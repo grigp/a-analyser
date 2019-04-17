@@ -52,12 +52,12 @@
    <slot>showDB()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>95</x>
+     <x>112</x>
      <y>16</y>
     </hint>
     <hint type="destinationlabel">
-     <x>627</x>
-     <y>56</y>
+     <x>628</x>
+     <y>33</y>
     </hint>
    </hints>
   </connection>

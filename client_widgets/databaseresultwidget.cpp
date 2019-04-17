@@ -1,10 +1,6 @@
 #include "databaseresultwidget.h"
 #include "ui_databaseresultwidget.h"
 
-#include <QApplication>
-#include "aanalyserapplication.h"
-#include "executewidget.h"
-
 DataBaseResultWidget::DataBaseResultWidget(QWidget *parent) :
     ClientWidget(parent),
     ui(new Ui::DataBaseResultWidget)
@@ -19,7 +15,7 @@ DataBaseResultWidget::~DataBaseResultWidget()
 
 QString DataBaseResultWidget::uid()
 {
-    return ClientWidgets::uidDatabaseResultWidgetUid;;
+    return ClientWidgets::uidDatabaseResultWidgetUid;
 }
 
 QString DataBaseResultWidget::name()
@@ -27,7 +23,3 @@ QString DataBaseResultWidget::name()
     return tr("База данных");
 }
 
-void DataBaseResultWidget::executeProbe()
-{
-    static_cast<AAnalyserApplication*>(QApplication::instance())->showClientPage(ClientWidgets::uidExecuteWidgetUid);
-}

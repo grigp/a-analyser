@@ -15,6 +15,7 @@ public:
     /*!
      * \brief Показывает страницу с заданным uid
      * \param uidPage - uid страницы
+     *     static_cast<AAnalyserApplication*>(QApplication::instance())->showClientPage(ClientWidgets::uidExecuteWidgetUid);
      */
     void showClientPage(const QString &uidPage);
 

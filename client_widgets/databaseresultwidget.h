@@ -31,9 +31,6 @@ public:
      */
     QString name() override;
 
-private slots:
-    void executeProbe();
-
 private:
     Ui::DataBaseResultWidget *ui;
 };

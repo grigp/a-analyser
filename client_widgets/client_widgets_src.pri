@@ -1,5 +1,7 @@
 INCLUDEPATH += $$PWD
 
+include(database_widgets/database_widgets_src.pri)
+
 HEADERS += \
     $$PWD/clientwidget.h \
     $$PWD/databaseresultwidget.h \
