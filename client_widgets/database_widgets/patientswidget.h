@@ -3,6 +3,8 @@
 
 #include <QWidget>
 
+class PatientsModel;
+
 namespace Ui {
 class PatientsWidget;
 }
@@ -15,8 +17,12 @@ public:
     explicit PatientsWidget(QWidget *parent = 0);
     ~PatientsWidget();
 
+    void onDbConnect();
+
 private:
     Ui::PatientsWidget *ui;
+
+    PatientsModel *m_mdlPatients;
 };
 
 #endif // PATIENTSWIDGET_H

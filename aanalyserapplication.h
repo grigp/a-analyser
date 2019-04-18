@@ -5,10 +5,14 @@
 #include <QObject>
 #include <QApplication>
 
+class DataBase;
+
 class AAnalyserApplication : public QApplication
 {
+    Q_OBJECT
 public:
-    AAnalyserApplication(int &argc, char **argv, int flags = ApplicationFlags);
+    AAnalyserApplication(int &argc, char **argv);
+    ~AAnalyserApplication();
 
     void setMainWindow(QMainWindow *mw);
 
@@ -19,8 +23,21 @@ public:
      */
     void showClientPage(const QString &uidPage);
 
+    /*!
+     * \brief Возвращает указатель на БД.
+     * В клиентских модулях не пользоваться!
+     * Вызывать продедуры из namespace BaseProvider!
+     */
+    DataBase* getDB();
+
+signals:
+    void dbConnected();
+
+    void dbDisconnected();
+
 private:
     QMainWindow *m_mw;
+    DataBase *m_database {nullptr};
 };
 
 #endif // AANALYSERAPPLICATION_H

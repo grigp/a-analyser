@@ -1,6 +1,8 @@
 #include "databaseresultwidget.h"
 #include "ui_databaseresultwidget.h"
 
+#include <QDebug>
+
 DataBaseResultWidget::DataBaseResultWidget(QWidget *parent) :
     ClientWidget(parent),
     ui(new Ui::DataBaseResultWidget)
@@ -21,5 +23,15 @@ QString DataBaseResultWidget::uid()
 QString DataBaseResultWidget::name()
 {
     return tr("База данных");
+}
+
+void DataBaseResultWidget::onDBConnect()
+{
+    ui->wgtPatients->onDbConnect();
+}
+
+void DataBaseResultWidget::onDBDisconnect()
+{
+
 }
 

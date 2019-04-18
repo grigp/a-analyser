@@ -28,6 +28,10 @@ public:
      */
     virtual QString name() = 0;
 
+    virtual void onDBConnect();
+
+    virtual void onDBDisconnect();
+
 private:
     Ui::ClientWidget *ui;
 };

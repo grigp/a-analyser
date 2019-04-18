@@ -24,6 +24,11 @@ public:
      */
     void showClientPage(const QString &uidPage);
 
+public slots:
+    void onDbConnected();
+
+    void obDBDisconnected();
+
 private:
     Ui::MainWindow *ui;
 

@@ -5,12 +5,14 @@
 #include "executewidget.h"
 #include "clientwidget.h"
 
+#include <QDebug>
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    setWindowIcon(QIcon(":/images/MainIcon.png"));
+    setWindowIcon(QIcon(":/images/MainIcon1.png"));
     createClientWidgets();
 }
 
@@ -23,6 +25,18 @@ void MainWindow::showClientPage(const QString &uidPage)
 {
     foreach (auto *wgt, m_clientWidgets)
         wgt->setVisible(static_cast<ClientWidget*>(wgt)->uid() == uidPage);
+}
+
+void MainWindow::onDbConnected()
+{
+    foreach (auto wgt, m_clientWidgets)
+        static_cast<ClientWidget*>(wgt)->onDBConnect();
+}
+
+void MainWindow::obDBDisconnected()
+{
+    foreach (auto wgt, m_clientWidgets)
+        static_cast<ClientWidget*>(wgt)->onDBDisconnect();
 }
 
 void MainWindow::createClientWidgets()

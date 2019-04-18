@@ -31,6 +31,10 @@ public:
      */
     QString name() override;
 
+    void onDBConnect() override;
+
+    void onDBDisconnect() override;
+
 private:
     Ui::DataBaseResultWidget *ui;
 };
