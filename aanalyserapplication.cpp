@@ -32,9 +32,6 @@ void AAnalyserApplication::setMainWindow(QMainWindow *mw)
 {
     m_mw = mw;
     connect(this, &AAnalyserApplication::dbConnected, static_cast<MainWindow*>(m_mw), &MainWindow::onDbConnected);
-
-    QString path = QStandardPaths::locate(QStandardPaths::GenericDataLocation, QString(), QStandardPaths::LocateDirectory);
-    qDebug() << path + applicationName() + '/';
 }
 
 void AAnalyserApplication::showClientPage(const QString &uidPage)

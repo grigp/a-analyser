@@ -2,7 +2,10 @@
 #define DATADEFINES_H
 
 #include <QString>
+#include <QMap>
 #include <QDate>
+#include <QStandardPaths>
+#include <QApplication>
 
 /*!
  * Набор типов данных из БД
@@ -19,6 +22,11 @@ enum Sex
     , female
 };
 
+static QMap<Sex, QString> SexToText{
+    std::pair<Sex, QString> (male, "муж")
+  , std::pair<Sex, QString> (female, "жен")
+};
+
 /*!
  * \brief Карточка пациента
  */
@@ -30,6 +38,22 @@ struct PatientKard
     Sex sex;
     PatientKard() {}
 };
+
+/*!
+ * \brief возвращает путь к папке данных приложения
+ */
+static QString appDataPath()
+{
+    QString path = QStandardPaths::locate(QStandardPaths::GenericDataLocation, QString(), QStandardPaths::LocateDirectory);
+    return path + QApplication::applicationName() + '/';
+}
+
+
+static QString dataBasesPath()
+{
+    return appDataPath() + "databases/";
+}
+
 
 }
 

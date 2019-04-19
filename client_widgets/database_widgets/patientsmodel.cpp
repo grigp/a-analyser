@@ -16,18 +16,25 @@ void PatientsModel::load()
     auto uidList = DataProvider::getPatients();
     foreach (auto uid, uidList)
     {
-        DataDefines::PatientKard kard;
-        DataProvider::getPatient(uid, kard);
+        DataDefines::PatientKard patient;
+        DataProvider::getPatient(uid, patient);
 
-        QStandardItem *itemFIO = new QStandardItem(kard.fio);
+        QStandardItem *itemFIO = new QStandardItem(patient.fio);
         itemFIO->setEditable(false);
-        QStandardItem *itemBorn = new QStandardItem(kard.born.toString());
+        QStandardItem *itemBorn = new QStandardItem(patient.born.toString("dd.MM.yyyy"));
         itemBorn->setEditable(false);
-        QStandardItem *itemSex = new QStandardItem(kard.sex);
+        QStandardItem *itemSex = new QStandardItem(DataDefines::SexToText.value(
+                                                       static_cast<DataDefines::Sex>(patient.sex)));
         itemSex->setEditable(false);
 
         appendRow(QList<QStandardItem*>() << itemFIO << itemBorn << itemSex);
     }
     setHorizontalHeaderLabels(QStringList() << "ФИО" << "Дата рождения" << "Пол");
 
+}
+
+void PatientsModel::addPatient(DataDefines::PatientKard &patient)
+{
+    DataProvider::updatePatient(patient);
+    load();
 }

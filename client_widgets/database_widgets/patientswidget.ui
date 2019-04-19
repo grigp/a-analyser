@@ -143,5 +143,25 @@
  <resources>
   <include location="../../kernel.qrc"/>
  </resources>
- <connections/>
+ <connections>
+  <connection>
+   <sender>btnAdd</sender>
+   <signal>clicked()</signal>
+   <receiver>PatientsWidget</receiver>
+   <slot>addPatient()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>249</x>
+     <y>21</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>372</x>
+     <y>81</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>addPatient()</slot>
+ </slots>
 </ui>

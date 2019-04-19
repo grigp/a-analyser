@@ -2,6 +2,7 @@
 #define DATABASE_H
 
 #include <QObject>
+#include <QDir>
 
 #include "datadefines.h"
 
@@ -48,6 +49,16 @@ signals:
     void disconnected();
 
 public slots:
+
+private:
+    QString currentDataBase();
+    QDir patientsDir();
+
+    void createPatient(const DataDefines::PatientKard patient);
+
+    bool readPatient(const QString &fullFileName, DataDefines::PatientKard &patient);
+
+    QString m_dataBaseName = "data";
 };
 
 #endif // DATABASE_H

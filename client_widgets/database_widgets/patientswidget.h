@@ -19,6 +19,12 @@ public:
 
     void onDbConnect();
 
+private slots:
+    /*!
+     * \brief Добавление пациента
+     */
+    void addPatient();
+
 private:
     Ui::PatientsWidget *ui;
 
