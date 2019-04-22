@@ -37,6 +37,12 @@ public:
      */
     void updatePatient(const DataDefines::PatientKard &patient);
 
+    /*!
+     * \brief Удаляет запись о пациенте
+     * \param uid - uid пациента
+     */
+    void removePatient(const QString &uid);
+
 signals:
     /*!
      * \brief Извещает о подключении к БД
@@ -51,12 +57,16 @@ signals:
 public slots:
 
 private:
-    QString currentDataBase();
-    QDir patientsDir();
+    QString currentDataBase() const;
+    QDir patientsDir() const;
 
-    void createPatient(const DataDefines::PatientKard patient);
+    void createPatientRec(const DataDefines::PatientKard patient);
 
-    bool readPatient(const QString &fullFileName, DataDefines::PatientKard &patient);
+    bool readPatientRec(const QString &fullFileName, DataDefines::PatientKard &patient);
+
+    void updatePatientRec(const DataDefines::PatientKard &patient);
+
+    bool patientExists(const QString &uid) const;
 
     QString m_dataBaseName = "data";
 };

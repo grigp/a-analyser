@@ -136,7 +136,13 @@
     </widget>
    </item>
    <item>
-    <widget class="QTreeView" name="tvPatients"/>
+    <widget class="QTreeView" name="tvPatients">
+     <property name="font">
+      <font>
+       <pointsize>11</pointsize>
+      </font>
+     </property>
+    </widget>
    </item>
   </layout>
  </widget>
@@ -160,8 +166,42 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>btnCard</sender>
+   <signal>clicked()</signal>
+   <receiver>PatientsWidget</receiver>
+   <slot>editPatient()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>302</x>
+     <y>28</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>369</x>
+     <y>109</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btnDelete</sender>
+   <signal>clicked()</signal>
+   <receiver>PatientsWidget</receiver>
+   <slot>removePatient()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>344</x>
+     <y>39</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>370</x>
+     <y>150</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>addPatient()</slot>
+  <slot>editPatient()</slot>
+  <slot>removePatient()</slot>
  </slots>
 </ui>

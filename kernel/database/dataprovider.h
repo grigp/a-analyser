@@ -31,6 +31,12 @@ bool getPatient(const QString &uid, DataDefines::PatientKard &patient);
  * \param patient - карточка пациента
  */
 void updatePatient(const DataDefines::PatientKard &patient);
+
+/*!
+ * \brief Удаляет запись о пациенте
+ * \param uid - uid пациента
+ */
+void removePatient(const QString &uid);
 }
 
 #endif // DATAPROVIDER_H

@@ -25,6 +25,16 @@ private slots:
      */
     void addPatient();
 
+    /*!
+     * \brief Редактирование записи о пациенте
+     */
+    void editPatient();
+
+    /*!
+     * \brief Удаление записи о пациенте
+     */
+    void removePatient();
+
 private:
     Ui::PatientsWidget *ui;
 

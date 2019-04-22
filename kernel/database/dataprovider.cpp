@@ -18,5 +18,10 @@ bool DataProvider::getPatient(const QString &uid, DataDefines::PatientKard &pati
 
 void DataProvider::updatePatient(const DataDefines::PatientKard &patient)
 {
-    return static_cast<AAnalyserApplication*>(QApplication::instance())->getDB()->updatePatient(patient);
+    static_cast<AAnalyserApplication*>(QApplication::instance())->getDB()->updatePatient(patient);
+}
+
+void DataProvider::removePatient(const QString &uid)
+{
+    static_cast<AAnalyserApplication*>(QApplication::instance())->getDB()->removePatient(uid);
 }
