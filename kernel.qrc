@@ -7,5 +7,6 @@
         <file>images/ResultsRun.png</file>
         <file>images/MainIcon.png</file>
         <file>images/MainIcon1.png</file>
+        <file>metodics.json</file>
     </qresource>
 </RCC>
