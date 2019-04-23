@@ -7,6 +7,8 @@ namespace Ui {
 class MethodsWidget;
 }
 
+class MetodicsModel;
+
 class MethodsWidget : public QWidget
 {
     Q_OBJECT
@@ -15,8 +17,14 @@ public:
     explicit MethodsWidget(QWidget *parent = 0);
     ~MethodsWidget();
 
+    void onDbConnect();
+
+private slots:
+    void editMetodParams();
+
 private:
     Ui::MethodsWidget *ui;
+    MetodicsModel *m_model;
 };
 
 #endif // METHODSWIDGET_H

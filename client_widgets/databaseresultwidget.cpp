@@ -28,6 +28,7 @@ QString DataBaseResultWidget::name()
 void DataBaseResultWidget::onDBConnect()
 {
     ui->wgtPatients->onDbConnect();
+    ui->wgtMetods->onDbConnect();
 }
 
 void DataBaseResultWidget::onDBDisconnect()

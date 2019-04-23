@@ -3,6 +3,7 @@
 #include "metodicdefines.h"
 #include "jumptestexecute.h"
 #include "jumptestvisualize.h"
+#include "jumptestparamsdialog.h"
 
 JumpTestTemplate::JumpTestTemplate(QObject *parent)
     : MetodicTemplate(parent)
@@ -34,7 +35,17 @@ QWidget *JumpTestTemplate::visualize(QWidget *parent, const QJsonObject &params)
     return retval;
 }
 
-bool JumpTestTemplate::editParams(QJsonObject &params)
+bool JumpTestTemplate::editParams(QWidget *parent, QJsonObject &params)
 {
-
+    auto dialog = new JumpTestParamsDialog(parent);
+    dialog->setParams(params);
+    bool retval = false;
+    connect(dialog, &JumpTestParamsDialog::accepted, this, [=]()
+    {
+        QJsonObject par = dialog->getParams();
+        //todo: сохранить параметры
+        //retval = true;
+    });
+    dialog->exec();
+    return retval;
 }

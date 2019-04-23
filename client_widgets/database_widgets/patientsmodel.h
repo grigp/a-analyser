@@ -6,6 +6,9 @@
 
 #include "datadefines.h"
 
+/*!
+ * \brief Класс модели списка пациентов PatientsModel class
+ */
 class PatientsModel : public QStandardItemModel
 {
     Q_OBJECT

@@ -5,10 +5,12 @@
 #include <QDebug>
 
 #include "mainwindow.h"
+#include "metodicsfactory.h"
 #include "database.h"
 
 AAnalyserApplication::AAnalyserApplication(int &argc, char **argv)
     : QApplication(argc, argv)
+    , m_metodics(new MetodicsFactory(this))
 {
     setApplicationName("a-analyser");
     setApplicationDisplayName("Физиологические исследования a-analyser");
@@ -26,6 +28,8 @@ AAnalyserApplication::~AAnalyserApplication()
 {
     if (m_database)
         delete m_database;
+    if (m_metodics)
+        delete m_metodics;
 }
 
 void AAnalyserApplication::setMainWindow(QMainWindow *mw)
@@ -42,4 +46,9 @@ void AAnalyserApplication::showClientPage(const QString &uidPage)
 DataBase *AAnalyserApplication::getDB()
 {
     return m_database;
+}
+
+MetodicsFactory *AAnalyserApplication::getMetodics()
+{
+    return m_metodics;
 }

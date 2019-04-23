@@ -40,7 +40,7 @@ public:
      *  \param params - параметры методики
      *  \return true, если нужно сохранить параметры
      */
-    bool editParams(QJsonObject &params)  override;
+    bool editParams(QWidget *parent, QJsonObject &params)  override;
 };
 
 #endif // STABTESTTEMPLATE_H

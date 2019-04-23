@@ -4,6 +4,7 @@
 #include <QStringList>
 
 #include "datadefines.h"
+#include "metodicdefines.h"
 
 /*!
  * Набор функций для доступа к данным
@@ -37,6 +38,21 @@ void updatePatient(const DataDefines::PatientKard &patient);
  * \param uid - uid пациента
  */
 void removePatient(const QString &uid);
+
+/*!
+ * \brief Возвращает полный список методик
+ */
+QList<MetodicDefines::MetodicInfo> getListMetodisc();
+
+
+/*!
+ * \brief Вызывает диалог редактирования параметров методики по uid методики
+ * \param metUid - uid методики
+ * \param params - редактируемые параметры
+ * \return true, если в диалоге нажали OK и параметры надо сохранить
+ */
+bool editMetodicParams(QWidget *parent, const QString &metUid);
+
 }
 
 #endif // DATAPROVIDER_H

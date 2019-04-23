@@ -5,14 +5,16 @@ HEADERS += \
     $$PWD/methodswidget.h \
     $$PWD/testswidget.h \
     $$PWD/patientsmodel.h \
-    $$PWD/patientkarddialog.h
+    $$PWD/patientkarddialog.h \
+    $$PWD/metodicsmodel.h
 
 SOURCES += \
     $$PWD/patientswidget.cpp \
     $$PWD/methodswidget.cpp \
     $$PWD/testswidget.cpp \
     $$PWD/patientsmodel.cpp \
-    $$PWD/patientkarddialog.cpp
+    $$PWD/patientkarddialog.cpp \
+    $$PWD/metodicsmodel.cpp
 
 FORMS += \
     $$PWD/patientswidget.ui \

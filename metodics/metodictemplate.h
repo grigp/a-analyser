@@ -40,7 +40,7 @@ public:
      *  \param params - параметры методики
      *  \return true, если нужно сохранить параметры
      */
-    virtual bool editParams(QJsonObject &params) = 0;
+    virtual bool editParams(QWidget *parent, QJsonObject &params) = 0;
 
 signals:
 

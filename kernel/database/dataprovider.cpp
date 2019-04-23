@@ -3,6 +3,7 @@
 #include <QApplication>
 #include "aanalyserapplication.h"
 #include "database.h"
+#include "metodicsfactory.h"
 
 
 QStringList DataProvider::getPatients()
@@ -24,4 +25,20 @@ void DataProvider::updatePatient(const DataDefines::PatientKard &patient)
 void DataProvider::removePatient(const QString &uid)
 {
     static_cast<AAnalyserApplication*>(QApplication::instance())->getDB()->removePatient(uid);
+}
+
+QList<MetodicDefines::MetodicInfo> DataProvider::getListMetodisc()
+{
+    MetodicsFactory *metFactory = static_cast<AAnalyserApplication*>(QApplication::instance())->getMetodics();
+
+    QList<MetodicDefines::MetodicInfo> retval;
+    for (int i = 0; i < metFactory->metodicsCount(); ++i)
+        retval << metFactory->metodic(i);
+    return retval;
+}
+
+bool DataProvider::editMetodicParams(QWidget *parent, const QString &metUid)
+{
+    return static_cast<AAnalyserApplication*>(QApplication::instance())->getMetodics()->
+            editMetodicParams(parent, metUid);
 }

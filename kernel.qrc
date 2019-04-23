@@ -8,5 +8,10 @@
         <file>images/MainIcon.png</file>
         <file>images/MainIcon1.png</file>
         <file>metodics.json</file>
+        <file>images/MethodsEdit.png</file>
+        <file>images/add.png</file>
+        <file>images/delete.png</file>
+        <file>images/down.png</file>
+        <file>images/up.png</file>
     </qresource>
 </RCC>

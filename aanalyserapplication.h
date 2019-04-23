@@ -6,6 +6,7 @@
 #include <QApplication>
 
 class DataBase;
+class MetodicsFactory;
 
 class AAnalyserApplication : public QApplication
 {
@@ -26,9 +27,16 @@ public:
     /*!
      * \brief Возвращает указатель на БД.
      * В клиентских модулях не пользоваться!
-     * Вызывать продедуры из namespace BaseProvider!
+     * Вызывать продедуры из namespace DataProvider!
      */
     DataBase* getDB();
+
+    /*!
+     * \brief Возвращает указатель на список методик
+     * В клиентских модулях не пользоваться!
+     * Вызывать продедуры из namespace DataProvider!
+     */
+    MetodicsFactory* getMetodics();
 
 signals:
     void dbConnected();
@@ -38,6 +46,7 @@ signals:
 private:
     QMainWindow *m_mw;
     DataBase *m_database {nullptr};
+    MetodicsFactory *m_metodics {nullptr};
 };
 
 #endif // AANALYSERAPPLICATION_H

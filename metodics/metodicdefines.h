@@ -19,6 +19,7 @@ namespace MetodicDefines
      */
     struct MetodicInfo
     {
+        QString uid;            ///< uid
         QString name;           ///< Название
         QString templateId;     ///< id шаблона методики
         QJsonObject params;     ///< Параметры

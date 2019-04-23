@@ -5,28 +5,30 @@
             "template": "met_stabtest_uid",
             "params":
             {
-                "probes_count": 3,
                 "probes": [
                     {
+                        "name": "Открытые глаза",
                         "time": 20,
                         "latent_time": 0,
                         "stimul": 1,
                         "zeroing": 1,
-                        "scale": 2
+                        "scale": 1
                     },
                     {
+                        "name": "Закрытые глаза",
                         "time": 20,
                         "latent_time": 0,
                         "stimul": 2,
                         "zeroing": 0,
-                        "scale": 2
+                        "scale": 1
                     },
                     {
+                        "name": "Мишень",
                         "time": 20,
                         "latent_time": 5,
                         "stimul": 3,
                         "zeroing": 0,
-                        "scale": 8
+                        "scale": 3
                     }
                 ]
             }
@@ -36,14 +38,14 @@
             "template": "met_stabtest_uid",
             "params":
             {
-                "probes_count": 1,
                 "probes": [
                     {
+                        "name": "Стабилографическая проба",
                         "time": -1,
                         "latent_time": 0,
                         "stimul": 0,
                         "zeroing": 1,
-                        "scale": 2
+                        "scale": 0
                     }
                 ]
             }
