@@ -5,6 +5,8 @@
 #include "aanalyserapplication.h"
 #include "databaseresultwidget.h"
 
+#include <QDebug>
+
 ExecuteWidget::ExecuteWidget(QWidget *parent) :
     ClientWidget(parent),
     ui(new Ui::ExecuteWidget)

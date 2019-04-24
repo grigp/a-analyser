@@ -117,8 +117,25 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>tvMetods</sender>
+   <signal>clicked(QModelIndex)</signal>
+   <receiver>MethodsWidget</receiver>
+   <slot>selectMetodic(QModelIndex)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>200</x>
+     <y>142</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>359</x>
+     <y>125</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>editMetodParams()</slot>
+  <slot>selectMetodic(QModelIndex)</slot>
  </slots>
 </ui>

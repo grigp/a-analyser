@@ -20,6 +20,9 @@ public:
 
     void setParams(const QJsonObject &params);
 
+private slots:
+    void showDataBase();
+
 private:
     Ui::JumpTestExecute *ui;
 };

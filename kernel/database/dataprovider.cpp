@@ -42,3 +42,8 @@ bool DataProvider::editMetodicParams(QWidget *parent, const QString &metUid)
     return static_cast<AAnalyserApplication*>(QApplication::instance())->getMetodics()->
             editMetodicParams(parent, metUid);
 }
+
+void DataProvider::execute(QWidget *parent, const QString &metUid)
+{
+    return static_cast<AAnalyserApplication*>(QApplication::instance())->getMetodics()->execute(parent, metUid);
+}

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>591</width>
-    <height>446</height>
+    <width>577</width>
+    <height>275</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -86,8 +86,8 @@
      </widget>
      <widget class="QWidget" name="wgtResults" native="true">
       <property name="sizePolicy">
-       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-        <horstretch>2</horstretch>
+       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+        <horstretch>5</horstretch>
         <verstretch>0</verstretch>
        </sizepolicy>
       </property>
@@ -105,9 +105,9 @@
         <number>1</number>
        </property>
        <item>
-        <widget class="QLabel" name="lblTestNotSelected">
+        <widget class="QLabel" name="lblNoTest">
          <property name="text">
-          <string>Тест не выбран</string>
+          <string>Не открыт тест</string>
          </property>
          <property name="alignment">
           <set>Qt::AlignCenter</set>

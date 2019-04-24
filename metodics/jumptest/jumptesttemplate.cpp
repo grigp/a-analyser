@@ -5,6 +5,8 @@
 #include "jumptestvisualize.h"
 #include "jumptestparamsdialog.h"
 
+#include <QLayout>
+
 JumpTestTemplate::JumpTestTemplate(QObject *parent)
     : MetodicTemplate(parent)
 {
@@ -24,6 +26,7 @@ QString JumpTestTemplate::name()
 QWidget *JumpTestTemplate::execute(QWidget *parent, const QJsonObject &params)
 {
     auto *retval = new JumpTestExecute(parent);
+    parent->layout()->addWidget(retval);
     retval->setParams(params);
     return retval;
 }

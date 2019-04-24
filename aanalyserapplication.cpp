@@ -2,10 +2,14 @@
 
 #include <QStandardPaths>
 #include <QTimer>
+#include <QMessageBox>
+#include <QLayout>
 #include <QDebug>
 
 #include "mainwindow.h"
 #include "metodicsfactory.h"
+#include "executewidget.h"
+#include "databaseresultwidget.h"
 #include "database.h"
 
 AAnalyserApplication::AAnalyserApplication(int &argc, char **argv)
@@ -51,4 +55,47 @@ DataBase *AAnalyserApplication::getDB()
 MetodicsFactory *AAnalyserApplication::getMetodics()
 {
     return m_metodics;
+}
+
+void AAnalyserApplication::selectPatient(const QString &uid)
+{
+    m_patientUid = uid;
+}
+
+void AAnalyserApplication::selectMetodic(const QString &uid)
+{
+    m_metodicUid = uid;
+}
+
+void AAnalyserApplication::executeMetodic()
+{
+    if (m_patientUid == "")
+        QMessageBox::information(m_mw, tr("Предупреждение"), tr("Должен быть выбран пациент"));
+    else
+    if (m_metodicUid == "")
+        QMessageBox::information(m_mw, tr("Предупреждение"), tr("Должна быть выбрана методика"));
+    else
+    {
+        auto widget = static_cast<MainWindow*>(m_mw)->getExecuteWidget();
+        if (widget)
+        {
+            while (QLayoutItem* item = widget->layout()->takeAt(0))
+            {
+                delete item->widget();
+                delete item;
+            }
+            m_metodics->execute(widget, m_metodicUid);
+            showClientPage(ClientWidgets::uidExecuteWidgetUid);
+        }
+    }
+}
+
+void AAnalyserApplication::openTest(const QString &uid)
+{
+
+}
+
+void AAnalyserApplication::showDataBase()
+{
+    showClientPage(ClientWidgets::uidDatabaseResultWidgetUid);
 }

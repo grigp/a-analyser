@@ -41,6 +41,7 @@ private slots:
     void addProbe();
     void deleteProbe();
 
+    void changeAutoEnd(const bool autoEnd);
     void changeTime(const QTime &time);
     void changeLatentTime(const QTime &time);
     void changeStimulIndex(const int stimul);

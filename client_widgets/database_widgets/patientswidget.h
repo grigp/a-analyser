@@ -2,6 +2,7 @@
 #define PATIENTSWIDGET_H
 
 #include <QWidget>
+#include <QModelIndex>
 
 class PatientsModel;
 
@@ -19,7 +20,12 @@ public:
 
     void onDbConnect();
 
+protected:
+    bool eventFilter(QObject *obj, QEvent *event);
+
 private slots:
+    void selectPatient(const QModelIndex index);
+
     /*!
      * \brief Добавление пациента
      */

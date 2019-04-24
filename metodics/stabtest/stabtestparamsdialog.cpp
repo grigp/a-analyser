@@ -13,6 +13,7 @@ namespace
 struct ProbeParams
 {
     QString name;          ///< Название пробы
+    bool autoEnd;          ///< Автоматическое завершение
     int time;              ///< Длительность
     int latentTime;        ///< Задержка привыкания
     int stimulCode;        ///< Код видеостимуляции 0 - нет, 1 - цветные круги, 2 - звуковые сигналы, 3 - мишень
@@ -32,8 +33,19 @@ StabTestParamsDialog::StabTestParamsDialog(QWidget *parent) :
 {
     ui->setupUi(this);
     ui->lvProbes->setModel(m_mdlProbes);
-    ui->cbStimul->addItems(QStringList() << "нет" << "Открытые глаза" << "Закрытые глаза" << "Мишень");
+    ui->cbStimul->addItems(QStringList() << tr("нет") << tr("Открытые глаза") << tr("Закрытые глаза") << tr("Мишень"));
     ui->cbScale->addItems(QStringList() << "1" << "2" << "4" << "8" << "16" << "32" << "64" << "128");
+
+    //! Редактирование названия пробы
+    connect(m_mdlProbes, &QStandardItemModel::itemChanged, [=](QStandardItem *item)
+    {
+        if (item->row() >= 0 && item->row() < metParams.size())
+        {
+            auto pp = metParams.at(item->row());
+            pp.name = item->data(Qt::DisplayRole).toString();
+            metParams.replace(item->row(), pp);
+        }
+    });
 
     ui->lvProbes->viewport()->installEventFilter(this);
 }
@@ -54,6 +66,7 @@ void StabTestParamsDialog::setParams(const QJsonObject &params)
         ProbeParams pp;
 
         pp.name = obj["name"].toString();
+        pp.autoEnd = obj["autoend"].toInt() == 1;
         pp.time = obj["time"].toInt();
         pp.latentTime = obj["latent_time"].toInt();
         pp.stimulCode = obj["stimul"].toInt();
@@ -66,7 +79,8 @@ void StabTestParamsDialog::setParams(const QJsonObject &params)
 
     if (metParams.size() > 0)
     {
-        ui->lvProbes->selectionModel()->select(m_mdlProbes->index(0, 0), QItemSelectionModel::Select | QItemSelectionModel::Rows);
+        ui->lvProbes->selectionModel()->setCurrentIndex(m_mdlProbes->index(0, 0),
+                                                        QItemSelectionModel::Select | QItemSelectionModel::Rows);
         m_curProbe = 0;
         showProbeParam();
     }
@@ -81,6 +95,7 @@ QJsonObject StabTestParamsDialog::getParams()
     {
         QJsonObject objP;
         objP["name"] = pp.name;
+        objP["autoend"] = static_cast<int>(pp.autoEnd);
         objP["time"] = pp.time;
         objP["latent_time"] = pp.latentTime;
         objP["stimul"] = pp.stimulCode;
@@ -100,7 +115,6 @@ bool StabTestParamsDialog::eventFilter(QObject *obj, QEvent *event)
         {
             m_curProbe = ui->lvProbes->selectionModel()->currentIndex().row();
             showProbeParam();
-
         }
     }
     return false;
@@ -123,6 +137,7 @@ void StabTestParamsDialog::addProbe()
     ProbeParams pp;
 
     pp.name = "Новая проба";
+    pp.autoEnd = false;
     pp.time = 20;
     pp.latentTime = 0;
     pp.stimulCode = 0;
@@ -148,6 +163,16 @@ void StabTestParamsDialog::deleteProbe()
             --m_curProbe;
         if (m_curProbe >= 0)
             showProbeParam();
+    }
+}
+
+void StabTestParamsDialog::changeAutoEnd(const bool autoEnd)
+{
+    if (m_curProbe >= 0 && m_curProbe < metParams.size())
+    {
+        auto pp = metParams.at(m_curProbe);
+        pp.autoEnd = autoEnd;
+        metParams.replace(m_curProbe, pp);
     }
 }
 
@@ -205,6 +230,7 @@ void StabTestParamsDialog::showProbeParam()
 {
     if (m_curProbe >= 0 && m_curProbe < metParams.size())
     {
+        ui->cbAutoEnd->setChecked(metParams.at(m_curProbe).autoEnd);
         ui->edTime->setTime(QTime(0, 0, 0, 0).addSecs(metParams.at(m_curProbe).time));
         ui->edTimeLatent->setTime(QTime(0, 0, 0, 0).addSecs(metParams.at(m_curProbe).latentTime));
         ui->cbStimul->setCurrentIndex(metParams.at(m_curProbe).stimulCode);

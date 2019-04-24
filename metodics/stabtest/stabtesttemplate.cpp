@@ -5,6 +5,7 @@
 #include "stabtestvisualize.h"
 #include "stabtestparamsdialog.h"
 
+#include <QLayout>
 #include <QDebug>
 
 StabTestTemplate::StabTestTemplate(QObject *parent)
@@ -26,6 +27,7 @@ QString StabTestTemplate::name()
 QWidget *StabTestTemplate::execute(QWidget *parent, const QJsonObject &params)
 {
    auto *retval = new StabTestExecute(parent);
+   parent->layout()->addWidget(retval);
    retval->setParams(params);
    return retval;
 }
@@ -33,6 +35,7 @@ QWidget *StabTestTemplate::execute(QWidget *parent, const QJsonObject &params)
 QWidget *StabTestTemplate::visualize(QWidget *parent, const QJsonObject &params)
 {
     auto *retval = new StabTestVisualize(parent);
+    parent->layout()->addWidget(retval);
     retval->setParams(params);
     return retval;
 }

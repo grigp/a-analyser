@@ -13,7 +13,39 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QPushButton" name="pushButton">
+     <property name="text">
+      <string>PushButton</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QTreeView" name="treeView"/>
+   </item>
+  </layout>
  </widget>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>pushButton</sender>
+   <signal>clicked()</signal>
+   <receiver>JumpTestExecute</receiver>
+   <slot>showDataBase()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>366</x>
+     <y>21</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>531</x>
+     <y>46</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>showDataBase()</slot>
+ </slots>
 </ui>

@@ -38,6 +38,36 @@ public:
      */
     MetodicsFactory* getMetodics();
 
+    /*!
+     * \brief Получение данных о выбранной записи о пациенте
+     * \param uid - uid выбранного пациента
+     */
+    void selectPatient(const QString &uid);
+
+    /*!
+     * \brief Получение информации о выбранной методике
+     * \param uid - uid выбранной методики
+     */
+    void selectMetodic(const QString &uid);
+
+    /*!
+     * \brief Выполнение методики
+     * Должны быть выбраны предварительно пациент и методика
+     * Если нет, то действие не будет выполнено
+     */
+    void executeMetodic();
+
+    /*!
+     * \brief Выбор теста и открытие его результатов
+     * \param uid - uid теста
+     */
+    void openTest(const QString &uid);
+
+    /*!
+     * \brief Показывает виджет базы данных
+     */
+    void showDataBase();
+
 signals:
     void dbConnected();
 
@@ -47,6 +77,9 @@ private:
     QMainWindow *m_mw;
     DataBase *m_database {nullptr};
     MetodicsFactory *m_metodics {nullptr};
+
+    QString m_patientUid = "";  ///< uid выбранного пациента
+    QString m_metodicUid = "";  ///< uid выбранной методики
 };
 
 #endif // AANALYSERAPPLICATION_H

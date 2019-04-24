@@ -12,6 +12,8 @@
 namespace DataProvider
 {
 
+//! ---------------- Пациенты -------------------
+
 /*!
  * \brief Возвращает список пациентов в виде списка строк, содержащих UID-ы
  */
@@ -39,11 +41,13 @@ void updatePatient(const DataDefines::PatientKard &patient);
  */
 void removePatient(const QString &uid);
 
+
+//! ---------------- Методики -------------------
+
 /*!
  * \brief Возвращает полный список методик
  */
 QList<MetodicDefines::MetodicInfo> getListMetodisc();
-
 
 /*!
  * \brief Вызывает диалог редактирования параметров методики по uid методики
@@ -52,6 +56,16 @@ QList<MetodicDefines::MetodicInfo> getListMetodisc();
  * \return true, если в диалоге нажали OK и параметры надо сохранить
  */
 bool editMetodicParams(QWidget *parent, const QString &metUid);
+
+/*!
+ * \brief выполнение методики
+ * \param parent - родительский виджет для размещения виджета выплнения пробы
+ * \param metUid - uid методики
+ */
+void execute(QWidget *parent, const QString &metUid);
+
+//! ---------------- Тесты -------------------
+
 
 }
 

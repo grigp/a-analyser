@@ -4,7 +4,9 @@
 #include "datadefines.h"
 #include "patientsmodel.h"
 #include "patientkarddialog.h"
+#include "aanalyserapplication.h"
 
+#include <QApplication>
 #include <QMessageBox>
 #include <QDebug>
 
@@ -15,6 +17,7 @@ PatientsWidget::PatientsWidget(QWidget *parent) :
 {
     ui->setupUi(this);
     ui->tvPatients->setModel(m_mdlPatients);
+    ui->tvPatients->viewport()->installEventFilter(this);
 }
 
 PatientsWidget::~PatientsWidget()
@@ -29,7 +32,30 @@ void PatientsWidget::onDbConnect()
     ui->tvPatients->header()->resizeSections(QHeaderView::ResizeToContents);
 //    ui->tvPatients->header()->resizeSection(PatientsModel::ColFio, 200);
 //    ui->tvPatients->header()->resizeSection(PatientsModel::ColBorn, 120);
-//    ui->tvPatients->header()->resizeSection(PatientsModel::colSex, 50);
+    //    ui->tvPatients->header()->resizeSection(PatientsModel::colSex, 50);
+}
+
+bool PatientsWidget::eventFilter(QObject *obj, QEvent *event)
+{
+    if (obj == ui->tvPatients->viewport())
+    {
+        if (event->type() == QEvent::Paint)
+        {
+            // Приводит к частым срабатываниям
+            selectPatient(ui->tvPatients->selectionModel()->currentIndex());
+        }
+    }
+    return false;
+}
+
+void PatientsWidget::selectPatient(const QModelIndex index)
+{
+    if (index.isValid())
+    {
+        auto uid = m_mdlPatients->index(index.row(), PatientsModel::ColFio, index.parent()).
+                data(PatientsModel::PatientUidRole).toString();
+        static_cast<AAnalyserApplication*>(QApplication::instance())->selectPatient(uid);
+    }
 }
 
 void PatientsWidget::addPatient()

@@ -31,7 +31,7 @@ public:
      */
     QString name() override;
 
-private slots:
+public slots:
     void showDB();
 
 

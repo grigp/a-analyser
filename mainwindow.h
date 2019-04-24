@@ -24,6 +24,8 @@ public:
      */
     void showClientPage(const QString &uidPage);
 
+    QWidget *getExecuteWidget();
+
 public slots:
     void onDbConnected();
 

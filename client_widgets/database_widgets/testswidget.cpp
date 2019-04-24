@@ -19,5 +19,5 @@ TestsWidget::~TestsWidget()
 
 void TestsWidget::runTest()
 {
-    static_cast<AAnalyserApplication*>(QApplication::instance())->showClientPage(ClientWidgets::uidExecuteWidgetUid);
+    static_cast<AAnalyserApplication*>(QApplication::instance())->executeMetodic();
 }

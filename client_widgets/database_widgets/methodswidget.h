@@ -2,6 +2,7 @@
 #define METHODSWIDGET_H
 
 #include <QWidget>
+#include <QModelIndex>
 
 namespace Ui {
 class MethodsWidget;
@@ -19,7 +20,11 @@ public:
 
     void onDbConnect();
 
+protected:
+    bool eventFilter(QObject *obj, QEvent *event);
+
 private slots:
+    void selectMetodic(const QModelIndex index);
     void editMetodParams();
 
 private:

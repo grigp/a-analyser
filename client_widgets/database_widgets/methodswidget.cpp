@@ -3,6 +3,9 @@
 
 #include "metodicdefines.h"
 #include "metodicsmodel.h"
+#include "aanalyserapplication.h"
+
+#include <QApplication>
 
 MethodsWidget::MethodsWidget(QWidget *parent) :
     QWidget(parent),
@@ -23,6 +26,30 @@ void MethodsWidget::onDbConnect()
     {
         m_model->load();
         ui->tvMetods->setModel(m_model);
+        ui->tvMetods->viewport()->installEventFilter(this);
+    }
+}
+
+bool MethodsWidget::eventFilter(QObject *obj, QEvent *event)
+{
+    if (obj == ui->tvMetods->viewport())
+    {
+        if (event->type() == QEvent::Paint)
+        {
+            // Приводит к частым срабатываниям
+            selectMetodic(ui->tvMetods->selectionModel()->currentIndex());
+        }
+    }
+    return false;
+}
+
+void MethodsWidget::selectMetodic(const QModelIndex index)
+{
+    if (index.isValid())
+    {
+        auto uid = m_model->index(index.row(), MetodicsModel::ColName, index.parent()).
+                data(MetodicsModel::MetodicUidRole).toString();
+        static_cast<AAnalyserApplication*>(QApplication::instance())->selectMetodic(uid);
     }
 }
 

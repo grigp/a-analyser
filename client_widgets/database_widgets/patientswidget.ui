@@ -198,10 +198,27 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>tvPatients</sender>
+   <signal>clicked(QModelIndex)</signal>
+   <receiver>PatientsWidget</receiver>
+   <slot>selectPatient(QModelIndex)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>286</x>
+     <y>174</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>369</x>
+     <y>206</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>addPatient()</slot>
   <slot>editPatient()</slot>
   <slot>removePatient()</slot>
+  <slot>selectPatient(QModelIndex)</slot>
  </slots>
 </ui>

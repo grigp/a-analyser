@@ -30,11 +30,18 @@ public:
 
     /*!
      * \brief Вызывает диалог редактирования параметров методики по uid методики
-     * \param templateUid - uid шаблона методики
-     * \param params - редактируемые параметры
+     * \param parent - родительский виджет для вызываемого диалогового окна
+     * \param metUid - uid методики
      * \return true, если в диалоге нажали OK и параметры надо сохранить
      */
     bool editMetodicParams(QWidget *parent, const QString &metUid);
+
+    /*!
+     * \brief выполнение методики
+     * \param parent - родительский виджет для размещения виджета выплнения пробы
+     * \param metUid - uid методики
+     */
+    void execute(QWidget *parent, const QString &metUid) const;
 
 signals:
 
@@ -46,6 +53,8 @@ private:
     void saveMetodics();
 
     int getMetodicIndexByUid(const QString &uid) const;
+
+    MetodicTemplate *getMetodicTemplate(const QString &metUid) const;
 
     QList<MetodicTemplate*> m_templates;
     QList<MetodicDefines::MetodicInfo> m_metodics;

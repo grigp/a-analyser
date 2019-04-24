@@ -37,27 +37,34 @@ MetodicDefines::MetodicInfo MetodicsFactory::metodic(const int i) const
 
 bool MetodicsFactory::editMetodicParams(QWidget *parent, const QString &metUid)
 {
-    int metIdx = getMetodicIndexByUid(metUid);
-    if (metIdx > -1)
+    auto *mt = getMetodicTemplate(metUid);
+    if (mt)
     {
-        MetodicTemplate* mt = nullptr;
-        foreach (auto templ, m_templates)
-            if (templ->uid() == m_metodics.at(metIdx).templateId)
-            {
-                mt = templ;
-                break;
-            }
-
-        if (mt)
+        auto mi = getMetodicIndexByUid(metUid);
+        if (mi > -1)
         {
-            auto met = m_metodics.at(metIdx);
+            auto met = m_metodics.at(mi);
             bool retval = mt->editParams(parent, met.params);
             if (retval)
             {
-                m_metodics.replace(metIdx, met);
+                m_metodics.replace(mi, met);
                 saveMetodics();
             }
             return retval;
+        }
+    }
+    return false;
+}
+
+void MetodicsFactory::execute(QWidget *parent, const QString &metUid) const
+{
+    auto *mt = getMetodicTemplate(metUid);
+    if (mt)
+    {
+        auto mi = getMetodicIndexByUid(metUid);
+        if (mi > -1)
+        {
+            mt->execute(parent, m_metodics.at(mi).params);
         }
     }
 }
@@ -80,6 +87,7 @@ void MetodicsFactory::assignMetodics()
                     DataDefines::appDataPath() + "metodics.json");
 
     QFile fMet(DataDefines::appDataPath() + "metodics.json");
+    fMet.setPermissions((((fMet.permissions() |= QFile::WriteOwner) |= QFile::WriteUser) |= QFile::WriteGroup) |= QFile::WriteOther);
     if (fMet.open(QIODevice::ReadOnly | QIODevice::Text))
     {
         QByteArray ba = fMet.readAll();
@@ -98,8 +106,6 @@ void MetodicsFactory::assignMetodics()
 
             m_metodics << mi;
         }
-
-        fMet.close();
     }
 }
 
@@ -124,7 +130,6 @@ void MetodicsFactory::saveMetodics()
         QJsonDocument doc(root);
         QByteArray ba = doc.toJson();
         fMet.write(ba);
-        fMet.close();
         }
 }
 
@@ -134,5 +139,17 @@ int MetodicsFactory::getMetodicIndexByUid(const QString &uid) const
         if (m_metodics.at(i).uid == uid)
             return i;
     return -1;
+}
+
+MetodicTemplate *MetodicsFactory::getMetodicTemplate(const QString &metUid) const
+{
+    int metIdx = getMetodicIndexByUid(metUid);
+    if (metIdx > -1)
+    {
+        foreach (auto templ, m_templates)
+            if (templ->uid() == m_metodics.at(metIdx).templateId)
+                return templ;
+    }
+    return nullptr;
 }
 

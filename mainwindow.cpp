@@ -27,6 +27,14 @@ void MainWindow::showClientPage(const QString &uidPage)
         wgt->setVisible(static_cast<ClientWidget*>(wgt)->uid() == uidPage);
 }
 
+QWidget *MainWindow::getExecuteWidget()
+{
+    foreach (auto *wgt, m_clientWidgets)
+        if (static_cast<ClientWidget*>(wgt)->uid() == ClientWidgets::uidExecuteWidgetUid)
+            return wgt;
+    return nullptr;
+}
+
 void MainWindow::onDbConnected()
 {
     foreach (auto wgt, m_clientWidgets)
