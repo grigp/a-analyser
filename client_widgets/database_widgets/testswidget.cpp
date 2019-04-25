@@ -2,6 +2,7 @@
 #include "ui_testswidget.h"
 
 #include <QApplication>
+#include <QFile>
 #include "aanalyserapplication.h"
 #include "executewidget.h"
 
@@ -21,3 +22,4 @@ void TestsWidget::runTest()
 {
     static_cast<AAnalyserApplication*>(QApplication::instance())->executeMetodic();
 }
+

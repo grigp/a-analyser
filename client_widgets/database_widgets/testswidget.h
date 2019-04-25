@@ -23,6 +23,7 @@ private slots:
 
 private:
     Ui::TestsWidget *ui;
+
 };
 
 #endif // TESTSWIDGET_H

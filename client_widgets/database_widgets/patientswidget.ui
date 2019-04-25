@@ -27,7 +27,7 @@
     <number>1</number>
    </property>
    <item>
-    <widget class="QFrame" name="frame">
+    <widget class="QFrame" name="frTitle">
      <property name="frameShape">
       <enum>QFrame::StyledPanel</enum>
      </property>

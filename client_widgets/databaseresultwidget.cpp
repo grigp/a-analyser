@@ -17,6 +17,7 @@ DataBaseResultWidget::DataBaseResultWidget(QWidget *parent) :
     QPixmap p(":/images/WallPaper.png");
     m_pmp->setScaledPixmap(p);
     ui->lblNoTest->setVisible(false);
+
 }
 
 DataBaseResultWidget::~DataBaseResultWidget()

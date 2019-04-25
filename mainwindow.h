@@ -34,6 +34,8 @@ public slots:
 private:
     Ui::MainWindow *ui;
 
+    void initUi();
+
     /*!
      * \brief Создает клиентские виджеты и размещает их на главном окне
      */

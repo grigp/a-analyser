@@ -5,6 +5,7 @@
 #include "executewidget.h"
 #include "clientwidget.h"
 
+#include <QFile>
 #include <QDebug>
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -14,6 +15,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     setWindowIcon(QIcon(":/images/MainIcon1.png"));
     createClientWidgets();
+
+    initUi();
 }
 
 MainWindow::~MainWindow()
@@ -45,6 +48,14 @@ void MainWindow::obDBDisconnected()
 {
     foreach (auto wgt, m_clientWidgets)
         static_cast<ClientWidget*>(wgt)->onDBDisconnect();
+}
+
+void MainWindow::initUi()
+{
+    QFile style( ":/qss/main.qss" );
+    style.open( QFile::ReadOnly );
+    QString stlDetail(style.readAll() );
+    setStyleSheet(stlDetail);
 }
 
 void MainWindow::createClientWidgets()

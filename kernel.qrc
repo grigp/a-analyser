@@ -14,5 +14,6 @@
         <file>images/down.png</file>
         <file>images/up.png</file>
         <file>images/WallPaper.png</file>
+        <file>qss/main.qss</file>
     </qresource>
 </RCC>
