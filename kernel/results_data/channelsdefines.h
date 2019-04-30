@@ -1,6 +1,7 @@
 #ifndef CHANNELSDEFINES_H
 #define CHANNELSDEFINES_H
 
+#include <QObject>
 #include <QString>
 
 namespace ChannelsDefines
@@ -34,6 +35,7 @@ struct ChannelInfo
         , type(std::get<2>(params))
     {}
 };
+
 
 }
 

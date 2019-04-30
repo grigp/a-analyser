@@ -5,7 +5,11 @@
 #include "metodicsmodel.h"
 #include "aanalyserapplication.h"
 
+#include "channelsdefines.h"
+#include "channelsutils.h"
+
 #include <QApplication>
+#include <QDebug>
 
 MethodsWidget::MethodsWidget(QWidget *parent) :
     QWidget(parent),
@@ -55,6 +59,7 @@ void MethodsWidget::selectMetodic(const QModelIndex index)
 
 void MethodsWidget::editMetodParams()
 {
+    qDebug() << "---" << ChannelsUtils::instance().channelName(ChannelsDefines::chanZ);
     QModelIndexList selIdxs = ui->tvMetods->selectionModel()->selectedIndexes();
     if (m_model && selIdxs.size() > 0)
         m_model->editMetodicParams(this, selIdxs.at(0).row());

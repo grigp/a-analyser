@@ -23,6 +23,8 @@ public:
 private slots:
     void showDataBase();
 
+    void signalTest();
+
 
 private:
     Ui::StabTestExecute *ui;
