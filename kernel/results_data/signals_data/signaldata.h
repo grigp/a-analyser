@@ -40,6 +40,19 @@ public:
      * \return значение сигнала п заданным номеру записи и номеру подканала
      */
     virtual double value(const int subChan, const int rec) const = 0;
+
+    /*!
+     * \brief Виртуальная функция, читает данные из массива байт
+     * \param data - данные в виде массива байт
+     */
+    virtual void fromByteArray(const QByteArray &data) = 0;
+
+    /*!
+     * \brief Виртуальная функция, записывает данные в массив байт
+     * \param data - массив, в которые будут записаны данные
+     */
+    virtual void toByteArray(QByteArray &data) const = 0;
+
 };
 
 #endif // SIGNALDATA_H

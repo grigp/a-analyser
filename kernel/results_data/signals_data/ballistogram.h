@@ -58,13 +58,13 @@ public:
      * \brief Читает данные из массива байт и заполняет буфер m_data
      * \param data - данные в виде массива байт
      */
-    void fromByteArray(const QByteArray &data);
+    void fromByteArray(const QByteArray &data) override;
 
     /*!
      * \brief Записывает данные из m_data в массив байт
      * \param data - массив, в которые будут записаны данные
      */
-    void toByteArray(QByteArray &data) const;
+    void toByteArray(QByteArray &data) const override;
 
 private:
     QString m_channelId;
