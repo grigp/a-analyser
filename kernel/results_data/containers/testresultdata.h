@@ -28,10 +28,10 @@ public:
     /*!
      * \brief Начинает проведение нового теста.
      * Если mode == undefined, то устанавливает mode в run иначе сбой
-     * \param patient - ФИО пациента
-     * \param metodicName - название методики
+     * \param patient - uid пациента
+     * \param metodicName - uid методики
      */
-    void newTest(const QString &patient, const QString &metodicName);
+    void newTest(const QString &patientUid, const QString &metodicUid);
 
     /*!
      * \brief Начинает новую пробу, начиная со второй. Первая начинается по newTest()
@@ -85,8 +85,8 @@ private:
    Mode m_mode;
 
    QString m_uid;
-   QString m_patient;
-   QString m_metodicName;
+   QString m_patientUid;
+   QString m_metodicUid;
    QDateTime m_dt;
 
    QList<ProbeResultData*>  m_probes;

@@ -47,3 +47,18 @@ void DataProvider::execute(QWidget *parent, const QString &metUid)
 {
     return static_cast<AAnalyserApplication*>(QApplication::instance())->getMetodics()->execute(parent, metUid);
 }
+
+QString DataProvider::addTest(const QString &patientUid, const QString &metodUid)
+{
+    return static_cast<AAnalyserApplication*>(QApplication::instance())->getDB()->addTest(patientUid, metodUid);
+}
+
+QString DataProvider::addProbe(const QString &testUid)
+{
+    return static_cast<AAnalyserApplication*>(QApplication::instance())->getDB()->addProbe(testUid);
+}
+
+void DataProvider::addSignal(const QString &probeUid, const QString &channelUid, const QByteArray &data)
+{
+    static_cast<AAnalyserApplication*>(QApplication::instance())->getDB()->addSignal(probeUid, channelUid, data);
+}

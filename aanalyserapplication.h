@@ -1,6 +1,9 @@
 #ifndef AANALYSERAPPLICATION_H
 #define AANALYSERAPPLICATION_H
 
+#include "datadefines.h"
+#include "metodicdefines.h"
+
 #include <QMainWindow>
 #include <QObject>
 #include <QApplication>
@@ -30,6 +33,16 @@ public:
      * Вызывать продедуры из namespace DataProvider!
      */
     DataBase* getDB();
+
+    /*!
+     * \brief Возвращает карточку выбранного пациента
+     */
+    DataDefines::PatientKard getSelectedPatient() const;
+
+    /*!
+     * \brief Возвращает данные о выбранной методике
+     */
+    MetodicDefines::MetodicInfo getSelectedMetodic() const;
 
     /*!
      * \brief Возвращает указатель на список методик

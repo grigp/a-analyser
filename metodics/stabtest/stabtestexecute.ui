@@ -13,30 +13,87 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <layout class="QHBoxLayout" name="horizontalLayout">
+  <layout class="QVBoxLayout" name="verticalLayout_3">
+   <property name="spacing">
+    <number>1</number>
+   </property>
+   <property name="leftMargin">
+    <number>1</number>
+   </property>
+   <property name="topMargin">
+    <number>1</number>
+   </property>
+   <property name="rightMargin">
+    <number>1</number>
+   </property>
+   <property name="bottomMargin">
+    <number>1</number>
+   </property>
    <item>
-    <widget class="QFrame" name="frSKG">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-       <horstretch>4</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="frameShape">
-      <enum>QFrame::Panel</enum>
-     </property>
-     <property name="frameShadow">
-      <enum>QFrame::Sunken</enum>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QFrame" name="frControl">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-       <horstretch>1</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
+    <widget class="QFrame" name="frMain">
+     <property name="palette">
+      <palette>
+       <active>
+        <colorrole role="BrightText">
+         <brush brushstyle="SolidPattern">
+          <color alpha="255">
+           <red>0</red>
+           <green>0</green>
+           <blue>0</blue>
+          </color>
+         </brush>
+        </colorrole>
+        <colorrole role="HighlightedText">
+         <brush brushstyle="SolidPattern">
+          <color alpha="255">
+           <red>2</red>
+           <green>2</green>
+           <blue>2</blue>
+          </color>
+         </brush>
+        </colorrole>
+       </active>
+       <inactive>
+        <colorrole role="BrightText">
+         <brush brushstyle="SolidPattern">
+          <color alpha="255">
+           <red>0</red>
+           <green>0</green>
+           <blue>0</blue>
+          </color>
+         </brush>
+        </colorrole>
+        <colorrole role="HighlightedText">
+         <brush brushstyle="SolidPattern">
+          <color alpha="255">
+           <red>2</red>
+           <green>2</green>
+           <blue>2</blue>
+          </color>
+         </brush>
+        </colorrole>
+       </inactive>
+       <disabled>
+        <colorrole role="BrightText">
+         <brush brushstyle="SolidPattern">
+          <color alpha="255">
+           <red>0</red>
+           <green>0</green>
+           <blue>0</blue>
+          </color>
+         </brush>
+        </colorrole>
+        <colorrole role="HighlightedText">
+         <brush brushstyle="SolidPattern">
+          <color alpha="255">
+           <red>2</red>
+           <green>2</green>
+           <blue>2</blue>
+          </color>
+         </brush>
+        </colorrole>
+       </disabled>
+      </palette>
      </property>
      <property name="frameShape">
       <enum>QFrame::StyledPanel</enum>
@@ -44,47 +101,196 @@
      <property name="frameShadow">
       <enum>QFrame::Raised</enum>
      </property>
-     <layout class="QVBoxLayout" name="verticalLayout">
+     <layout class="QVBoxLayout" name="verticalLayout_2">
+      <property name="spacing">
+       <number>1</number>
+      </property>
+      <property name="leftMargin">
+       <number>1</number>
+      </property>
+      <property name="topMargin">
+       <number>1</number>
+      </property>
+      <property name="rightMargin">
+       <number>1</number>
+      </property>
+      <property name="bottomMargin">
+       <number>1</number>
+      </property>
       <item>
-       <widget class="QPushButton" name="pushButton">
+       <widget class="QLabel" name="lblProbeTitle">
+        <property name="font">
+         <font>
+          <pointsize>10</pointsize>
+         </font>
+        </property>
         <property name="text">
-         <string>PushButton</string>
+         <string>Стабилографический тест</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="pushButton_2">
-        <property name="text">
-         <string>PushButton</string>
+       <widget class="QFrame" name="frClient">
+        <property name="frameShape">
+         <enum>QFrame::StyledPanel</enum>
         </property>
+        <property name="frameShadow">
+         <enum>QFrame::Raised</enum>
+        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout">
+         <item>
+          <widget class="QFrame" name="frSKG">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+             <horstretch>4</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="frameShape">
+            <enum>QFrame::Panel</enum>
+           </property>
+           <property name="frameShadow">
+            <enum>QFrame::Sunken</enum>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QFrame" name="frControl">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+             <horstretch>1</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="frameShape">
+            <enum>QFrame::StyledPanel</enum>
+           </property>
+           <property name="frameShadow">
+            <enum>QFrame::Raised</enum>
+           </property>
+           <layout class="QVBoxLayout" name="verticalLayout">
+            <item>
+             <widget class="QPushButton" name="pushButton">
+              <property name="text">
+               <string>PushButton</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="pushButton_2">
+              <property name="text">
+               <string>PushButton</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="pushButton_3">
+              <property name="text">
+               <string>PushButton</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="verticalSpacer_2">
+              <property name="orientation">
+               <enum>Qt::Vertical</enum>
+              </property>
+              <property name="sizeType">
+               <enum>QSizePolicy::Fixed</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>20</width>
+                <height>10</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
+             <widget class="QPushButton" name="btnRecord">
+              <property name="text">
+               <string>Запись</string>
+              </property>
+              <property name="icon">
+               <iconset resource="../../kernel.qrc">
+                <normaloff>:/images/Save.png</normaloff>:/images/Save.png</iconset>
+              </property>
+              <property name="iconSize">
+               <size>
+                <width>22</width>
+                <height>22</height>
+               </size>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="lblRecLenTitle">
+              <property name="text">
+               <string>Длительность записи</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="lblRecLen">
+              <property name="font">
+               <font>
+                <family>MS Shell Dlg 2</family>
+                <pointsize>14</pointsize>
+                <weight>75</weight>
+                <bold>true</bold>
+               </font>
+              </property>
+              <property name="text">
+               <string>00:00</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QProgressBar" name="pbRec">
+              <property name="value">
+               <number>0</number>
+              </property>
+              <property name="textVisible">
+               <bool>false</bool>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="verticalSpacer">
+              <property name="orientation">
+               <enum>Qt::Vertical</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>20</width>
+                <height>40</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
+          </widget>
+         </item>
+        </layout>
        </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="pushButton_3">
-        <property name="text">
-         <string>PushButton</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <spacer name="verticalSpacer">
-        <property name="orientation">
-         <enum>Qt::Vertical</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>20</width>
-          <height>40</height>
-         </size>
-        </property>
-       </spacer>
       </item>
      </layout>
     </widget>
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="../../kernel.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>pushButton</sender>
@@ -93,12 +299,12 @@
    <slot>showDataBase()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>591</x>
-     <y>34</y>
+     <x>648</x>
+     <y>54</y>
     </hint>
     <hint type="destinationlabel">
-     <x>706</x>
-     <y>63</y>
+     <x>700</x>
+     <y>48</y>
     </hint>
    </hints>
   </connection>
@@ -109,12 +315,28 @@
    <slot>signalTest()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>610</x>
-     <y>68</y>
+     <x>631</x>
+     <y>78</y>
     </hint>
     <hint type="destinationlabel">
-     <x>704</x>
-     <y>125</y>
+     <x>701</x>
+     <y>90</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btnRecord</sender>
+   <signal>clicked()</signal>
+   <receiver>StabTestExecute</receiver>
+   <slot>recording()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>609</x>
+     <y>143</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>700</x>
+     <y>156</y>
     </hint>
    </hints>
   </connection>
@@ -122,5 +344,6 @@
  <slots>
   <slot>showDataBase()</slot>
   <slot>signalTest()</slot>
+  <slot>recording()</slot>
  </slots>
 </ui>

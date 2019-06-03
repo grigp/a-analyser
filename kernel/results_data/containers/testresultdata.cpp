@@ -7,22 +7,20 @@
 
 TestResultData::TestResultData()
 {
-
+    m_mode = mdUndefined;
 }
 
-void TestResultData::newTest(const QString &patient, const QString &metodicName)
+void TestResultData::newTest(const QString &patientUid, const QString &metodicUid)
 {
     Q_ASSERT(m_mode == mdUndefined);
     m_mode = mdRun;
 
     m_uid = QUuid::createUuid().toString();
-    m_patient = patient;
-    m_metodicName = metodicName;
+    m_patientUid = patientUid;
+    m_metodicUid = metodicUid;
     m_dt = QDateTime::currentDateTime();
 
     m_probes.clear();
-
-    newProbe(""); //todo: название первой пробы
 }
 
 void TestResultData::newProbe(const QString &probeName)

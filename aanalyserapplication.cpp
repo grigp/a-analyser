@@ -52,6 +52,21 @@ DataBase *AAnalyserApplication::getDB()
     return m_database;
 }
 
+DataDefines::PatientKard AAnalyserApplication::getSelectedPatient() const
+{
+    DataDefines::PatientKard kard;
+    if (m_patientUid != "" && m_database)
+        m_database->getPatient(m_patientUid, kard);
+    return kard;
+}
+
+MetodicDefines::MetodicInfo AAnalyserApplication::getSelectedMetodic() const
+{
+    if (m_metodics && m_metodicUid != "")
+        return m_metodics->metodic(m_metodicUid);
+    return MetodicDefines::MetodicInfo();
+}
+
 MetodicsFactory *AAnalyserApplication::getMetodics()
 {
     return m_metodics;

@@ -4,7 +4,8 @@ HEADERS += \
     $$PWD/stabtesttemplate.h \
     $$PWD/stabtestexecute.h \
     $$PWD/stabtestvisualize.h \
-    $$PWD/stabtestparamsdialog.h
+    $$PWD/stabtestparamsdialog.h \
+    $$PWD/stabtestparams.h
 
 SOURCES += \
     $$PWD/stabtesttemplate.cpp \

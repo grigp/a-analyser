@@ -29,6 +29,12 @@ public:
     MetodicDefines::MetodicInfo metodic(const int i) const;
 
     /*!
+     * \brief Возвращает методику по uid
+     * \param metUid - uid методики
+     */
+    MetodicDefines::MetodicInfo metodic(const QString &metUid) const;
+
+    /*!
      * \brief Вызывает диалог редактирования параметров методики по uid методики
      * \param parent - родительский виджет для вызываемого диалогового окна
      * \param metUid - uid методики

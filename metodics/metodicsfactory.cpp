@@ -35,6 +35,12 @@ MetodicDefines::MetodicInfo MetodicsFactory::metodic(const int i) const
     return retval;
 }
 
+MetodicDefines::MetodicInfo MetodicsFactory::metodic(const QString &metUid) const
+{
+    auto mi = getMetodicIndexByUid(metUid);
+    return metodic(mi);
+}
+
 bool MetodicsFactory::editMetodicParams(QWidget *parent, const QString &metUid)
 {
     auto *mt = getMetodicTemplate(metUid);

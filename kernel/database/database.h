@@ -16,6 +16,9 @@ public:
     explicit DataBase(QObject *parent = nullptr);
     ~DataBase();
 
+    //!-----------------------------------------------------------------------
+    //! Пациенты
+
     /*!
      * \brief Возвращает список пациентов в виде списка строк, содержащих UID-ы
      */
@@ -27,7 +30,7 @@ public:
      * \param patient - возвращаемая карточка пациента
      * \return true, если пациент найден или false, если нет
      */
-    bool getPatient(const QString &uid, DataDefines::PatientKard &patient);
+    bool getPatient(const QString &uid, DataDefines::PatientKard &patient) const;
 
     /*!
      * \brief Обновляет данные о пациенте.
@@ -42,6 +45,32 @@ public:
      * \param uid - uid пациента
      */
     void removePatient(const QString &uid);
+
+    //!-----------------------------------------------------------------------
+    //! Сохранение теста
+
+    /*!
+     * \brief Добавляет запись о тесте
+     * \param patientUid - uid пациента
+     * \param metodUid - uid методики
+     * \return uid созданного теста
+     */
+    QString addTest(const QString &patientUid, const QString &metodUid);
+
+    /*!
+     * \brief Добавляет запись о пробе
+     * \param testUid - uid теста
+     * \return uid пробы
+     */
+    QString addProbe(const QString &testUid);
+
+    /*!
+     * \brief Добавляет сигнал
+     * \param probeUid - uid пробы
+     * \param channelUid - uid канала
+     * \param data - Данные сигнала
+     */
+    void addSignal(const QString &probeUid, const QString &channelUid, const QByteArray &data);
 
 signals:
     /*!
@@ -62,7 +91,8 @@ private:
 
     void createPatientRec(const DataDefines::PatientKard patient);
 
-    bool readPatientRec(const QString &fullFileName, DataDefines::PatientKard &patient);
+    bool readPatientRec(const QString &fullFileName, QJsonObject &patient) const;
+    bool writePatientRec(const QString &fullFileName, QJsonObject &patient) const;
 
     void updatePatientRec(const DataDefines::PatientKard &patient);
 

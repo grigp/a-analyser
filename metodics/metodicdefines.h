@@ -23,6 +23,13 @@ namespace MetodicDefines
         QString name;           ///< Название
         QString templateId;     ///< id шаблона методики
         QJsonObject params;     ///< Параметры
+        MetodicInfo()
+        {
+            uid = "";
+            name = "";
+            templateId = "";
+            params = QJsonObject();
+        }
     };
 
 }

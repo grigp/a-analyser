@@ -15,5 +15,8 @@
         <file>images/up.png</file>
         <file>images/WallPaper.png</file>
         <file>qss/main.qss</file>
+        <file>images/Save.png</file>
+        <file>images/SaveNO.png</file>
+        <file>images/SaveOK.png</file>
     </qresource>
 </RCC>

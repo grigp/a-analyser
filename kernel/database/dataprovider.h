@@ -66,6 +66,31 @@ void execute(QWidget *parent, const QString &metUid);
 
 //! ---------------- Тесты -------------------
 
+//! Сохранение теста
+
+/*!
+ * \brief Добавляет запись о тесте
+ * \param patientUid - uid пациента
+ * \param metodUid - uid методики
+ * \return uid созданного теста
+ */
+QString addTest(const QString &patientUid, const QString &metodUid);
+
+/*!
+ * \brief Добавляет запись о пробе
+ * \param testUid - uid теста
+ * \return uid пробы
+ */
+QString addProbe(const QString &testUid);
+
+/*!
+ * \brief Добавляет сигнал
+ * \param probeUid - uid пробы
+ * \param channelUid - uid канала
+ * \param data - Данные сигнала
+ */
+void addSignal(const QString &probeUid, const QString &channelUid, const QByteArray &data);
+
 
 }
 

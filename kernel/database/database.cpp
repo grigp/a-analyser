@@ -34,16 +34,19 @@ QStringList DataBase::getPatients()
     return retval;
 }
 
-bool DataBase::getPatient(const QString &uid, DataDefines::PatientKard &patient)
+bool DataBase::getPatient(const QString &uid, DataDefines::PatientKard &patient) const
 {
-    DataDefines::PatientKard kard;
     QDir dir = patientsDir();
-    readPatientRec(dir.absoluteFilePath(uid), kard);
-
-    patient.uid = uid;
-    patient.fio = kard.fio;
-    patient.born = kard.born;
-    patient.sex = kard.sex;
+    QJsonObject patObj;
+    if (readPatientRec(dir.absoluteFilePath(uid), patObj))
+    {
+        patient.uid = uid;
+        patient.fio = patObj["fio"].toString();
+        patient.born = QDate::fromString(patObj["born"].toString(), "dd.MM.yyyy");
+        patient.sex = static_cast<DataDefines::Sex>(patObj["sex"].toInt());
+        return true;
+    }
+    return false;
 }
 
 void DataBase::updatePatient(const DataDefines::PatientKard &patient)
@@ -62,6 +65,35 @@ void DataBase::removePatient(const QString &uid)
         QFile fPatientRec(dir.absoluteFilePath(uid));
         fPatientRec.remove();
     }
+}
+
+QString DataBase::addTest(const QString &patientUid, const QString &metodUid)
+{
+    //! uid нового теста
+    auto testUid = QUuid::createUuid().toString();
+
+    QDir dir = patientsDir();
+    QJsonObject patObj;
+    if (readPatientRec(dir.absoluteFilePath(patientUid), patObj))
+    {
+        QJsonObject test;
+        test["uid"] = testUid;
+        QJsonArray tests = patObj["tests"].toArray();
+        tests.append(test);
+        patObj["tests"] = tests;
+
+        writePatientRec(dir.absoluteFilePath(patientUid), patObj);
+    }
+}
+
+QString DataBase::addProbe(const QString &testUid)
+{
+
+}
+
+void DataBase::addSignal(const QString &probeUid, const QString &channelUid, const QByteArray &data)
+{
+
 }
 
 QString DataBase::currentDataBase() const
@@ -99,20 +131,31 @@ void DataBase::createPatientRec(const DataDefines::PatientKard patient)
     }
 }
 
-bool DataBase::readPatientRec(const QString &fullFileName, DataDefines::PatientKard &patient)
+bool DataBase::readPatientRec(const QString &fullFileName, QJsonObject &patient) const
 {
     QFile fPatient(fullFileName);
     if (fPatient.open(QIODevice::ReadOnly | QIODevice::Text))
     {
         QByteArray ba = fPatient.readAll();
         QJsonDocument loadDoc(QJsonDocument::fromJson(ba));
-        QJsonObject root = loadDoc.object();
-
-        patient.fio = root["fio"].toString();
-        patient.born = QDate::fromString(root["born"].toString(), "dd.MM.yyyy");
-        patient.sex = static_cast<DataDefines::Sex>(root["sex"].toInt());
-
+        patient = loadDoc.object();
         fPatient.close();
+        return true;
+    }
+    return false;
+}
+
+bool DataBase::writePatientRec(const QString &fullFileName, QJsonObject &patient) const
+{
+    QFile fPatientRec(fullFileName);
+    fPatientRec.remove();
+    if (fPatientRec.open(QIODevice::WriteOnly | QIODevice::Text))
+    {
+        QJsonDocument doc(patient);
+        QByteArray ba = doc.toJson();
+        fPatientRec.write(ba);
+
+        fPatientRec.close();
     }
 }
 

@@ -1,28 +1,16 @@
 #include "stabtestparamsdialog.h"
 #include "ui_stabtestparamsdialog.h"
 
+#include "stabtestparams.h"
+
 #include <QJsonArray>
 #include <QMessageBox>
 #include <QDebug>
 
 namespace
 {
-/*!
- * \brief Параметры пробы в тесте ProbeParams struct
- */
-struct ProbeParams
-{
-    QString name;          ///< Название пробы
-    bool autoEnd;          ///< Автоматическое завершение
-    int time;              ///< Длительность
-    int latentTime;        ///< Задержка привыкания
-    int stimulCode;        ///< Код видеостимуляции 0 - нет, 1 - цветные круги, 2 - звуковые сигналы, 3 - мишень
-    bool zeroingEnabled;   ///< Разрешена ли центровка
-    int scale;             ///< Номер масштаба 0 - 1, 1 - 2, 2 - 4, 3 - 8, 4 - 16, 5 - 32, 6 - 64, 7 -128
-    ProbeParams() {}
-};
 
-QList<ProbeParams> metParams;  ///< Параметры методики
+QList<StabTestParams::ProbeParams> metParams;  ///< Параметры методики
 
 }
 
@@ -63,7 +51,7 @@ void StabTestParamsDialog::setParams(const QJsonObject &params)
     for (int i = 0; i < prbsArr.size(); ++i)
     {
         auto obj = prbsArr[i].toObject();
-        ProbeParams pp;
+        StabTestParams::ProbeParams pp;
 
         pp.name = obj["name"].toString();
         pp.autoEnd = obj["autoend"].toInt() == 1;
@@ -134,7 +122,7 @@ void StabTestParamsDialog::selectProbe(const QModelIndex index)
 
 void StabTestParamsDialog::addProbe()
 {
-    ProbeParams pp;
+    StabTestParams::ProbeParams pp;
 
     pp.name = "Новая проба";
     pp.autoEnd = false;
