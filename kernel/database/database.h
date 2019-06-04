@@ -22,7 +22,7 @@ public:
     /*!
      * \brief Возвращает список пациентов в виде списка строк, содержащих UID-ы
      */
-    QStringList getPatients();
+    QStringList getPatients() const;
 
     /*!
      * \brief Возвращает запись карточку пациента по идентификатору пациента
@@ -60,9 +60,10 @@ public:
     /*!
      * \brief Добавляет запись о пробе
      * \param testUid - uid теста
+     * \param step - номер шага
      * \return uid пробы
      */
-    QString addProbe(const QString &testUid);
+    QString addProbe(const QString &testUid, const int step);
 
     /*!
      * \brief Добавляет сигнал
@@ -71,6 +72,24 @@ public:
      * \param data - Данные сигнала
      */
     void addSignal(const QString &probeUid, const QString &channelUid, const QByteArray &data);
+
+
+    //!-----------------------------------------------------------------------
+    //! Работа с тестами
+
+    /*!
+     * \brief Возвращает список тестов в виде списка строк, содержащих UID-ы
+     */
+    QStringList getTests() const;
+
+    /*!
+     * \brief Возвращает запись о тесте по uid
+     * \param testUid - uid теста
+     * \param ti - структура данных с возвращаемым тестом
+     * \return true, если удачно
+     */
+    bool getTest(const QString &testUid, DataDefines::TestInfo &ti) const;
+
 
 signals:
     /*!
@@ -88,11 +107,30 @@ public slots:
 private:
     QString currentDataBase() const;
     QDir patientsDir() const;
+    QDir testsDir() const;
+    QDir probesDir() const;
+    QDir signalsDir() const;
+    QDir localDir(const QString &dirName) const;
 
     void createPatientRec(const DataDefines::PatientKard patient);
 
-    bool readPatientRec(const QString &fullFileName, QJsonObject &patient) const;
-    bool writePatientRec(const QString &fullFileName, QJsonObject &patient) const;
+    /*!
+     * \brief Читает запись из файла, как запись в таблице в виде QJsonObject
+     * \param fullFileName - имя файла
+     * \param rec - прочитанная запись
+     * \return - true, если успешно и false, если нет
+     */
+    bool readTableRec(const QString &fullFileName, QJsonObject &rec) const;
+    /*!
+     * \brief записывает запись в файл.
+     * \param fullFileName - имя файла
+     * \param rec - записываемая запись
+     * \return - true, если успешно и false, если нет
+     */
+    bool writeTableRec(const QString &fullFileName, const QJsonObject &rec) const;
+
+    bool readTestRec(const QString &fullFileName, QJsonObject &test) const;
+    bool writeTestRec(const QString &fullFileName, const QJsonObject &test) const;
 
     void updatePatientRec(const DataDefines::PatientKard &patient);
 

@@ -1,5 +1,7 @@
 #include "proberesultdata.h"
 
+#include "dataprovider.h"
+
 ProbeResultData::ProbeResultData(const QString &testUid, const QString &uid, const QString &name)
     : m_testUid(testUid)
     , m_uid(uid)
@@ -8,13 +10,16 @@ ProbeResultData::ProbeResultData(const QString &testUid, const QString &uid, con
 
 }
 
-void ProbeResultData::saveProbe()
+void ProbeResultData::saveProbe(const QString &testUid, const int step)
 {
+    auto probeUid = DataProvider::addProbe(testUid, step);
+
     foreach (auto* signal, m_signals)
     {
-        QByteArray ba;
-        signal->toByteArray(ba);
-        //todo: массив байт сохранить в БД
+        QByteArray data;
+        signal->toByteArray(data);
+
+        DataProvider::addSignal(probeUid, signal->channelId(), data);
 
         delete signal;
     }

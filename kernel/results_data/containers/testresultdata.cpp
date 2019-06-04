@@ -2,8 +2,10 @@
 
 #include "proberesultdata.h"
 #include "resultinfo.h"
+#include "dataprovider.h"
 
 #include <QUuid>
+#include <QDebug>
 
 TestResultData::TestResultData()
 {
@@ -35,10 +37,14 @@ void TestResultData::saveTest()
 {
     Q_ASSERT(m_mode == mdRun);
 
+    auto testUid = DataProvider::addTest(m_patientUid, m_metodicUid);
+
+    int n = 0;
     foreach (auto* probe, m_probes)
     {
-        probe->saveProbe();
+        probe->saveProbe(testUid, n);
         delete probe;
+        ++n;
     }
     m_probes.clear();
 

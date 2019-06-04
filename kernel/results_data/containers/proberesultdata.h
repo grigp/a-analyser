@@ -17,7 +17,7 @@ public:
     /*!
      * \brief Сохраняет пробу в БД
      */
-    void saveProbe();
+    void saveProbe(const QString &testUid, const int step);
 
     /*!
      * \brief очищает данные пробы

@@ -39,6 +39,7 @@ void DataBaseResultWidget::onDBConnect()
 {
     ui->wgtPatients->onDbConnect();
     ui->wgtMetods->onDbConnect();
+    ui->wgtTests->onDbConnect();
 }
 
 void DataBaseResultWidget::onDBDisconnect()

@@ -79,9 +79,10 @@ QString addTest(const QString &patientUid, const QString &metodUid);
 /*!
  * \brief Добавляет запись о пробе
  * \param testUid - uid теста
+ * \param step - номер шага
  * \return uid пробы
  */
-QString addProbe(const QString &testUid);
+QString addProbe(const QString &testUid, const int step);
 
 /*!
  * \brief Добавляет сигнал
@@ -91,6 +92,21 @@ QString addProbe(const QString &testUid);
  */
 void addSignal(const QString &probeUid, const QString &channelUid, const QByteArray &data);
 
+
+//! Работа с тестами
+
+/*!
+ * \brief Возвращает список тестов в виде списка строк, содержащих UID-ы
+ */
+QStringList getTests();
+
+/*!
+ * \brief Возвращает запись о тесте по uid
+ * \param testUid - uid теста
+ * \param ti - структура данных с возвращаемым тестом
+ * \return true, если удачно
+ */
+bool getTest(const QString &testUid, DataDefines::TestInfo &ti);
 
 }
 

@@ -40,6 +40,19 @@ struct PatientKard
 };
 
 /*!
+ * \brief Структура информации о тесте TestInfo struct
+ */
+struct TestInfo
+{
+    QString uid;              ///< uid теста
+    QString patientUid;       ///< uid пациента
+    QString metodUid;         ///< uid методики
+    QDateTime dateTime;       ///< дата и время проведения
+    QStringList probes;       ///< список проб
+    TestInfo() {}
+};
+
+/*!
  * \brief возвращает путь к папке данных приложения
  */
 static QString appDataPath()

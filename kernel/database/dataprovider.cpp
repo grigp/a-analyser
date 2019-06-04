@@ -53,12 +53,22 @@ QString DataProvider::addTest(const QString &patientUid, const QString &metodUid
     return static_cast<AAnalyserApplication*>(QApplication::instance())->getDB()->addTest(patientUid, metodUid);
 }
 
-QString DataProvider::addProbe(const QString &testUid)
+QString DataProvider::addProbe(const QString &testUid, const int step)
 {
-    return static_cast<AAnalyserApplication*>(QApplication::instance())->getDB()->addProbe(testUid);
+    return static_cast<AAnalyserApplication*>(QApplication::instance())->getDB()->addProbe(testUid, step);
 }
 
 void DataProvider::addSignal(const QString &probeUid, const QString &channelUid, const QByteArray &data)
 {
     static_cast<AAnalyserApplication*>(QApplication::instance())->getDB()->addSignal(probeUid, channelUid, data);
+}
+
+QStringList DataProvider::getTests()
+{
+    return static_cast<AAnalyserApplication*>(QApplication::instance())->getDB()->getTests();
+}
+
+bool DataProvider::getTest(const QString &testUid, DataDefines::TestInfo &ti)
+{
+    return static_cast<AAnalyserApplication*>(QApplication::instance())->getDB()->getTest(testUid, ti);
 }
