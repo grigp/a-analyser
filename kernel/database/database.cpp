@@ -67,7 +67,7 @@ void DataBase::removePatient(const QString &uid)
     }
 }
 
-QString DataBase::addTest(const QString &patientUid, const QString &metodUid)
+QString DataBase::addTestStart(const QString &patientUid, const QString &metodUid)
 {
     //! uid нового теста
     auto testUid = QUuid::createUuid().toString();
@@ -97,6 +97,12 @@ QString DataBase::addTest(const QString &patientUid, const QString &metodUid)
     }
 
     return QString("");
+}
+
+void DataBase::addTestFinish(const QString &testUid)
+{
+    //! Известим мир
+    emit newTest(testUid);
 }
 
 QString DataBase::addProbe(const QString &testUid, const int step)

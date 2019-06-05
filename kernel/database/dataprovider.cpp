@@ -48,9 +48,14 @@ void DataProvider::execute(QWidget *parent, const QString &metUid)
     return static_cast<AAnalyserApplication*>(QApplication::instance())->getMetodics()->execute(parent, metUid);
 }
 
-QString DataProvider::addTest(const QString &patientUid, const QString &metodUid)
+QString DataProvider::addTestStart(const QString &patientUid, const QString &metodUid)
 {
-    return static_cast<AAnalyserApplication*>(QApplication::instance())->getDB()->addTest(patientUid, metodUid);
+    return static_cast<AAnalyserApplication*>(QApplication::instance())->getDB()->addTestStart(patientUid, metodUid);
+}
+
+void DataProvider::addTestFinish(const QString &testUid)
+{
+    static_cast<AAnalyserApplication*>(QApplication::instance())->getDB()->addTestFinish(testUid);
 }
 
 QString DataProvider::addProbe(const QString &testUid, const int step)
@@ -72,3 +77,4 @@ bool DataProvider::getTest(const QString &testUid, DataDefines::TestInfo &ti)
 {
     return static_cast<AAnalyserApplication*>(QApplication::instance())->getDB()->getTest(testUid, ti);
 }
+

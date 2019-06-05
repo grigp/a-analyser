@@ -37,7 +37,7 @@ void TestResultData::saveTest()
 {
     Q_ASSERT(m_mode == mdRun);
 
-    auto testUid = DataProvider::addTest(m_patientUid, m_metodicUid);
+    auto testUid = DataProvider::addTestStart(m_patientUid, m_metodicUid);
 
     int n = 0;
     foreach (auto* probe, m_probes)
@@ -47,6 +47,8 @@ void TestResultData::saveTest()
         ++n;
     }
     m_probes.clear();
+
+    DataProvider::addTestFinish(testUid);
 
     m_mode = mdUndefined;
 }

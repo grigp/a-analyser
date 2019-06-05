@@ -14,6 +14,9 @@
    <string>Form</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
+   <property name="spacing">
+    <number>1</number>
+   </property>
    <property name="leftMargin">
     <number>1</number>
    </property>
@@ -144,6 +147,19 @@
      </property>
     </widget>
    </item>
+   <item>
+    <widget class="QPushButton" name="btnUnselect">
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>18</height>
+      </size>
+     </property>
+     <property name="text">
+      <string>Снять выделение</string>
+     </property>
+    </widget>
+   </item>
   </layout>
  </widget>
  <resources>
@@ -214,11 +230,28 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>btnUnselect</sender>
+   <signal>clicked()</signal>
+   <receiver>PatientsWidget</receiver>
+   <slot>unselect()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>62</x>
+     <y>482</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>369</x>
+     <y>278</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>addPatient()</slot>
   <slot>editPatient()</slot>
   <slot>removePatient()</slot>
   <slot>selectPatient(QModelIndex)</slot>
+  <slot>unselect()</slot>
  </slots>
 </ui>

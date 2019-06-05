@@ -7,7 +7,8 @@ HEADERS += \
     $$PWD/patientsmodel.h \
     $$PWD/patientkarddialog.h \
     $$PWD/metodicsmodel.h \
-    $$PWD/testsmodel.h
+    $$PWD/testsmodel.h \
+    $$PWD/testproxymodel.h
 
 SOURCES += \
     $$PWD/patientswidget.cpp \
@@ -16,7 +17,8 @@ SOURCES += \
     $$PWD/patientsmodel.cpp \
     $$PWD/patientkarddialog.cpp \
     $$PWD/metodicsmodel.cpp \
-    $$PWD/testsmodel.cpp
+    $$PWD/testsmodel.cpp \
+    $$PWD/testproxymodel.cpp
 
 FORMS += \
     $$PWD/patientswidget.ui \

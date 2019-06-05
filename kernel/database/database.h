@@ -50,12 +50,18 @@ public:
     //! Сохранение теста
 
     /*!
-     * \brief Добавляет запись о тесте
+     * \brief Начинает добавление записи о тесте
      * \param patientUid - uid пациента
      * \param metodUid - uid методики
      * \return uid созданного теста
      */
-    QString addTest(const QString &patientUid, const QString &metodUid);
+    QString addTestStart(const QString &patientUid, const QString &metodUid);
+
+    /*!
+     * \brief Завершает добавление записи о тесте
+     * \param testUid - uid добавленного теста
+     */
+    void addTestFinish(const QString &testUid);
 
     /*!
      * \brief Добавляет запись о пробе
@@ -101,6 +107,12 @@ signals:
      * \brief Извещает об отключении от БД
      */
     void disconnected();
+
+    /*!
+     * \brief Извещает мир о новом тесте
+     * \param testUid - uid нового теста
+     */
+    void newTest(const QString &testUid);
 
 public slots:
 

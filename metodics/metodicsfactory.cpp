@@ -105,7 +105,7 @@ void MetodicsFactory::assignMetodics()
         {
             auto met = mets[i].toObject();
             MetodicDefines::MetodicInfo mi;
-            mi.uid = QUuid::createUuid().toString();
+            mi.uid = met["uid"].toString(); //QUuid::createUuid().toString();
             mi.name = met["name"].toString();
             mi.templateId = met["template"].toString();
             mi.params = met["params"].toObject();
@@ -126,6 +126,7 @@ void MetodicsFactory::saveMetodics()
         foreach (auto met, m_metodics)
         {
             QJsonObject obj;
+            obj["uid"] = met.uid;
             obj["name"] = met.name;
             obj["template"] = met.templateId;
             obj["params"] = met.params;

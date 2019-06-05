@@ -74,7 +74,13 @@ void execute(QWidget *parent, const QString &metUid);
  * \param metodUid - uid методики
  * \return uid созданного теста
  */
-QString addTest(const QString &patientUid, const QString &metodUid);
+QString addTestStart(const QString &patientUid, const QString &metodUid);
+
+/*!
+ * \brief Завершает добавление записи о тесте
+ * \param testUid - uid добавленного теста
+ */
+void addTestFinish(const QString &testUid);
 
 /*!
  * \brief Добавляет запись о пробе

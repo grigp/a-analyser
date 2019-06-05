@@ -7,15 +7,18 @@
 #include "aanalyserapplication.h"
 #include "executewidget.h"
 #include "testsmodel.h"
+#include "testproxymodel.h"
 
 TestsWidget::TestsWidget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::TestsWidget)
   , m_mdlTest(new TestsModel(this))
+  , m_pmdlTest(new TestProxyModel(this))
 {
     ui->setupUi(this);
 
-    ui->tvTests->setModel(m_mdlTest);
+    m_pmdlTest->setSourceModel(m_mdlTest);
+    ui->tvTests->setModel(m_pmdlTest);
 }
 
 TestsWidget::~TestsWidget()

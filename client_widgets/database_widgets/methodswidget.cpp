@@ -53,7 +53,7 @@ void MethodsWidget::selectMetodic(const QModelIndex index)
     {
         auto uid = m_model->index(index.row(), MetodicsModel::ColName, index.parent()).
                 data(MetodicsModel::MetodicUidRole).toString();
-        static_cast<AAnalyserApplication*>(QApplication::instance())->selectMetodic(uid);
+        static_cast<AAnalyserApplication*>(QApplication::instance())->doSelectMetodic(uid);
     }
 }
 
@@ -62,4 +62,10 @@ void MethodsWidget::editMetodParams()
     QModelIndexList selIdxs = ui->tvMetods->selectionModel()->selectedIndexes();
     if (m_model && selIdxs.size() > 0)
         m_model->editMetodicParams(this, selIdxs.at(0).row());
+}
+
+void MethodsWidget::unselect()
+{
+    ui->tvMetods->selectionModel()->clear();
+    static_cast<AAnalyserApplication*>(QApplication::instance())->doSelectMetodic("");
 }

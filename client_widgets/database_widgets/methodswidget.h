@@ -27,6 +27,8 @@ private slots:
     void selectMetodic(const QModelIndex index);
     void editMetodParams();
 
+    void unselect();
+
 private:
     Ui::MethodsWidget *ui;
     MetodicsModel *m_model;

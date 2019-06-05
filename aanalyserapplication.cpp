@@ -25,6 +25,7 @@ AAnalyserApplication::AAnalyserApplication(int &argc, char **argv)
         m_database = new DataBase(this);
         connect(m_database, &DataBase::connected, this, &AAnalyserApplication::dbConnected);
         connect(m_database, &DataBase::disconnected, this, &AAnalyserApplication::dbDisconnected);
+        connect(m_database, &DataBase::newTest, this, &AAnalyserApplication::newTest);
     });
 }
 
@@ -72,14 +73,16 @@ MetodicsFactory *AAnalyserApplication::getMetodics()
     return m_metodics;
 }
 
-void AAnalyserApplication::selectPatient(const QString &uid)
+void AAnalyserApplication::doSelectPatient(const QString &uid)
 {
     m_patientUid = uid;
+    emit selectPatient(m_patientUid);
 }
 
-void AAnalyserApplication::selectMetodic(const QString &uid)
+void AAnalyserApplication::doSelectMetodic(const QString &uid)
 {
     m_metodicUid = uid;
+    emit selectMetodic(m_metodicUid);
 }
 
 void AAnalyserApplication::executeMetodic()

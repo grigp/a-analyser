@@ -55,13 +55,13 @@ public:
      * \brief Получение данных о выбранной записи о пациенте
      * \param uid - uid выбранного пациента
      */
-    void selectPatient(const QString &uid);
+    void doSelectPatient(const QString &uid);
 
     /*!
      * \brief Получение информации о выбранной методике
      * \param uid - uid выбранной методики
      */
-    void selectMetodic(const QString &uid);
+    void doSelectMetodic(const QString &uid);
 
     /*!
      * \brief Выполнение методики
@@ -85,6 +85,11 @@ signals:
     void dbConnected();
 
     void dbDisconnected();
+
+    void newTest(const QString &testUid);
+
+    void selectPatient(const QString &patientUid);
+    void selectMetodic(const QString &metodicUid);
 
 private:
     QMainWindow *m_mw;

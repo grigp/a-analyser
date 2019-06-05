@@ -41,6 +41,8 @@ private slots:
      */
     void removePatient();
 
+    void unselect();
+
 private:
     Ui::PatientsWidget *ui;
 

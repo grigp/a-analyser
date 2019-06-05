@@ -8,6 +8,7 @@ class TestsWidget;
 }
 
 class TestsModel;
+class TestProxyModel;
 
 class TestsWidget : public QWidget
 {
@@ -29,6 +30,7 @@ private:
     Ui::TestsWidget *ui;
 
     TestsModel *m_mdlTest;
+    TestProxyModel *m_pmdlTest;
 };
 
 #endif // TESTSWIDGET_H

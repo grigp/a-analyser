@@ -54,7 +54,7 @@ void PatientsWidget::selectPatient(const QModelIndex index)
     {
         auto uid = m_mdlPatients->index(index.row(), PatientsModel::ColFio, index.parent()).
                 data(PatientsModel::PatientUidRole).toString();
-        static_cast<AAnalyserApplication*>(QApplication::instance())->selectPatient(uid);
+        static_cast<AAnalyserApplication*>(QApplication::instance())->doSelectPatient(uid);
     }
 }
 
@@ -134,4 +134,10 @@ void PatientsWidget::removePatient()
         m_mdlPatients->removePatient(uid);
         ui->tvPatients->header()->resizeSections(QHeaderView::ResizeToContents);
     }
+}
+
+void PatientsWidget::unselect()
+{
+    ui->tvPatients->selectionModel()->clear();
+    static_cast<AAnalyserApplication*>(QApplication::instance())->doSelectPatient("");
 }

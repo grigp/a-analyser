@@ -27,6 +27,12 @@ public:
 
     void load();
 
+private slots:
+    void onNewTest(const QString &testUid);
+
+private:
+    void addTest(const QString &testUid);
+
 };
 
 #endif // TESTSMODEL_H
