@@ -18,7 +18,7 @@ public:
     explicit StabTestVisualize(QWidget *parent = 0);
     ~StabTestVisualize();
 
-    void setParams(const QJsonObject &params);
+    void setTest(const QString &testUid);
 
 private:
     Ui::StabTestVisualize *ui;

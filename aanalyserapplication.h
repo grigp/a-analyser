@@ -64,6 +64,12 @@ public:
     void doSelectMetodic(const QString &uid);
 
     /*!
+     * \brief Получение иформации о выбранном тесте
+     * \param uid
+     */
+    void doSelectTest(const QString &uid);
+
+    /*!
      * \brief Выполнение методики
      * Должны быть выбраны предварительно пациент и методика
      * Если нет, то действие не будет выполнено
@@ -90,6 +96,7 @@ signals:
 
     void selectPatient(const QString &patientUid);
     void selectMetodic(const QString &metodicUid);
+    void selectTest(const QString &testUid);
 
 private:
     QMainWindow *m_mw;
@@ -98,6 +105,7 @@ private:
 
     QString m_patientUid = "";  ///< uid выбранного пациента
     QString m_metodicUid = "";  ///< uid выбранной методики
+    QString m_testUid = "";     ///< uid выбранного теста
 };
 
 #endif // AANALYSERAPPLICATION_H

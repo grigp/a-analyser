@@ -59,6 +59,7 @@ void TestsModel::addTest(const QString &testUid)
         }
 
         QStandardItem* itemPatient = new QStandardItem(patient.fio);
+        itemPatient->setData(testUid, TestUidRole);
         itemPatient->setData(ti.patientUid, PatientUidRole);
         itemPatient->setEditable(false);
 

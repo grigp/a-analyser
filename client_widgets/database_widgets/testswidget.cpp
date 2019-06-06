@@ -19,6 +19,7 @@ TestsWidget::TestsWidget(QWidget *parent) :
 
     m_pmdlTest->setSourceModel(m_mdlTest);
     ui->tvTests->setModel(m_pmdlTest);
+    ui->tvTests->viewport()->installEventFilter(this);
 }
 
 TestsWidget::~TestsWidget()
@@ -33,8 +34,32 @@ void TestsWidget::onDbConnect()
     ui->tvTests->header()->resizeSections(QHeaderView::ResizeToContents);
 }
 
+bool TestsWidget::eventFilter(QObject *obj, QEvent *event)
+{
+    if (obj == ui->tvTests->viewport())
+    {
+        if (event->type() == QEvent::Paint)
+        {
+            // Приводит к частым срабатываниям
+            auto idx = m_pmdlTest->mapToSource(ui->tvTests->selectionModel()->currentIndex());
+            selectTest(idx);
+        }
+    }
+    return false;
+}
+
 void TestsWidget::runTest()
 {
     static_cast<AAnalyserApplication*>(QApplication::instance())->executeMetodic();
+}
+
+void TestsWidget::selectTest(const QModelIndex &index)
+{
+    if (index.isValid())
+    {
+        auto uid = m_mdlTest->index(index.row(), TestsModel::ColPatient, index.parent()).
+                data(TestsModel::TestUidRole).toString();
+        static_cast<AAnalyserApplication*>(QApplication::instance())->doSelectTest(uid);
+    }
 }
 

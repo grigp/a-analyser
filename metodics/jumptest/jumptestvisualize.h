@@ -18,7 +18,7 @@ public:
     explicit JumpTestVisualize(QWidget *parent = 0);
     ~JumpTestVisualize();
 
-    void setParams(const QJsonObject &params);
+    void setTest(const QString &testUid);
 
 private:
     Ui::JumpTestVisualize *ui;

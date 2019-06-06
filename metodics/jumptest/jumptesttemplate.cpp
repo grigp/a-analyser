@@ -31,10 +31,10 @@ QWidget *JumpTestTemplate::execute(QWidget *parent, const QJsonObject &params)
     return retval;
 }
 
-QWidget *JumpTestTemplate::visualize(QWidget *parent, const QJsonObject &params)
+QWidget *JumpTestTemplate::visualize(QWidget *parent, const QString &testUid)
 {
     auto *retval = new JumpTestVisualize(parent);
-    retval->setParams(params);
+    retval->setTest(testUid);
     return retval;
 }
 

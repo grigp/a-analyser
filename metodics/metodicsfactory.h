@@ -49,6 +49,14 @@ public:
      */
     void execute(QWidget *parent, const QString &metUid) const;
 
+    /*!
+     * \brief Визуализация результатов теста
+     * \param parent - родительский виджет для размещения виджета результатов
+     * \param testUid - uid теста
+     * \return указатель на виджет результатов
+     */
+    QWidget *visualize(QWidget *parent, const QString &testUid) const;
+
 signals:
 
 public slots:

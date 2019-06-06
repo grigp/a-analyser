@@ -1,6 +1,10 @@
 #include "databaseresultwidget.h"
 #include "ui_databaseresultwidget.h"
 
+#include "aanalyserapplication.h"
+#include "dataprovider.h"
+#include "metodicsfactory.h"
+
 #include <QPainter>
 #include <QDebug>
 
@@ -10,13 +14,16 @@ DataBaseResultWidget::DataBaseResultWidget(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    m_pmp = new ScaledPixmap(this);
-    ui->wgtResults->layout()->addWidget(m_pmp);
-    ui->wgtResults->layout()->setMargin(1);
+    connect(static_cast<AAnalyserApplication*>(QApplication::instance()), &AAnalyserApplication::selectTest,
+            this, &DataBaseResultWidget::onSelectTest);
 
-    QPixmap p(":/images/WallPaper.png");
-    m_pmp->setScaledPixmap(p);
-    ui->lblNoTest->setVisible(false);
+//    m_pmp = new ScaledPixmap(this);
+//    ui->wgtResults->layout()->addWidget(m_pmp);
+//    ui->wgtResults->layout()->setMargin(1);
+
+//    QPixmap p(":/images/WallPaper.png");
+//    m_pmp->setScaledPixmap(p);
+//    ui->lblNoTest->setVisible(false);
 
 }
 
@@ -47,9 +54,19 @@ void DataBaseResultWidget::onDBDisconnect()
 
 }
 
+void DataBaseResultWidget::onSelectTest(const QString &testUid)
+{
+    MetodicsFactory *metFactory = static_cast<AAnalyserApplication*>(QApplication::instance())->getMetodics();
+    if (m_wgtResult)
+        delete m_wgtResult;
+    m_wgtResult = metFactory->visualize(ui->wgtResults, testUid);
+    ui->lblNoTest->setVisible(!m_wgtResult);
+}
+
 
 ScaledPixmap::ScaledPixmap(QWidget *parent)
 {
+    Q_UNUSED(parent);
 
 }
 

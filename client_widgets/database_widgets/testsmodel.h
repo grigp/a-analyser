@@ -21,7 +21,8 @@ public:
     ///< Роли для доступа к данным
     enum TestsModelRoles
     {
-          PatientUidRole = Qt::UserRole + 1  ///< uid пациента. QString в итеме ColPatient
+          TestUidRole = Qt::UserRole + 1     ///< uid теста. QString в итеме ColPatient
+        , PatientUidRole                     ///< uid пациента. QString в итеме ColPatient
         , MetodicUidRole                     ///< uid методики. QString в итеме ColMetodic
     };
 

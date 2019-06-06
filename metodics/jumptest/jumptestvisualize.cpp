@@ -13,7 +13,7 @@ JumpTestVisualize::~JumpTestVisualize()
     delete ui;
 }
 
-void JumpTestVisualize::setParams(const QJsonObject &params)
+void JumpTestVisualize::setTest(const QString &testUid)
 {
 
 }

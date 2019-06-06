@@ -32,11 +32,11 @@ QWidget *StabTestTemplate::execute(QWidget *parent, const QJsonObject &params)
    return retval;
 }
 
-QWidget *StabTestTemplate::visualize(QWidget *parent, const QJsonObject &params)
+QWidget *StabTestTemplate::visualize(QWidget *parent, const QString &testUid)
 {
     auto *retval = new StabTestVisualize(parent);
     parent->layout()->addWidget(retval);
-    retval->setParams(params);
+    retval->setTest(testUid);
     return retval;
 }
 

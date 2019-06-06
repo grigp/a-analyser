@@ -20,11 +20,20 @@ public:
 
     void onDbConnect();
 
+protected:
+    bool eventFilter(QObject *obj, QEvent *event);
+
 private slots:
     /*!
      * \brief Проведение тестирования
      */
     void runTest();
+
+    /*!
+     * \brief Выбор теста для просмотра результатов
+     * \param index - uid теста
+     */
+    void selectTest(const QModelIndex &index);
 
 private:
     Ui::TestsWidget *ui;

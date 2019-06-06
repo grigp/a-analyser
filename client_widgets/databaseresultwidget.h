@@ -54,10 +54,14 @@ public:
 
     void onDBDisconnect() override;
 
+private slots:
+    void onSelectTest(const QString &testUid);
+
 private:
     Ui::DataBaseResultWidget *ui;
 
     ScaledPixmap *m_pmp;
+    QWidget *m_wgtResult {nullptr};  ///< Текущий виджет для показа результатов теста
 };
 
 #endif // DATABASERESULTWIDGET_H

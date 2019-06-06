@@ -110,7 +110,11 @@
     </widget>
    </item>
    <item>
-    <widget class="QTreeView" name="tvTests"/>
+    <widget class="QTreeView" name="tvTests">
+     <property name="sortingEnabled">
+      <bool>true</bool>
+     </property>
+    </widget>
    </item>
   </layout>
  </widget>
@@ -125,8 +129,8 @@
    <slot>runTest()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>329</x>
-     <y>35</y>
+     <x>172</x>
+     <y>40</y>
     </hint>
     <hint type="destinationlabel">
      <x>403</x>

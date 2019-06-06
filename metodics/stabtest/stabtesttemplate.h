@@ -31,9 +31,9 @@ public:
 
     /*!
      * \brief Создает и возвращает виджет визуализации результатов тестирования по методике
-     *  \param params - параметры методики
+     *  \param testUid - uid теста
      */
-    QWidget *visualize(QWidget *parent, const QJsonObject &params)  override;
+    QWidget *visualize(QWidget *parent, const QString &testUid)  override;
 
     /*!
      * \brief Редактирование параметров методики

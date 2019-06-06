@@ -85,6 +85,16 @@ void AAnalyserApplication::doSelectMetodic(const QString &uid)
     emit selectMetodic(m_metodicUid);
 }
 
+void AAnalyserApplication::doSelectTest(const QString &uid)
+{
+    //! Возможно много лишних срабатываний
+    if (uid != m_testUid)
+    {
+        m_testUid = uid;
+        emit selectTest(m_testUid);
+    }
+}
+
 void AAnalyserApplication::executeMetodic()
 {
     if (m_patientUid == "")

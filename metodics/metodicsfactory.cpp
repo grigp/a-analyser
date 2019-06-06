@@ -4,6 +4,7 @@
 #include "stabtesttemplate.h"
 #include "jumptesttemplate.h"
 #include "datadefines.h"
+#include "dataprovider.h"
 
 #include <QFile>
 #include <QDir>
@@ -73,6 +74,24 @@ void MetodicsFactory::execute(QWidget *parent, const QString &metUid) const
             mt->execute(parent, m_metodics.at(mi).params);
         }
     }
+}
+
+QWidget *MetodicsFactory::visualize(QWidget *parent, const QString &testUid) const
+{
+    DataDefines::TestInfo ti;
+    if (DataProvider::getTest(testUid, ti))
+    {
+        auto *mt = getMetodicTemplate(ti.metodUid);
+        if (mt)
+        {
+            auto mi = getMetodicIndexByUid(ti.metodUid);
+            if (mi > -1)
+            {
+                return mt->visualize(parent, testUid);
+            }
+        }
+    }
+    return nullptr;
 }
 
 void MetodicsFactory::assignTemplates()
