@@ -44,7 +44,7 @@ void TestsModel::onNewTest(const QString &testUid)
 void TestsModel::addTest(const QString &testUid)
 {
     DataDefines::TestInfo ti;
-    if (DataProvider::getTest(testUid, ti))
+    if (DataProvider::getTestInfo(testUid, ti))
     {
         DataDefines::PatientKard patient;
         DataProvider::getPatient(ti.patientUid, patient);

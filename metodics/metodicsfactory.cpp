@@ -79,7 +79,7 @@ void MetodicsFactory::execute(QWidget *parent, const QString &metUid) const
 QWidget *MetodicsFactory::visualize(QWidget *parent, const QString &testUid) const
 {
     DataDefines::TestInfo ti;
-    if (DataProvider::getTest(testUid, ti))
+    if (DataProvider::getTestInfo(testUid, ti))
     {
         auto *mt = getMetodicTemplate(ti.metodUid);
         if (mt)

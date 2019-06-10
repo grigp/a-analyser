@@ -112,7 +112,32 @@ QStringList getTests();
  * \param ti - структура данных с возвращаемым тестом
  * \return true, если удачно
  */
-bool getTest(const QString &testUid, DataDefines::TestInfo &ti);
+bool getTestInfo(const QString &testUid, DataDefines::TestInfo &ti);
+
+/*!
+ * \brief Возвращает запись о пробе по uid
+ * \param probeUid - uid пробы
+ * \param pi - структура данных с возвращаемой пробой
+ * \return true, если удачно
+ */
+bool getProbeInfo(const QString &probeUid, DataDefines::ProbeInfo &pi);
+
+/*!
+ * \brief Возвращает данные канала в виде массива байт
+ * \param probeUid - uid пробы
+ * \param channelId - идентификатор канала
+ * \param data - возвращаемые данные канала
+ * \return true, если успешно
+ */
+bool getChannel(const QString &probeUid, const QString &channelId, QByteArray &data);
+
+/*!
+ * \brief Возвращает данные канала в виде массива байт
+ * \param channelUid - uid канала
+ * \param data - возвращаемые данные канала
+ * \return true, если успешно
+ */
+bool getChannel(const QString &channelUid, QByteArray &data);
 
 }
 

@@ -10,6 +10,12 @@ Stabilogram::Stabilogram(const QString &chanId, const int freq)
 
 }
 
+Stabilogram::Stabilogram(const QByteArray &data)
+    : SignalData()
+{
+    fromByteArray(data);
+}
+
 QString Stabilogram::channelId() const
 {
     return m_channelId;

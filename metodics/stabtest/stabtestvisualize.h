@@ -2,6 +2,7 @@
 #define STABTESTVISUALIZE_H
 
 #include <QWidget>
+#include <QTextEdit>
 
 namespace Ui {
 class StabTestVisualize;
@@ -22,6 +23,14 @@ public:
 
 private:
     Ui::StabTestVisualize *ui;
+
+    /*!
+     * \brief Показывает сигналы в пробе
+     * \param num - номер пробы
+     * \param uid - uid пробы
+     * \param edit - куда выводить данные
+     */
+    void showProbeResult(const int num, const QString uid, QTextEdit *edit);
 };
 
 #endif // STABTESTVISUALIZE_H

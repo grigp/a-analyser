@@ -149,14 +149,14 @@ void DataBase::addSignal(const QString &probeUid, const QString &channelUid, con
         QJsonObject signal;
         signal["uid"] = signalUid;
         signal["channelId"] = channelUid;
-        QJsonArray signs = probeObj["signals"].toArray();
+        QJsonArray signs = probeObj["channels"].toArray();
         signs.append(signal);
-        probeObj["signals"] = signs;
+        probeObj["channels"] = signs;
 
         writeTableRec(dir.absoluteFilePath(probeUid), probeObj);
 
         //! Запись сигнала
-        QDir dirSigns = signalsDir();
+        QDir dirSigns = channelsDir();
         QFile fileSign(dirSigns.absoluteFilePath(signalUid));
         if (fileSign.open(QIODevice::WriteOnly))
         {
@@ -178,7 +178,7 @@ QStringList DataBase::getTests() const
     return retval;
 }
 
-bool DataBase::getTest(const QString &testUid, DataDefines::TestInfo &ti) const
+bool DataBase::getTestInfo(const QString &testUid, DataDefines::TestInfo &ti) const
 {
     QDir dir = testsDir();
     QJsonObject testObj;
@@ -198,6 +198,65 @@ bool DataBase::getTest(const QString &testUid, DataDefines::TestInfo &ti) const
             ti.probes << obj["uid"].toString();
         }
         return true;
+    }
+    return false;
+}
+
+bool DataBase::getProbeInfo(const QString &probeUid, DataDefines::ProbeInfo &pi) const
+{
+    QDir dir = probesDir();
+    QJsonObject probeObj;
+    if (readTableRec(dir.absoluteFilePath(probeUid), probeObj))
+    {
+        pi.uid = probeUid;
+        pi.step = probeObj["step"].toInt();
+        pi.testUid = probeObj["testUid"].toString();
+
+        auto chansArr = probeObj["channels"].toArray();
+        pi.channels.clear();
+        for (int i = 0; i < chansArr.size(); ++i)
+        {
+            auto obj = chansArr.at(i).toObject();
+            auto chanUid = obj["uid"].toString();
+            auto channelId = obj["channelId"].toString();
+            DataDefines::ChannelInfo chanInfo(chanUid, channelId);
+            pi.channels << chanInfo;
+        }
+        return true;
+    }
+    return false;
+}
+
+bool DataBase::getChannel(const QString &probeUid, const QString &channelId, QByteArray &data) const
+{
+    DataDefines::ProbeInfo pi;
+    if (getProbeInfo(probeUid, pi))
+    {
+        for (int i = 0; i < pi.channels.size(); ++i)
+        {
+            auto chanRec = pi.channels.at(i);
+            if (chanRec.channelId == channelId)
+                return getChannel(chanRec.uid, data);
+        }
+    }
+    return false;
+}
+
+bool DataBase::getChannel(const QString &channelUid, QByteArray &data) const
+{
+    data.clear();
+
+    QDir dir = channelsDir();
+    auto fileName = dir.absoluteFilePath(channelUid);
+    if (QFile::exists(fileName))
+    {
+        QFile fChan(fileName);
+        if (fChan.open(QIODevice::ReadOnly))
+        {
+            data = fChan.readAll();
+            fChan.close();
+            return true;
+        }
     }
     return false;
 }
@@ -222,9 +281,9 @@ QDir DataBase::probesDir() const
     return localDir("probes");
 }
 
-QDir DataBase::signalsDir() const
+QDir DataBase::channelsDir() const
 {
-    return localDir("signals");
+    return localDir("channels");
 }
 
 QDir DataBase::localDir(const QString &dirName) const

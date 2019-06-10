@@ -49,7 +49,34 @@ struct TestInfo
     QString metodUid;         ///< uid методики
     QDateTime dateTime;       ///< дата и время проведения
     QStringList probes;       ///< список проб
+
     TestInfo() {}
+};
+
+/*!
+ * \brief Структура информации о канале ChannelInfo struct
+ */
+struct ChannelInfo
+{
+    QString uid;          ///< uid канала
+    QString channelId;    ///< Идентификатор канала
+    ChannelInfo(QString _uid, QString chId)
+        : uid(_uid), channelId(chId)
+    {}
+    ChannelInfo() {}
+};
+
+/*!
+ * \brief Структура информации о пробе ProbeInfo struct
+ */
+struct ProbeInfo
+{
+    QString uid;                  ///< uid пробы
+    int step;                     ///< номер пробы в тесте
+    QString testUid;              ///< uid теста
+    QList<ChannelInfo> channels;  ///< каналы
+
+    ProbeInfo() {}
 };
 
 /*!

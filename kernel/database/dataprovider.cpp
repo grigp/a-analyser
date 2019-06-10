@@ -73,8 +73,24 @@ QStringList DataProvider::getTests()
     return static_cast<AAnalyserApplication*>(QApplication::instance())->getDB()->getTests();
 }
 
-bool DataProvider::getTest(const QString &testUid, DataDefines::TestInfo &ti)
+bool DataProvider::getTestInfo(const QString &testUid, DataDefines::TestInfo &ti)
 {
-    return static_cast<AAnalyserApplication*>(QApplication::instance())->getDB()->getTest(testUid, ti);
+    return static_cast<AAnalyserApplication*>(QApplication::instance())->getDB()->getTestInfo(testUid, ti);
 }
 
+
+bool DataProvider::getProbeInfo(const QString &probeUid, DataDefines::ProbeInfo &pi)
+{
+    return static_cast<AAnalyserApplication*>(QApplication::instance())->getDB()->getProbeInfo(probeUid, pi);
+}
+
+
+bool DataProvider::getChannel(const QString &probeUid, const QString &channelId, QByteArray &data)
+{
+    return static_cast<AAnalyserApplication*>(QApplication::instance())->getDB()->getChannel(probeUid, channelId, data);
+}
+
+bool DataProvider::getChannel(const QString &channelUid, QByteArray &data)
+{
+    return static_cast<AAnalyserApplication*>(QApplication::instance())->getDB()->getChannel(channelUid, data);
+}
