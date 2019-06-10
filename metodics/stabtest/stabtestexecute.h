@@ -31,8 +31,6 @@ protected:
     void timerEvent(QTimerEvent *event) override;
 
 private slots:
-    void showDataBase();
-
     void signalTest();
 
     /*!

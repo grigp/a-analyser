@@ -100,11 +100,6 @@ void StabTestExecute::timerEvent(QTimerEvent *event)
     }
 }
 
-void StabTestExecute::showDataBase()
-{
-    finishTest();
-}
-
 void StabTestExecute::signalTest()
 {
     Stabilogram stab(ChannelsDefines::chanStab, 50);

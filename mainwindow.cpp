@@ -6,6 +6,8 @@
 #include "clientwidget.h"
 
 #include <QFile>
+#include <QCloseEvent>
+#include <QMessageBox>
 #include <QDebug>
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -27,7 +29,11 @@ MainWindow::~MainWindow()
 void MainWindow::showClientPage(const QString &uidPage)
 {
     foreach (auto *wgt, m_clientWidgets)
+    {
         wgt->setVisible(static_cast<ClientWidget*>(wgt)->uid() == uidPage);
+        if (static_cast<ClientWidget*>(wgt)->uid() == uidPage)
+            m_currentClientPage = uidPage;
+    }
 }
 
 QWidget *MainWindow::getExecuteWidget()
@@ -48,6 +54,20 @@ void MainWindow::obDBDisconnected()
 {
     foreach (auto wgt, m_clientWidgets)
         static_cast<ClientWidget*>(wgt)->onDBDisconnect();
+}
+
+void MainWindow::closeEvent(QCloseEvent *event)
+{
+    if (m_currentClientPage == ClientWidgets::uidExecuteWidgetUid)
+    {
+        auto mr = QMessageBox::question(this, tr("Предупреждение"), tr("Вы уверены, что хотите прервать проведение теста?"),
+                                        QMessageBox::Yes | QMessageBox::No);
+        if (mr == QMessageBox::Yes)
+            showClientPage(ClientWidgets::uidDatabaseResultWidgetUid);
+        event->ignore();
+    }
+    else
+        event->accept();
 }
 
 void MainWindow::initUi()

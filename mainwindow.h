@@ -31,6 +31,9 @@ public slots:
 
     void obDBDisconnected();
 
+protected:
+    void closeEvent(QCloseEvent *event) override;
+
 private:
     Ui::MainWindow *ui;
 
@@ -42,6 +45,7 @@ private:
     void createClientWidgets();
 
     QList<QWidget*> m_clientWidgets;
+    QString m_currentClientPage = ""; ///< Текущая страница с данными
 
 };
 
