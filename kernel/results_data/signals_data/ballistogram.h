@@ -13,6 +13,11 @@ class Ballistogram : public SignalData
 {
 public:
     explicit Ballistogram(const QString &chanId, const int freq);
+    /*!
+     * \brief Создает на основе массива байт
+     * \param data - сигнал в виде массива байт
+     */
+    explicit Ballistogram(const QByteArray &data);
 
     /*!
      * \brief Перекрытая функция, возвращающая идентификатор канала

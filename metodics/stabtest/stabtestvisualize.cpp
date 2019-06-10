@@ -6,6 +6,7 @@
 
 #include "channelsdefines.h"
 #include "stabilogram.h"
+#include "ballistogram.h"
 
 #include <QDebug>
 
@@ -39,15 +40,27 @@ void StabTestVisualize::showProbeResult(const int num, const QString uid, QTextE
 {
     Q_UNUSED(num);
     QByteArray baStab;
+    QByteArray baZ;
     if (DataProvider::getChannel(uid, ChannelsDefines::chanStab, baStab))
     {
+        auto isZ = DataProvider::getChannel(uid, ChannelsDefines::chanZ, baZ);
+        Ballistogram bsg(baZ);
+
         Stabilogram stab(baStab);
         for (int i = 0; i < stab.size(); ++i)
         {
             auto rec = stab.value(i);
             auto sx = QString::number(rec.x);
             auto sy = QString::number(rec.y);
-            edit->append(sx + "     " + sy);
+            QString line = sx + "     " + sy;
+
+            if (isZ && i < baZ.size())
+            {
+                auto sz = QString::number(bsg.value(i));
+                line = line + "     " + sz;
+            }
+
+            edit->append(line);
         }
     }
 }

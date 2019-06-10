@@ -10,6 +10,12 @@ Ballistogram::Ballistogram(const QString &chanId, const int freq)
 
 }
 
+Ballistogram::Ballistogram(const QByteArray &data)
+    : SignalData()
+{
+    fromByteArray(data);
+}
+
 QString Ballistogram::channelId() const
 {
     return m_channelId;
