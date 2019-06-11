@@ -3,15 +3,26 @@
 #include "testsmodel.h"
 #include "aanalyserapplication.h"
 
+#include <QTimer>
 #include <QDebug>
 
 TestProxyModel::TestProxyModel(QObject *parent)
     : QSortFilterProxyModel(parent)
 {
-    connect(static_cast<AAnalyserApplication*>(QApplication::instance()), &AAnalyserApplication::selectPatient,
-            this, &TestProxyModel::onSelectPatient);
-    connect(static_cast<AAnalyserApplication*>(QApplication::instance()), &AAnalyserApplication::selectMetodic,
-            this, &TestProxyModel::onSelectMetodic);
+    QTimer::singleShot(100, [=]()
+    {
+        connect(static_cast<AAnalyserApplication*>(QApplication::instance()), &AAnalyserApplication::selectPatient,
+                this, &TestProxyModel::onSelectPatient);
+        connect(static_cast<AAnalyserApplication*>(QApplication::instance()), &AAnalyserApplication::selectMetodic,
+                this, &TestProxyModel::onSelectMetodic);
+
+        connect(static_cast<AAnalyserApplication*>(QApplication::instance()),
+                &AAnalyserApplication::newTest, [=](const QString &testUid)
+        {
+            Q_UNUSED(testUid);
+            invalidate();
+        });
+    });
 }
 
 bool TestProxyModel::filterAcceptsRow(int source_row, const QModelIndex &source_parent) const
