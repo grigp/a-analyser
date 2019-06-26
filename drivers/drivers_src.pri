@@ -4,11 +4,13 @@ INCLUDEPATH += $$PWD
 
 HEADERS += \
     $$PWD/driversfactory.h \
-    $$PWD/driver.h
+    $$PWD/driver.h \
+    $$PWD/deviceprotocols.h
 
 SOURCES += \
     $$PWD/driversfactory.cpp \
-    $$PWD/driver.cpp
+    $$PWD/driver.cpp \
+    $$PWD/deviceprotocols.cpp
 
 FORMS += \
 
