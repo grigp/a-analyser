@@ -37,6 +37,7 @@ include(client_widgets/client_widgets_src.pri)
 include(kernel/kernel_src.pri)
 include(metodics/metodics_src.pri)
 include(drivers/drivers_src.pri)
+include(service/service_src.pri)
 
 SOURCES += \
         main.cpp \

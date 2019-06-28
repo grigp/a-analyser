@@ -4,6 +4,7 @@
 #include "databaseresultwidget.h"
 #include "executewidget.h"
 #include "clientwidget.h"
+#include "devicecontroldialog.h"
 
 #include <QFile>
 #include <QCloseEvent>
@@ -19,6 +20,7 @@ MainWindow::MainWindow(QWidget *parent) :
     createClientWidgets();
 
     initUi();
+    initMenu();
 }
 
 MainWindow::~MainWindow()
@@ -70,12 +72,26 @@ void MainWindow::closeEvent(QCloseEvent *event)
         event->accept();
 }
 
+void MainWindow::onDeviceControl()
+{
+    DeviceControlDialog dlg(this);
+    dlg.exec();
+}
+
 void MainWindow::initUi()
 {
     QFile style( ":/qss/main.qss" );
     style.open( QFile::ReadOnly );
     QString stlDetail(style.readAll() );
     setStyleSheet(stlDetail);
+}
+
+void MainWindow::initMenu()
+{
+    QMenu *menuSettings = menuBar()->addMenu(tr("Настройки"));
+
+    menuSettings->addAction(ui->acDeviceControl);
+
 }
 
 void MainWindow::createClientWidgets()

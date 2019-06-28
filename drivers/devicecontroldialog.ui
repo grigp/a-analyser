@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>DeviceControlDialog</class>
+ <widget class="QDialog" name="DeviceControlDialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>709</width>
+    <height>394</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Управление оборудованием</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QFrame" name="frTools">
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <property name="leftMargin">
+       <number>2</number>
+      </property>
+      <property name="topMargin">
+       <number>2</number>
+      </property>
+      <property name="rightMargin">
+       <number>2</number>
+      </property>
+      <property name="bottomMargin">
+       <number>2</number>
+      </property>
+      <item>
+       <widget class="QPushButton" name="btnAddConnect">
+        <property name="toolTip">
+         <string>Новое подключение...</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset resource="../kernel.qrc">
+          <normaloff>:/images/Connects/Add.png</normaloff>:/images/Connects/Add.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>25</width>
+          <height>25</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btnEditConnect">
+        <property name="toolTip">
+         <string>Редактировать подключение...</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset resource="../kernel.qrc">
+          <normaloff>:/images/Connects/Settings.png</normaloff>:/images/Connects/Settings.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>25</width>
+          <height>25</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btnDelConnect">
+        <property name="toolTip">
+         <string>Удалить подключение...</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset resource="../kernel.qrc">
+          <normaloff>:/images/Connects/Del.png</normaloff>:/images/Connects/Del.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>25</width>
+          <height>25</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <spacer name="horizontalSpacer_2">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeType">
+         <enum>QSizePolicy::Fixed</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>10</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btnUp">
+        <property name="toolTip">
+         <string>Поывысить приоритет</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset resource="../kernel.qrc">
+          <normaloff>:/images/Connects/Up.png</normaloff>:/images/Connects/Up.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>25</width>
+          <height>25</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btnDown">
+        <property name="toolTip">
+         <string>Понизить приоритет</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset resource="../kernel.qrc">
+          <normaloff>:/images/Connects/Down.png</normaloff>:/images/Connects/Down.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>25</width>
+          <height>25</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <spacer name="horizontalSpacer">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QTreeView" name="tvConnections">
+     <attribute name="headerMinimumSectionSize">
+      <number>20</number>
+     </attribute>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources>
+  <include location="../kernel.qrc"/>
+ </resources>
+ <connections>
+  <connection>
+   <sender>btnAddConnect</sender>
+   <signal>clicked()</signal>
+   <receiver>DeviceControlDialog</receiver>
+   <slot>addConnect()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>30</x>
+     <y>27</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>711</x>
+     <y>43</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btnEditConnect</sender>
+   <signal>clicked()</signal>
+   <receiver>DeviceControlDialog</receiver>
+   <slot>editConnect()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>76</x>
+     <y>24</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>710</x>
+     <y>69</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btnDelConnect</sender>
+   <signal>clicked()</signal>
+   <receiver>DeviceControlDialog</receiver>
+   <slot>delConnect()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>119</x>
+     <y>21</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>709</x>
+     <y>98</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btnUp</sender>
+   <signal>clicked()</signal>
+   <receiver>DeviceControlDialog</receiver>
+   <slot>upPriority()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>172</x>
+     <y>33</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>710</x>
+     <y>129</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btnDown</sender>
+   <signal>clicked()</signal>
+   <receiver>DeviceControlDialog</receiver>
+   <slot>downPriority()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>217</x>
+     <y>18</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>713</x>
+     <y>161</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>addConnect()</slot>
+  <slot>editConnect()</slot>
+  <slot>delConnect()</slot>
+  <slot>upPriority()</slot>
+  <slot>downPriority()</slot>
+ </slots>
+</ui>

@@ -2,6 +2,7 @@
 #define DRIVER_H
 
 #include <QObject>
+#include <QStringList>
 
 /*!
  * \brief Базовый класс драйвера Driver class
@@ -12,9 +13,6 @@ class Driver : public QObject
 public:
     explicit Driver(QObject *parent = nullptr);
 
-    virtual QString uid() const = 0;
-    virtual QString name() const = 0;
-
     /*!
      * \brief Устанавливает параметры драйвера
      * для использования при работе
@@ -24,8 +22,10 @@ public:
 
     /*!
      * \brief Вызывает диалог редактирования параметров
+     * \param params - редактируемые параметры
+     * \return true, если диалог закончился командой сохранить параметры
      */
-    virtual void editParams() = 0;
+    virtual bool editParams(QJsonObject &params) = 0;
 
     /*!
      * \brief Запуск передачи данных
@@ -36,11 +36,6 @@ public:
      */
     virtual void stop() = 0;
 
-    /*!
-     * \brief Возвращает список протоколов
-     * \return
-     */
-    virtual QList<int> getProtocols() = 0;
 
 signals:
 

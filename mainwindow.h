@@ -34,10 +34,15 @@ public slots:
 protected:
     void closeEvent(QCloseEvent *event) override;
 
+private slots:
+    void onDeviceControl();
+
 private:
     Ui::MainWindow *ui;
 
     void initUi();
+
+    void initMenu();
 
     /*!
      * \brief Создает клиентские виджеты и размещает их на главном окне

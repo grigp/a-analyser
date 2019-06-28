@@ -18,5 +18,11 @@
         <file>images/Save.png</file>
         <file>images/SaveNO.png</file>
         <file>images/SaveOK.png</file>
+        <file>connections.json</file>
+        <file>images/Connects/Add.png</file>
+        <file>images/Connects/Del.png</file>
+        <file>images/Connects/Down.png</file>
+        <file>images/Connects/Settings.png</file>
+        <file>images/Connects/Up.png</file>
     </qresource>
 </RCC>

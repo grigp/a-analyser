@@ -8,6 +8,7 @@
 
 #include "mainwindow.h"
 #include "metodicsfactory.h"
+#include "driversfactory.h"
 #include "executewidget.h"
 #include "databaseresultwidget.h"
 #include "database.h"
@@ -15,6 +16,7 @@
 AAnalyserApplication::AAnalyserApplication(int &argc, char **argv)
     : QApplication(argc, argv)
     , m_metodics(new MetodicsFactory(this))
+    , m_drivers(new DriversFactory(this))
 {
     setApplicationName("a-analyser");
     setApplicationDisplayName("Физиологические исследования a-analyser");
@@ -35,6 +37,8 @@ AAnalyserApplication::~AAnalyserApplication()
         delete m_database;
     if (m_metodics)
         delete m_metodics;
+    if (m_drivers)
+        delete m_drivers;
 }
 
 void AAnalyserApplication::setMainWindow(QMainWindow *mw)
@@ -126,4 +130,32 @@ void AAnalyserApplication::openTest(const QString &uid)
 void AAnalyserApplication::showDataBase()
 {
     showClientPage(ClientWidgets::uidDatabaseResultWidgetUid);
+}
+
+QStringList AAnalyserApplication::getDrivers() const
+{
+    if (m_drivers)
+        return m_drivers->getDrivers();
+    return QStringList();
+}
+
+QString AAnalyserApplication::getDriverName(const QString &drvUid) const
+{
+    if (m_drivers)
+        return m_drivers->getDriverName(drvUid);
+    return QString("");
+}
+
+QList<Connection> AAnalyserApplication::getConnections() const
+{
+    if (m_drivers)
+        return m_drivers->getConnections();
+    return QList<Connection>();
+}
+
+Driver *AAnalyserApplication::getDriver(const QStringList &protocols, const int index) const
+{
+    if (m_drivers)
+        return m_drivers->getDriver(protocols, index);
+    return nullptr;
 }

@@ -3,13 +3,17 @@
 
 #include "datadefines.h"
 #include "metodicdefines.h"
+#include "connection.h"
 
 #include <QMainWindow>
 #include <QObject>
 #include <QApplication>
 
+
 class DataBase;
 class MetodicsFactory;
+class DriversFactory;
+class Driver;
 
 class AAnalyserApplication : public QApplication
 {
@@ -87,6 +91,31 @@ public:
      */
     void showDataBase();
 
+    /*!
+     * \brief Возвращает список uid подключенных драйверов
+     */
+    QStringList getDrivers() const;
+
+    /*!
+     * \brief Возвращает название драйвера по uid
+     * \param drvUid
+     */
+    QString getDriverName(const QString &drvUid) const;
+
+    /*!
+     * \brief Возвращает список подключений
+     * Прежде всего для вывода в окне редактирования
+     */
+    QList<Connection> getConnections() const;
+
+    /*!
+     * \brief Возвращает экземпляр драйвера, соответствующего перечню протоколов
+     * \param protocols - перечень протоколов
+     * \param index - номер в списке
+     */
+    Driver* getDriver(const QStringList &protocols, const int index = 0) const;
+
+
 signals:
     void dbConnected();
 
@@ -102,6 +131,7 @@ private:
     QMainWindow *m_mw;
     DataBase *m_database {nullptr};
     MetodicsFactory *m_metodics {nullptr};
+    DriversFactory *m_drivers {nullptr};
 
     QString m_patientUid = "";  ///< uid выбранного пациента
     QString m_metodicUid = "";  ///< uid выбранной методики
