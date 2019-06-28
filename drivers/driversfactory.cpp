@@ -61,13 +61,8 @@ Driver *DriversFactory::getDriver(const QStringList &protocols, const int index)
 void DriversFactory::assignDrivers()
 {
     //! Надо хардкодить все драйвера
-    auto uid = Stabilan01::uid();
-    auto name = Stabilan01::name();
-    m_drivers.insert(uid, name);
-
-    uid = JumpPlate::uid();
-    name = JumpPlate::name();
-    m_drivers.insert(uid, name);
+    m_drivers.insert(Stabilan01::uid(), Stabilan01::name());
+    m_drivers.insert(JumpPlate::uid(), JumpPlate::name());
 }
 
 void DriversFactory::assignConnections()

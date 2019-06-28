@@ -51,6 +51,11 @@ public:
      */
     static QStringList getProtocols();
 
+    /*!
+     * \brief Возвращает список допустимых портов для драйвера
+     */
+    static QStringList getPorts();
+
     void calibrate() override;
 };
 
