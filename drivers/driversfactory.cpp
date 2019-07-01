@@ -3,7 +3,6 @@
 #include "stabilan01.h"
 #include "jumpplate.h"
 #include "datadefines.h"
-#include "deviceprotocols.h"
 
 #include <QFile>
 #include <QJsonDocument>
@@ -26,9 +25,59 @@ QString DriversFactory::getDriverName(const QString &drvUid) const
     return m_drivers.value(drvUid);
 }
 
+QList<DeviceProtocols::Ports> DriversFactory::getDriverPorts(const QString &drvUid) const
+{
+    //! Надо хардкодить все драйвера
+    if (drvUid == Stabilan01::uid())
+        return Stabilan01::getPorts();
+    else
+    if (drvUid == JumpPlate::uid())
+        return JumpPlate::getPorts();
+
+    return QList<DeviceProtocols::Ports>();
+}
+
 QList<Connection> DriversFactory::getConnections() const
 {
     return m_connections;
+}
+
+void DriversFactory::addConnection(const bool active,
+                                   const QString &drvUid,
+                                   const QJsonObject &params,
+                                   const DeviceProtocols::Ports port,
+                                   const QString &comment)
+{
+    Connection connection(drvUid, m_drivers.value(drvUid), port, params, active, comment);
+    m_connections << connection;
+    saveConnections();
+}
+
+void DriversFactory::moveConnectionUp(const int connectIdx)
+{
+    if (connectIdx > 0)
+    {
+        m_connections.move(connectIdx, connectIdx - 1);
+        saveConnections();
+    }
+}
+
+void DriversFactory::moveConnectionDown(const int connectIdx)
+{
+    if (connectIdx < m_connections.size() - 1)
+    {
+        m_connections.move(connectIdx, connectIdx + 1);
+        saveConnections();
+    }
+}
+
+void DriversFactory::deleteConnection(const int connectIdx)
+{
+    if (connectIdx >= 0 && connectIdx < m_connections.size())
+    {
+        m_connections.removeAt(connectIdx);
+        saveConnections();
+    }
 }
 
 Driver *DriversFactory::getDriver(const QStringList &protocols, const int index) const
@@ -90,13 +139,40 @@ void DriversFactory::assignConnections()
             auto drvUid = objConnect["driver_uid"].toString();
             auto drvName = m_drivers.value(drvUid);
             auto comment = objConnect["comment"].toString();
-            auto active = objConnect["active"].toInt();
-            auto port = objConnect["port"].toString();
+            auto active = objConnect["active"].toBool();
+            auto port = objConnect["port"].toInt();
             auto params = objConnect["params"].toObject();
 
-            Connection connection(drvUid, drvName, port, params, active, comment);
+            Connection connection(drvUid, drvName, static_cast<DeviceProtocols::Ports>(port), params, active, comment);
             m_connections << connection;
         }
+    }
+}
+
+void DriversFactory::saveConnections()
+{
+    QFile fConnect(DataDefines::appDataPath() + "connections.json");
+    if (fConnect.open(QIODevice::WriteOnly | QIODevice::Text))
+    {
+        QJsonArray connections;
+        foreach (auto connection, m_connections)
+        {
+            QJsonObject obj;
+            obj["active"] = connection.active();
+            obj["driver_uid"] = connection.driverUid();
+            obj["port"] = connection.port();
+            obj["comment"] = connection.comment();
+            obj["params"] = connection.params();
+
+            connections.append(obj);
+        }
+
+        QJsonObject root;
+        root["connections"] = connections;
+
+        QJsonDocument doc(root);
+        QByteArray ba = doc.toJson();
+        fConnect.write(ba);
     }
 }
 
@@ -122,3 +198,4 @@ bool DriversFactory::isDriverSupportedProtocols(const QString &driverUid, const 
     }
     return false;
 }
+

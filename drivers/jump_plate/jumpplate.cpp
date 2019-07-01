@@ -31,9 +31,9 @@ QStringList JumpPlate::getProtocols()
     return QStringList() << DeviceProtocols::uid_JumpPlateProtocol;
 }
 
-QStringList JumpPlate::getPorts()
+QList<DeviceProtocols::Ports> JumpPlate::getPorts()
 {
-
+    return DeviceProtocols::comUsbPorts();
 }
 
 void JumpPlate::calibrate()

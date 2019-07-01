@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QMap>
+#include <QList>
 #include <QVector>
 
 namespace DeviceProtocols {
@@ -10,7 +11,7 @@ namespace DeviceProtocols {
 ///<------------------------------------------------------------------------------------------
 ///< Порты
 
-enum ports {
+enum Ports {
       pcEmulation = -1
     , pcUsb = 0
     , pcCom1, pcCom2, pcCom3, pcCom4, pcCom5, pcCom6, pcCom7, pcCom8, pcCom9, pcCom10
@@ -29,7 +30,12 @@ enum ports {
 };
 
 
-static QString portName(const ports port);
+QString portName(const Ports port);
+
+QList<Ports> comPorts();
+QList<Ports> comUsbPorts();
+QList<Ports> allPorts();
+
 
 ///<------------------------------------------------------------------------------------------
 ///< Данные от устройств
@@ -276,5 +282,9 @@ static QMap<QString, QString> deviceDataName {
 
 
 }
+
+Q_DECLARE_METATYPE(QList<DeviceProtocols::Ports>)
+
+
 
 #endif // DEVICEPROTOCOLS_H

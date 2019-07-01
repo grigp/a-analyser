@@ -122,8 +122,8 @@
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>248</x>
-     <y>254</y>
+     <x>257</x>
+     <y>218</y>
     </hint>
     <hint type="destinationlabel">
      <x>157</x>
@@ -138,8 +138,8 @@
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>316</x>
-     <y>260</y>
+     <x>320</x>
+     <y>218</y>
     </hint>
     <hint type="destinationlabel">
      <x>286</x>
@@ -147,5 +147,24 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>cbDriver</sender>
+   <signal>activated(int)</signal>
+   <receiver>AddConnectionDialog</receiver>
+   <slot>selectDriver(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>102</x>
+     <y>41</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>331</x>
+     <y>56</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
+ <slots>
+  <slot>selectDriver(int)</slot>
+ </slots>
 </ui>

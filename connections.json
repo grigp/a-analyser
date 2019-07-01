@@ -3,8 +3,8 @@
         {
             "driver_uid": "{CEAD1669-1531-4B8E-9220-590C49BB310D}",
             "comment": "Первая платформа",
-            "active": 1,
-            "port": "com1",
+            "active": true,
+            "port": 1,
             "params":
             {
                 "model": "Стабилан-01. Исполнение 01",
@@ -14,8 +14,8 @@
         {
             "driver_uid": "{CEAD1669-1531-4B8E-9220-590C49BB310D}",
             "comment": "Вторая платформа",
-            "active": 0,
-            "port": "com2",
+            "active": false,
+            "port": 2,
             "params":
             {
                 "model": "Стабилан-01. Исполнение 16",
@@ -25,8 +25,8 @@
         {
             "driver_uid": "{ACC7467D-6600-4808-B372-EDC2069EBF5E}",
             "comment": "Прыжок",
-            "active": 1,
-            "port": "usb",
+            "active": true,
+            "port": 0,
             "params":
             {
                 "count": 1

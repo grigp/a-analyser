@@ -1,6 +1,8 @@
 #ifndef ADDCONNECTIONDIALOG_H
 #define ADDCONNECTIONDIALOG_H
 
+#include "deviceprotocols.h"
+
 #include <QDialog>
 
 namespace Ui {
@@ -28,16 +30,20 @@ public:
     /*!
      * \brief Возвращает порт
      */
-    QString port() const;
+    DeviceProtocols::Ports port() const;
 
     /*!
      * \brief Возвращает комментарий к подключению
      */
     QString comment() const;
 
+private slots:
+    void selectDriver(int lineIdx);
+
 private:
     Ui::AddConnectionDialog *ui;
 
+    QMap<QString, QList<DeviceProtocols::Ports>> m_ports;
     void fill();
 };
 

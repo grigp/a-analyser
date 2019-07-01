@@ -109,12 +109,47 @@ public:
     QList<Connection> getConnections() const;
 
     /*!
+     * \brief Добавляет подключение в список
+     * \param active - флаг активности
+     * \param drvUid - uid драйвера
+     * \param params - параметры драйвера
+     * \param port - порт
+     * \param comment - комментарий
+     */
+    void addConnection(const bool active,
+                       const QString &drvUid, const QJsonObject &params,
+                       const DeviceProtocols::Ports port, const QString &comment);
+
+    /*!
+     * \brief Перемещает подключение вверх на одну позицию
+     * \param connectIdx - перемещаемый индекс в массиве подключений
+     */
+    void moveConnectionUp(const int connectIdx);
+
+    /*!
+     * \brief Перемещает подключение вниз на одну позицию
+     * \param connectIdx - перемещаемый индекс в массиве подключений
+     */
+    void moveConnectionDown(const int connectIdx);
+
+    /*!
+     * \brief Удаляет подключение
+     * \param connectIdx - удаляемый индекс в массиве подключений
+     */
+    void deleteConnection(const int connectIdx);
+
+    /*!
      * \brief Возвращает экземпляр драйвера, соответствующего перечню протоколов
      * \param protocols - перечень протоколов
      * \param index - номер в списке
      */
     Driver* getDriver(const QStringList &protocols, const int index = 0) const;
 
+    /*!
+     * \brief Возвращает список допустимых портов для драйвера по его uid
+     * \param drvUid - uid драйвера
+     */
+    QList<DeviceProtocols::Ports> getDriverPorts(const QString &drvUid) const;
 
 signals:
     void dbConnected();

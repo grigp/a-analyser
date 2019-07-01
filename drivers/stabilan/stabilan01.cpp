@@ -32,8 +32,9 @@ QStringList Stabilan01::getProtocols()
     return QStringList() << DeviceProtocols::uid_StabProtocol;
 }
 
-QStringList Stabilan01::getPorts()
+QList<DeviceProtocols::Ports> Stabilan01::getPorts()
 {
+    return DeviceProtocols::comPorts();
 }
 
 void Stabilan01::calibrate()

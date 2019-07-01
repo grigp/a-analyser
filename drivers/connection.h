@@ -4,6 +4,8 @@
 #include <QObject>
 #include <QJsonObject>
 
+#include "deviceprotocols.h"
+
 /*!
  * \brief Класс данных для подключения к устройству Connection class
  */
@@ -13,7 +15,7 @@ public:
     explicit Connection() {}
     explicit Connection(const QString &drvUid,
                         const QString &drvName,
-                        const QString &port,
+                        const DeviceProtocols::Ports port,
                         const QJsonObject &params,
                         const bool active,
                         const QString &comment)
@@ -27,8 +29,8 @@ public:
     QString driverUid() const {return m_driverUid;}
     QString driverName() const {return m_driverName;}
 
-    QString port() const {return m_port;}
-    void setPort(QString &port) {m_port = port;}
+    DeviceProtocols::Ports port() const {return m_port;}
+    void setPort(const DeviceProtocols::Ports port) {m_port = port;}
 
     QJsonObject params() const {return m_params;}
     void setParams(const QJsonObject &params) {m_params = params;}
@@ -42,7 +44,7 @@ public:
 private:
     QString m_driverUid;
     QString m_driverName;
-    QString m_port;
+    DeviceProtocols::Ports m_port;
     QJsonObject m_params;
     bool m_active;
     QString m_comment;

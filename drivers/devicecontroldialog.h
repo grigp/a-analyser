@@ -5,6 +5,8 @@
 #include <QStandardItemModel>
 
 #include "checkboxdelegate.h"
+#include "comboboxdelegate.h"
+#include "deviceprotocols.h"
 
 namespace Ui {
 class DeviceControlDialog;
@@ -39,13 +41,15 @@ public:
         , DriverUidRole                   ///< uid драйвера. QString. В колонке ColDriver
         , ParamsRole                      ///< Параметры. QJsonObject. В колонке ColDriver
         , PortCodeRole                    ///< Код порта. int. В колонке ColPort
+        , PortsByDriverRole               ///< Список допустимых портов для драйвера QList<DeviceProtocols::port>. В колонке ColPort
     };
 
-    load();
+    void load();
 
     void appendRow(const bool active,
                    const QString &drvUid, const QString &drvName, const QJsonObject &params,
-                   const QString &port, const QString &comment);
+                   const DeviceProtocols::Ports port, //const QList<DeviceProtocols::Ports> ports,
+                   const QString &comment);
 };
 
 ///<=============================================================================================
@@ -66,6 +70,21 @@ protected:
 };
 
 ///<=============================================================================================
+
+
+class ComPortDeledate : public ComboBoxDelegate
+{
+public:
+    explicit ComPortDeledate(QObject *parent = nullptr)
+        : ComboBoxDelegate(parent) {}
+
+    QWidget *createEditor(QWidget *parent,
+                          const QStyleOptionViewItem &option,
+                          const QModelIndex &index) const override;
+};
+
+///<=============================================================================================
+
 
 /*!
  * \brief Класс окна диалога для управления оборудованием DeviceControlDialog class

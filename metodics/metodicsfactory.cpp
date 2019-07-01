@@ -156,7 +156,7 @@ void MetodicsFactory::saveMetodics()
         QJsonDocument doc(root);
         QByteArray ba = doc.toJson();
         fMet.write(ba);
-        }
+    }
 }
 
 int MetodicsFactory::getMetodicIndexByUid(const QString &uid) const

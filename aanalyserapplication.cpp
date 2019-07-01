@@ -124,6 +124,7 @@ void AAnalyserApplication::executeMetodic()
 
 void AAnalyserApplication::openTest(const QString &uid)
 {
+    Q_UNUSED(uid);
 
 }
 
@@ -153,9 +154,44 @@ QList<Connection> AAnalyserApplication::getConnections() const
     return QList<Connection>();
 }
 
+void AAnalyserApplication::addConnection(const bool active,
+                                         const QString &drvUid,
+                                         const QJsonObject &params,
+                                         const DeviceProtocols::Ports port,
+                                         const QString &comment)
+{
+    if (m_drivers)
+        m_drivers->addConnection(active, drvUid, params, port, comment);
+}
+
+void AAnalyserApplication::moveConnectionUp(const int connectIdx)
+{
+    if (m_drivers)
+        m_drivers->moveConnectionUp(connectIdx);
+}
+
+void AAnalyserApplication::moveConnectionDown(const int connectIdx)
+{
+    if (m_drivers)
+        m_drivers->moveConnectionDown(connectIdx);
+}
+
+void AAnalyserApplication::deleteConnection(const int connectIdx)
+{
+    if (m_drivers)
+        m_drivers->deleteConnection(connectIdx);
+}
+
 Driver *AAnalyserApplication::getDriver(const QStringList &protocols, const int index) const
 {
     if (m_drivers)
         return m_drivers->getDriver(protocols, index);
     return nullptr;
+}
+
+QList<DeviceProtocols::Ports> AAnalyserApplication::getDriverPorts(const QString &drvUid) const
+{
+    if (m_drivers)
+        return m_drivers->getDriverPorts(drvUid);
+    return QList<DeviceProtocols::Ports>();
 }

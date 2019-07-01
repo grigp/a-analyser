@@ -28,14 +28,26 @@ QString AddConnectionDialog::driverName() const
     return ui->cbDriver->currentText();
 }
 
-QString AddConnectionDialog::port() const
+DeviceProtocols::Ports AddConnectionDialog::port() const
 {
-    return ui->cbPort->currentText();
+    return static_cast<DeviceProtocols::Ports>(ui->cbPort->currentData().toInt());
 }
 
 QString AddConnectionDialog::comment() const
 {
     return ui->edComment->text();
+}
+
+void AddConnectionDialog::selectDriver(int lineIdx)
+{
+    Q_UNUSED(lineIdx);
+    ui->cbPort->clear();
+    auto ports = m_ports.value(driverUid());
+
+    for(int i = 0; i < ports.size(); ++i)
+    {
+        ui->cbPort->addItem(DeviceProtocols::portName(ports.at(i)), ports.at(i));
+    }
 }
 
 void AddConnectionDialog::fill()
@@ -46,5 +58,14 @@ void AddConnectionDialog::fill()
     {
         auto drvName = app->getDriverName(drvUid);
         ui->cbDriver->addItem(drvName, drvUid);
+
+        auto ports = app->getDriverPorts(drvUid);
+        m_ports.insert(drvUid, ports);
+    }
+
+    if (drivers.size() > 0)
+    {
+        ui->cbDriver->setCurrentIndex(0);
+        selectDriver(0);
     }
 }

@@ -3,10 +3,12 @@
 
 #include "aanalyserapplication.h"
 #include "stringvaluedelegate.h"
-#include "comboboxdelegate.h"
 #include "addconnectiondialog.h"
 
 #include <QApplication>
+#include <QComboBox>
+#include <QMessageBox>
+#include <QVariant>
 #include <QDebug>
 
 DeviceControlDialog::DeviceControlDialog(QWidget *parent) :
@@ -23,7 +25,7 @@ DeviceControlDialog::DeviceControlDialog(QWidget *parent) :
     ui->tvConnections->setItemDelegateForColumn(DeviceControlModel::ColActive,
                                                 new ActiveDelegate(ui->tvConnections));
     ui->tvConnections->setItemDelegateForColumn(DeviceControlModel::ColPort,
-                                                new ComboBoxDelegate(ui->tvConnections));
+                                                new ComPortDeledate(ui->tvConnections));
     ui->tvConnections->setItemDelegateForColumn(DeviceControlModel::ColComment,
                                                 new StringValueDelegate(ui->tvConnections));
 
@@ -43,6 +45,11 @@ void DeviceControlDialog::addConnect()
     if (dlg.exec() == QDialog::Accepted)
     {
         m_model->appendRow(true, dlg.driverUid(), dlg.driverName(), QJsonObject(), dlg.port(), dlg.comment());
+        static_cast<AAnalyserApplication*>(QApplication::instance())->addConnection(true,
+                                                                                    dlg.driverUid(),
+                                                                                    QJsonObject(),
+                                                                                    dlg.port(),
+                                                                                    dlg.comment());
     }
 }
 
@@ -53,17 +60,54 @@ void DeviceControlDialog::editConnect()
 
 void DeviceControlDialog::delConnect()
 {
-    qDebug() << "del connect";
+    auto selIdxs = ui->tvConnections->selectionModel()->selectedIndexes();
+    if (selIdxs.size() > 0)
+    {
+        const int rowIdx = selIdxs.at(0).row();
+        auto driver = m_model->index(rowIdx, DeviceControlModel::ColDriver).data().toString();
+        auto port = m_model->index(rowIdx, DeviceControlModel::ColPort).data().toString();
+        if (QMessageBox::question(this,
+                                  tr("Предупреждение"),
+                                  QString(tr("Удалить подключение %1 (%2)?")).arg(driver).arg(port))
+                ==
+                QMessageBox::Yes)
+        {
+            m_model->removeRow(rowIdx);
+            static_cast<AAnalyserApplication*>(QApplication::instance())->deleteConnection(rowIdx);
+        }
+    }
 }
 
 void DeviceControlDialog::upPriority()
 {
-    qDebug() << "up";
+    auto selIdxs = ui->tvConnections->selectionModel()->selectedIndexes();
+    if (selIdxs.size() > 0)
+    {
+        const int rowIdx = selIdxs.at(0).row();
+        if (rowIdx > 0)
+        {
+            QList<QStandardItem*> row = m_model->takeRow(rowIdx);
+            m_model->insertRow(rowIdx - 1, row);
+            ui->tvConnections->setCurrentIndex(m_model->index(rowIdx - 1, 0, selIdxs.at(0).parent()));
+            static_cast<AAnalyserApplication*>(QApplication::instance())->moveConnectionUp(rowIdx);
+        }
+    }
 }
 
 void DeviceControlDialog::downPriority()
 {
-    qDebug() << "down";
+    auto selIdxs = ui->tvConnections->selectionModel()->selectedIndexes();
+    if (selIdxs.size() > 0)
+    {
+        const int rowIdx = selIdxs.at(0).row();
+        if (rowIdx < m_model->rowCount() - 1)
+        {
+            QList<QStandardItem*> row = m_model->takeRow(rowIdx);
+            m_model->insertRow(rowIdx + 1, row);
+            ui->tvConnections->setCurrentIndex(m_model->index(rowIdx + 1, 0, selIdxs.at(0).parent()));
+            static_cast<AAnalyserApplication*>(QApplication::instance())->moveConnectionDown(rowIdx);
+        }
+    }
 }
 
 
@@ -77,7 +121,7 @@ DeviceControlModel::DeviceControlModel(QObject *parent)
     setHorizontalHeaderLabels(QStringList() << "Актив." << "Драйвер" << "Порт" << "Комментарий");
 }
 
-DeviceControlModel::load()
+void DeviceControlModel::load()
 {
     QList<Connection> connections = static_cast<AAnalyserApplication*>(QApplication::instance())->getConnections();
     foreach (auto connection, connections)
@@ -91,7 +135,7 @@ DeviceControlModel::load()
 
 void DeviceControlModel::appendRow(const bool active,
                                    const QString &drvUid, const QString &drvName, const QJsonObject &params,
-                                   const QString &port, const QString &comment)
+                                   const DeviceProtocols::Ports port, const QString &comment)
 {
     auto *itemActive = new QStandardItem();
     itemActive->setData(active, ActiveRole);
@@ -101,10 +145,39 @@ void DeviceControlModel::appendRow(const bool active,
     itemDriver->setData(params, ParamsRole);
     itemDriver->setEditable(false);
 
-    auto *itemPort = new QStandardItem(port);
-    itemPort->setData(0, PortCodeRole);
+    auto *itemPort = new QStandardItem(DeviceProtocols::portName(port));
+    itemPort->setData(port, PortCodeRole);
+    QVariant var;
+    QList<DeviceProtocols::Ports> ports = static_cast<AAnalyserApplication*>(QApplication::instance())->getDriverPorts(drvUid);
+    var.setValue<QList<DeviceProtocols::Ports>>(ports);
+    itemPort->setData(var, PortsByDriverRole);
 
     auto itemComment = new QStandardItem(comment);
 
     QStandardItemModel::appendRow(QList<QStandardItem*>() << itemActive << itemDriver << itemPort << itemComment);
+}
+
+
+///<=============================================================================================
+///< ComPortDeledate
+
+QWidget *ComPortDeledate::createEditor(QWidget *parent,
+                                       const QStyleOptionViewItem &option,
+                                       const QModelIndex &index) const
+{
+    Q_UNUSED(option);
+    QComboBox *editor = new QComboBox(parent);
+
+    QVariant var = index.data(DeviceControlModel::PortsByDriverRole);
+    if (var != QVariant())
+    {
+        QList<DeviceProtocols::Ports> ports = var.value<QList<DeviceProtocols::Ports>>();
+        for (int i = 0; i < ports.size(); ++i)
+        {
+            editor->addItem(DeviceProtocols::portName(ports.at(i)));
+            editor->setItemData(i, ports.at(i), ValueIdRole);
+        }
+    }
+
+    return editor;
 }
