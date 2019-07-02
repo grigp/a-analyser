@@ -1,6 +1,7 @@
 #include "stabilan01.h"
 
 #include "stabilan01paramsdialog.h"
+#include "aanalyserapplication.h"
 
 #include <QApplication>
 #include <QJsonObject>
@@ -56,7 +57,7 @@ bool Stabilan01::editParams(QJsonObject &params)
     auto model = params["model"].toInt();
     auto zt = params["zeroing_type"].toInt();
 
-    Stabilan01ParamsDialog dlg;
+    Stabilan01ParamsDialog dlg(static_cast<AAnalyserApplication*>(QApplication::instance())->mainWindow());
     dlg.setModel(static_cast<Stabilan01Defines::Model>(model));
     dlg.setZeroingType(static_cast<Stabilan01Defines::ZeroingType>(zt));
     if (dlg.exec() == QDialog::Accepted)

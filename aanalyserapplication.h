@@ -22,6 +22,7 @@ public:
     AAnalyserApplication(int &argc, char **argv);
     ~AAnalyserApplication();
 
+    QMainWindow* mainWindow() const;
     void setMainWindow(QMainWindow *mw);
 
     /*!

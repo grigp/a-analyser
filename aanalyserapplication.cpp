@@ -41,6 +41,11 @@ AAnalyserApplication::~AAnalyserApplication()
         delete m_drivers;
 }
 
+QMainWindow *AAnalyserApplication::mainWindow() const
+{
+    return m_mw;
+}
+
 void AAnalyserApplication::setMainWindow(QMainWindow *mw)
 {
     m_mw = mw;
