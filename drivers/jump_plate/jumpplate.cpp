@@ -9,7 +9,7 @@ JumpPlate::JumpPlate(QObject *parent)
 
 }
 
-void JumpPlate::setParams(const QJsonObject &params)
+void JumpPlate::setParams(const DeviceProtocols::Ports port, const QJsonObject &params)
 {
 
 }

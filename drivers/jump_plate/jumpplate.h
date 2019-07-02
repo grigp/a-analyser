@@ -26,8 +26,9 @@ public:
      * \brief Устанавливает параметры драйвера
      * для использования при работе
      * \param params - параметры
+     * \param port - порт
      */
-    void setParams(const QJsonObject &params) override;
+    void setParams(const DeviceProtocols::Ports port, const QJsonObject &params) override;
 
     /*!
      * \brief Вызывает диалог редактирования параметров

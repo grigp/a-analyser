@@ -2,6 +2,7 @@
 #define STABILAN01_H
 
 #include <QObject>
+#include <QThread>
 
 #include "driver.h"
 #include "deviceprotocols.h"
@@ -11,6 +12,30 @@ namespace  {
     static const QString uid_stabilan01 = "{CEAD1669-1531-4B8E-9220-590C49BB310D}";
     static const QString name_stabilan01 = "Стабилан - 01";
 }
+
+
+///< -----------------------------------------------------------------------------------
+///< Поток чтения данных
+
+class ReadingDataStabilan01 : public QThread
+{
+    Q_OBJECT
+
+public:
+    void run() override;
+
+public slots:
+    void stop();
+
+signals:
+    void dataExists();
+
+private:
+    bool m_isReading {false};
+};
+
+///< -----------------------------------------------------------------------------------
+///< Сам драйвер
 
 /*!
  * \brief Класс драйвера стабилоанализатора Стабилан - 01 Stabilan01 class
@@ -28,8 +53,9 @@ public:
      * \brief Устанавливает параметры драйвера
      * для использования при работе
      * \param params - параметры
+     * \param port - порт
      */
-    void setParams(const QJsonObject &params) override;
+    void setParams(const DeviceProtocols::Ports port, const QJsonObject &params) override;
 
     /*!
      * \brief Вызывает диалог редактирования параметров
@@ -69,6 +95,14 @@ public:
 
     static QString zeroingTypeName(const Stabilan01Defines::ZeroingType ztCode);
     static QList<Stabilan01Defines::ZeroingType> zeroingTypes();
+
+
+private:
+    DeviceProtocols::Ports m_port;
+    Stabilan01Defines::Model m_model;
+    Stabilan01Defines::ZeroingType m_zt;
+
+    ReadingDataStabilan01 *m_readData {nullptr};  ///< Поток чтения данных
 
 };
 

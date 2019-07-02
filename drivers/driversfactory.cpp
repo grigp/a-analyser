@@ -148,7 +148,7 @@ Driver *DriversFactory::getDriver(const QStringList &protocols, const int index)
                     if (connection.driverUid() == JumpPlate::uid())
                         drv = new JumpPlate();
                     //! Параметры драйверу!
-                    drv->setParams(connection.params());
+                    drv->setParams(connection.port(), connection.params());
                     return drv;
                 }
                 ++num;

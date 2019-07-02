@@ -9,9 +9,13 @@
 #include "testresultdata.h"
 #include "baseutils.h"
 #include "aanalyserapplication.h"
+#include "deviceprotocols.h"
+#include "driver.h"
 
 #include <QJsonObject>
 #include <QJsonArray>
+#include <QTimer>
+#include <QMessageBox>
 #include <QDebug>
 
 namespace
@@ -26,11 +30,7 @@ StabTestExecute::StabTestExecute(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    m_ti = startTimer(20);
-
-    m_kard = static_cast<AAnalyserApplication*>(QApplication::instance())->getSelectedPatient();
-    MetodicDefines::MetodicInfo mi = static_cast<AAnalyserApplication*>(QApplication::instance())->getSelectedMetodic();
-    m_trd->newTest(m_kard.uid, mi.uid);
+    QTimer::singleShot(0, this, &StabTestExecute::start);
 }
 
 StabTestExecute::~StabTestExecute()
@@ -99,6 +99,26 @@ void StabTestExecute::timerEvent(QTimerEvent *event)
         }
     }
 }
+
+void StabTestExecute::start()
+{
+    m_driver = static_cast<AAnalyserApplication*>(QApplication::instance())->
+            getDriver(QStringList() << DeviceProtocols::uid_StabProtocol);
+    if (m_driver)
+    {
+        m_driver->start();
+
+        m_ti = startTimer(20);
+
+        m_kard = static_cast<AAnalyserApplication*>(QApplication::instance())->getSelectedPatient();
+        MetodicDefines::MetodicInfo mi = static_cast<AAnalyserApplication*>(QApplication::instance())->getSelectedMetodic();
+        m_trd->newTest(m_kard.uid, mi.uid);
+    }
+    else
+    {
+        QMessageBox::warning(this, tr("Предупреждение"), tr("Отсутствует необходимое подключение для работы теста"));
+        static_cast<ExecuteWidget*>(parent())->showDB();
+    }}
 
 void StabTestExecute::signalTest()
 {

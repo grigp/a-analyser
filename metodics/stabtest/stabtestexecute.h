@@ -13,6 +13,7 @@ class StabTestExecute;
 class TestResultData;
 class Stabilogram;
 class Ballistogram;
+class Driver;
 
 /*!
  * \brief Виджет выполнения стабилометрического тестирования StabTestExecute class
@@ -31,6 +32,7 @@ protected:
     void timerEvent(QTimerEvent *event) override;
 
 private slots:
+    void start();
     void signalTest();
 
     /*!
@@ -66,6 +68,8 @@ private:
     int m_probe = 0;                ///< Номер текущей пробы
     bool m_isRecording = false;     ///< Протекает ли запись данных
     int m_recCount = 0;             ///< Счетчик пакетов данных в пробе
+
+    Driver* m_driver {nullptr};     ///< Драйвер передающий данные
 
     TestResultData *m_trd;  ///< Объект, записывающий данные в базу
     Stabilogram *m_stb;     ///< Записываемая стабилограмма

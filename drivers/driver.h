@@ -1,6 +1,8 @@
 #ifndef DRIVER_H
 #define DRIVER_H
 
+#include "deviceprotocols.h"
+
 #include <QObject>
 #include <QStringList>
 
@@ -17,8 +19,9 @@ public:
      * \brief Устанавливает параметры драйвера
      * для использования при работе
      * \param params - параметры
+     * \param port - порт
      */
-    virtual void setParams(const QJsonObject &params) = 0;
+    virtual void setParams(const DeviceProtocols::Ports port, const QJsonObject &params) = 0;
 
     /*!
      * \brief Вызывает диалог редактирования параметров

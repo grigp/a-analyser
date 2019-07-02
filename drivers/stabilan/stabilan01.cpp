@@ -41,15 +41,40 @@ namespace  {
 
 }
 
+///< -----------------------------------------------------------------------------------
+///< Поток чтения данных
+
+void ReadingDataStabilan01::run()
+{
+    m_isReading = true;
+    do
+    {
+
+        sleep(2);
+    }
+    while (m_isReading);
+}
+
+void ReadingDataStabilan01::stop()
+{
+    m_isReading = false;
+}
+
+
+///< -----------------------------------------------------------------------------------
+///< Сам драйвер
+
 Stabilan01::Stabilan01(QObject *parent)
     : Driver(parent)
 {
 
 }
 
-void Stabilan01::setParams(const QJsonObject &params)
+void Stabilan01::setParams(const DeviceProtocols::Ports port, const QJsonObject &params)
 {
-
+    m_port = port;
+    m_model = static_cast<Stabilan01Defines::Model>(params["model"].toInt());
+    m_zt = static_cast<Stabilan01Defines::ZeroingType>(params["zeroing_type"].toInt());
 }
 
 bool Stabilan01::editParams(QJsonObject &params)
@@ -71,12 +96,19 @@ bool Stabilan01::editParams(QJsonObject &params)
 
 void Stabilan01::start()
 {
-
+    if (!m_readData)
+    {
+        auto *m_readData = new ReadingDataStabilan01();
+        connect(m_readData, &ReadingDataStabilan01::dataExists, this, &Stabilan01::on_readData);
+        connect(m_readData, &ReadingDataStabilan01::finished, m_readData, &QObject::deleteLater);
+        m_readData->start();
+    }
 }
 
 void Stabilan01::stop()
 {
-
+    if (m_readData)
+        m_readData->stop();
 }
 
 QStringList Stabilan01::getProtocols()
@@ -118,3 +150,9 @@ QList<Stabilan01Defines::ZeroingType> Stabilan01::zeroingTypes()
 {
     return ZeroingTypes.keys();
 }
+
+void Stabilan01::on_readData()
+{
+
+}
+
