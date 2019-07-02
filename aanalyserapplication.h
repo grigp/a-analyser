@@ -139,6 +139,23 @@ public:
     void deleteConnection(const int connectIdx);
 
     /*!
+     * \brief Изменены основные параметры подключения
+     * \param connectIdx - индекс в массиве подключений
+     * \param paramIdx - код параметра 0 - active, 1 - x, 2 - port, 3 - comment
+     * \param value - значение
+     */
+    void dataChangedConnection(const int connectIdx, const int paramIdx, const QVariant value);
+
+    /*!
+     * \brief Вызывает диалог редактирования параметров драйвера для подключения
+     * \param connectIdx - индекс в массиве подключений
+     * \param drvUid - uid драйвера
+     * \param params - редактируемые параметры
+     * \return true, если диалог завершился, как accept
+     */
+    bool editParamsConnecton(const int connectIdx, const QString &drvUid, QJsonObject &params);
+
+    /*!
      * \brief Возвращает экземпляр драйвера, соответствующего перечню протоколов
      * \param protocols - перечень протоколов
      * \param index - номер в списке

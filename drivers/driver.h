@@ -25,7 +25,7 @@ public:
      * \param params - редактируемые параметры
      * \return true, если диалог закончился командой сохранить параметры
      */
-    virtual bool editParams(QJsonObject &params) = 0;
+//    virtual bool editParams(QJsonObject &params) = 0;
 
     /*!
      * \brief Запуск передачи данных

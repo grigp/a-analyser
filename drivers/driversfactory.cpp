@@ -8,6 +8,7 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QJsonArray>
+#include <QDebug>
 
 DriversFactory::DriversFactory(QObject *parent) : QObject(parent)
 {
@@ -78,6 +79,55 @@ void DriversFactory::deleteConnection(const int connectIdx)
         m_connections.removeAt(connectIdx);
         saveConnections();
     }
+}
+
+void DriversFactory::dataChangedConnection(const int connectIdx, const int paramIdx, const QVariant value)
+{
+    bool isChanged = false;
+
+    Connection connection = m_connections.at(connectIdx);
+    switch (paramIdx) {
+    case 0:
+        connection.setActive(value.toBool());
+        isChanged = true;
+        break;
+    case 2:
+        connection.setPort(static_cast<DeviceProtocols::Ports>(value.toInt()));
+        isChanged = true;
+        break;
+    case 3:
+        connection.setComment(value.toString());
+        isChanged = true;
+        break;
+    default:
+        break;
+    }
+
+    if (isChanged)
+    {
+        m_connections.replace(connectIdx, connection);
+        saveConnections();
+    }
+}
+
+bool DriversFactory::editParamsConnecton(const int connectIdx, const QString &drvUid, QJsonObject &params)
+{
+    bool resval = false;
+    //! Надо хардкодить все драйвера
+    if (drvUid == Stabilan01::uid())
+        resval = Stabilan01::editParams(params);
+    else
+    if (drvUid == JumpPlate::uid())
+        resval = JumpPlate::editParams(params);
+
+    if (resval && connectIdx > -1)
+    {
+        Connection connection = m_connections.at(connectIdx);
+        connection.setParams(params);
+        m_connections.replace(connectIdx, connection);
+        saveConnections();
+    }
+    return resval;
 }
 
 Driver *DriversFactory::getDriver(const QStringList &protocols, const int index) const

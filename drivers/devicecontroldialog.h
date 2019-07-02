@@ -81,6 +81,10 @@ public:
     QWidget *createEditor(QWidget *parent,
                           const QStyleOptionViewItem &option,
                           const QModelIndex &index) const override;
+
+    void setModelData(QWidget *editor,
+                      QAbstractItemModel *model,
+                      const QModelIndex &index) const override;
 };
 
 ///<=============================================================================================
@@ -104,6 +108,8 @@ private slots:
 
     void upPriority();
     void downPriority();
+
+    void on_dataChanged(const QModelIndex &topLeft, const QModelIndex &bottomRight);
 
 private:
     Ui::DeviceControlDialog *ui;

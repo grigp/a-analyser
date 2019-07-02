@@ -34,7 +34,7 @@ public:
      * \param params - редактируемые параметры
      * \return true, если диалог закончился командой сохранить параметры
      */
-    bool editParams(QJsonObject &params) override;
+    static bool editParams(QJsonObject &params);
 
     /*!
      * \brief Запуск передачи данных

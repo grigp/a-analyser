@@ -32,6 +32,8 @@ DeviceControlDialog::DeviceControlDialog(QWidget *parent) :
     ui->tvConnections->header()->resizeSection(DeviceControlModel::ColActive, 60);
     ui->tvConnections->header()->resizeSection(DeviceControlModel::ColDriver, 150);
     ui->tvConnections->header()->resizeSection(DeviceControlModel::ColPort, 80);
+
+    connect(m_model, &DeviceControlModel::dataChanged, this, &DeviceControlDialog::on_dataChanged);
 }
 
 DeviceControlDialog::~DeviceControlDialog()
@@ -44,18 +46,31 @@ void DeviceControlDialog::addConnect()
     AddConnectionDialog dlg(this);
     if (dlg.exec() == QDialog::Accepted)
     {
-        m_model->appendRow(true, dlg.driverUid(), dlg.driverName(), QJsonObject(), dlg.port(), dlg.comment());
-        static_cast<AAnalyserApplication*>(QApplication::instance())->addConnection(true,
-                                                                                    dlg.driverUid(),
-                                                                                    QJsonObject(),
-                                                                                    dlg.port(),
-                                                                                    dlg.comment());
+        // Редактирование параметров
+        QJsonObject params;
+        static_cast<AAnalyserApplication*>(QApplication::instance())->editParamsConnecton(-1, dlg.driverUid(), params);
+
+        m_model->appendRow(true, dlg.driverUid(), dlg.driverName(), params, dlg.port(), dlg.comment());
+        static_cast<AAnalyserApplication*>(QApplication::instance())->
+                addConnection(true, dlg.driverUid(), params, dlg.port(), dlg.comment());
     }
 }
 
 void DeviceControlDialog::editConnect()
 {
-    qDebug() << "edit connect";
+    auto selIdxs = ui->tvConnections->selectionModel()->selectedIndexes();
+    if (selIdxs.size() > 0)
+    {
+        const int rowIdx = selIdxs.at(0).row();
+        auto drvUid = m_model->index(rowIdx, DeviceControlModel::ColDriver).
+                data(DeviceControlModel::DriverUidRole).toString();
+        auto params = m_model->index(rowIdx, DeviceControlModel::ColDriver).
+                data(DeviceControlModel::ParamsRole).toJsonObject();
+
+        if (static_cast<AAnalyserApplication*>(QApplication::instance())->editParamsConnecton(rowIdx, drvUid, params))
+            m_model->setData(m_model->index(rowIdx, DeviceControlModel::ColDriver),
+                             params, DeviceControlModel::ParamsRole);
+    }
 }
 
 void DeviceControlDialog::delConnect()
@@ -108,6 +123,28 @@ void DeviceControlDialog::downPriority()
             static_cast<AAnalyserApplication*>(QApplication::instance())->moveConnectionDown(rowIdx);
         }
     }
+}
+
+void DeviceControlDialog::on_dataChanged(const QModelIndex &topLeft, const QModelIndex &bottomRight)
+{
+    Q_UNUSED(bottomRight);
+    QVariant value;
+    switch (topLeft.column()) {
+    case 0:
+        value = topLeft.data(DeviceControlModel::ActiveRole);
+        break;
+    case 2:
+        value = topLeft.data(DeviceControlModel::PortCodeRole);
+        break;
+    case 3:
+        value = topLeft.data();
+        break;
+    default:
+        break;
+    }
+
+    static_cast<AAnalyserApplication*>(QApplication::instance())->
+            dataChangedConnection(topLeft.row(), topLeft.column(), value);
 }
 
 
@@ -180,4 +217,13 @@ QWidget *ComPortDeledate::createEditor(QWidget *parent,
     }
 
     return editor;
+}
+
+void ComPortDeledate::setModelData(QWidget *editor,
+                                   QAbstractItemModel *model,
+                                   const QModelIndex &index) const
+{
+    ComboBoxDelegate::setModelData(editor, model, index);
+    QComboBox *edit = static_cast<QComboBox*>(editor);
+    model->setData(index, edit->currentData(ValueIdRole), DeviceControlModel::PortCodeRole);
 }

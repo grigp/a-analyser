@@ -7,8 +7,8 @@
             "port": 1,
             "params":
             {
-                "model": "Стабилан-01. Исполнение 01",
-                "zeroing": "мгновенная"
+                "model": 101,
+                "zeroing_type": 0
             }
         },
         {
@@ -18,8 +18,8 @@
             "port": 2,
             "params":
             {
-                "model": "Стабилан-01. Исполнение 16",
-                "zeroing": "мгновенная"
+                "model": 116,
+                "zeroing_type": 0
             }
         },
         {

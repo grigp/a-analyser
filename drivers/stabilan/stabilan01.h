@@ -5,6 +5,7 @@
 
 #include "driver.h"
 #include "deviceprotocols.h"
+#include "stabilan01defines.h"
 
 namespace  {
     static const QString uid_stabilan01 = "{CEAD1669-1531-4B8E-9220-590C49BB310D}";
@@ -35,7 +36,7 @@ public:
      * \param params - редактируемые параметры
      * \return true, если диалог закончился командой сохранить параметры
      */
-    bool editParams(QJsonObject &params) override;
+    static bool editParams(QJsonObject &params);
 
     /*!
      * \brief Запуск передачи данных
@@ -58,6 +59,16 @@ public:
 
     void calibrate() override;
     void zeroing() override;
+
+    /*!
+     * \brief Возвращает название модели стабилоанализатора по коду
+     * \param mdl - код модели
+     */
+    static QString modelName(const Stabilan01Defines::Model mdlCode);
+    static QList<Stabilan01Defines::Model> models();
+
+    static QString zeroingTypeName(const Stabilan01Defines::ZeroingType ztCode);
+    static QList<Stabilan01Defines::ZeroingType> zeroingTypes();
 
 };
 

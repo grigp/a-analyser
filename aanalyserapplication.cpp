@@ -182,6 +182,19 @@ void AAnalyserApplication::deleteConnection(const int connectIdx)
         m_drivers->deleteConnection(connectIdx);
 }
 
+void AAnalyserApplication::dataChangedConnection(const int connectIdx, const int paramIdx, const QVariant value)
+{
+    if (m_drivers)
+        m_drivers->dataChangedConnection(connectIdx, paramIdx, value);
+}
+
+bool AAnalyserApplication::editParamsConnecton(const int connectIdx, const QString &drvUid, QJsonObject &params)
+{
+    if (m_drivers)
+        return m_drivers->editParamsConnecton(connectIdx, drvUid, params);
+    return false;
+}
+
 Driver *AAnalyserApplication::getDriver(const QStringList &protocols, const int index) const
 {
     if (m_drivers)
