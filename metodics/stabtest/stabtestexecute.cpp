@@ -106,6 +106,8 @@ void StabTestExecute::start()
             getDriver(QStringList() << DeviceProtocols::uid_StabProtocol);
     if (m_driver)
     {
+        connect(m_driver, &Driver::sendData, this, &StabTestExecute::getData);
+
         m_driver->start();
 
         m_ti = startTimer(20);
@@ -141,6 +143,17 @@ void StabTestExecute::signalTest()
     stab1.fromByteArray(ba);
     for (int i = 0; i < stab1.size(); ++i)
         qDebug() << stab1.value(0, i) << stab1.value(1, i);
+}
+
+void StabTestExecute::getData(DeviceProtocols::DeviceData *data)
+{
+    if (data->uid() == DeviceProtocols::uid_StabDvcData)
+    {
+        DeviceProtocols::StabDvcData *stabData = static_cast<DeviceProtocols::StabDvcData*>(data);
+        qDebug() << stabData->x() << stabData->y();
+        ui->lblX->setText(QString("X = %1").arg(stabData->x()));
+        ui->lblY->setText(QString("Y = %1").arg(stabData->y()));
+    }
 }
 
 void StabTestExecute::recording()

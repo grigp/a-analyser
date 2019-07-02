@@ -41,6 +41,7 @@ public:
 
 
 signals:
+    void sendData(DeviceProtocols::DeviceData *data);
 
 public slots:
 };

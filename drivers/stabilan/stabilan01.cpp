@@ -5,6 +5,7 @@
 
 #include <QApplication>
 #include <QJsonObject>
+#include <QtMath>
 #include <QDebug>
 
 namespace  {
@@ -46,11 +47,21 @@ namespace  {
 
 void ReadingDataStabilan01::run()
 {
+    double r = 0;
     m_isReading = true;
     do
     {
+        double x = r * sin(r);
+        double y = r * cos(r);
 
-        sleep(2);
+        m_data.clear();
+        QDataStream stream(&m_data, QIODevice::WriteOnly);
+        stream << x << y;
+
+        r = r + 0.1256;
+
+        emit dataExists(m_data);
+        msleep(100);
     }
     while (m_isReading);
 }
@@ -151,8 +162,17 @@ QList<Stabilan01Defines::ZeroingType> Stabilan01::zeroingTypes()
     return ZeroingTypes.keys();
 }
 
-void Stabilan01::on_readData()
+void Stabilan01::on_readData(const QByteArray data)
 {
+    double x = 0;
+    double y = 0;
+    QByteArray ba = data;
+    QDataStream stream(&ba, QIODevice::ReadOnly);
+    stream >> x;
+    stream >> y;
 
+    auto stabData = new DeviceProtocols::StabDvcData(x, y);
+    emit sendData(stabData);
+    delete stabData;
 }
 

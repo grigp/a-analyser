@@ -57,8 +57,8 @@ class DeviceData
 public:
     explicit DeviceData() {}
 
-    virtual QString uid() const = 0;
-    virtual QString name() const = 0;
+    virtual QString uid() const = 0; // {return QString("");}
+    virtual QString name() const = 0; // {return QString("");}
 };
 
 
@@ -79,6 +79,11 @@ public:
 
     StabDvcData(double x, double y, double a, double b, double c, double d)
         : m_x(x), m_y(y), m_a(a), m_b(b), m_c(c), m_d(d) {m_z = m_a + m_b + m_c + m_d;}
+
+    StabDvcData(const StabDvcData &obj)
+        : m_x(obj.x()), m_y(obj.y()), m_z(obj.z()),
+          m_a(obj.a()), m_b(obj.b()), m_c(obj.c()), m_d(obj.d())
+    {}
 
     double x() const {return m_x;}
     double y() const {return m_y;}

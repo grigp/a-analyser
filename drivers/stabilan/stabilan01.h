@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QThread>
+#include <QByteArray>
 
 #include "driver.h"
 #include "deviceprotocols.h"
@@ -28,10 +29,11 @@ public slots:
     void stop();
 
 signals:
-    void dataExists();
+    void dataExists(const QByteArray data);
 
 private:
     bool m_isReading {false};
+    QByteArray m_data;
 };
 
 ///< -----------------------------------------------------------------------------------
@@ -96,6 +98,8 @@ public:
     static QString zeroingTypeName(const Stabilan01Defines::ZeroingType ztCode);
     static QList<Stabilan01Defines::ZeroingType> zeroingTypes();
 
+private slots:
+    void on_readData(const QByteArray data);
 
 private:
     DeviceProtocols::Ports m_port;

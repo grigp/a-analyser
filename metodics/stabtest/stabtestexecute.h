@@ -3,6 +3,7 @@
 
 #include "stabtestparams.h"
 #include "datadefines.h"
+#include "deviceprotocols.h"
 
 #include <QWidget>
 
@@ -34,6 +35,8 @@ protected:
 private slots:
     void start();
     void signalTest();
+
+    void getData(DeviceProtocols::DeviceData *data);
 
     /*!
      * \brief Управляет началом / остановом / прерыванием записи
