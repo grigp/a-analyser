@@ -13,12 +13,3 @@ ClientWidget::~ClientWidget()
     delete ui;
 }
 
-void ClientWidget::onDBConnect()
-{
-
-}
-
-void ClientWidget::onDBDisconnect()
-{
-
-}

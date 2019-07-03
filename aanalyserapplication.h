@@ -180,6 +180,8 @@ signals:
     void selectMetodic(const QString &metodicUid);
     void selectTest(const QString &testUid);
 
+    void sendData(DeviceProtocols::DeviceData *data);
+
 private:
     QMainWindow *m_mw;
     DataBase *m_database {nullptr};

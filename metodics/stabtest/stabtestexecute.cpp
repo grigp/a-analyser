@@ -30,11 +30,17 @@ StabTestExecute::StabTestExecute(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    ui->lblCommunicationError->setVisible(false);
     QTimer::singleShot(0, this, &StabTestExecute::start);
 }
 
 StabTestExecute::~StabTestExecute()
 {
+    if (m_driver)
+    {
+        m_driver->stop();
+        m_driver->deleteLater();
+    }
     delete ui;
 }
 
@@ -63,43 +69,6 @@ void StabTestExecute::setParams(const QJsonObject &params)
 
 double r = 0;
 
-void StabTestExecute::timerEvent(QTimerEvent *event)
-{
-    if (event->timerId() == m_ti)
-    {
-        if (m_isRecording)
-        {
-            double x = 10 * sin(r);  //todo: заменить реальным чтением данных
-            double y = 10 * cos(r);
-            r = r + 0.1256;
-            SignalsDefines::StabRec rec(std::make_tuple(x, y));
-            m_stb->addValue(rec);
-            m_z->addValue(x + y);
-
-            ++m_recCount;
-            if (probeParams().autoEnd)
-            {
-                ui->lblRecLen->setText(BaseUtils::getTimeBySecCount(m_recCount / m_frequency) + " / " +
-                                       BaseUtils::getTimeBySecCount(probeParams().time));
-                double rc = m_recCount;
-                double mrc = probeParams().time * m_frequency;
-                ui->pbRec->setValue(rc / mrc * 100);
-            }
-            else
-                ui->lblRecLen->setText(BaseUtils::getTimeBySecCount(m_recCount / m_frequency));
-
-            if (probeParams().autoEnd && (m_recCount >= probeParams().time * m_frequency))
-            {
-                //! Следующая проба
-                nextProbe();
-                //! Пробы кончились - завершение
-                if (m_probe >= m_params.size())
-                    finishTest();
-            }
-        }
-    }
-}
-
 void StabTestExecute::start()
 {
     m_driver = static_cast<AAnalyserApplication*>(QApplication::instance())->
@@ -107,10 +76,8 @@ void StabTestExecute::start()
     if (m_driver)
     {
         connect(m_driver, &Driver::sendData, this, &StabTestExecute::getData);
-
+        connect(m_driver, &Driver::communicationError, this, &StabTestExecute::on_communicationError);
         m_driver->start();
-
-        m_ti = startTimer(20);
 
         m_kard = static_cast<AAnalyserApplication*>(QApplication::instance())->getSelectedPatient();
         MetodicDefines::MetodicInfo mi = static_cast<AAnalyserApplication*>(QApplication::instance())->getSelectedMetodic();
@@ -145,15 +112,59 @@ void StabTestExecute::signalTest()
         qDebug() << stab1.value(0, i) << stab1.value(1, i);
 }
 
+void StabTestExecute::scaleChange(int scaleId)
+{
+    int v = 1;
+    for (int i = 0; i < scaleId - 1; ++i)
+        v = v * 2;
+    ui->wgtSKG->setDiap(128 / v);
+}
+
 void StabTestExecute::getData(DeviceProtocols::DeviceData *data)
 {
     if (data->uid() == DeviceProtocols::uid_StabDvcData)
     {
+        ui->lblCommunicationError->setVisible(false);
+
         DeviceProtocols::StabDvcData *stabData = static_cast<DeviceProtocols::StabDvcData*>(data);
-        qDebug() << stabData->x() << stabData->y();
+//        qDebug() << stabData->sender()->driverUid() << stabData->sender()->driverName() << stabData->x() << stabData->y();
         ui->lblX->setText(QString("X = %1").arg(stabData->x()));
         ui->lblY->setText(QString("Y = %1").arg(stabData->y()));
+        ui->wgtSKG->setMarker(stabData->x(), stabData->y());
+
+        if (m_isRecording)
+        {
+            SignalsDefines::StabRec rec(std::make_tuple(stabData->x(), stabData->y()));
+            m_stb->addValue(rec);
+            m_z->addValue(stabData->x() + stabData->y());
+
+            ++m_recCount;
+            if (probeParams().autoEnd)
+            {
+                ui->lblRecLen->setText(BaseUtils::getTimeBySecCount(m_recCount / m_frequency) + " / " +
+                                       BaseUtils::getTimeBySecCount(probeParams().time));
+                double rc = m_recCount;
+                double mrc = probeParams().time * m_frequency;
+                ui->pbRec->setValue(rc / mrc * 100);
+            }
+            else
+                ui->lblRecLen->setText(BaseUtils::getTimeBySecCount(m_recCount / m_frequency));
+
+            if (probeParams().autoEnd && (m_recCount >= probeParams().time * m_frequency))
+            {
+                //! Следующая проба
+                nextProbe();
+                //! Пробы кончились - завершение
+                if (m_probe >= m_params.size())
+                    finishTest();
+            }
+        }
     }
+}
+
+void StabTestExecute::on_communicationError(const int errorCode)
+{
+    ui->lblCommunicationError->setVisible(true);
 }
 
 void StabTestExecute::recording()
@@ -164,12 +175,12 @@ void StabTestExecute::recording()
         if (probeParams().autoEnd)
         {
             ui->btnRecord->setIcon(QIcon(":/images/SaveNO.png"));
-            ui->btnRecord->setText("Прервать");
+            ui->btnRecord->setText(tr("Прервать"));
         }
         else
         {
             ui->btnRecord->setIcon(QIcon(":/images/SaveOK.png"));
-            ui->btnRecord->setText("Завершить");
+            ui->btnRecord->setText(tr("Завершить"));
         }
 
         initRecSignals();
@@ -177,7 +188,7 @@ void StabTestExecute::recording()
     else
     {
         ui->btnRecord->setIcon(QIcon(":/images/Save.png"));
-        ui->btnRecord->setText("Запись");
+        ui->btnRecord->setText(tr("Запись"));
         if (! probeParams().autoEnd)
             finishTest();
     }
@@ -213,12 +224,13 @@ void StabTestExecute::nextProbe()
     m_recCount = 0;
     ui->lblRecLen->setText("00:00");
     ui->btnRecord->setIcon(QIcon(":/images/Save.png"));
-    ui->btnRecord->setText("Запись");
+    ui->btnRecord->setText(tr("Запись"));
     ui->pbRec->setValue(0);
 }
 
 void StabTestExecute::finishTest()
 {
+    m_isRecording = false;
     m_trd->saveTest();
     static_cast<ExecuteWidget*>(parent())->showDB();
 }

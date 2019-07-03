@@ -26,6 +26,13 @@ QString DeviceProtocols::portName(const DeviceProtocols::Ports port)
         return QString("COM %1").arg(static_cast<int>(port));
 }
 
+QString DeviceProtocols::serialPortName(const DeviceProtocols::Ports port)
+{
+    if (static_cast<int>(port) > 0)
+        return QString("COM%1").arg(static_cast<int>(port));
+    return QString("");
+}
+
 QList<DeviceProtocols::Ports> DeviceProtocols::comPorts()
 {
     return portsEnum(pcCom1, pcCom127);
@@ -40,3 +47,4 @@ QList<DeviceProtocols::Ports> DeviceProtocols::allPorts()
 {
     return portsEnum(pcEmulation, pcCom127);
 }
+

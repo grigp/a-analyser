@@ -2,6 +2,7 @@ INCLUDEPATH += $$PWD
 
 include(stabilan/drv_stabilan_src.pri)
 include(jump_plate/drv_jumpplate_src.pri)
+include(ports/ports_src.pri)
 
 HEADERS += \
     $$PWD/driversfactory.h \

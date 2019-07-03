@@ -16,19 +16,19 @@ public:
     explicit Driver(QObject *parent = nullptr);
 
     /*!
+     * \brief Виртуальные методы, возвращающие uid и name драйверов
+     * Есть методы в подклассах uid и name, но они статические и невиртуальные
+     */
+    virtual QString driverUid() const = 0;
+    virtual QString driverName() const = 0;
+
+    /*!
      * \brief Устанавливает параметры драйвера
      * для использования при работе
      * \param params - параметры
      * \param port - порт
      */
     virtual void setParams(const DeviceProtocols::Ports port, const QJsonObject &params) = 0;
-
-    /*!
-     * \brief Вызывает диалог редактирования параметров
-     * \param params - редактируемые параметры
-     * \return true, если диалог закончился командой сохранить параметры
-     */
-//    virtual bool editParams(QJsonObject &params) = 0;
 
     /*!
      * \brief Запуск передачи данных
@@ -42,6 +42,7 @@ public:
 
 signals:
     void sendData(DeviceProtocols::DeviceData *data);
+    void communicationError(const int errorCode);
 
 public slots:
 };

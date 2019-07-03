@@ -28,9 +28,18 @@ public:
      */
     virtual QString name() = 0;
 
-    virtual void onDBConnect();
+    virtual void onDBConnect() {}
 
-    virtual void onDBDisconnect();
+    virtual void onDBDisconnect() {}
+
+    /*!
+     * \brief Вызывается после показа виджета
+     */
+    virtual void onShow() {}
+    /*!
+     * \brief Вызывается перед прятанием виджета
+     */
+    virtual void onHide() {}
 
 private:
     Ui::ClientWidget *ui;

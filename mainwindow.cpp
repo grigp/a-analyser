@@ -31,10 +31,18 @@ MainWindow::~MainWindow()
 void MainWindow::showClientPage(const QString &uidPage)
 {
     foreach (auto *wgt, m_clientWidgets)
+        if (static_cast<ClientWidget*>(wgt)->uid() == m_currentClientPage)
+            static_cast<ClientWidget*>(wgt)->onHide();
+
+    foreach (auto *wgt, m_clientWidgets)
     {
         wgt->setVisible(static_cast<ClientWidget*>(wgt)->uid() == uidPage);
+
         if (static_cast<ClientWidget*>(wgt)->uid() == uidPage)
+        {
             m_currentClientPage = uidPage;
+            static_cast<ClientWidget*>(wgt)->onShow();
+        }
     }
 }
 

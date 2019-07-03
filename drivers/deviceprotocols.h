@@ -6,6 +6,8 @@
 #include <QList>
 #include <QVector>
 
+class Driver;
+
 namespace DeviceProtocols {
 
 ///<------------------------------------------------------------------------------------------
@@ -29,8 +31,15 @@ enum Ports {
     , pcCom121, pcCom122, pcCom123, pcCom124, pcCom125, pcCom126, pcCom127
 };
 
-
+/*!
+ * \brief Возвращает имя порта для показа в списке в формате COM <номер>
+ */
 QString portName(const Ports port);
+
+/*!
+ * \brief Возвращает имя порта для использования в QSerialPort в формате COM<номер>
+ */
+QString serialPortName(const Ports port);
 
 QList<Ports> comPorts();
 QList<Ports> comUsbPorts();
@@ -55,10 +64,16 @@ static const QString name_JumpPlateDvcData = "Данные прыжковой п
 class DeviceData
 {
 public:
-    explicit DeviceData() {}
+    explicit DeviceData(Driver* sender)
+        : m_sender(sender) {}
 
     virtual QString uid() const = 0; // {return QString("");}
     virtual QString name() const = 0; // {return QString("");}
+
+    Driver* sender() {return m_sender;}
+
+private:
+    Driver* m_sender;
 };
 
 
@@ -68,22 +83,28 @@ public:
 class StabDvcData : public DeviceData
 {
 public:
-    StabDvcData(double x, double y)
-        : m_x(x), m_y(y) {m_z = 0; m_a = 0; m_b = 0; m_c = 0, m_d = 0;}
+    StabDvcData(Driver *sender, double x, double y)
+        : DeviceData(sender)
+        , m_x(x), m_y(y) {m_z = 0; m_a = 0; m_b = 0; m_c = 0, m_d = 0;}
 
-    StabDvcData(double x, double y, double z)
-        : m_x(x), m_y(y), m_z(z) {m_a = 0; m_b = 0; m_c = 0, m_d = 0;}
+    StabDvcData(Driver *sender, double x, double y, double z)
+        : DeviceData(sender)
+        , m_x(x), m_y(y), m_z(z) {m_a = 0; m_b = 0; m_c = 0, m_d = 0;}
 
-    StabDvcData(double x, double y, double a, double b, double c)
-        : m_x(x), m_y(y), m_a(a), m_b(b), m_c(c) {m_z = m_a + m_b + m_c; m_d = 0;}
+    StabDvcData(Driver *sender, double x, double y, double a, double b, double c)
+        : DeviceData(sender)
+        , m_x(x), m_y(y), m_a(a), m_b(b), m_c(c) {m_z = m_a + m_b + m_c; m_d = 0;}
 
-    StabDvcData(double x, double y, double a, double b, double c, double d)
-        : m_x(x), m_y(y), m_a(a), m_b(b), m_c(c), m_d(d) {m_z = m_a + m_b + m_c + m_d;}
+    StabDvcData(Driver *sender, double x, double y, double a, double b, double c, double d)
+        : DeviceData(sender)
+        , m_x(x), m_y(y), m_a(a), m_b(b), m_c(c), m_d(d) {m_z = m_a + m_b + m_c + m_d;}
 
-    StabDvcData(const StabDvcData &obj)
-        : m_x(obj.x()), m_y(obj.y()), m_z(obj.z()),
-          m_a(obj.a()), m_b(obj.b()), m_c(obj.c()), m_d(obj.d())
-    {}
+//    StabDvcData(const StabDvcData &obj)
+//        : DeviceData(obj.sender())
+//        , m_x(obj.x()), m_y(obj.y()), m_z(obj.z()),
+//          m_a(obj.a()), m_b(obj.b()), m_c(obj.c()), m_d(obj.d())
+//    {}
+    ~StabDvcData(){}
 
     double x() const {return m_x;}
     double y() const {return m_y;}
@@ -108,8 +129,8 @@ private:
 class DynamoDvcData : public DeviceData
 {
 public:
-    DynamoDvcData(const QVector<double> &data)
-        : m_data(data) {}
+    DynamoDvcData(Driver *sender, const QVector<double> &data)
+        : DeviceData(sender), m_data(data) {}
 
     int size() const {return m_data.size();}
 
@@ -129,8 +150,8 @@ private:
 class JumpPlateDvcData : public DeviceData
 {
 public:
-    JumpPlateDvcData(bool busy, double time)
-        : m_busy(busy), m_time(time) {}
+    JumpPlateDvcData(Driver *sender, bool busy, double time)
+        : DeviceData(sender), m_busy(busy), m_time(time) {}
 
     bool busy() const {return m_busy;}
     double time() const {return m_time;}

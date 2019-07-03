@@ -9,6 +9,7 @@
 #include "mainwindow.h"
 #include "metodicsfactory.h"
 #include "driversfactory.h"
+#include "driver.h"
 #include "executewidget.h"
 #include "databaseresultwidget.h"
 #include "database.h"
@@ -203,7 +204,12 @@ bool AAnalyserApplication::editParamsConnecton(const int connectIdx, const QStri
 Driver *AAnalyserApplication::getDriver(const QStringList &protocols, const int index) const
 {
     if (m_drivers)
-        return m_drivers->getDriver(protocols, index);
+    {
+        auto *drv = m_drivers->getDriver(protocols, index);
+        if (drv)
+            connect(drv, &Driver::sendData, this, &AAnalyserApplication::sendData);
+        return drv;
+    }
     return nullptr;
 }
 
@@ -213,3 +219,4 @@ QList<DeviceProtocols::Ports> AAnalyserApplication::getDriverPorts(const QString
         return m_drivers->getDriverPorts(drvUid);
     return QList<DeviceProtocols::Ports>();
 }
+

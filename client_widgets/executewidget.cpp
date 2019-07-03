@@ -29,6 +29,20 @@ QString ExecuteWidget::name()
     return tr("Проведение теста");
 }
 
+void ExecuteWidget::onShow()
+{
+
+}
+
+void ExecuteWidget::onHide()
+{
+    while (QLayoutItem* item = layout()->takeAt(0))
+    {
+        delete item->widget();
+        delete item;
+    }
+}
+
 void ExecuteWidget::showDB()
 {
     static_cast<AAnalyserApplication*>(QApplication::instance())->showClientPage(ClientWidgets::uidDatabaseResultWidgetUid);

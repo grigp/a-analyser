@@ -29,14 +29,14 @@ public:
 
     void setParams(const QJsonObject &probeParams);
 
-protected:
-    void timerEvent(QTimerEvent *event) override;
-
 private slots:
     void start();
     void signalTest();
 
+    void scaleChange(int scaleId);
+
     void getData(DeviceProtocols::DeviceData *data);
+    void on_communicationError(const int errorCode);
 
     /*!
      * \brief Управляет началом / остановом / прерыванием записи
@@ -77,8 +77,6 @@ private:
     TestResultData *m_trd;  ///< Объект, записывающий данные в базу
     Stabilogram *m_stb;     ///< Записываемая стабилограмма
     Ballistogram *m_z;      ///< Записываемая баллистограмма
-
-    int m_ti;               ///< id таймера, отслеживающего прием данных (todo: временно, до реальных драйверов с потоками)
 };
 
 #endif // STABTESTEXECUTE_H

@@ -31,6 +31,16 @@ public:
      */
     QString name() override;
 
+    /*!
+     * \brief Вызывается после показа виджета
+     */
+    void onShow() override;
+    /*!
+     * \brief Вызывается перед прятанием виджета
+     */
+    void onHide() override;
+
+
 public slots:
     void showDB();
 

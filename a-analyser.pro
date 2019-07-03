@@ -6,7 +6,7 @@
 
 QMAKE_EXTRA_TARGETS += before_build makefilehook
 
-QT       += core gui
+QT       += core gui serialport
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -38,6 +38,7 @@ include(kernel/kernel_src.pri)
 include(metodics/metodics_src.pri)
 include(drivers/drivers_src.pri)
 include(service/service_src.pri)
+include(visual_widgets/visual_widgets_src.pri)
 
 SOURCES += \
         main.cpp \

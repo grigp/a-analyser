@@ -23,6 +23,13 @@ public:
     static QString name() {return name_jumpPlate;}
 
     /*!
+     * \brief Перекрытые методы, возвращающие uid и name драйверов
+     * uid и name можно использовать, как методы класса, а эти - только с экземпляром
+     */
+    QString driverUid() const override {return uid();}
+    QString driverName() const override {return name();}
+
+    /*!
      * \brief Устанавливает параметры драйвера
      * для использования при работе
      * \param params - параметры
