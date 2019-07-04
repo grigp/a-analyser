@@ -13,7 +13,6 @@ ColoredCircleWindow::ColoredCircleWindow(QWidget *parent) :
     ui(new Ui::ColoredCircleWindow)
 {
     ui->setupUi(this);
-    nextColor();
 }
 
 ColoredCircleWindow::~ColoredCircleWindow()
