@@ -4,6 +4,8 @@
 
 int main(int argc, char *argv[])
 {
+    qsrand(QDateTime::currentMSecsSinceEpoch());
+
     AAnalyserApplication a(argc, argv);
     MainWindow w;
     a.setMainWindow(&w);

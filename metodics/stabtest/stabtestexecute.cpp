@@ -12,10 +12,14 @@
 #include "deviceprotocols.h"
 #include "driver.h"
 
+#include "coloredcirclewindow.h"
+#include "soundpickwindow.h"
+
 #include <QJsonObject>
 #include <QJsonArray>
 #include <QTimer>
 #include <QMessageBox>
+#include <QDesktopWidget>
 #include <QDebug>
 
 namespace
@@ -86,12 +90,15 @@ void StabTestExecute::start()
 
         connect(m_driver, &Driver::sendData, this, &StabTestExecute::getData);
         connect(m_driver, &Driver::communicationError, this, &StabTestExecute::on_communicationError);
-        m_driver->start();
 
         m_kard = static_cast<AAnalyserApplication*>(QApplication::instance())->getSelectedPatient();
         MetodicDefines::MetodicInfo mi = static_cast<AAnalyserApplication*>(QApplication::instance())->getSelectedMetodic();
         ui->lblProbeTitle->setText(probeParams().name + " - " + m_kard.fio);
         m_trd->newTest(m_kard.uid, mi.uid);
+
+        showPatientWindow(m_params.at(m_probe).stimulCode);
+
+        m_driver->start();
     }
     else
     {
@@ -144,6 +151,9 @@ void StabTestExecute::getData(DeviceProtocols::DeviceData *data)
         ui->lblZ->setText(QString("Z = %1").arg(stabData->z(), 0, 'f', 2));
         ui->wgtSKG->setMarker(stabData->x(), stabData->y());
 
+        if (m_patientWin)
+            m_patientWin->setStabData(stabData->x(), stabData->y());
+
         if (m_isRecording)
         {
             SignalsDefines::StabRec rec(std::make_tuple(stabData->x(), stabData->y()));
@@ -176,6 +186,7 @@ void StabTestExecute::getData(DeviceProtocols::DeviceData *data)
 
 void StabTestExecute::on_communicationError(const int errorCode)
 {
+    Q_UNUSED(errorCode);
     ui->lblCommunicationError->setVisible(true);
 }
 
@@ -208,9 +219,14 @@ void StabTestExecute::recording()
         }
 
         initRecSignals();
+        if (m_patientWin)
+            m_patientWin->run();
     }
     else
     {
+        if (m_patientWin)
+            m_patientWin->stop();
+
         ui->btnRecord->setIcon(QIcon(":/images/Save.png"));
         ui->btnRecord->setText(tr("Запись"));
         if (! probeParams().autoEnd)
@@ -247,6 +263,8 @@ void StabTestExecute::initRecSignals()
 
 void StabTestExecute::nextProbe()
 {
+    hidePatientWindow();
+
     ++m_probe;
     ui->lblProbeTitle->setText(probeParams().name + " - " + m_kard.fio);
     m_isRecording = false;
@@ -255,6 +273,8 @@ void StabTestExecute::nextProbe()
     ui->btnRecord->setIcon(QIcon(":/images/Save.png"));
     ui->btnRecord->setText(tr("Запись"));
     ui->pbRec->setValue(0);
+
+    showPatientWindow(m_params.at(m_probe).stimulCode);
 }
 
 void StabTestExecute::finishTest()
@@ -262,4 +282,34 @@ void StabTestExecute::finishTest()
     m_isRecording = false;
     m_trd->saveTest();
     static_cast<ExecuteWidget*>(parent())->showDB();
+}
+
+void StabTestExecute::showPatientWindow(const int winCode)
+{
+    switch (winCode) {
+    case 1:
+        m_patientWin = new ColoredCircleWindow(this);
+        break;
+    case 2:
+        m_patientWin = new SoundPickWindow(this);
+        break;
+    default:
+        m_patientWin = nullptr;
+        break;
+    }
+
+    if (m_patientWin)
+    {
+        if (QApplication::desktop()->screenCount() > 1)
+            m_patientWin->setGeometry(QApplication::desktop()->screenGeometry(1));
+        else
+            m_patientWin->setGeometry(QApplication::desktop()->screenGeometry(0));
+        m_patientWin->show();
+    }
+}
+
+void StabTestExecute::hidePatientWindow()
+{
+    delete m_patientWin;
+    m_patientWin = nullptr;
 }

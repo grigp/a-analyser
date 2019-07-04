@@ -15,6 +15,7 @@ class TestResultData;
 class Stabilogram;
 class Ballistogram;
 class Driver;
+class PatientWindow;
 
 /*!
  * \brief Виджет выполнения стабилометрического тестирования StabTestExecute class
@@ -76,6 +77,16 @@ private:
      */
     void finishTest();
 
+    /*!
+     * \brief Показывает окно пациента
+     * \param winCode - код окна
+     */
+    void showPatientWindow(const int winCode);
+    /*!
+     * \brief Прячет окно пациента
+     */
+    void hidePatientWindow();
+
     DataDefines::PatientKard m_kard;
     QList<StabTestParams::ProbeParams> m_params; ///< Параметры методики
 
@@ -89,6 +100,8 @@ private:
     TestResultData *m_trd;  ///< Объект, записывающий данные в базу
     Stabilogram *m_stb;     ///< Записываемая стабилограмма
     Ballistogram *m_z;      ///< Записываемая баллистограмма
+
+    PatientWindow* m_patientWin {nullptr};  ///< Окно пациента
 };
 
 #endif // STABTESTEXECUTE_H
