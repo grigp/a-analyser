@@ -39,6 +39,16 @@ void AreaSKG::setMarker(const double x, const double y)
 
     m_marker->setPos(x * prop - m_marker->boundingRect().width() / 2,
                      - y * prop - m_marker->boundingRect().height() / 2);
+
+    if (m_isShowTrace)
+        m_traceSKG->add(x, y);
+}
+
+void AreaSKG::showTrace(const bool trace)
+{
+    m_isShowTrace = trace;
+    if (!m_isShowTrace)
+        m_traceSKG->clear();
 }
 
 void AreaSKG::setAreaSKG()

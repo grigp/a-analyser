@@ -24,5 +24,6 @@
         <file>images/Connects/Down.png</file>
         <file>images/Connects/Settings.png</file>
         <file>images/Connects/Up.png</file>
+        <file>images/Zeroing.png</file>
     </qresource>
 </RCC>

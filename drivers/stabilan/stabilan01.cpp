@@ -166,12 +166,17 @@ QList<DeviceProtocols::Ports> Stabilan01::getPorts()
 
 void Stabilan01::calibrate()
 {
-
+    QByteArray cmd;
+    cmd.resize(2);
+    cmd[0] = 0x33;
+    cmd[1] = 0x0;
+    emit writeData(cmd);
 }
 
 void Stabilan01::zeroing()
 {
-
+    m_offsetX = m_X;
+    m_offsetY = m_Y;
 }
 
 QString Stabilan01::modelName(const Stabilan01Defines::Model mdlCode)
@@ -324,7 +329,9 @@ void Stabilan01::assignByteFromDevice(quint8 b)
 
                 ++m_blockCount;
                 // Передача стабилограммы
-                auto stabData = new DeviceProtocols::StabDvcData(this, m_X, m_Y, m_A, m_B, m_C, m_D);
+                auto stabData = new DeviceProtocols::StabDvcData(this,
+                                                                 m_X - m_offsetX, m_Y - m_offsetY,
+                                                                 m_A, m_B, m_C, m_D);
                 emit sendData(stabData);
                 delete stabData;
 

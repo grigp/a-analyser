@@ -146,10 +146,14 @@ private:
     SerialPort *m_port {nullptr};
     QThread *m_trdInput {nullptr};
 
-    int m_blockCount {0};
-    bool m_isCommunicationError {false};
+    int m_blockCount {0};                    ///< Счетчик пакетов
     int m_blockCountPrev {0};
-    int m_tmCommError {-1};
+    int m_tmCommError {-1};                  ///< id таймера ошибки связи
+    bool m_isCommunicationError {false};     ///< признак ошибки связи
+
+    ///< Точки центровки
+    double m_offsetX {0};
+    double m_offsetY {0};
 
     //ReadingDataStabilan01 *m_readData {nullptr};  ///< Поток чтения данных
 

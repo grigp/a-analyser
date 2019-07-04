@@ -180,10 +180,16 @@
          <item>
           <widget class="QFrame" name="frControl">
            <property name="sizePolicy">
-            <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+            <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
              <horstretch>1</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>200</width>
+             <height>0</height>
+            </size>
            </property>
            <property name="frameShape">
             <enum>QFrame::StyledPanel</enum>
@@ -193,52 +199,67 @@
            </property>
            <layout class="QVBoxLayout" name="verticalLayout">
             <item>
-             <widget class="QPushButton" name="pushButton_2">
+             <widget class="QPushButton" name="btnZeroing">
               <property name="text">
-               <string>PushButton</string>
+               <string>Центровка</string>
               </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QPushButton" name="pushButton_3">
-              <property name="text">
-               <string>PushButton</string>
+              <property name="icon">
+               <iconset resource="../../kernel.qrc">
+                <normaloff>:/images/Zeroing.png</normaloff>:/images/Zeroing.png</iconset>
               </property>
-             </widget>
-            </item>
-            <item>
-             <spacer name="verticalSpacer_2">
-              <property name="orientation">
-               <enum>Qt::Vertical</enum>
-              </property>
-              <property name="sizeType">
-               <enum>QSizePolicy::Fixed</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
+              <property name="iconSize">
                <size>
-                <width>20</width>
-                <height>10</height>
+                <width>22</width>
+                <height>22</height>
                </size>
               </property>
-             </spacer>
+             </widget>
             </item>
             <item>
-             <widget class="QSlider" name="horizontalSlider">
-              <property name="minimum">
-               <number>1</number>
+             <widget class="QFrame" name="frScale">
+              <property name="frameShape">
+               <enum>QFrame::StyledPanel</enum>
               </property>
-              <property name="maximum">
-               <number>8</number>
+              <property name="frameShadow">
+               <enum>QFrame::Raised</enum>
               </property>
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="tickPosition">
-               <enum>QSlider::TicksBelow</enum>
-              </property>
-              <property name="tickInterval">
-               <number>1</number>
-              </property>
+              <layout class="QHBoxLayout" name="horizontalLayout_2">
+               <property name="leftMargin">
+                <number>1</number>
+               </property>
+               <property name="topMargin">
+                <number>1</number>
+               </property>
+               <property name="rightMargin">
+                <number>1</number>
+               </property>
+               <property name="bottomMargin">
+                <number>1</number>
+               </property>
+               <item>
+                <widget class="QLabel" name="lblScale">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                   <horstretch>2</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="text">
+                  <string>Масштаб</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QComboBox" name="cbScale">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                   <horstretch>1</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                </widget>
+               </item>
+              </layout>
              </widget>
             </item>
             <item>
@@ -333,7 +354,28 @@
                  </property>
                 </widget>
                </item>
+               <item>
+                <widget class="QLabel" name="lblZ">
+                 <property name="font">
+                  <font>
+                   <pointsize>12</pointsize>
+                   <weight>75</weight>
+                   <bold>true</bold>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>Z = 0</string>
+                 </property>
+                </widget>
+               </item>
               </layout>
+             </widget>
+            </item>
+            <item>
+             <widget class="QCheckBox" name="cbShowTrace">
+              <property name="text">
+               <string>Рисовать след</string>
+              </property>
              </widget>
             </item>
             <item>
@@ -348,6 +390,13 @@
                </size>
               </property>
              </spacer>
+            </item>
+            <item>
+             <widget class="QPushButton" name="btnCalibrate">
+              <property name="text">
+               <string>Калибровка</string>
+              </property>
+             </widget>
             </item>
            </layout>
           </widget>
@@ -481,22 +530,6 @@
  </resources>
  <connections>
   <connection>
-   <sender>pushButton_2</sender>
-   <signal>clicked()</signal>
-   <receiver>StabTestExecute</receiver>
-   <slot>signalTest()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>677</x>
-     <y>62</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>701</x>
-     <y>90</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>btnRecord</sender>
    <signal>clicked()</signal>
    <receiver>StabTestExecute</receiver>
@@ -504,7 +537,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>677</x>
-     <y>173</y>
+     <y>181</y>
     </hint>
     <hint type="destinationlabel">
      <x>700</x>
@@ -513,18 +546,66 @@
    </hints>
   </connection>
   <connection>
-   <sender>horizontalSlider</sender>
-   <signal>valueChanged(int)</signal>
+   <sender>btnZeroing</sender>
+   <signal>clicked()</signal>
+   <receiver>StabTestExecute</receiver>
+   <slot>zeroing()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>630</x>
+     <y>54</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>703</x>
+     <y>54</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btnCalibrate</sender>
+   <signal>clicked()</signal>
+   <receiver>StabTestExecute</receiver>
+   <slot>calibrate()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>550</x>
+     <y>460</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>702</x>
+     <y>457</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>cbShowTrace</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>StabTestExecute</receiver>
+   <slot>showTrace(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>548</x>
+     <y>366</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>703</x>
+     <y>324</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>cbScale</sender>
+   <signal>currentIndexChanged(int)</signal>
    <receiver>StabTestExecute</receiver>
    <slot>scaleChange(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>606</x>
-     <y>116</y>
+     <x>644</x>
+     <y>98</y>
     </hint>
     <hint type="destinationlabel">
      <x>701</x>
-     <y>128</y>
+     <y>105</y>
     </hint>
    </hints>
   </connection>
@@ -534,5 +615,8 @@
   <slot>signalTest()</slot>
   <slot>recording()</slot>
   <slot>scaleChange(int)</slot>
+  <slot>zeroing()</slot>
+  <slot>calibrate()</slot>
+  <slot>showTrace(bool)</slot>
  </slots>
 </ui>

@@ -32,6 +32,15 @@ StabTestExecute::StabTestExecute(QWidget *parent) :
 
     ui->lblCommunicationError->setVisible(false);
     QTimer::singleShot(0, this, &StabTestExecute::start);
+
+    ui->cbScale->addItem("1");
+    ui->cbScale->addItem("2");
+    ui->cbScale->addItem("4");
+    ui->cbScale->addItem("8");
+    ui->cbScale->addItem("16");
+    ui->cbScale->addItem("32");
+    ui->cbScale->addItem("64");
+    ui->cbScale->addItem("128");
 }
 
 StabTestExecute::~StabTestExecute()
@@ -67,27 +76,29 @@ void StabTestExecute::setParams(const QJsonObject &params)
     ui->lblProbeTitle->setText(probeParams().name + " - " + m_kard.fio);
 }
 
-double r = 0;
-
 void StabTestExecute::start()
 {
     m_driver = static_cast<AAnalyserApplication*>(QApplication::instance())->
             getDriver(QStringList() << DeviceProtocols::uid_StabProtocol);
     if (m_driver)
     {
+        m_stabControl = dynamic_cast<DeviceProtocols::StabControl*>(m_driver);
+
         connect(m_driver, &Driver::sendData, this, &StabTestExecute::getData);
         connect(m_driver, &Driver::communicationError, this, &StabTestExecute::on_communicationError);
         m_driver->start();
 
         m_kard = static_cast<AAnalyserApplication*>(QApplication::instance())->getSelectedPatient();
         MetodicDefines::MetodicInfo mi = static_cast<AAnalyserApplication*>(QApplication::instance())->getSelectedMetodic();
+        ui->lblProbeTitle->setText(probeParams().name + " - " + m_kard.fio);
         m_trd->newTest(m_kard.uid, mi.uid);
     }
     else
     {
         QMessageBox::warning(this, tr("Предупреждение"), tr("Отсутствует необходимое подключение для работы теста"));
         static_cast<ExecuteWidget*>(parent())->showDB();
-    }}
+    }
+}
 
 void StabTestExecute::signalTest()
 {
@@ -115,7 +126,7 @@ void StabTestExecute::signalTest()
 void StabTestExecute::scaleChange(int scaleId)
 {
     int v = 1;
-    for (int i = 0; i < scaleId - 1; ++i)
+    for (int i = 0; i < scaleId; ++i)
         v = v * 2;
     ui->wgtSKG->setDiap(128 / v);
 }
@@ -128,8 +139,9 @@ void StabTestExecute::getData(DeviceProtocols::DeviceData *data)
 
         DeviceProtocols::StabDvcData *stabData = static_cast<DeviceProtocols::StabDvcData*>(data);
 //        qDebug() << stabData->sender()->driverUid() << stabData->sender()->driverName() << stabData->x() << stabData->y();
-        ui->lblX->setText(QString("X = %1").arg(stabData->x()));
-        ui->lblY->setText(QString("Y = %1").arg(stabData->y()));
+        ui->lblX->setText(QString("X = %1").arg(stabData->x(), 0, 'f', 2));
+        ui->lblY->setText(QString("Y = %1").arg(stabData->y(), 0, 'f', 2));
+        ui->lblZ->setText(QString("Z = %1").arg(stabData->z(), 0, 'f', 2));
         ui->wgtSKG->setMarker(stabData->x(), stabData->y());
 
         if (m_isRecording)
@@ -167,6 +179,18 @@ void StabTestExecute::on_communicationError(const int errorCode)
     ui->lblCommunicationError->setVisible(true);
 }
 
+void StabTestExecute::zeroing()
+{
+    if (m_stabControl)
+        m_stabControl->zeroing();
+}
+
+void StabTestExecute::calibrate()
+{
+    if (m_stabControl)
+        m_stabControl->calibrate();
+}
+
 void StabTestExecute::recording()
 {
     m_isRecording = ! m_isRecording;
@@ -193,6 +217,11 @@ void StabTestExecute::recording()
             finishTest();
     }
     m_recCount = 0;
+}
+
+void StabTestExecute::showTrace(bool trace)
+{
+    ui->wgtSKG->showTrace(trace);
 }
 
 StabTestParams::ProbeParams StabTestExecute::probeParams()

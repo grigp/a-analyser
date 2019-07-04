@@ -28,6 +28,12 @@ public:
      */
     void setMarker(const double x, const double y);
 
+    /*!
+     * \brief Переключает режим рисования следа
+     * \param trace - признак рисования следа
+     */
+    void showTrace(const bool trace);
+
 private:
     Ui::AreaSKG *ui;
 
@@ -39,6 +45,7 @@ private:
     QGraphicsRectItem* m_marker {nullptr};
 
     int m_diap {128};
+    bool m_isShowTrace {false};
 };
 
 #endif // AREASKG_H

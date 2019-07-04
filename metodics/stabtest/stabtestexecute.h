@@ -39,10 +39,21 @@ private slots:
     void on_communicationError(const int errorCode);
 
     /*!
+     * \brief Центровка
+     */
+    void zeroing();
+
+    /*!
+     * \brief Калибровка
+     */
+    void calibrate();
+
+    /*!
      * \brief Управляет началом / остановом / прерыванием записи
      */
     void recording();
 
+    void showTrace(bool trace);
 
 private:
     Ui::StabTestExecute *ui;
@@ -73,6 +84,7 @@ private:
     int m_recCount = 0;             ///< Счетчик пакетов данных в пробе
 
     Driver* m_driver {nullptr};     ///< Драйвер передающий данные
+    DeviceProtocols::StabControl* m_stabControl;  ///< Управление стабилографией в драйвере
 
     TestResultData *m_trd;  ///< Объект, записывающий данные в базу
     Stabilogram *m_stb;     ///< Записываемая стабилограмма
