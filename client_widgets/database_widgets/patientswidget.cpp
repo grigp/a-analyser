@@ -3,6 +3,7 @@
 
 #include "datadefines.h"
 #include "patientsmodel.h"
+#include "patientsproxymodel.h"
 #include "patientkarddialog.h"
 #include "aanalyserapplication.h"
 
@@ -14,9 +15,12 @@ PatientsWidget::PatientsWidget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::PatientsWidget)
   , m_mdlPatients(new PatientsModel(this))
+  , m_pmdlPatients(new PatientsProxyModel(this))
 {
     ui->setupUi(this);
-    ui->tvPatients->setModel(m_mdlPatients);
+
+    m_pmdlPatients->setSourceModel(m_mdlPatients);
+    ui->tvPatients->setModel(m_pmdlPatients);
     ui->tvPatients->viewport()->installEventFilter(this);
     ui->tvPatients->sortByColumn(PatientsModel::ColFio, Qt::AscendingOrder);
 }

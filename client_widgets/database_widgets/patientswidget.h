@@ -5,6 +5,7 @@
 #include <QModelIndex>
 
 class PatientsModel;
+class PatientsProxyModel;
 
 namespace Ui {
 class PatientsWidget;
@@ -47,6 +48,7 @@ private:
     Ui::PatientsWidget *ui;
 
     PatientsModel *m_mdlPatients;
+    PatientsProxyModel *m_pmdlPatients;
 };
 
 #endif // PATIENTSWIDGET_H
