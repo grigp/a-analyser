@@ -85,10 +85,14 @@ void GridSKG::paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWi
 
 void GridSKG::setDiap(int diap)
 {
-    m_diap = diap;
-    int minS = qMin(m_width, m_height);
-    m_prop = static_cast<double>(minS / 2 - I_LABEL_SPACE) / static_cast<double>(m_diap);
-    update(boundingRect());
+    // Если до первой прорисовки сделать изменение масштаба, появятся коллизии
+    if (m_width > 0 && m_height > 0)
+    {
+        m_diap = diap;
+        int minS = qMin(m_width, m_height);
+        m_prop = static_cast<double>(minS / 2 - I_LABEL_SPACE) / static_cast<double>(m_diap);
+        update(boundingRect());
+    }
 }
 
 int GridSKG::getLabelSpace()

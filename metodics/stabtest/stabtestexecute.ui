@@ -600,12 +600,12 @@
    <slot>scaleChange(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>644</x>
-     <y>98</y>
+     <x>641</x>
+     <y>87</y>
     </hint>
     <hint type="destinationlabel">
-     <x>701</x>
-     <y>105</y>
+     <x>350</x>
+     <y>261</y>
     </hint>
    </hints>
   </connection>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>ColoredCircleWindow</class>
- <widget class="QDialog" name="ColoredCircleWindow">
+ <class>TargetWindow</class>
+ <widget class="QDialog" name="TargetWindow">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -11,9 +11,9 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Цветные круги</string>
+   <string>Dialog</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout">
+  <layout class="QHBoxLayout" name="horizontalLayout">
    <property name="spacing">
     <number>0</number>
    </property>
@@ -30,15 +30,15 @@
     <number>0</number>
    </property>
    <item>
-    <widget class="Figures" name="wgtCircle" native="true"/>
+    <widget class="TargetArea" name="widget" native="true"/>
    </item>
   </layout>
  </widget>
  <customwidgets>
   <customwidget>
-   <class>Figures</class>
+   <class>TargetArea</class>
    <extends>QWidget</extends>
-   <header location="global">figures.h</header>
+   <header location="global">targetarea.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

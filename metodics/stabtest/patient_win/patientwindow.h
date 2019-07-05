@@ -18,10 +18,16 @@ public:
     explicit PatientWindow(QWidget *parent = 0);
     ~PatientWindow();
 
-    virtual void setStabData(const double x, const double y) = 0;
+    virtual void setDiap(const int diap) = 0;
+    virtual void setMarker(const double x, const double y) = 0;
 
     virtual void run() = 0;
     virtual void stop() = 0;
+
+    /*!
+     * \brief Возвращает результат работы окна пациента
+     */
+    virtual QVariant result() = 0;
 
 private:
     Ui::PatientWindow *ui;

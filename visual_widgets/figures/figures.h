@@ -25,7 +25,12 @@ public:
 
     void setSize(const int size);
     void setFigureType(const FigureType ft);
+
     void setColor(const QColor color);
+    QColor color() const;
+
+    void setBackgroundColor(const QColor color);
+    QColor backgroundColor() const;
 
 protected:
     void paintEvent(QPaintEvent *event) override;
@@ -35,7 +40,8 @@ private:
 
     int m_size {100};
     FigureType m_ft {ftEllipse};
-    QColor m_color {Qt::red};
+    QColor m_color {Qt::white};
+    QColor m_backgroundColor {Qt::darkGray};
 };
 
 #endif // FIGURES_H

@@ -18,6 +18,7 @@ PatientsWidget::PatientsWidget(QWidget *parent) :
     ui->setupUi(this);
     ui->tvPatients->setModel(m_mdlPatients);
     ui->tvPatients->viewport()->installEventFilter(this);
+    ui->tvPatients->sortByColumn(PatientsModel::ColFio, Qt::AscendingOrder);
 }
 
 PatientsWidget::~PatientsWidget()

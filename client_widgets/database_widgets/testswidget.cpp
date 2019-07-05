@@ -32,6 +32,7 @@ void TestsWidget::onDbConnect()
     if (m_mdlTest)
         m_mdlTest->load();
     ui->tvTests->header()->resizeSections(QHeaderView::ResizeToContents);
+    ui->tvTests->sortByColumn(TestsModel::colDateTime, Qt::DescendingOrder);
 }
 
 bool TestsWidget::eventFilter(QObject *obj, QEvent *event)

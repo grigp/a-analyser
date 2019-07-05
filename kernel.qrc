@@ -25,5 +25,6 @@
         <file>images/Connects/Settings.png</file>
         <file>images/Connects/Up.png</file>
         <file>images/Zeroing.png</file>
+        <file>sound/03.wav</file>
     </qresource>
 </RCC>

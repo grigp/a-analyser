@@ -14,12 +14,14 @@
 
 #include "coloredcirclewindow.h"
 #include "soundpickwindow.h"
+#include "targetwindow.h"
 
 #include <QJsonObject>
 #include <QJsonArray>
 #include <QTimer>
 #include <QMessageBox>
 #include <QDesktopWidget>
+#include <QComboBox>
 #include <QDebug>
 
 namespace
@@ -97,6 +99,7 @@ void StabTestExecute::start()
         m_trd->newTest(m_kard.uid, mi.uid);
 
         showPatientWindow(m_params.at(m_probe).stimulCode);
+        ui->cbScale->setCurrentIndex(m_params.at(m_probe).scale);
 
         m_driver->start();
     }
@@ -136,6 +139,8 @@ void StabTestExecute::scaleChange(int scaleId)
     for (int i = 0; i < scaleId; ++i)
         v = v * 2;
     ui->wgtSKG->setDiap(128 / v);
+    if (m_patientWin)
+        m_patientWin->setDiap(128 / v);
 }
 
 void StabTestExecute::getData(DeviceProtocols::DeviceData *data)
@@ -152,7 +157,7 @@ void StabTestExecute::getData(DeviceProtocols::DeviceData *data)
         ui->wgtSKG->setMarker(stabData->x(), stabData->y());
 
         if (m_patientWin)
-            m_patientWin->setStabData(stabData->x(), stabData->y());
+            m_patientWin->setMarker(stabData->x(), stabData->y());
 
         if (m_isRecording)
         {
@@ -266,19 +271,24 @@ void StabTestExecute::nextProbe()
     hidePatientWindow();
 
     ++m_probe;
-    ui->lblProbeTitle->setText(probeParams().name + " - " + m_kard.fio);
-    m_isRecording = false;
-    m_recCount = 0;
-    ui->lblRecLen->setText("00:00");
-    ui->btnRecord->setIcon(QIcon(":/images/Save.png"));
-    ui->btnRecord->setText(tr("Запись"));
-    ui->pbRec->setValue(0);
+    if (m_probe < m_params.size())
+    {
+        ui->lblProbeTitle->setText(probeParams().name + " - " + m_kard.fio);
+        m_isRecording = false;
+        m_recCount = 0;
+        ui->lblRecLen->setText("00:00");
+        ui->btnRecord->setIcon(QIcon(":/images/Save.png"));
+        ui->btnRecord->setText(tr("Запись"));
+        ui->pbRec->setValue(0);
 
-    showPatientWindow(m_params.at(m_probe).stimulCode);
+        showPatientWindow(m_params.at(m_probe).stimulCode);
+        ui->cbScale->setCurrentIndex(m_params.at(m_probe).scale);
+    }
 }
 
 void StabTestExecute::finishTest()
 {
+    hidePatientWindow();
     m_isRecording = false;
     m_trd->saveTest();
     static_cast<ExecuteWidget*>(parent())->showDB();
@@ -292,6 +302,9 @@ void StabTestExecute::showPatientWindow(const int winCode)
         break;
     case 2:
         m_patientWin = new SoundPickWindow(this);
+        break;
+    case 3:
+        m_patientWin = new TargetWindow(this);
         break;
     default:
         m_patientWin = nullptr;
@@ -310,6 +323,9 @@ void StabTestExecute::showPatientWindow(const int winCode)
 
 void StabTestExecute::hidePatientWindow()
 {
-    delete m_patientWin;
-    m_patientWin = nullptr;
+    if (m_patientWin)
+    {
+        delete m_patientWin;
+        m_patientWin = nullptr;
+    }
 }

@@ -33,11 +33,30 @@ void Figures::setColor(const QColor color)
     repaint();
 }
 
+QColor Figures::color() const
+{
+    return m_color;
+}
+
+void Figures::setBackgroundColor(const QColor color)
+{
+    m_backgroundColor = color;
+}
+
+QColor Figures::backgroundColor() const
+{
+    return m_backgroundColor;
+}
+
 void Figures::paintEvent(QPaintEvent *event)
 {
     Q_UNUSED(event);
 
     QPainter painter(this);
+
+    painter.setBrush(QBrush(m_backgroundColor, Qt::SolidPattern));
+    painter.setPen(QPen(m_backgroundColor, 1, Qt::SolidLine, Qt::FlatCap));
+    painter.drawRect(geometry());
 
     painter.setBrush(QBrush(m_color, Qt::SolidPattern));
     painter.setPen(QPen(m_color, 1, Qt::SolidLine, Qt::FlatCap));

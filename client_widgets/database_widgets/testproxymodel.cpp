@@ -4,6 +4,7 @@
 #include "aanalyserapplication.h"
 
 #include <QTimer>
+#include <QDateTime>
 #include <QDebug>
 
 TestProxyModel::TestProxyModel(QObject *parent)
@@ -51,6 +52,19 @@ bool TestProxyModel::filterAcceptsColumn(int source_column, const QModelIndex &s
     if (source_column == TestsModel::ColMetodic)
         return m_selectMetodicUid == "";
     return true;
+}
+
+bool TestProxyModel::lessThan(const QModelIndex &source_left, const QModelIndex &source_right) const
+{
+    if (source_left.column() == TestsModel::colDateTime && source_right.column() == TestsModel::colDateTime)
+    {
+        auto sLeft = sourceModel()->data(source_left).toString();
+        auto sRight = sourceModel()->data(source_right).toString();
+        auto dtLeft = QDateTime::fromString(sLeft, "dd.MM.yyyy hh:mm");
+        auto dtRight = QDateTime::fromString(sRight, "dd.MM.yyyy hh:mm");
+        return dtLeft < dtRight;
+    }
+    return QSortFilterProxyModel::lessThan(source_left, source_right);
 }
 
 void TestProxyModel::onSelectPatient(const QString &patientUid)
