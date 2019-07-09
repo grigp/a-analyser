@@ -1,6 +1,8 @@
 #include "database.h"
 
 #include "datadefines.h"
+#include "aanalyserapplication.h"
+#include "metodicsfactory.h"
 
 #include <QJsonDocument>
 #include <QJsonObject>
@@ -91,6 +93,11 @@ QString DataBase::addTestStart(const QString &patientUid, const QString &metodUi
         testObj["patientUid"] = patientUid;
         testObj["metodUid"] = metodUid;
         testObj["datetime"] = QDateTime::currentDateTime().toString("dd.MM.yyyy hh:mm:ss");
+
+        // Параметры методики на момент проведения
+        auto metodic = static_cast<AAnalyserApplication*>(QApplication::instance())->getMetodics()->metodic(metodUid);
+        testObj["params"] = metodic.params;
+
         writeTableRec(dirTest.absoluteFilePath(testUid), testObj);
 
         return testUid;

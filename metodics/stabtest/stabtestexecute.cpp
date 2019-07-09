@@ -189,9 +189,11 @@ void StabTestExecute::getData(DeviceProtocols::DeviceData *data)
     }
 }
 
-void StabTestExecute::on_communicationError(const int errorCode)
+void StabTestExecute::on_communicationError(const QString &drvName, const QString &port, const int errorCode)
 {
     Q_UNUSED(errorCode);
+    ui->lblCommunicationError->setText(QString(tr("Ошибка связи с устройством") + ": %1 (" + tr("порт") + ": %2)").
+                                       arg(drvName).arg(port));
     ui->lblCommunicationError->setVisible(true);
 }
 

@@ -57,7 +57,8 @@ void PatientsWidget::selectPatient(const QModelIndex index)
 {
     if (index.isValid())
     {
-        auto uid = m_mdlPatients->index(index.row(), PatientsModel::ColFio, index.parent()).
+        auto srcIndex = m_pmdlPatients->mapToSource(index);
+        auto uid = m_mdlPatients->index(srcIndex.row(), PatientsModel::ColFio, srcIndex.parent()).
                 data(PatientsModel::PatientUidRole).toString();
         static_cast<AAnalyserApplication*>(QApplication::instance())->doSelectPatient(uid);
     }

@@ -208,7 +208,7 @@ void Stabilan01::timerEvent(QTimerEvent *event)
             if (!m_isCommunicationError)
             {
                 m_isCommunicationError = true;
-                emit communicationError(EC_NoData);
+                emit communicationError(name(), DeviceProtocols::portName(m_portName), EC_NoData);
             }
         }
         else

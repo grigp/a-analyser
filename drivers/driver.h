@@ -42,7 +42,7 @@ public:
 
 signals:
     void sendData(DeviceProtocols::DeviceData *data);
-    void communicationError(const int errorCode);
+    void communicationError(const QString &drvName, const QString &port, const int errorCode);
 
 public slots:
 };

@@ -508,7 +508,7 @@
       </font>
      </property>
      <property name="text">
-      <string>Ошибка связи</string>
+      <string>Ошибка связи с устройством:</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>
