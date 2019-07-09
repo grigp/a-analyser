@@ -7,9 +7,6 @@ namespace Ui {
 class TestsWidget;
 }
 
-class TestsModel;
-class TestProxyModel;
-
 class TestsWidget : public QWidget
 {
     Q_OBJECT
@@ -20,8 +17,6 @@ public:
 
     void onDbConnect();
 
-protected:
-    bool eventFilter(QObject *obj, QEvent *event);
 
 private slots:
     /*!
@@ -29,17 +24,14 @@ private slots:
      */
     void runTest();
 
-    /*!
-     * \brief Выбор теста для просмотра результатов
-     * \param index - uid теста
-     */
-    void selectTest(const QModelIndex &index);
+    void selectResult();
+    void selectDynamic();
 
 private:
     Ui::TestsWidget *ui;
 
-    TestsModel *m_mdlTest;
-    TestProxyModel *m_pmdlTest;
+    void restoreVisibleWidget();
+    void saveVisibleWidget(const QString &value);
 };
 
 #endif // TESTSWIDGET_H

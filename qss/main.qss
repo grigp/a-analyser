@@ -85,6 +85,29 @@ QPushButton#btnDelete:pressed
     background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 rgb(63, 116, 160), stop: 0.5 rgb(123, 159, 199), stop: 1 rgb(63, 116, 160));
 }
 
+QPushButton#btnResults,
+QPushButton#btnDynamic
+{
+    border: 2px solid rgb(55, 55, 55);
+    border-radius: 6px;
+    background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 rgb(15, 15, 15), stop: 0.5 rgb(50, 50, 50), stop: 1 rgb(15, 15, 15));
+    color: rgb(255, 255, 255);
+    min-width: 60px;
+}
+
+QPushButton#btnResults:hover,
+QPushButton#btnDynamic:hover
+{
+    background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 rgb(40, 40, 40), stop: 0.5 rgb(70, 70, 70), stop: 1 rgb(40, 40, 40));
+}
+
+QPushButton#btnResults:pressed,
+QPushButton#btnDynamic:pressed
+{
+    background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 rgb(30, 30, 30), stop: 0.5 rgb(40, 40, 40), stop: 1 rgb(30, 30, 30));
+}
+
+
 QPushButton#btnUnselect
 {
     font-size: 8pt;

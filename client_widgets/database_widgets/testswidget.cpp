@@ -2,6 +2,7 @@
 #include "ui_testswidget.h"
 
 #include <QApplication>
+#include <QSettings>
 #include <QFile>
 
 #include "aanalyserapplication.h"
@@ -12,14 +13,10 @@
 TestsWidget::TestsWidget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::TestsWidget)
-  , m_mdlTest(new TestsModel(this))
-  , m_pmdlTest(new TestProxyModel(this))
 {
     ui->setupUi(this);
 
-    m_pmdlTest->setSourceModel(m_mdlTest);
-    ui->tvTests->setModel(m_pmdlTest);
-    ui->tvTests->viewport()->installEventFilter(this);
+    restoreVisibleWidget();
 }
 
 TestsWidget::~TestsWidget()
@@ -29,24 +26,8 @@ TestsWidget::~TestsWidget()
 
 void TestsWidget::onDbConnect()
 {
-    if (m_mdlTest)
-        m_mdlTest->load();
-    ui->tvTests->header()->resizeSections(QHeaderView::ResizeToContents);
-    ui->tvTests->sortByColumn(TestsModel::colDateTime, Qt::DescendingOrder);
-}
-
-bool TestsWidget::eventFilter(QObject *obj, QEvent *event)
-{
-    if (obj == ui->tvTests->viewport())
-    {
-        if (event->type() == QEvent::Paint)
-        {
-            // Приводит к частым срабатываниям
-            auto idx = m_pmdlTest->mapToSource(ui->tvTests->selectionModel()->currentIndex());
-            selectTest(idx);
-        }
-    }
-    return false;
+    ui->wgtResult->onDbConnect();
+    ui->wgtDynamic->onDbConnect();
 }
 
 void TestsWidget::runTest()
@@ -54,13 +35,40 @@ void TestsWidget::runTest()
     static_cast<AAnalyserApplication*>(QApplication::instance())->executeMetodic();
 }
 
-void TestsWidget::selectTest(const QModelIndex &index)
+void TestsWidget::selectResult()
 {
-    if (index.isValid())
-    {
-        auto uid = m_mdlTest->index(index.row(), TestsModel::ColPatient, index.parent()).
-                data(TestsModel::TestUidRole).toString();
-        static_cast<AAnalyserApplication*>(QApplication::instance())->doSelectTest(uid);
-    }
+    ui->wgtDynamic->setVisible(false);
+    ui->wgtResult->setVisible(true);
+    saveVisibleWidget(ui->wgtResult->widgetName());
+}
+
+void TestsWidget::selectDynamic()
+{
+    ui->wgtResult->setVisible(false);
+    ui->wgtDynamic->setVisible(true);
+    saveVisibleWidget(ui->wgtDynamic->widgetName());
+}
+
+void TestsWidget::restoreVisibleWidget()
+{
+    QSettings set(QApplication::instance()->organizationName(),
+                  QApplication::instance()->applicationName());
+    set.beginGroup("ResultWidget");
+    auto val = set.value("SelectionWidget", ui->wgtResult->widgetName()).toString();
+    set.endGroup();
+    if (val == ui->wgtResult->widgetName())
+        ui->wgtDynamic->setVisible(false);
+    else
+    if (val == ui->wgtDynamic->widgetName())
+        ui->wgtResult->setVisible(false);
+}
+
+void TestsWidget::saveVisibleWidget(const QString &value)
+{
+    QSettings set(QApplication::instance()->organizationName(),
+                  QApplication::instance()->applicationName());
+    set.beginGroup("ResultWidget");
+    set.setValue("SelectionWidget", value);
+    set.endGroup();
 }
 

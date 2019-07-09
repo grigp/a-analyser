@@ -6,14 +6,17 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>228</width>
-    <height>335</height>
+    <width>719</width>
+    <height>494</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
+   <property name="spacing">
+    <number>1</number>
+   </property>
    <property name="leftMargin">
     <number>1</number>
    </property>
@@ -28,6 +31,12 @@
    </property>
    <item>
     <widget class="QFrame" name="frTitle">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
      <property name="frameShape">
       <enum>QFrame::StyledPanel</enum>
      </property>
@@ -53,6 +62,9 @@
          <string>Тесты</string>
         </property>
        </widget>
+      </item>
+      <item>
+       <widget class="QWidget" name="widget" native="true"/>
       </item>
       <item>
        <widget class="QPushButton" name="btnNewTest">
@@ -106,18 +118,114 @@
         </property>
        </widget>
       </item>
+      <item>
+       <spacer name="horizontalSpacer_2">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btnResults">
+        <property name="text">
+         <string>Результаты</string>
+        </property>
+        <property name="icon">
+         <iconset resource="../../kernel.qrc">
+          <normaloff>:/images/Results.png</normaloff>:/images/Results.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>32</width>
+          <height>32</height>
+         </size>
+        </property>
+        <property name="checkable">
+         <bool>true</bool>
+        </property>
+        <property name="checked">
+         <bool>true</bool>
+        </property>
+        <property name="autoExclusive">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btnDynamic">
+        <property name="text">
+         <string>Динамика</string>
+        </property>
+        <property name="icon">
+         <iconset resource="../../kernel.qrc">
+          <normaloff>:/images/Dynamic.png</normaloff>:/images/Dynamic.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>32</width>
+          <height>32</height>
+         </size>
+        </property>
+        <property name="checkable">
+         <bool>true</bool>
+        </property>
+        <property name="autoExclusive">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QWidget" name="widget_2" native="true"/>
+      </item>
      </layout>
     </widget>
    </item>
    <item>
-    <widget class="QTreeView" name="tvTests">
-     <property name="sortingEnabled">
-      <bool>true</bool>
-     </property>
+    <widget class="QWidget" name="wgtClient" native="true">
+     <layout class="QHBoxLayout" name="horizontalLayout_2">
+      <property name="leftMargin">
+       <number>1</number>
+      </property>
+      <property name="topMargin">
+       <number>0</number>
+      </property>
+      <property name="rightMargin">
+       <number>1</number>
+      </property>
+      <property name="bottomMargin">
+       <number>1</number>
+      </property>
+      <item>
+       <widget class="ResultsWidget" name="wgtResult" native="true"/>
+      </item>
+      <item>
+       <widget class="DynamicAutoWidget" name="wgtDynamic" native="true"/>
+      </item>
+     </layout>
     </widget>
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>DynamicAutoWidget</class>
+   <extends>QWidget</extends>
+   <header location="global">dynamicautowidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>ResultsWidget</class>
+   <extends>QWidget</extends>
+   <header location="global">resultswidget.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources>
   <include location="../../kernel.qrc"/>
  </resources>
@@ -129,8 +237,8 @@
    <slot>runTest()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>172</x>
-     <y>40</y>
+     <x>101</x>
+     <y>44</y>
     </hint>
     <hint type="destinationlabel">
      <x>403</x>
@@ -138,8 +246,42 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>btnResults</sender>
+   <signal>clicked()</signal>
+   <receiver>TestsWidget</receiver>
+   <slot>selectResult()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>564</x>
+     <y>36</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>722</x>
+     <y>57</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btnDynamic</sender>
+   <signal>clicked()</signal>
+   <receiver>TestsWidget</receiver>
+   <slot>selectDynamic()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>625</x>
+     <y>19</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>720</x>
+     <y>37</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>runTest()</slot>
+  <slot>selectResult()</slot>
+  <slot>selectDynamic()</slot>
  </slots>
 </ui>

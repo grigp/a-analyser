@@ -26,5 +26,7 @@
         <file>images/Connects/Up.png</file>
         <file>images/Zeroing.png</file>
         <file>sound/03.wav</file>
+        <file>images/Dynamic.png</file>
+        <file>images/Results.png</file>
     </qresource>
 </RCC>
