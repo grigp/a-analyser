@@ -7,6 +7,7 @@
 #include "metodicsfactory.h"
 
 #include <QPainter>
+#include <QDebug>
 
 ResultsWidget::ResultsWidget(QWidget *parent) :
     QWidget(parent),
@@ -51,7 +52,9 @@ bool ResultsWidget::eventFilter(QObject *obj, QEvent *event)
         {
             // Приводит к частым срабатываниям
             auto idx = m_pmdlTest->mapToSource(ui->tvTests->selectionModel()->currentIndex());
-            selectTest(idx);
+            if (idx.row() != m_selectedRow)
+                selectTest(idx);
+            m_selectedRow = idx.row();
         }
     }
     return false;

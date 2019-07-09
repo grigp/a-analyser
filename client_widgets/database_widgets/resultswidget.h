@@ -64,6 +64,7 @@ private:
     //ScaledPixmap *m_pmp;
 
     QWidget *m_wgtResult {nullptr};  ///< Текущий виджет для показа результатов теста
+    int m_selectedRow {-1};          ///< Номер выбранной строки в списке
 
 };
 

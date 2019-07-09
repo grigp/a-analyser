@@ -39,6 +39,7 @@ include(metodics/metodics_src.pri)
 include(drivers/drivers_src.pri)
 include(service/service_src.pri)
 include(visual_widgets/visual_widgets_src.pri)
+include(factors/factors_src.pri)
 
 SOURCES += \
         main.cpp \
