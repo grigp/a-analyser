@@ -72,6 +72,30 @@ private:
     double m_value;
 };
 
+
+/*!
+ * \brief Класс значения показателя с описанием FactorValueDescript class
+ * Описание нужно, еслии берутся два одинаковых показателя из разных проб
+ * Выводиться может, например, так <name> (<description>): КФР (Открытые глаза)
+ */
+class FactorValueDescript : public FactorValue
+{
+public:
+    FactorValueDescript(const QString &uid,
+                        const double value,
+                        const QString &description)
+        : FactorValue(uid, value)
+        , m_description(description)
+    {}
+    FactorValueDescript() {}
+
+    QString description() const {return m_description;}
+    void setDescription(const QString &description) {m_description = description;}
+
+private:
+    QString m_description;
+};
+
 }
 
 #endif // FACTORSDEFINES_H

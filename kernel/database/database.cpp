@@ -180,6 +180,7 @@ bool DataBase::getTestInfo(const QString &testUid, DataDefines::TestInfo &ti) co
         ti.metodUid = testObj["metodUid"].toString();
         auto dt = testObj["datetime"].toString();
         ti.dateTime = QDateTime::fromString(dt, "dd.MM.yyyy hh:mm:ss");
+        ti.params = testObj["params"].toObject();
 
         auto prbArr = testObj["probes"].toArray();
         ti.probes.clear();

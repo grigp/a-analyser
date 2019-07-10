@@ -6,6 +6,7 @@
 #include <QDate>
 #include <QStandardPaths>
 #include <QApplication>
+#include <QJsonObject>
 
 /*!
  * Набор типов данных из БД
@@ -49,6 +50,7 @@ struct TestInfo
     QString metodUid;         ///< uid методики
     QDateTime dateTime;       ///< дата и время проведения
     QStringList probes;       ///< список проб
+    QJsonObject params;       ///< параметры на момент проведения
 
     TestInfo() {}
 };

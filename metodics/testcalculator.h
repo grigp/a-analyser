@@ -1,0 +1,76 @@
+#ifndef TESTCALCULATOR_H
+#define TESTCALCULATOR_H
+
+#include <QObject>
+#include <QStandardItemModel>
+
+#include "factorsdefines.h"
+
+/*!
+ * \brief Базовый класс для модулей расчета и доступа к результатам теста TestCalculator class
+ * Содержит:
+ * - метод расчета результатов
+ * - список указателей к показателям для автодинамики
+ */
+class TestCalculator : public QObject
+{
+    Q_OBJECT
+public:
+    explicit TestCalculator(const QString &testUid, QObject *parent = nullptr);
+
+    enum TestTreeRoles
+    {
+          TestUidRole = Qt::UserRole + 1   ///<  uid теста. QString. В узле теста
+        , TestDateTimeRole                 ///<  дата и время проведения теста. QDateTime. В узле теста
+        , PatientUidRole                   ///<  uid пациента. QString. В узле теста
+        , MetodicUidRole                   ///<  uid методики. QString. В узле теста
+        , ParamsRole                       ///<  параметры методики. QJsonObject. В узле теста
+
+    };
+
+    /*!
+     * \brief Полный расчет данных теста с записью значений первичных показателей в БД
+     */
+    virtual void calculate();
+
+    /*!
+     * \brief Быстрый расчет данных теста
+     * Чтение первичных показателей из БД
+     */
+    virtual void fastCalculate();
+
+    /*!
+     * \brief Возвращает кол-во первичных показателей
+     */
+    int primaryFactorsCount() const {return m_primaryFactors.size();}
+
+    /*!
+     * \brief Возвращает первичный показатель по номеру в списке
+     * \param num - номер в списке
+     */
+    FactorsDefines::FactorValueDescript* primaryFactor(const int num) const;
+
+    QString testUid() const {return m_testUid;}
+
+protected:
+    /*!
+     * \brief Построение дерева теста
+     */
+    virtual void computeTestTree();
+
+    /*!
+     * \brief Добавляет первичный показатель в список
+     * Добавлять будут подклассы
+     * \param uid
+     * \param value
+     * \param description
+     */
+    void addPrimaryFactor(const QString &uid, const double value, const QString &description);
+
+private:
+    QString m_testUid;
+    QList<FactorsDefines::FactorValueDescript*> m_primaryFactors;
+    QStandardItemModel m_mdlTest;
+};
+
+#endif // TESTCALCULATOR_H
