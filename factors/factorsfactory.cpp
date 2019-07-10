@@ -1,9 +1,17 @@
 #include "factorsfactory.h"
 
+#include "classicfactors.h"
+
+#include <QTimer>
+#include <QDebug>
 
 FactorsFactory::FactorsFactory(QObject *parent) : QObject(parent)
 {
-
+    //! Регистрация показателей из факторсгрупп
+    QTimer::singleShot(0, [=]()
+    {
+        ClassicFactors::registerFactors();
+    });
 }
 
 FactorsDefines::FactorInfo FactorsFactory::getFactorInfo(const QString &uid) const
@@ -30,4 +38,7 @@ void FactorsFactory::registerFactor(const QString &uid, const QString &groupUid,
 void FactorsFactory::registerGroup(const QString &uid, const QString &name)
 {
     m_groups.insert(uid, name);
+    if (uid == ClassicFactorsDefines::GroupUid)
+        m_creatorsChannel.insert(uid, new ClassicFactorsCreator());
 }
+

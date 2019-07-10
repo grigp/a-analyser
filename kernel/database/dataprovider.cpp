@@ -94,3 +94,13 @@ bool DataProvider::getChannel(const QString &channelUid, QByteArray &data)
 {
     return static_cast<AAnalyserApplication*>(QApplication::instance())->getDB()->getChannel(channelUid, data);
 }
+
+bool DataProvider::channelExists(const QString &probeUid, const QString &channelId)
+{
+    return static_cast<AAnalyserApplication*>(QApplication::instance())->getDB()->channelExists(probeUid, channelId);
+}
+
+bool DataProvider::channelExists(const QString &channelUid)
+{
+    return static_cast<AAnalyserApplication*>(QApplication::instance())->getDB()->channelExists(channelUid);
+}

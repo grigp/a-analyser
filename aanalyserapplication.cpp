@@ -9,6 +9,7 @@
 #include "mainwindow.h"
 #include "metodicsfactory.h"
 #include "driversfactory.h"
+#include "factorsfactory.h"
 #include "driver.h"
 #include "executewidget.h"
 #include "databaseresultwidget.h"
@@ -18,6 +19,7 @@ AAnalyserApplication::AAnalyserApplication(int &argc, char **argv)
     : QApplication(argc, argv)
     , m_metodics(new MetodicsFactory(this))
     , m_drivers(new DriversFactory(this))
+    , m_factors(new FactorsFactory(this))
 {
     setApplicationName("a-analyser");
     setApplicationDisplayName("Физиологические исследования a-analyser");
@@ -40,6 +42,8 @@ AAnalyserApplication::~AAnalyserApplication()
         delete m_metodics;
     if (m_drivers)
         delete m_drivers;
+    if (m_factors)
+        delete(m_factors);
 }
 
 QMainWindow *AAnalyserApplication::mainWindow() const
@@ -218,5 +222,33 @@ QList<DeviceProtocols::Ports> AAnalyserApplication::getDriverPorts(const QString
     if (m_drivers)
         return m_drivers->getDriverPorts(drvUid);
     return QList<DeviceProtocols::Ports>();
+}
+
+FactorsDefines::FactorInfo AAnalyserApplication::getFactorInfo(const QString &uid) const
+{
+    if (m_factors)
+        return m_factors->getFactorInfo(uid);
+    return FactorsDefines::FactorInfo();
+}
+
+QString AAnalyserApplication::getGroupName(const QString &groupUid) const
+{
+    if (m_factors)
+        return m_factors->getGroupName(groupUid);
+    return QString("");
+}
+
+void AAnalyserApplication::registerFactor(const QString &uid, const QString &groupUid,
+                                          const QString &name, const QString &shortName,
+                                          const QString &measure, const QString &format)
+{
+    if (m_factors)
+        m_factors->registerFactor(uid, groupUid, name, shortName, measure, format);
+}
+
+void AAnalyserApplication::registerGroup(const QString &uid, const QString &name)
+{
+    if (m_factors)
+        m_factors->registerGroup(uid, name);
 }
 

@@ -6,6 +6,10 @@
 
 #include "factorsdefines.h"
 
+class TestFactorsCreator;
+class ProbeFactorsCreator;
+class ChannelFactorsCreator;
+
 /*!
  * \brief Класс фабрики классов показателей FactorsFactory class
  */
@@ -49,6 +53,10 @@ public slots:
 private:
     QMap<QString, FactorsDefines::FactorInfo> m_factors;
     QMap<QString, QString> m_groups;
+
+    QMap<QString, TestFactorsCreator*> m_creatorsTest;
+    QMap<QString, ProbeFactorsCreator*> m_creatorsProbe;
+    QMap<QString, ChannelFactorsCreator*> m_creatorsChannel;
 };
 
 #endif // FACTORSFACTORY_H

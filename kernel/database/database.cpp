@@ -74,36 +74,20 @@ QString DataBase::addTestStart(const QString &patientUid, const QString &metodUi
     //! uid нового теста
     auto testUid = QUuid::createUuid().toString();
 
-    //! Запись в данные пациента
-    QDir dir = patientsDir();
-    QJsonObject patObj;
-    if (readTableRec(dir.absoluteFilePath(patientUid), patObj))
-    {
-        QJsonObject test;
-        test["uid"] = testUid;
-        QJsonArray tests = patObj["tests"].toArray();
-        tests.append(test);
-        patObj["tests"] = tests;
+    //! Создание записи в таблице тестов
+    QDir dirTest = testsDir();
+    QJsonObject testObj;
+    testObj["patientUid"] = patientUid;
+    testObj["metodUid"] = metodUid;
+    testObj["datetime"] = QDateTime::currentDateTime().toString("dd.MM.yyyy hh:mm:ss");
 
-        writeTableRec(dir.absoluteFilePath(patientUid), patObj);
+    // Параметры методики на момент проведения
+    auto metodic = static_cast<AAnalyserApplication*>(QApplication::instance())->getMetodics()->metodic(metodUid);
+    testObj["params"] = metodic.params;
 
-        //! Создание записи в таблице тестов
-        QDir dirTest = testsDir();
-        QJsonObject testObj;
-        testObj["patientUid"] = patientUid;
-        testObj["metodUid"] = metodUid;
-        testObj["datetime"] = QDateTime::currentDateTime().toString("dd.MM.yyyy hh:mm:ss");
+    writeTableRec(dirTest.absoluteFilePath(testUid), testObj);
 
-        // Параметры методики на момент проведения
-        auto metodic = static_cast<AAnalyserApplication*>(QApplication::instance())->getMetodics()->metodic(metodUid);
-        testObj["params"] = metodic.params;
-
-        writeTableRec(dirTest.absoluteFilePath(testUid), testObj);
-
-        return testUid;
-    }
-
-    return QString("");
+    return testUid;
 }
 
 void DataBase::addTestFinish(const QString &testUid)
@@ -232,6 +216,28 @@ bool DataBase::getProbeInfo(const QString &probeUid, DataDefines::ProbeInfo &pi)
         return true;
     }
     return false;
+}
+
+bool DataBase::channelExists(const QString &probeUid, const QString &channelId) const
+{
+    DataDefines::ProbeInfo pi;
+    if (getProbeInfo(probeUid, pi))
+    {
+        for (int i = 0; i < pi.channels.size(); ++i)
+        {
+            auto chanRec = pi.channels.at(i);
+            if (chanRec.channelId == channelId)
+                return channelExists(chanRec.uid);
+        }
+    }
+    return false;
+}
+
+bool DataBase::channelExists(const QString &channelUid) const
+{
+    QDir dir = channelsDir();
+    auto fileName = dir.absoluteFilePath(channelUid);
+    return QFile::exists(fileName);
 }
 
 bool DataBase::getChannel(const QString &probeUid, const QString &channelId, QByteArray &data) const

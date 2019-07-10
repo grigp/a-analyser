@@ -3,6 +3,7 @@
 
 #include "datadefines.h"
 #include "metodicdefines.h"
+#include "factorsdefines.h"
 #include "connection.h"
 
 #include <QMainWindow>
@@ -13,6 +14,7 @@
 class DataBase;
 class MetodicsFactory;
 class DriversFactory;
+class FactorsFactory;
 class Driver;
 
 class AAnalyserApplication : public QApplication
@@ -169,6 +171,40 @@ public:
      */
     QList<DeviceProtocols::Ports> getDriverPorts(const QString &drvUid) const;
 
+
+    ///<-----------------------------------------------------------------------------
+    ///< Показатели
+
+    /*!
+     * \brief Возвращает информацию о показателе
+     * \param uid - uid показателя
+     */
+    FactorsDefines::FactorInfo getFactorInfo(const QString &uid) const;
+
+    /*!
+     * \brief Возвращает название группы показателей по uid группы
+     * \param groupUid - uid группы показателей
+     */
+    QString getGroupName(const QString &groupUid) const;
+
+    /*!
+     * \brief Регистрирует показатель и информацию о нем.
+     * Этот метод вызывают факторсгруппы
+     */
+    void registerFactor(const QString &uid, const QString &groupUid,
+                        const QString &name, const QString &shortName,
+                        const QString &measure, const QString &format);
+
+    /*!
+     * \brief Регистрирует группу показателей
+     * \param uid - uid группы
+     * \param name - название группы
+     */
+    void registerGroup(const QString &uid, const QString &name);
+
+
+    ///<-----------------------------------------------------------------------------
+
 signals:
     void dbConnected();
 
@@ -187,6 +223,7 @@ private:
     DataBase *m_database {nullptr};
     MetodicsFactory *m_metodics {nullptr};
     DriversFactory *m_drivers {nullptr};
+    FactorsFactory *m_factors {nullptr};
 
     QString m_patientUid = "";  ///< uid выбранного пациента
     QString m_metodicUid = "";  ///< uid выбранной методики

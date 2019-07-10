@@ -123,6 +123,19 @@ bool getTestInfo(const QString &testUid, DataDefines::TestInfo &ti);
 bool getProbeInfo(const QString &probeUid, DataDefines::ProbeInfo &pi);
 
 /*!
+ * \brief Возращает true, если канал имеется
+ * \param probeUid - uid пробы
+ * \param channelId - идентификатор канала
+ */
+bool channelExists(const QString &probeUid, const QString &channelId);
+
+/*!
+ * \brief Возращает true, если канал имеется
+ * \param channelUid - uid канала
+ */
+bool channelExists(const QString &channelUid);
+
+/*!
  * \brief Возвращает данные канала в виде массива байт
  * \param probeUid - uid пробы
  * \param channelId - идентификатор канала
