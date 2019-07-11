@@ -2,6 +2,7 @@
 
 #include "datadefines.h"
 #include "dataprovider.h"
+#include "channelsutils.h"
 
 TestCalculator::TestCalculator(const QString &testUid, QObject *parent)
     : QObject(parent)
@@ -33,6 +34,7 @@ void TestCalculator::computeTestTree()
     if (DataProvider::getTestInfo(m_testUid, ti))
     {
         auto *testItem = new QStandardItem(ti.uid);
+        testItem->setData(LevelTest, LevelRole);
         testItem->setData(ti.uid, TestUidRole);
         testItem->setData(ti.dateTime, TestDateTimeRole);
         testItem->setData(ti.patientUid, PatientUidRole);
@@ -46,11 +48,28 @@ void TestCalculator::computeTestTree()
             DataDefines::ProbeInfo pi;
             if (DataProvider::getProbeInfo(probeUid, pi))
             {
-                auto *probeItem = new QStandardItem(pi.uid);
+                QList<MetodicDefines::MetodicInfo> ml = DataProvider::getListMetodisc();
+                QString metName = "";
+                foreach (auto mi, ml)
+                    if (mi.uid == ti.metodUid)
+                        metName = mi.name;
+                auto *probeItem = new QStandardItem(metName);
+                probeItem->setData(LevelProbe, LevelRole);
+                probeItem->setData(pi.uid, ProbeUidRole);
+                probeItem->setData(pi.step, ProbeStepRole);
+                testItem->appendRow(probeItem);
+
+                foreach (auto ci, pi.channels)
+                {
+                    auto *channelItem = new QStandardItem(ChannelsUtils::instance().channelName(ci.channelId));
+                    channelItem->setData(LevelChannel, LevelRole);
+                    channelItem->setData(ci.channelId, ChannelIdRole);
+                    channelItem->setData(ci.uid, ChannelUidRole);
+                    testItem->appendRow(channelItem);
+                }
             }
         }
     }
-
 }
 
 void TestCalculator::addPrimaryFactor(const QString &uid, const double value, const QString &description)

@@ -58,9 +58,9 @@ void DataProvider::addTestFinish(const QString &testUid)
     static_cast<AAnalyserApplication*>(QApplication::instance())->getDB()->addTestFinish(testUid);
 }
 
-QString DataProvider::addProbe(const QString &testUid, const int step)
+QString DataProvider::addProbe(const QString &testUid, const int step, const QString &name)
 {
-    return static_cast<AAnalyserApplication*>(QApplication::instance())->getDB()->addProbe(testUid, step);
+    return static_cast<AAnalyserApplication*>(QApplication::instance())->getDB()->addProbe(testUid, step, name);
 }
 
 void DataProvider::addSignal(const QString &probeUid, const QString &channelUid, const QByteArray &data)

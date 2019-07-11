@@ -96,7 +96,7 @@ void DataBase::addTestFinish(const QString &testUid)
     emit newTest(testUid);
 }
 
-QString DataBase::addProbe(const QString &testUid, const int step)
+QString DataBase::addProbe(const QString &testUid, const int step, const QString &name)
 {
     //! uid новой пробы
     auto probeUid = QUuid::createUuid().toString();
@@ -118,6 +118,7 @@ QString DataBase::addProbe(const QString &testUid, const int step)
         QDir dirProbe = probesDir();
         QJsonObject probeObj;
         probeObj["testUid"] = testUid;
+        probeObj["name"] = name;
         probeObj["step"] = step;
         writeTableRec(dirProbe.absoluteFilePath(probeUid), probeObj);
 
@@ -201,6 +202,7 @@ bool DataBase::getProbeInfo(const QString &probeUid, DataDefines::ProbeInfo &pi)
     if (readTableRec(dir.absoluteFilePath(probeUid), probeObj))
     {
         pi.uid = probeUid;
+        pi.name = probeObj["name"].toString();
         pi.step = probeObj["step"].toInt();
         pi.testUid = probeObj["testUid"].toString();
 

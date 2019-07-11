@@ -31,11 +31,41 @@
    </property>
    <item>
     <widget class="QWidget" name="wgtMain" native="true">
-     <layout class="QHBoxLayout" name="horizontalLayout"/>
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <property name="spacing">
+       <number>1</number>
+      </property>
+      <property name="leftMargin">
+       <number>1</number>
+      </property>
+      <property name="topMargin">
+       <number>1</number>
+      </property>
+      <property name="rightMargin">
+       <number>1</number>
+      </property>
+      <property name="bottomMargin">
+       <number>1</number>
+      </property>
+      <item>
+       <widget class="QWidget" name="wgtUndef" native="true"/>
+      </item>
+      <item>
+       <widget class="StabSignalsTestWidget" name="wgtSignals" native="true"/>
+      </item>
+     </layout>
     </widget>
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>StabSignalsTestWidget</class>
+   <extends>QWidget</extends>
+   <header location="global">stabsignalstestwidget.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

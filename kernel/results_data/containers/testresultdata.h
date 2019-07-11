@@ -3,6 +3,7 @@
 
 #include <QList>
 #include <QDateTime>
+#include <QJsonObject>
 
 class ProbeResultData;
 class SignalData;
@@ -81,6 +82,12 @@ public:
 
     ProbeResultInfo* probe(const int number) const;
 
+    /*!
+     * \brief Возвращает параметры на момент проведения
+     * mode == handle, иначе сбой
+     */
+    QJsonObject getParams() const;
+
 private:
    Mode m_mode;
 
@@ -88,6 +95,7 @@ private:
    QString m_patientUid;
    QString m_metodicUid;
    QDateTime m_dt;
+   QJsonObject m_params;
 
    QList<ProbeResultData*>  m_probes;
 };

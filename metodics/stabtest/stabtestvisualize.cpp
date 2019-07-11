@@ -7,12 +7,17 @@
 #include "channelsdefines.h"
 #include "stabilogram.h"
 #include "ballistogram.h"
+#include "testresultdata.h"
+#include "resultinfo.h"
+
+#include "stabsignalstestwidget.h"
 
 #include <QDebug>
 
 StabTestVisualize::StabTestVisualize(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::StabTestVisualize)
+  , m_trd(new TestResultData())
 {
     ui->setupUi(this);
 }
@@ -27,40 +32,58 @@ void StabTestVisualize::setTest(const QString &testUid)
     DataDefines::TestInfo ti;
     if (DataProvider::getTestInfo(testUid, ti))
     {
-        for (int i = 0; i < ti.probes.size(); ++i)
+        auto params = ti.params;
+        auto cnd = params["condition"].toInt();
+        for (int i = 0; i < ui->wgtMain->layout()->count(); ++i)
         {
-            QTextEdit *edit = new QTextEdit(ui->wgtMain);
-            ui->wgtMain->layout()->addWidget(edit);
-            showProbeResult(i, ti.probes.at(i), edit);
-        }
-    }
-}
-
-void StabTestVisualize::showProbeResult(const int num, const QString uid, QTextEdit *edit)
-{
-    Q_UNUSED(num);
-    QByteArray baStab;
-    QByteArray baZ;
-    if (DataProvider::getChannel(uid, ChannelsDefines::chanStab, baStab))
-    {
-        auto isZ = DataProvider::getChannel(uid, ChannelsDefines::chanZ, baZ);
-        Ballistogram bsg(baZ);
-
-        Stabilogram stab(baStab);
-        for (int i = 0; i < stab.size(); ++i)
-        {
-            auto rec = stab.value(i);
-            auto sx = QString::number(rec.x);
-            auto sy = QString::number(rec.y);
-            QString line = sx + "     " + sy;
-
-            if (isZ && i < baZ.size())
+            auto *wgt = ui->wgtMain->layout()->itemAt(i)->widget();
+            if (wgt)
             {
-                auto sz = QString::number(bsg.value(i));
-                line = line + "     " + sz;
+                wgt->setVisible(
+                            (cnd == 0 && wgt->objectName() == "wgtSignals")
+//                         || (cnd == 1 && wgt->objectName() == "wgtStateChampions")
+//                         || (cnd == 2 && wgt->objectName() == "wgtDopusk")
+                                );
+                if (cnd == 0 && wgt->objectName() == "wgtSignals")
+                    static_cast<StabSignalsTestWidget*>(wgt)->calculate(testUid);
             }
-
-            edit->append(line);
         }
     }
+
+//    m_trd->openTest(testUid);
+//    for (int i = 0; i < m_trd->probesCount(); ++i)
+//    {
+//        auto* probe = m_trd->probe(i);
+
+//        QTextEdit *edit = new QTextEdit(ui->wgtUndef);
+//        ui->wgtUndef->layout()->addWidget(edit);
+
+//        for (int j = 0; j < probe->signalsCount(); ++j)
+//        {
+//            auto *signal = probe->signal(j);
+//            for (int k = 0; k < signal->size(); ++k)
+//            {
+//                if (signal->channelId() == ChannelsDefines::chanStab)
+//                {
+//                     auto x = signal->value(0, k);
+//                     auto y = signal->value(1, k);
+
+//                     auto sx = QString::number(x);
+//                     auto sy = QString::number(y);
+//                     edit->append(sx + "     " + sy);
+//                }
+//                else
+//                if (signal->channelId() == ChannelsDefines::chanZ)
+//                {
+//                    auto z = signal->value(0, k);
+//                    auto sz = QString::number(z);
+//                    edit->append(sz);
+//                }
+//            }
+//            delete signal;
+//        }
+
+//        delete probe;
+//    }
 }
+

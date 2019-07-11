@@ -3,6 +3,9 @@
 #include "proberesultdata.h"
 #include "resultinfo.h"
 #include "dataprovider.h"
+#include "channelsdefines.h"
+#include "stabilogram.h"
+#include "ballistogram.h"
 
 #include <QUuid>
 #include <QDebug>
@@ -58,6 +61,36 @@ void TestResultData::openTest(const QString &uid)
     Q_ASSERT(m_mode == mdUndefined);
     m_mode = mdHandle;
     m_uid = uid;
+
+    DataDefines::TestInfo ti;
+    if (DataProvider::getTestInfo(m_uid, ti))
+    {
+        m_params = ti.params;
+        for (int i = 0; i < ti.probes.size(); ++i)
+        {
+            auto probeUid = ti.probes.at(i);
+
+            DataDefines::ProbeInfo pi;
+            if (DataProvider::getProbeInfo(probeUid, pi))
+            {
+                ProbeResultData *probe = new ProbeResultData(m_uid, probeUid, pi.name);
+                m_probes << probe;
+
+                foreach (auto ci, pi.channels)
+                {
+                    QByteArray chan;
+                    DataProvider::getChannel(ci.uid, chan);
+                    SignalData *signal;
+                    if (ci.channelId == ChannelsDefines::chanStab)
+                        signal = new Stabilogram(chan);
+                    else
+                    if (ci.channelId == ChannelsDefines::chanZ)
+                        signal = new Ballistogram(chan);
+                    probe->addSignal(signal);
+                }
+            }
+        }
+    }
 }
 
 void TestResultData::closeTest()
@@ -85,4 +118,10 @@ ProbeResultInfo *TestResultData::probe(const int number) const
 {
     Q_ASSERT(number >= 0 && number < m_probes.size());
     return new ProbeResultInfo(m_probes.at(number));
+}
+
+QJsonObject TestResultData::getParams() const
+{
+    Q_ASSERT(m_mode == mdHandle);
+    return m_params;
 }

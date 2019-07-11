@@ -8,6 +8,9 @@ namespace Ui {
 class StabTestVisualize;
 }
 
+class TestResultData;
+
+
 /*!
  * \brief Виджет показа результатов стабилометрического тестирования StabTestVisualize class
  */
@@ -24,13 +27,8 @@ public:
 private:
     Ui::StabTestVisualize *ui;
 
-    /*!
-     * \brief Показывает сигналы в пробе
-     * \param num - номер пробы
-     * \param uid - uid пробы
-     * \param edit - куда выводить данные
-     */
-    void showProbeResult(const int num, const QString uid, QTextEdit *edit);
+    TestResultData* m_trd;
+
 };
 
 #endif // STABTESTVISUALIZE_H

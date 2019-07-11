@@ -6,6 +6,7 @@
             "template": "met_stabtest_uid",
             "params":
             {
+                "condition": 0,
                 "probes": [
                     {
                         "name": "Открытые глаза",
@@ -43,6 +44,7 @@
             "template": "met_stabtest_uid",
             "params":
             {
+                "condition": 0,
                 "probes": [
                     {
                         "name": "Стабилографическая проба",

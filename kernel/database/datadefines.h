@@ -74,6 +74,7 @@ struct ChannelInfo
 struct ProbeInfo
 {
     QString uid;                  ///< uid пробы
+    QString name;                 ///< название пробы
     int step;                     ///< номер пробы в тесте
     QString testUid;              ///< uid теста
     QList<ChannelInfo> channels;  ///< каналы

@@ -41,6 +41,8 @@ private slots:
     void addProbe();
     void deleteProbe();
 
+    void changeCondition(const int condition);
+
     void changeAutoEnd(const bool autoEnd);
     void changeTime(const QTime &time);
     void changeLatentTime(const QTime &time);

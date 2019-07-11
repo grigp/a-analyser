@@ -10,7 +10,15 @@
 namespace
 {
 
-QList<StabTestParams::ProbeParams> metParams;  ///< Параметры методики
+///< Параметры методики
+struct MetodicParams
+{
+    int condition;                               ///< Условия проведения
+    QList<StabTestParams::ProbeParams> probes;   ///< Пробы
+};
+
+MetodicParams metParams;
+
 
 }
 
@@ -23,15 +31,16 @@ StabTestParamsDialog::StabTestParamsDialog(QWidget *parent) :
     ui->lvProbes->setModel(m_mdlProbes);
     ui->cbStimul->addItems(QStringList() << tr("нет") << tr("Открытые глаза") << tr("Закрытые глаза") << tr("Мишень"));
     ui->cbScale->addItems(QStringList() << "1" << "2" << "4" << "8" << "16" << "32" << "64" << "128");
+    ui->cbConditions->addItems(QStringList() << tr("Анализ сигналов") << tr("Стань чемпионом") << tr("Допусковый контроль"));
 
     //! Редактирование названия пробы
     connect(m_mdlProbes, &QStandardItemModel::itemChanged, [=](QStandardItem *item)
     {
-        if (item->row() >= 0 && item->row() < metParams.size())
+        if (item->row() >= 0 && item->row() < metParams.probes.size())
         {
-            auto pp = metParams.at(item->row());
+            auto pp = metParams.probes.at(item->row());
             pp.name = item->data(Qt::DisplayRole).toString();
-            metParams.replace(item->row(), pp);
+            metParams.probes.replace(item->row(), pp);
         }
     });
 
@@ -46,7 +55,8 @@ StabTestParamsDialog::~StabTestParamsDialog()
 void StabTestParamsDialog::setParams(const QJsonObject &params)
 {
     m_mdlProbes->clear();
-    metParams.clear();
+    metParams.probes.clear();
+    metParams.condition = params["condition"].toInt();
     auto prbsArr = params["probes"].toArray();
     for (int i = 0; i < prbsArr.size(); ++i)
     {
@@ -61,11 +71,13 @@ void StabTestParamsDialog::setParams(const QJsonObject &params)
         pp.zeroingEnabled = obj["zeroing"].toInt() == 1;
         pp.scale = obj["scale"].toInt();
 
-        metParams << pp;
+        metParams.probes << pp;
         m_mdlProbes->appendRow(new QStandardItem(pp.name));
     }
 
-    if (metParams.size() > 0)
+    ui->cbConditions->setCurrentIndex(metParams.condition);
+
+    if (metParams.probes.size() > 0)
     {
         ui->lvProbes->selectionModel()->setCurrentIndex(m_mdlProbes->index(0, 0),
                                                         QItemSelectionModel::Select | QItemSelectionModel::Rows);
@@ -79,7 +91,7 @@ QJsonObject StabTestParamsDialog::getParams()
     QJsonObject retval;
     QJsonArray prbArray;
 
-    foreach (auto pp, metParams)
+    foreach (auto pp, metParams.probes)
     {
         QJsonObject objP;
         objP["name"] = pp.name;
@@ -92,6 +104,7 @@ QJsonObject StabTestParamsDialog::getParams()
         prbArray.append(objP);
     }
     retval["probes"] = prbArray;
+    retval["condition"] = metParams.condition;
     return retval;
 }
 
@@ -134,7 +147,7 @@ void StabTestParamsDialog::addProbe()
 
     if (m_curProbe < 0)
         m_curProbe = 0;
-    metParams.insert(m_curProbe, pp);
+    metParams.probes.insert(m_curProbe, pp);
     m_mdlProbes->insertRow(m_curProbe, new QStandardItem(pp.name));
 }
 
@@ -142,87 +155,92 @@ void StabTestParamsDialog::deleteProbe()
 {
 
     if (QMessageBox::question(this, tr("Предупреждение"),
-                              QString(tr("Удалить запись о пробе '%1'?")).arg(metParams.at(m_curProbe).name)) ==
+                              QString(tr("Удалить запись о пробе '%1'?")).arg(metParams.probes.at(m_curProbe).name)) ==
             QMessageBox::Yes)
     {
-        metParams.removeAt(m_curProbe);
+        metParams.probes.removeAt(m_curProbe);
         m_mdlProbes->removeRow(m_curProbe);
-        if (m_curProbe >= metParams.size())
+        if (m_curProbe >= metParams.probes.size())
             --m_curProbe;
         if (m_curProbe >= 0)
             showProbeParam();
     }
 }
 
+void StabTestParamsDialog::changeCondition(const int condition)
+{
+    metParams.condition = condition;
+}
+
 void StabTestParamsDialog::changeAutoEnd(const bool autoEnd)
 {
-    if (m_curProbe >= 0 && m_curProbe < metParams.size())
+    if (m_curProbe >= 0 && m_curProbe < metParams.probes.size())
     {
-        auto pp = metParams.at(m_curProbe);
+        auto pp = metParams.probes.at(m_curProbe);
         pp.autoEnd = autoEnd;
-        metParams.replace(m_curProbe, pp);
+        metParams.probes.replace(m_curProbe, pp);
     }
 }
 
 void StabTestParamsDialog::changeTime(const QTime &time)
 {
-    if (m_curProbe >= 0 && m_curProbe < metParams.size())
+    if (m_curProbe >= 0 && m_curProbe < metParams.probes.size())
     {
-        auto pp = metParams.at(m_curProbe);
+        auto pp = metParams.probes.at(m_curProbe);
         pp.time = time.hour() * 3600 + time.minute() * 60 + time.second();
-        metParams.replace(m_curProbe, pp);
+        metParams.probes.replace(m_curProbe, pp);
     }
 }
 
 void StabTestParamsDialog::changeLatentTime(const QTime &time)
 {
-    if (m_curProbe >= 0 && m_curProbe < metParams.size())
+    if (m_curProbe >= 0 && m_curProbe < metParams.probes.size())
     {
-        auto pp = metParams.at(m_curProbe);
+        auto pp = metParams.probes.at(m_curProbe);
         pp.latentTime = time.hour() * 3600 + time.minute() * 60 + time.second();
-        metParams.replace(m_curProbe, pp);
+        metParams.probes.replace(m_curProbe, pp);
     }
 }
 
 void StabTestParamsDialog::changeStimulIndex(const int stimul)
 {
-    if (m_curProbe >= 0 && m_curProbe < metParams.size())
+    if (m_curProbe >= 0 && m_curProbe < metParams.probes.size())
     {
-        auto pp = metParams.at(m_curProbe);
+        auto pp = metParams.probes.at(m_curProbe);
         pp.stimulCode = stimul;
-        metParams.replace(m_curProbe, pp);
+        metParams.probes.replace(m_curProbe, pp);
     }
 }
 
 void StabTestParamsDialog::changeZeroing(const bool zeroing)
 {
-    if (m_curProbe >= 0 && m_curProbe < metParams.size())
+    if (m_curProbe >= 0 && m_curProbe < metParams.probes.size())
     {
-        auto pp = metParams.at(m_curProbe);
+        auto pp = metParams.probes.at(m_curProbe);
         pp.zeroingEnabled = zeroing;
-        metParams.replace(m_curProbe, pp);
+        metParams.probes.replace(m_curProbe, pp);
     }
 }
 
 void StabTestParamsDialog::changeScale(const int scale)
 {
-    if (m_curProbe >= 0 && m_curProbe < metParams.size())
+    if (m_curProbe >= 0 && m_curProbe < metParams.probes.size())
     {
-        auto pp = metParams.at(m_curProbe);
+        auto pp = metParams.probes.at(m_curProbe);
         pp.scale = scale;
-        metParams.replace(m_curProbe, pp);
+        metParams.probes.replace(m_curProbe, pp);
     }
 }
 
 void StabTestParamsDialog::showProbeParam()
 {
-    if (m_curProbe >= 0 && m_curProbe < metParams.size())
+    if (m_curProbe >= 0 && m_curProbe < metParams.probes.size())
     {
-        ui->cbAutoEnd->setChecked(metParams.at(m_curProbe).autoEnd);
-        ui->edTime->setTime(QTime(0, 0, 0, 0).addSecs(metParams.at(m_curProbe).time));
-        ui->edTimeLatent->setTime(QTime(0, 0, 0, 0).addSecs(metParams.at(m_curProbe).latentTime));
-        ui->cbStimul->setCurrentIndex(metParams.at(m_curProbe).stimulCode);
-        ui->cbZeroing->setChecked(metParams.at(m_curProbe).zeroingEnabled);
-        ui->cbScale->setCurrentIndex(metParams.at(m_curProbe).scale);
+        ui->cbAutoEnd->setChecked(metParams.probes.at(m_curProbe).autoEnd);
+        ui->edTime->setTime(QTime(0, 0, 0, 0).addSecs(metParams.probes.at(m_curProbe).time));
+        ui->edTimeLatent->setTime(QTime(0, 0, 0, 0).addSecs(metParams.probes.at(m_curProbe).latentTime));
+        ui->cbStimul->setCurrentIndex(metParams.probes.at(m_curProbe).stimulCode);
+        ui->cbZeroing->setChecked(metParams.probes.at(m_curProbe).zeroingEnabled);
+        ui->cbScale->setCurrentIndex(metParams.probes.at(m_curProbe).scale);
     }
 }

@@ -88,7 +88,7 @@ void addTestFinish(const QString &testUid);
  * \param step - номер шага
  * \return uid пробы
  */
-QString addProbe(const QString &testUid, const int step);
+QString addProbe(const QString &testUid, const int step, const QString &name);
 
 /*!
  * \brief Добавляет сигнал

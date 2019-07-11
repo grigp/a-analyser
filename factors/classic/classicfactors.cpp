@@ -53,15 +53,19 @@ void ClassicFactors::calculate()
         for (int i = 0; i < stab.size(); ++i)
         {
             auto rec = stab.value(i);
-            m_qx = m_qx + pow(rec.x - m_mx, 2) / stab.size() - 1;
-            m_my = m_my + pow(rec.y - m_my, 2) / stab.size() - 1;
+            m_qx = m_qx + pow(abs(rec.x - m_mx), 2) / (stab.size() - 1);
+            m_qy = m_qy + pow(abs(rec.y - m_my), 2) / (stab.size() - 1);
             m_r = m_r + sqrt(pow(rec.x - m_mx, 2) + pow(rec.y - m_my, 2)) / stab.size();
         }
         m_qx = sqrt(m_qx);
         m_qy = sqrt(m_qy);
     }
 
- //   addFactor();
+    addFactor(ClassicFactorsDefines::MoXUid, m_mx);
+    addFactor(ClassicFactorsDefines::MoYUid, m_my);
+    addFactor(ClassicFactorsDefines::QXUid, m_qx);
+    addFactor(ClassicFactorsDefines::QYUid, m_qy);
+    addFactor(ClassicFactorsDefines::RUid, m_r);
 }
 
 void ClassicFactors::registerFactors()

@@ -18,14 +18,34 @@ class TestCalculator : public QObject
 public:
     explicit TestCalculator(const QString &testUid, QObject *parent = nullptr);
 
+    /*!
+     * \brief Уровни структуры теста TestLevel enum
+     */
+    enum TestLevel
+    {
+          LevelTest = 0
+        , LevelProbe
+        , LevelChannel
+    };
+
+    /*!
+     * \brief Роли в модели данных структуры теста TestTreeRoles enum
+     */
     enum TestTreeRoles
     {
-          TestUidRole = Qt::UserRole + 1   ///<  uid теста. QString. В узле теста
+          LevelRole = Qt::UserRole + 1     ///<  Уровень. TestLevel. В каждом узле свое значение
+        , TestUidRole                      ///<  uid теста. QString. В узле теста
         , TestDateTimeRole                 ///<  дата и время проведения теста. QDateTime. В узле теста
         , PatientUidRole                   ///<  uid пациента. QString. В узле теста
         , MetodicUidRole                   ///<  uid методики. QString. В узле теста
         , ParamsRole                       ///<  параметры методики. QJsonObject. В узле теста
-
+        , ProbeUidRole                     ///<  uid пробы. QString. В узле пробы
+        , ProbeStepRole                    ///<  номер этапа пробы. int. В узле пробы
+        , ChannelUidRole                   ///<  uid канала. QString. В узле канала
+        , ChannelIdRole                    ///<  id канала. QString. В узле канала
+        , SignalRole                       ///<  Записанный сигнал в виде QByteArray. В узле канала
+        , FactorsgroupRole                 ///<  Указатель на рассчитанную факторсгруппу. В дополнительных столбцах
+        , FactorsgroupUidRole              ///<  uid рассчитанной факторсгруппы
     };
 
     /*!
@@ -67,10 +87,24 @@ protected:
      */
     void addPrimaryFactor(const QString &uid, const double value, const QString &description);
 
+    QStandardItemModel m_mdlTest;
+
 private:
     QString m_testUid;
     QList<FactorsDefines::FactorValueDescript*> m_primaryFactors;
-    QStandardItemModel m_mdlTest;
+};
+
+///<------------------------------------------------------------------------------------------------
+/*!
+ * \brief Класс модуля расчета результатов стабилографического теста StabTestCalculator class
+ */
+class StabTestCalculator : public TestCalculator
+{
+    Q_OBJECT
+public:
+    StabTestCalculator(const QString &testUid, QObject *parent = nullptr)
+        : TestCalculator(testUid, parent)
+    {}
 };
 
 #endif // TESTCALCULATOR_H

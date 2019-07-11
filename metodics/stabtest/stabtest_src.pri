@@ -1,6 +1,8 @@
 INCLUDEPATH += $$PWD
 
 include(patient_win/patient_win_src.pri)
+include(calculators/calculators_src.pri)
+include(visualizators/visualizators_src.pri)
 
 HEADERS += \
     $$PWD/stabtesttemplate.h \

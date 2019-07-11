@@ -12,7 +12,7 @@ ProbeResultData::ProbeResultData(const QString &testUid, const QString &uid, con
 
 void ProbeResultData::saveProbe(const QString &testUid, const int step)
 {
-    auto probeUid = DataProvider::addProbe(testUid, step);
+    auto probeUid = DataProvider::addProbe(testUid, step, m_name);
 
     foreach (auto* signal, m_signals)
     {

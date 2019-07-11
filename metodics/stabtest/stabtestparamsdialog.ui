@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>656</width>
-    <height>396</height>
+    <height>428</height>
    </rect>
   </property>
   <property name="font">
@@ -166,6 +166,16 @@
             </size>
            </property>
           </spacer>
+         </item>
+         <item>
+          <widget class="QLabel" name="lblCondition">
+           <property name="text">
+            <string>Условия проведения</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QComboBox" name="cbConditions"/>
          </item>
         </layout>
        </widget>
@@ -502,8 +512,8 @@
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>257</x>
-     <y>386</y>
+     <x>266</x>
+     <y>418</y>
     </hint>
     <hint type="destinationlabel">
      <x>157</x>
@@ -518,8 +528,8 @@
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>325</x>
-     <y>386</y>
+     <x>334</x>
+     <y>418</y>
     </hint>
     <hint type="destinationlabel">
      <x>286</x>
@@ -535,7 +545,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>267</x>
-     <y>68</y>
+     <y>57</y>
     </hint>
     <hint type="destinationlabel">
      <x>430</x>
@@ -551,7 +561,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>305</x>
-     <y>65</y>
+     <y>57</y>
     </hint>
     <hint type="destinationlabel">
      <x>432</x>
@@ -586,7 +596,7 @@
      <y>66</y>
     </hint>
     <hint type="destinationlabel">
-     <x>660</x>
+     <x>655</x>
      <y>37</y>
     </hint>
    </hints>
@@ -602,7 +612,7 @@
      <y>103</y>
     </hint>
     <hint type="destinationlabel">
-     <x>658</x>
+     <x>655</x>
      <y>85</y>
     </hint>
    </hints>
@@ -618,7 +628,7 @@
      <y>142</y>
     </hint>
     <hint type="destinationlabel">
-     <x>661</x>
+     <x>655</x>
      <y>116</y>
     </hint>
    </hints>
@@ -634,7 +644,7 @@
      <y>167</y>
     </hint>
     <hint type="destinationlabel">
-     <x>657</x>
+     <x>655</x>
      <y>154</y>
     </hint>
    </hints>
@@ -650,7 +660,7 @@
      <y>204</y>
     </hint>
     <hint type="destinationlabel">
-     <x>656</x>
+     <x>655</x>
      <y>183</y>
     </hint>
    </hints>
@@ -666,8 +676,24 @@
      <y>38</y>
     </hint>
     <hint type="destinationlabel">
-     <x>660</x>
+     <x>655</x>
      <y>23</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>cbConditions</sender>
+   <signal>activated(int)</signal>
+   <receiver>StabTestParamsDialog</receiver>
+   <slot>changeCondition(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>158</x>
+     <y>351</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>660</x>
+     <y>301</y>
     </hint>
    </hints>
   </connection>
@@ -683,5 +709,6 @@
   <slot>changeZeroing(bool)</slot>
   <slot>changeScale(int)</slot>
   <slot>changeAutoEnd(bool)</slot>
+  <slot>changeCondition(int)</slot>
  </slots>
 </ui>

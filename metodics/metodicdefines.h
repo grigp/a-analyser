@@ -22,6 +22,7 @@ namespace MetodicDefines
         QString uid;            ///< uid
         QString name;           ///< Название
         QString templateId;     ///< id шаблона методики
+        int condition;          ///< Условия проведения
         QJsonObject params;     ///< Параметры
         MetodicInfo()
         {
