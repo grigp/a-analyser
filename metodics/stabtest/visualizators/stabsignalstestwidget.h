@@ -8,6 +8,7 @@ namespace Ui {
 class StabSignalsTestWidget;
 }
 
+class StabSignalsTestCalculator;
 /*!
  * \brief Класс виджета визуализатора обработчика сигналов стабилографического теста StabSignalsTestWidget class
  */
@@ -23,9 +24,13 @@ public:
      * \brief Метод расчета и отображения данных
      * \param testUid - uid теста
      */
-    void calculate(const QString &testUid);
+    void calculate(StabSignalsTestCalculator *calculator, const QString &testUid);
 
 private:
+    void showTable(StabSignalsTestCalculator *calculator, const QString &testUid);
+
+    void showSKG(StabSignalsTestCalculator *calculator, const QString &testUid);
+
     Ui::StabSignalsTestWidget *ui;
     QStandardItemModel m_mdlTable;
 };

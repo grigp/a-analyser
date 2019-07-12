@@ -76,7 +76,7 @@ protected:
     /*!
      * \brief Построение дерева теста
      */
-    virtual void computeTestTree();
+    //virtual void computeTestTree();
 
     /*!
      * \brief Добавляет первичный показатель в список

@@ -1,9 +1,12 @@
 #include "stabtesttemplate.h"
 
+#include "dataprovider.h"
 #include "metodicdefines.h"
 #include "stabtestexecute.h"
 #include "stabtestvisualize.h"
 #include "stabtestparamsdialog.h"
+#include "testcalculator.h"
+#include "stabsignalstestcalculator.h"
 
 #include <QLayout>
 #include <QDebug>
@@ -34,7 +37,7 @@ QWidget *StabTestTemplate::execute(QWidget *parent, const QJsonObject &params)
 
 QWidget *StabTestTemplate::visualize(QWidget *parent, const QString &testUid)
 {
-    auto *retval = new StabTestVisualize(parent);
+    auto *retval = new StabTestVisualize(StabTestTemplate::calculator(testUid), parent);
     parent->layout()->addWidget(retval);
     retval->setTest(testUid);
     return retval;
@@ -51,4 +54,24 @@ bool StabTestTemplate::editParams(QWidget *parent, QJsonObject &params)
         retval = true;
     }
     return retval;
+}
+
+TestCalculator *StabTestTemplate::calculator(const QString &testUid)
+{
+    DataDefines::TestInfo ti;
+    if (DataProvider::getTestInfo(testUid, ti))
+    {
+        auto params = ti.params;
+        auto cnd = params["condition"].toInt();
+
+        if (cnd == 0)
+            return new StabSignalsTestCalculator(testUid);
+//        else
+//        if (cnd == 1)
+//            return new StateChampionsTestCalculator(testUid, this);
+//        else
+//        if (cnd == 2)
+//            return new DopuskTestCalculator(testUid, this);
+    }
+    return nullptr;
 }

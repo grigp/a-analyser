@@ -9,14 +9,16 @@
 #include "ballistogram.h"
 #include "testresultdata.h"
 #include "resultinfo.h"
+#include "stabsignalstestcalculator.h"
 
 #include "stabsignalstestwidget.h"
 
 #include <QDebug>
 
-StabTestVisualize::StabTestVisualize(QWidget *parent) :
+StabTestVisualize::StabTestVisualize(TestCalculator* calculator, QWidget *parent) :
     QWidget(parent),
     ui(new Ui::StabTestVisualize)
+  , m_calculator(calculator)
   , m_trd(new TestResultData())
 {
     ui->setupUi(this);
@@ -29,6 +31,8 @@ StabTestVisualize::~StabTestVisualize()
 
 void StabTestVisualize::setTest(const QString &testUid)
 {
+    m_calculator->calculate();
+
     DataDefines::TestInfo ti;
     if (DataProvider::getTestInfo(testUid, ti))
     {
@@ -45,7 +49,8 @@ void StabTestVisualize::setTest(const QString &testUid)
 //                         || (cnd == 2 && wgt->objectName() == "wgtDopusk")
                                 );
                 if (cnd == 0 && wgt->objectName() == "wgtSignals")
-                    static_cast<StabSignalsTestWidget*>(wgt)->calculate(testUid);
+                    static_cast<StabSignalsTestWidget*>(wgt)->
+                        calculate(static_cast<StabSignalsTestCalculator*>(m_calculator), testUid);
             }
         }
     }

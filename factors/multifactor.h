@@ -43,6 +43,12 @@ public:
      */
     double factorValue(const int id) const;
 
+    /*!
+     * \brief Возвращает значение показателя по uid показателя
+     * \param uid - uid показателя
+     */
+    double factorValue(const QString &uid) const;
+
 signals:
 
 public slots:

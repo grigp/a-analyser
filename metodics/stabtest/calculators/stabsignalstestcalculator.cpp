@@ -15,7 +15,39 @@ StabSignalsTestCalculator::StabSignalsTestCalculator(const QString &testUid, QOb
 void StabSignalsTestCalculator::calculate()
 {
     StabTestCalculator::calculate();
-    fillSignals();
+//    fillSignals();
+
+    DataDefines::TestInfo ti;
+    if (DataProvider::getTestInfo(testUid(), ti))
+    {
+        foreach (auto probeUid, ti.probes)
+        {
+            DataDefines::ProbeInfo pi;
+            if (DataProvider::getProbeInfo(probeUid, pi))
+            {
+                StabProbeFactors spf;
+                spf.fctClassic = new ClassicFactors(testUid(), pi.uid, ChannelsDefines::chanStab);
+                m_probesFactors << spf;
+
+                addPrimaryFactor(ClassicFactorsDefines::MoXUid,
+                                 spf.fctClassic->factorValue(ClassicFactorsDefines::MoXUid),
+                                 pi.name);
+                addPrimaryFactor(ClassicFactorsDefines::MoYUid,
+                                 spf.fctClassic->factorValue(ClassicFactorsDefines::MoYUid),
+                                 pi.name);
+                addPrimaryFactor(ClassicFactorsDefines::QXUid,
+                                 spf.fctClassic->factorValue(ClassicFactorsDefines::QXUid),
+                                 pi.name);
+                addPrimaryFactor(ClassicFactorsDefines::QYUid,
+                                 spf.fctClassic->factorValue(ClassicFactorsDefines::QYUid),
+                                 pi.name);
+                addPrimaryFactor(ClassicFactorsDefines::RUid,
+                                 spf.fctClassic->factorValue(ClassicFactorsDefines::RUid),
+                                 pi.name);
+            }
+        }
+    }
+
 }
 
 void StabSignalsTestCalculator::fastCalculate()
@@ -24,8 +56,21 @@ void StabSignalsTestCalculator::fastCalculate()
 
 }
 
-void StabSignalsTestCalculator::fillSignals(QModelIndex parent)
+int StabSignalsTestCalculator::factorsCount() const
 {
+    if (m_probesFactors.size() > 0)
+        return m_probesFactors.at(0).fctClassic->size();
+    return 0;
+}
+
+ClassicFactors *StabSignalsTestCalculator::classicFactors(const int probeNum) const
+{
+    Q_ASSERT(probeNum >= 0 && probeNum < m_probesFactors.size());
+    return m_probesFactors.at(probeNum).fctClassic;
+}
+
+//void StabSignalsTestCalculator::fillSignals(QModelIndex parent)
+//{
 //    for (int i = 0; ; ++i)
 //    {
 //        auto index = m_mdlTest.index(i, 0, parent);
@@ -67,4 +112,4 @@ void StabSignalsTestCalculator::fillSignals(QModelIndex parent)
 //            }
 //        }
 //    }
-}
+//}

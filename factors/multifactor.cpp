@@ -17,6 +17,16 @@ double MultiFactor::factorValue(const int id) const
     return m_factors.at(id)->value();
 }
 
+double MultiFactor::factorValue(const QString &uid) const
+{
+    foreach (auto fi, m_factors)
+    {
+        if (fi->uid() == uid)
+            return fi->value();
+    }
+    return 0;
+}
+
 void MultiFactor::addFactor(const QString &uid, const double value)
 {
     m_factors.append(new FactorsDefines::FactorValue(uid, value));

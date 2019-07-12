@@ -4,6 +4,8 @@
 #include <QObject>
 #include "metodictemplate.h"
 
+class TestCalculator;
+
 /*!
  * \brief Шаблон методики стабилографического тестирования StabTestTemplate class
  */
@@ -41,6 +43,8 @@ public:
      *  \return true, если нужно сохранить параметры
      */
     bool editParams(QWidget *parent, QJsonObject &params)  override;
+
+    static TestCalculator* calculator(const QString &testUid);
 };
 
 #endif // STABTESTTEMPLATE_H

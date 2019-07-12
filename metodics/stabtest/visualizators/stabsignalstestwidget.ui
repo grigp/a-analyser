@@ -26,6 +26,7 @@
         <verstretch>1</verstretch>
        </sizepolicy>
       </property>
+      <layout class="QHBoxLayout" name="horizontalLayout"/>
      </widget>
      <widget class="QTreeView" name="treeView">
       <property name="sizePolicy">
