@@ -3,6 +3,8 @@
 
 #include "gridskg.h"
 #include "traceskg.h"
+#include "lineskg.h"
+#include "resultinfo.h"
 
 AreaSKG::AreaSKG(QWidget *parent) :
     QWidget(parent),
@@ -10,6 +12,7 @@ AreaSKG::AreaSKG(QWidget *parent) :
   , m_sceneSKG(new QGraphicsScene(QRectF(-128, -128, 256, 256)))
   , m_gridSKG(new GridSKG(128))
   , m_traceSKG(new TraceSKG(128))
+  , m_lineSKG(new LineSKG(128))
 {
     ui->setupUi(this);
     setAreaSKG();
@@ -29,6 +32,7 @@ void AreaSKG::setDiap(const int diap)
 {
     m_gridSKG->setDiap(diap);
     m_traceSKG->setDiap(diap);
+    m_lineSKG->setDiap(diap);
     m_diap = diap;
 }
 
@@ -51,10 +55,16 @@ void AreaSKG::showTrace(const bool trace)
         m_traceSKG->clear();
 }
 
+void AreaSKG::setSignal(SignalResultInfo *signal)
+{
+    m_lineSKG->setSignal(signal);
+}
+
 void AreaSKG::setAreaSKG()
 {
     ui->panSKG->setScene(m_sceneSKG);
     m_sceneSKG->addItem(m_gridSKG);
     m_sceneSKG->addItem(m_traceSKG);
+    m_sceneSKG->addItem(m_lineSKG);
     m_marker = m_sceneSKG->addRect(QRectF(0, 0, 10, 10), QPen(Qt::darkRed), QBrush(Qt::red));
 }

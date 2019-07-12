@@ -19,7 +19,6 @@ StabTestVisualize::StabTestVisualize(TestCalculator* calculator, QWidget *parent
     QWidget(parent),
     ui(new Ui::StabTestVisualize)
   , m_calculator(calculator)
-  , m_trd(new TestResultData())
 {
     ui->setupUi(this);
 }

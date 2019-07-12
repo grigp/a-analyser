@@ -28,7 +28,6 @@ public:
 private:
     Ui::StabTestVisualize *ui;
 
-    TestResultData* m_trd;
     TestCalculator* m_calculator;
 
 };

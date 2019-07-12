@@ -5,6 +5,9 @@
 #include <QGraphicsItem>
 #include <QList>
 
+/*!
+ * \brief Класс следа СКГ за курсором TraceSKG class
+ */
 class TraceSKG : public QGraphicsItem
 {
 public:

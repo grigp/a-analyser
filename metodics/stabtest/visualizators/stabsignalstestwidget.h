@@ -4,6 +4,8 @@
 #include <QWidget>
 #include <QStandardItemModel>
 
+class TestResultData;
+
 namespace Ui {
 class StabSignalsTestWidget;
 }
@@ -33,6 +35,7 @@ private:
 
     Ui::StabSignalsTestWidget *ui;
     QStandardItemModel m_mdlTable;
+    TestResultData* m_trd;
 };
 
 #endif // STABSIGNALSTESTWIDGET_H

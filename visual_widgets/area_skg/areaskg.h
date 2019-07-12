@@ -10,6 +10,8 @@ class AreaSKG;
 
 class GridSKG;
 class TraceSKG;
+class LineSKG;
+class SignalResultInfo;
 
 class AreaSKG : public QWidget
 {
@@ -34,6 +36,12 @@ public:
      */
     void showTrace(const bool trace);
 
+    /*!
+     * \brief Задает сигнал для отображения в виджете при использовании в визуале
+     * \param signal
+     */
+    void setSignal(SignalResultInfo *signal);
+
 private:
     Ui::AreaSKG *ui;
 
@@ -42,6 +50,7 @@ private:
     QGraphicsScene* m_sceneSKG {nullptr};
     GridSKG* m_gridSKG {nullptr};
     TraceSKG* m_traceSKG {nullptr};
+    LineSKG* m_lineSKG {nullptr};
     QGraphicsRectItem* m_marker {nullptr};
 
     int m_diap {128};
