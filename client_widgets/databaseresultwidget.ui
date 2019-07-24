@@ -109,8 +109,43 @@
   </customwidget>
  </customwidgets>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>splitter</sender>
+   <signal>splitterMoved(int,int)</signal>
+   <receiver>DataBaseResultWidget</receiver>
+   <slot>splitterVMoved(int,int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>43</x>
+     <y>46</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>578</x>
+     <y>57</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>splitter_2</sender>
+   <signal>splitterMoved(int,int)</signal>
+   <receiver>DataBaseResultWidget</receiver>
+   <slot>splitterHMoved(int,int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>30</x>
+     <y>181</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>578</x>
+     <y>199</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
  <slots>
   <slot>executeProbe()</slot>
+  <slot>splitterVMoved(int,int)</slot>
+  <slot>splitterHMoved(int,int)</slot>
  </slots>
 </ui>

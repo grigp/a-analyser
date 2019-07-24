@@ -38,8 +38,14 @@ public:
 private slots:
     void onSelectTest(const QString &testUid);
 
+    void splitterVMoved(int pos,int index);
+    void splitterHMoved(int pos,int index);
+
 private:
     Ui::DataBaseResultWidget *ui;
+
+    void saveSplittersPosition();
+    void restoreSplittersPosition();
 
     QWidget *m_wgtResult {nullptr};  ///< Текущий виджет для показа результатов теста
 };

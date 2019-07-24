@@ -28,13 +28,20 @@ public:
      */
     void setSignal(SignalResultInfo *signal);
 
+    /*!
+     * \brief Устанавливает признак центровки сигнала
+     */
+    void setZeroing(const bool zeroing);
+
 private:
     void updateItem();
 
     int m_diap;
-    double m_prop = 1;
-    int m_width = 0;
-    int m_height = 0;
+    double m_prop {1};
+    int m_width {0};
+    int m_height {0};
+    double m_offsX {0}, m_offsY {0};
+    bool m_isZeroing {false};
 
     SignalResultInfo *m_signal {nullptr};
 };

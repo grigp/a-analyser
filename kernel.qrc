@@ -28,5 +28,7 @@
         <file>sound/03.wav</file>
         <file>images/Dynamic.png</file>
         <file>images/Results.png</file>
+        <file>images/Minus.png</file>
+        <file>images/Plus.png</file>
     </qresource>
 </RCC>

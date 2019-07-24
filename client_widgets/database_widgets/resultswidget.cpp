@@ -7,6 +7,7 @@
 #include "metodicsfactory.h"
 
 #include <QPainter>
+#include <QSettings>
 #include <QDebug>
 
 ResultsWidget::ResultsWidget(QWidget *parent) :
@@ -20,6 +21,8 @@ ResultsWidget::ResultsWidget(QWidget *parent) :
     m_pmdlTest->setSourceModel(m_mdlTest);
     ui->tvTests->setModel(m_pmdlTest);
     ui->tvTests->viewport()->installEventFilter(this);
+
+    restoreSplitterPosition();
 
     //    m_pmp = new ScaledPixmap(this);
     //    ui->wgtResults->layout()->addWidget(m_pmp);
@@ -74,6 +77,32 @@ void ResultsWidget::selectTest(const QModelIndex &index)
         m_wgtResult = metFactory->visualize(ui->wgtResults, uid);
         ui->lblNoTest->setVisible(!m_wgtResult);
     }
+}
+
+void ResultsWidget::splitterMoved(int pos, int index)
+{
+    Q_UNUSED(pos);
+    Q_UNUSED(index);
+    saveSplitterPosition();
+}
+
+void ResultsWidget::saveSplitterPosition()
+{
+    QSettings set(QApplication::instance()->organizationName(),
+                  QApplication::instance()->applicationName());
+    set.beginGroup("ResultWidget");
+    set.setValue("SplitterPosition", ui->splitter->saveState());
+    set.endGroup();
+}
+
+void ResultsWidget::restoreSplitterPosition()
+{
+    QSettings set(QApplication::instance()->organizationName(),
+                  QApplication::instance()->applicationName());
+    set.beginGroup("ResultWidget");
+    auto val = set.value("SplitterPosition");
+    set.endGroup();
+    ui->splitter->restoreState(val.toByteArray());
 }
 
 ScaledPixmap::ScaledPixmap(QWidget *parent)

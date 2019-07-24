@@ -11,6 +11,7 @@
 #include "testresultdata.h"
 #include "resultinfo.h"
 
+#include <QSettings>
 #include <QDebug>
 
 StabSignalsTestWidget::StabSignalsTestWidget(QWidget *parent) :
@@ -19,6 +20,8 @@ StabSignalsTestWidget::StabSignalsTestWidget(QWidget *parent) :
   , m_trd(new TestResultData())
 {
     ui->setupUi(this);
+
+    restoreSplitterPosition();
 }
 
 StabSignalsTestWidget::~StabSignalsTestWidget()
@@ -30,6 +33,44 @@ void StabSignalsTestWidget::calculate(StabSignalsTestCalculator *calculator, con
 {
     showTable(calculator, testUid);
     showSKG(calculator, testUid);
+}
+
+void StabSignalsTestWidget::zoomIn()
+{
+    for (int i = 0; i < ui->wgtSKGAreases->layout()->count(); ++i)
+    {
+        QLayoutItem* item = ui->wgtSKGAreases->layout()->itemAt(i);
+        auto diap = static_cast<AreaSKG*>(item->widget())->diap();
+        if (diap > 1)
+            static_cast<AreaSKG*>(item->widget())->setDiap(diap / 2);
+    }
+}
+
+void StabSignalsTestWidget::zoomOut()
+{
+    for (int i = 0; i < ui->wgtSKGAreases->layout()->count(); ++i)
+    {
+        QLayoutItem* item = ui->wgtSKGAreases->layout()->itemAt(i);
+        auto diap = static_cast<AreaSKG*>(item->widget())->diap();
+        if (diap < 128)
+            static_cast<AreaSKG*>(item->widget())->setDiap(diap * 2);
+    }
+}
+
+void StabSignalsTestWidget::zeroing(bool isZeroing)
+{
+    for (int i = 0; i < ui->wgtSKGAreases->layout()->count(); ++i)
+    {
+        QLayoutItem* item = ui->wgtSKGAreases->layout()->itemAt(i);
+        static_cast<AreaSKG*>(item->widget())->setZeroing(isZeroing);
+    }
+}
+
+void StabSignalsTestWidget::splitterMoved(int pos, int index)
+{
+    Q_UNUSED(pos);
+    Q_UNUSED(index);
+    saveSplitterPosition();
 }
 
 void StabSignalsTestWidget::showTable(StabSignalsTestCalculator *calculator, const QString &testUid)
@@ -69,9 +110,9 @@ void StabSignalsTestWidget::showTable(StabSignalsTestCalculator *calculator, con
     }
 
     m_mdlTable.setHorizontalHeaderLabels(headerLabels);
-    ui->treeView->setModel(&m_mdlTable);
+    ui->tvFactors->setModel(&m_mdlTable);
     for (int i = 0; i < m_mdlTable.columnCount(); ++i)
-        ui->treeView->resizeColumnToContents(i);
+        ui->tvFactors->resizeColumnToContents(i);
 }
 
 void StabSignalsTestWidget::showSKG(StabSignalsTestCalculator *calculator, const QString &testUid)
@@ -88,12 +129,32 @@ void StabSignalsTestWidget::showSKG(StabSignalsTestCalculator *calculator, const
             if (DataProvider::getProbeInfo(ti.probes.at(i), pi))
             {
                 auto* probe = m_trd->probe(i);
-                auto *skg = new AreaSKG(ui->widget);
+                auto *skg = new AreaSKG(ui->wgtSKGAreases);
+                skg->setVisibleMarker(false);
                 skg->setSignal(probe->signal(ChannelsDefines::chanStab));
-                ui->widget->layout()->addWidget(skg);
+                ui->wgtSKGAreases->layout()->addWidget(skg);
             }
         }
     }
+}
+
+void StabSignalsTestWidget::saveSplitterPosition()
+{
+    QSettings set(QApplication::instance()->organizationName(),
+                  QApplication::instance()->applicationName());
+    set.beginGroup("StabSignalsTestWidget");
+    set.setValue("SplitterPosition", ui->splitter->saveState());
+    set.endGroup();
+}
+
+void StabSignalsTestWidget::restoreSplitterPosition()
+{
+    QSettings set(QApplication::instance()->organizationName(),
+                  QApplication::instance()->applicationName());
+    set.beginGroup("StabSignalsTestWidget");
+    auto val = set.value("SplitterPosition");
+    set.endGroup();
+    ui->splitter->restoreState(val.toByteArray());
 }
 
 //    m_trd->openTest(testUid);

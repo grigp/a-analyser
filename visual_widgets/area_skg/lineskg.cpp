@@ -4,6 +4,7 @@
 
 #include <QPainter>
 #include <QWidget>
+#include <QDebug>
 
 static const int I_LABEL_SPACE = 20;
 
@@ -26,7 +27,7 @@ void LineSKG::paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWi
     if (!m_signal)
         return;
 
-    // Параметры построения
+        // Параметры построения
     m_width = widget->size().width();
     m_height = widget->size().height();
     int minS = qMin(m_width, m_height);
@@ -44,8 +45,16 @@ void LineSKG::paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWi
 
     for (int i = 0; i < m_signal->size(); ++i)
     {
-        x1 = m_signal->value(0, i) * m_prop;
-        y1 = - m_signal->value(1, i) * m_prop;
+        if (m_isZeroing)
+        {
+            x1 = (m_signal->value(0, i) - m_offsX) * m_prop;
+            y1 = - (m_signal->value(1, i) - m_offsY) * m_prop;
+        }
+        else
+        {
+            x1 = m_signal->value(0, i) * m_prop;
+            y1 = - m_signal->value(1, i) * m_prop;
+        }
         if (i > 0)
             painter->drawLine(x1, y1, x2, y2);
         x2 = x1;
@@ -79,6 +88,22 @@ void LineSKG::setDiap(int diap)
 void LineSKG::setSignal(SignalResultInfo *signal)
 {
     m_signal = signal;
+
+    m_offsX = 0;
+    m_offsY = 0;
+    for (int i = 0; i < m_signal->size(); ++i)
+    {
+        m_offsX = m_offsX + m_signal->value(0, i);
+        m_offsY = m_offsY + m_signal->value(1, i);
+    }
+    m_offsX = m_offsX / m_signal->size();
+    m_offsY = m_offsY / m_signal->size();
+}
+
+void LineSKG::setZeroing(const bool zeroing)
+{
+    m_isZeroing = zeroing;
+    updateItem();
 }
 
 void LineSKG::updateItem()

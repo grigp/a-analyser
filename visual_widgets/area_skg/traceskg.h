@@ -17,21 +17,30 @@ public:
 
     virtual void paint(QPainter* painter, const QStyleOptionGraphicsItem* item, QWidget* widget);
 
-    // Устанавливает диапазон коодинат
+    /*!
+     * \brief Устанавливает диапазон коодинат
+     * \param diap - значение диапазона
+     */
     void setDiap(int diap);
 
-    // Добавление точки
+    /*!
+     * \brief Добавление точки
+     * \param x, y - координаты
+     */
     void add(double x, double y);
-    // Очистка
+
+    /*!
+     * \brief Очистка
+     */
     void clear();
 
 private:
     void updateItem();
 
     int m_diap;
-    double m_prop = 1;
-    int m_width = 0;
-    int m_height = 0;
+    double m_prop {1};
+    int m_width {0};
+    int m_height {0};
 
     QList<QPointF> m_trace;
 };

@@ -1,6 +1,7 @@
 #include "traceskg.h"
 #include <QPainter>
 #include <QWidget>
+#include <QDebug>
 
 static const int I_LABEL_SPACE = 20;
 

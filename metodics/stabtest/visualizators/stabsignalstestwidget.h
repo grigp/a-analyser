@@ -28,10 +28,20 @@ public:
      */
     void calculate(StabSignalsTestCalculator *calculator, const QString &testUid);
 
+private slots:
+    void zoomIn();
+    void zoomOut();
+    void zeroing(bool isZeroing);
+
+    void splitterMoved(int pos,int index);
+
 private:
     void showTable(StabSignalsTestCalculator *calculator, const QString &testUid);
 
     void showSKG(StabSignalsTestCalculator *calculator, const QString &testUid);
+
+    void saveSplitterPosition();
+    void restoreSplitterPosition();
 
     Ui::StabSignalsTestWidget *ui;
     QStandardItemModel m_mdlTable;

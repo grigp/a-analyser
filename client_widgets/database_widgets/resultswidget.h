@@ -54,9 +54,13 @@ private slots:
      */
     void selectTest(const QModelIndex &index);
 
+    void splitterMoved(int pos,int index);
 
 private:
     Ui::ResultsWidget *ui;
+
+    void saveSplitterPosition();
+    void restoreSplitterPosition();
 
     TestsModel *m_mdlTest;
     TestProxyModel *m_pmdlTest;

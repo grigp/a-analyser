@@ -82,5 +82,25 @@
   </layout>
  </widget>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>splitter</sender>
+   <signal>splitterMoved(int,int)</signal>
+   <receiver>ResultsWidget</receiver>
+   <slot>splitterMoved(int,int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>349</x>
+     <y>80</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>574</x>
+     <y>81</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>splitterMoved(int,int)</slot>
+ </slots>
 </ui>

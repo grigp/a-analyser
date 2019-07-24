@@ -4,6 +4,7 @@
 #include "aanalyserapplication.h"
 #include "dataprovider.h"
 
+#include <QSettings>
 #include <QDebug>
 
 DataBaseResultWidget::DataBaseResultWidget(QWidget *parent) :
@@ -15,6 +16,7 @@ DataBaseResultWidget::DataBaseResultWidget(QWidget *parent) :
     connect(static_cast<AAnalyserApplication*>(QApplication::instance()), &AAnalyserApplication::selectTest,
             this, &DataBaseResultWidget::onSelectTest);
 
+    restoreSplittersPosition();
 }
 
 DataBaseResultWidget::~DataBaseResultWidget()
@@ -46,6 +48,43 @@ void DataBaseResultWidget::onDBDisconnect()
 
 void DataBaseResultWidget::onSelectTest(const QString &testUid)
 {
+    Q_UNUSED(testUid);
+}
+
+void DataBaseResultWidget::splitterVMoved(int pos, int index)
+{
+    Q_UNUSED(pos);
+    Q_UNUSED(index);
+    saveSplittersPosition();
+}
+
+void DataBaseResultWidget::splitterHMoved(int pos, int index)
+{
+    Q_UNUSED(pos);
+    Q_UNUSED(index);
+    saveSplittersPosition();
+}
+
+void DataBaseResultWidget::saveSplittersPosition()
+{
+    QSettings set(QApplication::instance()->organizationName(),
+                  QApplication::instance()->applicationName());
+    set.beginGroup("DataBaseResultWidget");
+    set.setValue("SplitterVPosition", ui->splitter->saveState());
+    set.setValue("SplitterHPosition", ui->splitter_2->saveState());
+    set.endGroup();
+}
+
+void DataBaseResultWidget::restoreSplittersPosition()
+{
+    QSettings set(QApplication::instance()->organizationName(),
+                  QApplication::instance()->applicationName());
+    set.beginGroup("DataBaseResultWidget");
+    auto valV = set.value("SplitterVPosition");
+    auto valH = set.value("SplitterHPosition");
+    set.endGroup();
+    ui->splitter->restoreState(valV.toByteArray());
+    ui->splitter_2->restoreState(valH.toByteArray());
 }
 
 

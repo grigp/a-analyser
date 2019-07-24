@@ -60,6 +60,31 @@ void AreaSKG::setSignal(SignalResultInfo *signal)
     m_lineSKG->setSignal(signal);
 }
 
+void AreaSKG::setVisibleMarker(const bool visibleMarker)
+{
+    m_isVisibleMarker = visibleMarker;
+    if (m_isVisibleMarker)
+        if (!m_marker)
+            m_marker = m_sceneSKG->addRect(QRectF(0, 0, 10, 10), QPen(Qt::darkRed), QBrush(Qt::red));
+        else
+            return;
+    else
+    {
+        if (m_marker)
+        {
+            m_sceneSKG->removeItem(m_marker);
+            delete m_marker;
+            m_marker = nullptr;
+        }
+    }
+}
+
+void AreaSKG::setZeroing(const bool zeroing)
+{
+    if (m_lineSKG)
+        m_lineSKG->setZeroing(zeroing);
+}
+
 void AreaSKG::setAreaSKG()
 {
     ui->panSKG->setScene(m_sceneSKG);

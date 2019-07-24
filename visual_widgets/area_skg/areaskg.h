@@ -42,6 +42,17 @@ public:
      */
     void setSignal(SignalResultInfo *signal);
 
+    /*!
+     * \brief Управляет видимостью маркера
+     * \param visibleMarker - будет ли видим маркер
+     */
+    void setVisibleMarker(const bool visibleMarker);
+
+    /*!
+     * \brief Устанавливает признак центровки сигнала
+     */
+    void setZeroing(const bool zeroing);
+
 private:
     Ui::AreaSKG *ui;
 
@@ -55,6 +66,7 @@ private:
 
     int m_diap {128};
     bool m_isShowTrace {false};
+    bool m_isVisibleMarker {true};
 };
 
 #endif // AREASKG_H
