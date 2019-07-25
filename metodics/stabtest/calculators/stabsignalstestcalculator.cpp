@@ -3,6 +3,7 @@
 #include "channelsdefines.h"
 #include "dataprovider.h"
 #include "classicfactors.h"
+#include "vectorfactors.h"
 #include "factorsfactory.h"
 #include "aanalyserapplication.h"
 
@@ -27,6 +28,7 @@ void StabSignalsTestCalculator::calculate()
             {
                 StabProbeFactors spf;
                 spf.fctClassic = new ClassicFactors(testUid(), pi.uid, ChannelsDefines::chanStab);
+                spf.fctVector = new VectorFactors(testUid(), pi.uid, ChannelsDefines::chanStab);
                 m_probesFactors << spf;
 
                 addPrimaryFactor(ClassicFactorsDefines::MoXUid,
@@ -44,6 +46,10 @@ void StabSignalsTestCalculator::calculate()
                 addPrimaryFactor(ClassicFactorsDefines::RUid,
                                  spf.fctClassic->factorValue(ClassicFactorsDefines::RUid),
                                  pi.name);
+
+                addPrimaryFactor(VectorFactorsDefines::KFRUid,
+                                 spf.fctVector->factorValue(VectorFactorsDefines::KFRUid),
+                                 pi.name);
             }
         }
     }
@@ -59,7 +65,7 @@ void StabSignalsTestCalculator::fastCalculate()
 int StabSignalsTestCalculator::factorsCount() const
 {
     if (m_probesFactors.size() > 0)
-        return m_probesFactors.at(0).fctClassic->size();
+        return m_probesFactors.at(0).fctClassic->size() + m_probesFactors.at(0).fctVector->size();
     return 0;
 }
 
@@ -67,6 +73,12 @@ ClassicFactors *StabSignalsTestCalculator::classicFactors(const int probeNum) co
 {
     Q_ASSERT(probeNum >= 0 && probeNum < m_probesFactors.size());
     return m_probesFactors.at(probeNum).fctClassic;
+}
+
+VectorFactors *StabSignalsTestCalculator::vectorFactors(const int probeNum) const
+{
+    Q_ASSERT(probeNum >= 0 && probeNum < m_probesFactors.size());
+    return m_probesFactors.at(probeNum).fctVector;
 }
 
 //void StabSignalsTestCalculator::fillSignals(QModelIndex parent)

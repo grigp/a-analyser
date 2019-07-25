@@ -1,6 +1,7 @@
 #include "factorsfactory.h"
 
 #include "classicfactors.h"
+#include "vectorfactors.h"
 
 #include <QTimer>
 #include <QDebug>
@@ -11,6 +12,7 @@ FactorsFactory::FactorsFactory(QObject *parent) : QObject(parent)
     QTimer::singleShot(0, [=]()
     {
         ClassicFactors::registerFactors();
+        VectorFactors::registerFactors();
     });
 }
 

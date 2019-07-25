@@ -5,10 +5,12 @@
 #include "testcalculator.h"
 
 class ClassicFactors;
+class VectorFactors;
 
 struct StabProbeFactors
 {
     ClassicFactors *fctClassic;
+    VectorFactors *fctVector;
     StabProbeFactors() {}
 };
 
@@ -44,6 +46,12 @@ public:
      * \param probeNum - номер пробы
      */
     ClassicFactors *classicFactors(const int probeNum) const;
+
+    /*!
+     * \brief Возвращает векторные показатели для пробы по номеру
+     * \param probeNum - номер пробы
+     */
+    VectorFactors *vectorFactors(const int ProbeNum) const;
 
 private:
     //void fillSignals(QModelIndex parent = QModelIndex());
