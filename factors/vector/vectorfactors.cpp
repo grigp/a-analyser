@@ -6,6 +6,7 @@
 #include "channelsutils.h"
 
 #include <math.h>
+#include <QDebug>
 
 namespace  {
 
@@ -54,10 +55,10 @@ void VectorFactors::calculate()
         //! Только для значимых отклонений, с амплитудой, большей чем 0,5 мм
         if (r >= 0.5)
         {
-            //! Расчет скоростей по фронтали и сагиттали
-            QVector<double> spdX;
-            QVector<double> spdY;
-            computeSpeed(&stab, spdX, spdY);
+            //! Расчет скоростей и ускорений по фронтали и сагиттали
+            QVector<double> spdX, spdY;
+            QVector<double> accelX, accelY;
+            computeSpeed(&stab, spdX, spdY, accelX, accelY);
 
             //! Расчет векторов скорости и угловых скоростей
             QVector<double> spd;
@@ -70,6 +71,9 @@ void VectorFactors::calculate()
 
             //! Расчет НПВ
             computeNPV(spdX, spdY, stab.frequency());
+
+            computeVariationFactors(spd, stab.frequency(), m_amplV, m_tV);
+            computeVariationFactors(wSpeed, stab.frequency(), m_amplW, m_tW);
         }
     }
 
@@ -78,6 +82,10 @@ void VectorFactors::calculate()
     addFactor(VectorFactorsDefines::KRINDUid, m_krind);
     addFactor(VectorFactorsDefines::VMidUid, m_vMid);
     addFactor(VectorFactorsDefines::AmplVUid, m_amplV);
+    addFactor(VectorFactorsDefines::TVUid, m_tV);
+    addFactor(VectorFactorsDefines::WMidUid, m_wMid);
+    addFactor(VectorFactorsDefines::AmplWUid, m_amplW);
+    addFactor(VectorFactorsDefines::TVUid, m_tW);
 }
 
 void VectorFactors::registerFactors()
@@ -94,13 +102,26 @@ void VectorFactors::registerFactors()
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(VectorFactorsDefines::KRINDUid, VectorFactorsDefines::GroupUid,
                            tr("Коэф-т резкого изм. напр. движения"), tr("КРИНД"), tr("%"), "");
+
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(VectorFactorsDefines::VMidUid, VectorFactorsDefines::GroupUid,
                            tr("Линейная скорость средняя"), tr("ЛСС"), tr("мм/сек"), "");
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(VectorFactorsDefines::AmplVUid, VectorFactorsDefines::GroupUid,
                            tr("Амплитуда вариации линейной скорости"), tr("АВЛС"), tr("мм/сек"), "");
+    static_cast<AAnalyserApplication*>(QApplication::instance())->
+            registerFactor(VectorFactorsDefines::TVUid, VectorFactorsDefines::GroupUid,
+                           tr("Период вариации линейной скорости"), tr("ПВЛС"), tr("сек"), "");
 
+    static_cast<AAnalyserApplication*>(QApplication::instance())->
+            registerFactor(VectorFactorsDefines::WMidUid, VectorFactorsDefines::GroupUid,
+                           tr("Угловая скорость средняя"), tr("УСС"), tr("рад/сек"), "");
+    static_cast<AAnalyserApplication*>(QApplication::instance())->
+            registerFactor(VectorFactorsDefines::AmplWUid, VectorFactorsDefines::GroupUid,
+                           tr("Амплитуда вариации угловой скорости"), tr("АВУС"), tr("рад/сек"), "");
+    static_cast<AAnalyserApplication*>(QApplication::instance())->
+            registerFactor(VectorFactorsDefines::TWUid, VectorFactorsDefines::GroupUid,
+                           tr("Период вариации угловой скорости"), tr("ПВУС"), tr("сек"), "");
 }
 
 double VectorFactors::deviation(Stabilogram *stab)
@@ -125,14 +146,27 @@ double VectorFactors::deviation(Stabilogram *stab)
     return r;
 }
 
-void VectorFactors::computeSpeed(Stabilogram *stab, QVector<double> &spdX, QVector<double> &spdY)
+void VectorFactors::computeSpeed(Stabilogram *stab,
+                                 QVector<double> &spdX, QVector<double> &spdY,
+                                 QVector<double> &accelX, QVector<double> &accelY)
 {
     spdX.clear();
     spdY.clear();
-    for (int i = 1; i < stab->size() - 1; ++i)
+    accelX.clear();
+    accelY.clear();
+
+    for (int i = 2; i < stab->size() - 3; ++i)
     {
-        spdX << stab->value(0, i) - stab->value(0, i - 1);
-        spdY << stab->value(1, i) - stab->value(1, i - 1);
+        //! Расчет скорости с использованием сплайна
+        spdX << (stab->value(0, i-2) - 8 * stab->value(0, i-1) + 8 * stab->value(0, i+1) - stab->value(0, i+2)) /
+                (12.0 / stab->frequency());
+        spdY << (stab->value(1, i-2) - 8 * stab->value(1, i-1) + 8 * stab->value(1, i+1) - stab->value(1, i+2)) /
+                (12.0 / stab->frequency());
+
+        accelX << (-stab->value(0, i-2) + 16 * stab->value(0, i-1) - 30 * stab->value(0, i) + 16 * stab->value(0, i+1) - stab->value(0, i+2)) /
+                  (12.0 * pow(1/stab->frequency(), 2));
+        accelY << (-stab->value(1, i-2) + 16 * stab->value(1, i-1) - 30 * stab->value(1, i) + 16 * stab->value(1, i+1) - stab->value(1, i+2)) /
+                  (12.0 * pow(1/stab->frequency(), 2));
     }
 }
 
@@ -161,6 +195,8 @@ void VectorFactors::vectorSpeed(const QVector<double> &spdX, const QVector<doubl
                             spdX.value(i) * cos(a1) + spdY.value(i) * sin(a1));
             double w = a2 * 180 / M_PI;
             wSpeed << w;
+            m_wMid = m_wMid + w;
+
             //! Расчет КРИНД
             if (w > BoundKRIND)
                 m_krind = m_krind + 1;
@@ -179,6 +215,12 @@ void VectorFactors::vectorSpeed(const QVector<double> &spdX, const QVector<doubl
     else
         m_vMid = 0;
 
+    //! Дорасчет WMid
+    if (wSpeed.size() > 0)
+        m_wMid = m_wMid / wSpeed.size();
+    else
+        m_wMid = 0;
+
     //! Дорасчет КРИНД
     if (wSpeed.size() > 0)
         m_krind = m_krind / wSpeed.size() * 100;
@@ -193,9 +235,11 @@ void VectorFactors::computeKFR(const QVector<double> &spd)
     for (int i = 0; i < VectorFactorsDefines::DiapsCount; ++i)
     {
         m_diapazones[i].limitLow = loV;
-        m_diapazones[i].limitHigh = sqrt(KoefDiap * i / M_PI);
+        m_diapazones[i].limitHigh = sqrt(KoefDiap * (i + 1) / M_PI);
         loV = m_diapazones[i].limitHigh;
         m_diapazones[i].vectorsCnt = 0;
+        m_diapazones[i].freq = 0;
+        m_diapazones[i].freqAcc = 0;
     }
 
     //! Расчет распределения векторов
@@ -212,8 +256,9 @@ void VectorFactors::computeKFR(const QVector<double> &spd)
     m_diapazones[0].freqAcc = 0;
     for (int i = 0; i < VectorFactorsDefines::DiapsCount; ++i)
     {
+        m_diapazones[i].freq = m_diapazones[i].vectorsCnt;
         if (spd.size() > 0)
-            m_diapazones[i].freq = m_diapazones[i].vectorsCnt / spd.size();
+            m_diapazones[i].freq = m_diapazones[i].freq / spd.size();
         else
             m_diapazones[i].freq = 0;
         accF = accF + m_diapazones[i].freq;
@@ -227,7 +272,7 @@ void VectorFactors::computeKFR(const QVector<double> &spd)
     //! Расчет КФР
     m_kfr = m_diapazones[1].freqAcc / 2;
     for (int i = 1; i < VectorFactorsDefines::DiapsCount; ++i)
-        m_kfr = m_kfr + (m_diapazones[i+1].freqAcc + m_diapazones[i].freqAcc) / 2;
+        m_kfr = m_kfr + (m_diapazones[i].freqAcc + m_diapazones[i-1].freqAcc) / 2;
     m_kfr = m_kfr / VectorFactorsDefines::DiapsCount * 100;
 }
 
@@ -237,7 +282,7 @@ int VectorFactors::getDiapasoneIndex(const double value) const
         if ((value >= m_diapazones[i].limitLow) &&
             (value < m_diapazones[i].limitHigh))
             return i;
-    return -1;
+    return VectorFactorsDefines::DiapsCount - 1;
 }
 
 void VectorFactors::computeNPV(const QVector<double> &spdX,
@@ -252,4 +297,50 @@ void VectorFactors::computeNPV(const QVector<double> &spdX,
         m_npv = m_npv / (fmin(spdX.size(), spdY.size()) / frequency);
     else
         m_npv = 0;
+}
+
+void VectorFactors::computeVariationFactors(const QVector<double> &spd, const int frequency,
+                                            double &amplAv, double &timeAv) const
+{
+    auto dv = spd.value(1) - spd.value(0);
+    auto ve = spd.value(0);
+    int ne = 1;
+    double ampl = 0;
+    int i = 2;
+    while (i < spd.size())
+    {
+        //! Поиск экстремума
+        if (dv >= 0)
+            while (dv >= 0 && i < spd.size())
+            {
+                dv = spd.value(i) - spd.value(i-1);
+                ++i;
+            }
+        else
+            while (dv <= 0 && i < spd.size())
+            {
+                dv = spd.value(i) - spd.value(i-1);
+                ++i;
+            }
+
+        //! Регистрация экстремума
+        if (i < spd.size())
+        {
+            auto i2 = i - 2;
+            ampl = ampl + fabs(ve - spd.value(i2));
+            ve = spd.value(i2);
+            ++ne;
+        }
+    }
+
+    //! Окончательный расчет амплитуды
+    ampl = ampl + fabs(ve - spd.value(i-1));
+    amplAv = ampl / ne;
+
+    //! Окончательный расчет периода вариации
+    double dne = ne;
+    if (ne > 0)
+        timeAv = (spd.size()-1) / dne / frequency * 2;
+    else
+        timeAv = 0;
 }

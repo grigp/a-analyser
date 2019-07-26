@@ -36,7 +36,20 @@ private slots:
     void splitterMoved(int pos,int index);
 
 private:
+
+    enum FactorGroupId
+    {
+          fgiClassic
+        , fgiVector
+    };
+
     void showTable(StabSignalsTestCalculator *calculator, const QString &testUid);
+
+    void addFactorsFromMultifactor(StabSignalsTestCalculator *calculator, const FactorGroupId fgi);
+    int factorCount(StabSignalsTestCalculator *calculator, const FactorGroupId fgi) const;
+    QString factorUid(StabSignalsTestCalculator *calculator, const FactorGroupId fgi, const int factorNum) const;
+    double factorValue(StabSignalsTestCalculator *calculator, const FactorGroupId fgi,
+                       const int probeNum, const int factorNum) const;
 
     void showSKG(StabSignalsTestCalculator *calculator, const QString &testUid);
 

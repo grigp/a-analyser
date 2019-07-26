@@ -5,6 +5,7 @@
 #include "channelsdefines.h"
 #include "dataprovider.h"
 #include "classicfactors.h"
+#include "vectorfactors.h"
 #include "aanalyserapplication.h"
 #include "stabsignalstestcalculator.h"
 #include "areaskg.h"
@@ -87,20 +88,50 @@ void StabSignalsTestWidget::showTable(StabSignalsTestCalculator *calculator, con
                 headerLabels << pi.name;
         }
 
-    auto *app = static_cast<AAnalyserApplication*>(QApplication::instance());
 
-    for (int i = 0; i < calculator->factorsCount(); ++i)
+    addFactorsFromMultifactor(calculator, fgiClassic);
+    addFactorsFromMultifactor(calculator, fgiVector);
+//    auto *app = static_cast<AAnalyserApplication*>(QApplication::instance());
+//    for (int i = 0; i < calculator->factorsCount(); ++i)
+//    {
+//        QList<QStandardItem*> items;
+//        auto fi = app->getFactorInfo(calculator->classicFactors(0)->factorUid(i));
+//        auto *itemFactor = new QStandardItem(fi.name());
+//        itemFactor->setEditable(false);
+//        items << itemFactor;
+
+//        for (int j = 0; j < calculator->probesCount(); ++j)
+//        {
+//            auto value = calculator->classicFactors(j)->factorValue(i);
+//            auto *item = new QStandardItem(QString::number(value));
+//            item->setEditable(false);
+//            items << item;
+//        }
+
+//        m_mdlTable.appendRow(items);
+//    }
+
+    m_mdlTable.setHorizontalHeaderLabels(headerLabels);
+    ui->tvFactors->setModel(&m_mdlTable);
+    for (int i = 0; i < m_mdlTable.columnCount(); ++i)
+        ui->tvFactors->resizeColumnToContents(i);
+}
+
+void StabSignalsTestWidget::addFactorsFromMultifactor(StabSignalsTestCalculator *calculator, const FactorGroupId fgi)
+{
+    auto *app = static_cast<AAnalyserApplication*>(QApplication::instance());
+    for (int i = 0; i < factorCount(calculator, fgi); ++i)
     {
         QList<QStandardItem*> items;
 
-        auto fi = app->getFactorInfo(calculator->classicFactors(0)->factorUid(i));
+        auto fi = app->getFactorInfo(factorUid(calculator, fgi, i));
         auto *itemFactor = new QStandardItem(fi.name());
         itemFactor->setEditable(false);
         items << itemFactor;
 
         for (int j = 0; j < calculator->probesCount(); ++j)
         {
-            auto value = calculator->classicFactors(j)->factorValue(i);
+            auto value = factorValue(calculator, fgi, j, i);
             auto *item = new QStandardItem(QString::number(value));
             item->setEditable(false);
             items << item;
@@ -108,11 +139,59 @@ void StabSignalsTestWidget::showTable(StabSignalsTestCalculator *calculator, con
 
         m_mdlTable.appendRow(items);
     }
+}
 
-    m_mdlTable.setHorizontalHeaderLabels(headerLabels);
-    ui->tvFactors->setModel(&m_mdlTable);
-    for (int i = 0; i < m_mdlTable.columnCount(); ++i)
-        ui->tvFactors->resizeColumnToContents(i);
+int StabSignalsTestWidget::factorCount(StabSignalsTestCalculator *calculator,
+                                       const StabSignalsTestWidget::FactorGroupId fgi) const
+{
+    int n = 0;
+    switch (fgi) {
+    case fgiClassic:
+        n = calculator->classicFactors(0)->size();
+        break;
+    case fgiVector:
+        n = calculator->vectorFactors(0)->size();
+        break;
+    default:
+        break;
+    }
+    return n;
+}
+
+QString StabSignalsTestWidget::factorUid(StabSignalsTestCalculator *calculator,
+                                         const StabSignalsTestWidget::FactorGroupId fgi,
+                                         const int factorNum) const
+{
+    QString fUid = "";
+    switch (fgi) {
+    case fgiClassic:
+        fUid = calculator->classicFactors(0)->factorUid(factorNum);
+        break;
+    case fgiVector:
+        fUid = calculator->vectorFactors(0)->factorUid(factorNum);
+        break;
+    default:
+        break;
+    }
+    return fUid;
+}
+
+double StabSignalsTestWidget::factorValue(StabSignalsTestCalculator *calculator,
+                                          const StabSignalsTestWidget::FactorGroupId fgi,
+                                          const int probeNum, const int factorNum) const
+{
+    double val = 0;
+    switch (fgi) {
+    case fgiClassic:
+        val = calculator->classicFactors(probeNum)->factorValue(factorNum);
+        break;
+    case fgiVector:
+        val = calculator->vectorFactors(probeNum)->factorValue(factorNum);
+        break;
+    default:
+        break;
+    }
+    return val;
 }
 
 void StabSignalsTestWidget::showSKG(StabSignalsTestCalculator *calculator, const QString &testUid)

@@ -10,8 +10,14 @@ static const QString GroupUid = "{EE47A8A0-2C55-4B8B-AF44-B642932ACC90}";
 static const QString KFRUid = "{1A32C0D6-7A87-4E92-B1EE-ED0BB506EABA}";
 static const QString NPVUid = "{A3EE312D-630B-423C-B21B-811FE8E6AD04}";
 static const QString KRINDUid = "{92790B4F-DAAA-4666-8ECC-61017B6E0095}";
+
 static const QString VMidUid = "{A3D24C31-7330-4AE7-A0B3-3F1CEED27361}";
 static const QString AmplVUid = "{C798791A-AEBB-41F7-9DFC-DA829105EE7E}";
+static const QString TVUid = "{B8BB2479-295D-4E4D-91D3-140765E9A48A}";
+
+static const QString WMidUid = "{D42D78E5-55FB-47AE-B8A0-CCFEDC9D0319}";
+static const QString AmplWUid = "{552F3C8C-D647-4EA1-BD65-DCE77C92EA6B}";
+static const QString TWUid = "{E996D938-DF03-4E04-8094-BC13EAA6B57F}";
 
 //! Количество диапазонов
 static const int DiapsCount = 50;
@@ -78,10 +84,12 @@ private:
     /*!
      * \brief Расчет скоростей
      * \param stab - Исходная стабилограмма
-     * \param spdX - Скорость по фронтали
-     * \param spdY - Скорость по сагиттали
+     * \param spdX, spdY - Скорости по фронтали и сагиттали
+     * \param accelX, accelY - Ускорения по фронтали и сагиттали
      */
-    void computeSpeed(Stabilogram *stab, QVector<double> &spdX, QVector<double> &spdY);
+    void computeSpeed(Stabilogram *stab,
+                      QVector<double> &spdX, QVector<double> &spdY,
+                      QVector<double> &accelX, QVector<double> &accelY);
 
     /*!
      * \brief Расчет векторов линейной скорости, углов и угловой скорости
@@ -113,11 +121,27 @@ private:
                     const QVector<double> &spdY,
                     const int frequency);
 
+    /*!
+     * \brief Расчет показателей вариативности скорости
+     * \param spd - вектор значений скорости
+     * \param frequency - частота дискретизации
+     * \param amplAv - амплитуда вариации скорости
+     * \param timeAv - период вариации скорости
+     */
+    void computeVariationFactors(const QVector<double> &spd, const int frequency,
+                                 double &amplAv, double &timeAv) const;
+
     double m_kfr {0};
     double m_npv {0};
     double m_krind {0};
+
     double m_vMid {0};
     double m_amplV {0};
+    double m_tV {0};
+
+    double m_wMid {0};
+    double m_amplW {0};
+    double m_tW {0};
 
     double m_rotLf {0};
     double m_rotRt {0};
