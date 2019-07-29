@@ -86,6 +86,7 @@ void VectorFactors::calculate()
     addFactor(VectorFactorsDefines::WMidUid, m_wMid);
     addFactor(VectorFactorsDefines::AmplWUid, m_amplW);
     addFactor(VectorFactorsDefines::TVUid, m_tW);
+    addFactor(VectorFactorsDefines::KAUSUid, m_kaus);
 }
 
 void VectorFactors::registerFactors()
@@ -122,6 +123,10 @@ void VectorFactors::registerFactors()
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(VectorFactorsDefines::TWUid, VectorFactorsDefines::GroupUid,
                            tr("Период вариации угловой скорости"), tr("ПВУС"), tr("сек"), "");
+
+    static_cast<AAnalyserApplication*>(QApplication::instance())->
+            registerFactor(VectorFactorsDefines::KAUSUid, VectorFactorsDefines::GroupUid,
+                           tr("Коэф-т асимметрии угловой скорости"), tr("КАУС"), tr("%"), "");
 }
 
 double VectorFactors::deviation(Stabilogram *stab)
@@ -226,6 +231,12 @@ void VectorFactors::vectorSpeed(const QVector<double> &spdX, const QVector<doubl
         m_krind = m_krind / wSpeed.size() * 100;
     else
         m_krind = 0;
+
+    //! Дорасчет КАУС
+    if (m_rotRt + m_rotLf > 0)
+        m_kaus = (m_rotRt - m_rotLf) / (m_rotRt + m_rotLf) * 100;
+    else
+        m_kaus = 0;
 }
 
 void VectorFactors::computeKFR(const QVector<double> &spd)

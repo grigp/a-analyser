@@ -125,14 +125,17 @@ void StabSignalsTestWidget::addFactorsFromMultifactor(StabSignalsTestCalculator 
         QList<QStandardItem*> items;
 
         auto fi = app->getFactorInfo(factorUid(calculator, fgi, i));
-        auto *itemFactor = new QStandardItem(fi.name());
+        auto fctName = fi.name();
+        if (fi.measure() != "")
+            fctName = fctName + ", " + fi.measure();
+        auto *itemFactor = new QStandardItem(fctName);
         itemFactor->setEditable(false);
         items << itemFactor;
 
         for (int j = 0; j < calculator->probesCount(); ++j)
         {
             auto value = factorValue(calculator, fgi, j, i);
-            auto *item = new QStandardItem(QString::number(value));
+            auto *item = new QStandardItem(QString::number(value, 'f', 2));
             item->setEditable(false);
             items << item;
         }

@@ -19,6 +19,8 @@ static const QString WMidUid = "{D42D78E5-55FB-47AE-B8A0-CCFEDC9D0319}";
 static const QString AmplWUid = "{552F3C8C-D647-4EA1-BD65-DCE77C92EA6B}";
 static const QString TWUid = "{E996D938-DF03-4E04-8094-BC13EAA6B57F}";
 
+static const QString KAUSUid = "{322CA2B5-B016-4EBF-AE22-3EC3B12DC018}";
+
 //! Количество диапазонов
 static const int DiapsCount = 50;
 
@@ -142,6 +144,8 @@ private:
     double m_wMid {0};
     double m_amplW {0};
     double m_tW {0};
+
+    double m_kaus {0};
 
     double m_rotLf {0};
     double m_rotRt {0};
