@@ -72,8 +72,23 @@ void VectorFactors::calculate()
             //! Расчет НПВ
             computeNPV(spdX, spdY, stab.frequency());
 
+            //! Расчет НУС
+            computeNUS(wSpeed);
+
             computeVariationFactors(spd, stab.frequency(), m_amplV, m_tV);
             computeVariationFactors(wSpeed, stab.frequency(), m_amplW, m_tW);
+
+            //! Коэффициенты асимметрии
+            m_kals_f = computeAsymmetry(spdX);
+            m_kals_s = computeAsymmetry(spdY);
+
+            //! Мощность векторограммы
+            computePowerVector(&stab);
+
+            if (m_wMid != 0)
+                m_vw = m_vMid / m_wMid;
+            else
+                m_vw = 0;
         }
     }
 
@@ -87,6 +102,13 @@ void VectorFactors::calculate()
     addFactor(VectorFactorsDefines::AmplWUid, m_amplW);
     addFactor(VectorFactorsDefines::TVUid, m_tW);
     addFactor(VectorFactorsDefines::KAUSUid, m_kaus);
+    addFactor(VectorFactorsDefines::NUSUid, m_nus);
+    addFactor(VectorFactorsDefines::LSSFUid, m_lss_f);
+    addFactor(VectorFactorsDefines::LSSSUid, m_lss_s);
+    addFactor(VectorFactorsDefines::KALSFUid, m_kals_f);
+    addFactor(VectorFactorsDefines::KALSSUid, m_kals_s);
+    addFactor(VectorFactorsDefines::PwVgrUid, m_pv);
+    addFactor(VectorFactorsDefines::VWUid, m_vw);
 }
 
 void VectorFactors::registerFactors()
@@ -96,37 +118,60 @@ void VectorFactors::registerFactors()
 
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(VectorFactorsDefines::KFRUid, VectorFactorsDefines::GroupUid,
-                           tr("Качество функции равновесия"), tr("КФР"), tr("%"), "");
+                           tr("Качество функции равновесия"), tr("КФР"), tr("%"), 0);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(VectorFactorsDefines::NPVUid, VectorFactorsDefines::GroupUid,
-                           tr("Нормированная площадь векторограммы"), tr("НПВ"), tr("кв.мм./с"), "");
+                           tr("Нормированная площадь векторограммы"), tr("НПВ"), tr("кв.мм./с"), 0);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(VectorFactorsDefines::KRINDUid, VectorFactorsDefines::GroupUid,
-                           tr("Коэф-т резкого изм. напр. движения"), tr("КРИНД"), tr("%"), "");
+                           tr("Коэф-т резкого изм. напр. движения"), tr("КРИНД"), tr("%"), 2);
 
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(VectorFactorsDefines::VMidUid, VectorFactorsDefines::GroupUid,
-                           tr("Линейная скорость средняя"), tr("ЛСС"), tr("мм/сек"), "");
+                           tr("Линейная скорость средняя"), tr("ЛСС"), tr("мм/сек"), 2);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(VectorFactorsDefines::AmplVUid, VectorFactorsDefines::GroupUid,
-                           tr("Амплитуда вариации линейной скорости"), tr("АВЛС"), tr("мм/сек"), "");
+                           tr("Амплитуда вариации линейной скорости"), tr("АВЛС"), tr("мм/сек"), 2);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(VectorFactorsDefines::TVUid, VectorFactorsDefines::GroupUid,
-                           tr("Период вариации линейной скорости"), tr("ПВЛС"), tr("сек"), "");
+                           tr("Период вариации линейной скорости"), tr("ПВЛС"), tr("сек"), 2);
 
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(VectorFactorsDefines::WMidUid, VectorFactorsDefines::GroupUid,
-                           tr("Угловая скорость средняя"), tr("УСС"), tr("рад/сек"), "");
+                           tr("Угловая скорость средняя"), tr("УСС"), tr("рад/сек"), 2);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(VectorFactorsDefines::AmplWUid, VectorFactorsDefines::GroupUid,
-                           tr("Амплитуда вариации угловой скорости"), tr("АВУС"), tr("рад/сек"), "");
+                           tr("Амплитуда вариации угловой скорости"), tr("АВУС"), tr("рад/сек"), 2);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(VectorFactorsDefines::TWUid, VectorFactorsDefines::GroupUid,
-                           tr("Период вариации угловой скорости"), tr("ПВУС"), tr("сек"), "");
+                           tr("Период вариации угловой скорости"), tr("ПВУС"), tr("сек"), 2);
 
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(VectorFactorsDefines::KAUSUid, VectorFactorsDefines::GroupUid,
-                           tr("Коэф-т асимметрии угловой скорости"), tr("КАУС"), tr("%"), "");
+                           tr("Коэф-т асимметрии угловой скорости"), tr("КАУС"), tr("%"), 2);
+    static_cast<AAnalyserApplication*>(QApplication::instance())->
+            registerFactor(VectorFactorsDefines::NUSUid, VectorFactorsDefines::GroupUid,
+                           tr("Накопленный угол смещения"), tr("НУС"), tr("об."), 2);
+
+    static_cast<AAnalyserApplication*>(QApplication::instance())->
+            registerFactor(VectorFactorsDefines::LSSFUid, VectorFactorsDefines::GroupUid,
+                           tr("Линейная скорость средняя по фронтали"), tr("ЛСС ф"), tr("мм/сек"), 2);
+    static_cast<AAnalyserApplication*>(QApplication::instance())->
+            registerFactor(VectorFactorsDefines::LSSSUid, VectorFactorsDefines::GroupUid,
+                           tr("Линейная скорость средняя по сагиттали"), tr("ЛСС с"), tr("мм/сек"), 2);
+    static_cast<AAnalyserApplication*>(QApplication::instance())->
+            registerFactor(VectorFactorsDefines::KALSFUid, VectorFactorsDefines::GroupUid,
+                           tr("Коэф-т асим. линейной скорости по фронтали"), tr("КАЛС ф"), tr("%"), 2);
+    static_cast<AAnalyserApplication*>(QApplication::instance())->
+            registerFactor(VectorFactorsDefines::KALSSUid, VectorFactorsDefines::GroupUid,
+                           tr("Коэф-т асим. линейной скорости по сагиттали"), tr("КАЛС с"), tr("%"), 2);
+
+    static_cast<AAnalyserApplication*>(QApplication::instance())->
+            registerFactor(VectorFactorsDefines::PwVgrUid, VectorFactorsDefines::GroupUid,
+                           tr("Мощность векторограммы"), tr("МВ"), tr("кв.мм/куб.сек"), 2);
+    static_cast<AAnalyserApplication*>(QApplication::instance())->
+            registerFactor(VectorFactorsDefines::VWUid, VectorFactorsDefines::GroupUid,
+                           tr("Соотношение линейной и угловой скоростей"), tr("ЛСС/УС"), tr("мм/град"), 2);
 }
 
 double VectorFactors::deviation(Stabilogram *stab)
@@ -188,6 +233,8 @@ void VectorFactors::vectorSpeed(const QVector<double> &spdX, const QVector<doubl
         auto v = hypot(spdX.value(i), spdY.value(i));
         spd << v;
         m_vMid = m_vMid + v;
+        m_lss_f = m_lss_f + fabs(spdX.value(i));
+        m_lss_s = m_lss_s + fabs(spdY.value(i));
 
         //! Угол
         angles << atan2(spdY.value(i), spdX.value(i));
@@ -200,7 +247,7 @@ void VectorFactors::vectorSpeed(const QVector<double> &spdX, const QVector<doubl
                             spdX.value(i) * cos(a1) + spdY.value(i) * sin(a1));
             double w = a2 * 180 / M_PI;
             wSpeed << w;
-            m_wMid = m_wMid + w;
+            m_wMid = m_wMid + fabs(w);
 
             //! Расчет КРИНД
             if (w > BoundKRIND)
@@ -219,6 +266,16 @@ void VectorFactors::vectorSpeed(const QVector<double> &spdX, const QVector<doubl
         m_vMid = m_vMid / fmin(spdX.size(), spdY.size());
     else
         m_vMid = 0;
+
+    //! Дорасчет ЛСС по каналам
+    if (spdX.size() > 0)
+        m_lss_f = m_lss_f / spdX.size();
+    else
+        m_lss_f = 0;
+    if (spdY.size() > 0)
+        m_lss_s = m_lss_s / spdY.size();
+    else
+        m_lss_s = 0;
 
     //! Дорасчет WMid
     if (wSpeed.size() > 0)
@@ -310,6 +367,13 @@ void VectorFactors::computeNPV(const QVector<double> &spdX,
         m_npv = 0;
 }
 
+void VectorFactors::computeNUS(const QVector<double> &wSpeed)
+{
+    foreach (auto val, wSpeed)
+        m_nus = m_nus + val;
+    m_nus = m_nus / 360;
+}
+
 void VectorFactors::computeVariationFactors(const QVector<double> &spd, const int frequency,
                                             double &amplAv, double &timeAv) const
 {
@@ -354,4 +418,33 @@ void VectorFactors::computeVariationFactors(const QVector<double> &spd, const in
         timeAv = (spd.size()-1) / dne / frequency * 2;
     else
         timeAv = 0;
+}
+
+double VectorFactors::computeAsymmetry(const QVector<double> &spd)
+{
+    double plusCnt = 0;
+    double minusCnt = 0;
+    foreach (auto val, spd)
+    {
+        if (val > 0)
+            plusCnt = plusCnt + fabs(val);
+        else
+            minusCnt = minusCnt + fabs(val);
+    }
+
+    if (plusCnt + minusCnt > 0)
+        return (plusCnt - minusCnt) / (plusCnt + minusCnt) * 100;
+    return 0;
+}
+
+void VectorFactors::computePowerVector(Stabilogram *stab)
+{
+    for (int i = 1; i < stab->size() - 1; ++i)
+    {
+        auto vx = stab->value(0, i) - stab->value(0, i-1);
+        auto vy = stab->value(1, i) - stab->value(1, i-1);
+        m_pv = m_pv + pow(hypot(vx, vy), 2);
+    }
+    if (stab->size() > 0)
+        m_pv = m_pv / (stab->size() / stab->frequency());
 }

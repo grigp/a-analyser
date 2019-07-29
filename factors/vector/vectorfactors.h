@@ -20,6 +20,15 @@ static const QString AmplWUid = "{552F3C8C-D647-4EA1-BD65-DCE77C92EA6B}";
 static const QString TWUid = "{E996D938-DF03-4E04-8094-BC13EAA6B57F}";
 
 static const QString KAUSUid = "{322CA2B5-B016-4EBF-AE22-3EC3B12DC018}";
+static const QString NUSUid = "{E2AA941A-A124-40CD-BCB4-1F87BD9A6E25}";
+
+static const QString LSSFUid = "{D82C60C6-D09D-470D-A28B-78EC83D7D841}";
+static const QString LSSSUid = "{58C9D5ED-22D3-48C3-A2FD-BCACE16600A6}";
+static const QString KALSFUid = "{C0AD66A6-2FB2-4E2D-8453-B6B8D8880D89}";
+static const QString KALSSUid = "{0B3D724A-DADC-4432-9BFC-64087D55398D}";
+
+static const QString PwVgrUid = "{BED2A473-10D9-4719-8CC5-10E3BEC1DCE5}";
+static const QString VWUid = "{85984CC0-E541-4AF4-B6BE-3DF9E05840A1}";
 
 //! Количество диапазонов
 static const int DiapsCount = 50;
@@ -124,6 +133,12 @@ private:
                     const int frequency);
 
     /*!
+     * \brief Расчет НУС
+     * \param wSpeed - массив угловой скорости
+     */
+    void computeNUS(const QVector<double> &wSpeed);
+
+    /*!
      * \brief Расчет показателей вариативности скорости
      * \param spd - вектор значений скорости
      * \param frequency - частота дискретизации
@@ -132,6 +147,19 @@ private:
      */
     void computeVariationFactors(const QVector<double> &spd, const int frequency,
                                  double &amplAv, double &timeAv) const;
+
+    /*!
+     * \brief Расчет коэффициента асимметрии для массива скорости
+     * \param spd - массив скорости
+     * \return коэффициент асимметрии
+     */
+    double computeAsymmetry(const QVector<double> &spd);
+
+    /*!
+     * \brief Расчет мощности векторограммы
+     * \param stab - указатель на стабилограмму
+     */
+    void computePowerVector(Stabilogram *stab);
 
     double m_kfr {0};
     double m_npv {0};
@@ -146,6 +174,15 @@ private:
     double m_tW {0};
 
     double m_kaus {0};
+    double m_nus {0};
+
+    double m_lss_f {0};
+    double m_lss_s {0};
+    double m_kals_f {0};
+    double m_kals_s {0};
+
+    double m_pv {0};
+    double m_vw {0};
 
     double m_rotLf {0};
     double m_rotRt {0};

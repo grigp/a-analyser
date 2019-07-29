@@ -240,7 +240,7 @@ QString AAnalyserApplication::getGroupName(const QString &groupUid) const
 
 void AAnalyserApplication::registerFactor(const QString &uid, const QString &groupUid,
                                           const QString &name, const QString &shortName,
-                                          const QString &measure, const QString &format)
+                                          const QString &measure, const int format)
 {
     if (m_factors)
         m_factors->registerFactor(uid, groupUid, name, shortName, measure, format);

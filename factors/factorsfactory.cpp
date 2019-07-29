@@ -31,7 +31,7 @@ QString FactorsFactory::getGroupName(const QString &groupUid) const
 
 void FactorsFactory::registerFactor(const QString &uid, const QString &groupUid,
                                     const QString &name, const QString &shortName,
-                                    const QString &measure, const QString &format)
+                                    const QString &measure, const int format)
 {
     FactorsDefines::FactorInfo fi(uid, groupUid, name, shortName, measure, format);
     m_factors.insert(uid, fi);

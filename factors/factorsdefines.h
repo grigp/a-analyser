@@ -13,7 +13,7 @@ class FactorInfo
 public:
     FactorInfo(const QString &uid, const QString &groupUid,
                const QString &name, const QString &shortName,
-               const QString &measure, const QString &format)
+               const QString &measure, const int format)
         : m_uid(uid), m_groupUid(groupUid),
           m_name(name), m_shortName(shortName),
           m_measure(measure), m_format(format)
@@ -35,8 +35,8 @@ public:
     QString measure() const {return m_measure;}
     void setMeasure(const QString &measure) {m_measure = measure;}
 
-    QString format() const {return m_format;}
-    void setFormat(const QString &format) {m_format = format;}
+    int format() const {return m_format;}
+    void setFormat(const int format) {m_format = format;}
 
 private:
     QString m_uid;
@@ -44,7 +44,7 @@ private:
     QString m_name;
     QString m_shortName;
     QString m_measure;
-    QString m_format;
+    int m_format;
 };
 
 

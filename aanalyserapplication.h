@@ -193,7 +193,7 @@ public:
      */
     void registerFactor(const QString &uid, const QString &groupUid,
                         const QString &name, const QString &shortName,
-                        const QString &measure, const QString &format);
+                        const QString &measure, const int format);
 
     /*!
      * \brief Регистрирует группу показателей
