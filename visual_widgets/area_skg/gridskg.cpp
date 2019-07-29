@@ -85,7 +85,7 @@ void GridSKG::paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWi
 
 void GridSKG::setDiap(int diap)
 {
-    // Если до первой прорисовки сделать изменение масштаба, появятся коллизии
+    //! Если до первой прорисовки сделать изменение масштаба, появятся коллизии
     if (m_width > 0 && m_height > 0)
     {
         m_diap = diap;

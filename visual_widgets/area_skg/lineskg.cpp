@@ -27,7 +27,7 @@ void LineSKG::paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWi
     if (!m_signal)
         return;
 
-        // Параметры построения
+    // Параметры построения
     m_width = widget->size().width();
     m_height = widget->size().height();
     int minS = qMin(m_width, m_height);
