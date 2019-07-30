@@ -33,6 +33,13 @@ public:
      */
     void setZeroing(const bool zeroing);
 
+    /*!
+     * \brief Устанавливает параметры эллипса
+     * \param sizeA, sizeB - длины осей
+     * \param angle - угол наклона
+     */
+    void setEllipse(const double sizeA, const double sizeB, const double angle);
+
 private:
     void updateItem();
 
@@ -44,6 +51,12 @@ private:
     bool m_isZeroing {false};
 
     SignalResultInfo *m_signal {nullptr};
+
+    ///< Параметры эллипса
+    double m_sizeA {0};
+    double m_sizeB {0};
+    double m_angle {0};
+
 };
 
 #endif // LINESKG_H

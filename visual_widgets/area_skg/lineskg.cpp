@@ -24,10 +24,11 @@ QRectF LineSKG::boundingRect() const
 
 void LineSKG::paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWidget *widget)
 {
+    Q_UNUSED(item);
     if (!m_signal)
         return;
 
-    // Параметры построения
+    //! Параметры построения
     m_width = widget->size().width();
     m_height = widget->size().height();
     int minS = qMin(m_width, m_height);
@@ -35,9 +36,8 @@ void LineSKG::paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWi
 
     painter->save();
 
+    //! Статокинезиграмма
     painter->setPen(QPen(Qt::blue, 1));
-
-    int i = 0;
     int x1 = 0;
     int y1 = 0;
     int x2 = 0;
@@ -61,20 +61,60 @@ void LineSKG::paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWi
         y2 = y1;
     }
 
-//    QListIterator<QPointF> it(m_trace);
-//    while (it.hasNext())
-//    {
-//        QPointF pt = it.next();
-//        x1 = pt.x() * m_prop;
-//        y1 = - pt.y() * m_prop;
+    //! Эллипс
+    painter->setPen(QPen(Qt::darkBlue, 1));
+    if (m_sizeA > 0 && m_sizeA < 5000
+            && m_sizeB > 0 && m_sizeB < 5000
+            && m_angle >= -360 && m_angle <= 360)
+    {
+        double fi = - m_angle * M_PI / 180 - M_PI / 2;
+        double psi = 0;
+        int ox = 0;
+        int oy = 0;
+        int x = 0;
+        int y = 0;
+        bool first = true;
+        painter->setPen(QPen(Qt::darkBlue));
+        while (psi < 2 * M_PI)
+        {
+            if (m_isZeroing)
+            {
+                x = lround((m_sizeA * cos(psi) * cos(-fi) + m_sizeB * sin(psi) * sin(-fi)) * m_prop);
+                y = lround((-m_sizeA * cos(psi) * sin(-fi) + m_sizeB * sin(psi) * cos(-fi)) * m_prop);
+            }
+            else
+            {
+                x = lround((m_sizeA * cos(psi) * cos(-fi) + m_sizeB * sin(psi) * sin(-fi) + m_offsX) * m_prop);
+                y = lround((-m_sizeA * cos(psi) * sin(-fi) + m_sizeB * sin(psi) * cos(-fi) - m_offsY) * m_prop);
+            }
 
-//        if (i > 0)
-//            painter->drawLine(x1, y1, x2, y2);
-//        x2 = x1;
-//        y2 = y1;
+            if (!first)
+                painter->drawLine(ox, oy, x, y);
 
-//        ++i;
-//    }
+            ox = x;
+            oy = y;
+            first = false;
+            psi = psi + 2 * M_PI / 360;
+        }
+
+        //! Ось
+        if (m_isZeroing)
+        {
+            x = lround((m_sizeA * 1.1 * cos(0) * cos(-fi) + m_sizeB * sin(0) * sin(-fi)) * m_prop);
+            y = lround((-m_sizeA * 1.1 * cos(0) * sin(-fi) + m_sizeB * sin(0) * cos(-fi)) * m_prop);
+            ox = lround((m_sizeA * 1.1 * cos(M_PI) * cos(-fi) + m_sizeB * sin(M_PI) * sin(-fi)) * m_prop);
+            oy = lround((-m_sizeA * 1.1 * cos(M_PI) * sin(-fi) + m_sizeB * sin(M_PI) * cos(-fi)) * m_prop);
+        }
+        else
+        {
+            x = lround((m_sizeA * 1.1 * cos(0) * cos(-fi) + m_sizeB * sin(0) * sin(-fi) + m_offsX) * m_prop);
+            y = lround((-m_sizeA * 1.1 * cos(0) * sin(-fi) + m_sizeB * sin(0) * cos(-fi) - m_offsY) * m_prop);
+            ox = lround((m_sizeA * 1.1 * cos(M_PI) * cos(-fi) + m_sizeB * sin(M_PI) * sin(-fi) + m_offsX) * m_prop);
+            oy = lround((-m_sizeA * 1.1 * cos(M_PI) * sin(-fi) + m_sizeB * sin(M_PI) * cos(-fi) - m_offsY) * m_prop);
+        }
+        painter->drawLine(ox, oy, x, y);
+
+    }
 
     painter->restore();
 }
@@ -104,6 +144,14 @@ void LineSKG::setZeroing(const bool zeroing)
 {
     m_isZeroing = zeroing;
     updateItem();
+}
+
+void LineSKG::setEllipse(const double sizeA, const double sizeB, const double angle)
+{
+    m_sizeA = sizeA;
+    m_sizeB = sizeB;
+    m_angle = angle;
+    update(boundingRect());
 }
 
 void LineSKG::updateItem()

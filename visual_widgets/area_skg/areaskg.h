@@ -53,6 +53,13 @@ public:
      */
     void setZeroing(const bool zeroing);
 
+    /*!
+     * \brief Устанавливает параметры эллипса
+     * \param sizeA, sizeB - длины осей
+     * \param angle - угол наклона
+     */
+    void setEllipse(const double sizeA, const double sizeB, const double angle);
+
 private:
     Ui::AreaSKG *ui;
 

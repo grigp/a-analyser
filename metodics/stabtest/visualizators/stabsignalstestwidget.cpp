@@ -88,28 +88,8 @@ void StabSignalsTestWidget::showTable(StabSignalsTestCalculator *calculator, con
                 headerLabels << pi.name;
         }
 
-
     addFactorsFromMultifactor(calculator, fgiClassic);
     addFactorsFromMultifactor(calculator, fgiVector);
-//    auto *app = static_cast<AAnalyserApplication*>(QApplication::instance());
-//    for (int i = 0; i < calculator->factorsCount(); ++i)
-//    {
-//        QList<QStandardItem*> items;
-//        auto fi = app->getFactorInfo(calculator->classicFactors(0)->factorUid(i));
-//        auto *itemFactor = new QStandardItem(fi.name());
-//        itemFactor->setEditable(false);
-//        items << itemFactor;
-
-//        for (int j = 0; j < calculator->probesCount(); ++j)
-//        {
-//            auto value = calculator->classicFactors(j)->factorValue(i);
-//            auto *item = new QStandardItem(QString::number(value));
-//            item->setEditable(false);
-//            items << item;
-//        }
-
-//        m_mdlTable.appendRow(items);
-//    }
 
     m_mdlTable.setHorizontalHeaderLabels(headerLabels);
     ui->tvFactors->setModel(&m_mdlTable);
@@ -214,6 +194,12 @@ void StabSignalsTestWidget::showSKG(StabSignalsTestCalculator *calculator, const
                 auto *skg = new AreaSKG(ui->wgtSKGAreases);
                 skg->setVisibleMarker(false);
                 skg->setSignal(probe->signal(ChannelsDefines::chanStab));
+
+                auto angle = calculator->classicFactors(i)->ellipse().angle;
+                auto sizeA = calculator->classicFactors(i)->ellipse().sizeA;
+                auto sizeB = calculator->classicFactors(i)->ellipse().sizeB;
+                skg->setEllipse(sizeA, sizeB, angle);
+
                 ui->wgtSKGAreases->layout()->addWidget(skg);
             }
         }

@@ -85,6 +85,12 @@ void AreaSKG::setZeroing(const bool zeroing)
         m_lineSKG->setZeroing(zeroing);
 }
 
+void AreaSKG::setEllipse(const double sizeA, const double sizeB, const double angle)
+{
+    if (m_lineSKG)
+        m_lineSKG->setEllipse(sizeA, sizeB, angle);
+}
+
 void AreaSKG::setAreaSKG()
 {
     ui->panSKG->setScene(m_sceneSKG);
