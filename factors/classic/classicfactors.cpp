@@ -31,8 +31,6 @@ bool ClassicFactors::isValid(const QString &testUid, const QString &probeUid, co
 bool ClassicFactors::isValid() const
 {
     return isValid(testUid(), probeUid(), channelId());
-//    return DataProvider::channelExists(probeUid(), channelId()) &&
-//           ChannelsUtils::instance().channelType(channelId()) == ChannelsDefines::ctStabilogram;
 }
 
 void ClassicFactors::calculate()
@@ -42,6 +40,7 @@ void ClassicFactors::calculate()
     {
         Stabilogram stab(baStab);
 
+        //! Смещения
         for (int i = 0; i < stab.size(); ++i)
         {
             auto rec = stab.value(i);
@@ -51,16 +50,26 @@ void ClassicFactors::calculate()
         m_mx = m_mx / stab.size();
         m_my = m_my / stab.size();
 
+        //! Разбросы и др.
+        double ox = 0;
+        double oy = 0;
         for (int i = 0; i < stab.size(); ++i)
         {
             auto rec = stab.value(i);
             m_qx = m_qx + pow(abs(rec.x - m_mx), 2) / (stab.size() - 1);
             m_qy = m_qy + pow(abs(rec.y - m_my), 2) / (stab.size() - 1);
             m_r = m_r + sqrt(pow(rec.x - m_mx, 2) + pow(rec.y - m_my, 2)) / stab.size();
+
+            //! Длина СКГ
+            if (i > 0)
+                m_l = m_l + sqrt(pow(rec.x - ox, 2) + pow(rec.y - oy, 2));
+            ox = rec.x;
+            oy = rec.y;
         }
         m_qx = sqrt(m_qx);
         m_qy = sqrt(m_qy);
 
+        //! Эллипс
         computeParamsEllipse(&stab);
     }
 
@@ -69,6 +78,7 @@ void ClassicFactors::calculate()
     addFactor(ClassicFactorsDefines::QXUid, m_qx);
     addFactor(ClassicFactorsDefines::QYUid, m_qy);
     addFactor(ClassicFactorsDefines::RUid, m_r);
+    addFactor(ClassicFactorsDefines::LUid, m_l);
     addFactor(ClassicFactorsDefines::AngleUid, m_angle);
     addFactor(ClassicFactorsDefines::SquareUid, m_square);
     addFactor(ClassicFactorsDefines::ComprRatioUid, m_comprRatio);
@@ -94,6 +104,9 @@ void ClassicFactors::registerFactors()
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(ClassicFactorsDefines::RUid, ClassicFactorsDefines::GroupUid,
                            tr("Средний радиус"), tr("R"), tr("мм"), 2);
+    static_cast<AAnalyserApplication*>(QApplication::instance())->
+            registerFactor(ClassicFactorsDefines::LUid, ClassicFactorsDefines::GroupUid,
+                           tr("Длина статокинезиграммы"), tr("L"), tr("мм"), 0);
 
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(ClassicFactorsDefines::AngleUid, ClassicFactorsDefines::GroupUid,

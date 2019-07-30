@@ -56,9 +56,9 @@ void Ballistogram::addValue(const double val)
 
 void Ballistogram::fromByteArray(const QByteArray &data)
 {
-    // Формат массива байт с данными о канале
-    // [channelId(38)|freq(4)|cnt(4)|V0(double)|V1(double)| ... |VCnt-1(double)]
-    //  0          37|38   41|42  45|46  ...
+    //! Формат массива байт с данными о канале
+    //! [channelId(38)|freq(4)|cnt(4)|V0(double)|V1(double)| ... |VCnt-1(double)]
+    //!  0          37|38   41|42  45|46  ...
 
     QByteArray ba = data;
     QDataStream stream(&ba, QIODevice::ReadOnly);
@@ -69,10 +69,20 @@ void Ballistogram::fromByteArray(const QByteArray &data)
     stream >> count;
     m_data.resize(count);
 
+    m_maxValue = -INT_MAX;
+    m_minValue = INT_MAX;
+
     for (int i = 0; i < count; ++i)
     {
         double val;
         stream >> val;
+
+        //! Минимум и максимум
+        if (val > m_maxValue)
+            m_maxValue = val;
+        if (val < m_minValue)
+            m_minValue = val;
+
         m_data.replace(i, val);
     }
 }

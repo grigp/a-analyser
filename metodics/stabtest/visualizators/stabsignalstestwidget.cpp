@@ -13,6 +13,7 @@
 #include "resultinfo.h"
 
 #include <QSettings>
+#include <QTimer>
 #include <QDebug>
 
 StabSignalsTestWidget::StabSignalsTestWidget(QWidget *parent) :
@@ -183,6 +184,8 @@ void StabSignalsTestWidget::showSKG(StabSignalsTestCalculator *calculator, const
     DataDefines::TestInfo ti;
     if (DataProvider::getTestInfo(testUid, ti))
     {
+        double absMax = 0;
+        QList<AreaSKG*> skgList;
         m_trd->openTest(testUid);
         Q_ASSERT(ti.probes.size() == m_trd->probesCount());
         for (int i = 0; i < ti.probes.size(); ++i)
@@ -192,8 +195,14 @@ void StabSignalsTestWidget::showSKG(StabSignalsTestCalculator *calculator, const
             {
                 auto* probe = m_trd->probe(i);
                 auto *skg = new AreaSKG(ui->wgtSKGAreases);
+                skgList << skg;
                 skg->setVisibleMarker(false);
-                skg->setSignal(probe->signal(ChannelsDefines::chanStab));
+
+                auto *sig = probe->signal(ChannelsDefines::chanStab);
+                skg->setSignal(sig);
+                auto max = sig->absMaxValue();
+                if (max > absMax)
+                    absMax = max;
 
                 auto angle = calculator->classicFactors(i)->ellipse().angle;
                 auto sizeA = calculator->classicFactors(i)->ellipse().sizeA;
@@ -203,6 +212,16 @@ void StabSignalsTestWidget::showSKG(StabSignalsTestCalculator *calculator, const
                 ui->wgtSKGAreases->layout()->addWidget(skg);
             }
         }
+
+        //! Установка диапазонов для всех СКГ
+        QTimer::singleShot(0, [=]()
+        {
+            int diap = 1;
+            while (diap < absMax)
+                diap = diap * 2;
+            foreach (auto* skg, skgList)
+                skg->setDiap(diap);
+        });
     }
 }
 

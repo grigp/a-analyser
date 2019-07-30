@@ -60,14 +60,17 @@ void Stabilogram::addValue(const SignalsDefines::StabRec rec)
 
 void Stabilogram::fromByteArray(const QByteArray &data)
 {
-    // Формат массива байт с данными о канале
-    // [channelId(38)|freq(4)|cnt(4)|X0(double)|Y0(double)|X1(double)|Y1(double)| ... |XCnt-1(double)|YCnt-1(double)]
-    //  0          37|38   41|42  45|46  ...
+    //! Формат массива байт с данными о канале
+    //! [channelId(38)|freq(4)|cnt(4)|X0(double)|Y0(double)|X1(double)|Y1(double)| ... |XCnt-1(double)|YCnt-1(double)]
+    //!  0          37|38   41|42  45|46  ...
 
     QByteArray ba = data;
     QDataStream stream(&ba, QIODevice::ReadOnly);
     stream >> m_channelId;
     stream >> m_frequency;
+
+    m_maxValue = -INT_MAX;
+    m_minValue = INT_MAX;
 
     int count = 0;
     stream >> count;
@@ -78,6 +81,17 @@ void Stabilogram::fromByteArray(const QByteArray &data)
         SignalsDefines::StabRec rec;
         stream >> rec.x;
         stream >> rec.y;
+
+        //! Минимум и максимум
+        if (rec.x > m_maxValue)
+            m_maxValue = rec.x;
+        if (rec.y > m_maxValue)
+            m_maxValue = rec.y;
+        if (rec.x < m_minValue)
+            m_minValue = rec.x;
+        if (rec.y < m_minValue)
+            m_minValue = rec.y;
+
         m_data.replace(i, rec);
     }
 }

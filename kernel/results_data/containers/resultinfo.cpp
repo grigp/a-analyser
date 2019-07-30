@@ -60,3 +60,8 @@ double SignalResultInfo::value(const int chan, const int rec) const
 {
     return m_signal->value(chan, rec);
 }
+
+double SignalResultInfo::absMaxValue()
+{
+    return m_signal->absMaxValue();
+}

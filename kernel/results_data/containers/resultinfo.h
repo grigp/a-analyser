@@ -78,6 +78,11 @@ public:
      */
     double value(const int chan, const int rec) const;
 
+    /*!
+     * \brief Возвращает максимальное значение сигнала по модулю
+     */
+    double absMaxValue();
+
 private:
     SignalData* m_signal;
 };

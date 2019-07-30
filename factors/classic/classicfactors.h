@@ -13,6 +13,7 @@ static const QString MoYUid = "{ADEA0860-76A3-4491-A3FB-BE130E1C64DA}";
 static const QString QXUid = "{48DB78C0-EDBD-4065-9CC1-F767499B8C90}";
 static const QString QYUid = "{4184ED12-B318-4D95-892F-4B20904E2503}";
 static const QString RUid = "{E860357D-8493-43F6-9AC4-49A8557D0F15}";
+static const QString LUid = "{FC3117F1-7C50-406B-997D-78683E09FF93}";
 
 static const QString AngleUid = "{4580E0C5-9DBF-4261-8024-687C61B5016E}";
 static const QString SquareUid = "{B256BAC6-DC9E-4C28-BC7F-D6C3E37BF1B5}";
@@ -95,6 +96,7 @@ private:
     double m_qx {0};
     double m_qy {0};
     double m_r {0};
+    double m_l {0};
 
     double m_angle {0};
     double m_square {0};
