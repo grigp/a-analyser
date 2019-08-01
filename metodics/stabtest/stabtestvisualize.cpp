@@ -11,9 +11,11 @@
 #include "resultinfo.h"
 #include "stabsignalstestcalculator.h"
 #include "dopuskcalculator.h"
+#include "statechampionstestcalculator.h"
 
 #include "stabsignalstestwidget.h"
 #include "dopuskwidget.h"
+#include "statechampionswidget.h"
 
 #include <QDebug>
 
@@ -47,16 +49,16 @@ void StabTestVisualize::setTest(const QString &testUid)
             {
                 wgt->setVisible(
                             (cnd == 0 && wgt->objectName() == "wgtSignals")
-//                         || (cnd == 1 && wgt->objectName() == "wgtStateChampions")
+                         || (cnd == 1 && wgt->objectName() == "wgtStateChampions")
                          || (cnd == 2 && wgt->objectName() == "wgtDopusk")
                                 );
                 if (cnd == 0 && wgt->objectName() == "wgtSignals")
                     static_cast<StabSignalsTestWidget*>(wgt)->
                         calculate(static_cast<StabSignalsTestCalculator*>(m_calculator), testUid);
-//                else
-//                if (cnd == 1 && wgt->objectName() == "wgtStateChampions")
-//                    static_cast<StateChampionsWidget*>(wgt)->
-//                        calculate(static_cast<StateChampionsCalculator*>(m_calculator), testUid);
+                else
+                if (cnd == 1 && wgt->objectName() == "wgtStateChampions")
+                    static_cast<StateChampionsWidget*>(wgt)->
+                        calculate(static_cast<StateChampionsTestCalculator*>(m_calculator), testUid);
                 else
                 if (cnd == 2 && wgt->objectName() == "wgtDopusk")
                     static_cast<DopuskWidget*>(wgt)->

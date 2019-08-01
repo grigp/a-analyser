@@ -134,6 +134,13 @@ public:
      */
     bool getChannel(const QString &channelUid, QByteArray &data) const;
 
+    void addPrimaryFactor(const QString &testUid,
+                          const QString &uid,
+                          const double value,
+                          const int probeNum,
+                          const QString &channelId,
+                          const QString &description);
+
 
 signals:
     /*!

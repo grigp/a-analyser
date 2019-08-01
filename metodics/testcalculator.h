@@ -81,11 +81,25 @@ protected:
     /*!
      * \brief Добавляет первичный показатель в список
      * Добавлять будут подклассы
-     * \param uid
-     * \param value
-     * \param description
+     * \param uid - uid показателя
+     * \param value - значение
+     * \param probeNum - номер пробы
+     * \param channelId - идентификатор канала
+     * \param description - описание
      */
-    void addPrimaryFactor(const QString &uid, const double value, const QString &description);
+    void addPrimaryFactor(const QString &uid,
+                          const double value,
+                          const int probeNum,
+                          const QString &channelId,
+                          const QString &description);
+
+    /*!
+     * \brief Добавляет первичный показатель в список
+     * Без данных о пробе. Для показателей уровня теста
+     */
+    void addPrimaryFactor(const QString &uid,
+                          const double value,
+                          const QString &description);
 
     QStandardItemModel m_mdlTest;
 

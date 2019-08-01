@@ -30,7 +30,7 @@ void DopuskCalculator::calculate()
                 m_factors[i] = new VectorFactors(testUid(), pi.uid, ChannelsDefines::chanStab);
                 addPrimaryFactor(VectorFactorsDefines::KFRUid,
                                  m_factors[i]->factorValue(VectorFactorsDefines::KFRUid),
-                                 pi.name);
+                                 i, ChannelsDefines::chanStab, pi.name);
             }
         }
     }

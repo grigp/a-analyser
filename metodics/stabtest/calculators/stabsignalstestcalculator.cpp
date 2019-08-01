@@ -33,23 +33,23 @@ void StabSignalsTestCalculator::calculate()
 
                 addPrimaryFactor(ClassicFactorsDefines::MoXUid,
                                  spf.fctClassic->factorValue(ClassicFactorsDefines::MoXUid),
-                                 pi.name);
+                                 pi.step, ChannelsDefines::chanStab, pi.name);
                 addPrimaryFactor(ClassicFactorsDefines::MoYUid,
                                  spf.fctClassic->factorValue(ClassicFactorsDefines::MoYUid),
-                                 pi.name);
+                                 pi.step, ChannelsDefines::chanStab, pi.name);
                 addPrimaryFactor(ClassicFactorsDefines::QXUid,
                                  spf.fctClassic->factorValue(ClassicFactorsDefines::QXUid),
-                                 pi.name);
+                                 pi.step, ChannelsDefines::chanStab, pi.name);
                 addPrimaryFactor(ClassicFactorsDefines::QYUid,
                                  spf.fctClassic->factorValue(ClassicFactorsDefines::QYUid),
-                                 pi.name);
+                                 pi.step, ChannelsDefines::chanStab, pi.name);
                 addPrimaryFactor(ClassicFactorsDefines::RUid,
                                  spf.fctClassic->factorValue(ClassicFactorsDefines::RUid),
-                                 pi.name);
+                                 pi.step, ChannelsDefines::chanStab, pi.name);
 
                 addPrimaryFactor(VectorFactorsDefines::KFRUid,
                                  spf.fctVector->factorValue(VectorFactorsDefines::KFRUid),
-                                 pi.name);
+                                 pi.step, ChannelsDefines::chanStab, pi.name);
             }
         }
     }

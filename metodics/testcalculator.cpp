@@ -4,6 +4,9 @@
 #include "dataprovider.h"
 #include "channelsutils.h"
 
+#include <QUuid>
+#include <QDebug>
+
 TestCalculator::TestCalculator(const QString &testUid, QObject *parent)
     : QObject(parent)
     , m_testUid(testUid)
@@ -72,7 +75,16 @@ FactorsDefines::FactorValueDescript *TestCalculator::primaryFactor(const int num
 //    }
 //}
 
+void TestCalculator::addPrimaryFactor(const QString &uid,
+                                      const double value,
+                                      const int probeNum,
+                                      const QString &channelId,
+                                      const QString &description)
+{
+    m_primaryFactors.append(new FactorsDefines::FactorValueDescript(uid, value, probeNum, channelId, description));
+}
+
 void TestCalculator::addPrimaryFactor(const QString &uid, const double value, const QString &description)
 {
-    m_primaryFactors.append(new FactorsDefines::FactorValueDescript(uid, value, description));
+    addPrimaryFactor(uid, value, -1, QUuid().toString(), description);
 }

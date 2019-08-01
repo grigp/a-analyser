@@ -77,6 +77,44 @@
             }
         },
         {
+            "uid": "{EA27C3B7-9D67-45CC-A80D-F07E22DC2ADB}",
+            "name": "Тестирование по методике \"Стань чемпионом\"",
+            "template": "met_stabtest_uid",
+            "params":
+            {
+                "condition": 1,
+                "probes": [
+                    {
+                        "name": "Открытые глаза",
+                        "autoend": 1,
+                        "time": 20,
+                        "latent_time": 0,
+                        "stimul": 1,
+                        "zeroing": 1,
+                        "scale": 1
+                    },
+                    {
+                        "name": "Закрытые глаза",
+                        "autoend": 1,
+                        "time": 20,
+                        "latent_time": 0,
+                        "stimul": 2,
+                        "zeroing": 0,
+                        "scale": 1
+                    },
+                    {
+                        "name": "Мишень",
+                        "autoend": 1,
+                        "time": 20,
+                        "latent_time": 5,
+                        "stimul": 3,
+                        "zeroing": 0,
+                        "scale": 3
+                    }
+                ]
+            }
+        },
+        {
             "uid": "{8BFC7928-8DAF-429B-8AB5-C689C63BECC9}",
             "name": "Стабилографический тест",
             "template": "met_stabtest_uid",

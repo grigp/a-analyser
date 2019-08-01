@@ -277,6 +277,11 @@ bool DataBase::getChannel(const QString &channelUid, QByteArray &data) const
     return false;
 }
 
+void DataBase::addPrimaryFactor(const QString &testUid, const QString &uid, const double value, const int probeNum, const QString &channelId, const QString &description)
+{
+
+}
+
 QString DataBase::currentDataBase() const
 {
     return DataDefines::dataBasesPath() + m_dataBaseName + "/";

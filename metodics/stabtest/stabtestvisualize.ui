@@ -56,6 +56,9 @@
       <item>
        <widget class="DopuskWidget" name="wgtDopusk" native="true"/>
       </item>
+      <item>
+       <widget class="StateChampionsWidget" name="wgtStateChampions" native="true"/>
+      </item>
      </layout>
     </widget>
    </item>
@@ -72,6 +75,12 @@
    <class>DopuskWidget</class>
    <extends>QWidget</extends>
    <header location="global">dopuskwidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>StateChampionsWidget</class>
+   <extends>QWidget</extends>
+   <header location="global">statechampionswidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

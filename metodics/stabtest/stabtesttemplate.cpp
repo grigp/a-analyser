@@ -8,6 +8,7 @@
 #include "testcalculator.h"
 #include "stabsignalstestcalculator.h"
 #include "dopuskcalculator.h"
+#include "statechampionstestcalculator.h"
 
 #include <QLayout>
 #include <QDebug>
@@ -67,9 +68,9 @@ TestCalculator *StabTestTemplate::calculator(const QString &testUid)
 
         if (cnd == 0)
             return new StabSignalsTestCalculator(testUid);
-//        else
-//        if (cnd == 1)
-//            return new StateChampionsTestCalculator(testUid, this);
+        else
+        if (cnd == 1)
+            return new StateChampionsTestCalculator(testUid);
         else
         if (cnd == 2)
             return new DopuskCalculator(testUid);

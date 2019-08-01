@@ -14,6 +14,9 @@ struct StabProbeFactors
     StabProbeFactors() {}
 };
 
+/*!
+ * \brief Класс расчета результатов стабилографического теста для обработки сигналов StabSignalsTestCalculator class
+ */
 class StabSignalsTestCalculator : public StabTestCalculator
 {
     Q_OBJECT

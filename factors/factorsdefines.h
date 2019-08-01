@@ -83,8 +83,12 @@ class FactorValueDescript : public FactorValue
 public:
     FactorValueDescript(const QString &uid,
                         const double value,
+                        const int probeNum,
+                        const QString &channelId,
                         const QString &description)
         : FactorValue(uid, value)
+        , m_probeNum(probeNum)
+        , m_channelId(channelId)
         , m_description(description)
     {}
     FactorValueDescript() {}
@@ -92,8 +96,16 @@ public:
     QString description() const {return m_description;}
     void setDescription(const QString &description) {m_description = description;}
 
+    QString channelId() const {return m_channelId;}
+    void setChannelId(const QString &channelId) {m_channelId = channelId;}
+
+    int probeNum() const {return m_probeNum;}
+    void setProbeNum(const int probeNum) {m_probeNum = probeNum;}
+
 private:
     QString m_description;
+    int m_probeNum;
+    QString m_channelId;
 };
 
 }

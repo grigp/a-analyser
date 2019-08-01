@@ -6,6 +6,9 @@
 
 class VectorFactors;
 
+/*!
+ * \brief Класс расчета результатов стабилографического теста как допускового контроля DopuskCalculator class
+ */
 class DopuskCalculator : public StabTestCalculator
 {
     Q_OBJECT
