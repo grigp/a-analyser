@@ -277,9 +277,69 @@ bool DataBase::getChannel(const QString &channelUid, QByteArray &data) const
     return false;
 }
 
-void DataBase::addPrimaryFactor(const QString &testUid, const QString &uid, const double value, const int probeNum, const QString &channelId, const QString &description)
+void DataBase::addPrimaryFactor(const QString &testUid,
+                                const QString &uid,
+                                const double value,
+                                const int probeNum,
+                                const QString &channelId,
+                                const QString &description)
 {
+    QDir dir = testsDir();
+    QJsonObject testObj;
+    if (readTableRec(dir.absoluteFilePath(testUid), testObj))
+    {
+        //! Поиск в массиве и замена значения, если нашли
+        QJsonArray factors = testObj["factors"].toArray();
+        for (int i = 0; i < factors.size(); ++i)
+        {
+            auto obj = factors.at(i).toObject();
+            if (obj["uid"].toString() == uid &&
+                obj["probeNum"].toInt() == probeNum &&
+                obj["channelId"].toString() == channelId)
+            {
+                obj["value"] = value;
+                factors.replace(i, obj);
+                return;
+            }
+        }
 
+        //! Не нашли - создать новую запись
+        QJsonObject obj;
+        obj["uid"] = uid;
+        obj["probeNum"] = probeNum;
+        obj["channelId"] = channelId;
+        obj["value"] = value;
+        obj["description"] = description;
+        factors.append(obj);
+
+        //! Запись в файл
+        testObj["factors"] = factors;
+        writeTableRec(dir.absoluteFilePath(testUid), testObj);
+    }
+}
+
+QList<FactorsDefines::FactorValueAdvanced> DataBase::getPrimaryFactors(const QString &testUid) const
+{
+    QList<FactorsDefines::FactorValueAdvanced> retval;
+    retval.clear();
+
+    QDir dir = testsDir();
+    QJsonObject testObj;
+    if (readTableRec(dir.absoluteFilePath(testUid), testObj))
+    {
+        QJsonArray factors = testObj["factors"].toArray();
+        for (int i = 0; i < factors.size(); ++i)
+        {
+            auto obj = factors.at(i).toObject();
+            FactorsDefines::FactorValueAdvanced factor(obj["uid"].toString(),
+                    obj["value"].toDouble(),
+                    obj["probeNum"].toInt(),
+                    obj["channelId"].toString(),
+                    obj["description"].toString());
+            retval << factor;
+        }
+    }
+    return retval;
 }
 
 QString DataBase::currentDataBase() const

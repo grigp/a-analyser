@@ -3,6 +3,7 @@
 #include "datadefines.h"
 #include "dataprovider.h"
 #include "channelsutils.h"
+#include "dataprovider.h"
 
 #include <QUuid>
 #include <QDebug>
@@ -24,7 +25,7 @@ void TestCalculator::fastCalculate()
 
 }
 
-FactorsDefines::FactorValueDescript *TestCalculator::primaryFactor(const int num) const
+FactorsDefines::FactorValueAdvanced *TestCalculator::primaryFactor(const int num) const
 {
     Q_ASSERT(num >= 0 && num < m_primaryFactors.size());
     return m_primaryFactors.at(num);
@@ -75,16 +76,19 @@ FactorsDefines::FactorValueDescript *TestCalculator::primaryFactor(const int num
 //    }
 //}
 
-void TestCalculator::addPrimaryFactor(const QString &uid,
+void TestCalculator::addPrimaryFactor(const QString &testUid,
+                                      const QString &uid,
                                       const double value,
                                       const int probeNum,
                                       const QString &channelId,
                                       const QString &description)
 {
-    m_primaryFactors.append(new FactorsDefines::FactorValueDescript(uid, value, probeNum, channelId, description));
+    m_primaryFactors.append(new FactorsDefines::FactorValueAdvanced(uid, value, probeNum, channelId, description));
+    DataProvider::addPrimaryFactor(testUid, uid, value, probeNum, channelId, description);
 }
 
-void TestCalculator::addPrimaryFactor(const QString &uid, const double value, const QString &description)
+void TestCalculator::addPrimaryFactor(const QString &testUid,
+                                      const QString &uid, const double value, const QString &description)
 {
-    addPrimaryFactor(uid, value, -1, QUuid().toString(), description);
+    addPrimaryFactor(testUid, uid, value, -1, QUuid().toString(), description);
 }

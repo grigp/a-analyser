@@ -68,7 +68,7 @@ public:
      * \brief Возвращает первичный показатель по номеру в списке
      * \param num - номер в списке
      */
-    FactorsDefines::FactorValueDescript* primaryFactor(const int num) const;
+    FactorsDefines::FactorValueAdvanced* primaryFactor(const int num) const;
 
     QString testUid() const {return m_testUid;}
 
@@ -87,7 +87,8 @@ protected:
      * \param channelId - идентификатор канала
      * \param description - описание
      */
-    void addPrimaryFactor(const QString &uid,
+    void addPrimaryFactor(const QString &testUid,
+                          const QString &uid,
                           const double value,
                           const int probeNum,
                           const QString &channelId,
@@ -97,7 +98,8 @@ protected:
      * \brief Добавляет первичный показатель в список
      * Без данных о пробе. Для показателей уровня теста
      */
-    void addPrimaryFactor(const QString &uid,
+    void addPrimaryFactor(const QString &testUid,
+                          const QString &uid,
                           const double value,
                           const QString &description);
 
@@ -105,7 +107,7 @@ protected:
 
 private:
     QString m_testUid;
-    QList<FactorsDefines::FactorValueDescript*> m_primaryFactors;
+    QList<FactorsDefines::FactorValueAdvanced*> m_primaryFactors;
 };
 
 ///<------------------------------------------------------------------------------------------------

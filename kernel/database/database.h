@@ -5,6 +5,7 @@
 #include <QDir>
 
 #include "datadefines.h"
+#include "factorsdefines.h"
 
 /*!
  * \brief Класс, осуществляющий доступ к данным DataBase class
@@ -134,6 +135,15 @@ public:
      */
     bool getChannel(const QString &channelUid, QByteArray &data) const;
 
+    /*!
+     * \brief Добавляет в запись о тесте запись о первичном показателе
+     * \param testUid - uid теста
+     * \param uid - uid показателя
+     * \param value - значение показателя
+     * \param probeNum - номер пробы
+     * \param channelId - идентификатор канала
+     * \param description - описание показателя
+     */
     void addPrimaryFactor(const QString &testUid,
                           const QString &uid,
                           const double value,
@@ -141,6 +151,10 @@ public:
                           const QString &channelId,
                           const QString &description);
 
+    /*!
+     * \brief Возвращает список первичных показателей для теста по uid
+     */
+    QList<FactorsDefines::FactorValueAdvanced> getPrimaryFactors(const QString &testUid) const;
 
 signals:
     /*!

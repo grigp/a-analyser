@@ -5,6 +5,7 @@
 
 #include "datadefines.h"
 #include "metodicdefines.h"
+#include "factorsdefines.h"
 
 /*!
  * Набор функций для доступа к данным
@@ -151,6 +152,28 @@ bool getChannel(const QString &probeUid, const QString &channelId, QByteArray &d
  * \return true, если успешно
  */
 bool getChannel(const QString &channelUid, QByteArray &data);
+
+
+/*!
+ * \brief Добавляет в запись о тесте запись о первичном показателе
+ * \param testUid - uid теста
+ * \param uid - uid показателя
+ * \param value - значение показателя
+ * \param probeNum - номер пробы
+ * \param channelId - идентификатор канала
+ * \param description - описание показателя
+ */
+void addPrimaryFactor(const QString &testUid,
+                      const QString &uid,
+                      const double value,
+                      const int probeNum,
+                      const QString &channelId,
+                      const QString &description);
+
+/*!
+ * \brief Возвращает список первичных показателей для теста по uid
+ */
+QList<FactorsDefines::FactorValueAdvanced> getPrimaryFactors(const QString &testUid);
 
 }
 

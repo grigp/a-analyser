@@ -74,14 +74,14 @@ private:
 
 
 /*!
- * \brief Класс значения показателя с описанием FactorValueDescript class
+ * \brief Класс значения показателя с данными о его положении в тесте FactorValueAdvanced class
  * Описание нужно, еслии берутся два одинаковых показателя из разных проб
  * Выводиться может, например, так <name> (<description>): КФР (Открытые глаза)
  */
-class FactorValueDescript : public FactorValue
+class FactorValueAdvanced : public FactorValue
 {
 public:
-    FactorValueDescript(const QString &uid,
+    FactorValueAdvanced(const QString &uid,
                         const double value,
                         const int probeNum,
                         const QString &channelId,
@@ -91,7 +91,7 @@ public:
         , m_channelId(channelId)
         , m_description(description)
     {}
-    FactorValueDescript() {}
+    FactorValueAdvanced() {}
 
     QString description() const {return m_description;}
     void setDescription(const QString &description) {m_description = description;}

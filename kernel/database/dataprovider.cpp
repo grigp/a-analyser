@@ -104,3 +104,19 @@ bool DataProvider::channelExists(const QString &channelUid)
 {
     return static_cast<AAnalyserApplication*>(QApplication::instance())->getDB()->channelExists(channelUid);
 }
+
+void DataProvider::addPrimaryFactor(const QString &testUid,
+                                    const QString &uid,
+                                    const double value,
+                                    const int probeNum,
+                                    const QString &channelId,
+                                    const QString &description)
+{
+    static_cast<AAnalyserApplication*>(QApplication::instance())->getDB()->
+            addPrimaryFactor(testUid, uid, value, probeNum, channelId, description);
+}
+
+QList<FactorsDefines::FactorValueAdvanced> DataProvider::getPrimaryFactors(const QString &testUid)
+{
+    return static_cast<AAnalyserApplication*>(QApplication::instance())->getDB()->getPrimaryFactors(testUid);
+}

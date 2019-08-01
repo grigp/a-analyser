@@ -28,7 +28,7 @@ void DopuskCalculator::calculate()
             if (DataProvider::getProbeInfo(ti.probes.at(i), pi))
             {
                 m_factors[i] = new VectorFactors(testUid(), pi.uid, ChannelsDefines::chanStab);
-                addPrimaryFactor(VectorFactorsDefines::KFRUid,
+                addPrimaryFactor(testUid(), VectorFactorsDefines::KFRUid,
                                  m_factors[i]->factorValue(VectorFactorsDefines::KFRUid),
                                  i, ChannelsDefines::chanStab, pi.name);
             }

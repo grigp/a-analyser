@@ -38,18 +38,18 @@ void StateChampionsTestCalculator::calculate()
             {
                 auto cf = new ClassicFactors(testUid(), ti.probes.at(i), ChannelsDefines::chanStab);
                 m_prbFct[i].square = cf->factorValue(ClassicFactorsDefines::SquareUid);
-                addPrimaryFactor(ClassicFactorsDefines::SquareUid, m_prbFct[i].square,
+                addPrimaryFactor(testUid(), ClassicFactorsDefines::SquareUid, m_prbFct[i].square,
                                  i, ChannelsDefines::chanStab, pi.name);
                 delete cf;
 
                 auto vf = new VectorFactors(testUid(), ti.probes.at(i), ChannelsDefines::chanStab);
                 m_prbFct[i].speed = vf->factorValue(VectorFactorsDefines::VMidUid);
-                addPrimaryFactor(VectorFactorsDefines::VMidUid, m_prbFct[i].speed,
+                addPrimaryFactor(testUid(), VectorFactorsDefines::VMidUid, m_prbFct[i].speed,
                                  i, ChannelsDefines::chanStab, pi.name);
                 if (i == 2)
                 {
                     m_trgtKFR = vf->factorValue(VectorFactorsDefines::KFRUid);
-                    addPrimaryFactor(VectorFactorsDefines::KFRUid, m_trgtKFR,
+                    addPrimaryFactor(testUid(), VectorFactorsDefines::KFRUid, m_trgtKFR,
                                      i, ChannelsDefines::chanStab, pi.name);
                 }
                 delete vf;
@@ -57,7 +57,7 @@ void StateChampionsTestCalculator::calculate()
         }
     }
 
-    addPrimaryFactor(RatioProbesFactorsDefines::Probe2SUid, m_RombKoef, tr("Коэффициент Ромберга"));
+    addPrimaryFactor(testUid(), RatioProbesFactorsDefines::Probe2SUid, m_RombKoef, tr("Коэффициент Ромберга"));
 }
 
 void StateChampionsTestCalculator::fastCalculate()

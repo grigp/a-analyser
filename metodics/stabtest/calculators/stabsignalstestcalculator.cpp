@@ -31,23 +31,23 @@ void StabSignalsTestCalculator::calculate()
                 spf.fctVector = new VectorFactors(testUid(), pi.uid, ChannelsDefines::chanStab);
                 m_probesFactors << spf;
 
-                addPrimaryFactor(ClassicFactorsDefines::MoXUid,
+                addPrimaryFactor(testUid(), ClassicFactorsDefines::MoXUid,
                                  spf.fctClassic->factorValue(ClassicFactorsDefines::MoXUid),
                                  pi.step, ChannelsDefines::chanStab, pi.name);
-                addPrimaryFactor(ClassicFactorsDefines::MoYUid,
+                addPrimaryFactor(testUid(), ClassicFactorsDefines::MoYUid,
                                  spf.fctClassic->factorValue(ClassicFactorsDefines::MoYUid),
                                  pi.step, ChannelsDefines::chanStab, pi.name);
-                addPrimaryFactor(ClassicFactorsDefines::QXUid,
+                addPrimaryFactor(testUid(), ClassicFactorsDefines::QXUid,
                                  spf.fctClassic->factorValue(ClassicFactorsDefines::QXUid),
                                  pi.step, ChannelsDefines::chanStab, pi.name);
-                addPrimaryFactor(ClassicFactorsDefines::QYUid,
+                addPrimaryFactor(testUid(), ClassicFactorsDefines::QYUid,
                                  spf.fctClassic->factorValue(ClassicFactorsDefines::QYUid),
                                  pi.step, ChannelsDefines::chanStab, pi.name);
-                addPrimaryFactor(ClassicFactorsDefines::RUid,
+                addPrimaryFactor(testUid(), ClassicFactorsDefines::RUid,
                                  spf.fctClassic->factorValue(ClassicFactorsDefines::RUid),
                                  pi.step, ChannelsDefines::chanStab, pi.name);
 
-                addPrimaryFactor(VectorFactorsDefines::KFRUid,
+                addPrimaryFactor(testUid(), VectorFactorsDefines::KFRUid,
                                  spf.fctVector->factorValue(VectorFactorsDefines::KFRUid),
                                  pi.step, ChannelsDefines::chanStab, pi.name);
             }
