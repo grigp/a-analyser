@@ -93,6 +93,7 @@ public:
      * \brief Удаление теста, выбранного ранее (в doSelectTest)
      */
     void deleteTest();
+    void deleteTest(const QString &testUid);
 
     /*!
      * \brief Показывает виджет базы данных

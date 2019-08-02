@@ -154,13 +154,20 @@ void AAnalyserApplication::deleteTest()
                                         .arg(patient.fio).arg(mi.name).arg(ti.dateTime.toString("dd.MM.yyyy hh:mm")));
         if (mr == QMessageBox::Yes)
         {
-            if (m_database->deleteTest(m_testUid))
-                emit removeTest(m_testUid);
+            deleteTest(m_testUid);
+//            if (m_database->deleteTest(m_testUid))
+//                emit removeTest(m_testUid);
             m_testUid = "";
         }
     }
     else
         QMessageBox::information(nullptr, tr("Предупрежение"), tr("Не выбран тест"));
+}
+
+void AAnalyserApplication::deleteTest(const QString &testUid)
+{
+    if (m_database->deleteTest(testUid))
+        emit removeTest(testUid);
 }
 
 void AAnalyserApplication::showDataBase()

@@ -63,6 +63,15 @@ void DataBase::removePatient(const QString &uid)
 {
     if (patientExists(uid))
     {
+        auto tests = getTests();
+        foreach (auto testUid, tests)
+        {
+            DataDefines::TestInfo ti;
+            if (getTestInfo(testUid, ti))
+                if (ti.patientUid == uid)
+                    static_cast<AAnalyserApplication*>(QApplication::instance())->deleteTest(testUid);
+        }
+
         QDir dir = patientsDir();
         QFile fPatientRec(dir.absoluteFilePath(uid));
         fPatientRec.remove();
