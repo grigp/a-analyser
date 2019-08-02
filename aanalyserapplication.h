@@ -90,6 +90,11 @@ public:
     void openTest(const QString &uid);
 
     /*!
+     * \brief Удаление теста, выбранного ранее (в doSelectTest)
+     */
+    void deleteTest();
+
+    /*!
      * \brief Показывает виджет базы данных
      */
     void showDataBase();
@@ -211,6 +216,7 @@ signals:
     void dbDisconnected();
 
     void newTest(const QString &testUid);
+    void removeTest(const QString &testUid);
 
     void selectPatient(const QString &patientUid);
     void selectMetodic(const QString &metodicUid);

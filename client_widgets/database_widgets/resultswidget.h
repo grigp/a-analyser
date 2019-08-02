@@ -56,6 +56,10 @@ private slots:
 
     void splitterMoved(int pos,int index);
 
+    void onNewTests(const QModelIndex &parent, int first, int last);
+
+    void onRemoveTests(const QModelIndex &parent, int first, int last);
+
 private:
     Ui::ResultsWidget *ui;
 

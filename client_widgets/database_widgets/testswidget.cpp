@@ -35,6 +35,11 @@ void TestsWidget::runTest()
     static_cast<AAnalyserApplication*>(QApplication::instance())->executeMetodic();
 }
 
+void TestsWidget::deleteTest()
+{
+    static_cast<AAnalyserApplication*>(QApplication::instance())->deleteTest();
+}
+
 void TestsWidget::selectResult()
 {
     ui->wgtDynamic->setVisible(false);

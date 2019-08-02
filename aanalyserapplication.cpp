@@ -138,6 +138,31 @@ void AAnalyserApplication::openTest(const QString &uid)
 
 }
 
+void AAnalyserApplication::deleteTest()
+{
+    if (m_testUid != "")
+    {
+        DataDefines::TestInfo ti;
+        m_database->getTestInfo(m_testUid, ti);
+        DataDefines::PatientKard patient;
+        m_database->getPatient(ti.patientUid, patient);
+        auto mi = m_metodics->metodic(ti.metodUid);
+        auto mr = QMessageBox::question(nullptr, tr("Подтверждение"), QString(tr("Удалить запись о методике?") + "\n" +
+                                                                              tr("Пациент") + ": %1\n" +
+                                                                              tr("Методика") + ": %2\n" +
+                                                                              tr("Дата и время проведения") + ": %3")
+                                        .arg(patient.fio).arg(mi.name).arg(ti.dateTime.toString("dd.MM.yyyy hh:mm")));
+        if (mr == QMessageBox::Yes)
+        {
+            if (m_database->deleteTest(m_testUid))
+                emit removeTest(m_testUid);
+            m_testUid = "";
+        }
+    }
+    else
+        QMessageBox::information(nullptr, tr("Предупрежение"), tr("Не выбран тест"));
+}
+
 void AAnalyserApplication::showDataBase()
 {
     showClientPage(ClientWidgets::uidDatabaseResultWidgetUid);

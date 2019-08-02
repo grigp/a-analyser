@@ -56,7 +56,7 @@ bool TestProxyModel::filterAcceptsColumn(int source_column, const QModelIndex &s
 
 bool TestProxyModel::lessThan(const QModelIndex &source_left, const QModelIndex &source_right) const
 {
-    if (source_left.column() == TestsModel::colDateTime && source_right.column() == TestsModel::colDateTime)
+    if (source_left.column() == TestsModel::ColDateTime && source_right.column() == TestsModel::ColDateTime)
     {
         auto sLeft = sourceModel()->data(source_left).toString();
         auto sRight = sourceModel()->data(source_right).toString();

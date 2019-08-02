@@ -21,6 +21,10 @@ TestsModel::TestsModel(QObject *parent)
         connect(static_cast<AAnalyserApplication*>(QApplication::instance()),
                 &AAnalyserApplication::newTest,
                 this, &TestsModel::onNewTest);
+
+        connect(static_cast<AAnalyserApplication*>(QApplication::instance()),
+                &AAnalyserApplication::removeTest,
+                this, &TestsModel::onRemoveTest);
     });
 }
 
@@ -39,6 +43,25 @@ void TestsModel::load()
 void TestsModel::onNewTest(const QString &testUid)
 {
     addTest(testUid);
+}
+
+void TestsModel::onRemoveTest(const QString &testUid)
+{
+    int line = -1;
+    for (int i = 0; i < rowCount(); ++i)
+    {
+        auto uid = index(i, ColPatient).data(TestUidRole).toString();
+        if (uid == testUid)
+        {
+            line = i;
+            break;
+        }
+    }
+    if (line > -1)
+    {
+        emit removeTest(testUid);
+        removeRows(line, 1);
+    }
 }
 
 void TestsModel::addTest(const QString &testUid)

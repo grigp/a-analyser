@@ -136,6 +136,13 @@ public:
     bool getChannel(const QString &channelUid, QByteArray &data) const;
 
     /*!
+     * \brief Удаление записи о тесте
+     * \param testUid - uid теста
+     * \return true, если успешно
+     */
+    bool deleteTest(const QString &testUid) const;
+
+    /*!
      * \brief Добавляет в запись о тесте запись о первичном показателе
      * \param testUid - uid теста
      * \param uid - uid показателя

@@ -277,6 +277,43 @@ bool DataBase::getChannel(const QString &channelUid, QByteArray &data) const
     return false;
 }
 
+bool DataBase::deleteTest(const QString &testUid) const
+{
+    DataDefines::TestInfo ti;
+    if (getTestInfo(testUid, ti))
+    {
+        foreach (auto probeUid, ti.probes)
+        {
+            //! Удаление каналов
+            DataDefines::ProbeInfo pi;
+            if (getProbeInfo(probeUid, pi))
+            {
+                foreach (auto chan, pi.channels)
+                {
+                    QDir dir = channelsDir();
+                    auto fileName = dir.absoluteFilePath(chan.uid);
+                    if (QFile::exists(fileName))
+                        QFile::remove(fileName);
+                }
+            }
+
+            //! Удаление пробы
+            QDir dir = probesDir();
+            auto fileName = dir.absoluteFilePath(probeUid);
+            if (QFile::exists(fileName))
+                QFile::remove(fileName);
+        }
+
+        //! Удаление теста
+        QDir dir = testsDir();
+        auto fileName = dir.absoluteFilePath(testUid);
+        if (QFile::exists(fileName))
+            QFile::remove(fileName);
+        return true;
+    }
+    return false;
+}
+
 void DataBase::addPrimaryFactor(const QString &testUid,
                                 const QString &uid,
                                 const double value,

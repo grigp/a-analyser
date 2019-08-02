@@ -44,7 +44,11 @@ void ResultsWidget::onDbConnect()
     if (m_mdlTest)
         m_mdlTest->load();
     ui->tvTests->header()->resizeSections(QHeaderView::ResizeToContents);
-    ui->tvTests->sortByColumn(TestsModel::colDateTime, Qt::DescendingOrder);
+    ui->tvTests->sortByColumn(TestsModel::ColDateTime, Qt::DescendingOrder);
+
+    connect(m_mdlTest, &TestsModel::rowsInserted, this, &ResultsWidget::onNewTests);
+    connect(m_mdlTest, &TestsModel::rowsRemoved, this, &ResultsWidget::onRemoveTests);
+
 }
 
 bool ResultsWidget::eventFilter(QObject *obj, QEvent *event)
@@ -84,6 +88,29 @@ void ResultsWidget::splitterMoved(int pos, int index)
     Q_UNUSED(pos);
     Q_UNUSED(index);
     saveSplitterPosition();
+}
+
+void ResultsWidget::onNewTests(const QModelIndex &parent, int first, int last)
+{
+    Q_UNUSED(last);
+    auto index = m_mdlTest->index(first, TestsModel::ColPatient, parent);
+    selectTest(index);
+    auto indexDT = m_mdlTest->index(index.row(), TestsModel::ColDateTime, index.parent());
+    auto proxyIdx = m_pmdlTest->mapFromSource(indexDT);
+    ui->tvTests->selectionModel()->select(proxyIdx, QItemSelectionModel::ClearAndSelect | QItemSelectionModel::Rows);
+}
+
+void ResultsWidget::onRemoveTests(const QModelIndex &parent, int first, int last)
+{
+    Q_UNUSED(parent);
+    Q_UNUSED(first);
+    Q_UNUSED(last);
+    m_selectedRow = -1;
+    if (m_wgtResult)
+        delete m_wgtResult;
+    m_wgtResult = nullptr;
+    ui->lblNoTest->setVisible(true);
+    ui->tvTests->selectionModel()->clearSelection();
 }
 
 void ResultsWidget::saveSplitterPosition()

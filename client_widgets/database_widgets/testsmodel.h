@@ -15,7 +15,7 @@ public:
     {
           ColPatient = 0
         , ColMetodic
-        , colDateTime
+        , ColDateTime
     };
 
     ///< Роли для доступа к данным
@@ -28,8 +28,12 @@ public:
 
     void load();
 
+signals:
+    void removeTest(const QString &testUid);
+
 private slots:
     void onNewTest(const QString &testUid);
+    void onRemoveTest(const QString &testUid);
 
 private:
     void addTest(const QString &testUid);

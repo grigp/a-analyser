@@ -278,10 +278,27 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>btnDelTest</sender>
+   <signal>clicked()</signal>
+   <receiver>TestsWidget</receiver>
+   <slot>deleteTest()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>125</x>
+     <y>17</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>720</x>
+     <y>101</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>runTest()</slot>
   <slot>selectResult()</slot>
   <slot>selectDynamic()</slot>
+  <slot>deleteTest()</slot>
  </slots>
 </ui>

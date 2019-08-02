@@ -24,6 +24,11 @@ private slots:
      */
     void runTest();
 
+    /*!
+     * \brief Команда на удаление теста
+     */
+    void deleteTest();
+
     void selectResult();
     void selectDynamic();
 
