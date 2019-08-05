@@ -11,7 +11,8 @@ HEADERS += \
     $$PWD/patientsproxymodel.h \
     $$PWD/testswidget.h \
     $$PWD/dynamicautowidget.h \
-    $$PWD/resultswidget.h
+    $$PWD/resultswidget.h \
+    $$PWD/dynamicdatamodel.h
 
 SOURCES += \
     $$PWD/patientswidget.cpp \
@@ -24,7 +25,8 @@ SOURCES += \
     $$PWD/patientsproxymodel.cpp \
     $$PWD/testswidget.cpp \
     $$PWD/dynamicautowidget.cpp \
-    $$PWD/resultswidget.cpp
+    $$PWD/resultswidget.cpp \
+    $$PWD/dynamicdatamodel.cpp
 
 FORMS += \
     $$PWD/patientswidget.ui \

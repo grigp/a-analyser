@@ -172,7 +172,7 @@ QStringList DataBase::getTests() const
     QStringList retval;
 
     QDir dir = testsDir();
-    QFileInfoList list = dir.entryInfoList();
+    QFileInfoList list = dir.entryInfoList(QDir::NoFilter, QDir::Time);
     foreach (auto fileInfo, list)
         if (fileInfo.fileName() != "." && fileInfo.fileName() != "..")
         retval << fileInfo.fileName();

@@ -58,5 +58,25 @@
   </layout>
  </widget>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>treeView</sender>
+   <signal>clicked(QModelIndex)</signal>
+   <receiver>DynamicAutoWidget</receiver>
+   <slot>selectFactor(QModelIndex)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>313</x>
+     <y>162</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>606</x>
+     <y>157</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>selectFactor(QModelIndex)</slot>
+ </slots>
 </ui>
