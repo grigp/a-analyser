@@ -40,9 +40,8 @@ bool DynamicAutoWidget::eventFilter(QObject *obj, QEvent *event)
         if (event->type() == QEvent::Paint)
         {
             // Приводит к частым срабатываниям
-            if (ui->treeView->selectionModel() &&
-                ui->treeView->selectionModel()->currentIndex().isValid() &&
-                ui->treeView->selectionModel()->currentIndex().row() != m_selectRow)
+            if (ui->treeView->selectionModel()
+                    && ui->treeView->selectionModel()->currentIndex().isValid())
                 showGraph(ui->treeView->selectionModel()->currentIndex().row());
         }
     }
@@ -127,11 +126,23 @@ void DynamicAutoWidget::showDynamic()
 
 void DynamicAutoWidget::showGraph(const int row)
 {
+    if (row == m_selectRow)
+        return;
+
+    ui->wgtDynamic->clear();
+    auto factorUid = m_mdlDynamic->item(row, 0)->data(DynamicDataModel::FactorUidRole).toString();
+    auto fi = static_cast<AAnalyserApplication*>(QApplication::instance())->getFactorInfo(factorUid);
+    QString title = fi.name();
+    if (fi.measure() != "")
+        title = title + ", " + fi.measure();
+    ui->wgtDynamic->setTitle(title);
+
     m_selectRow = row;
-    QString line = "";
-    for (int i = 0; i < m_mdlDynamic->columnCount(); ++i)
+    for (int i = 1; i < m_mdlDynamic->columnCount(); ++i)
     {
-        line = line + m_mdlDynamic->item(row, i)->data(Qt::DisplayRole).toString() + "   ";
+        auto value = m_mdlDynamic->item(row, i)->data(DynamicDataModel::ValueRole).toDouble();
+        auto dt = m_mdlDynamic->horizontalHeaderItem(i)->data(DynamicDataModel::DateTimeRole).toDateTime();
+        auto di = new DiagItem(value, dt.toString("dd.MM.yyyy hh:mm"));
+        ui->wgtDynamic->appendItem(di);
     }
-    qDebug() << line;
 }
