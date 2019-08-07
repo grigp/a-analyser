@@ -6,6 +6,7 @@
 #include "datadefines.h"
 #include "dynamicdatamodel.h"
 
+#include <QSettings>
 #include <QDebug>
 
 DynamicAutoWidget::DynamicAutoWidget(QWidget *parent) :
@@ -31,6 +32,8 @@ DynamicAutoWidget::~DynamicAutoWidget()
 void DynamicAutoWidget::onDbConnect()
 {
     ui->tvFactors->viewport()->installEventFilter(this);
+    restoreDynamicKind();
+    restoreDynamicVolume();
 }
 
 bool DynamicAutoWidget::eventFilter(QObject *obj, QEvent *event)
@@ -76,20 +79,28 @@ void DynamicAutoWidget::dynamicAsGraph()
 {
     ui->wgtDynamic->setKind(DynamicDiagram::KindGraph);
     ui->btnBar->setChecked(false);
+    saveDynamicKind(static_cast<int>(DynamicDiagram::KindGraph));
 }
 
 void DynamicAutoWidget::dynamicAsBar()
 {
     ui->wgtDynamic->setKind(DynamicDiagram::KindBar);
     ui->btnGraph->setChecked(false);
+    saveDynamicKind(static_cast<int>(DynamicDiagram::KindBar));
 }
 
 void DynamicAutoWidget::dynamic3D(bool pressed)
 {
     if (pressed)
+    {
         ui->wgtDynamic->setVolume(DynamicDiagram::Volume3D);
+        saveDynamicVolume(DynamicDiagram::Volume3D);
+    }
     else
+    {
         ui->wgtDynamic->setVolume(DynamicDiagram::Volume2D);
+        saveDynamicVolume(DynamicDiagram::Volume2D);
+    }
 }
 
 void DynamicAutoWidget::buildDynamic()
@@ -98,7 +109,6 @@ void DynamicAutoWidget::buildDynamic()
     {
         m_mdlDynamic->clear();
 
-        qDebug() << m_selectedPatientUid << m_selectedMetodicUid;
         //! Построение списка
         fillTable();
 
@@ -165,4 +175,49 @@ void DynamicAutoWidget::showGraph(const int row)
         auto di = new DiagItem(value, dt.toString("dd.MM.yyyy hh:mm"));
         ui->wgtDynamic->appendItem(di);
     }
+}
+
+void DynamicAutoWidget::saveDynamicKind(const int kindCode) const
+{
+    QSettings set(QApplication::instance()->organizationName(),
+                  QApplication::instance()->applicationName());
+    set.beginGroup("DynamicWidget");
+    set.setValue("DynamicKind", kindCode);
+    set.endGroup();
+}
+
+void DynamicAutoWidget::restoreDynamicKind()
+{
+    QSettings set(QApplication::instance()->organizationName(),
+                  QApplication::instance()->applicationName());
+    set.beginGroup("DynamicWidget");
+    auto kindCode = set.value("DynamicKind").toInt();
+    set.endGroup();
+
+    DynamicDiagram::Kind kind = static_cast<DynamicDiagram::Kind>(kindCode);
+    ui->wgtDynamic->setKind(kind);
+    ui->btnGraph->setChecked(kind == DynamicDiagram::KindGraph);
+    ui->btnBar->setChecked(kind == DynamicDiagram::KindBar);
+}
+
+void DynamicAutoWidget::saveDynamicVolume(const int volumeCode) const
+{
+    QSettings set(QApplication::instance()->organizationName(),
+                  QApplication::instance()->applicationName());
+    set.beginGroup("DynamicWidget");
+    set.setValue("DynamicVolume", volumeCode);
+    set.endGroup();
+}
+
+void DynamicAutoWidget::restoreDynamicVolume()
+{
+    QSettings set(QApplication::instance()->organizationName(),
+                  QApplication::instance()->applicationName());
+    set.beginGroup("DynamicWidget");
+    auto volumeCode = set.value("DynamicVolume").toInt();
+    set.endGroup();
+
+    DynamicDiagram::Volume volume = static_cast<DynamicDiagram::Volume>(volumeCode);
+    ui->wgtDynamic->setVolume(volume);
+    ui->btn3D->setChecked(volume == DynamicDiagram::Volume3D);
 }

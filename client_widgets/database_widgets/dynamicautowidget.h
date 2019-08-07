@@ -50,6 +50,12 @@ private:
 
     void showGraph(const int row);
 
+    void saveDynamicKind(const int kindCode) const;
+    void restoreDynamicKind();
+
+    void saveDynamicVolume(const int volumeCode) const;
+    void restoreDynamicVolume();
+
     DynamicDataModel *m_mdlDynamic {nullptr};
     QString m_selectedPatientUid {""};
     QString m_selectedMetodicUid {""};
