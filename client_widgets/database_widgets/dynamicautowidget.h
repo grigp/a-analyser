@@ -35,6 +35,10 @@ private slots:
 
     void selectFactor(const QModelIndex index);
 
+    void dynamicAsGraph();
+    void dynamicAsBar();
+    void dynamic3D(bool pressed);
+
 private:
     Ui::DynamicAutoWidget *ui;
 

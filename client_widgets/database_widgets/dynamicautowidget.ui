@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>603</width>
-    <height>436</height>
+    <height>510</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -34,15 +34,176 @@
      <property name="orientation">
       <enum>Qt::Vertical</enum>
      </property>
-     <widget class="DynamicDiagram" name="wgtDynamic" native="true">
+     <widget class="QFrame" name="frDynamic">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
         <horstretch>0</horstretch>
         <verstretch>1</verstretch>
        </sizepolicy>
       </property>
+      <property name="frameShape">
+       <enum>QFrame::StyledPanel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
+      <layout class="QHBoxLayout" name="horizontalLayout">
+       <property name="spacing">
+        <number>1</number>
+       </property>
+       <property name="leftMargin">
+        <number>1</number>
+       </property>
+       <property name="topMargin">
+        <number>1</number>
+       </property>
+       <property name="rightMargin">
+        <number>1</number>
+       </property>
+       <property name="bottomMargin">
+        <number>1</number>
+       </property>
+       <item>
+        <widget class="DynamicDiagram" name="wgtDynamic" native="true">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>1</verstretch>
+          </sizepolicy>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QFrame" name="frTools">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="frameShape">
+          <enum>QFrame::StyledPanel</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Raised</enum>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_2">
+          <item>
+           <widget class="QPushButton" name="btnGraph">
+            <property name="toolTip">
+             <string>Показать в виде графика</string>
+            </property>
+            <property name="statusTip">
+             <string/>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="../../kernel.qrc">
+              <normaloff>:/images/Dynamic/DynAsGraph.png</normaloff>:/images/Dynamic/DynAsGraph.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>20</width>
+              <height>20</height>
+             </size>
+            </property>
+            <property name="checkable">
+             <bool>true</bool>
+            </property>
+            <property name="checked">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="btnBar">
+            <property name="toolTip">
+             <string>Показать в виде гистограммы</string>
+            </property>
+            <property name="statusTip">
+             <string/>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="../../kernel.qrc">
+              <normaloff>:/images/Dynamic/DynAsBar.png</normaloff>:/images/Dynamic/DynAsBar.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>20</width>
+              <height>20</height>
+             </size>
+            </property>
+            <property name="checkable">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="verticalSpacer">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::Fixed</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>10</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QPushButton" name="btn3D">
+            <property name="toolTip">
+             <string>Объемное представление</string>
+            </property>
+            <property name="statusTip">
+             <string/>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="../../kernel.qrc">
+              <normaloff>:/images/Dynamic/Dyn3D.png</normaloff>:/images/Dynamic/Dyn3D.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>20</width>
+              <height>20</height>
+             </size>
+            </property>
+            <property name="checkable">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="verticalSpacer_2">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>40</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </widget>
+       </item>
+      </layout>
      </widget>
-     <widget class="QTreeView" name="treeView">
+     <widget class="QTreeView" name="tvFactors">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
         <horstretch>0</horstretch>
@@ -62,10 +223,12 @@
    <container>1</container>
   </customwidget>
  </customwidgets>
- <resources/>
+ <resources>
+  <include location="../../kernel.qrc"/>
+ </resources>
  <connections>
   <connection>
-   <sender>treeView</sender>
+   <sender>tvFactors</sender>
    <signal>clicked(QModelIndex)</signal>
    <receiver>DynamicAutoWidget</receiver>
    <slot>selectFactor(QModelIndex)</slot>
@@ -75,13 +238,64 @@
      <y>162</y>
     </hint>
     <hint type="destinationlabel">
-     <x>606</x>
+     <x>602</x>
      <y>157</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btnGraph</sender>
+   <signal>clicked()</signal>
+   <receiver>DynamicAutoWidget</receiver>
+   <slot>dynamicAsGraph()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>571</x>
+     <y>26</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>603</x>
+     <y>23</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btnBar</sender>
+   <signal>clicked()</signal>
+   <receiver>DynamicAutoWidget</receiver>
+   <slot>dynamicAsBar()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>569</x>
+     <y>67</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>606</x>
+     <y>68</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btn3D</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>DynamicAutoWidget</receiver>
+   <slot>dynamic3D(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>576</x>
+     <y>111</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>604</x>
+     <y>114</y>
     </hint>
    </hints>
   </connection>
  </connections>
  <slots>
   <slot>selectFactor(QModelIndex)</slot>
+  <slot>dynamicAsGraph()</slot>
+  <slot>dynamicAsBar()</slot>
+  <slot>dynamic3D(bool)</slot>
  </slots>
 </ui>

@@ -153,6 +153,14 @@ void DynamicDiagram::paintEvent(QPaintEvent *event)
     if (min <= 0 && max >= 0)
         painter.drawLine(AxisSpace, zeroY, geometry().width() - AxisSpace, zeroY);
 
+    //! Размер шрифта для отметок
+    QFont font = painter.font();
+    font.setPointSize(8);
+    painter.setFont(font);
+
+    //! Сетка по оси значений
+    showValuesGrid(painter, min, max, prop);
+
     int ox = -1;
     int oy = -1;
     for (int i = 0; i < m_items.size(); ++i)
@@ -178,14 +186,52 @@ void DynamicDiagram::paintEvent(QPaintEvent *event)
             painter.setBrush(QBrush(m_diagColor, Qt::SolidPattern));
             painter.setPen(QPen(m_titleColor, 1, Qt::SolidLine, Qt::FlatCap));
             painter.drawRect(x, y, w, h);
+            if (m_volume == Volume3D)
+            {
+                auto dk = getDarkColor(m_diagColor);
+                painter.setBrush(QBrush(dk, Qt::SolidPattern));
+                QPoint ptTop[4] = {
+                    QPoint(x, y),
+                    QPoint(x + 10, y - 10),
+                    QPoint(x + w + 10, y - 10),
+                    QPoint(x + w, y)
+                };
+                painter.drawPolygon(ptTop, 4);
+                painter.setBrush(QBrush(getDarkColor(dk), Qt::SolidPattern));
+                QPoint ptRight[4] = {
+                    QPoint(x + w, y),
+                    QPoint(x + w + 10, y - 10),
+                    QPoint(x + w + 10, y + h - 10),
+                    QPoint(x + w, y + h)
+                };
+                painter.drawPolygon(ptRight, 4);
+            }
         }
         else
         if (m_kind == KindGraph)
         {
-            painter.setBrush(QBrush(m_diagColor, Qt::SolidPattern));
-            painter.setPen(QPen(m_diagColor, 4, Qt::SolidLine, Qt::FlatCap));
             if (i > 0)
-                painter.drawLine(ox, oy, xv, yv);
+            {
+                if (m_volume == Volume2D)
+                {
+                    painter.setBrush(QBrush(m_diagColor, Qt::SolidPattern));
+                    painter.setPen(QPen(m_diagColor, 4, Qt::SolidLine, Qt::FlatCap));
+                    painter.drawLine(ox, oy, xv, yv);
+                }
+                else
+                if (m_volume == Volume3D)
+                {
+                    painter.setBrush(QBrush(m_diagColor, Qt::SolidPattern));
+                    painter.setPen(QPen(m_titleColor, 1, Qt::SolidLine, Qt::FlatCap));
+                    QPoint points[4] = {
+                        QPoint(ox, oy),
+                        QPoint(ox + 10, oy - 10),
+                        QPoint(xv + 10, yv - 10),
+                        QPoint(xv, yv)
+                    };
+                    painter.drawPolygon(points, 4);
+                }
+            }
             //! Ветрикальный отстчет
             painter.setPen(QPen(m_titleColor, 1, Qt::DotLine, Qt::FlatCap));
             painter.drawLine(xv, geometry().height() - AxisSpace,
@@ -223,10 +269,74 @@ void DynamicDiagram::computeDiap(double &min, double &max)
     if (m_kind == KindBar)
     {
         if (min > 0 && max > 0)
+        {
             min = 0;
+            max = max * 1.1; // + 10%
+        }
         else
         if (min < 0 && max < 0)
+        {
             max = 0;
+            min = min * 1.1; // + 10%
+        }
     }
+    else
+    if (m_kind == KindGraph)
+    {
+        double max_ = max;
+        double min_ = min;
+        min = min - (max_ - min_) * 0.1;
+        max = max + (max_ - min_) * 0.1;
+    }
+}
 
+QColor DynamicDiagram::getDarkColor(const QColor &colBase) const
+{
+    auto red = colBase.red() / 2;
+    auto green = colBase.green() / 2;
+    auto blue = colBase.blue() / 2;
+    return QColor(red, green, blue);
+}
+
+void DynamicDiagram::showValuesGrid(QPainter &painter,
+                                    const double min, const double max,
+                                    const double prop)
+{
+    double step = 1;
+    if (max - min < 0.2)
+        step = 0.01;
+    else
+    if (max - min < 2)
+        step = 0.1;
+    else
+    if (max - min < 20)
+        step = 1;
+    else
+    if (max - min < 200)
+        step = 10;
+    else
+    if (max - min < 2000)
+        step = 100;
+    else
+    if (max - min < 20000)
+        step = 1000;
+
+    int prec = 0;
+    if (step < 1)
+        prec = 1;
+    if(step < 0.1)
+        prec = 2;
+
+    double cnt = min;
+    while (cnt < max)
+    {
+        int y = geometry().height() - AxisSpace - (cnt - min) * prop;
+        painter.setPen(QPen(m_titleColor, 1, Qt::DotLine, Qt::FlatCap));
+        painter.drawLine(AxisSpace, y, geometry().width() - AxisSpace, y);
+
+        QString lblMark = QString::number(cnt, 'f', prec);
+        painter.drawText(QRect(0, y - 5, AxisSpace, 10), lblMark, QTextOption(Qt::AlignHCenter | Qt::AlignVCenter));
+
+        cnt = cnt + step;
+    }
 }

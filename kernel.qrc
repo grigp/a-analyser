@@ -30,5 +30,8 @@
         <file>images/Results.png</file>
         <file>images/Minus.png</file>
         <file>images/Plus.png</file>
+        <file>images/Dynamic/Dyn3D.png</file>
+        <file>images/Dynamic/DynAsBar.png</file>
+        <file>images/Dynamic/DynAsGraph.png</file>
     </qresource>
 </RCC>

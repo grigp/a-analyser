@@ -30,19 +30,19 @@ DynamicAutoWidget::~DynamicAutoWidget()
 
 void DynamicAutoWidget::onDbConnect()
 {
-    ui->treeView->viewport()->installEventFilter(this);
+    ui->tvFactors->viewport()->installEventFilter(this);
 }
 
 bool DynamicAutoWidget::eventFilter(QObject *obj, QEvent *event)
 {
-    if (obj == ui->treeView->viewport())
+    if (obj == ui->tvFactors->viewport())
     {
         if (event->type() == QEvent::Paint)
         {
             // Приводит к частым срабатываниям
-            if (ui->treeView->selectionModel()
-                    && ui->treeView->selectionModel()->currentIndex().isValid())
-                showGraph(ui->treeView->selectionModel()->currentIndex().row());
+            if (ui->tvFactors->selectionModel()
+                    && ui->tvFactors->selectionModel()->currentIndex().isValid())
+                showGraph(ui->tvFactors->selectionModel()->currentIndex().row());
         }
     }
     return false;
@@ -70,6 +70,26 @@ void DynamicAutoWidget::selectFactor(const QModelIndex index)
 {
     if (index.isValid())
         showGraph(index.row());
+}
+
+void DynamicAutoWidget::dynamicAsGraph()
+{
+    ui->wgtDynamic->setKind(DynamicDiagram::KindGraph);
+    ui->btnBar->setChecked(false);
+}
+
+void DynamicAutoWidget::dynamicAsBar()
+{
+    ui->wgtDynamic->setKind(DynamicDiagram::KindBar);
+    ui->btnGraph->setChecked(false);
+}
+
+void DynamicAutoWidget::dynamic3D(bool pressed)
+{
+    if (pressed)
+        ui->wgtDynamic->setVolume(DynamicDiagram::Volume3D);
+    else
+        ui->wgtDynamic->setVolume(DynamicDiagram::Volume2D);
 }
 
 void DynamicAutoWidget::buildDynamic()
@@ -114,12 +134,12 @@ void DynamicAutoWidget::fillTable()
 
 void DynamicAutoWidget::showDynamic()
 {
-    ui->treeView->setModel(m_mdlDynamic);
+    ui->tvFactors->setModel(m_mdlDynamic);
     for (int i = 0; i < m_mdlDynamic->columnCount(); ++i)
-        ui->treeView->resizeColumnToContents(i);
+        ui->tvFactors->resizeColumnToContents(i);
     if (m_mdlDynamic->rowCount() > 0 && m_mdlDynamic->columnCount() > 0)
     {
-        ui->treeView->setCurrentIndex(m_mdlDynamic->index(0, 0));
+        ui->tvFactors->setCurrentIndex(m_mdlDynamic->index(0, 0));
         showGraph(0);
     }
 }

@@ -95,12 +95,30 @@ private:
      */
     void computeDiap(double &min, double &max);
 
-    Kind m_kind {KindBar};
+    /*!
+     * \brief Возвращает цвет темнее базового
+     * Раскладывает его на составляющие rgb
+     * Затем по каждой составляющей делает темнее вполовину
+     * \param colBase - базовый цвет
+     */
+    QColor getDarkColor(const QColor &colBase) const;
+
+    /*!
+     * \brief Рисует сетку по оси значений
+     * \param painter - рисователь
+     * \param min, max - мин и макс значения
+     * \param prop - пропорция
+     */
+    void showValuesGrid(QPainter &painter,
+                        const double min, const double max,
+                        const double prop);
+
+    Kind m_kind {KindGraph};
     Volume m_volume {Volume2D};
     QString m_title {""};
 
     QColor m_backgroundColor {Qt::white};
-    QColor m_diagColor {Qt::blue};
+    QColor m_diagColor {Qt::darkCyan};
     QColor m_titleColor {Qt::black};
 
     QList<DiagItem*> m_items;
