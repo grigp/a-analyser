@@ -155,8 +155,6 @@ private:
     double m_offsetX {0};
     double m_offsetY {0};
 
-    //ReadingDataStabilan01 *m_readData {nullptr};  ///< Поток чтения данных
-
 };
 
 #endif // STABILAN01_H

@@ -26,7 +26,7 @@
             "driver_uid": "{ACC7467D-6600-4808-B372-EDC2069EBF5E}",
             "comment": "Прыжок",
             "active": true,
-            "port": 0,
+            "port": 1,
             "params":
             {
                 "count": 1

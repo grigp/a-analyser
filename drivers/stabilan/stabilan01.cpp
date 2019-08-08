@@ -137,21 +137,11 @@ void Stabilan01::start()
 
         m_trdInput->start();
     }
-
-//    if (!m_readData)
-//    {
-//        auto *m_readData = new ReadingDataStabilan01();
-//        connect(m_readData, &ReadingDataStabilan01::dataExists, this, &Stabilan01::on_readData);
-//        connect(m_readData, &ReadingDataStabilan01::finished, m_readData, &QObject::deleteLater);
-//        m_readData->start();
-//    }
 }
 
 void Stabilan01::stop()
 {
     emit disconnectPort();
-//    if (m_readData)
-//        m_readData->stop();
 }
 
 QStringList Stabilan01::getProtocols()
