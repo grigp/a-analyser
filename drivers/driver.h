@@ -3,8 +3,13 @@
 
 #include "deviceprotocols.h"
 
+#include "serialportdefines.h"
+
 #include <QObject>
 #include <QStringList>
+#include <QThread>
+
+class SerialPort;
 
 /*!
  * \brief Базовый класс драйвера Driver class
@@ -14,6 +19,13 @@ class Driver : public QObject
     Q_OBJECT
 public:
     explicit Driver(QObject *parent = nullptr);
+
+    enum ErrorCodes
+    {
+          EC_NoError = 0
+        , EC_NoData = 1
+        , EC_User = 100
+    };
 
     /*!
      * \brief Виртуальные методы, возвращающие uid и name драйверов
@@ -33,18 +45,55 @@ public:
     /*!
      * \brief Запуск передачи данных
      */
-    virtual void start() = 0;
+    virtual void start();
     /*!
      * \brief Останов передачи данных
      */
-    virtual void stop() = 0;
-
+    virtual void stop();
 
 signals:
     void sendData(DeviceProtocols::DeviceData *data);
     void communicationError(const QString &drvName, const QString &port, const int errorCode);
 
+    void connectPort();
+    void disconnectPort();
+    void portSettings(const QString &name,
+                      const int baudrate, const int DataBits, const int Parity,
+                      const int StopBits, const int FlowControl);
+    void writeData(const QByteArray data);
+    void error(const int errorCode);
+
 public slots:
+
+protected slots:
+    virtual void on_readData(const QByteArray data);
+    virtual void on_error(const QString &err);
+
+protected:
+    DeviceProtocols::Ports portName() const {return m_portName;}
+    void setPortName(const DeviceProtocols::Ports portName) {m_portName = portName;}
+
+    SerialPort* port() const {return m_port;}
+    QThread* trdInput() const {return m_trdInput;}
+
+    /*!
+     * \brief Возвращает настройки порта
+     */
+    virtual SerialPortDefines::Settings getSerialPortSettings();
+
+    void incBlockCount() {++m_blockCount;}
+
+    void timerEvent(QTimerEvent *event) override;
+
+private:
+    int m_blockCount {0};                    ///< Счетчик пакетов
+    int m_blockCountPrev {0};
+    int m_tmCommError {-1};                  ///< id таймера ошибки связи
+    bool m_isCommunicationError {false};     ///< признак ошибки связи
+
+    DeviceProtocols::Ports m_portName;
+    SerialPort *m_port {nullptr};
+    QThread *m_trdInput {nullptr};
 };
 
 #endif // DRIVER_H

@@ -17,29 +17,6 @@ namespace  {
 
 class SerialPort;
 
-///< -----------------------------------------------------------------------------------
-///< Поток чтения данных
-
-//class ReadingDataStabilan01 : public QThread
-//{
-//    Q_OBJECT
-
-//public:
-//    void run() override;
-
-//public slots:
-//    void stop();
-
-//signals:
-//    void dataExists(const QByteArray data);
-
-//private:
-//    bool m_isReading {false};
-//    QByteArray m_data;
-//};
-
-///< -----------------------------------------------------------------------------------
-///< Сам драйвер
 
 /*!
  * \brief Класс драйвера стабилоанализатора Стабилан - 01 Stabilan01 class
@@ -49,6 +26,12 @@ class Stabilan01 : public Driver, public DeviceProtocols::StabControl
     Q_OBJECT
 public:
     explicit Stabilan01(QObject *parent = nullptr);
+
+    enum ErrorCodes
+    {
+        EC_MarkerIinsidePackage = Driver::EC_User + 1
+
+    };
 
     static QString uid() {return uid_stabilan01;}
     static QString name() {return name_stabilan01;}
@@ -107,21 +90,9 @@ public:
     static QString zeroingTypeName(const Stabilan01Defines::ZeroingType ztCode);
     static QList<Stabilan01Defines::ZeroingType> zeroingTypes();
 
-signals:
-    void connectPort();
-    void disconnectPort();
-    void portSettings(const QString &name,
-                      const int baudrate, const int DataBits, const int Parity,
-                      const int StopBits, const int FlowControl);
-    void writeData(const QByteArray data);
-    void error(const int errorCode);
-
-protected:
-    void timerEvent(QTimerEvent *event) override;
-
-private slots:
-    void on_readData(const QByteArray data);
-    void on_error(const QString &err);
+protected slots:
+    void on_readData(const QByteArray data) override;
+    void on_error(const QString &err) override;
 
 private:
 
@@ -139,17 +110,8 @@ private:
     quint8 m_prevB;               // Первый принятый байт
     double m_X, m_Y, m_A, m_B, m_C, m_D, m_Z; // Принятые и разобранные данные
 
-    DeviceProtocols::Ports m_portName;
     Stabilan01Defines::Model m_model;
     Stabilan01Defines::ZeroingType m_zt;
-
-    SerialPort *m_port {nullptr};
-    QThread *m_trdInput {nullptr};
-
-    int m_blockCount {0};                    ///< Счетчик пакетов
-    int m_blockCountPrev {0};
-    int m_tmCommError {-1};                  ///< id таймера ошибки связи
-    bool m_isCommunicationError {false};     ///< признак ошибки связи
 
     ///< Точки центровки
     double m_offsetX {0};

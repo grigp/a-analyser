@@ -42,44 +42,8 @@ namespace  {
   };
 
   const quint8 MarkerValue = 0x80;
-  const int EC_NoError = 0;
-  const int EC_NoData = 1;
-  const int EC_MarkerIinsidePackage = 2;
-
 }
 
-///< -----------------------------------------------------------------------------------
-///< Поток чтения данных
-
-//void ReadingDataStabilan01::run()
-//{
-//    double r = 0;
-//    m_isReading = true;
-//    do
-//    {
-//        double x = 20 * sin(r);
-//        double y = 10 * cos(r);
-
-//        m_data.clear();
-//        QDataStream stream(&m_data, QIODevice::WriteOnly);
-//        stream << x << y;
-
-//        r = r + 0.1256;
-
-//        emit dataExists(m_data);
-//        msleep(20);
-//    }
-//    while (m_isReading);
-//}
-
-//void ReadingDataStabilan01::stop()
-//{
-//    m_isReading = false;
-//}
-
-
-///< -----------------------------------------------------------------------------------
-///< Сам драйвер
 
 Stabilan01::Stabilan01(QObject *parent)
     : Driver(parent)
@@ -89,7 +53,7 @@ Stabilan01::Stabilan01(QObject *parent)
 
 void Stabilan01::setParams(const DeviceProtocols::Ports port, const QJsonObject &params)
 {
-    m_portName = port;
+    setPortName(port);
     m_model = static_cast<Stabilan01Defines::Model>(params["model"].toInt());
     m_zt = static_cast<Stabilan01Defines::ZeroingType>(params["zeroing_type"].toInt());
 }
@@ -113,35 +77,12 @@ bool Stabilan01::editParams(QJsonObject &params)
 
 void Stabilan01::start()
 {
-    if (!m_trdInput)
-    {
-        m_trdInput = new QThread();
-        m_port = new SerialPort();
-        m_port->toThread(m_trdInput);
-
-        connect(m_port, &SerialPort::error_, this, &Stabilan01::on_error);
-        connect(m_trdInput, &QThread::started, m_port, &SerialPort::processPort);
-        connect(m_port, &SerialPort::finishedPort, m_trdInput, &QThread::quit);
-        connect(m_trdInput, &QThread::finished, m_port, &SerialPort::deleteLater);
-        connect(m_port, &SerialPort::finishedPort, m_trdInput, &QThread::deleteLater);
-        connect(this, &Stabilan01::portSettings, m_port, &SerialPort::WriteSettingsPort);
-        connect(this, &Stabilan01::connectPort, m_port, &SerialPort::ConnectPort);
-        connect(this, &Stabilan01::disconnectPort, m_port, &SerialPort::DisconnectPort);
-        connect(m_port, &SerialPort::outPortD, this, &Stabilan01::on_readData);
-        connect(this, &Stabilan01::writeData, m_port, &SerialPort::WriteToPort);
-
-        m_tmCommError = startTimer(1000);
-
-        emit portSettings(DeviceProtocols::serialPortName(m_portName), 57600, 8, 0, 1, 0);
-        emit connectPort();
-
-        m_trdInput->start();
-    }
+    Driver::start();
 }
 
 void Stabilan01::stop()
 {
-    emit disconnectPort();
+    Driver::stop();
 }
 
 QStringList Stabilan01::getProtocols()
@@ -189,47 +130,19 @@ QList<Stabilan01Defines::ZeroingType> Stabilan01::zeroingTypes()
     return ZeroingTypes.keys();
 }
 
-void Stabilan01::timerEvent(QTimerEvent *event)
-{
-    if (event->timerId() == m_tmCommError)
-    {
-        if (m_blockCount == m_blockCountPrev)
-        {
-            if (!m_isCommunicationError)
-            {
-                m_isCommunicationError = true;
-                emit communicationError(name(), DeviceProtocols::portName(m_portName), EC_NoData);
-            }
-        }
-        else
-            m_isCommunicationError = false;
-        m_blockCountPrev = m_blockCount;
-    }
-    Driver::timerEvent(event);
-}
-
 void Stabilan01::on_readData(const QByteArray data)
 {
+    Driver::on_readData(data);
     for (int i = 0; i < data.count(); i++)
     {
         quint8 B = data[i];
         assignByteFromDevice(B);
     }
-
-//    double x = 0;
-//    double y = 0;
-//    QByteArray ba = data;
-//    QDataStream stream(&ba, QIODevice::ReadOnly);
-//    stream >> x;
-//    stream >> y;
-
-//    auto stabData = new DeviceProtocols::StabDvcData(this, x, y);
-//    emit sendData(stabData);
-    //    delete stabData;
 }
 
 void Stabilan01::on_error(const QString &err)
 {
+    Driver::on_error(err);
     qDebug() << err;
 
 }
@@ -317,7 +230,7 @@ void Stabilan01::assignByteFromDevice(quint8 b)
             if (m_countBytePack == m_countChannels * 2){  // Достигли заданного кол-ва каналов
                 m_Z = m_A + m_B + m_C + m_D;                     // Расчет баллистограммы
 
-                ++m_blockCount;
+                incBlockCount();
                 // Передача стабилограммы
                 auto stabData = new DeviceProtocols::StabDvcData(this,
                                                                  m_X - m_offsetX, m_Y - m_offsetY,

@@ -7,16 +7,7 @@
 //#include <QtSerialPort/QserialPort>  // Обьявляем работу с портом
 //#include <QtSerialPort/QSerialPortInfo>
 
-//Структура с настройками порта
-struct Settings
-{
-    QString name;
-    qint32 baudRate;
-    QSerialPort::DataBits dataBits;
-    QSerialPort::Parity parity;
-    QSerialPort::StopBits stopBits;
-    QSerialPort::FlowControl flowControl;
-};
+#include "serialportdefines.h"
 
 class SerialPort : public QObject
 {
@@ -51,7 +42,7 @@ private slots:
 
 private:
     QSerialPort m_nativePort;
-    Settings m_SettingsPort;
+    SerialPortDefines::Settings m_SettingsPort;
 
 };
 
