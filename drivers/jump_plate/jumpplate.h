@@ -19,6 +19,12 @@ class JumpPlate : public Driver, public DeviceProtocols::JumpPlateControl
 public:
     explicit JumpPlate(QObject *parent = nullptr);
 
+    enum ErrorCodes
+    {
+        EC_MarkerIinsidePackage = Driver::EC_User + 1
+
+    };
+
     static QString uid() {return uid_jumpPlate;}
     static QString name() {return name_jumpPlate;}
 
@@ -65,6 +71,37 @@ public:
     static QList<DeviceProtocols::Ports> getPorts();
 
     void calibrate() override;
+
+protected slots:
+    void on_readData(const QByteArray data) override;
+    void on_error(const QString &err) override;
+
+
+private:
+    /*!
+     * \brief Обрабатывает принятый байт из пакета данных байт
+     * \param b - текущий байт
+     */
+    void assignByteFromDevice(quint8 b);
+
+    ///< разбор принятых данных
+    bool m_isMarker {false};      ///< Счетчик байтов маркера. При первом 0x80 становится true. При втором 0x80 начинается прием пакета. При true и не 0x80 сбрасывается
+    bool m_isPackage {false};     ///< true - идет разбор пакета, false - нет разбора пакета
+    int m_countBytePack {0};      ///< Счетчик байтов пакета
+    int m_countChannels {11};     ///< Кол-во каналов. Должно инициализироваться как параметр драйвера
+    quint8 m_byte0 {0};           ///< Первый принятый байт
+    quint8 m_byte1 {0};           ///< Второй принятый байт
+    quint8 m_byte2 {0};           ///< Третий принятый байт
+
+    int m_flagPlate1 {0};         ///< Флаг нажатия первой платформы
+    int m_counterPlate1 {0};      ///< Счетчик времени первой платформы
+    int m_flagPlate2 {0};         ///< Флаг нажатия второй платформы
+    int m_counterPlate2 {0};      ///< Счетчик времени второй платформы
+
+    bool m_busyPlate1 {false};    ///< Флаг "Занятия" платформы 1
+    double m_timePlate1 {0};      ///< Время занятия / свободного состояния платформы 1
+    bool m_busyPlate2 {false};    ///< Флаг "Занятия" платформы 2
+    double m_timePlate2 {0};      ///< Время занятия / свободного состояния платформы 2
 };
 
 #endif // JUMPPLATE_H

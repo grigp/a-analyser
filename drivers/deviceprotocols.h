@@ -150,9 +150,10 @@ private:
 class JumpPlateDvcData : public DeviceData
 {
 public:
-    JumpPlateDvcData(Driver *sender, bool busy, double time)
-        : DeviceData(sender), m_busy(busy), m_time(time) {}
+    JumpPlateDvcData(Driver *sender, int plate, bool busy, double time)
+        : DeviceData(sender), m_plate(plate), m_busy(busy), m_time(time) {}
 
+    int plate() const {return m_plate;}
     bool busy() const {return m_busy;}
     double time() const {return m_time;}
 
@@ -160,6 +161,7 @@ public:
     QString name() const override {return name_JumpPlateDvcData;}
 
 private:
+    int m_plate;
     bool m_busy;
     double m_time;
 };

@@ -4,7 +4,8 @@ HEADERS += \
     $$PWD/jumptesttemplate.h \
     $$PWD/jumptestexecute.h \
     $$PWD/jumptestvisualize.h \
-    $$PWD/jumptestparamsdialog.h
+    $$PWD/jumptestparamsdialog.h \
+    $$PWD/jumptestdefines.h
 
 SOURCES += \
     $$PWD/jumptesttemplate.cpp \
