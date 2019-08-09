@@ -105,27 +105,22 @@ void DynamicAutoWidget::dynamic3D(bool pressed)
 
 void DynamicAutoWidget::buildDynamic()
 {
+    m_mdlDynamic->clear();
+    ui->wgtDynamic->clear();
+
     if (m_selectedPatientUid != "" && m_selectedMetodicUid != "")
     {
-        m_mdlDynamic->clear();
-
         //! Построение списка
         fillTable();
 
         //! Прорисовка
         showDynamic();
     }
-    else
-        hideDynamic();
-}
-
-void DynamicAutoWidget::hideDynamic()
-{
-    m_mdlDynamic->clear();
 }
 
 void DynamicAutoWidget::fillTable()
 {
+    m_selectRow = -1;
     auto tests = DataProvider::getTests();
     foreach (auto testUid, tests)
     {
@@ -152,6 +147,8 @@ void DynamicAutoWidget::showDynamic()
         ui->tvFactors->setCurrentIndex(m_mdlDynamic->index(0, 0));
         showGraph(0);
     }
+    else
+        ui->wgtDynamic->clear();
 }
 
 void DynamicAutoWidget::showGraph(const int row)

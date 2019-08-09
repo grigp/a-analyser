@@ -115,6 +115,8 @@ QString DynamicDiagram::itemName(const int idx) const
 void DynamicDiagram::clear()
 {
     m_items.clear();
+    m_title = "";
+    update();
 }
 
 void DynamicDiagram::paintEvent(QPaintEvent *event)

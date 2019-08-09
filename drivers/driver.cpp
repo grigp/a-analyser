@@ -2,6 +2,8 @@
 
 #include "serialport.h"
 
+#include <QDebug>
+
 Driver::Driver(QObject *parent) : QObject(parent)
 {
 
@@ -28,7 +30,9 @@ void Driver::start()
 
         m_tmCommError = startTimer(1000);
 
-        emit portSettings(DeviceProtocols::serialPortName(m_portName), 57600, 8, 0, 1, 0);
+        auto sps = getSerialPortSettings();
+        emit portSettings(DeviceProtocols::serialPortName(m_portName),
+                          sps.baudRate, sps.dataBits, sps.parity, sps.stopBits, sps.flowControl);
         emit connectPort();
 
         m_trdInput->start();

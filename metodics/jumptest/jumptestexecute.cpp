@@ -18,6 +18,7 @@ JumpTestExecute::JumpTestExecute(QWidget *parent) :
   , m_trd(new TestResultData())
 {
     ui->setupUi(this);
+    ui->lblCommunicationError->setVisible(false);
     QTimer::singleShot(0, this, &JumpTestExecute::start);
 }
 
@@ -60,8 +61,21 @@ void JumpTestExecute::start()
     }
 }
 
+int n = 0;
+
 void JumpTestExecute::getData(DeviceProtocols::DeviceData *data)
 {
+    if (data->uid() == DeviceProtocols::uid_JumpPlateBlockData)
+    {
+        DeviceProtocols::JumpPlateBlockData *jpData = static_cast<DeviceProtocols::JumpPlateBlockData*>(data);
+
+        jpData->counter1();
+        ui->lblBlockCounter->setText(QString("Пакеты : %1.  Платформа 1: Загрузка: %2, Счетчик: %3, Константа: %4.   Платформа 2: Загрузка: %5, Счетчик: %6, Константа: %7").
+                                     arg(jpData->blockCnt()).
+                                     arg(jpData->busy1()).arg((unsigned int)jpData->counter1()).arg(jpData->con1()).
+                                     arg(jpData->busy2()).arg((unsigned int)jpData->counter2()).arg(jpData->con2()));
+    }
+    else
     if (data->uid() == DeviceProtocols::uid_JumpPlateDvcData)
     {
         ui->lblCommunicationError->setVisible(false);

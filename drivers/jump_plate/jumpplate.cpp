@@ -3,6 +3,8 @@
 #include "jumpplateparamsdialog.h"
 #include "aanalyserapplication.h"
 
+#include <QDebug>
+
 namespace
 {
 const quint8 MarkerValue = 0x80;
@@ -17,6 +19,7 @@ JumpPlate::JumpPlate(QObject *parent)
 
 void JumpPlate::setParams(const DeviceProtocols::Ports port, const QJsonObject &params)
 {
+    setPortName(port);
 
 }
 
@@ -40,7 +43,6 @@ void JumpPlate::start()
     cmd[0] = 0xA5;
     cmd[1] = 0x63;
     emit writeData(cmd);
-
 }
 
 void JumpPlate::stop()
@@ -68,6 +70,15 @@ QList<DeviceProtocols::Ports> JumpPlate::getPorts()
 void JumpPlate::calibrate()
 {
 
+}
+
+SerialPortDefines::Settings JumpPlate::getSerialPortSettings()
+{
+    return SerialPortDefines::Settings(115200,
+                                       QSerialPort::Data8,
+                                       QSerialPort::NoParity,
+                                       QSerialPort::OneStop,
+                                       QSerialPort::NoFlowControl);
 }
 
 void JumpPlate::on_readData(const QByteArray data)
@@ -115,65 +126,90 @@ void JumpPlate::assignByteFromDevice(quint8 b)
             case 0:     //! Флаг нажатия первой платформы
             {
                 if (m_countBytePack % 4 == 0)
-                    m_byte0 = b;
+                    m_byte2 = b;
                 else
                 if (m_countBytePack % 4 == 1)
                     m_byte1 = b;
                 else
                 if (m_countBytePack % 4 == 2)
-                    m_byte2 = b;
+                    m_byte0 = b;
                 else
-                    m_flagPlate1 = m_byte0 * 16777216 + m_byte1 * 65536 + m_byte2 * 256 + b;
+                {
+                    m_conPlate1 = m_byte2 * 65536 + m_byte1 * 256 + m_byte0;
+                    m_conPlate1 = m_conPlate1 / 1000000.0;
+                    m_flagPlate1 = b;
+                }
                 break;
             }
             case 1:     //! Счетчик первой платформы
             {
                 if (m_countBytePack % 4 == 0)
-                    m_byte0 = b;
+                    m_byte2 = b;
                 else
                 if (m_countBytePack % 4 == 1)
                     m_byte1 = b;
                 else
                 if (m_countBytePack % 4 == 2)
-                    m_byte2 = b;
+                    m_byte0 = b;
                 else
-                    m_counterPlate1 = m_byte0 * 16777216 + m_byte1 * 65536 + m_byte2 * 256 + b;
+                {
+//                    m_counterPlate1 = m_byte2 * 16777216 + m_byte1 * 65536 + m_byte0 * 256 + b;
+                    m_counterPlate1 = b * 16777216 + m_byte0 * 65536 + m_byte1 * 256 + m_byte2;
+                    m_timePlate1 = m_counterPlate1 * m_conPlate1;
+                }
                 break;
             }
             case 2:      //! Флаг нажатия второй платформы
             {
                 if (m_countBytePack % 4 == 0)
-                    m_byte0 = b;
+                    m_byte2 = b;
                 else
                 if (m_countBytePack % 4 == 1)
                     m_byte1 = b;
                 else
                 if (m_countBytePack % 4 == 2)
-                    m_byte2 = b;
+                    m_byte0 = b;
                 else
-                    m_flagPlate2 = m_byte0 * 16777216 + m_byte1 * 65536 + m_byte2 * 256 + b;
+                {
+                    m_conPlate2 = m_byte2 * 65536 + m_byte1 * 256 + m_byte0;
+                    m_conPlate2 = m_conPlate2 / 1000000.0;
+                    m_flagPlate2 = b;
+                }
                 break;
             }
             case 3:      //! Счетчик второй платформы
             {
                 if (m_countBytePack % 4 == 0)
-                    m_byte0 = b;
+                    m_byte2 = b;
                 else
                 if (m_countBytePack % 4 == 1)
                     m_byte1 = b;
                 else
                 if (m_countBytePack % 4 == 2)
-                    m_byte2 = b;
+                    m_byte0 = b;
                 else
-                    m_counterPlate2 = m_byte0 * 16777216 + m_byte1 * 65536 + m_byte2 * 256 + b;
+                {
+//                    m_counterPlate2 = m_byte2 * 16777216 + m_byte1 * 65536 + m_byte0 * 256 + b;
+                    m_counterPlate2 = b * 16777216 + m_byte0 * 65536 + m_byte1 * 256 + m_byte2;
+                    m_timePlate2 = m_counterPlate2 * m_conPlate2;
+                }
                 break;
             }
             }
 
+            ++m_countBytePack;
+
             //! Окончание разбора пакета
-            if (m_countBytePack == m_countChannels * 2)     //! Достигли заданного кол-ва каналов
+            if (m_countBytePack == m_countChannels * 4)     //! Достигли заданного кол-ва каналов
             {
                 incBlockCount();
+
+                auto data = new DeviceProtocols::JumpPlateBlockData(this, blockCount(),
+                                                                    m_busyPlate1, m_counterPlate1, m_conPlate1,
+                                                                    m_busyPlate2, m_counterPlate2, m_conPlate2);
+                emit sendData(data);
+                delete data;
+
                 //! Передача данных
                 if (m_busyPlate1 != m_flagPlate1)
                 {
@@ -193,8 +229,6 @@ void JumpPlate::assignByteFromDevice(quint8 b)
 
                 m_isPackage = false;                     //! Сбросим признак пакета
             }
-
-            m_countBytePack++;
         }
     }
 

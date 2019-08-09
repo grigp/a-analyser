@@ -90,6 +90,13 @@ public:
     static QString zeroingTypeName(const Stabilan01Defines::ZeroingType ztCode);
     static QList<Stabilan01Defines::ZeroingType> zeroingTypes();
 
+protected:
+    /*!
+     * \brief Возвращает настройки порта
+     */
+    SerialPortDefines::Settings getSerialPortSettings() override;
+
+
 protected slots:
     void on_readData(const QByteArray data) override;
     void on_error(const QString &err) override;

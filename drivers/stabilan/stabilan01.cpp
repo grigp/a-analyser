@@ -130,6 +130,15 @@ QList<Stabilan01Defines::ZeroingType> Stabilan01::zeroingTypes()
     return ZeroingTypes.keys();
 }
 
+SerialPortDefines::Settings Stabilan01::getSerialPortSettings()
+{
+    return SerialPortDefines::Settings(57600,
+                                       QSerialPort::Data8,
+                                       QSerialPort::NoParity,
+                                       QSerialPort::OneStop,
+                                       QSerialPort::NoFlowControl);
+}
+
 void Stabilan01::on_readData(const QByteArray data)
 {
     Driver::on_readData(data);

@@ -52,10 +52,12 @@ QList<Ports> allPorts();
 static const QString uid_StabDvcData = "{69941064-D628-4A6F-A415-0EA12156D237}";
 static const QString uid_DynDvcData = "{EB0F8C35-048E-412C-B7B9-26C0479FEC6E}";
 static const QString uid_JumpPlateDvcData = "{F7EF6F97-3502-4EC0-A798-68DDF40DFB7F}";
+static const QString uid_JumpPlateBlockData = "{A3CE22EA-1D4D-4C3F-8E61-7FED58C7044B}";
 
 static const QString name_StabDvcData = "Данные стабилографии";
 static const QString name_DynDvcData = "Данные динамометрии";
 static const QString name_JumpPlateDvcData = "Данные прыжковой платформы";
+static const QString name_JumpPlateBlockData = "Отсчеты прыжковой платформы";
 
 
 /*!
@@ -164,6 +166,44 @@ private:
     int m_plate;
     bool m_busy;
     double m_time;
+};
+
+/*!
+ * \brief Класс данных отсчетов прыжковой платформы, получаемых от устройств JumpPlateBlockData class
+ */
+class JumpPlateBlockData : public DeviceData
+{
+public:
+    JumpPlateBlockData(Driver *sender, int blockCnt,
+                       bool busy1, double counter1, double con1,
+                       bool busy2, double counter2, double con2)
+        : DeviceData(sender), m_blockCnt(blockCnt)
+        , m_busy1(busy1), m_counter1(counter1), m_con1(con1)
+        , m_busy2(busy2), m_counter2(counter2), m_con2(con2)
+    {}
+
+    QString uid() const override {return uid_JumpPlateBlockData;}
+    QString name() const override {return name_JumpPlateBlockData;}
+
+    int blockCnt() const {return m_blockCnt;}
+
+    bool busy1() const {return m_busy1;}
+    double counter1() const {return m_counter1;}
+    double con1() const {return m_con1;}
+
+    bool busy2() const {return m_busy2;}
+    double counter2() const {return m_counter2;}
+    double con2() const {return m_con2;}
+
+private:
+    int m_blockCnt;
+    bool m_busy1;
+    double m_counter1;
+    double m_con1;
+    bool m_busy2;
+    double m_counter2;
+    double m_con2;
+
 };
 
 ///<------------------------------------------------------------------------------------------
@@ -306,6 +346,7 @@ static QMap<QString, QString> deviceDataName {
     std::pair<QString, QString> (uid_StabDvcData, name_StabDvcData)
   , std::pair<QString, QString> (uid_DynDvcData, name_DynDvcData)
   , std::pair<QString, QString> (uid_JumpPlateDvcData, name_JumpPlateDvcData)
+  , std::pair<QString, QString> (uid_JumpPlateBlockData, name_JumpPlateBlockData)
 };
 
 

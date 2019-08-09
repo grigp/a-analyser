@@ -82,6 +82,7 @@ protected:
     virtual SerialPortDefines::Settings getSerialPortSettings();
 
     void incBlockCount() {++m_blockCount;}
+    int blockCount() const {return m_blockCount;}
 
     void timerEvent(QTimerEvent *event) override;
 
