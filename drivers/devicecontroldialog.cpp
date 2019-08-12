@@ -83,7 +83,7 @@ void DeviceControlDialog::delConnect()
         auto port = m_model->index(rowIdx, DeviceControlModel::ColPort).data().toString();
         if (QMessageBox::question(this,
                                   tr("Предупреждение"),
-                                  QString(tr("Удалить подключение %1 (%2)?")).arg(driver).arg(port))
+                                  QString(tr("Удалить подключение") + " %1 (%2)?").arg(driver).arg(port))
                 ==
                 QMessageBox::Yes)
         {
@@ -155,7 +155,7 @@ DeviceControlModel::DeviceControlModel(QObject *parent)
     : QStandardItemModel(parent)
 {
 
-    setHorizontalHeaderLabels(QStringList() << "Актив." << "Драйвер" << "Порт" << "Комментарий");
+    setHorizontalHeaderLabels(QStringList() << tr("Актив.") << tr("Драйвер") << tr("Порт") << tr("Комментарий"));
 }
 
 void DeviceControlModel::load()

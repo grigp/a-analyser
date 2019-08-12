@@ -38,6 +38,9 @@ private:
     DeviceProtocols::JumpPlateControl* m_jumpControl;  ///< Управление прыжковой платформой в драйвере
 
     TestResultData *m_trd;  ///< Объект, записывающий данные в базу
+
+    int m_plt1Count {0};
+    int m_plt2Count {0};
 };
 
 #endif // JUMPTESTEXECUTE_H

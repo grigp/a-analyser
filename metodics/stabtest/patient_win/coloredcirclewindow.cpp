@@ -23,7 +23,7 @@ ColoredCircleWindow::~ColoredCircleWindow()
 
 void ColoredCircleWindow::setDiap(const int diap)
 {
-
+    Q_UNUSED(diap);
 }
 
 void ColoredCircleWindow::setMarker(const double x, const double y)

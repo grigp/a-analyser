@@ -60,7 +60,12 @@ bool ResultsWidget::eventFilter(QObject *obj, QEvent *event)
             // Приводит к частым срабатываниям
             auto idx = m_pmdlTest->mapToSource(ui->tvTests->selectionModel()->currentIndex());
             if (idx.row() != m_selectedRow)
-                selectTest(idx);
+            {
+                if (idx.row() > -1)
+                    selectTest(idx);
+                else
+                    closeTest();
+            }
             m_selectedRow = idx.row();
         }
     }
@@ -81,6 +86,14 @@ void ResultsWidget::selectTest(const QModelIndex &index)
         m_wgtResult = metFactory->visualize(ui->wgtResults, uid);
         ui->lblNoTest->setVisible(!m_wgtResult);
     }
+}
+
+void ResultsWidget::closeTest()
+{
+    if (m_wgtResult)
+        delete m_wgtResult;
+    m_wgtResult = nullptr;
+    ui->lblNoTest->setVisible(!m_wgtResult);
 }
 
 void ResultsWidget::splitterMoved(int pos, int index)

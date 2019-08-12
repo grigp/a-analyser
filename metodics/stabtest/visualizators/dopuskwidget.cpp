@@ -21,6 +21,7 @@ DopuskWidget::~DopuskWidget()
 
 void DopuskWidget::calculate(DopuskCalculator *calculator, const QString &testUid)
 {
+    Q_UNUSED(testUid);
     auto format = static_cast<AAnalyserApplication*>(QApplication::instance())->
             getFactorInfo(VectorFactorsDefines::KFRUid).format();
 

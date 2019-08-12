@@ -70,7 +70,7 @@ public:
         : m_sender(sender) {}
 
     virtual QString uid() const = 0; // {return QString("");}
-    virtual QString name() const = 0; // {return QString("");}
+//    virtual QString name() const = 0; // {return QString("");}  Непонятно, как быть с локализацией
 
     Driver* sender() {return m_sender;}
 
@@ -118,7 +118,7 @@ public:
     double d() const {return m_d;}
 
     QString uid() const override {return uid_StabDvcData;}
-    QString name() const override {return name_StabDvcData;}
+//    QString name() const override {return name_StabDvcData;} Непонятно, как быть с локализацией
 
 private:
   double m_x, m_y, m_z;
@@ -160,7 +160,7 @@ public:
     double time() const {return m_time;}
 
     QString uid() const override {return uid_JumpPlateDvcData;}
-    QString name() const override {return name_JumpPlateDvcData;}
+//    QString name() const override {return name_JumpPlateDvcData;}  Непонятно, как быть с локализацией
 
 private:
     int m_plate;
@@ -183,7 +183,7 @@ public:
     {}
 
     QString uid() const override {return uid_JumpPlateBlockData;}
-    QString name() const override {return name_JumpPlateBlockData;}
+//    QString name() const override {return name_JumpPlateBlockData;}
 
     int blockCnt() const {return m_blockCnt;}
 
@@ -243,7 +243,7 @@ public:
     virtual void stop() = 0;
 
     static QString uid() {return uid_CommonControl;}
-    static QString name() {return name_CommonControl;}
+//    static QString name() {return name_CommonControl;}   Непонятно, как быть с локализацией
 
     ~CommonControl() {}
 };
@@ -258,7 +258,7 @@ public:
     virtual void zeroing() = 0;
 
     static QString uid() {return uid_StabControl;}
-    static QString name() {return name_StabControl;}
+//    static QString name() {return name_StabControl;}         Непонятно, как быть с локализацией
 
     ~StabControl() {}
 };
@@ -272,7 +272,7 @@ public:
     virtual void calibrate(int chan) = 0;
 
     static QString uid() {return uid_DynControl;}
-    static QString name() {return name_DynControl;}
+//    static QString name() {return name_DynControl;}        Непонятно, как быть с локализацией
 
     ~DynControl() {}
 };
@@ -286,7 +286,7 @@ public:
     virtual void calibrate() = 0;
 
     static QString uid() {return uid_JumpPlateControl;}
-    static QString name() {return name_JumpPlateControl;}
+//    static QString name() {return name_JumpPlateControl;}          Непонятно, как быть с локализацией
 
     ~JumpPlateControl() {}
 };

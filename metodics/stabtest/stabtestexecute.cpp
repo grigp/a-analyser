@@ -199,6 +199,9 @@ void StabTestExecute::on_communicationError(const QString &drvName, const QStrin
 
 void StabTestExecute::zeroing()
 {
+//    throw 1;
+//    QLabel *lbl;   // Эмуляция сбоя
+//    delete lbl;
     if (m_stabControl)
         m_stabControl->zeroing();
 }

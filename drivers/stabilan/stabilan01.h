@@ -2,6 +2,7 @@
 #define STABILAN01_H
 
 #include <QObject>
+#include <QCoreApplication>
 #include <QThread>
 #include <QByteArray>
 
@@ -11,7 +12,7 @@
 
 namespace  {
     static const QString uid_stabilan01 = "{CEAD1669-1531-4B8E-9220-590C49BB310D}";
-    static const QString name_stabilan01 = "Стабилан - 01";
+    static const QString name_stabilan01 = QCoreApplication::tr("Стабилан - 01");
 }
 
 

@@ -15,5 +15,6 @@ JumpTestVisualize::~JumpTestVisualize()
 
 void JumpTestVisualize::setTest(const QString &testUid)
 {
+    Q_UNUSED(testUid);
 
 }

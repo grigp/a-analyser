@@ -19,12 +19,14 @@ JumpPlate::JumpPlate(QObject *parent)
 
 void JumpPlate::setParams(const DeviceProtocols::Ports port, const QJsonObject &params)
 {
+    Q_UNUSED(params);
     setPortName(port);
 
 }
 
 bool JumpPlate::editParams(QJsonObject &params)
 {
+    Q_UNUSED(params);
     JumpPlateParamsDialog dlg(static_cast<AAnalyserApplication*>(QApplication::instance())->mainWindow());
     if (dlg.exec() == QDialog::Accepted)
     {
@@ -126,13 +128,13 @@ void JumpPlate::assignByteFromDevice(quint8 b)
             case 0:     //! Флаг нажатия первой платформы
             {
                 if (m_countBytePack % 4 == 0)
-                    m_byte2 = b;
+                    m_byte0 = b;
                 else
                 if (m_countBytePack % 4 == 1)
                     m_byte1 = b;
                 else
                 if (m_countBytePack % 4 == 2)
-                    m_byte0 = b;
+                    m_byte2 = b;
                 else
                 {
                     m_conPlate1 = m_byte2 * 65536 + m_byte1 * 256 + m_byte0;
@@ -144,17 +146,16 @@ void JumpPlate::assignByteFromDevice(quint8 b)
             case 1:     //! Счетчик первой платформы
             {
                 if (m_countBytePack % 4 == 0)
-                    m_byte2 = b;
+                    m_byte0 = b;
                 else
                 if (m_countBytePack % 4 == 1)
                     m_byte1 = b;
                 else
                 if (m_countBytePack % 4 == 2)
-                    m_byte0 = b;
+                    m_byte2 = b;
                 else
                 {
-//                    m_counterPlate1 = m_byte2 * 16777216 + m_byte1 * 65536 + m_byte0 * 256 + b;
-                    m_counterPlate1 = b * 16777216 + m_byte0 * 65536 + m_byte1 * 256 + m_byte2;
+                    m_counterPlate1 = b * 16777216 + m_byte2 * 65536 + m_byte1 * 256 + m_byte0;
                     m_timePlate1 = m_counterPlate1 * m_conPlate1;
                 }
                 break;
@@ -162,13 +163,13 @@ void JumpPlate::assignByteFromDevice(quint8 b)
             case 2:      //! Флаг нажатия второй платформы
             {
                 if (m_countBytePack % 4 == 0)
-                    m_byte2 = b;
+                    m_byte0 = b;
                 else
                 if (m_countBytePack % 4 == 1)
                     m_byte1 = b;
                 else
                 if (m_countBytePack % 4 == 2)
-                    m_byte0 = b;
+                    m_byte2 = b;
                 else
                 {
                     m_conPlate2 = m_byte2 * 65536 + m_byte1 * 256 + m_byte0;
@@ -180,17 +181,16 @@ void JumpPlate::assignByteFromDevice(quint8 b)
             case 3:      //! Счетчик второй платформы
             {
                 if (m_countBytePack % 4 == 0)
-                    m_byte2 = b;
+                    m_byte0 = b;
                 else
                 if (m_countBytePack % 4 == 1)
                     m_byte1 = b;
                 else
                 if (m_countBytePack % 4 == 2)
-                    m_byte0 = b;
+                    m_byte2 = b;
                 else
                 {
-//                    m_counterPlate2 = m_byte2 * 16777216 + m_byte1 * 65536 + m_byte0 * 256 + b;
-                    m_counterPlate2 = b * 16777216 + m_byte0 * 65536 + m_byte1 * 256 + m_byte2;
+                    m_counterPlate2 = b * 16777216 + m_byte2 * 65536 + m_byte1 * 256 + m_byte0;
                     m_timePlate2 = m_counterPlate2 * m_conPlate2;
                 }
                 break;

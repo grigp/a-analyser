@@ -1,6 +1,10 @@
 #include "mainwindow.h"
-#include <QApplication>
+
 #include <aanalyserapplication.h>
+#include "exitcodes.h"
+
+#include <QApplication>
+#include <QDebug>
 
 int main(int argc, char *argv[])
 {

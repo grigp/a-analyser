@@ -80,7 +80,7 @@ void  SerialPort::DisconnectPort()
     if(m_nativePort.isOpen())
     {
         m_nativePort.close();
-        error_(m_SettingsPort.name + " >> Закрыт!");
+        error_(m_SettingsPort.name + " >> " + tr("Закрыт!"));
     }
 }
 

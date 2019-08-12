@@ -59,6 +59,7 @@ SignalData *ProbeResultData::getSignal(const QString &channelId) const
     foreach (auto *sig, m_signals)
         if (sig->channelId() == channelId)
             return sig;
+    return nullptr;
 }
 
 void ProbeResultData::addSignal(SignalData *signal)

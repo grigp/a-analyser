@@ -15,7 +15,6 @@ struct RatioFactorsUid
 {
     QString SUid;
     QString KFRUid;
-    RatioFactors() {}
 };
 
 RatioFactorsUid RFUid[4] = {{RatioProbesFactorsDefines::Probe2SUid, RatioProbesFactorsDefines::Probe2KFRUid},

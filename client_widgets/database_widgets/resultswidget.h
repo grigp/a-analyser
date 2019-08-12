@@ -54,6 +54,8 @@ private slots:
      */
     void selectTest(const QModelIndex &index);
 
+    void closeTest();
+
     void splitterMoved(int pos,int index);
 
     void onNewTests(const QModelIndex &parent, int first, int last);

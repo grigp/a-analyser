@@ -33,7 +33,7 @@ void PatientsModel::load()
 
         appendRow(QList<QStandardItem*>() << itemFIO << itemBorn << itemSex);
     }
-    setHorizontalHeaderLabels(QStringList() << "ФИО" << "Дата рождения" << "Пол");
+    setHorizontalHeaderLabels(QStringList() << tr("ФИО") << tr("Дата рождения") << tr("Пол"));
 
 }
 

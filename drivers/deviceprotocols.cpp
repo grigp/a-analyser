@@ -1,5 +1,6 @@
 #include "deviceprotocols.h"
 
+#include <QCoreApplication>
 #include <QDebug>
 
 namespace  {
@@ -18,7 +19,7 @@ QList<DeviceProtocols::Ports> portsEnum(const DeviceProtocols::Ports start,
 QString DeviceProtocols::portName(const DeviceProtocols::Ports port)
 {
     if (port == pcEmulation)
-        return "Эмуляция";
+        return QCoreApplication::tr("Эмуляция");
     else
     if (port == pcUsb)
         return "USB";

@@ -23,6 +23,7 @@ QRectF GridSKG::boundingRect() const
 
 void GridSKG::paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWidget *widget)
 {
+    Q_UNUSED(item);
     // Параметры построения
     m_width = widget->size().width();
     m_height = widget->size().height();

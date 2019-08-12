@@ -14,6 +14,8 @@
 #include "executewidget.h"
 #include "databaseresultwidget.h"
 #include "database.h"
+#include "exitcodes.h"
+#include "log.h"
 
 AAnalyserApplication::AAnalyserApplication(int &argc, char **argv)
     : QApplication(argc, argv)
@@ -22,7 +24,7 @@ AAnalyserApplication::AAnalyserApplication(int &argc, char **argv)
     , m_factors(new FactorsFactory(this))
 {
     setApplicationName("a-analyser");
-    setApplicationDisplayName("Физиологические исследования a-analyser");
+    setApplicationDisplayName(tr("Физиологические исследования a-analyser"));
     setOrganizationName("A-Med");
 
     QTimer::singleShot(100, [=]()
@@ -282,5 +284,34 @@ void AAnalyserApplication::registerGroup(const QString &uid, const QString &name
 {
     if (m_factors)
         m_factors->registerGroup(uid, name);
+}
+
+bool AAnalyserApplication::notify(QObject *re, QEvent *ev)
+{
+    try
+    {
+        return QApplication::notify(re, ev);
+    }
+    catch(QString &e)
+    {
+        QString s = EXIT_COMMENTS[EC_MAINLOOP_ERROR].arg(e).arg(re->objectName());
+        qDebug() << s;
+        log(s);
+        QTimer::singleShot(0, this, [this]()
+        {
+            exit(EC_MAINLOOP_ERROR);
+        });
+    }
+    catch(...)
+    {
+        QString s = EXIT_COMMENTS[EC_MAINLOOP_UNKNOWN_ERROR].arg(re->objectName());
+        qDebug() << s;
+        log(s);
+        QTimer::singleShot(0, this, [this]()
+        {
+            exit(EC_MAINLOOP_UNKNOWN_ERROR);
+        });
+    }
+    return false;
 }
 

@@ -103,9 +103,9 @@ public:
     void setProbeNum(const int probeNum) {m_probeNum = probeNum;}
 
 private:
-    QString m_description;
     int m_probeNum;
     QString m_channelId;
+    QString m_description;
 };
 
 }

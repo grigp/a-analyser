@@ -37,7 +37,7 @@ void TestsModel::load()
 
     foreach (auto uid, uidList)
         addTest(uid);
-    setHorizontalHeaderLabels(QStringList() << "Пациент" << "Методика" << "Проведено");
+    setHorizontalHeaderLabels(QStringList() << tr("Пациент") << tr("Методика") << tr("Проведено"));
 }
 
 void TestsModel::onNewTest(const QString &testUid)

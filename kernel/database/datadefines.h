@@ -6,6 +6,7 @@
 #include <QDate>
 #include <QStandardPaths>
 #include <QApplication>
+#include <QCoreApplication>
 #include <QJsonObject>
 
 /*!
@@ -24,8 +25,8 @@ enum Sex
 };
 
 static QMap<Sex, QString> SexToText{
-    std::pair<Sex, QString> (male, "муж")
-  , std::pair<Sex, QString> (female, "жен")
+    std::pair<Sex, QString> (male, QCoreApplication::tr("муж"))
+  , std::pair<Sex, QString> (female, QCoreApplication::tr("жен"))
 };
 
 /*!

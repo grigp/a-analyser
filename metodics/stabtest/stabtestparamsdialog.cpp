@@ -137,7 +137,7 @@ void StabTestParamsDialog::addProbe()
 {
     StabTestParams::ProbeParams pp;
 
-    pp.name = "Новая проба";
+    pp.name = tr("Новая проба");
     pp.autoEnd = false;
     pp.time = 20;
     pp.latentTime = 0;

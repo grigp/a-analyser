@@ -225,6 +225,10 @@ signals:
 
     void sendData(DeviceProtocols::DeviceData *data);
 
+protected:
+    //! Обработка исключений основного цикла программы
+    bool notify(QObject *, QEvent *) override;
+
 private:
     QMainWindow *m_mw;
     DataBase *m_database {nullptr};

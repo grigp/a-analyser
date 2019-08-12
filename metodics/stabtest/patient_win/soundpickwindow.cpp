@@ -17,7 +17,7 @@ SoundPickWindow::~SoundPickWindow()
 
 void SoundPickWindow::setDiap(const int diap)
 {
-
+    Q_UNUSED(diap);
 }
 
 void SoundPickWindow::setMarker(const double x, const double y)

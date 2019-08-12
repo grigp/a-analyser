@@ -2,12 +2,13 @@
 #define JUMPPLATE_H
 
 #include <QObject>
+#include <QCoreApplication>
 #include "driver.h"
 #include "deviceprotocols.h"
 
 namespace  {
     static const QString uid_jumpPlate = "{ACC7467D-6600-4808-B372-EDC2069EBF5E}";
-    static const QString name_jumpPlate = "Прыжковая платформа";
+    static const QString name_jumpPlate = QCoreApplication::tr("Прыжковая платформа");
 }
 
 /*!

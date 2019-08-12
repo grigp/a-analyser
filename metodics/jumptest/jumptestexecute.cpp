@@ -34,7 +34,7 @@ JumpTestExecute::~JumpTestExecute()
 
 void JumpTestExecute::setParams(const QJsonObject &params)
 {
-
+    Q_UNUSED(params);
 }
 
 void JumpTestExecute::start()
@@ -84,16 +84,22 @@ void JumpTestExecute::getData(DeviceProtocols::DeviceData *data)
 
         if (jpData->plate() == 1)
         {
+            ++m_plt1Count;
             ui->lblPlate1Flag->setText(JumpTestDefines::BusyValue.value(jpData->busy()));
-            ui->lblPlate1Time->setText(QString(tr("Время, сек") + " : %1").arg(jpData->time()));
-            ui->lblPlate1Height->setText(QString(tr("Высота прыжка, мм") + " : %1").arg(jpData->time()));
+            ui->lblPlate1Time->setText(QString(tr("Время, мс") + " : %1").arg(jpData->time()));
+            double h = (9.8 * pow(jpData->time() / 1000, 2)) / 8;
+            ui->lblPlate1Height->setText(QString(tr("Высота прыжка, м") + " : %1").arg(h));
+            ui->lblPlate1Count->setText(QString(tr("Кол-во") + " : %1").arg(m_plt1Count));
         }
         else
         if (jpData->plate() == 2)
         {
+            ++m_plt2Count;
             ui->lblPlate2Flag->setText(JumpTestDefines::BusyValue.value(jpData->busy()));
-            ui->lblPlate2Time->setText(QString(tr("Время, сек") + " : %1").arg(jpData->time()));
-            ui->lblPlate2Height->setText(QString(tr("Высота прыжка, мм") + " : %1").arg(jpData->time()));
+            ui->lblPlate2Time->setText(QString(tr("Время, мс") + " : %1").arg(jpData->time()));
+            double h = (9.8 * pow(jpData->time() / 1000, 2)) / 8;
+            ui->lblPlate2Height->setText(QString(tr("Высота прыжка, м") + " : %1").arg(h));
+            ui->lblPlate2Count->setText(QString(tr("Кол-во") + " : %1").arg(m_plt2Count));
         }
 
 //        ui->lblX->setText(QString("X = %1").arg(jpData->x(), 0, 'f', 2));

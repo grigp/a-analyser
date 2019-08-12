@@ -15,9 +15,10 @@ JumpTestParamsDialog::~JumpTestParamsDialog()
 
 void JumpTestParamsDialog::setParams(const QJsonObject &params)
 {
+    Q_UNUSED(params);
 }
 
 QJsonObject JumpTestParamsDialog::getParams()
 {
-
+    return QJsonObject();
 }

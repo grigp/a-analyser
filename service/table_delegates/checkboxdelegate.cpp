@@ -37,6 +37,8 @@ void CheckBoxDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opti
 
 QWidget *CheckBoxDelegate::createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
+    Q_UNUSED(option);
+    Q_UNUSED(index);
     auto *editor = new QCheckBox(parent);
     editor->setText("");
     return editor;
