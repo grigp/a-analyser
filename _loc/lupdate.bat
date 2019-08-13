@@ -1,0 +1,1 @@
+c:\qt\5.9\mingw53_32\bin\lupdate.exe ..\a-analyser.pro

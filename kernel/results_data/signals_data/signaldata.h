@@ -12,6 +12,7 @@ class SignalData
 {
 public:
     explicit SignalData();
+    virtual ~SignalData();
 
     /*!
      * \brief Виртуальная функция, возвращающая идентификатор канала

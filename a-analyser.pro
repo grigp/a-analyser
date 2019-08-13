@@ -22,6 +22,8 @@ OBJECTS_DIR = obj
 RCC_DIR = rcc
 UI_DIR = uic
 
+TRANSLATIONS += a-analyser_en_US.ts #a-analyser_de_DE.ts
+
 # The following define makes your compiler emit warnings if you use
 # any feature of Qt which has been marked as deprecated (the exact warnings
 # depend on your compiler). Please consult the documentation of the

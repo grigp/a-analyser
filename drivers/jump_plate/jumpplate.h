@@ -27,7 +27,7 @@ public:
     };
 
     static QString uid() {return uid_jumpPlate;}
-    static QString name() {return name_jumpPlate;}
+    static QString name() {return tr("Прыжковая платформа");} //name_jumpPlate;}  Не локализуется через константу
 
     /*!
      * \brief Перекрытые методы, возвращающие uid и name драйверов

@@ -7,7 +7,6 @@
         <file>images/ResultsRun.png</file>
         <file>images/MainIcon.png</file>
         <file>images/MainIcon1.png</file>
-        <file>metodics.json</file>
         <file>images/MethodsEdit.png</file>
         <file>images/add.png</file>
         <file>images/delete.png</file>
@@ -18,7 +17,6 @@
         <file>images/Save.png</file>
         <file>images/SaveNO.png</file>
         <file>images/SaveOK.png</file>
-        <file>connections.json</file>
         <file>images/Connects/Add.png</file>
         <file>images/Connects/Del.png</file>
         <file>images/Connects/Down.png</file>
@@ -33,5 +31,9 @@
         <file>images/Dynamic/Dyn3D.png</file>
         <file>images/Dynamic/DynAsBar.png</file>
         <file>images/Dynamic/DynAsGraph.png</file>
+        <file>pre_settings/connections.json</file>
+        <file>pre_settings/metodics.json</file>
+        <file>pre_settings/connections_en_US.json</file>
+        <file>pre_settings/metodics_en_US.json</file>
     </qresource>
 </RCC>

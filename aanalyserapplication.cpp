@@ -17,14 +17,15 @@
 #include "exitcodes.h"
 #include "log.h"
 
-AAnalyserApplication::AAnalyserApplication(int &argc, char **argv)
+AAnalyserApplication::AAnalyserApplication(int &argc, char **argv, const QString &languargeCode)
     : QApplication(argc, argv)
+    , m_languargeCode(languargeCode)
     , m_metodics(new MetodicsFactory(this))
     , m_drivers(new DriversFactory(this))
     , m_factors(new FactorsFactory(this))
 {
     setApplicationName("a-analyser");
-    setApplicationDisplayName(tr("Физиологические исследования a-analyser"));
+//    setApplicationDisplayName(tr("Физиологические исследования a-analyser")); Не переводится
     setOrganizationName("A-Med");
 
     QTimer::singleShot(100, [=]()
@@ -284,6 +285,16 @@ void AAnalyserApplication::registerGroup(const QString &uid, const QString &name
 {
     if (m_factors)
         m_factors->registerGroup(uid, name);
+}
+
+void AAnalyserApplication::setLanguargeCode(const QString &code)
+{
+    m_languargeCode = code;
+}
+
+QString AAnalyserApplication::languargeCode() const
+{
+    return m_languargeCode;
 }
 
 bool AAnalyserApplication::notify(QObject *re, QEvent *ev)

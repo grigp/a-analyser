@@ -1,5 +1,6 @@
 #include "metodicsfactory.h"
 
+#include "aanalyserapplication.h"
 #include "metodictemplate.h"
 #include "stabtesttemplate.h"
 #include "jumptesttemplate.h"
@@ -11,12 +12,16 @@
 #include <QUuid>
 #include <QJsonArray>
 #include <QJsonDocument>
+#include <QTimer>
 #include <QDebug>
 
 MetodicsFactory::MetodicsFactory(QObject *parent) : QObject(parent)
 {
-    assignTemplates();
-    assignMetodics();
+    QTimer::singleShot(0, [=]()
+    {
+        assignTemplates();
+        assignMetodics();
+    });
 }
 
 MetodicsFactory::~MetodicsFactory()
@@ -108,8 +113,15 @@ void MetodicsFactory::assignMetodics()
     //! Это позволяет не инсталить ни методики, ни базу данных, а создавать все в
     //! в процессе работы
     if (!QFile::exists(DataDefines::appDataPath() + "metodics.json"))
-        QFile::copy(":/metodics.json",
-                    DataDefines::appDataPath() + "metodics.json");
+    {
+        if (static_cast<AAnalyserApplication*>(QApplication::instance())->languargeCode() == DataDefines::LANG_CODE_RUS)
+            QFile::copy(":/pre_settings/metodics.json",
+                        DataDefines::appDataPath() + "metodics.json");
+        else
+            if (static_cast<AAnalyserApplication*>(QApplication::instance())->languargeCode() == DataDefines::LANG_CODE_ENGUSA)
+                QFile::copy(":/pre_settings/metodics_en_US.json",
+                            DataDefines::appDataPath() + "metodics.json");
+    }
 
     QFile fMet(DataDefines::appDataPath() + "metodics.json");
     fMet.setPermissions((((fMet.permissions() |= QFile::WriteOwner) |= QFile::WriteUser) |= QFile::WriteGroup) |= QFile::WriteOther);

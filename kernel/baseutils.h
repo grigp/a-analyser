@@ -13,6 +13,14 @@ namespace BaseUtils
  */
 QString getTimeBySecCount(const int secCnt, const bool isHour = false);
 
+/*!
+ * \brief Возвращает имя файла с данными для переводчика и строковый код языка
+ * \param fileName - имя файла с данными для переводчика
+ * \param langCode - строковый код языка
+ * \return true, если найден файл и false, если нет
+ */
+bool getTranslatorFileName(QString &fileName, QString &langCode);
+
 }
 
 

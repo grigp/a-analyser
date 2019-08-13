@@ -114,7 +114,7 @@
       <item>
        <widget class="QPushButton" name="btnUp">
         <property name="toolTip">
-         <string>Поывысить приоритет</string>
+         <string>Повысить приоритет</string>
         </property>
         <property name="text">
          <string/>

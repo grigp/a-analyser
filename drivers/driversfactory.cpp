@@ -1,5 +1,6 @@
 #include "driversfactory.h"
 
+#include "aanalyserapplication.h"
 #include "stabilan01.h"
 #include "jumpplate.h"
 #include "datadefines.h"
@@ -8,12 +9,16 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QJsonArray>
+#include <QTimer>
 #include <QDebug>
 
 DriversFactory::DriversFactory(QObject *parent) : QObject(parent)
 {
-    assignDrivers();
-    assignConnections();
+    QTimer::singleShot(0, [=]()
+    {
+        assignDrivers();
+        assignConnections();
+    });
 }
 
 QStringList DriversFactory::getDrivers() const
@@ -171,8 +176,15 @@ void DriversFactory::assignConnections()
     //! Это позволяет не инсталить подключения, а создавать все в
     //! в процессе работы
     if (!QFile::exists(DataDefines::appDataPath() + "connections.json"))
-        QFile::copy(":/connections.json",
-                    DataDefines::appDataPath() + "connections.json");
+    {
+        if (static_cast<AAnalyserApplication*>(QApplication::instance())->languargeCode() == DataDefines::LANG_CODE_RUS)
+            QFile::copy(":/pre_settings/connections.json",
+                        DataDefines::appDataPath() + "connections.json");
+        else
+            if (static_cast<AAnalyserApplication*>(QApplication::instance())->languargeCode() == DataDefines::LANG_CODE_ENGUSA)
+                QFile::copy(":/pre_settings/connections_en_US.json",
+                            DataDefines::appDataPath() + "connections.json");
+    }
 
     QFile fConnect(DataDefines::appDataPath() + "connections.json");
     fConnect.setPermissions((((fConnect.permissions() |= QFile::WriteOwner) |= QFile::WriteUser) |= QFile::WriteGroup) |= QFile::WriteOther);

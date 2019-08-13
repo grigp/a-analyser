@@ -1,5 +1,6 @@
 #include "baseutils.h"
 
+#include <QDir>
 
 QString BaseUtils::getTimeBySecCount(const int secCnt, const bool isHour)
 {
@@ -15,4 +16,22 @@ QString BaseUtils::getTimeBySecCount(const int secCnt, const bool isHour)
     }
     return QString::number(min).rightJustified(2, '0') + ":" +
            QString::number(sec).rightJustified(2, '0');
+}
+
+bool BaseUtils::getTranslatorFileName(QString &fileName, QString &langCode)
+{
+    QDir dir("translations");
+    QFileInfoList list = dir.entryInfoList();
+    foreach (auto fileInfo, list)
+        if (fileInfo.fileName() != "." && fileInfo.fileName() != "..")
+        {
+            if (fileInfo.fileName().contains("a-analyser_") &&
+                fileInfo.completeSuffix() == "qm")
+            {
+                fileName = fileInfo.absoluteFilePath();
+                langCode = fileInfo.baseName().remove("a-analyser_");
+                return true;
+            }
+        }
+    return false;
 }

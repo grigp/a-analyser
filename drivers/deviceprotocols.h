@@ -69,6 +69,8 @@ public:
     explicit DeviceData(Driver* sender)
         : m_sender(sender) {}
 
+    virtual ~DeviceData(){}
+
     virtual QString uid() const = 0; // {return QString("");}
 //    virtual QString name() const = 0; // {return QString("");}  Непонятно, как быть с локализацией
 

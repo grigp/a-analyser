@@ -80,13 +80,14 @@ void TestResultData::openTest(const QString &uid)
                 {
                     QByteArray chan;
                     DataProvider::getChannel(ci.uid, chan);
-                    SignalData *signal;
+                    SignalData *signal = nullptr;
                     if (ci.channelId == ChannelsDefines::chanStab)
                         signal = new Stabilogram(chan);
                     else
                     if (ci.channelId == ChannelsDefines::chanZ)
                         signal = new Ballistogram(chan);
-                    probe->addSignal(signal);
+                    if (signal)
+                        probe->addSignal(signal);
                 }
             }
         }

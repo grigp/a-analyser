@@ -86,18 +86,24 @@ struct ProbeInfo
 /*!
  * \brief возвращает путь к папке данных приложения
  */
-static QString appDataPath()
-{
-    QString path = QStandardPaths::locate(QStandardPaths::GenericDataLocation, QString(), QStandardPaths::LocateDirectory);
-    return path + QApplication::applicationName() + '/';
-}
+QString appDataPath();
 
 
-static QString dataBasesPath()
-{
-    return appDataPath() + "databases/";
-}
+QString dataBasesPath();
 
+
+///< ----------------------------------------------------------------
+///< Локализация
+
+static const QString LANG_CODE_RUS = "ru_RU";
+static const QString LANG_CODE_ENGUSA = "en_US";
+
+static QMap<QString, QString> LanguageName{
+    std::pair<QString, QString> (LANG_CODE_RUS, QCoreApplication::tr("Русский"))
+  , std::pair<QString, QString> (LANG_CODE_ENGUSA, QCoreApplication::tr("English (USA)"))
+};
+
+///< ----------------------------------------------------------------
 
 }
 

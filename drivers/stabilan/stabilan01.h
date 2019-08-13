@@ -35,7 +35,7 @@ public:
     };
 
     static QString uid() {return uid_stabilan01;}
-    static QString name() {return name_stabilan01;}
+    static QString name() {return tr("Стабилан - 01");} //name_stabilan01);} Не локализуется через константу
 
     /*!
      * \brief Перекрытые методы, возвращающие uid и name драйверов

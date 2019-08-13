@@ -7,6 +7,7 @@ HEADERS += \
 
 SOURCES += \
     $$PWD/dataprovider.cpp \
-    $$PWD/database.cpp
+    $$PWD/database.cpp \
+    $$PWD/datadefines.cpp
 
 FORMS += \

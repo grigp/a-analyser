@@ -5,6 +5,11 @@ SignalData::SignalData()
 
 }
 
+SignalData::~SignalData()
+{
+
+}
+
 double SignalData::maxValue() const
 {
     return m_maxValue;

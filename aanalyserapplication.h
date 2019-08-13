@@ -21,7 +21,7 @@ class AAnalyserApplication : public QApplication
 {
     Q_OBJECT
 public:
-    AAnalyserApplication(int &argc, char **argv);
+    AAnalyserApplication(int &argc, char **argv, const QString &languargeCode);
     ~AAnalyserApplication();
 
     QMainWindow* mainWindow() const;
@@ -208,8 +208,18 @@ public:
      */
     void registerGroup(const QString &uid, const QString &name);
 
-
     ///<-----------------------------------------------------------------------------
+
+    /*!
+     * \brief Запоминает код установленной локализации
+     * \param code - код установленного языка
+     */
+    void setLanguargeCode(const QString &code);
+
+    /*!
+     * \brief Возвращает код установленной локализации
+     */
+    QString languargeCode() const;
 
 signals:
     void dbConnected();
@@ -239,6 +249,8 @@ private:
     QString m_patientUid = "";  ///< uid выбранного пациента
     QString m_metodicUid = "";  ///< uid выбранной методики
     QString m_testUid = "";     ///< uid выбранного теста
+
+    QString m_languargeCode = DataDefines::LANG_CODE_RUS;
 };
 
 #endif // AANALYSERAPPLICATION_H
