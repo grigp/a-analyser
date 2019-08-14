@@ -107,3 +107,8 @@ void Stabilogram::toByteArray(QByteArray &data) const
     for (int i = 0; i < size(); ++i)
         stream << m_data.at(i).x << m_data.at(i).y;
 }
+
+void Stabilogram::clear()
+{
+    m_data.clear();
+}

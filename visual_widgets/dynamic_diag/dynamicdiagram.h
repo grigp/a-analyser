@@ -70,6 +70,9 @@ public:
     QColor diagColor() const;
     void setDiagColor(const QColor &color);
 
+    QColor selectItemColor() const;
+    void setSelectItemColor(const QColor &color);
+
     QColor titleColor() const;
     void setTitleColor(const QColor &color);
 
@@ -85,6 +88,7 @@ public:
 
 protected:
     void paintEvent(QPaintEvent *event) override;
+    void mousePressEvent(QMouseEvent *event) override;
 
 private:
     Ui::DynamicDiagram *ui;
@@ -119,7 +123,11 @@ private:
 
     QColor m_backgroundColor {Qt::white};
     QColor m_diagColor {Qt::darkCyan};
+    QColor m_selectItemColor {QColor(0, 194, 194)};
     QColor m_titleColor {Qt::black};
+
+    double m_sizeH {0};
+    int m_selectItem {-1};   ///< Выбранный элемент
 
     QList<DiagItem*> m_items;
 };

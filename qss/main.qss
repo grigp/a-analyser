@@ -18,10 +18,20 @@ QFrame#frTitle
     background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 rgb(1, 59, 86), stop: 0.5 rgb(2, 112, 164), stop: 1 rgb(1, 59, 86));
 }
 
+QLabel
+{
+    font-size: 11pt;
+}
+
 QLabel#lblTitle
 {
     font-size: 11pt;
     color: rgb(255, 255, 255);
+}
+
+QComboBox
+{
+    font-size: 11pt;
 }
 
 QTreeView

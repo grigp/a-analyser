@@ -2,6 +2,7 @@
 #include "ui_dynamicdiagram.h"
 
 #include <QPainter>
+#include <QMouseEvent>
 #include <QDebug>
 
 namespace  {
@@ -77,6 +78,16 @@ void DynamicDiagram::setDiagColor(const QColor &color)
     update();
 }
 
+QColor DynamicDiagram::selectItemColor() const
+{
+    return m_selectItemColor;
+}
+
+void DynamicDiagram::setSelectItemColor(const QColor &color)
+{
+    m_selectItemColor = color;
+}
+
 QColor DynamicDiagram::titleColor() const
 {
     return m_titleColor;
@@ -130,7 +141,7 @@ void DynamicDiagram::paintEvent(QPaintEvent *event)
     double min = 0;
     double max = 0;
     computeDiap(min, max);
-    double sizeH = (geometry().width() - 3 - 2 * AxisSpace) / (m_items.size() + 1);
+    m_sizeH = (geometry().width() - 3 - 2 * AxisSpace) / (m_items.size() + 1);
     double prop = 0;
     if (max > min)
         prop = (geometry().height() - AxisSpace - TitleHeight - 3) / (max - min);
@@ -167,12 +178,12 @@ void DynamicDiagram::paintEvent(QPaintEvent *event)
     int oy = -1;
     for (int i = 0; i < m_items.size(); ++i)
     {
-        int xv = AxisSpace + (i + 1) * sizeH;
+        int xv = AxisSpace + (i + 1) * m_sizeH;
         int yv = geometry().height() - AxisSpace - (m_items.at(i)->value() - min) * prop;
         if (m_kind == KindBar)
         {
-            int x = xv - sizeH / 10;
-            int w = sizeH / 5;
+            int x = xv - m_sizeH / 10;
+            int w = m_sizeH / 5;
             int y = zeroY;
             int h = 0;
             if (m_items.at(i)->value() > 0)
@@ -185,12 +196,15 @@ void DynamicDiagram::paintEvent(QPaintEvent *event)
                 y = zeroY;
                 h = yv - y;
             }
-            painter.setBrush(QBrush(m_diagColor, Qt::SolidPattern));
+            QColor barColor = m_diagColor;
+            if (i == m_selectItem)
+                barColor = m_selectItemColor;
+            painter.setBrush(QBrush(barColor, Qt::SolidPattern));
             painter.setPen(QPen(m_titleColor, 1, Qt::SolidLine, Qt::FlatCap));
             painter.drawRect(x, y, w, h);
             if (m_volume == Volume3D)
             {
-                auto dk = getDarkColor(m_diagColor);
+                auto dk = getDarkColor(barColor);
                 painter.setBrush(QBrush(dk, Qt::SolidPattern));
                 QPoint ptTop[4] = {
                     QPoint(x, y),
@@ -238,16 +252,39 @@ void DynamicDiagram::paintEvent(QPaintEvent *event)
             painter.setPen(QPen(m_titleColor, 1, Qt::DotLine, Qt::FlatCap));
             painter.drawLine(xv, geometry().height() - AxisSpace,
                              xv, geometry().height() - AxisSpace - (max - min) * prop);
+
+            if (i == m_selectItem)
+            {
+                painter.setPen(QPen(m_selectItemColor, 3, Qt::SolidLine, Qt::FlatCap));
+                painter.drawLine(xv, geometry().height() - AxisSpace,
+                                 xv, geometry().height() - AxisSpace - (max - min) * prop);
+            }
+
             ox = xv;
             oy = yv;
         }
         QFontMetrics fm(painter.font());
         int fw = fm.width(m_items.at(i)->name());
         int fh = fm.height();
+        painter.setPen(QPen(m_titleColor, 1, Qt::SolidLine, Qt::FlatCap));
         painter.drawText(xv - fw / 2, geometry().height() - AxisSpace + fh, m_items.at(i)->name());
     }
 
     painter.restore();
+}
+
+void DynamicDiagram::mousePressEvent(QMouseEvent *event)
+{
+    //! Выделение элемента
+    int idx = (event->x() + m_sizeH / 2 - AxisSpace) / m_sizeH - 1;
+    if (idx < 0)
+        idx = 0;
+    if (idx >= m_items.size())
+        idx = m_items.size() - 1;
+    m_selectItem = idx;
+    update();
+
+    QWidget::mousePressEvent(event);
 }
 
 void DynamicDiagram::computeDiap(double &min, double &max)

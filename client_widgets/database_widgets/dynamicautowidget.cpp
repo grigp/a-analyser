@@ -22,6 +22,9 @@ DynamicAutoWidget::DynamicAutoWidget(QWidget *parent) :
     connect(static_cast<AAnalyserApplication*>(QApplication::instance()),
             &AAnalyserApplication::selectMetodic,
             this, &DynamicAutoWidget::on_selectMetodic);
+    connect(static_cast<AAnalyserApplication*>(QApplication::instance()),
+            &AAnalyserApplication::selectTest,
+            this, &DynamicAutoWidget::on_selectTest);
 }
 
 DynamicAutoWidget::~DynamicAutoWidget()
@@ -48,6 +51,7 @@ bool DynamicAutoWidget::eventFilter(QObject *obj, QEvent *event)
                 showGraph(ui->tvFactors->selectionModel()->currentIndex().row());
         }
     }
+
     return false;
 }
 
@@ -67,6 +71,13 @@ void DynamicAutoWidget::on_selectMetodic(const QString &metodicUid)
         m_selectedMetodicUid = metodicUid;
         buildDynamic();
     }
+}
+
+void DynamicAutoWidget::on_selectTest(const QString &testUid)
+{
+    Q_UNUSED(testUid);
+    if (m_selectedPatientUid != "" && m_selectedMetodicUid != "")
+        buildDynamic();
 }
 
 void DynamicAutoWidget::selectFactor(const QModelIndex index)

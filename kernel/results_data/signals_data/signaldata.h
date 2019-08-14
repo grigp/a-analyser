@@ -69,6 +69,11 @@ public:
      */
     virtual void toByteArray(QByteArray &data) const = 0;
 
+    /*!
+     * \brief Очищает данные
+     */
+    virtual void clear() = 0;
+
 protected:
     double m_minValue {0};
     double m_maxValue {0};

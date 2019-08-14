@@ -78,13 +78,14 @@ void ResultsWidget::selectTest(const QModelIndex &index)
     {
         auto uid = m_mdlTest->index(index.row(), TestsModel::ColPatient, index.parent()).
                 data(TestsModel::TestUidRole).toString();
-        static_cast<AAnalyserApplication*>(QApplication::instance())->doSelectTest(uid);
 
         MetodicsFactory *metFactory = static_cast<AAnalyserApplication*>(QApplication::instance())->getMetodics();
         if (m_wgtResult)
             delete m_wgtResult;
         m_wgtResult = metFactory->visualize(ui->wgtResults, uid);
         ui->lblNoTest->setVisible(!m_wgtResult);
+
+        static_cast<AAnalyserApplication*>(QApplication::instance())->doSelectTest(uid);
     }
 }
 

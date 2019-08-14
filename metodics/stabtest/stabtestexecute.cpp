@@ -161,23 +161,34 @@ void StabTestExecute::getData(DeviceProtocols::DeviceData *data)
 
         if (m_isRecording)
         {
-            SignalsDefines::StabRec rec(std::make_tuple(stabData->x(), stabData->y()));
-            m_stb->addValue(rec);
-            m_z->addValue(stabData->x() + stabData->y());
+            //! Запись, если не задержка привыкания
+            if (m_recCount >= probeParams().latentTime * m_frequency)
+            {
+                SignalsDefines::StabRec rec(std::make_tuple(stabData->x(), stabData->y()));
+                m_stb->addValue(rec);
+                m_z->addValue(stabData->z());
+            }
 
             ++m_recCount;
+            //! Вывод времени теста и прогресса
             if (probeParams().autoEnd)
             {
-                ui->lblRecLen->setText(BaseUtils::getTimeBySecCount(m_recCount / m_frequency) + " / " +
-                                       BaseUtils::getTimeBySecCount(probeParams().time));
-                double rc = m_recCount;
+                double rc = m_recCount - probeParams().latentTime * m_frequency;
+                if (rc < 0)
+                    rc = 0;
+                if (m_recCount < probeParams().latentTime * m_frequency)
+                    ui->lblRecLen->setText(tr("Задержка привыкания"));
+                else
+                    ui->lblRecLen->setText(BaseUtils::getTimeBySecCount(rc / m_frequency) + " / " +
+                                           BaseUtils::getTimeBySecCount(probeParams().time));
                 double mrc = probeParams().time * m_frequency;
                 ui->pbRec->setValue(rc / mrc * 100);
             }
             else
                 ui->lblRecLen->setText(BaseUtils::getTimeBySecCount(m_recCount / m_frequency));
 
-            if (probeParams().autoEnd && (m_recCount >= probeParams().time * m_frequency))
+            //! Смена пробы и окончание
+            if (probeParams().autoEnd && (m_recCount >= (probeParams().time + probeParams().latentTime) * m_frequency))
             {
                 //! Следующая проба
                 nextProbe();
@@ -215,6 +226,14 @@ void StabTestExecute::calibrate()
 void StabTestExecute::recording()
 {
     m_isRecording = ! m_isRecording;
+
+    ui->pbRec->setValue(0);
+    ui->lblRecLen->setText("00:00");
+
+    ui->btnZeroing->setEnabled(!m_isRecording);
+    ui->btnCalibrate->setEnabled(!m_isRecording);
+    ui->frScale->setEnabled(!m_isRecording);
+
     if (m_isRecording)
     {
         if (probeParams().autoEnd)
@@ -263,11 +282,19 @@ void StabTestExecute::initRecSignals()
     ///< Запись данных в пробе
     if (m_probe < m_params.size())
     {
-        m_trd->newProbe(probeParams().name);
-        m_stb = new Stabilogram(ChannelsDefines::chanStab, m_frequency);
-        m_trd->addSignal(m_stb);
-        m_z = new Ballistogram(ChannelsDefines::chanZ, m_frequency);
-        m_trd->addSignal(m_z);
+        if (m_probe == m_trd->probesCount())   //! Новая проба - создать пробу и сигналы
+        {
+            m_trd->newProbe(probeParams().name);
+            m_stb = new Stabilogram(ChannelsDefines::chanStab, m_frequency);
+            m_trd->addSignal(m_stb);
+            m_z = new Ballistogram(ChannelsDefines::chanZ, m_frequency);
+            m_trd->addSignal(m_z);
+        }
+        else
+        {                               //! Проба была прервана - очистить сигналы
+            m_stb->clear();
+            m_z->clear();
+        }
     }
 }
 

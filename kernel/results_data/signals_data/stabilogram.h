@@ -71,6 +71,11 @@ public:
      */
     void toByteArray(QByteArray &data) const override;
 
+    /*!
+     * \brief Очищает данные
+     */
+    void clear() override;
+
 private:
     QString m_channelId;
     int m_frequency;

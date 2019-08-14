@@ -5,6 +5,8 @@
 
 #include <QJsonArray>
 #include <QMessageBox>
+#include <QFile>
+#include <QSettings>
 #include <QDebug>
 
 namespace
@@ -28,6 +30,9 @@ StabTestParamsDialog::StabTestParamsDialog(QWidget *parent) :
   , m_mdlProbes(new QStandardItemModel(this))
 {
     ui->setupUi(this);
+    initUi();
+    assignAccessMode();
+
     ui->lvProbes->setModel(m_mdlProbes);
     ui->cbStimul->addItems(QStringList() << tr("нет") << tr("Цветные круги") << tr("Звуковые сигналы") << tr("Мишень"));
     ui->cbScale->addItems(QStringList() << "1" << "2" << "4" << "8" << "16" << "32" << "64" << "128");
@@ -243,4 +248,29 @@ void StabTestParamsDialog::showProbeParam()
         ui->cbZeroing->setChecked(metParams.probes.at(m_curProbe).zeroingEnabled);
         ui->cbScale->setCurrentIndex(metParams.probes.at(m_curProbe).scale);
     }
+}
+
+void StabTestParamsDialog::initUi()
+{
+    QFile style( ":/qss/main.qss" );
+    style.open( QFile::ReadOnly );
+    QString stlDetail(style.readAll() );
+    setStyleSheet(stlDetail);
+}
+
+void StabTestParamsDialog::assignAccessMode()
+{
+    // Полный доступ: HKCU/Software/A-Med/a-analyser -> Параметр "Mode" -> значение "root"
+    QSettings set(QApplication::instance()->organizationName(),
+                  QApplication::instance()->applicationName());
+    auto rootMode = (set.value("Mode").toString() == "root");
+
+    ui->btnAddProbe->setVisible(rootMode);
+    ui->btnDeleteProbe->setVisible(rootMode);
+    ui->frAutoEnd->setVisible(rootMode);
+    ui->frStimul->setVisible(rootMode);
+    ui->frZeroing->setVisible(rootMode);
+    ui->frScale->setVisible(rootMode);
+    ui->cbConditions->setVisible(rootMode);
+    ui->lblCondition->setVisible(rootMode);
 }

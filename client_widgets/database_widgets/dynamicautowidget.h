@@ -28,10 +28,10 @@ public:
 protected:
     bool eventFilter(QObject *obj, QEvent *event);
 
-
 private slots:
     void on_selectPatient(const QString &patientUid);
     void on_selectMetodic(const QString &metodicUid);
+    void on_selectTest(const QString &testUid);
 
     void selectFactor(const QModelIndex index);
 

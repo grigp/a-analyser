@@ -55,6 +55,13 @@ private:
 
     void showProbeParam();
 
+    void initUi();
+
+    /*!
+     * \brief Настройка режима доступа
+     */
+    void assignAccessMode();
+
     int m_curProbe = -1;
     QStandardItemModel *m_mdlProbes {nullptr};
 };

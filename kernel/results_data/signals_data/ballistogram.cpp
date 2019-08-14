@@ -98,3 +98,8 @@ void Ballistogram::toByteArray(QByteArray &data) const
     for (int i = 0; i < size(); ++i)
         stream << m_data.at(i);
 }
+
+void Ballistogram::clear()
+{
+    m_data.clear();
+}
