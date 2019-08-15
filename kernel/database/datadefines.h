@@ -84,11 +84,18 @@ struct ProbeInfo
 };
 
 /*!
- * \brief возвращает путь к папке данных приложения
+ * \brief возвращает путь к папке данных для всех приложений a-analyser
  */
-QString appDataPath();
+QString aanalyserDataPath();
 
+/*!
+ * \brief возвращает путь к папке данных копии приложения
+ */
+QString appCopyPath();
 
+/*!
+ * \brief возвращает путь к папке с базой данных
+ */
 QString dataBasesPath();
 
 

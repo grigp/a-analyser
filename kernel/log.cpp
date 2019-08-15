@@ -14,10 +14,10 @@ static const QString LogFileName = "events.log";
 
 void log(const QString &str)
 {
-    QDir dir(DataDefines::appDataPath() + "log/");
+    QDir dir(DataDefines::appCopyPath() + "log/");
     if (!dir.exists())
-        dir.mkpath(DataDefines::appDataPath() + "log/");
-    QString fn = DataDefines::appDataPath() + "log/" + LogFileName;
+        dir.mkpath(DataDefines::appCopyPath() + "log/");
+    QString fn = DataDefines::appCopyPath() + "log/" + LogFileName;
     QFile fLog(fn);
     if (fLog.open(QIODevice::Append | QIODevice::Text))
     {

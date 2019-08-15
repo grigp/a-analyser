@@ -241,6 +241,8 @@ protected:
 
 private:
     QMainWindow *m_mw;
+    QString m_languargeCode = DataDefines::LANG_CODE_RUS;
+
     DataBase *m_database {nullptr};
     MetodicsFactory *m_metodics {nullptr};
     DriversFactory *m_drivers {nullptr};
@@ -250,7 +252,6 @@ private:
     QString m_metodicUid = "";  ///< uid выбранной методики
     QString m_testUid = "";     ///< uid выбранного теста
 
-    QString m_languargeCode = DataDefines::LANG_CODE_RUS;
 };
 
 #endif // AANALYSERAPPLICATION_H

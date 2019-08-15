@@ -66,6 +66,13 @@ private:
     void assignMetodics();
     void saveMetodics();
 
+    /*!
+     * \brief Добавляет новые методики из файла предопределенных в файл методик
+     * \param fnPreDefMetodics - имя ресурса с предопределенными методиками
+     * \param fnMetodics - имя файла методик
+     */
+    void appendNewMetodic(const QString &fnPreDefMetodics, const QString &fnMetodics);
+
     int getMetodicIndexByUid(const QString &uid) const;
 
     MetodicTemplate *getMetodicTemplate(const QString &metUid) const;

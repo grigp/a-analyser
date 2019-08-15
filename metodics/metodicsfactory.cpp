@@ -113,19 +113,19 @@ void MetodicsFactory::assignMetodics()
     //! после чего читаем и редактируем уже с диска.
     //! Это позволяет не инсталить ни методики, ни базу данных, а создавать все в
     //! в процессе работы
-    if (!QFile::exists(DataDefines::appDataPath() + "metodics.json"))
-    {
-        QString resName = AAnalyserDefines::PresetsMetodicsFileName;
-        if (static_cast<AAnalyserApplication*>(QApplication::instance())->languargeCode() == DataDefines::LANG_CODE_RUS)
-            QFile::copy(":/pre_settings/" + resName + ".json",
-                        DataDefines::appDataPath() + "metodics.json");
-        else
-            if (static_cast<AAnalyserApplication*>(QApplication::instance())->languargeCode() == DataDefines::LANG_CODE_ENGUSA)
-                QFile::copy(":/pre_settings/" + resName + "_en_US.json",
-                            DataDefines::appDataPath() + "metodics.json");
-    }
+    QDir dir(DataDefines::appCopyPath());
+    if (!dir.exists())
+        dir.mkpath(DataDefines::appCopyPath());
+    QString resName = ":/pre_settings/" + AAnalyserDefines::PresetsMetodicsFileName + ".json";
+    if (static_cast<AAnalyserApplication*>(QApplication::instance())->languargeCode() == DataDefines::LANG_CODE_ENGUSA)
+        resName = ":/pre_settings/" + AAnalyserDefines::PresetsMetodicsFileName + "_en_US.json";
 
-    QFile fMet(DataDefines::appDataPath() + "metodics.json");
+    if (!QFile::exists(DataDefines::appCopyPath() + "metodics.json"))
+        QFile::copy(resName, DataDefines::appCopyPath() + "metodics.json");
+    else
+        appendNewMetodic(resName, DataDefines::appCopyPath() + "metodics.json");
+
+    QFile fMet(DataDefines::appCopyPath() + "metodics.json");
     fMet.setPermissions((((fMet.permissions() |= QFile::WriteOwner) |= QFile::WriteUser) |= QFile::WriteGroup) |= QFile::WriteOther);
     if (fMet.open(QIODevice::ReadOnly | QIODevice::Text))
     {
@@ -150,7 +150,7 @@ void MetodicsFactory::assignMetodics()
 
 void MetodicsFactory::saveMetodics()
 {
-    QDir dir = DataDefines::appDataPath();
+    QDir dir = DataDefines::appCopyPath();
     QFile fMet(dir.absoluteFilePath("metodics.json"));
     if (fMet.open(QIODevice::WriteOnly | QIODevice::Text))
     {
@@ -171,6 +171,12 @@ void MetodicsFactory::saveMetodics()
         QByteArray ba = doc.toJson();
         fMet.write(ba);
     }
+}
+
+void MetodicsFactory::appendNewMetodic(const QString &fnPreDefMetodics, const QString &fnMetodics)
+{
+    Q_UNUSED(fnPreDefMetodics);
+    Q_UNUSED(fnMetodics);
 }
 
 int MetodicsFactory::getMetodicIndexByUid(const QString &uid) const

@@ -6,6 +6,7 @@
 #include "datadefines.h"
 
 #include <QFile>
+#include <QDir>
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QJsonArray>
@@ -175,18 +176,21 @@ void DriversFactory::assignConnections()
     //! после чего читаем и редактируем уже с диска.
     //! Это позволяет не инсталить подключения, а создавать все в
     //! в процессе работы
-    if (!QFile::exists(DataDefines::appDataPath() + "connections.json"))
+    if (!QFile::exists(DataDefines::appCopyPath() + "connections.json"))
     {
+        QDir dir(DataDefines::appCopyPath());
+        if (!dir.exists())
+            dir.mkpath(DataDefines::appCopyPath());
         if (static_cast<AAnalyserApplication*>(QApplication::instance())->languargeCode() == DataDefines::LANG_CODE_RUS)
             QFile::copy(":/pre_settings/connections.json",
-                        DataDefines::appDataPath() + "connections.json");
+                        DataDefines::appCopyPath() + "connections.json");
         else
             if (static_cast<AAnalyserApplication*>(QApplication::instance())->languargeCode() == DataDefines::LANG_CODE_ENGUSA)
                 QFile::copy(":/pre_settings/connections_en_US.json",
-                            DataDefines::appDataPath() + "connections.json");
+                            DataDefines::appCopyPath() + "connections.json");
     }
 
-    QFile fConnect(DataDefines::appDataPath() + "connections.json");
+    QFile fConnect(DataDefines::appCopyPath() + "connections.json");
     fConnect.setPermissions((((fConnect.permissions() |= QFile::WriteOwner) |= QFile::WriteUser) |= QFile::WriteGroup) |= QFile::WriteOther);
     if (fConnect.open(QIODevice::ReadOnly | QIODevice::Text))
     {
@@ -213,7 +217,7 @@ void DriversFactory::assignConnections()
 
 void DriversFactory::saveConnections()
 {
-    QFile fConnect(DataDefines::appDataPath() + "connections.json");
+    QFile fConnect(DataDefines::appCopyPath() + "connections.json");
     if (fConnect.open(QIODevice::WriteOnly | QIODevice::Text))
     {
         QJsonArray connections;
