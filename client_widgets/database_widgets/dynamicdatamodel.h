@@ -32,16 +32,18 @@ public:
         , ProbeNumRole                      ///< Роль для доступа к номеру пробы. int. Колонка ColFactor.
         , ChannelIdRole                     ///< Роль для доступа к идентификатору канала. QString. Колонка ColFactor.
         , DateTimeRole                      ///< Роль для доступа к дате и времени обследования. QDateTime. Итемы заголовков. row() == 0.
+        , TestUidRole                       ///< Роль для доступа к uid обследований. QString. Итемы заголовков. row() == 0.
         , ValueRole                         ///< Роль для доступа к значению показателя. double. Колонки, начиная с ColTestsFirst.
     };
 
     /*!
      * \brief Добавляет колонку с показателями для теста
      * \param factors - колонка с показателями
+     * \param testUid - uid теста
      * \param dt - дата и время теста
      */
     void addTestData(const QList<FactorsDefines::FactorValueAdvanced> &factors,
-                     const QDateTime &dt);
+                     const QString &testUid, const QDateTime &dt);
 
 private:
     int getColumnNumberByDateTimeTest(const QDateTime &dt) const;

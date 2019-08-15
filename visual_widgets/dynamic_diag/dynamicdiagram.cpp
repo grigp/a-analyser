@@ -248,16 +248,32 @@ void DynamicDiagram::paintEvent(QPaintEvent *event)
                     painter.drawPolygon(points, 4);
                 }
             }
-            //! Ветрикальный отстчет
+            //! Вертикальный отстчет
             painter.setPen(QPen(m_titleColor, 1, Qt::DotLine, Qt::FlatCap));
             painter.drawLine(xv, geometry().height() - AxisSpace,
                              xv, geometry().height() - AxisSpace - (max - min) * prop);
 
             if (i == m_selectItem)
             {
-                painter.setPen(QPen(m_selectItemColor, 3, Qt::SolidLine, Qt::FlatCap));
-                painter.drawLine(xv, geometry().height() - AxisSpace,
-                                 xv, geometry().height() - AxisSpace - (max - min) * prop);
+                if (m_volume == Volume2D)
+                {
+                    painter.setPen(QPen(m_selectItemColor, 3, Qt::SolidLine, Qt::FlatCap));
+                    painter.drawLine(xv, geometry().height() - AxisSpace,
+                                     xv, geometry().height() - AxisSpace - (max - min) * prop);
+                }
+                else
+                if (m_volume == Volume3D)
+                {
+                    painter.setBrush(QBrush(m_selectItemColor, Qt::SolidPattern));
+                    painter.setPen(QPen(m_titleColor, 1, Qt::SolidLine, Qt::FlatCap));
+                    QPoint points[4] = {
+                        QPoint(xv, geometry().height() - AxisSpace),
+                        QPoint(xv, geometry().height() - AxisSpace - (max - min) * prop),
+                        QPoint(xv + 10, geometry().height() - AxisSpace - (max - min) * prop - 10),
+                        QPoint(xv + 10, geometry().height() - AxisSpace - 10)
+                    };
+                    painter.drawPolygon(points, 4);
+                }
             }
 
             ox = xv;
@@ -282,6 +298,7 @@ void DynamicDiagram::mousePressEvent(QMouseEvent *event)
     if (idx >= m_items.size())
         idx = m_items.size() - 1;
     m_selectItem = idx;
+    emit selectItem(m_selectItem);
     update();
 
     QWidget::mousePressEvent(event);

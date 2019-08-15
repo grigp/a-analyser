@@ -10,7 +10,7 @@ DynamicDataModel::DynamicDataModel(QObject *parent)
 }
 
 void DynamicDataModel::addTestData(const QList<FactorsDefines::FactorValueAdvanced> &factors,
-                                   const QDateTime &dt)
+                                   const QString &testUid, const QDateTime &dt)
 {
     //! Для нулквой колонки - названия показателей
     if (columnCount() == 0)
@@ -49,6 +49,7 @@ void DynamicDataModel::addTestData(const QList<FactorsDefines::FactorValueAdvanc
     auto *headerItem = new QStandardItem(dt.toString("dd.MM.yyyy hh:mm"));
     headerItem->setEditable(false);
     headerItem->setData(dt, DateTimeRole);
+    headerItem->setData(testUid, TestUidRole);
 
     auto colNum = getColumnNumberByDateTimeTest(dt);
     if (colNum == -1)

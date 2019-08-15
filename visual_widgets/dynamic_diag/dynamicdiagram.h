@@ -86,6 +86,13 @@ public:
 
     void clear();
 
+signals:
+    /*!
+     * \brief Возникает при выборе итема мышкой
+     * \param idx - индекс выбранного итема
+     */
+    void selectItem(const int idx);
+
 protected:
     void paintEvent(QPaintEvent *event) override;
     void mousePressEvent(QMouseEvent *event) override;

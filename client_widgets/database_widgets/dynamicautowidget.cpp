@@ -25,6 +25,11 @@ DynamicAutoWidget::DynamicAutoWidget(QWidget *parent) :
     connect(static_cast<AAnalyserApplication*>(QApplication::instance()),
             &AAnalyserApplication::selectTest,
             this, &DynamicAutoWidget::on_selectTest);
+    connect(static_cast<AAnalyserApplication*>(QApplication::instance()),
+            &AAnalyserApplication::removeTest,
+            this, &DynamicAutoWidget::on_removeTest);
+
+    connect(ui->wgtDynamic, &DynamicDiagram::selectItem, this, &DynamicAutoWidget::on_selectItem);
 }
 
 DynamicAutoWidget::~DynamicAutoWidget()
@@ -75,8 +80,15 @@ void DynamicAutoWidget::on_selectMetodic(const QString &metodicUid)
 
 void DynamicAutoWidget::on_selectTest(const QString &testUid)
 {
-    Q_UNUSED(testUid);
-    if (m_selectedPatientUid != "" && m_selectedMetodicUid != "")
+    if (!m_tests.contains(testUid) &&        ///< Тест не должен участвовать в построении текущей динамики
+            m_selectedPatientUid != "" && m_selectedMetodicUid != "")
+        buildDynamic();
+}
+
+void DynamicAutoWidget::on_removeTest(const QString &testUid)
+{
+    if (m_tests.contains(testUid) &&        ///< Тест должен участвовать в построении текущей динамики
+            m_selectedPatientUid != "" && m_selectedMetodicUid != "")
         buildDynamic();
 }
 
@@ -114,10 +126,20 @@ void DynamicAutoWidget::dynamic3D(bool pressed)
     }
 }
 
+void DynamicAutoWidget::on_selectItem(const int idx)
+{
+    if (idx >= 0 && idx < m_mdlDynamic->columnCount() - 1)
+    {
+        auto testUid = m_mdlDynamic->headerData(idx + 1, Qt::Horizontal, DynamicDataModel::TestUidRole).toString();
+        static_cast<AAnalyserApplication*>(QApplication::instance())->doSelectTest(testUid);
+    }
+}
+
 void DynamicAutoWidget::buildDynamic()
 {
     m_mdlDynamic->clear();
     ui->wgtDynamic->clear();
+    m_tests.clear();
 
     if (m_selectedPatientUid != "" && m_selectedMetodicUid != "")
     {
@@ -142,7 +164,8 @@ void DynamicAutoWidget::fillTable()
                 ti.metodUid == m_selectedMetodicUid)
             {
                 auto factors = DataProvider::getPrimaryFactors(testUid);
-                m_mdlDynamic->addTestData(factors, ti.dateTime);
+                m_mdlDynamic->addTestData(factors, ti.uid, ti.dateTime);
+                m_tests.insert(ti.uid);
             }
         }
     }

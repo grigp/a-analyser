@@ -1,6 +1,7 @@
 #include "metodicsfactory.h"
 
 #include "aanalyserapplication.h"
+#include "aanalyserdefines.h"
 #include "metodictemplate.h"
 #include "stabtesttemplate.h"
 #include "jumptesttemplate.h"
@@ -114,12 +115,13 @@ void MetodicsFactory::assignMetodics()
     //! в процессе работы
     if (!QFile::exists(DataDefines::appDataPath() + "metodics.json"))
     {
+        QString resName = AAnalyserDefines::PresetsMetodicsFileName;
         if (static_cast<AAnalyserApplication*>(QApplication::instance())->languargeCode() == DataDefines::LANG_CODE_RUS)
-            QFile::copy(":/pre_settings/metodics.json",
+            QFile::copy(":/pre_settings/" + resName + ".json",
                         DataDefines::appDataPath() + "metodics.json");
         else
             if (static_cast<AAnalyserApplication*>(QApplication::instance())->languargeCode() == DataDefines::LANG_CODE_ENGUSA)
-                QFile::copy(":/pre_settings/metodics_en_US.json",
+                QFile::copy(":/pre_settings/" + resName + "_en_US.json",
                             DataDefines::appDataPath() + "metodics.json");
     }
 

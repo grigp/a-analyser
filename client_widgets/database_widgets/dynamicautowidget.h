@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <QModelIndex>
+#include <QSet>
 
 namespace Ui {
 class DynamicAutoWidget;
@@ -32,12 +33,20 @@ private slots:
     void on_selectPatient(const QString &patientUid);
     void on_selectMetodic(const QString &metodicUid);
     void on_selectTest(const QString &testUid);
+    void on_removeTest(const QString &testUid);
 
     void selectFactor(const QModelIndex index);
 
     void dynamicAsGraph();
     void dynamicAsBar();
     void dynamic3D(bool pressed);
+
+    /*!
+     * \brief Выбор итема мышкой
+     * \param idx - индекс выбранного итема
+     */
+    void on_selectItem(const int idx);
+
 
 private:
     Ui::DynamicAutoWidget *ui;
@@ -60,6 +69,7 @@ private:
     QString m_selectedPatientUid {""};
     QString m_selectedMetodicUid {""};
     int m_selectRow {-1};
+    QSet<QString> m_tests; ///< uid-ы тестов, участвующих в построении динамики
 };
 
 #endif // DYNAMICAUTOWIDGET_H

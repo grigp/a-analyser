@@ -71,7 +71,7 @@ public:
     void doSelectMetodic(const QString &uid);
 
     /*!
-     * \brief Получение иформации о выбранном тесте
+     * \brief Получение информации о выбранном тесте
      * \param uid
      */
     void doSelectTest(const QString &uid);
