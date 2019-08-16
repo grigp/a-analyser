@@ -175,8 +175,42 @@ void MetodicsFactory::saveMetodics()
 
 void MetodicsFactory::appendNewMetodic(const QString &fnPreDefMetodics, const QString &fnMetodics)
 {
-    Q_UNUSED(fnPreDefMetodics);
-    Q_UNUSED(fnMetodics);
+    auto metPD = readMetodicsFile(fnPreDefMetodics);
+    auto met = readMetodicsFile(fnMetodics);
+
+    //! Если кол-во элементов в массивах равно, то и добавлять ничего не надо
+    //! Методики будут только добавляться
+    if (met.size() == metPD.size())
+        return;
+
+    QList<int> newMetIdx;
+
+    for (int i = 0; i < metPD.size(); ++i)
+    {
+        auto objMetPD = metPD.at(i).toObject();
+        bool fnd = false;
+        for (int j = 0; j < met.size(); ++j)
+        {
+            auto objMet = met.at(j).toObject();
+            if (objMet["uid"].toString() == objMetPD["uid"].toString())
+            {
+                fnd = true;
+                break;
+            }
+        }
+        if (!fnd)
+            newMetIdx << i;
+    }
+
+    if (newMetIdx.size() > 0)
+    {
+        foreach (auto nmIdx, newMetIdx)
+        {
+            auto objMetPD = metPD.at(nmIdx).toObject();
+            met.append(objMetPD);
+        }
+        writeMetodicsFile(met, fnMetodics);
+    }
 }
 
 int MetodicsFactory::getMetodicIndexByUid(const QString &uid) const
@@ -197,5 +231,35 @@ MetodicTemplate *MetodicsFactory::getMetodicTemplate(const QString &metUid) cons
                 return templ;
     }
     return nullptr;
+}
+
+void MetodicsFactory::writeMetodicsFile(const QJsonArray &arr, const QString &fn)
+{
+    QFile fMetodics(fn);
+    if (fMetodics.open(QIODevice::WriteOnly | QIODevice::Text))
+    {
+        QJsonObject obj;
+        obj["tests"] = arr;
+
+        QJsonDocument doc(obj);
+        QByteArray ba = doc.toJson();
+        fMetodics.write(ba);
+        fMetodics.close();
+    }
+}
+
+QJsonArray MetodicsFactory::readMetodicsFile(const QString &fn)
+{
+    QFile fMetodics(fn);
+    if (fMetodics.open(QIODevice::ReadOnly | QIODevice::Text))
+    {
+        QByteArray ba = fMetodics.readAll();
+        QJsonDocument doc(QJsonDocument::fromJson(ba));
+        QJsonObject obj = doc.object();
+        fMetodics.close();
+
+        return obj["tests"].toArray();
+    }
+    return QJsonArray();
 }
 

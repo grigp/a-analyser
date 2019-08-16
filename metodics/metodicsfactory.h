@@ -77,6 +77,9 @@ private:
 
     MetodicTemplate *getMetodicTemplate(const QString &metUid) const;
 
+    void writeMetodicsFile(const QJsonArray &arr, const QString &fn);
+    QJsonArray readMetodicsFile(const QString &fn);
+
     QList<MetodicTemplate*> m_templates;
     QList<MetodicDefines::MetodicInfo> m_metodics;
 };

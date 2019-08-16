@@ -136,6 +136,35 @@
             }
         },
         {
+            "uid": "{02D4EC93-C0C2-42BD-979C-D9F472A3CCEE}",
+            "name": "Тест Ромберга",
+            "template": "met_stabtest_uid",
+            "params":
+            {
+                "condition": 0,
+                "probes": [
+                    {
+                        "name": "Открытые глаза",
+                        "autoend": 1,
+                        "time": 20,
+                        "latent_time": 0,
+                        "stimul": 1,
+                        "zeroing": 1,
+                        "scale": 1
+                    },
+                    {
+                        "name": "Закрытые глаза",
+                        "autoend": 1,
+                        "time": 20,
+                        "latent_time": 0,
+                        "stimul": 2,
+                        "zeroing": 0,
+                        "scale": 1
+                    }
+                ]
+            }
+        },
+        {
             "uid": "{ACFA62A1-7F52-477E-B9C9-A7FF14B3E098}",
             "name": "Анализ высоты прыжка",
             "template": "met_jumptest_uid",
