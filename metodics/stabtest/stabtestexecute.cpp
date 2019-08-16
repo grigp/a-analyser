@@ -315,6 +315,11 @@ void StabTestExecute::nextProbe()
 
         showPatientWindow(m_params.at(m_probe).stimulCode);
         ui->cbScale->setCurrentIndex(m_params.at(m_probe).scale);
+
+        ui->btnZeroing->setVisible(m_params.at(m_probe).zeroingEnabled);
+        ui->btnZeroing->setEnabled(!m_isRecording);
+        ui->btnCalibrate->setEnabled(!m_isRecording);
+        ui->frScale->setEnabled(!m_isRecording);
     }
 }
 
