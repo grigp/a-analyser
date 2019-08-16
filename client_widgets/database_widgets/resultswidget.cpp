@@ -5,9 +5,9 @@
 #include "testproxymodel.h"
 #include "aanalyserapplication.h"
 #include "metodicsfactory.h"
+#include "settingsprovider.h"
 
 #include <QPainter>
-#include <QSettings>
 #include <QDebug>
 
 ResultsWidget::ResultsWidget(QWidget *parent) :
@@ -129,21 +129,13 @@ void ResultsWidget::onRemoveTests(const QModelIndex &parent, int first, int last
 
 void ResultsWidget::saveSplitterPosition()
 {
-    QSettings set(QApplication::instance()->organizationName(),
-                  QApplication::instance()->applicationName());
-    set.beginGroup("ResultWidget");
-    set.setValue("SplitterPosition", ui->splitter->saveState());
-    set.endGroup();
+    SettingsProvider::setValueToRegAppCopy("ResultWidget", "SplitterPosition", ui->splitter->saveState());
 }
 
 void ResultsWidget::restoreSplitterPosition()
 {
-    QSettings set(QApplication::instance()->organizationName(),
-                  QApplication::instance()->applicationName());
-    set.beginGroup("ResultWidget");
-    auto val = set.value("SplitterPosition");
-    set.endGroup();
-    ui->splitter->restoreState(val.toByteArray());
+    auto val = SettingsProvider::valueFromRegAppCopy("ResultWidget", "SplitterPosition").toByteArray();
+    ui->splitter->restoreState(val);
 }
 
 ScaledPixmap::ScaledPixmap(QWidget *parent)

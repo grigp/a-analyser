@@ -47,11 +47,13 @@ include(factors/factors_src.pri)
 SOURCES += \
         main.cpp \
         mainwindow.cpp \
-    aanalyserapplication.cpp
+    aanalyserapplication.cpp \
+    settingsprovider.cpp
 
 HEADERS += \
         mainwindow.h \
-    aanalyserapplication.h
+    aanalyserapplication.h \
+    settingsprovider.h
 
 FORMS += \
         mainwindow.ui

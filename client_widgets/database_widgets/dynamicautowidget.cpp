@@ -5,8 +5,8 @@
 #include "dataprovider.h"
 #include "datadefines.h"
 #include "dynamicdatamodel.h"
+#include "settingsprovider.h"
 
-#include <QSettings>
 #include <QDebug>
 
 DynamicAutoWidget::DynamicAutoWidget(QWidget *parent) :
@@ -210,20 +210,12 @@ void DynamicAutoWidget::showGraph(const int row)
 
 void DynamicAutoWidget::saveDynamicKind(const int kindCode) const
 {
-    QSettings set(QApplication::instance()->organizationName(),
-                  QApplication::instance()->applicationName());
-    set.beginGroup("DynamicWidget");
-    set.setValue("DynamicKind", kindCode);
-    set.endGroup();
+    SettingsProvider::setValueToRegAppCopy("DynamicWidget", "DynamicKind", kindCode);
 }
 
 void DynamicAutoWidget::restoreDynamicKind()
 {
-    QSettings set(QApplication::instance()->organizationName(),
-                  QApplication::instance()->applicationName());
-    set.beginGroup("DynamicWidget");
-    auto kindCode = set.value("DynamicKind").toInt();
-    set.endGroup();
+    auto kindCode = SettingsProvider::valueFromRegAppCopy("DynamicWidget", "DynamicKind", 0).toInt();
 
     DynamicDiagram::Kind kind = static_cast<DynamicDiagram::Kind>(kindCode);
     ui->wgtDynamic->setKind(kind);
@@ -233,20 +225,12 @@ void DynamicAutoWidget::restoreDynamicKind()
 
 void DynamicAutoWidget::saveDynamicVolume(const int volumeCode) const
 {
-    QSettings set(QApplication::instance()->organizationName(),
-                  QApplication::instance()->applicationName());
-    set.beginGroup("DynamicWidget");
-    set.setValue("DynamicVolume", volumeCode);
-    set.endGroup();
+    SettingsProvider::setValueToRegAppCopy("DynamicWidget", "DynamicVolume", volumeCode);
 }
 
 void DynamicAutoWidget::restoreDynamicVolume()
 {
-    QSettings set(QApplication::instance()->organizationName(),
-                  QApplication::instance()->applicationName());
-    set.beginGroup("DynamicWidget");
-    auto volumeCode = set.value("DynamicVolume").toInt();
-    set.endGroup();
+    auto volumeCode = SettingsProvider::valueFromRegAppCopy("DynamicWidget", "DynamicVolume", 0).toInt();
 
     DynamicDiagram::Volume volume = static_cast<DynamicDiagram::Volume>(volumeCode);
     ui->wgtDynamic->setVolume(volume);

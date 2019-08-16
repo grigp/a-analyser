@@ -10,7 +10,7 @@
 namespace
 {
 
-QString appCopyUid = "";
+QString m_appCopyUid = "";
 
 }
 
@@ -54,8 +54,8 @@ QString DataDefines::aanalyserDataPath()
 
 QString DataDefines::appCopyPath()
 {
-    if (appCopyUid != "")
-        return aanalyserDataPath() + appCopyUid + "/";
+    if (m_appCopyUid != "")
+        return aanalyserDataPath() + m_appCopyUid + "/";
     else
     {
         QString fnCopies = aanalyserDataPath() + "copies.json";
@@ -64,12 +64,12 @@ QString DataDefines::appCopyPath()
             //! Не нашли файл - создаем и записываем uid копии, который и возвращаем
             QJsonObject obj;
             obj["path"] = QApplication::instance()->applicationDirPath();
-            appCopyUid = QUuid::createUuid().toString();
-            obj["uid"] = appCopyUid;
+            m_appCopyUid = QUuid::createUuid().toString();
+            obj["uid"] = m_appCopyUid;
             QJsonArray arr;
             arr.append(obj);
             writeCopiesFile(arr, fnCopies);
-            return aanalyserDataPath() + appCopyUid + "/";
+            return aanalyserDataPath() + m_appCopyUid + "/";
         }
         else
         {
@@ -81,18 +81,18 @@ QString DataDefines::appCopyPath()
                 if (obj["path"] == QApplication::instance()->applicationDirPath())
                 {
                     //! Нашли uid - возвращаем его и запоминаем, чтоб дальше не переспрашивать
-                    appCopyUid = obj["uid"].toString();
-                    return aanalyserDataPath() + appCopyUid + "/";
+                    m_appCopyUid = obj["uid"].toString();
+                    return aanalyserDataPath() + m_appCopyUid + "/";
                 }
             }
             //! Не нашли uid - создаем, записываем в файл и возвращаем
             QJsonObject obj;
             obj["path"] = QApplication::instance()->applicationDirPath();
-            appCopyUid = QUuid::createUuid().toString();
-            obj["uid"] = appCopyUid;
+            m_appCopyUid = QUuid::createUuid().toString();
+            obj["uid"] = m_appCopyUid;
             arr.append(obj);
             writeCopiesFile(arr, fnCopies);
-            return aanalyserDataPath() + appCopyUid + "/";
+            return aanalyserDataPath() + m_appCopyUid + "/";
         }
     }
     return "";
@@ -104,4 +104,8 @@ QString DataDefines::dataBasesPath()
 }
 
 
-
+QString DataDefines::appCopyUid()
+{
+    appCopyPath();
+    return m_appCopyUid;
+}

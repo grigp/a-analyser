@@ -5,11 +5,12 @@
 #include "executewidget.h"
 #include "clientwidget.h"
 #include "devicecontroldialog.h"
+#include "datadefines.h"
+#include "settingsprovider.h"
 
 #include <QFile>
 #include <QCloseEvent>
 #include <QMessageBox>
-#include <QSettings>
 #include <QDebug>
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -23,12 +24,8 @@ MainWindow::MainWindow(QWidget *parent) :
     initUi();
     initMenu();
 
-    QSettings set(QApplication::instance()->organizationName(),
-                  QApplication::instance()->applicationName());
-    set.beginGroup("MainWindow");
-    auto val = set.value("Geometry");
-    set.endGroup();
-    restoreGeometry(val.toByteArray());
+    auto val = SettingsProvider::valueFromRegAppCopy("MainWindow", "Geometry").toByteArray();
+    restoreGeometry(val);
 }
 
 MainWindow::~MainWindow()
@@ -86,12 +83,7 @@ void MainWindow::closeEvent(QCloseEvent *event)
     }
     else
     {
-        QSettings set(QApplication::instance()->organizationName(),
-                      QApplication::instance()->applicationName());
-        set.beginGroup("MainWindow");
-        set.setValue("Geometry", saveGeometry());
-        set.endGroup();
-
+        SettingsProvider::setValueToRegAppCopy("MainWindow", "Geometry", saveGeometry());
         event->accept();
     }
 }

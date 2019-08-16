@@ -234,44 +234,12 @@
    <slot>selectFactor(QModelIndex)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>313</x>
-     <y>162</y>
+     <x>314</x>
+     <y>413</y>
     </hint>
     <hint type="destinationlabel">
      <x>602</x>
      <y>157</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>btnGraph</sender>
-   <signal>clicked()</signal>
-   <receiver>DynamicAutoWidget</receiver>
-   <slot>dynamicAsGraph()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>571</x>
-     <y>26</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>603</x>
-     <y>23</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>btnBar</sender>
-   <signal>clicked()</signal>
-   <receiver>DynamicAutoWidget</receiver>
-   <slot>dynamicAsBar()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>569</x>
-     <y>67</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>606</x>
-     <y>68</y>
     </hint>
    </hints>
   </connection>
@@ -291,11 +259,43 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>btnGraph</sender>
+   <signal>clicked()</signal>
+   <receiver>DynamicAutoWidget</receiver>
+   <slot>dynamicAsGraph()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>572</x>
+     <y>29</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>603</x>
+     <y>39</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btnBar</sender>
+   <signal>clicked()</signal>
+   <receiver>DynamicAutoWidget</receiver>
+   <slot>dynamicAsBar()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>576</x>
+     <y>65</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>603</x>
+     <y>66</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>selectFactor(QModelIndex)</slot>
+  <slot>dynamic3D(bool)</slot>
   <slot>dynamicAsGraph()</slot>
   <slot>dynamicAsBar()</slot>
-  <slot>dynamic3D(bool)</slot>
  </slots>
 </ui>

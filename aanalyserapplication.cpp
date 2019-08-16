@@ -14,6 +14,7 @@
 #include "executewidget.h"
 #include "databaseresultwidget.h"
 #include "database.h"
+#include "datadefines.h"
 #include "exitcodes.h"
 #include "log.h"
 
@@ -24,6 +25,11 @@ AAnalyserApplication::AAnalyserApplication(int &argc, char **argv, const QString
     , m_drivers(new DriversFactory(this))
     , m_factors(new FactorsFactory(this))
 {
+
+    //! Это необходимо сделать сдесь, чтоб получить и запомнить uid приложения,
+    //! чтобы использовать его дальше, в настройках и файлах
+    DataDefines::appCopyUid();
+
     setApplicationName("a-analyser");
 //    setApplicationDisplayName(tr("Физиологические исследования a-analyser")); Не переводится
     setOrganizationName("A-Med");

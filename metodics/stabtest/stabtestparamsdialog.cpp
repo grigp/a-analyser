@@ -2,11 +2,12 @@
 #include "ui_stabtestparamsdialog.h"
 
 #include "stabtestparams.h"
+#include "datadefines.h"
+#include "settingsprovider.h"
 
 #include <QJsonArray>
 #include <QMessageBox>
 #include <QFile>
-#include <QSettings>
 #include <QDebug>
 
 namespace
@@ -260,10 +261,8 @@ void StabTestParamsDialog::initUi()
 
 void StabTestParamsDialog::assignAccessMode()
 {
-    // Полный доступ: HKCU/Software/A-Med/a-analyser -> Параметр "Mode" -> значение "root"
-    QSettings set(QApplication::instance()->organizationName(),
-                  QApplication::instance()->applicationName());
-    auto rootMode = (set.value("Mode").toString() == "root");
+    // Полный доступ: HKCU/Software/A-Med/a-analyser -> Параметр "Mode" -> значение "admin"
+    auto rootMode = (SettingsProvider::valueFromRegAppCopy("", "Mode").toString() == "admin");
 
     ui->btnAddProbe->setVisible(rootMode);
     ui->btnDeleteProbe->setVisible(rootMode);

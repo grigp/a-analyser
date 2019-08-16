@@ -2,13 +2,14 @@
 #include "ui_testswidget.h"
 
 #include <QApplication>
-#include <QSettings>
 #include <QFile>
+#include <QDebug>
 
 #include "aanalyserapplication.h"
 #include "executewidget.h"
 #include "testsmodel.h"
 #include "testproxymodel.h"
+#include "settingsprovider.h"
 
 TestsWidget::TestsWidget(QWidget *parent) :
     QWidget(parent),
@@ -56,11 +57,7 @@ void TestsWidget::selectDynamic()
 
 void TestsWidget::restoreVisibleWidget()
 {
-    QSettings set(QApplication::instance()->organizationName(),
-                  QApplication::instance()->applicationName());
-    set.beginGroup("ResultWidget");
-    auto val = set.value("SelectionWidget", ui->wgtResult->widgetName()).toString();
-    set.endGroup();
+    auto val = SettingsProvider::valueFromRegAppCopy("ResultWidget", "SelectionWidget", ui->wgtResult->widgetName()).toString();
     if (val == ui->wgtResult->widgetName())
         ui->wgtDynamic->setVisible(false);
     else
@@ -70,10 +67,6 @@ void TestsWidget::restoreVisibleWidget()
 
 void TestsWidget::saveVisibleWidget(const QString &value)
 {
-    QSettings set(QApplication::instance()->organizationName(),
-                  QApplication::instance()->applicationName());
-    set.beginGroup("ResultWidget");
-    set.setValue("SelectionWidget", value);
-    set.endGroup();
+    SettingsProvider::setValueToRegAppCopy("ResultWidget", "SelectionWidget", value);
 }
 

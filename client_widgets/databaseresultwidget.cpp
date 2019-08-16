@@ -3,8 +3,8 @@
 
 #include "aanalyserapplication.h"
 #include "dataprovider.h"
+#include "settingsprovider.h"
 
-#include <QSettings>
 #include <QDebug>
 
 DataBaseResultWidget::DataBaseResultWidget(QWidget *parent) :
@@ -67,24 +67,16 @@ void DataBaseResultWidget::splitterHMoved(int pos, int index)
 
 void DataBaseResultWidget::saveSplittersPosition()
 {
-    QSettings set(QApplication::instance()->organizationName(),
-                  QApplication::instance()->applicationName());
-    set.beginGroup("DataBaseResultWidget");
-    set.setValue("SplitterVPosition", ui->splitter->saveState());
-    set.setValue("SplitterHPosition", ui->splitter_2->saveState());
-    set.endGroup();
+    SettingsProvider::setValueToRegAppCopy("DataBaseResultWidget", "SplitterVPosition", ui->splitter->saveState());
+    SettingsProvider::setValueToRegAppCopy("DataBaseResultWidget", "SplitterHPosition", ui->splitter_2->saveState());
 }
 
 void DataBaseResultWidget::restoreSplittersPosition()
 {
-    QSettings set(QApplication::instance()->organizationName(),
-                  QApplication::instance()->applicationName());
-    set.beginGroup("DataBaseResultWidget");
-    auto valV = set.value("SplitterVPosition");
-    auto valH = set.value("SplitterHPosition");
-    set.endGroup();
-    ui->splitter->restoreState(valV.toByteArray());
-    ui->splitter_2->restoreState(valH.toByteArray());
+    auto valV = SettingsProvider::valueFromRegAppCopy("DataBaseResultWidget", "SplitterVPosition").toByteArray();
+    auto valH = SettingsProvider::valueFromRegAppCopy("DataBaseResultWidget", "SplitterHPosition").toByteArray();
+    ui->splitter->restoreState(valV);
+    ui->splitter_2->restoreState(valH);
 }
 
 

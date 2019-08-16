@@ -11,8 +11,8 @@
 #include "areaskg.h"
 #include "testresultdata.h"
 #include "resultinfo.h"
+#include "settingsprovider.h"
 
-#include <QSettings>
 #include <QTimer>
 #include <QDebug>
 
@@ -227,21 +227,13 @@ void StabSignalsTestWidget::showSKG(StabSignalsTestCalculator *calculator, const
 
 void StabSignalsTestWidget::saveSplitterPosition()
 {
-    QSettings set(QApplication::instance()->organizationName(),
-                  QApplication::instance()->applicationName());
-    set.beginGroup("StabSignalsTestWidget");
-    set.setValue("SplitterPosition", ui->splitter->saveState());
-    set.endGroup();
+    SettingsProvider::setValueToRegAppCopy("StabSignalsTestWidget", "SplitterPosition", ui->splitter->saveState());
 }
 
 void StabSignalsTestWidget::restoreSplitterPosition()
 {
-    QSettings set(QApplication::instance()->organizationName(),
-                  QApplication::instance()->applicationName());
-    set.beginGroup("StabSignalsTestWidget");
-    auto val = set.value("SplitterPosition");
-    set.endGroup();
-    ui->splitter->restoreState(val.toByteArray());
+    auto val = SettingsProvider::valueFromRegAppCopy("StabSignalsTestWidget", "SplitterPosition").toByteArray();
+    ui->splitter->restoreState(val);
 }
 
 //    m_trd->openTest(testUid);

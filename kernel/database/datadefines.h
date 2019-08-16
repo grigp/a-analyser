@@ -98,6 +98,10 @@ QString appCopyPath();
  */
 QString dataBasesPath();
 
+/*!
+ * \brief Возвращает uid копии приложения
+ */
+QString appCopyUid();
 
 ///< ----------------------------------------------------------------
 ///< Локализация
