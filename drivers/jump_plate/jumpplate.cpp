@@ -3,6 +3,7 @@
 #include "jumpplateparamsdialog.h"
 #include "aanalyserapplication.h"
 
+#include <QJsonObject>
 #include <QDebug>
 
 namespace
@@ -19,17 +20,18 @@ JumpPlate::JumpPlate(QObject *parent)
 
 void JumpPlate::setParams(const DeviceProtocols::Ports port, const QJsonObject &params)
 {
-    Q_UNUSED(params);
     setPortName(port);
-
+    m_platformCount = params["count"].toInt();
 }
 
 bool JumpPlate::editParams(QJsonObject &params)
 {
     Q_UNUSED(params);
     JumpPlateParamsDialog dlg(static_cast<AAnalyserApplication*>(QApplication::instance())->mainWindow());
+    dlg.setPlatformsCount(params["count"].toInt());
     if (dlg.exec() == QDialog::Accepted)
     {
+        params["count"] = dlg.platformsCount();
         return true;
     }
     return false;
@@ -72,6 +74,31 @@ QList<DeviceProtocols::Ports> JumpPlate::getPorts()
 void JumpPlate::calibrate()
 {
 
+}
+
+int JumpPlate::platformsCount()
+{
+    return m_platformCount;
+}
+
+bool JumpPlate::platformState(const int pltNum) const
+{
+    switch (pltNum)
+    {
+    case 0: return m_busyPlate1;
+    case 1: return m_busyPlate2;
+    default: return false;
+    }
+}
+
+double JumpPlate::platformTime(const int pltNum) const
+{
+    switch (pltNum)
+    {
+    case 0: return m_timePlate1;
+    case 1: return m_timePlate2;
+    default: return 0;
+    }
 }
 
 SerialPortDefines::Settings JumpPlate::getSerialPortSettings()

@@ -290,6 +290,23 @@ public:
     static QString uid() {return uid_JumpPlateControl;}
 //    static QString name() {return name_JumpPlateControl;}          Непонятно, как быть с локализацией
 
+    /*!
+     * \brief Возвращает кол-во платформ
+     */
+    virtual int platformsCount() = 0;
+
+    /*!
+     * \brief Возвращает состояние платформы (true - загружена, false - пустая)
+     * \param pltNum - номер платформы
+     */
+    virtual bool platformState(const int pltNum) const = 0;
+
+    /*!
+     * \brief Возвращает время платформы
+     * \param pltNum - номер платформы
+     */
+    virtual double platformTime(const int pltNum) const = 0;
+
     ~JumpPlateControl() {}
 };
 

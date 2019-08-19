@@ -15,6 +15,9 @@ public:
     explicit JumpPlateParamsDialog(QWidget *parent = 0);
     ~JumpPlateParamsDialog();
 
+    int platformsCount() const;
+    void setPlatformsCount(const int count);
+
 private:
     Ui::JumpPlateParamsDialog *ui;
 };

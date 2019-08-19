@@ -35,5 +35,6 @@
         <file>pre_settings/metodics.json</file>
         <file>pre_settings/connections_en_US.json</file>
         <file>pre_settings/metodics_en_US.json</file>
+        <file>qss/another_win.qss</file>
     </qresource>
 </RCC>

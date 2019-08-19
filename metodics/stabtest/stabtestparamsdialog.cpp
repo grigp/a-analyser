@@ -253,7 +253,7 @@ void StabTestParamsDialog::showProbeParam()
 
 void StabTestParamsDialog::initUi()
 {
-    QFile style( ":/qss/main.qss" );
+    QFile style( ":/qss/another_win.qss" );
     style.open( QFile::ReadOnly );
     QString stlDetail(style.readAll() );
     setStyleSheet(stlDetail);

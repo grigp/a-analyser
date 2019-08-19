@@ -8,6 +8,7 @@
 #include "settingsprovider.h"
 
 #include <QPainter>
+#include <QException>
 #include <QDebug>
 
 ResultsWidget::ResultsWidget(QWidget *parent) :
@@ -74,18 +75,30 @@ bool ResultsWidget::eventFilter(QObject *obj, QEvent *event)
 
 void ResultsWidget::selectTest(const QModelIndex &index)
 {
-    if (index.isValid())
+    try
     {
-        auto uid = m_mdlTest->index(index.row(), TestsModel::ColPatient, index.parent()).
-                data(TestsModel::TestUidRole).toString();
+//        qDebug() << "1";
+//        int v = 0;
+//        v = 23 / v;
+//        qDebug() << v;
+        if (index.isValid())
+        {
+            auto uid = m_mdlTest->index(index.row(), TestsModel::ColPatient, index.parent()).
+                    data(TestsModel::TestUidRole).toString();
 
-        MetodicsFactory *metFactory = static_cast<AAnalyserApplication*>(QApplication::instance())->getMetodics();
-        if (m_wgtResult)
-            delete m_wgtResult;
-        m_wgtResult = metFactory->visualize(ui->wgtResults, uid);
-        ui->lblNoTest->setVisible(!m_wgtResult);
+            MetodicsFactory *metFactory = static_cast<AAnalyserApplication*>(QApplication::instance())->getMetodics();
+            if (m_wgtResult)
+                delete m_wgtResult;
+            m_wgtResult = metFactory->visualize(ui->wgtResults, uid);
+            ui->lblNoTest->setVisible(!m_wgtResult);
 
-        static_cast<AAnalyserApplication*>(QApplication::instance())->doSelectTest(uid);
+            static_cast<AAnalyserApplication*>(QApplication::instance())->doSelectTest(uid);
+        }
+    }
+    catch(QException &e)
+    {
+        qDebug() << "exception select test" << e.what();
+        throw 1;
     }
 }
 

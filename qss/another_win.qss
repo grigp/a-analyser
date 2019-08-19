@@ -1,0 +1,82 @@
+QLabel
+{
+    font-size: 11pt;
+}
+
+QComboBox
+{
+    font-size: 11pt;
+}
+
+QTreeView
+{
+    background-color: rgb(205, 209, 214);
+    font-size: 11pt;
+    color: rgb(32,88,103);
+}
+
+QListView
+{
+    background-color: rgb(205, 209, 214);
+    font-size: 11pt;
+    color: rgb(32,88,103);
+}
+
+QHeaderView::section
+{
+    background-color: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                                      stop:0 #616161, stop: 0.5 #505050,
+                                      stop: 0.6 #434343, stop:1 #656565);
+    font-size: 11pt;
+    color: white;
+    padding-left: 4px;
+    border: 1px solid #6c6c6c;
+}
+
+QSplitter::handle:horizontal
+{
+    background: qlineargradient(x1: 0, y1: 0, x2: 1, y2: 0, stop: 0 #205867, stop: 0.5 #40b0ce, stop: 1 #205867);
+}
+
+QSplitter::handle:vertical
+{
+    background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #205867, stop: 0.5 #40b0ce, stop: 1 #205867);
+}
+
+/*QPushButton
+{
+    border: 2px solid #8f8f91;
+    border-radius: 6px;
+    background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 rgb(83, 136, 180), stop: 0.5 rgb(143, 179, 219), stop: 1 rgb(83, 136, 180));
+    min-width: 60px;
+}
+
+QPushButton:hover
+{
+    background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 rgb(103, 156, 200), stop: 0.5 rgb(163, 199, 239), stop: 1 rgb(103, 156, 200));
+}
+
+QPushButton:pressed
+{
+    background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 rgb(63, 116, 160), stop: 0.5 rgb(123, 159, 199), stop: 1 rgb(63, 116, 160));
+}
+
+QDialogButtonBox::buttons
+{
+    border: 2px solid #8f8f91;
+    border-radius: 6px;
+    background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 rgb(83, 136, 180), stop: 0.5 rgb(143, 179, 219), stop: 1 rgb(83, 136, 180));
+    min-width: 60px;
+}
+
+QDialogButtonBox::buttons:hover
+{
+    background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 rgb(103, 156, 200), stop: 0.5 rgb(163, 199, 239), stop: 1 rgb(103, 156, 200));
+}
+
+QDialogButtonBox::buttons:pressed
+{
+    background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 rgb(63, 116, 160), stop: 0.5 rgb(123, 159, 199), stop: 1 rgb(63, 116, 160));
+}
+
+*/

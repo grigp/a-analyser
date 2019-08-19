@@ -19,6 +19,7 @@ JumpTestExecute::JumpTestExecute(QWidget *parent) :
 {
     ui->setupUi(this);
     ui->lblCommunicationError->setVisible(false);
+    ui->lblJumpHeight->setVisible(false);
     QTimer::singleShot(0, this, &JumpTestExecute::start);
 }
 
@@ -53,6 +54,13 @@ void JumpTestExecute::start()
         m_trd->newTest(kard.uid, mi.uid);
 
         m_driver->start();
+
+        if (m_jumpControl)
+        {
+            m_plt1Pressed = m_jumpControl->platformState(0);
+            m_plt2Pressed = m_jumpControl->platformState(1);
+            mainMsgData(true);
+        }
     }
     else
     {
@@ -90,6 +98,13 @@ void JumpTestExecute::getData(DeviceProtocols::DeviceData *data)
             double h = (9.8 * pow(jpData->time() / 1000, 2)) / 8;
             ui->lblPlate1Height->setText(QString(tr("Высота прыжка, м") + " : %1").arg(h));
             ui->lblPlate1Count->setText(QString(tr("Кол-во") + " : %1").arg(m_plt1Count));
+
+            m_plt1Pressed = jpData->busy();
+            if (m_plt1Pressed)
+            {
+                m_plt1Time = jpData->time();
+                m_plt1Height = h;
+            }
         }
         else
         if (jpData->plate() == 2)
@@ -100,7 +115,16 @@ void JumpTestExecute::getData(DeviceProtocols::DeviceData *data)
             double h = (9.8 * pow(jpData->time() / 1000, 2)) / 8;
             ui->lblPlate2Height->setText(QString(tr("Высота прыжка, м") + " : %1").arg(h));
             ui->lblPlate2Count->setText(QString(tr("Кол-во") + " : %1").arg(m_plt2Count));
+
+            m_plt2Pressed = jpData->busy();
+            if (m_plt2Pressed)
+            {
+                m_plt2Time = jpData->time();
+                m_plt2Height = h;
+            }
         }
+
+        mainMsgData(false);
 
 //        ui->lblX->setText(QString("X = %1").arg(jpData->x(), 0, 'f', 2));
 //        ui->lblY->setText(QString("Y = %1").arg(jpData->y(), 0, 'f', 2));
@@ -143,4 +167,43 @@ void JumpTestExecute::on_communicationError(const QString &drvName, const QStrin
     ui->lblCommunicationError->setText(QString(tr("Ошибка связи с устройством") + ": %1 (" + tr("порт") + ": %2)").
                                        arg(drvName).arg(port));
     ui->lblCommunicationError->setVisible(true);
+}
+
+void JumpTestExecute::mainMsgData(const bool isStart)
+{
+    int pltCnt = 1;
+    if (m_jumpControl)
+        pltCnt = m_jumpControl->platformsCount();
+
+    if (pltCnt == 2)
+    {
+        ui->lblStateOnPlatform->setVisible(!(m_plt1Pressed && m_plt2Pressed));
+        ui->lblRunJump->setVisible(m_plt1Pressed && m_plt2Pressed);
+
+        if (m_plt1Pressed && m_plt2Pressed &&
+            m_plt1Height > 0 && m_plt1Height < 3 &&
+            m_plt2Height > 0 && m_plt2Height < 3 &&
+            ! isStart)
+        {
+            ui->lblJumpHeight->setVisible(true);
+            double mid = (m_plt1Height + m_plt2Height) / 2;
+            ui->lblJumpHeight->setText(QString(tr("Высота прыжка, м") + " : %1").arg(mid));
+        }
+    }
+    else
+    if (pltCnt == 1)
+    {
+        ui->lblStateOnPlatform->setVisible(!m_plt1Pressed);
+        ui->lblRunJump->setVisible(m_plt1Pressed);
+
+        if (m_plt1Pressed &&
+            m_plt1Height > 0 && m_plt1Height < 3 &&
+            ! isStart)
+        {
+            ui->lblJumpHeight->setVisible(true);
+            double mid = m_plt1Height / 2;
+            ui->lblJumpHeight->setText(QString(tr("Высота прыжка, м") + " : %1").arg(mid));
+        }
+    }
+
 }

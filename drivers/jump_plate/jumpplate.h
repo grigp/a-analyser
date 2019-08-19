@@ -73,6 +73,24 @@ public:
 
     void calibrate() override;
 
+    /*!
+     * \brief Возвращает кол-во платформ
+     */
+    int platformsCount() override;
+
+    /*!
+     * \brief Возвращает состояние платформы (true - загружена, false - пустая)
+     * \param pltNum - номер платформы
+     */
+    bool platformState(const int pltNum) const override;
+
+    /*!
+     * \brief Возвращает время платформы
+     * \param pltNum - номер платформы
+     */
+    double platformTime(const int pltNum) const override;
+
+
 protected:
     /*!
      * \brief Возвращает настройки порта
@@ -91,6 +109,8 @@ private:
      * \param b - текущий байт
      */
     void assignByteFromDevice(quint8 b);
+
+    int m_platformCount = 1;      ///< Кол-во платформ
 
     ///< разбор принятых данных
     bool m_isMarker {false};      ///< Счетчик байтов маркера. При первом 0x80 становится true. При втором 0x80 начинается прием пакета. При true и не 0x80 сбрасывается

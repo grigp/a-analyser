@@ -15,3 +15,15 @@ JumpPlateParamsDialog::~JumpPlateParamsDialog()
 {
     delete ui;
 }
+
+int JumpPlateParamsDialog::platformsCount() const
+{
+    return ui->cbPlateCount->currentData().toInt();
+}
+
+void JumpPlateParamsDialog::setPlatformsCount(const int count)
+{
+    auto idx = ui->cbPlateCount->findData(count);
+    if (idx > -1)
+        ui->cbPlateCount->setCurrentIndex(idx);
+}

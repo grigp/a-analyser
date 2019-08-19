@@ -34,10 +34,19 @@ private slots:
 private:
     Ui::JumpTestExecute *ui;
 
+    void mainMsgData(const bool isStart);
+
     Driver* m_driver {nullptr};     ///< Драйвер передающий данные
     DeviceProtocols::JumpPlateControl* m_jumpControl;  ///< Управление прыжковой платформой в драйвере
 
     TestResultData *m_trd;  ///< Объект, записывающий данные в базу
+
+    bool m_plt1Pressed {false};
+    bool m_plt2Pressed {false};
+    double m_plt1Time {0};
+    double m_plt2Time {0};
+    double m_plt1Height {0};
+    double m_plt2Height {0};
 
     int m_plt1Count {0};
     int m_plt2Count {0};
