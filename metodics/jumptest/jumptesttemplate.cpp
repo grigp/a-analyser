@@ -43,12 +43,10 @@ bool JumpTestTemplate::editParams(QWidget *parent, QJsonObject &params)
     auto dialog = new JumpTestParamsDialog(parent);
     dialog->setParams(params);
     bool retval = false;
-    connect(dialog, &JumpTestParamsDialog::accepted, this, [=]()
+    if (dialog->exec() == QDialog::Accepted)
     {
-        QJsonObject par = dialog->getParams();
-        //todo: сохранить параметры
-        //retval = true;
-    });
-    dialog->exec();
+        params = dialog->getParams();
+        retval = true;
+    }
     return retval;
 }

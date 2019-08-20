@@ -141,7 +141,16 @@
             "template": "met_jumptest_uid",
             "params":
             {
-
+                "methodic": 0
+            }
+        },
+        {
+            "uid": "{6855943F-E7C1-477E-B68E-EBC7DAE30E2B}",
+            "name": "Hopping analysis",
+            "template": "met_jumptest_uid",
+            "params":
+            {
+                "methodic": 1
             }
         }
     ]

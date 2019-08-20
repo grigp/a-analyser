@@ -20,6 +20,8 @@ JumpTestExecute::JumpTestExecute(QWidget *parent) :
     ui->setupUi(this);
     ui->lblCommunicationError->setVisible(false);
     ui->lblJumpHeight->setVisible(false);
+    ui->frTools->setVisible(false);
+    ui->btnSave->setEnabled(false);
     QTimer::singleShot(0, this, &JumpTestExecute::start);
 }
 
@@ -35,7 +37,12 @@ JumpTestExecute::~JumpTestExecute()
 
 void JumpTestExecute::setParams(const QJsonObject &params)
 {
-    Q_UNUSED(params);
+    m_methodic = static_cast<JumpTestDefines::Methodic>(params["methodic"].toInt());
+    if (m_methodic == JumpTestDefines::MetJumpHeight)
+        ui->lblStateOnPlatform->setText(tr("Станьте на прыжковую платформу"));
+    else
+    if (m_methodic == JumpTestDefines::MetHopping)
+        ui->lblStateOnPlatform->setText(tr("Сойдите с прыжковой платформы"));
 }
 
 void JumpTestExecute::start()
@@ -55,12 +62,17 @@ void JumpTestExecute::start()
 
         m_driver->start();
 
-        if (m_jumpControl)
+        QTimer::singleShot(300, [=]()
         {
-            m_plt1Pressed = m_jumpControl->platformState(0);
-            m_plt2Pressed = m_jumpControl->platformState(1);
-            mainMsgData(true);
-        }
+            if (m_jumpControl)
+            {
+                m_isBlocked = false;
+                m_plt1Pressed = m_jumpControl->platformState(0);
+                m_plt2Pressed = m_jumpControl->platformState(1);
+                qDebug() << "1" << m_plt1Pressed << m_plt2Pressed;
+                methodicWorking(true);
+            }
+        });
     }
     else
     {
@@ -69,8 +81,6 @@ void JumpTestExecute::start()
     }
 }
 
-int n = 0;
-
 void JumpTestExecute::getData(DeviceProtocols::DeviceData *data)
 {
     if (data->uid() == DeviceProtocols::uid_JumpPlateBlockData)
@@ -78,10 +88,16 @@ void JumpTestExecute::getData(DeviceProtocols::DeviceData *data)
         DeviceProtocols::JumpPlateBlockData *jpData = static_cast<DeviceProtocols::JumpPlateBlockData*>(data);
 
         jpData->counter1();
-        ui->lblBlockCounter->setText(QString("Пакеты : %1.  Платформа 1: Загрузка: %2, Счетчик: %3, Константа: %4.   Платформа 2: Загрузка: %5, Счетчик: %6, Константа: %7").
+        ui->lblBlockCounter->setText(QString("Пакеты : %1.\nПлатформа 1: Загрузка: %2, Счетчик: %3, Константа: %4.\nПлатформа 2: Загрузка: %5, Счетчик: %6, Константа: %7").
                                      arg(jpData->blockCnt()).
                                      arg(jpData->busy1()).arg((unsigned int)jpData->counter1()).arg(jpData->con1()).
                                      arg(jpData->busy2()).arg((unsigned int)jpData->counter2()).arg(jpData->con2()));
+//        if (jpData->blockCnt() == 2)
+//        {
+//            m_plt1Pressed = jpData->busy1();
+//            m_plt2Pressed = jpData->busy2();
+//            methodicWorking(true);
+//        }
     }
     else
     if (data->uid() == DeviceProtocols::uid_JumpPlateDvcData)
@@ -124,7 +140,7 @@ void JumpTestExecute::getData(DeviceProtocols::DeviceData *data)
             }
         }
 
-        mainMsgData(false);
+        methodicWorking(false);
 
 //        ui->lblX->setText(QString("X = %1").arg(jpData->x(), 0, 'f', 2));
 //        ui->lblY->setText(QString("Y = %1").arg(jpData->y(), 0, 'f', 2));
@@ -169,13 +185,39 @@ void JumpTestExecute::on_communicationError(const QString &drvName, const QStrin
     ui->lblCommunicationError->setVisible(true);
 }
 
-void JumpTestExecute::mainMsgData(const bool isStart)
+void JumpTestExecute::showTools(bool isShow)
 {
+    ui->frTools->setVisible(isShow);
+}
+
+void JumpTestExecute::saveResult()
+{
+
+}
+
+void JumpTestExecute::cancelTest()
+{
+    static_cast<ExecuteWidget*>(parent())->showDB();
+}
+
+void JumpTestExecute::methodicWorking(const bool isStart)
+{
+    if (m_isBlocked)
+        return;
     int pltCnt = 1;
     if (m_jumpControl)
         pltCnt = m_jumpControl->platformsCount();
 
-    if (pltCnt == 2)
+    if (m_methodic == JumpTestDefines::MetJumpHeight)
+        methodicWorkingJumpHeight(isStart, pltCnt);
+    else
+    if (m_methodic == JumpTestDefines::MetHopping)
+        methodicWorkingHopping(isStart, pltCnt);
+}
+
+void JumpTestExecute::methodicWorkingJumpHeight(const bool isStart, const int platformsCount)
+{
+    if (platformsCount == 2)
     {
         ui->lblStateOnPlatform->setVisible(!(m_plt1Pressed && m_plt2Pressed));
         ui->lblRunJump->setVisible(m_plt1Pressed && m_plt2Pressed);
@@ -186,12 +228,13 @@ void JumpTestExecute::mainMsgData(const bool isStart)
             ! isStart)
         {
             ui->lblJumpHeight->setVisible(true);
+            ui->btnSave->setEnabled(true);
             double mid = (m_plt1Height + m_plt2Height) / 2;
             ui->lblJumpHeight->setText(QString(tr("Высота прыжка, м") + " : %1").arg(mid));
         }
     }
     else
-    if (pltCnt == 1)
+    if (platformsCount == 1)
     {
         ui->lblStateOnPlatform->setVisible(!m_plt1Pressed);
         ui->lblRunJump->setVisible(m_plt1Pressed);
@@ -201,9 +244,56 @@ void JumpTestExecute::mainMsgData(const bool isStart)
             ! isStart)
         {
             ui->lblJumpHeight->setVisible(true);
+            ui->btnSave->setEnabled(true);
             double mid = m_plt1Height / 2;
             ui->lblJumpHeight->setText(QString(tr("Высота прыжка, м") + " : %1").arg(mid));
         }
     }
 
+}
+
+void JumpTestExecute::methodicWorkingHopping(const bool isStart, const int platformsCount)
+{
+    qDebug() << isStart << m_hoppingStage << m_plt1Pressed << m_plt2Pressed;
+    if (m_hoppingStage == -1)
+    {
+        if (m_plt1Pressed || m_plt2Pressed)
+            ui->lblStateOnPlatform->setVisible(true);
+        else
+        {
+            ui->lblStateOnPlatform->setVisible(false);
+            ++m_hoppingStage;
+            ui->lblRunJump->setText(tr("Выполните прыжок на платформу"));
+        }
+    }
+    else
+    if (m_hoppingStage == 0)
+    {
+        if (m_plt1Pressed && m_plt2Pressed)
+        {
+            ++m_hoppingStage;
+            ui->lblRunJump->setText(tr("Выполните прыжок"));
+        }
+    }
+    else
+    if (m_hoppingStage == 1)
+    {
+        if (!m_plt1Pressed && !m_plt2Pressed)
+        {
+            ++m_hoppingStage;
+            ui->lblRunJump->setVisible(false);
+        }
+    }
+    else
+    if (m_hoppingStage == 2)
+    {
+        if (m_plt1Pressed && m_plt2Pressed)
+        {
+            m_hoppingStage = -1;
+            ui->lblRunJump->setVisible(false);
+            ui->lblStateOnPlatform->setVisible(true);
+            ui->lblJumpHeight->setVisible(true);
+        }
+    }
+    ui->label->setText(QString::number(m_hoppingStage));
 }

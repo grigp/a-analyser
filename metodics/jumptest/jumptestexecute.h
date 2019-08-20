@@ -5,6 +5,7 @@
 
 #include "datadefines.h"
 #include "deviceprotocols.h"
+#include "jumptestdefines.h"
 
 namespace Ui {
 class JumpTestExecute;
@@ -31,25 +32,36 @@ private slots:
     void getData(DeviceProtocols::DeviceData *data);
     void on_communicationError(const QString &drvName, const QString &port, const int errorCode);
 
+    void showTools(bool isShow);
+    void saveResult();
+    void cancelTest();
+
 private:
     Ui::JumpTestExecute *ui;
 
-    void mainMsgData(const bool isStart);
+    void methodicWorking(const bool isStart);
+    void methodicWorkingJumpHeight(const bool isStart, const int platformsCount);
+    void methodicWorkingHopping(const bool isStart, const int platformsCount);
 
     Driver* m_driver {nullptr};     ///< Драйвер передающий данные
     DeviceProtocols::JumpPlateControl* m_jumpControl;  ///< Управление прыжковой платформой в драйвере
 
     TestResultData *m_trd;  ///< Объект, записывающий данные в базу
 
-    bool m_plt1Pressed {false};
+    JumpTestDefines::Methodic m_methodic = JumpTestDefines::MetJumpHeight;      ///< Код методики
+
+    bool m_plt1Pressed {false};  ///< Нажата ли платформа
     bool m_plt2Pressed {false};
-    double m_plt1Time {0};
+    double m_plt1Time {0};       ///< Время
     double m_plt2Time {0};
-    double m_plt1Height {0};
+    double m_plt1Height {0};     ///< Высота рассчитанная
     double m_plt2Height {0};
 
-    int m_plt1Count {0};
+    int m_plt1Count {0};  ///< Кол-во смен состояний
     int m_plt2Count {0};
+
+    bool m_isBlocked {true};   ///< Блокировка обработки событий
+    int m_hoppingStage {-1};   ///< Номер этапа в методике соскакивания
 };
 
 #endif // JUMPTESTEXECUTE_H

@@ -29,6 +29,8 @@ public:
 
 private:
     Ui::JumpTestParamsDialog *ui;
+
+    void initUi();
 };
 
 #endif // JUMPTESTPARAMSDIALOG_H

@@ -2,6 +2,7 @@
 #define JUMPTESTTEMPLATE_H
 
 #include <QObject>
+#include <QJsonObject>
 
 #include "metodictemplate.h"
 
