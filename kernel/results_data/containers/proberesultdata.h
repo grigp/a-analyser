@@ -3,7 +3,7 @@
 
 #include <QList>
 
-#include "signaldata.h"
+#include "channeldata.h"
 
 /*!
  * \brief Класс, хранящий в себе результаты пробы ProbeResultData class
@@ -43,26 +43,26 @@ public:
      * \brief Возвращает указатель на сигнал по номеру в списке
      * \param num - номер сигнала
      */
-    SignalData* getSignal(const int num) const;
+    ChannelData* getSignal(const int num) const;
 
     /*!
      * \brief Возвращает указатель на сигнал по id сигнала
      * \param channelId - id сигнала
      */
-    SignalData* getSignal(const QString &channelId) const;
+    ChannelData* getSignal(const QString &channelId) const;
 
     /*!
      * \brief Добавляет сигнал к списку пробы.
      * Вызывать сервисным модулям НЕЛЬЗЯ!!!
      * \param signal - добавляемый сигнал
      */
-    void addSignal(SignalData* signal);
+    void addChannel(ChannelData* signal);
 
 private:
     QString m_testUid;
     QString m_uid;
     QString m_name;
-    QList<SignalData*> m_signals;
+    QList<ChannelData*> m_channels;
 };
 
 #endif // PROBERESULTDATA_H

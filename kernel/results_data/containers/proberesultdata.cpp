@@ -14,23 +14,23 @@ void ProbeResultData::saveProbe(const QString &testUid, const int step)
 {
     auto probeUid = DataProvider::addProbe(testUid, step, m_name);
 
-    foreach (auto* signal, m_signals)
+    foreach (auto* channel, m_channels)
     {
         QByteArray data;
-        signal->toByteArray(data);
+        channel->toByteArray(data);
 
-        DataProvider::addSignal(probeUid, signal->channelId(), data);
+        DataProvider::addSignal(probeUid, channel->channelId(), data);
 
-        delete signal;
+        delete channel;
     }
-    m_signals.clear();
+    m_channels.clear();
 }
 
 void ProbeResultData::clear()
 {
-    foreach (auto* signal, m_signals)
-        delete signal;
-    m_signals.clear();
+    foreach (auto* channel, m_channels)
+        delete channel;
+    m_channels.clear();
 }
 
 QString ProbeResultData::uid() const
@@ -45,24 +45,25 @@ QString ProbeResultData::name() const
 
 int ProbeResultData::signalsCount() const
 {
-    return m_signals.size();
+    return m_channels.size();
 }
 
-SignalData *ProbeResultData::getSignal(const int num) const
+ChannelData *ProbeResultData::getSignal(const int num) const
 {
-    Q_ASSERT(num >= 0 && num < m_signals.size());
-    return m_signals.at(num);
+    Q_ASSERT(num >= 0 && num < m_channels.size());
+    return m_channels.at(num);
 }
 
-SignalData *ProbeResultData::getSignal(const QString &channelId) const
+ChannelData *ProbeResultData::getSignal(const QString &channelId) const
 {
-    foreach (auto *sig, m_signals)
+    foreach (auto *sig, m_channels)
         if (sig->channelId() == channelId)
             return sig;
     return nullptr;
 }
 
-void ProbeResultData::addSignal(SignalData *signal)
+void ProbeResultData::addChannel(ChannelData *signal)
 {
-    m_signals.append(signal);
+    m_channels.append(signal);
 }
+

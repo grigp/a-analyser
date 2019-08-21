@@ -286,9 +286,9 @@ void StabTestExecute::initRecSignals()
         {
             m_trd->newProbe(probeParams().name);
             m_stb = new Stabilogram(ChannelsDefines::chanStab, m_frequency);
-            m_trd->addSignal(m_stb);
+            m_trd->addChannel(m_stb);
             m_z = new Ballistogram(ChannelsDefines::chanZ, m_frequency);
-            m_trd->addSignal(m_z);
+            m_trd->addChannel(m_z);
         }
         else
         {                               //! Проба была прервана - очистить сигналы

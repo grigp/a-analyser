@@ -1,6 +1,7 @@
 #include "signaldata.h"
 
 SignalData::SignalData()
+    : ChannelData()
 {
 
 }

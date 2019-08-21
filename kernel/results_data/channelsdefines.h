@@ -12,12 +12,17 @@ namespace ChannelsDefines
  */
  static QString ctStabilogram = "{1F7A5F8A-FC64-44E2-B2D2-5245D02ED2CA}";
  static QString ctBallistogram = "{98CA38D2-8423-4AE5-9AF3-A47AA58F2616}";
+ static QString ctJumpHeight = "{828DC7F7-2E70-4912-9ED5-03AA5A8BE729}";
+ static QString ctHopping = "{77A6BE07-5937-4A8A-8521-08D6C379BDD8}";
+
 
 /*!
  * \brief идентификаторы каналов
  */
  static QString chanStab = "{61E814F9-CE64-46F6-B158-46961964BEE9}";
  static QString chanZ = "{41280317-450F-4CF7-B3D9-15E2D0B87469}";
+ static QString chanJumpHeight = "{EF9DF092-7FE0-4F74-9EA6-8BA3318AA91C}";
+ static QString chanHopping = "{EF4AD6ED-2D10-497A-AB8D-945CF6C0645E}";
 
 
 /*!

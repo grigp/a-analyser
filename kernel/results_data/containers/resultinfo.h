@@ -4,7 +4,7 @@
 #include <QString>
 
 class ProbeResultData;
-class SignalData;
+class ChannelData;
 class SignalResultInfo;
 
 /*!
@@ -54,7 +54,7 @@ private:
 class SignalResultInfo
 {
 public:
-    explicit SignalResultInfo(SignalData* signal);
+    explicit SignalResultInfo(ChannelData* channel);
 
     /*!
      * \brief Возвращает идентификатор канала
@@ -84,7 +84,7 @@ public:
     double absMaxValue();
 
 private:
-    SignalData* m_signal;
+    ChannelData* m_channel;
 };
 
 #endif // RESULTINFO_H

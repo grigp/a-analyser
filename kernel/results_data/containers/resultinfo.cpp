@@ -1,6 +1,7 @@
 #include "resultinfo.h"
 
 #include "proberesultdata.h"
+#include "signaldata.h"
 
 ProbeResultInfo::ProbeResultInfo(ProbeResultData* probe)
     : m_probe(probe)
@@ -36,32 +37,44 @@ QString ProbeResultInfo::name() const
 
 
 
-SignalResultInfo::SignalResultInfo(SignalData* signal)
-    : m_signal(signal)
+SignalResultInfo::SignalResultInfo(ChannelData* channel)
+    : m_channel(channel)
 {
 }
 
 QString SignalResultInfo::channelId() const
 {
-    return m_signal->channelId();
+    return m_channel->channelId();
 }
 
 int SignalResultInfo::frequency() const
 {
-    return m_signal->frequency();
+    SignalData* signal = dynamic_cast<SignalData*>(m_channel);
+    if (signal)
+        return signal->frequency();
+    return 0;
 }
 
 int SignalResultInfo::size() const
 {
-    return m_signal->size();
+    SignalData* signal = dynamic_cast<SignalData*>(m_channel);
+    if (signal)
+        return signal->size();
+    return 0;
 }
 
 double SignalResultInfo::value(const int chan, const int rec) const
 {
-    return m_signal->value(chan, rec);
+    SignalData* signal = dynamic_cast<SignalData*>(m_channel);
+    if (signal)
+        return signal->value(chan, rec);
+    return 0;
 }
 
 double SignalResultInfo::absMaxValue()
 {
-    return m_signal->absMaxValue();
+    SignalData* signal = dynamic_cast<SignalData*>(m_channel);
+    if (signal)
+        return signal->absMaxValue();
+    return 0;
 }

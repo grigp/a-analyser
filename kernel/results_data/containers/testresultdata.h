@@ -6,7 +6,7 @@
 #include <QJsonObject>
 
 class ProbeResultData;
-class SignalData;
+class ChannelData;
 class ProbeResultInfo;
 
 /*!
@@ -63,7 +63,7 @@ public:
     void closeTest();
 
     /*!
-     * \brief Добавляет сигнал к данным пробы
+     * \brief Добавляет канал к данным пробы
      * Если mode != run, то сбой
      *
      * Stabilogram* stb = new Stabilogram(chanId);
@@ -71,9 +71,9 @@ public:
      * stb->addValue(rec);
      * ...
      *
-     * \param signal - добавляемый сигнал
+     * \param channel - добавляемый канал
      */
-    void addSignal(SignalData *signal);
+    void addChannel(ChannelData *channel);
 
     /*!
      * \brief Возвращает кол-во проб

@@ -3,12 +3,14 @@
 
 #include <QString>
 
+#include "channeldata.h"
+
 /*!
- * \brief Базовый виртуальный класс сигнала Signal class
+ * \brief Базовый виртуальный класс сигнала SignalData class
  * Будет использоваться при отображении данных.
  * Доступ к данным унифицирован для любых сигналов
  */
-class SignalData
+class SignalData : public ChannelData
 {
 public:
     explicit SignalData();

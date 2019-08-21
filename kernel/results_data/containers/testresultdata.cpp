@@ -87,7 +87,7 @@ void TestResultData::openTest(const QString &uid)
                     if (ci.channelId == ChannelsDefines::chanZ)
                         signal = new Ballistogram(chan);
                     if (signal)
-                        probe->addSignal(signal);
+                        probe->addChannel(signal);
                 }
             }
         }
@@ -104,10 +104,10 @@ void TestResultData::closeTest()
     m_probes.clear();
 }
 
-void TestResultData::addSignal(SignalData *signal)
+void TestResultData::addChannel(ChannelData *channel)
 {
     Q_ASSERT(m_mode == mdRun);
-    m_probes.at(m_probes.size() - 1)->addSignal(signal);
+    m_probes.at(m_probes.size() - 1)->addChannel(channel);
 }
 
 int TestResultData::probesCount() const
