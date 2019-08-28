@@ -13,6 +13,7 @@
 class ChannelJsonData : public ChannelData
 {
 public:
+    ChannelJsonData(const QString &chanId);
     ChannelJsonData();
     virtual ~ChannelJsonData();
 
@@ -22,7 +23,7 @@ public:
     /*!
      * \brief Виртуальная функция, возвращающая идентификатор канала
      */
-    virtual QString channelId() const = 0;
+    virtual QString channelId() const {return m_channelId;}
 
     /*!
      * \brief Виртуальная функция, читает данные из массива байт
@@ -43,6 +44,7 @@ public:
 
 private:
     QJsonObject m_data = QJsonObject();
+    QString m_channelId {""};
 };
 
 #endif // CHANNELJSONDATA_H

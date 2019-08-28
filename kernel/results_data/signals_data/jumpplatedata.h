@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QJsonObject>
+#include <QByteArray>
 
 #include "channeljsondata.h"
 
@@ -13,17 +14,14 @@ class JumpHeightData : public ChannelJsonData
 {
 public:
     JumpHeightData(const QString &chanId);
-
     /*!
-     * \brief Виртуальная функция, возвращающая идентификатор канала
+     * \brief Создает на основе массива байт
+     * \param data - сигнал в виде массива байт
      */
-    QString channelId() const override;
+    explicit JumpHeightData(const QByteArray &data);
 
     double height() const;
     void setHeight(const double height);
-
-private:
-    QString m_channelId;
 };
 
 
@@ -34,11 +32,11 @@ class HoppingData : public ChannelJsonData
 {
 public:
     HoppingData(const QString &chanId);
-
     /*!
-     * \brief Виртуальная функция, возвращающая идентификатор канала
+     * \brief Создает на основе массива байт
+     * \param data - сигнал в виде массива байт
      */
-    QString channelId() const override;
+    explicit HoppingData(const QByteArray &data);
 
     double time() const;
     void setTime(const double time);
@@ -46,8 +44,6 @@ public:
     double height() const;
     void setHeight(const double height);
 
-private:
-    QString m_channelId;
 };
 
 #endif // JUMPPLATEDATA_H

@@ -2,6 +2,8 @@
 
 #include "dataprovider.h"
 
+#include <QDebug>
+
 ProbeResultData::ProbeResultData(const QString &testUid, const QString &uid, const QString &name)
     : m_testUid(testUid)
     , m_uid(uid)

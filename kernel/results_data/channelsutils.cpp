@@ -31,6 +31,14 @@ ChannelsUtils::ChannelsUtils()
                                                                   std::make_tuple(QString("Баллистограмма"),
                                                                                   QString("Z"),
                                                                                   ChannelsDefines::ctBallistogram))
+                 , std::pair<QString, ChannelsDefines::ChannelInfo>(ChannelsDefines::chanJumpHeight,
+                                                                    std::make_tuple(QString("Высота прыжка"),
+                                                                                    QString("H"),
+                                                                                    ChannelsDefines::ctJumpHeight))
+                 , std::pair<QString, ChannelsDefines::ChannelInfo>(ChannelsDefines::chanHopping,
+                                                                    std::make_tuple(QString("Соскакивание на платформу"),
+                                                                                    QString("JOP"),
+                                                                                    ChannelsDefines::ctHopping))
                  })
 {
 

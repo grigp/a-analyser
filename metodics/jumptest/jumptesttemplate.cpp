@@ -34,6 +34,7 @@ QWidget *JumpTestTemplate::execute(QWidget *parent, const QJsonObject &params)
 QWidget *JumpTestTemplate::visualize(QWidget *parent, const QString &testUid)
 {
     auto *retval = new JumpTestVisualize(parent);
+    parent->layout()->addWidget(retval);
     retval->setTest(testUid);
     return retval;
 }

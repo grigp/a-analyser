@@ -205,7 +205,7 @@ void JumpTestExecute::saveResult()
         m_trd.addChannel(data);
     }
     else
-    if (m_methodic == JumpTestDefines::MetJumpHeight)
+    if (m_methodic == JumpTestDefines::MetHopping)
     {
         m_trd.newProbe(tr("Анализ соскакивания"));
         auto *data = new HoppingData(ChannelsDefines::chanHopping);
@@ -312,7 +312,7 @@ void JumpTestExecute::methodicWorkingHopping(const bool isStart, const int platf
     else
     if (m_hoppingStage == 0)
     {
-        ui->btnSave->setEnabled(false);
+//        ui->btnSave->setEnabled(false); Если включить, то будет кнопка [Сохранить] гаснуть при сходе с платформы
         if (isBothPressed)
         {
             ++m_hoppingStage;

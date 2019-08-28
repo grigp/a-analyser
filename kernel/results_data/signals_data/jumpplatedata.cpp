@@ -3,15 +3,15 @@
 
 
 JumpHeightData::JumpHeightData(const QString &chanId)
-    : ChannelJsonData()
-    , m_channelId(chanId)
+    : ChannelJsonData(chanId)
 {
 
 }
 
-QString JumpHeightData::channelId() const
+JumpHeightData::JumpHeightData(const QByteArray &data)
+    : ChannelJsonData()
 {
-    return m_channelId;
+    fromByteArray(data);
 }
 
 double JumpHeightData::height() const
@@ -21,21 +21,21 @@ double JumpHeightData::height() const
 
 void JumpHeightData::setHeight(const double height)
 {
-    QJsonObject obj;
+    QJsonObject obj = data();
     obj["jump_height"] = height;
     setData(obj);
 }
 
 HoppingData::HoppingData(const QString &chanId)
-    : ChannelJsonData()
-    , m_channelId(chanId)
+    : ChannelJsonData(chanId)
 {
 
 }
 
-QString HoppingData::channelId() const
+HoppingData::HoppingData(const QByteArray &data)
+    : ChannelJsonData()
 {
-    return m_channelId;
+    fromByteArray(data);
 }
 
 double HoppingData::time() const

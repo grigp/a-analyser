@@ -7,6 +7,8 @@ namespace Ui {
 class JumpTestVisualize;
 }
 
+class JumpTestCalculator;
+
 /*!
  * \brief Виджет показа результатов измерения высоты прыжка JumpTestVisualize class
  */
@@ -22,6 +24,8 @@ public:
 
 private:
     Ui::JumpTestVisualize *ui;
+
+    JumpTestCalculator* m_calculator {nullptr};
 };
 
 #endif // JUMPTESTVISUALIZE_H
