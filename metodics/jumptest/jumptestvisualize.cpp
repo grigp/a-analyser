@@ -25,17 +25,21 @@ void JumpTestVisualize::setTest(const QString &testUid)
         m_calculator = new JumpTestCalculator(testUid, this);
         m_calculator->calculate();
 
+        //! Высота прыжка
         auto* fctHeight = m_calculator->primaryFactor(0);
         auto fi = static_cast<AAnalyserApplication*>(QApplication::instance())->getFactorInfo(fctHeight->uid());
-        qDebug() << fctHeight->value() << fi.format() << fctHeight->uid();
         QString fv = QString::number(fctHeight->value(), 'f', fi.format());
-        qDebug() << "1";
-        qDebug() << fv;
         ui->lblJumpHeight->setText(QString(tr("Высота прыжка") + " : %1 " + tr("м")).arg(fv));
-//        ui->lblTime->setText(QString);
+
+        //! Для методики соскакивания - время задержки на платформе
+        ui->lblTime->setVisible(m_calculator->metodic() == JumpTestDefines::MetHopping);
+        if (m_calculator->metodic() == JumpTestDefines::MetHopping &&
+                m_calculator->primaryFactorsCount() > 1)
+        {
+            auto* fctTime = m_calculator->primaryFactor(1);
+            auto fi = static_cast<AAnalyserApplication*>(QApplication::instance())->getFactorInfo(fctTime->uid());
+            QString fv = QString::number(fctTime->value(), 'f', fi.format());
+            ui->lblTime->setText(QString(tr("Задержка на платформе") + " : %1 " + tr("сек")).arg(fv));
+        }
     }
-
-    Q_UNUSED(testUid);
-
-
 }

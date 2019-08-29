@@ -24,7 +24,7 @@ bool HoppingFactors::isValid(const QString &testUid, const QString &probeUid, co
 {
     Q_UNUSED(testUid);
     return DataProvider::channelExists(probeUid, channelId) &&
-           ChannelsUtils::instance().channelType(channelId) == ChannelsDefines::ctJumpHeight;
+           ChannelsUtils::instance().channelType(channelId) == ChannelsDefines::ctHopping;
 }
 
 void HoppingFactors::calculate()
@@ -44,12 +44,12 @@ void HoppingFactors::calculate()
 void HoppingFactors::registerFactors()
 {
     static_cast<AAnalyserApplication*>(QApplication::instance())->
-            registerGroup(HoppingFactorsDefines::GroupUid, tr("Показатели высоты прыжка"));
+            registerGroup(HoppingFactorsDefines::GroupUid, tr("Показатели соскакивания на платформу"));
 
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(HoppingFactorsDefines::JumpHeightUid, HoppingFactorsDefines::GroupUid,
                            tr("Высота прыжка"), tr("h"), tr("м"), 4);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(HoppingFactorsDefines::TimeUid, HoppingFactorsDefines::GroupUid,
-                           tr("Задержка на платформе"), tr("t"), tr("сек"), 4);
+                           tr("Задержка на платформе"), tr("t"), tr("сек"), 2);
 }

@@ -36,8 +36,6 @@ void JumpTestCalculator::calculate()
                     addPrimaryFactor(testUid(), JumpHeightFactorsDefines::JumpHeightUid,
                                      fct->factorValue(JumpHeightFactorsDefines::JumpHeightUid),
                                      0, ChannelsDefines::chanJumpHeight, pi.name);
-                    qDebug() << "---" << testUid() << JumpHeightFactorsDefines::JumpHeightUid <<
-                                         fct->factorValue(JumpHeightFactorsDefines::JumpHeightUid);
                     delete fct;
                 }
                 else

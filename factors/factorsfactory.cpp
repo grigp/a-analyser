@@ -3,6 +3,8 @@
 #include "classicfactors.h"
 #include "vectorfactors.h"
 #include "ratioprobesfactors.h"
+#include "jumpheightfactors.h"
+#include "hoppingfactors.h"
 
 #include <QTimer>
 #include <QDebug>
@@ -15,6 +17,8 @@ FactorsFactory::FactorsFactory(QObject *parent) : QObject(parent)
         ClassicFactors::registerFactors();
         VectorFactors::registerFactors();
         RatioProbesFactors::registerFactors();
+        JumpHeightFactors::registerFactors();
+        HoppingFactors::registerFactors();
     });
 }
 
