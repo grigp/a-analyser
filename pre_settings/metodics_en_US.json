@@ -152,6 +152,26 @@
             {
                 "methodic": 1
             }
+        },
+        {
+            "uid": "{A100CF38-D2E6-4E71-A485-53845E3F116C}",
+            "name": "DCI health level",
+            "template": "met_stabtest_uid",
+            "params":
+            {
+                "condition": 3,
+                "probes": [
+                    {
+                        "name": "Open eyes",
+                        "autoend": 1,
+                        "time": 20,
+                        "latent_time": 0,
+                        "stimul": 2,
+                        "zeroing": 1,
+                        "scale": 0
+                    }
+                ]
+            }
         }
     ]
 }
