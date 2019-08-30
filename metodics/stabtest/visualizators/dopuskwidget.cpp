@@ -34,3 +34,5 @@ void DopuskWidget::calculate(DopuskCalculator *calculator, const QString &testUi
     auto valTarget = calculator->factors(2)->factorValue(VectorFactorsDefines::KFRUid);
     ui->lblTargetResult->setText(QString("%1 %").arg(valTarget, 3, 'f', format));
 }
+
+

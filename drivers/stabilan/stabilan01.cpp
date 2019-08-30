@@ -3,6 +3,7 @@
 #include "stabilan01paramsdialog.h"
 #include "aanalyserapplication.h"
 #include "serialport.h"
+#include "channelsutils.h"
 
 #include <QApplication>
 #include <QJsonObject>
@@ -83,6 +84,16 @@ void Stabilan01::start()
 void Stabilan01::stop()
 {
     Driver::stop();
+}
+
+int Stabilan01::frequency(const QString &channelId) const
+{
+    if (ChannelsUtils::instance().channelType(channelId) == ChannelsDefines::ctStabilogram)
+        return 50;
+    else
+    if (ChannelsUtils::instance().channelType(channelId) == ChannelsDefines::ctBallistogram)
+        return 50;
+    return 1;
 }
 
 QStringList Stabilan01::getProtocols()
@@ -185,6 +196,8 @@ void Stabilan01::on_error(const QString &err)
 
 }
 
+double r = 0;
+
 void Stabilan01::assignByteFromDevice(quint8 b)
 {
     bool isTwoMarkers = false;
@@ -269,6 +282,12 @@ void Stabilan01::assignByteFromDevice(quint8 b)
                 m_Z = m_A + m_B + m_C + m_D;                     // Расчет баллистограммы
 
                 incBlockCount();
+
+                // Эмуляция стабилограммы кругом
+//                m_X = 10 * sin(r);
+//                m_Y = 10 * cos(r);
+//                r = r + 2 * M_PI / 50;
+
                 // Передача стабилограммы
                 auto stabData = new DeviceProtocols::StabDvcData(this,
                                                                  m_X - m_offsetX, m_Y - m_offsetY,

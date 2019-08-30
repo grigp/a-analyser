@@ -59,6 +59,9 @@
       <item>
        <widget class="StateChampionsWidget" name="wgtStateChampions" native="true"/>
       </item>
+      <item>
+       <widget class="IDSWidget" name="wgtIDSAnalysis" native="true"/>
+      </item>
      </layout>
     </widget>
    </item>
@@ -81,6 +84,12 @@
    <class>StateChampionsWidget</class>
    <extends>QWidget</extends>
    <header location="global">statechampionswidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>IDSWidget</class>
+   <extends>QWidget</extends>
+   <header location="global">idswidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

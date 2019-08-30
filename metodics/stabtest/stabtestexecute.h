@@ -32,7 +32,6 @@ public:
 
 private slots:
     void start();
-    void signalTest();
 
     void scaleChange(int scaleId);
 
@@ -86,6 +85,9 @@ private:
      * \brief Прячет окно пациента
      */
     void hidePatientWindow();
+
+    int m_freqStab = 50;        ///< Частота дискретизации стабилограммы
+    int m_freqZ = 50;           ///< Частота дискретизации баллистограммы
 
     DataDefines::PatientKard m_kard;
     QList<StabTestParams::ProbeParams> m_params; ///< Параметры методики

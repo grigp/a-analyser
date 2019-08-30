@@ -68,6 +68,8 @@ private:
 
     void computeFDSBuf(const QVector<double> &bufV, const QVector<double> &bufW);
 
+    void bufToFile(const QVector<double> &buf, const QString &fn);
+
     QVector<double> m_bufFDS;   ///< Массив значений ФДС
     double m_fdsQ {0};          ///< СКО ФДС
 

@@ -12,10 +12,12 @@
 #include "stabsignalstestcalculator.h"
 #include "dopuskcalculator.h"
 #include "statechampionstestcalculator.h"
+#include "idscalculator.h"
 
 #include "stabsignalstestwidget.h"
 #include "dopuskwidget.h"
 #include "statechampionswidget.h"
+#include "idswidget.h"
 
 #include <QDebug>
 
@@ -51,6 +53,7 @@ void StabTestVisualize::setTest(const QString &testUid)
                             (cnd == 0 && wgt->objectName() == "wgtSignals")
                          || (cnd == 1 && wgt->objectName() == "wgtStateChampions")
                          || (cnd == 2 && wgt->objectName() == "wgtDopusk")
+                         || (cnd == 3 && wgt->objectName() == "wgtIDSAnalysis")
                                 );
                 if (cnd == 0 && wgt->objectName() == "wgtSignals")
                     static_cast<StabSignalsTestWidget*>(wgt)->
@@ -63,6 +66,10 @@ void StabTestVisualize::setTest(const QString &testUid)
                 if (cnd == 2 && wgt->objectName() == "wgtDopusk")
                     static_cast<DopuskWidget*>(wgt)->
                         calculate(static_cast<DopuskCalculator*>(m_calculator), testUid);
+                else
+                if (cnd == 3 && wgt->objectName() == "wgtIDSAnalysis")
+                    static_cast<IDSWidget*>(wgt)->
+                        calculate(static_cast<IDSCalculator*>(m_calculator), testUid);
             }
         }
     }

@@ -61,6 +61,12 @@ public:
     void stop() override;
 
     /*!
+     * \brief Возвращает частоту дискретизации для канала по его id
+     * \param channelId - идентификатор канала
+     */
+    int frequency(const QString &channelId) const override;
+
+    /*!
      * \brief Возвращает список протоколов
      * \return
      */

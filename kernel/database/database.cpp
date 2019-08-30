@@ -345,6 +345,9 @@ void DataBase::addPrimaryFactor(const QString &testUid,
             {
                 obj["value"] = value;
                 factors.replace(i, obj);
+                //! Запись в файл
+                testObj["factors"] = factors;
+                writeTableRec(dir.absoluteFilePath(testUid), testObj);
                 return;
             }
         }

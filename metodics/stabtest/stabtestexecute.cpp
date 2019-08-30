@@ -24,11 +24,6 @@
 #include <QComboBox>
 #include <QDebug>
 
-namespace
-{
-    const int m_frequency = 50;  ///< Частота дискретизации todo: временно, до появляения реальных драйверов
-}
-
 StabTestExecute::StabTestExecute(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::StabTestExecute)
@@ -89,6 +84,8 @@ void StabTestExecute::start()
     if (m_driver)
     {
         m_stabControl = dynamic_cast<DeviceProtocols::StabControl*>(m_driver);
+        m_freqStab = m_driver->frequency(ChannelsDefines::chanStab);
+        m_freqZ = m_driver->frequency(ChannelsDefines::chanZ);
 
         connect(m_driver, &Driver::sendData, this, &StabTestExecute::getData);
         connect(m_driver, &Driver::communicationError, this, &StabTestExecute::on_communicationError);
@@ -108,29 +105,6 @@ void StabTestExecute::start()
         QMessageBox::warning(this, tr("Предупреждение"), tr("Отсутствует необходимое подключение для работы теста"));
         static_cast<ExecuteWidget*>(parent())->showDB();
     }
-}
-
-void StabTestExecute::signalTest()
-{
-    Stabilogram stab(ChannelsDefines::chanStab, 50);
-
-    for (int i = 0; i < 1000; ++i)
-    {
-        SignalsDefines::StabRec rec;
-        rec.x = i;
-        rec.y = 1000 - i;
-        stab.addValue(rec);
-    }
-
-    QByteArray ba;
-    stab.toByteArray(ba);
-
-    qDebug() << ba;
-
-    Stabilogram stab1(ChannelsDefines::chanStab, 50);
-    stab1.fromByteArray(ba);
-    for (int i = 0; i < stab1.size(); ++i)
-        qDebug() << stab1.value(0, i) << stab1.value(1, i);
 }
 
 void StabTestExecute::scaleChange(int scaleId)
@@ -162,7 +136,7 @@ void StabTestExecute::getData(DeviceProtocols::DeviceData *data)
         if (m_isRecording)
         {
             //! Запись, если не задержка привыкания
-            if (m_recCount >= probeParams().latentTime * m_frequency)
+            if (m_recCount >= probeParams().latentTime * m_freqStab)
             {
                 SignalsDefines::StabRec rec(std::make_tuple(stabData->x(), stabData->y()));
                 m_stb->addValue(rec);
@@ -173,22 +147,22 @@ void StabTestExecute::getData(DeviceProtocols::DeviceData *data)
             //! Вывод времени теста и прогресса
             if (probeParams().autoEnd)
             {
-                double rc = m_recCount - probeParams().latentTime * m_frequency;
+                double rc = m_recCount - probeParams().latentTime * m_freqStab;
                 if (rc < 0)
                     rc = 0;
-                if (m_recCount < probeParams().latentTime * m_frequency)
+                if (m_recCount < probeParams().latentTime * m_freqStab)
                     ui->lblRecLen->setText(tr("Задержка привыкания"));
                 else
-                    ui->lblRecLen->setText(BaseUtils::getTimeBySecCount(rc / m_frequency) + " / " +
+                    ui->lblRecLen->setText(BaseUtils::getTimeBySecCount(rc / m_freqStab) + " / " +
                                            BaseUtils::getTimeBySecCount(probeParams().time));
-                double mrc = probeParams().time * m_frequency;
+                double mrc = probeParams().time * m_freqStab;
                 ui->pbRec->setValue(rc / mrc * 100);
             }
             else
-                ui->lblRecLen->setText(BaseUtils::getTimeBySecCount(m_recCount / m_frequency));
+                ui->lblRecLen->setText(BaseUtils::getTimeBySecCount(m_recCount / m_freqStab));
 
             //! Смена пробы и окончание
-            if (probeParams().autoEnd && (m_recCount >= (probeParams().time + probeParams().latentTime) * m_frequency))
+            if (probeParams().autoEnd && (m_recCount >= (probeParams().time + probeParams().latentTime) * m_freqStab))
             {
                 //! Следующая проба
                 nextProbe();
@@ -285,9 +259,9 @@ void StabTestExecute::initRecSignals()
         if (m_probe == m_trd->probesCount())   //! Новая проба - создать пробу и сигналы
         {
             m_trd->newProbe(probeParams().name);
-            m_stb = new Stabilogram(ChannelsDefines::chanStab, m_frequency);
+            m_stb = new Stabilogram(ChannelsDefines::chanStab, m_freqStab);
             m_trd->addChannel(m_stb);
-            m_z = new Ballistogram(ChannelsDefines::chanZ, m_frequency);
+            m_z = new Ballistogram(ChannelsDefines::chanZ, m_freqZ);
             m_trd->addChannel(m_z);
         }
         else

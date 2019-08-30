@@ -245,6 +245,7 @@ public:
     virtual void stop() = 0;
 
     static QString uid() {return uid_CommonControl;}
+
 //    static QString name() {return name_CommonControl;}   Непонятно, как быть с локализацией
 
     ~CommonControl() {}

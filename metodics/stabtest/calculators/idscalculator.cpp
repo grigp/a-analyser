@@ -15,6 +15,7 @@ void IDSCalculator::calculate()
 {
     StabTestCalculator::calculate();
 
+    m_factors.clear();
     DataDefines::TestInfo ti;
     if (DataProvider::getTestInfo(testUid(), ti))
     {

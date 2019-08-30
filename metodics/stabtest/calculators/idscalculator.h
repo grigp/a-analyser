@@ -29,6 +29,11 @@ public:
     void fastCalculate() override;
 
     /*!
+     * \brief Возвращает кол-во проб
+     */
+    int probesCount() {return m_factors.size();}
+
+    /*!
      * \brief Возвращает указатель на факторгруппу, рассчитанную для пробы по номеру
      * \param probeNum - номер пробы
      */

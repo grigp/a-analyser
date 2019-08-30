@@ -51,6 +51,13 @@ public:
      */
     virtual void stop();
 
+    /*!
+     * \brief Возвращает частоту дискретизации для канала по его id
+     * \param channelId - идентификатор канала
+     */
+    virtual int frequency(const QString &channelId) const = 0;
+
+
 signals:
     void sendData(DeviceProtocols::DeviceData *data);
     void communicationError(const QString &drvName, const QString &port, const int errorCode);

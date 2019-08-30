@@ -6,6 +6,8 @@
 #include "stabilogram.h"
 
 #include <math.h>
+#include <QTextStream>
+#include <QDebug>
 
 IDSFactors::IDSFactors(const QString &testUid,
                        const QString &probeUid,
@@ -46,6 +48,10 @@ void IDSFactors::calculate()
             //! Расчет массива ФДС
             computeFDSBuf(bufV, bufW);
 
+//            bufToFile(bufV, "C:/111/v.txt");
+//            bufToFile(bufW, "C:/111/w.txt");
+//            bufToFile(m_bufFDS, "C:/111/fds.txt");
+
             //! ИДС
             if (m_fdsQ > 0)
                 m_ids = 100 - (log10(m_fdsQ) - 2) / 0.04;
@@ -54,7 +60,7 @@ void IDSFactors::calculate()
             if (m_ids > 100)
                 m_ids = 100;
 
-            if (m_fdsQ > 0)
+            if (m_fdsQ > 1)
                 m_freq = pow(log10(pow(m_fdsQ, 2)), 3) * 3;
         }
     }
@@ -96,6 +102,7 @@ void IDSFactors::computeSpeedBuf(Stabilogram *stab, QVector<double> &bufV, QVect
     {
         double x = stab->value(i).x;
         double y = stab->value(i).y;
+
         if (i > 0)
         {
             double vx = (x - ox) * stab->frequency();
@@ -103,7 +110,9 @@ void IDSFactors::computeSpeedBuf(Stabilogram *stab, QVector<double> &bufV, QVect
             double v = sqrt(pow(vx, 2) + pow(vy, 2));
             bufV.replace(i - 1, v);
 
-            double w = v / sqrt(x * x + y + y);
+            double w = 0;
+            if (fabs(x) > 0 && fabs(y) > 0)
+                w = v / sqrt(x * x + y * y);
             bufW.replace(i - 1, w);
         }
         ox = x;
@@ -136,5 +145,17 @@ void IDSFactors::computeFDSBuf(const QVector<double> &bufV, const QVector<double
         m_fdsQ = m_fdsQ + pow(fdsMid - fds, 2);
     if (m_bufFDS.size() - 1 > 0)
         m_fdsQ = sqrt(m_fdsQ / (m_bufFDS.size() - 1));
+}
+
+void IDSFactors::bufToFile(const QVector<double> &buf, const QString &fn)
+{
+    QFile file(fn);
+    if (file.open(QIODevice::WriteOnly | QIODevice::Text))
+    {
+        QTextStream fs(&file);
+        foreach (auto val, buf)
+            fs << QString::number(val) << "\n";
+        file.close();
+    }
 }
 

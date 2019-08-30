@@ -61,6 +61,12 @@ void JumpPlate::stop()
     Driver::stop();
 }
 
+int JumpPlate::frequency(const QString &channelId) const
+{
+    Q_UNUSED(channelId);
+    return 50;
+}
+
 QStringList JumpPlate::getProtocols()
 {
     return QStringList() << DeviceProtocols::uid_JumpPlateProtocol;
