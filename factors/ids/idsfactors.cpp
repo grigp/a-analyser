@@ -4,6 +4,7 @@
 #include "channelsutils.h"
 #include "aanalyserapplication.h"
 #include "stabilogram.h"
+#include "baseutils.h"
 
 #include <math.h>
 #include <QTextStream>
@@ -48,9 +49,9 @@ void IDSFactors::calculate()
             //! Расчет массива ФДС
             computeFDSBuf(bufV, bufW);
 
-//            bufToFile(bufV, "C:/111/v.txt");
-//            bufToFile(bufW, "C:/111/w.txt");
-//            bufToFile(m_bufFDS, "C:/111/fds.txt");
+//            bufToFile(bufV, "C:/a-analyser/temp/v.txt");
+//            bufToFile(bufW, "C:/a-analyser/temp/w.txt");
+//            bufToFile(m_bufFDS, "C:/a-analyser/temp/fds.txt");
 
             //! ИДС
             if (m_fdsQ > 0)
@@ -95,9 +96,10 @@ double IDSFactors::fds(const int idx) const
 void IDSFactors::computeSpeedBuf(Stabilogram *stab, QVector<double> &bufV, QVector<double> &bufW)
 {
     bufV.resize(stab->size() - 1);
-    bufW.resize(stab->size() - 1);
+    bufW.resize(stab->size() - 2);
     double ox = 0;
     double oy = 0;
+    double oa = 0;
     for (int i = 0; i < stab->size(); ++i)
     {
         double x = stab->value(i).x;
@@ -110,10 +112,13 @@ void IDSFactors::computeSpeedBuf(Stabilogram *stab, QVector<double> &bufV, QVect
             double v = sqrt(pow(vx, 2) + pow(vy, 2));
             bufV.replace(i - 1, v);
 
-            double w = 0;
-            if (fabs(x) > 0 && fabs(y) > 0)
-                w = v / sqrt(x * x + y * y);
-            bufW.replace(i - 1, w);
+            double a = BaseUtils::getAngleByCoord(vx, vy);
+            if (i > 1)
+            {
+                double da = BaseUtils::getDifferenceAngles(oa, a);
+                bufW.replace(i - 2, da * stab->frequency());
+            }
+            oa = a;
         }
         ox = x;
         oy = y;
@@ -122,10 +127,10 @@ void IDSFactors::computeSpeedBuf(Stabilogram *stab, QVector<double> &bufV, QVect
 
 void IDSFactors::computeFDSBuf(const QVector<double> &bufV, const QVector<double> &bufW)
 {
-    m_bufFDS.resize(bufV.size() - 1);
+    m_bufFDS.resize(bufW.size() - 1);
     double ov = 0;
     double fdsMid = 0;
-    for (int i = 0; i < bufV.size(); ++i)
+    for (int i = 0; i < bufW.size(); ++i)
     {
         double v = bufV.at(i);
         double w = bufW.at(i);

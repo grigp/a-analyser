@@ -35,3 +35,42 @@ bool BaseUtils::getTranslatorFileName(QString &fileName, QString &langCode)
         }
     return false;
 }
+
+double BaseUtils::getAngleByCoord(const double x, const double y)
+{
+    if (x == 0 && y >= 0)
+        return 0;
+    else
+    if (x > 0 && y == 0)
+        return M_PI_2;
+    else
+    if (x == 0 && y < 0)
+        return M_PI;
+    else
+    if (x < 0 && y == 0)
+        return 3   * M_PI_2;
+    if (x > 0 && y > 0)
+        return atan(x / y);
+    else
+    if (x > 0 && y < 0)
+        return M_PI_2 + atan(fabs(y / x));
+    else
+    if (x < 0 && y < 0)
+        return M_PI + atan(fabs(x / y));
+    else
+    if (x < 0 && y > 0)
+        return 3 * M_PI / 2 + atan(fabs(y / x));
+    else
+        return 0;
+}
+
+double BaseUtils::getDifferenceAngles(const double a1, const double a2)
+{
+    if (a1 < M_PI_2 && a2 > 3 * M_PI_2)
+        return -(a1 + 2 * M_PI - a2);
+    else
+    if (a2 < M_PI_2 && a1 > 3 * M_PI_2)
+        return 2 * M_PI - a1 + a2;
+    else
+        return a2 - a1;
+}

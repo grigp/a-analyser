@@ -30,7 +30,11 @@
     <number>1</number>
    </property>
    <item>
-    <widget class="QTreeView" name="tvFactors"/>
+    <widget class="QTreeView" name="tvFactors">
+     <property name="selectionBehavior">
+      <enum>QAbstractItemView::SelectItems</enum>
+     </property>
+    </widget>
    </item>
   </layout>
  </widget>

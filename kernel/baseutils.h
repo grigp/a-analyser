@@ -21,6 +21,19 @@ QString getTimeBySecCount(const int secCnt, const bool isHour = false);
  */
 bool getTranslatorFileName(QString &fileName, QString &langCode);
 
+/*!
+ * \brief Возвращает угол в полярной системе координат (0 - 2 * M_PI) по значениям координат в декартовой системе координат
+ * \param x, y - координаты в декартовой системе координат
+ */
+double getAngleByCoord(const double x, const double y);
+
+/*!
+ * \brief Возвращает разницу между двумя углами a1 - a2
+ * Исходные углы и разница в радианах
+ * \param a1, a2 - исходные углы
+ */
+double getDifferenceAngles(const double a1, const double a2);
+
 }
 
 
