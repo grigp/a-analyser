@@ -4,7 +4,7 @@
 #include <QObject>
 #include <QGraphicsItem>
 
-class SignalResultInfo;
+class SignalAccess;
 
 /*!
  * \brief Класс линии СКГ LineSKG class
@@ -26,7 +26,7 @@ public:
      * \brief Задает сигнал для отображения в виджете при использовании в визуале
      * \param signal
      */
-    void setSignal(SignalResultInfo *signal);
+    void setSignal(SignalAccess *signal);
 
     /*!
      * \brief Устанавливает признак центровки сигнала
@@ -50,7 +50,7 @@ private:
     double m_offsX {0}, m_offsY {0};
     bool m_isZeroing {false};
 
-    SignalResultInfo *m_signal {nullptr};
+    SignalAccess *m_signal {nullptr};
 
     ///< Параметры эллипса
     double m_sizeA {0};

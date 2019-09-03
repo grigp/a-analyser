@@ -4,7 +4,7 @@
 #include "gridskg.h"
 #include "traceskg.h"
 #include "lineskg.h"
-#include "resultinfo.h"
+#include "signalaccess.h"
 
 AreaSKG::AreaSKG(QWidget *parent) :
     QWidget(parent),
@@ -55,7 +55,7 @@ void AreaSKG::showTrace(const bool trace)
         m_traceSKG->clear();
 }
 
-void AreaSKG::setSignal(SignalResultInfo *signal)
+void AreaSKG::setSignal(SignalAccess *signal)
 {
     m_lineSKG->setSignal(signal);
 }

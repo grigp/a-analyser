@@ -11,7 +11,7 @@ class AreaSKG;
 class GridSKG;
 class TraceSKG;
 class LineSKG;
-class SignalResultInfo;
+class SignalAccess;
 
 class AreaSKG : public QWidget
 {
@@ -40,7 +40,7 @@ public:
      * \brief Задает сигнал для отображения в виджете при использовании в визуале
      * \param signal
      */
-    void setSignal(SignalResultInfo *signal);
+    void setSignal(SignalAccess *signal);
 
     /*!
      * \brief Управляет видимостью маркера

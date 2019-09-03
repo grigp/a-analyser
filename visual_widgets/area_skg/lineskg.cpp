@@ -1,6 +1,6 @@
 #include "lineskg.h"
 
-#include "resultinfo.h"
+#include "signalaccess.h"
 
 #include <QPainter>
 #include <QWidget>
@@ -125,7 +125,7 @@ void LineSKG::setDiap(int diap)
     updateItem();
 }
 
-void LineSKG::setSignal(SignalResultInfo *signal)
+void LineSKG::setSignal(SignalAccess *signal)
 {
     m_signal = signal;
 
