@@ -4,6 +4,7 @@
 #include "datadefines.h"
 #include "dataprovider.h"
 #include "aanalyserapplication.h"
+#include "settingsprovider.h"
 
 #include "idscalculator.h"
 #include "idsfactors.h"
@@ -15,6 +16,7 @@ IDSWidget::IDSWidget(QWidget *parent) :
     ui(new Ui::IDSWidget)
 {
     ui->setupUi(this);
+    restoreSplitterPosition();
 }
 
 IDSWidget::~IDSWidget()
@@ -48,6 +50,13 @@ void IDSWidget::calculate(IDSCalculator *calculator, const QString &testUid)
         ui->tvFactors->resizeColumnToContents(i);
 }
 
+void IDSWidget::splitterMoved(int pos, int index)
+{
+    Q_UNUSED(pos);
+    Q_UNUSED(index);
+    saveSplitterPosition();
+}
+
 void IDSWidget::addFactorsFromMultifactor(IDSCalculator *calculator)
 {
     auto *app = static_cast<AAnalyserApplication*>(QApplication::instance());
@@ -72,4 +81,18 @@ void IDSWidget::addFactorsFromMultifactor(IDSCalculator *calculator)
 
         m_mdlTable.appendRow(items);
     }
+}
+
+void IDSWidget::saveSplitterPosition()
+{
+    SettingsProvider::setValueToRegAppCopy("IDSTestWidget", "SplitterDiagramPosition", ui->splDiagrams->saveState());
+    SettingsProvider::setValueToRegAppCopy("IDSTestWidget", "SplitterTableDiagPosition", ui->splTblDiag->saveState());
+}
+
+void IDSWidget::restoreSplitterPosition()
+{
+    auto valDiag = SettingsProvider::valueFromRegAppCopy("IDSTestWidget", "SplitterDiagramPosition").toByteArray();
+    ui->splDiagrams->restoreState(valDiag);
+    auto valTblDiag = SettingsProvider::valueFromRegAppCopy("IDSTestWidget", "SplitterTableDiagPosition").toByteArray();
+    ui->splTblDiag->restoreState(valTblDiag);
 }

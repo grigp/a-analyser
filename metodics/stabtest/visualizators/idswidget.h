@@ -27,10 +27,17 @@ public:
      */
     void calculate(IDSCalculator *calculator, const QString &testUid);
 
+private slots:
+    void splitterMoved(int pos,int index);
+
+
 private:
     Ui::IDSWidget *ui;
 
     void addFactorsFromMultifactor(IDSCalculator *calculator);
+
+    void saveSplitterPosition();
+    void restoreSplitterPosition();
 
     QStandardItemModel m_mdlTable;
 };

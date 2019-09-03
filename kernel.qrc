@@ -36,5 +36,14 @@
         <file>pre_settings/connections_en_US.json</file>
         <file>pre_settings/metodics_en_US.json</file>
         <file>qss/another_win.qss</file>
+        <file>images/Animate/Minus.png</file>
+        <file>images/Animate/Next.png</file>
+        <file>images/Animate/Play.png</file>
+        <file>images/Animate/Plus.png</file>
+        <file>images/Animate/Prev.png</file>
+        <file>images/Animate/Stop.png</file>
+        <file>images/Animate/ToBegin.png</file>
+        <file>images/Animate/Zeroing.png</file>
+        <file>images/Animate/Volume.png</file>
     </qresource>
 </RCC>
