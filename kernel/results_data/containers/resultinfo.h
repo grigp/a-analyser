@@ -3,9 +3,12 @@
 
 #include <QString>
 
+#include "signalaccess.h"
+
 class ProbeResultData;
 class ChannelData;
 class SignalResultInfo;
+
 
 /*!
  * \brief Класс, ассоциированный с объектом пробы ProbeResultInfo class
@@ -51,7 +54,7 @@ private:
  * \brief Класс, ассоциированный с объектом сигнала SignalResultInfo class
  * Через него осуществляется доступ к данным сигнала
  */
-class SignalResultInfo
+class SignalResultInfo : public SignalAccess
 {
 public:
     explicit SignalResultInfo(ChannelData* channel);
@@ -64,19 +67,24 @@ public:
     /*!
      * \brief Возвращает частоту дискретизации сигнала
      */
-    int frequency() const;
+    int frequency() const override;
 
     /*!
      * \brief Возвращает кол-во отсчетов сигнала
      */
-    int size() const;
+    int size() const override;
+
+    /*!
+     * \brief Виртуальная функция, возвращающая кол-во подканалов
+     */
+    int subChansCount() const override;
 
     /*!
      * \brief Возвращает значение сигнала
      * \param chan - номер канала
      * \param rec - номер записи
      */
-    double value(const int chan, const int rec) const;
+    double value(const int chan, const int rec) const override;
 
     /*!
      * \brief Возвращает максимальное значение сигнала по модулю

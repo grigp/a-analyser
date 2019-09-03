@@ -63,6 +63,14 @@ int SignalResultInfo::size() const
     return 0;
 }
 
+int SignalResultInfo::subChansCount() const
+{
+    SignalData* signal = dynamic_cast<SignalData*>(m_channel);
+    if (signal)
+        return signal->subChansCount();
+    return 0;
+}
+
 double SignalResultInfo::value(const int chan, const int rec) const
 {
     SignalData* signal = dynamic_cast<SignalData*>(m_channel);

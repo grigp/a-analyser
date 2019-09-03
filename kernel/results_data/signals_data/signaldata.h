@@ -4,13 +4,14 @@
 #include <QString>
 
 #include "channeldata.h"
+#include "signalaccess.h"
 
 /*!
  * \brief Базовый виртуальный класс сигнала SignalData class
  * Будет использоваться при отображении данных.
  * Доступ к данным унифицирован для любых сигналов
  */
-class SignalData : public ChannelData
+class SignalData : public ChannelData, public SignalAccess
 {
 public:
     explicit SignalData();
@@ -24,17 +25,17 @@ public:
     /*!
      * \brief Виртуальная функция, возвращающая частоту дискретизации канала
      */
-    virtual int frequency() const = 0;
+    int frequency() const override = 0;
 
     /*!
      * \brief Виртуальная функция, возвращающая размер сигнала в отсчетах
      */
-    virtual int size() const = 0;
+    int size() const override = 0;
 
     /*!
      * \brief Виртуальная функция, возвращающая кол-во подканалов
      */
-    virtual int subChansCount() const = 0;
+    int subChansCount() const override = 0;
 
     /*!
      * \brief Виртуальная функция, возвращающая данные канала
@@ -42,7 +43,7 @@ public:
      * \param rec - номер записи
      * \return значение сигнала п заданным номеру записи и номеру подканала
      */
-    virtual double value(const int subChan, const int rec) const = 0;
+    double value(const int subChan, const int rec) const override = 0;
 
     /*!
      * \brief Возвращает максимальное значение сигнала
