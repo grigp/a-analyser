@@ -6,6 +6,9 @@
 #include "aanalyserapplication.h"
 #include "settingsprovider.h"
 #include "soundgenerator.h"
+#include "testresultdata.h"
+#include "channelsdefines.h"
+#include "resultinfo.h"
 
 #include "idscalculator.h"
 #include "idsfactors.h"
@@ -23,13 +26,17 @@
 IDSWidget::IDSWidget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::IDSWidget)
+  , m_trd(new TestResultData())
 {
     ui->setupUi(this);
     restoreSplitterPosition();
+    ui->tvFactors->viewport()->installEventFilter(this);
 }
 
 IDSWidget::~IDSWidget()
 {
+    if (m_trd)
+        delete m_trd;
     if (m_tmStopSound > -1)
     {
         killTimer(m_tmStopSound);
@@ -40,6 +47,9 @@ IDSWidget::~IDSWidget()
 
 void IDSWidget::calculate(IDSCalculator *calculator, const QString &testUid)
 {
+    m_calculator = calculator;
+    m_testUid = testUid;
+
     QStringList headerLabels;
     headerLabels << tr("Показатель");
 
@@ -76,6 +86,8 @@ void IDSWidget::calculate(IDSCalculator *calculator, const QString &testUid)
 //        ui->tvFactors->resizeColumnToContents(i);
     for (int i = 1; i < m_mdlTable.columnCount(); ++i)
         ui->tvFactors->header()->resizeSection(i, 100);
+
+    ui->wgtSKG->setVisibleMarker(false);
 }
 
 void IDSWidget::timerEvent(QTimerEvent *event)
@@ -85,6 +97,25 @@ void IDSWidget::timerEvent(QTimerEvent *event)
     {
         doneAudio();
     }
+}
+
+bool IDSWidget::eventFilter(QObject *obj, QEvent *event)
+{
+    if (obj == ui->tvFactors->viewport())
+    {
+        if (event->type() == QEvent::Paint)
+        {
+            // Приводит к частым срабатываниям
+            auto curIdx = ui->tvFactors->selectionModel()->currentIndex();
+            if (curIdx.row() != m_curRow && curIdx.column() != m_curCol)
+            {
+                m_curRow = curIdx.row();
+                m_curCol = curIdx.column();
+                showSKG(m_testUid, m_curCol - 1);
+            }
+        }
+    }
+    return false;
 }
 
 void IDSWidget::splitterMoved(int pos, int index)
@@ -181,6 +212,35 @@ void IDSWidget::doneAudio()
         m_audioOutput->deleteLater();
     }
     m_tmStopSound = -1;
+}
+
+void IDSWidget::showSKG(const QString &testUid, const int probeNum)
+{
+    DataDefines::TestInfo ti;
+    if (DataProvider::getTestInfo(testUid, ti))
+    {
+        m_trd->openTest(testUid);
+
+        Q_ASSERT(ti.probes.size() == m_trd->probesCount() && probeNum < ti.probes.size());
+        DataDefines::ProbeInfo pi;
+        if (DataProvider::getProbeInfo(ti.probes.at(probeNum), pi))
+        {
+            auto* probe = m_trd->probe(probeNum);
+
+            auto *sig = probe->signal(ChannelsDefines::chanStab);
+            ui->wgtSKG->setSignal(sig);
+            auto max = sig->absMaxValue();
+
+            //! Установка диапазонов для СКГ
+            QTimer::singleShot(0, [=]()
+            {
+                int diap = 1;
+                while (diap < max)
+                    diap = diap * 2;
+                ui->wgtSKG->setDiap(diap);
+            });
+        }
+    }
 }
 
 

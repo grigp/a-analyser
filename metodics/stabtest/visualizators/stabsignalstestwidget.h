@@ -58,7 +58,7 @@ private:
 
     Ui::StabSignalsTestWidget *ui;
     QStandardItemModel m_mdlTable;
-    TestResultData* m_trd;
+    TestResultData* m_trd {nullptr};
 };
 
 #endif // STABSIGNALSTESTWIDGET_H

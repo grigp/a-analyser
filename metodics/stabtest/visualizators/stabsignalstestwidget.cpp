@@ -28,6 +28,8 @@ StabSignalsTestWidget::StabSignalsTestWidget(QWidget *parent) :
 
 StabSignalsTestWidget::~StabSignalsTestWidget()
 {
+    if (m_trd)
+        delete m_trd;
     delete ui;
 }
 
