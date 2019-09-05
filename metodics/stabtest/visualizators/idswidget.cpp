@@ -26,11 +26,15 @@ IDSWidget::IDSWidget(QWidget *parent) :
 {
     ui->setupUi(this);
     restoreSplitterPosition();
-    initAudio();
 }
 
 IDSWidget::~IDSWidget()
 {
+    if (m_tmStopSound > -1)
+    {
+        killTimer(m_tmStopSound);
+        doneAudio();
+    }
     delete ui;
 }
 
@@ -74,6 +78,15 @@ void IDSWidget::calculate(IDSCalculator *calculator, const QString &testUid)
         ui->tvFactors->header()->resizeSection(i, 100);
 }
 
+void IDSWidget::timerEvent(QTimerEvent *event)
+{
+    QWidget::timerEvent(event);
+    if (event->timerId() == m_tmStopSound)
+    {
+        doneAudio();
+    }
+}
+
 void IDSWidget::splitterMoved(int pos, int index)
 {
     Q_UNUSED(pos);
@@ -83,14 +96,14 @@ void IDSWidget::splitterMoved(int pos, int index)
 
 void IDSWidget::on_play(const double frequency)
 {
-    m_soundGenerator->reset(m_audioFormat, 2 * 1000000, frequency);
-    m_soundGenerator->start();
-    m_audioOutput->start(m_soundGenerator);
-    QTimer::singleShot(1000, [=]()
+    if (m_tmStopSound == -1)
     {
-        m_soundGenerator->stop();
-        m_audioOutput->stop();
-    });
+        initAudio(frequency);
+
+        m_soundGenerator->start();
+        m_audioOutput->start(m_soundGenerator);
+        m_tmStopSound = startTimer(1000);
+    }
 }
 
 void IDSWidget::addFactorsFromMultifactor(IDSCalculator *calculator)
@@ -139,7 +152,7 @@ void IDSWidget::restoreSplitterPosition()
     ui->splTblDiag->restoreState(valTblDiag);
 }
 
-void IDSWidget::initAudio()
+void IDSWidget::initAudio(const double frequency)
 {
     m_audioFormat.setSampleRate(44100);
     m_audioFormat.setChannelCount(1);
@@ -151,8 +164,23 @@ void IDSWidget::initAudio()
     if (!QAudioDeviceInfo::defaultOutputDevice().isFormatSupported(m_audioFormat))
         m_audioFormat = QAudioDeviceInfo::defaultOutputDevice().nearestFormat(m_audioFormat);
 
-    m_soundGenerator = new SoundGenerator(m_audioFormat, 2 * 1000000, 500);
+    m_soundGenerator = new SoundGenerator(m_audioFormat, 2 * 1000000, frequency);
     m_audioOutput = new QAudioOutput(QAudioDeviceInfo::defaultOutputDevice(), m_audioFormat);
+}
+
+void IDSWidget::doneAudio()
+{
+    if (m_soundGenerator)
+    {
+        m_soundGenerator->stop();
+        m_soundGenerator->deleteLater();
+    }
+    if (m_audioOutput)
+    {
+        m_audioOutput->stop();
+        m_audioOutput->deleteLater();
+    }
+    m_tmStopSound = -1;
 }
 
 

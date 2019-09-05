@@ -5,6 +5,7 @@
 #include <QStandardItemModel>
 #include <QStyledItemDelegate>
 #include <QAudioOutput>
+#include <QTimerEvent>
 
 namespace Ui {
 class IDSWidget;
@@ -37,6 +38,9 @@ public:
      */
     void calculate(IDSCalculator *calculator, const QString &testUid);
 
+protected:
+    void timerEvent(QTimerEvent *event);
+
 private slots:
     void splitterMoved(int pos,int index);
     void on_play(const double frequency);
@@ -49,12 +53,14 @@ private:
     void saveSplitterPosition();
     void restoreSplitterPosition();
 
-    void initAudio();
+    void initAudio(const double frequency);
+    void doneAudio();
 
     QStandardItemModel m_mdlTable;
 
-    SoundGenerator* m_soundGenerator;
-    QAudioOutput* m_audioOutput;
+    int m_tmStopSound {-1};
+    SoundGenerator* m_soundGenerator {nullptr};
+    QAudioOutput* m_audioOutput {nullptr};
     QAudioFormat m_audioFormat;
 };
 
