@@ -6,7 +6,8 @@ HEADERS += \
     $$PWD/ballistogram.h \
     $$PWD/jumpplatedata.h \
     $$PWD/channeljsondata.h \
-    $$PWD/channeldata.h
+    $$PWD/channeldata.h \
+    $$PWD/anysignal.h
 
 SOURCES += \
     $$PWD/signaldata.cpp \
@@ -14,4 +15,5 @@ SOURCES += \
     $$PWD/ballistogram.cpp \
     $$PWD/jumpplatedata.cpp \
     $$PWD/channeljsondata.cpp \
-    $$PWD/channeldata.cpp
+    $$PWD/channeldata.cpp \
+    $$PWD/anysignal.cpp

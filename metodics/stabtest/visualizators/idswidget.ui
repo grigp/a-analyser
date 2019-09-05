@@ -90,7 +90,7 @@
            </size>
           </property>
          </widget>
-         <widget class="QWidget" name="wgtFDS" native="true">
+         <widget class="AreaGraph" name="wgtFDS" native="true">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
             <horstretch>3</horstretch>
@@ -376,6 +376,12 @@
    <class>AreaSKG</class>
    <extends>QWidget</extends>
    <header location="global">areaskg.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>AreaGraph</class>
+   <extends>QWidget</extends>
+   <header location="global">areagraph.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
