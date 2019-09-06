@@ -78,8 +78,8 @@ public:
     virtual void clear() = 0;
 
 protected:
-    double m_minValue {0};
-    double m_maxValue {0};
+    double m_minValue {INT_MAX};
+    double m_maxValue {-INT_MAX};
 
 };
 

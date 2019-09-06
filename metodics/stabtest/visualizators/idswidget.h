@@ -14,6 +14,7 @@ class IDSWidget;
 class IDSCalculator;
 class SoundGenerator;
 class TestResultData;
+class AnySignal;
 
 /*!
  * \brief Класс виджета визуализатора динамической стабилизации в рамках стабилографического теста IDSWidget class
@@ -59,7 +60,8 @@ private:
     void initAudio(const double frequency);
     void doneAudio();
 
-    void showSKG(const QString &testUid, const int probeNum);
+    void showSKG(const int probeNum);
+    void showFDS(const int probeNum);
 
     QStandardItemModel m_mdlTable;
 
@@ -69,6 +71,7 @@ private:
     IDSCalculator *m_calculator {nullptr};
     QString m_testUid;
     TestResultData* m_trd {nullptr};
+    AnySignal* m_fds {nullptr};
 
     SoundGenerator* m_soundGenerator {nullptr};
     QAudioOutput* m_audioOutput {nullptr};

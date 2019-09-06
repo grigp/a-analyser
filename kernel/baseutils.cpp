@@ -74,3 +74,11 @@ double BaseUtils::getDifferenceAngles(const double a1, const double a2)
     else
         return a2 - a1;
 }
+
+QSize BaseUtils::getTextSize(QPainter *painter, const QString &text)
+{
+    QFontMetrics fm(painter->font());
+    int w = fm.width(text);
+    int h = fm.height();
+    return QSize(w, h);
+}

@@ -28,20 +28,30 @@ class SignalAccess;
 class GraphArea
 {
 public:
-    explicit GraphArea(SignalAccess* signal, const int numSubChan);
+    explicit GraphArea(SignalAccess* signal,
+                       const int numSubChan,
+                       const QString &name);
 
     SignalAccess* signal() const {return m_signal;}
 
     int numSubChan() {return m_numSubChan;}
 
     QColor color(const int colorNum) const;
-
     void setColor(const int colorNum, const QColor &color);
+
+    QString name() const {return m_name;}
+
+    double minValue() const {return m_minVal;}
+    double maxValue() const {return m_maxVal;}
+    void setDiapazone(const double minVal, const double maxVal);
 
 private:
     SignalAccess* m_signal {nullptr};
     int m_numSubChan {-1};   ///< Номер отображаемого подканала. Если он равен -1, то отображаются все подканалы сигнала в одной зоне
+    QString m_name;
     QVector<QColor> m_palette;
+    double m_minVal {0};
+    double m_maxVal {0};
 };
 
 /*!
@@ -67,17 +77,43 @@ public:
      */
     int areasesCount() const {return m_areases.size();}
 
+    /*!
+     * \brief Возвращает указатель на зону построения по ее номеру
+     * \param areaNum - номер зоны построения
+     */
+    GraphArea* area(const int areaNum) const;
+
+    /*!
+     * \brief Очищает все зоны построения и удаляет их
+     */
+    void clear();
+
     QColor colorBackground() const {return m_envColors.colorBackground;}
-    void setColorBackground(const QColor &color) {m_envColors.colorBackground = color;}
+    void setColorBackground(const QColor &color);
 
     QColor colorAxis() const {return m_envColors.colorAxis;}
-    void setColorAxis(const QColor &color) {m_envColors.colorAxis = color;}
+    void setColorAxis(const QColor &color);
 
     QColor colorGrid() const {return m_envColors.colorGrid;}
-    void setColorGrid(const QColor &color) {m_envColors.colorGrid = color;}
+    void setColorGrid(const QColor &color);
 
     QColor colorLabels() const {return m_envColors.colorLabels;}
-    void setColorLabels(const QColor &color) {m_envColors.colorLabels = color;}
+    void setColorLabels(const QColor &color);
+
+    /*!
+     * \brief Режимы отображения сигнала по горизонтали XCoordSignalMode enum
+     */
+    enum XCoordSignalMode
+    {
+          xsm_fullSignal = 0  ///< Режим полного сигнала
+        , xsm_scrolling       ///< Режим скроллинга
+    };
+
+    XCoordSignalMode xcoordSignalMode() const {return m_xcsm;}
+    void setXCoordSignalMode(const XCoordSignalMode mode);
+
+    int startPoint() const {return m_startPoint;}
+    void setStartPoint(const int startPoint);
 
 protected:
     void paintEvent(QPaintEvent *event) override;
@@ -88,6 +124,9 @@ private:
 
     QList<GraphArea*> m_areases;
     GraphEnvColors m_envColors;
+
+    XCoordSignalMode m_xcsm {xsm_fullSignal}; ///< Режим отображения сигнала по горизонтали
+    int m_startPoint {0};                     ///< Начальная точка прорисовки в режиме скроллинга
 };
 
 #endif // AREAGRAPH_H

@@ -12,6 +12,7 @@
 
 #include "idscalculator.h"
 #include "idsfactors.h"
+#include "anysignal.h"
 
 #include <QPainter>
 #include <QPushButton>
@@ -35,6 +36,8 @@ IDSWidget::IDSWidget(QWidget *parent) :
 
 IDSWidget::~IDSWidget()
 {
+    if (m_fds)
+        delete m_fds;
     if (m_trd)
         delete m_trd;
     if (m_tmStopSound > -1)
@@ -107,11 +110,15 @@ bool IDSWidget::eventFilter(QObject *obj, QEvent *event)
         {
             // Приводит к частым срабатываниям
             auto curIdx = ui->tvFactors->selectionModel()->currentIndex();
-            if (curIdx.row() != m_curRow && curIdx.column() != m_curCol)
+            if (curIdx.row() != m_curRow || curIdx.column() != m_curCol)
             {
                 m_curRow = curIdx.row();
                 m_curCol = curIdx.column();
-                showSKG(m_testUid, m_curCol - 1);
+                if (m_curCol > 0)
+                {
+                    showSKG(m_curCol - 1);
+                    showFDS(m_curCol - 1);
+                }
             }
         }
     }
@@ -214,12 +221,13 @@ void IDSWidget::doneAudio()
     m_tmStopSound = -1;
 }
 
-void IDSWidget::showSKG(const QString &testUid, const int probeNum)
+void IDSWidget::showSKG(const int probeNum)
 {
     DataDefines::TestInfo ti;
-    if (DataProvider::getTestInfo(testUid, ti))
+    if (DataProvider::getTestInfo(m_testUid, ti))
     {
-        m_trd->openTest(testUid);
+        m_trd->closeTest();
+        m_trd->openTest(m_testUid);
 
         Q_ASSERT(ti.probes.size() == m_trd->probesCount() && probeNum < ti.probes.size());
         DataDefines::ProbeInfo pi;
@@ -241,6 +249,27 @@ void IDSWidget::showSKG(const QString &testUid, const int probeNum)
             });
         }
     }
+}
+
+void IDSWidget::showFDS(const int probeNum)
+{
+    ui->wgtFDS->clear();
+    auto* factors = m_calculator->factors(probeNum);
+
+    if (!m_fds)
+        m_fds = new AnySignal(factors->freqDiskr(), 1);
+    else
+        m_fds->clear();
+
+    for (int i = 0; i < factors->fdsSize(); ++i)
+    {
+        QVector<double> rec;
+        rec << factors->fds(i);
+        m_fds->appendValue(rec);
+    }
+
+    ui->wgtFDS->appendSignal(m_fds);
+    ui->wgtFDS->area(0)->setDiapazone(m_fds->minValue(), m_fds->maxValue());
 }
 
 

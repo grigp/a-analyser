@@ -102,6 +102,7 @@ void TestResultData::closeTest()
         delete probe;
     }
     m_probes.clear();
+    m_mode = mdUndefined;
 }
 
 void TestResultData::addChannel(ChannelData *channel)

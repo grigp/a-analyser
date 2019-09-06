@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QVector>
+#include <QUuid>
 
 #include "signaldata.h"
 
@@ -18,6 +19,8 @@ public:
      * \brief Перекрытая функция, возвращающая идентификатор канала
      */
     QString channelId() const override;
+
+    void setChannelId(const QString channelId);
 
     /*!
      * \brief Перекрытая функция, возвращающая частоту дискретизации канала
@@ -67,6 +70,7 @@ public:
 private:
     int m_frequency;
     int m_subChansCount;
+    QString m_channelId {QUuid().toString()};
 
     QVector<QVector<double>> m_data;
 };

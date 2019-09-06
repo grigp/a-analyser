@@ -2,6 +2,7 @@
 #define BASEUTILS_H
 
 #include <QObject>
+#include <QPainter>
 
 namespace BaseUtils
 {
@@ -33,6 +34,13 @@ double getAngleByCoord(const double x, const double y);
  * \param a1, a2 - исходные углы
  */
 double getDifferenceAngles(const double a1, const double a2);
+
+/*!
+ * \brief Возвращает размер текста для установленных параметров рисователя
+ * \param painter - указатель на рисователь
+ * \param text - текст
+ */
+QSize getTextSize(QPainter *painter, const QString &text);
 
 }
 

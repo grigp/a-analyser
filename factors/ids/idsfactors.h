@@ -63,6 +63,11 @@ public:
      */
     double fds(const int idx) const;
 
+    /*!
+     * \brief Возвращает чатоту дискретизации сигнала
+     */
+    int freqDiskr() {return m_freqDiskr;}
+
 private:
     void computeSpeedBuf(Stabilogram* stab, QVector<double> &bufV, QVector<double> &bufW);
 
@@ -70,6 +75,7 @@ private:
 
     void bufToFile(const QVector<double> &buf, const QString &fn);
 
+    int m_freqDiskr {0};        ///< Частота дискретизации сигнала
     QVector<double> m_bufFDS;   ///< Массив значений ФДС
     double m_fdsQ {0};          ///< СКО ФДС
 

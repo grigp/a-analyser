@@ -1,6 +1,8 @@
 #include "dynamicdiagram.h"
 #include "ui_dynamicdiagram.h"
 
+#include "baseutils.h"
+
 #include <QPainter>
 #include <QMouseEvent>
 #include <QDebug>
@@ -279,11 +281,10 @@ void DynamicDiagram::paintEvent(QPaintEvent *event)
             ox = xv;
             oy = yv;
         }
-        QFontMetrics fm(painter.font());
-        int fw = fm.width(m_items.at(i)->name());
-        int fh = fm.height();
+
+        auto size = BaseUtils::getTextSize(&painter, m_items.at(i)->name());
         painter.setPen(QPen(m_titleColor, 1, Qt::SolidLine, Qt::FlatCap));
-        painter.drawText(xv - fw / 2, geometry().height() - AxisSpace + fh, m_items.at(i)->name());
+        painter.drawText(xv - size.width() / 2, geometry().height() - AxisSpace + size.height(), m_items.at(i)->name());
     }
 
     painter.restore();

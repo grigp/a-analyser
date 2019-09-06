@@ -38,6 +38,7 @@ void IDSFactors::calculate()
     if (DataProvider::getChannel(probeUid(), channelId(), baStab))
     {
         Stabilogram stab(baStab);
+        m_freqDiskr = stab.frequency();
         QVector<double> bufV; //! Буфер длин векторов линейной скорости
         QVector<double> bufW; //! Буфер значений угловой скорости
 
