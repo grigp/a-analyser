@@ -60,6 +60,16 @@ public:
      */
     void setEllipse(const double sizeA, const double sizeB, const double angle);
 
+    /*!
+     * \brief Устанавливает цвет СКГ
+     */
+    void setColorSKG(const QColor &color);
+
+    /*!
+     * \brief Устанавливает цвет эллипса
+     */
+    void setColorEllipse(const QColor &color);
+
 private:
     Ui::AreaSKG *ui;
 

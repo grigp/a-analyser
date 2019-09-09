@@ -40,6 +40,16 @@ public:
      */
     void setEllipse(const double sizeA, const double sizeB, const double angle);
 
+    /*!
+     * \brief Устанавливает цвет СКГ
+     */
+    void setColorSKG(const QColor &color) {m_colorSKG = color;}
+
+    /*!
+     * \brief Устанавливает цвет эллипса
+     */
+    void setColorEllipse(const QColor &color) {m_colorEllipse = color;}
+
 private:
     void updateItem();
 
@@ -56,6 +66,9 @@ private:
     double m_sizeA {0};
     double m_sizeB {0};
     double m_angle {0};
+
+    QColor m_colorSKG {Qt::darkCyan};
+    QColor m_colorEllipse {Qt::darkBlue};
 
 };
 

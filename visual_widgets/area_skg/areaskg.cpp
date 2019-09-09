@@ -91,6 +91,20 @@ void AreaSKG::setEllipse(const double sizeA, const double sizeB, const double an
         m_lineSKG->setEllipse(sizeA, sizeB, angle);
 }
 
+void AreaSKG::setColorSKG(const QColor &color)
+{
+    if (m_lineSKG)
+        m_lineSKG->setColorSKG(color);
+    if (m_traceSKG)
+        m_traceSKG->setColorSKG(color);
+}
+
+void AreaSKG::setColorEllipse(const QColor &color)
+{
+    if (m_lineSKG)
+        m_lineSKG->setColorEllipse(color);
+}
+
 void AreaSKG::setAreaSKG()
 {
     ui->panSKG->setScene(m_sceneSKG);

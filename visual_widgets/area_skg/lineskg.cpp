@@ -37,7 +37,7 @@ void LineSKG::paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWi
     painter->save();
 
     //! Статокинезиграмма
-    painter->setPen(QPen(Qt::blue, 1));
+    painter->setPen(QPen(m_colorSKG, 1));
     int x1 = 0;
     int y1 = 0;
     int x2 = 0;
@@ -62,7 +62,7 @@ void LineSKG::paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWi
     }
 
     //! Эллипс
-    painter->setPen(QPen(Qt::darkBlue, 1));
+    painter->setPen(QPen(m_colorEllipse, 1));
     if (m_sizeA > 0 && m_sizeA < 5000
             && m_sizeB > 0 && m_sizeB < 5000
             && m_angle >= -360 && m_angle <= 360)
@@ -74,7 +74,7 @@ void LineSKG::paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWi
         int x = 0;
         int y = 0;
         bool first = true;
-        painter->setPen(QPen(Qt::darkBlue));
+        painter->setPen(QPen(m_colorEllipse));
         while (psi < 2 * M_PI)
         {
             if (m_isZeroing)

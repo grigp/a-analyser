@@ -34,6 +34,11 @@ public:
      */
     void clear();
 
+    /*!
+     * \brief Устанавливает цвет СКГ
+     */
+    void setColorSKG(const QColor &color) {m_colorSKG = color;}
+
 private:
     void updateItem();
 
@@ -43,6 +48,7 @@ private:
     int m_height {0};
 
     QList<QPointF> m_trace;
+    QColor m_colorSKG {Qt::darkCyan};
 };
 
 #endif // TRACESKG_H

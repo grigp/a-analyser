@@ -30,7 +30,7 @@ void TraceSKG::paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QW
 
     painter->save();
 
-    painter->setPen(QPen(Qt::blue, 1));
+    painter->setPen(QPen(m_colorSKG, 1));
 
     int i = 0;
     int x1 = 0;
