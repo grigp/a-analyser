@@ -15,7 +15,7 @@ static const int RightSpace = 10;
 static const int TopSpace = 5;
 static const int BottomSpace = 20;
 
-static const QVector<QColor> PaletteDefault = {Qt::darkCyan, Qt::red, Qt::blue, Qt::green, Qt::darkYellow, Qt::darkMagenta};
+static const QVector<QColor> PaletteDefault = {Qt::darkGreen, Qt::blue, Qt::darkCyan, Qt::red, Qt::darkYellow, Qt::darkMagenta};
 
 }
 
@@ -38,9 +38,9 @@ AreaGraph::~AreaGraph()
     delete ui;
 }
 
-void AreaGraph::appendSignal(SignalAccess *signal, const int numSubChan)
+void AreaGraph::appendSignal(SignalAccess *signal, const QString &name, const int numSubChan)
 {
-    m_areases.append(new GraphArea(signal, numSubChan, tr("ФДС")));
+    m_areases.append(new GraphArea(signal, numSubChan, name));
     update();
 }
 
@@ -94,6 +94,25 @@ void AreaGraph::setStartPoint(const int startPoint)
     update();
 }
 
+void AreaGraph::setHScale(const int hScale)
+{
+    m_hScale = hScale;
+    update();
+}
+
+void AreaGraph::setIsZeroing(const bool zeroing)
+{
+    m_isZeroing = zeroing;
+    update();
+}
+
+void AreaGraph::setDiapazone(const double minVal, const double maxVal)
+{
+    foreach (auto area, m_areases)
+        area->setDiapazone(minVal, maxVal);
+    update();
+}
+
 void AreaGraph::paintEvent(QPaintEvent *event)
 {
     QWidget::paintEvent(event);
@@ -133,16 +152,16 @@ void AreaGraph::paintEvent(QPaintEvent *event)
             //! Минимальное значение
             QString sMin = QString::number(trunc(m_areases.at(iz)->minValue()));
             auto size = BaseUtils::getTextSize(&painter, sMin);
-            painter.drawText(LeftSpace - size.width() - 5, height() - BottomSpace - 3, sMin);
+            painter.drawText(LeftSpace - size.width() - 5, axisY - 3, sMin);
 
             //! Максимальное значение
             QString sMax = QString::number(trunc(m_areases.at(iz)->maxValue()));
             size = BaseUtils::getTextSize(&painter, sMax);
-            painter.drawText(LeftSpace - size.width() - 5, TopSpace + size.height(), sMax);
+            painter.drawText(LeftSpace - size.width() - 5, axisY - zoneH + size.height(), sMax);
 
             //! Название зоны
             size = BaseUtils::getTextSize(&painter, m_areases.at(iz)->name());
-            painter.drawText(LeftSpace + 5, TopSpace + size.height(), m_areases.at(iz)->name());
+            painter.drawText(LeftSpace + 5, axisY - zoneH + size.height(), m_areases.at(iz)->name());
 
             //! Линия нуля
             if (m_areases.at(iz)->maxValue() > 0 && m_areases.at(iz)->minValue() < 0)
@@ -153,26 +172,64 @@ void AreaGraph::paintEvent(QPaintEvent *event)
                 painter.drawText(LeftSpace - size.width() - 5, line0 + size.height()/2, "0");
             }
 
-            //! По сигналу
-            for (int i = m_startPoint; i < m_areases.at(iz)->signal()->size() - 1; ++i)
+            //! Настройка растяжения и позиции в зависимости от установок
+            int hScale = 1;
+            int startPoint = 0;
+            if (m_xcsm == xsm_scrolling)
             {
-                int x1 = LeftSpace + trunc(i * step);
-                int x2 = LeftSpace + trunc((i + 1) * step);
-                int y1 = axisY - trunc((m_areases.at(iz)->signal()->value(0, i) - m_areases.at(iz)->minValue()) * prop);
-                int y2 = axisY - trunc((m_areases.at(iz)->signal()->value(0, i + 1) - m_areases.at(iz)->minValue()) * prop);
-                painter.setPen(QPen(m_areases.at(iz)->color(0), 1, Qt::SolidLine, Qt::FlatCap));
-                painter.drawLine(x1, y1, x2, y2);
+                hScale = m_hScale;
+                startPoint = m_startPoint;
+            }
+            //! По сигналу
+            for (int i = 0; i < m_areases.at(iz)->signal()->size() - 1; ++i)
+            {
+                int x1 = LeftSpace + trunc((i - startPoint) * step * hScale);
+                int x2 = LeftSpace + trunc((i - startPoint + 1) * step * hScale);
 
-                if (iz == 0)
+                if (i > startPoint)
                 {
-                    if (i % m_areases.at(iz)->signal()->frequency() == 0 && i != 0)
+                    if (x1 < LeftSpace)
+                        x1 = LeftSpace;
+
+                    //! Лямбда функция вывода линии.
+                    //! Необходима, чтобы не передавать кучу параметров в приватный метод
+                    auto drawLine = [&](const int chan)
                     {
-                        painter.setPen(QPen(m_envColors.colorGrid, 1, Qt::DotLine, Qt::FlatCap));
-                        painter.drawLine(x1, TopSpace, x1, height() - BottomSpace);
-                        QString s = QString::number(i / m_areases.at(iz)->signal()->frequency());
-                        auto size = BaseUtils::getTextSize(&painter, s);
-                        painter.setPen(QPen(m_envColors.colorAxis, 1, Qt::SolidLine, Qt::FlatCap));
-                        painter.drawText(x1 - size.width() / 2, height() - BottomSpace + size.height() + 1, s);
+                        double v1 = m_areases.at(iz)->signal()->value(chan, i);
+                        double v2 = m_areases.at(iz)->signal()->value(chan, i + 1);
+                        if (m_isZeroing)
+                        {
+                            v1 = v1 - m_areases.at(iz)->average(chan);
+                            v2 = v2 - m_areases.at(iz)->average(chan);
+                        }
+                        int y1 = axisY - trunc((v1 - m_areases.at(iz)->minValue()) * prop);
+                        int y2 = axisY - trunc((v2 - m_areases.at(iz)->minValue()) * prop);
+                        painter.setPen(QPen(m_areases.at(iz)->color(chan), 1, Qt::SolidLine, Qt::FlatCap));
+                        painter.drawLine(x1, y1, x2, y2);
+                    };
+
+                    //! Все подканалы
+                    if (m_areases.at(iz)->numSubChan() == -1)
+                        //! По подканалам
+                        for (int j = 0; j < m_areases.at(iz)->signal()->subChansCount(); ++j)
+                            drawLine(j);
+                    else
+                    //! Только выбранный подканал
+                    if (m_areases.at(iz)->numSubChan() >= 0 &&
+                        m_areases.at(iz)->numSubChan() < m_areases.at(iz)->signal()->subChansCount())
+                        drawLine(m_areases.at(iz)->numSubChan());
+
+                    if (iz == 0)
+                    {
+                        if (i % m_areases.at(iz)->signal()->frequency() == 0 && i != 0)
+                        {
+                            painter.setPen(QPen(m_envColors.colorGrid, 1, Qt::DotLine, Qt::FlatCap));
+                            painter.drawLine(x1, TopSpace, x1, height() - BottomSpace);
+                            QString s = QString::number(i / m_areases.at(iz)->signal()->frequency());
+                            auto size = BaseUtils::getTextSize(&painter, s);
+                            painter.setPen(QPen(m_envColors.colorAxis, 1, Qt::SolidLine, Qt::FlatCap));
+                            painter.drawText(x1 - size.width() / 2, height() - BottomSpace + size.height() + 1, s);
+                        }
                     }
                 }
             }
@@ -198,7 +255,7 @@ GraphArea::GraphArea(SignalAccess *signal,
     , m_name(name)
     , m_palette(PaletteDefault)
 {
-
+    computeAverageValue();
 }
 
 QColor GraphArea::color(const int colorNum) const
@@ -221,8 +278,28 @@ void GraphArea::setColor(const int colorNum, const QColor &color)
     }
 }
 
+double GraphArea::average(const int numSubChan)
+{
+    return m_average.at(numSubChan);
+}
+
 void GraphArea::setDiapazone(const double minVal, const double maxVal)
 {
     m_minVal = minVal;
     m_maxVal = maxVal;
+}
+
+void GraphArea::computeAverageValue()
+{
+    m_average.clear();
+    for (int i = 0; i < m_signal->subChansCount(); ++i)
+    {
+        double mid = 0;
+        for (int j = 0; j < m_signal->size(); ++j)
+        {
+            double v = m_signal->value(i, j);
+            mid = mid + v;
+        }
+        m_average.append(mid / static_cast<double>(m_signal->size()));
+    }
 }

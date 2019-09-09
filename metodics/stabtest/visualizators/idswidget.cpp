@@ -268,7 +268,7 @@ void IDSWidget::showFDS(const int probeNum)
         m_fds->appendValue(rec);
     }
 
-    ui->wgtFDS->appendSignal(m_fds);
+    ui->wgtFDS->appendSignal(m_fds, tr("ФДС"));
     ui->wgtFDS->area(0)->setDiapazone(m_fds->minValue(), m_fds->maxValue());
 }
 

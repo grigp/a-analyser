@@ -43,15 +43,24 @@ public:
 
     double minValue() const {return m_minVal;}
     double maxValue() const {return m_maxVal;}
+    double average(const int numSubChan);
     void setDiapazone(const double minVal, const double maxVal);
 
 private:
+    /*!
+     * \brief Расчет среднего значения по каждому отведению сигнала
+     * Рассчитанные значния записываются в массив m_average
+     * Его размер равен кол-ву подканалов
+     */
+    void computeAverageValue();
+
     SignalAccess* m_signal {nullptr};
     int m_numSubChan {-1};   ///< Номер отображаемого подканала. Если он равен -1, то отображаются все подканалы сигнала в одной зоне
     QString m_name;
     QVector<QColor> m_palette;
     double m_minVal {0};
     double m_maxVal {0};
+    QList<double> m_average;
 };
 
 /*!
@@ -70,7 +79,7 @@ public:
      * \param signal - сигнал
      * \param numSubChan - номер отведения
      */
-    void appendSignal(SignalAccess* signal, const int numSubChan = -1);
+    void appendSignal(SignalAccess* signal, const QString &name, const int numSubChan = -1);
 
     /*!
      * \brief Возвращает кол-во зон построения
@@ -115,6 +124,18 @@ public:
     int startPoint() const {return m_startPoint;}
     void setStartPoint(const int startPoint);
 
+    int hScale() const {return m_hScale;}
+    void setHScale(const int hScale);
+
+    bool isZeroing() const {return m_isZeroing;}
+    void setIsZeroing(const bool zeroing);
+
+    /*!
+     * \brief Устанавливает диапазоны для всех зон графиков одинаковыми
+     * \param minVal, maxVal - минимальная и максимальная границы диапазона
+     */
+    void setDiapazone(const double minVal, const double maxVal);
+
 protected:
     void paintEvent(QPaintEvent *event) override;
     void mousePressEvent(QMouseEvent *event) override;
@@ -127,6 +148,8 @@ private:
 
     XCoordSignalMode m_xcsm {xsm_fullSignal}; ///< Режим отображения сигнала по горизонтали
     int m_startPoint {0};                     ///< Начальная точка прорисовки в режиме скроллинга
+    int m_hScale {1};                         ///< Множитель горизонтального масштабирования (увеличения)
+    bool m_isZeroing {false};                 ///< Центровка
 };
 
 #endif // AREAGRAPH_H

@@ -9,6 +9,7 @@
 #include "aanalyserapplication.h"
 #include "stabsignalstestcalculator.h"
 #include "areaskg.h"
+#include "areagraph.h"
 #include "testresultdata.h"
 #include "resultinfo.h"
 #include "settingsprovider.h"
@@ -23,7 +24,14 @@ StabSignalsTestWidget::StabSignalsTestWidget(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    auto val = SettingsProvider::valueFromRegAppCopy("StabSignalsTestWidget", "CurrentPage").toInt();
+    ui->tabWidget->setCurrentIndex(val);
+
     restoreSplitterPosition();
+    ui->sbSignal->setEnabled(false);
+    ui->btnHScalePlus->setEnabled(false);
+    ui->btnHScaleMinus->setEnabled(false);
+    ui->cbScale->addItems(QStringList() << "1" << "2" << "4" << "8" << "16" << "32" << "64" << "128");
 }
 
 StabSignalsTestWidget::~StabSignalsTestWidget()
@@ -75,6 +83,54 @@ void StabSignalsTestWidget::splitterMoved(int pos, int index)
     Q_UNUSED(pos);
     Q_UNUSED(index);
     saveSplitterPosition();
+}
+
+void StabSignalsTestWidget::curPageChanged(int pageIdx)
+{
+    SettingsProvider::setValueToRegAppCopy("StabSignalsTestWidget", "CurrentPage", pageIdx);
+}
+
+void StabSignalsTestWidget::scaleChange(int scaleIdx)
+{
+    int diap = 128;
+    for (int i = 0; i < scaleIdx; ++i)
+        diap = diap / 2;
+    ui->wgtGraph->setDiapazone(-diap, diap);
+}
+
+void StabSignalsTestWidget::fullSignalChanged(bool isFullSignal)
+{
+    ui->sbSignal->setEnabled(!isFullSignal);
+    ui->btnHScalePlus->setEnabled(!isFullSignal);
+    ui->btnHScaleMinus->setEnabled(!isFullSignal);
+    if (isFullSignal)
+        ui->wgtGraph->setXCoordSignalMode(AreaGraph::xsm_fullSignal);
+    else
+        ui->wgtGraph->setXCoordSignalMode(AreaGraph::xsm_scrolling);
+}
+
+void StabSignalsTestWidget::zeroingChanged(bool isZeroing)
+{
+    ui->wgtGraph->setIsZeroing(isZeroing);
+}
+
+void StabSignalsTestWidget::signalScroll(int pos)
+{
+    ui->wgtGraph->setStartPoint(ui->wgtGraph->area(0)->signal()->size() * pos / 100);
+}
+
+void StabSignalsTestWidget::hScaleZoomIn()
+{
+    auto hScale = ui->wgtGraph->hScale();
+    if (hScale < 8)
+        ui->wgtGraph->setHScale(hScale * 2);
+}
+
+void StabSignalsTestWidget::hScaleZoomOut()
+{
+    auto hScale = ui->wgtGraph->hScale();
+    if (hScale > 1)
+        ui->wgtGraph->setHScale(hScale / 2);
 }
 
 void StabSignalsTestWidget::showTable(StabSignalsTestCalculator *calculator, const QString &testUid)
@@ -212,6 +268,9 @@ void StabSignalsTestWidget::showSKG(StabSignalsTestCalculator *calculator, const
                 skg->setEllipse(sizeA, sizeB, angle);
 
                 ui->wgtSKGAreases->layout()->addWidget(skg);
+
+                //! Графики сигналов
+                ui->wgtGraph->appendSignal(sig, pi.name);
             }
         }
 
@@ -219,10 +278,16 @@ void StabSignalsTestWidget::showSKG(StabSignalsTestCalculator *calculator, const
         QTimer::singleShot(0, [=]()
         {
             int diap = 1;
+            int step = 0;
             while (diap < absMax)
+            {
                 diap = diap * 2;
+                ++step;
+            }
             foreach (auto* skg, skgList)
                 skg->setDiap(diap);
+            ui->wgtGraph->setDiapazone(-diap, diap);
+            ui->cbScale->setCurrentIndex(7 - step);
         });
     }
 }

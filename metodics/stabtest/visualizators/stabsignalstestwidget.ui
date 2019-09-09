@@ -14,19 +14,34 @@
    <string>Form</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_2">
+   <property name="spacing">
+    <number>1</number>
+   </property>
+   <property name="leftMargin">
+    <number>1</number>
+   </property>
+   <property name="topMargin">
+    <number>1</number>
+   </property>
+   <property name="rightMargin">
+    <number>1</number>
+   </property>
+   <property name="bottomMargin">
+    <number>1</number>
+   </property>
    <item>
-    <widget class="QSplitter" name="splitter">
-     <property name="orientation">
-      <enum>Qt::Vertical</enum>
+    <widget class="QTabWidget" name="tabWidget">
+     <property name="tabPosition">
+      <enum>QTabWidget::South</enum>
      </property>
-     <widget class="QWidget" name="wgtSKG" native="true">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-        <horstretch>0</horstretch>
-        <verstretch>2</verstretch>
-       </sizepolicy>
-      </property>
-      <layout class="QVBoxLayout" name="verticalLayout">
+     <property name="currentIndex">
+      <number>1</number>
+     </property>
+     <widget class="QWidget" name="tabSKG">
+      <attribute name="title">
+       <string>СКГ</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_3">
        <property name="spacing">
         <number>1</number>
        </property>
@@ -43,25 +58,194 @@
         <number>1</number>
        </property>
        <item>
-        <widget class="QWidget" name="wgtSKGAreases" native="true">
-         <layout class="QHBoxLayout" name="horizontalLayout_2">
-          <property name="leftMargin">
-           <number>1</number>
+        <widget class="QSplitter" name="splitter">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <widget class="QWidget" name="wgtSKG" native="true">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>2</verstretch>
+           </sizepolicy>
           </property>
-          <property name="topMargin">
-           <number>1</number>
+          <layout class="QVBoxLayout" name="verticalLayout">
+           <property name="spacing">
+            <number>1</number>
+           </property>
+           <property name="leftMargin">
+            <number>1</number>
+           </property>
+           <property name="topMargin">
+            <number>1</number>
+           </property>
+           <property name="rightMargin">
+            <number>1</number>
+           </property>
+           <property name="bottomMargin">
+            <number>1</number>
+           </property>
+           <item>
+            <widget class="QWidget" name="wgtSKGAreases" native="true">
+             <layout class="QHBoxLayout" name="horizontalLayout_2">
+              <property name="leftMargin">
+               <number>1</number>
+              </property>
+              <property name="topMargin">
+               <number>1</number>
+              </property>
+              <property name="rightMargin">
+               <number>1</number>
+              </property>
+              <property name="bottomMargin">
+               <number>1</number>
+              </property>
+             </layout>
+            </widget>
+           </item>
+           <item>
+            <widget class="QFrame" name="frSKGToolBar">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="frameShape">
+              <enum>QFrame::StyledPanel</enum>
+             </property>
+             <property name="frameShadow">
+              <enum>QFrame::Raised</enum>
+             </property>
+             <layout class="QHBoxLayout" name="horizontalLayout">
+              <property name="leftMargin">
+               <number>1</number>
+              </property>
+              <property name="topMargin">
+               <number>1</number>
+              </property>
+              <property name="rightMargin">
+               <number>1</number>
+              </property>
+              <property name="bottomMargin">
+               <number>1</number>
+              </property>
+              <item>
+               <widget class="QPushButton" name="btnPlus">
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="icon">
+                 <iconset resource="../../../kernel.qrc">
+                  <normaloff>:/images/Plus.png</normaloff>:/images/Plus.png</iconset>
+                </property>
+                <property name="iconSize">
+                 <size>
+                  <width>22</width>
+                  <height>22</height>
+                 </size>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="btnMinus">
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="icon">
+                 <iconset resource="../../../kernel.qrc">
+                  <normaloff>:/images/Minus.png</normaloff>:/images/Minus.png</iconset>
+                </property>
+                <property name="iconSize">
+                 <size>
+                  <width>22</width>
+                  <height>22</height>
+                 </size>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="btnZeroing">
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="icon">
+                 <iconset resource="../../../kernel.qrc">
+                  <normaloff>:/images/Zeroing.png</normaloff>:/images/Zeroing.png</iconset>
+                </property>
+                <property name="iconSize">
+                 <size>
+                  <width>22</width>
+                  <height>22</height>
+                 </size>
+                </property>
+                <property name="checkable">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <spacer name="horizontalSpacer">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>40</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+             </layout>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+         <widget class="QTreeView" name="tvFactors">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+            <horstretch>0</horstretch>
+            <verstretch>1</verstretch>
+           </sizepolicy>
           </property>
-          <property name="rightMargin">
-           <number>1</number>
-          </property>
-          <property name="bottomMargin">
-           <number>1</number>
-          </property>
-         </layout>
+         </widget>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="tabGraph">
+      <attribute name="title">
+       <string>Графики</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_4">
+       <property name="spacing">
+        <number>1</number>
+       </property>
+       <property name="leftMargin">
+        <number>1</number>
+       </property>
+       <property name="topMargin">
+        <number>1</number>
+       </property>
+       <property name="rightMargin">
+        <number>1</number>
+       </property>
+       <property name="bottomMargin">
+        <number>1</number>
+       </property>
+       <item>
+        <widget class="AreaGraph" name="wgtGraph" native="true"/>
+       </item>
+       <item>
+        <widget class="QScrollBar" name="sbSignal">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
         </widget>
        </item>
        <item>
-        <widget class="QFrame" name="frSKGToolBar">
+        <widget class="QFrame" name="frControl">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
            <horstretch>0</horstretch>
@@ -74,27 +258,24 @@
          <property name="frameShadow">
           <enum>QFrame::Raised</enum>
          </property>
-         <layout class="QHBoxLayout" name="horizontalLayout">
-          <property name="leftMargin">
-           <number>1</number>
-          </property>
+         <layout class="QHBoxLayout" name="horizontalLayout_3">
           <property name="topMargin">
-           <number>1</number>
-          </property>
-          <property name="rightMargin">
            <number>1</number>
           </property>
           <property name="bottomMargin">
            <number>1</number>
           </property>
           <item>
-           <widget class="QPushButton" name="btnPlus">
+           <widget class="QComboBox" name="cbScale"/>
+          </item>
+          <item>
+           <widget class="QPushButton" name="btnFullSignal">
             <property name="text">
              <string/>
             </property>
             <property name="icon">
              <iconset resource="../../../kernel.qrc">
-              <normaloff>:/images/Plus.png</normaloff>:/images/Plus.png</iconset>
+              <normaloff>:/images/Tools/FullSignal.png</normaloff>:/images/Tools/FullSignal.png</iconset>
             </property>
             <property name="iconSize">
              <size>
@@ -102,33 +283,92 @@
               <height>22</height>
              </size>
             </property>
+            <property name="checkable">
+             <bool>true</bool>
+            </property>
+            <property name="checked">
+             <bool>true</bool>
+            </property>
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="btnMinus">
+           <widget class="QFrame" name="frame">
+            <property name="frameShape">
+             <enum>QFrame::StyledPanel</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Raised</enum>
+            </property>
+            <layout class="QVBoxLayout" name="verticalLayout_5">
+             <property name="spacing">
+              <number>0</number>
+             </property>
+             <property name="leftMargin">
+              <number>0</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
+              <number>0</number>
+             </property>
+             <item>
+              <widget class="QPushButton" name="btnHScalePlus">
+               <property name="maximumSize">
+                <size>
+                 <width>13</width>
+                 <height>13</height>
+                </size>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset resource="../../../kernel.qrc">
+                 <normaloff>:/images/Tools/Plus_10.png</normaloff>:/images/Tools/Plus_10.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>9</width>
+                 <height>9</height>
+                </size>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="btnHScaleMinus">
+               <property name="maximumSize">
+                <size>
+                 <width>13</width>
+                 <height>13</height>
+                </size>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset resource="../../../kernel.qrc">
+                 <normaloff>:/images/Tools/Minus_10.png</normaloff>:/images/Tools/Minus_10.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>10</width>
+                 <height>10</height>
+                </size>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="btnZeriong">
             <property name="text">
              <string/>
             </property>
             <property name="icon">
              <iconset resource="../../../kernel.qrc">
-              <normaloff>:/images/Minus.png</normaloff>:/images/Minus.png</iconset>
-            </property>
-            <property name="iconSize">
-             <size>
-              <width>22</width>
-              <height>22</height>
-             </size>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="btnZeroing">
-            <property name="text">
-             <string/>
-            </property>
-            <property name="icon">
-             <iconset resource="../../../kernel.qrc">
-              <normaloff>:/images/Zeroing.png</normaloff>:/images/Zeroing.png</iconset>
+              <normaloff>:/images/Animate/Zeroing.png</normaloff>:/images/Animate/Zeroing.png</iconset>
             </property>
             <property name="iconSize">
              <size>
@@ -142,7 +382,7 @@
            </widget>
           </item>
           <item>
-           <spacer name="horizontalSpacer">
+           <spacer name="horizontalSpacer_2">
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
             </property>
@@ -159,18 +399,18 @@
        </item>
       </layout>
      </widget>
-     <widget class="QTreeView" name="tvFactors">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-        <horstretch>0</horstretch>
-        <verstretch>1</verstretch>
-       </sizepolicy>
-      </property>
-     </widget>
     </widget>
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>AreaGraph</class>
+   <extends>QWidget</extends>
+   <header location="global">areagraph.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources>
   <include location="../../../kernel.qrc"/>
  </resources>
@@ -182,8 +422,8 @@
    <slot>zoomIn()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>44</x>
-     <y>186</y>
+     <x>40</x>
+     <y>178</y>
     </hint>
     <hint type="destinationlabel">
      <x>1016</x>
@@ -198,8 +438,8 @@
    <slot>zoomOut()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>85</x>
-     <y>186</y>
+     <x>80</x>
+     <y>178</y>
     </hint>
     <hint type="destinationlabel">
      <x>1017</x>
@@ -239,11 +479,130 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>cbScale</sender>
+   <signal>currentIndexChanged(int)</signal>
+   <receiver>StabSignalsTestWidget</receiver>
+   <slot>scaleChange(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>64</x>
+     <y>602</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1015</x>
+     <y>277</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btnFullSignal</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>StabSignalsTestWidget</receiver>
+   <slot>fullSignalChanged(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>104</x>
+     <y>606</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1015</x>
+     <y>352</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btnZeriong</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>StabSignalsTestWidget</receiver>
+   <slot>zeroingChanged(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>192</x>
+     <y>622</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1017</x>
+     <y>382</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>sbSignal</sender>
+   <signal>sliderMoved(int)</signal>
+   <receiver>StabSignalsTestWidget</receiver>
+   <slot>signalScroll(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>265</x>
+     <y>576</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1015</x>
+     <y>422</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btnHScaleMinus</sender>
+   <signal>clicked()</signal>
+   <receiver>StabSignalsTestWidget</receiver>
+   <slot>hScaleZoomOut()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>138</x>
+     <y>612</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1017</x>
+     <y>536</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btnHScalePlus</sender>
+   <signal>clicked()</signal>
+   <receiver>StabSignalsTestWidget</receiver>
+   <slot>hScaleZoomIn()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>135</x>
+     <y>600</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1016</x>
+     <y>491</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>tabWidget</sender>
+   <signal>tabBarClicked(int)</signal>
+   <receiver>StabSignalsTestWidget</receiver>
+   <slot>curPageChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>84</x>
+     <y>640</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1016</x>
+     <y>210</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>zoomIn()</slot>
   <slot>zoomOut()</slot>
   <slot>zeroing(bool)</slot>
   <slot>splitterMoved(int,int)</slot>
+  <slot>scaleChange(int)</slot>
+  <slot>fullSignalChanged(bool)</slot>
+  <slot>zeroingChanged(bool)</slot>
+  <slot>signalScroll(int)</slot>
+  <slot>hScaleZoomIn()</slot>
+  <slot>hScaleZoomOut()</slot>
+  <slot>curPageChanged(int)</slot>
  </slots>
 </ui>

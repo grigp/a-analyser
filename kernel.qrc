@@ -45,5 +45,8 @@
         <file>images/Animate/ToBegin.png</file>
         <file>images/Animate/Zeroing.png</file>
         <file>images/Animate/Volume.png</file>
+        <file>images/Tools/FullSignal.png</file>
+        <file>images/Tools/Minus_10.png</file>
+        <file>images/Tools/Plus_10.png</file>
     </qresource>
 </RCC>

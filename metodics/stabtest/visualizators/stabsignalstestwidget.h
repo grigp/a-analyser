@@ -35,6 +35,14 @@ private slots:
 
     void splitterMoved(int pos,int index);
 
+    void curPageChanged(int pageIdx);
+    void scaleChange(int scaleIdx);
+    void fullSignalChanged(bool isFullSignal);
+    void zeroingChanged(bool isZeroing);
+    void signalScroll(int pos);
+    void hScaleZoomIn();
+    void hScaleZoomOut();
+
 private:
 
     enum FactorGroupId
