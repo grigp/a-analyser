@@ -47,7 +47,9 @@ protected:
 
 private slots:
     void splitterMoved(int pos,int index);
+    void tableClicked(const QModelIndex &index);
     void on_play(const double frequency);
+    void setVolume(int volume);
 
 private:
     Ui::IDSWidget *ui;
@@ -76,6 +78,7 @@ private:
     SoundGenerator* m_soundGenerator {nullptr};
     QAudioOutput* m_audioOutput {nullptr};
     QAudioFormat m_audioFormat;
+    int m_volume {50};
 };
 
 

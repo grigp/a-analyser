@@ -421,8 +421,42 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>tvFactors</sender>
+   <signal>clicked(QModelIndex)</signal>
+   <receiver>IDSWidget</receiver>
+   <slot>tableClicked(QModelIndex)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>121</x>
+     <y>122</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>567</x>
+     <y>142</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>sldVolume</sender>
+   <signal>sliderMoved(int)</signal>
+   <receiver>IDSWidget</receiver>
+   <slot>setVolume(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>370</x>
+     <y>507</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>566</x>
+     <y>405</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>splitterMoved(int,int)</slot>
+  <slot>tableClicked(QModelIndex)</slot>
+  <slot>setVolume(int)</slot>
  </slots>
 </ui>

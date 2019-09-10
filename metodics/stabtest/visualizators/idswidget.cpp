@@ -32,6 +32,7 @@ IDSWidget::IDSWidget(QWidget *parent) :
     ui->setupUi(this);
     restoreSplitterPosition();
     ui->tvFactors->viewport()->installEventFilter(this);
+    ui->sldVolume->setValue(m_volume);
 }
 
 IDSWidget::~IDSWidget()
@@ -77,7 +78,6 @@ void IDSWidget::calculate(IDSCalculator *calculator, const QString &testUid)
         {
             auto dlgPS = new PlaySoundDelegate(ui->tvFactors);
             ui->tvFactors->setItemDelegateForRow(i, dlgPS);
-            connect(dlgPS, &PlaySoundDelegate::play, this, &IDSWidget::on_play);
             break;
         }
     ui->tvFactors->setEditTriggers(QAbstractItemView::AnyKeyPressed | QAbstractItemView::CurrentChanged);
@@ -132,6 +132,14 @@ void IDSWidget::splitterMoved(int pos, int index)
     saveSplitterPosition();
 }
 
+void IDSWidget::tableClicked(const QModelIndex &index)
+{
+    if (index.column() > 0 && index.data(FactorUidRole).toString() == IDSFactorsDefines::FreqUid)
+    {
+        on_play(index.data(FrequencyRole).toDouble());
+    }
+}
+
 void IDSWidget::on_play(const double frequency)
 {
     if (m_tmStopSound == -1)
@@ -139,9 +147,18 @@ void IDSWidget::on_play(const double frequency)
         initAudio(frequency);
 
         m_soundGenerator->start();
+        double linearVolume = QAudio::convertVolume(m_volume / double(100),
+                                                    QAudio::LogarithmicVolumeScale,
+                                                    QAudio::LinearVolumeScale);
+        m_audioOutput->setVolume(linearVolume);
         m_audioOutput->start(m_soundGenerator);
         m_tmStopSound = startTimer(1000);
     }
+}
+
+void IDSWidget::setVolume(int volume)
+{
+    m_volume = volume;
 }
 
 void IDSWidget::addFactorsFromMultifactor(IDSCalculator *calculator)
@@ -167,8 +184,7 @@ void IDSWidget::addFactorsFromMultifactor(IDSCalculator *calculator)
             item->setData(fUid, FactorUidRole);
             if (fUid == IDSFactorsDefines::FreqUid)
                 item->setData(value, FrequencyRole);
-            else
-                item->setEditable(false);
+            item->setEditable(false);
             items << item;
         }
 
