@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <QModelIndex>
+#include <QItemSelectionModel>
 
 namespace Ui {
 class MethodsWidget;
@@ -20,10 +21,8 @@ public:
 
     void onDbConnect();
 
-protected:
-    bool eventFilter(QObject *obj, QEvent *event);
-
 private slots:
+    void on_selectionChanged(const QItemSelection &selected, const QItemSelection &deselected);
     void selectMetodic(const QModelIndex index);
     void editMetodParams();
 

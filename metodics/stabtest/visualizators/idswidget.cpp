@@ -31,7 +31,7 @@ IDSWidget::IDSWidget(QWidget *parent) :
 {
     ui->setupUi(this);
     restoreSplitterPosition();
-    ui->tvFactors->viewport()->installEventFilter(this);
+//    ui->tvFactors->viewport()->installEventFilter(this);
     ui->sldVolume->setValue(m_volume);
 }
 
@@ -91,6 +91,19 @@ void IDSWidget::calculate(IDSCalculator *calculator, const QString &testUid)
         ui->tvFactors->header()->resizeSection(i, 100);
 
     ui->wgtSKG->setVisibleMarker(false);
+
+    //! Выделить запись
+    if (m_mdlTable.columnCount() > 1)
+    {
+        m_curRow = 0;
+        m_curCol = 1;
+        ui->tvFactors->selectionModel()->setCurrentIndex(m_mdlTable.index(m_curRow, m_curCol), QItemSelectionModel::Select);
+        showSKG(m_curCol - 1);
+        showFDS(m_curCol - 1);
+
+        connect(ui->tvFactors->selectionModel(), &QItemSelectionModel::selectionChanged,
+                this, &IDSWidget::on_selectionChanged);
+    }
 }
 
 void IDSWidget::timerEvent(QTimerEvent *event)
@@ -102,27 +115,44 @@ void IDSWidget::timerEvent(QTimerEvent *event)
     }
 }
 
-bool IDSWidget::eventFilter(QObject *obj, QEvent *event)
+//bool IDSWidget::eventFilter(QObject *obj, QEvent *event)
+//{
+//    if (obj == ui->tvFactors->viewport())
+//    {
+//        if (event->type() == QEvent::Paint)
+//        {
+//            // Приводит к частым срабатываниям
+//            auto curIdx = ui->tvFactors->selectionModel()->currentIndex();
+//            if (curIdx.row() != m_curRow || curIdx.column() != m_curCol)
+//            {
+//                m_curRow = curIdx.row();
+//                m_curCol = curIdx.column();
+//                if (m_curCol > 0)
+//                {
+//                    showSKG(m_curCol - 1);
+//                    showFDS(m_curCol - 1);
+//                }
+//            }
+//        }
+//    }
+//    return false;
+//}
+
+void IDSWidget::on_selectionChanged(const QItemSelection &selected, const QItemSelection &deselected)
 {
-    if (obj == ui->tvFactors->viewport())
+    Q_UNUSED(selected);
+    Q_UNUSED(deselected);
+    auto curIdx = ui->tvFactors->selectionModel()->currentIndex();
+    if (curIdx.row() != m_curRow || curIdx.column() != m_curCol)
     {
-        if (event->type() == QEvent::Paint)
+        m_curRow = curIdx.row();
+        m_curCol = curIdx.column();
+        if (m_curCol > 0)
         {
-            // Приводит к частым срабатываниям
-            auto curIdx = ui->tvFactors->selectionModel()->currentIndex();
-            if (curIdx.row() != m_curRow || curIdx.column() != m_curCol)
-            {
-                m_curRow = curIdx.row();
-                m_curCol = curIdx.column();
-                if (m_curCol > 0)
-                {
-                    showSKG(m_curCol - 1);
-                    showFDS(m_curCol - 1);
-                }
-            }
+            showSKG(m_curCol - 1);
+            showFDS(m_curCol - 1);
         }
     }
-    return false;
 }
 
 void IDSWidget::splitterMoved(int pos, int index)

@@ -21,8 +21,10 @@ PatientsWidget::PatientsWidget(QWidget *parent) :
 
     m_pmdlPatients->setSourceModel(m_mdlPatients);
     ui->tvPatients->setModel(m_pmdlPatients);
-    ui->tvPatients->viewport()->installEventFilter(this);
     ui->tvPatients->sortByColumn(PatientsModel::ColFio, Qt::AscendingOrder);
+
+    connect(ui->tvPatients->selectionModel(), &QItemSelectionModel::selectionChanged,
+            this, &PatientsWidget::on_selectionChanged);
 }
 
 PatientsWidget::~PatientsWidget()
@@ -40,17 +42,11 @@ void PatientsWidget::onDbConnect()
     //    ui->tvPatients->header()->resizeSection(PatientsModel::colSex, 50);
 }
 
-bool PatientsWidget::eventFilter(QObject *obj, QEvent *event)
+void PatientsWidget::on_selectionChanged(const QItemSelection &selected, const QItemSelection &deselected)
 {
-    if (obj == ui->tvPatients->viewport())
-    {
-        if (event->type() == QEvent::Paint)
-        {
-            // Приводит к частым срабатываниям
-            selectPatient(ui->tvPatients->selectionModel()->currentIndex());
-        }
-    }
-    return false;
+    Q_UNUSED(selected);
+    Q_UNUSED(deselected);
+    selectPatient(ui->tvPatients->selectionModel()->currentIndex());
 }
 
 void PatientsWidget::selectPatient(const QModelIndex index)

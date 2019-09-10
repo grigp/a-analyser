@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <QModelIndex>
+#include <QItemSelectionModel>
 
 class PatientsModel;
 class PatientsProxyModel;
@@ -21,10 +22,9 @@ public:
 
     void onDbConnect();
 
-protected:
-    bool eventFilter(QObject *obj, QEvent *event);
-
 private slots:
+    void on_selectionChanged(const QItemSelection &selected, const QItemSelection &deselected);
+
     void selectPatient(const QModelIndex index);
 
     /*!

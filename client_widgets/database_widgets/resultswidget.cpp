@@ -21,7 +21,8 @@ ResultsWidget::ResultsWidget(QWidget *parent) :
 
     m_pmdlTest->setSourceModel(m_mdlTest);
     ui->tvTests->setModel(m_pmdlTest);
-    ui->tvTests->viewport()->installEventFilter(this);
+    connect(ui->tvTests->selectionModel(), &QItemSelectionModel::selectionChanged,
+            this, &ResultsWidget::on_selectionChanged);
 
     restoreSplitterPosition();
 
@@ -52,25 +53,19 @@ void ResultsWidget::onDbConnect()
 
 }
 
-bool ResultsWidget::eventFilter(QObject *obj, QEvent *event)
+void ResultsWidget::on_selectionChanged(const QItemSelection &selected, const QItemSelection &deselected)
 {
-    if (obj == ui->tvTests->viewport())
+    Q_UNUSED(selected);
+    Q_UNUSED(deselected);
+    auto idx = m_pmdlTest->mapToSource(ui->tvTests->selectionModel()->currentIndex());
+    if (idx.row() != m_selectedRow)
     {
-        if (event->type() == QEvent::Paint)
-        {
-            // Приводит к частым срабатываниям
-            auto idx = m_pmdlTest->mapToSource(ui->tvTests->selectionModel()->currentIndex());
-            if (idx.row() != m_selectedRow)
-            {
-                if (idx.row() > -1)
-                    selectTest(idx);
-                else
-                    closeTest();
-            }
-            m_selectedRow = idx.row();
-        }
+        if (idx.row() > -1)
+            selectTest(idx);
+        else
+            closeTest();
     }
-    return false;
+    m_selectedRow = idx.row();
 }
 
 void ResultsWidget::selectTest(const QModelIndex &index)

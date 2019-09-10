@@ -2,6 +2,7 @@
 #define RESULTSWIDGET_H
 
 #include <QWidget>
+#include <QItemSelectionModel>
 
 namespace Ui {
 class ResultsWidget;
@@ -43,10 +44,9 @@ public:
 
     static QString widgetName() {return QString("result");}
 
-protected:
-    bool eventFilter(QObject *obj, QEvent *event);
-
 private slots:
+
+    void on_selectionChanged(const QItemSelection &selected, const QItemSelection &deselected);
 
     /*!
      * \brief Выбор теста для просмотра результатов

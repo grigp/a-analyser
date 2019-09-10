@@ -39,25 +39,17 @@ DynamicAutoWidget::~DynamicAutoWidget()
 
 void DynamicAutoWidget::onDbConnect()
 {
-    ui->tvFactors->viewport()->installEventFilter(this);
     restoreDynamicKind();
     restoreDynamicVolume();
 }
 
-bool DynamicAutoWidget::eventFilter(QObject *obj, QEvent *event)
+void DynamicAutoWidget::on_selectionChanged(const QItemSelection &selected, const QItemSelection &deselected)
 {
-    if (obj == ui->tvFactors->viewport())
-    {
-        if (event->type() == QEvent::Paint)
-        {
-            // Приводит к частым срабатываниям
-            if (ui->tvFactors->selectionModel()
-                    && ui->tvFactors->selectionModel()->currentIndex().isValid())
-                showGraph(ui->tvFactors->selectionModel()->currentIndex().row());
-        }
-    }
-
-    return false;
+    Q_UNUSED(selected);
+    Q_UNUSED(deselected);
+    if (ui->tvFactors->selectionModel()
+            && ui->tvFactors->selectionModel()->currentIndex().isValid())
+        showGraph(ui->tvFactors->selectionModel()->currentIndex().row());
 }
 
 void DynamicAutoWidget::on_selectPatient(const QString &patientUid)
@@ -180,6 +172,8 @@ void DynamicAutoWidget::showDynamic()
     {
         ui->tvFactors->setCurrentIndex(m_mdlDynamic->index(0, 0));
         showGraph(0);
+        connect(ui->tvFactors->selectionModel(), &QItemSelectionModel::selectionChanged,
+                this, &DynamicAutoWidget::on_selectionChanged);
     }
     else
         ui->wgtDynamic->clear();

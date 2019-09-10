@@ -4,6 +4,7 @@
 #include <QDialog>
 #include <QJsonObject>
 #include <QStandardItemModel>
+#include <QItemSelectionModel>
 
 namespace Ui {
 class StabTestParamsDialog;
@@ -32,10 +33,9 @@ public:
      */
     QJsonObject getParams();
 
-protected:
-    bool eventFilter(QObject *obj, QEvent *event);
-
 private slots:
+    void on_selectionChanged(const QItemSelection &selected, const QItemSelection &deselected);
+
     void selectProbe(const int numProbe);
     void selectProbe(const QModelIndex index);
     void addProbe();

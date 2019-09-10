@@ -4,6 +4,7 @@
 #include <QWidget>
 #include <QModelIndex>
 #include <QSet>
+#include <QItemSelectionModel>
 
 namespace Ui {
 class DynamicAutoWidget;
@@ -26,10 +27,9 @@ public:
 
     static QString widgetName() {return QString("dynamic");}
 
-protected:
-    bool eventFilter(QObject *obj, QEvent *event);
-
 private slots:
+    void on_selectionChanged(const QItemSelection &selected, const QItemSelection &deselected);
+
     void on_selectPatient(const QString &patientUid);
     void on_selectMetodic(const QString &metodicUid);
     void on_selectTest(const QString &testUid);

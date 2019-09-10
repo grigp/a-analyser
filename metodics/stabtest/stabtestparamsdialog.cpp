@@ -53,7 +53,8 @@ StabTestParamsDialog::StabTestParamsDialog(QWidget *parent) :
         }
     });
 
-    ui->lvProbes->viewport()->installEventFilter(this);
+    connect(ui->lvProbes->selectionModel(), &QItemSelectionModel::selectionChanged,
+            this, &StabTestParamsDialog::on_selectionChanged);
 }
 
 StabTestParamsDialog::~StabTestParamsDialog()
@@ -117,17 +118,12 @@ QJsonObject StabTestParamsDialog::getParams()
     return retval;
 }
 
-bool StabTestParamsDialog::eventFilter(QObject *obj, QEvent *event)
+void StabTestParamsDialog::on_selectionChanged(const QItemSelection &selected, const QItemSelection &deselected)
 {
-    if (obj == ui->lvProbes->viewport())
-    {
-        if (event->type() == QEvent::Paint)
-        {
-            m_curProbe = ui->lvProbes->selectionModel()->currentIndex().row();
-            showProbeParam();
-        }
-    }
-    return false;
+    Q_UNUSED(selected);
+    Q_UNUSED(deselected);
+    m_curProbe = ui->lvProbes->selectionModel()->currentIndex().row();
+    showProbeParam();
 }
 
 void StabTestParamsDialog::selectProbe(const int numProbe)

@@ -30,21 +30,16 @@ void MethodsWidget::onDbConnect()
     {
         m_model->load();
         ui->tvMetods->setModel(m_model);
-        ui->tvMetods->viewport()->installEventFilter(this);
+        connect(ui->tvMetods->selectionModel(), &QItemSelectionModel::selectionChanged,
+                this, &MethodsWidget::on_selectionChanged);
     }
 }
 
-bool MethodsWidget::eventFilter(QObject *obj, QEvent *event)
+void MethodsWidget::on_selectionChanged(const QItemSelection &selected, const QItemSelection &deselected)
 {
-    if (obj == ui->tvMetods->viewport())
-    {
-        if (event->type() == QEvent::Paint)
-        {
-            // Приводит к частым срабатываниям
-            selectMetodic(ui->tvMetods->selectionModel()->currentIndex());
-        }
-    }
-    return false;
+    Q_UNUSED(selected);
+    Q_UNUSED(deselected);
+    selectMetodic(ui->tvMetods->selectionModel()->currentIndex());
 }
 
 void MethodsWidget::selectMetodic(const QModelIndex index)

@@ -6,6 +6,7 @@
 #include <QStyledItemDelegate>
 #include <QAudioOutput>
 #include <QTimerEvent>
+#include <QItemSelectionModel>
 
 namespace Ui {
 class IDSWidget;
@@ -43,9 +44,11 @@ public:
 protected:
     void timerEvent(QTimerEvent *event);
 
-    bool eventFilter(QObject *obj, QEvent *event);
+//    bool eventFilter(QObject *obj, QEvent *event);
 
 private slots:
+    void on_selectionChanged(const QItemSelection &selected, const QItemSelection &deselected);
+
     void splitterMoved(int pos,int index);
     void tableClicked(const QModelIndex &index);
     void on_play(const double frequency);
