@@ -32,8 +32,8 @@ IDSWidget::IDSWidget(QWidget *parent) :
 {
     ui->setupUi(this);
     restoreSplitterPosition();
-//    ui->tvFactors->viewport()->installEventFilter(this);
     ui->sldVolume->setValue(m_volume);
+    actionsEnabledOnPlay(false);
 }
 
 IDSWidget::~IDSWidget()
@@ -86,8 +86,7 @@ void IDSWidget::calculate(IDSCalculator *calculator, const QString &testUid)
     m_mdlTable.setHorizontalHeaderLabels(headerLabels);
     ui->tvFactors->setModel(&m_mdlTable);
     ui->tvFactors->resizeColumnToContents(0);
-//    for (int i = 0; i < m_mdlTable.columnCount(); ++i)
-//        ui->tvFactors->resizeColumnToContents(i);
+
     for (int i = 1; i < m_mdlTable.columnCount(); ++i)
         ui->tvFactors->header()->resizeSection(i, 100);
 
@@ -105,6 +104,11 @@ void IDSWidget::calculate(IDSCalculator *calculator, const QString &testUid)
         connect(ui->tvFactors->selectionModel(), &QItemSelectionModel::selectionChanged,
                 this, &IDSWidget::on_selectionChanged);
     }
+
+    QTimer::singleShot(0, [=]()
+    {
+        resizeColumns();
+    });
 }
 
 void IDSWidget::timerEvent(QTimerEvent *event)
@@ -114,30 +118,33 @@ void IDSWidget::timerEvent(QTimerEvent *event)
     {
         doneAudio();
     }
+    else
+    if (event->timerId() == m_tmAnimate)
+    {
+        ++m_animCurPos;
+        if (m_animCurPos < m_fds->size())
+        {
+            ui->wgtFDS->setCursor(0, m_animCurPos);
+            double freq = m_fds->value(0, m_animCurPos) / m_fds->absMaxValue() * 5000;
+            m_soundGenerator->reset(m_audioFormat, m_fds->size() / m_fds->frequency() * 1000000, freq);
+        }
+        else
+        {
+            actionsEnabledOnPlay(false);
+            killTimer(m_tmAnimate);
+            m_tmAnimate = -1;
+            m_animCurPos = 0;
+            ui->wgtFDS->setCursor(0, m_animCurPos);
+            doneAudio();
+        }
+    }
 }
 
-//bool IDSWidget::eventFilter(QObject *obj, QEvent *event)
-//{
-//    if (obj == ui->tvFactors->viewport())
-//    {
-//        if (event->type() == QEvent::Paint)
-//        {
-//            // Приводит к частым срабатываниям
-//            auto curIdx = ui->tvFactors->selectionModel()->currentIndex();
-//            if (curIdx.row() != m_curRow || curIdx.column() != m_curCol)
-//            {
-//                m_curRow = curIdx.row();
-//                m_curCol = curIdx.column();
-//                if (m_curCol > 0)
-//                {
-//                    showSKG(m_curCol - 1);
-//                    showFDS(m_curCol - 1);
-//                }
-//            }
-//        }
-//    }
-//    return false;
-//}
+void IDSWidget::resizeEvent(QResizeEvent *event)
+{
+    resizeColumns();
+    QWidget::resizeEvent(event);
+}
 
 void IDSWidget::on_selectionChanged(const QItemSelection &selected, const QItemSelection &deselected)
 {
@@ -175,14 +182,8 @@ void IDSWidget::on_play(const double frequency)
 {
     if (m_tmStopSound == -1)
     {
-        initAudio(frequency);
-
-        m_soundGenerator->start();
-        double linearVolume = QAudio::convertVolume(m_volume / double(100),
-                                                    QAudio::LogarithmicVolumeScale,
-                                                    QAudio::LinearVolumeScale);
-        m_audioOutput->setVolume(linearVolume);
-        m_audioOutput->start(m_soundGenerator);
+        initAudio(frequency, 2);
+        startAudio();
         m_tmStopSound = startTimer(1000);
     }
 }
@@ -190,6 +191,8 @@ void IDSWidget::on_play(const double frequency)
 void IDSWidget::setVolume(int volume)
 {
     m_volume = volume;
+    if (m_tmAnimate != -1)
+        assignVolume();
 }
 
 void IDSWidget::onSKGZoomIn()
@@ -225,6 +228,44 @@ void IDSWidget::onFDSZoomOut()
     auto maxV = ui->wgtFDS->area(0)->maxValue();
     double midV = (minV + maxV) / 2;
     ui->wgtFDS->setDiapazone(0, midV - (maxV - minV), midV + (maxV - minV));
+}
+
+void IDSWidget::animToBegin()
+{
+    m_animCurPos = 0;
+    ui->wgtFDS->setCursor(0, m_animCurPos);
+}
+
+void IDSWidget::animBack()
+{
+    m_animCurPos = m_animCurPos - m_fds->frequency();
+    if (m_animCurPos < 0)
+        m_animCurPos = 0;
+    ui->wgtFDS->setCursor(0, m_animCurPos);
+}
+
+void IDSWidget::animPlay()
+{
+    m_tmAnimate = startTimer(1000 / m_fds->frequency());
+    initAudio(2000, m_fds->size() / m_fds->frequency());
+    startAudio();
+    actionsEnabledOnPlay(true);
+}
+
+void IDSWidget::animStop()
+{
+    killTimer(m_tmAnimate);
+    m_tmAnimate = -1;
+    actionsEnabledOnPlay(false);
+    doneAudio();
+}
+
+void IDSWidget::animForward()
+{
+    m_animCurPos = m_animCurPos + m_fds->frequency();
+    if (m_animCurPos > m_fds->size() - 1)
+        m_animCurPos = m_fds->size() - 1;
+    ui->wgtFDS->setCursor(0, m_animCurPos);
 }
 
 void IDSWidget::addFactorsFromMultifactor(IDSCalculator *calculator)
@@ -272,7 +313,7 @@ void IDSWidget::restoreSplitterPosition()
     ui->splTblDiag->restoreState(valTblDiag);
 }
 
-void IDSWidget::initAudio(const double frequency)
+void IDSWidget::initAudio(const double frequency, const int duration)
 {
     m_audioFormat.setSampleRate(44100);
     m_audioFormat.setChannelCount(1);
@@ -284,8 +325,23 @@ void IDSWidget::initAudio(const double frequency)
     if (!QAudioDeviceInfo::defaultOutputDevice().isFormatSupported(m_audioFormat))
         m_audioFormat = QAudioDeviceInfo::defaultOutputDevice().nearestFormat(m_audioFormat);
 
-    m_soundGenerator = new SoundGenerator(m_audioFormat, 2 * 1000000, frequency);
+    m_soundGenerator = new SoundGenerator(m_audioFormat, duration * 1000000, frequency);
     m_audioOutput = new QAudioOutput(QAudioDeviceInfo::defaultOutputDevice(), m_audioFormat);
+}
+
+void IDSWidget::startAudio()
+{
+    m_soundGenerator->start();
+    assignVolume();
+}
+
+void IDSWidget::assignVolume()
+{
+    double linearVolume = QAudio::convertVolume(m_volume / double(100),
+                                                QAudio::LogarithmicVolumeScale,
+                                                QAudio::LinearVolumeScale);
+    m_audioOutput->setVolume(linearVolume);
+    m_audioOutput->start(m_soundGenerator);
 }
 
 void IDSWidget::doneAudio()
@@ -353,6 +409,30 @@ void IDSWidget::showFDS(const int probeNum)
     ui->wgtFDS->appendSignal(m_fds, tr("ФДС"));
     double maxV = fmax(fabs(m_fds->minValue()), fabs(m_fds->maxValue()));
     ui->wgtFDS->area(0)->setDiapazone(-maxV, maxV);
+
+    m_animCurPos = 0;
+}
+
+void IDSWidget::actionsEnabledOnPlay(const bool play)
+{
+    ui->btnFDSMinius->setEnabled(!play);
+    ui->btnFDSPlus->setEnabled(!play);
+    ui->btnToBegin->setEnabled(!play);
+    ui->btnPrev->setEnabled(!play);
+    ui->btnNext->setEnabled(!play);
+    ui->btnPlay->setEnabled(!play);
+    ui->btnStop->setEnabled(play);
+    ui->btnSKGMinus->setEnabled(!play);
+    ui->btnSKGPlus->setEnabled(!play);
+    ui->btnSKGZeroing->setEnabled(!play);
+    ui->tvFactors->setEnabled(!play);
+}
+
+void IDSWidget::resizeColumns()
+{
+    int w = (ui->tvFactors->geometry().width() - ui->tvFactors->header()->sectionSize(0)) / (m_mdlTable.columnCount() - 1);
+    for (int i = 1; i < m_mdlTable.columnCount(); ++i)
+        ui->tvFactors->header()->resizeSection(i, w);
 }
 
 

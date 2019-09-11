@@ -64,12 +64,20 @@ void IDSFactors::calculate()
 
             if (m_fdsQ > 1)
                 m_freq = pow(log10(pow(m_fdsQ, 2)), 3) * 3;
+
+            //! Стабильность ФДС
+            computeStabilityFDS();
+            //! Асимметрия ФДС
+            computeAsymmetryFDS();
         }
     }
 
     addFactor(IDSFactorsDefines::IDSUid, m_ids);
     addFactor(IDSFactorsDefines::FDSDispUid, pow(m_fdsQ, 2));
     addFactor(IDSFactorsDefines::FreqUid, m_freq);
+    addFactor(IDSFactorsDefines::StabFDSUid, m_stabFDS);
+    addFactor(IDSFactorsDefines::AsymFDSUid, m_asymFDS);
+    addFactor(IDSFactorsDefines::KVarFDSUid, m_kvFDS);
 }
 
 void IDSFactors::registerFactors()
@@ -86,6 +94,16 @@ void IDSFactors::registerFactors()
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(IDSFactorsDefines::FreqUid, IDSFactorsDefines::GroupUid,
                            tr("Частота звука"), tr("Freq"), tr("Гц"), 0);
+
+    static_cast<AAnalyserApplication*>(QApplication::instance())->
+            registerFactor(IDSFactorsDefines::StabFDSUid, IDSFactorsDefines::GroupUid,
+                           tr("Стабильность ФДС"), tr("Стаб.ФДС"), tr("%"), 1);
+    static_cast<AAnalyserApplication*>(QApplication::instance())->
+            registerFactor(IDSFactorsDefines::AsymFDSUid, IDSFactorsDefines::GroupUid,
+                           tr("Асимметрия ФДС"), tr("Асм.ФДС"), tr("%"), 1);
+    static_cast<AAnalyserApplication*>(QApplication::instance())->
+            registerFactor(IDSFactorsDefines::KVarFDSUid, IDSFactorsDefines::GroupUid,
+                           tr("Коэффициент вариации ФДС"), tr("КВ ФДС"), tr("%"), 1);
 }
 
 double IDSFactors::fds(const int idx) const
@@ -151,6 +169,66 @@ void IDSFactors::computeFDSBuf(const QVector<double> &bufV, const QVector<double
         m_fdsQ = m_fdsQ + pow(fdsMid - fds, 2);
     if (m_bufFDS.size() - 1 > 0)
         m_fdsQ = sqrt(m_fdsQ / (m_bufFDS.size() - 1));
+}
+
+void IDSFactors::computeStabilityFDS()
+{
+    double mid = 0;
+    double mid1 = 0;
+    QVector<double> mid1Arr;
+    for (int i = 0; i < m_bufFDS.size(); ++i)
+    {
+        //! Расчет общего среднего
+        double v = fabs(m_bufFDS.at(i) / 2500);
+        mid = mid + v;
+
+        //! Расчет посекундного среднего
+        if (i > 0 && (i % m_freqDiskr) == 0)
+        {
+            mid1 = mid1 / m_freqDiskr;
+            mid1Arr.append(mid1);
+            mid1 = 0;
+        }
+        else
+            mid1 = mid1 + v;
+    }
+    mid = mid / m_bufFDS.size();
+
+    //! Нахождение разницы между общим средним и средними за каждую секунду и средней разницы
+    QVector<double> deltaArr;
+    deltaArr.resize(mid1Arr.size());
+    double delta = 0;
+    for (int i = 0; i < mid1Arr.size() - 1; ++i)
+    {
+        deltaArr.replace(i, fabs(mid - mid1Arr.at(i)));
+        delta = delta + deltaArr.at(i);
+    }
+    delta = delta / mid1Arr.size();
+
+    double deltaQ = 0;
+    for (int i = 0; i < deltaArr.size(); ++i)
+        deltaQ = deltaQ + pow(deltaArr.at(i) - delta, 2) / static_cast<double>(deltaArr.size() - 1);
+    deltaQ = sqrt(deltaQ);
+
+    if (mid > delta)
+        m_stabFDS = 100 - delta * 100 / mid;
+    if (delta > 0)
+        m_kvFDS = deltaQ / delta * 100;
+}
+
+void IDSFactors::computeAsymmetryFDS()
+{
+    double sPlus = 0;
+    double sMinus = 0;
+    for (int i = 0; i < m_bufFDS.size(); ++i)
+    {
+        double v = m_bufFDS.at(i);
+        if (v > 0)
+            sPlus = sPlus + v;
+        else
+            sMinus = sMinus + fabs(v);
+    }
+    m_asymFDS = (sMinus - sPlus) / (sPlus + sMinus) * 100;
 }
 
 void IDSFactors::bufToFile(const QVector<double> &buf, const QString &fn)

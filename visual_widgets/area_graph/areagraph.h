@@ -16,6 +16,7 @@ struct GraphEnvColors
     QColor colorAxis;
     QColor colorGrid;
     QColor colorLabels;
+    QColor colorCursor;
 
     GraphEnvColors() {}
 };
@@ -46,6 +47,9 @@ public:
     double average(const int numSubChan);
     void setDiapazone(const double minVal, const double maxVal);
 
+    int cursorPos() {return m_cursorPos;}
+    void setCursor(const int pos);
+
 private:
     /*!
      * \brief Расчет среднего значения по каждому отведению сигнала
@@ -61,6 +65,7 @@ private:
     double m_minVal {0};
     double m_maxVal {0};
     QList<double> m_average;
+    int m_cursorPos {-1};   ///< Номер отсчета, на котором стоит курсор
 };
 
 /*!
@@ -109,6 +114,9 @@ public:
     QColor colorLabels() const {return m_envColors.colorLabels;}
     void setColorLabels(const QColor &color);
 
+    QColor colorCursor() const {return m_envColors.colorCursor;}
+    void setColorCursor(const QColor &color);
+
     /*!
      * \brief Режимы отображения сигнала по горизонтали XCoordSignalMode enum
      */
@@ -141,6 +149,13 @@ public:
      * \param minVal, maxVal - минимальная и максимальная границы диапазона
      */
     void setDiapazone(const double minVal, const double maxVal);
+
+    /*!
+     * \brief Устанавливает курсор в зоне zoneNum на позицию pos
+     * \param zoneNum - номер зоны
+     * \param pos - позиция (номер отсчета)
+     */
+    void setCursor(const int zoneNum, const int pos);
 
 protected:
     void paintEvent(QPaintEvent *event) override;

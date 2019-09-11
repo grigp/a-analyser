@@ -43,8 +43,7 @@ public:
 
 protected:
     void timerEvent(QTimerEvent *event);
-
-//    bool eventFilter(QObject *obj, QEvent *event);
+    void resizeEvent(QResizeEvent *event);
 
 private slots:
     void on_selectionChanged(const QItemSelection &selected, const QItemSelection &deselected);
@@ -61,6 +60,12 @@ private slots:
     void onFDSZoomIn();
     void onFDSZoomOut();
 
+    void animToBegin();
+    void animBack();
+    void animPlay();
+    void animStop();
+    void animForward();
+
 private:
     Ui::IDSWidget *ui;
 
@@ -69,11 +74,17 @@ private:
     void saveSplitterPosition();
     void restoreSplitterPosition();
 
-    void initAudio(const double frequency);
+    void initAudio(const double frequency, const int duration);
+    void startAudio();
+    void assignVolume();
     void doneAudio();
 
     void showSKG(const int probeNum);
     void showFDS(const int probeNum);
+
+    void actionsEnabledOnPlay(const bool play);
+
+    void resizeColumns();
 
     QStandardItemModel m_mdlTable;
 
@@ -89,6 +100,10 @@ private:
     QAudioOutput* m_audioOutput {nullptr};
     QAudioFormat m_audioFormat;
     int m_volume {50};
+
+    ///< Анимация
+    int m_tmAnimate {-1};
+    int m_animCurPos {-1};
 };
 
 

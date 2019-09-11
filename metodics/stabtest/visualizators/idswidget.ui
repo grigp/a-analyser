@@ -536,6 +536,86 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>btnToBegin</sender>
+   <signal>clicked()</signal>
+   <receiver>IDSWidget</receiver>
+   <slot>animToBegin()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>147</x>
+     <y>518</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>567</x>
+     <y>78</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btnPrev</sender>
+   <signal>clicked()</signal>
+   <receiver>IDSWidget</receiver>
+   <slot>animBack()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>177</x>
+     <y>521</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>565</x>
+     <y>104</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btnPlay</sender>
+   <signal>clicked()</signal>
+   <receiver>IDSWidget</receiver>
+   <slot>animPlay()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>214</x>
+     <y>514</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>565</x>
+     <y>136</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btnStop</sender>
+   <signal>clicked()</signal>
+   <receiver>IDSWidget</receiver>
+   <slot>animStop()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>259</x>
+     <y>509</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>569</x>
+     <y>169</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btnNext</sender>
+   <signal>clicked()</signal>
+   <receiver>IDSWidget</receiver>
+   <slot>animForward()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>284</x>
+     <y>511</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>569</x>
+     <y>262</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>splitterMoved(int,int)</slot>
@@ -546,5 +626,10 @@
   <slot>onSKGZeroing(bool)</slot>
   <slot>onFDSZoomIn()</slot>
   <slot>onFDSZoomOut()</slot>
+  <slot>animToBegin()</slot>
+  <slot>animBack()</slot>
+  <slot>animPlay()</slot>
+  <slot>animStop()</slot>
+  <slot>animForward()</slot>
  </slots>
 </ui>

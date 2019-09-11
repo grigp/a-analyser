@@ -27,6 +27,7 @@ AreaGraph::AreaGraph(QWidget *parent) :
     m_envColors.colorBackground = Qt::white;
     m_envColors.colorGrid = Qt::darkGray;
     m_envColors.colorLabels = Qt::black;
+    m_envColors.colorCursor = Qt::darkGray;
 
     m_areases.clear();
     ui->setupUi(this);
@@ -82,6 +83,12 @@ void AreaGraph::setColorLabels(const QColor &color)
     update();
 }
 
+void AreaGraph::setColorCursor(const QColor &color)
+{
+    m_envColors.colorCursor = color;
+    update();
+}
+
 void AreaGraph::setXCoordSignalMode(const AreaGraph::XCoordSignalMode mode)
 {
     m_xcsm = mode;
@@ -117,6 +124,13 @@ void AreaGraph::setDiapazone(const double minVal, const double maxVal)
 {
     foreach (auto area, m_areases)
         area->setDiapazone(minVal, maxVal);
+    update();
+}
+
+void AreaGraph::setCursor(const int zoneNum, const int pos)
+{
+    Q_ASSERT(zoneNum >= 0 && zoneNum < m_areases.size());
+    m_areases.at(zoneNum)->setCursor(pos);
     update();
 }
 
@@ -240,6 +254,14 @@ void AreaGraph::paintEvent(QPaintEvent *event)
                     }
                 }
             }
+
+            //! Курсор в зоне
+            if (m_areases.at(iz)->cursorPos() > -1)
+            {
+                int x = LeftSpace + trunc((m_areases.at(iz)->cursorPos() - startPoint) * step * hScale);
+                painter.setPen(QPen(m_envColors.colorCursor, 1, Qt::SolidLine, Qt::FlatCap));
+                painter.drawLine(x, axisY, x, axisY - zoneH);
+            }
         }
     }
 
@@ -294,6 +316,11 @@ void GraphArea::setDiapazone(const double minVal, const double maxVal)
 {
     m_minVal = minVal;
     m_maxVal = maxVal;
+}
+
+void GraphArea::setCursor(const int pos)
+{
+    m_cursorPos = pos;
 }
 
 void GraphArea::computeAverageValue()
