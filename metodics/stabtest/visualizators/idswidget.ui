@@ -180,6 +180,9 @@
           <height>22</height>
          </size>
         </property>
+        <property name="checkable">
+         <bool>true</bool>
+        </property>
        </widget>
       </item>
       <item>
@@ -453,10 +456,95 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>btnSKGPlus</sender>
+   <signal>clicked()</signal>
+   <receiver>IDSWidget</receiver>
+   <slot>onSKGZoomIn()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>27</x>
+     <y>520</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>567</x>
+     <y>324</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btnSKGMinus</sender>
+   <signal>clicked()</signal>
+   <receiver>IDSWidget</receiver>
+   <slot>onSKGZoomOut()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>57</x>
+     <y>513</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>568</x>
+     <y>352</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btnSKGZeroing</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>IDSWidget</receiver>
+   <slot>onSKGZeroing(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>101</x>
+     <y>511</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>565</x>
+     <y>219</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btnFDSPlus</sender>
+   <signal>clicked()</signal>
+   <receiver>IDSWidget</receiver>
+   <slot>onFDSZoomIn()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>500</x>
+     <y>511</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>565</x>
+     <y>17</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btnFDSMinius</sender>
+   <signal>clicked()</signal>
+   <receiver>IDSWidget</receiver>
+   <slot>onFDSZoomOut()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>532</x>
+     <y>511</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>566</x>
+     <y>44</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>splitterMoved(int,int)</slot>
   <slot>tableClicked(QModelIndex)</slot>
   <slot>setVolume(int)</slot>
+  <slot>onSKGZoomIn()</slot>
+  <slot>onSKGZoomOut()</slot>
+  <slot>onSKGZeroing(bool)</slot>
+  <slot>onFDSZoomIn()</slot>
+  <slot>onFDSZoomOut()</slot>
  </slots>
 </ui>

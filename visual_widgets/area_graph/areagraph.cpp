@@ -106,6 +106,13 @@ void AreaGraph::setIsZeroing(const bool zeroing)
     update();
 }
 
+void AreaGraph::setDiapazone(const int numArea, const double minVal, const double maxVal)
+{
+    Q_ASSERT(numArea >= 0 && numArea < m_areases.size());
+    m_areases.at(numArea)->setDiapazone(minVal, maxVal);
+    update();
+}
+
 void AreaGraph::setDiapazone(const double minVal, const double maxVal)
 {
     foreach (auto area, m_areases)

@@ -131,6 +131,12 @@ public:
     void setIsZeroing(const bool zeroing);
 
     /*!
+     * \brief Устанавливает диапазоны для одной зоны графиков одинаковыми
+     * \param numArea - номер зоны графиков
+     * \param minVal, maxVal - минимальная и максимальная границы диапазона
+     */
+    void setDiapazone(const int numArea, const double minVal, const double maxVal);
+    /*!
      * \brief Устанавливает диапазоны для всех зон графиков одинаковыми
      * \param minVal, maxVal - минимальная и максимальная границы диапазона
      */

@@ -23,6 +23,7 @@
 #include <QAudioDeviceInfo>
 #include <QTimer>
 #include <QDebug>
+#include <math.h>
 
 IDSWidget::IDSWidget(QWidget *parent) :
     QWidget(parent),
@@ -191,6 +192,41 @@ void IDSWidget::setVolume(int volume)
     m_volume = volume;
 }
 
+void IDSWidget::onSKGZoomIn()
+{
+    auto diap = ui->wgtSKG->diap();
+    if (diap > 1)
+        ui->wgtSKG->setDiap(diap / 2);
+}
+
+void IDSWidget::onSKGZoomOut()
+{
+    auto diap = ui->wgtSKG->diap();
+    if (diap < 128)
+        ui->wgtSKG->setDiap(diap * 2);
+}
+
+void IDSWidget::onSKGZeroing(bool isZeroing)
+{
+    ui->wgtSKG->setZeroing(isZeroing);
+}
+
+void IDSWidget::onFDSZoomIn()
+{
+    auto minV = ui->wgtFDS->area(0)->minValue();
+    auto maxV = ui->wgtFDS->area(0)->maxValue();
+    double midV = (minV + maxV) / 2;
+    ui->wgtFDS->setDiapazone(0, midV - (maxV - minV) / 4, midV + (maxV - minV) / 4);
+}
+
+void IDSWidget::onFDSZoomOut()
+{
+    auto minV = ui->wgtFDS->area(0)->minValue();
+    auto maxV = ui->wgtFDS->area(0)->maxValue();
+    double midV = (minV + maxV) / 2;
+    ui->wgtFDS->setDiapazone(0, midV - (maxV - minV), midV + (maxV - minV));
+}
+
 void IDSWidget::addFactorsFromMultifactor(IDSCalculator *calculator)
 {
     auto *app = static_cast<AAnalyserApplication*>(QApplication::instance());
@@ -315,7 +351,8 @@ void IDSWidget::showFDS(const int probeNum)
     }
 
     ui->wgtFDS->appendSignal(m_fds, tr("ФДС"));
-    ui->wgtFDS->area(0)->setDiapazone(m_fds->minValue(), m_fds->maxValue());
+    double maxV = fmax(fabs(m_fds->minValue()), fabs(m_fds->maxValue()));
+    ui->wgtFDS->area(0)->setDiapazone(-maxV, maxV);
 }
 
 

@@ -54,6 +54,13 @@ private slots:
     void on_play(const double frequency);
     void setVolume(int volume);
 
+    void onSKGZoomIn();
+    void onSKGZoomOut();
+    void onSKGZeroing(bool isZeroing);
+
+    void onFDSZoomIn();
+    void onFDSZoomOut();
+
 private:
     Ui::IDSWidget *ui;
 
