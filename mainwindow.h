@@ -37,6 +37,11 @@ protected:
 private slots:
     void onDeviceControl();
 
+    void onDataBaseProperty();
+    void onDataBaseExport();
+    void onDataBaseImport();
+    void onDataBaseSelect();
+
 private:
     Ui::MainWindow *ui;
 

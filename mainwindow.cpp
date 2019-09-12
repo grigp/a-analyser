@@ -7,6 +7,7 @@
 #include "devicecontroldialog.h"
 #include "datadefines.h"
 #include "settingsprovider.h"
+#include "databasepropertydialog.h"
 
 #include <QFile>
 #include <QCloseEvent>
@@ -18,7 +19,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    setWindowIcon(QIcon(":/images/MainIcon1.png"));
+    setWindowIcon(QIcon(":/images/MainIcon2.ico"));
     createClientWidgets();
 
     initUi();
@@ -94,6 +95,36 @@ void MainWindow::onDeviceControl()
     dlg.exec();
 }
 
+void MainWindow::onDataBaseProperty()
+{
+    DataBasePropertyDialog dlg(this);
+    dlg.setPath(SettingsProvider::valueFromRegAppCopy("Database", "path").toString());
+    dlg.setComment(SettingsProvider::valueFromRegAppCopy("Database", "comment").toString());
+
+    if (dlg.exec() == QDialog::Accepted)
+    {
+        SettingsProvider::setValueToRegAppCopy("Database", "comment", dlg.comment());
+    }
+}
+
+void MainWindow::onDataBaseExport()
+{
+    qDebug() << "export";
+
+}
+
+void MainWindow::onDataBaseImport()
+{
+    qDebug() << "import";
+
+}
+
+void MainWindow::onDataBaseSelect()
+{
+    qDebug() << "select";
+
+}
+
 void MainWindow::initUi()
 {
     QFile style( ":/qss/main.qss" );
@@ -104,10 +135,16 @@ void MainWindow::initUi()
 
 void MainWindow::initMenu()
 {
+    QMenu *menuDatabase = menuBar()->addMenu(tr("База данных"));
+    menuDatabase->addAction(ui->acDataBaseProperty);
+    menuDatabase->addSeparator();
+    menuDatabase->addAction(ui->acDataBaseExport);
+    menuDatabase->addAction(ui->acDataBaseImport);
+    menuDatabase->addSeparator();
+    menuDatabase->addAction(ui->acDataBaseSelect);
+
     QMenu *menuSettings = menuBar()->addMenu(tr("Настройки"));
-
     menuSettings->addAction(ui->acDeviceControl);
-
 }
 
 void MainWindow::createClientWidgets()

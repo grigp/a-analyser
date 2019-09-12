@@ -48,5 +48,9 @@
         <file>images/Tools/FullSignal.png</file>
         <file>images/Tools/Minus_10.png</file>
         <file>images/Tools/Plus_10.png</file>
+        <file>pre_settings/metodics_st_champ.json</file>
+        <file>pre_settings/metodics_st_champ_en_US.json</file>
+        <file>images/MainIcon2.png</file>
+        <file>images/MainIcon2.ico</file>
     </qresource>
 </RCC>

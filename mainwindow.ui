@@ -82,6 +82,35 @@
     <string>Управление оборудованием...</string>
    </property>
   </action>
+  <action name="acDataBaseProperty">
+   <property name="text">
+    <string>Свойства...</string>
+   </property>
+   <property name="toolTip">
+    <string>Свойства базы данных</string>
+   </property>
+  </action>
+  <action name="acDataBaseExport">
+   <property name="text">
+    <string>Экспорт...</string>
+   </property>
+   <property name="toolTip">
+    <string>Экспорт базы данных</string>
+   </property>
+  </action>
+  <action name="acDataBaseImport">
+   <property name="text">
+    <string>Импорт...</string>
+   </property>
+   <property name="toolTip">
+    <string>Импорт базы данных</string>
+   </property>
+  </action>
+  <action name="acDataBaseSelect">
+   <property name="text">
+    <string>Выбрать</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources/>
@@ -102,8 +131,76 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>acDataBaseProperty</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>onDataBaseProperty()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>581</x>
+     <y>317</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>acDataBaseExport</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>onDataBaseExport()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>581</x>
+     <y>317</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>acDataBaseImport</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>onDataBaseImport()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>581</x>
+     <y>317</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>acDataBaseSelect</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>onDataBaseSelect()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>581</x>
+     <y>317</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>onDeviceControl()</slot>
+  <slot>onDataBaseProperty()</slot>
+  <slot>onDataBaseExport()</slot>
+  <slot>onDataBaseImport()</slot>
+  <slot>onDataBaseSelect()</slot>
  </slots>
 </ui>

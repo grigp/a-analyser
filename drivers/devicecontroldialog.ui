@@ -260,6 +260,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>tvConnections</sender>
+   <signal>doubleClicked(QModelIndex)</signal>
+   <receiver>DeviceControlDialog</receiver>
+   <slot>on_doubleClicked(QModelIndex)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>197</x>
+     <y>229</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>708</x>
+     <y>289</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>addConnect()</slot>
@@ -267,5 +283,6 @@
   <slot>delConnect()</slot>
   <slot>upPriority()</slot>
   <slot>downPriority()</slot>
+  <slot>on_doubleClicked(QModelIndex)</slot>
  </slots>
 </ui>

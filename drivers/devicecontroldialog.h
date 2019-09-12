@@ -109,6 +109,8 @@ private slots:
     void upPriority();
     void downPriority();
 
+    void on_doubleClicked(const QModelIndex &index);
+
     void on_dataChanged(const QModelIndex &topLeft, const QModelIndex &bottomRight);
 
 private:

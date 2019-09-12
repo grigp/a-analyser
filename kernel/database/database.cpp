@@ -3,6 +3,7 @@
 #include "datadefines.h"
 #include "aanalyserapplication.h"
 #include "metodicsfactory.h"
+#include "settingsprovider.h"
 
 #include <QJsonDocument>
 #include <QJsonObject>
@@ -393,7 +394,27 @@ QList<FactorsDefines::FactorValueAdvanced> DataBase::getPrimaryFactors(const QSt
 
 QString DataBase::currentDataBase() const
 {
-    return DataDefines::dataBasesPath() + m_dataBaseName + "/";
+    auto path = SettingsProvider::valueFromRegAppCopy("Database", "path", QString("")).toString();
+    if (path != "")
+        return path;
+    else
+    {
+        int i = 0;
+        bool exists = false;
+        do
+        {
+            if (i == 0)
+                path = DataDefines::dataBasesPath() + m_dataBaseNameDef + "/";
+            else
+                path = DataDefines::dataBasesPath() + m_dataBaseNameDef + " " + QString::number(i) + "/";
+            QDir dir (path);
+            exists = dir.exists();
+            ++i;
+        }
+        while (exists);
+        SettingsProvider::setValueToRegAppCopy("Database", "path", path);
+        return path;
+    }
 }
 
 QDir DataBase::patientsDir() const

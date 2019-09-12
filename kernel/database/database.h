@@ -214,7 +214,7 @@ private:
 
     bool patientExists(const QString &uid) const;
 
-    QString m_dataBaseName = "data";
+    QString m_dataBaseNameDef {"data"};
 };
 
 #endif // DATABASE_H

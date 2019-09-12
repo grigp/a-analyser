@@ -125,6 +125,12 @@ void DeviceControlDialog::downPriority()
     }
 }
 
+void DeviceControlDialog::on_doubleClicked(const QModelIndex &index)
+{
+    Q_UNUSED(index);
+    editConnect();
+}
+
 void DeviceControlDialog::on_dataChanged(const QModelIndex &topLeft, const QModelIndex &bottomRight)
 {
     Q_UNUSED(bottomRight);
