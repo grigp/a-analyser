@@ -28,6 +28,7 @@ void MethodsWidget::onDbConnect()
 {
     if (m_model)
     {
+        m_model->clear();
         m_model->load();
         ui->tvMetods->setModel(m_model);
         connect(ui->tvMetods->selectionModel(), &QItemSelectionModel::selectionChanged,

@@ -5,6 +5,7 @@
 #include <QJsonObject>
 #include <QJsonDocument>
 #include <QUuid>
+#include <QDir>
 #include <QDebug>
 
 namespace
@@ -108,4 +109,65 @@ QString DataDefines::appCopyUid()
 {
     appCopyPath();
     return m_appCopyUid;
+}
+
+QList<DataDefines::DatabaseInfo> DataDefines::getDatabases()
+{
+    QList<DatabaseInfo> retval;
+    retval.clear();
+    QDir dir = dataBasesPath();
+    QFileInfoList list = dir.entryInfoList(QDir::Dirs | QDir::NoDotAndDotDot);
+    foreach (auto fileInfo, list)
+    {
+        DatabaseInfo info = getDatabaseInfo(dataBasesPath() + fileInfo.fileName() + "/");
+        retval << info;
+    }
+
+    return retval;
+}
+
+DataDefines::DatabaseInfo DataDefines::getDatabaseInfo(const QString &dbFolder)
+{
+    DatabaseInfo retval;
+
+    QStringList folders = dbFolder.split("/");
+    if (folders.size() > 2)
+        retval.name = folders.at(folders.size() - 2);
+    else
+        retval.name = "";
+    retval.version = DataBaseVersionCode;
+
+    QFile fileRec(dbFolder + "db.info");
+    if (fileRec.open(QIODevice::ReadOnly | QIODevice::Text))
+    {
+        QByteArray ba = fileRec.readAll();
+        QJsonDocument loadDoc(QJsonDocument::fromJson(ba));
+        QJsonObject info = loadDoc.object();
+        fileRec.close();
+
+        retval.comment = info["comment"].toString();
+        retval.version = info["version"].toString();
+    }
+
+    return retval;
+}
+
+void DataDefines::setDatabaseComment(const QString &dbFolder, const QString &comment)
+{
+    DatabaseInfo info = getDatabaseInfo(dbFolder);
+    QJsonObject obj;
+    obj["name"] = info.name;
+    obj["comment"] = comment;
+    obj["version"] = info.version;
+
+    QFile fileRec(dbFolder + "db.info");
+    fileRec.remove();
+    if (fileRec.open(QIODevice::WriteOnly | QIODevice::Text))
+    {
+        QJsonDocument doc(obj);
+        QByteArray ba = doc.toJson();
+        fileRec.write(ba);
+
+        fileRec.close();
+    }
 }

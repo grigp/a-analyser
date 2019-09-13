@@ -31,6 +31,12 @@ void TestsWidget::onDbConnect()
     ui->wgtDynamic->onDbConnect();
 }
 
+void TestsWidget::onDbDisconnect()
+{
+    ui->wgtResult->onDbDisconnect();
+    ui->wgtDynamic->onDbDisconnect();
+}
+
 void TestsWidget::runTest()
 {
     static_cast<AAnalyserApplication*>(QApplication::instance())->executeMetodic();

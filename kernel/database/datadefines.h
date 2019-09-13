@@ -15,6 +15,8 @@
 namespace DataDefines
 {
 
+static const QString DataBaseVersionCode = "1.0";
+
 /*!
  * \brief Пол пациента
  */
@@ -84,6 +86,17 @@ struct ProbeInfo
 };
 
 /*!
+ * \brief Структура, содержащая информацию о базе данных и ее расположении DatabaseInfo struct
+ */
+struct DatabaseInfo
+{
+    QString name;        ///< Название папки с БД
+    QString comment;     ///< Комментарий
+    QString version;     ///< Версия БД
+    DatabaseInfo() {}
+};
+
+/*!
  * \brief возвращает путь к папке данных для всех приложений a-analyser
  */
 QString aanalyserDataPath();
@@ -102,6 +115,24 @@ QString dataBasesPath();
  * \brief Возвращает uid копии приложения
  */
 QString appCopyUid();
+
+/*!
+ * \brief Возвращает список баз данных, доступных для подключения
+ */
+QList<DatabaseInfo> getDatabases();
+
+/*!
+ * \brief Возвращает данные о БД по пути к ней
+ * \param dbFolder - путь к БД
+ */
+DatabaseInfo getDatabaseInfo(const QString &dbFolder);
+
+/*!
+ * \brief Изменяет комментарий для базы данных
+ * \param dbFolder - путь к БД
+ * \param comment - новый комментарий
+ */
+void setDatabaseComment(const QString &dbFolder, const QString &comment);
 
 ///< ----------------------------------------------------------------
 ///< Локализация

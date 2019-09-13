@@ -21,7 +21,7 @@ QString BaseUtils::getTimeBySecCount(const int secCnt, const bool isHour)
 bool BaseUtils::getTranslatorFileName(QString &fileName, QString &langCode)
 {
     QDir dir("translations");
-    QFileInfoList list = dir.entryInfoList();
+    QFileInfoList list = dir.entryInfoList(QDir::NoDotAndDotDot);
     foreach (auto fileInfo, list)
         if (fileInfo.fileName() != "." && fileInfo.fileName() != "..")
         {

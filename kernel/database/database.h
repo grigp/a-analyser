@@ -182,6 +182,12 @@ signals:
 
 public slots:
 
+    /*!
+     * \brief Смена базы данных
+     * \param dataBaseFolder - путь к новой БД
+     */
+    void changeDatabase(const QString &dataBaseFolder);
+
 private:
     QString currentDataBase() const;
     QDir patientsDir() const;

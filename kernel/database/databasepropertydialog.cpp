@@ -18,6 +18,11 @@ void DataBasePropertyDialog::setPath(const QString &path)
     ui->lblPath->setText(path);
 }
 
+void DataBasePropertyDialog::setVersion(const QString &version)
+{
+    ui->lblVersion->setText(version);
+}
+
 QString DataBasePropertyDialog::comment() const
 {
     return ui->edComment->text();

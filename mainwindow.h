@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QMenu>
 
 class DataBaseResultWidget;
 class ExecuteWidget;
@@ -26,10 +27,13 @@ public:
 
     QWidget *getExecuteWidget();
 
+signals:
+    void dataBaseChange(const QString &dataBaseFolder);
+
 public slots:
     void onDbConnected();
 
-    void obDBDisconnected();
+    void obDbDisconnected();
 
 protected:
     void closeEvent(QCloseEvent *event) override;
@@ -42,12 +46,15 @@ private slots:
     void onDataBaseImport();
     void onDataBaseSelect();
 
+    void on_selectDatabase();
+
 private:
     Ui::MainWindow *ui;
 
     void initUi();
 
     void initMenu();
+    void initSelectDatabaseMenu();
 
     /*!
      * \brief Создает клиентские виджеты и размещает их на главном окне
@@ -56,6 +63,7 @@ private:
 
     QList<QWidget*> m_clientWidgets;
     QString m_currentClientPage = ""; ///< Текущая страница с данными
+    QMenu m_menuSelectDatabase;       ///< Меню выбора БД
 
 };
 

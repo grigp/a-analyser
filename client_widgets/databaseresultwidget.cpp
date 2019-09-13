@@ -43,7 +43,7 @@ void DataBaseResultWidget::onDBConnect()
 
 void DataBaseResultWidget::onDBDisconnect()
 {
-
+    ui->wgtTests->onDbDisconnect();
 }
 
 void DataBaseResultWidget::onSelectTest(const QString &testUid)

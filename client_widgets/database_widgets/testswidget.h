@@ -16,6 +16,7 @@ public:
     ~TestsWidget();
 
     void onDbConnect();
+    void onDbDisconnect();
 
 
 private slots:

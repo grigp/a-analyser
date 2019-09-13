@@ -12,6 +12,7 @@
 #include <QFile>
 #include <QCloseEvent>
 #include <QMessageBox>
+#include <QAction>
 #include <QDebug>
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -66,7 +67,7 @@ void MainWindow::onDbConnected()
         static_cast<ClientWidget*>(wgt)->onDBConnect();
 }
 
-void MainWindow::obDBDisconnected()
+void MainWindow::obDbDisconnected()
 {
     foreach (auto wgt, m_clientWidgets)
         static_cast<ClientWidget*>(wgt)->onDBDisconnect();
@@ -98,12 +99,14 @@ void MainWindow::onDeviceControl()
 void MainWindow::onDataBaseProperty()
 {
     DataBasePropertyDialog dlg(this);
-    dlg.setPath(SettingsProvider::valueFromRegAppCopy("Database", "path").toString());
-    dlg.setComment(SettingsProvider::valueFromRegAppCopy("Database", "comment").toString());
-
+    QString path = SettingsProvider::valueFromRegAppCopy("Database", "path").toString();
+    dlg.setPath(path);
+    DataDefines::DatabaseInfo info = DataDefines::getDatabaseInfo(path);
+    dlg.setComment(info.comment);
+    dlg.setVersion(info.version);
     if (dlg.exec() == QDialog::Accepted)
     {
-        SettingsProvider::setValueToRegAppCopy("Database", "comment", dlg.comment());
+        DataDefines::setDatabaseComment(path, dlg.comment());
     }
 }
 
@@ -125,6 +128,13 @@ void MainWindow::onDataBaseSelect()
 
 }
 
+void MainWindow::on_selectDatabase()
+{
+    QString path = DataDefines::dataBasesPath() + static_cast<QAction*>(sender())->data().toString() + "/";
+    emit dataBaseChange(path);
+    initSelectDatabaseMenu();
+}
+
 void MainWindow::initUi()
 {
     QFile style( ":/qss/main.qss" );
@@ -141,10 +151,38 @@ void MainWindow::initMenu()
     menuDatabase->addAction(ui->acDataBaseExport);
     menuDatabase->addAction(ui->acDataBaseImport);
     menuDatabase->addSeparator();
-    menuDatabase->addAction(ui->acDataBaseSelect);
+
+    initSelectDatabaseMenu();
+    menuDatabase->addMenu(&m_menuSelectDatabase);
 
     QMenu *menuSettings = menuBar()->addMenu(tr("Настройки"));
     menuSettings->addAction(ui->acDeviceControl);
+}
+
+void MainWindow::initSelectDatabaseMenu()
+{
+    QString path = SettingsProvider::valueFromRegAppCopy("Database", "path").toString();
+    QStringList folders = path.split("/");
+    QString curNameBD = "";
+    if (folders.size() > 2)
+        curNameBD = folders.at(folders.size() - 2);
+
+    m_menuSelectDatabase.setTitle(tr("Выбрать"));
+    m_menuSelectDatabase.clear();
+    auto dbInfos = DataDefines::getDatabases();
+    foreach (auto dbInfo, dbInfos)
+    {
+        if (dbInfo.name != curNameBD)
+        {
+            QString title = dbInfo.comment;
+            if (title == "")
+                title = dbInfo.name;
+            QAction *acSelDB = new QAction(title);
+            acSelDB->setData(dbInfo.name);
+            m_menuSelectDatabase.addAction(acSelDB);
+            connect(acSelDB, &QAction::triggered, this, &MainWindow::on_selectDatabase);
+        }
+    }
 }
 
 void MainWindow::createClientWidgets()

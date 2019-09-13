@@ -30,9 +30,8 @@ QStringList DataBase::getPatients() const
     QStringList retval;
 
     QDir dir = patientsDir();
-    QFileInfoList list = dir.entryInfoList();
+    QFileInfoList list = dir.entryInfoList(QDir::Files | QDir::NoDotAndDotDot);
     foreach (auto fileInfo, list)
-        if (fileInfo.fileName() != "." && fileInfo.fileName() != "..")
         retval << fileInfo.fileName();
     return retval;
 }
@@ -173,9 +172,8 @@ QStringList DataBase::getTests() const
     QStringList retval;
 
     QDir dir = testsDir();
-    QFileInfoList list = dir.entryInfoList(QDir::NoFilter, QDir::Time);
+    QFileInfoList list = dir.entryInfoList(QDir::Files | QDir::NoDotAndDotDot, QDir::Time);
     foreach (auto fileInfo, list)
-        if (fileInfo.fileName() != "." && fileInfo.fileName() != "..")
         retval << fileInfo.fileName();
     return retval;
 }
@@ -392,6 +390,16 @@ QList<FactorsDefines::FactorValueAdvanced> DataBase::getPrimaryFactors(const QSt
     return retval;
 }
 
+void DataBase::changeDatabase(const QString &dataBaseFolder)
+{
+    emit disconnected();
+    SettingsProvider::setValueToRegAppCopy("Database", "path", dataBaseFolder);
+    QTimer::singleShot(0, [=]()
+    {
+        emit connected();
+    });
+}
+
 QString DataBase::currentDataBase() const
 {
     auto path = SettingsProvider::valueFromRegAppCopy("Database", "path", QString("")).toString();
@@ -515,7 +523,7 @@ void DataBase::updatePatientRec(const DataDefines::PatientKard &patient)
 bool DataBase::patientExists(const QString &uid) const
 {
     QDir dir = patientsDir();
-    QFileInfoList list = dir.entryInfoList();
+    QFileInfoList list = dir.entryInfoList(QDir::Files | QDir::NoDotAndDotDot);
     foreach (auto fileInfo, list)
         if (fileInfo.fileName() == uid)
             return true;

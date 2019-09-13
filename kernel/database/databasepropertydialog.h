@@ -21,6 +21,11 @@ public:
     void setPath(const QString &path);
 
     /*!
+     * \brief Устанавливает версию БД
+     */
+    void setVersion(const QString &version);
+
+    /*!
      * \brief Доступ к полю комментария
      */
     QString comment() const;

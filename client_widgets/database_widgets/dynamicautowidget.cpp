@@ -43,6 +43,11 @@ void DynamicAutoWidget::onDbConnect()
     restoreDynamicVolume();
 }
 
+void DynamicAutoWidget::onDbDisconnect()
+{
+
+}
+
 void DynamicAutoWidget::on_selectionChanged(const QItemSelection &selected, const QItemSelection &deselected)
 {
     Q_UNUSED(selected);

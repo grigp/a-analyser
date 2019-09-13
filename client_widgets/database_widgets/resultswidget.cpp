@@ -50,7 +50,14 @@ void ResultsWidget::onDbConnect()
 
     connect(m_mdlTest, &TestsModel::rowsInserted, this, &ResultsWidget::onNewTests);
     connect(m_mdlTest, &TestsModel::rowsRemoved, this, &ResultsWidget::onRemoveTests);
+}
 
+void ResultsWidget::onDbDisconnect()
+{
+    closeTest();
+    disconnect(m_mdlTest, &TestsModel::rowsInserted, this, &ResultsWidget::onNewTests);
+    disconnect(m_mdlTest, &TestsModel::rowsRemoved, this, &ResultsWidget::onRemoveTests);
+    m_mdlTest->clear();
 }
 
 void ResultsWidget::on_selectionChanged(const QItemSelection &selected, const QItemSelection &deselected)
@@ -114,6 +121,7 @@ void ResultsWidget::splitterMoved(int pos, int index)
 
 void ResultsWidget::onNewTests(const QModelIndex &parent, int first, int last)
 {
+    qDebug() << Q_FUNC_INFO;
     Q_UNUSED(last);
     auto index = m_mdlTest->index(first, TestsModel::ColPatient, parent);
     selectTest(index);

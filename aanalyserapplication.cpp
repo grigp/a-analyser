@@ -40,6 +40,8 @@ AAnalyserApplication::AAnalyserApplication(int &argc, char **argv, const QString
         connect(m_database, &DataBase::connected, this, &AAnalyserApplication::dbConnected);
         connect(m_database, &DataBase::disconnected, this, &AAnalyserApplication::dbDisconnected);
         connect(m_database, &DataBase::newTest, this, &AAnalyserApplication::newTest);
+
+        connect(static_cast<MainWindow*>(m_mw), &MainWindow::dataBaseChange, m_database, &DataBase::changeDatabase);
     });
 }
 
@@ -64,6 +66,7 @@ void AAnalyserApplication::setMainWindow(QMainWindow *mw)
 {
     m_mw = mw;
     connect(this, &AAnalyserApplication::dbConnected, static_cast<MainWindow*>(m_mw), &MainWindow::onDbConnected);
+    connect(this, &AAnalyserApplication::dbDisconnected, static_cast<MainWindow*>(m_mw), &MainWindow::obDbDisconnected);
 }
 
 void AAnalyserApplication::showClientPage(const QString &uidPage)
@@ -74,6 +77,11 @@ void AAnalyserApplication::showClientPage(const QString &uidPage)
 DataBase *AAnalyserApplication::getDB()
 {
     return m_database;
+}
+
+void AAnalyserApplication::changeDatabase(const QString &dataBaseFolder)
+{
+    m_database->changeDatabase(dataBaseFolder);
 }
 
 DataDefines::PatientKard AAnalyserApplication::getSelectedPatient() const

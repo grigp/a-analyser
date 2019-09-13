@@ -24,6 +24,7 @@ public:
     ~DynamicAutoWidget();
 
     void onDbConnect();
+    void onDbDisconnect();
 
     static QString widgetName() {return QString("dynamic");}
 

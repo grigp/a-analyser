@@ -41,6 +41,7 @@ public:
     ~ResultsWidget();
 
     void onDbConnect();
+    void onDbDisconnect();
 
     static QString widgetName() {return QString("result");}
 

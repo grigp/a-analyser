@@ -42,6 +42,12 @@ public:
     DataBase* getDB();
 
     /*!
+     * \brief Смена базы данных
+     * \param dataBaseFolder - путь к новой БД
+     */
+    void changeDatabase(const QString &dataBaseFolder);
+
+    /*!
      * \brief Возвращает карточку выбранного пациента
      */
     DataDefines::PatientKard getSelectedPatient() const;
