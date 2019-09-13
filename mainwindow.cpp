@@ -128,6 +128,18 @@ void MainWindow::onDataBaseSelect()
 
 }
 
+void MainWindow::onDataBaseClear()
+{
+    qDebug() << "clear";
+
+}
+
+void MainWindow::onDataBaseCreate()
+{
+    qDebug() << "create";
+
+}
+
 void MainWindow::on_selectDatabase()
 {
     QString path = DataDefines::dataBasesPath() + static_cast<QAction*>(sender())->data().toString() + "/";
@@ -150,6 +162,8 @@ void MainWindow::initMenu()
     menuDatabase->addSeparator();
     menuDatabase->addAction(ui->acDataBaseExport);
     menuDatabase->addAction(ui->acDataBaseImport);
+    menuDatabase->addAction(ui->acDataBaseClear);
+    menuDatabase->addAction(ui->acDataBaseCreate);
     menuDatabase->addSeparator();
 
     initSelectDatabaseMenu();

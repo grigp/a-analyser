@@ -111,6 +111,22 @@
     <string>Выбрать</string>
    </property>
   </action>
+  <action name="acDataBaseClear">
+   <property name="text">
+    <string>Очистить</string>
+   </property>
+   <property name="toolTip">
+    <string>Удалить пациентов и обследования</string>
+   </property>
+  </action>
+  <action name="acDataBaseCreate">
+   <property name="text">
+    <string>Создать</string>
+   </property>
+   <property name="toolTip">
+    <string>Создать новую пустую БД</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources/>
@@ -195,6 +211,38 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>acDataBaseClear</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>onDataBaseClear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>581</x>
+     <y>317</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>acDataBaseCreate</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>onDataBaseCreate()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>581</x>
+     <y>317</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>onDeviceControl()</slot>
@@ -202,5 +250,7 @@
   <slot>onDataBaseExport()</slot>
   <slot>onDataBaseImport()</slot>
   <slot>onDataBaseSelect()</slot>
+  <slot>onDataBaseClear()</slot>
+  <slot>onDataBaseCreate()</slot>
  </slots>
 </ui>

@@ -45,6 +45,8 @@ private slots:
     void onDataBaseExport();
     void onDataBaseImport();
     void onDataBaseSelect();
+    void onDataBaseClear();
+    void onDataBaseCreate();
 
     void on_selectDatabase();
 
