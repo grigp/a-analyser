@@ -400,6 +400,22 @@ void DataBase::changeDatabase(const QString &dataBaseFolder)
     });
 }
 
+void DataBase::clear()
+{
+    disconnected();
+    deleteAllTests();
+    QDir dir = patientsDir();
+    clearDBFolder(dir);
+    connected();
+}
+
+void DataBase::deleteTests()
+{
+    disconnected();
+    deleteAllTests();
+    connected();
+}
+
 QString DataBase::currentDataBase() const
 {
     auto path = SettingsProvider::valueFromRegAppCopy("Database", "path", QString("")).toString();
@@ -528,4 +544,21 @@ bool DataBase::patientExists(const QString &uid) const
         if (fileInfo.fileName() == uid)
             return true;
     return false;
+}
+
+void DataBase::clearDBFolder(QDir &dir)
+{
+    QFileInfoList list = dir.entryInfoList(QDir::Files | QDir::NoDotAndDotDot, QDir::Time);
+    foreach (auto fileInfo, list)
+        QFile::remove(fileInfo.absoluteFilePath());
+}
+
+void DataBase::deleteAllTests()
+{
+    QDir dir = testsDir();
+    clearDBFolder(dir);
+    dir = probesDir();
+    clearDBFolder(dir);
+    dir = channelsDir();
+    clearDBFolder(dir);
 }

@@ -130,8 +130,16 @@ void MainWindow::onDataBaseSelect()
 
 void MainWindow::onDataBaseClear()
 {
-    qDebug() << "clear";
+    if (QMessageBox::question(this, tr("Запрос"), tr("Удалить всех пациентов со всеми обследованиями?")) ==
+            QMessageBox::Yes)
+        emit dataBaseClear();
+}
 
+void MainWindow::onDataBaseDelTests()
+{
+    if (QMessageBox::question(this, tr("Запрос"), tr("Удалить все обследования?")) ==
+            QMessageBox::Yes)
+        emit deleteTests();
 }
 
 void MainWindow::onDataBaseCreate()
@@ -162,7 +170,11 @@ void MainWindow::initMenu()
     menuDatabase->addSeparator();
     menuDatabase->addAction(ui->acDataBaseExport);
     menuDatabase->addAction(ui->acDataBaseImport);
-    menuDatabase->addAction(ui->acDataBaseClear);
+
+    QMenu *menuDBClear = menuDatabase->addMenu(tr("Очистить"));
+    menuDBClear->addAction(ui->acDataBaseClear);
+    menuDBClear->addAction(ui->acDataBaseDelTests);
+
     menuDatabase->addAction(ui->acDataBaseCreate);
     menuDatabase->addSeparator();
 
@@ -171,6 +183,13 @@ void MainWindow::initMenu()
 
     QMenu *menuSettings = menuBar()->addMenu(tr("Настройки"));
     menuSettings->addAction(ui->acDeviceControl);
+}
+
+QMenu *MainWindow::initDatabaseClearMenu()
+{
+    QMenu *menu = new QMenu();
+
+    return menu;
 }
 
 void MainWindow::initSelectDatabaseMenu()

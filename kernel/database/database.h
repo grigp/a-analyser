@@ -188,6 +188,16 @@ public slots:
      */
     void changeDatabase(const QString &dataBaseFolder);
 
+    /*!
+     * \brief Очищает всю БД
+     */
+    void clear();
+
+    /*!
+     * \brief Удаляет все тесты со всеми данными
+     */
+    void deleteTests();
+
 private:
     QString currentDataBase() const;
     QDir patientsDir() const;
@@ -219,6 +229,14 @@ private:
     void updatePatientRec(const DataDefines::PatientKard &patient);
 
     bool patientExists(const QString &uid) const;
+
+    /*!
+     * \brief Очищает папку с БД
+     * \param dir - объект папки
+     */
+    void clearDBFolder(QDir &dir);
+
+    void deleteAllTests();
 
     QString m_dataBaseNameDef {"data"};
 };

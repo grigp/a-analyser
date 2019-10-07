@@ -29,6 +29,8 @@ public:
 
 signals:
     void dataBaseChange(const QString &dataBaseFolder);
+    void dataBaseClear();
+    void deleteTests();
 
 public slots:
     void onDbConnected();
@@ -46,6 +48,7 @@ private slots:
     void onDataBaseImport();
     void onDataBaseSelect();
     void onDataBaseClear();
+    void onDataBaseDelTests();
     void onDataBaseCreate();
 
     void on_selectDatabase();
@@ -56,6 +59,7 @@ private:
     void initUi();
 
     void initMenu();
+    QMenu* initDatabaseClearMenu();
     void initSelectDatabaseMenu();
 
     /*!
