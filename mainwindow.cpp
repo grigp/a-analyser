@@ -144,8 +144,12 @@ void MainWindow::onDataBaseDelTests()
 
 void MainWindow::onDataBaseCreate()
 {
-    qDebug() << "create";
-
+    if (QMessageBox::question(this, tr("Запрос"), tr("Создать новую базу данных?")) ==
+            QMessageBox::Yes)
+    {
+        emit dataBaseCreate();
+        initSelectDatabaseMenu();
+    }
 }
 
 void MainWindow::on_selectDatabase()

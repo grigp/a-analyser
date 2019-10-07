@@ -189,6 +189,11 @@ public slots:
     void changeDatabase(const QString &dataBaseFolder);
 
     /*!
+     * \brief Создание новой БД и переключение на нее
+     */
+    void createDatabase();
+
+    /*!
      * \brief Очищает всю БД
      */
     void clear();

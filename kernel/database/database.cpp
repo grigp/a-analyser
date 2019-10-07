@@ -400,6 +400,24 @@ void DataBase::changeDatabase(const QString &dataBaseFolder)
     });
 }
 
+void DataBase::createDatabase()
+{
+    bool dbExists = false;
+    int n = 0;
+    QString name = "data";
+    do
+    {
+        if (n > 0)
+            name = "data " + QString::number(n);
+        QDir dir(DataDefines::dataBasesPath() + name);
+        dbExists = dir.exists();
+        ++n;
+    }
+    while (dbExists);
+
+    changeDatabase(DataDefines::dataBasesPath() + name + "/");
+}
+
 void DataBase::clear()
 {
     disconnected();
