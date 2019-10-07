@@ -8,10 +8,12 @@
 #include "datadefines.h"
 #include "settingsprovider.h"
 #include "databasepropertydialog.h"
+#include "dataprovider.h"
 
 #include <QFile>
 #include <QCloseEvent>
 #include <QMessageBox>
+#include <QFileDialog>
 #include <QAction>
 #include <QDebug>
 
@@ -112,8 +114,12 @@ void MainWindow::onDataBaseProperty()
 
 void MainWindow::onDataBaseExport()
 {
-    qDebug() << "export";
-
+    QString path = DataDefines::aanalyserDocumentsPath();
+    auto fileName = QFileDialog::getSaveFileName(this, tr("Файл для экспорта БД"), path, tr("Экспортные файлы БД (*.abde)"));
+    if (fileName != "")
+    {
+        DataProvider::exportBD(fileName);
+    }
 }
 
 void MainWindow::onDataBaseImport()
@@ -124,7 +130,6 @@ void MainWindow::onDataBaseImport()
 
 void MainWindow::onDataBaseSelect()
 {
-    qDebug() << "select";
 
 }
 
@@ -132,14 +137,14 @@ void MainWindow::onDataBaseClear()
 {
     if (QMessageBox::question(this, tr("Запрос"), tr("Удалить всех пациентов со всеми обследованиями?")) ==
             QMessageBox::Yes)
-        emit dataBaseClear();
+        DataProvider::clear();
 }
 
 void MainWindow::onDataBaseDelTests()
 {
     if (QMessageBox::question(this, tr("Запрос"), tr("Удалить все обследования?")) ==
             QMessageBox::Yes)
-        emit deleteTests();
+        DataProvider::deleteTests();
 }
 
 void MainWindow::onDataBaseCreate()
@@ -171,7 +176,10 @@ void MainWindow::initMenu()
 {
     QMenu *menuDatabase = menuBar()->addMenu(tr("База данных"));
     menuDatabase->addAction(ui->acDataBaseProperty);
+    initSelectDatabaseMenu();
+    menuDatabase->addMenu(&m_menuSelectDatabase);
     menuDatabase->addSeparator();
+
     menuDatabase->addAction(ui->acDataBaseExport);
     menuDatabase->addAction(ui->acDataBaseImport);
 
@@ -182,8 +190,7 @@ void MainWindow::initMenu()
     menuDatabase->addAction(ui->acDataBaseCreate);
     menuDatabase->addSeparator();
 
-    initSelectDatabaseMenu();
-    menuDatabase->addMenu(&m_menuSelectDatabase);
+    menuDatabase->addAction(ui->acExit);
 
     QMenu *menuSettings = menuBar()->addMenu(tr("Настройки"));
     menuSettings->addAction(ui->acDeviceControl);

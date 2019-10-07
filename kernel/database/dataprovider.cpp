@@ -120,3 +120,23 @@ QList<FactorsDefines::FactorValueAdvanced> DataProvider::getPrimaryFactors(const
 {
     return static_cast<AAnalyserApplication*>(QApplication::instance())->getDB()->getPrimaryFactors(testUid);
 }
+
+void DataProvider::clear()
+{
+    static_cast<AAnalyserApplication*>(QApplication::instance())->getDB()->clear();
+}
+
+void DataProvider::deleteTests()
+{
+    static_cast<AAnalyserApplication*>(QApplication::instance())->getDB()->deleteTests();
+}
+
+void DataProvider::exportBD(const QString &fileName)
+{
+    static_cast<AAnalyserApplication*>(QApplication::instance())->getDB()->exportBD(fileName);
+}
+
+void DataProvider::importBD(const QString &fileName)
+{
+    static_cast<AAnalyserApplication*>(QApplication::instance())->getDB()->importBD(fileName);
+}

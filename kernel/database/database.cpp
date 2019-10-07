@@ -390,6 +390,75 @@ QList<FactorsDefines::FactorValueAdvanced> DataBase::getPrimaryFactors(const QSt
     return retval;
 }
 
+void DataBase::clear()
+{
+    disconnected();
+    deleteAllTests();
+    QDir dir = patientsDir();
+    clearDBFolder(dir);
+    connected();
+}
+
+void DataBase::deleteTests()
+{
+    disconnected();
+    deleteAllTests();
+    connected();
+}
+
+void DataBase::exportBD(const QString &fileName)
+{
+    QByteArray ba;
+    ba.clear();
+    QDataStream stream(&ba, QIODevice::WriteOnly);
+    if (QFile::exists(currentDataBase() + "db.info"))
+        addFileToByteArray(currentDataBase() + "db.info", stream);
+
+    auto scanFolder = [&](QDir &dir)
+    {
+        QFileInfoList list = dir.entryInfoList(QDir::Files | QDir::NoDotAndDotDot);
+        int s = list.size();
+        stream << s;
+        foreach (auto fileInfo, list)
+        {
+            stream << fileInfo.fileName();
+            addFileToByteArray(dir.absoluteFilePath(fileInfo.fileName()), stream);
+        }
+    };
+
+    QDir dir = patientsDir();
+    scanFolder(dir);
+
+    dir = testsDir();
+    scanFolder(dir);
+
+    dir = probesDir();
+    scanFolder(dir);
+
+    dir = channelsDir();
+    scanFolder(dir);
+
+//    QFileInfoList list = dir.entryInfoList(QDir::Files | QDir::NoDotAndDotDot);
+//    int s = list.size();
+//    stream << s;
+//    foreach (auto fileInfo, list)
+//        addFileToByteArray(dir.absoluteFilePath(fileInfo.fileName()), stream);
+
+
+    QFile file(fileName);
+    if (file.open(QIODevice::WriteOnly))
+    {
+        file.write(ba);
+        file.close();
+    }
+}
+
+void DataBase::importBD(const QString &fileName)
+{
+
+}
+
+
 void DataBase::changeDatabase(const QString &dataBaseFolder)
 {
     emit disconnected();
@@ -416,22 +485,6 @@ void DataBase::createDatabase()
     while (dbExists);
 
     changeDatabase(DataDefines::dataBasesPath() + name + "/");
-}
-
-void DataBase::clear()
-{
-    disconnected();
-    deleteAllTests();
-    QDir dir = patientsDir();
-    clearDBFolder(dir);
-    connected();
-}
-
-void DataBase::deleteTests()
-{
-    disconnected();
-    deleteAllTests();
-    connected();
 }
 
 QString DataBase::currentDataBase() const
@@ -579,4 +632,17 @@ void DataBase::deleteAllTests()
     clearDBFolder(dir);
     dir = channelsDir();
     clearDBFolder(dir);
+}
+
+void DataBase::addFileToByteArray(const QString &fileName, QDataStream &stream)
+{
+    QFile file(fileName);
+    if (file.open(QIODevice::ReadOnly))
+    {
+        QByteArray baf = file.readAll();
+        int s = baf.size();
+
+        stream << s;
+        stream << baf;
+    }
 }

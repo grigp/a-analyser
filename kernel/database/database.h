@@ -163,6 +163,28 @@ public:
      */
     QList<FactorsDefines::FactorValueAdvanced> getPrimaryFactors(const QString &testUid) const;
 
+    /*!
+     * \brief Очищает всю БД
+     */
+    void clear();
+
+    /*!
+     * \brief Удаляет все тесты со всеми данными
+     */
+    void deleteTests();
+
+    /*!
+     * \brief Экспорт БД в файл
+     * \param fileName - имя файла
+     */
+    void exportBD(const QString &fileName);
+
+    /*!
+     * \brief Импорт БД из файла
+     * \param fileName - имя файла
+     */
+    void importBD(const QString &fileName);
+
 signals:
     /*!
      * \brief Извещает о подключении к БД
@@ -192,16 +214,6 @@ public slots:
      * \brief Создание новой БД и переключение на нее
      */
     void createDatabase();
-
-    /*!
-     * \brief Очищает всю БД
-     */
-    void clear();
-
-    /*!
-     * \brief Удаляет все тесты со всеми данными
-     */
-    void deleteTests();
 
 private:
     QString currentDataBase() const;
@@ -242,6 +254,13 @@ private:
     void clearDBFolder(QDir &dir);
 
     void deleteAllTests();
+
+    /*!
+     * \brief Читает файл и добавляет его содержимое к байтовому массиву
+     * \param fileName - имя файла
+     * \param ba - байтовый массив
+     */
+    void addFileToByteArray(const QString &fileName, QDataStream &stream);
 
     QString m_dataBaseNameDef {"data"};
 };

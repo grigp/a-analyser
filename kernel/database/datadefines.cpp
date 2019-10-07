@@ -52,6 +52,15 @@ QString DataDefines::aanalyserDataPath()
     return path + QApplication::applicationName() + '/';
 }
 
+QString DataDefines::aanalyserDocumentsPath()
+{
+    QString path = QStandardPaths::locate(QStandardPaths::DocumentsLocation, QString(), QStandardPaths::LocateDirectory);
+    path = path + "a-analyser/";
+    QDir dir(path);
+    if (!dir.exists())
+        dir.mkpath(path);
+    return path;
+}
 
 QString DataDefines::appCopyPath()
 {
@@ -171,3 +180,4 @@ void DataDefines::setDatabaseComment(const QString &dbFolder, const QString &com
         fileRec.close();
     }
 }
+

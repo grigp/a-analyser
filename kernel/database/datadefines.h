@@ -102,6 +102,11 @@ struct DatabaseInfo
 QString aanalyserDataPath();
 
 /*!
+ * \brief возвращает путь к папке документов для всех приложений a-analyser
+ */
+QString aanalyserDocumentsPath();
+
+/*!
  * \brief возвращает путь к папке данных копии приложения
  */
 QString appCopyPath();

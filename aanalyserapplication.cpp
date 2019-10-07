@@ -43,8 +43,6 @@ AAnalyserApplication::AAnalyserApplication(int &argc, char **argv, const QString
 
         connect(static_cast<MainWindow*>(m_mw), &MainWindow::dataBaseChange, m_database, &DataBase::changeDatabase);
         connect(static_cast<MainWindow*>(m_mw), &MainWindow::dataBaseClear, m_database, &DataBase::clear);
-        connect(static_cast<MainWindow*>(m_mw), &MainWindow::deleteTests, m_database, &DataBase::deleteTests);
-        connect(static_cast<MainWindow*>(m_mw), &MainWindow::dataBaseCreate, m_database, &DataBase::createDatabase);
     });
 }
 

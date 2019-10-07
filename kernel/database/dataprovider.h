@@ -175,6 +175,31 @@ void addPrimaryFactor(const QString &testUid,
  */
 QList<FactorsDefines::FactorValueAdvanced> getPrimaryFactors(const QString &testUid);
 
+
+//! ------------------- Общие и сервисные операции -------------------
+/*!
+ * \brief Очищает всю БД
+ */
+void clear();
+
+/*!
+ * \brief Удаляет все тесты со всеми данными
+ */
+void deleteTests();
+
+/*!
+ * \brief Экспорт БД в файл
+ * \param fileName - имя файла
+ */
+void exportBD(const QString &fileName);
+
+/*!
+ * \brief Импорт БД из файла
+ * \param fileName - имя файла
+ */
+void importBD(const QString &fileName);
+
+
 }
 
 #endif // DATAPROVIDER_H
