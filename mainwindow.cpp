@@ -124,8 +124,12 @@ void MainWindow::onDataBaseExport()
 
 void MainWindow::onDataBaseImport()
 {
-    qDebug() << "import";
-
+    QString path = DataDefines::aanalyserDocumentsPath();
+    auto fileName = QFileDialog::getOpenFileName(this, tr("Файл для импорта БД"), path, tr("Экспортные файлы БД (*.abde)"));
+    if (fileName != "")
+    {
+        DataProvider::importBD(fileName);
+    }
 }
 
 void MainWindow::onDataBaseSelect()

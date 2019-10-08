@@ -248,6 +248,11 @@ private:
     bool patientExists(const QString &uid) const;
 
     /*!
+     * \brief Возвращает новое имя папки для БД
+     */
+    QString getNewDatabaseName();
+
+    /*!
      * \brief Очищает папку с БД
      * \param dir - объект папки
      */
@@ -257,10 +262,11 @@ private:
 
     /*!
      * \brief Читает файл и добавляет его содержимое к байтовому массиву
+     * \param fullFileName - полное имя файла (с путем)
      * \param fileName - имя файла
      * \param ba - байтовый массив
      */
-    void addFileToByteArray(const QString &fileName, QDataStream &stream);
+    void addFileToByteArray(const QString &fullFileName, const QString &fileName, QDataStream &stream);
 
     QString m_dataBaseNameDef {"data"};
 };

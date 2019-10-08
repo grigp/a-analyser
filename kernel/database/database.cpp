@@ -408,56 +408,100 @@ void DataBase::deleteTests()
 
 void DataBase::exportBD(const QString &fileName)
 {
-    QByteArray ba;
-    ba.clear();
-    QDataStream stream(&ba, QIODevice::WriteOnly);
-    if (QFile::exists(currentDataBase() + "db.info"))
-        addFileToByteArray(currentDataBase() + "db.info", stream);
-
-    auto scanFolder = [&](QDir &dir)
-    {
-        QFileInfoList list = dir.entryInfoList(QDir::Files | QDir::NoDotAndDotDot);
-        int s = list.size();
-        stream << s;
-        foreach (auto fileInfo, list)
-        {
-            stream << fileInfo.fileName();
-            addFileToByteArray(dir.absoluteFilePath(fileInfo.fileName()), stream);
-        }
-    };
-
-    QDir dir = patientsDir();
-    scanFolder(dir);
-
-    dir = testsDir();
-    scanFolder(dir);
-
-    dir = probesDir();
-    scanFolder(dir);
-
-    dir = channelsDir();
-    scanFolder(dir);
-
-//    QFileInfoList list = dir.entryInfoList(QDir::Files | QDir::NoDotAndDotDot);
-//    int s = list.size();
-//    stream << s;
-//    foreach (auto fileInfo, list)
-//        addFileToByteArray(dir.absoluteFilePath(fileInfo.fileName()), stream);
-
-
     QFile file(fileName);
     if (file.open(QIODevice::WriteOnly))
     {
-        file.write(ba);
+        QDataStream stream(&file);
+        if (QFile::exists(currentDataBase() + "db.info"))
+            addFileToByteArray(currentDataBase() + "db.info", "db.info", stream);
+
+        auto scanFolder = [&](QDir &dir)
+        {
+            QFileInfoList list = dir.entryInfoList(QDir::Files | QDir::NoDotAndDotDot);
+            int count = list.size();
+            stream << count;
+            foreach (auto fileInfo, list)
+                addFileToByteArray(dir.absoluteFilePath(fileInfo.fileName()), fileInfo.fileName(), stream);
+        };
+
+        QDir dir = patientsDir();
+        scanFolder(dir);
+
+        dir = testsDir();
+        scanFolder(dir);
+
+        dir = probesDir();
+        scanFolder(dir);
+
+        dir = channelsDir();
+        scanFolder(dir);
+
         file.close();
     }
 }
 
 void DataBase::importBD(const QString &fileName)
 {
+    QFile fileRec(fileName);
+    if (fileRec.open(QIODevice::ReadOnly))
+    {
+        QString dbName = DataDefines::dataBasesPath() + getNewDatabaseName() + "/";
+        QDir dir(dbName);
+        if (!dir.exists())
+            dir.mkpath(dbName);
 
+        QDataStream stream(&fileRec);
+
+        auto createFile = [&](QString &folder)
+        {
+            QString fn = "";
+            stream >> fn;
+            QByteArray ba;
+            int pos = stream.device()->pos();
+            stream >> ba;
+            qDebug() << "1" << fn;
+            qDebug() << "2" << ba;
+            qDebug() << "3" << pos << stream.device()->pos() << ba.size();
+
+            QFile file(folder + fn);
+            if (file.open(QIODevice::WriteOnly))
+            {
+                file.write(ba);
+                file.close();
+            }
+        };
+
+        auto processDBFolder = [&](QString &folder)
+        {
+            QDir dir(folder);
+            dir.mkpath(folder);
+            int count = 0;
+            qDebug() << "";
+            qDebug() << "3" << stream.device()->pos();
+            stream >> count;
+            qDebug() << "#" << folder << count;
+            for (int i = 0; i < count - 1; ++i)
+                createFile(folder);
+        };
+
+
+        //! db.info
+        createFile(dbName);
+
+        //! Пациенты
+        QString dbFolder = dbName + "patients/";
+        processDBFolder(dbFolder);
+        //! Тесты
+        dbFolder = dbName + "tests/";
+        processDBFolder(dbFolder);
+        //! Пробы
+        dbFolder = dbName + "probes/";
+        processDBFolder(dbFolder);
+        //! Каналы
+        dbFolder = dbName + "channels/";
+        processDBFolder(dbFolder);
+    }
 }
-
 
 void DataBase::changeDatabase(const QString &dataBaseFolder)
 {
@@ -471,19 +515,7 @@ void DataBase::changeDatabase(const QString &dataBaseFolder)
 
 void DataBase::createDatabase()
 {
-    bool dbExists = false;
-    int n = 0;
-    QString name = "data";
-    do
-    {
-        if (n > 0)
-            name = "data " + QString::number(n);
-        QDir dir(DataDefines::dataBasesPath() + name);
-        dbExists = dir.exists();
-        ++n;
-    }
-    while (dbExists);
-
+    QString name = getNewDatabaseName();
     changeDatabase(DataDefines::dataBasesPath() + name + "/");
 }
 
@@ -617,6 +649,23 @@ bool DataBase::patientExists(const QString &uid) const
     return false;
 }
 
+QString DataBase::getNewDatabaseName()
+{
+    bool dbExists = false;
+    int n = 0;
+    QString name = "data";
+    do
+    {
+        if (n > 0)
+            name = "data " + QString::number(n);
+        QDir dir(DataDefines::dataBasesPath() + name);
+        dbExists = dir.exists();
+        ++n;
+    }
+    while (dbExists);
+    return name;
+}
+
 void DataBase::clearDBFolder(QDir &dir)
 {
     QFileInfoList list = dir.entryInfoList(QDir::Files | QDir::NoDotAndDotDot, QDir::Time);
@@ -634,15 +683,16 @@ void DataBase::deleteAllTests()
     clearDBFolder(dir);
 }
 
-void DataBase::addFileToByteArray(const QString &fileName, QDataStream &stream)
+void DataBase::addFileToByteArray(const QString &fullFileName, const QString &fileName, QDataStream &stream)
 {
-    QFile file(fileName);
+    QFile file(fullFileName);
     if (file.open(QIODevice::ReadOnly))
     {
-        QByteArray baf = file.readAll();
-        int s = baf.size();
+        QByteArray ba = file.readAll();
+//        int s = baf.size();
 
-        stream << s;
-        stream << baf;
+//        stream << s;
+        stream << fileName;
+        stream << ba;
     }
 }
