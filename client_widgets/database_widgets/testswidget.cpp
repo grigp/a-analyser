@@ -3,6 +3,7 @@
 
 #include <QApplication>
 #include <QFile>
+#include <QMessageBox>
 #include <QDebug>
 
 #include "aanalyserapplication.h"
@@ -10,6 +11,8 @@
 #include "testsmodel.h"
 #include "testproxymodel.h"
 #include "settingsprovider.h"
+#include "testpropertydialog.h"
+#include "dataprovider.h"
 
 TestsWidget::TestsWidget(QWidget *parent) :
     QWidget(parent),
@@ -18,6 +21,12 @@ TestsWidget::TestsWidget(QWidget *parent) :
     ui->setupUi(this);
 
     restoreVisibleWidget();
+
+    connect(static_cast<AAnalyserApplication*>(QApplication::instance()), &AAnalyserApplication::selectTest,
+            [=](const QString &testUid)
+    {
+        m_selectedTestUid = testUid;
+    });
 }
 
 TestsWidget::~TestsWidget()
@@ -45,6 +54,29 @@ void TestsWidget::runTest()
 void TestsWidget::deleteTest()
 {
     static_cast<AAnalyserApplication*>(QApplication::instance())->deleteTest();
+}
+
+void TestsWidget::editTestProperty()
+{
+    if (m_selectedTestUid != "")
+    {
+        DataDefines::TestInfo ti;
+        if (DataProvider::getTestInfo(m_selectedTestUid, ti))
+        {
+            TestPropertyDialog dialog(this);
+            dialog.setComment(ti.comment);
+            dialog.setNormContained(ti.isNormContained);
+            if (dialog.exec() == QDialog::Accepted)
+            {
+                DataProvider::setTestProperty(m_selectedTestUid,
+                                              dialog.comment(),
+                                              dialog.condition(),
+                                              dialog.normContained());
+            }
+        }
+    }
+    else
+        QMessageBox::information(nullptr, tr("Предупрежение"), tr("Не выбран тест"));
 }
 
 void TestsWidget::selectResult()

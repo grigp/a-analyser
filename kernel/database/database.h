@@ -98,6 +98,18 @@ public:
     bool getTestInfo(const QString &testUid, DataDefines::TestInfo &ti) const;
 
     /*!
+     * \brief Сохраняет свойства теста в записи об тесте
+     * \param testUid - uid теста
+     * \param comment - комментарий
+     * \param condition - uid условий проведения
+     * \param isNorm - нормообразующее
+     */
+    void setTestProperty(const QString &testUid,
+                         const QString &comment,
+                         const QString &condition,
+                         const bool isNorm);
+
+    /*!
      * \brief Возвращает запись о пробе по uid
      * \param probeUid - uid пробы
      * \param pi - структура данных с возвращаемой пробой

@@ -190,6 +190,9 @@ bool DataBase::getTestInfo(const QString &testUid, DataDefines::TestInfo &ti) co
         auto dt = testObj["datetime"].toString();
         ti.dateTime = QDateTime::fromString(dt, "dd.MM.yyyy hh:mm:ss");
         ti.params = testObj["params"].toObject();
+        ti.comment = testObj["comment"].toString();
+        ti.condition = testObj["condition"].toString();
+        ti.isNormContained = testObj["norm_contained"].toBool();
 
         auto prbArr = testObj["probes"].toArray();
         ti.probes.clear();
@@ -201,6 +204,23 @@ bool DataBase::getTestInfo(const QString &testUid, DataDefines::TestInfo &ti) co
         return true;
     }
     return false;
+}
+
+void DataBase::setTestProperty(const QString &testUid,
+                               const QString &comment,
+                               const QString &condition,
+                               const bool isNorm)
+{
+    QDir dir = testsDir();
+    QJsonObject testObj;
+    if (readTableRec(dir.absoluteFilePath(testUid), testObj))
+    {
+        testObj["comment"] = comment;
+        testObj["condition"] = condition;
+        testObj["norm_contained"] = isNorm;
+
+        writeTableRec(dir.absoluteFilePath(testUid), testObj);
+    }
 }
 
 bool DataBase::getProbeInfo(const QString &probeUid, DataDefines::ProbeInfo &pi) const

@@ -1,0 +1,60 @@
+{
+    "conditions": [
+        {
+            "uid": "{27DD05B8-2788-4A02-9474-87973F3FA7CF}",
+            "name": "Usual test",
+            "description": "A typical reseach of a person who assesses his condition as normal",
+            "norms_enabled": false
+        },
+        {
+            "uid": "{25F339D2-FECB-4507-B0A0-7701B37F12F6}",
+            "name": "Pre-flight test",
+            "description": "Pre-shift monitoring of flight personnel",
+            "norms_enabled": true
+        },
+        {
+            "uid": "{859BB242-00E5-47D7-A09D-B053D0B23878}",
+            "name": "Post-flight test",
+            "description": "Monitoring the condition of the flight crew after work",
+            "norms_enabled": true
+        },
+        {
+            "uid": "{AA8EBD44-E138-4C6B-9609-CD0A2EC93DE9}",
+            "name": "Pre-trip test",
+            "description": "Pre-shift monitoring of locomotive drivers",
+            "norms_enabled": true
+        },
+        {
+            "uid": "{E500AB27-E303-42BD-A130-13DC9B66EB7F}",
+            "name": "Post-trip test",
+            "description": "Monitoring the condition of locomotive drivers after work",
+            "norms_enabled": true
+        },
+        {
+            "uid": "{FABE70F6-BF47-433A-AD7F-F09BC05A1E93}",
+            "name": "Pre-shift test",
+            "description": "Monitoring staff before work",
+            "norms_enabled": true
+        },
+        {
+            "uid": "{B315AC8E-2E72-4202-8781-73576FF67720}",
+            "name": "Post-shift test",
+            "description": "Monitoring staff after work",
+            "norms_enabled": true
+        },
+        {
+            "uid": "{220E2CBE-8974-470B-8123-E37A7168A39C}",
+            "name": "Clinical test or rehabilitation",
+            "description": "Test or rehabilitation session carried out in the treatment of a patient in a hospital or on an outpatient basis. The patient's condition may change during the treatment; norms cannot be built.",
+            "norms_enabled": false
+        },
+        {
+            "uid": "{42FBA8B8-BCF3-4F4D-BD9F-F3EA252F65AC}",
+            "name": "Test under other circumstances",
+            "description": "A test conducted under conditions not listed.",
+            "norms_enabled": false
+        }
+    ]
+}
+
+

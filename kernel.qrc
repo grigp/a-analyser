@@ -52,5 +52,8 @@
         <file>pre_settings/metodics_st_champ_en_US.json</file>
         <file>images/MainIcon2.png</file>
         <file>images/MainIcon2.ico</file>
+        <file>pre_settings/conditions.json</file>
+        <file>pre_settings/conditions_en_US.json</file>
+        <file>images/TestProperty.png</file>
     </qresource>
 </RCC>

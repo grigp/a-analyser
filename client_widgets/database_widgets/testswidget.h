@@ -30,6 +30,8 @@ private slots:
      */
     void deleteTest();
 
+    void editTestProperty();
+
     void selectResult();
     void selectDynamic();
 
@@ -38,6 +40,8 @@ private:
 
     void restoreVisibleWidget();
     void saveVisibleWidget(const QString &value);
+
+    QString m_selectedTestUid {""};
 };
 
 #endif // TESTSWIDGET_H

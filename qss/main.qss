@@ -62,7 +62,8 @@ QPushButton#btnNewTest,
 QPushButton#btnDelTest,
 QPushButton#btnAdd,
 QPushButton#btnCard,
-QPushButton#btnDelete
+QPushButton#btnDelete,
+QPushButton#btnTestProperty
 {
     border: 2px solid #8f8f91;
     border-radius: 6px;

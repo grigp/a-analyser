@@ -12,7 +12,8 @@ HEADERS += \
     $$PWD/testswidget.h \
     $$PWD/dynamicautowidget.h \
     $$PWD/resultswidget.h \
-    $$PWD/dynamicdatamodel.h
+    $$PWD/dynamicdatamodel.h \
+    $$PWD/testpropertydialog.h
 
 SOURCES += \
     $$PWD/patientswidget.cpp \
@@ -26,7 +27,8 @@ SOURCES += \
     $$PWD/testswidget.cpp \
     $$PWD/dynamicautowidget.cpp \
     $$PWD/resultswidget.cpp \
-    $$PWD/dynamicdatamodel.cpp
+    $$PWD/dynamicdatamodel.cpp \
+    $$PWD/testpropertydialog.cpp
 
 FORMS += \
     $$PWD/patientswidget.ui \
@@ -34,5 +36,6 @@ FORMS += \
     $$PWD/testswidget.ui \
     $$PWD/patientkarddialog.ui \
     $$PWD/dynamicautowidget.ui \
-    $$PWD/resultswidget.ui
+    $$PWD/resultswidget.ui \
+    $$PWD/testpropertydialog.ui
 

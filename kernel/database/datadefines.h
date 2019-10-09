@@ -54,6 +54,9 @@ struct TestInfo
     QDateTime dateTime;       ///< дата и время проведения
     QStringList probes;       ///< список проб
     QJsonObject params;       ///< параметры на момент проведения
+    QString comment;          ///< комментарий к тесту
+    QString condition;        ///< условия проведения
+    bool isNormContained;     ///< нормообразующее
 
     TestInfo() {}
 };

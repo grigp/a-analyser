@@ -1,6 +1,8 @@
 #include "dataprovider.h"
 
 #include <QApplication>
+#include <QDebug>
+
 #include "aanalyserapplication.h"
 #include "database.h"
 #include "metodicsfactory.h"
@@ -78,6 +80,14 @@ bool DataProvider::getTestInfo(const QString &testUid, DataDefines::TestInfo &ti
     return static_cast<AAnalyserApplication*>(QApplication::instance())->getDB()->getTestInfo(testUid, ti);
 }
 
+void DataProvider::setTestProperty(const QString &testUid,
+                                   const QString &comment,
+                                   const QString &condition,
+                                   const bool isNorm)
+{
+    static_cast<AAnalyserApplication*>(QApplication::instance())->getDB()->
+            setTestProperty(testUid, comment, condition, isNorm);
+}
 
 bool DataProvider::getProbeInfo(const QString &probeUid, DataDefines::ProbeInfo &pi)
 {
@@ -140,3 +150,4 @@ void DataProvider::importBD(const QString &fileName)
 {
     static_cast<AAnalyserApplication*>(QApplication::instance())->getDB()->importBD(fileName);
 }
+
