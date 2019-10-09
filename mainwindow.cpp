@@ -129,6 +129,7 @@ void MainWindow::onDataBaseImport()
     if (fileName != "")
     {
         DataProvider::importBD(fileName);
+        initSelectDatabaseMenu();
     }
 }
 
