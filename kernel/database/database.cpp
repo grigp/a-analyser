@@ -457,11 +457,7 @@ void DataBase::importBD(const QString &fileName)
             QString fn = "";
             stream >> fn;
             QByteArray ba;
-            int pos = stream.device()->pos();
             stream >> ba;
-            qDebug() << "1" << fn;
-            qDebug() << "2" << ba;
-            qDebug() << "3" << pos << stream.device()->pos() << ba.size();
 
             QFile file(folder + fn);
             if (file.open(QIODevice::WriteOnly))
@@ -476,14 +472,10 @@ void DataBase::importBD(const QString &fileName)
             QDir dir(folder);
             dir.mkpath(folder);
             int count = 0;
-            qDebug() << "";
-            qDebug() << "3" << stream.device()->pos();
             stream >> count;
-            qDebug() << "#" << folder << count;
-            for (int i = 0; i < count - 1; ++i)
+            for (int i = 0; i < count; ++i)
                 createFile(folder);
         };
-
 
         //! db.info
         createFile(dbName);
@@ -500,6 +492,8 @@ void DataBase::importBD(const QString &fileName)
         //! Каналы
         dbFolder = dbName + "channels/";
         processDBFolder(dbFolder);
+
+        changeDatabase(dbName);
     }
 }
 
