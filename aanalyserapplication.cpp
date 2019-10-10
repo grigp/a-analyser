@@ -11,6 +11,7 @@
 #include "driversfactory.h"
 #include "factorsfactory.h"
 #include "driver.h"
+#include "personalnormmanager.h"
 #include "executewidget.h"
 #include "databaseresultwidget.h"
 #include "database.h"
@@ -24,6 +25,7 @@ AAnalyserApplication::AAnalyserApplication(int &argc, char **argv, const QString
     , m_metodics(new MetodicsFactory(this))
     , m_drivers(new DriversFactory(this))
     , m_factors(new FactorsFactory(this))
+    , m_pnManager(new PersonalNormManager(this))
 {
 
     //! Это необходимо сделать сдесь, чтоб получить и запомнить uid приложения,
@@ -300,6 +302,18 @@ void AAnalyserApplication::registerGroup(const QString &uid, const QString &name
 {
     if (m_factors)
         m_factors->registerGroup(uid, name);
+}
+
+QStringList AAnalyserApplication::getTestConditions()
+{
+    if (m_pnManager)
+        return m_pnManager->getTestConditions();
+}
+
+bool AAnalyserApplication::getTestConditionInfo(const QString &uid, DataDefines::TestConditionInfo &ci)
+{
+    if (m_pnManager)
+        return m_pnManager->getTestConditionInfo(uid, ci);
 }
 
 void AAnalyserApplication::setLanguargeCode(const QString &code)

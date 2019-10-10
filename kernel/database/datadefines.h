@@ -100,6 +100,17 @@ struct DatabaseInfo
 };
 
 /*!
+ * \brief Структура, содержащая информацию об условиях проведения теста TestConditionInfo struct
+ */
+struct TestConditionInfo
+{
+    QString uid;             ///< uid условия проведения
+    QString name;            ///< название
+    QString description;     ///< описание
+    bool norms_enabled;      ///< можно ли строить нормы для данного условия проведения
+};
+
+/*!
  * \brief возвращает путь к папке данных для всех приложений a-analyser
  */
 QString aanalyserDataPath();

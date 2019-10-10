@@ -24,8 +24,20 @@ public:
     bool normContained();
     void setNormContained(const bool nc);
 
+    enum ConditionRoles
+    {
+          UidRole = Qt::UserRole + 1
+        , DescriptionRole
+        , NormsEnabledRole
+    };
+
+private slots:
+    void conditionChanged(int idx);
+
 private:
     Ui::TestPropertyDialog *ui;
+
+    void loadConditions();
 };
 
 #endif // TESTPROPERTYDIALOG_H

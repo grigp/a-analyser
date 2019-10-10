@@ -65,6 +65,7 @@ void TestsWidget::editTestProperty()
         {
             TestPropertyDialog dialog(this);
             dialog.setComment(ti.comment);
+            dialog.setCondition(ti.condition);
             dialog.setNormContained(ti.isNormContained);
             if (dialog.exec() == QDialog::Accepted)
             {

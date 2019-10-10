@@ -16,6 +16,7 @@ class MetodicsFactory;
 class DriversFactory;
 class FactorsFactory;
 class Driver;
+class PersonalNormManager;
 
 class AAnalyserApplication : public QApplication
 {
@@ -216,6 +217,25 @@ public:
 
     ///<-----------------------------------------------------------------------------
 
+
+    ///<-----------------------------------------------------------------------------
+    ///< Индивидуальные нормы
+
+    /*!
+     * \brief Возвращает список условий проведения в виде списка uid
+     */
+    QStringList getTestConditions();
+
+    /*!
+     * \brief Возвращает данные об условиях проведения
+     * \param uid - uid условий проведения
+     * \param ci - информация об условиях проведения
+     * \return true, если удалось вернуть
+     */
+    bool getTestConditionInfo(const QString &uid, DataDefines::TestConditionInfo &ci);
+
+    ///<-----------------------------------------------------------------------------
+
     /*!
      * \brief Запоминает код установленной локализации
      * \param code - код установленного языка
@@ -253,6 +273,7 @@ private:
     MetodicsFactory *m_metodics {nullptr};
     DriversFactory *m_drivers {nullptr};
     FactorsFactory *m_factors {nullptr};
+    PersonalNormManager *m_pnManager {nullptr};
 
     QString m_patientUid = "";  ///< uid выбранного пациента
     QString m_metodicUid = "";  ///< uid выбранной методики

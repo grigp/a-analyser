@@ -17,7 +17,7 @@
    <item>
     <widget class="QTabWidget" name="twCatgories">
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="tabComment">
       <attribute name="title">
@@ -25,7 +25,45 @@
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout_2">
        <item>
-        <widget class="QTextEdit" name="edComment"/>
+        <widget class="QTextEdit" name="edComment">
+         <property name="palette">
+          <palette>
+           <active>
+            <colorrole role="Base">
+             <brush brushstyle="SolidPattern">
+              <color alpha="255">
+               <red>255</red>
+               <green>255</green>
+               <blue>255</blue>
+              </color>
+             </brush>
+            </colorrole>
+           </active>
+           <inactive>
+            <colorrole role="Base">
+             <brush brushstyle="SolidPattern">
+              <color alpha="255">
+               <red>255</red>
+               <green>255</green>
+               <blue>255</blue>
+              </color>
+             </brush>
+            </colorrole>
+           </inactive>
+           <disabled>
+            <colorrole role="Base">
+             <brush brushstyle="SolidPattern">
+              <color alpha="255">
+               <red>240</red>
+               <green>240</green>
+               <blue>240</blue>
+              </color>
+             </brush>
+            </colorrole>
+           </disabled>
+          </palette>
+         </property>
+        </widget>
        </item>
       </layout>
      </widget>
@@ -50,6 +88,43 @@
            <width>0</width>
            <height>35</height>
           </size>
+         </property>
+         <property name="palette">
+          <palette>
+           <active>
+            <colorrole role="Base">
+             <brush brushstyle="SolidPattern">
+              <color alpha="255">
+               <red>255</red>
+               <green>255</green>
+               <blue>225</blue>
+              </color>
+             </brush>
+            </colorrole>
+           </active>
+           <inactive>
+            <colorrole role="Base">
+             <brush brushstyle="SolidPattern">
+              <color alpha="255">
+               <red>255</red>
+               <green>255</green>
+               <blue>225</blue>
+              </color>
+             </brush>
+            </colorrole>
+           </inactive>
+           <disabled>
+            <colorrole role="Base">
+             <brush brushstyle="SolidPattern">
+              <color alpha="255">
+               <red>240</red>
+               <green>240</green>
+               <blue>240</blue>
+              </color>
+             </brush>
+            </colorrole>
+           </disabled>
+          </palette>
          </property>
          <property name="readOnly">
           <bool>true</bool>
@@ -104,8 +179,8 @@
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>248</x>
-     <y>254</y>
+     <x>257</x>
+     <y>250</y>
     </hint>
     <hint type="destinationlabel">
      <x>157</x>
@@ -120,8 +195,8 @@
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>316</x>
-     <y>260</y>
+     <x>325</x>
+     <y>250</y>
     </hint>
     <hint type="destinationlabel">
      <x>286</x>
@@ -129,5 +204,24 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>cbConditions</sender>
+   <signal>currentIndexChanged(int)</signal>
+   <receiver>TestPropertyDialog</receiver>
+   <slot>conditionChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>148</x>
+     <y>48</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>412</x>
+     <y>69</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
+ <slots>
+  <slot>conditionChanged(int)</slot>
+ </slots>
 </ui>
