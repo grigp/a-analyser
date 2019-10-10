@@ -4,6 +4,7 @@
             "uid": "{140441C1-C1BB-42D0-8858-2A18976166E1}",
             "name": "Анализ функции равновесия",
             "template": "met_stabtest_uid",
+            "build_norms": false,
             "params":
             {
                 "condition": 0,
@@ -42,6 +43,7 @@
             "uid": "{EBEA57B4-A791-4F35-87C2-BEDEC6406D2D}",
             "name": "Допусковый контроль",
             "template": "met_stabtest_uid",
+            "build_norms": true,
             "params":
             {
                 "condition": 2,
@@ -81,6 +83,7 @@
             "name": "Стабилометрический тест",
             "name1": "Тестирование по методике \"Стань чемпионом\"",
             "template": "met_stabtest_uid",
+            "build_norms": false,
             "params":
             {
                 "condition": 1,
@@ -119,6 +122,7 @@
             "uid": "{8BFC7928-8DAF-429B-8AB5-C689C63BECC9}",
             "name": "Стабилографический тест",
             "template": "met_stabtest_uid",
+            "build_norms": false,
             "params":
             {
                 "condition": 0,
@@ -139,6 +143,7 @@
             "uid": "{02D4EC93-C0C2-42BD-979C-D9F472A3CCEE}",
             "name": "Тест Ромберга",
             "template": "met_stabtest_uid",
+            "build_norms": false,
             "params":
             {
                 "condition": 0,
@@ -168,6 +173,7 @@
             "uid": "{ACFA62A1-7F52-477E-B9C9-A7FF14B3E098}",
             "name": "Анализ высоты прыжка",
             "template": "met_jumptest_uid",
+            "build_norms": false,
             "params":
             {
                 "methodic": 0
@@ -177,6 +183,7 @@
             "uid": "{6855943F-E7C1-477E-B68E-EBC7DAE30E2B}",
             "name": "Анализ соскакивания",
             "template": "met_jumptest_uid",
+            "build_norms": false,
             "params":
             {
                 "methodic": 1
@@ -186,6 +193,7 @@
             "uid": "{A100CF38-D2E6-4E71-A485-53845E3F116C}",
             "name": "Уровень здоровья по ИДС",
             "template": "met_stabtest_uid",
+            "build_norms": false,
             "params":
             {
                 "condition": 3,
@@ -206,6 +214,7 @@
             "uid": "{15265537-77D4-4CF8-B2A3-1A7A7EE580EF}",
             "name": "Уровень здоровья по ИДС на базе теста Ромберга",
             "template": "met_stabtest_uid",
+            "build_norms": false,
             "params":
             {
                 "condition": 3,

@@ -176,6 +176,32 @@ public:
     QList<FactorsDefines::FactorValueAdvanced> getPrimaryFactors(const QString &testUid) const;
 
     /*!
+     * \brief Записывает индивидуальную норму в базу данных.
+     * Записывает значение нормы для одного показателя.
+     * Для методики необходимо вызвать для всех показателей отдельно
+     * \param patientUid - uid пациента
+     * \param methodUid - uid методики
+     * \param conditionUid - uid условия проведения
+     * \param factorUid - uid показателя
+     * \param probeNum - номер пробы
+     * \param value - значение нормы
+     * \param stdDeviation - среднеквадратическое отклонение нормы
+     */
+    void setPersonalNorm(const QString &patientUid, const QString &methodUid, const QString &conditionUid,
+                         const QString &factorUid, const int probeNum, const double value, const double stdDeviation);
+
+    /*!
+     * \brief Возвращает список индивидуальных норм для пациента по методике с заданными условиями проведения
+     * \param patientUid - uid пациента
+     * \param methodUid - uid методики
+     * \param conditionUid - uid условия проведения
+     * \param pnil - возвращаемые данные индивидуальной нормы
+     * \return true, если нормы найдены и их удалось вернуть
+     */
+    bool getPersonalNorm(const QString &patientUid, const QString &methodUid, const QString &conditionUid,
+                         QList<DataDefines::PersonalNormInfo> &pnil) const;
+
+    /*!
      * \brief Очищает всю БД
      */
     void clear();
@@ -233,7 +259,10 @@ private:
     QDir testsDir() const;
     QDir probesDir() const;
     QDir channelsDir() const;
+    QDir personalNormDir() const;
     QDir localDir(const QString &dirName) const;
+
+    QString personalNormFileName(const QString &patientUid, const QString &methodicUid, const QString &conditionUid) const;
 
     void createPatientRec(const DataDefines::PatientKard patient);
 

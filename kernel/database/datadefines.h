@@ -108,6 +108,22 @@ struct TestConditionInfo
     QString name;            ///< название
     QString description;     ///< описание
     bool norms_enabled;      ///< можно ли строить нормы для данного условия проведения
+    TestConditionInfo() {}
+};
+
+/*!
+ * \brief Структура, содержащая информацию о, индивидуальной норме PersonalNormInfo struct
+ */
+struct PersonalNormInfo
+{
+    QString patientUid;       ///< uid пациента
+    QString methodicUid;      ///< uid методики
+    QString conditionUid;     ///< uid условия проведения
+    QString factorUid;        ///< uid показателя
+    int probeNum;             ///< номер пробы
+    double value;             ///< значение нормы
+    double stdDeviation;      ///< среднеквадратическое отклонение
+    PersonalNormInfo() {}
 };
 
 /*!

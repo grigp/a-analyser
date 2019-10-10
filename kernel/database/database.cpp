@@ -410,6 +410,91 @@ QList<FactorsDefines::FactorValueAdvanced> DataBase::getPrimaryFactors(const QSt
     return retval;
 }
 
+void DataBase::setPersonalNorm(const QString &patientUid, const QString &methodUid, const QString &conditionUid,
+                               const QString &factorUid, const int probeNum,
+                               const double value, const double stdDeviation)
+{
+    QDir dir = personalNormDir();
+    QString pnfn = personalNormFileName(patientUid, methodUid, conditionUid);
+    QJsonObject pnObj;
+
+    //! Чтение файла норм
+    if (readTableRec(dir.absoluteFilePath(pnfn), pnObj))
+    {
+        //! Прочитали - разбираем массив норм
+        QJsonArray norms = pnObj["norms"].toArray();
+        for (int i = 0; i < norms.size(); ++i)
+        {
+            QJsonObject norm = norms.at(i).toObject();
+            //! Если нашли норму, переписать значение и ско
+            if (norm["factor"].toString() == factorUid &&
+                norm["probe_num"].toInt() == probeNum)
+            {
+                norm["value"] = value;
+                norm["std_deviation"] = stdDeviation;
+                norms.replace(i, norm);
+                return;
+            }
+        }
+        //! Не нашли - создадим новую запись в файле
+        QJsonObject norm;
+        norm["factor"] = factorUid;
+        norm["probe_num"] = probeNum;
+        norm["value"] = value;
+        norm["std_deviation"] = stdDeviation;
+        norms.append(norm);
+    }
+    else
+    {
+        //! Не нашли файл - создать его и записать в него норму
+        QJsonObject normsObj;
+        QJsonArray norms;
+        QJsonObject norm;
+        norm["factor"] = factorUid;
+        norm["probe_num"] = probeNum;
+        norm["value"] = value;
+        norm["std_deviation"] = stdDeviation;
+        norms.append(norm);
+        normsObj["norms"] = norms;
+        writeTableRec(dir.absoluteFilePath(pnfn), normsObj);
+    }
+}
+
+bool DataBase::getPersonalNorm(const QString &patientUid, const QString &methodUid, const QString &conditionUid,
+                               QList<DataDefines::PersonalNormInfo> &pnil) const
+{
+    pnil.clear();
+
+    QDir dir = personalNormDir();
+    QString pnfn = personalNormFileName(patientUid, methodUid, conditionUid);
+    QJsonObject pnObj;
+
+    //! Чтение файла норм
+    if (readTableRec(dir.absoluteFilePath(pnfn), pnObj))
+    {
+        //! Прочитали - разбираем массив норм
+        QJsonArray norms = pnObj["norms"].toArray();
+        for (int i = 0; i < norms.size(); ++i)
+        {
+            QJsonObject norm = norms.at(i).toObject();
+
+            //! Элемент массива - в выходной список
+            DataDefines::PersonalNormInfo pni;
+            pni.patientUid = patientUid;
+            pni.methodicUid = methodUid;
+            pni.conditionUid = conditionUid;
+            pni.factorUid = norm["factor"].toString();
+            pni.probeNum = norm["probe_num"].toInt();
+            pni.value = norm["value"].toDouble();
+            pni.stdDeviation = norm["std_deviation"].toDouble();
+            pnil << pni;
+        }
+
+        return norms.size() > 0;
+    }
+    return false;
+}
+
 void DataBase::clear()
 {
     disconnected();
@@ -579,12 +664,22 @@ QDir DataBase::channelsDir() const
     return localDir("channels");
 }
 
+QDir DataBase::personalNormDir() const
+{
+    return localDir("personal_norms");
+}
+
 QDir DataBase::localDir(const QString &dirName) const
 {
     QDir dir(currentDataBase() + dirName + "/");
     if (!dir.exists())
         dir.mkpath(currentDataBase() + dirName + "/");
     return dir;
+}
+
+QString DataBase::personalNormFileName(const QString &patientUid, const QString &methodicUid, const QString &conditionUid) const
+{
+    return patientUid + "_" + methodicUid + "_" + conditionUid;
 }
 
 

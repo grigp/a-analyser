@@ -187,6 +187,9 @@ void addPrimaryFactor(const QString &testUid,
  */
 QList<FactorsDefines::FactorValueAdvanced> getPrimaryFactors(const QString &testUid);
 
+//! ------------------- Индивидуальные нормы -------------------
+
+
 
 //! ------------------- Общие и сервисные операции -------------------
 /*!

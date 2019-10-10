@@ -23,6 +23,7 @@ namespace MetodicDefines
         QString name;           ///< Название
         QString templateId;     ///< id шаблона методики
         int condition;          ///< Условия проведения
+        bool buildNorms;        ///< Строить нормы по методике
         QJsonObject params;     ///< Параметры
         MetodicInfo()
         {

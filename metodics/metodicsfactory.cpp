@@ -138,9 +138,10 @@ void MetodicsFactory::assignMetodics()
         {
             auto met = mets[i].toObject();
             MetodicDefines::MetodicInfo mi;
-            mi.uid = met["uid"].toString(); //QUuid::createUuid().toString();
+            mi.uid = met["uid"].toString();
             mi.name = met["name"].toString();
             mi.templateId = met["template"].toString();
+            mi.buildNorms = met["build_norms"].toBool();
             mi.params = met["params"].toObject();
 
             m_metodics << mi;

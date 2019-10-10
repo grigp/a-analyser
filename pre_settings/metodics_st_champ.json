@@ -5,6 +5,7 @@
             "name": "Стабилометрический тест",
             "name1": "Тестирование по методике \"Стань чемпионом\"",
             "template": "met_stabtest_uid",
+            "build_norms": false,
             "params":
             {
                 "condition": 1,
@@ -43,6 +44,7 @@
             "uid": "{ACFA62A1-7F52-477E-B9C9-A7FF14B3E098}",
             "name": "Анализ высоты прыжка",
             "template": "met_jumptest_uid",
+            "build_norms": false,
             "params":
             {
                 "methodic": 0
@@ -52,6 +54,7 @@
             "uid": "{6855943F-E7C1-477E-B68E-EBC7DAE30E2B}",
             "name": "Анализ соскакивания",
             "template": "met_jumptest_uid",
+            "build_norms": false,
             "params":
             {
                 "methodic": 1
