@@ -502,6 +502,7 @@ void DataBase::importBD(const QString &fileName)
         //! db.info
         createFile(dbName);
 
+        //! Проход по папкам БД
         int fldrCount = 0;
         stream >> fldrCount;
 
@@ -689,12 +690,16 @@ void DataBase::clearDBFolder(QDir &dir)
 
 void DataBase::deleteAllTests()
 {
-    QDir dir = testsDir();
-    clearDBFolder(dir);
-    dir = probesDir();
-    clearDBFolder(dir);
-    dir = channelsDir();
-    clearDBFolder(dir);
+    QDir dbDir(currentDataBase());
+    QFileInfoList list = dbDir.entryInfoList(QDir::Dirs | QDir::NoDotAndDotDot);
+    foreach (auto fileInfo, list)
+    {
+        if (fileInfo.fileName() != "patients")
+        {
+            QDir dir(currentDataBase() + fileInfo.fileName() + "/");
+            clearDBFolder(dir);
+        }
+    }
 }
 
 void DataBase::addFileToByteArray(const QString &fullFileName, const QString &fileName, QDataStream &stream)
