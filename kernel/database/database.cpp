@@ -435,6 +435,7 @@ void DataBase::exportBD(const QString &fileName)
         if (QFile::exists(currentDataBase() + "db.info"))
             addFileToByteArray(currentDataBase() + "db.info", "db.info", stream);
 
+        //! Обработка папки БД
         auto scanFolder = [&](QDir &dir)
         {
             QFileInfoList list = dir.entryInfoList(QDir::Files | QDir::NoDotAndDotDot);
@@ -444,17 +445,16 @@ void DataBase::exportBD(const QString &fileName)
                 addFileToByteArray(dir.absoluteFilePath(fileInfo.fileName()), fileInfo.fileName(), stream);
         };
 
-        QDir dir = patientsDir();
-        scanFolder(dir);
-
-        dir = testsDir();
-        scanFolder(dir);
-
-        dir = probesDir();
-        scanFolder(dir);
-
-        dir = channelsDir();
-        scanFolder(dir);
+        //! Проход по папкам БД
+        QDir dbDir(currentDataBase());
+        QFileInfoList list = dbDir.entryInfoList(QDir::Dirs | QDir::NoDotAndDotDot);
+        stream << list.size();
+        foreach (auto fileInfo, list)
+        {
+            stream << fileInfo.fileName();
+            QDir dir = currentDataBase() + fileInfo.fileName() + "/";
+            scanFolder(dir);
+        }
 
         file.close();
     }
@@ -472,6 +472,7 @@ void DataBase::importBD(const QString &fileName)
 
         QDataStream stream(&fileRec);
 
+        //! Создание файла в БД
         auto createFile = [&](QString &folder)
         {
             QString fn = "";
@@ -487,6 +488,7 @@ void DataBase::importBD(const QString &fileName)
             }
         };
 
+        //! Обработка папки БД
         auto processDBFolder = [&](QString &folder)
         {
             QDir dir(folder);
@@ -500,18 +502,16 @@ void DataBase::importBD(const QString &fileName)
         //! db.info
         createFile(dbName);
 
-        //! Пациенты
-        QString dbFolder = dbName + "patients/";
-        processDBFolder(dbFolder);
-        //! Тесты
-        dbFolder = dbName + "tests/";
-        processDBFolder(dbFolder);
-        //! Пробы
-        dbFolder = dbName + "probes/";
-        processDBFolder(dbFolder);
-        //! Каналы
-        dbFolder = dbName + "channels/";
-        processDBFolder(dbFolder);
+        int fldrCount = 0;
+        stream >> fldrCount;
+
+        for (int i = 0; i < fldrCount; ++i)
+        {
+            QString fldrName = "";
+            stream >> fldrName;
+            QString dbFolder = dbName + fldrName + "/";
+            processDBFolder(dbFolder);
+        }
 
         changeDatabase(dbName);
     }
