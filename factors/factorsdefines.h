@@ -16,6 +16,16 @@ enum NormSide
 };
 
 /*!
+ * \brief Данные нормы для показателя Norm struct
+ */
+struct Norm
+{
+    double value;     ///< Значение
+    double stdDev;    ///< СКО
+    Norm(double val, double sd) : value(val), stdDev(sd) {}
+};
+
+/*!
  * \brief Класс информации о показателе FactorInfo class
  */
 class FactorInfo

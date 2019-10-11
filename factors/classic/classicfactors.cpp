@@ -56,8 +56,8 @@ void ClassicFactors::calculate()
         for (int i = 0; i < stab.size(); ++i)
         {
             auto rec = stab.value(i);
-            m_qx = m_qx + pow(abs(rec.x - m_mx), 2) / (stab.size() - 1);
-            m_qy = m_qy + pow(abs(rec.y - m_my), 2) / (stab.size() - 1);
+            m_qx = m_qx + pow(fabs(rec.x - m_mx), 2) / (stab.size() - 1);
+            m_qy = m_qy + pow(fabs(rec.y - m_my), 2) / (stab.size() - 1);
             m_r = m_r + sqrt(pow(rec.x - m_mx, 2) + pow(rec.y - m_my, 2)) / stab.size();
 
             //! Длина СКГ
