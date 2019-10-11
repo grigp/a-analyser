@@ -13,6 +13,7 @@
 #include "settingsprovider.h"
 #include "testpropertydialog.h"
 #include "dataprovider.h"
+#include "metodicsfactory.h"
 
 TestsWidget::TestsWidget(QWidget *parent) :
     QWidget(parent),
@@ -63,10 +64,15 @@ void TestsWidget::editTestProperty()
         DataDefines::TestInfo ti;
         if (DataProvider::getTestInfo(m_selectedTestUid, ti))
         {
+            MetodicDefines::MetodicInfo metInfo =
+                    static_cast<AAnalyserApplication*>(QApplication::instance())->
+                    getMetodics()->metodic(ti.metodUid);
+
             TestPropertyDialog dialog(this);
             dialog.setComment(ti.comment);
             dialog.setCondition(ti.condition);
             dialog.setNormContained(ti.isNormContained);
+            dialog.setNormVisible(metInfo.buildNorms);
             if (dialog.exec() == QDialog::Accepted)
             {
                 DataProvider::setTestProperty(m_selectedTestUid,

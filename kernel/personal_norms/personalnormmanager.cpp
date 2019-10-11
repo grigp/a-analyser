@@ -59,8 +59,16 @@ int PersonalNormManager::getPersonalNormContainedTestCount(const QString &testUi
             //! Разрешается строить нормы по данным условиям проведения
             if (tci.norms_enabled)
             {
+                //! По тестам
+                int cnt = 0;
                 QStringList tests = DataProvider::getTests(ti.patientUid, ti.metodUid, ti.condition);
-                return tests.size();
+                foreach (auto testUid, tests)
+                {
+                    //! Суммируем только нормообразующие
+                    if (isTestNormContained(testUid))
+                        ++cnt;
+                }
+                return cnt;
             }
     }
     return 0;
@@ -159,8 +167,12 @@ void PersonalNormManager::fillFactorsTable(const QString &patientUid, const QStr
         DataDefines::TestInfo ti;
         if (DataProvider::getTestInfo(testUid, ti))
         {
-            QList<FactorsDefines::FactorValueAdvanced> tstFactors = DataProvider::getPrimaryFactors(testUid);
-            factors << tstFactors;
+            //! Заносим только нормообразующие
+            if (isTestNormContained(testUid))
+            {
+                QList<FactorsDefines::FactorValueAdvanced> tstFactors = DataProvider::getPrimaryFactors(testUid);
+                factors << tstFactors;
+            }
         }
     }
 }
@@ -222,5 +234,14 @@ void PersonalNormManager::saveNormsToDatabase(const QString &patientUid, const Q
                                           factors.at(0).at(i).uid(), factors.at(0).at(i).probeNum(),
                                           norms.at(i).value, norms.at(i).stdDev);
     }
+}
+
+bool PersonalNormManager::isTestNormContained(const QString &testUid)  const
+{
+    DataDefines::TestInfo ti;
+    if (DataProvider::getTestInfo(testUid, ti))
+        return ti.isNormContained && (ti.dateTime.daysTo(QDateTime::currentDateTime()) / 30 < 12);
+
+    return false;
 }
 

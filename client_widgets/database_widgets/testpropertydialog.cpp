@@ -60,6 +60,11 @@ void TestPropertyDialog::setNormContained(const bool nc)
     ui->cbInNormContained->setChecked(nc);
 }
 
+void TestPropertyDialog::setNormVisible(const bool visible)
+{
+    ui->cbInNormContained->setVisible(visible);
+}
+
 void TestPropertyDialog::conditionChanged(int idx)
 {
     Q_UNUSED(idx);

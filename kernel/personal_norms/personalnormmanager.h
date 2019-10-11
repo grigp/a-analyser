@@ -80,6 +80,12 @@ private:
                              const QList<QList<FactorsDefines::FactorValueAdvanced>> &factors,
                              const QList<FactorsDefines::Norm> &norms) const;
 
+    /*!
+     * \brief Возвращает true, если тест является нормообразующим
+     * Учитывает флаг от пользователя и устаревание
+     * \param testId - uid теста
+     */
+    bool isTestNormContained(const QString &testUid) const;
 
     QList<DataDefines::TestConditionInfo> m_tcList;   ///< Список условий проведения
 

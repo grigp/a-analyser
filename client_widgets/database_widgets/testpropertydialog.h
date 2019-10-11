@@ -24,6 +24,8 @@ public:
     bool normContained();
     void setNormContained(const bool nc);
 
+    void setNormVisible(const bool visible);
+
     enum ConditionRoles
     {
           UidRole = Qt::UserRole + 1
