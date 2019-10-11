@@ -87,23 +87,23 @@ void IDSFactors::registerFactors()
 
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(IDSFactorsDefines::IDSUid, IDSFactorsDefines::GroupUid,
-                           tr("Индекс динамической стабилизации"), tr("ИДС"), tr("%"), 0);
+                           tr("Индекс динамической стабилизации"), tr("ИДС"), tr("%"), 0, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(IDSFactorsDefines::FDSDispUid, IDSFactorsDefines::GroupUid,
-                           tr("Дисперсия ФДС"), tr("Дисп.ФДС"), tr(""), 0);
+                           tr("Дисперсия ФДС"), tr("Дисп.ФДС"), tr(""), 0, 1, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(IDSFactorsDefines::FreqUid, IDSFactorsDefines::GroupUid,
-                           tr("Частота звука"), tr("Freq"), tr("Гц"), 0);
+                           tr("Частота звука"), tr("Freq"), tr("Гц"), 0, 2, FactorsDefines::nsDual, 12);
 
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(IDSFactorsDefines::StabFDSUid, IDSFactorsDefines::GroupUid,
-                           tr("Стабильность ФДС"), tr("Стаб.ФДС"), tr("%"), 1);
+                           tr("Стабильность ФДС"), tr("Стаб.ФДС"), tr("%"), 1, 2, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(IDSFactorsDefines::AsymFDSUid, IDSFactorsDefines::GroupUid,
-                           tr("Асимметрия ФДС"), tr("Асм.ФДС"), tr("%"), 1);
+                           tr("Асимметрия ФДС"), tr("Асм.ФДС"), tr("%"), 1, 2, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(IDSFactorsDefines::KVarFDSUid, IDSFactorsDefines::GroupUid,
-                           tr("Коэффициент вариации ФДС"), tr("КВ ФДС"), tr("%"), 1);
+                           tr("Коэффициент вариации ФДС"), tr("КВ ФДС"), tr("%"), 1, 2, FactorsDefines::nsDual, 12);
 }
 
 double IDSFactors::fds(const int idx) const

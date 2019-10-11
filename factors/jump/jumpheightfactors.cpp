@@ -48,5 +48,5 @@ void JumpHeightFactors::registerFactors()
 
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(JumpHeightFactorsDefines::JumpHeightUid, JumpHeightFactorsDefines::GroupUid,
-                           tr("Высота прыжка"), tr("h"), tr("м"), 4);
+                           tr("Высота прыжка"), tr("h"), tr("м"), 4, 2, FactorsDefines::nsAbove, 12);
 }

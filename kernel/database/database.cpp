@@ -495,6 +495,33 @@ bool DataBase::getPersonalNorm(const QString &patientUid, const QString &methodU
     return false;
 }
 
+QStringList DataBase::getTests(const QString &patientUid, const QString &methodUid, const QString &conditionUid) const
+{
+    QStringList retval;
+
+    QDir dir = testsDir();
+    QFileInfoList list = dir.entryInfoList(QDir::Files | QDir::NoDotAndDotDot, QDir::Time);
+    foreach (auto fileInfo, list)
+    {
+        DataDefines::TestInfo ti;
+        if (getTestInfo(fileInfo.fileName(), ti))
+            if (ti.patientUid == patientUid && ti.metodUid == methodUid && ti.condition == conditionUid)
+                retval << fileInfo.fileName();
+    }
+    return retval;
+}
+
+void DataBase::setTestNormContained(const QString &testUid, const bool isNormContained)
+{
+    QDir dir = testsDir();
+    QJsonObject testObj;
+    if (readTableRec(dir.absoluteFilePath(testUid), testObj))
+    {
+        testObj["norm_contained"] = isNormContained;
+        writeTableRec(dir.absoluteFilePath(testUid), testObj);
+    }
+}
+
 void DataBase::clear()
 {
     disconnected();

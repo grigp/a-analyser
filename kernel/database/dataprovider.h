@@ -189,7 +189,46 @@ QList<FactorsDefines::FactorValueAdvanced> getPrimaryFactors(const QString &test
 
 //! ------------------- Индивидуальные нормы -------------------
 
+/*!
+ * \brief Записывает индивидуальную норму в базу данных.
+ * Записывает значение нормы для одного показателя.
+ * Для методики необходимо вызвать для всех показателей отдельно
+ * \param patientUid - uid пациента
+ * \param methodUid - uid методики
+ * \param conditionUid - uid условия проведения
+ * \param factorUid - uid показателя
+ * \param probeNum - номер пробы
+ * \param value - значение нормы
+ * \param stdDeviation - среднеквадратическое отклонение нормы
+ */
+void setPersonalNorm(const QString &patientUid, const QString &methodUid, const QString &conditionUid,
+                     const QString &factorUid, const int probeNum, const double value, const double stdDeviation);
 
+/*!
+ * \brief Возвращает список индивидуальных норм для пациента по методике с заданными условиями проведения
+ * \param patientUid - uid пациента
+ * \param methodUid - uid методики
+ * \param conditionUid - uid условия проведения
+ * \param pnil - возвращаемые данные индивидуальной нормы
+ * \return true, если нормы найдены и их удалось вернуть
+ */
+bool getPersonalNorm(const QString &patientUid, const QString &methodUid, const QString &conditionUid,
+                     QList<DataDefines::PersonalNormInfo> &pnil);
+
+/*!
+ * \brief Воазвращает список тестов для указанного пациента по указанной методике с указанными условиями проведения
+ * \param patientUid - uid пациента
+ * \param methodUid - uid методики
+ * \param conditionUid - uid условий проведения
+ */
+QStringList getTests(const QString &patientUid, const QString &methodUid, const QString &conditionUid);
+
+/*!
+ * \brief Устанавливает для теста признак включения в нормообразующие в true или false
+ * \param testUid - uid теста
+ * \param isNormContained - признак использования, как нормообразующее
+ */
+void setTestNormContained(const QString &testUid, const bool isNormContained);
 
 //! ------------------- Общие и сервисные операции -------------------
 /*!

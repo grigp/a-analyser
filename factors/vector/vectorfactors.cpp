@@ -118,60 +118,60 @@ void VectorFactors::registerFactors()
 
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(VectorFactorsDefines::KFRUid, VectorFactorsDefines::GroupUid,
-                           tr("Качество функции равновесия"), tr("КФР"), tr("%"), 0);
+                           tr("Качество функции равновесия"), tr("КФР"), tr("%"), 0, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(VectorFactorsDefines::NPVUid, VectorFactorsDefines::GroupUid,
-                           tr("Нормированная площадь векторограммы"), tr("НПВ"), tr("кв.мм./с"), 0);
+                           tr("Нормированная площадь векторограммы"), tr("НПВ"), tr("кв.мм./с"), 0, 2, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(VectorFactorsDefines::KRINDUid, VectorFactorsDefines::GroupUid,
-                           tr("Коэф-т резкого изм. напр. движения"), tr("КРИНД"), tr("%"), 2);
+                           tr("Коэф-т резкого изм. напр. движения"), tr("КРИНД"), tr("%"), 2, 2, FactorsDefines::nsDual, 12);
 
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(VectorFactorsDefines::VMidUid, VectorFactorsDefines::GroupUid,
-                           tr("Линейная скорость средняя"), tr("ЛСС"), tr("мм/сек"), 2);
+                           tr("Линейная скорость средняя"), tr("ЛСС"), tr("мм/сек"), 2, 2, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(VectorFactorsDefines::AmplVUid, VectorFactorsDefines::GroupUid,
-                           tr("Амплитуда вариации линейной скорости"), tr("АВЛС"), tr("мм/сек"), 2);
+                           tr("Амплитуда вариации линейной скорости"), tr("АВЛС"), tr("мм/сек"), 2, 2, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(VectorFactorsDefines::TVUid, VectorFactorsDefines::GroupUid,
-                           tr("Период вариации линейной скорости"), tr("ПВЛС"), tr("сек"), 2);
+                           tr("Период вариации линейной скорости"), tr("ПВЛС"), tr("сек"), 2, 2, FactorsDefines::nsDual, 12);
 
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(VectorFactorsDefines::WMidUid, VectorFactorsDefines::GroupUid,
-                           tr("Угловая скорость средняя"), tr("УСС"), tr("рад/сек"), 2);
+                           tr("Угловая скорость средняя"), tr("УСС"), tr("рад/сек"), 2, 2, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(VectorFactorsDefines::AmplWUid, VectorFactorsDefines::GroupUid,
-                           tr("Амплитуда вариации угловой скорости"), tr("АВУС"), tr("рад/сек"), 2);
+                           tr("Амплитуда вариации угловой скорости"), tr("АВУС"), tr("рад/сек"), 2, 2, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(VectorFactorsDefines::TWUid, VectorFactorsDefines::GroupUid,
-                           tr("Период вариации угловой скорости"), tr("ПВУС"), tr("сек"), 2);
+                           tr("Период вариации угловой скорости"), tr("ПВУС"), tr("сек"), 2, 2, FactorsDefines::nsDual, 12);
 
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(VectorFactorsDefines::KAUSUid, VectorFactorsDefines::GroupUid,
-                           tr("Коэф-т асимметрии угловой скорости"), tr("КАУС"), tr("%"), 2);
+                           tr("Коэф-т асимметрии угловой скорости"), tr("КАУС"), tr("%"), 2, 2, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(VectorFactorsDefines::NUSUid, VectorFactorsDefines::GroupUid,
-                           tr("Накопленный угол смещения"), tr("НУС"), tr("об."), 2);
+                           tr("Накопленный угол смещения"), tr("НУС"), tr("об."), 2, 2, FactorsDefines::nsDual, 12);
 
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(VectorFactorsDefines::LSSFUid, VectorFactorsDefines::GroupUid,
-                           tr("Линейная скорость средняя по фронтали"), tr("ЛСС ф"), tr("мм/сек"), 2);
+                           tr("Линейная скорость средняя по фронтали"), tr("ЛСС ф"), tr("мм/сек"), 2, 2, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(VectorFactorsDefines::LSSSUid, VectorFactorsDefines::GroupUid,
-                           tr("Линейная скорость средняя по сагиттали"), tr("ЛСС с"), tr("мм/сек"), 2);
+                           tr("Линейная скорость средняя по сагиттали"), tr("ЛСС с"), tr("мм/сек"), 2, 2, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(VectorFactorsDefines::KALSFUid, VectorFactorsDefines::GroupUid,
-                           tr("Коэф-т асим. линейной скорости по фронтали"), tr("КАЛС ф"), tr("%"), 2);
+                           tr("Коэф-т асим. линейной скорости по фронтали"), tr("КАЛС ф"), tr("%"), 2, 2, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(VectorFactorsDefines::KALSSUid, VectorFactorsDefines::GroupUid,
-                           tr("Коэф-т асим. линейной скорости по сагиттали"), tr("КАЛС с"), tr("%"), 2);
+                           tr("Коэф-т асим. линейной скорости по сагиттали"), tr("КАЛС с"), tr("%"), 2, 2, FactorsDefines::nsDual, 12);
 
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(VectorFactorsDefines::PwVgrUid, VectorFactorsDefines::GroupUid,
-                           tr("Мощность векторограммы"), tr("МВ"), tr("кв.мм/куб.сек"), 2);
+                           tr("Мощность векторограммы"), tr("МВ"), tr("кв.мм/куб.сек"), 2, 2, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(VectorFactorsDefines::VWUid, VectorFactorsDefines::GroupUid,
-                           tr("Соотношение линейной и угловой скоростей"), tr("ЛСС/УС"), tr("мм/град"), 2);
+                           tr("Соотношение линейной и угловой скоростей"), tr("ЛСС/УС"), tr("мм/град"), 2, 2, FactorsDefines::nsDual, 12);
 }
 
 double VectorFactors::deviation(Stabilogram *stab)

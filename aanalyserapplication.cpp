@@ -292,10 +292,11 @@ QString AAnalyserApplication::getGroupName(const QString &groupUid) const
 
 void AAnalyserApplication::registerFactor(const QString &uid, const QString &groupUid,
                                           const QString &name, const QString &shortName,
-                                          const QString &measure, const int format)
+                                          const QString &measure, const int format,
+                                          const double multiplier, const FactorsDefines::NormSide side, const int agingPeriod)
 {
     if (m_factors)
-        m_factors->registerFactor(uid, groupUid, name, shortName, measure, format);
+        m_factors->registerFactor(uid, groupUid, name, shortName, measure, format, multiplier, side, agingPeriod);
 }
 
 void AAnalyserApplication::registerGroup(const QString &uid, const QString &name)
@@ -308,12 +309,14 @@ QStringList AAnalyserApplication::getTestConditions()
 {
     if (m_pnManager)
         return m_pnManager->getTestConditions();
+    return QStringList();
 }
 
 bool AAnalyserApplication::getTestConditionInfo(const QString &uid, DataDefines::TestConditionInfo &ci)
 {
     if (m_pnManager)
         return m_pnManager->getTestConditionInfo(uid, ci);
+    return false;
 }
 
 void AAnalyserApplication::setLanguargeCode(const QString &code)

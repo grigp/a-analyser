@@ -6,6 +6,16 @@
 namespace FactorsDefines {
 
 /*!
+ * \brief Направление нормы NormSide enum
+ */
+enum NormSide
+{
+    nsBelow = -1,   ///< Нижняя. Норма то, что ниже значения
+    nsDual = 0,     ///< Двусторонняя. Норма то, что внутри
+    nsAbove = 1     ///< Верхняя. Норма то, что выше значения
+};
+
+/*!
  * \brief Класс информации о показателе FactorInfo class
  */
 class FactorInfo
@@ -13,10 +23,12 @@ class FactorInfo
 public:
     FactorInfo(const QString &uid, const QString &groupUid,
                const QString &name, const QString &shortName,
-               const QString &measure, const int format)
+               const QString &measure, const int format,
+               const double multiplier, const NormSide side, const int agingPeriod)
         : m_uid(uid), m_groupUid(groupUid),
           m_name(name), m_shortName(shortName),
-          m_measure(measure), m_format(format)
+          m_measure(measure), m_format(format),
+          m_multiplier(multiplier), m_side(side), m_agingPeriod(agingPeriod)
     {}
     FactorInfo() {}
 
@@ -38,6 +50,15 @@ public:
     int format() const {return m_format;}
     void setFormat(const int format) {m_format = format;}
 
+    double multiplier() const {return m_multiplier;}
+    void setMultiplier(const double multiplier) {m_multiplier = multiplier;}
+
+    NormSide side() const {return m_side;}
+    void setSide(const NormSide side) {m_side = side;}
+
+    int agingPeriod() const {return m_agingPeriod;}
+    void setAgingPeriod(const int agingPeriod) {m_agingPeriod = agingPeriod;}
+
 private:
     QString m_uid;
     QString m_groupUid;
@@ -45,6 +66,9 @@ private:
     QString m_shortName;
     QString m_measure;
     int m_format;
+    double m_multiplier;
+    NormSide m_side;
+    int m_agingPeriod;      ///< Период устаревания в месяцах
 };
 
 

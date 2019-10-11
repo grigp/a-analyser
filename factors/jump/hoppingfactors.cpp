@@ -48,8 +48,8 @@ void HoppingFactors::registerFactors()
 
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(HoppingFactorsDefines::JumpHeightUid, HoppingFactorsDefines::GroupUid,
-                           tr("Высота прыжка"), tr("h"), tr("м"), 4);
+                           tr("Высота прыжка"), tr("h"), tr("м"), 4, 2, FactorsDefines::nsAbove, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(HoppingFactorsDefines::TimeUid, HoppingFactorsDefines::GroupUid,
-                           tr("Задержка на платформе"), tr("t"), tr("сек"), 2);
+                           tr("Задержка на платформе"), tr("t"), tr("сек"), 2, 2, FactorsDefines::nsBelow, 12);
 }

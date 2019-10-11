@@ -201,6 +201,23 @@ public:
     bool getPersonalNorm(const QString &patientUid, const QString &methodUid, const QString &conditionUid,
                          QList<DataDefines::PersonalNormInfo> &pnil) const;
 
+
+    /*!
+     * \brief Воазвращает список тестов для указанного пациента по указанной методике с указанными условиями проведения
+     * \param patientUid - uid пациента
+     * \param methodUid - uid методики
+     * \param conditionUid - uid условий проведения
+     */
+    QStringList getTests(const QString &patientUid, const QString &methodUid, const QString &conditionUid) const;
+
+    /*!
+     * \brief Устанавливает для теста признак включения в нормообразующие в true или false
+     * \param testUid - uid теста
+     * \param isNormContained - признак использования, как нормообразующее
+     */
+    void setTestNormContained(const QString &testUid, const bool isNormContained);
+
+
     /*!
      * \brief Очищает всю БД
      */

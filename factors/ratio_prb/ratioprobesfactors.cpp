@@ -100,26 +100,26 @@ void RatioProbesFactors::registerFactors()
 
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(RatioProbesFactorsDefines::Probe2SUid, RatioProbesFactorsDefines::GroupUid,
-                           tr("Коэффициент отношения по площади"), tr("KS"), tr("%"), 0);
+                           tr("Коэффициент отношения по площади"), tr("KS"), tr("%"), 0, 2, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(RatioProbesFactorsDefines::Probe2KFRUid, RatioProbesFactorsDefines::GroupUid,
-                           tr("Коэффициент отношения по КФР"), tr("KKFR"), tr("%"), 0);
+                           tr("Коэффициент отношения по КФР"), tr("KKFR"), tr("%"), 0, 2, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(RatioProbesFactorsDefines::Probe3SUid, RatioProbesFactorsDefines::GroupUid,
-                           tr("Коэффициент отношения по площади"), tr("KS"), tr("%"), 0);
+                           tr("Коэффициент отношения по площади"), tr("KS"), tr("%"), 0, 2, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(RatioProbesFactorsDefines::Probe3KFRUid, RatioProbesFactorsDefines::GroupUid,
-                           tr("Коэффициент отношения по КФР"), tr("KKFR"), tr("%"), 0);
+                           tr("Коэффициент отношения по КФР"), tr("KKFR"), tr("%"), 0, 2, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(RatioProbesFactorsDefines::Probe4SUid, RatioProbesFactorsDefines::GroupUid,
-                           tr("Коэффициент отношения по площади"), tr("KS"), tr("%"), 0);
+                           tr("Коэффициент отношения по площади"), tr("KS"), tr("%"), 0, 2, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(RatioProbesFactorsDefines::Probe4KFRUid, RatioProbesFactorsDefines::GroupUid,
-                           tr("Коэффициент отношения по КФР"), tr("KKFR"), tr("%"), 0);
+                           tr("Коэффициент отношения по КФР"), tr("KKFR"), tr("%"), 0, 2, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(RatioProbesFactorsDefines::Probe5SUid, RatioProbesFactorsDefines::GroupUid,
-                           tr("Коэффициент отношения по площади"), tr("KS"), tr("%"), 0);
+                           tr("Коэффициент отношения по площади"), tr("KS"), tr("%"), 0, 2, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(RatioProbesFactorsDefines::Probe5KFRUid, RatioProbesFactorsDefines::GroupUid,
-                           tr("Коэффициент отношения по КФР"), tr("KKFR"), tr("%"), 0);
+                           tr("Коэффициент отношения по КФР"), tr("KKFR"), tr("%"), 0, 2, FactorsDefines::nsDual, 12);
 }

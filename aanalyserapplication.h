@@ -206,7 +206,8 @@ public:
      */
     void registerFactor(const QString &uid, const QString &groupUid,
                         const QString &name, const QString &shortName,
-                        const QString &measure, const int format);
+                        const QString &measure, const int format,
+                        const double multiplier, const FactorsDefines::NormSide side, const int agingPeriod);
 
     /*!
      * \brief Регистрирует группу показателей

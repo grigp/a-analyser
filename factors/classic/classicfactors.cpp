@@ -91,32 +91,32 @@ void ClassicFactors::registerFactors()
 
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(ClassicFactorsDefines::MoXUid, ClassicFactorsDefines::GroupUid,
-                           tr("Смещение по фронтали"), tr("MoX"), tr("мм"), 2);
+                           tr("Смещение по фронтали"), tr("MoX"), tr("мм"), 2, 1, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(ClassicFactorsDefines::MoYUid, ClassicFactorsDefines::GroupUid,
-                           tr("Смещение по сагиттали"), tr("MoY"), tr("мм"), 2);
+                           tr("Смещение по сагиттали"), tr("MoY"), tr("мм"), 2, 1, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(ClassicFactorsDefines::QXUid, ClassicFactorsDefines::GroupUid,
-                           tr("Разброс по фронтали"), tr("QX"), tr("мм"), 2);
+                           tr("Разброс по фронтали"), tr("QX"), tr("мм"), 2, 2, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(ClassicFactorsDefines::QYUid, ClassicFactorsDefines::GroupUid,
-                           tr("Разброс по сагиттали"), tr("QY"), tr("мм"), 2);
+                           tr("Разброс по сагиттали"), tr("QY"), tr("мм"), 2, 2, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(ClassicFactorsDefines::RUid, ClassicFactorsDefines::GroupUid,
-                           tr("Средний радиус"), tr("R"), tr("мм"), 2);
+                           tr("Средний радиус"), tr("R"), tr("мм"), 2, 2, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(ClassicFactorsDefines::LUid, ClassicFactorsDefines::GroupUid,
-                           tr("Длина статокинезиграммы"), tr("L"), tr("мм"), 0);
+                           tr("Длина статокинезиграммы"), tr("L"), tr("мм"), 0, 2, FactorsDefines::nsDual, 12);
 
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(ClassicFactorsDefines::AngleUid, ClassicFactorsDefines::GroupUid,
-                           tr("Среднее направление колебаний"), tr("Angle"), tr("град"), 2);
+                           tr("Среднее направление колебаний"), tr("Angle"), tr("град"), 2, 2, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(ClassicFactorsDefines::SquareUid, ClassicFactorsDefines::GroupUid,
-                           tr("Площадь эллипса"), tr("EllS"), tr("кв.мм"), 1);
+                           tr("Площадь эллипса"), tr("EllS"), tr("кв.мм"), 1, 2, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(ClassicFactorsDefines::ComprRatioUid, ClassicFactorsDefines::GroupUid,
-                           tr("Коэффициент сжатия"), tr("EllE"), tr(""), 2);
+                           tr("Коэффициент сжатия"), tr("EllE"), tr(""), 2, 2, FactorsDefines::nsDual, 12);
 }
 
 void ClassicFactors::computeParamsEllipse(Stabilogram *stab)

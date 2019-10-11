@@ -131,6 +131,33 @@ QList<FactorsDefines::FactorValueAdvanced> DataProvider::getPrimaryFactors(const
     return static_cast<AAnalyserApplication*>(QApplication::instance())->getDB()->getPrimaryFactors(testUid);
 }
 
+void DataProvider::setPersonalNorm(const QString &patientUid, const QString &methodUid, const QString &conditionUid,
+                                   const QString &factorUid, const int probeNum,
+                                   const double value, const double stdDeviation)
+{
+    static_cast<AAnalyserApplication*>(QApplication::instance())->getDB()->
+            setPersonalNorm(patientUid, methodUid, conditionUid, factorUid, probeNum, value, stdDeviation);
+}
+
+bool DataProvider::getPersonalNorm(const QString &patientUid, const QString &methodUid, const QString &conditionUid,
+                                   QList<DataDefines::PersonalNormInfo> &pnil)
+{
+    return static_cast<AAnalyserApplication*>(QApplication::instance())->getDB()->
+            getPersonalNorm(patientUid, methodUid, conditionUid, pnil);
+}
+
+QStringList DataProvider::getTests(const QString &patientUid, const QString &methodUid, const QString &conditionUid)
+{
+    return static_cast<AAnalyserApplication*>(QApplication::instance())->getDB()->
+            getTests(patientUid, methodUid, conditionUid);
+}
+
+void DataProvider::setTestNormContained(const QString &testUid, const bool isNormContained)
+{
+    static_cast<AAnalyserApplication*>(QApplication::instance())->getDB()->
+            setTestNormContained(testUid, isNormContained);
+}
+
 void DataProvider::clear()
 {
     static_cast<AAnalyserApplication*>(QApplication::instance())->getDB()->clear();
