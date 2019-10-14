@@ -45,6 +45,9 @@ AAnalyserApplication::AAnalyserApplication(int &argc, char **argv, const QString
 
         connect(static_cast<MainWindow*>(m_mw), &MainWindow::dataBaseChange, m_database, &DataBase::changeDatabase);
         connect(static_cast<MainWindow*>(m_mw), &MainWindow::dataBaseClear, m_database, &DataBase::clear);
+
+        connect(m_pnManager, &PersonalNormManager::recalculatedPersonalNorm,
+                this, &AAnalyserApplication::recalculatedPersonalNorm);
     });
 }
 
@@ -317,6 +320,38 @@ bool AAnalyserApplication::getTestConditionInfo(const QString &uid, DataDefines:
     if (m_pnManager)
         return m_pnManager->getTestConditionInfo(uid, ci);
     return false;
+}
+
+bool AAnalyserApplication::getPersonalNorm(const QString &testUid, QList<DataDefines::PersonalNormInfo> &pnil) const
+{
+    if (m_pnManager)
+        return m_pnManager->getPersonalNorm(testUid, pnil);
+    return false;
+}
+
+int AAnalyserApplication::getPersonalNormContainedTestCount(const QString &testUid) const
+{
+    if (m_pnManager)
+        return m_pnManager->getPersonalNormContainedTestCount(testUid);
+    return 0;
+}
+
+void AAnalyserApplication::setTestNormContained(const QString &testUid, const bool isNormContained) const
+{
+    if (m_pnManager)
+        m_pnManager->setTestNormContained(testUid, isNormContained);
+}
+
+void AAnalyserApplication::calculatePersonalNorm(const QString &patientUid, const QString &methodUid, const QString &conditionUid) const
+{
+    if (m_pnManager)
+        m_pnManager->calculate(patientUid, methodUid, conditionUid);
+}
+
+void AAnalyserApplication::calculateAllPersonalNorms()
+{
+    if (m_pnManager)
+        m_pnManager->calculateAll();
 }
 
 void AAnalyserApplication::setLanguargeCode(const QString &code)

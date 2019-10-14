@@ -3,6 +3,8 @@
 
 #include <QWidget>
 
+#include "datadefines.h"
+
 namespace Ui {
 class DopuskWidget;
 }
@@ -26,8 +28,23 @@ public:
      */
     void calculate(DopuskCalculator *calculator, const QString &testUid);
 
+private slots:
+    /*!
+     * \brief Произошел перерасчет индивидуальной нормы
+     * \param patientUid - uid пациента
+     * \param methodUid - uid методики
+     * \param conditionUid - uid условий проведения
+     */
+    void on_recalculatedPersonalNorm(const QString &patientUid, const QString &methodUid, const QString &conditionUid);
+
+
 private:
     Ui::DopuskWidget *ui;
+
+    void getNorms();
+
+    QString m_testUid {""};
+    QList<DataDefines::PersonalNormInfo> m_pnil;
 };
 
 #endif // DOPUSKWIDGET_H

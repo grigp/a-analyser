@@ -48,19 +48,7 @@ public:
      * \param testUid - uid теста
      * \param isNormContained - будет ли тест нормообразующим
      */
-    void setTestNormContained(const QString &testUid, const bool isNormContained) const;
-
-    /*!
-     * \brief Расчет всех индивидуальных норм
-     */
-    void calculateAll();
-
-signals:
-
-public slots:
-
-private:
-    void loadConditions();
+    void setTestNormContained(const QString &testUid, const bool isNormContained);
 
     /*!
      * \brief Расчет индивидуальной нормы для пациента по методике и условиям проведения
@@ -68,7 +56,26 @@ private:
      * \param methodUid - uid методики
      * \param conditionUid - uid условий проведения
      */
-    void calculate(const QString &patientUid, const QString &methodUid, const QString &conditionUid) const;
+    void calculate(const QString &patientUid, const QString &methodUid, const QString &conditionUid);
+
+    /*!
+     * \brief Расчет всех индивидуальных норм
+     */
+    void calculateAll();
+
+signals:
+    /*!
+     * \brief Сигнал о том, что индивидуальная норма пересчитана
+     * \param patientUid - uid пациента
+     * \param methodUid - uid методики
+     * \param conditionUid - uid условий проведения
+     */
+    void recalculatedPersonalNorm(const QString &patientUid, const QString &methodUid, const QString &conditionUid);
+
+public slots:
+
+private:
+    void loadConditions();
 
     void fillFactorsTable(const QString &patientUid, const QString &methodUid, const QString &conditionUid,
                           QList<QList<FactorsDefines::FactorValueAdvanced>> &factors) const;

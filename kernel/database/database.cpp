@@ -4,6 +4,7 @@
 #include "aanalyserapplication.h"
 #include "metodicsfactory.h"
 #include "settingsprovider.h"
+#include "personalnormmanager.h"
 
 #include <QJsonDocument>
 #include <QJsonObject>
@@ -215,11 +216,48 @@ void DataBase::setTestProperty(const QString &testUid,
     QJsonObject testObj;
     if (readTableRec(dir.absoluteFilePath(testUid), testObj))
     {
+        QString oldCondition = testObj["condition"].toString();
+        bool oldIsNorm = testObj["norm_contained"].toBool();
         testObj["comment"] = comment;
         testObj["condition"] = condition;
         testObj["norm_contained"] = isNorm;
 
         writeTableRec(dir.absoluteFilePath(testUid), testObj);
+
+        /*!
+         Если по методике строятся нормы, то нужн контроллировать два параметра:
+         - условия проведения
+         - нормообразующий ли тест
+         И при их изменении пересчитывать номы. Этим и займемся ниже
+          */
+        DataDefines::TestInfo ti;
+        if (getTestInfo(testUid, ti))
+        {
+            MetodicDefines::MetodicInfo mi = static_cast<AAnalyserApplication*>(QApplication::instance())->
+                    getMetodics()->metodic(ti.metodUid);
+            if (mi.buildNorms)
+            {
+                if (oldCondition == condition)
+                {
+                    //! Если не изменились условия, то пересчитаем норму, если изменился флаг нормообразующего
+                    if (oldIsNorm != isNorm)
+                        static_cast<AAnalyserApplication*>(QApplication::instance())->setTestNormContained(testUid, isNorm);
+                }
+                else
+                {
+                    //! Если изменились условия, то пересчитаем норму по любому, вне зависимости от состояния флага
+                    static_cast<AAnalyserApplication*>(QApplication::instance())->setTestNormContained(testUid, isNorm);
+                    //! Пересчет нормы по старым условиям
+                    DataDefines::TestConditionInfo ci;
+                    if (static_cast<AAnalyserApplication*>(QApplication::instance())->getTestConditionInfo(oldCondition, ci))
+                    {
+                        if (ci.norms_enabled)
+                            static_cast<AAnalyserApplication*>(QApplication::instance())->
+                                    calculatePersonalNorm(ti.patientUid, ti.metodUid, oldCondition);
+                    }
+                }
+            }
+        }
     }
 }
 
@@ -433,6 +471,8 @@ void DataBase::setPersonalNorm(const QString &patientUid, const QString &methodU
                 norm["value"] = value;
                 norm["std_deviation"] = stdDeviation;
                 norms.replace(i, norm);
+                pnObj["norms"] = norms;
+                writeTableRec(dir.absoluteFilePath(pnfn), pnObj);
                 return;
             }
         }
@@ -443,6 +483,8 @@ void DataBase::setPersonalNorm(const QString &patientUid, const QString &methodU
         norm["value"] = value;
         norm["std_deviation"] = stdDeviation;
         norms.append(norm);
+        pnObj["norms"] = norms;
+        writeTableRec(dir.absoluteFilePath(pnfn), pnObj);
     }
     else
     {

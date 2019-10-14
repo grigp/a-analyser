@@ -6,6 +6,7 @@
 #include <QDebug>
 
 #include "aanalyserapplication.h"
+#include "settingsprovider.h"
 #include "dataprovider.h"
 
 PersonalNormManager::PersonalNormManager(QObject *parent)
@@ -75,7 +76,7 @@ int PersonalNormManager::getPersonalNormContainedTestCount(const QString &testUi
 }
 
 void PersonalNormManager::setTestNormContained(const QString &testUid,
-                                               const bool isNormContained) const
+                                               const bool isNormContained)
 {
     //! Получили данные теста
     DataDefines::TestInfo ti;
@@ -92,6 +93,29 @@ void PersonalNormManager::setTestNormContained(const QString &testUid,
                 //! Перерасчет индивидуальной нормы
                 calculate(ti.patientUid, ti.metodUid, ti.condition);
             }
+    }
+}
+
+void PersonalNormManager::calculate(const QString &patientUid, const QString &methodUid, const QString &conditionUid)
+{
+    QList<QList<FactorsDefines::FactorValueAdvanced>> factors;
+    factors.clear();
+
+    //! Собрать в таблицу все показатели нормообразующих тестов
+    fillFactorsTable(patientUid, methodUid, conditionUid, factors);
+
+    //! Есть показатели и их не меньше, чем минимальное кол-во
+    int minTestCount = SettingsProvider::valueFromRegAppCopy("Norms", "MinTestCount", 5).toInt();
+
+    if (factors.size() >= minTestCount)
+    {
+        QList<FactorsDefines::Norm> norms;
+        //! Расчет нормативов
+        calculateNormsForTable(factors, norms);
+        //! И сохранение их в БД
+        saveNormsToDatabase(patientUid, methodUid, conditionUid, factors, norms);
+        //! Оповещение мира об изменении нормы
+        emit recalculatedPersonalNorm(patientUid, methodUid, conditionUid);
     }
 }
 
@@ -136,27 +160,6 @@ void PersonalNormManager::loadConditions()
     }
 }
 
-
-void PersonalNormManager::calculate(const QString &patientUid, const QString &methodUid, const QString &conditionUid) const
-{
-    QList<QList<FactorsDefines::FactorValueAdvanced>> factors;
-    factors.clear();
-
-    //! Собрать в таблицу все показатели нормообразующих тестов
-    fillFactorsTable(patientUid, methodUid, conditionUid, factors);
-
-    //! Есть показатели
-    if (factors.size() > 0)
-    {
-        QList<FactorsDefines::Norm> norms;
-
-        //! Расчет нормативов
-        calculateNormsForTable(factors, norms);
-
-        //! И сохранение их в БД
-        saveNormsToDatabase(patientUid, methodUid, conditionUid, factors, norms);
-    }
-}
 
 void PersonalNormManager::fillFactorsTable(const QString &patientUid, const QString &methodUid, const QString &conditionUid,
                                            QList<QList<FactorsDefines::FactorValueAdvanced>> &factors) const

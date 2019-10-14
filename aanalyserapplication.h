@@ -235,6 +235,40 @@ public:
      */
     bool getTestConditionInfo(const QString &uid, DataDefines::TestConditionInfo &ci);
 
+    /*!
+     * \brief Получение индивидуальных норм для всех показателей теста
+     * \param testUid - uid теста
+     * \param pnil - возвращаемый список индивидуальных норм для теста
+     * \return true, если нормы получены
+     */
+    bool getPersonalNorm(const QString &testUid, QList<DataDefines::PersonalNormInfo> &pnil) const;
+
+    /*!
+     * \brief Возвращает количество нормообразующих обследований для нормы, которую будет использовать тест
+     * \param testUid - uid теста
+     */
+    int getPersonalNormContainedTestCount(const QString &testUid) const;
+
+    /*!
+     * \brief Устанавливает для теста признак включения в нормообразующие в true или false
+     * \param testUid - uid теста
+     * \param isNormContained - будет ли тест нормообразующим
+     */
+    void setTestNormContained(const QString &testUid, const bool isNormContained) const;
+
+    /*!
+     * \brief Расчет индивидуальной нормы для пациента по методике и условиям проведения
+     * \param patientUid - uid пациента
+     * \param methodUid - uid методики
+     * \param conditionUid - uid условий проведения
+     */
+    void calculatePersonalNorm(const QString &patientUid, const QString &methodUid, const QString &conditionUid) const;
+
+    /*!
+     * \brief Расчет всех индивидуальных норм
+     */
+    void calculateAllPersonalNorms();
+
     ///<-----------------------------------------------------------------------------
 
     /*!
@@ -261,6 +295,14 @@ signals:
     void selectTest(const QString &testUid);
 
     void sendData(DeviceProtocols::DeviceData *data);
+
+    /*!
+     * \brief Сигнал о том, что индивидуальная норма пересчитана
+     * \param patientUid - uid пациента
+     * \param methodUid - uid методики
+     * \param conditionUid - uid условий проведения
+     */
+    void recalculatedPersonalNorm(const QString &patientUid, const QString &methodUid, const QString &conditionUid);
 
 protected:
     //! Обработка исключений основного цикла программы
