@@ -1,5 +1,5 @@
-#ifndef PERSONALNORMMANAGER_H
-#define PERSONALNORMMANAGER_H
+#ifndef NORMSMANAGER_H
+#define NORMSMANAGER_H
 
 #include <QObject>
 
@@ -7,13 +7,13 @@
 #include "factorsdefines.h"
 
 /*!
- * \brief Класс диспетчера индивидуальных норм PersonalNormManager class
+ * \brief Класс диспетчера индивидуальных норм NormsManager class
  */
-class PersonalNormManager : public QObject
+class NormsManager : public QObject
 {
     Q_OBJECT
 public:
-    explicit PersonalNormManager(QObject *parent = nullptr);
+    explicit NormsManager(QObject *parent = nullptr);
 
 public:
     /*!
@@ -98,4 +98,4 @@ private:
 
 };
 
-#endif // PERSONALNORMMANAGER_H
+#endif // NORMSMANAGER_H

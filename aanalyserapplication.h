@@ -16,7 +16,7 @@ class MetodicsFactory;
 class DriversFactory;
 class FactorsFactory;
 class Driver;
-class PersonalNormManager;
+class NormsManager;
 
 class AAnalyserApplication : public QApplication
 {
@@ -316,7 +316,7 @@ private:
     MetodicsFactory *m_metodics {nullptr};
     DriversFactory *m_drivers {nullptr};
     FactorsFactory *m_factors {nullptr};
-    PersonalNormManager *m_pnManager {nullptr};
+    NormsManager *m_normsManager {nullptr};
 
     QString m_patientUid = "";  ///< uid выбранного пациента
     QString m_metodicUid = "";  ///< uid выбранной методики

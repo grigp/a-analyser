@@ -1,4 +1,4 @@
-#include "personalnormmanager.h"
+#include "normsmanager.h"
 
 #include <QJsonDocument>
 #include <QJsonArray>
@@ -9,14 +9,14 @@
 #include "settingsprovider.h"
 #include "dataprovider.h"
 
-PersonalNormManager::PersonalNormManager(QObject *parent)
+NormsManager::NormsManager(QObject *parent)
     : QObject(parent)
 {
     loadConditions();
 
 }
 
-QStringList PersonalNormManager::getTestConditions()  const
+QStringList NormsManager::getTestConditions()  const
 {
     QStringList retval;
     foreach (auto cond, m_tcList)
@@ -24,7 +24,7 @@ QStringList PersonalNormManager::getTestConditions()  const
     return retval;
 }
 
-bool PersonalNormManager::getTestConditionInfo(const QString &uid, DataDefines::TestConditionInfo &ci)  const
+bool NormsManager::getTestConditionInfo(const QString &uid, DataDefines::TestConditionInfo &ci)  const
 {
     foreach (auto cond, m_tcList)
         if (cond.uid == uid)
@@ -38,7 +38,7 @@ bool PersonalNormManager::getTestConditionInfo(const QString &uid, DataDefines::
     return false;
 }
 
-bool PersonalNormManager::getPersonalNorm(const QString &testUid,
+bool NormsManager::getPersonalNorm(const QString &testUid,
                                           QList<DataDefines::PersonalNormInfo> &pnil) const
 {
     //! Получили данные теста
@@ -48,7 +48,7 @@ bool PersonalNormManager::getPersonalNorm(const QString &testUid,
     return false;
 }
 
-int PersonalNormManager::getPersonalNormContainedTestCount(const QString &testUid) const
+int NormsManager::getPersonalNormContainedTestCount(const QString &testUid) const
 {
     //! Получили данные теста
     DataDefines::TestInfo ti;
@@ -75,7 +75,7 @@ int PersonalNormManager::getPersonalNormContainedTestCount(const QString &testUi
     return 0;
 }
 
-void PersonalNormManager::setTestNormContained(const QString &testUid,
+void NormsManager::setTestNormContained(const QString &testUid,
                                                const bool isNormContained)
 {
     //! Получили данные теста
@@ -96,7 +96,7 @@ void PersonalNormManager::setTestNormContained(const QString &testUid,
     }
 }
 
-void PersonalNormManager::calculate(const QString &patientUid, const QString &methodUid, const QString &conditionUid)
+void NormsManager::calculate(const QString &patientUid, const QString &methodUid, const QString &conditionUid)
 {
     QList<QList<FactorsDefines::FactorValueAdvanced>> factors;
     factors.clear();
@@ -119,12 +119,12 @@ void PersonalNormManager::calculate(const QString &patientUid, const QString &me
     }
 }
 
-void PersonalNormManager::calculateAll()
+void NormsManager::calculateAll()
 {
 
 }
 
-void PersonalNormManager::loadConditions()
+void NormsManager::loadConditions()
 {
     m_tcList.clear();
 
@@ -161,7 +161,7 @@ void PersonalNormManager::loadConditions()
 }
 
 
-void PersonalNormManager::fillFactorsTable(const QString &patientUid, const QString &methodUid, const QString &conditionUid,
+void NormsManager::fillFactorsTable(const QString &patientUid, const QString &methodUid, const QString &conditionUid,
                                            QList<QList<FactorsDefines::FactorValueAdvanced>> &factors) const
 {
     QStringList tests = DataProvider::getTests(patientUid, methodUid, conditionUid);
@@ -180,7 +180,7 @@ void PersonalNormManager::fillFactorsTable(const QString &patientUid, const QStr
     }
 }
 
-void PersonalNormManager::calculateNormsForTable(const QList<QList<FactorsDefines::FactorValueAdvanced> > &factors,
+void NormsManager::calculateNormsForTable(const QList<QList<FactorsDefines::FactorValueAdvanced> > &factors,
                                                  QList<FactorsDefines::Norm> &norms) const
 {
     //! Расчет среднего значения
@@ -226,7 +226,7 @@ void PersonalNormManager::calculateNormsForTable(const QList<QList<FactorsDefine
     }
 }
 
-void PersonalNormManager::saveNormsToDatabase(const QString &patientUid, const QString &methodUid, const QString &conditionUid,
+void NormsManager::saveNormsToDatabase(const QString &patientUid, const QString &methodUid, const QString &conditionUid,
                                               const QList<QList<FactorsDefines::FactorValueAdvanced> > &factors,
                                               const QList<FactorsDefines::Norm> &norms) const
 {
@@ -239,7 +239,7 @@ void PersonalNormManager::saveNormsToDatabase(const QString &patientUid, const Q
     }
 }
 
-bool PersonalNormManager::isTestNormContained(const QString &testUid)  const
+bool NormsManager::isTestNormContained(const QString &testUid)  const
 {
     DataDefines::TestInfo ti;
     if (DataProvider::getTestInfo(testUid, ti))

@@ -11,7 +11,7 @@
 #include "driversfactory.h"
 #include "factorsfactory.h"
 #include "driver.h"
-#include "personalnormmanager.h"
+#include "normsmanager.h"
 #include "executewidget.h"
 #include "databaseresultwidget.h"
 #include "database.h"
@@ -25,7 +25,7 @@ AAnalyserApplication::AAnalyserApplication(int &argc, char **argv, const QString
     , m_metodics(new MetodicsFactory(this))
     , m_drivers(new DriversFactory(this))
     , m_factors(new FactorsFactory(this))
-    , m_pnManager(new PersonalNormManager(this))
+    , m_normsManager(new NormsManager(this))
 {
 
     //! Это необходимо сделать сдесь, чтоб получить и запомнить uid приложения,
@@ -46,7 +46,7 @@ AAnalyserApplication::AAnalyserApplication(int &argc, char **argv, const QString
         connect(static_cast<MainWindow*>(m_mw), &MainWindow::dataBaseChange, m_database, &DataBase::changeDatabase);
         connect(static_cast<MainWindow*>(m_mw), &MainWindow::dataBaseClear, m_database, &DataBase::clear);
 
-        connect(m_pnManager, &PersonalNormManager::recalculatedPersonalNorm,
+        connect(m_normsManager, &NormsManager::recalculatedPersonalNorm,
                 this, &AAnalyserApplication::recalculatedPersonalNorm);
     });
 }
@@ -310,48 +310,48 @@ void AAnalyserApplication::registerGroup(const QString &uid, const QString &name
 
 QStringList AAnalyserApplication::getTestConditions()
 {
-    if (m_pnManager)
-        return m_pnManager->getTestConditions();
+    if (m_normsManager)
+        return m_normsManager->getTestConditions();
     return QStringList();
 }
 
 bool AAnalyserApplication::getTestConditionInfo(const QString &uid, DataDefines::TestConditionInfo &ci)
 {
-    if (m_pnManager)
-        return m_pnManager->getTestConditionInfo(uid, ci);
+    if (m_normsManager)
+        return m_normsManager->getTestConditionInfo(uid, ci);
     return false;
 }
 
 bool AAnalyserApplication::getPersonalNorm(const QString &testUid, QList<DataDefines::PersonalNormInfo> &pnil) const
 {
-    if (m_pnManager)
-        return m_pnManager->getPersonalNorm(testUid, pnil);
+    if (m_normsManager)
+        return m_normsManager->getPersonalNorm(testUid, pnil);
     return false;
 }
 
 int AAnalyserApplication::getPersonalNormContainedTestCount(const QString &testUid) const
 {
-    if (m_pnManager)
-        return m_pnManager->getPersonalNormContainedTestCount(testUid);
+    if (m_normsManager)
+        return m_normsManager->getPersonalNormContainedTestCount(testUid);
     return 0;
 }
 
 void AAnalyserApplication::setTestNormContained(const QString &testUid, const bool isNormContained) const
 {
-    if (m_pnManager)
-        m_pnManager->setTestNormContained(testUid, isNormContained);
+    if (m_normsManager)
+        m_normsManager->setTestNormContained(testUid, isNormContained);
 }
 
 void AAnalyserApplication::calculatePersonalNorm(const QString &patientUid, const QString &methodUid, const QString &conditionUid) const
 {
-    if (m_pnManager)
-        m_pnManager->calculate(patientUid, methodUid, conditionUid);
+    if (m_normsManager)
+        m_normsManager->calculate(patientUid, methodUid, conditionUid);
 }
 
 void AAnalyserApplication::calculateAllPersonalNorms()
 {
-    if (m_pnManager)
-        m_pnManager->calculateAll();
+    if (m_normsManager)
+        m_normsManager->calculateAll();
 }
 
 void AAnalyserApplication::setLanguargeCode(const QString &code)

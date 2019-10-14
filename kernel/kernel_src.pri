@@ -2,7 +2,7 @@ INCLUDEPATH += $$PWD
 
 include(database/database_src.pri)
 include(results_data/results_data_src.pri)
-include(personal_norms/personal_norms_src.pri)
+include(norms/norms_src.pri)
 
 HEADERS += \
     $$PWD/baseutils.h \

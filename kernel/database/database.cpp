@@ -4,7 +4,7 @@
 #include "aanalyserapplication.h"
 #include "metodicsfactory.h"
 #include "settingsprovider.h"
-#include "personalnormmanager.h"
+#include "normsmanager.h"
 
 #include <QJsonDocument>
 #include <QJsonObject>
