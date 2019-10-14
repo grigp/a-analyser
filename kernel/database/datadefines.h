@@ -112,7 +112,7 @@ struct TestConditionInfo
 };
 
 /*!
- * \brief Структура, содержащая информацию о, индивидуальной норме PersonalNormInfo struct
+ * \brief Структура, содержащая информацию об индивидуальной норме PersonalNormInfo struct
  */
 struct PersonalNormInfo
 {
@@ -124,6 +124,26 @@ struct PersonalNormInfo
     double value;             ///< значение нормы
     double stdDeviation;      ///< среднеквадратическое отклонение
     PersonalNormInfo() {}
+};
+
+/*!
+ * \brief Структура, содержащая информацию о групповой норме GroupNormInfo struct
+ */
+struct GroupNormInfo
+{
+    double border;             ///< Значение порога нормы
+    double conditionBorder;    ///< Значение порога условной нормы
+};
+
+/*!
+ * \brief Структура групповых норм для допускового контроля DopuskGroupNormInfo struct
+ */
+struct DopuskGroupNormInfo
+{
+    GroupNormInfo openEyes;
+    GroupNormInfo closeEyes;
+    GroupNormInfo target;
+    DopuskGroupNormInfo() {}
 };
 
 /*!

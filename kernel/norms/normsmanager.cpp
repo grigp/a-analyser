@@ -13,6 +13,7 @@ NormsManager::NormsManager(QObject *parent)
     : QObject(parent)
 {
     loadConditions();
+    loadDopuskGroupNorms();
 
 }
 
@@ -124,6 +125,16 @@ void NormsManager::calculateAll()
 
 }
 
+bool NormsManager::getDopuskGroupNorm(const QString &conditionUid, DataDefines::DopuskGroupNormInfo &gni)
+{
+    if (m_dopuskGroupNorm.contains(conditionUid))
+    {
+        gni = m_dopuskGroupNorm.value(conditionUid);
+        return true;
+    }
+    return false;
+}
+
 void NormsManager::loadConditions()
 {
     m_tcList.clear();
@@ -157,6 +168,40 @@ void NormsManager::loadConditions()
         ci.norms_enabled = obj["norms_enabled"].toBool();
 
         m_tcList.append(ci);
+    }
+}
+
+void NormsManager::loadDopuskGroupNorms()
+{
+    m_dopuskGroupNorm.clear();
+
+    QString resName = ":/pre_settings/dopusk_norms.json";
+    QJsonObject normsObj;
+    QFile file(resName);
+    if (file.open(QIODevice::ReadOnly | QIODevice::Text))
+    {
+        QByteArray ba = file.readAll();
+        QJsonDocument loadDoc(QJsonDocument::fromJson(ba));
+        normsObj = loadDoc.object();
+        file.close();
+    }
+
+    auto normsArr = normsObj["norms"].toArray();
+    for (int i = 0; i < normsArr.size(); ++i)
+    {
+        auto obj = normsArr.at(i).toObject();
+
+        QString uid = obj["uid"].toString();
+
+        DataDefines::DopuskGroupNormInfo gni;
+        gni.openEyes.border = obj["open"].toDouble();
+        gni.openEyes.conditionBorder = obj["open_cond"].toDouble();
+        gni.closeEyes.border = obj["close"].toDouble();
+        gni.closeEyes.conditionBorder = obj["close_cond"].toDouble();
+        gni.target.border = obj["target"].toDouble();
+        gni.target.conditionBorder = obj["target_cond"].toDouble();
+
+        m_dopuskGroupNorm.insert(uid, gni);
     }
 }
 

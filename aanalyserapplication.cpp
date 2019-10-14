@@ -354,6 +354,13 @@ void AAnalyserApplication::calculateAllPersonalNorms()
         m_normsManager->calculateAll();
 }
 
+bool AAnalyserApplication::getDopuskGroupNorm(const QString &conditionInfo, DataDefines::DopuskGroupNormInfo &gni) const
+{
+    if (m_normsManager)
+        return m_normsManager->getDopuskGroupNorm(conditionInfo, gni);
+    return false;
+}
+
 void AAnalyserApplication::setLanguargeCode(const QString &code)
 {
     m_languargeCode = code;

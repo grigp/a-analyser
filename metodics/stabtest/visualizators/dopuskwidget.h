@@ -41,7 +41,7 @@ private slots:
 private:
     Ui::DopuskWidget *ui;
 
-    void getNorms();
+    void getPersonalNorms();
 
     QString m_testUid {""};
     QList<DataDefines::PersonalNormInfo> m_pnil;

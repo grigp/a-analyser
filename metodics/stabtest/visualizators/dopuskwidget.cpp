@@ -23,23 +23,35 @@ DopuskWidget::~DopuskWidget()
 void DopuskWidget::calculate(DopuskCalculator *calculator, const QString &testUid)
 {
     m_testUid = testUid;
-    auto format = static_cast<AAnalyserApplication*>(QApplication::instance())->
-            getFactorInfo(VectorFactorsDefines::KFRUid).format();
+    DataDefines::TestInfo ti;
+    if (DataProvider::getTestInfo(m_testUid, ti))
+    {
+        auto format = static_cast<AAnalyserApplication*>(QApplication::instance())->
+                getFactorInfo(VectorFactorsDefines::KFRUid).format();
 
-    auto valOpenEyes = calculator->factors(0)->factorValue(VectorFactorsDefines::KFRUid);
-    ui->lblOpenEyesResult->setText(QString("%1 %").arg(valOpenEyes, 3, 'f', format));
+        auto valOpenEyes = calculator->factors(0)->factorValue(VectorFactorsDefines::KFRUid);
+        ui->lblOpenEyesResult->setText(QString("%1 %").arg(valOpenEyes, 3, 'f', format));
 
-    auto valCloseEyes = calculator->factors(1)->factorValue(VectorFactorsDefines::KFRUid);
-    ui->lblCloseEyesResult->setText(QString("%1 %").arg(valCloseEyes, 3, 'f', format));
+        auto valCloseEyes = calculator->factors(1)->factorValue(VectorFactorsDefines::KFRUid);
+        ui->lblCloseEyesResult->setText(QString("%1 %").arg(valCloseEyes, 3, 'f', format));
 
-    auto valTarget = calculator->factors(2)->factorValue(VectorFactorsDefines::KFRUid);
-    ui->lblTargetResult->setText(QString("%1 %").arg(valTarget, 3, 'f', format));
+        auto valTarget = calculator->factors(2)->factorValue(VectorFactorsDefines::KFRUid);
+        ui->lblTargetResult->setText(QString("%1 %").arg(valTarget, 3, 'f', format));
 
-    getNorms();
+        getPersonalNorms();
 
-    connect(static_cast<AAnalyserApplication*>(QApplication::instance()),
-            &AAnalyserApplication::recalculatedPersonalNorm,
-            this, &DopuskWidget::on_recalculatedPersonalNorm);
+        DataDefines::DopuskGroupNormInfo gni;
+        if (static_cast<AAnalyserApplication*>(QApplication::instance())->getDopuskGroupNorm(ti.condition, gni))
+        {
+            qDebug() << "open" << gni.openEyes.border << gni.openEyes.conditionBorder;
+            qDebug() << "close" << gni.closeEyes.border << gni.closeEyes.conditionBorder;
+            qDebug() << "target" << gni.target.border << gni.target.conditionBorder;
+        }
+
+        connect(static_cast<AAnalyserApplication*>(QApplication::instance()),
+                &AAnalyserApplication::recalculatedPersonalNorm,
+                this, &DopuskWidget::on_recalculatedPersonalNorm);
+    }
 }
 
 void DopuskWidget::on_recalculatedPersonalNorm(const QString &patientUid,
@@ -51,12 +63,12 @@ void DopuskWidget::on_recalculatedPersonalNorm(const QString &patientUid,
     {
         if (patientUid == ti.patientUid && methodUid == ti.metodUid && conditionUid == ti.condition)
         {
-            getNorms();
+            getPersonalNorms();
         }
     }
 }
 
-void DopuskWidget::getNorms()
+void DopuskWidget::getPersonalNorms()
 {
     if (static_cast<AAnalyserApplication*>(QApplication::instance())->getPersonalNorm(m_testUid, m_pnil))
     {

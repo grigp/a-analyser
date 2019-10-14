@@ -269,6 +269,14 @@ public:
      */
     void calculateAllPersonalNorms();
 
+    /*!
+     * \brief Возвращает групповую норму для допуск контроля по условиям проведения
+     * \param conditionInfo - uid условий проведения
+     * \param gni - групповая норма
+     * \return true, если удалось вернуть
+     */
+    bool getDopuskGroupNorm(const QString &conditionInfo, DataDefines::DopuskGroupNormInfo &gni) const;
+
     ///<-----------------------------------------------------------------------------
 
     /*!

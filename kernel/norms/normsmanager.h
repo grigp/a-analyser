@@ -63,6 +63,14 @@ public:
      */
     void calculateAll();
 
+    /*!
+     * \brief Возвращает групповую норму для допуск контроля по условиям проведения
+     * \param conditionUid - uid условий проведения
+     * \param gni - групповая норма
+     * \return true, если удалось вернуть
+     */
+    bool getDopuskGroupNorm(const QString &conditionUid, DataDefines::DopuskGroupNormInfo &gni);
+
 signals:
     /*!
      * \brief Сигнал о том, что индивидуальная норма пересчитана
@@ -76,6 +84,7 @@ public slots:
 
 private:
     void loadConditions();
+    void loadDopuskGroupNorms();
 
     void fillFactorsTable(const QString &patientUid, const QString &methodUid, const QString &conditionUid,
                           QList<QList<FactorsDefines::FactorValueAdvanced>> &factors) const;
@@ -95,6 +104,7 @@ private:
     bool isTestNormContained(const QString &testUid) const;
 
     QList<DataDefines::TestConditionInfo> m_tcList;   ///< Список условий проведения
+    QMap<QString, DataDefines::DopuskGroupNormInfo> m_dopuskGroupNorm;
 
 };
 
