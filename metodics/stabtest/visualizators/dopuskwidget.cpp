@@ -29,23 +29,26 @@ void DopuskWidget::calculate(DopuskCalculator *calculator, const QString &testUi
         auto format = static_cast<AAnalyserApplication*>(QApplication::instance())->
                 getFactorInfo(VectorFactorsDefines::KFRUid).format();
 
-        auto valOpenEyes = calculator->factors(0)->factorValue(VectorFactorsDefines::KFRUid);
-        ui->lblOpenEyesResult->setText(QString("%1 %").arg(valOpenEyes, 3, 'f', format));
+        m_values[0] = calculator->factors(0)->factorValue(VectorFactorsDefines::KFRUid);
+        ui->lblOpenEyesResult->setText(QString("%1 %").arg(m_values[0], 3, 'f', format));
 
-        auto valCloseEyes = calculator->factors(1)->factorValue(VectorFactorsDefines::KFRUid);
-        ui->lblCloseEyesResult->setText(QString("%1 %").arg(valCloseEyes, 3, 'f', format));
+        m_values[1] = calculator->factors(1)->factorValue(VectorFactorsDefines::KFRUid);
+        ui->lblCloseEyesResult->setText(QString("%1 %").arg(m_values[1], 3, 'f', format));
 
-        auto valTarget = calculator->factors(2)->factorValue(VectorFactorsDefines::KFRUid);
-        ui->lblTargetResult->setText(QString("%1 %").arg(valTarget, 3, 'f', format));
+        m_values[2] = calculator->factors(2)->factorValue(VectorFactorsDefines::KFRUid);
+        ui->lblTargetResult->setText(QString("%1 %").arg(m_values[2], 3, 'f', format));
 
         getPersonalNorms();
 
         QList<DataDefines::GroupNormInfo> gni;
         if (static_cast<AAnalyserApplication*>(QApplication::instance())->getGroupNorms(ti.metodUid, ti.condition, gni))
         {
+            m_groupNorms.clear();
             foreach (auto gNorm, gni)
-                qDebug() << gNorm.probeNum << gNorm.border << gNorm.conditionBorder;
+                m_groupNorms.insert(gNorm.probeNum, GroupNorm(gNorm.border, gNorm.conditionBorder));
         }
+
+        showConslution();
 
         connect(static_cast<AAnalyserApplication*>(QApplication::instance()),
                 &AAnalyserApplication::recalculatedPersonalNorm,
@@ -71,6 +74,8 @@ void DopuskWidget::getPersonalNorms()
 {
     if (static_cast<AAnalyserApplication*>(QApplication::instance())->getPersonalNorm(m_testUid, m_pnil))
     {
+        showConslution();
+
         for (int i = 0; i < m_pnil.size(); ++i)
         {
             QString st = QString(tr("Норма") + " %1 (q = %2)").arg(m_pnil.at(i).value).arg(m_pnil.at(i).stdDeviation);
@@ -90,6 +95,40 @@ void DopuskWidget::getPersonalNorms()
             }
         }
     }
+}
+
+void DopuskWidget::showConslution()
+{
+    for (int i = 0; i < 3; ++i)
+    {
+        GroupNorm gnv(m_groupNorms.value(i).bound, m_groupNorms.value(i).conditionBound);
+        NormValue nv = NotNormal;
+        if (m_values[i] >= gnv.bound)
+            nv = Normal;
+        else
+        if (m_values[i] < gnv.bound && m_values[i] > gnv.conditionBound)
+            nv = ConditionNormal;
+
+        QColor color = Qt::gray;
+        if (nv == Normal)
+            color = Qt::green;
+        else
+        if (nv == 1)
+            color = Qt::yellow;
+        else
+        if (nv == 2)
+            color = Qt::red;
+
+        if (i == 0)
+            ui->wgtOpenEyesGroupNorm->setColor(color);
+        else
+        if (i == 1)
+            ui->wgtCloseEyesGroupNorm->setColor(color);
+        else
+        if (i == 2)
+            ui->wgtCloseEyesGroupNorm->setColor(color);
+    }
+
 }
 
 

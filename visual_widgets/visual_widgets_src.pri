@@ -5,6 +5,8 @@ include(figures/figures_src.pri)
 include(target/target_src.pri)
 include(dynamic_diag/dynamic_diag_src.pri)
 include(area_graph/area_graph_src.pri)
+include(rgbled/rgbled_src.pri)
+include(circlenormindicator/circlenormindicator_src.pri)
 
 HEADERS += \
 

@@ -12,6 +12,24 @@ class DopuskWidget;
 class DopuskCalculator;
 
 /*!
+ * \brief Запись о текущей групповой норме GroupNorm struct
+ */
+struct GroupNorm
+{
+    double bound;
+    double conditionBound;
+    GroupNorm(){}
+    GroupNorm(double bnd, double cndBnd) : bound(bnd), conditionBound(cndBnd) {}
+};
+
+enum NormValue
+{
+      NotNormal = -1
+    , ConditionNormal = 0
+    , Normal = 1
+};
+
+/*!
  * \brief Класс виджета визуализатора допускового контроля в рамках стабилографического теста DopuskWidget class
  */
 class DopuskWidget : public QWidget
@@ -43,8 +61,14 @@ private:
 
     void getPersonalNorms();
 
+    void showConslution();
+
+    double m_values[3];
+
     QString m_testUid {""};
     QList<DataDefines::PersonalNormInfo> m_pnil;
+
+    QMap<int, GroupNorm> m_groupNorms;      ///< Групповые нормы int - номер пробы
 };
 
 #endif // DOPUSKWIDGET_H
