@@ -40,12 +40,11 @@ void DopuskWidget::calculate(DopuskCalculator *calculator, const QString &testUi
 
         getPersonalNorms();
 
-        DataDefines::DopuskGroupNormInfo gni;
-        if (static_cast<AAnalyserApplication*>(QApplication::instance())->getDopuskGroupNorm(ti.condition, gni))
+        QList<DataDefines::GroupNormInfo> gni;
+        if (static_cast<AAnalyserApplication*>(QApplication::instance())->getGroupNorms(ti.metodUid, ti.condition, gni))
         {
-            qDebug() << "open" << gni.openEyes.border << gni.openEyes.conditionBorder;
-            qDebug() << "close" << gni.closeEyes.border << gni.closeEyes.conditionBorder;
-            qDebug() << "target" << gni.target.border << gni.target.conditionBorder;
+            foreach (auto gNorm, gni)
+                qDebug() << gNorm.probeNum << gNorm.border << gNorm.conditionBorder;
         }
 
         connect(static_cast<AAnalyserApplication*>(QApplication::instance()),

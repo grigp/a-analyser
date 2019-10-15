@@ -1,0 +1,29 @@
+{
+    "norms": [
+        {
+            "methodic": "{EBEA57B4-A791-4F35-87C2-BEDEC6406D2D}",
+            "condition": "{25F339D2-FECB-4507-B0A0-7701B37F12F6}",
+            "factor": "{1A32C0D6-7A87-4E92-B1EE-ED0BB506EABA}",
+            "probe_num": 0,
+            "border": 88,
+            "condition_border": 75
+        },
+        {
+            "methodic": "{EBEA57B4-A791-4F35-87C2-BEDEC6406D2D}",
+            "condition": "{25F339D2-FECB-4507-B0A0-7701B37F12F6}",
+            "factor": "{1A32C0D6-7A87-4E92-B1EE-ED0BB506EABA}",
+            "probe_num": 1,
+            "border": 71,
+            "condition_border": 45
+        },
+        {
+            "methodic": "{EBEA57B4-A791-4F35-87C2-BEDEC6406D2D}",
+            "condition": "{25F339D2-FECB-4507-B0A0-7701B37F12F6}",
+            "factor": "{1A32C0D6-7A87-4E92-B1EE-ED0BB506EABA}",
+            "probe_num": 2,
+            "border": 64,
+            "condition_border": 34
+        }
+    ]
+}
+

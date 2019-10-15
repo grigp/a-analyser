@@ -64,12 +64,15 @@ public:
     void calculateAll();
 
     /*!
-     * \brief Возвращает групповую норму для допуск контроля по условиям проведения
-     * \param conditionUid - uid условий проведения
-     * \param gni - групповая норма
+     * \brief Возвращает список групповых норм для заданной методике по заданным условиям проведения
+     * \param methodicUid - uid методики
+     * \param consitionUid - uid условий проведения
+     * \param gni - список индивидуальных норм
      * \return true, если удалось вернуть
      */
-    bool getDopuskGroupNorm(const QString &conditionUid, DataDefines::DopuskGroupNormInfo &gni);
+    bool getGroupNorms(const QString &methodicUid, const QString &conditionUid,
+                       QList<DataDefines::GroupNormInfo> &gni) const;
+
 
 signals:
     /*!
@@ -104,8 +107,7 @@ private:
     bool isTestNormContained(const QString &testUid) const;
 
     QList<DataDefines::TestConditionInfo> m_tcList;   ///< Список условий проведения
-    QMap<QString, DataDefines::DopuskGroupNormInfo> m_dopuskGroupNorm;
-
+    QList<DataDefines::GroupNormInfo> m_groupNorms;   ///< Список групповых норм
 };
 
 #endif // NORMSMANAGER_H

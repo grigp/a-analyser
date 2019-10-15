@@ -354,10 +354,11 @@ void AAnalyserApplication::calculateAllPersonalNorms()
         m_normsManager->calculateAll();
 }
 
-bool AAnalyserApplication::getDopuskGroupNorm(const QString &conditionInfo, DataDefines::DopuskGroupNormInfo &gni) const
+bool AAnalyserApplication::getGroupNorms(const QString &methodicUid, const QString &conditionUid,
+                                         QList<DataDefines::GroupNormInfo> &gni)
 {
     if (m_normsManager)
-        return m_normsManager->getDopuskGroupNorm(conditionInfo, gni);
+        return m_normsManager->getGroupNorms(methodicUid, conditionUid, gni);
     return false;
 }
 

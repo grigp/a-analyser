@@ -131,19 +131,12 @@ struct PersonalNormInfo
  */
 struct GroupNormInfo
 {
+    QString methodicUid;       ///< uid методики
+    QString conditionUid;      ///< uid условия проведения
+    QString factorUid;         ///< uid показателя
+    int probeNum;              ///< номер пробы
     double border;             ///< Значение порога нормы
     double conditionBorder;    ///< Значение порога условной нормы
-};
-
-/*!
- * \brief Структура групповых норм для допускового контроля DopuskGroupNormInfo struct
- */
-struct DopuskGroupNormInfo
-{
-    GroupNormInfo openEyes;
-    GroupNormInfo closeEyes;
-    GroupNormInfo target;
-    DopuskGroupNormInfo() {}
 };
 
 /*!

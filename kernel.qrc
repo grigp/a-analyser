@@ -55,6 +55,6 @@
         <file>pre_settings/conditions.json</file>
         <file>pre_settings/conditions_en_US.json</file>
         <file>images/TestProperty.png</file>
-        <file>pre_settings/dopusk_norms.json</file>
+        <file>pre_settings/group_norms.json</file>
     </qresource>
 </RCC>

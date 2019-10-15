@@ -270,12 +270,14 @@ public:
     void calculateAllPersonalNorms();
 
     /*!
-     * \brief Возвращает групповую норму для допуск контроля по условиям проведения
-     * \param conditionInfo - uid условий проведения
-     * \param gni - групповая норма
+     * \brief Возвращает список групповых норм для заданной методике по заданным условиям проведения
+     * \param methodicUid - uid методики
+     * \param consitionUid - uid условий проведения
+     * \param gni - список индивидуальных норм
      * \return true, если удалось вернуть
      */
-    bool getDopuskGroupNorm(const QString &conditionInfo, DataDefines::DopuskGroupNormInfo &gni) const;
+    bool getGroupNorms(const QString &methodicUid, const QString &conditionUid,
+                       QList<DataDefines::GroupNormInfo> &gni);
 
     ///<-----------------------------------------------------------------------------
 
