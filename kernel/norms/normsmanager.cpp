@@ -237,12 +237,9 @@ void NormsManager::calculateNormsForTable(const QList<QList<FactorsDefines::Fact
         {
             if (first)
                 norms.append(FactorsDefines::Norm(0, 0));
-            else
-            {
-                FactorsDefines::Norm n = norms.at(i);
-                n.value = n.value + tstFactors.at(i).value();
-                norms.replace(i, n);
-            }
+            FactorsDefines::Norm n = norms.at(i);
+            n.value = n.value + tstFactors.at(i).value();
+            norms.replace(i, n);
         }
         first = false;
     }

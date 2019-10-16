@@ -140,6 +140,18 @@ struct GroupNormInfo
 };
 
 /*!
+ * \brief Варианты значений нормы NormValue enum
+ */
+enum NormValue
+{
+      MissingNorm = -2        ///< Норма отсутствует
+    , NotNormal = -1          ///< Значение не в норме
+    , ConditionNormal = 0     ///< Значение в условной норме
+    , Normal = 1              ///< Значение в норме
+};
+
+
+/*!
  * \brief возвращает путь к папке данных для всех приложений a-analyser
  */
 QString aanalyserDataPath();
@@ -181,6 +193,24 @@ DatabaseInfo getDatabaseInfo(const QString &dbFolder);
  * \param comment - новый комментарий
  */
 void setDatabaseComment(const QString &dbFolder, const QString &comment);
+
+/*!
+ * \brief По коду значения нормы возвращает строковое значение нормы
+ * \param val - код нормы
+ */
+QString normValueToString(const NormValue val);
+
+/*!
+ * \brief По коду значения нормы возвращает цвет прорисовки нормы
+ * \param val - код нормы
+ */
+QColor normValueToColor(const NormValue val);
+
+/*!
+ * \brief По коду значения нормы возвращает темный цвет прорисовки нормы
+ * \param val - код нормы
+ */
+QColor normValueToColorDark(const NormValue val);
 
 ///< ----------------------------------------------------------------
 ///< Локализация

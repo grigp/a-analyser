@@ -58,12 +58,20 @@ void CircleNormIndicator::setGroupNorm(NormBounds &norm)
 {
     m_isGroupNorm = true;
     m_groupNorms = norm;
+    correctValue(m_groupNorms.condNormHi);
+    correctValue(m_groupNorms.condNormLo);
+    correctValue(m_groupNorms.normValHi);
+    correctValue(m_groupNorms.normValLo);
 }
 
 void CircleNormIndicator::setPersonalNorm(NormBounds &norm)
 {
     m_isPersonalNorm = true;
     m_personalNorms = norm;
+    correctValue(m_personalNorms.condNormHi);
+    correctValue(m_personalNorms.condNormLo);
+    correctValue(m_personalNorms.normValHi);
+    correctValue(m_personalNorms.normValLo);
 }
 
 void CircleNormIndicator::resizeEvent(QResizeEvent *event)
@@ -251,10 +259,13 @@ int CircleNormIndicator::valueToDegrees(const int v) const
 
 int CircleNormIndicator::getDistanceDegrees(const int u, const int d) const
 {
-    if (u >= 300)
-        return (360 - u) + d;
-    else
+    if (u >= 0 && u <= 240 && d >= 0 && d <= 240)
         return d - u;
+    else
+    if (u >= 300 && u <= 360 && d >= 300 && d <= 360)
+        return d - u;
+    else
+        return d + (360 - u);
 }
 
 QPoint CircleNormIndicator::getPointOnCircleByAngle(const int angle) const
@@ -334,4 +345,12 @@ void CircleNormIndicator::drawValue(QPainter &p)
     p.drawText(m_centerX - size / 2, m_centerY + m_half / 2, size, size,
                Qt::AlignCenter, QString::number(m_value));
     p.restore();
+}
+
+void CircleNormIndicator::correctValue(int &value)
+{
+    if (value < m_minVal)
+        value = m_minVal;
+    if (value > m_maxVal)
+        value = m_maxVal;
 }

@@ -123,6 +123,8 @@ private:
      */
     void drawValue(QPainter &p);
 
+    void correctValue(int &value);
+
     Ui::CircleNormIndicator *ui;
 
     int m_height;    ///< Высота виджета

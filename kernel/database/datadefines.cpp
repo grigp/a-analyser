@@ -6,6 +6,7 @@
 #include <QJsonDocument>
 #include <QUuid>
 #include <QDir>
+#include <QColor>
 #include <QDebug>
 
 namespace
@@ -181,3 +182,36 @@ void DataDefines::setDatabaseComment(const QString &dbFolder, const QString &com
     }
 }
 
+
+QString DataDefines::normValueToString(const DataDefines::NormValue val)
+{
+    static QMap<NormValue, QString> normValues{
+        std::pair<NormValue, QString> (MissingNorm, QCoreApplication::tr("Не задана"))
+      , std::pair<NormValue, QString> (NotNormal, QCoreApplication::tr("Не в норме"))
+      , std::pair<NormValue, QString> (ConditionNormal, QCoreApplication::tr("Условно в норме"))
+      , std::pair<NormValue, QString> (Normal, QCoreApplication::tr("В норме"))
+    };
+    return normValues.value(val);
+}
+
+QColor DataDefines::normValueToColor(const DataDefines::NormValue val)
+{
+    static QMap<NormValue, QColor> normColors{
+        std::pair<NormValue, QColor> (MissingNorm, Qt::gray)
+      , std::pair<NormValue, QColor> (NotNormal, Qt::red)
+      , std::pair<NormValue, QColor> (ConditionNormal, Qt::yellow)
+      , std::pair<NormValue, QColor> (Normal, Qt::green)
+    };
+    return normColors.value(val);
+}
+
+QColor DataDefines::normValueToColorDark(const DataDefines::NormValue val)
+{
+    static QMap<NormValue, QColor> normColors{
+        std::pair<NormValue, QColor> (MissingNorm, Qt::darkGray)
+      , std::pair<NormValue, QColor> (NotNormal, Qt::darkRed)
+      , std::pair<NormValue, QColor> (ConditionNormal, Qt::darkYellow)
+      , std::pair<NormValue, QColor> (Normal, Qt::darkGreen)
+    };
+    return normColors.value(val);
+}

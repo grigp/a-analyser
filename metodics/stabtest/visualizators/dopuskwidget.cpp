@@ -29,14 +29,20 @@ void DopuskWidget::calculate(DopuskCalculator *calculator, const QString &testUi
         auto format = static_cast<AAnalyserApplication*>(QApplication::instance())->
                 getFactorInfo(VectorFactorsDefines::KFRUid).format();
 
+        QString fctName = static_cast<AAnalyserApplication*>(QApplication::instance())->
+                getFactorInfo(VectorFactorsDefines::KFRUid).name();
+
         m_values[0] = calculator->factors(0)->factorValue(VectorFactorsDefines::KFRUid);
         ui->lblOpenEyesResult->setText(QString("%1 %").arg(m_values[0], 3, 'f', format));
+        ui->lblOpenEyesFactor->setText(fctName);
 
         m_values[1] = calculator->factors(1)->factorValue(VectorFactorsDefines::KFRUid);
         ui->lblCloseEyesResult->setText(QString("%1 %").arg(m_values[1], 3, 'f', format));
+        ui->lblCloseEyesFactor->setText(fctName);
 
         m_values[2] = calculator->factors(2)->factorValue(VectorFactorsDefines::KFRUid);
         ui->lblTargetResult->setText(QString("%1 %").arg(m_values[2], 3, 'f', format));
+        ui->lblTargetFactor->setText(fctName);
 
         getPersonalNorms();
 
@@ -64,71 +70,105 @@ void DopuskWidget::on_recalculatedPersonalNorm(const QString &patientUid,
     if (DataProvider::getTestInfo(m_testUid, ti))
     {
         if (patientUid == ti.patientUid && methodUid == ti.metodUid && conditionUid == ti.condition)
-        {
             getPersonalNorms();
-        }
     }
 }
 
 void DopuskWidget::getPersonalNorms()
 {
     if (static_cast<AAnalyserApplication*>(QApplication::instance())->getPersonalNorm(m_testUid, m_pnil))
-    {
         showConslution();
-
-        for (int i = 0; i < m_pnil.size(); ++i)
-        {
-            QString st = QString(tr("Норма") + " %1 (q = %2)").arg(m_pnil.at(i).value).arg(m_pnil.at(i).stdDeviation);
-            if (i == 0)
-            {
-                ui->lblOpenEyesNorm->setText(st);
-            }
-            else
-            if (i == 1)
-            {
-                ui->lblCloseEyesNorm->setText(st);
-            }
-            else
-            if (i == 2)
-            {
-                ui->lblTargetNorm->setText(st);
-            }
-        }
-    }
 }
 
 void DopuskWidget::showConslution()
 {
     for (int i = 0; i < 3; ++i)
     {
-        GroupNorm gnv(m_groupNorms.value(i).bound, m_groupNorms.value(i).conditionBound);
-        NormValue nv = NotNormal;
-        if (m_values[i] >= gnv.bound)
-            nv = Normal;
-        else
-        if (m_values[i] < gnv.bound && m_values[i] > gnv.conditionBound)
-            nv = ConditionNormal;
+        NormBounds pn(-1, -1, -1, -1);
+        if (i < m_pnil.size())
+        {
+            pn.normValLo = m_pnil.at(i).value - m_pnil.at(i).stdDeviation * 1;
+            pn.normValHi = m_pnil.at(i).value + m_pnil.at(i).stdDeviation * 1;
+            pn.condNormLo = m_pnil.at(i).value - m_pnil.at(i).stdDeviation * 2;
+            pn.condNormHi = m_pnil.at(i).value + m_pnil.at(i).stdDeviation * 2;
+        }
+        DataDefines::NormValue pnv = getPersonalNormValue(i, pn);
+        QColor pnColor = DataDefines::normValueToColor(pnv);
 
-        QColor color = Qt::gray;
-        if (nv == Normal)
-            color = Qt::green;
-        else
-        if (nv == 1)
-            color = Qt::yellow;
-        else
-        if (nv == 2)
-            color = Qt::red;
+        NormBounds gn(m_groupNorms.value(i).conditionBound, m_groupNorms.value(i).bound, 100, 100);
+        DataDefines::NormValue gnv = getGroupNormValue(i);
+        QColor gnColor = DataDefines::normValueToColor(gnv);
+
+        auto drawNorm = [&](RGBLed *gnLed, RGBLed *pnLed,
+                QLabel *gnResume, QLabel *pnResume,
+                CircleNormIndicator *cni)
+        {
+            gnLed->setColor(gnColor);
+            gnResume->setText(DataDefines::normValueToString(gnv));
+            QPalette palette = gnResume->palette();
+            palette.setColor(gnResume->foregroundRole(), DataDefines::normValueToColorDark(gnv));
+            gnResume->setPalette(palette);
+
+            pnLed->setColor(pnColor);
+            pnResume->setText(DataDefines::normValueToString(pnv));
+            palette = pnResume->palette();
+            palette.setColor(pnResume->foregroundRole(), DataDefines::normValueToColorDark(pnv));
+            pnResume->setPalette(palette);
+
+            cni->setValue(m_values[i]);
+            if (m_groupNorms.contains(i))
+                cni->setGroupNorm(gn);
+            if (i < m_pnil.size())
+                cni->setPersonalNorm(pn);
+        };
 
         if (i == 0)
-            ui->wgtOpenEyesGroupNorm->setColor(color);
+            drawNorm(ui->wgtOpenEyesGroupNorm, ui->wgtOpenEyesPersonalNorm,
+                     ui->lblOpenEyesGroupNormResume, ui->lblOpenEyesPersonalNormResume,
+                     ui->wgtOpenEyesNorm);
         else
         if (i == 1)
-            ui->wgtCloseEyesGroupNorm->setColor(color);
+            drawNorm(ui->wgtCloseEyesGroupNorm, ui->wgtCloseEyesPersonalNorm,
+                     ui->lblCloseEyesGroupNormResume, ui->lblCloseEyesPersonalNormResume,
+                     ui->wgtCloseEyesNorm);
         else
         if (i == 2)
-            ui->wgtCloseEyesGroupNorm->setColor(color);
+            drawNorm(ui->wgtTargetGroupNorm, ui->wgtTargetPersonalNorm,
+                     ui->lblTargetGroupNormResume, ui->lblTargetPersonalNormResume,
+                     ui->wgtTargetNorm);
     }
+}
 
+DataDefines::NormValue DopuskWidget::getGroupNormValue(const int numProbe)
+{
+    DataDefines::NormValue gnv = DataDefines::MissingNorm;
+    if (m_groupNorms.contains(numProbe))
+    {
+        GroupNorm gnvalues(m_groupNorms.value(numProbe).bound, m_groupNorms.value(numProbe).conditionBound);
+        if (m_values[numProbe] >= gnvalues.bound)
+            gnv = DataDefines::Normal;
+        else
+        if (m_values[numProbe] < gnvalues.bound && m_values[numProbe] > gnvalues.conditionBound)
+            gnv = DataDefines::ConditionNormal;
+        else
+        if (m_values[numProbe] < gnvalues.conditionBound)
+            gnv = DataDefines::NotNormal;
+    }
+    return gnv;
+}
+
+DataDefines::NormValue DopuskWidget::getPersonalNormValue(const int numProbe, const NormBounds &pn)
+{
+    if (pn.normValLo == -1 || pn.normValHi == -1 || pn.condNormLo == -1 || pn.condNormHi == -1)
+        return DataDefines::MissingNorm;
+    else
+    if (m_values[numProbe] < pn.condNormLo || m_values[numProbe] > pn.condNormHi)
+        return DataDefines::NotNormal;
+    else
+    if (m_values[numProbe] < pn.normValLo || m_values[numProbe] > pn.normValHi)
+        return DataDefines::ConditionNormal;
+    else
+        return DataDefines::Normal;
 }
 
 

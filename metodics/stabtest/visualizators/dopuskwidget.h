@@ -4,6 +4,7 @@
 #include <QWidget>
 
 #include "datadefines.h"
+#include "circlenormindicator.h"
 
 namespace Ui {
 class DopuskWidget;
@@ -20,13 +21,6 @@ struct GroupNorm
     double conditionBound;
     GroupNorm(){}
     GroupNorm(double bnd, double cndBnd) : bound(bnd), conditionBound(cndBnd) {}
-};
-
-enum NormValue
-{
-      NotNormal = -1
-    , ConditionNormal = 0
-    , Normal = 1
 };
 
 /*!
@@ -62,6 +56,9 @@ private:
     void getPersonalNorms();
 
     void showConslution();
+
+    DataDefines::NormValue getGroupNormValue(const int numProbe);
+    DataDefines::NormValue getPersonalNormValue(const int numProbe, const NormBounds &pn);
 
     double m_values[3];
 
