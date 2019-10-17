@@ -146,6 +146,18 @@ bool DataProvider::getPersonalNorm(const QString &patientUid, const QString &met
             getPersonalNorm(patientUid, methodUid, conditionUid, pnil);
 }
 
+bool DataProvider::personalNormExists(const QString &patientUid, const QString &methodUid, const QString &conditionUid)
+{
+    return static_cast<AAnalyserApplication*>(QApplication::instance())->getDB()->
+            personalNormExists(patientUid, methodUid, conditionUid);
+}
+
+void DataProvider::deletePersonalNorm(const QString &patientUid, const QString &methodUid, const QString &conditionUid)
+{
+    static_cast<AAnalyserApplication*>(QApplication::instance())->getDB()->
+            deletePersonalNorm(patientUid, methodUid, conditionUid);
+}
+
 QStringList DataProvider::getTests(const QString &patientUid, const QString &methodUid, const QString &conditionUid)
 {
     return static_cast<AAnalyserApplication*>(QApplication::instance())->getDB()->
@@ -177,4 +189,5 @@ void DataProvider::importBD(const QString &fileName)
 {
     static_cast<AAnalyserApplication*>(QApplication::instance())->getDB()->importBD(fileName);
 }
+
 

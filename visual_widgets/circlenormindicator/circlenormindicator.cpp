@@ -62,6 +62,7 @@ void CircleNormIndicator::setGroupNorm(NormBounds &norm)
     correctValue(m_groupNorms.condNormLo);
     correctValue(m_groupNorms.normValHi);
     correctValue(m_groupNorms.normValLo);
+    update();
 }
 
 void CircleNormIndicator::setPersonalNorm(NormBounds &norm)
@@ -72,6 +73,7 @@ void CircleNormIndicator::setPersonalNorm(NormBounds &norm)
     correctValue(m_personalNorms.condNormLo);
     correctValue(m_personalNorms.normValHi);
     correctValue(m_personalNorms.normValLo);
+    update();
 }
 
 void CircleNormIndicator::resizeEvent(QResizeEvent *event)
@@ -217,35 +219,48 @@ void CircleNormIndicator::drawNorm(const CircleNormIndicator::NormKind nk, QPain
 
     QRect r(m_centerX - radius, m_centerY - radius, (radius) * 2, (radius) * 2);
 
-    //! 0 - не норма, 1 - условная норма, 2 - норма
-    //! Если заданы верхние границы, равные maxVal, то норма односторонняя
-    for (int i = 0; i < 3; ++i)
+    //! Если все нули, то это значит, что нормы нет
+    if (condNormHi == 0 && condNormLo == 0 && normHi == 0 && normLo == 0)
     {
-        QRadialGradient normGradient(QPoint(m_centerX, m_centerY), radius);
-        normGradient.setColorAt(0, m_colorNormLight.value(i));
-        normGradient.setColorAt(1, m_colorNormDark.value(i));
-        QBrush normBrush(normGradient);
-        p.setBrush(normBrush);
-        if (i == 0)
-            p.drawPie(r, 300 * 16, 300 * 16);
-        else
-        if (i == 1)
+        QColor darkIn(m_panelColor.darker(120));
+        QRadialGradient glassGradientIn(QPoint(m_centerX, m_centerY), m_innerBorderRadius );
+        glassGradientIn.setColorAt(0, m_panelColor);
+        glassGradientIn.setColorAt(1, darkIn);
+        QBrush glassBrushIn(glassGradientIn);
+        p.setBrush(glassBrushIn);
+        p.drawPie(r, 300 * 16, 300 * 16);
+    }
+    else
+    {
+        //! 0 - не норма, 1 - условная норма, 2 - норма
+        //! Если заданы верхние границы, равные maxVal, то норма односторонняя
+        for (int i = 0; i < 3; ++i)
         {
-            int u = valueToDegrees(condNormHi);
-            int d = valueToDegrees(condNormLo);
-            d = getDistanceDegrees(u, d);
-            p.drawPie(r, u * 16, d * 16);
-        }
-        else
-        if (i == 2)
-        {
-            int u = valueToDegrees(normHi);
-            int d = valueToDegrees(normLo);
-            d = getDistanceDegrees(u, d);
-            p.drawPie(r, u * 16, d * 16);
+            QRadialGradient normGradient(QPoint(m_centerX, m_centerY), radius);
+            normGradient.setColorAt(0, m_colorNormLight.value(i));
+            normGradient.setColorAt(1, m_colorNormDark.value(i));
+            QBrush normBrush(normGradient);
+            p.setBrush(normBrush);
+            if (i == 0)
+                p.drawPie(r, 300 * 16, 300 * 16);
+            else
+            if (i == 1)
+            {
+                int u = valueToDegrees(condNormHi);
+                int d = valueToDegrees(condNormLo);
+                d = getDistanceDegrees(u, d);
+                p.drawPie(r, u * 16, d * 16);
+            }
+            else
+            if (i == 2)
+            {
+                int u = valueToDegrees(normHi);
+                int d = valueToDegrees(normLo);
+                d = getDistanceDegrees(u, d);
+                p.drawPie(r, u * 16, d * 16);
+            }
         }
     }
-
 }
 
 int CircleNormIndicator::valueToDegrees(const int v) const

@@ -312,7 +312,15 @@ signals:
      * \param methodUid - uid методики
      * \param conditionUid - uid условий проведения
      */
-    void recalculatedPersonalNorm(const QString &patientUid, const QString &methodUid, const QString &conditionUid);
+    void personalNormRecalculated(const QString &patientUid, const QString &methodUid, const QString &conditionUid);
+
+    /*!
+     * \brief Сигнал о том, что индивидуальная норма удалена
+     * \param patientUid - uid пациента
+     * \param methodUid - uid методики
+     * \param conditionUid - uid условий проведения
+     */
+    void personalNormDeleted(const QString &patientUid, const QString &methodUid, const QString &conditionUid);
 
 protected:
     //! Обработка исключений основного цикла программы

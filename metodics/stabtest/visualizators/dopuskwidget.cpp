@@ -57,14 +57,17 @@ void DopuskWidget::calculate(DopuskCalculator *calculator, const QString &testUi
         showConslution();
 
         connect(static_cast<AAnalyserApplication*>(QApplication::instance()),
-                &AAnalyserApplication::recalculatedPersonalNorm,
-                this, &DopuskWidget::on_recalculatedPersonalNorm);
+                &AAnalyserApplication::personalNormRecalculated,
+                this, &DopuskWidget::on_changePersonalNorm);
+        connect(static_cast<AAnalyserApplication*>(QApplication::instance()),
+                &AAnalyserApplication::personalNormDeleted,
+                this, &DopuskWidget::on_changePersonalNorm);
     }
 }
 
-void DopuskWidget::on_recalculatedPersonalNorm(const QString &patientUid,
-                                               const QString &methodUid,
-                                               const QString &conditionUid)
+void DopuskWidget::on_changePersonalNorm(const QString &patientUid,
+                                         const QString &methodUid,
+                                         const QString &conditionUid)
 {
     DataDefines::TestInfo ti;
     if (DataProvider::getTestInfo(m_testUid, ti))
@@ -76,8 +79,8 @@ void DopuskWidget::on_recalculatedPersonalNorm(const QString &patientUid,
 
 void DopuskWidget::getPersonalNorms()
 {
-    if (static_cast<AAnalyserApplication*>(QApplication::instance())->getPersonalNorm(m_testUid, m_pnil))
-        showConslution();
+    static_cast<AAnalyserApplication*>(QApplication::instance())->getPersonalNorm(m_testUid, m_pnil);
+    showConslution();
 }
 
 void DopuskWidget::showConslution()
@@ -118,8 +121,7 @@ void DopuskWidget::showConslution()
             cni->setValue(m_values[i]);
             if (m_groupNorms.contains(i))
                 cni->setGroupNorm(gn);
-            if (i < m_pnil.size())
-                cni->setPersonalNorm(pn);
+            cni->setPersonalNorm(pn);
         };
 
         if (i == 0)
@@ -137,6 +139,11 @@ void DopuskWidget::showConslution()
                      ui->lblTargetGroupNormResume, ui->lblTargetPersonalNormResume,
                      ui->wgtTargetNorm);
     }
+
+    //! Количество нормообразующих обследований
+    auto cnt = static_cast<AAnalyserApplication*>(QApplication::instance())->
+            getPersonalNormContainedTestCount(m_testUid);
+    ui->lblNormContainsCount->setText(QString(tr("Количество нормообразующих обследований") + " - %1").arg(cnt));
 }
 
 DataDefines::NormValue DopuskWidget::getGroupNormValue(const int numProbe)

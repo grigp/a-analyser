@@ -26,6 +26,7 @@ RGBLed::~RGBLed()
 void RGBLed::setColor(const QColor &color)
 {
     ledColor = color;
+    update();
 }
 
 void RGBLed::resizeEvent(QResizeEvent *event)

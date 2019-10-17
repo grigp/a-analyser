@@ -502,6 +502,21 @@ void DataBase::setPersonalNorm(const QString &patientUid, const QString &methodU
     }
 }
 
+bool DataBase::personalNormExists(const QString &patientUid, const QString &methodUid, const QString &conditionUid)
+{
+    QDir dir = personalNormDir();
+    QString pnfn = personalNormFileName(patientUid, methodUid, conditionUid);
+    return QFile::exists(dir.absoluteFilePath(pnfn));
+}
+
+void DataBase::deletePersonalNorm(const QString &patientUid, const QString &methodUid, const QString &conditionUid)
+{
+    QDir dir = personalNormDir();
+    QString pnfn = personalNormFileName(patientUid, methodUid, conditionUid);
+    if (QFile::exists(dir.absoluteFilePath(pnfn)))
+        QFile::remove(dir.absoluteFilePath(pnfn));
+}
+
 bool DataBase::getPersonalNorm(const QString &patientUid, const QString &methodUid, const QString &conditionUid,
                                QList<DataDefines::PersonalNormInfo> &pnil) const
 {

@@ -46,8 +46,10 @@ AAnalyserApplication::AAnalyserApplication(int &argc, char **argv, const QString
         connect(static_cast<MainWindow*>(m_mw), &MainWindow::dataBaseChange, m_database, &DataBase::changeDatabase);
         connect(static_cast<MainWindow*>(m_mw), &MainWindow::dataBaseClear, m_database, &DataBase::clear);
 
-        connect(m_normsManager, &NormsManager::recalculatedPersonalNorm,
-                this, &AAnalyserApplication::recalculatedPersonalNorm);
+        connect(m_normsManager, &NormsManager::personalNormRecalculated,
+                this, &AAnalyserApplication::personalNormRecalculated);
+        connect(m_normsManager, &NormsManager::personalNormDeleted,
+                this, &AAnalyserApplication::personalNormDeleted);
     });
 }
 

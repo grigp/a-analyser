@@ -216,6 +216,22 @@ bool getPersonalNorm(const QString &patientUid, const QString &methodUid, const 
                      QList<DataDefines::PersonalNormInfo> &pnil);
 
 /*!
+ * \brief Возвращает true, если индивидуальная норма для пациента по методике и условий проведения существует
+ * \param patientUid - uid пациента
+ * \param methodUid - uid методики
+ * \param conditionUid - uid условий проведения
+ */
+bool personalNormExists(const QString &patientUid, const QString &methodUid, const QString &conditionUid);
+
+/*! Удаляет индивидуальную норму для пациента по методике и условий проведения
+ * \brief deletePersonalNorm
+ * \param patientUid - uid пациента
+ * \param methodUid - uid методики
+ * \param conditionUid - uid условий проведения
+ */
+void deletePersonalNorm(const QString &patientUid, const QString &methodUid, const QString &conditionUid);
+
+/*!
  * \brief Воазвращает список тестов для указанного пациента по указанной методике с указанными условиями проведения
  * \param patientUid - uid пациента
  * \param methodUid - uid методики

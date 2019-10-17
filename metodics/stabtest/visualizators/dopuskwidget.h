@@ -47,7 +47,7 @@ private slots:
      * \param methodUid - uid методики
      * \param conditionUid - uid условий проведения
      */
-    void on_recalculatedPersonalNorm(const QString &patientUid, const QString &methodUid, const QString &conditionUid);
+    void on_changePersonalNorm(const QString &patientUid, const QString &methodUid, const QString &conditionUid);
 
 
 private:

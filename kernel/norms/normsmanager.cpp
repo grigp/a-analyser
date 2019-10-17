@@ -116,7 +116,17 @@ void NormsManager::calculate(const QString &patientUid, const QString &methodUid
         //! И сохранение их в БД
         saveNormsToDatabase(patientUid, methodUid, conditionUid, factors, norms);
         //! Оповещение мира об изменении нормы
-        emit recalculatedPersonalNorm(patientUid, methodUid, conditionUid);
+        emit personalNormRecalculated(patientUid, methodUid, conditionUid);
+    }
+    else
+    {
+        //! Если показтелей меньше, чем необходимо, то надо удалить норму, если она была ранее построена
+        if (DataProvider::personalNormExists(patientUid, methodUid, conditionUid))
+        {
+            DataProvider::deletePersonalNorm(patientUid, methodUid, conditionUid);
+            //! Оповещение мира об изменении нормы
+            emit personalNormDeleted(patientUid, methodUid, conditionUid);
+        }
     }
 }
 
