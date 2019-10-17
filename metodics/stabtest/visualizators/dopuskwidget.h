@@ -53,6 +53,7 @@ private slots:
 private:
     Ui::DopuskWidget *ui;
 
+    void getGroupNorm(const QString &methodUid, const QString &conditionUid);
     void getPersonalNorms();
 
     void showConslution();

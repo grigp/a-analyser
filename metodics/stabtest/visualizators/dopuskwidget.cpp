@@ -45,14 +45,7 @@ void DopuskWidget::calculate(DopuskCalculator *calculator, const QString &testUi
         ui->lblTargetFactor->setText(fctName);
 
         getPersonalNorms();
-
-        QList<DataDefines::GroupNormInfo> gni;
-        if (static_cast<AAnalyserApplication*>(QApplication::instance())->getGroupNorms(ti.metodUid, ti.condition, gni))
-        {
-            m_groupNorms.clear();
-            foreach (auto gNorm, gni)
-                m_groupNorms.insert(gNorm.probeNum, GroupNorm(gNorm.border, gNorm.conditionBorder));
-        }
+        getGroupNorm(ti.metodUid, ti.condition);
 
         showConslution();
 
@@ -73,7 +66,21 @@ void DopuskWidget::on_changePersonalNorm(const QString &patientUid,
     if (DataProvider::getTestInfo(m_testUid, ti))
     {
         if (patientUid == ti.patientUid && methodUid == ti.metodUid && conditionUid == ti.condition)
+        {
+            getGroupNorm(methodUid, conditionUid);
             getPersonalNorms();
+        }
+    }
+}
+
+void DopuskWidget::getGroupNorm(const QString &methodUid, const QString &conditionUid)
+{
+    m_groupNorms.clear();
+    QList<DataDefines::GroupNormInfo> gni;
+    if (static_cast<AAnalyserApplication*>(QApplication::instance())->getGroupNorms(methodUid, conditionUid, gni))
+    {
+        foreach (auto gNorm, gni)
+            m_groupNorms.insert(gNorm.probeNum, GroupNorm(gNorm.border, gNorm.conditionBorder));
     }
 }
 
@@ -98,7 +105,6 @@ void DopuskWidget::showConslution()
         DataDefines::NormValue pnv = getPersonalNormValue(i, pn);
         QColor pnColor = DataDefines::normValueToColor(pnv);
 
-        NormBounds gn(m_groupNorms.value(i).conditionBound, m_groupNorms.value(i).bound, 100, 100);
         DataDefines::NormValue gnv = getGroupNormValue(i);
         QColor gnColor = DataDefines::normValueToColor(gnv);
 
@@ -120,7 +126,15 @@ void DopuskWidget::showConslution()
 
             cni->setValue(m_values[i]);
             if (m_groupNorms.contains(i))
+            {
+                NormBounds gn(m_groupNorms.value(i).conditionBound, m_groupNorms.value(i).bound, 100, 100);
                 cni->setGroupNorm(gn);
+            }
+            else
+            {
+                NormBounds gn(-1, -1, -1, -1);
+                cni->setGroupNorm(gn);
+            }
             cni->setPersonalNorm(pn);
         };
 
