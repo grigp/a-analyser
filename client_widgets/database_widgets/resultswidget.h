@@ -63,8 +63,13 @@ private slots:
 
     void onRemoveTests(const QModelIndex &parent, int first, int last);
 
+    void on_selectPatient(const QString &patientUid);
+    void on_selectMetodic(const QString &metodicUid);
+
 private:
     Ui::ResultsWidget *ui;
+
+    void closeTestIfNotSelection();
 
     void saveSplitterPosition();
     void restoreSplitterPosition();

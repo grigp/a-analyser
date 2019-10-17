@@ -24,6 +24,11 @@ ResultsWidget::ResultsWidget(QWidget *parent) :
     connect(ui->tvTests->selectionModel(), &QItemSelectionModel::selectionChanged,
             this, &ResultsWidget::on_selectionChanged);
 
+    connect(static_cast<AAnalyserApplication*>(QApplication::instance()),
+            &AAnalyserApplication::selectPatient, this, &ResultsWidget::on_selectPatient);
+    connect(static_cast<AAnalyserApplication*>(QApplication::instance()),
+            &AAnalyserApplication::selectMetodic, this, &ResultsWidget::on_selectMetodic);
+
     restoreSplitterPosition();
 
     //    m_pmp = new ScaledPixmap(this);
@@ -121,7 +126,6 @@ void ResultsWidget::splitterMoved(int pos, int index)
 
 void ResultsWidget::onNewTests(const QModelIndex &parent, int first, int last)
 {
-    qDebug() << Q_FUNC_INFO;
     Q_UNUSED(last);
     auto index = m_mdlTest->index(first, TestsModel::ColPatient, parent);
     selectTest(index);
@@ -141,6 +145,24 @@ void ResultsWidget::onRemoveTests(const QModelIndex &parent, int first, int last
     m_wgtResult = nullptr;
     ui->lblNoTest->setVisible(true);
     ui->tvTests->selectionModel()->clearSelection();
+}
+
+void ResultsWidget::on_selectPatient(const QString &patientUid)
+{
+    Q_UNUSED(patientUid);
+    closeTestIfNotSelection();
+}
+
+void ResultsWidget::on_selectMetodic(const QString &metodicUid)
+{
+    Q_UNUSED(metodicUid);
+    closeTestIfNotSelection();
+}
+
+void ResultsWidget::closeTestIfNotSelection()
+{
+    if (ui->tvTests->selectionModel()->selectedIndexes().size() == 0)
+        closeTest();
 }
 
 void ResultsWidget::saveSplitterPosition()
