@@ -17,6 +17,8 @@ MethodsWidget::MethodsWidget(QWidget *parent) :
   , m_model(new MetodicsModel(this))
 {
     ui->setupUi(this);
+
+    ui->tvMetods->viewport()->installEventFilter(this);
 }
 
 MethodsWidget::~MethodsWidget()
@@ -34,6 +36,25 @@ void MethodsWidget::onDbConnect()
         connect(ui->tvMetods->selectionModel(), &QItemSelectionModel::selectionChanged,
                 this, &MethodsWidget::on_selectionChanged);
     }
+}
+
+bool MethodsWidget::eventFilter(QObject *watched, QEvent *event)
+{
+    if (watched == ui->tvMetods->viewport() && event->type() == QEvent::MouseButtonRelease)
+    {
+        QMouseEvent *me = static_cast <QMouseEvent *> (event);
+        QModelIndex index = ui->tvMetods->indexAt(me->pos());
+
+        if (!index.isValid())
+        {
+            ui->tvMetods->clearSelection();
+            static_cast<AAnalyserApplication*>(QApplication::instance())->doSelectMetodic("");
+        }
+
+        return true;
+    }
+
+    return QWidget::eventFilter(watched, event);
 }
 
 void MethodsWidget::on_selectionChanged(const QItemSelection &selected, const QItemSelection &deselected)
@@ -62,6 +83,6 @@ void MethodsWidget::editMetodParams()
 
 void MethodsWidget::unselect()
 {
-    ui->tvMetods->selectionModel()->clear();
+    ui->tvMetods->clearSelection();
     static_cast<AAnalyserApplication*>(QApplication::instance())->doSelectMetodic("");
 }

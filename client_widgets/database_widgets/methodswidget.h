@@ -21,6 +21,9 @@ public:
 
     void onDbConnect();
 
+protected:
+    bool eventFilter(QObject *watched, QEvent *event);
+
 private slots:
     void on_selectionChanged(const QItemSelection &selected, const QItemSelection &deselected);
     void selectMetodic(const QModelIndex index);
