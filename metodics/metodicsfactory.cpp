@@ -163,6 +163,7 @@ void MetodicsFactory::saveMetodics()
             obj["uid"] = met.uid;
             obj["name"] = met.name;
             obj["template"] = met.templateId;
+            obj["build_norms"] = met.buildNorms;
             obj["params"] = met.params;
             tests.append(obj);
         }

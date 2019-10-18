@@ -18,7 +18,7 @@ MethodsWidget::MethodsWidget(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    ui->tvMetods->viewport()->installEventFilter(this);
+//    ui->tvMetods->viewport()->installEventFilter(this);
 }
 
 MethodsWidget::~MethodsWidget()
@@ -38,24 +38,24 @@ void MethodsWidget::onDbConnect()
     }
 }
 
-bool MethodsWidget::eventFilter(QObject *watched, QEvent *event)
-{
-    if (watched == ui->tvMetods->viewport() && event->type() == QEvent::MouseButtonRelease)
-    {
-        QMouseEvent *me = static_cast <QMouseEvent *> (event);
-        QModelIndex index = ui->tvMetods->indexAt(me->pos());
+//bool MethodsWidget::eventFilter(QObject *watched, QEvent *event)
+//{
+//    if (watched == ui->tvMetods->viewport() && event->type() == QEvent::MouseButtonRelease)
+//    {
+//        QMouseEvent *me = static_cast <QMouseEvent *> (event);
+//        QModelIndex index = ui->tvMetods->indexAt(me->pos());
 
-        if (!index.isValid())
-        {
-            ui->tvMetods->clearSelection();
-            static_cast<AAnalyserApplication*>(QApplication::instance())->doSelectMetodic("");
-        }
+//        if (!index.isValid())
+//        {
+//            ui->tvMetods->clearSelection();
+//            static_cast<AAnalyserApplication*>(QApplication::instance())->doSelectMetodic("");
+//        }
 
-        return true;
-    }
+//        return true;
+//    }
 
-    return QWidget::eventFilter(watched, event);
-}
+//    return QWidget::eventFilter(watched, event);
+//}
 
 void MethodsWidget::on_selectionChanged(const QItemSelection &selected, const QItemSelection &deselected)
 {

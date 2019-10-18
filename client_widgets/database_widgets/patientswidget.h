@@ -44,8 +44,8 @@ private slots:
 
     void unselect();
 
-protected:
-    bool eventFilter(QObject *watched, QEvent *event);
+//protected:
+//    bool eventFilter(QObject *watched, QEvent *event);
 
 private:
     Ui::PatientsWidget *ui;

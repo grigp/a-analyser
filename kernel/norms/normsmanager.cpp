@@ -124,9 +124,11 @@ void NormsManager::calculate(const QString &patientUid, const QString &methodUid
         if (DataProvider::personalNormExists(patientUid, methodUid, conditionUid))
         {
             DataProvider::deletePersonalNorm(patientUid, methodUid, conditionUid);
-            //! Оповещение мира об изменении нормы
+            //! Оповещение мира об удалении нормы
             emit personalNormDeleted(patientUid, methodUid, conditionUid);
         }
+        //! Оповещение мира об изменении кол-ва нормообразующих тестов
+        emit personalNormContainedChange(patientUid, methodUid, conditionUid);
     }
 }
 

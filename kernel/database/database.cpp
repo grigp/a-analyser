@@ -255,6 +255,9 @@ void DataBase::setTestProperty(const QString &testUid,
                             static_cast<AAnalyserApplication*>(QApplication::instance())->
                                     calculatePersonalNorm(ti.patientUid, ti.metodUid, oldCondition);
                     }
+
+                    //! Известим мир об изменении условий проведения у теста
+                    emit changeTestCondition(testUid);
                 }
             }
         }

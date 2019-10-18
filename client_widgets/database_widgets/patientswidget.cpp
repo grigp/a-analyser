@@ -23,7 +23,7 @@ PatientsWidget::PatientsWidget(QWidget *parent) :
     ui->tvPatients->setModel(m_pmdlPatients);
     ui->tvPatients->sortByColumn(PatientsModel::ColFio, Qt::AscendingOrder);
 
-    ui->tvPatients->viewport()->installEventFilter(this);
+//    ui->tvPatients->viewport()->installEventFilter(this);
 
     connect(ui->tvPatients->selectionModel(), &QItemSelectionModel::selectionChanged,
             this, &PatientsWidget::on_selectionChanged);
@@ -147,21 +147,21 @@ void PatientsWidget::unselect()
     static_cast<AAnalyserApplication*>(QApplication::instance())->doSelectPatient("");
 }
 
-bool PatientsWidget::eventFilter(QObject *watched, QEvent *event)
-{
-    if (watched == ui->tvPatients->viewport() && event->type() == QEvent::MouseButtonRelease)
-    {
-        QMouseEvent *me = static_cast <QMouseEvent *> (event);
-        QModelIndex index = ui->tvPatients->indexAt(me->pos());
+//bool PatientsWidget::eventFilter(QObject *watched, QEvent *event)
+//{
+//    if (watched == ui->tvPatients->viewport() && event->type() == QEvent::MouseButtonRelease)
+//    {
+//        QMouseEvent *me = static_cast <QMouseEvent *> (event);
+//        QModelIndex index = ui->tvPatients->indexAt(me->pos());
 
-        if (!index.isValid())
-        {
-            ui->tvPatients->clearSelection();
-            static_cast<AAnalyserApplication*>(QApplication::instance())->doSelectPatient("");
-        }
+//        if (!index.isValid())
+//        {
+//            ui->tvPatients->clearSelection();
+//            static_cast<AAnalyserApplication*>(QApplication::instance())->doSelectPatient("");
+//        }
 
-        return true;
-    }
+//        return true;
+//    }
 
-    return QWidget::eventFilter(watched, event);
-}
+//    return QWidget::eventFilter(watched, event);
+//}

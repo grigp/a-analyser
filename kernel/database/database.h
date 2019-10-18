@@ -272,6 +272,12 @@ signals:
      */
     void newTest(const QString &testUid);
 
+    /*!
+     * \brief Извещает мир об изменении условий проведения для теста
+     * \param testUid - uid теста
+     */
+    void changeTestCondition(const QString &testUid);
+
 public slots:
 
     /*!

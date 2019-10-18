@@ -49,6 +49,12 @@ private slots:
      */
     void on_changePersonalNorm(const QString &patientUid, const QString &methodUid, const QString &conditionUid);
 
+    /*!
+     * \brief Произошло изменение условий проведения теста
+     * \param testUid - uid теста
+     */
+    void on_changeTestCondition(const QString &testUid);
+
 
 private:
     Ui::DopuskWidget *ui;

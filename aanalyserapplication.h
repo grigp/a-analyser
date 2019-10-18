@@ -322,6 +322,20 @@ signals:
      */
     void personalNormDeleted(const QString &patientUid, const QString &methodUid, const QString &conditionUid);
 
+    /*!
+     * \brief Сигнал о том, что у индивидуальной нормы изменено кол-во нормообразующих обследований
+     * \param patientUid - uid пациента
+     * \param methodUid - uid методики
+     * \param conditionUid - uid условий проведения
+     */
+    void personalNormContainedChange(const QString &patientUid, const QString &methodUid, const QString &conditionUid);
+
+    /*!
+     * \brief Извещает мир об изменении условий проведения для теста
+     * \param testUid - uid теста
+     */
+    void changeTestCondition(const QString &testUid);
+
 protected:
     //! Обработка исключений основного цикла программы
     bool notify(QObject *, QEvent *) override;

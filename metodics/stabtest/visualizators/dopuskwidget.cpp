@@ -55,6 +55,12 @@ void DopuskWidget::calculate(DopuskCalculator *calculator, const QString &testUi
         connect(static_cast<AAnalyserApplication*>(QApplication::instance()),
                 &AAnalyserApplication::personalNormDeleted,
                 this, &DopuskWidget::on_changePersonalNorm);
+        connect(static_cast<AAnalyserApplication*>(QApplication::instance()),
+                &AAnalyserApplication::personalNormContainedChange,
+                this, &DopuskWidget::on_changePersonalNorm);
+        connect(static_cast<AAnalyserApplication*>(QApplication::instance()),
+                &AAnalyserApplication::changeTestCondition,
+                this, &DopuskWidget::on_changeTestCondition);
     }
 }
 
@@ -71,6 +77,13 @@ void DopuskWidget::on_changePersonalNorm(const QString &patientUid,
             getPersonalNorms();
         }
     }
+}
+
+void DopuskWidget::on_changeTestCondition(const QString &testUid)
+{
+    DataDefines::TestInfo ti;
+    if (DataProvider::getTestInfo(testUid, ti))
+        on_changePersonalNorm(ti.patientUid, ti.metodUid, ti.condition);
 }
 
 void DopuskWidget::getGroupNorm(const QString &methodUid, const QString &conditionUid)

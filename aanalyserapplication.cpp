@@ -50,6 +50,10 @@ AAnalyserApplication::AAnalyserApplication(int &argc, char **argv, const QString
                 this, &AAnalyserApplication::personalNormRecalculated);
         connect(m_normsManager, &NormsManager::personalNormDeleted,
                 this, &AAnalyserApplication::personalNormDeleted);
+        connect(m_normsManager, &NormsManager::personalNormContainedChange,
+                this, &AAnalyserApplication::personalNormContainedChange);
+        connect(m_database, &DataBase::changeTestCondition,
+                this, &AAnalyserApplication::changeTestCondition);
     });
 }
 

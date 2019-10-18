@@ -91,6 +91,14 @@ signals:
      */
     void personalNormDeleted(const QString &patientUid, const QString &methodUid, const QString &conditionUid);
 
+    /*!
+     * \brief Сигнал о том, что у индивидуальной нормы изменено кол-во нормообразующих обследований
+     * \param patientUid - uid пациента
+     * \param methodUid - uid методики
+     * \param conditionUid - uid условий проведения
+     */
+    void personalNormContainedChange(const QString &patientUid, const QString &methodUid, const QString &conditionUid);
+
 public slots:
 
 private:
