@@ -53,6 +53,10 @@ private:
 
     void showTable(StabSignalsTestCalculator *calculator, const QString &testUid);
 
+    void showRationalTable(const QString &testUid);
+
+    QList<int> getProbesKind(const QJsonObject params);
+
     void addFactorsFromMultifactor(StabSignalsTestCalculator *calculator, const FactorGroupId fgi);
     int factorCount(StabSignalsTestCalculator *calculator, const FactorGroupId fgi) const;
     QString factorUid(StabSignalsTestCalculator *calculator, const FactorGroupId fgi, const int factorNum) const;
@@ -67,6 +71,7 @@ private:
     Ui::StabSignalsTestWidget *ui;
     QStandardItemModel m_mdlTable;
     TestResultData* m_trd {nullptr};
+    QStandardItemModel* m_mdlRF {nullptr};
 };
 
 #endif // STABSIGNALSTESTWIDGET_H

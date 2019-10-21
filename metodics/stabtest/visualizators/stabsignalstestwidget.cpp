@@ -13,8 +13,12 @@
 #include "testresultdata.h"
 #include "resultinfo.h"
 #include "settingsprovider.h"
+#include "ratioprobesfactors.h"
+#include "stabtesttemplate.h"
 
 #include <QTimer>
+#include <QJsonArray>
+#include <QJsonObject>
 #include <QDebug>
 
 StabSignalsTestWidget::StabSignalsTestWidget(QWidget *parent) :
@@ -38,6 +42,8 @@ StabSignalsTestWidget::~StabSignalsTestWidget()
 {
     if (m_trd)
         delete m_trd;
+    if (m_mdlRF)
+        delete m_mdlRF;
     delete ui;
 }
 
@@ -45,6 +51,7 @@ void StabSignalsTestWidget::calculate(StabSignalsTestCalculator *calculator, con
 {
     showTable(calculator, testUid);
     showSKG(calculator, testUid);
+    showRationalTable(testUid);
 }
 
 void StabSignalsTestWidget::zoomIn()
@@ -154,6 +161,70 @@ void StabSignalsTestWidget::showTable(StabSignalsTestCalculator *calculator, con
     ui->tvFactors->setModel(&m_mdlTable);
     for (int i = 0; i < m_mdlTable.columnCount(); ++i)
         ui->tvFactors->resizeColumnToContents(i);
+}
+
+void StabSignalsTestWidget::showRationalTable(const QString &testUid)
+{
+    DataDefines::TestInfo ti;
+    if (DataProvider::getTestInfo(testUid, ti))
+    {
+        QList<int> kinds = getProbesKind(ti.params);
+        QString metPrefix = "";
+        if (kinds.size() == 2 &&
+               static_cast<StabTestParams::ProbeKinds>(kinds.at(0)) == StabTestParams::pkBackground &&
+               static_cast<StabTestParams::ProbeKinds>(kinds.at(1)) == StabTestParams::pkCloseEyes)
+            metPrefix = tr("Коэффициент Ромберга");
+        m_mdlRF = new QStandardItemModel(this);
+        QStandardItem* itemFctS = new QStandardItem(metPrefix + " " + tr("по площади эллипса"));
+        QStandardItem* itemFctKFR = new QStandardItem(metPrefix + " " + tr("по КФР"));
+        m_mdlRF->appendColumn(QList<QStandardItem*>() << itemFctS << itemFctKFR);
+
+        ui->frRationalFactors->setVisible(ti.probes.size() > 1);
+        RatioProbesFactors* rationalFactors = new RatioProbesFactors(testUid);
+        QStandardItem* itemS = nullptr;
+        for (int i = 0; i < rationalFactors->size(); ++i)
+        {
+            QString uid = rationalFactors->factorUid(i);
+            FactorsDefines::FactorInfo fi = static_cast<AAnalyserApplication*>(QApplication::instance())->
+                    getFactorInfo(uid);
+            if (i % 2 == 0)
+                itemS = new QStandardItem(QString::number(rationalFactors->factorValue(i), 'f', fi.format()));
+            else
+            if (i % 2 == 1)
+            {
+                QStandardItem* itemKFR = new QStandardItem(QString::number(rationalFactors->factorValue(i), 'f', fi.format()));
+                if (itemS)
+                    m_mdlRF->appendColumn(QList<QStandardItem*>() << itemS << itemKFR);
+            }
+        }
+        delete rationalFactors;
+
+        //! Заголовок таблицы
+        QStringList mdlCaption;
+        mdlCaption << tr("Показатель");
+        for (int i = 1; i < ti.probes.size(); ++i)
+        {
+            DataDefines::ProbeInfo pi;
+            if (DataProvider::getProbeInfo(ti.probes.at(i), pi))
+                mdlCaption << pi.name;
+        }
+        m_mdlRF->setHorizontalHeaderLabels(mdlCaption);
+
+        ui->tvRationalFactors->setModel(m_mdlRF);
+        ui->tvRationalFactors->header()->resizeSections(QHeaderView::ResizeToContents);
+    }
+}
+
+QList<int> StabSignalsTestWidget::getProbesKind(const QJsonObject params)
+{
+    QList<int> retval;
+    QJsonArray probes = params["probes"].toArray();
+    for (int i = 0; i < probes.size(); ++i)
+    {
+        QJsonObject probe = probes.at(i).toObject();
+        retval << probe["kind"].toInt();
+    }
+    return retval;
 }
 
 void StabSignalsTestWidget::addFactorsFromMultifactor(StabSignalsTestCalculator *calculator, const FactorGroupId fgi)
@@ -294,13 +365,15 @@ void StabSignalsTestWidget::showSKG(StabSignalsTestCalculator *calculator, const
 
 void StabSignalsTestWidget::saveSplitterPosition()
 {
-    SettingsProvider::setValueToRegAppCopy("StabSignalsTestWidget", "SplitterPosition", ui->splitter->saveState());
+//    SettingsProvider::setValueToRegAppCopy("StabSignalsTestWidget", "SplitterPosition", ui->splitter->saveState());
+    SettingsProvider::setValueToRegAppCopy("StabSignalsTestWidget", "AreaSKGSplitterPosition", ui->splAreaSKG->saveState());
 }
 
 void StabSignalsTestWidget::restoreSplitterPosition()
 {
-    auto val = SettingsProvider::valueFromRegAppCopy("StabSignalsTestWidget", "SplitterPosition").toByteArray();
-    ui->splitter->restoreState(val);
+//    auto val = SettingsProvider::valueFromRegAppCopy("StabSignalsTestWidget", "SplitterPosition").toByteArray();
+    auto val = SettingsProvider::valueFromRegAppCopy("StabSignalsTestWidget", "AreaSKGSplitterPosition").toByteArray();
+    ui->splAreaSKG->restoreState(val);
 }
 
 //    m_trd->openTest(testUid);
