@@ -39,9 +39,9 @@ protected:
     QColor bottomReflexSideColor;
 
 private:
-    void drawLed(const QColor &color);
-
     Ui::RGBLed *ui;
+
+    void drawLed(const QColor &color);
 
     int height;
     int width;

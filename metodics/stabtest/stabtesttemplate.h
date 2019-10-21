@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include "metodictemplate.h"
+#include "stabtestparams.h"
 
 class TestCalculator;
 
@@ -45,6 +46,17 @@ public:
     bool editParams(QWidget *parent, QJsonObject &params)  override;
 
     static TestCalculator* calculator(const QString &testUid);
+
+    /*!
+     * \brief Возвращает список кодов типов проб
+     */
+    static QList<StabTestParams::ProbeKinds> probeKinds();
+
+    /*!
+     * \brief Возвращает название типа кода проб по коду
+     * \param pk - код типа пробы
+     */
+    static QString getProbeKindName(StabTestParams::ProbeKinds pk);
 };
 
 #endif // STABTESTTEMPLATE_H

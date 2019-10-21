@@ -43,6 +43,7 @@ private slots:
 
     void changeCondition(const int condition);
 
+    void changeProbeKind(const int probeKind);
     void changeAutoEnd(const bool autoEnd);
     void changeTime(const QTime &time);
     void changeLatentTime(const QTime &time);
@@ -61,6 +62,8 @@ private:
      * \brief Настройка режима доступа
      */
     void assignAccessMode();
+
+    void fillProbeKinds();
 
     int m_curProbe = -1;
     QStandardItemModel *m_mdlProbes {nullptr};

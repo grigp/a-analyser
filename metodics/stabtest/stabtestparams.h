@@ -7,11 +7,38 @@ namespace StabTestParams
 {
 
 /*!
+ * \brief Типы проб
+ */
+enum ProbeKinds
+{
+      pkUndefined = 0      ///< Не задана
+    , pkBackground         ///< Фоновая
+    , pkCloseEyes          ///< Закрытые глаза
+    , pkTarget             ///< Мишень
+    , pkFourZones          ///< Четыре зоны
+    , pkRugStand           ///< Стойка на коврике
+    , pkMandibular         ///< Мандибулярная (сжатые челюсти)
+    , pkHeadToRight        ///< Голова повернута направо
+    , pkHeadToLeft         ///< Голова повернута налево
+    , pkHeadTiltRight      ///< Голова наклонена вправо
+    , pkHeadTiltLeft       ///< Голова наклонена влево
+    , pkHeadTiltForward    ///< Голова наклонена вперед
+    , pkHeadTiltBackward   ///< Голова наклонена назад
+    , pkLinesToRight       ///< Движение полос вправо
+    , pkLinesToLeft        ///< Движение полос влево
+    , pkLinesUp            ///< Движение полос вверх
+    , pkLinesDown          ///< Движение полос вниз
+    , pkDynamic            ///< Динамическая
+    , pkLastValue          ///< Последнее значение
+};
+
+/*!
  * \brief Параметры пробы в тесте ProbeParams struct
  */
 struct ProbeParams
 {
     QString name;          ///< Название пробы
+    int probeKind;         ///< Назначение пробы (код назначения из константного списка)
     bool autoEnd;          ///< Автоматическое завершение
     int time;              ///< Длительность
     int latentTime;        ///< Задержка привыкания
@@ -21,6 +48,7 @@ struct ProbeParams
     ProbeParams()
     {
         name = "";
+        probeKind = 0;
         autoEnd = true;
         time = 0;
         latentTime = 0;

@@ -2,6 +2,7 @@
 #include "ui_stabtestparamsdialog.h"
 
 #include "stabtestparams.h"
+#include "stabtesttemplate.h"
 #include "datadefines.h"
 #include "settingsprovider.h"
 
@@ -41,6 +42,7 @@ StabTestParamsDialog::StabTestParamsDialog(QWidget *parent) :
                                              << tr("Стань чемпионом")
                                              << tr("Допусковый контроль")
                                              << tr("Уровень здоровья по ИДС"));
+    fillProbeKinds();
 
     //! Редактирование названия пробы
     connect(m_mdlProbes, &QStandardItemModel::itemChanged, [=](QStandardItem *item)
@@ -74,6 +76,7 @@ void StabTestParamsDialog::setParams(const QJsonObject &params)
         StabTestParams::ProbeParams pp;
 
         pp.name = obj["name"].toString();
+        pp.probeKind = obj["kind"].toInt();
         pp.autoEnd = obj["autoend"].toInt() == 1;
         pp.time = obj["time"].toInt();
         pp.latentTime = obj["latent_time"].toInt();
@@ -105,6 +108,7 @@ QJsonObject StabTestParamsDialog::getParams()
     {
         QJsonObject objP;
         objP["name"] = pp.name;
+        objP["kind"] = pp.probeKind;
         objP["autoend"] = static_cast<int>(pp.autoEnd);
         objP["time"] = pp.time;
         objP["latent_time"] = pp.latentTime;
@@ -177,6 +181,16 @@ void StabTestParamsDialog::changeCondition(const int condition)
     metParams.condition = condition;
 }
 
+void StabTestParamsDialog::changeProbeKind(const int probeKind)
+{
+    if (m_curProbe >= 0 && m_curProbe < metParams.probes.size())
+    {
+        auto pp = metParams.probes.at(m_curProbe);
+        pp.probeKind = probeKind;
+        metParams.probes.replace(m_curProbe, pp);
+    }
+}
+
 void StabTestParamsDialog::changeAutoEnd(const bool autoEnd)
 {
     if (m_curProbe >= 0 && m_curProbe < metParams.probes.size())
@@ -241,6 +255,7 @@ void StabTestParamsDialog::showProbeParam()
 {
     if (m_curProbe >= 0 && m_curProbe < metParams.probes.size())
     {
+        ui->cbProbeKind->setCurrentIndex(metParams.probes.at(m_curProbe).probeKind);
         ui->cbAutoEnd->setChecked(metParams.probes.at(m_curProbe).autoEnd);
         ui->edTime->setTime(QTime(0, 0, 0, 0).addSecs(metParams.probes.at(m_curProbe).time));
         ui->edTimeLatent->setTime(QTime(0, 0, 0, 0).addSecs(metParams.probes.at(m_curProbe).latentTime));
@@ -271,4 +286,11 @@ void StabTestParamsDialog::assignAccessMode()
     ui->frScale->setVisible(rootMode);
     ui->cbConditions->setVisible(rootMode);
     ui->lblCondition->setVisible(rootMode);
+}
+
+void StabTestParamsDialog::fillProbeKinds()
+{
+    QList<StabTestParams::ProbeKinds> pkl = StabTestTemplate::probeKinds();
+    foreach (auto pki, pkl)
+        ui->cbProbeKind->addItem(StabTestTemplate::getProbeKindName(pki));
 }

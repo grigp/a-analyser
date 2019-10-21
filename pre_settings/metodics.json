@@ -11,6 +11,7 @@
                 "probes": [
                     {
                         "name": "Фоновая",
+                        "kind": 1,
                         "autoend": 1,
                         "time": 20,
                         "latent_time": 0,
@@ -20,6 +21,7 @@
                     },
                     {
                         "name": "Голова направо",
+                        "kind": 7,
                         "autoend": 1,
                         "time": 20,
                         "latent_time": 0,
@@ -29,6 +31,7 @@
                     },
                     {
                         "name": "Голова налево",
+                        "kind": 8,
                         "autoend": 1,
                         "time": 20,
                         "latent_time": 0,
@@ -50,6 +53,7 @@
                 "probes": [
                     {
                         "name": "Фоновая",
+                        "kind": 1,
                         "autoend": 1,
                         "time": 20,
                         "latent_time": 0,
@@ -59,6 +63,7 @@
                     },
                     {
                         "name": "Наклон головы вправо",
+                        "kind": 9,
                         "autoend": 1,
                         "time": 20,
                         "latent_time": 0,
@@ -68,6 +73,7 @@
                     },
                     {
                         "name": "Наклон головы влево",
+                        "kind": 10,
                         "autoend": 1,
                         "time": 20,
                         "latent_time": 0,
@@ -77,6 +83,7 @@
                     },
                     {
                         "name": "Наклон головы вперед",
+                        "kind": 11,
                         "autoend": 1,
                         "time": 20,
                         "latent_time": 0,
@@ -86,6 +93,7 @@
                     },
                     {
                         "name": "Наклон головы назад",
+                        "kind": 12,
                         "autoend": 1,
                         "time": 20,
                         "latent_time": 0,
@@ -107,6 +115,7 @@
                 "probes": [
                     {
                         "name": "Открытые глаза",
+                        "kind": 1,
                         "autoend": 1,
                         "time": 20,
                         "latent_time": 0,
@@ -116,6 +125,7 @@
                     },
                     {
                         "name": "Закрытые глаза",
+                        "kind": 2,
                         "autoend": 1,
                         "time": 20,
                         "latent_time": 0,
@@ -125,6 +135,7 @@
                     },
                     {
                         "name": "Мишень",
+                        "kind": 3,
                         "autoend": 1,
                         "time": 20,
                         "latent_time": 5,
@@ -147,6 +158,7 @@
                 "probes": [
                     {
                         "name": "Открытые глаза",
+                        "kind": 1,
                         "autoend": 1,
                         "time": 20,
                         "latent_time": 0,
@@ -156,6 +168,7 @@
                     },
                     {
                         "name": "Закрытые глаза",
+                        "kind": 2,
                         "autoend": 1,
                         "time": 20,
                         "latent_time": 0,
@@ -165,6 +178,7 @@
                     },
                     {
                         "name": "Мишень",
+                        "kind": 3,
                         "autoend": 1,
                         "time": 20,
                         "latent_time": 5,
@@ -186,6 +200,7 @@
                 "probes": [
                     {
                         "name": "Стабилографическая проба",
+                        "kind": 1,
                         "autoend": 0,
                         "time": 20,
                         "latent_time": 0,
@@ -207,6 +222,7 @@
                 "probes": [
                     {
                         "name": "Открытые глаза",
+                        "kind": 1,
                         "autoend": 1,
                         "time": 20,
                         "latent_time": 0,
@@ -216,6 +232,7 @@
                     },
                     {
                         "name": "Закрытые глаза",
+                        "kind": 2,
                         "autoend": 1,
                         "time": 20,
                         "latent_time": 0,
@@ -257,6 +274,7 @@
                 "probes": [
                     {
                         "name": "Открытые глаза",
+                        "kind": 1,
                         "autoend": 1,
                         "time": 20,
                         "latent_time": 0,
@@ -278,6 +296,7 @@
                 "probes": [
                     {
                         "name": "Открытые глаза",
+                        "kind": 1,
                         "autoend": 1,
                         "time": 20,
                         "latent_time": 0,
@@ -287,6 +306,7 @@
                     },
                     {
                         "name": "Закрытые глаза",
+                        "kind": 2,
                         "autoend": 1,
                         "time": 20,
                         "latent_time": 0,

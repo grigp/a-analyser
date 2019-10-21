@@ -81,3 +81,40 @@ TestCalculator *StabTestTemplate::calculator(const QString &testUid)
     }
     return nullptr;
 }
+
+QList<StabTestParams::ProbeKinds> StabTestTemplate::probeKinds()
+{
+    QList<StabTestParams::ProbeKinds> retval;
+    for (int i = StabTestParams::pkUndefined; i < StabTestParams::pkLastValue; ++i)
+        retval << static_cast<StabTestParams::ProbeKinds>(i);
+    return retval;
+}
+
+QString StabTestTemplate::getProbeKindName(StabTestParams::ProbeKinds pk)
+{
+    static QMap<StabTestParams::ProbeKinds, QString> probeKinds {
+        std::pair<StabTestParams::ProbeKinds, QString> (StabTestParams::pkUndefined, tr("Не задана"))
+      , std::pair<StabTestParams::ProbeKinds, QString> (StabTestParams::pkBackground, tr("Фоновая"))
+      , std::pair<StabTestParams::ProbeKinds, QString> (StabTestParams::pkCloseEyes, tr("Закрытые глаза"))
+      , std::pair<StabTestParams::ProbeKinds, QString> (StabTestParams::pkTarget, tr("Мишень"))
+      , std::pair<StabTestParams::ProbeKinds, QString> (StabTestParams::pkFourZones, tr("Четыре зоны"))
+      , std::pair<StabTestParams::ProbeKinds, QString> (StabTestParams::pkRugStand, tr("Стойка на коврике"))
+      , std::pair<StabTestParams::ProbeKinds, QString> (StabTestParams::pkMandibular, tr("Мандибулярная (сжатые челюсти)"))
+      , std::pair<StabTestParams::ProbeKinds, QString> (StabTestParams::pkHeadToRight, tr("Голова повернута направо"))
+      , std::pair<StabTestParams::ProbeKinds, QString> (StabTestParams::pkHeadToLeft, tr("Голова повернута налево"))
+      , std::pair<StabTestParams::ProbeKinds, QString> (StabTestParams::pkHeadTiltRight, tr("Голова наклонена вправо"))
+      , std::pair<StabTestParams::ProbeKinds, QString> (StabTestParams::pkHeadTiltLeft, tr("Голова наклонена влево"))
+      , std::pair<StabTestParams::ProbeKinds, QString> (StabTestParams::pkHeadTiltForward, tr("Голова наклонена вперед"))
+      , std::pair<StabTestParams::ProbeKinds, QString> (StabTestParams::pkHeadTiltBackward, tr("Голова наклонена назад"))
+      , std::pair<StabTestParams::ProbeKinds, QString> (StabTestParams::pkLinesToRight, tr("Движение полос вправо"))
+      , std::pair<StabTestParams::ProbeKinds, QString> (StabTestParams::pkLinesToLeft, tr("Движение полос влево"))
+      , std::pair<StabTestParams::ProbeKinds, QString> (StabTestParams::pkLinesUp, tr("Движение полос вверх"))
+      , std::pair<StabTestParams::ProbeKinds, QString> (StabTestParams::pkLinesDown, tr("Движение полос вниз"))
+      , std::pair<StabTestParams::ProbeKinds, QString> (StabTestParams::pkDynamic, tr("Динамическая"))
+      , std::pair<StabTestParams::ProbeKinds, QString> (StabTestParams::pkLastValue, tr("Последнее значение"))
+    };
+
+    if (probeKinds.contains(pk))
+        return probeKinds.value(pk);
+    return tr("Не задана");
+}

@@ -11,6 +11,7 @@
                 "probes": [
                     {
                         "name": "Open eyes",
+                        "kind": 1,
                         "autoend": 1,
                         "time": 20,
                         "latent_time": 0,
@@ -20,6 +21,7 @@
                     },
                     {
                         "name": "Close eyes",
+                        "kind": 2,
                         "autoend": 1,
                         "time": 20,
                         "latent_time": 0,
@@ -29,6 +31,7 @@
                     },
                     {
                         "name": "Target",
+                        "kind": 3,
                         "autoend": 1,
                         "time": 20,
                         "latent_time": 5,

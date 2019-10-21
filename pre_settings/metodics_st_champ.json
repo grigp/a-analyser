@@ -12,6 +12,7 @@
                 "probes": [
                     {
                         "name": "Открытые глаза",
+                        "kind": 1,
                         "autoend": 1,
                         "time": 20,
                         "latent_time": 0,
@@ -21,6 +22,7 @@
                     },
                     {
                         "name": "Закрытые глаза",
+                        "kind": 2,
                         "autoend": 1,
                         "time": 20,
                         "latent_time": 0,
@@ -30,6 +32,7 @@
                     },
                     {
                         "name": "Мишень",
+                        "kind": 3,
                         "autoend": 1,
                         "time": 20,
                         "latent_time": 5,
