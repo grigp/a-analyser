@@ -4,6 +4,8 @@
 #include <QWidget>
 #include <QStandardItemModel>
 
+#include "datadefines.h"
+
 class TestResultData;
 
 namespace Ui {
@@ -53,7 +55,25 @@ private:
 
     void showTable(StabSignalsTestCalculator *calculator, const QString &testUid);
 
-    void showRationalTable(const QString &testUid);
+    void showRationalTable(StabSignalsTestCalculator *calculator, const QString &testUid);
+
+    void showRombergNorms(StabSignalsTestCalculator *calculator, const QString &testUid);
+
+    DataDefines::NormValue getRombergNorm(const int probeNum, const QString &factorUid, const double value) const;
+
+    QStandardItem* createItemRationalFactors(StabSignalsTestCalculator *calculator,
+                                             const int numProbe,
+                                             const QString &factorUid, const int action, const char chan);
+
+    void appendColumnReadOnly(QStandardItemModel *mdl, QList<QStandardItem*> list);
+
+    bool isRombergTest(DataDefines::TestInfo ti);
+
+    QString getKoefRombResume(const double value, const int format) const;
+
+    QString getOffsetResume(const double value, const char chan) const;
+
+    QString getDeviationResume(const double value) const;
 
     QList<int> getProbesKind(const QJsonObject params);
 
@@ -72,6 +92,7 @@ private:
     QStandardItemModel m_mdlTable;
     TestResultData* m_trd {nullptr};
     QStandardItemModel* m_mdlRF {nullptr};
+    QStandardItemModel* m_mdlNorms {nullptr};
 };
 
 #endif // STABSIGNALSTESTWIDGET_H

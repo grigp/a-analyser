@@ -21,6 +21,38 @@
 #include <QJsonObject>
 #include <QDebug>
 
+namespace  {
+
+/*!
+ * \brief Структура нормы для теста Ромберга NormRomberg struct
+ */
+struct NormRomberg
+{
+    double norm;
+    double stdDeviation;
+    double low;
+    double high;
+    NormRomberg(double nv, double stdDev, double l, double h)
+        : norm(nv), stdDeviation(stdDev), low(l), high(h)
+    {}
+    NormRomberg() {}
+};
+
+static QMap<QString, NormRomberg> NormsRombergOpenEyes {
+    std::pair<QString, NormRomberg> (ClassicFactorsDefines::QXUid, NormRomberg(4.35, 0.73, 1.9, 10.24))
+  , std::pair<QString, NormRomberg> (ClassicFactorsDefines::QYUid, NormRomberg(3.26, 0.39, 1.53, 5.26))
+  , std::pair<QString, NormRomberg> (ClassicFactorsDefines::LUid, NormRomberg(276, 20.9, 159, 378))
+  , std::pair<QString, NormRomberg> (ClassicFactorsDefines::SquareUid, NormRomberg(460, 88.07, 128, 966))
+};
+static QMap<QString, NormRomberg> NormsRombergCloseEyes {
+    std::pair<QString, NormRomberg> (ClassicFactorsDefines::QXUid, NormRomberg(6.44, 0.57, 3.83, 9.84))
+  , std::pair<QString, NormRomberg> (ClassicFactorsDefines::QYUid, NormRomberg(4.97, 0.47, 2.96, 7.31))
+  , std::pair<QString, NormRomberg> (ClassicFactorsDefines::LUid, NormRomberg(482, 36.6, 357, 966))
+  , std::pair<QString, NormRomberg> (ClassicFactorsDefines::SquareUid, NormRomberg(1119, 166.9, 585, 2314))
+};
+
+}
+
 StabSignalsTestWidget::StabSignalsTestWidget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::StabSignalsTestWidget)
@@ -44,6 +76,8 @@ StabSignalsTestWidget::~StabSignalsTestWidget()
         delete m_trd;
     if (m_mdlRF)
         delete m_mdlRF;
+    if (m_mdlNorms)
+        delete m_mdlNorms;
     delete ui;
 }
 
@@ -51,7 +85,8 @@ void StabSignalsTestWidget::calculate(StabSignalsTestCalculator *calculator, con
 {
     showTable(calculator, testUid);
     showSKG(calculator, testUid);
-    showRationalTable(testUid);
+    showRationalTable(calculator, testUid);
+    showRombergNorms(calculator, testUid);
 }
 
 void StabSignalsTestWidget::zoomIn()
@@ -163,21 +198,24 @@ void StabSignalsTestWidget::showTable(StabSignalsTestCalculator *calculator, con
         ui->tvFactors->resizeColumnToContents(i);
 }
 
-void StabSignalsTestWidget::showRationalTable(const QString &testUid)
+void StabSignalsTestWidget::showRationalTable(StabSignalsTestCalculator *calculator, const QString &testUid)
 {
     DataDefines::TestInfo ti;
     if (DataProvider::getTestInfo(testUid, ti))
     {
-        QList<int> kinds = getProbesKind(ti.params);
         QString metPrefix = "";
-        if (kinds.size() == 2 &&
-               static_cast<StabTestParams::ProbeKinds>(kinds.at(0)) == StabTestParams::pkBackground &&
-               static_cast<StabTestParams::ProbeKinds>(kinds.at(1)) == StabTestParams::pkCloseEyes)
+        if (isRombergTest(ti))
             metPrefix = tr("Коэффициент Ромберга");
         m_mdlRF = new QStandardItemModel(this);
         QStandardItem* itemFctS = new QStandardItem(metPrefix + " " + tr("по площади эллипса"));
         QStandardItem* itemFctKFR = new QStandardItem(metPrefix + " " + tr("по КФР"));
-        m_mdlRF->appendColumn(QList<QStandardItem*>() << itemFctS << itemFctKFR);
+        QStandardItem* itemFctMoX = new QStandardItem(tr("Смещение по X"));
+        QStandardItem* itemFctMoY = new QStandardItem(tr("Смещение по Y"));
+        QStandardItem* itemFctQX = new QStandardItem(tr("Разброс по X"));
+        QStandardItem* itemFctQY = new QStandardItem(tr("Разброс по Y"));
+        appendColumnReadOnly(m_mdlRF,
+                             QList<QStandardItem*>() <<
+                                    itemFctS << itemFctKFR << itemFctMoX << itemFctMoY << itemFctQX << itemFctQY);
 
         ui->frRationalFactors->setVisible(ti.probes.size() > 1);
         RatioProbesFactors* rationalFactors = new RatioProbesFactors(testUid);
@@ -188,13 +226,30 @@ void StabSignalsTestWidget::showRationalTable(const QString &testUid)
             FactorsDefines::FactorInfo fi = static_cast<AAnalyserApplication*>(QApplication::instance())->
                     getFactorInfo(uid);
             if (i % 2 == 0)
-                itemS = new QStandardItem(QString::number(rationalFactors->factorValue(i), 'f', fi.format()));
+            {
+                if (isRombergTest(ti))
+                    itemS = new QStandardItem(getKoefRombResume(rationalFactors->factorValue(i), fi.format()));
+                else
+                    itemS = new QStandardItem(QString::number(rationalFactors->factorValue(i), 'f', fi.format()));
+            }
             else
             if (i % 2 == 1)
             {
-                QStandardItem* itemKFR = new QStandardItem(QString::number(rationalFactors->factorValue(i), 'f', fi.format()));
+                QStandardItem* itemKFR = nullptr;
+                if (isRombergTest(ti))
+                    itemKFR = new QStandardItem(getKoefRombResume(rationalFactors->factorValue(i), fi.format()));
+                else
+                    itemKFR = new QStandardItem(QString::number(rationalFactors->factorValue(i), 'f', fi.format()));
+
+                QStandardItem* itemMoX = createItemRationalFactors(calculator, i, ClassicFactorsDefines::MoXUid, 1, 'x');
+                QStandardItem* itemMoY = createItemRationalFactors(calculator, i, ClassicFactorsDefines::MoYUid, 1, 'y');
+                QStandardItem* itemQX = createItemRationalFactors(calculator, i, ClassicFactorsDefines::QXUid, 0, 'x');
+                QStandardItem* itemQY = createItemRationalFactors(calculator, i, ClassicFactorsDefines::QYUid, 0, 'y');
+
                 if (itemS)
-                    m_mdlRF->appendColumn(QList<QStandardItem*>() << itemS << itemKFR);
+                    appendColumnReadOnly(m_mdlRF,
+                                         QList<QStandardItem*>() <<
+                                                itemS << itemKFR << itemMoX << itemMoY << itemQX << itemQY);
             }
         }
         delete rationalFactors;
@@ -211,8 +266,165 @@ void StabSignalsTestWidget::showRationalTable(const QString &testUid)
         m_mdlRF->setHorizontalHeaderLabels(mdlCaption);
 
         ui->tvRationalFactors->setModel(m_mdlRF);
-        ui->tvRationalFactors->header()->resizeSections(QHeaderView::ResizeToContents);
+        ui->tvRationalFactors->header()->resizeSection(0, 350);
+        for (int i = 1; i < ti.probes.size(); ++i)
+            ui->tvRationalFactors->header()->resizeSection(i, 200);
     }
+}
+
+void StabSignalsTestWidget::showRombergNorms(StabSignalsTestCalculator *calculator, const QString &testUid)
+{
+    DataDefines::TestInfo ti;
+    if (DataProvider::getTestInfo(testUid, ti))
+    {
+        bool isRomb = isRombergTest(ti);
+        ui->frRombergNorms->setVisible(isRomb);
+        if (isRomb)
+        {
+            m_mdlNorms = new QStandardItemModel(this);
+
+            QStandardItem* itemQX = new QStandardItem(tr("Разброс по X"));
+            QStandardItem* itemQY = new QStandardItem(tr("Разброс по Y"));
+            QStandardItem* itemL = new QStandardItem(tr("Длина статокинезиграммы"));
+            QStandardItem* itemS = new QStandardItem(tr("Площадь статокинезиграммы"));
+            appendColumnReadOnly(m_mdlNorms, QList<QStandardItem*>() << itemQX << itemQY << itemL << itemS);
+
+            for (int i = 0; i < calculator->probesCount(); ++i)
+            {
+                auto getItem = [&](const QString &factorUid) -> QStandardItem*
+                {
+                    FactorsDefines::FactorInfo fi = static_cast<AAnalyserApplication*>(QApplication::instance())->
+                            getFactorInfo(factorUid);
+                    double value = calculator->classicFactors(i)->factorValue(factorUid);
+                    auto nv = getRombergNorm(i, factorUid, value);
+                    QString sNorm = "";
+                    if (nv == DataDefines::Normal)
+                        sNorm = tr("В норме");
+                    else
+                    if (nv == DataDefines::ConditionNormal)
+                        sNorm = tr("Условно в норме");
+                    else
+                    if (nv == DataDefines::NotNormal)
+                        sNorm = tr("Не в норме");
+                    return new QStandardItem(QString::number(value, 'f', fi.format()) + " (" + sNorm + ")");
+                };
+
+                QStandardItem* itemQX = getItem(ClassicFactorsDefines::QXUid);
+                QStandardItem* itemQY = getItem(ClassicFactorsDefines::QYUid);
+                QStandardItem* itemL = getItem(ClassicFactorsDefines::LUid);
+                QStandardItem* itemS = getItem(ClassicFactorsDefines::SquareUid);
+                appendColumnReadOnly(m_mdlNorms, QList<QStandardItem*>() << itemQX << itemQY << itemL << itemS);
+            }
+
+            //! Заголовок таблицы
+            QStringList mdlCaption;
+            mdlCaption << tr("Показатель");
+            for (int i = 0; i < ti.probes.size(); ++i)
+            {
+                DataDefines::ProbeInfo pi;
+                if (DataProvider::getProbeInfo(ti.probes.at(i), pi))
+                    mdlCaption << pi.name;
+            }
+            m_mdlNorms->setHorizontalHeaderLabels(mdlCaption);
+
+            ui->tvRombergNorms->setModel(m_mdlNorms);
+        }
+    }
+}
+
+DataDefines::NormValue StabSignalsTestWidget::getRombergNorm(const int probeNum,
+                                                             const QString &factorUid,
+                                                             const double value) const
+{
+    NormRomberg norm;
+    if (probeNum == 0)
+        norm = NormsRombergOpenEyes.value(factorUid);
+    else
+        norm = NormsRombergCloseEyes.value(factorUid);
+
+    if (value >= norm.norm - norm.stdDeviation && value <= norm.norm + norm.stdDeviation)
+        return DataDefines::Normal;
+    else
+    if (value < norm.low || value > norm.high)
+        return DataDefines::NotNormal;
+    else
+        return DataDefines::ConditionNormal;
+}
+
+QStandardItem* StabSignalsTestWidget::createItemRationalFactors(StabSignalsTestCalculator *calculator,
+                                                                const int numProbe,
+                                                                const QString &factorUid, const int action, const char chan)
+{
+    double val = 0;
+    QString resume = "";
+    if (action == 0)
+    {
+        val =
+            calculator->classicFactors(numProbe / 2 + 1)->factorValue(factorUid) /
+            calculator->classicFactors(0)->factorValue(factorUid);
+        resume = getDeviationResume(val);
+    }
+    else
+    {
+        val =
+            calculator->classicFactors(numProbe / 2 + 1)->factorValue(factorUid) -
+            calculator->classicFactors(0)->factorValue(factorUid);
+        resume = getOffsetResume(val, chan);
+    }
+    QStandardItem* item = new QStandardItem(resume);
+    return item;
+}
+
+void StabSignalsTestWidget::appendColumnReadOnly(QStandardItemModel *mdl, QList<QStandardItem *> list)
+{
+    foreach (auto *item, list)
+        item->setEditable(false);
+    mdl->appendColumn(list);
+}
+
+bool StabSignalsTestWidget::isRombergTest(DataDefines::TestInfo ti)
+{
+    QList<int> kinds = getProbesKind(ti.params);
+    return (kinds.size() == 2 &&
+            static_cast<StabTestParams::ProbeKinds>(kinds.at(0)) == StabTestParams::pkBackground &&
+            static_cast<StabTestParams::ProbeKinds>(kinds.at(1)) == StabTestParams::pkCloseEyes);
+}
+
+QString StabSignalsTestWidget::getKoefRombResume(const double value, const int format) const
+{
+    QString sVal = QString::number(value, 'f', format);
+    if (value >= 100 && value <= 250)
+        return QString("%1 " + tr("В норме") + " (100 - 250)").arg(sVal);
+    else
+    if (value < 100)
+        return QString("%1 " + tr("Ниже нормы (Постуральная слепота)")).arg(sVal);
+    else
+        return QString("%1 " + tr("Выше нормы (Держится за счет зрения)")).arg(sVal);
+}
+
+QString StabSignalsTestWidget::getOffsetResume(const double value, const char chan) const
+{
+    QString sVal = QString::number(fabs(value), 'f', 2);
+    QString sDir = "";
+    if (value >= 0 && chan == 'x')
+        sDir = tr("вправо");
+    else
+    if (value < 0 && chan == 'x')
+        sDir = tr("влево");
+    else
+    if (value >= 0 && chan == 'y')
+        sDir = tr("вперед");
+    else
+    if (value < 0 && chan == 'y')
+        sDir = tr("назад");
+
+    return QString(tr("Смещение на") + " %1 " + tr("мм") + " " + sDir).arg(sVal);
+}
+
+QString StabSignalsTestWidget::getDeviationResume(const double value) const
+{
+    QString sVal = QString::number(value, 'f', 2);
+    return QString(tr("Увеличение девиации в") + " %1 " + tr("раз")).arg(sVal);
 }
 
 QList<int> StabSignalsTestWidget::getProbesKind(const QJsonObject params)
