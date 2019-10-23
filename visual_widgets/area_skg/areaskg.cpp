@@ -36,6 +36,7 @@ void AreaSKG::setDiap(const int diap)
     m_traceSKG->setDiap(diap);
     m_lineSKG->setDiap(diap);
     m_diap = diap;
+    ui->panSKG->ensureVisible(QRectF(-m_diap, -m_diap, m_diap * 2, m_diap * 2));
 }
 
 void AreaSKG::setMarker(const double x, const double y)
@@ -109,10 +110,7 @@ void AreaSKG::setColorEllipse(const QColor &color)
 
 void AreaSKG::resizeEvent(QResizeEvent *event)
 {
-    qDebug() << ui->panSKG->sceneRect() << ui->panSKG->geometry();
-//    int dx = ui->panSKG->sceneRect().width() / 2 - ui->panSKG->geometry().width() / 2;
-//    int dy = ui->panSKG->sceneRect().height() / 2 - ui->panSKG->geometry().height() / 2;
-//    scroll(dx, dy);
+    ui->panSKG->ensureVisible(QRectF(-m_diap, -m_diap, m_diap * 2, m_diap * 2));
     QWidget::resizeEvent(event);
 }
 

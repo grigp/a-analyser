@@ -621,7 +621,7 @@ void StabSignalsTestWidget::restoreSplitterPosition()
 
 void StabSignalsTestWidget::resizeColumnsTable(QStandardItemModel *mdl, QTreeView* tv, const bool toContens)
 {
-    if (mdl && mdl->columnCount() > 0)
+    if (mdl && mdl->columnCount() > 1)
     {
         int w = (tv->geometry().width() - tv->header()->sectionSize(0)) / (mdl->columnCount() - 1);
         for (int i = 1; i < mdl->columnCount(); ++i)
