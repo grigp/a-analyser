@@ -15,6 +15,7 @@
 #include "settingsprovider.h"
 #include "ratioprobesfactors.h"
 #include "stabtesttemplate.h"
+#include "rombergnormvaluedelegate.h"
 
 #include <QTimer>
 #include <QJsonArray>
@@ -87,6 +88,13 @@ void StabSignalsTestWidget::calculate(StabSignalsTestCalculator *calculator, con
     showSKG(calculator, testUid);
     showRationalTable(calculator, testUid);
     showRombergNorms(calculator, testUid);
+}
+
+void StabSignalsTestWidget::resizeEvent(QResizeEvent *event)
+{
+    resizeColumnsTable(m_mdlNorms, ui->tvRombergNorms, false);
+    resizeColumnsTable(m_mdlRF, ui->tvRationalFactors, true);
+    QWidget::resizeEvent(event);
 }
 
 void StabSignalsTestWidget::zoomIn()
@@ -266,9 +274,12 @@ void StabSignalsTestWidget::showRationalTable(StabSignalsTestCalculator *calcula
         m_mdlRF->setHorizontalHeaderLabels(mdlCaption);
 
         ui->tvRationalFactors->setModel(m_mdlRF);
-        ui->tvRationalFactors->header()->resizeSection(0, 350);
-        for (int i = 1; i < ti.probes.size(); ++i)
-            ui->tvRationalFactors->header()->resizeSection(i, 200);
+        ui->tvRationalFactors->resizeColumnToContents(0);
+
+        QTimer::singleShot(0, [=]()
+        {
+            resizeColumnsTable(m_mdlRF, ui->tvRationalFactors, true);
+        });
     }
 }
 
@@ -297,16 +308,11 @@ void StabSignalsTestWidget::showRombergNorms(StabSignalsTestCalculator *calculat
                             getFactorInfo(factorUid);
                     double value = calculator->classicFactors(i)->factorValue(factorUid);
                     auto nv = getRombergNorm(i, factorUid, value);
-                    QString sNorm = "";
-                    if (nv == DataDefines::Normal)
-                        sNorm = tr("В норме");
-                    else
-                    if (nv == DataDefines::ConditionNormal)
-                        sNorm = tr("Условно в норме");
-                    else
-                    if (nv == DataDefines::NotNormal)
-                        sNorm = tr("Не в норме");
-                    return new QStandardItem(QString::number(value, 'f', fi.format()) + " (" + sNorm + ")");
+                    auto *item = new QStandardItem("");
+                    item->setData(nv, NormRole);
+                    item->setData(value, ValueRole);
+                    item->setData(fi.format(), FormatRole);
+                    return item;
                 };
 
                 QStandardItem* itemQX = getItem(ClassicFactorsDefines::QXUid);
@@ -328,6 +334,14 @@ void StabSignalsTestWidget::showRombergNorms(StabSignalsTestCalculator *calculat
             m_mdlNorms->setHorizontalHeaderLabels(mdlCaption);
 
             ui->tvRombergNorms->setModel(m_mdlNorms);
+            ui->tvRombergNorms->setItemDelegateForColumn(1, new RombergNormValueDelegate(ui->tvRombergNorms));
+            ui->tvRombergNorms->setItemDelegateForColumn(2, new RombergNormValueDelegate(ui->tvRombergNorms));
+            ui->tvRombergNorms->resizeColumnToContents(0);
+
+            QTimer::singleShot(0, [=]()
+            {
+                resizeColumnsTable(m_mdlNorms, ui->tvRombergNorms, false);
+            });
         }
     }
 }
@@ -342,13 +356,20 @@ DataDefines::NormValue StabSignalsTestWidget::getRombergNorm(const int probeNum,
     else
         norm = NormsRombergCloseEyes.value(factorUid);
 
-    if (value >= norm.norm - norm.stdDeviation && value <= norm.norm + norm.stdDeviation)
+    if (value <= norm.norm + norm.stdDeviation)
         return DataDefines::Normal;
     else
-    if (value < norm.low || value > norm.high)
+    if (value > norm.high)
         return DataDefines::NotNormal;
     else
         return DataDefines::ConditionNormal;
+//    if (value >= norm.norm - norm.stdDeviation && value <= norm.norm + norm.stdDeviation)
+//        return DataDefines::Normal;
+//    else
+//    if (value < norm.low || value > norm.high)
+//        return DataDefines::NotNormal;
+//    else
+//        return DataDefines::ConditionNormal;
 }
 
 QStandardItem* StabSignalsTestWidget::createItemRationalFactors(StabSignalsTestCalculator *calculator,
@@ -407,24 +428,33 @@ QString StabSignalsTestWidget::getOffsetResume(const double value, const char ch
     QString sVal = QString::number(fabs(value), 'f', 2);
     QString sDir = "";
     if (value >= 0 && chan == 'x')
-        sDir = tr("вправо");
+        sDir = tr("Вправо");
     else
     if (value < 0 && chan == 'x')
-        sDir = tr("влево");
+        sDir = tr("Влево");
     else
     if (value >= 0 && chan == 'y')
-        sDir = tr("вперед");
+        sDir = tr("Вперед");
     else
     if (value < 0 && chan == 'y')
-        sDir = tr("назад");
+        sDir = tr("Назад");
 
-    return QString(tr("Смещение на") + " %1 " + tr("мм") + " " + sDir).arg(sVal);
+    return QString(sDir + " " + tr("на") + " %1 " + tr("мм")).arg(sVal);
 }
 
 QString StabSignalsTestWidget::getDeviationResume(const double value) const
 {
-    QString sVal = QString::number(value, 'f', 2);
-    return QString(tr("Увеличение девиации в") + " %1 " + tr("раз")).arg(sVal);
+    double v = value;
+    QString sDir = "";
+    if (v >= 1)
+        sDir = tr("Рост");
+    else
+    {
+        sDir = tr("Уменьшение");
+        v = 1 / v;
+    }
+    QString sVal = QString::number(v, 'f', 2);
+    return QString(sDir + " " + tr("в") + " %1 " + tr("раз")).arg(sVal);
 }
 
 QList<int> StabSignalsTestWidget::getProbesKind(const QJsonObject params)
@@ -550,6 +580,7 @@ void StabSignalsTestWidget::showSKG(StabSignalsTestCalculator *calculator, const
                 auto sizeB = calculator->classicFactors(i)->ellipse().sizeB;
                 skg->setEllipse(sizeA, sizeB, angle);
 
+
                 ui->wgtSKGAreases->layout()->addWidget(skg);
 
                 //! Графики сигналов
@@ -588,38 +619,16 @@ void StabSignalsTestWidget::restoreSplitterPosition()
     ui->splAreaSKG->restoreState(val);
 }
 
-//    m_trd->openTest(testUid);
-//    for (int i = 0; i < m_trd->probesCount(); ++i)
-//    {
-//        auto* probe = m_trd->probe(i);
+void StabSignalsTestWidget::resizeColumnsTable(QStandardItemModel *mdl, QTreeView* tv, const bool toContens)
+{
+    if (mdl && mdl->columnCount() > 0)
+    {
+        int w = (tv->geometry().width() - tv->header()->sectionSize(0)) / (mdl->columnCount() - 1);
+        for (int i = 1; i < mdl->columnCount(); ++i)
+            if (toContens)
+                tv->resizeColumnToContents(i);
+            else
+                tv->header()->resizeSection(i, w);
+    }
+}
 
-//        QTextEdit *edit = new QTextEdit(ui->wgtUndef);
-//        ui->wgtUndef->layout()->addWidget(edit);
-
-//        for (int j = 0; j < probe->signalsCount(); ++j)
-//        {
-//            auto *signal = probe->signal(j);
-//            for (int k = 0; k < signal->size(); ++k)
-//            {
-//                if (signal->channelId() == ChannelsDefines::chanStab)
-//                {
-//                     auto x = signal->value(0, k);
-//                     auto y = signal->value(1, k);
-
-//                     auto sx = QString::number(x);
-//                     auto sy = QString::number(y);
-//                     edit->append(sx + "     " + sy);
-//                }
-//                else
-//                if (signal->channelId() == ChannelsDefines::chanZ)
-//                {
-//                    auto z = signal->value(0, k);
-//                    auto sz = QString::number(z);
-//                    edit->append(sz);
-//                }
-//            }
-//            delete signal;
-//        }
-
-//        delete probe;
-//    }

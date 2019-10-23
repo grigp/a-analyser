@@ -6,6 +6,8 @@
 #include "lineskg.h"
 #include "signalaccess.h"
 
+#include <QDebug>
+
 AreaSKG::AreaSKG(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::AreaSKG)
@@ -103,6 +105,15 @@ void AreaSKG::setColorEllipse(const QColor &color)
 {
     if (m_lineSKG)
         m_lineSKG->setColorEllipse(color);
+}
+
+void AreaSKG::resizeEvent(QResizeEvent *event)
+{
+    qDebug() << ui->panSKG->sceneRect() << ui->panSKG->geometry();
+//    int dx = ui->panSKG->sceneRect().width() / 2 - ui->panSKG->geometry().width() / 2;
+//    int dy = ui->panSKG->sceneRect().height() / 2 - ui->panSKG->geometry().height() / 2;
+//    scroll(dx, dy);
+    QWidget::resizeEvent(event);
 }
 
 void AreaSKG::setAreaSKG()

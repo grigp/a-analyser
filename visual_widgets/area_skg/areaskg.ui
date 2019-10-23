@@ -30,7 +30,14 @@
     <number>0</number>
    </property>
    <item>
-    <widget class="ViewSKG" name="panSKG"/>
+    <widget class="ViewSKG" name="panSKG">
+     <property name="verticalScrollBarPolicy">
+      <enum>Qt::ScrollBarAlwaysOff</enum>
+     </property>
+     <property name="horizontalScrollBarPolicy">
+      <enum>Qt::ScrollBarAlwaysOff</enum>
+     </property>
+    </widget>
    </item>
   </layout>
  </widget>

@@ -70,6 +70,9 @@ public:
      */
     void setColorEllipse(const QColor &color);
 
+protected:
+    void resizeEvent(QResizeEvent *event);
+
 private:
     Ui::AreaSKG *ui;
 

@@ -2,6 +2,7 @@
 #define STABSIGNALSTESTWIDGET_H
 
 #include <QWidget>
+#include <QTreeView>
 #include <QStandardItemModel>
 
 #include "datadefines.h"
@@ -29,6 +30,20 @@ public:
      * \param testUid - uid теста
      */
     void calculate(StabSignalsTestCalculator *calculator, const QString &testUid);
+
+    /*!
+     * \brief Роли для модели таблицы нормативов для теста Ромберга
+     */
+    enum RombergNormsTableRoles
+    {
+          NormRole = Qt::UserRole + 1   ///< Норма. int. В колонках значений
+        , ValueRole                     ///< Значение показателя. double. В колонках значений
+        , FormatRole                    ///< Формат значения, кол-во знаков после запятой. int. В колонках значений
+    };
+
+protected:
+    void resizeEvent(QResizeEvent *event);
+
 
 private slots:
     void zoomIn();
@@ -87,6 +102,8 @@ private:
 
     void saveSplitterPosition();
     void restoreSplitterPosition();
+
+    void resizeColumnsTable(QStandardItemModel *mdl, QTreeView* tv, const bool toContens);
 
     Ui::StabSignalsTestWidget *ui;
     QStandardItemModel m_mdlTable;
