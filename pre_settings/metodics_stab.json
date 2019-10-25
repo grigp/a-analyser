@@ -1,0 +1,204 @@
+{
+    "tests": [
+        {
+            "uid": "{140441C1-C1BB-42D0-8858-2A18976166E1}",
+            "name": "Тест с поворотом головы",
+            "template": "met_stabtest_uid",
+            "build_norms": false,
+            "params":
+            {
+                "condition": 0,
+                "probes": [
+                    {
+                        "name": "Фоновая",
+                        "kind": 1,
+                        "autoend": 1,
+                        "time": 20,
+                        "latent_time": 0,
+                        "stimul": 1,
+                        "zeroing": 1,
+                        "scale": 1
+                    },
+                    {
+                        "name": "Голова направо",
+                        "kind": 7,
+                        "autoend": 1,
+                        "time": 20,
+                        "latent_time": 0,
+                        "stimul": 2,
+                        "zeroing": 0,
+                        "scale": 1
+                    },
+                    {
+                        "name": "Голова налево",
+                        "kind": 8,
+                        "autoend": 1,
+                        "time": 20,
+                        "latent_time": 0,
+                        "stimul": 2,
+                        "zeroing": 0,
+                        "scale": 1
+                    }
+                ]
+            }
+        },
+        {
+            "uid": "{E4140AE9-C6AE-4173-96D4-CE0B632FF340}",
+            "name": "Тест с наклоном головы",
+            "template": "met_stabtest_uid",
+            "build_norms": false,
+            "params":
+            {
+                "condition": 0,
+                "probes": [
+                    {
+                        "name": "Фоновая",
+                        "kind": 1,
+                        "autoend": 1,
+                        "time": 20,
+                        "latent_time": 0,
+                        "stimul": 1,
+                        "zeroing": 1,
+                        "scale": 1
+                    },
+                    {
+                        "name": "Наклон головы вправо",
+                        "kind": 9,
+                        "autoend": 1,
+                        "time": 20,
+                        "latent_time": 0,
+                        "stimul": 2,
+                        "zeroing": 0,
+                        "scale": 1
+                    },
+                    {
+                        "name": "Наклон головы влево",
+                        "kind": 10,
+                        "autoend": 1,
+                        "time": 20,
+                        "latent_time": 0,
+                        "stimul": 2,
+                        "zeroing": 0,
+                        "scale": 1
+                    },
+                    {
+                        "name": "Наклон головы вперед",
+                        "kind": 11,
+                        "autoend": 1,
+                        "time": 20,
+                        "latent_time": 0,
+                        "stimul": 2,
+                        "zeroing": 0,
+                        "scale": 1
+                    },
+                    {
+                        "name": "Наклон головы назад",
+                        "kind": 12,
+                        "autoend": 1,
+                        "time": 20,
+                        "latent_time": 0,
+                        "stimul": 2,
+                        "zeroing": 0,
+                        "scale": 1
+                    }
+                ]
+            }
+        },
+        {
+            "uid": "{EBEA57B4-A791-4F35-87C2-BEDEC6406D2D}",
+            "name": "Допусковый контроль",
+            "template": "met_stabtest_uid",
+            "build_norms": true,
+            "params":
+            {
+                "condition": 2,
+                "probes": [
+                    {
+                        "name": "Открытые глаза",
+                        "kind": 1,
+                        "autoend": 1,
+                        "time": 20,
+                        "latent_time": 0,
+                        "stimul": 1,
+                        "zeroing": 1,
+                        "scale": 1
+                    },
+                    {
+                        "name": "Закрытые глаза",
+                        "kind": 2,
+                        "autoend": 1,
+                        "time": 20,
+                        "latent_time": 0,
+                        "stimul": 2,
+                        "zeroing": 0,
+                        "scale": 1
+                    },
+                    {
+                        "name": "Мишень",
+                        "kind": 3,
+                        "autoend": 1,
+                        "time": 20,
+                        "latent_time": 5,
+                        "stimul": 3,
+                        "zeroing": 0,
+                        "scale": 3
+                    }
+                ]
+            }
+        },
+        {
+            "uid": "{8BFC7928-8DAF-429B-8AB5-C689C63BECC9}",
+            "name": "Стабилографический тест",
+            "template": "met_stabtest_uid",
+            "build_norms": false,
+            "params":
+            {
+                "condition": 0,
+                "probes": [
+                    {
+                        "name": "Стабилографическая проба",
+                        "kind": 1,
+                        "autoend": 0,
+                        "time": 20,
+                        "latent_time": 0,
+                        "stimul": 0,
+                        "zeroing": 1,
+                        "scale": 0
+                    }
+                ]
+            }
+        },
+        {
+            "uid": "{02D4EC93-C0C2-42BD-979C-D9F472A3CCEE}",
+            "name": "Тест Ромберга",
+            "template": "met_stabtest_uid",
+            "build_norms": false,
+            "params":
+            {
+                "condition": 0,
+                "probes": [
+                    {
+                        "name": "Открытые глаза",
+                        "kind": 1,
+                        "autoend": 1,
+                        "time": 20,
+                        "latent_time": 0,
+                        "stimul": 1,
+                        "zeroing": 1,
+                        "scale": 1
+                    },
+                    {
+                        "name": "Закрытые глаза",
+                        "kind": 2,
+                        "autoend": 1,
+                        "time": 20,
+                        "latent_time": 0,
+                        "stimul": 2,
+                        "zeroing": 0,
+                        "scale": 1
+                    }
+                ]
+            }
+        }
+    ]
+}

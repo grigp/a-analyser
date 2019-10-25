@@ -56,5 +56,9 @@
         <file>pre_settings/conditions_en_US.json</file>
         <file>images/TestProperty.png</file>
         <file>pre_settings/group_norms.json</file>
+        <file>pre_settings/metodics_ids.json</file>
+        <file>pre_settings/metodics_ids_en_US.json</file>
+        <file>pre_settings/metodics_stab.json</file>
+        <file>pre_settings/metodics_stab_en_US.json</file>
     </qresource>
 </RCC>

@@ -299,10 +299,15 @@ void StabTestExecute::nextProbe()
 
 void StabTestExecute::finishTest()
 {
+    qDebug() << Q_FUNC_INFO << "1";
     hidePatientWindow();
+    qDebug() << "2";
     m_isRecording = false;
+    qDebug() << "3";
     m_trd->saveTest();
+    qDebug() << "4";
     static_cast<ExecuteWidget*>(parent())->showDB();
+    qDebug() << "5";
 }
 
 void StabTestExecute::showPatientWindow(const int winCode)

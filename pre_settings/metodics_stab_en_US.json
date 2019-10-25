@@ -1,0 +1,172 @@
+{
+    "tests": [
+        {
+            "uid": "{140441C1-C1BB-42D0-8858-2A18976166E1}",
+            "name": "Head turn test",
+            "template": "met_stabtest_uid",
+            "build_norms": false,
+            "params":
+            {
+                "condition": 0,
+                "probes": [
+                    {
+                        "name": "Initial",
+                        "kind": 1,
+                        "autoend": 1,
+                        "time": 20,
+                        "latent_time": 0,
+                        "stimul": 1,
+                        "zeroing": 1,
+                        "scale": 1
+                    },
+                    {
+                        "name": "Head to the right",
+                        "kind": 7,
+                        "autoend": 1,
+                        "time": 20,
+                        "latent_time": 0,
+                        "stimul": 2,
+                        "zeroing": 0,
+                        "scale": 1
+                    },
+                    {
+                        "name": "Head to the left",
+                        "kind": 8,
+                        "autoend": 1,
+                        "time": 20,
+                        "latent_time": 0,
+                        "stimul": 2,
+                        "zeroing": 0,
+                        "scale": 1
+                    }
+                ]
+            }
+        },
+        {
+            "uid": "{E4140AE9-C6AE-4173-96D4-CE0B632FF340}",
+            "name": "Head tilt test",
+            "template": "met_stabtest_uid",
+            "build_norms": false,
+            "params":
+            {
+                "condition": 0,
+                "probes": [
+                    {
+                        "name": "Initial",
+                        "kind": 1,
+                        "autoend": 1,
+                        "time": 20,
+                        "latent_time": 0,
+                        "stimul": 1,
+                        "zeroing": 1,
+                        "scale": 1
+                    },
+                    {
+                        "name": "Head tilt to the right",
+                        "kind": 9,
+                        "autoend": 1,
+                        "time": 20,
+                        "latent_time": 0,
+                        "stimul": 2,
+                        "zeroing": 0,
+                        "scale": 1
+                    },
+                    {
+                        "name": "Head tilt to the left",
+                        "kind": 10,
+                        "autoend": 1,
+                        "time": 20,
+                        "latent_time": 0,
+                        "stimul": 2,
+                        "zeroing": 0,
+                        "scale": 1
+                    },
+                    {
+                        "name": "Head tilt forward",
+                        "kind": 11,
+                        "autoend": 1,
+                        "time": 20,
+                        "latent_time": 0,
+                        "stimul": 2,
+                        "zeroing": 0,
+                        "scale": 1
+                    },
+                    {
+                        "name": "Head tilt back",
+                        "kind": 12,
+                        "autoend": 1,
+                        "time": 20,
+                        "latent_time": 0,
+                        "stimul": 2,
+                        "zeroing": 0,
+                        "scale": 1
+                    }
+                ]
+            }
+        },
+        {
+            "uid": "{EBEA57B4-A791-4F35-87C2-BEDEC6406D2D}",
+            "name": "Admittance control",
+            "template": "met_stabtest_uid",
+            "build_norms": true,
+            "params":
+            {
+                "condition": 2,
+                "probes": [
+                    {
+                        "name": "Open eyes",
+                        "kind": 1,
+                        "autoend": 1,
+                        "time": 20,
+                        "latent_time": 0,
+                        "stimul": 1,
+                        "zeroing": 1,
+                        "scale": 1
+                    },
+                    {
+                        "name": "Close eyes",
+                        "kind": 2,
+                        "autoend": 1,
+                        "time": 20,
+                        "latent_time": 0,
+                        "stimul": 2,
+                        "zeroing": 0,
+                        "scale": 1
+                    },
+                    {
+                        "name": "Target",
+                        "kind": 3,
+                        "autoend": 1,
+                        "time": 20,
+                        "latent_time": 5,
+                        "stimul": 3,
+                        "zeroing": 0,
+                        "scale": 3
+                    }
+                ]
+            }
+        },
+        {
+            "uid": "{8BFC7928-8DAF-429B-8AB5-C689C63BECC9}",
+            "name": "Stabilo test",
+            "template": "met_stabtest_uid",
+            "build_norms": false,
+            "params":
+            {
+                "condition": 0,
+                "probes": [
+                    {
+                        "name": "Stabilo probe",
+                        "kind": 1,
+                        "autoend": 0,
+                        "time": 20,
+                        "latent_time": 0,
+                        "stimul": 0,
+                        "zeroing": 1,
+                        "scale": 0
+                    }
+                ]
+            }
+        }
+    ]
+}
