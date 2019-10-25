@@ -280,7 +280,7 @@ void StabTestParamsDialog::assignAccessMode()
 
     ui->btnAddProbe->setVisible(rootMode);
     ui->btnDeleteProbe->setVisible(rootMode);
-    ui->frAutoEnd->setVisible(rootMode);
+//    ui->frAutoEnd->setVisible(rootMode);
     ui->frStimul->setVisible(rootMode);
     ui->frZeroing->setVisible(rootMode);
     ui->frScale->setVisible(rootMode);

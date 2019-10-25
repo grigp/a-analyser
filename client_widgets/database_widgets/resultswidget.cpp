@@ -9,6 +9,7 @@
 
 #include <QPainter>
 #include <QException>
+#include <QTimer>
 #include <QDebug>
 
 ResultsWidget::ResultsWidget(QWidget *parent) :
@@ -151,12 +152,20 @@ void ResultsWidget::on_selectPatient(const QString &patientUid)
 {
     Q_UNUSED(patientUid);
     closeTestIfNotSelection();
+    QTimer::singleShot(100, [=]
+    {
+        ui->tvTests->header()->resizeSections(QHeaderView::ResizeToContents);
+    });
 }
 
 void ResultsWidget::on_selectMetodic(const QString &metodicUid)
 {
     Q_UNUSED(metodicUid);
     closeTestIfNotSelection();
+    QTimer::singleShot(100, [=]
+    {
+        ui->tvTests->header()->resizeSections(QHeaderView::ResizeToContents);
+    });
 }
 
 void ResultsWidget::closeTestIfNotSelection()
