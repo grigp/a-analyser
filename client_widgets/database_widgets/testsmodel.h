@@ -28,9 +28,6 @@ public:
 
     void load();
 
-signals:
-    void removeTest(const QString &testUid);
-
 private slots:
     void onNewTest(const QString &testUid);
     void onRemoveTest(const QString &testUid);

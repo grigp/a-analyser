@@ -59,7 +59,6 @@ void TestsModel::onRemoveTest(const QString &testUid)
     }
     if (line > -1)
     {
-        emit removeTest(testUid);
         removeRows(line, 1);
     }
 }

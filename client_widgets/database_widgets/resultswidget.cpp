@@ -140,12 +140,9 @@ void ResultsWidget::onRemoveTests(const QModelIndex &parent, int first, int last
     Q_UNUSED(parent);
     Q_UNUSED(first);
     Q_UNUSED(last);
-    m_selectedRow = -1;
-    if (m_wgtResult)
-        delete m_wgtResult;
-    m_wgtResult = nullptr;
-    ui->lblNoTest->setVisible(true);
-    ui->tvTests->selectionModel()->clearSelection();
+//    m_selectedRow = -1;
+//    closeTest();
+//    ui->tvTests->selectionModel()->clearCurrentIndex();
 }
 
 void ResultsWidget::on_selectPatient(const QString &patientUid)

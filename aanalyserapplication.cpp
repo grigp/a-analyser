@@ -196,7 +196,10 @@ void AAnalyserApplication::deleteTest()
 void AAnalyserApplication::deleteTest(const QString &testUid)
 {
     if (m_database->deleteTest(testUid))
-        emit removeTest(testUid);
+        QTimer::singleShot(100, [=]
+        {
+            emit removeTest(testUid);
+        });
 }
 
 void AAnalyserApplication::showDataBase()
