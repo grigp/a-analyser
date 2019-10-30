@@ -6,6 +6,7 @@
 #include "jumpheightfactors.h"
 #include "hoppingfactors.h"
 #include "idsfactors.h"
+#include "targetfactors.h"
 
 #include <QTimer>
 #include <QDebug>
@@ -21,6 +22,7 @@ FactorsFactory::FactorsFactory(QObject *parent) : QObject(parent)
         JumpHeightFactors::registerFactors();
         HoppingFactors::registerFactors();
         IDSFactors::registerFactors();
+        TargetFactors::registerFactors();
     });
 }
 

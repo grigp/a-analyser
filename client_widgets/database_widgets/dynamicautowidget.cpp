@@ -161,8 +161,11 @@ void DynamicAutoWidget::fillTable()
                 ti.metodUid == m_selectedMetodicUid)
             {
                 auto factors = DataProvider::getPrimaryFactors(testUid);
-                m_mdlDynamic->addTestData(factors, ti.uid, ti.dateTime);
-                m_tests.insert(ti.uid);
+                if (factors.size() > 0)
+                {
+                    m_mdlDynamic->addTestData(factors, ti.uid, ti.dateTime);
+                    m_tests.insert(ti.uid);
+                }
             }
         }
     }

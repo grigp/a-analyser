@@ -212,6 +212,28 @@
             }
         },
         {
+            "uid": "{271DB867-0297-4DBD-BD7D-E1BC5675BC2A}",
+            "name": "Test \"Target\"",
+            "template": "met_stabtest_uid",
+            "build_norms": false,
+            "params":
+            {
+                "condition": 4,
+                "probes": [
+                    {
+                        "name": "Probe \"Target\"",
+                        "kind": 3,
+                        "autoend": 1,
+                        "time": 20,
+                        "latent_time": 5,
+                        "stimul": 3,
+                        "zeroing": 1,
+                        "scale": 3
+                    }
+                ]
+            }
+        },
+        {
             "uid": "{ACFA62A1-7F52-477E-B9C9-A7FF14B3E098}",
             "name": "Jump height analysis",
             "template": "met_jumptest_uid",

@@ -52,6 +52,9 @@ struct Diapazone
 
 class Stabilogram;
 
+/*!
+ * \brief Класс модуля расчета векторных показателей  VectorFactors class
+ */
 class VectorFactors : public ChannelMultifactor
 {
     Q_OBJECT

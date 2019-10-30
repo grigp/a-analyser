@@ -10,6 +10,7 @@
 #include "dopuskcalculator.h"
 #include "statechampionstestcalculator.h"
 #include "idscalculator.h"
+#include "targetcalculator.h"
 
 #include <QLayout>
 #include <QDebug>
@@ -78,6 +79,9 @@ TestCalculator *StabTestTemplate::calculator(const QString &testUid)
         else
         if (cnd == 3)
             return new IDSCalculator(testUid);
+        else
+        if (cnd == 4)
+            return new TargetCalculator(testUid);
     }
     return nullptr;
 }

@@ -212,6 +212,28 @@
             }
         },
         {
+            "uid": "{271DB867-0297-4DBD-BD7D-E1BC5675BC2A}",
+            "name": "Тест \"Мишень\"",
+            "template": "met_stabtest_uid",
+            "build_norms": false,
+            "params":
+            {
+                "condition": 4,
+                "probes": [
+                    {
+                        "name": "Проба \"Мишень\"",
+                        "kind": 3,
+                        "autoend": 1,
+                        "time": 20,
+                        "latent_time": 5,
+                        "stimul": 3,
+                        "zeroing": 1,
+                        "scale": 3
+                    }
+                ]
+            }
+        },
+        {
             "uid": "{02D4EC93-C0C2-42BD-979C-D9F472A3CCEE}",
             "name": "Тест Ромберга",
             "template": "met_stabtest_uid",

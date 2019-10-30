@@ -38,10 +38,11 @@ StabTestParamsDialog::StabTestParamsDialog(QWidget *parent) :
     ui->lvProbes->setModel(m_mdlProbes);
     ui->cbStimul->addItems(QStringList() << tr("нет") << tr("Цветные круги") << tr("Звуковые сигналы") << tr("Мишень"));
     ui->cbScale->addItems(QStringList() << "1" << "2" << "4" << "8" << "16" << "32" << "64" << "128");
-    ui->cbConditions->addItems(QStringList() << tr("Анализ сигналов")
-                                             << tr("Стань чемпионом")
-                                             << tr("Допусковый контроль")
-                                             << tr("Уровень здоровья по ИДС"));
+    ui->cbConditions->addItems(QStringList() << tr("Анализ сигналов")             ///< Код 0
+                                             << tr("Стань чемпионом")             ///< Код 1
+                                             << tr("Допусковый контроль")         ///< Код 2
+                                             << tr("Уровень здоровья по ИДС")     ///< Код 3
+                                             << tr("Мишень"));                    ///< Код 4
     fillProbeKinds();
 
     //! Редактирование названия пробы

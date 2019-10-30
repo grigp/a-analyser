@@ -30,6 +30,12 @@ QLabel#lblTitle
     color: rgb(255, 255, 255);
 }
 
+QLabel#lblScore
+{
+    font-size: 18pt;
+    color: rgb(32,88,103);
+}
+
 QComboBox
 {
     font-size: 11pt;
