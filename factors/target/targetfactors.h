@@ -62,7 +62,7 @@ private:
     double m_score {0};
     double m_totalScore {0};
 
-    int m_hist[9];    ///< Гистограмма распределения
+    int m_hist[10];    ///< Гистограмма распределения
 
 };
 

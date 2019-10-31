@@ -30,6 +30,7 @@ private:
     Ui::TargetWidget *ui;
 
     void showSKG(TargetCalculator *calculator, const QString &testUid) const;
+    void showDiagram(TargetCalculator *calculator, const QString &testUid) const;
 };
 
 #endif // TARGETWIDGET_H

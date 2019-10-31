@@ -2,6 +2,9 @@
 #define STABTESTPARAMS_H
 
 #include <QString>
+#include <QList>
+#include <QJsonArray>
+#include <QJsonObject>
 
 namespace StabTestParams
 {
@@ -56,6 +59,17 @@ struct ProbeParams
         zeroingEnabled = false;
         scale = 0;
     }
+};
+
+/*!
+ * \brief Параметры теста на момент проведения StabTestParams struct
+ */
+struct StabTestParams
+{
+    int condition;                 ///< Условия проведения теста
+    QList<ProbeParams> probes;     ///< Пробы с параметрами
+    StabTestParams() {}
+    StabTestParams(const QJsonObject params);
 };
 
 }

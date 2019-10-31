@@ -30,6 +30,9 @@ public:
 
     void setParams(const QJsonObject &probeParams);
 
+protected:
+    void closeEvent(QCloseEvent *event);
+
 private slots:
     void start();
 

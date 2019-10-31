@@ -15,7 +15,8 @@ SOURCES += \
     $$PWD/stabtesttemplate.cpp \
     $$PWD/stabtestexecute.cpp \
     $$PWD/stabtestvisualize.cpp \
-    $$PWD/stabtestparamsdialog.cpp
+    $$PWD/stabtestparamsdialog.cpp \
+    $$PWD/stabtestparams.cpp
 
 FORMS += \
     $$PWD/stabtestexecute.ui \

@@ -38,6 +38,7 @@ void ExecuteWidget::onHide()
 {
     while (QLayoutItem* item = layout()->takeAt(0))
     {
+        item->widget()->close();
         delete item->widget();
         delete item;
     }

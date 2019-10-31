@@ -46,11 +46,6 @@ StabTestExecute::StabTestExecute(QWidget *parent) :
 
 StabTestExecute::~StabTestExecute()
 {
-    if (m_driver)
-    {
-        m_driver->stop();
-        m_driver->deleteLater();
-    }
     delete ui;
 }
 
@@ -75,6 +70,18 @@ void StabTestExecute::setParams(const QJsonObject &params)
     }
 
     ui->lblProbeTitle->setText(probeParams().name + " - " + m_kard.fio);
+}
+
+void StabTestExecute::closeEvent(QCloseEvent *event)
+{
+    //! Переехало из деструктора. Подозрение на нерегулярный сбой.
+    //! Но для срабатывания необходимо перед delete вызывать close();
+    if (m_driver)
+    {
+        m_driver->stop();
+        m_driver->deleteLater();
+    }
+    QWidget::closeEvent(event);
 }
 
 void StabTestExecute::start()

@@ -4,6 +4,9 @@
 #include "dataprovider.h"
 #include "channelsutils.h"
 #include "stabilogram.h"
+#include "stabtestparams.h"
+
+#include <QDebug>
 
 TargetFactors::TargetFactors(const QString &testUid,
                              const QString &probeUid,
@@ -45,7 +48,7 @@ void TargetFactors::calculate()
         {
             auto rec = stab.value(i);
             double val = sqrt(pow(rec.x/* - offsetX*/, 2) + pow(rec.y/* - offsetY*/, 2));
-            int idx = 10 - trunc(val / step);
+            int idx = 9 - trunc(val / step);
             if (idx < 0)
                 idx = 0;
             if (idx > 9)
@@ -93,23 +96,38 @@ void TargetFactors::registerFactors()
 
 int TargetFactors::histogram(const int idx) const
 {
-    Q_ASSERT(idx >= 0 && idx < 9);
+    Q_ASSERT(idx >= 0 && idx < 10);
     return m_hist[idx];
 }
 
 int TargetFactors::getDiap(Stabilogram *stab) const
 {
-    double max = 0;
-    for (int i = 0; i < stab->size(); ++i)
-    {
-        auto val = stab->value(i);
-        if (fabs(val.x) > max)
-            max = fabs(val.x);
-        if (fabs(val.y) > max)
-            max = fabs(val.y);
-    }
     int retval = 1;
-    while (retval < max)
-        retval = retval * 2;
-    return retval;
+
+    DataDefines::TestInfo ti;
+    if (DataProvider::getTestInfo(testUid(), ti))
+    {
+        StabTestParams::StabTestParams params(ti.params);
+        if (params.probes.size() == 1)
+        {
+            auto scale = params.probes.at(0).scale;
+            for (int i = 0; i < scale; ++i)
+                retval *= 2;
+        }
+    }
+    return 128 / retval;
+
+//    double max = 0;
+//    for (int i = 0; i < stab->size(); ++i)
+//    {
+//        auto val = stab->value(i);
+//        if (fabs(val.x) > max)
+//            max = fabs(val.x);
+//        if (fabs(val.y) > max)
+//            max = fabs(val.y);
+//    }
+//    int retval = 1;
+//    while (retval < max)
+//        retval = retval * 2;
+//    return retval;
 }
