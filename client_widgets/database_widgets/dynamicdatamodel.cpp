@@ -3,6 +3,8 @@
 #include "factorsfactory.h"
 #include "aanalyserapplication.h"
 
+#include <QDebug>
+
 DynamicDataModel::DynamicDataModel(QObject *parent)
     : QStandardItemModel(parent)
 {

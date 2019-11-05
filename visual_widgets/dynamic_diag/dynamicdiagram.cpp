@@ -58,6 +58,17 @@ void DynamicDiagram::setTitle(const QString &title)
     update();
 }
 
+QString DynamicDiagram::bottomText() const
+{
+    return m_bottomText;
+}
+
+void DynamicDiagram::setBottomText(const QString &text)
+{
+    m_bottomText = text;
+    update();
+}
+
 QColor DynamicDiagram::backgroundColor() const
 {
     return m_backgroundColor;
@@ -157,6 +168,9 @@ void DynamicDiagram::paintEvent(QPaintEvent *event)
     //! Заголовок
     painter.setPen(QPen(m_titleColor, 1, Qt::SolidLine, Qt::FlatCap));
     painter.drawText(QRect(0, 0, geometry().width(), TitleHeight - 5), m_title, QTextOption(Qt::AlignHCenter | Qt::AlignVCenter));
+
+    painter.drawText(QRect(0, geometry().height() - AxisSpace + TitleHeight, geometry().width(), TitleHeight - 5),
+                     m_bottomText, QTextOption(Qt::AlignHCenter | Qt::AlignVCenter));
 
     //painter.drawRect(QRect(0, TitleHeight, geometry().width() - 3, geometry().height() - TitleHeight - 3));
 

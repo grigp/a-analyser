@@ -64,6 +64,9 @@ public:
     QString title() const;
     void setTitle(const QString &title);
 
+    QString bottomText() const;
+    void setBottomText(const QString &text);
+
     QColor backgroundColor() const;
     void setBackgroundColor(const QColor &color);
 
@@ -127,6 +130,7 @@ private:
     Kind m_kind {KindGraph};
     Volume m_volume {Volume2D};
     QString m_title {""};
+    QString m_bottomText {""};
 
     QColor m_backgroundColor {Qt::white};
     QColor m_diagColor {Qt::darkCyan};
