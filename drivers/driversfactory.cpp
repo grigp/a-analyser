@@ -136,12 +136,39 @@ bool DriversFactory::editParamsConnecton(const int connectIdx, const QString &dr
     return resval;
 }
 
-Driver *DriversFactory::getDriver(const QStringList &protocols, const int index) const
+Driver *DriversFactory::getDriverByProtocols(const QStringList &protocols, const int index) const
 {
     int num = 0;
     foreach (auto connection, m_connections)
         if (connection.active())
             if (isDriverSupportedProtocols(connection.driverUid(), protocols))
+            {
+                if (num == index)
+                {
+                    //! Создаем и возвращаем экземпляры драйверов
+                    //! Надо хардкодить все драйвера
+                    Driver *drv{nullptr} ;
+                    if (connection.driverUid() == Stabilan01::uid())
+                        drv = new Stabilan01();
+                    else
+                    if (connection.driverUid() == JumpPlate::uid())
+                        drv = new JumpPlate();
+                    //! Параметры драйверу!
+                    drv->setParams(connection.port(), connection.params());
+                    return drv;
+                }
+                ++num;
+            }
+
+    return nullptr;
+}
+
+Driver *DriversFactory::getDriverByFormats(const QStringList &formats, const int index) const
+{
+    int num = 0;
+    foreach (auto connection, m_connections)
+        if (connection.active())
+            if (isDriverSupportedFormats(connection.driverUid(), formats))
             {
                 if (num == index)
                 {
@@ -259,6 +286,35 @@ bool DriversFactory::isDriverSupportedProtocols(const QString &driverUid, const 
     {
         foreach (auto protocol, protocols)
             if (!protocolsDrv.contains(protocol))
+                return false;
+        return true;
+    }
+    return false;
+}
+
+bool DriversFactory::isDriverSupportedFormats(const QString &driverUid, const QStringList &formats) const
+{
+    QStringList protocolsDrv = QStringList();
+
+    //! Получаем протоколы от драйвера
+    //! Надо хардкодить все драйвера
+    if (driverUid == Stabilan01::uid())
+        protocolsDrv = Stabilan01::getProtocols();
+    else
+    if (driverUid == JumpPlate::uid())
+        protocolsDrv = JumpPlate::getProtocols();
+
+    //! Переводим протоколы в форматы. В протоколе всегда данные одного формата.
+    //! Но драйвер может реализовывать данные разных протоколов и поставлять данные разных форматов
+    QStringList formatsDrv = QStringList();
+    foreach (auto protocol, protocolsDrv)
+        formatsDrv.append(DeviceProtocols::protocolFormat.value(protocol));
+
+    //! Ищем все переданные форматы в полученном списке
+    if (formatsDrv != QStringList())
+    {
+        foreach (auto format, formats)
+            if (!formatsDrv.contains(format))
                 return false;
         return true;
     }

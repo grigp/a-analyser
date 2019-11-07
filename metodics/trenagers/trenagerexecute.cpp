@@ -12,3 +12,8 @@ TrenagerExecute::~TrenagerExecute()
 {
     delete ui;
 }
+
+void TrenagerExecute::setParams(const QJsonObject &params)
+{
+
+}

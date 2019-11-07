@@ -176,8 +176,15 @@ public:
      * \param protocols - перечень протоколов
      * \param index - номер в списке
      */
-    Driver* getDriver(const QStringList &protocols, const int index = 0) const;
+    Driver* getDriverByProtocols(const QStringList &protocols, const int index = 0) const;
 
+    /*!
+     * \brief Возвращает экземпляр драйвера, соответствующего перечню форматов каналов
+     * \param formats - перечень форматов каналов
+     * \param index - номер в списке
+     */
+    Driver* getDriverByFormats(const QStringList &formats, const int index = 0) const;
+    
     /*!
      * \brief Возвращает список допустимых портов для драйвера по его uid
      * \param drvUid - uid драйвера

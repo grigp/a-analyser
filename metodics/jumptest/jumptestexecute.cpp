@@ -63,7 +63,7 @@ void JumpTestExecute::timerEvent(QTimerEvent *event)
 void JumpTestExecute::start()
 {
     m_driver = static_cast<AAnalyserApplication*>(QApplication::instance())->
-            getDriver(QStringList() << DeviceProtocols::uid_JumpPlateProtocol);
+            getDriverByProtocols(QStringList() << DeviceProtocols::uid_JumpPlateProtocol);
     if (m_driver)
     {
         m_jumpControl = dynamic_cast<DeviceProtocols::JumpPlateControl*>(m_driver);

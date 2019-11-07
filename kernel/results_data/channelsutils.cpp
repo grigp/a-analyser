@@ -21,6 +21,17 @@ QString ChannelsUtils::channelShortName(const QString &channelId) const
     return m_channels.value(channelId).shortName;
 }
 
+QString ChannelsUtils::channelFormat(const QString &channelId) const
+{
+    auto type = channelType(channelId);
+    if (type != "")
+    {
+        if (m_formats.contains(type))
+            return m_formats.value(type);
+    }
+    return ChannelsDefines::cfNoSignal;
+}
+
 ChannelsUtils::ChannelsUtils()
     : m_channels({
                  std::pair<QString, ChannelsDefines::ChannelInfo>(ChannelsDefines::chanStab,
@@ -40,6 +51,12 @@ ChannelsUtils::ChannelsUtils()
                                                                                     QString("JOP"),
                                                                                     ChannelsDefines::ctHopping))
                  })
+    , m_formats({
+                  std::pair<QString, QString>(ChannelsDefines::ctStabilogram, ChannelsDefines::cfDecartCoordinates)
+                , std::pair<QString, QString>(ChannelsDefines::ctBallistogram, ChannelsDefines::cfSinglePositive)
+                , std::pair<QString, QString>(ChannelsDefines::ctJumpHeight, ChannelsDefines::cfNoSignal)
+                , std::pair<QString, QString>(ChannelsDefines::ctHopping, ChannelsDefines::cfNoSignal)
+                })
 {
 
 }

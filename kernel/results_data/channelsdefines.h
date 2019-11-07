@@ -8,6 +8,15 @@ namespace ChannelsDefines
 {
 
 /*!
+ * \brief Идентификаторы форматов каналов
+ */
+static QString cfSinglePositive = "{F0B6F40E-D5BD-4888-9D3C-B370E068945E}";  ///< Одиночный положительный
+static QString cfSingleNegative = "{BB902571-208C-4238-8917-249F2FD51DE8}";  ///< Одиночный отрицательный
+static QString cfSingleDual = "{1E3D3FD7-8635-404D-95D8-082A5A5061DF}";      ///< Одиночный двунаправленный
+static QString cfDecartCoordinates = "{86261A11-D896-45C7-A3E6-600ECF2A9F21}"; ///< декартовы координаты (два канала двунаправленных)
+static QString cfNoSignal = "{90e313c6-8805-4235-8981-1fb85d7aea5f}";          ///< Не является сигналом (не может быть использован для поиска)
+
+/*!
  * \brief Идентификаторы типов каналов
  */
  static QString ctStabilogram = "{1F7A5F8A-FC64-44E2-B2D2-5245D02ED2CA}";

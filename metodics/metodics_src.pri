@@ -3,6 +3,7 @@ INCLUDEPATH += $$PWD
 include(stabtest/stabtest_src.pri)
 include(jumptest/jumptest_src.pri)
 include(teppingtest/teppingtest_src.pri)
+include(trenagers/trenagers_src.pri)
 
 HEADERS += \
     $$PWD/metodictemplate.h \

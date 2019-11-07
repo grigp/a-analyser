@@ -87,7 +87,7 @@ void StabTestExecute::closeEvent(QCloseEvent *event)
 void StabTestExecute::start()
 {
     m_driver = static_cast<AAnalyserApplication*>(QApplication::instance())->
-            getDriver(QStringList() << DeviceProtocols::uid_StabProtocol);
+            getDriverByProtocols(QStringList() << DeviceProtocols::uid_StabProtocol);
     if (m_driver)
     {
         m_stabControl = dynamic_cast<DeviceProtocols::StabControl*>(m_driver);

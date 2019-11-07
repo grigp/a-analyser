@@ -102,6 +102,7 @@ int TargetFactors::histogram(const int idx) const
 
 int TargetFactors::getDiap(Stabilogram *stab) const
 {
+    Q_UNUSED(stab);
     int retval = 1;
 
     DataDefines::TestInfo ti;

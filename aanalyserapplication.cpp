@@ -269,11 +269,23 @@ bool AAnalyserApplication::editParamsConnecton(const int connectIdx, const QStri
     return false;
 }
 
-Driver *AAnalyserApplication::getDriver(const QStringList &protocols, const int index) const
+Driver *AAnalyserApplication::getDriverByProtocols(const QStringList &protocols, const int index) const
 {
     if (m_drivers)
     {
-        auto *drv = m_drivers->getDriver(protocols, index);
+        auto *drv = m_drivers->getDriverByProtocols(protocols, index);
+        if (drv)
+            connect(drv, &Driver::sendData, this, &AAnalyserApplication::sendData);
+        return drv;
+    }
+    return nullptr;
+}
+
+Driver *AAnalyserApplication::getDriverByFormats(const QStringList &formats, const int index) const
+{
+    if (m_drivers)
+    {
+        auto *drv = m_drivers->getDriverByFormats(formats, index);
         if (drv)
             connect(drv, &Driver::sendData, this, &AAnalyserApplication::sendData);
         return drv;

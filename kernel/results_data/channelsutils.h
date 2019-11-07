@@ -20,11 +20,14 @@ public:
 
     QString channelShortName(const QString &channelId) const;
 
+    QString channelFormat(const QString &channelId) const;
+
 private:
     ChannelsUtils();
     ChannelsUtils(const ChannelsUtils &rhs) = default;
 
     QMap<QString, ChannelsDefines::ChannelInfo> m_channels;
+    QMap<QString, QString> m_formats; ///< Соответствие типа канала его формату
 };
 
 #endif // CHANNELSUTILS_H

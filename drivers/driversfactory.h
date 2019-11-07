@@ -94,7 +94,14 @@ public:
      * \param protocols - перечень протоколов
      * \param index - номер в списке
      */
-    Driver* getDriver(const QStringList &protocols, const int index = 0) const;
+    Driver* getDriverByProtocols(const QStringList &protocols, const int index = 0) const;
+
+    /*!
+     * \brief Возвращает экземпляр драйвера, соответствующего перечню форматов каналов
+     * \param formats - перечень форматов каналов
+     * \param index - номер в списке
+     */
+    Driver* getDriverByFormats(const QStringList &formats, const int index = 0) const;
 
 signals:
 
@@ -111,6 +118,13 @@ private:
      * \param protocols - список uid протоколов
      */
     bool isDriverSupportedProtocols(const QString &driverUid, const QStringList &protocols) const;
+
+    /*!
+     * \brief Возвращает true, если драйвер с заданным uid реализует указанные форматы каналов
+     * \param driverUid - uid драйвера
+     * \param formats - список uid форматов каналов
+     */
+    bool isDriverSupportedFormats(const QString &driverUid, const QStringList &formats) const;
 
     QMap<QString, QString> m_drivers;
     QList<Connection> m_connections;

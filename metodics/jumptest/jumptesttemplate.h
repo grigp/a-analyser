@@ -13,7 +13,7 @@ public:
     explicit JumpTestTemplate(QObject *parent = nullptr);
 
     /*!
-     * \brief Возвращает уникальный идектификатор методики
+     * \brief Возвращает уникальный идентификатор методики
      */
     QString uid() override;
 

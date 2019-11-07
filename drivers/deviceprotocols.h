@@ -6,6 +6,8 @@
 #include <QList>
 #include <QVector>
 
+#include "channelsdefines.h"
+
 class Driver;
 
 namespace DeviceProtocols {
@@ -369,6 +371,12 @@ static QMap<QString, QString> deviceDataName {
   , std::pair<QString, QString> (uid_JumpPlateBlockData, name_JumpPlateBlockData)
 };
 
+///< Соответствие протокола и формата канала по uid
+static QMap<QString, QString> protocolFormat {
+    std::pair<QString, QString> (uid_StabProtocol, ChannelsDefines::cfDecartCoordinates)
+  , std::pair<QString, QString> (uid_DynProtocol, ChannelsDefines::cfSinglePositive)
+  , std::pair<QString, QString> (uid_JumpPlateProtocol, ChannelsDefines::cfNoSignal)
+};
 
 }
 
