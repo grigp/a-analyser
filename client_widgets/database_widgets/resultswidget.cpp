@@ -98,7 +98,7 @@ void ResultsWidget::selectTest(const QModelIndex &index)
             if (m_wgtResult)
                 delete m_wgtResult;
             m_wgtResult = metFactory->visualize(ui->wgtResults, uid);
-            ui->lblNoTest->setVisible(!m_wgtResult);
+            ui->wgtNoTest->setVisible(!m_wgtResult);
 
             static_cast<AAnalyserApplication*>(QApplication::instance())->doSelectTest(uid);
         }
@@ -115,7 +115,7 @@ void ResultsWidget::closeTest()
     if (m_wgtResult)
         delete m_wgtResult;
     m_wgtResult = nullptr;
-    ui->lblNoTest->setVisible(!m_wgtResult);
+    ui->wgtNoTest->setVisible(!m_wgtResult);
 }
 
 void ResultsWidget::splitterMoved(int pos, int index)
