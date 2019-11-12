@@ -286,6 +286,407 @@
             }
         },
         {
+            "uid": "{CFCCCAA0-A520-49EF-9C04-EB57580E8CAD}",
+            "name": "Тренажер \"Мячики\"",
+            "template": "met_trentakeput_uid",
+            "build_norms": false,
+            "params":
+            {
+                "take_zones": [
+                    {
+                        "position": "random",
+                        "x_min": -800,
+                        "x_max": 800,
+                        "y_min": -800,
+                        "y_max": 0,
+                        "width": 50,
+                        "height": 50
+                    }
+                ],
+                "take_elements": [
+                    {
+                        "style": "picture_fixed",
+                        "image": "ball.png",
+                        "repaint": true,
+                        "color": "ffffff00",
+                        "enabled": true,
+                        "code": 1
+                    }
+                ],
+                "take_order": {
+                    "mode": "enabled_primary"
+                },
+                "put_zones": [
+                    {
+                        "position": "fixed",
+                        "x": -670,
+                        "y": -600,
+                        "width": 200,
+                        "height": 200
+                    },
+                    {
+                        "position": "fixed",
+                        "x": 0,
+                        "y": -600,
+                        "width": 200,
+                        "height": 200
+                    },
+                    {
+                        "position": "fixed",
+                        "x": 670,
+                        "y": -600,
+                        "width": 200,
+                        "height": 200
+                    }
+                ],
+                "put_elements": [
+                    {
+                        "style": "picture_fixed",
+                        "image": "basket.png",
+                        "repaint": true,
+                        "color": "ffffff00",
+                        "enabled": true,
+                        "code": 1
+                    },
+                    {
+                        "style": "picture_fixed",
+                        "image": "basket.png",
+                        "repaint": true,
+                        "color": "ffffffff",
+                        "enabled": false,
+                        "code": 0
+                    }
+                ],
+                "put_order": {
+                    "mode": "enabled_primary"
+                },
+                "stage": "take_put",
+                "scale": 2
+            }
+        },
+        {
+            "uid": "{BE743459-AF91-428A-9862-E177D614ABD3}",
+            "name": "Тренажер \"Цветные мячики\"",
+            "template": "met_trentakeput_uid",
+            "build_norms": false,
+            "params":
+            {
+                "take_zones": [
+                    {
+                        "position": "fixed",
+                        "x": -670,
+                        "y": 900,
+                        "width": 50,
+                        "height": 50
+                    },
+                    {
+                        "position": "fixed",
+                        "x": 0,
+                        "y": 900,
+                        "width": 50,
+                        "height": 50
+                    },
+                    {
+                        "position": "fixed",
+                        "x": 670,
+                        "y": 900,
+                        "width": 50,
+                        "height": 50
+                    }
+                ],
+                "take_elements": [
+                    {
+                        "style": "picture_fixed",
+                        "image": "ball.png",
+                        "repaint": true,
+                        "color": "ffffff00",
+                        "enabled": true,
+                        "code": 1
+                    },
+                    {
+                        "style": "picture_fixed",
+                        "image": "ball.png",
+                        "repaint": true,
+                        "color": "ffff0000",
+                        "enabled": true,
+                        "code": 2
+                    },
+                    {
+                        "style": "picture_fixed",
+                        "image": "ball.png",
+                        "repaint": true,
+                        "color": "ff00ff00",
+                        "enabled": true,
+                        "code": 3
+                    }
+                ],
+                "take_order": {
+                    "mode": "all_by_order"
+                },
+                "put_zones": [
+                    {
+                        "position": "fixed",
+                        "x": -670,
+                        "y": -600,
+                        "width": 200,
+                        "height": 200
+                    },
+                    {
+                        "position": "fixed",
+                        "x": 0,
+                        "y": -600,
+                        "width": 200,
+                        "height": 200
+                    },
+                    {
+                        "position": "fixed",
+                        "x": 670,
+                        "y": -600,
+                        "width": 200,
+                        "height": 200
+                    }
+                ],
+                "put_elements": [
+                    {
+                        "style": "picture_fixed",
+                        "image": "basket.png",
+                        "repaint": true,
+                        "color": "ffffff00",
+                        "enabled": true,
+                        "code": 1
+                    },
+                    {
+                        "style": "picture_fixed",
+                        "image": "basket.png",
+                        "repaint": true,
+                        "color": "ffff0000",
+                        "enabled": true,
+                        "code": 2
+                    },
+                    {
+                        "style": "picture_fixed",
+                        "image": "basket.png",
+                        "repaint": true,
+                        "color": "ff00ff00",
+                        "enabled": true,
+                        "code": 3
+                    }
+                ],
+                "put_order": {
+                    "mode": "all_by_order"
+                },
+                "stage": "all_elements",
+                "scale": 2
+            }
+        },
+        {
+            "uid": "{24Bf2A64-064F-4264-85BD-F5F62AF7A804}",
+            "name": "Тренажер \"Фигурки\"",
+            "template": "met_trentakeput_uid",
+            "build_norms": false,
+            "params":
+            {
+                "take_zones": [
+                    {
+                        "position": "fixed",
+                        "x": -670,
+                        "y": 900,
+                        "width": 50,
+                        "height": 50
+                    },
+                    {
+                        "position": "fixed",
+                        "x": 0,
+                        "y": 900,
+                        "width": 50,
+                        "height": 50
+                    },
+                    {
+                        "position": "fixed",
+                        "x": 670,
+                        "y": 900,
+                        "width": 50,
+                        "height": 50
+                    }
+                ],
+                "take_elements": [
+                    {
+                        "style": "picture_fixed",
+                        "image": "ball.png",
+                        "repaint": true,
+                        "color": "ffffff00",
+                        "enabled": true,
+                        "code": 1
+                    },
+                    {
+                        "style": "picture_fixed",
+                        "image": "cube.png",
+                        "repaint": true,
+                        "color": "ffffff00",
+                        "enabled": false,
+                        "code": 0
+                    },
+                    {
+                        "style": "picture_fixed",
+                        "image": "piramide.png",
+                        "repaint": true,
+                        "color": "ffffff00",
+                        "enabled": false,
+                        "code": 0
+                    }
+                ],
+                "take_order": {
+                    "mode": "enabled_primary"
+                },
+                "put_zones": [
+                    {
+                        "position": "fixed",
+                        "x": -670,
+                        "y": -600,
+                        "width": 200,
+                        "height": 200
+                    },
+                    {
+                        "position": "fixed",
+                        "x": 0,
+                        "y": -600,
+                        "width": 200,
+                        "height": 200
+                    },
+                    {
+                        "position": "fixed",
+                        "x": 670,
+                        "y": -600,
+                        "width": 200,
+                        "height": 200
+                    }
+                ],
+                "put_elements": [
+                    {
+                        "style": "picture_fixed",
+                        "image": "basket.png",
+                        "repaint": true,
+                        "color": "ffffff00",
+                        "enabled": true,
+                        "code": 1
+                    },
+                    {
+                        "style": "picture_fixed",
+                        "image": "basket.png",
+                        "repaint": true,
+                        "color": "ffffffff",
+                        "enabled": false,
+                        "code": 0
+                    }
+                ],
+                "put_order": {
+                    "mode": "enabled_primary"
+                },
+                "stage": "take_put",
+                "scale": 2
+            }
+        },
+        {
+            "uid": "{D03ACE59-9144-42CB-B4BC-9970349906D9}",
+            "name": "Тренажер \"Фигурки по кресту\"",
+            "template": "met_trentakeput_uid",
+            "build_norms": false,
+            "params":
+            {
+                "take_zones": [
+                    {
+                        "position": "fixed",
+                        "x": 0,
+                        "y": 900,
+                        "width": 50,
+                        "height": 50
+                    },
+                    {
+                        "position": "fixed",
+                        "x": 900,
+                        "y": 0,
+                        "width": 50,
+                        "height": 50
+                    },
+                    {
+                        "position": "fixed",
+                        "x": 0,
+                        "y": -900,
+                        "width": 50,
+                        "height": 50
+                    },
+                    {
+                        "position": "fixed",
+                        "x": -900,
+                        "y": 0,
+                        "width": 50,
+                        "height": 50
+                    }
+                ],
+                "take_elements": [
+                    {
+                        "style": "picture_fixed",
+                        "image": "ball.png",
+                        "repaint": true,
+                        "color": "ffffff00",
+                        "enabled": true,
+                        "code": 1
+                    },
+                    {
+                        "style": "picture_fixed",
+                        "image": "cube.png",
+                        "repaint": true,
+                        "color": "ffffff00",
+                        "enabled": false,
+                        "code": 0
+                    },
+                    {
+                        "style": "picture_fixed",
+                        "image": "piramide.png",
+                        "repaint": true,
+                        "color": "ffffff00",
+                        "enabled": false,
+                        "code": 0
+                    },
+                    {
+                        "style": "picture_fixed",
+                        "image": "prizm.png",
+                        "repaint": true,
+                        "color": "ffffff00",
+                        "enabled": false,
+                        "code": 0
+                    }
+                ],
+                "take_order": {
+                    "mode": "enabled_primary"
+                },
+                "put_zones": [
+                    {
+                        "position": "fixed",
+                        "x": 0,
+                        "y": 0,
+                        "width": 200,
+                        "height": 200
+                    }
+                ],
+                "put_elements": [
+                    {
+                        "style": "picture_fixed",
+                        "image": "basket.png",
+                        "repaint": true,
+                        "color": "ffffff00",
+                        "enabled": true,
+                        "code": 1
+                    }
+                ],
+                "put_order": {
+                    "mode": "enabled_primary"
+                },
+                "stage": "take_put",
+                "scale": 2
+            }
+        },
+        {
             "uid": "{A100CF38-D2E6-4E71-A485-53845E3F116C}",
             "name": "Уровень здоровья по ИДС",
             "template": "met_stabtest_uid",
