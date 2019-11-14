@@ -1,5 +1,5 @@
-#ifndef TRENAGERTEMPLATE_H
-#define TRENAGERTEMPLATE_H
+#ifndef TRENTAKEPUTTEMPLATE_H
+#define TRENTAKEPUTTEMPLATE_H
 
 #include <QObject>
 
@@ -8,11 +8,11 @@
 /*!
  * \brief Класс шаблона методики тренажера TrenagerTemplate class
  */
-class TrenagerTemplate : public MetodicTemplate
+class TrenTakePutTemplate : public MetodicTemplate
 {
     Q_OBJECT
 public:
-    explicit TrenagerTemplate(QObject *parent = nullptr);
+    explicit TrenTakePutTemplate(QObject *parent = nullptr);
 
     /*!
      * \brief Возвращает уникальный идентификатор методики
@@ -44,4 +44,4 @@ public:
     bool editParams(QWidget *parent, QJsonObject &params)  override;
 };
 
-#endif // TRENAGERTEMPLATE_H
+#endif // TRENTAKEPUTTEMPLATE_H

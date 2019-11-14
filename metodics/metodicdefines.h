@@ -9,12 +9,12 @@ namespace MetodicDefines
     static const QString MetUid_StabTest = "met_stabtest_uid";
     static const QString MetUid_JumpTest = "met_jumptest_uid";
     static const QString MetUid_TeppingTest = "met_teppingtest_uid";
-    static const QString MetUid_Trenager = "met_trenager_uid";
+    static const QString MetUid_TrenTakePut = "met_trentakeput_uid";
 
     static const QString MetName_StabTest = "Стабилометрическое тестирование";
     static const QString MetName_JumpTest = "Измерение высоты прыжка";
     static const QString MetName_TeppingTest = "Теппинг тест";
-    static const QString MetName_Trenager = "Тренажер с БОС";
+    static const QString MetName_TrenTakePut = "Тренажер захвата - укладки";
 
     /*!
      * \brief Структура описания методики MetodicInfo struct

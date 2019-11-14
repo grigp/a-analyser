@@ -687,6 +687,196 @@
             }
         },
         {
+            "uid": "{BDE82084-9568-4A7C-BA11-33A20BB14072}",
+            "name": "Тренажер \"Построение картинок\"",
+            "template": "met_trentakeput_uid",
+            "build_norms": false,
+            "params":
+            {
+                "take_zones": [
+                    {
+                        "position": "fixed",
+                        "x": -750,
+                        "y": 750,
+                        "width": 500,
+                        "height": 500
+                    },
+                    {
+                        "position": "fixed",
+                        "x": -250,
+                        "y": 750,
+                        "width": 500,
+                        "height": 500
+                    },
+                    {
+                        "position": "fixed",
+                        "x": 250,
+                        "y": 750,
+                        "width": 500,
+                        "height": 500
+                    },
+                    {
+                        "position": "fixed",
+                        "x": 750,
+                        "y": 750,
+                        "width": 500,
+                        "height": 500
+                    }
+                ],
+                "take_elements": [
+                    {
+                        "style": "picture_split",
+                        "imagefolder": "picture//puzzle//",
+                        "repaint": false,
+                        "enabled": true,
+                        "code": 0
+                    }
+                ],
+                "take_order": {
+                    "mode": "all_by_order"
+                },
+                "put_zones": [
+                    {
+                        "position": "fixed",
+                        "x": -250,
+                        "y": 0,
+                        "width": 500,
+                        "height": 500
+                    },
+                    {
+                        "position": "fixed",
+                        "x": 250,
+                        "y": 0,
+                        "width": 500,
+                        "height": 500
+                    },
+                    {
+                        "position": "fixed",
+                        "x": -250,
+                        "y": -500,
+                        "width": 500,
+                        "height": 500
+                    },
+                    {
+                        "position": "fixed",
+                        "x": 250,
+                        "y": -500,
+                        "width": 500,
+                        "height": 500
+                    }
+                ],
+                "put_elements": [
+                    {
+                        "style": "drawing",
+                        "drawing": "rectangle",
+                        "color": "fff0f0f0",
+                        "enabled": true,
+                        "code": 0
+                    }
+                ],
+                "put_order": {
+                    "mode": "all_by_order"
+                },
+                "stage": "all_elements",
+                "scale": 2
+            }
+        },
+        {
+            "uid": "{72EF6357-B6B0-48FF-9206-7A5D56ABB788 }",
+            "name": "Тренажер \"Мировые столицы\"",
+            "template": "met_trentakeput_uid",
+            "build_norms": false,
+            "params":
+            {
+                "take_zones": [
+                    {
+                        "position": "fixed",
+                        "x": -750,
+                        "y": 750,
+                        "width": 500,
+                        "height": 500
+                    },
+                    {
+                        "position": "fixed",
+                        "x": -250,
+                        "y": 750,
+                        "width": 500,
+                        "height": 500
+                    },
+                    {
+                        "position": "fixed",
+                        "x": 250,
+                        "y": 750,
+                        "width": 500,
+                        "height": 500
+                    },
+                    {
+                        "position": "fixed",
+                        "x": 750,
+                        "y": 750,
+                        "width": 500,
+                        "height": 500
+                    }
+                ],
+                "take_elements": [
+                    {
+                        "style": "picture_pair",
+                        "imagefolder": "picture//capitals//",
+                        "repaint": false,
+                        "enabled": true,
+                        "code": 0
+                    }
+                ],
+                "take_order": {
+                    "mode": "all_by_order"
+                },
+                "put_zones": [
+                    {
+                        "position": "fixed",
+                        "x": -750,
+                        "y": -750,
+                        "width": 500,
+                        "height": 500
+                    },
+                    {
+                        "position": "fixed",
+                        "x": -250,
+                        "y": -750,
+                        "width": 500,
+                        "height": 500
+                    },
+                    {
+                        "position": "fixed",
+                        "x": 250,
+                        "y": -750,
+                        "width": 500,
+                        "height": 500
+                    },
+                    {
+                        "position": "fixed",
+                        "x": 750,
+                        "y": -750,
+                        "width": 500,
+                        "height": 500
+                    }
+                ],
+                "put_elements": [
+                    {
+                        "style": "picture_pair",
+                        "imagefolder": "picture//capitals//",
+                        "repaint": false,
+                        "enabled": true,
+                        "code": 0
+                    }
+                ],
+                "put_order": {
+                    "mode": "all_by_order"
+                },
+                "stage": "all_elements",
+                "scale": 2
+            }
+        },
+        {
             "uid": "{A100CF38-D2E6-4E71-A485-53845E3F116C}",
             "name": "Уровень здоровья по ИДС",
             "template": "met_stabtest_uid",
