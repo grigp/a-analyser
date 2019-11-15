@@ -5,6 +5,7 @@
 #include "metodictemplate.h"
 #include "stabtesttemplate.h"
 #include "jumptesttemplate.h"
+#include "trentakeputtemplate.h"
 #include "datadefines.h"
 #include "dataprovider.h"
 
@@ -104,7 +105,8 @@ void MetodicsFactory::assignTemplates()
 {
 
     m_templates << new StabTestTemplate(this)
-                << new JumpTestTemplate(this);
+                << new JumpTestTemplate(this)
+                << new TrenTakePutTemplate(this);
 }
 
 void MetodicsFactory::assignMetodics()

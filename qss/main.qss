@@ -36,6 +36,12 @@ QLabel#lblScore
     color: rgb(32,88,103);
 }
 
+QLabel#lblCommunicationError
+{
+font-size: 14pt;
+color: rgb(255,0,0);
+}
+
 QComboBox
 {
     font-size: 11pt;

@@ -82,3 +82,19 @@ QSize BaseUtils::getTextSize(QPainter *painter, const QString &text)
     int h = fm.height();
     return QSize(w, h);
 }
+
+
+
+QString BaseUtils::colorToRGBAStr(const QColor color)
+{
+    unsigned int cc = color.rgba();
+    return QString::number(cc, 16);
+}
+
+QColor BaseUtils::strRGBAToColor(const QString rgbaStr)
+{
+    bool ok;
+    unsigned int colCode = rgbaStr.toLongLong(&ok, 16);
+    return QColor::fromRgba(colCode);
+}
+

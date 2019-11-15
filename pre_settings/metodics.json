@@ -306,7 +306,7 @@
                 "take_elements": [
                     {
                         "style": "picture_fixed",
-                        "image": "ball.png",
+                        "images": "ball.png",
                         "repaint": true,
                         "color": "ffffff00",
                         "enabled": true,
@@ -342,7 +342,7 @@
                 "put_elements": [
                     {
                         "style": "picture_fixed",
-                        "image": "basket.png",
+                        "images": "basket.png",
                         "repaint": true,
                         "color": "ffffff00",
                         "enabled": true,
@@ -350,7 +350,7 @@
                     },
                     {
                         "style": "picture_fixed",
-                        "image": "basket.png",
+                        "images": "basket.png",
                         "repaint": true,
                         "color": "ffffffff",
                         "enabled": false,
@@ -361,7 +361,7 @@
                     "mode": "enabled_primary"
                 },
                 "stage": "take_put",
-                "scale": 2
+                "scale": 1
             }
         },
         {
@@ -397,7 +397,7 @@
                 "take_elements": [
                     {
                         "style": "picture_fixed",
-                        "image": "ball.png",
+                        "images": "ball.png",
                         "repaint": true,
                         "color": "ffffff00",
                         "enabled": true,
@@ -405,7 +405,7 @@
                     },
                     {
                         "style": "picture_fixed",
-                        "image": "ball.png",
+                        "images": "ball.png",
                         "repaint": true,
                         "color": "ffff0000",
                         "enabled": true,
@@ -413,7 +413,7 @@
                     },
                     {
                         "style": "picture_fixed",
-                        "image": "ball.png",
+                        "images": "ball.png",
                         "repaint": true,
                         "color": "ff00ff00",
                         "enabled": true,
@@ -449,7 +449,7 @@
                 "put_elements": [
                     {
                         "style": "picture_fixed",
-                        "image": "basket.png",
+                        "images": "basket.png",
                         "repaint": true,
                         "color": "ffffff00",
                         "enabled": true,
@@ -457,7 +457,7 @@
                     },
                     {
                         "style": "picture_fixed",
-                        "image": "basket.png",
+                        "images": "basket.png",
                         "repaint": true,
                         "color": "ffff0000",
                         "enabled": true,
@@ -465,7 +465,7 @@
                     },
                     {
                         "style": "picture_fixed",
-                        "image": "basket.png",
+                        "images": "basket.png",
                         "repaint": true,
                         "color": "ff00ff00",
                         "enabled": true,
@@ -476,7 +476,7 @@
                     "mode": "all_by_order"
                 },
                 "stage": "all_elements",
-                "scale": 2
+                "scale": 1
             }
         },
         {
@@ -512,7 +512,7 @@
                 "take_elements": [
                     {
                         "style": "picture_fixed",
-                        "image": "ball.png",
+                        "images": "ball.png",
                         "repaint": true,
                         "color": "ffffff00",
                         "enabled": true,
@@ -520,7 +520,7 @@
                     },
                     {
                         "style": "picture_fixed",
-                        "image": "cube.png",
+                        "images": "cube.png",
                         "repaint": true,
                         "color": "ffffff00",
                         "enabled": false,
@@ -528,7 +528,7 @@
                     },
                     {
                         "style": "picture_fixed",
-                        "image": "piramide.png",
+                        "images": "piramide.png",
                         "repaint": true,
                         "color": "ffffff00",
                         "enabled": false,
@@ -564,7 +564,7 @@
                 "put_elements": [
                     {
                         "style": "picture_fixed",
-                        "image": "basket.png",
+                        "images": "basket.png",
                         "repaint": true,
                         "color": "ffffff00",
                         "enabled": true,
@@ -572,7 +572,7 @@
                     },
                     {
                         "style": "picture_fixed",
-                        "image": "basket.png",
+                        "images": "basket.png",
                         "repaint": true,
                         "color": "ffffffff",
                         "enabled": false,
@@ -583,7 +583,7 @@
                     "mode": "enabled_primary"
                 },
                 "stage": "take_put",
-                "scale": 2
+                "scale": 1
             }
         },
         {
@@ -626,7 +626,7 @@
                 "take_elements": [
                     {
                         "style": "picture_fixed",
-                        "image": "ball.png",
+                        "images": "ball.png",
                         "repaint": true,
                         "color": "ffffff00",
                         "enabled": true,
@@ -634,7 +634,7 @@
                     },
                     {
                         "style": "picture_fixed",
-                        "image": "cube.png",
+                        "images": "cube.png",
                         "repaint": true,
                         "color": "ffffff00",
                         "enabled": false,
@@ -642,7 +642,7 @@
                     },
                     {
                         "style": "picture_fixed",
-                        "image": "piramide.png",
+                        "images": "piramide.png",
                         "repaint": true,
                         "color": "ffffff00",
                         "enabled": false,
@@ -650,7 +650,7 @@
                     },
                     {
                         "style": "picture_fixed",
-                        "image": "prizm.png",
+                        "images": "prizm.png",
                         "repaint": true,
                         "color": "ffffff00",
                         "enabled": false,
@@ -672,7 +672,7 @@
                 "put_elements": [
                     {
                         "style": "picture_fixed",
-                        "image": "basket.png",
+                        "images": "basket.png",
                         "repaint": true,
                         "color": "ffffff00",
                         "enabled": true,
@@ -683,7 +683,7 @@
                     "mode": "enabled_primary"
                 },
                 "stage": "take_put",
-                "scale": 2
+                "scale": 1
             }
         },
         {
@@ -726,7 +726,7 @@
                 "take_elements": [
                     {
                         "style": "picture_split",
-                        "imagefolder": "picture//puzzle//",
+                        "images": "picture//puzzle//",
                         "repaint": false,
                         "enabled": true,
                         "code": 0
@@ -778,7 +778,7 @@
                     "mode": "all_by_order"
                 },
                 "stage": "all_elements",
-                "scale": 2
+                "scale": 1
             }
         },
         {
@@ -821,7 +821,7 @@
                 "take_elements": [
                     {
                         "style": "picture_pair",
-                        "imagefolder": "picture//capitals//",
+                        "images": "picture//capitals//",
                         "repaint": false,
                         "enabled": true,
                         "code": 0
@@ -863,7 +863,7 @@
                 "put_elements": [
                     {
                         "style": "picture_pair",
-                        "imagefolder": "picture//capitals//",
+                        "images": "picture//capitals//",
                         "repaint": false,
                         "enabled": true,
                         "code": 0
@@ -873,7 +873,7 @@
                     "mode": "all_by_order"
                 },
                 "stage": "all_elements",
-                "scale": 2
+                "scale": 1
             }
         },
         {

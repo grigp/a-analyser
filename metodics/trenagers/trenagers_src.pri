@@ -5,7 +5,8 @@ HEADERS += \
     $$PWD/trentakeputvisualize.h \
     $$PWD/trentakeputtestcalculator.h \
     $$PWD/trentakeputtemplate.h \
-    $$PWD/trentakeputparamsdialog.h
+    $$PWD/trentakeputparamsdialog.h \
+    $$PWD/trentakeputdefines.h
 
 SOURCES += \
     $$PWD/trentakeputexecute.cpp \

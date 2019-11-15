@@ -42,6 +42,19 @@ double getDifferenceAngles(const double a1, const double a2);
  */
 QSize getTextSize(QPainter *painter, const QString &text);
 
+/*!
+ * \brief Преобразует цвет в строку, содержащуу состоявляющие цвета: "aarrggbb"
+ * \param color - цвет
+ */
+QString colorToRGBAStr(const QColor color);
+
+/*!
+ * \brief Преобразует строку, содержащуу состоявляющие цвета: "aarrggbb"  в цвет QColor
+ * \param rgbaStr - строка в формате "aarrggbb"
+ */
+QColor strRGBAToColor(const QString rgbaStr);
+
+
 }
 
 
