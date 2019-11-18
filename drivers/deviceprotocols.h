@@ -68,8 +68,8 @@ static const QString name_JumpPlateBlockData = "Отсчеты прыжково�
 class DeviceData
 {
 public:
-    explicit DeviceData(Driver* sender)
-        : m_sender(sender) {}
+    explicit DeviceData(Driver* sender, const QString &channelId)
+        : m_sender(sender), m_channelId(channelId) {}
 
     virtual ~DeviceData(){}
 
@@ -77,9 +77,11 @@ public:
 //    virtual QString name() const = 0; // {return QString("");}  Непонятно, как быть с локализацией
 
     Driver* sender() {return m_sender;}
+    QString channelId() {return m_channelId;}
 
 private:
     Driver* m_sender;
+    QString m_channelId;
 };
 
 
@@ -89,20 +91,20 @@ private:
 class StabDvcData : public DeviceData
 {
 public:
-    StabDvcData(Driver *sender, double x, double y)
-        : DeviceData(sender)
+    StabDvcData(Driver *sender, const QString &channelId, double x, double y)
+        : DeviceData(sender, channelId)
         , m_x(x), m_y(y) {m_z = 0; m_a = 0; m_b = 0; m_c = 0, m_d = 0;}
 
-    StabDvcData(Driver *sender, double x, double y, double z)
-        : DeviceData(sender)
+    StabDvcData(Driver *sender, const QString &channelId, double x, double y, double z)
+        : DeviceData(sender, channelId)
         , m_x(x), m_y(y), m_z(z) {m_a = 0; m_b = 0; m_c = 0, m_d = 0;}
 
-    StabDvcData(Driver *sender, double x, double y, double a, double b, double c)
-        : DeviceData(sender)
+    StabDvcData(Driver *sender, const QString &channelId, double x, double y, double a, double b, double c)
+        : DeviceData(sender, channelId)
         , m_x(x), m_y(y), m_a(a), m_b(b), m_c(c) {m_z = m_a + m_b + m_c; m_d = 0;}
 
-    StabDvcData(Driver *sender, double x, double y, double a, double b, double c, double d)
-        : DeviceData(sender)
+    StabDvcData(Driver *sender, const QString &channelId, double x, double y, double a, double b, double c, double d)
+        : DeviceData(sender, channelId)
         , m_x(x), m_y(y), m_a(a), m_b(b), m_c(c), m_d(d) {m_z = m_a + m_b + m_c + m_d;}
 
 //    StabDvcData(const StabDvcData &obj)
@@ -135,8 +137,8 @@ private:
 class DynamoDvcData : public DeviceData
 {
 public:
-    DynamoDvcData(Driver *sender, const QVector<double> &data)
-        : DeviceData(sender), m_data(data) {}
+    DynamoDvcData(Driver *sender, const QString &channelId, const QVector<double> &data)
+        : DeviceData(sender, channelId), m_data(data) {}
 
     int size() const {return m_data.size();}
 
@@ -156,8 +158,8 @@ private:
 class JumpPlateDvcData : public DeviceData
 {
 public:
-    JumpPlateDvcData(Driver *sender, int plate, bool busy, double time)
-        : DeviceData(sender), m_plate(plate), m_busy(busy), m_time(time) {}
+    JumpPlateDvcData(Driver *sender, const QString &channelId, int plate, bool busy, double time)
+        : DeviceData(sender, channelId), m_plate(plate), m_busy(busy), m_time(time) {}
 
     int plate() const {return m_plate;}
     bool busy() const {return m_busy;}
@@ -178,10 +180,10 @@ private:
 class JumpPlateBlockData : public DeviceData
 {
 public:
-    JumpPlateBlockData(Driver *sender, int blockCnt,
+    JumpPlateBlockData(Driver *sender, const QString &channelId, int blockCnt,
                        bool busy1, double counter1, double con1,
                        bool busy2, double counter2, double con2)
-        : DeviceData(sender), m_blockCnt(blockCnt)
+        : DeviceData(sender, channelId), m_blockCnt(blockCnt)
         , m_busy1(busy1), m_counter1(counter1), m_con1(con1)
         , m_busy2(busy2), m_counter2(counter2), m_con2(con2)
     {}

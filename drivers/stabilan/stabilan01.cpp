@@ -289,7 +289,7 @@ void Stabilan01::assignByteFromDevice(quint8 b)
 //                r = r + 2 * M_PI / 50;
 
                 // Передача стабилограммы
-                auto stabData = new DeviceProtocols::StabDvcData(this,
+                auto stabData = new DeviceProtocols::StabDvcData(this, ChannelsDefines::chanStab,
                                                                  m_X - m_offsetX, m_Y - m_offsetY,
                                                                  m_A, m_B, m_C, m_D);
                 emit sendData(stabData);
