@@ -67,6 +67,18 @@ int JumpPlate::frequency(const QString &channelId) const
     return 50;
 }
 
+QList<QString> JumpPlate::getChannelsByProtocol(const QString &protocolUid) const
+{
+    Q_UNUSED(protocolUid);
+    return QList<QString>();
+}
+
+QList<QString> JumpPlate::getChannelsByFormat(const QString &formatUid) const
+{
+    Q_UNUSED(formatUid);
+    return QList<QString>();
+}
+
 QStringList JumpPlate::getProtocols()
 {
     return QStringList() << DeviceProtocols::uid_JumpPlateProtocol;

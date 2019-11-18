@@ -57,6 +57,18 @@ public:
      */
     virtual int frequency(const QString &channelId) const = 0;
 
+    /*!
+     * \brief Возвращает список uid-ов каналов, передаваемых драйвером по uid протокола
+     * \param protocolUid - uid протокола
+     */
+    virtual QList<QString> getChannelsByProtocol(const QString &protocolUid) const = 0;
+
+    /*!
+     * \brief Возвращает список uid-ов каналов, передаваемых драйвером по uid формата данных
+     * \param protocolUid - uid формата данных
+     */
+   virtual  QList<QString> getChannelsByFormat(const QString &formatUid) const = 0;
+
 
 signals:
     void sendData(DeviceProtocols::DeviceData *data);

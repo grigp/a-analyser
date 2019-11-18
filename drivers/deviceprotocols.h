@@ -84,27 +84,47 @@ private:
     QString m_channelId;
 };
 
+/*!
+ * \brief Класс данных от устройств с универсальным доступом к подканалам MultiData class
+ * Предполагается для использования в тестах, которые получают данные по формату и не знают о сути каналов
+ */
+class MultiData : public DeviceData
+{
+public:
+    explicit MultiData(Driver* sender, const QString &channelId)
+        : DeviceData(sender, channelId){}
+
+    /*!
+     * \brief Возвращает кол-во подканалов
+     */
+    virtual int subChanCount() const = 0;
+
+    /*!
+     * \brief Возвращает значение подканала по индексу
+     */
+    virtual double value(const int idx) const = 0;
+};
 
 /*!
  * \brief Класс данных стабилографии, получаемых от устройств StabDvcData class
  */
-class StabDvcData : public DeviceData
+class StabDvcData : public MultiData
 {
 public:
     StabDvcData(Driver *sender, const QString &channelId, double x, double y)
-        : DeviceData(sender, channelId)
+        : MultiData(sender, channelId)
         , m_x(x), m_y(y) {m_z = 0; m_a = 0; m_b = 0; m_c = 0, m_d = 0;}
 
     StabDvcData(Driver *sender, const QString &channelId, double x, double y, double z)
-        : DeviceData(sender, channelId)
+        : MultiData(sender, channelId)
         , m_x(x), m_y(y), m_z(z) {m_a = 0; m_b = 0; m_c = 0, m_d = 0;}
 
     StabDvcData(Driver *sender, const QString &channelId, double x, double y, double a, double b, double c)
-        : DeviceData(sender, channelId)
+        : MultiData(sender, channelId)
         , m_x(x), m_y(y), m_a(a), m_b(b), m_c(c) {m_z = m_a + m_b + m_c; m_d = 0;}
 
     StabDvcData(Driver *sender, const QString &channelId, double x, double y, double a, double b, double c, double d)
-        : DeviceData(sender, channelId)
+        : MultiData(sender, channelId)
         , m_x(x), m_y(y), m_a(a), m_b(b), m_c(c), m_d(d) {m_z = m_a + m_b + m_c + m_d;}
 
 //    StabDvcData(const StabDvcData &obj)
@@ -123,6 +143,18 @@ public:
     double c() const {return m_c;}
     double d() const {return m_d;}
 
+    int subChanCount() const override {return 3;}
+
+    double value(const int idx) const override
+    {
+        switch (idx) {
+        case 0: return m_x;
+        case 1: return m_y;
+        case 3: return m_z;
+        default: return 0;
+        }
+    }
+
     QString uid() const override {return uid_StabDvcData;}
 //    QString name() const override {return name_StabDvcData;} Непонятно, как быть с локализацией
 
@@ -134,18 +166,33 @@ private:
 /*!
  * \brief Класс данных динамометрии, получаемых от устройств DynamoDvcData class
  */
-class DynamoDvcData : public DeviceData
+class DynamoDvcData : public MultiData
 {
 public:
-    DynamoDvcData(Driver *sender, const QString &channelId, const QVector<double> &data)
-        : DeviceData(sender, channelId), m_data(data) {}
+    DynamoDvcData(Driver *sender, const QString &channelId, const double &value)
+        : MultiData(sender, channelId), m_value(value) {}
 
-    int size() const {return m_data.size();}
+    int subChanCount() const override {return 1;}
+    double value(const int idx) const override {Q_UNUSED(idx); return m_value;}
 
-    double value(const int i) const
+private:
+    double m_value;
+};
+
+/*!
+ * \brief Класс данных динамометрии по нескольким каналам, получаемых от устройств DynamoComboDvcData class
+ */
+class DynamoComboDvcData : public MultiData
+{
+public:
+    DynamoComboDvcData(Driver *sender, const QString &channelId, const QVector<double> &data)
+        : MultiData(sender, channelId), m_data(data) {}
+
+    int subChanCount() const override {return m_data.size();}
+    double value(const int idx) const override
     {
-        Q_ASSERT(i >= 0 && i < m_data.size());
-        return m_data.at(i);
+        Q_ASSERT(idx >= 0 && idx < m_data.size());
+        return m_data.at(idx);
     }
 
 private:
@@ -155,11 +202,11 @@ private:
 /*!
  * \brief Класс данных прыжковой платформы, получаемых от устройств JumpPlateDvcData class
  */
-class JumpPlateDvcData : public DeviceData
+class JumpPlateDvcData : public MultiData
 {
 public:
     JumpPlateDvcData(Driver *sender, const QString &channelId, int plate, bool busy, double time)
-        : DeviceData(sender, channelId), m_plate(plate), m_busy(busy), m_time(time) {}
+        : MultiData(sender, channelId), m_plate(plate), m_busy(busy), m_time(time) {}
 
     int plate() const {return m_plate;}
     bool busy() const {return m_busy;}
@@ -167,6 +214,9 @@ public:
 
     QString uid() const override {return uid_JumpPlateDvcData;}
 //    QString name() const override {return name_JumpPlateDvcData;}  Непонятно, как быть с локализацией
+
+    int subChanCount() const override {return 0;}
+    double value(const int idx) const override {Q_UNUSED(idx); return 0;}
 
 private:
     int m_plate;
@@ -177,13 +227,13 @@ private:
 /*!
  * \brief Класс данных отсчетов прыжковой платформы, получаемых от устройств JumpPlateBlockData class
  */
-class JumpPlateBlockData : public DeviceData
+class JumpPlateBlockData : public MultiData
 {
 public:
     JumpPlateBlockData(Driver *sender, const QString &channelId, int blockCnt,
                        bool busy1, double counter1, double con1,
                        bool busy2, double counter2, double con2)
-        : DeviceData(sender, channelId), m_blockCnt(blockCnt)
+        : MultiData(sender, channelId), m_blockCnt(blockCnt)
         , m_busy1(busy1), m_counter1(counter1), m_con1(con1)
         , m_busy2(busy2), m_counter2(counter2), m_con2(con2)
     {}
@@ -200,6 +250,9 @@ public:
     bool busy2() const {return m_busy2;}
     double counter2() const {return m_counter2;}
     double con2() const {return m_con2;}
+
+    int subChanCount() const override {return 0;}
+    double value(const int idx) const override {Q_UNUSED(idx); return 0;}
 
 private:
     int m_blockCnt;

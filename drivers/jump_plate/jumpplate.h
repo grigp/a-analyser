@@ -67,6 +67,18 @@ public:
     int frequency(const QString &channelId) const override;
 
     /*!
+     * \brief Возвращает список uid-ов каналов, передаваемых драйвером по uid протокола
+     * \param protocolUid - uid протокола
+     */
+    QList<QString> getChannelsByProtocol(const QString &protocolUid) const override;
+
+    /*!
+     * \brief Возвращает список uid-ов каналов, передаваемых драйвером по uid формата данных
+     * \param protocolUid - uid формата данных
+     */
+    QList<QString> getChannelsByFormat(const QString &formatUid) const override;
+
+    /*!
      * \brief Возвращает список протоколов
      * \return
      */

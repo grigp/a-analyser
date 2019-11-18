@@ -5,6 +5,7 @@
 #include "driver.h"
 #include "executewidget.h"
 #include "baseutils.h"
+#include "channelsutils.h"
 
 #include <QTimer>
 #include <QMessageBox>
@@ -103,6 +104,9 @@ void TrenTakePutExecute::start()
 
 //        showPatientWindow(m_params.at(m_probe).stimulCode);
 
+        // По формату получаем список каналов этого формата, которые передает драйвер, заносим их в список для выбора
+        setChannels();
+
         m_driver->start();
     }
     else
@@ -114,12 +118,16 @@ void TrenTakePutExecute::start()
 
 void TrenTakePutExecute::getData(DeviceProtocols::DeviceData *data)
 {
-//    DeviceProtocols::protocols
-    if (data->uid() == DeviceProtocols::uid_StabDvcData)
+    if (ui->cbSelectChannel->currentData().toString() == data->channelId())
     {
         ui->lblCommunicationError->setVisible(false);
 
-//        DeviceProtocols::StabDvcData *stabData = static_cast<DeviceProtocols::StabDvcData*>(data);
+        auto* multiData = static_cast<DeviceProtocols::MultiData*>(data);
+        if (multiData->subChanCount() >= 2)
+            qDebug() << multiData->value(0) << multiData->value(1);
+        else
+            qDebug() << multiData->subChanCount();
+
     }
 }
 
@@ -200,5 +208,15 @@ void TrenTakePutExecute::setElements(const QJsonArray &arrElements, QList<TrenTa
             ei.drawing = TrenTakePutDefines::edCircle;
 
         elements << ei;
+    }
+}
+
+void TrenTakePutExecute::setChannels()
+{
+    auto listChanUid = m_driver->getChannelsByFormat(ChannelsDefines::cfDecartCoordinates);
+    foreach (auto channelUid, listChanUid)
+    {
+        auto name = ChannelsUtils::instance().channelName(channelUid);
+        ui->cbSelectChannel->addItem(name, channelUid);
     }
 }

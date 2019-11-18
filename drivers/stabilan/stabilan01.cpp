@@ -96,6 +96,22 @@ int Stabilan01::frequency(const QString &channelId) const
     return 1;
 }
 
+QList<QString> Stabilan01::getChannelsByProtocol(const QString &protocolUid) const
+{
+    QList<QString> retval;
+    if (protocolUid == DeviceProtocols::uid_StabProtocol)
+        retval << ChannelsDefines::chanStab;
+    return retval;
+}
+
+QList<QString> Stabilan01::getChannelsByFormat(const QString &formatUid) const
+{
+    QList<QString> retval;
+    if (formatUid == ChannelsDefines::cfDecartCoordinates)
+        retval << ChannelsDefines::chanStab;
+    return retval;
+}
+
 QStringList Stabilan01::getProtocols()
 {
     return QStringList() << DeviceProtocols::uid_StabProtocol;

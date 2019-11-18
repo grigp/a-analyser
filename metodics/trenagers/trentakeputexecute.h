@@ -44,6 +44,12 @@ private:
     void setZones(const QJsonArray &arrZones, QList<TrenTakePutDefines::GameZoneInfo> &zones);
     void setElements(const QJsonArray &arrElements, QList<TrenTakePutDefines::GameElementInfo> &elements);
 
+    /*!
+     * \brief Формирует список каналов для выбора управления
+     * По формату получаем список каналов этого формата, которые передает драйвер, заносим их в список для выбора
+     */
+    void setChannels();
+
     int m_freqStab = 50;        ///< Частота дискретизации стабилограммы
     int m_freqZ = 50;           ///< Частота дискретизации баллистограммы
 
