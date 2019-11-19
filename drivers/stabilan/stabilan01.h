@@ -87,6 +87,12 @@ public:
     QList<QString> getChannelsByFormat(const QString &formatUid) const override;
 
     /*!
+     * \brief Возвращает кол-во подканалов для канала с заданным uid
+     * \param channelUid - uid канала
+     */
+    int getSubChannelsCount(const QString &channelUid) const override;
+
+    /*!
      * \brief Возвращает список протоколов
      */
     static QStringList getProtocols();
@@ -96,8 +102,8 @@ public:
      */
     static QList<DeviceProtocols::Ports> getPorts();
 
-    void calibrate() override;
-    void zeroing() override;
+    void calibrate(const QString &channelUid) override;
+    void zeroing(const QString &channelUid) override;
 
     /*!
      * \brief Возвращает название модели стабилоанализатора по коду

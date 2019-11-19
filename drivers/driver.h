@@ -67,7 +67,13 @@ public:
      * \brief Возвращает список uid-ов каналов, передаваемых драйвером по uid формата данных
      * \param protocolUid - uid формата данных
      */
-   virtual  QList<QString> getChannelsByFormat(const QString &formatUid) const = 0;
+    virtual QList<QString> getChannelsByFormat(const QString &formatUid) const = 0;
+
+    /*!
+     * \brief Возвращает кол-во подканалов для канала с заданным uid
+     * \param channelUid - uid канала
+     */
+    virtual int getSubChannelsCount(const QString &channelUid) const = 0;
 
 
 signals:

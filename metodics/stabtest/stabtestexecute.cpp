@@ -195,13 +195,13 @@ void StabTestExecute::zeroing()
 //    QLabel *lbl;   // Эмуляция сбоя
 //    delete lbl;
     if (m_stabControl)
-        m_stabControl->zeroing();
+        m_stabControl->zeroing(ChannelsDefines::chanStab);
 }
 
 void StabTestExecute::calibrate()
 {
     if (m_stabControl)
-        m_stabControl->calibrate();
+        m_stabControl->calibrate(ChannelsDefines::chanStab);
 }
 
 void StabTestExecute::recording()

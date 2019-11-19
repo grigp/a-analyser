@@ -102,7 +102,7 @@ public:
     /*!
      * \brief Возвращает значение подканала по индексу
      */
-    virtual double value(const int idx) const = 0;
+    virtual QVariant value(const int idx) const = 0;
 };
 
 /*!
@@ -143,16 +143,20 @@ public:
     double c() const {return m_c;}
     double d() const {return m_d;}
 
-    int subChanCount() const override {return 3;}
+    int subChanCount() const override {return 1;} //3;}
 
-    double value(const int idx) const override
+    QVariant value(const int idx) const override
     {
-        switch (idx) {
-        case 0: return m_x;
-        case 1: return m_y;
-        case 3: return m_z;
-        default: return 0;
-        }
+        Q_UNUSED(idx);
+        QPointF rec(m_x, m_y);
+        return QVariant::fromValue(rec);
+
+//        switch (idx) {
+//        case 0: return m_x;
+//        case 1: return m_y;
+//        case 3: return m_z;
+//        default: return 0;
+//        }
     }
 
     QString uid() const override {return uid_StabDvcData;}
@@ -173,7 +177,7 @@ public:
         : MultiData(sender, channelId), m_value(value) {}
 
     int subChanCount() const override {return 1;}
-    double value(const int idx) const override {Q_UNUSED(idx); return m_value;}
+    QVariant value(const int idx) const override {Q_UNUSED(idx); return m_value;}
 
 private:
     double m_value;
@@ -189,7 +193,7 @@ public:
         : MultiData(sender, channelId), m_data(data) {}
 
     int subChanCount() const override {return m_data.size();}
-    double value(const int idx) const override
+    QVariant value(const int idx) const override
     {
         Q_ASSERT(idx >= 0 && idx < m_data.size());
         return m_data.at(idx);
@@ -216,7 +220,7 @@ public:
 //    QString name() const override {return name_JumpPlateDvcData;}  Непонятно, как быть с локализацией
 
     int subChanCount() const override {return 0;}
-    double value(const int idx) const override {Q_UNUSED(idx); return 0;}
+    QVariant value(const int idx) const override {Q_UNUSED(idx); return 0;}
 
 private:
     int m_plate;
@@ -252,7 +256,7 @@ public:
     double con2() const {return m_con2;}
 
     int subChanCount() const override {return 0;}
-    double value(const int idx) const override {Q_UNUSED(idx); return 0;}
+    QVariant value(const int idx) const override {Q_UNUSED(idx); return 0;}
 
 private:
     int m_blockCnt;
@@ -314,8 +318,8 @@ public:
 class StabControl : public DeviceControl
 {
 public:
-    virtual void calibrate() = 0;
-    virtual void zeroing() = 0;
+    virtual void calibrate(const QString &channelUid) = 0;
+    virtual void zeroing(const QString &channelUid) = 0;
 
     static QString uid() {return uid_StabControl;}
 //    static QString name() {return name_StabControl;}         Непонятно, как быть с локализацией
@@ -329,7 +333,7 @@ public:
 class DynControl : public DeviceControl
 {
 public:
-    virtual void calibrate(int chan) = 0;
+    virtual void calibrate(const QString &channelUid) = 0;
 
     static QString uid() {return uid_DynControl;}
 //    static QString name() {return name_DynControl;}        Непонятно, как быть с локализацией

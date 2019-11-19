@@ -79,6 +79,12 @@ public:
     QList<QString> getChannelsByFormat(const QString &formatUid) const override;
 
     /*!
+     * \brief Возвращает кол-во подканалов для канала с заданным uid
+     * \param channelUid - uid канала
+     */
+    int getSubChannelsCount(const QString &channelUid) const override;
+
+    /*!
      * \brief Возвращает список протоколов
      * \return
      */

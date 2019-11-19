@@ -12,6 +12,14 @@
 class ChannelsUtils
 {
 public:
+
+    ///< Роли для данных в переключателе выбора каналов для управления
+    enum ChannelSelectRoles
+    {
+          ChannelUidRole = Qt::UserRole + 0   ///< Идентификатор канала QString
+        , SubChanNumRole                      ///< Номер подканала int
+    };
+
     static ChannelsUtils instance();
 
     QString channelType(const QString &channelId) const;

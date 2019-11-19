@@ -112,6 +112,14 @@ QList<QString> Stabilan01::getChannelsByFormat(const QString &formatUid) const
     return retval;
 }
 
+int Stabilan01::getSubChannelsCount(const QString &channelUid) const
+{
+    if (ChannelsUtils::instance().channelType(channelUid) == ChannelsDefines::ctStabilogram ||
+        ChannelsUtils::instance().channelType(channelUid) == ChannelsDefines::ctBallistogram)
+        return 1;
+    return 0;
+}
+
 QStringList Stabilan01::getProtocols()
 {
     return QStringList() << DeviceProtocols::uid_StabProtocol;
@@ -122,8 +130,9 @@ QList<DeviceProtocols::Ports> Stabilan01::getPorts()
     return DeviceProtocols::comPorts();
 }
 
-void Stabilan01::calibrate()
+void Stabilan01::calibrate(const QString &channelUid)
 {
+    Q_UNUSED(channelUid);
     QByteArray cmd;
     cmd.resize(2);
     cmd[0] = 0x33;
@@ -131,8 +140,9 @@ void Stabilan01::calibrate()
     emit writeData(cmd);
 }
 
-void Stabilan01::zeroing()
+void Stabilan01::zeroing(const QString &channelUid)
 {
+    Q_UNUSED(channelUid);
     m_offsetX = m_X;
     m_offsetY = m_Y;
 }

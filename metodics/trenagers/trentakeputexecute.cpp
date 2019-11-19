@@ -9,6 +9,7 @@
 
 #include <QTimer>
 #include <QMessageBox>
+#include <QPointF>
 #include <QDebug>
 
 TrenTakePutExecute::TrenTakePutExecute(QWidget *parent) :
@@ -118,15 +119,18 @@ void TrenTakePutExecute::start()
 
 void TrenTakePutExecute::getData(DeviceProtocols::DeviceData *data)
 {
-    if (ui->cbSelectChannel->currentData().toString() == data->channelId())
+    if (ui->cbSelectChannel->currentData(ChannelsUtils::ChannelUidRole).toString() == data->channelId())
     {
         ui->lblCommunicationError->setVisible(false);
 
-        auto* multiData = static_cast<DeviceProtocols::MultiData*>(data);
-        if (multiData->subChanCount() >= 2)
-            qDebug() << multiData->value(0) << multiData->value(1);
-        else
-            qDebug() << multiData->subChanCount();
+//        auto* multiData = static_cast<DeviceProtocols::MultiData*>(data);
+//        if (multiData->subChanCount() > 0)
+//        {
+//            QPointF rec = qvariant_cast<QPointF>(multiData->value(0));
+//            qDebug() << rec.x() << rec.y();
+//        }
+//        else
+//            qDebug() << multiData->subChanCount();
 
     }
 }
@@ -137,6 +141,13 @@ void TrenTakePutExecute::on_communicationError(const QString &drvName, const QSt
     ui->lblCommunicationError->setText(QString(tr("Ошибка связи с устройством") + ": %1 (" + tr("порт") + ": %2)").
                                        arg(drvName).arg(port));
     ui->lblCommunicationError->setVisible(true);
+}
+
+void TrenTakePutExecute::on_selectChannel(int chanIdx)
+{
+    qDebug() << chanIdx
+             << ui->cbSelectChannel->itemData(chanIdx, ChannelsUtils::ChannelUidRole)
+             << ui->cbSelectChannel->itemData(chanIdx, ChannelsUtils::SubChanNumRole);
 }
 
 void TrenTakePutExecute::setZones(const QJsonArray &arrZones, QList<TrenTakePutDefines::GameZoneInfo> &zones)
@@ -216,7 +227,14 @@ void TrenTakePutExecute::setChannels()
     auto listChanUid = m_driver->getChannelsByFormat(ChannelsDefines::cfDecartCoordinates);
     foreach (auto channelUid, listChanUid)
     {
-        auto name = ChannelsUtils::instance().channelName(channelUid);
-        ui->cbSelectChannel->addItem(name, channelUid);
+        auto subChanCnt = m_driver->getSubChannelsCount(channelUid);
+
+        for (int i = 0; i < subChanCnt; ++i)
+        {
+            auto name = ChannelsUtils::instance().channelName(channelUid);
+            ui->cbSelectChannel->addItem(name);
+            ui->cbSelectChannel->setItemData(ui->cbSelectChannel->count() - 1, channelUid, ChannelsUtils::ChannelUidRole);
+            ui->cbSelectChannel->setItemData(ui->cbSelectChannel->count() - 1, i, ChannelsUtils::SubChanNumRole);
+        }
     }
 }

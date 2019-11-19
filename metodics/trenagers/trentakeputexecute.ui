@@ -356,5 +356,25 @@
  <resources>
   <include location="../../kernel.qrc"/>
  </resources>
- <connections/>
+ <connections>
+  <connection>
+   <sender>cbSelectChannel</sender>
+   <signal>currentIndexChanged(int)</signal>
+   <receiver>TrenTakePutExecute</receiver>
+   <slot>on_selectChannel(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>724</x>
+     <y>226</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>869</x>
+     <y>233</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>on_selectChannel(int)</slot>
+ </slots>
 </ui>
