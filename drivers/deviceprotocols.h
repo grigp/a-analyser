@@ -313,13 +313,32 @@ public:
 };
 
 /*!
+ * \brief Класс управления данными, представляющими собой декартовы координаты DecartCoordControl class
+ */
+class DecartCoordControl : public DeviceControl
+{
+public:
+    virtual void zeroing(const QString &channelUid) = 0;
+
+    ~DecartCoordControl() {}
+};
+
+/*!
+ * \brief Класс управления данными, представляющими собой линейный канал LinearChanControl class
+ */
+class LinearChanControl : public DeviceControl
+{
+public:
+    ~LinearChanControl() {}
+};
+
+/*!
  * \brief Класс управления устройствами данными стабилографии StabControl class
  */
-class StabControl : public DeviceControl
+class StabControl : public DecartCoordControl
 {
 public:
     virtual void calibrate(const QString &channelUid) = 0;
-    virtual void zeroing(const QString &channelUid) = 0;
 
     static QString uid() {return uid_StabControl;}
 //    static QString name() {return name_StabControl;}         Непонятно, как быть с локализацией
@@ -330,7 +349,7 @@ public:
 /*!
  * \brief Класс управления устройствами данными динамометрии DynControl class
  */
-class DynControl : public DeviceControl
+class DynControl : public LinearChanControl
 {
 public:
     virtual void calibrate(const QString &channelUid) = 0;

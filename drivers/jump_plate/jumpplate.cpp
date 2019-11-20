@@ -79,6 +79,11 @@ QList<QString> JumpPlate::getChannelsByFormat(const QString &formatUid) const
     return QList<QString>();
 }
 
+QList<QString> JumpPlate::getChannels() const
+{
+    return QList<QString>();
+}
+
 int JumpPlate::getSubChannelsCount(const QString &channelUid) const
 {
     Q_UNUSED(channelUid);

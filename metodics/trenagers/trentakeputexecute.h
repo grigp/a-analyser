@@ -39,6 +39,7 @@ private slots:
     void on_communicationError(const QString &drvName, const QString &port, const int errorCode);
 
     void on_selectChannel(int chanIdx);
+    void on_zeroing();
 
 private:
     Ui::TrenTakePutExecute *ui;
@@ -52,11 +53,10 @@ private:
      */
     void setChannels();
 
-    int m_freqStab = 50;        ///< Частота дискретизации стабилограммы
-    int m_freqZ = 50;           ///< Частота дискретизации баллистограммы
+    int m_frequency = 50;        ///< Частота дискретизации
 
     Driver* m_driver {nullptr};     ///< Драйвер передающий данные
-    DeviceProtocols::StabControl* m_stabControl;  ///< Управление стабилографией в драйвере
+    DeviceProtocols::DecartCoordControl* m_dcControl;  ///< Управление декартовыми данными в драйвере
 
     TrenTakePutDefines::TakeOrder m_TakeTakeOrder {TrenTakePutDefines::toEnabledPrimary};
     TrenTakePutDefines::TakeOrder m_PutTakeOrder {TrenTakePutDefines::toEnabledPrimary};

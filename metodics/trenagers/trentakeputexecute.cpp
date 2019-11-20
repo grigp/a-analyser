@@ -91,9 +91,7 @@ void TrenTakePutExecute::start()
             getDriverByFormats(QStringList() << ChannelsDefines::cfDecartCoordinates);
     if (m_driver)
     {
-        m_stabControl = dynamic_cast<DeviceProtocols::StabControl*>(m_driver);
-        m_freqStab = m_driver->frequency(ChannelsDefines::chanStab);
-        m_freqZ = m_driver->frequency(ChannelsDefines::chanZ);
+        m_dcControl = dynamic_cast<DeviceProtocols::DecartCoordControl*>(m_driver);
 
         connect(m_driver, &Driver::sendData, this, &TrenTakePutExecute::getData);
         connect(m_driver, &Driver::communicationError, this, &TrenTakePutExecute::on_communicationError);
@@ -107,6 +105,9 @@ void TrenTakePutExecute::start()
 
         // По формату получаем список каналов этого формата, которые передает драйвер, заносим их в список для выбора
         setChannels();
+
+        auto chanUid = ui->cbSelectChannel->currentData(ChannelsUtils::ChannelUidRole).toString();
+        m_frequency = m_driver->frequency(chanUid);
 
         m_driver->start();
     }
@@ -148,6 +149,13 @@ void TrenTakePutExecute::on_selectChannel(int chanIdx)
     qDebug() << chanIdx
              << ui->cbSelectChannel->itemData(chanIdx, ChannelsUtils::ChannelUidRole)
              << ui->cbSelectChannel->itemData(chanIdx, ChannelsUtils::SubChanNumRole);
+}
+
+void TrenTakePutExecute::on_zeroing()
+{
+    auto chanUid = ui->cbSelectChannel->currentData(ChannelsUtils::ChannelUidRole).toString();
+    if (m_dcControl && chanUid != "")
+        m_dcControl->zeroing(chanUid);
 }
 
 void TrenTakePutExecute::setZones(const QJsonArray &arrZones, QList<TrenTakePutDefines::GameZoneInfo> &zones)

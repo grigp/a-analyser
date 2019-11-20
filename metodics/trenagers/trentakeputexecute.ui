@@ -373,8 +373,25 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>btnZeroing</sender>
+   <signal>clicked()</signal>
+   <receiver>TrenTakePutExecute</receiver>
+   <slot>on_zeroing()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>815</x>
+     <y>29</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>866</x>
+     <y>29</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>on_selectChannel(int)</slot>
+  <slot>on_zeroing()</slot>
  </slots>
 </ui>

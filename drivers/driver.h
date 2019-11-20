@@ -70,6 +70,11 @@ public:
     virtual QList<QString> getChannelsByFormat(const QString &formatUid) const = 0;
 
     /*!
+     * \brief Возвращает список всех каналов, передаваемых драйвером
+     */
+    virtual QList<QString> getChannels() const = 0;
+
+    /*!
      * \brief Возвращает кол-во подканалов для канала с заданным uid
      * \param channelUid - uid канала
      */

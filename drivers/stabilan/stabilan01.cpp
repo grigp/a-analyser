@@ -98,6 +98,7 @@ int Stabilan01::frequency(const QString &channelId) const
 
 QList<QString> Stabilan01::getChannelsByProtocol(const QString &protocolUid) const
 {
+    // todo: Неплохо было бы автоматизировать, используя getChannels(), чтобы один раз составить список, а здесь только выбирать из него
     QList<QString> retval;
     if (protocolUid == DeviceProtocols::uid_StabProtocol)
         retval << ChannelsDefines::chanStab;
@@ -106,9 +107,17 @@ QList<QString> Stabilan01::getChannelsByProtocol(const QString &protocolUid) con
 
 QList<QString> Stabilan01::getChannelsByFormat(const QString &formatUid) const
 {
+    // todo: Неплохо было бы автоматизировать, используя getChannels(), чтобы один раз составить список, а здесь только выбирать из него
     QList<QString> retval;
     if (formatUid == ChannelsDefines::cfDecartCoordinates)
         retval << ChannelsDefines::chanStab;
+    return retval;
+}
+
+QList<QString> Stabilan01::getChannels() const
+{
+    QList<QString> retval;
+    retval << ChannelsDefines::chanStab;
     return retval;
 }
 
