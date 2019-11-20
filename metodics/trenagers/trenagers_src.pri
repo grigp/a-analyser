@@ -13,7 +13,8 @@ SOURCES += \
     $$PWD/trentakeputvisualize.cpp \
     $$PWD/trentakeputtestcalculator.cpp \
     $$PWD/trentakeputtemplate.cpp \
-    $$PWD/trentakeputparamsdialog.cpp
+    $$PWD/trentakeputparamsdialog.cpp \
+    $$PWD/trentakeputdefines.cpp
 
 FORMS += \
     $$PWD/trentakeputexecute.ui \

@@ -5,6 +5,7 @@
 #include <QJsonObject>
 #include <QJsonArray>
 #include <QList>
+#include <QGraphicsScene>
 
 #include "datadefines.h"
 #include "deviceprotocols.h"
@@ -53,13 +54,29 @@ private:
      */
     void setChannels();
 
+    /*!
+     * \brief Генерация новой сцены
+     */
+    void newScene();
+
+    void allocBySeparatePositions(TrenTakePutDefines::TakeOrder &takeOrder,
+                                  QList<TrenTakePutDefines::GameZoneInfo> &zones,
+                                  QList<TrenTakePutDefines::GameElementInfo> &elements);
+
+    void allocElements(QList<TrenTakePutDefines::GameZoneInfo> &zones,
+                       QList<TrenTakePutDefines::GameElementInfo> &elements,
+                       int enabled);   ///< -1 - все, 1 - только enabled == true, 0 - только enabled == false
+    bool isEmptyZonesPresent(QList<TrenTakePutDefines::GameZoneInfo> &zones) const;
+
+    QGraphicsScene* m_scene {nullptr};
+
     int m_frequency = 50;        ///< Частота дискретизации
 
     Driver* m_driver {nullptr};     ///< Драйвер передающий данные
     DeviceProtocols::DecartCoordControl* m_dcControl;  ///< Управление декартовыми данными в драйвере
 
-    TrenTakePutDefines::TakeOrder m_TakeTakeOrder {TrenTakePutDefines::toEnabledPrimary};
-    TrenTakePutDefines::TakeOrder m_PutTakeOrder {TrenTakePutDefines::toEnabledPrimary};
+    TrenTakePutDefines::TakeOrder m_takeTakeOrder {TrenTakePutDefines::toEnabledPrimary};
+    TrenTakePutDefines::TakeOrder m_putTakeOrder {TrenTakePutDefines::toEnabledPrimary};
     TrenTakePutDefines::StageMode m_stageMode {TrenTakePutDefines::smTakePut};
 
     ///< Зоны игры и элементы

@@ -15,6 +15,7 @@
 TrenTakePutExecute::TrenTakePutExecute(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::TrenTakePutExecute)
+  , m_scene(new QGraphicsScene(-1000, -1000, 2000, 2000))
 {
     ui->setupUi(this);
 
@@ -29,6 +30,8 @@ TrenTakePutExecute::TrenTakePutExecute(QWidget *parent) :
     ui->cbScale->addItem("32");
     ui->cbScale->addItem("64");
     ui->cbScale->addItem("128");
+
+    ui->gvGame->setScene(m_scene);
 }
 
 TrenTakePutExecute::~TrenTakePutExecute()
@@ -46,9 +49,9 @@ void TrenTakePutExecute::setParams(const QJsonObject &params)
     auto objTakeOrder = params["take_order"].toObject();
     auto tto = objTakeOrder["mode"].toString();
     if (tto == "enabled_primary")
-        m_TakeTakeOrder = TrenTakePutDefines::toEnabledPrimary;
+        m_takeTakeOrder = TrenTakePutDefines::toEnabledPrimary;
     if (tto == "all_by_order")
-        m_TakeTakeOrder = TrenTakePutDefines::toAllByOrder;
+        m_takeTakeOrder = TrenTakePutDefines::toAllByOrder;
 
     auto arrPutZones = params["put_zones"].toArray();
     auto arrPutElements = params["put_elements"].toArray();
@@ -58,9 +61,9 @@ void TrenTakePutExecute::setParams(const QJsonObject &params)
     auto objPutOrder = params["put_order"].toObject();
     auto pto = objPutOrder["mode"].toString();
     if (pto == "enabled_primary")
-        m_PutTakeOrder = TrenTakePutDefines::toEnabledPrimary;
+        m_putTakeOrder = TrenTakePutDefines::toEnabledPrimary;
     if (pto == "all_by_order")
-        m_PutTakeOrder = TrenTakePutDefines::toAllByOrder;
+        m_putTakeOrder = TrenTakePutDefines::toAllByOrder;
 
     auto sStage = params["stage"].toString();
     if (sStage == "take_put")
@@ -110,6 +113,8 @@ void TrenTakePutExecute::start()
         m_frequency = m_driver->frequency(chanUid);
 
         m_driver->start();
+
+        newScene();
     }
     else
     {
@@ -245,4 +250,84 @@ void TrenTakePutExecute::setChannels()
             ui->cbSelectChannel->setItemData(ui->cbSelectChannel->count() - 1, i, ChannelsUtils::SubChanNumRole);
         }
     }
+}
+
+void TrenTakePutExecute::newScene()
+{
+    m_scene->clear();
+
+    if (m_elementsTake.size() > 0 && m_elementsPut.size() > 0 &&
+        m_zonesTake.size() > 0 && m_zonesPut.size() > 0)
+    {
+        //! Распределение по отдельным позициям
+        if (m_elementsTake.at(0).style == TrenTakePutDefines::esPictureFixed ||
+            m_elementsTake.at(0).style == TrenTakePutDefines::esDrawing)
+        {
+            allocBySeparatePositions(m_takeTakeOrder, m_zonesTake, m_elementsTake);
+            allocBySeparatePositions(m_putTakeOrder, m_zonesPut, m_elementsPut);
+        }
+        else
+        //! Распределение парных
+        if (m_elementsTake.at(0).style == TrenTakePutDefines::esPicturePair)
+        {
+
+        }
+        else
+        //! Распределение разделенных
+        if (m_elementsTake.at(0).style == TrenTakePutDefines::esPictureSplit)
+        {
+
+        }
+    }
+}
+
+void TrenTakePutExecute::allocBySeparatePositions(TrenTakePutDefines::TakeOrder &takeOrder,
+                                                  QList<TrenTakePutDefines::GameZoneInfo> &zones,
+                                                  QList<TrenTakePutDefines::GameElementInfo> &elements)
+{
+    //! Сначала допустимые, потом остальные
+    if (takeOrder == TrenTakePutDefines::toEnabledPrimary)
+    {
+        allocElements(zones, elements, 1);
+        while (isEmptyZonesPresent(zones))
+            allocElements(zones, elements, 0);
+    }
+    else
+    //! Все по порядку
+    if (takeOrder == TrenTakePutDefines::toAllByOrder)
+        if (m_elementsTake.size() == m_zonesTake.size())
+            allocElements(zones, elements, -1);
+}
+
+void TrenTakePutExecute::allocElements(QList<TrenTakePutDefines::GameZoneInfo> &zones,
+                                       QList<TrenTakePutDefines::GameElementInfo> &elements,
+                                       int enabled)
+{
+    foreach (auto element, elements)
+    {
+        if (enabled == -1 || enabled == element.enabled)
+        {
+            auto* gameElement = new TrenTakePutDefines::GameElement();
+            gameElement->assignElementInfo(&element);
+
+            int zoneNum = 0;
+            do
+                zoneNum = qrand() % zones.size();
+            while (zones.at(zoneNum).element != nullptr);
+
+            auto zone = zones.at(zoneNum);
+            zone.setElement(gameElement);
+            zones.replace(zoneNum, zone);
+
+            m_scene->addItem(gameElement);
+        }
+    }
+}
+
+bool TrenTakePutExecute::isEmptyZonesPresent(QList<TrenTakePutDefines::GameZoneInfo> &zones) const
+{
+    foreach (auto zone, zones)
+        if (zone.element == nullptr)
+            return true;
+    return false;
 }

@@ -76,6 +76,10 @@ class GameElement : public QGraphicsItem
 public:
     explicit GameElement(QGraphicsItem *parent = nullptr) : QGraphicsItem(parent) {}
 
+    QRectF boundingRect() const override;
+
+    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
+
     GameElementInfo* elementInfo() const {return m_element;}
     void assignElementInfo(GameElementInfo* element) {m_element = element;}
 
@@ -88,6 +92,7 @@ private:
  */
 struct GameZoneInfo
 {
+public:
     PositionKind posKind {pkFixed};
     int x_min {0};                         ///< Диапазон значений позиции для posKind == pkRandom
     int x_max {0};
@@ -104,6 +109,9 @@ struct GameZoneInfo
     GameElement* element {nullptr};        ///< Назначенный для зоны графический элемент
 
     GameZoneInfo() {}
+
+    void setElement(GameElement* elem) {element = elem;}
+    void clearElement() {element = nullptr;}
 };
 
 /*!
