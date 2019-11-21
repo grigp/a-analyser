@@ -98,3 +98,26 @@ QColor BaseUtils::strRGBAToColor(const QString rgbaStr)
     return QColor::fromRgba(colCode);
 }
 
+
+void BaseUtils::setColoredPicture(QPixmap &pixmap, const QColor &color)
+{
+    int o_r = color.red();
+    int o_g = color.green();
+    int o_b = color.blue();
+    auto image = pixmap.toImage();
+    for (int i = 0; i < pixmap.width(); ++i)
+        for (int j = 0; j < pixmap.height(); ++j)
+        {
+            auto rgb = image.pixel(i, j);
+            auto pixelColor = qRed(rgb);
+            auto pixelA = qAlpha(rgb);
+            if (pixelColor > 0)
+            {
+                int r = o_r * pixelColor / 255;
+                int g = o_g * pixelColor / 255;
+                int b = o_b * pixelColor / 255;
+                image.setPixel(i, j, qRgba(r, g, b, pixelA));
+            }
+        }
+    pixmap.convertFromImage(image);
+}

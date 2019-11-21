@@ -6,6 +6,8 @@
 #include <QJsonArray>
 #include <QList>
 #include <QGraphicsScene>
+#include <QGraphicsPixmapItem>
+#include <QResizeEvent>
 
 #include "datadefines.h"
 #include "deviceprotocols.h"
@@ -33,6 +35,8 @@ public:
 protected:
     void closeEvent(QCloseEvent *event);
 
+    void resizeEvent(QResizeEvent* event);
+
 private slots:
     void start();
 
@@ -47,6 +51,7 @@ private:
 
     void setZones(const QJsonArray &arrZones, QList<TrenTakePutDefines::GameZoneInfo> &zones);
     void setElements(const QJsonArray &arrElements, QList<TrenTakePutDefines::GameElementInfo> &elements);
+    void setMarker(const QJsonObject &objMarker);
 
     /*!
      * \brief Формирует список каналов для выбора управления
@@ -69,6 +74,8 @@ private:
     bool isEmptyZonesPresent(QList<TrenTakePutDefines::GameZoneInfo> &zones) const;
 
     QGraphicsScene* m_scene {nullptr};
+    double m_prop = 1; ///< Пропорция для пересчера базовой сцены 2000 x 2000 в реальные размеры игровой сцены
+    QGraphicsPixmapItem *m_marker {nullptr};
 
     int m_frequency = 50;        ///< Частота дискретизации
 

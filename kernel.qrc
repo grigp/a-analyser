@@ -60,5 +60,14 @@
         <file>pre_settings/metodics_ids_en_US.json</file>
         <file>pre_settings/metodics_stab.json</file>
         <file>pre_settings/metodics_stab_en_US.json</file>
+        <file>images/Games/ball.png</file>
+        <file>images/Games/basket.png</file>
+        <file>images/Games/cone.png</file>
+        <file>images/Games/cube.png</file>
+        <file>images/Games/piramide.png</file>
+        <file>images/Games/prism.png</file>
+        <file>images/Games/Marker1.png</file>
+        <file>images/Games/Marker2.png</file>
+        <file>images/Games/Marker3.png</file>
     </qresource>
 </RCC>

@@ -46,6 +46,8 @@ void TrenTakePutExecute::setParams(const QJsonObject &params)
     setZones(arrTakeZones, m_zonesTake);
     setElements(arrTakeElements, m_elementsTake);
 
+    setMarker(params["marker"].toObject());
+
     auto objTakeOrder = params["take_order"].toObject();
     auto tto = objTakeOrder["mode"].toString();
     if (tto == "enabled_primary")
@@ -86,6 +88,15 @@ void TrenTakePutExecute::closeEvent(QCloseEvent *event)
         m_driver->deleteLater();
     }
     QWidget::closeEvent(event);
+}
+
+void TrenTakePutExecute::resizeEvent(QResizeEvent *event)
+{
+    int size = event->size().height();
+    if (event->size().width() < event->size().height())
+        size = event->size().width();
+    m_scene->setSceneRect(-size / 2, - size / 2, size, size);
+    m_prop = static_cast<double>(size) / 2000;
 }
 
 void TrenTakePutExecute::start()
@@ -129,12 +140,14 @@ void TrenTakePutExecute::getData(DeviceProtocols::DeviceData *data)
     {
         ui->lblCommunicationError->setVisible(false);
 
-//        auto* multiData = static_cast<DeviceProtocols::MultiData*>(data);
-//        if (multiData->subChanCount() > 0)
-//        {
-//            QPointF rec = qvariant_cast<QPointF>(multiData->value(0));
+        auto* multiData = static_cast<DeviceProtocols::MultiData*>(data);
+        if (multiData->subChanCount() > 0)
+        {
+            QPointF rec = qvariant_cast<QPointF>(multiData->value(0));
+            if (m_marker)
+                m_marker->setPos(rec.x(), rec.y());
 //            qDebug() << rec.x() << rec.y();
-//        }
+        }
 //        else
 //            qDebug() << multiData->subChanCount();
 
@@ -235,6 +248,17 @@ void TrenTakePutExecute::setElements(const QJsonArray &arrElements, QList<TrenTa
     }
 }
 
+void TrenTakePutExecute::setMarker(const QJsonObject &objMarker)
+{
+    auto style = objMarker["style"].toString();
+    if (style == "picture")
+    {
+        QPixmap mpmp(":/images/Games/" + objMarker["image"].toString());
+        BaseUtils::setColoredPicture(mpmp, BaseUtils::strRGBAToColor(objMarker["color"].toString()));
+        m_marker = new QGraphicsPixmapItem(mpmp);
+    }
+}
+
 void TrenTakePutExecute::setChannels()
 {
     auto listChanUid = m_driver->getChannelsByFormat(ChannelsDefines::cfDecartCoordinates);
@@ -279,6 +303,9 @@ void TrenTakePutExecute::newScene()
 
         }
     }
+
+    m_scene->addItem(m_marker);
+    m_marker->setPos(0, 0);
 }
 
 void TrenTakePutExecute::allocBySeparatePositions(TrenTakePutDefines::TakeOrder &takeOrder,
@@ -318,6 +345,16 @@ void TrenTakePutExecute::allocElements(QList<TrenTakePutDefines::GameZoneInfo> &
             auto zone = zones.at(zoneNum);
             zone.setElement(gameElement);
             zones.replace(zoneNum, zone);
+
+            if (zone.posKind == TrenTakePutDefines::pkFixed)
+                gameElement->setPos(zone.x * m_prop, zone.y * m_prop);
+            else
+            if (zone.posKind == TrenTakePutDefines::pkRandom)
+            {
+                int x = zone.x_min + qrand() % (zone.x_max - zone.x_min);
+                int y = zone.y_min + qrand() % (zone.y_max - zone.y_min);
+                gameElement->setPos(x * m_prop, y * m_prop);
+            }
 
             m_scene->addItem(gameElement);
         }

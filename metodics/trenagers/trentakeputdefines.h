@@ -2,6 +2,7 @@
 #define TRENTAKEPUTDEFINES_H
 
 #include <QGraphicsItem>
+#include <QPixmap>
 
 namespace TrenTakePutDefines
 {
@@ -74,17 +75,19 @@ struct GameElementInfo;
 class GameElement : public QGraphicsItem
 {
 public:
-    explicit GameElement(QGraphicsItem *parent = nullptr) : QGraphicsItem(parent) {}
+    explicit GameElement(QGraphicsItem *parent = nullptr);
 
     QRectF boundingRect() const override;
 
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
 
     GameElementInfo* elementInfo() const {return m_element;}
-    void assignElementInfo(GameElementInfo* element) {m_element = element;}
+    void assignElementInfo(GameElementInfo* element);
+    void clearElementInfo() {m_element = nullptr;}
 
 private:
     GameElementInfo* m_element {nullptr};
+    QPixmap m_pixmap;
 };
 
 /*!

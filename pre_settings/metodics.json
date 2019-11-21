@@ -320,21 +320,21 @@
                     {
                         "position": "fixed",
                         "x": -670,
-                        "y": -600,
+                        "y": 700,
                         "width": 200,
                         "height": 200
                     },
                     {
                         "position": "fixed",
                         "x": 0,
-                        "y": -600,
+                        "y": 700,
                         "width": 200,
                         "height": 200
                     },
                     {
                         "position": "fixed",
                         "x": 670,
-                        "y": -600,
+                        "y": 700,
                         "width": 200,
                         "height": 200
                     }
@@ -359,6 +359,13 @@
                 ],
                 "put_order": {
                     "mode": "enabled_primary"
+                },
+                "marker":
+                {
+                    "style": "picture",
+                    "image": "Marker1.png",
+                    "repaint": true,
+                    "color": "ffff0000"
                 },
                 "stage": "take_put",
                 "scale": 1
@@ -375,21 +382,21 @@
                     {
                         "position": "fixed",
                         "x": -670,
-                        "y": 900,
+                        "y": -800,
                         "width": 50,
                         "height": 50
                     },
                     {
                         "position": "fixed",
                         "x": 0,
-                        "y": 900,
+                        "y": -800,
                         "width": 50,
                         "height": 50
                     },
                     {
                         "position": "fixed",
                         "x": 670,
-                        "y": 900,
+                        "y": -800,
                         "width": 50,
                         "height": 50
                     }
@@ -427,21 +434,21 @@
                     {
                         "position": "fixed",
                         "x": -670,
-                        "y": -600,
+                        "y": 700,
                         "width": 200,
                         "height": 200
                     },
                     {
                         "position": "fixed",
                         "x": 0,
-                        "y": -600,
+                        "y": 700,
                         "width": 200,
                         "height": 200
                     },
                     {
                         "position": "fixed",
                         "x": 670,
-                        "y": -600,
+                        "y": 700,
                         "width": 200,
                         "height": 200
                     }
@@ -475,6 +482,13 @@
                 "put_order": {
                     "mode": "all_by_order"
                 },
+                "marker":
+                {
+                    "style": "picture",
+                    "image": "Marker1.png",
+                    "repaint": true,
+                    "color": "ffff0000"
+                },
                 "stage": "all_elements",
                 "scale": 1
             }
@@ -490,21 +504,21 @@
                     {
                         "position": "fixed",
                         "x": -670,
-                        "y": 900,
+                        "y": -800,
                         "width": 50,
                         "height": 50
                     },
                     {
                         "position": "fixed",
                         "x": 0,
-                        "y": 900,
+                        "y": -800,
                         "width": 50,
                         "height": 50
                     },
                     {
                         "position": "fixed",
                         "x": 670,
-                        "y": 900,
+                        "y": -800,
                         "width": 50,
                         "height": 50
                     }
@@ -542,21 +556,21 @@
                     {
                         "position": "fixed",
                         "x": -670,
-                        "y": -600,
+                        "y": 700,
                         "width": 200,
                         "height": 200
                     },
                     {
                         "position": "fixed",
                         "x": 0,
-                        "y": -600,
+                        "y": 700,
                         "width": 200,
                         "height": 200
                     },
                     {
                         "position": "fixed",
                         "x": 670,
-                        "y": -600,
+                        "y": 700,
                         "width": 200,
                         "height": 200
                     }
@@ -582,6 +596,13 @@
                 "put_order": {
                     "mode": "enabled_primary"
                 },
+                "marker":
+                {
+                    "style": "picture",
+                    "image": "Marker1.png",
+                    "repaint": true,
+                    "color": "ffff0000"
+                },
                 "stage": "take_put",
                 "scale": 1
             }
@@ -597,13 +618,13 @@
                     {
                         "position": "fixed",
                         "x": 0,
-                        "y": 900,
+                        "y": 800,
                         "width": 50,
                         "height": 50
                     },
                     {
                         "position": "fixed",
-                        "x": 900,
+                        "x": 800,
                         "y": 0,
                         "width": 50,
                         "height": 50
@@ -611,13 +632,13 @@
                     {
                         "position": "fixed",
                         "x": 0,
-                        "y": -900,
+                        "y": -800,
                         "width": 50,
                         "height": 50
                     },
                     {
                         "position": "fixed",
-                        "x": -900,
+                        "x": -800,
                         "y": 0,
                         "width": 50,
                         "height": 50
@@ -650,7 +671,7 @@
                     },
                     {
                         "style": "picture_fixed",
-                        "images": "prizm.png",
+                        "images": "cone.png",
                         "repaint": true,
                         "color": "ffffff00",
                         "enabled": false,
@@ -681,6 +702,13 @@
                 ],
                 "put_order": {
                     "mode": "enabled_primary"
+                },
+                "marker":
+                {
+                    "style": "picture",
+                    "image": "Marker1.png",
+                    "repaint": true,
+                    "color": "ffff0000"
                 },
                 "stage": "take_put",
                 "scale": 1
@@ -777,6 +805,13 @@
                 "put_order": {
                     "mode": "all_by_order"
                 },
+                "marker":
+                {
+                    "style": "picture",
+                    "image": "Marker1.png",
+                    "repaint": true,
+                    "color": "ffff0000"
+                },
                 "stage": "all_elements",
                 "scale": 1
             }
@@ -871,6 +906,13 @@
                 ],
                 "put_order": {
                     "mode": "all_by_order"
+                },
+                "marker":
+                {
+                    "style": "picture",
+                    "image": "Marker1.png",
+                    "repaint": true,
+                    "color": "ffff0000"
                 },
                 "stage": "all_elements",
                 "scale": 1

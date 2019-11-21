@@ -54,6 +54,13 @@ QString colorToRGBAStr(const QColor color);
  */
 QColor strRGBAToColor(const QString rgbaStr);
 
+/*!
+ * \brief Перекрашивает картинку в заданный цвет
+ * \param pixmap - картинка
+ * \param color - заданный цвет
+ */
+void setColoredPicture(QPixmap &pixmap, const QColor &color);
+
 
 }
 
