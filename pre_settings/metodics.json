@@ -314,7 +314,8 @@
                     }
                 ],
                 "take_order": {
-                    "mode": "enabled_primary"
+                    "mode": "enabled_primary",
+                    "time": 0
                 },
                 "put_zones": [
                     {
@@ -358,7 +359,8 @@
                     }
                 ],
                 "put_order": {
-                    "mode": "enabled_primary"
+                    "mode": "enabled_primary",
+                    "time": 0
                 },
                 "marker":
                 {
@@ -428,7 +430,8 @@
                     }
                 ],
                 "take_order": {
-                    "mode": "all_by_order"
+                    "mode": "all_by_order",
+                    "time": 0
                 },
                 "put_zones": [
                     {
@@ -480,7 +483,8 @@
                     }
                 ],
                 "put_order": {
-                    "mode": "all_by_order"
+                    "mode": "all_by_order",
+                    "time": 0
                 },
                 "marker":
                 {
@@ -550,7 +554,8 @@
                     }
                 ],
                 "take_order": {
-                    "mode": "enabled_primary"
+                    "mode": "enabled_primary",
+                    "time": 0
                 },
                 "put_zones": [
                     {
@@ -594,7 +599,8 @@
                     }
                 ],
                 "put_order": {
-                    "mode": "enabled_primary"
+                    "mode": "enabled_primary",
+                    "time": 0
                 },
                 "marker":
                 {
@@ -679,7 +685,8 @@
                     }
                 ],
                 "take_order": {
-                    "mode": "enabled_primary"
+                    "mode": "enabled_primary",
+                    "time": 0
                 },
                 "put_zones": [
                     {
@@ -701,7 +708,8 @@
                     }
                 ],
                 "put_order": {
-                    "mode": "enabled_primary"
+                    "mode": "enabled_primary",
+                    "time": 0
                 },
                 "marker":
                 {
@@ -761,7 +769,8 @@
                     }
                 ],
                 "take_order": {
-                    "mode": "all_by_order"
+                    "mode": "all_by_order",
+                    "time": 1
                 },
                 "put_zones": [
                     {
@@ -803,7 +812,8 @@
                     }
                 ],
                 "put_order": {
-                    "mode": "all_by_order"
+                    "mode": "all_by_order",
+                    "time": 1
                 },
                 "marker":
                 {
@@ -863,7 +873,8 @@
                     }
                 ],
                 "take_order": {
-                    "mode": "all_by_order"
+                    "mode": "all_by_order",
+                    "time": 1
                 },
                 "put_zones": [
                     {
@@ -905,7 +916,8 @@
                     }
                 ],
                 "put_order": {
-                    "mode": "all_by_order"
+                    "mode": "all_by_order",
+                    "time": 1
                 },
                 "marker":
                 {

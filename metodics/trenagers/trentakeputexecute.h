@@ -45,12 +45,15 @@ private slots:
 
     void on_selectChannel(int chanIdx);
     void on_zeroing();
+    void on_scaleChange(int scaleIdx);
 
 private:
     Ui::TrenTakePutExecute *ui;
 
     void setZones(const QJsonArray &arrZones, QList<TrenTakePutDefines::GameZoneInfo> &zones);
-    void setElements(const QJsonArray &arrElements, QList<TrenTakePutDefines::GameElementInfo> &elements);
+    void setElements(const QJsonArray &arrElements,
+                     QList<TrenTakePutDefines::GameElementInfo> &elements,
+                     TrenTakePutDefines::GameStage stage);
     void setMarker(const QJsonObject &objMarker);
 
     /*!
@@ -66,24 +69,41 @@ private:
 
     void allocBySeparatePositions(TrenTakePutDefines::TakeOrder &takeOrder,
                                   QList<TrenTakePutDefines::GameZoneInfo> &zones,
-                                  QList<TrenTakePutDefines::GameElementInfo> &elements);
+                                  QList<TrenTakePutDefines::GameElementInfo> &elements,
+                                  const int zOrder);
 
     void allocElements(QList<TrenTakePutDefines::GameZoneInfo> &zones,
                        QList<TrenTakePutDefines::GameElementInfo> &elements,
-                       int enabled);   ///< -1 - все, 1 - только enabled == true, 0 - только enabled == false
+                       int enabled,         ///< -1 - все, 1 - только enabled == true, 0 - только enabled == false
+                       const int zOrder);
     bool isEmptyZonesPresent(QList<TrenTakePutDefines::GameZoneInfo> &zones) const;
+
+    int scaleMultiplier() const;
+
+    /*!
+     * \brief Проверяет, находится ли маркер на элементе
+     * В режиме захвата m_gameStage == gmTake берет только элементы с movableWithMarker == true,
+     * в режиме укладки m_gameStage == gmPut берет только элементы с movableWithMarker == false
+     * \return указатель на элемент или nullptr, если не на элементе
+     */
+    TrenTakePutDefines::GameElement* markerOnGameElement();
 
     QGraphicsScene* m_scene {nullptr};
     double m_prop = 1; ///< Пропорция для пересчера базовой сцены 2000 x 2000 в реальные размеры игровой сцены
     QGraphicsPixmapItem *m_marker {nullptr};
+    QGraphicsItem *m_item1 {nullptr};  // !!!! Временно!!!
 
     int m_frequency = 50;        ///< Частота дискретизации
 
     Driver* m_driver {nullptr};     ///< Драйвер передающий данные
     DeviceProtocols::DecartCoordControl* m_dcControl;  ///< Управление декартовыми данными в драйвере
 
+    TrenTakePutDefines::GameStage m_gameStage {TrenTakePutDefines::gsTake};
+
     TrenTakePutDefines::TakeOrder m_takeTakeOrder {TrenTakePutDefines::toEnabledPrimary};
     TrenTakePutDefines::TakeOrder m_putTakeOrder {TrenTakePutDefines::toEnabledPrimary};
+    int m_timeFixTake {0};
+    int m_timeFixPut {0};
     TrenTakePutDefines::StageMode m_stageMode {TrenTakePutDefines::smTakePut};
 
     ///< Зоны игры и элементы
@@ -92,6 +112,7 @@ private:
     QList<TrenTakePutDefines::GameElementInfo> m_elementsTake;
     QList<TrenTakePutDefines::GameElementInfo> m_elementsPut;
 
+    TrenTakePutDefines::GameElement *m_elementTake {nullptr};
 
 //    DataDefines::PatientKard m_kard;
 

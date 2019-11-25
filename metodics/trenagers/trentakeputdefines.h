@@ -8,6 +8,17 @@ namespace TrenTakePutDefines
 {
 
 /*!
+ * \brief Этапы игры GameStage enum
+ */
+enum GameStage
+{
+      gsTake = 0     ///< Поиск захвата
+    , gsTakeProcess  ///< Процесс захвата
+    , gsPut          ///< Поиск укладки
+    , gsPutProcess   ///< Процесс укладки
+};
+
+/*!
  * \brief Типы позиции зоны PositionKind enum
  */
 enum PositionKind
@@ -85,9 +96,13 @@ public:
     void assignElementInfo(GameElementInfo* element);
     void clearElementInfo() {m_element = nullptr;}
 
+    bool isProcessed() const {return m_isProcessed;}
+    void setProcessed(const bool isProcessed) {m_isProcessed = isProcessed;}
+
 private:
     GameElementInfo* m_element {nullptr};
     QPixmap m_pixmap;
+    bool m_isProcessed {false};
 };
 
 /*!
@@ -130,6 +145,7 @@ struct GameElementInfo
     ElementDrawing drawing {edRectangle}; ///< Режим прорисовки при style == esDrawing
     bool enabled {true};                  ///< Можно ли захватывать элемент
     int code {0};                         ///< Код элемента. Можно укладывать друг на друга только элементы с совпадающим кодом
+    bool movableWithMarker {false};       ///< Будет ли элемент перемещатся маркером
 
     GameElementInfo() {}
 };

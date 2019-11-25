@@ -44,7 +44,7 @@ void TrenTakePutExecute::setParams(const QJsonObject &params)
     auto arrTakeZones = params["take_zones"].toArray();
     auto arrTakeElements = params["take_elements"].toArray();
     setZones(arrTakeZones, m_zonesTake);
-    setElements(arrTakeElements, m_elementsTake);
+    setElements(arrTakeElements, m_elementsTake, TrenTakePutDefines::gsTake);
 
     setMarker(params["marker"].toObject());
 
@@ -54,11 +54,12 @@ void TrenTakePutExecute::setParams(const QJsonObject &params)
         m_takeTakeOrder = TrenTakePutDefines::toEnabledPrimary;
     if (tto == "all_by_order")
         m_takeTakeOrder = TrenTakePutDefines::toAllByOrder;
+    m_timeFixTake = objTakeOrder["time"].toInt();
 
     auto arrPutZones = params["put_zones"].toArray();
     auto arrPutElements = params["put_elements"].toArray();
     setZones(arrPutZones, m_zonesPut);
-    setElements(arrPutElements, m_elementsPut);
+    setElements(arrPutElements, m_elementsPut, TrenTakePutDefines::gsPut);
 
     auto objPutOrder = params["put_order"].toObject();
     auto pto = objPutOrder["mode"].toString();
@@ -66,6 +67,7 @@ void TrenTakePutExecute::setParams(const QJsonObject &params)
         m_putTakeOrder = TrenTakePutDefines::toEnabledPrimary;
     if (pto == "all_by_order")
         m_putTakeOrder = TrenTakePutDefines::toAllByOrder;
+    m_timeFixPut = objPutOrder["time"].toInt();
 
     auto sStage = params["stage"].toString();
     if (sStage == "take_put")
@@ -145,12 +147,54 @@ void TrenTakePutExecute::getData(DeviceProtocols::DeviceData *data)
         {
             QPointF rec = qvariant_cast<QPointF>(multiData->value(0));
             if (m_marker)
-                m_marker->setPos(rec.x(), rec.y());
-//            qDebug() << rec.x() << rec.y();
-        }
-//        else
-//            qDebug() << multiData->subChanCount();
+            {
+                double mx = rec.x() / (128 / scaleMultiplier()) * (m_scene->sceneRect().width() / 2);
+                double my = - rec.y() / (128 / scaleMultiplier()) * (m_scene->sceneRect().height() / 2);
 
+                m_marker->setPos(mx - m_marker->boundingRect().width() / 2,
+                                 my - m_marker->boundingRect().height() / 2);
+
+                if (m_elementTake)
+                    m_elementTake->setPos(m_marker->pos());
+
+                auto* element = markerOnGameElement();
+
+                if (element)
+                {
+                    if (m_gameStage == TrenTakePutDefines::gsTake)
+                    {
+                        if (m_timeFixTake == 0)
+                        {
+                            m_gameStage = TrenTakePutDefines::gsPut;
+                            m_elementTake = element;
+                        }
+                        else
+                        {
+                            m_gameStage = TrenTakePutDefines::gsTakeProcess;
+                            //todo: время процесса и фиксировать выход со сбросом
+                        }
+                    }
+                    else
+                    if (m_gameStage == TrenTakePutDefines::gsPut)
+                    {
+                        if (m_timeFixPut == 0)
+                        {
+                            m_gameStage = TrenTakePutDefines::gsTake;
+                            m_elementTake->setProcessed(true);
+                            m_elementTake = nullptr;
+//                            newScene();
+                        }
+                        else
+                        {
+                            m_gameStage = TrenTakePutDefines::gsPutProcess;
+                            //todo: время процесса и фиксировать выход со сбросом
+                        }
+                    }
+                }
+
+                m_scene->update(m_scene->sceneRect());
+            }
+        }
     }
 }
 
@@ -174,6 +218,11 @@ void TrenTakePutExecute::on_zeroing()
     auto chanUid = ui->cbSelectChannel->currentData(ChannelsUtils::ChannelUidRole).toString();
     if (m_dcControl && chanUid != "")
         m_dcControl->zeroing(chanUid);
+}
+
+void TrenTakePutExecute::on_scaleChange(int scaleIdx)
+{
+    Q_UNUSED(scaleIdx);
 }
 
 void TrenTakePutExecute::setZones(const QJsonArray &arrZones, QList<TrenTakePutDefines::GameZoneInfo> &zones)
@@ -210,7 +259,9 @@ void TrenTakePutExecute::setZones(const QJsonArray &arrZones, QList<TrenTakePutD
     }
 }
 
-void TrenTakePutExecute::setElements(const QJsonArray &arrElements, QList<TrenTakePutDefines::GameElementInfo> &elements)
+void TrenTakePutExecute::setElements(const QJsonArray &arrElements,
+                                     QList<TrenTakePutDefines::GameElementInfo> &elements,
+                                     TrenTakePutDefines::GameStage stage)
 {
     elements.clear();
     for (int i = 0; i < arrElements.size(); ++i)
@@ -236,6 +287,7 @@ void TrenTakePutExecute::setElements(const QJsonArray &arrElements, QList<TrenTa
         ei.images = obj["images"].toString();
         ei.isRepaint = obj["repaint"].toBool();
         ei.color = BaseUtils::strRGBAToColor(obj["color"].toString());
+        ei.movableWithMarker = (stage == TrenTakePutDefines::gsTake);
 
         auto drawing = obj["drawing"].toString();
         if (drawing == "rectangle")
@@ -287,8 +339,8 @@ void TrenTakePutExecute::newScene()
         if (m_elementsTake.at(0).style == TrenTakePutDefines::esPictureFixed ||
             m_elementsTake.at(0).style == TrenTakePutDefines::esDrawing)
         {
-            allocBySeparatePositions(m_takeTakeOrder, m_zonesTake, m_elementsTake);
-            allocBySeparatePositions(m_putTakeOrder, m_zonesPut, m_elementsPut);
+            allocBySeparatePositions(m_takeTakeOrder, m_zonesTake, m_elementsTake, 2);
+            allocBySeparatePositions(m_putTakeOrder, m_zonesPut, m_elementsPut, 1);
         }
         else
         //! Распределение парных
@@ -305,37 +357,41 @@ void TrenTakePutExecute::newScene()
     }
 
     m_scene->addItem(m_marker);
-    m_marker->setPos(0, 0);
+    m_marker->setZValue(3);
+    m_marker->setPos(0 - m_marker->boundingRect().width() / 2,
+                     0 - m_marker->boundingRect().height() / 2);
 }
 
 void TrenTakePutExecute::allocBySeparatePositions(TrenTakePutDefines::TakeOrder &takeOrder,
                                                   QList<TrenTakePutDefines::GameZoneInfo> &zones,
-                                                  QList<TrenTakePutDefines::GameElementInfo> &elements)
+                                                  QList<TrenTakePutDefines::GameElementInfo> &elements,
+                                                  const int zOrder)
 {
     //! Сначала допустимые, потом остальные
     if (takeOrder == TrenTakePutDefines::toEnabledPrimary)
     {
-        allocElements(zones, elements, 1);
+        allocElements(zones, elements, 1, zOrder);
         while (isEmptyZonesPresent(zones))
-            allocElements(zones, elements, 0);
+            allocElements(zones, elements, 0, zOrder);
     }
     else
     //! Все по порядку
     if (takeOrder == TrenTakePutDefines::toAllByOrder)
         if (m_elementsTake.size() == m_zonesTake.size())
-            allocElements(zones, elements, -1);
+            allocElements(zones, elements, -1, zOrder);
 }
 
 void TrenTakePutExecute::allocElements(QList<TrenTakePutDefines::GameZoneInfo> &zones,
                                        QList<TrenTakePutDefines::GameElementInfo> &elements,
-                                       int enabled)
+                                       int enabled,
+                                       const int zOrder)
 {
-    foreach (auto element, elements)
+    for (int i = 0; i < elements.size(); ++i)
     {
-        if (enabled == -1 || enabled == element.enabled)
+        if (enabled == -1 || enabled == elements.at(i).enabled)
         {
             auto* gameElement = new TrenTakePutDefines::GameElement();
-            gameElement->assignElementInfo(&element);
+            gameElement->assignElementInfo(&elements[i]);
 
             int zoneNum = 0;
             do
@@ -346,17 +402,32 @@ void TrenTakePutExecute::allocElements(QList<TrenTakePutDefines::GameZoneInfo> &
             zone.setElement(gameElement);
             zones.replace(zoneNum, zone);
 
+
             if (zone.posKind == TrenTakePutDefines::pkFixed)
-                gameElement->setPos(zone.x * m_prop, zone.y * m_prop);
+                gameElement->setPos(zone.x * m_prop - gameElement->boundingRect().width() / 2,
+                                    zone.y * m_prop - gameElement->boundingRect().height() / 2);
             else
             if (zone.posKind == TrenTakePutDefines::pkRandom)
             {
                 int x = zone.x_min + qrand() % (zone.x_max - zone.x_min);
                 int y = zone.y_min + qrand() % (zone.y_max - zone.y_min);
-                gameElement->setPos(x * m_prop, y * m_prop);
+                gameElement->setPos(x * m_prop - gameElement->boundingRect().width() / 2,
+                                    y * m_prop - gameElement->boundingRect().height() / 2);
             }
 
+            gameElement->setZValue(zOrder);
             m_scene->addItem(gameElement);
+
+
+//            int j = 0;
+//            qDebug() << elements.at(i).code << m_scene->items().size() << "---------------------";
+//            foreach (auto* item, m_scene->items())
+//                if (item != m_marker)
+//                {
+//                    auto* ge = dynamic_cast<TrenTakePutDefines::GameElement*>(item);
+//                    qDebug() << j << ge->elementInfo()->code;
+//                    ++j;
+//                }
         }
     }
 }
@@ -367,4 +438,36 @@ bool TrenTakePutExecute::isEmptyZonesPresent(QList<TrenTakePutDefines::GameZoneI
         if (zone.element == nullptr)
             return true;
     return false;
+}
+
+int TrenTakePutExecute::scaleMultiplier() const
+{
+    int idx = ui->cbScale->currentIndex();
+    int retval = 1;
+    for (int i = 0; i < idx; ++i)
+        retval *= 2;
+    return retval;
+}
+
+TrenTakePutDefines::GameElement *TrenTakePutExecute::markerOnGameElement()
+{
+    double mx = m_marker->x() + m_marker->boundingRect().width() / 2;
+    double my = m_marker->y() + m_marker->boundingRect().height() / 2;
+
+    foreach (auto* item, m_scene->items())
+    {
+        if (item != m_marker)
+        {
+            auto* ge = static_cast<TrenTakePutDefines::GameElement*>(item);
+            if (!ge->isProcessed())
+                if (((m_gameStage == TrenTakePutDefines::gsTake) && (ge->elementInfo()->movableWithMarker)) ||
+                    ((m_gameStage == TrenTakePutDefines::gsPut) && (!ge->elementInfo()->movableWithMarker)))
+                {
+                    if (mx >= item->x() && mx <= item->x() + item->boundingRect().width() &&
+                        my >= item->y() && my <= item->y() + item->boundingRect().height())
+                        return ge;
+                }
+        }
+    }
+    return nullptr;
 }

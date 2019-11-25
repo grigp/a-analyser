@@ -389,9 +389,26 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>cbScale</sender>
+   <signal>activated(int)</signal>
+   <receiver>TrenTakePutExecute</receiver>
+   <slot>on_scaleChange(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>806</x>
+     <y>58</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>867</x>
+     <y>59</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>on_selectChannel(int)</slot>
   <slot>on_zeroing()</slot>
+  <slot>on_scaleChange(int)</slot>
  </slots>
 </ui>
