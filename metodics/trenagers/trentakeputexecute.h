@@ -8,6 +8,7 @@
 #include <QGraphicsScene>
 #include <QGraphicsPixmapItem>
 #include <QResizeEvent>
+#include <QMediaPlayer>
 
 #include "datadefines.h"
 #include "deviceprotocols.h"
@@ -62,10 +63,17 @@ private:
      */
     void setChannels();
 
+    void elementsInteraction();
+
+    /*!
+     * \brief Переключение этапов пробы
+     */
+    void newStage();
+
     /*!
      * \brief Генерация новой сцены
      */
-    void newScene();
+    void generateNewScene(const bool isAddScore);
 
     void allocBySeparatePositions(TrenTakePutDefines::TakeOrder &takeOrder,
                                   QList<TrenTakePutDefines::GameZoneInfo> &zones,
@@ -91,7 +99,7 @@ private:
     QGraphicsScene* m_scene {nullptr};
     double m_prop = 1; ///< Пропорция для пересчера базовой сцены 2000 x 2000 в реальные размеры игровой сцены
     QGraphicsPixmapItem *m_marker {nullptr};
-    QGraphicsItem *m_item1 {nullptr};  // !!!! Временно!!!
+    QJsonObject m_markerObj;
 
     int m_frequency = 50;        ///< Частота дискретизации
 
@@ -113,6 +121,12 @@ private:
     QList<TrenTakePutDefines::GameElementInfo> m_elementsPut;
 
     TrenTakePutDefines::GameElement *m_elementTake {nullptr};
+    int m_putElementCount {0}; ///< Счетчик элементов, уложенных в корзину
+    int m_score {0};           ///< Очки, набранные в пробе
+    int m_errorsCount {0};     ///< Счетчик ошибок
+    bool m_isError {false};    ///< Признак ошибки. Для исключения "лишних" ошибок
+
+    QMediaPlayer m_player;
 
 //    DataDefines::PatientKard m_kard;
 

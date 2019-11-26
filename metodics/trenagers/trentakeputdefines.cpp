@@ -16,7 +16,6 @@ QRectF TrenTakePutDefines::GameElement::boundingRect() const
     if (m_pixmap.width() == 0 || m_pixmap.height() == 0)
         return QRectF(-25, -25, 50, 50);
     else
-//        return QRectF(-25, -25, m_pixmap.width(), m_pixmap.height());
         return QRectF(0, 0, m_pixmap.width(), m_pixmap.height());
 }
 
