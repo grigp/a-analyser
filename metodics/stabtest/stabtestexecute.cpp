@@ -331,10 +331,13 @@ void StabTestExecute::showPatientWindow(const int winCode)
 
     if (m_patientWin)
     {
+        auto rect = QApplication::desktop()->screenGeometry(0);
         if (QApplication::desktop()->screenCount() > 1)
-            m_patientWin->setGeometry(QApplication::desktop()->screenGeometry(1));
-        else
-            m_patientWin->setGeometry(QApplication::desktop()->screenGeometry(0));
+            rect = QApplication::desktop()->screenGeometry(1);
+
+        m_patientWin->resize(rect.size());
+        m_patientWin->move(rect.x(), rect.y());
+
         m_patientWin->show();
     }
 }

@@ -7,6 +7,8 @@ PatientWindow::PatientWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    setWindowFlags(Qt::Dialog | Qt::CustomizeWindowHint | Qt::WindowTitleHint);
+
     QPalette pal(palette());
     pal.setColor(QPalette::Background, Qt::darkGray);
     setAutoFillBackground(true);

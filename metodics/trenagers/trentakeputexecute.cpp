@@ -6,10 +6,12 @@
 #include "executewidget.h"
 #include "baseutils.h"
 #include "channelsutils.h"
+#include "trentakeputpatientwindow.h"
 
 #include <QTimer>
 #include <QMessageBox>
 #include <QPointF>
+#include <QDesktopWidget>
 #include <QDebug>
 
 TrenTakePutExecute::TrenTakePutExecute(QWidget *parent) :
@@ -30,8 +32,6 @@ TrenTakePutExecute::TrenTakePutExecute(QWidget *parent) :
     ui->cbScale->addItem("32");
     ui->cbScale->addItem("64");
     ui->cbScale->addItem("128");
-
-    ui->gvGame->setScene(m_scene);
 }
 
 TrenTakePutExecute::~TrenTakePutExecute()
@@ -82,6 +82,8 @@ void TrenTakePutExecute::setParams(const QJsonObject &params)
 
 void TrenTakePutExecute::closeEvent(QCloseEvent *event)
 {
+    hidePatientWindow();
+
     //! Переехало из деструктора. Подозрение на нерегулярный сбой.
     //! Но для срабатывания необходимо перед delete вызывать close();
     if (m_driver)
@@ -97,7 +99,11 @@ void TrenTakePutExecute::resizeEvent(QResizeEvent *event)
     int size = event->size().height();
     if (event->size().width() < event->size().height())
         size = event->size().width();
-    m_scene->setSceneRect(-size / 2, - size / 2, size, size);
+    if (ui->gvGame->scene())
+    {
+        ui->gvGame->scene()->setSceneRect(-size / 2, - size / 2, size, size);
+//        m_scene->setSceneRect(-size / 2, - size / 2, size, size);
+    }
     m_prop = static_cast<double>(size) / 2000;
 }
 
@@ -117,8 +123,6 @@ void TrenTakePutExecute::start()
 //        ui->lblProbeTitle->setText(probeParams().name + " - " + m_kard.fio);
 //        m_trd->newTest(m_kard.uid, mi.uid);
 
-//        showPatientWindow(m_params.at(m_probe).stimulCode);
-
         // По формату получаем список каналов этого формата, которые передает драйвер, заносим их в список для выбора
         setChannels();
 
@@ -127,6 +131,7 @@ void TrenTakePutExecute::start()
 
         m_driver->start();
 
+        showPatientWindow();
         generateNewScene(false);
     }
     else
@@ -423,10 +428,9 @@ void TrenTakePutExecute::fixingStage()
 void TrenTakePutExecute::fixingError()
 {
     ++m_errorsCount;
-    ui->lblGameErrors->setText(QString(tr("Ошибки") + " : %1").arg(m_errorsCount));
     if (m_score > 0)
         --m_score;
-    ui->lblGameScore->setText(QString(tr("Очки") + " : %1").arg(m_score));
+    showFactors();
     m_isError = true;
     m_player.setMedia(QUrl("qrc:/sound/04.wav"));
     m_player.play();
@@ -474,7 +478,7 @@ void TrenTakePutExecute::generateNewScene(const bool isAddScore)
     if (isAddScore)
     {
         m_score += (m_zonesTake.size() * 2);
-        ui->lblGameScore->setText(QString(tr("Очки") + " : %1").arg(m_score));
+        showFactors();
         m_player.setMedia(QUrl("qrc:/sound/05.wav"));
         m_player.play();
     }
@@ -591,4 +595,45 @@ TrenTakePutDefines::GameElement *TrenTakePutExecute::markerOnGameElement()
         }
     }
     return nullptr;
+}
+
+void TrenTakePutExecute::showPatientWindow()
+{
+    if (QApplication::desktop()->screenCount() > 1)
+    {
+        if (!m_patientWindow)
+            m_patientWindow = new TrenTakePutPatientWindow(this);
+        m_patientWindow->setScene(m_scene);
+        m_patientWindow->resize(QApplication::desktop()->screenGeometry(1).size());
+        m_patientWindow->move(QApplication::desktop()->screenGeometry(1).x(),
+                              QApplication::desktop()->screenGeometry(1).y());
+        m_patientWindow->show();
+        m_prop = m_patientWindow->prop();
+    }
+    else
+        ui->gvGame->setScene(m_scene);
+}
+
+void TrenTakePutExecute::hidePatientWindow()
+{
+    if (m_patientWindow)
+    {
+        m_patientWindow->hide();
+        auto* p = m_patientWindow;
+        m_patientWindow = nullptr;
+        delete p;
+    }
+}
+
+void TrenTakePutExecute::showFactors()
+{
+    QString score = QString(tr("Очки") + " : %1").arg(m_score);
+    QString errors = QString(tr("Ошибки") + " : %1").arg(m_errorsCount);
+    ui->lblGameScore->setText(score);
+    ui->lblGameErrors->setText(errors);
+    if (m_patientWindow)
+    {
+        m_patientWindow->setScore(score);
+        m_patientWindow->setErrors(errors);
+    }
 }

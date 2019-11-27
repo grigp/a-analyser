@@ -19,6 +19,7 @@ class TrenTakePutExecute;
 }
 
 class Driver;
+class TrenTakePutPatientWindow;
 
 /*!
  * \brief Класс виджета проведения сеанса тренинга TrenagerExecute class
@@ -102,6 +103,11 @@ private:
      */
     TrenTakePutDefines::GameElement* markerOnGameElement();
 
+    void showPatientWindow();
+    void hidePatientWindow();
+
+    void showFactors();
+
     QGraphicsScene* m_scene {nullptr};
     double m_prop = 1; ///< Пропорция для пересчера базовой сцены 2000 x 2000 в реальные размеры игровой сцены
     QGraphicsPixmapItem *m_marker {nullptr};
@@ -134,6 +140,7 @@ private:
     bool m_isError {false};    ///< Признак ошибки. Для исключения "лишних" ошибок
 
     QMediaPlayer m_player;
+    TrenTakePutPatientWindow* m_patientWindow {nullptr};   ///< Окно пациента
 
 //    DataDefines::PatientKard m_kard;
 
