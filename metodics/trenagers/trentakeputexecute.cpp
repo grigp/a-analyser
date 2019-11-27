@@ -155,7 +155,9 @@ void TrenTakePutExecute::getData(DeviceProtocols::DeviceData *data)
                                  my - m_marker->boundingRect().height() / 2);
 
                 //! Положение фигуры, захваченной маркером
-                if (m_elementTake)
+                if (m_elementTake &&
+                        (m_gameStage == TrenTakePutDefines::gsPut ||
+                         m_gameStage == TrenTakePutDefines::gsPutProcess))
                 {
                     double x = m_marker->pos().x() + m_marker->boundingRect().width() / 2 - m_elementTake->boundingRect().width() / 2;
                     double y = m_marker->pos().y() + m_marker->boundingRect().height() / 2 - m_elementTake->boundingRect().height() / 2;
@@ -306,63 +308,97 @@ void TrenTakePutExecute::elementsInteraction()
     //! Проверка, захватил ли маркер элемент
     auto* element = markerOnGameElement();
 
-    //! Захватили ли элемент или положили ли элемент в зону
-    if (element)
+    //! На этапах фиксации захвата или фиксации укладки
+    if (m_gameStage == TrenTakePutDefines::gsTakeProcess ||
+        m_gameStage == TrenTakePutDefines::gsPutProcess)
     {
-        if (element->elementInfo()->enabled
-                &&
-                ((m_gameStage == TrenTakePutDefines::gsTake) ||
-                 ((m_gameStage == TrenTakePutDefines::gsPut) &&
-                  (element->elementInfo()->code == m_elementTake->elementInfo()->code))))
+        processStageWorking();
+
+        if (!element)
         {
-            if (m_gameStage == TrenTakePutDefines::gsTake)
+            if (m_gameStage == TrenTakePutDefines::gsTakeProcess)
             {
-                if (m_timeFixTake == 0)
-                {
-                    m_gameStage = TrenTakePutDefines::gsPut;
-                    m_elementTake = element;
-                    m_player.setMedia(QUrl("qrc:/sound/03.wav"));
-                    m_player.play();
-                }
-                else
-                {
-                    m_gameStage = TrenTakePutDefines::gsTakeProcess;
-                    //todo: время процесса и фиксировать выход со сбросом
-                }
+                m_gameStage = TrenTakePutDefines::gsTake;
+                m_elementTake = nullptr;
             }
             else
-            if (m_gameStage == TrenTakePutDefines::gsPut)
-            {
-                if (m_timeFixPut == 0)
-                    newStage();
-                else
-                {
-                    m_gameStage = TrenTakePutDefines::gsPutProcess;
-                    //todo: время процесса и фиксировать выход со сбросом
-                }
-            }
-            m_isError = false;
-        }
-        else
-        {
-            if (!m_isError)
-            {
-                ++m_errorsCount;
-                ui->lblGameErrors->setText(QString(tr("Ошибки") + " : %1").arg(m_errorsCount));
-                if (m_score > 0)
-                    --m_score;
-                ui->lblGameScore->setText(QString(tr("Очки") + " : %1").arg(m_score));
-                m_isError = true;
-                m_player.setMedia(QUrl("qrc:/sound/04.wav"));
-                m_player.play();
-            }
+            if (m_gameStage == TrenTakePutDefines::gsPutProcess)
+                m_gameStage = TrenTakePutDefines::gsPut;
         }
     }
     else
-        m_isError = false;
+    {
+        //! Захватили ли элемент или положили ли элемент в зону
+        if (element)
+        {
+            if (element->elementInfo()->enabled
+                    &&
+                    ((m_gameStage == TrenTakePutDefines::gsTake) ||
+                     ((m_gameStage == TrenTakePutDefines::gsPut) &&
+                      (element->elementInfo()->code == m_elementTake->elementInfo()->code))))
+            {
+                if (m_gameStage == TrenTakePutDefines::gsTake)
+                {
+                    if (m_timeFixTake == 0)
+                    {
+                        m_elementTake = element;
+                        fixingTake();
+                    }
+                    else
+                    {
+                        m_gameStage = TrenTakePutDefines::gsTakeProcess;
+                        m_elementTake = element;
+                        m_fixCount = 0;
+                    }
+                }
+                else
+                if (m_gameStage == TrenTakePutDefines::gsPut)
+                {
+                    if (m_timeFixPut == 0)
+                        fixingStage();
+                    else
+                    {
+                        m_gameStage = TrenTakePutDefines::gsPutProcess;
+                        m_fixCount = 0;
+                    }
+                }
+                m_isError = false;
+            }
+            else
+            {
+                if (!m_isError)
+                    fixingError();
+            }
+        }
+        else
+            m_isError = false;
+    }
 }
 
-void TrenTakePutExecute::newStage()
+void TrenTakePutExecute::processStageWorking()
+{
+    ++m_fixCount;
+    int timeTake = m_timeFixTake;
+    if (m_gameStage == TrenTakePutDefines::gsPutProcess)
+        timeTake = m_timeFixPut;
+    if (m_fixCount >= timeTake * m_frequency)
+    {
+        if (m_gameStage == TrenTakePutDefines::gsTakeProcess)
+            fixingTake();
+        else
+        if (m_gameStage == TrenTakePutDefines::gsPutProcess)
+            fixingStage();
+    }
+}
+
+void TrenTakePutExecute::fixingTake()
+{
+    m_gameStage = TrenTakePutDefines::gsPut;
+    m_player.setMedia(QUrl("qrc:/sound/03.wav"));
+    m_player.play();
+}
+
+void TrenTakePutExecute::fixingStage()
 {
     m_gameStage = TrenTakePutDefines::gsTake;
     m_elementTake->setProcessed(true);
@@ -382,6 +418,18 @@ void TrenTakePutExecute::newStage()
             m_player.play();
         }
     }
+}
+
+void TrenTakePutExecute::fixingError()
+{
+    ++m_errorsCount;
+    ui->lblGameErrors->setText(QString(tr("Ошибки") + " : %1").arg(m_errorsCount));
+    if (m_score > 0)
+        --m_score;
+    ui->lblGameScore->setText(QString(tr("Очки") + " : %1").arg(m_score));
+    m_isError = true;
+    m_player.setMedia(QUrl("qrc:/sound/04.wav"));
+    m_player.play();
 }
 
 void TrenTakePutExecute::generateNewScene(const bool isAddScore)
@@ -530,8 +578,11 @@ TrenTakePutDefines::GameElement *TrenTakePutExecute::markerOnGameElement()
         {
             auto* ge = static_cast<TrenTakePutDefines::GameElement*>(item);
             if (!ge->isProcessed())
-                if (((m_gameStage == TrenTakePutDefines::gsTake) && (ge->elementInfo()->movableWithMarker)) ||
-                    ((m_gameStage == TrenTakePutDefines::gsPut) && (!ge->elementInfo()->movableWithMarker)))
+                if ((((m_gameStage == TrenTakePutDefines::gsTake) || (m_gameStage == TrenTakePutDefines::gsTakeProcess))
+                     && (ge->elementInfo()->movableWithMarker))
+                        ||
+                    (((m_gameStage == TrenTakePutDefines::gsPut) || (m_gameStage == TrenTakePutDefines::gsPutProcess))
+                     && (!ge->elementInfo()->movableWithMarker)))
                 {
                     if (mx >= item->x() && mx <= item->x() + item->boundingRect().width() &&
                         my >= item->y() && my <= item->y() + item->boundingRect().height())

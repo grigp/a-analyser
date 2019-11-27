@@ -65,10 +65,16 @@ private:
 
     void elementsInteraction();
 
+    void processStageWorking();
+
+    void fixingTake();
+
     /*!
      * \brief Переключение этапов пробы
      */
-    void newStage();
+    void fixingStage();
+
+    void fixingError();
 
     /*!
      * \brief Генерация новой сцены
@@ -122,6 +128,7 @@ private:
 
     TrenTakePutDefines::GameElement *m_elementTake {nullptr};
     int m_putElementCount {0}; ///< Счетчик элементов, уложенных в корзину
+    int m_fixCount {0};        ///< Счетчик пакетов для фиксации захвата или укладки
     int m_score {0};           ///< Очки, набранные в пробе
     int m_errorsCount {0};     ///< Счетчик ошибок
     bool m_isError {false};    ///< Признак ошибки. Для исключения "лишних" ошибок
