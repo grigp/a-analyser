@@ -82,6 +82,14 @@ private:
      */
     void generateNewScene(const bool isAddScore);
 
+    void allocSplitPictures();
+
+    /*!
+     * \brief Загрузка списка картинок для построения в режиме puzzle
+     * \param folder - папка с картинками
+     */
+    void loadPicturesPuzzle(const QString &folder);
+
     void allocBySeparatePositions(TrenTakePutDefines::TakeOrder &takeOrder,
                                   QList<TrenTakePutDefines::GameZoneInfo> &zones,
                                   QList<TrenTakePutDefines::GameElementInfo> &elements,
@@ -91,6 +99,12 @@ private:
                        QList<TrenTakePutDefines::GameElementInfo> &elements,
                        int enabled,         ///< -1 - все, 1 - только enabled == true, 0 - только enabled == false
                        const int zOrder);
+
+    TrenTakePutDefines::GameElement* allocElement(QList<TrenTakePutDefines::GameZoneInfo> &zones,
+                                                  TrenTakePutDefines::GameElementInfo *element,
+                                                  const QPixmap *pixmap,
+                                                  const int zOrder);
+
     bool isEmptyZonesPresent(QList<TrenTakePutDefines::GameZoneInfo> &zones) const;
 
     int scaleMultiplier() const;
@@ -141,6 +155,7 @@ private:
 
     QMediaPlayer m_player;
     TrenTakePutPatientWindow* m_patientWindow {nullptr};   ///< Окно пациента
+    QList<QString> m_filesPuzzle;      ///< Список файлов для построения картинок
 
 //    DataDefines::PatientKard m_kard;
 

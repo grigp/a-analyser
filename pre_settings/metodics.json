@@ -733,28 +733,28 @@
                     {
                         "position": "fixed",
                         "x": -750,
-                        "y": 750,
+                        "y": -750,
                         "width": 500,
                         "height": 500
                     },
                     {
                         "position": "fixed",
                         "x": -250,
-                        "y": 750,
+                        "y": -750,
                         "width": 500,
                         "height": 500
                     },
                     {
                         "position": "fixed",
                         "x": 250,
-                        "y": 750,
+                        "y": -750,
                         "width": 500,
                         "height": 500
                     },
                     {
                         "position": "fixed",
                         "x": 750,
-                        "y": 750,
+                        "y": -750,
                         "width": 500,
                         "height": 500
                     }
@@ -790,14 +790,14 @@
                     {
                         "position": "fixed",
                         "x": -250,
-                        "y": -500,
+                        "y": 500,
                         "width": 500,
                         "height": 500
                     },
                     {
                         "position": "fixed",
                         "x": 250,
-                        "y": -500,
+                        "y": 500,
                         "width": 500,
                         "height": 500
                     }
@@ -837,28 +837,28 @@
                     {
                         "position": "fixed",
                         "x": -750,
-                        "y": 750,
+                        "y": -750,
                         "width": 500,
                         "height": 500
                     },
                     {
                         "position": "fixed",
                         "x": -250,
-                        "y": 750,
+                        "y": -750,
                         "width": 500,
                         "height": 500
                     },
                     {
                         "position": "fixed",
                         "x": 250,
-                        "y": 750,
+                        "y": -750,
                         "width": 500,
                         "height": 500
                     },
                     {
                         "position": "fixed",
                         "x": 750,
-                        "y": 750,
+                        "y": -750,
                         "width": 500,
                         "height": 500
                     }
@@ -866,7 +866,7 @@
                 "take_elements": [
                     {
                         "style": "picture_pair",
-                        "images": "picture//capitals//",
+                        "images": "pictures//capitals//",
                         "repaint": false,
                         "enabled": true,
                         "code": 0
@@ -880,28 +880,28 @@
                     {
                         "position": "fixed",
                         "x": -750,
-                        "y": -750,
+                        "y": 750,
                         "width": 500,
                         "height": 500
                     },
                     {
                         "position": "fixed",
                         "x": -250,
-                        "y": -750,
+                        "y": 750,
                         "width": 500,
                         "height": 500
                     },
                     {
                         "position": "fixed",
                         "x": 250,
-                        "y": -750,
+                        "y": 750,
                         "width": 500,
                         "height": 500
                     },
                     {
                         "position": "fixed",
                         "x": 750,
-                        "y": -750,
+                        "y": 750,
                         "width": 500,
                         "height": 500
                     }
@@ -909,7 +909,7 @@
                 "put_elements": [
                     {
                         "style": "picture_pair",
-                        "images": "picture//capitals//",
+                        "images": "pictures//capitals//",
                         "repaint": false,
                         "enabled": true,
                         "code": 0

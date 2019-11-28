@@ -3,6 +3,7 @@
 
 #include <QGraphicsItem>
 #include <QPixmap>
+#include <QSizeF>
 
 namespace TrenTakePutDefines
 {
@@ -93,16 +94,25 @@ public:
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
 
     GameElementInfo* elementInfo() const {return m_element;}
-    void assignElementInfo(GameElementInfo* element);
+    void assignElementInfo(GameElementInfo* element, const QPixmap *pixmap);
     void clearElementInfo() {m_element = nullptr;}
 
     bool isProcessed() const {return m_isProcessed;}
     void setProcessed(const bool isProcessed) {m_isProcessed = isProcessed;}
 
+    QSizeF size() const {return m_size;}
+    void setSize(const QSizeF &size) {m_size = size;}
+    void setSize(const double w, const double h)
+    {
+        QSizeF size(w, h);
+        m_size = size;
+    }
+
 private:
     GameElementInfo* m_element {nullptr};
     QPixmap m_pixmap;
     bool m_isProcessed {false};
+    QSizeF m_size;
 };
 
 /*!

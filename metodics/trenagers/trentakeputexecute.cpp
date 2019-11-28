@@ -12,6 +12,7 @@
 #include <QMessageBox>
 #include <QPointF>
 #include <QDesktopWidget>
+#include <QDir>
 #include <QDebug>
 
 TrenTakePutExecute::TrenTakePutExecute(QWidget *parent) :
@@ -45,6 +46,9 @@ void TrenTakePutExecute::setParams(const QJsonObject &params)
     auto arrTakeElements = params["take_elements"].toArray();
     setZones(arrTakeZones, m_zonesTake);
     setElements(arrTakeElements, m_elementsTake, TrenTakePutDefines::gsTake);
+
+    if ((m_elementsTake.size() == 1) && (m_elementsTake.at(0).style == TrenTakePutDefines::esPictureSplit))
+        loadPicturesPuzzle(m_elementsTake.at(0).images);
 
     m_markerObj = params["marker"].toObject();
 
@@ -464,7 +468,7 @@ void TrenTakePutExecute::generateNewScene(const bool isAddScore)
         //! Распределение разделенных
         if (m_elementsTake.at(0).style == TrenTakePutDefines::esPictureSplit)
         {
-
+            allocSplitPictures();
         }
     }
 
@@ -482,6 +486,42 @@ void TrenTakePutExecute::generateNewScene(const bool isAddScore)
         m_player.setMedia(QUrl("qrc:/sound/05.wav"));
         m_player.play();
     }
+}
+
+void TrenTakePutExecute::allocSplitPictures()
+{
+    if (m_elementsTake.size() != 1 || m_elementsPut.size() != 1)
+        return;
+
+    int picNum = qrand() % m_filesPuzzle.size();
+    QPixmap pixAll(m_elementsTake.at(0).images + m_filesPuzzle.at(picNum));
+    if (m_zonesTake.size() == 4 && m_zonesPut.size() == 4) // || m_zonesTake.size() == 9)
+    {
+        auto pixLT = pixAll.copy(0, 0, pixAll.width() / 2, pixAll.height() / 2);
+        auto pixRT = pixAll.copy(pixAll.width() / 2, 0, pixAll.width() / 2, pixAll.height() / 2);
+        auto pixLD = pixAll.copy(0, pixAll.height() / 2, pixAll.width() / 2, pixAll.height() / 2);
+        auto pixRD = pixAll.copy(pixAll.width() / 2, pixAll.height() / 2, pixAll.width() / 2, pixAll.height() / 2);
+
+        allocElement(m_zonesTake, &m_elementsTake[0], &pixLT, 2);
+        allocElement(m_zonesTake, &m_elementsTake[0], &pixRT, 2);
+        allocElement(m_zonesTake, &m_elementsTake[0], &pixLD, 2);
+        allocElement(m_zonesTake, &m_elementsTake[0], &pixRD, 2);
+
+        for (int i = 0; i < m_zonesPut.size(); ++i)
+        {
+            allocElement(m_zonesPut, &m_elementsPut[0], nullptr, 1);
+        }
+    }
+}
+
+void TrenTakePutExecute::loadPicturesPuzzle(const QString &folder)
+{
+    m_filesPuzzle.clear();
+    QDir dir = folder;
+    QFileInfoList list = dir.entryInfoList(QDir::Files | QDir::NoDotAndDotDot);
+    foreach (auto fileInfo, list)
+        if (fileInfo.suffix() == "png")
+            m_filesPuzzle << fileInfo.fileName();
 }
 
 void TrenTakePutExecute::allocBySeparatePositions(TrenTakePutDefines::TakeOrder &takeOrder,
@@ -509,49 +549,44 @@ void TrenTakePutExecute::allocElements(QList<TrenTakePutDefines::GameZoneInfo> &
                                        const int zOrder)
 {
     for (int i = 0; i < elements.size(); ++i)
-    {
         if (enabled == -1 || enabled == elements.at(i).enabled)
-        {
-            auto* gameElement = new TrenTakePutDefines::GameElement();
-            gameElement->assignElementInfo(&elements[i]);
+            allocElement(zones, &elements[i], nullptr, zOrder);
+}
 
-            int zoneNum = 0;
-            do
-                zoneNum = qrand() % zones.size();
-            while (zones.at(zoneNum).element != nullptr);
+TrenTakePutDefines::GameElement* TrenTakePutExecute::allocElement(QList<TrenTakePutDefines::GameZoneInfo> &zones,
+                                                                  TrenTakePutDefines::GameElementInfo *element,
+                                                                  const QPixmap *pixmap,
+                                                                  const int zOrder)
+{
+    auto* gameElement = new TrenTakePutDefines::GameElement();
+    gameElement->assignElementInfo(element, pixmap);
 
-            auto zone = zones.at(zoneNum);
-            zone.setElement(gameElement);
-            zones.replace(zoneNum, zone);
+    int zoneNum = 0;
+    do
+        zoneNum = qrand() % zones.size();
+    while (zones.at(zoneNum).element != nullptr);
 
+    auto zone = zones.at(zoneNum);
+    zone.setElement(gameElement);
+    zones.replace(zoneNum, zone);
 
-            if (zone.posKind == TrenTakePutDefines::pkFixed)
-                gameElement->setPos(zone.x * m_prop - gameElement->boundingRect().width() / 2,
-                                    zone.y * m_prop - gameElement->boundingRect().height() / 2);
-            else
-            if (zone.posKind == TrenTakePutDefines::pkRandom)
-            {
-                int x = zone.x_min + qrand() % (zone.x_max - zone.x_min);
-                int y = zone.y_min + qrand() % (zone.y_max - zone.y_min);
-                gameElement->setPos(x * m_prop - gameElement->boundingRect().width() / 2,
-                                    y * m_prop - gameElement->boundingRect().height() / 2);
-            }
+    gameElement->setSize(QSizeF(zone.width * m_prop, zone.height * m_prop));
 
-            gameElement->setZValue(zOrder);
-            m_scene->addItem(gameElement);
-
-
-//            int j = 0;
-//            qDebug() << elements.at(i).code << m_scene->items().size() << "---------------------";
-//            foreach (auto* item, m_scene->items())
-//                if (item != m_marker)
-//                {
-//                    auto* ge = dynamic_cast<TrenTakePutDefines::GameElement*>(item);
-//                    qDebug() << j << ge->elementInfo()->code;
-//                    ++j;
-//                }
-        }
+    if (zone.posKind == TrenTakePutDefines::pkFixed)
+        gameElement->setPos(zone.x * m_prop - gameElement->boundingRect().width() / 2,
+                            zone.y * m_prop - gameElement->boundingRect().height() / 2);
+    else
+    if (zone.posKind == TrenTakePutDefines::pkRandom)
+    {
+        int x = zone.x_min + qrand() % (zone.x_max - zone.x_min);
+        int y = zone.y_min + qrand() % (zone.y_max - zone.y_min);
+        gameElement->setPos(x * m_prop - gameElement->boundingRect().width() / 2,
+                            y * m_prop - gameElement->boundingRect().height() / 2);
     }
+
+    gameElement->setZValue(zOrder);
+    m_scene->addItem(gameElement);
+    return gameElement;
 }
 
 bool TrenTakePutExecute::isEmptyZonesPresent(QList<TrenTakePutDefines::GameZoneInfo> &zones) const
