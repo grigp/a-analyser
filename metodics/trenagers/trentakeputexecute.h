@@ -152,6 +152,7 @@ private:
     int m_score {0};           ///< Очки, набранные в пробе
     int m_errorsCount {0};     ///< Счетчик ошибок
     bool m_isError {false};    ///< Признак ошибки. Для исключения "лишних" ошибок
+    QPointF m_pos;
 
     QMediaPlayer m_player;
     TrenTakePutPatientWindow* m_patientWindow {nullptr};   ///< Окно пациента

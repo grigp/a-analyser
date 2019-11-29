@@ -108,11 +108,19 @@ public:
         m_size = size;
     }
 
+    int code() const;
+    void setCode(const int code) {m_code = code;}
+
+    int zoneIdx() const {return m_zoneIdx;}
+    void setZoneIdx(const int idx) {m_zoneIdx = idx;}
+
 private:
     GameElementInfo* m_element {nullptr};
     QPixmap m_pixmap;
     bool m_isProcessed {false};
     QSizeF m_size;
+    int m_code;
+    int m_zoneIdx {-1};
 };
 
 /*!
@@ -133,6 +141,8 @@ public:
     bool isMobile {false};                 ///< Перемещается ли автоматически
     MovingLaw movingLaw {mlRandomSpeed};   ///< Закон перемещения для isMobile == true
     int movingSpeed {0};                   ///< Маскимальная скорость перемещения для isMobile == true
+    int position {0};                      ///< Для стиля picture_split код позиции. Первая цифра - номер столбца, вторые две - номер строки
+                                           ///< Теоретически 100 столбцов и 100 строк pos / 100 - столбец, pos % 100 - строка
 
     GameElement* element {nullptr};        ///< Назначенный для зоны графический элемент
 

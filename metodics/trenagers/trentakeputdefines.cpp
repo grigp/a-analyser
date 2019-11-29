@@ -10,6 +10,7 @@ TrenTakePutDefines::GameElement::GameElement(QGraphicsItem *parent)
 {
     m_size.setWidth(50);
     m_size.setHeight(50);
+    m_code = 0;
 }
 
 QRectF TrenTakePutDefines::GameElement::boundingRect() const
@@ -37,9 +38,7 @@ void TrenTakePutDefines::GameElement::paint(QPainter *painter, const QStyleOptio
                boundingRect().width(), boundingRect().height());
 
     if (m_element->style == esPictureFixed || m_element->style == esPictureSplit || m_element->style == esPicturePair)
-    {
         painter->drawPixmap(rect, m_pixmap);
-    }
     else
     if (m_element->style == esDrawing)
     {
@@ -67,5 +66,13 @@ void TrenTakePutDefines::GameElement::assignElementInfo(TrenTakePutDefines::Game
         if (m_element->isRepaint)
             BaseUtils::setColoredPicture(m_pixmap, m_element->color);
     }
+}
+
+int TrenTakePutDefines::GameElement::code() const
+{
+    if (m_element->code == -1)
+        return m_code;
+    else
+        return m_element->code;
 }
 

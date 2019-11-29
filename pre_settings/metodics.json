@@ -765,7 +765,7 @@
                         "images": "picture//puzzle//",
                         "repaint": false,
                         "enabled": true,
-                        "code": 0
+                        "code": -1
                     }
                 ],
                 "take_order": {
@@ -778,28 +778,32 @@
                         "x": -250,
                         "y": 0,
                         "width": 500,
-                        "height": 500
+                        "height": 500,
+                        "positionCode": 101
                     },
                     {
                         "position": "fixed",
                         "x": 250,
                         "y": 0,
                         "width": 500,
-                        "height": 500
+                        "height": 500,
+                        "positionCode": 102
                     },
                     {
                         "position": "fixed",
                         "x": -250,
                         "y": 500,
                         "width": 500,
-                        "height": 500
+                        "height": 500,
+                        "positionCode": 201
                     },
                     {
                         "position": "fixed",
                         "x": 250,
                         "y": 500,
                         "width": 500,
-                        "height": 500
+                        "height": 500,
+                        "positionCode": 202
                     }
                 ],
                 "put_elements": [
@@ -808,7 +812,7 @@
                         "drawing": "rectangle",
                         "color": "fff0f0f0",
                         "enabled": true,
-                        "code": 0
+                        "code": -1
                     }
                 ],
                 "put_order": {
@@ -869,7 +873,7 @@
                         "images": "pictures//capitals//",
                         "repaint": false,
                         "enabled": true,
-                        "code": 0
+                        "code": -1
                     }
                 ],
                 "take_order": {
@@ -912,7 +916,7 @@
                         "images": "pictures//capitals//",
                         "repaint": false,
                         "enabled": true,
-                        "code": 0
+                        "code": -1
                     }
                 ],
                 "put_order": {

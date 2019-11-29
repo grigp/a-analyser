@@ -234,6 +234,7 @@ void TrenTakePutExecute::setZones(const QJsonArray &arrZones, QList<TrenTakePutD
         zi.height = obj["height"].toInt();
         zi.isMobile = obj["mobile"].toBool();
         zi.movingSpeed = obj["moving_speed"].toInt();
+        zi.position = obj["positionCode"].toInt();
 
         auto ml = obj["moving_law"].toString();
         if (ml == "random_speed")
@@ -334,17 +335,22 @@ void TrenTakePutExecute::elementsInteraction()
             if (m_gameStage == TrenTakePutDefines::gsPutProcess)
                 m_gameStage = TrenTakePutDefines::gsPut;
         }
+        else
+        {
+            m_pos = element->pos();
+        }
     }
     else
     {
         //! Захватили ли элемент или положили ли элемент в зону
         if (element)
         {
+            m_pos = element->pos();
             if (element->elementInfo()->enabled
                     &&
                     ((m_gameStage == TrenTakePutDefines::gsTake) ||
                      ((m_gameStage == TrenTakePutDefines::gsPut) &&
-                      (element->elementInfo()->code == m_elementTake->elementInfo()->code))))
+                      (element->code() == m_elementTake->code()))))
             {
                 if (m_gameStage == TrenTakePutDefines::gsTake)
                 {
@@ -411,7 +417,12 @@ void TrenTakePutExecute::fixingStage()
 {
     m_gameStage = TrenTakePutDefines::gsTake;
     m_elementTake->setProcessed(true);
-    m_elementTake->setVisible(false);
+    if (m_elementTake->elementInfo()->style != TrenTakePutDefines::esPictureSplit)
+        m_elementTake->setVisible(false);
+    else
+    {
+        m_elementTake->setPos(m_pos);
+    }
     m_elementTake = nullptr;
     if (m_stageMode == TrenTakePutDefines::smTakePut)
         generateNewScene(true);
@@ -495,6 +506,10 @@ void TrenTakePutExecute::allocSplitPictures()
 
     int picNum = qrand() % m_filesPuzzle.size();
     QPixmap pixAll(m_elementsTake.at(0).images + m_filesPuzzle.at(picNum));
+    //! Масштабирование
+    pixAll = pixAll.scaled(m_zonesTake.at(0).width * 2 * m_prop,
+                           m_zonesTake.at(0).height * 2 * m_prop,
+                           Qt::KeepAspectRatio);
     if (m_zonesTake.size() == 4 && m_zonesPut.size() == 4) // || m_zonesTake.size() == 9)
     {
         auto pixLT = pixAll.copy(0, 0, pixAll.width() / 2, pixAll.height() / 2);
@@ -502,15 +517,40 @@ void TrenTakePutExecute::allocSplitPictures()
         auto pixLD = pixAll.copy(0, pixAll.height() / 2, pixAll.width() / 2, pixAll.height() / 2);
         auto pixRD = pixAll.copy(pixAll.width() / 2, pixAll.height() / 2, pixAll.width() / 2, pixAll.height() / 2);
 
-        allocElement(m_zonesTake, &m_elementsTake[0], &pixLT, 2);
-        allocElement(m_zonesTake, &m_elementsTake[0], &pixRT, 2);
-        allocElement(m_zonesTake, &m_elementsTake[0], &pixLD, 2);
-        allocElement(m_zonesTake, &m_elementsTake[0], &pixRD, 2);
+        auto* takeLT = allocElement(m_zonesTake, &m_elementsTake[0], &pixLT, 2);
+        auto* takeRT = allocElement(m_zonesTake, &m_elementsTake[0], &pixRT, 2);
+        auto* takeLD = allocElement(m_zonesTake, &m_elementsTake[0], &pixLD, 2);
+        auto* takeRD = allocElement(m_zonesTake, &m_elementsTake[0], &pixRD, 2);
 
-        for (int i = 0; i < m_zonesPut.size(); ++i)
+        auto* putLT = allocElement(m_zonesPut, &m_elementsPut[0], nullptr, 1);
+        auto* putRT = allocElement(m_zonesPut, &m_elementsPut[0], nullptr, 1);
+        auto* putLD = allocElement(m_zonesPut, &m_elementsPut[0], nullptr, 1);
+        auto* putRD = allocElement(m_zonesPut, &m_elementsPut[0], nullptr, 1);
+
+        auto assignCode = [&](TrenTakePutDefines::GameElement* element)
         {
-            allocElement(m_zonesPut, &m_elementsPut[0], nullptr, 1);
-        }
+            auto posCode = m_zonesPut.at(element->zoneIdx()).position;
+            element->setCode(posCode);
+            int row = posCode / 100;
+            int col = posCode % 100;
+
+            if (row == 1 && col == 1)
+                takeLT->setCode(posCode);
+            else
+            if (row == 1 && col == 2)
+                takeRT->setCode(posCode);
+            else
+            if (row == 2 && col == 1)
+                takeLD->setCode(posCode);
+            else
+            if (row == 2 && col == 2)
+                takeRD->setCode(posCode);
+        };
+
+        assignCode(putLT);
+        assignCode(putRT);
+        assignCode(putLD);
+        assignCode(putRD);
     }
 }
 
@@ -569,6 +609,7 @@ TrenTakePutDefines::GameElement* TrenTakePutExecute::allocElement(QList<TrenTake
     auto zone = zones.at(zoneNum);
     zone.setElement(gameElement);
     zones.replace(zoneNum, zone);
+    gameElement->setZoneIdx(zoneNum);
 
     gameElement->setSize(QSizeF(zone.width * m_prop, zone.height * m_prop));
 
@@ -611,8 +652,10 @@ TrenTakePutDefines::GameElement *TrenTakePutExecute::markerOnGameElement()
     double mx = m_marker->x() + m_marker->boundingRect().width() / 2;
     double my = m_marker->y() + m_marker->boundingRect().height() / 2;
 
-    foreach (auto* item, m_scene->items())
+    auto items = m_scene->items();
+    for (int i = 0; i < items.size(); ++i)
     {
+        auto* item = items[i];
         if (item != m_marker)
         {
             auto* ge = static_cast<TrenTakePutDefines::GameElement*>(item);
