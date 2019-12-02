@@ -7,6 +7,7 @@
 #include "baseutils.h"
 #include "channelsutils.h"
 #include "trentakeputpatientwindow.h"
+#include "settingsprovider.h"
 
 #include <QTimer>
 #include <QMessageBox>
@@ -100,15 +101,8 @@ void TrenTakePutExecute::closeEvent(QCloseEvent *event)
 
 void TrenTakePutExecute::resizeEvent(QResizeEvent *event)
 {
-    int size = event->size().height();
-    if (event->size().width() < event->size().height())
-        size = event->size().width();
-    if (ui->gvGame->scene())
-    {
-        ui->gvGame->scene()->setSceneRect(-size / 2, - size / 2, size, size);
-//        m_scene->setSceneRect(-size / 2, - size / 2, size, size);
-    }
-    m_prop = static_cast<double>(size) / 2000;
+    QSize size = event->size();
+    setSceneSize(size);
 }
 
 void TrenTakePutExecute::start()
@@ -207,6 +201,16 @@ void TrenTakePutExecute::on_zeroing()
 void TrenTakePutExecute::on_scaleChange(int scaleIdx)
 {
     Q_UNUSED(scaleIdx);
+}
+
+void TrenTakePutExecute::setSceneSize(QSize &size)
+{
+    int sideSize = size.height();
+    if (size.width() < size.height())
+        sideSize = size.width();
+    if (ui->gvGame->scene())
+        ui->gvGame->scene()->setSceneRect(-sideSize / 2, - sideSize / 2, sideSize, sideSize);
+    m_prop = static_cast<double>(sideSize) / 2000;
 }
 
 void TrenTakePutExecute::setZones(const QJsonArray &arrZones, QList<TrenTakePutDefines::GameZoneInfo> &zones)
@@ -373,6 +377,7 @@ void TrenTakePutExecute::elementsInteraction()
                         fixingStage();
                     else
                     {
+                        qDebug() << "put" << element->code();
                         m_gameStage = TrenTakePutDefines::gsPutProcess;
                         m_fixCount = 0;
                     }
@@ -381,8 +386,23 @@ void TrenTakePutExecute::elementsInteraction()
             }
             else
             {
-                if (!m_isError)
-                    fixingError();
+                qDebug() << m_timeFixPut;
+                fixingError();
+//                if (m_gameStage == TrenTakePutDefines::gsTake)
+//                    fixingError();
+//                else
+//                if (m_gameStage == TrenTakePutDefines::gsPut)
+//                {
+//                    if (m_timeFixPut == 0)
+//                        fixingError();
+//                    else
+//                    {
+//                        qDebug() << "err";
+//                        m_isDeferredError = true;
+//                        m_gameStage = TrenTakePutDefines::gsPutProcess;
+//                        m_fixCount = 0;
+//                    }
+//                }
             }
         }
         else
@@ -398,16 +418,22 @@ void TrenTakePutExecute::processStageWorking()
         timeTake = m_timeFixPut;
     if (m_fixCount >= timeTake * m_frequency)
     {
-        if (m_gameStage == TrenTakePutDefines::gsTakeProcess)
-            fixingTake();
+        if (m_isDeferredError)
+            fixingError();
         else
-        if (m_gameStage == TrenTakePutDefines::gsPutProcess)
-            fixingStage();
+        {
+            if (m_gameStage == TrenTakePutDefines::gsTakeProcess)
+                fixingTake();
+            else
+            if (m_gameStage == TrenTakePutDefines::gsPutProcess)
+                fixingStage();
+        }
     }
 }
 
 void TrenTakePutExecute::fixingTake()
 {
+    qDebug() << "take" << m_elementTake->code();
     m_gameStage = TrenTakePutDefines::gsPut;
     m_player.setMedia(QUrl("qrc:/sound/03.wav"));
     m_player.play();
@@ -421,7 +447,7 @@ void TrenTakePutExecute::fixingStage()
         m_elementTake->setVisible(false);
     else
     {
-        m_elementTake->setPos(m_pos);
+        m_elementTake->setPos(m_pos); //! Принудительное позиционирование по позиции зоны укладки
     }
     m_elementTake = nullptr;
     if (m_stageMode == TrenTakePutDefines::smTakePut)
@@ -442,13 +468,17 @@ void TrenTakePutExecute::fixingStage()
 
 void TrenTakePutExecute::fixingError()
 {
-    ++m_errorsCount;
-    if (m_score > 0)
-        --m_score;
-    showFactors();
-    m_isError = true;
-    m_player.setMedia(QUrl("qrc:/sound/04.wav"));
-    m_player.play();
+    if (!m_isError)
+    {
+        ++m_errorsCount;
+        if (m_score > 0)
+            --m_score;
+        showFactors();
+        m_isError = true;
+        m_player.setMedia(QUrl("qrc:/sound/04.wav"));
+        m_player.play();
+        m_isDeferredError = false;
+    }
 }
 
 void TrenTakePutExecute::generateNewScene(const bool isAddScore)
@@ -522,35 +552,40 @@ void TrenTakePutExecute::allocSplitPictures()
         auto* takeLD = allocElement(m_zonesTake, &m_elementsTake[0], &pixLD, 2);
         auto* takeRD = allocElement(m_zonesTake, &m_elementsTake[0], &pixRD, 2);
 
-        auto* putLT = allocElement(m_zonesPut, &m_elementsPut[0], nullptr, 1);
-        auto* putRT = allocElement(m_zonesPut, &m_elementsPut[0], nullptr, 1);
-        auto* putLD = allocElement(m_zonesPut, &m_elementsPut[0], nullptr, 1);
-        auto* putRD = allocElement(m_zonesPut, &m_elementsPut[0], nullptr, 1);
+        qDebug() << takeLT->zoneIdx() <<
+                    takeRT->zoneIdx() <<
+                    takeLD->zoneIdx() <<
+                    takeRD->zoneIdx();
 
-        auto assignCode = [&](TrenTakePutDefines::GameElement* element)
+        auto* putLT = allocElement(m_zonesPut, &m_elementsPut[0], nullptr, 1, 0);
+        auto* putRT = allocElement(m_zonesPut, &m_elementsPut[0], nullptr, 1, 1);
+        auto* putLD = allocElement(m_zonesPut, &m_elementsPut[0], nullptr, 1, 2);
+        auto* putRD = allocElement(m_zonesPut, &m_elementsPut[0], nullptr, 1, 3);
+
+        auto assignCode = [&](TrenTakePutDefines::GameElement* elementTake,
+                              TrenTakePutDefines::GameElement* elementPut)
         {
-            auto posCode = m_zonesPut.at(element->zoneIdx()).position;
-            element->setCode(posCode);
-            int row = posCode / 100;
-            int col = posCode % 100;
+            auto posPutCode = m_zonesPut.at(elementPut->zoneIdx()).position;
+            elementPut->setCode(posPutCode);
+            elementTake->setCode(posPutCode);
 
-            if (row == 1 && col == 1)
-                takeLT->setCode(posCode);
-            else
-            if (row == 1 && col == 2)
-                takeRT->setCode(posCode);
-            else
-            if (row == 2 && col == 1)
-                takeLD->setCode(posCode);
-            else
-            if (row == 2 && col == 2)
-                takeRD->setCode(posCode);
+            qDebug() << "---" << elementTake->zoneIdx() << elementPut->zoneIdx() << posPutCode;
         };
 
-        assignCode(putLT);
-        assignCode(putRT);
-        assignCode(putLD);
-        assignCode(putRD);
+        assignCode(takeLT, putLT);
+        assignCode(takeRT, putRT);
+        assignCode(takeLD, putLD);
+        assignCode(takeRD, putRD);
+
+        qDebug() << "";
+        qDebug() << takeLT->code() << "(" << takeLT->pos() << ") " <<
+                    takeRT->code() << "(" << takeRT->pos() << ") " <<
+                    takeLD->code() << "(" << takeLD->pos() << ") " <<
+                    takeRD->code() << "(" << takeRD->pos() << ") ";
+        qDebug() << putLT->code() << "(" << putLT->pos() << ") " <<
+                    putRT->code() << "(" << putRT->pos() << ") " <<
+                    putLD->code() << "(" << putLD->pos() << ") " <<
+                    putRD->code() << "(" << putRD->pos() << ") ";
     }
 }
 
@@ -596,15 +631,19 @@ void TrenTakePutExecute::allocElements(QList<TrenTakePutDefines::GameZoneInfo> &
 TrenTakePutDefines::GameElement* TrenTakePutExecute::allocElement(QList<TrenTakePutDefines::GameZoneInfo> &zones,
                                                                   TrenTakePutDefines::GameElementInfo *element,
                                                                   const QPixmap *pixmap,
-                                                                  const int zOrder)
+                                                                  const int zOrder,
+                                                                  const int zoneIdx)
 {
     auto* gameElement = new TrenTakePutDefines::GameElement();
     gameElement->assignElementInfo(element, pixmap);
 
-    int zoneNum = 0;
-    do
-        zoneNum = qrand() % zones.size();
-    while (zones.at(zoneNum).element != nullptr);
+    int zoneNum = zoneIdx;
+    if (zoneIdx == -1)
+    {
+        do
+            zoneNum = qrand() % zones.size();
+        while (zones.at(zoneNum).element != nullptr);
+    }
 
     auto zone = zones.at(zoneNum);
     zone.setElement(gameElement);
@@ -677,7 +716,9 @@ TrenTakePutDefines::GameElement *TrenTakePutExecute::markerOnGameElement()
 
 void TrenTakePutExecute::showPatientWindow()
 {
-    if (QApplication::desktop()->screenCount() > 1)
+    auto winPresent = SettingsProvider::valueFromRegAppCopy("", "PatientWindow", static_cast<QVariant>(true)).toBool();
+
+    if (winPresent && QApplication::desktop()->screenCount() > 1)
     {
         if (!m_patientWindow)
             m_patientWindow = new TrenTakePutPatientWindow(this);
@@ -689,7 +730,11 @@ void TrenTakePutExecute::showPatientWindow()
         m_prop = m_patientWindow->prop();
     }
     else
+    {
         ui->gvGame->setScene(m_scene);
+        QSize size = geometry().size();
+        setSceneSize(size);
+    }
 }
 
 void TrenTakePutExecute::hidePatientWindow()

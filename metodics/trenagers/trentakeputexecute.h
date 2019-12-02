@@ -52,6 +52,7 @@ private slots:
 private:
     Ui::TrenTakePutExecute *ui;
 
+    void setSceneSize(QSize &size);
     void setZones(const QJsonArray &arrZones, QList<TrenTakePutDefines::GameZoneInfo> &zones);
     void setElements(const QJsonArray &arrElements,
                      QList<TrenTakePutDefines::GameElementInfo> &elements,
@@ -103,7 +104,8 @@ private:
     TrenTakePutDefines::GameElement* allocElement(QList<TrenTakePutDefines::GameZoneInfo> &zones,
                                                   TrenTakePutDefines::GameElementInfo *element,
                                                   const QPixmap *pixmap,
-                                                  const int zOrder);
+                                                  const int zOrder,
+                                                  const int zoneIdx = -1);
 
     bool isEmptyZonesPresent(QList<TrenTakePutDefines::GameZoneInfo> &zones) const;
 
@@ -152,6 +154,7 @@ private:
     int m_score {0};           ///< Очки, набранные в пробе
     int m_errorsCount {0};     ///< Счетчик ошибок
     bool m_isError {false};    ///< Признак ошибки. Для исключения "лишних" ошибок
+    bool m_isDeferredError {false};  ///< Признак ошибки при укладке с отложенным временем
     QPointF m_pos;
 
     QMediaPlayer m_player;
@@ -161,5 +164,6 @@ private:
 //    DataDefines::PatientKard m_kard;
 
 };
+
 
 #endif // TRENTAKEPUTEXECUTE_H
