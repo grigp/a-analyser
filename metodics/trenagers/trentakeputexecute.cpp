@@ -16,6 +16,13 @@
 #include <QDir>
 #include <QDebug>
 
+namespace  {
+
+QList<TrenTakePutDefines::GameElement*> takeElements;
+QList<TrenTakePutDefines::GameElement*> putElements;
+
+}
+
 TrenTakePutExecute::TrenTakePutExecute(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::TrenTakePutExecute)
@@ -50,6 +57,8 @@ void TrenTakePutExecute::setParams(const QJsonObject &params)
 
     if ((m_elementsTake.size() == 1) && (m_elementsTake.at(0).style == TrenTakePutDefines::esPictureSplit))
         loadPicturesPuzzle(m_elementsTake.at(0).images);
+    ui->lblFullPicture->setVisible((m_elementsTake.size() == 1) &&
+                                   (m_elementsTake.at(0).style == TrenTakePutDefines::esPictureSplit));
 
     m_markerObj = params["marker"].toObject();
 
@@ -328,6 +337,7 @@ void TrenTakePutExecute::elementsInteraction()
     {
         processStageWorking();
 
+        //! Элемент потерян
         if (!element)
         {
             if (m_gameStage == TrenTakePutDefines::gsTakeProcess)
@@ -337,11 +347,34 @@ void TrenTakePutExecute::elementsInteraction()
             }
             else
             if (m_gameStage == TrenTakePutDefines::gsPutProcess)
+            {
                 m_gameStage = TrenTakePutDefines::gsPut;
+                m_elementPut = nullptr;
+            }
         }
         else
+        //! Элемент не потерян
         {
             m_pos = element->pos();
+            if (m_gameStage == TrenTakePutDefines::gsTakeProcess)
+            {
+                //! Перешли на другой элемент при захвате - потерять предыдущий
+                if (element != m_elementTake)
+                {
+                    m_gameStage = TrenTakePutDefines::gsTake;
+                    m_elementTake = nullptr;
+                }
+            }
+            else
+            if (m_gameStage == TrenTakePutDefines::gsPutProcess)
+            {
+                //! Перешли на другой элемент при укладке - потерять предыдущий
+                if (element != m_elementPut)
+                {
+                    m_gameStage = TrenTakePutDefines::gsPut;
+                    m_elementPut = nullptr;
+                }
+            }
         }
     }
     else
@@ -366,7 +399,7 @@ void TrenTakePutExecute::elementsInteraction()
                     else
                     {
                         m_gameStage = TrenTakePutDefines::gsTakeProcess;
-                        m_elementTake = element;
+                        m_elementTake = element;                        
                         m_fixCount = 0;
                     }
                 }
@@ -374,19 +407,23 @@ void TrenTakePutExecute::elementsInteraction()
                 if (m_gameStage == TrenTakePutDefines::gsPut)
                 {
                     if (m_timeFixPut == 0)
+                    {
+                        m_elementPut = element;
                         fixingStage();
+                    }
                     else
                     {
-                        qDebug() << "put" << element->code();
                         m_gameStage = TrenTakePutDefines::gsPutProcess;
+                        m_elementPut = element;
                         m_fixCount = 0;
                     }
                 }
                 m_isError = false;
+//                m_isDeferredError = false;
             }
             else
             {
-                qDebug() << m_timeFixPut;
+//                qDebug() << m_timeFixPut;
                 fixingError();
 //                if (m_gameStage == TrenTakePutDefines::gsTake)
 //                    fixingError();
@@ -433,7 +470,7 @@ void TrenTakePutExecute::processStageWorking()
 
 void TrenTakePutExecute::fixingTake()
 {
-    qDebug() << "take" << m_elementTake->code();
+    m_elementTake->setZValue(zlvlTakeElements);
     m_gameStage = TrenTakePutDefines::gsPut;
     m_player.setMedia(QUrl("qrc:/sound/03.wav"));
     m_player.play();
@@ -447,7 +484,8 @@ void TrenTakePutExecute::fixingStage()
         m_elementTake->setVisible(false);
     else
     {
-        m_elementTake->setPos(m_pos); //! Принудительное позиционирование по позиции зоны укладки
+        m_elementTake->setZValue(zlvlElements);
+        m_elementTake->setPos(m_pos); //! Принудительное позиционирование элемента по позиции зоны укладки
     }
     m_elementTake = nullptr;
     if (m_stageMode == TrenTakePutDefines::smTakePut)
@@ -496,8 +534,8 @@ void TrenTakePutExecute::generateNewScene(const bool isAddScore)
         if (m_elementsTake.at(0).style == TrenTakePutDefines::esPictureFixed ||
             m_elementsTake.at(0).style == TrenTakePutDefines::esDrawing)
         {
-            allocBySeparatePositions(m_takeTakeOrder, m_zonesTake, m_elementsTake, 2);
-            allocBySeparatePositions(m_putTakeOrder, m_zonesPut, m_elementsPut, 1);
+            allocBySeparatePositions(m_takeTakeOrder, m_zonesTake, m_elementsTake, zlvlElements);
+            allocBySeparatePositions(m_putTakeOrder, m_zonesPut, m_elementsPut, zlvlZones);
         }
         else
         //! Распределение парных
@@ -515,7 +553,7 @@ void TrenTakePutExecute::generateNewScene(const bool isAddScore)
 
     setMarker(m_markerObj);
     m_scene->addItem(m_marker);
-    m_marker->setZValue(3);
+    m_marker->setZValue(zlvlMarker);
     m_marker->setPos(0 - m_marker->boundingRect().width() / 2,
                      0 - m_marker->boundingRect().height() / 2);
     m_putElementCount = 0;
@@ -536,10 +574,12 @@ void TrenTakePutExecute::allocSplitPictures()
 
     int picNum = qrand() % m_filesPuzzle.size();
     QPixmap pixAll(m_elementsTake.at(0).images + m_filesPuzzle.at(picNum));
+    ui->lblFullPicture->setPixmap(pixAll.scaled(ui->frControl->geometry().width(), ui->frControl->geometry().width()));
     //! Масштабирование
     pixAll = pixAll.scaled(m_zonesTake.at(0).width * 2 * m_prop,
                            m_zonesTake.at(0).height * 2 * m_prop,
                            Qt::KeepAspectRatio);
+
     if (m_zonesTake.size() == 4 && m_zonesPut.size() == 4) // || m_zonesTake.size() == 9)
     {
         auto pixLT = pixAll.copy(0, 0, pixAll.width() / 2, pixAll.height() / 2);
@@ -552,15 +592,16 @@ void TrenTakePutExecute::allocSplitPictures()
         auto* takeLD = allocElement(m_zonesTake, &m_elementsTake[0], &pixLD, 2);
         auto* takeRD = allocElement(m_zonesTake, &m_elementsTake[0], &pixRD, 2);
 
-        qDebug() << takeLT->zoneIdx() <<
-                    takeRT->zoneIdx() <<
-                    takeLD->zoneIdx() <<
-                    takeRD->zoneIdx();
+        takeElements.clear();
+        takeElements << takeLT << takeRT << takeLD << takeRD;
 
         auto* putLT = allocElement(m_zonesPut, &m_elementsPut[0], nullptr, 1, 0);
         auto* putRT = allocElement(m_zonesPut, &m_elementsPut[0], nullptr, 1, 1);
         auto* putLD = allocElement(m_zonesPut, &m_elementsPut[0], nullptr, 1, 2);
         auto* putRD = allocElement(m_zonesPut, &m_elementsPut[0], nullptr, 1, 3);
+
+        putElements.clear();
+        putElements << putLT << putRT << putLD << putRD;
 
         auto assignCode = [&](TrenTakePutDefines::GameElement* elementTake,
                               TrenTakePutDefines::GameElement* elementPut)
@@ -568,24 +609,12 @@ void TrenTakePutExecute::allocSplitPictures()
             auto posPutCode = m_zonesPut.at(elementPut->zoneIdx()).position;
             elementPut->setCode(posPutCode);
             elementTake->setCode(posPutCode);
-
-            qDebug() << "---" << elementTake->zoneIdx() << elementPut->zoneIdx() << posPutCode;
         };
 
         assignCode(takeLT, putLT);
         assignCode(takeRT, putRT);
         assignCode(takeLD, putLD);
         assignCode(takeRD, putRD);
-
-        qDebug() << "";
-        qDebug() << takeLT->code() << "(" << takeLT->pos() << ") " <<
-                    takeRT->code() << "(" << takeRT->pos() << ") " <<
-                    takeLD->code() << "(" << takeLD->pos() << ") " <<
-                    takeRD->code() << "(" << takeRD->pos() << ") ";
-        qDebug() << putLT->code() << "(" << putLT->pos() << ") " <<
-                    putRT->code() << "(" << putRT->pos() << ") " <<
-                    putLD->code() << "(" << putLD->pos() << ") " <<
-                    putRD->code() << "(" << putRD->pos() << ") ";
     }
 }
 

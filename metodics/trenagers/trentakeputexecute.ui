@@ -70,6 +70,12 @@
           <height>0</height>
          </size>
         </property>
+        <property name="maximumSize">
+         <size>
+          <width>200</width>
+          <height>16777215</height>
+         </size>
+        </property>
         <property name="frameShape">
          <enum>QFrame::StyledPanel</enum>
         </property>
@@ -387,6 +393,13 @@
             </size>
            </property>
           </spacer>
+         </item>
+         <item>
+          <widget class="QLabel" name="lblFullPicture">
+           <property name="text">
+            <string>TextLabel</string>
+           </property>
+          </widget>
          </item>
         </layout>
        </widget>

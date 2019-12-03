@@ -52,6 +52,15 @@ private slots:
 private:
     Ui::TrenTakePutExecute *ui;
 
+    ///< Слои игрового поля
+    enum ZLevels
+    {
+        zlvlZones = 1,
+        zlvlElements = 2,
+        zlvlTakeElements = 3,
+        zlvlMarker = 4
+    };
+
     void setSceneSize(QSize &size);
     void setZones(const QJsonArray &arrZones, QList<TrenTakePutDefines::GameZoneInfo> &zones);
     void setElements(const QJsonArray &arrElements,
@@ -149,6 +158,7 @@ private:
     QList<TrenTakePutDefines::GameElementInfo> m_elementsPut;
 
     TrenTakePutDefines::GameElement *m_elementTake {nullptr};
+    TrenTakePutDefines::GameElement *m_elementPut {nullptr};
     int m_putElementCount {0}; ///< Счетчик элементов, уложенных в корзину
     int m_fixCount {0};        ///< Счетчик пакетов для фиксации захвата или укладки
     int m_score {0};           ///< Очки, набранные в пробе
