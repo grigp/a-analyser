@@ -88,6 +88,11 @@ private:
     void fixingError();
 
     /*!
+     * \brief Задержка, чтобы зафиксировать собранную сцену перед генерацией новой
+     */
+    void delayScene();
+
+    /*!
      * \brief Генерация новой сцены
      */
     void generateNewScene(const bool isAddScore);

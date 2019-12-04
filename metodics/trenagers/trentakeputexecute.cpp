@@ -494,7 +494,11 @@ void TrenTakePutExecute::fixingStage()
     if (m_stageMode == TrenTakePutDefines::smAllElements)
     {
         if (m_putElementCount == m_zonesTake.size() - 1)
+        {
+            //! Задержка, чтобы зафиксировать собранную сцену перед генерацией новой
+            delayScene();
             generateNewScene(true);
+        }
         else
         {
             ++m_putElementCount;
@@ -516,6 +520,17 @@ void TrenTakePutExecute::fixingError()
         m_player.setMedia(QUrl("qrc:/sound/04.wav"));
         m_player.play();
         m_isDeferredError = false;
+    }
+}
+
+void TrenTakePutExecute::delayScene()
+{
+    m_scene->update(m_scene->sceneRect());
+    QTime time;
+    time.start();
+    while (time.elapsed() < 500)
+    {
+        QApplication::processEvents();
     }
 }
 
