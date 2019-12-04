@@ -41,6 +41,8 @@ TrenTakePutExecute::TrenTakePutExecute(QWidget *parent) :
     ui->cbScale->addItem("32");
     ui->cbScale->addItem("64");
     ui->cbScale->addItem("128");
+
+    m_filesPuzzleUsed.clear();
 }
 
 TrenTakePutExecute::~TrenTakePutExecute()
@@ -587,7 +589,8 @@ void TrenTakePutExecute::allocSplitPictures()
     if (m_elementsTake.size() != 1 || m_elementsPut.size() != 1)
         return;
 
-    int picNum = qrand() % m_filesPuzzle.size();
+    int picNum = getNextPictureNumber();
+
     QPixmap pixAll(m_elementsTake.at(0).images + m_filesPuzzle.at(picNum));
     ui->lblFullPicture->setPixmap(pixAll.scaled(ui->frControl->geometry().width(), ui->frControl->geometry().width()));
     //! Масштабирование
@@ -631,6 +634,23 @@ void TrenTakePutExecute::allocSplitPictures()
         assignCode(takeLD, putLD);
         assignCode(takeRD, putRD);
     }
+}
+
+int TrenTakePutExecute::getNextPictureNumber()
+{
+    int retval = -1;
+    int cnt = 0;
+    do
+    {
+        retval = qrand() % m_filesPuzzle.size();
+        ++cnt;
+    }
+    while (m_filesPuzzleUsed.contains(retval));
+
+    m_filesPuzzleUsed.insert(retval);
+    if (m_filesPuzzleUsed.size() == m_filesPuzzle.size())
+        m_filesPuzzleUsed.clear();
+    return retval;
 }
 
 void TrenTakePutExecute::loadPicturesPuzzle(const QString &folder)

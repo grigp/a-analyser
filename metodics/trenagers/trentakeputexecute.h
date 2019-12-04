@@ -99,6 +99,8 @@ private:
 
     void allocSplitPictures();
 
+    int getNextPictureNumber();
+
     /*!
      * \brief Загрузка списка картинок для построения в режиме puzzle
      * \param folder - папка с картинками
@@ -175,6 +177,7 @@ private:
     QMediaPlayer m_player;
     TrenTakePutPatientWindow* m_patientWindow {nullptr};   ///< Окно пациента
     QList<QString> m_filesPuzzle;      ///< Список файлов для построения картинок
+    QSet<int> m_filesPuzzleUsed;   ///< Номера файлов, которые уже использовались
 
 //    DataDefines::PatientKard m_kard;
 
