@@ -421,27 +421,23 @@ void TrenTakePutExecute::elementsInteraction()
                     }
                 }
                 m_isError = false;
-//                m_isDeferredError = false;
             }
             else
             {
-//                qDebug() << m_timeFixPut;
-                fixingError();
-//                if (m_gameStage == TrenTakePutDefines::gsTake)
-//                    fixingError();
-//                else
-//                if (m_gameStage == TrenTakePutDefines::gsPut)
-//                {
-//                    if (m_timeFixPut == 0)
-//                        fixingError();
-//                    else
-//                    {
-//                        qDebug() << "err";
-//                        m_isDeferredError = true;
-//                        m_gameStage = TrenTakePutDefines::gsPutProcess;
-//                        m_fixCount = 0;
-//                    }
-//                }
+                if (m_gameStage == TrenTakePutDefines::gsTake)
+                    fixingError();
+                else
+                if (m_gameStage == TrenTakePutDefines::gsPut)
+                {
+                    if (m_timeFixPut == 0)
+                        fixingError();
+                    else
+                    {
+                        m_gameStage = TrenTakePutDefines::gsPutProcess;
+                        m_elementPut = element;
+                        m_fixCount = 0;
+                    }
+                }
             }
         }
         else
@@ -457,15 +453,22 @@ void TrenTakePutExecute::processStageWorking()
         timeTake = m_timeFixPut;
     if (m_fixCount >= timeTake * m_frequency)
     {
-        if (m_isDeferredError)
-            fixingError();
+        if (m_gameStage == TrenTakePutDefines::gsTakeProcess)
+            fixingTake();
         else
+        if (m_gameStage == TrenTakePutDefines::gsPutProcess)
         {
-            if (m_gameStage == TrenTakePutDefines::gsTakeProcess)
-                fixingTake();
-            else
-            if (m_gameStage == TrenTakePutDefines::gsPutProcess)
+            int takeCode = -1;
+            if (m_elementTake)
+                takeCode = m_elementTake->code();
+            int putCode = -1;
+            if (m_elementPut)
+                putCode = m_elementPut->code();
+
+            if (takeCode == putCode)
                 fixingStage();
+            else
+                fixingError();
         }
     }
 }
@@ -521,7 +524,6 @@ void TrenTakePutExecute::fixingError()
         m_isError = true;
         m_player.setMedia(QUrl("qrc:/sound/04.wav"));
         m_player.play();
-        m_isDeferredError = false;
     }
 }
 

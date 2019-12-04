@@ -171,7 +171,6 @@ private:
     int m_score {0};           ///< Очки, набранные в пробе
     int m_errorsCount {0};     ///< Счетчик ошибок
     bool m_isError {false};    ///< Признак ошибки. Для исключения "лишних" ошибок
-    bool m_isDeferredError {false};  ///< Признак ошибки при укладке с отложенным временем
     QPointF m_pos;
 
     QMediaPlayer m_player;
