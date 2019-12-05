@@ -16,12 +16,12 @@
 #include <QDir>
 #include <QDebug>
 
-namespace  {
+//namespace  {
 
-QList<TrenTakePutDefines::GameElement*> takeElements;
-QList<TrenTakePutDefines::GameElement*> putElements;
+//QList<TrenTakePutDefines::GameElement*> takeElements;
+//QList<TrenTakePutDefines::GameElement*> putElements;
 
-}
+//}
 
 TrenTakePutExecute::TrenTakePutExecute(QWidget *parent) :
     QWidget(parent),
@@ -42,7 +42,7 @@ TrenTakePutExecute::TrenTakePutExecute(QWidget *parent) :
     ui->cbScale->addItem("64");
     ui->cbScale->addItem("128");
 
-    m_filesPuzzleUsed.clear();
+    m_filesUsed.clear();
 }
 
 TrenTakePutExecute::~TrenTakePutExecute()
@@ -61,6 +61,9 @@ void TrenTakePutExecute::setParams(const QJsonObject &params)
         loadPicturesPuzzle(m_elementsTake.at(0).images);
     ui->lblFullPicture->setVisible((m_elementsTake.size() == 1) &&
                                    (m_elementsTake.at(0).style == TrenTakePutDefines::esPictureSplit));
+
+    if ((m_elementsTake.size() == 1) && (m_elementsTake.at(0).style == TrenTakePutDefines::esPicturePair))
+        loadPicturesPair(m_elementsTake.at(0).images);
 
     m_markerObj = params["marker"].toObject();
 
@@ -560,7 +563,7 @@ void TrenTakePutExecute::generateNewScene(const bool isAddScore)
         //! Распределение парных
         if (m_elementsTake.at(0).style == TrenTakePutDefines::esPicturePair)
         {
-
+            allocPairPictires();
         }
         else
         //! Распределение разделенных
@@ -586,12 +589,31 @@ void TrenTakePutExecute::generateNewScene(const bool isAddScore)
     }
 }
 
+void TrenTakePutExecute::allocPairPictires()
+{
+    if (m_elementsTake.size() != 1 || m_elementsPut.size() != 1 ||
+            m_zonesTake.size() != m_zonesPut.size())
+        return;
+
+    for (int i = 0; i < m_zonesTake.size(); ++i)
+    {
+        int picNum = getNextPictureNumber(m_filesPair.size());
+        QPixmap pixTake(m_filesPair.at(picNum).take);
+        QPixmap pixPut(m_filesPair.at(picNum).put);
+
+        auto* elementTake = allocElement(m_zonesTake, &m_elementsTake[0], &pixTake, 2);
+        auto* elementPut = allocElement(m_zonesPut, &m_elementsPut[0], &pixPut, 1);
+        elementTake->setCode(i+1);
+        elementPut->setCode(i+1);
+    }
+}
+
 void TrenTakePutExecute::allocSplitPictures()
 {
     if (m_elementsTake.size() != 1 || m_elementsPut.size() != 1)
         return;
 
-    int picNum = getNextPictureNumber();
+    int picNum = getNextPictureNumber(m_filesPuzzle.size());
 
     QPixmap pixAll(m_elementsTake.at(0).images + m_filesPuzzle.at(picNum));
     ui->lblFullPicture->setPixmap(pixAll.scaled(ui->frControl->geometry().width(), ui->frControl->geometry().width()));
@@ -612,16 +634,16 @@ void TrenTakePutExecute::allocSplitPictures()
         auto* takeLD = allocElement(m_zonesTake, &m_elementsTake[0], &pixLD, 2);
         auto* takeRD = allocElement(m_zonesTake, &m_elementsTake[0], &pixRD, 2);
 
-        takeElements.clear();
-        takeElements << takeLT << takeRT << takeLD << takeRD;
+//        takeElements.clear();
+//        takeElements << takeLT << takeRT << takeLD << takeRD;
 
         auto* putLT = allocElement(m_zonesPut, &m_elementsPut[0], nullptr, 1, 0);
         auto* putRT = allocElement(m_zonesPut, &m_elementsPut[0], nullptr, 1, 1);
         auto* putLD = allocElement(m_zonesPut, &m_elementsPut[0], nullptr, 1, 2);
         auto* putRD = allocElement(m_zonesPut, &m_elementsPut[0], nullptr, 1, 3);
 
-        putElements.clear();
-        putElements << putLT << putRT << putLD << putRD;
+//        putElements.clear();
+//        putElements << putLT << putRT << putLD << putRD;
 
         auto assignCode = [&](TrenTakePutDefines::GameElement* elementTake,
                               TrenTakePutDefines::GameElement* elementPut)
@@ -638,20 +660,20 @@ void TrenTakePutExecute::allocSplitPictures()
     }
 }
 
-int TrenTakePutExecute::getNextPictureNumber()
+int TrenTakePutExecute::getNextPictureNumber(const int filesCount)
 {
     int retval = -1;
     int cnt = 0;
     do
     {
-        retval = qrand() % m_filesPuzzle.size();
+        retval = qrand() % filesCount;
         ++cnt;
     }
-    while (m_filesPuzzleUsed.contains(retval));
+    while (m_filesUsed.contains(retval));
 
-    m_filesPuzzleUsed.insert(retval);
-    if (m_filesPuzzleUsed.size() == m_filesPuzzle.size())
-        m_filesPuzzleUsed.clear();
+    m_filesUsed.insert(retval);
+    if (m_filesUsed.size() == filesCount)
+        m_filesUsed.clear();
     return retval;
 }
 
@@ -663,6 +685,27 @@ void TrenTakePutExecute::loadPicturesPuzzle(const QString &folder)
     foreach (auto fileInfo, list)
         if (fileInfo.suffix() == "png")
             m_filesPuzzle << fileInfo.fileName();
+}
+
+void TrenTakePutExecute::loadPicturesPair(const QString &folder)
+{
+    m_filesPair.clear();
+    int i = 1;
+    QString fnTake = "";
+    QString fnPut = "";
+    do
+    {
+        fnTake = folder + "take" + QString::number(i).rightJustified(2, '0') + ".png";
+        fnPut = folder + "put" + QString::number(i).rightJustified(2, '0') + ".png";
+
+        if (QFile::exists(fnTake) && QFile::exists(fnPut))
+        {
+            FilesPair rec(fnTake, fnPut);
+            m_filesPair << rec;
+        }
+        ++i;
+    }
+    while(QFile::exists(fnTake) && QFile::exists(fnPut));
 }
 
 void TrenTakePutExecute::allocBySeparatePositions(TrenTakePutDefines::TakeOrder &takeOrder,

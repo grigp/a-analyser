@@ -60,7 +60,7 @@ void TrenTakePutDefines::GameElement::assignElementInfo(TrenTakePutDefines::Game
         if (m_element->style == esPictureFixed)
             m_pixmap.load(":/images/Games/" + m_element->images);
         else
-        if (m_element->style == esPictureSplit)
+        if (m_element->style == esPictureSplit || m_element->style == esPicturePair)
             if (pixmap)
                 m_pixmap = *pixmap;
         if (m_element->isRepaint)

@@ -22,6 +22,17 @@ class Driver;
 class TrenTakePutPatientWindow;
 
 /*!
+ * \brief Структура записи о парных файлов FilesPair struct
+ */
+struct FilesPair
+{
+    QString take;
+    QString put;
+    FilesPair(const QString &ts, const QString &ps)
+        : take(ts), put(ps){}
+};
+
+/*!
  * \brief Класс виджета проведения сеанса тренинга TrenagerExecute class
  */
 class TrenTakePutExecute : public QWidget
@@ -97,15 +108,23 @@ private:
      */
     void generateNewScene(const bool isAddScore);
 
+    void allocPairPictires();
+
     void allocSplitPictures();
 
-    int getNextPictureNumber();
+    int getNextPictureNumber(const int filesCount);
 
     /*!
      * \brief Загрузка списка картинок для построения в режиме puzzle
      * \param folder - папка с картинками
      */
     void loadPicturesPuzzle(const QString &folder);
+
+    /*!
+     * \brief Загрузка списка картинок для построения в режиме pair
+     * \param folder - папка с картинками
+     */
+    void loadPicturesPair(const QString &folder);
 
     void allocBySeparatePositions(TrenTakePutDefines::TakeOrder &takeOrder,
                                   QList<TrenTakePutDefines::GameZoneInfo> &zones,
@@ -176,7 +195,8 @@ private:
     QMediaPlayer m_player;
     TrenTakePutPatientWindow* m_patientWindow {nullptr};   ///< Окно пациента
     QList<QString> m_filesPuzzle;      ///< Список файлов для построения картинок
-    QSet<int> m_filesPuzzleUsed;   ///< Номера файлов, которые уже использовались
+    QList<FilesPair> m_filesPair;      ///< Список файлов для парных файлов
+    QSet<int> m_filesUsed;   ///< Номера файлов, которые уже использовались
 
 //    DataDefines::PatientKard m_kard;
 
