@@ -66,10 +66,11 @@ private:
     ///< Слои игрового поля
     enum ZLevels
     {
-        zlvlZones = 1,
-        zlvlElements = 2,
-        zlvlTakeElements = 3,
-        zlvlMarker = 4
+        zlvlBackground = 1,
+        zlvlZones = 2,
+        zlvlElements = 3,
+        zlvlTakeElements = 4,
+        zlvlMarker = 5
     };
 
     void setSceneSize(QSize &size);
@@ -78,6 +79,7 @@ private:
                      QList<TrenTakePutDefines::GameElementInfo> &elements,
                      TrenTakePutDefines::GameStage stage);
     void setMarker(const QJsonObject &objMarker);
+    void setBackground(const QJsonObject &objBackground);
 
     /*!
      * \brief Формирует список каналов для выбора управления
@@ -163,6 +165,8 @@ private:
     double m_prop = 1; ///< Пропорция для пересчера базовой сцены 2000 x 2000 в реальные размеры игровой сцены
     QGraphicsPixmapItem *m_marker {nullptr};
     QJsonObject m_markerObj;
+    TrenTakePutDefines::BackgroundElement *m_background {nullptr};
+    QJsonObject m_backgroundObj;
 
     int m_frequency = 50;        ///< Частота дискретизации
 

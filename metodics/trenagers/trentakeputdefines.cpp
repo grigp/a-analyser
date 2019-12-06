@@ -76,3 +76,44 @@ int TrenTakePutDefines::GameElement::code() const
         return m_element->code;
 }
 
+
+TrenTakePutDefines::BackgroundElement::BackgroundElement(const BackgroundMode mode, QGraphicsItem *parent)
+    : QGraphicsItem(parent)
+{
+    m_mode = mode;
+    m_rect.setWidth(100);
+    m_rect.setHeight(100);
+}
+
+QRectF TrenTakePutDefines::BackgroundElement::boundingRect() const
+{
+    return m_rect;
+}
+
+void TrenTakePutDefines::BackgroundElement::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
+{
+    Q_UNUSED(option);
+    Q_UNUSED(widget);
+
+    QRect rect(boundingRect().x(), boundingRect().y(),
+               boundingRect().width(), boundingRect().height());
+
+    if (m_mode == bkgmPicture)
+    {
+        painter->drawPixmap(rect, m_pixmap);
+    }
+    else
+    if (m_mode == bkgmPlate)
+    {
+
+    }
+    if (m_mode == bkgmDrawing)
+    {
+
+    }
+}
+
+void TrenTakePutDefines::BackgroundElement::assignPixmap(const QString &fnPixmap)
+{
+    m_pixmap.load(fnPixmap);
+}

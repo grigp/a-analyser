@@ -79,6 +79,16 @@ enum StageMode
     , smAllElements  ///< Этап для всех элементов (все enabled элементы надо положить в свои зоны)
 };
 
+/*!
+ * \brief Режим фоновой картинки BackgroundMode enum
+ */
+enum BackgroundMode
+{
+      bkgmPicture = 0   ///< Растянутая картинка
+    , bkgmPlate         ///< Замощение плиткой
+    , bkgmDrawing       ///< Рисование
+};
+
 struct GameElementInfo;
 
 /*!
@@ -121,6 +131,28 @@ private:
     QSizeF m_size;
     int m_code;
     int m_zoneIdx {-1};
+};
+
+/*!
+ * \brief Элемент - фон графической зоны BackgroundElement class
+ */
+class BackgroundElement : public QGraphicsItem
+{
+public:
+    explicit BackgroundElement(const BackgroundMode mode, QGraphicsItem *parent = nullptr);
+
+    QRectF boundingRect() const override;
+
+    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
+
+    void assignPixmap(const QString &fnPixmap);
+
+    void setRect(const QRectF &rect) {m_rect = rect;}
+
+private:
+    QRectF m_rect;
+    BackgroundMode m_mode;
+    QPixmap m_pixmap;
 };
 
 /*!

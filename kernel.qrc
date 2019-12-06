@@ -71,5 +71,6 @@
         <file>images/Games/Marker3.png</file>
         <file>sound/04.wav</file>
         <file>sound/05.wav</file>
+        <file>images/backgrounds/background_01.png</file>
     </qresource>
 </RCC>

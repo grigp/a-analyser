@@ -66,6 +66,7 @@ void TrenTakePutExecute::setParams(const QJsonObject &params)
         loadPicturesPair(m_elementsTake.at(0).images);
 
     m_markerObj = params["marker"].toObject();
+    m_backgroundObj = params["background"].toObject();
 
     auto objTakeOrder = params["take_order"].toObject();
     auto tto = objTakeOrder["mode"].toString();
@@ -311,6 +312,19 @@ void TrenTakePutExecute::setMarker(const QJsonObject &objMarker)
         QPixmap mpmp(":/images/Games/" + objMarker["image"].toString());
         BaseUtils::setColoredPicture(mpmp, BaseUtils::strRGBAToColor(objMarker["color"].toString()));
         m_marker = new QGraphicsPixmapItem(mpmp);
+    }
+}
+
+void TrenTakePutExecute::setBackground(const QJsonObject &objBackground)
+{
+
+    auto style = objBackground["style"].toString();
+    if (style == "picture")
+    {
+        m_background = new TrenTakePutDefines::BackgroundElement(TrenTakePutDefines::bkgmPicture);
+        m_background->assignPixmap(":/images/backgrounds/" + objBackground["image"].toString());
+        m_background->setRect(m_scene->sceneRect());
+        m_background->setZValue(zlvlBackground);
     }
 }
 
@@ -573,6 +587,9 @@ void TrenTakePutExecute::generateNewScene(const bool isAddScore)
         }
     }
 
+    setBackground(m_backgroundObj);
+    m_scene->addItem(m_background);
+
     setMarker(m_markerObj);
     m_scene->addItem(m_marker);
     m_marker->setZValue(zlvlMarker);
@@ -601,8 +618,8 @@ void TrenTakePutExecute::allocPairPictires()
         QPixmap pixTake(m_filesPair.at(picNum).take);
         QPixmap pixPut(m_filesPair.at(picNum).put);
 
-        auto* elementTake = allocElement(m_zonesTake, &m_elementsTake[0], &pixTake, 2);
-        auto* elementPut = allocElement(m_zonesPut, &m_elementsPut[0], &pixPut, 1);
+        auto* elementTake = allocElement(m_zonesTake, &m_elementsTake[0], &pixTake, zlvlElements);
+        auto* elementPut = allocElement(m_zonesPut, &m_elementsPut[0], &pixPut, zlvlZones);
         elementTake->setCode(i+1);
         elementPut->setCode(i+1);
     }
@@ -629,18 +646,18 @@ void TrenTakePutExecute::allocSplitPictures()
         auto pixLD = pixAll.copy(0, pixAll.height() / 2, pixAll.width() / 2, pixAll.height() / 2);
         auto pixRD = pixAll.copy(pixAll.width() / 2, pixAll.height() / 2, pixAll.width() / 2, pixAll.height() / 2);
 
-        auto* takeLT = allocElement(m_zonesTake, &m_elementsTake[0], &pixLT, 2);
-        auto* takeRT = allocElement(m_zonesTake, &m_elementsTake[0], &pixRT, 2);
-        auto* takeLD = allocElement(m_zonesTake, &m_elementsTake[0], &pixLD, 2);
-        auto* takeRD = allocElement(m_zonesTake, &m_elementsTake[0], &pixRD, 2);
+        auto* takeLT = allocElement(m_zonesTake, &m_elementsTake[0], &pixLT, zlvlElements);
+        auto* takeRT = allocElement(m_zonesTake, &m_elementsTake[0], &pixRT, zlvlElements);
+        auto* takeLD = allocElement(m_zonesTake, &m_elementsTake[0], &pixLD, zlvlElements);
+        auto* takeRD = allocElement(m_zonesTake, &m_elementsTake[0], &pixRD, zlvlElements);
 
 //        takeElements.clear();
 //        takeElements << takeLT << takeRT << takeLD << takeRD;
 
-        auto* putLT = allocElement(m_zonesPut, &m_elementsPut[0], nullptr, 1, 0);
-        auto* putRT = allocElement(m_zonesPut, &m_elementsPut[0], nullptr, 1, 1);
-        auto* putLD = allocElement(m_zonesPut, &m_elementsPut[0], nullptr, 1, 2);
-        auto* putRD = allocElement(m_zonesPut, &m_elementsPut[0], nullptr, 1, 3);
+        auto* putLT = allocElement(m_zonesPut, &m_elementsPut[0], nullptr, zlvlZones, 0);
+        auto* putRT = allocElement(m_zonesPut, &m_elementsPut[0], nullptr, zlvlZones, 1);
+        auto* putLD = allocElement(m_zonesPut, &m_elementsPut[0], nullptr, zlvlZones, 2);
+        auto* putRD = allocElement(m_zonesPut, &m_elementsPut[0], nullptr, zlvlZones, 3);
 
 //        putElements.clear();
 //        putElements << putLT << putRT << putLD << putRD;
@@ -804,7 +821,7 @@ TrenTakePutDefines::GameElement *TrenTakePutExecute::markerOnGameElement()
     for (int i = 0; i < items.size(); ++i)
     {
         auto* item = items[i];
-        if (item != m_marker)
+        if (item != m_marker && item != m_background)
         {
             auto* ge = static_cast<TrenTakePutDefines::GameElement*>(item);
             if (!ge->isProcessed())
