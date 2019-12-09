@@ -26,8 +26,8 @@ QString TrenTakePutTemplate::name()
 QWidget *TrenTakePutTemplate::execute(QWidget *parent, const QJsonObject &params)
 {
     auto *retval = new TrenTakePutExecute(parent);
-    parent->layout()->addWidget(retval);
     retval->setParams(params);
+    parent->layout()->addWidget(retval);
     return retval;
 }
 

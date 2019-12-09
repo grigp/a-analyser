@@ -167,6 +167,11 @@ private:
     QJsonObject m_markerObj;
     TrenTakePutDefines::BackgroundElement *m_background {nullptr};
     QJsonObject m_backgroundObj;
+    ///< Границы зоны рамки
+    int m_bndLeft {0};
+    int m_bndTop {0};
+    int m_bndRight {0};
+    int m_bndBottom {0};
 
     int m_frequency = 50;        ///< Частота дискретизации
 

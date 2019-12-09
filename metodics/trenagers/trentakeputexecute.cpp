@@ -31,7 +31,7 @@ TrenTakePutExecute::TrenTakePutExecute(QWidget *parent) :
     ui->setupUi(this);
 
     ui->lblCommunicationError->setVisible(false);
-    QTimer::singleShot(0, this, &TrenTakePutExecute::start);
+//    QTimer::singleShot(0, this, &TrenTakePutExecute::start);
 
     ui->cbScale->addItem("1");
     ui->cbScale->addItem("2");
@@ -98,6 +98,8 @@ void TrenTakePutExecute::setParams(const QJsonObject &params)
 
     auto scale = params["scale"].toInt();
     ui->cbScale->setCurrentIndex(scale);
+
+    QTimer::singleShot(0, this, &TrenTakePutExecute::start);
 }
 
 void TrenTakePutExecute::closeEvent(QCloseEvent *event)
@@ -116,7 +118,9 @@ void TrenTakePutExecute::closeEvent(QCloseEvent *event)
 
 void TrenTakePutExecute::resizeEvent(QResizeEvent *event)
 {
-    QSize size = event->size();
+    Q_UNUSED(event);
+//    QSize size = event->size();
+    QSize size = ui->gvGame->geometry().size();
     setSceneSize(size);
 }
 
@@ -223,8 +227,8 @@ void TrenTakePutExecute::setSceneSize(QSize &size)
     int sideSize = size.height();
     if (size.width() < size.height())
         sideSize = size.width();
-    if (ui->gvGame->scene())
-        ui->gvGame->scene()->setSceneRect(-sideSize / 2, - sideSize / 2, sideSize, sideSize);
+    if (m_scene)
+        m_scene->setSceneRect(-size.width() / 2, - size.height() / 2, size.width(), size.height());
     m_prop = static_cast<double>(sideSize) / 2000;
 }
 
@@ -326,6 +330,14 @@ void TrenTakePutExecute::setBackground(const QJsonObject &objBackground)
         m_background->setRect(m_scene->sceneRect());
         m_background->setZValue(zlvlBackground);
     }
+    auto bo = objBackground["borders"].toObject();
+    m_bndTop = bo["top"].toInt();
+    m_bndBottom = bo["bottom"].toInt();
+    m_bndLeft = bo["left"].toInt();
+    m_bndRight = bo["right"].toInt();
+
+    QSize size = ui->gvGame->geometry().size();
+    setSceneSize(size);
 }
 
 void TrenTakePutExecute::setChannels()
@@ -563,6 +575,8 @@ void TrenTakePutExecute::generateNewScene(const bool isAddScore)
     for (int i = 0; i < m_zonesPut.size(); ++i)
         m_zonesPut[i].clearElement();
 
+    setBackground(m_backgroundObj);
+
     if (m_elementsTake.size() > 0 && m_elementsPut.size() > 0 &&
         m_zonesTake.size() > 0 && m_zonesPut.size() > 0)
     {
@@ -587,7 +601,6 @@ void TrenTakePutExecute::generateNewScene(const bool isAddScore)
         }
     }
 
-    setBackground(m_backgroundObj);
     m_scene->addItem(m_background);
 
     setMarker(m_markerObj);
@@ -858,7 +871,7 @@ void TrenTakePutExecute::showPatientWindow()
     else
     {
         ui->gvGame->setScene(m_scene);
-        QSize size = geometry().size();
+        QSize size = ui->gvGame->geometry().size();
         setSceneSize(size);
     }
 }
