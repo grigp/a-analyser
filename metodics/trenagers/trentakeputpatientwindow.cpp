@@ -8,7 +8,7 @@ TrenTakePutPatientWindow::TrenTakePutPatientWindow(QWidget *parent) :
     ui(new Ui::TrenTakePutPatientWindow)
 {
     ui->setupUi(this);
-    setWindowFlags(Qt::Dialog | Qt::CustomizeWindowHint | Qt::WindowTitleHint);
+    setWindowFlags(Qt::Dialog | Qt::FramelessWindowHint);
 }
 
 TrenTakePutPatientWindow::~TrenTakePutPatientWindow()
@@ -38,10 +38,18 @@ void TrenTakePutPatientWindow::setErrors(const QString &errors)
 
 void TrenTakePutPatientWindow::resizeEvent(QResizeEvent *event)
 {
-    int size = event->size().height();
-    if (event->size().width() < event->size().height())
-        size = event->size().width();
+    Q_UNUSED(event);
+    int sideSize = ui->gvGame->geometry().size().height();
+    if (ui->gvGame->geometry().size().width() < ui->gvGame->geometry().size().height())
+        sideSize = ui->gvGame->geometry().size().width();
     if (ui->gvGame->scene())
-        ui->gvGame->scene()->setSceneRect(-size / 2, - size / 2, size, size);
-    m_prop = static_cast<double>(size) / 2000;
+        ui->gvGame->scene()->setSceneRect(-ui->gvGame->geometry().size().width() / 2,
+                                          - ui->gvGame->geometry().size().height() / 2,
+                                          ui->gvGame->geometry().size().width(),
+                                          ui->gvGame->geometry().size().height());
+//        ui->gvGame->scene()->setSceneRect(-ui->gvGame->geometry().size().width() * 0.995 / 2,
+//                                          - ui->gvGame->geometry().size().height() * 0.995 / 2,
+//                                          ui->gvGame->geometry().size().width() * 0.995,
+//                                          ui->gvGame->geometry().size().height() * 0.995);
+    m_prop = static_cast<double>(sideSize) / 2000;
 }

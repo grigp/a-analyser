@@ -105,7 +105,17 @@ void TrenTakePutDefines::BackgroundElement::paint(QPainter *painter, const QStyl
     else
     if (m_mode == bkgmPlate)
     {
-
+        int x = boundingRect().x();
+        while (x < boundingRect().width())
+        {
+            int y = boundingRect().y();
+            while(y < boundingRect().height())
+            {
+                painter->drawPixmap(x, y, m_pixmap);
+                y += m_pixmap.height();
+            }
+            x += m_pixmap.width();
+        }
     }
     if (m_mode == bkgmDrawing)
     {

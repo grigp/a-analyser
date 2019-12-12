@@ -295,9 +295,9 @@
                 "take_zones": [
                     {
                         "position": "random",
-                        "x_min": -800,
-                        "x_max": 800,
-                        "y_min": -800,
+                        "x_min": -700,
+                        "x_max": 700,
+                        "y_min": -700,
                         "y_max": 0,
                         "width": 50,
                         "height": 50
@@ -321,21 +321,21 @@
                     {
                         "position": "fixed",
                         "x": -670,
-                        "y": 700,
+                        "y": 600,
                         "width": 200,
                         "height": 200
                     },
                     {
                         "position": "fixed",
                         "x": 0,
-                        "y": 700,
+                        "y": 600,
                         "width": 200,
                         "height": 200
                     },
                     {
                         "position": "fixed",
                         "x": 670,
-                        "y": 700,
+                        "y": 600,
                         "width": 200,
                         "height": 200
                     }
@@ -368,6 +368,16 @@
                     "image": "Marker1.png",
                     "repaint": true,
                     "color": "ffff0000"
+                },
+                "background": {
+                    "borders": {
+                        "bottom": 20,
+                        "left": 20,
+                        "right": 20,
+                        "top": 20
+                    },
+                    "image": "background_01.png",
+                    "style": "picture"
                 },
                 "stage": "take_put",
                 "scale": 1
@@ -493,6 +503,16 @@
                     "repaint": true,
                     "color": "ffff0000"
                 },
+                "background": {
+                    "borders": {
+                        "bottom": 20,
+                        "left": 20,
+                        "right": 20,
+                        "top": 20
+                    },
+                    "image": "background_04.png",
+                    "style": "picture"
+                },
                 "stage": "all_elements",
                 "scale": 1
             }
@@ -508,21 +528,21 @@
                     {
                         "position": "fixed",
                         "x": -670,
-                        "y": -800,
+                        "y": -700,
                         "width": 50,
                         "height": 50
                     },
                     {
                         "position": "fixed",
                         "x": 0,
-                        "y": -800,
+                        "y": -700,
                         "width": 50,
                         "height": 50
                     },
                     {
                         "position": "fixed",
                         "x": 670,
-                        "y": -800,
+                        "y": -700,
                         "width": 50,
                         "height": 50
                     }
@@ -561,21 +581,21 @@
                     {
                         "position": "fixed",
                         "x": -670,
-                        "y": 700,
+                        "y": 600,
                         "width": 200,
                         "height": 200
                     },
                     {
                         "position": "fixed",
                         "x": 0,
-                        "y": 700,
+                        "y": 600,
                         "width": 200,
                         "height": 200
                     },
                     {
                         "position": "fixed",
                         "x": 670,
-                        "y": 700,
+                        "y": 600,
                         "width": 200,
                         "height": 200
                     }
@@ -609,6 +629,16 @@
                     "repaint": true,
                     "color": "ffff0000"
                 },
+                "background": {
+                    "borders": {
+                        "bottom": 20,
+                        "left": 20,
+                        "right": 20,
+                        "top": 20
+                    },
+                    "image": "background_02.png",
+                    "style": "picture"
+                },
                 "stage": "take_put",
                 "scale": 1
             }
@@ -624,13 +654,13 @@
                     {
                         "position": "fixed",
                         "x": 0,
-                        "y": 800,
+                        "y": 700,
                         "width": 50,
                         "height": 50
                     },
                     {
                         "position": "fixed",
-                        "x": 800,
+                        "x": 700,
                         "y": 0,
                         "width": 50,
                         "height": 50
@@ -638,13 +668,13 @@
                     {
                         "position": "fixed",
                         "x": 0,
-                        "y": -800,
+                        "y": -700,
                         "width": 50,
                         "height": 50
                     },
                     {
                         "position": "fixed",
-                        "x": -800,
+                        "x": -700,
                         "y": 0,
                         "width": 50,
                         "height": 50
@@ -718,6 +748,16 @@
                     "repaint": true,
                     "color": "ffff0000"
                 },
+                "background": {
+                    "borders": {
+                        "bottom": 20,
+                        "left": 20,
+                        "right": 20,
+                        "top": 20
+                    },
+                    "image": "background_03.png",
+                    "style": "picture"
+                },
                 "stage": "take_put",
                 "scale": 1
             }
@@ -762,7 +802,7 @@
                 "take_elements": [
                     {
                         "style": "picture_split",
-                        "images": "picture//puzzle//",
+                        "images": "pictures//puzzle//",
                         "repaint": false,
                         "enabled": true,
                         "code": -1
@@ -825,6 +865,16 @@
                     "image": "Marker1.png",
                     "repaint": true,
                     "color": "ffff0000"
+                },
+                "background": {
+                    "borders": {
+                        "bottom": 0,
+                        "left": 0,
+                        "right": 0,
+                        "top": 0
+                    },
+                    "image": "01.png",
+                    "style": "plate"
                 },
                 "stage": "all_elements",
                 "scale": 1

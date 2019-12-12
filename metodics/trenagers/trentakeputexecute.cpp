@@ -228,7 +228,7 @@ void TrenTakePutExecute::setSceneSize(QSize &size)
     if (size.width() < size.height())
         sideSize = size.width();
     if (m_scene)
-        m_scene->setSceneRect(-size.width() / 2, - size.height() / 2, size.width(), size.height());
+        m_scene->setSceneRect(-size.width() * 0.995 / 2, - size.height() * 0.995 / 2, size.width() * 0.995, size.height() * 0.995);
     m_prop = static_cast<double>(sideSize) / 2000;
 }
 
@@ -330,14 +330,22 @@ void TrenTakePutExecute::setBackground(const QJsonObject &objBackground)
         m_background->setRect(m_scene->sceneRect());
         m_background->setZValue(zlvlBackground);
     }
+    else
+    if (style == "plate")
+    {
+        m_background = new TrenTakePutDefines::BackgroundElement(TrenTakePutDefines::bkgmPlate);
+        m_background->assignPixmap(":/images/plite_textures/" + objBackground["image"].toString());
+        m_background->setRect(m_scene->sceneRect());
+        m_background->setZValue(zlvlBackground);
+    }
     auto bo = objBackground["borders"].toObject();
     m_bndTop = bo["top"].toInt();
     m_bndBottom = bo["bottom"].toInt();
     m_bndLeft = bo["left"].toInt();
     m_bndRight = bo["right"].toInt();
 
-    QSize size = ui->gvGame->geometry().size();
-    setSceneSize(size);
+//    QSize size = ui->gvGame->geometry().size();
+//    setSceneSize(size);
 }
 
 void TrenTakePutExecute::setChannels()
@@ -862,9 +870,9 @@ void TrenTakePutExecute::showPatientWindow()
         if (!m_patientWindow)
             m_patientWindow = new TrenTakePutPatientWindow(this);
         m_patientWindow->setScene(m_scene);
-        m_patientWindow->resize(QApplication::desktop()->screenGeometry(1).size());
-        m_patientWindow->move(QApplication::desktop()->screenGeometry(1).x(),
-                              QApplication::desktop()->screenGeometry(1).y());
+        m_patientWindow->resize(QApplication::desktop()->availableGeometry(1).size());
+        m_patientWindow->move(QApplication::desktop()->availableGeometry(1).x(),
+                              QApplication::desktop()->availableGeometry(1).y());
         m_patientWindow->show();
         m_prop = m_patientWindow->prop();
     }

@@ -72,5 +72,18 @@
         <file>sound/04.wav</file>
         <file>sound/05.wav</file>
         <file>images/backgrounds/background_01.png</file>
+        <file>images/backgrounds/background_02.png</file>
+        <file>images/backgrounds/background_03.png</file>
+        <file>images/backgrounds/background_04.png</file>
+        <file>images/backgrounds/background_05.png</file>
+        <file>images/plite_textures/01.png</file>
+        <file>images/plite_textures/02.png</file>
+        <file>images/plite_textures/03.png</file>
+        <file>images/plite_textures/04.png</file>
+        <file>images/plite_textures/05.png</file>
+        <file>images/plite_textures/06.png</file>
+        <file>images/plite_textures/07.png</file>
+        <file>images/plite_textures/08.png</file>
+        <file>images/plite_textures/09.png</file>
     </qresource>
 </RCC>
