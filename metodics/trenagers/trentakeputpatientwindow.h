@@ -29,6 +29,8 @@ public:
     void setScore(const QString &score);
     void setErrors(const QString &errors);
 
+    void setSamplePixmap(const QPixmap &pixmap);
+
 protected:
     void resizeEvent(QResizeEvent* event);
 

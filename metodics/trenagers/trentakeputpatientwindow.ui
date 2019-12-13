@@ -223,6 +223,20 @@
         </property>
        </spacer>
       </item>
+      <item>
+       <widget class="QLabel" name="lblFullPicture">
+        <property name="font">
+         <font>
+          <pointsize>9</pointsize>
+          <weight>50</weight>
+          <bold>false</bold>
+         </font>
+        </property>
+        <property name="text">
+         <string>TextLabel</string>
+        </property>
+       </widget>
+      </item>
      </layout>
     </widget>
    </item>

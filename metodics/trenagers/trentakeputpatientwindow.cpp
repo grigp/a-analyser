@@ -9,6 +9,7 @@ TrenTakePutPatientWindow::TrenTakePutPatientWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     setWindowFlags(Qt::Dialog | Qt::FramelessWindowHint);
+    ui->lblFullPicture->setVisible(false);
 }
 
 TrenTakePutPatientWindow::~TrenTakePutPatientWindow()
@@ -44,6 +45,12 @@ void TrenTakePutPatientWindow::setScore(const QString &score)
 void TrenTakePutPatientWindow::setErrors(const QString &errors)
 {
     ui->lblGameErrors->setText(errors);
+}
+
+void TrenTakePutPatientWindow::setSamplePixmap(const QPixmap &pixmap)
+{
+    ui->lblFullPicture->setPixmap(pixmap.scaled(ui->frParams->geometry().width(), ui->frParams->geometry().width()));
+    ui->lblFullPicture->setVisible(true);
 }
 
 void TrenTakePutPatientWindow::resizeEvent(QResizeEvent *event)

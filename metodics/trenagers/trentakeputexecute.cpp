@@ -667,6 +667,9 @@ void TrenTakePutExecute::allocSplitPictures()
 
     QPixmap pixAll(m_elementsTake.at(0).images + m_filesPuzzle.at(picNum));
     ui->lblFullPicture->setPixmap(pixAll.scaled(ui->frControl->geometry().width(), ui->frControl->geometry().width()));
+    if (m_patientWindow)
+        m_patientWindow->setSamplePixmap(pixAll);
+
     //! Масштабирование
     pixAll = pixAll.scaled(m_zonesTake.at(0).width * 2 * m_prop,
                            m_zonesTake.at(0).height * 2 * m_prop,
