@@ -23,6 +23,8 @@ public:
     void setScene(QGraphicsScene *scene);
 
     double prop() const;
+    double propX() const;
+    double propY() const;
 
     void setScore(const QString &score);
     void setErrors(const QString &errors);
@@ -34,6 +36,8 @@ protected:
 private:
     Ui::TrenTakePutPatientWindow *ui;
     double m_prop = 1; ///< Пропорция для пересчера базовой сцены 2000 x 2000 в реальные размеры игровой сцены
+    double m_propX = 1;
+    double m_propY = 1;
 };
 
 #endif // TRENTAKEPUTPATIENTWINDOW_H

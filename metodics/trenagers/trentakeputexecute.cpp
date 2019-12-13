@@ -173,6 +173,16 @@ void TrenTakePutExecute::getData(DeviceProtocols::DeviceData *data)
                 //! Установка маркера
                 double mx = rec.x() / (128 / scaleMultiplier()) * (m_scene->sceneRect().width() / 2);
                 double my = - rec.y() / (128 / scaleMultiplier()) * (m_scene->sceneRect().height() / 2);
+
+                if (mx - m_marker->boundingRect().width() / 2 < m_scene->sceneRect().x() + m_bndLeft * m_propX)
+                    mx = m_scene->sceneRect().x() + m_bndLeft * m_propX + m_marker->boundingRect().width() / 2;
+                if (mx > m_scene->sceneRect().x() + m_scene->sceneRect().width() - m_bndRight * m_propX - m_marker->boundingRect().width() / 2)
+                    mx = m_scene->sceneRect().x() + m_scene->sceneRect().width() - m_bndRight * m_propX - m_marker->boundingRect().width() / 2;
+                if (my - m_marker->boundingRect().height() / 2 < m_scene->sceneRect().y() + m_bndTop * m_propY)
+                    my = m_scene->sceneRect().y() + m_bndTop * m_propY + m_marker->boundingRect().height() / 2;
+                if (my > m_scene->sceneRect().y() + m_scene->sceneRect().height() - m_bndBottom * m_propY - m_marker->boundingRect().height() / 2)
+                    my = m_scene->sceneRect().y() + m_scene->sceneRect().height() - m_bndBottom * m_propY - m_marker->boundingRect().height() / 2;
+
                 m_marker->setPos(mx - m_marker->boundingRect().width() / 2,
                                  my - m_marker->boundingRect().height() / 2);
 
@@ -227,9 +237,11 @@ void TrenTakePutExecute::setSceneSize(QSize &size)
     int sideSize = size.height();
     if (size.width() < size.height())
         sideSize = size.width();
+    m_prop = static_cast<double>(sideSize) / 2000;
     if (m_scene)
         m_scene->setSceneRect(-size.width() * 0.995 / 2, - size.height() * 0.995 / 2, size.width() * 0.995, size.height() * 0.995);
-    m_prop = static_cast<double>(sideSize) / 2000;
+    m_propX = static_cast<double>(size.width()) / 2000;
+    m_propY = static_cast<double>(size.height()) / 2000;
 }
 
 void TrenTakePutExecute::setZones(const QJsonArray &arrZones, QList<TrenTakePutDefines::GameZoneInfo> &zones)
@@ -875,6 +887,8 @@ void TrenTakePutExecute::showPatientWindow()
                               QApplication::desktop()->availableGeometry(1).y());
         m_patientWindow->show();
         m_prop = m_patientWindow->prop();
+        m_propX = m_patientWindow->propX();
+        m_propY = m_patientWindow->propY();
     }
     else
     {

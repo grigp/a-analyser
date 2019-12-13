@@ -371,10 +371,10 @@
                 },
                 "background": {
                     "borders": {
-                        "bottom": 20,
-                        "left": 20,
-                        "right": 20,
-                        "top": 20
+                        "bottom": 130,
+                        "left": 160,
+                        "right": 160,
+                        "top": 130
                     },
                     "image": "background_01.png",
                     "style": "picture"
@@ -505,10 +505,10 @@
                 },
                 "background": {
                     "borders": {
-                        "bottom": 20,
-                        "left": 20,
-                        "right": 20,
-                        "top": 20
+                        "bottom": 50,
+                        "left": 40,
+                        "right": 40,
+                        "top": 50
                     },
                     "image": "background_04.png",
                     "style": "picture"
@@ -631,10 +631,10 @@
                 },
                 "background": {
                     "borders": {
-                        "bottom": 20,
-                        "left": 20,
-                        "right": 20,
-                        "top": 20
+                        "bottom": 70,
+                        "left": 75,
+                        "right": 75,
+                        "top": 70
                     },
                     "image": "background_02.png",
                     "style": "picture"
@@ -750,10 +750,10 @@
                 },
                 "background": {
                     "borders": {
-                        "bottom": 20,
-                        "left": 20,
-                        "right": 20,
-                        "top": 20
+                        "bottom": 110,
+                        "left": 140,
+                        "right": 140,
+                        "top": 110
                     },
                     "image": "background_03.png",
                     "style": "picture"
@@ -986,10 +986,10 @@
                      "image": "background_01.png",
                      "borders":
                      {
-                         "left": 0,
-                         "top": 0,
-                         "right": 0,
-                         "bottom": 0
+                        "bottom": 60,
+                        "left": 65,
+                        "right": 65,
+                        "top": 60
                      }
                 },
                 "stage": "all_elements",

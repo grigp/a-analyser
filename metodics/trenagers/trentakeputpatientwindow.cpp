@@ -26,6 +26,16 @@ double TrenTakePutPatientWindow::prop() const
     return m_prop;
 }
 
+double TrenTakePutPatientWindow::propX() const
+{
+    return m_propX;
+}
+
+double TrenTakePutPatientWindow::propY() const
+{
+    return m_propY;
+}
+
 void TrenTakePutPatientWindow::setScore(const QString &score)
 {
     ui->lblGameScore->setText(score);
@@ -52,4 +62,6 @@ void TrenTakePutPatientWindow::resizeEvent(QResizeEvent *event)
 //                                          ui->gvGame->geometry().size().width() * 0.995,
 //                                          ui->gvGame->geometry().size().height() * 0.995);
     m_prop = static_cast<double>(sideSize) / 2000;
+    m_propX = static_cast<double>(ui->gvGame->geometry().size().width()) / 2000;
+    m_propY = static_cast<double>(ui->gvGame->geometry().size().height()) / 2000;
 }
