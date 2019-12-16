@@ -997,6 +997,66 @@
             }
         },
         {
+            "uid": "{1E383953-2062-43DA-9AE8-0D73F2258FC5}",
+            "name": "Тренажер \"Охота\"",
+            "template": "met_trentakeput_uid",
+            "build_norms": false,
+            "params":
+            {
+                "take_zones": [
+                    {
+                        "position": "random",
+                        "x_min": -700,
+                        "x_max": 700,
+                        "y_min": -700,
+                        "y_max": 0,
+                        "width": 500,
+                        "height": 500
+                    }
+                ],
+                "take_elements": [
+                    {
+                        "style": "picture_random",
+                        "images": "pictures//animals//",
+                        "repaint": false,
+                        "enabled": true,
+                        "code": 1
+                    }
+                ],
+                "take_order": {
+                    "mode": "enabled_primary",
+                    "time": 2
+                },
+                "put_zones": [
+                ],
+                "put_elements": [
+                ],
+                "put_order": {
+                    "mode": "enabled_primary",
+                    "time": 0
+                },
+                "marker":
+                {
+                    "style": "picture",
+                    "image": "Marker3.png",
+                    "repaint": true,
+                    "color": "ffff0000"
+                },
+                "background": {
+                    "borders": {
+                        "bottom": 0,
+                        "left": 0,
+                        "right": 0,
+                        "top": 0
+                    },
+                    "image": "03.png",
+                    "style": "plate"
+                },
+                "stage": "all_elements",
+                "scale": 1
+            }
+        },
+        {
             "uid": "{A100CF38-D2E6-4E71-A485-53845E3F116C}",
             "name": "Уровень здоровья по ИДС",
             "template": "met_stabtest_uid",

@@ -117,16 +117,19 @@ private:
     int getNextPictureNumber(const int filesCount);
 
     /*!
-     * \brief Загрузка списка картинок для построения в режиме puzzle
+     * \brief Загрузка списка одиночных картинок для построения, например в режиме puzzle
      * \param folder - папка с картинками
      */
-    void loadPicturesPuzzle(const QString &folder);
+    void loadPicturesSingle(const QString &folder);
 
     /*!
      * \brief Загрузка списка картинок для построения в режиме pair
      * \param folder - папка с картинками
      */
     void loadPicturesPair(const QString &folder);
+
+    void allocByRandomPositions(QList<TrenTakePutDefines::GameZoneInfo> &zones,
+                                QList<TrenTakePutDefines::GameElementInfo> &elements);
 
     void allocBySeparatePositions(TrenTakePutDefines::TakeOrder &takeOrder,
                                   QList<TrenTakePutDefines::GameZoneInfo> &zones,
@@ -205,7 +208,7 @@ private:
 
     QMediaPlayer m_player;
     TrenTakePutPatientWindow* m_patientWindow {nullptr};   ///< Окно пациента
-    QList<QString> m_filesPuzzle;      ///< Список файлов для построения картинок
+    QList<QString> m_filesSingle;      ///< Список одиночных файлов для построения картинок или для охоты
     QList<FilesPair> m_filesPair;      ///< Список файлов для парных файлов
     QSet<int> m_filesUsed;   ///< Номера файлов, которые уже использовались
 

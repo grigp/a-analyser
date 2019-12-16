@@ -58,7 +58,9 @@ void TrenTakePutExecute::setParams(const QJsonObject &params)
     setElements(arrTakeElements, m_elementsTake, TrenTakePutDefines::gsTake);
 
     if ((m_elementsTake.size() == 1) && (m_elementsTake.at(0).style == TrenTakePutDefines::esPictureSplit))
-        loadPicturesPuzzle(m_elementsTake.at(0).images);
+        loadPicturesSingle(m_elementsTake.at(0).images);
+    if ((m_elementsTake.size() >= 1) && (m_elementsTake.at(0).style == TrenTakePutDefines::esPictureRandom))
+        loadPicturesSingle(m_elementsTake.at(0).images);
     ui->lblFullPicture->setVisible((m_elementsTake.size() == 1) &&
                                    (m_elementsTake.at(0).style == TrenTakePutDefines::esPictureSplit));
 
@@ -293,6 +295,9 @@ void TrenTakePutExecute::setElements(const QJsonArray &arrElements,
         if (sStyle == "picture_fixed")
             ei.style = TrenTakePutDefines::esPictureFixed;
         else
+        if (sStyle == "picture_random")
+            ei.style = TrenTakePutDefines::esPictureRandom;
+        else
         if (sStyle == "picture_pair")
             ei.style = TrenTakePutDefines::esPicturePair;
         else
@@ -308,6 +313,7 @@ void TrenTakePutExecute::setElements(const QJsonArray &arrElements,
         ei.isRepaint = obj["repaint"].toBool();
         ei.color = BaseUtils::strRGBAToColor(obj["color"].toString());
         ei.movableWithMarker = (stage == TrenTakePutDefines::gsTake);
+        ei.presentTime = obj["present_time"].toInt();
 
         auto drawing = obj["drawing"].toString();
         if (drawing == "rectangle")
@@ -620,6 +626,16 @@ void TrenTakePutExecute::generateNewScene(const bool isAddScore)
             allocSplitPictures();
         }
     }
+    else
+    if (m_elementsTake.size() > 0 && m_elementsPut.size() == 0 &&
+        m_zonesTake.size() > 0 && m_zonesPut.size() == 0)
+    {
+        //! Распределение по отдельным позициям
+        if (m_elementsTake.at(0).style == TrenTakePutDefines::esPictureRandom)
+        {
+            allocByRandomPositions(m_zonesTake, m_elementsTake);
+        }
+    }
 
     m_scene->addItem(m_background);
 
@@ -663,9 +679,9 @@ void TrenTakePutExecute::allocSplitPictures()
     if (m_elementsTake.size() != 1 || m_elementsPut.size() != 1)
         return;
 
-    int picNum = getNextPictureNumber(m_filesPuzzle.size());
+    int picNum = getNextPictureNumber(m_filesSingle.size());
 
-    QPixmap pixAll(m_elementsTake.at(0).images + m_filesPuzzle.at(picNum));
+    QPixmap pixAll(m_elementsTake.at(0).images + m_filesSingle.at(picNum));
     ui->lblFullPicture->setPixmap(pixAll.scaled(ui->frControl->geometry().width(), ui->frControl->geometry().width()));
     if (m_patientWindow)
         m_patientWindow->setSamplePixmap(pixAll);
@@ -730,14 +746,14 @@ int TrenTakePutExecute::getNextPictureNumber(const int filesCount)
     return retval;
 }
 
-void TrenTakePutExecute::loadPicturesPuzzle(const QString &folder)
+void TrenTakePutExecute::loadPicturesSingle(const QString &folder)
 {
-    m_filesPuzzle.clear();
+    m_filesSingle.clear();
     QDir dir = folder;
     QFileInfoList list = dir.entryInfoList(QDir::Files | QDir::NoDotAndDotDot);
     foreach (auto fileInfo, list)
         if (fileInfo.suffix() == "png")
-            m_filesPuzzle << fileInfo.fileName();
+            m_filesSingle << fileInfo.fileName();
 }
 
 void TrenTakePutExecute::loadPicturesPair(const QString &folder)
@@ -759,6 +775,17 @@ void TrenTakePutExecute::loadPicturesPair(const QString &folder)
         ++i;
     }
     while(QFile::exists(fnTake) && QFile::exists(fnPut));
+}
+
+void TrenTakePutExecute::allocByRandomPositions(QList<TrenTakePutDefines::GameZoneInfo> &zones,
+                                                QList<TrenTakePutDefines::GameElementInfo> &elements)
+{
+    for (int i = 0; i < elements.size(); ++i)
+    {
+        int picNum = getNextPictureNumber(m_filesSingle.size());
+        QPixmap pixmap(m_elementsTake.at(i).images + m_filesSingle.at(picNum));
+        allocElement(zones, &elements[i], &pixmap, zlvlElements);
+    }
 }
 
 void TrenTakePutExecute::allocBySeparatePositions(TrenTakePutDefines::TakeOrder &takeOrder,

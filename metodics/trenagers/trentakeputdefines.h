@@ -42,6 +42,7 @@ enum MovingLaw
 enum ElementStyle
 {
       esPictureFixed  ///< Картинка фиксированная
+    , esPictureRandom ///< Картинка из набора вариантов
     , esPicturePair   ///< Картинка парная захват - укладка
     , esPictureSplit  ///< Картинка разделяемая на части в зонах захвата
     , esDrawing       ///< Рисованный элемент
@@ -131,6 +132,7 @@ private:
     QSizeF m_size;
     int m_code;
     int m_zoneIdx {-1};
+    int m_elapsedTime {0};  ///< Оставшееся время показа (если m_element->presentTime > 0)
 };
 
 /*!
@@ -198,6 +200,7 @@ struct GameElementInfo
     bool enabled {true};                  ///< Можно ли захватывать элемент
     int code {0};                         ///< Код элемента. Можно укладывать друг на друга только элементы с совпадающим кодом
     bool movableWithMarker {false};       ///< Будет ли элемент перемещатся маркером
+    int presentTime {0};                  ///< Время показа элемента
 
     GameElementInfo() {}
 };

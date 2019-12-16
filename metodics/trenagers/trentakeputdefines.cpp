@@ -37,7 +37,8 @@ void TrenTakePutDefines::GameElement::paint(QPainter *painter, const QStyleOptio
     QRect rect(boundingRect().x(), boundingRect().y(),
                boundingRect().width(), boundingRect().height());
 
-    if (m_element->style == esPictureFixed || m_element->style == esPictureSplit || m_element->style == esPicturePair)
+    if (m_element->style == esPictureFixed || m_element->style == esPictureSplit ||
+        m_element->style == esPicturePair || m_element->style == esPictureRandom)
         painter->drawPixmap(rect, m_pixmap);
     else
     if (m_element->style == esDrawing)
@@ -55,17 +56,21 @@ void TrenTakePutDefines::GameElement::assignElementInfo(TrenTakePutDefines::Game
                                                         const QPixmap *pixmap)
 {
     m_element = element;
-    if (m_element->style == esPictureFixed || m_element->style == esPictureSplit || m_element->style == esPicturePair)
+    if (m_element->style == esPictureFixed || m_element->style == esPictureRandom ||
+        m_element->style == esPictureSplit || m_element->style == esPicturePair)
     {
         if (m_element->style == esPictureFixed)
             m_pixmap.load(":/images/Games/" + m_element->images);
         else
-        if (m_element->style == esPictureSplit || m_element->style == esPicturePair)
+        if (m_element->style == esPictureSplit || m_element->style == esPicturePair ||
+            m_element->style == esPictureRandom)
             if (pixmap)
                 m_pixmap = *pixmap;
         if (m_element->isRepaint)
             BaseUtils::setColoredPicture(m_pixmap, m_element->color);
     }
+    if (m_element->presentTime > 0)
+        m_elapsedTime = m_element->presentTime;
 }
 
 int TrenTakePutDefines::GameElement::code() const
