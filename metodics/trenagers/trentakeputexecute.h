@@ -33,6 +33,16 @@ struct FilesPair
 };
 
 /*!
+ * \brief Структура параметров звуковой схемы SoundSheme struct
+ */
+struct SoundSheme
+{
+    QString ok;
+    QString error;
+    QString scene;
+};
+
+/*!
  * \brief Класс виджета проведения сеанса тренинга TrenagerExecute class
  */
 class TrenTakePutExecute : public QWidget
@@ -207,6 +217,7 @@ private:
     QPointF m_pos;
 
     QMediaPlayer m_player;
+    SoundSheme m_soundSheme;
     TrenTakePutPatientWindow* m_patientWindow {nullptr};   ///< Окно пациента
     QList<QString> m_filesSingle;      ///< Список одиночных файлов для построения картинок или для охоты
     QList<FilesPair> m_filesPair;      ///< Список файлов для парных файлов

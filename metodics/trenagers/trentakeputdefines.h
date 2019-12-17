@@ -98,7 +98,7 @@ struct GameElementInfo;
 class GameElement : public QGraphicsItem
 {
 public:
-    explicit GameElement(QGraphicsItem *parent = nullptr);
+    explicit GameElement(const QString name, QGraphicsItem *parent = nullptr);
 
     QRectF boundingRect() const override;
 
@@ -125,7 +125,10 @@ public:
     int zoneIdx() const {return m_zoneIdx;}
     void setZoneIdx(const int idx) {m_zoneIdx = idx;}
 
+    QString name() {return m_name;}
+
 private:
+    QString m_name;
     GameElementInfo* m_element {nullptr};
     QPixmap m_pixmap;
     bool m_isProcessed {false};

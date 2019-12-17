@@ -379,6 +379,12 @@
                     "image": "background_01.png",
                     "style": "picture"
                 },
+                "sounds":
+                {
+                    "ok": "03.wav",
+                    "error": "04.wav",
+                    "scene": "05.wav"
+                },
                 "stage": "take_put",
                 "scale": 1
             }
@@ -513,6 +519,12 @@
                     "image": "background_04.png",
                     "style": "picture"
                 },
+                "sounds":
+                {
+                    "ok": "03.wav",
+                    "error": "04.wav",
+                    "scene": "05.wav"
+                },
                 "stage": "all_elements",
                 "scale": 1
             }
@@ -639,6 +651,12 @@
                     "image": "background_02.png",
                     "style": "picture"
                 },
+                "sounds":
+                {
+                    "ok": "03.wav",
+                    "error": "04.wav",
+                    "scene": "05.wav"
+                },
                 "stage": "take_put",
                 "scale": 1
             }
@@ -758,6 +776,12 @@
                     "image": "background_03.png",
                     "style": "picture"
                 },
+                "sounds":
+                {
+                    "ok": "03.wav",
+                    "error": "04.wav",
+                    "scene": "05.wav"
+                },
                 "stage": "take_put",
                 "scale": 1
             }
@@ -876,6 +900,12 @@
                     "image": "01.png",
                     "style": "plate"
                 },
+                "sounds":
+                {
+                    "ok": "03.wav",
+                    "error": "04.wav",
+                    "scene": "05.wav"
+                },
                 "stage": "all_elements",
                 "scale": 1
             }
@@ -934,28 +964,28 @@
                     {
                         "position": "fixed",
                         "x": -750,
-                        "y": 750,
+                        "y": 600,
                         "width": 500,
                         "height": 500
                     },
                     {
                         "position": "fixed",
                         "x": -250,
-                        "y": 750,
+                        "y": 600,
                         "width": 500,
                         "height": 500
                     },
                     {
                         "position": "fixed",
                         "x": 250,
-                        "y": 750,
+                        "y": 600,
                         "width": 500,
                         "height": 500
                     },
                     {
                         "position": "fixed",
                         "x": 750,
-                        "y": 750,
+                        "y": 600,
                         "width": 500,
                         "height": 500
                     }
@@ -991,6 +1021,12 @@
                         "right": 65,
                         "top": 60
                      }
+                },
+                "sounds":
+                {
+                    "ok": "03.wav",
+                    "error": "04.wav",
+                    "scene": "05.wav"
                 },
                 "stage": "all_elements",
                 "scale": 1
@@ -1051,6 +1087,12 @@
                     },
                     "image": "03.png",
                     "style": "plate"
+                },
+                "sounds":
+                {
+                    "ok": "02.mp3",
+                    "error": "",
+                    "scene": ""
                 },
                 "stage": "all_elements",
                 "scale": 1

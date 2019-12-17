@@ -101,6 +101,11 @@ void TrenTakePutExecute::setParams(const QJsonObject &params)
     auto scale = params["scale"].toInt();
     ui->cbScale->setCurrentIndex(scale);
 
+    auto objSS = params["sounds"].toObject();
+    m_soundSheme.ok = objSS["ok"].toString();
+    m_soundSheme.error = objSS["error"].toString();
+    m_soundSheme.scene = objSS["scene"].toString();
+
     QTimer::singleShot(0, this, &TrenTakePutExecute::start);
 }
 
@@ -392,8 +397,6 @@ void TrenTakePutExecute::elementsInteraction()
     if (m_gameStage == TrenTakePutDefines::gsTakeProcess ||
         m_gameStage == TrenTakePutDefines::gsPutProcess)
     {
-        processStageWorking();
-
         //! Элемент потерян
         if (!element)
         {
@@ -433,6 +436,8 @@ void TrenTakePutExecute::elementsInteraction()
                 }
             }
         }
+
+        processStageWorking();
     }
     else
     {
@@ -496,7 +501,13 @@ void TrenTakePutExecute::elementsInteraction()
             }
         }
         else
+        {
+            //! Игры без этапа укладки - сразу, как перешли к укладке, генерим новую сцену
+            if (m_zonesPut.size() == 0 && m_elementsPut.size() == 0 &&
+                    m_gameStage == TrenTakePutDefines::gsPut)
+                fixingStage();
             m_isError = false;
+        }
     }
 }
 
@@ -509,7 +520,9 @@ void TrenTakePutExecute::processStageWorking()
     if (m_fixCount >= timeTake * m_frequency)
     {
         if (m_gameStage == TrenTakePutDefines::gsTakeProcess)
+        {
             fixingTake();
+        }
         else
         if (m_gameStage == TrenTakePutDefines::gsPutProcess)
         {
@@ -532,8 +545,11 @@ void TrenTakePutExecute::fixingTake()
 {
     m_elementTake->setZValue(zlvlTakeElements);
     m_gameStage = TrenTakePutDefines::gsPut;
-    m_player.setMedia(QUrl("qrc:/sound/03.wav"));
-    m_player.play();
+    if (m_soundSheme.ok != "")
+    {
+        m_player.setMedia(QUrl("qrc:/sound/" + m_soundSheme.ok));
+        m_player.play();
+    }
 }
 
 void TrenTakePutExecute::fixingStage()
@@ -562,8 +578,11 @@ void TrenTakePutExecute::fixingStage()
         else
         {
             ++m_putElementCount;
-            m_player.setMedia(QUrl("qrc:/sound/03.wav"));
-            m_player.play();
+            if (m_soundSheme.ok != "")
+            {
+                m_player.setMedia(QUrl("qrc:/sound/" + m_soundSheme.ok));
+                m_player.play();
+            }
         }
     }
 }
@@ -577,8 +596,11 @@ void TrenTakePutExecute::fixingError()
             --m_score;
         showFactors();
         m_isError = true;
-        m_player.setMedia(QUrl("qrc:/sound/04.wav"));
-        m_player.play();
+        if (m_soundSheme.error != "")
+        {
+            m_player.setMedia(QUrl("qrc:/sound/" + m_soundSheme.error));
+            m_player.play();
+        }
     }
 }
 
@@ -600,6 +622,8 @@ void TrenTakePutExecute::generateNewScene(const bool isAddScore)
         m_zonesTake[i].clearElement();
     for (int i = 0; i < m_zonesPut.size(); ++i)
         m_zonesPut[i].clearElement();
+    m_elementTake = nullptr;
+    m_elementPut = nullptr;
 
     setBackground(m_backgroundObj);
 
@@ -650,8 +674,11 @@ void TrenTakePutExecute::generateNewScene(const bool isAddScore)
     {
         m_score += (m_zonesTake.size() * 2);
         showFactors();
-        m_player.setMedia(QUrl("qrc:/sound/05.wav"));
-        m_player.play();
+        if (m_soundSheme.scene != "")
+        {
+            m_player.setMedia(QUrl("qrc:/sound/" + m_soundSheme.scene));
+            m_player.play();
+        }
     }
 }
 
@@ -823,7 +850,7 @@ TrenTakePutDefines::GameElement* TrenTakePutExecute::allocElement(QList<TrenTake
                                                                   const int zOrder,
                                                                   const int zoneIdx)
 {
-    auto* gameElement = new TrenTakePutDefines::GameElement();
+    auto* gameElement = new TrenTakePutDefines::GameElement("element");
     gameElement->assignElementInfo(element, pixmap);
 
     int zoneNum = zoneIdx;
@@ -834,21 +861,19 @@ TrenTakePutDefines::GameElement* TrenTakePutExecute::allocElement(QList<TrenTake
         while (zones.at(zoneNum).element != nullptr);
     }
 
-    auto zone = zones.at(zoneNum);
-    zone.setElement(gameElement);
-    zones.replace(zoneNum, zone);
+    zones[zoneNum].setElement(gameElement);
     gameElement->setZoneIdx(zoneNum);
 
-    gameElement->setSize(QSizeF(zone.width * m_prop, zone.height * m_prop));
+    gameElement->setSize(QSizeF(zones[zoneNum].width * m_prop, zones[zoneNum].height * m_prop));
 
-    if (zone.posKind == TrenTakePutDefines::pkFixed)
-        gameElement->setPos(zone.x * m_prop - gameElement->boundingRect().width() / 2,
-                            zone.y * m_prop - gameElement->boundingRect().height() / 2);
+    if (zones[zoneNum].posKind == TrenTakePutDefines::pkFixed)
+        gameElement->setPos(zones[zoneNum].x * m_prop - gameElement->boundingRect().width() / 2,
+                            zones[zoneNum].y * m_prop - gameElement->boundingRect().height() / 2);
     else
-    if (zone.posKind == TrenTakePutDefines::pkRandom)
+    if (zones[zoneNum].posKind == TrenTakePutDefines::pkRandom)
     {
-        int x = zone.x_min + qrand() % (zone.x_max - zone.x_min);
-        int y = zone.y_min + qrand() % (zone.y_max - zone.y_min);
+        int x = zones[zoneNum].x_min + qrand() % (zones[zoneNum].x_max - zones[zoneNum].x_min);
+        int y = zones[zoneNum].y_min + qrand() % (zones[zoneNum].y_max - zones[zoneNum].y_min);
         gameElement->setPos(x * m_prop - gameElement->boundingRect().width() / 2,
                             y * m_prop - gameElement->boundingRect().height() / 2);
     }
@@ -896,7 +921,9 @@ TrenTakePutDefines::GameElement *TrenTakePutExecute::markerOnGameElement()
                 {
                     if (mx >= item->x() && mx <= item->x() + item->boundingRect().width() &&
                         my >= item->y() && my <= item->y() + item->boundingRect().height())
+                    {
                         return ge;
+                    }
                 }
         }
     }

@@ -5,8 +5,8 @@
 #include <QPainter>
 #include <QDebug>
 
-TrenTakePutDefines::GameElement::GameElement(QGraphicsItem *parent)
-    : QGraphicsItem(parent)
+TrenTakePutDefines::GameElement::GameElement(const QString name, QGraphicsItem *parent)
+    : QGraphicsItem(parent), m_name(name)
 {
     m_size.setWidth(50);
     m_size.setHeight(50);
