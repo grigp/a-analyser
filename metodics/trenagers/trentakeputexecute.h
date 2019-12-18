@@ -101,6 +101,16 @@ private:
 
     void processStageWorking();
 
+    /*!
+     * \brief Обработка лимита времени для элементов
+     */
+    void elementsTimeLimitWorking();
+
+    /*!
+     * \brief Обработка подвижности для элементов
+     */
+    void elementsMobileWorking();
+
     void fixingTake();
 
     /*!

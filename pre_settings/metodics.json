@@ -1045,7 +1045,7 @@
                         "x_min": -700,
                         "x_max": 700,
                         "y_min": -700,
-                        "y_max": 0,
+                        "y_max": 700,
                         "width": 500,
                         "height": 500
                     }
@@ -1057,6 +1057,142 @@
                         "repaint": false,
                         "enabled": true,
                         "code": 1
+                    }
+                ],
+                "take_order": {
+                    "mode": "enabled_primary",
+                    "time": 2
+                },
+                "put_zones": [
+                ],
+                "put_elements": [
+                ],
+                "put_order": {
+                    "mode": "enabled_primary",
+                    "time": 0
+                },
+                "marker":
+                {
+                    "style": "picture",
+                    "image": "Marker3.png",
+                    "repaint": true,
+                    "color": "ffff0000"
+                },
+                "background": {
+                    "borders": {
+                        "bottom": 0,
+                        "left": 0,
+                        "right": 0,
+                        "top": 0
+                    },
+                    "image": "03.png",
+                    "style": "plate"
+                },
+                "sounds":
+                {
+                    "ok": "02.mp3",
+                    "error": "",
+                    "scene": ""
+                },
+                "stage": "all_elements",
+                "scale": 1
+            }
+        },
+        {
+            "uid": "{951DD0E9-E535-4BBB-8F54-DA53859A43C2}",
+            "name": "Тренажер \"Охота с лимитом времени\"",
+            "template": "met_trentakeput_uid",
+            "build_norms": false,
+            "params":
+            {
+                "take_zones": [
+                    {
+                        "position": "random",
+                        "x_min": -700,
+                        "x_max": 700,
+                        "y_min": -700,
+                        "y_max": 700,
+                        "width": 500,
+                        "height": 500
+                    }
+                ],
+                "take_elements": [
+                    {
+                        "style": "picture_random",
+                        "images": "pictures//animals//",
+                        "repaint": false,
+                        "enabled": true,
+                        "code": 1,
+                        "present_time": 5
+                    }
+                ],
+                "take_order": {
+                    "mode": "enabled_primary",
+                    "time": 2
+                },
+                "put_zones": [
+                ],
+                "put_elements": [
+                ],
+                "put_order": {
+                    "mode": "enabled_primary",
+                    "time": 0
+                },
+                "marker":
+                {
+                    "style": "picture",
+                    "image": "Marker3.png",
+                    "repaint": true,
+                    "color": "ffff0000"
+                },
+                "background": {
+                    "borders": {
+                        "bottom": 0,
+                        "left": 0,
+                        "right": 0,
+                        "top": 0
+                    },
+                    "image": "03.png",
+                    "style": "plate"
+                },
+                "sounds":
+                {
+                    "ok": "02.mp3",
+                    "error": "",
+                    "scene": ""
+                },
+                "stage": "all_elements",
+                "scale": 1
+            }
+        },
+        {
+            "uid": "{03B9C401-061C-4FA4-BA98-6054FE8AE6BC}",
+            "name": "Тренажер \"Воздушный бой\"",
+            "template": "met_trentakeput_uid",
+            "build_norms": false,
+            "params":
+            {
+                "take_zones": [
+                    {
+                        "position": "random",
+                        "x_min": -700,
+                        "x_max": 700,
+                        "y_min": -700,
+                        "y_max": 700,
+                        "width": 500,
+                        "height": 500
+                    }
+                ],
+                "take_elements": [
+                    {
+                        "style": "picture_random",
+                        "images": "pictures//animals//",
+                        "repaint": false,
+                        "enabled": true,
+                        "code": 1,
+                        "mobile": true,
+                        "moving_law": "random_force",
+                        "moving_max_force": 25
                     }
                 ],
                 "take_order": {

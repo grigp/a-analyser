@@ -5,8 +5,8 @@
 #include <QPainter>
 #include <QDebug>
 
-TrenTakePutDefines::GameElement::GameElement(const QString name, QGraphicsItem *parent)
-    : QGraphicsItem(parent), m_name(name)
+TrenTakePutDefines::GameElement::GameElement(QGraphicsItem *parent)
+    : QGraphicsItem(parent)
 {
     m_size.setWidth(50);
     m_size.setHeight(50);
@@ -50,6 +50,21 @@ void TrenTakePutDefines::GameElement::paint(QPainter *painter, const QStyleOptio
         if (m_element->drawing == edCircle)
             painter->drawEllipse(rect);
     }
+
+    if (m_presentTime > 0)
+    {
+        painter->save();
+        painter->setPen(QPen(Qt::yellow));
+        auto font = painter->font();
+        font.setPixelSize(40);
+        font.setBold(true);
+        painter->setFont(font);
+        auto s = QString::number(m_presentTime - m_timeCounter);
+        if (s.size() > 6)
+            s = "0";
+        painter->drawText(boundingRect().x() + 20, boundingRect().y() + 20, s);
+        painter->restore();
+    }
 }
 
 void TrenTakePutDefines::GameElement::assignElementInfo(TrenTakePutDefines::GameElementInfo *element,
@@ -69,8 +84,17 @@ void TrenTakePutDefines::GameElement::assignElementInfo(TrenTakePutDefines::Game
         if (m_element->isRepaint)
             BaseUtils::setColoredPicture(m_pixmap, m_element->color);
     }
-    if (m_element->presentTime > 0)
-        m_elapsedTime = m_element->presentTime;
+
+    m_timeCounter = 0;
+    if (m_element->timeLimitMin > 0 && m_element->timeLimitMax > 0)
+    {
+        if (m_element->timeLimitMax > m_element->timeLimitMin)
+            m_presentTime = m_element->timeLimitMin + qrand() % (m_element->timeLimitMax - m_element->timeLimitMin);
+        else
+            m_presentTime = m_element->timeLimitMin;
+    }
+    else
+        m_presentTime = 0;
 }
 
 int TrenTakePutDefines::GameElement::code() const

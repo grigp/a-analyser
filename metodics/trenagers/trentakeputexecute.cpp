@@ -274,13 +274,7 @@ void TrenTakePutExecute::setZones(const QJsonArray &arrZones, QList<TrenTakePutD
         zi.y = obj["y"].toInt();
         zi.width = obj["width"].toInt();
         zi.height = obj["height"].toInt();
-        zi.isMobile = obj["mobile"].toBool();
-        zi.movingSpeed = obj["moving_speed"].toInt();
         zi.position = obj["positionCode"].toInt();
-
-        auto ml = obj["moving_law"].toString();
-        if (ml == "random_speed")
-            zi.movingLaw = TrenTakePutDefines::mlRandomSpeed;
 
         zones << zi;
     }
@@ -318,7 +312,18 @@ void TrenTakePutExecute::setElements(const QJsonArray &arrElements,
         ei.isRepaint = obj["repaint"].toBool();
         ei.color = BaseUtils::strRGBAToColor(obj["color"].toString());
         ei.movableWithMarker = (stage == TrenTakePutDefines::gsTake);
-        ei.presentTime = obj["present_time"].toInt();
+
+        auto tl = obj["present_time"].toInt();
+        if (tl <= 1000)
+        {
+            ei.timeLimitMin = tl;
+            ei.timeLimitMax = tl;
+        }
+        else
+        {
+            ei.timeLimitMin = tl / 1000;
+            ei.timeLimitMax = tl % 1000;
+        }
 
         auto drawing = obj["drawing"].toString();
         if (drawing == "rectangle")
@@ -326,6 +331,12 @@ void TrenTakePutExecute::setElements(const QJsonArray &arrElements,
         else
         if (drawing == "circle")
             ei.drawing = TrenTakePutDefines::edCircle;
+
+        ei.isMobile = obj["mobile"].toBool();
+        ei.movingMaxForce = obj["moving_max_force"].toInt();
+        auto ml = obj["moving_law"].toString();
+        if (ml == "random_force")
+            ei.movingLaw = TrenTakePutDefines::mlRandomForce;
 
         elements << ei;
     }
@@ -509,6 +520,9 @@ void TrenTakePutExecute::elementsInteraction()
             m_isError = false;
         }
     }
+
+    elementsTimeLimitWorking();
+    elementsMobileWorking();
 }
 
 void TrenTakePutExecute::processStageWorking()
@@ -537,6 +551,68 @@ void TrenTakePutExecute::processStageWorking()
                 fixingStage();
             else
                 fixingError();
+        }
+    }
+}
+
+void TrenTakePutExecute::elementsTimeLimitWorking()
+{
+    bool allIsProcessed = true;
+    auto items = m_scene->items();
+    for (int i = 0; i < items.size(); ++i)
+    {
+        auto* item = items[i];
+        if (item != m_marker && item != m_background)
+        {
+            auto* ge = static_cast<TrenTakePutDefines::GameElement*>(item);
+            if (ge->presentTime() > 0)
+            {
+                ge->incTimeCounter(1.0 / m_frequency);
+                if (!ge->isProcessed())
+                {
+                    if (ge->timeCounter() >= ge->presentTime())
+                    {
+                        ge->setProcessed(true);
+                        m_elementTake = ge;
+                        fixingError();
+                    }
+                }
+                if (!ge->isProcessed())
+                    allIsProcessed = false;
+            }
+            else
+                allIsProcessed = false;
+        }
+    }
+
+    //! Все погашены, - тогда новый этап
+    if (allIsProcessed && m_elementTake)
+        fixingStage();
+}
+
+void TrenTakePutExecute::elementsMobileWorking()
+{
+    auto items = m_scene->items();
+    for (int i = 0; i < items.size(); ++i)
+    {
+        auto* item = items[i];
+        if (item != m_marker && item != m_background)
+        {
+            auto* ge = static_cast<TrenTakePutDefines::GameElement*>(item);
+            if (!ge->isProcessed() && ge->elementInfo()->isMobile)
+            {
+                if (ge->elementInfo()->movingLaw == TrenTakePutDefines::mlRandomForce)
+                {
+                    double f = qrand() % ge->elementInfo()->movingMaxForce * 2 - ge->elementInfo()->movingMaxForce;
+                    double vx = f / 10 + ge->vx();
+                    double x = ge->pos().x() + vx;
+                    f = qrand() % ge->elementInfo()->movingMaxForce * 2 - ge->elementInfo()->movingMaxForce;
+                    double vy = f / 10 + ge->vy();
+                    double y = ge->pos().y() + vy;
+
+                    ge->setPos(x, y);
+                }
+            }
         }
     }
 }
@@ -850,7 +926,7 @@ TrenTakePutDefines::GameElement* TrenTakePutExecute::allocElement(QList<TrenTake
                                                                   const int zOrder,
                                                                   const int zoneIdx)
 {
-    auto* gameElement = new TrenTakePutDefines::GameElement("element");
+    auto* gameElement = new TrenTakePutDefines::GameElement();
     gameElement->assignElementInfo(element, pixmap);
 
     int zoneNum = zoneIdx;

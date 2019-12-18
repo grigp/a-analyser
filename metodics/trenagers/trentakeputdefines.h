@@ -4,6 +4,7 @@
 #include <QGraphicsItem>
 #include <QPixmap>
 #include <QSizeF>
+#include <QDebug>
 
 namespace TrenTakePutDefines
 {
@@ -33,7 +34,7 @@ enum PositionKind
  */
 enum MovingLaw
 {
-    mlRandomSpeed  ///< Со скоростью, меняющейся по случайному закону
+    mlRandomForce  ///< Со силой воздействия, меняющейся по случайному закону
 };
 
 /*!
@@ -98,7 +99,7 @@ struct GameElementInfo;
 class GameElement : public QGraphicsItem
 {
 public:
-    explicit GameElement(const QString name, QGraphicsItem *parent = nullptr);
+    explicit GameElement(QGraphicsItem *parent = nullptr);
 
     QRectF boundingRect() const override;
 
@@ -125,17 +126,30 @@ public:
     int zoneIdx() const {return m_zoneIdx;}
     void setZoneIdx(const int idx) {m_zoneIdx = idx;}
 
-    QString name() {return m_name;}
+    ///< Работа со временем показа элемента
+    double timeCounter() const {return m_timeCounter;}
+    void incTimeCounter(const double delta) {m_timeCounter += delta;}
+    void resetTimeCounter() {m_timeCounter = 0;}
+    int presentTime() const {return m_presentTime;}
+
+    ///< Перемещение элемента
+    void setSpeed(const double vx, const double vy) {m_vx = vx; m_vy = vy;}
+    double vx() const {return m_vx;}
+    double vy() const {return m_vy;}
 
 private:
-    QString m_name;
     GameElementInfo* m_element {nullptr};
     QPixmap m_pixmap;
-    bool m_isProcessed {false};
+    bool m_isProcessed {false};   ///< Обработан ли элемент. Если обработан, то он не фиксируется
     QSizeF m_size;
     int m_code;
     int m_zoneIdx {-1};
-    int m_elapsedTime {0};  ///< Оставшееся время показа (если m_element->presentTime > 0)
+    int m_presentTime {0};     ///< Время показа. Расчитывается как случайное в диапазоне m_element->timeLimitMin -:- m_element->timeLimitMax
+                               ///< Если m_element->timeLimitMin > 0 и m_element->timeLimitMax > 0
+    double m_timeCounter {0};  ///< Счетчик времени показа  в отсчетах (если m_presentTime > 0)
+
+    double m_vx {0};           ///< Скорость перемещения элемента по x и y
+    double m_vy {0};
 };
 
 /*!
@@ -175,9 +189,6 @@ public:
     int y {0};
     int width {50};                        ///< Размеры
     int height {50};
-    bool isMobile {false};                 ///< Перемещается ли автоматически
-    MovingLaw movingLaw {mlRandomSpeed};   ///< Закон перемещения для isMobile == true
-    int movingSpeed {0};                   ///< Маскимальная скорость перемещения для isMobile == true
     int position {0};                      ///< Для стиля picture_split код позиции. Первая цифра - номер столбца, вторые две - номер строки
                                            ///< Теоретически 100 столбцов и 100 строк pos / 100 - столбец, pos % 100 - строка
 
@@ -203,7 +214,12 @@ struct GameElementInfo
     bool enabled {true};                  ///< Можно ли захватывать элемент
     int code {0};                         ///< Код элемента. Можно укладывать друг на друга только элементы с совпадающим кодом
     bool movableWithMarker {false};       ///< Будет ли элемент перемещатся маркером
-    int presentTime {0};                  ///< Время показа элемента
+    int timeLimitMin {0};                 ///< Минимальное время показа элемента
+    int timeLimitMax {0};                 ///< Максимальное время показа элемента
+
+    bool isMobile {false};                 ///< Перемещается ли автоматически
+    MovingLaw movingLaw {mlRandomForce};   ///< Закон перемещения для isMobile == true
+    int movingMaxForce {0};                ///< Маскимальная сила воздействия для isMobile == true
 
     GameElementInfo() {}
 };
