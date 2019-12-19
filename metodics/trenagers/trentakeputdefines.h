@@ -91,6 +91,15 @@ enum BackgroundMode
     , bkgmDrawing       ///< Рисование
 };
 
+/*!
+ * \brief Режим дополнений в маркере TargetAdvMode enum
+ */
+enum TargetAdvMode
+{
+      tamNone = 0         ///< Нет
+    , tamTraceOnTarget    ///< Трассы, когда маркер на цели
+};
+
 struct GameElementInfo;
 
 /*!
@@ -152,8 +161,27 @@ private:
     double m_vy {0};
 };
 
+
 /*!
- * \brief Элемент - фон графической зоны BackgroundElement class
+ * \brief Класс элемента - маркера MarkerElement class
+ */
+class MarkerElement : public QGraphicsPixmapItem
+{
+public:
+    explicit MarkerElement(const QPixmap &pixmap, QGraphicsItem *parent = nullptr)
+        : QGraphicsPixmapItem(pixmap, parent) {}
+
+    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
+
+    void setShotTrace(const bool isShotTrace);
+
+private:
+    bool m_isShotTrace {false};
+    int m_traceCounter {0};
+};
+
+/*!
+ * \brief Класс элемента - фона графической зоны BackgroundElement class
  */
 class BackgroundElement : public QGraphicsItem
 {

@@ -156,3 +156,34 @@ void TrenTakePutDefines::BackgroundElement::assignPixmap(const QString &fnPixmap
 {
     m_pixmap.load(fnPixmap);
 }
+
+void TrenTakePutDefines::MarkerElement::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
+{
+    if (m_isShotTrace)
+    {
+        if (m_traceCounter / 2 % 2 == 0)
+        {
+            painter->save();
+            auto pen = painter->pen();
+            pen.setStyle(Qt::DashDotDotLine);
+            pen.setWidth(3);
+            pen.setColor(Qt::yellow);
+            painter->setPen(pen);
+
+            painter->drawLine(boundingRect().bottomLeft(), boundingRect().center());
+            painter->drawLine(boundingRect().bottomRight(), boundingRect().center());
+            painter->restore();
+
+        }
+        ++m_traceCounter;
+    }
+
+    QGraphicsPixmapItem::paint(painter, option, widget);
+}
+
+void TrenTakePutDefines::MarkerElement::setShotTrace(const bool isShotTrace)
+{
+    if (isShotTrace && !m_isShotTrace)
+        m_traceCounter = 0;
+    m_isShotTrace = isShotTrace;
+}

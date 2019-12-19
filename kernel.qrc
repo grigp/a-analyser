@@ -87,5 +87,6 @@
         <file>images/plite_textures/09.png</file>
         <file>images/plite_textures/10.png</file>
         <file>sound/02.mp3</file>
+        <file>images/backgrounds/background_06.png</file>
     </qresource>
 </RCC>

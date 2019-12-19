@@ -1186,7 +1186,7 @@
                 "take_elements": [
                     {
                         "style": "picture_random",
-                        "images": "pictures//animals//",
+                        "images": "pictures//aviation//",
                         "repaint": false,
                         "enabled": true,
                         "code": 1,
@@ -1212,7 +1212,8 @@
                     "style": "picture",
                     "image": "Marker3.png",
                     "repaint": true,
-                    "color": "ffff0000"
+                    "color": "ffff0000",
+                    "advanced": "trace_on_target"
                 },
                 "background": {
                     "borders": {
@@ -1221,8 +1222,8 @@
                         "right": 0,
                         "top": 0
                     },
-                    "image": "03.png",
-                    "style": "plate"
+                    "image": "background_06.png",
+                    "style": "picture"
                 },
                 "sounds":
                 {

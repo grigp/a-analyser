@@ -105,6 +105,7 @@ void TrenTakePutExecute::setParams(const QJsonObject &params)
     m_soundSheme.ok = objSS["ok"].toString();
     m_soundSheme.error = objSS["error"].toString();
     m_soundSheme.scene = objSS["scene"].toString();
+    m_soundSheme.onTarget = objSS["on_target"].toString();
 
     QTimer::singleShot(0, this, &TrenTakePutExecute::start);
 }
@@ -348,8 +349,13 @@ void TrenTakePutExecute::setMarker(const QJsonObject &objMarker)
     if (style == "picture")
     {
         QPixmap mpmp(":/images/Games/" + objMarker["image"].toString());
-        BaseUtils::setColoredPicture(mpmp, BaseUtils::strRGBAToColor(objMarker["color"].toString()));
-        m_marker = new QGraphicsPixmapItem(mpmp);
+        if (objMarker["repaint"].toBool())
+            BaseUtils::setColoredPicture(mpmp, BaseUtils::strRGBAToColor(objMarker["color"].toString()));
+        m_marker = new TrenTakePutDefines::MarkerElement(mpmp);
+
+        auto stAdv = objMarker["advanced"].toString();
+        if (stAdv == "trace_on_target")
+            m_targetAdvMode = TrenTakePutDefines::tamTraceOnTarget;
     }
 }
 
@@ -408,6 +414,16 @@ void TrenTakePutExecute::elementsInteraction()
     if (m_gameStage == TrenTakePutDefines::gsTakeProcess ||
         m_gameStage == TrenTakePutDefines::gsPutProcess)
     {
+        if (m_targetAdvMode == TrenTakePutDefines::tamTraceOnTarget)
+        {
+            m_marker->setShotTrace(element);
+//            if (m_soundSheme.onTarget != "")
+//            {
+//                m_player.setMedia(QUrl("qrc:/sound/" + m_soundSheme.onTarget));
+//                m_player.play();
+//            }
+        }
+
         //! Элемент потерян
         if (!element)
         {
@@ -603,12 +619,28 @@ void TrenTakePutExecute::elementsMobileWorking()
             {
                 if (ge->elementInfo()->movingLaw == TrenTakePutDefines::mlRandomForce)
                 {
-                    double f = qrand() % ge->elementInfo()->movingMaxForce * 2 - ge->elementInfo()->movingMaxForce;
-                    double vx = f / 10 + ge->vx();
+                    auto randomForce = [&](const double v, const double min, const double max) -> double
+                    {
+                        if (v > min / 2 && v < max / 2)
+                            return qrand() % ge->elementInfo()->movingMaxForce * 2 - ge->elementInfo()->movingMaxForce;
+                        else
+                        if (v < min / 2)
+                            return qrand() % ge->elementInfo()->movingMaxForce * 2;
+                        else
+                            return - qrand() % ge->elementInfo()->movingMaxForce * 2;
+                    };
+
+                    double f = randomForce(ge->pos().x(), m_scene->sceneRect().x(), m_scene->sceneRect().right());
+                    double vx = f / 50 + ge->vx();
                     double x = ge->pos().x() + vx;
-                    f = qrand() % ge->elementInfo()->movingMaxForce * 2 - ge->elementInfo()->movingMaxForce;
-                    double vy = f / 10 + ge->vy();
+                    f = randomForce(ge->pos().y(), m_scene->sceneRect().y(), m_scene->sceneRect().bottom());
+                    double vy = f / 50 + ge->vy();
                     double y = ge->pos().y() + vy;
+                    if (fabs(vx) > 5)
+                        vx = 0;
+                    if (fabs(vy) > 5)
+                        vy = 0;
+                    ge->setSpeed(vx, vy);
 
                     ge->setPos(x, y);
                 }

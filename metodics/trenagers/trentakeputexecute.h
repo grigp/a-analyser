@@ -40,6 +40,7 @@ struct SoundSheme
     QString ok;
     QString error;
     QString scene;
+    QString onTarget;
 };
 
 /*!
@@ -188,10 +189,14 @@ private:
     double m_prop = 1;   ///< Пропорция для пересчера базовой сцены 2000 x 2000 в реальные размеры игровой сцены
     double m_propX = 1;
     double m_propY = 1;
-    QGraphicsPixmapItem *m_marker {nullptr};
+
+    TrenTakePutDefines::MarkerElement *m_marker {nullptr};
     QJsonObject m_markerObj;
+    TrenTakePutDefines::TargetAdvMode m_targetAdvMode {TrenTakePutDefines::tamNone};
+
     TrenTakePutDefines::BackgroundElement *m_background {nullptr};
     QJsonObject m_backgroundObj;
+
     ///< Границы зоны рамки
     int m_bndLeft {0};
     int m_bndTop {0};
