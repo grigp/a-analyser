@@ -1259,6 +1259,72 @@
             }
         },
         {
+            "uid": "{00B91519-842A-450D-93F1-1ADf104CDC0E}",
+            "name": "Тренажер \"Охота на птиц\"",
+            "template": "met_trentakeput_uid",
+            "build_norms": false,
+            "params":
+            {
+                "take_zones": [
+                    {
+                        "position": "random",
+                        "x_min": -1000,
+                        "x_max": -1000,
+                        "y_min": -900,
+                        "y_max": 0,
+                        "width": 200,
+                        "height": 200
+                    }
+                ],
+                "take_elements": [
+                    {
+                        "style": "picture_random",
+                        "images": "pictures//birds//",
+                        "repaint": false,
+                        "enabled": true,
+                        "code": 1
+                    }
+                ],
+                "take_order": {
+                    "mode": "enabled_primary",
+                    "time": 1
+                },
+                "put_zones": [
+                ],
+                "put_elements": [
+                ],
+                "put_order": {
+                    "mode": "enabled_primary",
+                    "time": 0
+                },
+                "marker":
+                {
+                    "style": "picture",
+                    "image": "Marker3.png",
+                    "repaint": true,
+                    "color": "ffff0000"
+                },
+                "background": {
+                    "borders": {
+                        "bottom": 0,
+                        "left": 0,
+                        "right": 0,
+                        "top": 0
+                    },
+                    "image": "background_07.png",
+                    "style": "picture"
+                },
+                "sounds":
+                {
+                    "ok": "02.wav",
+                    "error": "04.wav",
+                    "scene": ""
+                },
+                "stage": "all_elements",
+                "scale": 1
+            }
+        },
+        {
             "uid": "{03B9C401-061C-4FA4-BA98-6054FE8AE6BC}",
             "name": "Тренажер \"Воздушный бой\"",
             "template": "met_trentakeput_uid",

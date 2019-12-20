@@ -993,8 +993,12 @@ TrenTakePutDefines::GameElement* TrenTakePutExecute::allocElement(QList<TrenTake
     else
     if (zones[zoneNum].posKind == TrenTakePutDefines::pkRandom)
     {
-        int x = zones[zoneNum].x_min + qrand() % (zones[zoneNum].x_max - zones[zoneNum].x_min);
-        int y = zones[zoneNum].y_min + qrand() % (zones[zoneNum].y_max - zones[zoneNum].y_min);
+        int x = zones[zoneNum].x_max;
+        if (zones[zoneNum].x_max > zones[zoneNum].x_min)
+            x = zones[zoneNum].x_min + qrand() % (zones[zoneNum].x_max - zones[zoneNum].x_min);
+        int y = zones[zoneNum].y_max;
+        if (zones[zoneNum].y_max > zones[zoneNum].y_min)
+            y = zones[zoneNum].y_min + qrand() % (zones[zoneNum].y_max - zones[zoneNum].y_min);
         gameElement->setPos(x * m_prop - gameElement->boundingRect().width() / 2,
                             y * m_prop - gameElement->boundingRect().height() / 2);
     }

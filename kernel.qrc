@@ -90,5 +90,7 @@
         <file>sound/01.wav</file>
         <file>sound/02.wav</file>
         <file>sound/06.wav</file>
+        <file>images/backgrounds/background_07.png</file>
+        <file>images/backgrounds/background_08.png</file>
     </qresource>
 </RCC>
