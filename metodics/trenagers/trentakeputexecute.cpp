@@ -417,11 +417,19 @@ void TrenTakePutExecute::elementsInteraction()
         if (m_targetAdvMode == TrenTakePutDefines::tamTraceOnTarget)
         {
             m_marker->setShotTrace(element);
-//            if (m_soundSheme.onTarget != "")
-//            {
-//                m_player.setMedia(QUrl("qrc:/sound/" + m_soundSheme.onTarget));
-//                m_player.play();
-//            }
+            if (m_soundSheme.onTarget != "")
+            {
+                if (element)
+                {
+                    if (m_player.state() != QMediaPlayer::PlayingState)
+                    {
+                        m_player.setMedia(QUrl("qrc:/sound/" + m_soundSheme.onTarget));
+                        m_player.play();
+                    }
+                }
+                else
+                    m_player.stop();
+            }
         }
 
         //! Элемент потерян
@@ -589,7 +597,9 @@ void TrenTakePutExecute::elementsTimeLimitWorking()
                     if (ge->timeCounter() >= ge->presentTime())
                     {
                         ge->setProcessed(true);
+                        ge->setVisible(false);
                         m_elementTake = ge;
+                        ++m_putElementCount;
                         fixingError();
                     }
                 }
@@ -677,7 +687,7 @@ void TrenTakePutExecute::fixingStage()
     else
     if (m_stageMode == TrenTakePutDefines::smAllElements)
     {
-        if (m_putElementCount == m_zonesTake.size() - 1)
+        if (m_putElementCount >= m_zonesTake.size() - 1)
         {
             //! Задержка, чтобы зафиксировать собранную сцену перед генерацией новой
             delayScene();
@@ -915,11 +925,14 @@ void TrenTakePutExecute::loadPicturesPair(const QString &folder)
 void TrenTakePutExecute::allocByRandomPositions(QList<TrenTakePutDefines::GameZoneInfo> &zones,
                                                 QList<TrenTakePutDefines::GameElementInfo> &elements)
 {
-    for (int i = 0; i < elements.size(); ++i)
+    if (elements.size() != 1)
+        return;
+
+    for (int i = 0; i < zones.size(); ++i)
     {
         int picNum = getNextPictureNumber(m_filesSingle.size());
-        QPixmap pixmap(m_elementsTake.at(i).images + m_filesSingle.at(picNum));
-        allocElement(zones, &elements[i], &pixmap, zlvlElements);
+        QPixmap pixmap(m_elementsTake.at(0).images + m_filesSingle.at(picNum));
+        allocElement(zones, &elements[0], &pixmap, zlvlElements);
     }
 }
 

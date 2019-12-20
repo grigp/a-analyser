@@ -1090,7 +1090,7 @@
                 },
                 "sounds":
                 {
-                    "ok": "02.mp3",
+                    "ok": "02.wav",
                     "error": "",
                     "scene": ""
                 },
@@ -1123,7 +1123,7 @@
                         "repaint": false,
                         "enabled": true,
                         "code": 1,
-                        "present_time": 5
+                        "present_time": 5015
                     }
                 ],
                 "take_order": {
@@ -1157,8 +1157,101 @@
                 },
                 "sounds":
                 {
-                    "ok": "02.mp3",
-                    "error": "",
+                    "ok": "02.wav",
+                    "error": "04.wav",
+                    "scene": ""
+                },
+                "stage": "all_elements",
+                "scale": 1
+            }
+        },
+        {
+            "uid": "{7B3EBE0D-E670-4fC3-B4E4-DffC74857A21}",
+            "name": "Тренажер \"Тир\"",
+            "template": "met_trentakeput_uid",
+            "build_norms": false,
+            "params":
+            {
+                "take_zones": [
+                    {
+                        "position": "fixed",
+                        "x": -800,
+                        "y": -500,
+                        "width": 500,
+                        "height": 500
+                    },
+                    {
+                        "position": "fixed",
+                        "x": 0,
+                        "y": -500,
+                        "width": 500,
+                        "height": 500
+                    },
+                    {
+                        "position": "fixed",
+                        "x": 800,
+                        "y": -500,
+                        "width": 500,
+                        "height": 500
+                    },
+                    {
+                        "position": "fixed",
+                        "x": -800,
+                        "y": 300,
+                        "width": 500,
+                        "height": 500
+                    },
+                    {
+                        "position": "fixed",
+                        "x": 800,
+                        "y": 300,
+                        "width": 500,
+                        "height": 500
+                    }
+                ],
+                "take_elements": [
+                    {
+                        "style": "picture_random",
+                        "images": "pictures//animals//",
+                        "repaint": false,
+                        "enabled": true,
+                        "code": 1,
+                        "present_time": 10025
+                    }
+                ],
+                "take_order": {
+                    "mode": "all_by_order",
+                    "time": 2
+                },
+                "put_zones": [
+                ],
+                "put_elements": [
+                ],
+                "put_order": {
+                    "mode": "enabled_primary",
+                    "time": 0
+                },
+                "marker":
+                {
+                    "style": "picture",
+                    "image": "Marker3.png",
+                    "repaint": true,
+                    "color": "ffff0000"
+                },
+                "background": {
+                    "borders": {
+                        "bottom": 0,
+                        "left": 0,
+                        "right": 0,
+                        "top": 0
+                    },
+                    "image": "03.png",
+                    "style": "plate"
+                },
+                "sounds":
+                {
+                    "ok": "02.wav",
+                    "error": "04.wav",
                     "scene": ""
                 },
                 "stage": "all_elements",
@@ -1227,9 +1320,10 @@
                 },
                 "sounds":
                 {
-                    "ok": "02.mp3",
+                    "ok": "06.wav",
                     "error": "",
-                    "scene": ""
+                    "scene": "",
+                    "on_target": "01.wav"
                 },
                 "stage": "all_elements",
                 "scale": 1
