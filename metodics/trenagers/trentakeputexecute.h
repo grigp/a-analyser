@@ -112,6 +112,10 @@ private:
      */
     void elementsMobileWorking();
 
+    void setRandomWorkMobilePosition(TrenTakePutDefines::GameElement* ge);
+
+    void setLinearMovingMobilePosition(TrenTakePutDefines::GameElement* ge);
+
     void fixingTake();
 
     /*!
@@ -141,7 +145,7 @@ private:
      * \brief Загрузка списка одиночных картинок для построения, например в режиме puzzle
      * \param folder - папка с картинками
      */
-    void loadPicturesSingle(const QString &folder);
+    void loadPicturesSingle(const QString &folder, const QString &suffix);
 
     /*!
      * \brief Загрузка списка картинок для построения в режиме pair

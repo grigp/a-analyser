@@ -34,7 +34,11 @@ enum PositionKind
  */
 enum MovingLaw
 {
-    mlRandomForce  ///< Со силой воздействия, меняющейся по случайному закону
+      mlRandomForce  ///< Со силой воздействия, меняющейся по случайному закону
+    , mlRightToLeft  ///< Справа налево
+    , mlLeftToRight  ///< Слева направо
+    , mlUpToDown     ///< Сверху вниз
+    , mlDownToUp     ///< Снизу вверх
 };
 
 /*!
@@ -98,6 +102,16 @@ enum TargetAdvMode
 {
       tamNone = 0         ///< Нет
     , tamTraceOnTarget    ///< Трассы, когда маркер на цели
+};
+
+/*!
+ * \brief Режим процесса удаления элемента DoneProcess enum
+ */
+enum DoneProcess
+{
+      dpHide   ///< Спрятать
+    , dpShow   ///< Оставить видимым
+    , dpBang   ///< Нарисовать взрыв
 };
 
 struct GameElementInfo;
@@ -247,7 +261,10 @@ struct GameElementInfo
 
     bool isMobile {false};                 ///< Перемещается ли автоматически
     MovingLaw movingLaw {mlRandomForce};   ///< Закон перемещения для isMobile == true
-    int movingMaxForce {0};                ///< Маскимальная сила воздействия для isMobile == true
+    int movingMaxForce {0};                ///< Маскимальная сила воздействия для isMobile == true и movingLaw == mlRandomForce
+    int movingMaxSpeed {0};                ///< Максимальная скорость для isMobile == true
+
+    DoneProcess doneProcess {dpHide};      ///< Процесс освобождения элементов
 
     GameElementInfo() {}
 };

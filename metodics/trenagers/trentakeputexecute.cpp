@@ -58,9 +58,9 @@ void TrenTakePutExecute::setParams(const QJsonObject &params)
     setElements(arrTakeElements, m_elementsTake, TrenTakePutDefines::gsTake);
 
     if ((m_elementsTake.size() == 1) && (m_elementsTake.at(0).style == TrenTakePutDefines::esPictureSplit))
-        loadPicturesSingle(m_elementsTake.at(0).images);
+        loadPicturesSingle(m_elementsTake.at(0).images, "png");
     if ((m_elementsTake.size() >= 1) && (m_elementsTake.at(0).style == TrenTakePutDefines::esPictureRandom))
-        loadPicturesSingle(m_elementsTake.at(0).images);
+        loadPicturesSingle(m_elementsTake.at(0).images, "png"); //"gif");
     ui->lblFullPicture->setVisible((m_elementsTake.size() == 1) &&
                                    (m_elementsTake.at(0).style == TrenTakePutDefines::esPictureSplit));
 
@@ -335,9 +335,33 @@ void TrenTakePutExecute::setElements(const QJsonArray &arrElements,
 
         ei.isMobile = obj["mobile"].toBool();
         ei.movingMaxForce = obj["moving_max_force"].toInt();
+        ei.movingMaxSpeed = obj["moving_max_speed"].toInt();
+
         auto ml = obj["moving_law"].toString();
         if (ml == "random_force")
             ei.movingLaw = TrenTakePutDefines::mlRandomForce;
+        else
+        if (ml == "right_to_left")
+            ei.movingLaw = TrenTakePutDefines::mlRightToLeft;
+        else
+        if (ml == "left_to_right")
+            ei.movingLaw = TrenTakePutDefines::mlLeftToRight;
+        else
+        if (ml == "up_to_down")
+            ei.movingLaw = TrenTakePutDefines::mlUpToDown;
+        else
+        if (ml == "down_to_up")
+            ei.movingLaw = TrenTakePutDefines::mlDownToUp;
+
+        auto dp = obj["done_process"].toString();
+        if (dp == "hide")
+            ei.doneProcess = TrenTakePutDefines::dpHide;
+        else
+        if (dp == "show")
+            ei.doneProcess = TrenTakePutDefines::dpShow;
+        else
+        if (dp == "bang")
+            ei.doneProcess = TrenTakePutDefines::dpBang;
 
         elements << ei;
     }
@@ -628,35 +652,97 @@ void TrenTakePutExecute::elementsMobileWorking()
             if (!ge->isProcessed() && ge->elementInfo()->isMobile)
             {
                 if (ge->elementInfo()->movingLaw == TrenTakePutDefines::mlRandomForce)
+                    setRandomWorkMobilePosition(ge);
+                else
+                if (ge->elementInfo()->movingLaw == TrenTakePutDefines::mlLeftToRight ||
+                    ge->elementInfo()->movingLaw == TrenTakePutDefines::mlRightToLeft ||
+                    ge->elementInfo()->movingLaw == TrenTakePutDefines::mlUpToDown ||
+                    ge->elementInfo()->movingLaw == TrenTakePutDefines::mlDownToUp)
                 {
-                    auto randomForce = [&](const double v, const double min, const double max) -> double
+                    setLinearMovingMobilePosition(ge);
+                    if (!m_scene->sceneRect().contains(ge->pos()))
                     {
-                        if (v > min / 2 && v < max / 2)
-                            return qrand() % ge->elementInfo()->movingMaxForce * 2 - ge->elementInfo()->movingMaxForce;
-                        else
-                        if (v < min / 2)
-                            return qrand() % ge->elementInfo()->movingMaxForce * 2;
-                        else
-                            return - qrand() % ge->elementInfo()->movingMaxForce * 2;
-                    };
-
-                    double f = randomForce(ge->pos().x(), m_scene->sceneRect().x(), m_scene->sceneRect().right());
-                    double vx = f / 50 + ge->vx();
-                    double x = ge->pos().x() + vx;
-                    f = randomForce(ge->pos().y(), m_scene->sceneRect().y(), m_scene->sceneRect().bottom());
-                    double vy = f / 50 + ge->vy();
-                    double y = ge->pos().y() + vy;
-                    if (fabs(vx) > 5)
-                        vx = 0;
-                    if (fabs(vy) > 5)
-                        vy = 0;
-                    ge->setSpeed(vx, vy);
-
-                    ge->setPos(x, y);
+                        ge->setProcessed(true);
+                        ge->setVisible(false);
+                        m_elementTake = ge;
+                        ++m_putElementCount;
+                        fixingError();
+                        fixingStage();
+                        return;
+                    }
                 }
             }
         }
     }
+}
+
+void TrenTakePutExecute::setRandomWorkMobilePosition(TrenTakePutDefines::GameElement *ge)
+{
+    auto randomForce = [&](const double v, const double min, const double max) -> double
+    {
+        if (v > min / 2 && v < max / 2)
+            return qrand() % ge->elementInfo()->movingMaxForce * 2 - ge->elementInfo()->movingMaxForce;
+        else
+        if (v < min / 2)
+            return qrand() % ge->elementInfo()->movingMaxForce * 2;
+        else
+            return - qrand() % ge->elementInfo()->movingMaxForce * 2;
+    };
+
+    double f = randomForce(ge->pos().x(), m_scene->sceneRect().x(), m_scene->sceneRect().right());
+    double vx = f / 50 + ge->vx();
+    double x = ge->pos().x() + vx;
+    f = randomForce(ge->pos().y(), m_scene->sceneRect().y(), m_scene->sceneRect().bottom());
+    double vy = f / 50 + ge->vy();
+    double y = ge->pos().y() + vy;
+    if (fabs(vx) > 5)
+        vx = 0;
+    if (fabs(vy) > 5)
+        vy = 0;
+    ge->setSpeed(vx, vy);
+
+    ge->setPos(x, y);
+}
+
+void TrenTakePutExecute::setLinearMovingMobilePosition(TrenTakePutDefines::GameElement *ge)
+{
+    double vx = ge->vx();
+    double vy = ge->vy();
+    double x = ge->pos().x();
+    double y = ge->pos().y();
+
+    int maxSpeed = 10;
+    if (ge->elementInfo()->movingMaxSpeed > 0)
+        maxSpeed = ge->elementInfo()->movingMaxSpeed;
+    if (ge->elementInfo()->movingLaw == TrenTakePutDefines::mlLeftToRight)
+    {
+        if (vx == 0)
+            vx = qrand() % maxSpeed;
+        x = x + vx;
+    }
+    else
+    if (ge->elementInfo()->movingLaw == TrenTakePutDefines::mlRightToLeft)
+    {
+        if (vx == 0)
+            vx = qrand() % maxSpeed;
+        x = x - vx;
+    }
+    else
+    if (ge->elementInfo()->movingLaw == TrenTakePutDefines::mlUpToDown)
+    {
+        if (vy == 0)
+            vy = qrand() % maxSpeed;
+        y = y + vy;
+    }
+    else
+    if (ge->elementInfo()->movingLaw == TrenTakePutDefines::mlDownToUp)
+    {
+        if (vy == 0)
+            vy = qrand() % maxSpeed;
+        y = y - vy;
+    }
+    ge->setPos(x, y);
+    ge->setSpeed(vx, vy);
 }
 
 void TrenTakePutExecute::fixingTake()
@@ -672,10 +758,21 @@ void TrenTakePutExecute::fixingTake()
 
 void TrenTakePutExecute::fixingStage()
 {
+    //! Нарисовать взрыв
+    if (m_elementTake->elementInfo()->doneProcess == TrenTakePutDefines::dpBang)
+    {
+        auto *ei = m_elementTake->elementInfo();
+        QPixmap pm(":/images/Games/bang.png");
+        m_elementTake->assignElementInfo(ei, &pm);
+    }
+
     m_gameStage = TrenTakePutDefines::gsTake;
     m_elementTake->setProcessed(true);
     if (m_elementTake->elementInfo()->style != TrenTakePutDefines::esPictureSplit)
-        m_elementTake->setVisible(false);
+    {
+        if (m_elementTake->elementInfo()->doneProcess == TrenTakePutDefines::dpHide)
+            m_elementTake->setVisible(false);
+    }
     else
     {
         m_elementTake->setZValue(zlvlElements);
@@ -891,13 +988,13 @@ int TrenTakePutExecute::getNextPictureNumber(const int filesCount)
     return retval;
 }
 
-void TrenTakePutExecute::loadPicturesSingle(const QString &folder)
+void TrenTakePutExecute::loadPicturesSingle(const QString &folder, const QString &suffix)
 {
     m_filesSingle.clear();
     QDir dir = folder;
     QFileInfoList list = dir.entryInfoList(QDir::Files | QDir::NoDotAndDotDot);
     foreach (auto fileInfo, list)
-        if (fileInfo.suffix() == "png")
+        if (fileInfo.suffix() == suffix)
             m_filesSingle << fileInfo.fileName();
 }
 

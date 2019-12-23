@@ -92,5 +92,7 @@
         <file>sound/06.wav</file>
         <file>images/backgrounds/background_07.png</file>
         <file>images/backgrounds/background_08.png</file>
+        <file>images/Games/bang.gif</file>
+        <file>images/Games/bang.png</file>
     </qresource>
 </RCC>
