@@ -4,6 +4,7 @@
 #include "aanalyserapplication.h"
 #include "serialport.h"
 #include "channelsutils.h"
+#include "settingsprovider.h"
 
 #include <QApplication>
 #include <QJsonObject>
@@ -49,7 +50,8 @@ namespace  {
 Stabilan01::Stabilan01(QObject *parent)
     : Driver(parent)
 {
-
+    m_offsetX = SettingsProvider::valueFromRegAppCopy("StabilanDriver", "zeroing_x").toDouble();
+    m_offsetY = SettingsProvider::valueFromRegAppCopy("StabilanDriver", "zeroing_y").toDouble();
 }
 
 void Stabilan01::setParams(const DeviceProtocols::Ports port, const QJsonObject &params)
@@ -154,6 +156,8 @@ void Stabilan01::zeroing(const QString &channelUid)
     Q_UNUSED(channelUid);
     m_offsetX = m_X;
     m_offsetY = m_Y;
+    SettingsProvider::setValueToRegAppCopy("StabilanDriver", "zeroing_x", m_offsetX);
+    SettingsProvider::setValueToRegAppCopy("StabilanDriver", "zeroing_y", m_offsetY);
 }
 
 QString Stabilan01::modelName(const Stabilan01Defines::Model mdlCode)

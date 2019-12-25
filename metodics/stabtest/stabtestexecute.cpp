@@ -11,6 +11,7 @@
 #include "aanalyserapplication.h"
 #include "deviceprotocols.h"
 #include "driver.h"
+#include "settingsprovider.h"
 
 #include "coloredcirclewindow.h"
 #include "soundpickwindow.h"
@@ -42,6 +43,8 @@ StabTestExecute::StabTestExecute(QWidget *parent) :
     ui->cbScale->addItem("32");
     ui->cbScale->addItem("64");
     ui->cbScale->addItem("128");
+
+    ui->wgtAdvChannels->setVisible(false);
 }
 
 StabTestExecute::~StabTestExecute()
@@ -104,6 +107,10 @@ void StabTestExecute::start()
 
         showPatientWindow(m_params.at(m_probe).stimulCode);
         ui->cbScale->setCurrentIndex(m_params.at(m_probe).scale);
+
+        ui->wgtAdvChannels->assignDriver(m_driver);
+        auto val = SettingsProvider::valueFromRegAppCopy("AdvancedChannelsWidget", "SplitterProbePosition").toByteArray();
+        ui->splitter->restoreState(val);
 
         m_driver->start();
     }
@@ -248,6 +255,18 @@ void StabTestExecute::recording()
 void StabTestExecute::showTrace(bool trace)
 {
     ui->wgtSKG->showTrace(trace);
+}
+
+void StabTestExecute::on_advChannelsClicked(bool checked)
+{
+    ui->wgtAdvChannels->setVisible(checked);
+}
+
+void StabTestExecute::splitterMoved(int pos, int index)
+{
+    Q_UNUSED(pos);
+    Q_UNUSED(index);
+    SettingsProvider::setValueToRegAppCopy("AdvancedChannelsWidget", "SplitterProbePosition", ui->splitter->saveState());
 }
 
 StabTestParams::ProbeParams StabTestExecute::probeParams()
