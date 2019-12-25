@@ -97,6 +97,7 @@ void TrenTakePutExecute::setParams(const QJsonObject &params)
     else
     if (sStage == "all_elements")
         m_stageMode = TrenTakePutDefines::smAllElements;
+    m_delayAfterStage = params["delay_after_stage"].toInt();
 
     auto scale = params["scale"].toInt();
     ui->cbScale->setCurrentIndex(scale);
@@ -112,6 +113,7 @@ void TrenTakePutExecute::setParams(const QJsonObject &params)
 
 void TrenTakePutExecute::closeEvent(QCloseEvent *event)
 {
+    m_isClosed = true;
     hidePatientWindow();
 
     //! Переехало из деструктора. Подозрение на нерегулярный сбой.
@@ -821,78 +823,84 @@ void TrenTakePutExecute::fixingError()
 
 void TrenTakePutExecute::delayScene()
 {
-    m_scene->update(m_scene->sceneRect());
-    QTime time;
-    time.start();
-    while (time.elapsed() < 500)
+    if (m_delayAfterStage > 0)
     {
-        QApplication::processEvents();
+        m_scene->update(m_scene->sceneRect());
+        QTime time;
+        time.start();
+        while (time.elapsed() < m_delayAfterStage)
+        {
+            QApplication::processEvents();
+        }
     }
 }
 
 void TrenTakePutExecute::generateNewScene(const bool isAddScore)
 {
-    m_scene->clear();
-    for (int i = 0; i < m_zonesTake.size(); ++i)
-        m_zonesTake[i].clearElement();
-    for (int i = 0; i < m_zonesPut.size(); ++i)
-        m_zonesPut[i].clearElement();
-    m_elementTake = nullptr;
-    m_elementPut = nullptr;
-
-    setBackground(m_backgroundObj);
-
-    if (m_elementsTake.size() > 0 && m_elementsPut.size() > 0 &&
-        m_zonesTake.size() > 0 && m_zonesPut.size() > 0)
+    if (!m_isClosed)
     {
-        //! Распределение по отдельным позициям
-        if (m_elementsTake.at(0).style == TrenTakePutDefines::esPictureFixed ||
-            m_elementsTake.at(0).style == TrenTakePutDefines::esDrawing)
+        m_scene->clear();
+        for (int i = 0; i < m_zonesTake.size(); ++i)
+            m_zonesTake[i].clearElement();
+        for (int i = 0; i < m_zonesPut.size(); ++i)
+            m_zonesPut[i].clearElement();
+        m_elementTake = nullptr;
+        m_elementPut = nullptr;
+
+        setBackground(m_backgroundObj);
+
+        if (m_elementsTake.size() > 0 && m_elementsPut.size() > 0 &&
+            m_zonesTake.size() > 0 && m_zonesPut.size() > 0)
         {
-            allocBySeparatePositions(m_takeTakeOrder, m_zonesTake, m_elementsTake, zlvlElements);
-            allocBySeparatePositions(m_putTakeOrder, m_zonesPut, m_elementsPut, zlvlZones);
+            //! Распределение по отдельным позициям
+            if (m_elementsTake.at(0).style == TrenTakePutDefines::esPictureFixed ||
+                m_elementsTake.at(0).style == TrenTakePutDefines::esDrawing)
+            {
+                allocBySeparatePositions(m_takeTakeOrder, m_zonesTake, m_elementsTake, zlvlElements);
+                allocBySeparatePositions(m_putTakeOrder, m_zonesPut, m_elementsPut, zlvlZones);
+            }
+            else
+            //! Распределение парных
+            if (m_elementsTake.at(0).style == TrenTakePutDefines::esPicturePair)
+            {
+                allocPairPictires();
+            }
+            else
+            //! Распределение разделенных
+            if (m_elementsTake.at(0).style == TrenTakePutDefines::esPictureSplit)
+            {
+                allocSplitPictures();
+            }
         }
         else
-        //! Распределение парных
-        if (m_elementsTake.at(0).style == TrenTakePutDefines::esPicturePair)
+        if (m_elementsTake.size() > 0 && m_elementsPut.size() == 0 &&
+            m_zonesTake.size() > 0 && m_zonesPut.size() == 0)
         {
-            allocPairPictires();
+            //! Распределение по отдельным позициям
+            if (m_elementsTake.at(0).style == TrenTakePutDefines::esPictureRandom)
+            {
+                allocByRandomPositions(m_zonesTake, m_elementsTake);
+            }
         }
-        else
-        //! Распределение разделенных
-        if (m_elementsTake.at(0).style == TrenTakePutDefines::esPictureSplit)
-        {
-            allocSplitPictures();
-        }
-    }
-    else
-    if (m_elementsTake.size() > 0 && m_elementsPut.size() == 0 &&
-        m_zonesTake.size() > 0 && m_zonesPut.size() == 0)
-    {
-        //! Распределение по отдельным позициям
-        if (m_elementsTake.at(0).style == TrenTakePutDefines::esPictureRandom)
-        {
-            allocByRandomPositions(m_zonesTake, m_elementsTake);
-        }
-    }
 
-    m_scene->addItem(m_background);
+        m_scene->addItem(m_background);
 
-    setMarker(m_markerObj);
-    m_scene->addItem(m_marker);
-    m_marker->setZValue(zlvlMarker);
-    m_marker->setPos(0 - m_marker->boundingRect().width() / 2,
-                     0 - m_marker->boundingRect().height() / 2);
-    m_putElementCount = 0;
+        setMarker(m_markerObj);
+        m_scene->addItem(m_marker);
+        m_marker->setZValue(zlvlMarker);
+        m_marker->setPos(0 - m_marker->boundingRect().width() / 2,
+                         0 - m_marker->boundingRect().height() / 2);
+        m_putElementCount = 0;
 
-    if (isAddScore)
-    {
-        m_score += (m_zonesTake.size() * 2);
-        showFactors();
-        if (m_soundSheme.scene != "")
+        if (isAddScore)
         {
-            m_player.setMedia(QUrl("qrc:/sound/" + m_soundSheme.scene));
-            m_player.play();
+            m_score += (m_zonesTake.size() * 2);
+            showFactors();
+            if (m_soundSheme.scene != "")
+            {
+                m_player.setMedia(QUrl("qrc:/sound/" + m_soundSheme.scene));
+                m_player.play();
+            }
         }
     }
 }

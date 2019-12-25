@@ -219,6 +219,7 @@ private:
     int m_timeFixTake {0};
     int m_timeFixPut {0};
     TrenTakePutDefines::StageMode m_stageMode {TrenTakePutDefines::smTakePut};
+    int m_delayAfterStage {0};
 
     ///< Зоны игры и элементы
     QList<TrenTakePutDefines::GameZoneInfo> m_zonesTake;
@@ -242,6 +243,7 @@ private:
     QList<FilesPair> m_filesPair;      ///< Список файлов для парных файлов
     QSet<int> m_filesUsed;   ///< Номера файлов, которые уже использовались
 
+    bool m_isClosed {false};
 //    DataDefines::PatientKard m_kard;
 
 };
