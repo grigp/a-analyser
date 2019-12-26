@@ -20,6 +20,12 @@ public:
     explicit StabilogramWidget(const QString channelId, QWidget *parent = 0);
     ~StabilogramWidget();
 
+    /*!
+     * \brief Получение данных от устройства
+     * \param data - данные
+     */
+    void getData(DeviceProtocols::DeviceData *data) override;
+
 private:
     Ui::StabilogramWidget *ui;
 };

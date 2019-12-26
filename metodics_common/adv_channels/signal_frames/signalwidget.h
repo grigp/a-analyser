@@ -4,6 +4,8 @@
 #include <QObject>
 #include <QWidget>
 
+#include "deviceprotocols.h"
+
 /*!
  * \brief Базовый класс виджета сигналов SignalWidget class
  */
@@ -14,6 +16,12 @@ public:
     explicit SignalWidget(const QString channelId, QWidget *parent = nullptr);
 
 //    virtual QString signalType() = 0;
+
+    /*!
+     * \brief Получение данных от устройства
+     * \param data - данные
+     */
+    virtual void getData(DeviceProtocols::DeviceData *data) = 0;
 
     QString channelId() {return m_channelId;}
 

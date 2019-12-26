@@ -145,7 +145,6 @@ void AreaGraph::paintEvent(QPaintEvent *event)
     painter.setBrush(QBrush(m_envColors.colorBackground, Qt::SolidPattern));
     painter.setPen(QPen(m_envColors.colorBackground, 1, Qt::SolidLine, Qt::FlatCap));
     painter.drawRect(0, 0, width(), height());
-//    painter.drawRect(geometry());
 
     painter.setPen(QPen(m_envColors.colorAxis, 1, Qt::SolidLine, Qt::FlatCap));
     painter.drawLine(LeftSpace, TopSpace, LeftSpace, height() - BottomSpace);

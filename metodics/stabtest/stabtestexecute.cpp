@@ -138,11 +138,12 @@ void StabTestExecute::getData(DeviceProtocols::DeviceData *data)
         ui->lblCommunicationError->setVisible(false);
 
         DeviceProtocols::StabDvcData *stabData = static_cast<DeviceProtocols::StabDvcData*>(data);
-//        qDebug() << stabData->sender()->driverUid() << stabData->sender()->driverName() << stabData->x() << stabData->y();
         ui->lblX->setText(QString("X = %1").arg(stabData->x(), 0, 'f', 2));
         ui->lblY->setText(QString("Y = %1").arg(stabData->y(), 0, 'f', 2));
         ui->lblZ->setText(QString("Z = %1").arg(stabData->z(), 0, 'f', 2));
         ui->wgtSKG->setMarker(stabData->x(), stabData->y());
+
+        ui->wgtAdvChannels->getData(data);
 
         if (m_patientWin)
             m_patientWin->setMarker(stabData->x(), stabData->y());

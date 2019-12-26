@@ -5,6 +5,8 @@
 #include <QStandardItemModel>
 #include <QItemSelection>
 
+#include "deviceprotocols.h"
+
 namespace Ui {
 class AdvancedChannels;
 }
@@ -28,7 +30,8 @@ public:
      */
     enum Roles
     {
-        WidgetRole = Qt::UserRole + 1   ///< Указатель на виджет
+          WidgetRole = Qt::UserRole + 1   ///< Указатель на виджет. Содержит SignalWidget*
+        , ChannelIdRole                   ///< Идентификатор канала. Содержит QString
     };
 
     /*!
@@ -36,6 +39,12 @@ public:
      * Анализирует драйвер на предмет передаваемых каналов, создает для них виджеты, подключается к передаче данных от драйвера
      */
     void assignDriver(Driver* driver);
+
+    /*!
+     * \brief Получение данных от устройства
+     * \param data - данные
+     */
+    void getData(DeviceProtocols::DeviceData *data);
 
 private slots:
     void on_selectIndex(QModelIndex index);

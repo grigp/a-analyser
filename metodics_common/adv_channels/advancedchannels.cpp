@@ -30,6 +30,7 @@ void AdvancedChannels::assignDriver(Driver *driver)
     auto *itemDrv = new QStandardItem(m_driver->driverName());
     itemDrv->setEditable(false);
     itemDrv->setData(QVariant(), WidgetRole);
+    itemDrv->setData("", ChannelIdRole);
     m_mdlDrvChan.appendRow(itemDrv);
 
     auto chanList = m_driver->getChannels();
@@ -43,6 +44,7 @@ void AdvancedChannels::assignDriver(Driver *driver)
         QVariant var;
         var.setValue(wgt);
         item->setData(var, WidgetRole);
+        item->setData(channelId, ChannelIdRole);
         wgt->setVisible(false);
 
         itemDrv->appendRow(item);
@@ -55,6 +57,25 @@ void AdvancedChannels::assignDriver(Driver *driver)
             this, &AdvancedChannels::on_selectionChanged);
     auto val = SettingsProvider::valueFromRegAppCopy("AdvancedChannelsWidget", "SplitterTreePosition").toByteArray();
     ui->splitter->restoreState(val);
+}
+
+void AdvancedChannels::getData(DeviceProtocols::DeviceData *data)
+{
+    for (int id = 0; id < m_mdlDrvChan.rowCount(); ++id)
+    {
+        QModelIndex idxDrv = m_mdlDrvChan.index(id, 0);
+        for (int i = 0; i < m_mdlDrvChan.rowCount(idxDrv); ++i)
+        {
+            QModelIndex index = m_mdlDrvChan.index(i, 0, idxDrv);
+            if (index.data(ChannelIdRole).toString() == data->channelId())
+            {
+                QVariant var = index.data(WidgetRole);
+                SignalWidget* wgt = var.value<SignalWidget*>();
+                if (wgt)
+                    wgt->getData(data);
+            }
+        }
+    }
 }
 
 void AdvancedChannels::on_selectIndex(QModelIndex index)
@@ -90,7 +111,10 @@ SignalWidget *AdvancedChannels::createWidget(const QString channelId)
 
     auto channelType = ChannelsUtils::instance().channelType(channelId);
     if (channelType == ChannelsDefines::ctStabilogram)
+    {
         retval = new StabilogramWidget(channelId, ui->frWidgets);
+        ui->frWidgets->layout()->addWidget(retval);
+    }
 
     return retval;
 }
