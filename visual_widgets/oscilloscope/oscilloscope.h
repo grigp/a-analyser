@@ -35,16 +35,22 @@ public:
     void setColor(const int colorNum, const QColor &color);
 
     QString name() const {return m_name;}
+    int channelsCount() const {return m_channelCount;}
 
     double minValue() const {return m_minVal;}
     double maxValue() const {return m_maxVal;}
     void setDiapazone(const double minVal, const double maxVal);
 
-private:
+    void dataResize(const int dataSize);
 
+    void addValue(const QVector<double> value, const int recNum);
+    QVector<double> value(const int idx) const;
+
+private:
     QString m_name;
     int m_channelCount;
     QVector<QColor> m_palette;
+    QVector<QVector<double>> m_data;
     double m_minVal {0};
     double m_maxVal {0};
 };
@@ -102,6 +108,9 @@ public:
     bool isZeroing() const {return m_isZeroing;}
     void setIsZeroing(const bool zeroing);
 
+    int frequency() const {return m_frequency;}
+    void setFrequency(const int frequency) {m_frequency = frequency;}
+
     /*!
      * \brief Устанавливает диапазоны для одной зоны графиков одинаковыми
      * \param numArea - номер зоны графиков
@@ -114,8 +123,16 @@ public:
      */
     void setDiapazone(const double minVal, const double maxVal);
 
+    /*!
+     * \brief Добавляет значение в данные осциллографа
+     * \param value - значение, представляющее собой массив.
+     *                Кол-во элементов равно сумме каналов в каждой из зон осциллографа
+     */
+    void addValue(const QVector<double> value);
+
 protected:
     void paintEvent(QPaintEvent *event) override;
+    void resizeEvent(QResizeEvent *event) override;
 
 private:
     Ui::Oscilloscope *ui;
@@ -123,7 +140,11 @@ private:
     QList<OscilloscopeArea*> m_areases;
     OscilloscopeEnvColors m_envColors;
 
+    int m_graphWidth {0};                     ///< Ширина зоны построения графиков
     bool m_isZeroing {false};                 ///< Центровка
+    int m_cursorPos {0};                      ///< Позиция курсора
+    int m_dataCounter {0};                    ///< Счетчик переданных данных
+    int m_frequency {50};                     ///< Частота дискретизации
 };
 
 #endif // OSCILLOSCOPE_H

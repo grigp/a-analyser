@@ -26,6 +26,8 @@ public:
      */
     void getData(DeviceProtocols::DeviceData *data) override;
 
+    void setFrequency(const int frequency) override;
+
 private:
     Ui::StabilogramWidget *ui;
 };

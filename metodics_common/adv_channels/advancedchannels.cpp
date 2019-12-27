@@ -46,6 +46,7 @@ void AdvancedChannels::assignDriver(Driver *driver)
         item->setData(var, WidgetRole);
         item->setData(channelId, ChannelIdRole);
         wgt->setVisible(false);
+        wgt->setFrequency(driver->frequency(channelId));
 
         itemDrv->appendRow(item);
     }

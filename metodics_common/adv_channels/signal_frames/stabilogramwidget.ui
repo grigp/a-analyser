@@ -71,7 +71,7 @@
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_3">
            <property name="spacing">
-            <number>2</number>
+            <number>1</number>
            </property>
            <property name="leftMargin">
             <number>1</number>
@@ -117,7 +117,7 @@
              </property>
              <layout class="QHBoxLayout" name="horizontalLayout">
               <property name="spacing">
-               <number>1</number>
+               <number>5</number>
               </property>
               <property name="leftMargin">
                <number>1</number>
@@ -279,7 +279,7 @@
              </property>
              <layout class="QHBoxLayout" name="horizontalLayout_2">
               <property name="spacing">
-               <number>1</number>
+               <number>5</number>
               </property>
               <property name="leftMargin">
                <number>1</number>
@@ -360,6 +360,13 @@
               </item>
               <item>
                <widget class="QLabel" name="lblMassa">
+                <property name="font">
+                 <font>
+                  <pointsize>18</pointsize>
+                  <weight>75</weight>
+                  <bold>true</bold>
+                 </font>
+                </property>
                 <property name="text">
                  <string>Масса</string>
                 </property>
@@ -392,6 +399,9 @@
                   <width>22</width>
                   <height>22</height>
                  </size>
+                </property>
+                <property name="checkable">
+                 <bool>true</bool>
                 </property>
                </widget>
               </item>

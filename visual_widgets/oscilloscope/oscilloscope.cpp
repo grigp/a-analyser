@@ -4,13 +4,15 @@
 #include "baseutils.h"
 
 #include <QPainter>
+#include <QResizeEvent>
+#include <QDebug>
 
 namespace  {
 ///< Отступы от краев виджета
 static const int LeftSpace = 50;
 static const int RightSpace = 10;
-static const int TopSpace = 5;
-static const int BottomSpace = 20;
+static const int TopSpace = 2;
+static const int BottomSpace = 5;
 
 static const QVector<QColor> PaletteDefault = {Qt::darkGreen, Qt::blue, Qt::darkCyan, Qt::red, Qt::darkYellow, Qt::darkMagenta};
 
@@ -28,16 +30,22 @@ Oscilloscope::Oscilloscope(QWidget *parent) :
 
     m_areases.clear();
     ui->setupUi(this);
+
+    m_graphWidth = geometry().width() - RightSpace - LeftSpace;
+
 }
 
 Oscilloscope::~Oscilloscope()
 {
+    clear();
     delete ui;
 }
 
 void Oscilloscope::appendArea(const QString &areaName, const int channelCount)
 {
-    m_areases.append(new OscilloscopeArea(areaName, channelCount));
+    auto *area = new OscilloscopeArea(areaName, channelCount);
+    m_areases.append(area);
+    area->dataResize(m_graphWidth);
     update();
 }
 
@@ -93,15 +101,37 @@ void Oscilloscope::setIsZeroing(const bool zeroing)
 
 void Oscilloscope::setDiapazone(const int numArea, const double minVal, const double maxVal)
 {
-    Q_ASSERT(numArea >= 0 && numArea < m_areases.size());
-    m_areases.at(numArea)->setDiapazone(minVal, maxVal);
-    update();
+    if (m_areases.size() > 0)
+    {
+        Q_ASSERT(numArea >= 0 && numArea < m_areases.size());
+        m_areases.at(numArea)->setDiapazone(minVal, maxVal);
+        update();
+    }
 }
 
 void Oscilloscope::setDiapazone(const double minVal, const double maxVal)
 {
-    foreach (auto area, m_areases)
+    foreach (auto *area, m_areases)
         area->setDiapazone(minVal, maxVal);
+    update();
+}
+
+void Oscilloscope::addValue(const QVector<double> value)
+{
+    int n = 0;
+    foreach (auto *area, m_areases)
+    {
+        QVector<double> rec;
+        for (int i = 0; i < area->channelsCount(); ++i)
+            rec.append(value.at(n + i));
+        area->addValue(rec, m_cursorPos);
+    }
+
+    ++m_cursorPos;
+    if (m_cursorPos >= m_graphWidth)
+        m_cursorPos = 0;
+    ++m_dataCounter;
+
     update();
 }
 
@@ -128,13 +158,37 @@ void Oscilloscope::paintEvent(QPaintEvent *event)
         //! По зонам построения
         for (int iz = 0; iz < m_areases.size(); ++iz)
         {
-            //! Ось зоны
-            painter.setPen(QPen(m_envColors.colorAxis, 1, Qt::SolidLine, Qt::FlatCap));
-            int axisY = TopSpace + (iz + 1) * zoneH;
-            painter.drawLine(LeftSpace, axisY, width() - RightSpace, axisY);
-
             //! Пропорции по значениям и шаг
             double prop = zoneH / (m_areases.at(iz)->maxValue() - m_areases.at(iz)->minValue());
+            int axisY = TopSpace + (iz + 1) * zoneH;
+
+            //! Сигналы
+            for (int i = 1; i < m_graphWidth; ++i)
+            {
+                int x = LeftSpace + i;
+
+                auto rec1 = m_areases.at(iz)->value(i - 1);
+                auto rec2 = m_areases.at(iz)->value(i);
+                for (int j = 0; j < rec2.size(); ++j)
+                {
+                    int y1 = axisY - trunc((rec1.at(j) - m_areases.at(iz)->minValue()) * prop);
+                    int y2 = axisY - trunc((rec2.at(j) - m_areases.at(iz)->minValue()) * prop);
+
+                    painter.setPen(QPen(m_areases.at(iz)->color(j), 1, Qt::SolidLine, Qt::FlatCap));
+                    painter.drawLine(x - 1, y1, x, y2);
+                }
+
+                //! Секундная метка
+                if (i % m_frequency == 0)
+                {
+                    painter.setPen(QPen(m_envColors.colorCursor, 1, Qt::DotLine, Qt::FlatCap));
+                    painter.drawLine(x, TopSpace, x, height() - BottomSpace);
+                }
+            }
+
+            //! Ось зоны
+            painter.setPen(QPen(m_envColors.colorAxis, 1, Qt::SolidLine, Qt::FlatCap));
+            painter.drawLine(LeftSpace, axisY, width() - RightSpace, axisY);
 
             //! Минимальное значение
             QString sMin = QString::number(trunc(m_areases.at(iz)->minValue()));
@@ -159,9 +213,27 @@ void Oscilloscope::paintEvent(QPaintEvent *event)
                 painter.drawText(LeftSpace - size.width() - 5, line0 + size.height()/2, "0");
             }
         }
+
+        //! Маркер
+        painter.setPen(QPen(m_envColors.colorCursor, 1, Qt::SolidLine, Qt::FlatCap));
+        painter.drawLine(LeftSpace + m_cursorPos, TopSpace, LeftSpace + m_cursorPos, height() - BottomSpace);
     }
 
     painter.restore();
+}
+
+void Oscilloscope::resizeEvent(QResizeEvent *event)
+{
+    QWidget::resizeEvent(event);
+
+    m_graphWidth = event->size().width() - RightSpace - LeftSpace;
+    //! Ресайз в зонах
+    foreach (auto *area, m_areases)
+        area->dataResize(m_graphWidth);
+
+    //! Позиция курсора
+    if (m_cursorPos > m_graphWidth)
+        m_cursorPos = 0;
 }
 
 OscilloscopeArea::OscilloscopeArea(const QString &name, const int channelCount)
@@ -169,7 +241,7 @@ OscilloscopeArea::OscilloscopeArea(const QString &name, const int channelCount)
     , m_channelCount(channelCount)
     , m_palette(PaletteDefault)
 {
-
+    m_data.clear();
 }
 
 QColor OscilloscopeArea::color(const int colorNum) const
@@ -196,4 +268,31 @@ void OscilloscopeArea::setDiapazone(const double minVal, const double maxVal)
 {
     m_minVal = minVal;
     m_maxVal = maxVal;
+}
+
+void OscilloscopeArea::dataResize(const int dataSize)
+{
+    int ods = m_data.size();
+    m_data.resize(dataSize);
+
+    if (dataSize > ods)
+        for (int i = ods; i < dataSize; ++i)
+        {
+            QVector<double> rec;
+            for (int j = 0; j < m_channelCount; ++j)
+                rec.append(0);
+            m_data[i] = rec;
+        }
+}
+
+void OscilloscopeArea::addValue(const QVector<double> value, const int recNum)
+{
+    Q_ASSERT(recNum >= 0 && recNum < m_data.size());
+    m_data[recNum] = value;
+}
+
+QVector<double> OscilloscopeArea::value(const int idx) const
+{
+    Q_ASSERT(idx >= 0 && idx < m_data.size());
+    return m_data.at(idx);
 }

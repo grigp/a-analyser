@@ -23,6 +23,8 @@ public:
      */
     virtual void getData(DeviceProtocols::DeviceData *data) = 0;
 
+    virtual void setFrequency(const int frequency) = 0;
+
     QString channelId() {return m_channelId;}
 
 signals:
