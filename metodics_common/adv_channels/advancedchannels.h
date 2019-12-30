@@ -59,6 +59,11 @@ private:
      */
     SignalWidget* createWidget(const QString channelId);
 
+    /*!
+     * \brief Выделяет первый канал в списке
+     */
+    void selectFirstChannel();
+
     Driver *m_driver;                  ///< Указатель на драйвер
     QStandardItemModel m_mdlDrvChan;   ///< Модель каналов драйвера
 };

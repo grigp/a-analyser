@@ -58,6 +58,8 @@ void AdvancedChannels::assignDriver(Driver *driver)
             this, &AdvancedChannels::on_selectionChanged);
     auto val = SettingsProvider::valueFromRegAppCopy("AdvancedChannelsWidget", "SplitterTreePosition").toByteArray();
     ui->splitter->restoreState(val);
+
+    selectFirstChannel();
 }
 
 void AdvancedChannels::getData(DeviceProtocols::DeviceData *data)
@@ -118,4 +120,19 @@ SignalWidget *AdvancedChannels::createWidget(const QString channelId)
     }
 
     return retval;
+}
+
+void AdvancedChannels::selectFirstChannel()
+{
+    for (int i = 0; i < m_mdlDrvChan.rowCount(); ++i)
+    {
+        auto drvIdx = m_mdlDrvChan.index(0, 0);
+        for (int j = 0; j < m_mdlDrvChan.rowCount(drvIdx); ++j)
+        {
+            auto index = m_mdlDrvChan.index(0, 0, drvIdx);
+            ui->tvDrvChannels->selectionModel()->select(index, QItemSelectionModel::Select);
+            on_selectIndex(index);
+            return;
+        }
+    }
 }
