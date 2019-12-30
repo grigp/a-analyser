@@ -434,5 +434,76 @@
  <resources>
   <include location="../../../kernel.qrc"/>
  </resources>
- <connections/>
+ <connections>
+  <connection>
+   <sender>cbStabScale</sender>
+   <signal>currentIndexChanged(int)</signal>
+   <receiver>StabilogramWidget</receiver>
+   <slot>on_changeScaleStab(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>177</x>
+     <y>251</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>759</x>
+     <y>144</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>cbZScale</sender>
+   <signal>currentIndexChanged(int)</signal>
+   <receiver>StabilogramWidget</receiver>
+   <slot>on_changeScaleZ(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>213</x>
+     <y>381</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>760</x>
+     <y>277</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btnStabZeroing</sender>
+   <signal>clicked()</signal>
+   <receiver>StabilogramWidget</receiver>
+   <slot>on_zeroingStab()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>62</x>
+     <y>247</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>761</x>
+     <y>176</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btnZCalibrate</sender>
+   <signal>clicked()</signal>
+   <receiver>StabilogramWidget</receiver>
+   <slot>on_calibrate()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>294</x>
+     <y>377</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>762</x>
+     <y>341</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>on_changeScaleStab(int)</slot>
+  <slot>on_changeScaleZ(int)</slot>
+  <slot>on_zeroingStab()</slot>
+  <slot>on_calibrate()</slot>
+ </slots>
 </ui>

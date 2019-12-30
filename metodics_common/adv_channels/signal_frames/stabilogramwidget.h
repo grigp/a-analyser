@@ -17,7 +17,7 @@ class StabilogramWidget : public SignalWidget
     Q_OBJECT
 
 public:
-    explicit StabilogramWidget(const QString channelId, QWidget *parent = 0);
+    explicit StabilogramWidget(Driver *driver, const QString channelId, QWidget *parent = 0);
     ~StabilogramWidget();
 
     /*!
@@ -28,8 +28,22 @@ public:
 
     void setFrequency(const int frequency) override;
 
+protected:
+    bool eventFilter(QObject *watched, QEvent *event);
+
+private slots:
+    void on_changeScaleStab(int scaleIdx);
+    void on_changeScaleZ(int scaleIdx);
+
+    void on_zeroingStab();
+    void on_calibrate();
+
 private:
     Ui::StabilogramWidget *ui;
+
+    QVector<double> m_recStab;
+    QVector<double> m_recZ;
+    bool m_isShowMassa {false};
 };
 
 #endif // STABILOGRAMWIDGET_H

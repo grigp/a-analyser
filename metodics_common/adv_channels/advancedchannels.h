@@ -57,7 +57,7 @@ private:
     /*!
      * \brief Создает виджет для канала по идентификатору канала
      */
-    SignalWidget* createWidget(const QString channelId);
+    SignalWidget* createWidget(Driver* driver, const QString channelId);
 
     /*!
      * \brief Выделяет первый канал в списке

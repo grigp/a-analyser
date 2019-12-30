@@ -46,6 +46,9 @@ public:
     void addValue(const QVector<double> value, const int recNum);
     QVector<double> value(const int idx) const;
 
+    double offset(const int numChan) const;
+    void setOffset(const int numChan, const double offset);
+
 private:
     QString m_name;
     int m_channelCount;
@@ -53,6 +56,7 @@ private:
     QVector<QVector<double>> m_data;
     double m_minVal {0};
     double m_maxVal {0};
+    QVector<double> m_offsets;
 };
 
 
@@ -122,6 +126,14 @@ public:
      * \param minVal, maxVal - минимальная и максимальная границы диапазона
      */
     void setDiapazone(const double minVal, const double maxVal);
+
+    /*!
+     * \brief Возвращает диапазон значений для зоны
+     * \param numArea - номер зоны 0 - ...
+     * \param minVal, maxVal - возвращаемые минимальное и максимальное значения
+     * \return true, если удачно
+     */
+    bool diapazone(const int numArea, double &minVal, double &maxVal);
 
     /*!
      * \brief Добавляет значение в данные осциллографа

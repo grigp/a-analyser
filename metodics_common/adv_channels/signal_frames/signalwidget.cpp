@@ -1,7 +1,10 @@
 #include "signalwidget.h"
 
-SignalWidget::SignalWidget(const QString channelId, QWidget *parent)
+#include "driver.h"
+
+SignalWidget::SignalWidget(Driver *driver, const QString channelId, QWidget *parent)
     : QWidget(parent)
+    , m_driver(driver)
     , m_channelId(channelId)
 {
 

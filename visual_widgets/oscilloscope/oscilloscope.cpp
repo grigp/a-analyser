@@ -116,6 +116,17 @@ void Oscilloscope::setDiapazone(const double minVal, const double maxVal)
     update();
 }
 
+bool Oscilloscope::diapazone(const int numArea, double &minVal, double &maxVal)
+{
+    if (numArea >= 0 && numArea < m_areases.size())
+    {
+        minVal = m_areases.at(numArea)->minValue();
+        maxVal = m_areases.at(numArea)->maxValue();
+        return true;
+    }
+    return false;
+}
+
 void Oscilloscope::addValue(const QVector<double> value)
 {
     int n = 0;
@@ -171,8 +182,9 @@ void Oscilloscope::paintEvent(QPaintEvent *event)
                 auto rec2 = m_areases.at(iz)->value(i);
                 for (int j = 0; j < rec2.size(); ++j)
                 {
-                    int y1 = axisY - trunc((rec1.at(j) - m_areases.at(iz)->minValue()) * prop);
-                    int y2 = axisY - trunc((rec2.at(j) - m_areases.at(iz)->minValue()) * prop);
+                    double offset = m_areases.at(iz)->offset(j);
+                    int y1 = axisY - trunc((rec1.at(j) - offset - m_areases.at(iz)->minValue()) * prop);
+                    int y2 = axisY - trunc((rec2.at(j) - offset - m_areases.at(iz)->minValue()) * prop);
 
                     painter.setPen(QPen(m_areases.at(iz)->color(j), 1, Qt::SolidLine, Qt::FlatCap));
                     painter.drawLine(x - 1, y1, x, y2);
@@ -242,6 +254,10 @@ OscilloscopeArea::OscilloscopeArea(const QString &name, const int channelCount)
     , m_palette(PaletteDefault)
 {
     m_data.clear();
+
+    m_offsets.resize(channelCount);
+    foreach (auto offs, m_offsets)
+        offs = 0;
 }
 
 QColor OscilloscopeArea::color(const int colorNum) const
@@ -295,4 +311,16 @@ QVector<double> OscilloscopeArea::value(const int idx) const
 {
     Q_ASSERT(idx >= 0 && idx < m_data.size());
     return m_data.at(idx);
+}
+
+double OscilloscopeArea::offset(const int numChan) const
+{
+    Q_ASSERT(numChan >= 0 && numChan < m_offsets.size());
+    return m_offsets.at(numChan);
+}
+
+void OscilloscopeArea::setOffset(const int numChan, const double offset)
+{
+    Q_ASSERT(numChan >= 0 && numChan < m_offsets.size());
+    m_offsets[numChan] = offset;
 }

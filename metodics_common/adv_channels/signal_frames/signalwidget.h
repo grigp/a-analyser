@@ -6,6 +6,8 @@
 
 #include "deviceprotocols.h"
 
+class Driver;
+
 /*!
  * \brief Базовый класс виджета сигналов SignalWidget class
  */
@@ -13,7 +15,7 @@ class SignalWidget : public QWidget
 {
     Q_OBJECT
 public:
-    explicit SignalWidget(const QString channelId, QWidget *parent = nullptr);
+    explicit SignalWidget(Driver *driver, const QString channelId, QWidget *parent = nullptr);
 
 //    virtual QString signalType() = 0;
 
@@ -27,12 +29,15 @@ public:
 
     QString channelId() {return m_channelId;}
 
+    Driver* driver() {return m_driver;}
+
 signals:
 
 public slots:
 
 
 private:
+    Driver *m_driver;
     QString m_channelId {""};
 };
 

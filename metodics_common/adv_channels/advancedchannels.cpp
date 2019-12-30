@@ -40,7 +40,7 @@ void AdvancedChannels::assignDriver(Driver *driver)
         auto *item = new QStandardItem(chanName);
         item->setEditable(false);
 
-        auto *wgt = createWidget(channelId);
+        auto *wgt = createWidget(m_driver, channelId);
         QVariant var;
         var.setValue(wgt);
         item->setData(var, WidgetRole);
@@ -108,14 +108,14 @@ void AdvancedChannels::splitterMoved(int pos, int index)
     SettingsProvider::setValueToRegAppCopy("AdvancedChannelsWidget", "SplitterTreePosition", ui->splitter->saveState());
 }
 
-SignalWidget *AdvancedChannels::createWidget(const QString channelId)
+SignalWidget *AdvancedChannels::createWidget(Driver* driver, const QString channelId)
 {
     SignalWidget *retval = nullptr;
 
     auto channelType = ChannelsUtils::instance().channelType(channelId);
     if (channelType == ChannelsDefines::ctStabilogram)
     {
-        retval = new StabilogramWidget(channelId, ui->frWidgets);
+        retval = new StabilogramWidget(driver, channelId, ui->frWidgets);
         ui->frWidgets->layout()->addWidget(retval);
     }
 
