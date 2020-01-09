@@ -98,6 +98,12 @@ public:
     int getSubChannelsCount(const QString &channelUid) const override;
 
     /*!
+     * \brief Возвращает true, если канал записывается по умолчанию (установлено в драйвере)
+     * \param channelUid - uid канала
+     */
+    bool isChannelRecordingDefault(const QString &channelUid) const override;
+
+    /*!
      * \brief Возвращает список протоколов
      */
     static QStringList getProtocols();
@@ -139,6 +145,9 @@ private:
      */
     void assignByteFromDevice(quint8 b);
 
+    static QMap<QString, bool> getChanRecordingDefault(const QJsonObject &obj);
+    static QJsonObject setChanRecordingDefault(const QMap<QString, bool>& recMap);
+
     // разбор принятых данных
     bool m_isMarker = false;      // Счетчик байтов маркера. При первом 0x80 становится true. При втором 0x80 начинается прием пакета. При true и не 0x80 сбрасывается
     bool m_isPackage = false;     // true - идет разбор пакета, false - нет разбора пакета
@@ -154,6 +163,7 @@ private:
     double m_offsetX {0};
     double m_offsetY {0};
 
+    QMap<QString, bool> m_chanRecordingDefault;
 };
 
 #endif // STABILAN01_H

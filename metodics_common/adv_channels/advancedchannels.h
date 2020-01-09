@@ -13,6 +13,7 @@ class AdvancedChannels;
 
 class Driver;
 class SignalWidget;
+class TestResultData;
 
 /*!
  * \brief Класс виджета дополнительных физиологических каналов AdvancedChannels class
@@ -37,14 +38,28 @@ public:
     /*!
      * \brief Запоминает указатель на драйвер
      * Анализирует драйвер на предмет передаваемых каналов, создает для них виджеты, подключается к передаче данных от драйвера
+     * \param driver - указатель на драйвер
+     * \param trd - указатель на объект, пишущий данные в БД
      */
-    void assignDriver(Driver* driver);
+    void assignDriver(Driver* driver, TestResultData *trd);
 
     /*!
      * \brief Получение данных от устройства
      * \param data - данные
      */
     void getData(DeviceProtocols::DeviceData *data);
+
+    /*!
+     * \brief Начало новой пробы
+     */
+    void newProbe();
+
+    /*!
+     * \brief Прерывание пробы
+     */
+    void abortProbe();
+
+    void record(DeviceProtocols::DeviceData *data);
 
 private slots:
     void on_selectIndex(QModelIndex index);

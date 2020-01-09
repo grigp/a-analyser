@@ -2,6 +2,7 @@
 #include "ui_advancedchannels.h"
 
 #include "driver.h"
+#include "testresultdata.h"
 #include "channelsutils.h"
 #include "settingsprovider.h"
 #include "stabilogramwidget.h"
@@ -21,7 +22,7 @@ AdvancedChannels::~AdvancedChannels()
     delete ui;
 }
 
-void AdvancedChannels::assignDriver(Driver *driver)
+void AdvancedChannels::assignDriver(Driver *driver, TestResultData *trd)
 {
     Q_ASSERT(driver);
     m_driver = driver;
@@ -47,6 +48,7 @@ void AdvancedChannels::assignDriver(Driver *driver)
         item->setData(channelId, ChannelIdRole);
         wgt->setVisible(false);
         wgt->setFrequency(driver->frequency(channelId));
+        wgt->assignTestResultDataObject(trd);
 
         itemDrv->appendRow(item);
     }
@@ -77,6 +79,54 @@ void AdvancedChannels::getData(DeviceProtocols::DeviceData *data)
                 if (wgt)
                     wgt->getData(data);
             }
+        }
+    }
+}
+
+void AdvancedChannels::newProbe()
+{
+    for (int id = 0; id < m_mdlDrvChan.rowCount(); ++id)
+    {
+        QModelIndex idxDrv = m_mdlDrvChan.index(id, 0);
+        for (int i = 0; i < m_mdlDrvChan.rowCount(idxDrv); ++i)
+        {
+            QModelIndex index = m_mdlDrvChan.index(i, 0, idxDrv);
+            QVariant var = index.data(WidgetRole);
+            SignalWidget* wgt = var.value<SignalWidget*>();
+            if (wgt)
+                wgt->newProbe();
+        }
+    }
+}
+
+void AdvancedChannels::abortProbe()
+{
+    for (int id = 0; id < m_mdlDrvChan.rowCount(); ++id)
+    {
+        QModelIndex idxDrv = m_mdlDrvChan.index(id, 0);
+        for (int i = 0; i < m_mdlDrvChan.rowCount(idxDrv); ++i)
+        {
+            QModelIndex index = m_mdlDrvChan.index(i, 0, idxDrv);
+            QVariant var = index.data(WidgetRole);
+            SignalWidget* wgt = var.value<SignalWidget*>();
+            if (wgt)
+                wgt->abortProbe();
+        }
+    }
+}
+
+void AdvancedChannels::record(DeviceProtocols::DeviceData *data)
+{
+    for (int id = 0; id < m_mdlDrvChan.rowCount(); ++id)
+    {
+        QModelIndex idxDrv = m_mdlDrvChan.index(id, 0);
+        for (int i = 0; i < m_mdlDrvChan.rowCount(idxDrv); ++i)
+        {
+            QModelIndex index = m_mdlDrvChan.index(i, 0, idxDrv);
+            QVariant var = index.data(WidgetRole);
+            SignalWidget* wgt = var.value<SignalWidget*>();
+            if (wgt)
+                wgt->record(data);
         }
     }
 }

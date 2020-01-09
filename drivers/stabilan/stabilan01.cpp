@@ -59,6 +59,7 @@ void Stabilan01::setParams(const DeviceProtocols::Ports port, const QJsonObject 
     setPortName(port);
     m_model = static_cast<Stabilan01Defines::Model>(params["model"].toInt());
     m_zt = static_cast<Stabilan01Defines::ZeroingType>(params["zeroing_type"].toInt());
+    m_chanRecordingDefault = Stabilan01::getChanRecordingDefault(params["chan_recording_default"].toObject());
 }
 
 bool Stabilan01::editParams(QJsonObject &params)
@@ -69,14 +70,17 @@ bool Stabilan01::editParams(QJsonObject &params)
     Stabilan01ParamsDialog dlg(static_cast<AAnalyserApplication*>(QApplication::instance())->mainWindow());
     dlg.setModel(static_cast<Stabilan01Defines::Model>(model));
     dlg.setZeroingType(static_cast<Stabilan01Defines::ZeroingType>(zt));
+    dlg.setRecording(getChanRecordingDefault(params["chan_recording_default"].toObject()));
     if (dlg.exec() == QDialog::Accepted)
     {
         params["model"] = static_cast<int>(dlg.model());
         params["zeroing_type"] = static_cast<int>(dlg.zeroingType());
+        params["chan_recording_default"] = setChanRecordingDefault(dlg.getRecording());
         return true;
     }
     return false;
 }
+
 
 void Stabilan01::start()
 {
@@ -129,6 +133,13 @@ int Stabilan01::getSubChannelsCount(const QString &channelUid) const
         ChannelsUtils::instance().channelType(channelUid) == ChannelsDefines::ctBallistogram)
         return 1;
     return 0;
+}
+
+bool Stabilan01::isChannelRecordingDefault(const QString &channelUid) const
+{
+    if (m_chanRecordingDefault.contains(channelUid))
+        return m_chanRecordingDefault.value(channelUid);
+    return false;
 }
 
 QStringList Stabilan01::getProtocols()
@@ -345,5 +356,25 @@ void Stabilan01::assignByteFromDevice(quint8 b)
     if (isError){
         emit error(EC_MarkerIinsidePackage);
     }
+}
+
+QMap<QString, bool> Stabilan01::getChanRecordingDefault(const QJsonObject &obj)
+{
+    QMap<QString, bool> retval;
+    retval.insert(ChannelsDefines::chanStab, obj["stab"].toBool());
+    retval.insert(ChannelsDefines::chanZ, obj["z"].toBool());
+    retval.insert(ChannelsDefines::chanMyo, obj["myo"].toBool());
+    retval.insert(ChannelsDefines::chanPulse, obj["pulse"].toBool());
+    return retval;
+}
+
+QJsonObject Stabilan01::setChanRecordingDefault(const QMap<QString, bool> &recMap)
+{
+    QJsonObject recObj;
+    recObj["stab"] = recMap.value(ChannelsDefines::chanStab);
+    recObj["z"] = recMap.value(ChannelsDefines::chanZ);
+    recObj["myo"] = recMap.value(ChannelsDefines::chanMyo);
+    recObj["pulse"] = recMap.value(ChannelsDefines::chanPulse);
+    return recObj;
 }
 

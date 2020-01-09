@@ -23,6 +23,9 @@ public:
     Stabilan01Defines::ZeroingType zeroingType() const;
     void setZeroingType(const Stabilan01Defines::ZeroingType zt);
 
+    void setRecording(const QMap<QString,  bool>& recMap);
+    QMap<QString, bool> getRecording() const;
+
 private:
     Ui::Stabilan01ParamsDialog *ui;
 };

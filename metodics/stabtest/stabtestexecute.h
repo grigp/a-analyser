@@ -107,8 +107,8 @@ private:
     DeviceProtocols::StabControl* m_stabControl;  ///< Управление стабилографией в драйвере
 
     TestResultData *m_trd;  ///< Объект, записывающий данные в базу
-    Stabilogram *m_stb;     ///< Записываемая стабилограмма
-    Ballistogram *m_z;      ///< Записываемая баллистограмма
+//    Stabilogram *m_stb;     ///< Записываемая стабилограмма
+//    Ballistogram *m_z;      ///< Записываемая баллистограмма
 
     PatientWindow* m_patientWin {nullptr};  ///< Окно пациента
 };

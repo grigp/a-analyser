@@ -30,6 +30,12 @@ public:
 
     QString channelFormat(const QString &channelId) const;
 
+    /*!
+     * \brief Возвращает идентификатор канала баллистограммы для канала стабилограммы
+     * \param channelIdStab - идентификатор канала стабилограммы
+     */
+    QString zChanForStabChan(const QString &channelIdStab) const;
+
 private:
     ChannelsUtils();
     ChannelsUtils(const ChannelsUtils &rhs) = default;

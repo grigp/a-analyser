@@ -40,3 +40,21 @@ void Stabilan01ParamsDialog::setZeroingType(const Stabilan01Defines::ZeroingType
 {
     ui->cbZeroingType->setCurrentText(Stabilan01::zeroingTypeName(zt));
 }
+
+void Stabilan01ParamsDialog::setRecording(const QMap<QString, bool> &recMap)
+{
+    ui->cbRecStab->setChecked(recMap.value(ChannelsDefines::chanStab));
+    ui->cbRecZ->setChecked(recMap.value(ChannelsDefines::chanZ));
+    ui->cbRecMyo->setChecked(recMap.value(ChannelsDefines::chanMyo));
+    ui->cbRecPulse->setChecked(recMap.value(ChannelsDefines::chanPulse));
+}
+
+QMap<QString, bool> Stabilan01ParamsDialog::getRecording() const
+{
+    QMap<QString, bool> retval;
+    retval.insert(ChannelsDefines::chanStab, ui->cbRecStab->isChecked());
+    retval.insert(ChannelsDefines::chanZ, ui->cbRecZ->isChecked());
+    retval.insert(ChannelsDefines::chanMyo, ui->cbRecMyo->isChecked());
+    retval.insert(ChannelsDefines::chanPulse, ui->cbRecPulse->isChecked());
+    return retval;
+}

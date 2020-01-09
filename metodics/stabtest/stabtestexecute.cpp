@@ -108,7 +108,7 @@ void StabTestExecute::start()
         showPatientWindow(m_params.at(m_probe).stimulCode);
         ui->cbScale->setCurrentIndex(m_params.at(m_probe).scale);
 
-        ui->wgtAdvChannels->assignDriver(m_driver);
+        ui->wgtAdvChannels->assignDriver(m_driver, m_trd);
         auto val = SettingsProvider::valueFromRegAppCopy("AdvancedChannelsWidget", "SplitterProbePosition").toByteArray();
         ui->splitter->restoreState(val);
 
@@ -153,9 +153,10 @@ void StabTestExecute::getData(DeviceProtocols::DeviceData *data)
             //! Запись, если не задержка привыкания
             if (m_recCount >= probeParams().latentTime * m_freqStab)
             {
-                SignalsDefines::StabRec rec(std::make_tuple(stabData->x(), stabData->y()));
-                m_stb->addValue(rec);
-                m_z->addValue(stabData->z());
+                ui->wgtAdvChannels->record(data);
+//                SignalsDefines::StabRec rec(std::make_tuple(stabData->x(), stabData->y()));
+//                m_stb->addValue(rec);
+//                m_z->addValue(stabData->z());
             }
 
             ++m_recCount;
@@ -286,15 +287,17 @@ void StabTestExecute::initRecSignals()
         if (m_probe == m_trd->probesCount())   //! Новая проба - создать пробу и сигналы
         {
             m_trd->newProbe(probeParams().name);
-            m_stb = new Stabilogram(ChannelsDefines::chanStab, m_freqStab);
-            m_trd->addChannel(m_stb);
-            m_z = new Ballistogram(ChannelsDefines::chanZ, m_freqZ);
-            m_trd->addChannel(m_z);
+            ui->wgtAdvChannels->newProbe();
+//            m_stb = new Stabilogram(ChannelsDefines::chanStab, m_freqStab);
+//            m_trd->addChannel(m_stb);
+//            m_z = new Ballistogram(ChannelsDefines::chanZ, m_freqZ);
+//            m_trd->addChannel(m_z);
         }
         else
         {                               //! Проба была прервана - очистить сигналы
-            m_stb->clear();
-            m_z->clear();
+            ui->wgtAdvChannels->abortProbe();
+//            m_stb->clear();
+//            m_z->clear();
         }
     }
 }

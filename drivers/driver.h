@@ -80,6 +80,12 @@ public:
      */
     virtual int getSubChannelsCount(const QString &channelUid) const = 0;
 
+    /*!
+     * \brief Возвращает true, если канал записывается по умолчанию (установлено в драйвере)
+     * \param channelUid - uid канала
+     */
+    virtual bool isChannelRecordingDefault(const QString &channelUid) const = 0;
+
 
 signals:
     void sendData(DeviceProtocols::DeviceData *data);

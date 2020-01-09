@@ -90,6 +90,12 @@ public:
     int getSubChannelsCount(const QString &channelUid) const override;
 
     /*!
+     * \brief Возвращает true, если канал записывается по умолчанию (установлено в драйвере)
+     * \param channelUid - uid канала
+     */
+    bool isChannelRecordingDefault(const QString &channelUid) const override;
+
+    /*!
      * \brief Возвращает список протоколов
      * \return
      */

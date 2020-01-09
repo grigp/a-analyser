@@ -90,6 +90,12 @@ int JumpPlate::getSubChannelsCount(const QString &channelUid) const
     return 0;
 }
 
+bool JumpPlate::isChannelRecordingDefault(const QString &channelUid) const
+{
+    Q_UNUSED(channelUid);
+    return false;
+}
+
 QStringList JumpPlate::getProtocols()
 {
     return QStringList() << DeviceProtocols::uid_JumpPlateProtocol;

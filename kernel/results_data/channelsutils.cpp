@@ -32,6 +32,13 @@ QString ChannelsUtils::channelFormat(const QString &channelId) const
     return ChannelsDefines::cfNoSignal;
 }
 
+QString ChannelsUtils::zChanForStabChan(const QString &channelIdStab) const
+{
+    if (channelIdStab == ChannelsDefines::chanStab)
+        return ChannelsDefines::chanZ;
+    return "";
+}
+
 ChannelsUtils::ChannelsUtils()
     : m_channels({
                  std::pair<QString, ChannelsDefines::ChannelInfo>(ChannelsDefines::chanStab,

@@ -2,6 +2,10 @@
 #include "ui_stabilogramwidget.h"
 
 #include "driver.h"
+#include "stabilogram.h"
+#include "ballistogram.h"
+#include "testresultdata.h"
+#include "channelsutils.h"
 
 #include <QDebug>
 
@@ -20,12 +24,36 @@ StabilogramWidget::StabilogramWidget(Driver *driver, const QString channelId, QW
     ui->cbStabScale->setCurrentIndex(0);
     ui->cbZScale->setCurrentIndex(0);
 
+    setRecordedChannels();
+
     ui->lblMassa->installEventFilter(this);
 }
 
 StabilogramWidget::~StabilogramWidget()
 {
     delete ui;
+}
+
+void StabilogramWidget::newProbe()
+{
+    if (ui->btnStabRecord->isChecked())
+    {
+        m_stb = new Stabilogram(ChannelsDefines::chanStab, ui->wgtStabOscill->frequency());
+        objTestResultData()->addChannel(m_stb);
+    }
+    if (ui->btnZRecord->isChecked())
+    {
+        m_z = new Ballistogram(ChannelsDefines::chanZ, ui->wgtZOscill->frequency());
+        objTestResultData()->addChannel(m_z);
+    }
+}
+
+void StabilogramWidget::abortProbe()
+{
+    if (ui->btnStabRecord->isChecked())
+        m_stb->clear();
+    if (ui->btnZRecord->isChecked())
+        m_z->clear();
 }
 
 void StabilogramWidget::getData(DeviceProtocols::DeviceData *data)
@@ -50,6 +78,22 @@ void StabilogramWidget::getData(DeviceProtocols::DeviceData *data)
 
         if (m_isShowMassa)
             ui->lblMassa->setText(QString(tr("Масса") + " %1" + " " + tr("кг")).arg(m_recZ.at(0)));
+
+    }
+}
+
+void StabilogramWidget::record(DeviceProtocols::DeviceData *data)
+{
+    if (data->channelId() == channelId())
+    {
+        DeviceProtocols::StabDvcData *stabData = static_cast<DeviceProtocols::StabDvcData*>(data);
+        if (ui->btnStabRecord->isChecked())
+        {
+            SignalsDefines::StabRec rec(std::make_tuple(stabData->x(), stabData->y()));
+            m_stb->addValue(rec);
+        }
+        if (ui->btnZRecord->isChecked())
+            m_z->addValue(stabData->z());
     }
 }
 
@@ -104,4 +148,16 @@ void StabilogramWidget::on_calibrate()
     DeviceProtocols::StabControl* stabControl = dynamic_cast<DeviceProtocols::StabControl*>(driver());
     if (stabControl)
         stabControl->calibrate(ChannelsDefines::chanStab);
+}
+
+void StabilogramWidget::setRecordedChannels()
+{
+    auto isRecStab = driver()->isChannelRecordingDefault(channelId());
+    auto zChannelId = ChannelsUtils::instance().zChanForStabChan(channelId());
+    auto isRecZ = false;
+    if (zChannelId != "")
+        isRecZ = driver()->isChannelRecordingDefault(zChannelId);
+
+    ui->btnStabRecord->setChecked(isRecStab);
+    ui->btnZRecord->setChecked(isRecZ);
 }

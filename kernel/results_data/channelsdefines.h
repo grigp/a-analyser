@@ -33,6 +33,9 @@ static QString cfNoSignal = "{90e313c6-8805-4235-8981-1fb85d7aea5f}";          /
  static QString chanJumpHeight = "{EF9DF092-7FE0-4F74-9EA6-8BA3318AA91C}";
  static QString chanHopping = "{EF4AD6ED-2D10-497A-AB8D-945CF6C0645E}";
 
+ static QString chanMyo = "{E4342137-B1BF-4F68-BC17-2C337b97A642}";
+ static QString chanPulse = "{84736B99-7F4B-494A-9958-D6F908E07C32}";
+
 
 /*!
  * \brief Структура информации о канале ChannelInfo struct
