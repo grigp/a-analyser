@@ -66,6 +66,8 @@ private slots:
 private:
     Ui::StabilogramWidget *ui;
 
+    void showAdvancedInfo(DeviceProtocols::StabDvcData *stabData);
+
     void setRecordedChannels();
 
     void setRecButton(QPushButton *btn, const bool checked);

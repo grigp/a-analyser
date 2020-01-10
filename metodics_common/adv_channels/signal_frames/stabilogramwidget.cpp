@@ -23,6 +23,7 @@ StabilogramWidget::StabilogramWidget(Driver *driver, const QString channelId, QW
     ui->cbZScale->addItems(QStringList() <<  "1" << "2" << "4" << "8" << "16" << "32" << "64" << "128" << "256" << "512");
     ui->cbStabScale->setCurrentIndex(0);
     ui->cbZScale->setCurrentIndex(0);
+    ui->tabWindows->setCurrentIndex(0);
 
     setRecordedChannels();
 
@@ -72,9 +73,7 @@ void StabilogramWidget::getData(DeviceProtocols::DeviceData *data)
         ui->wgtZOscill->addValue(recZ);
         m_recZ = recZ;
 
-        QString s = QString("X = %1").arg(stabData->x(), 0, 'f', 2) + "    " +
-                    QString("Y = %1").arg(stabData->y(), 0, 'f', 2) + "    " +
-                    QString("Z = %1").arg(stabData->z(), 0, 'f', 2);
+        showAdvancedInfo(stabData);
 
         if (m_isShowMassa)
             ui->lblMassa->setText(QString(tr("Масса") + " %1" + " " + tr("кг")).arg(m_recZ.at(0)));
@@ -168,6 +167,22 @@ void StabilogramWidget::on_recStabClick(bool checked)
 void StabilogramWidget::on_recZClick(bool checked)
 {
     setRecButton(ui->btnZRecord, checked);
+}
+
+void StabilogramWidget::showAdvancedInfo(DeviceProtocols::StabDvcData *stabData)
+{
+    ui->lblReactAValue->setText(QString::number(stabData->a(), 'f', 2));
+    ui->lblReactBValue->setText(QString::number(stabData->b(), 'f', 2));
+    ui->lblReactCValue->setText(QString::number(stabData->c(), 'f', 2));
+    ui->lblReactDValue->setText(QString::number(stabData->d(), 'f', 2));
+
+    auto summ = stabData->a() + stabData->b() + stabData->c() + stabData->d();
+    ui->lblSumm->setText(QString(tr("Сумма") + " = %1").arg(QString::number(summ, 'f', 2)));
+
+    ui->pbValueA->setValue(stabData->a() / 40.0 * ui->pbValueA->maximum());
+    ui->pbValueB->setValue(stabData->b() / 40.0 * ui->pbValueB->maximum());
+    ui->pbValueC->setValue(stabData->c() / 40.0 * ui->pbValueC->maximum());
+    ui->pbValueD->setValue(stabData->d() / 40.0 * ui->pbValueD->maximum());
 }
 
 void StabilogramWidget::setRecordedChannels()

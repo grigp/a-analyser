@@ -45,6 +45,7 @@ StabTestExecute::StabTestExecute(QWidget *parent) :
     ui->cbScale->addItem("128");
 
     ui->wgtAdvChannels->setVisible(false);
+    ui->btnCalibrate->setVisible(false);
 }
 
 StabTestExecute::~StabTestExecute()
