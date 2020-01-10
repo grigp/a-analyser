@@ -61,6 +61,11 @@ public:
 
     void record(DeviceProtocols::DeviceData *data);
 
+    /*!
+     * \brief Управляет допустимостью элементов на панелях
+     */
+    void enabledControls(const bool enabled);
+
 private slots:
     void on_selectIndex(QModelIndex index);
     void on_selectionChanged(const QItemSelection &selected, const QItemSelection &deselected);

@@ -154,9 +154,6 @@ void StabTestExecute::getData(DeviceProtocols::DeviceData *data)
             if (m_recCount >= probeParams().latentTime * m_freqStab)
             {
                 ui->wgtAdvChannels->record(data);
-//                SignalsDefines::StabRec rec(std::make_tuple(stabData->x(), stabData->y()));
-//                m_stb->addValue(rec);
-//                m_z->addValue(stabData->z());
             }
 
             ++m_recCount;
@@ -223,6 +220,7 @@ void StabTestExecute::recording()
     ui->btnZeroing->setEnabled(!m_isRecording);
     ui->btnCalibrate->setEnabled(!m_isRecording);
     ui->frScale->setEnabled(!m_isRecording);
+    ui->wgtAdvChannels->enabledControls(!m_isRecording);
 
     if (m_isRecording)
     {
@@ -288,16 +286,10 @@ void StabTestExecute::initRecSignals()
         {
             m_trd->newProbe(probeParams().name);
             ui->wgtAdvChannels->newProbe();
-//            m_stb = new Stabilogram(ChannelsDefines::chanStab, m_freqStab);
-//            m_trd->addChannel(m_stb);
-//            m_z = new Ballistogram(ChannelsDefines::chanZ, m_freqZ);
-//            m_trd->addChannel(m_z);
         }
         else
         {                               //! Проба была прервана - очистить сигналы
             ui->wgtAdvChannels->abortProbe();
-//            m_stb->clear();
-//            m_z->clear();
         }
     }
 }
@@ -324,6 +316,7 @@ void StabTestExecute::nextProbe()
         ui->btnZeroing->setEnabled(!m_isRecording);
         ui->btnCalibrate->setEnabled(!m_isRecording);
         ui->frScale->setEnabled(!m_isRecording);
+        ui->wgtAdvChannels->enabledControls(!m_isRecording);
     }
 }
 

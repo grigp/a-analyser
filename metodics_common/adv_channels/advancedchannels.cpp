@@ -32,6 +32,7 @@ void AdvancedChannels::assignDriver(Driver *driver, TestResultData *trd)
     itemDrv->setEditable(false);
     itemDrv->setData(QVariant(), WidgetRole);
     itemDrv->setData("", ChannelIdRole);
+    itemDrv->setIcon(QIcon(":/images/tree/device.png"));
     m_mdlDrvChan.appendRow(itemDrv);
 
     auto chanList = m_driver->getChannels();
@@ -46,6 +47,7 @@ void AdvancedChannels::assignDriver(Driver *driver, TestResultData *trd)
         var.setValue(wgt);
         item->setData(var, WidgetRole);
         item->setData(channelId, ChannelIdRole);
+        item->setIcon(QIcon(":/images/tree/signal.png"));
         wgt->setVisible(false);
         wgt->setFrequency(driver->frequency(channelId));
         wgt->assignTestResultDataObject(trd);
@@ -127,6 +129,22 @@ void AdvancedChannels::record(DeviceProtocols::DeviceData *data)
             SignalWidget* wgt = var.value<SignalWidget*>();
             if (wgt)
                 wgt->record(data);
+        }
+    }
+}
+
+void AdvancedChannels::enabledControls(const bool enabled)
+{
+    for (int id = 0; id < m_mdlDrvChan.rowCount(); ++id)
+    {
+        QModelIndex idxDrv = m_mdlDrvChan.index(id, 0);
+        for (int i = 0; i < m_mdlDrvChan.rowCount(idxDrv); ++i)
+        {
+            QModelIndex index = m_mdlDrvChan.index(i, 0, idxDrv);
+            QVariant var = index.data(WidgetRole);
+            SignalWidget* wgt = var.value<SignalWidget*>();
+            if (wgt)
+                wgt->enabledControls(enabled);
         }
     }
 }

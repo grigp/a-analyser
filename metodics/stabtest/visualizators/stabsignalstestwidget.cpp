@@ -570,21 +570,24 @@ void StabSignalsTestWidget::showSKG(StabSignalsTestCalculator *calculator, const
                 skg->setVisibleMarker(false);
 
                 auto *sig = probe->signal(ChannelsDefines::chanStab);
-                skg->setSignal(sig);
-                auto max = sig->absMaxValue();
-                if (max > absMax)
-                    absMax = max;
+                //todo: подумать, как быть с обследованиями, которые невозможно открыть: сбой или зависание. Такие обследования нужно иметь возможность удалить
+                if (sig && sig->size() > 0)
+                {
+                    skg->setSignal(sig);
+                    auto max = sig->absMaxValue();
+                    if (max > absMax)
+                        absMax = max;
 
-                auto angle = calculator->classicFactors(i)->ellipse().angle;
-                auto sizeA = calculator->classicFactors(i)->ellipse().sizeA;
-                auto sizeB = calculator->classicFactors(i)->ellipse().sizeB;
-                skg->setEllipse(sizeA, sizeB, angle);
+                    auto angle = calculator->classicFactors(i)->ellipse().angle;
+                    auto sizeA = calculator->classicFactors(i)->ellipse().sizeA;
+                    auto sizeB = calculator->classicFactors(i)->ellipse().sizeB;
+                    skg->setEllipse(sizeA, sizeB, angle);
 
+                    ui->wgtSKGAreases->layout()->addWidget(skg);
 
-                ui->wgtSKGAreases->layout()->addWidget(skg);
-
-                //! Графики сигналов
-                ui->wgtGraph->appendSignal(sig, pi.name);
+                    //! Графики сигналов
+                    ui->wgtGraph->appendSignal(sig, pi.name);
+                }
             }
         }
 

@@ -94,5 +94,7 @@
         <file>images/backgrounds/background_08.png</file>
         <file>images/Games/bang.gif</file>
         <file>images/Games/bang.png</file>
+        <file>images/tree/device.png</file>
+        <file>images/tree/signal.png</file>
     </qresource>
 </RCC>

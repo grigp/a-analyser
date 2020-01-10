@@ -103,6 +103,16 @@ void StabilogramWidget::setFrequency(const int frequency)
     ui->wgtZOscill->setFrequency(frequency);
 }
 
+void StabilogramWidget::enabledControls(const bool enabled)
+{
+    ui->btnStabRecord->setEnabled(enabled);
+    ui->btnStabZeroing->setEnabled(enabled);
+    ui->btnZCalibrate->setEnabled(enabled);
+    ui->btnZRecord->setEnabled(enabled);
+    ui->cbStabScale->setEnabled(enabled);
+    ui->cbZScale->setEnabled(enabled);
+}
+
 bool StabilogramWidget::eventFilter(QObject *watched, QEvent *event)
 {
     if (watched == ui->lblMassa && event->type() == QEvent::MouseButtonDblClick)
@@ -150,6 +160,16 @@ void StabilogramWidget::on_calibrate()
         stabControl->calibrate(ChannelsDefines::chanStab);
 }
 
+void StabilogramWidget::on_recStabClick(bool checked)
+{
+    setRecButton(ui->btnStabRecord, checked);
+}
+
+void StabilogramWidget::on_recZClick(bool checked)
+{
+    setRecButton(ui->btnZRecord, checked);
+}
+
 void StabilogramWidget::setRecordedChannels()
 {
     auto isRecStab = driver()->isChannelRecordingDefault(channelId());
@@ -159,5 +179,16 @@ void StabilogramWidget::setRecordedChannels()
         isRecZ = driver()->isChannelRecordingDefault(zChannelId);
 
     ui->btnStabRecord->setChecked(isRecStab);
+    setRecButton(ui->btnStabRecord, isRecStab);
+
     ui->btnZRecord->setChecked(isRecZ);
+    setRecButton(ui->btnZRecord, isRecZ);
+}
+
+void StabilogramWidget::setRecButton(QPushButton *btn, const bool checked)
+{
+    if (checked)
+        btn->setIcon(QIcon(":/images/SaveOK.png"));
+    else
+        btn->setIcon(QIcon(":/images/SaveNO.png"));
 }

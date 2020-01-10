@@ -2,6 +2,7 @@
 #define STABILOGRAMWIDGET_H
 
 #include <QWidget>
+#include <QPushButton>
 
 #include "signalwidget.h"
 
@@ -44,6 +45,11 @@ public:
 
     void setFrequency(const int frequency) override;
 
+    /*!
+     * \brief Управляет допустимостью элементов на панелях
+     */
+    void enabledControls(const bool enabled) override;
+
 protected:
     bool eventFilter(QObject *watched, QEvent *event);
 
@@ -54,10 +60,15 @@ private slots:
     void on_zeroingStab();
     void on_calibrate();
 
+    void on_recStabClick(bool checked);
+    void on_recZClick(bool checked);
+
 private:
     Ui::StabilogramWidget *ui;
 
     void setRecordedChannels();
+
+    void setRecButton(QPushButton *btn, const bool checked);
 
     QVector<double> m_recStab;
     QVector<double> m_recZ;

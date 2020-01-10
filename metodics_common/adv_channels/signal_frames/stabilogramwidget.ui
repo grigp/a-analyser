@@ -367,6 +367,9 @@
                   <bold>true</bold>
                  </font>
                 </property>
+                <property name="cursor">
+                 <cursorShape>PointingHandCursor</cursorShape>
+                </property>
                 <property name="text">
                  <string>Масса</string>
                 </property>
@@ -499,11 +502,45 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>btnStabRecord</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>StabilogramWidget</receiver>
+   <slot>on_recStabClick(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>732</x>
+     <y>243</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>759</x>
+     <y>230</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btnZRecord</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>StabilogramWidget</receiver>
+   <slot>on_recZClick(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>734</x>
+     <y>376</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>761</x>
+     <y>374</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>on_changeScaleStab(int)</slot>
   <slot>on_changeScaleZ(int)</slot>
   <slot>on_zeroingStab()</slot>
   <slot>on_calibrate()</slot>
+  <slot>on_recStabClick(bool)</slot>
+  <slot>on_recZClick(bool)</slot>
  </slots>
 </ui>

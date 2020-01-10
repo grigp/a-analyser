@@ -45,6 +45,12 @@ public:
 
     virtual void setFrequency(const int frequency) = 0;
 
+    /*!
+     * \brief Управляет допустимостью элементов на панелях
+     */
+    virtual void enabledControls(const bool enabled) = 0;
+
+
     QString channelId() {return m_channelId;}
 
     Driver* driver() {return m_driver;}
