@@ -20,6 +20,7 @@ class TrenTakePutExecute;
 
 class Driver;
 class TrenTakePutPatientWindow;
+class TestResultData;
 
 /*!
  * \brief Структура записи о парных файлов FilesPair struct
@@ -70,6 +71,8 @@ private slots:
     void on_selectChannel(int chanIdx);
     void on_zeroing();
     void on_scaleChange(int scaleIdx);
+
+    void on_advChannelsClicked(bool checked);
 
 private:
     Ui::TrenTakePutExecute *ui;
@@ -208,9 +211,11 @@ private:
     int m_bndBottom {0};
 
     int m_frequency = 50;        ///< Частота дискретизации
+    DataDefines::PatientKard m_kard;
 
     Driver* m_driver {nullptr};     ///< Драйвер передающий данные
     DeviceProtocols::DecartCoordControl* m_dcControl;  ///< Управление декартовыми данными в драйвере
+    TestResultData *m_trd;  ///< Объект, записывающий данные в базу
 
     TrenTakePutDefines::GameStage m_gameStage {TrenTakePutDefines::gsTake};
 

@@ -66,6 +66,12 @@ public:
      */
     void enabledControls(const bool enabled);
 
+    /*!
+     * \brief Устанавливает канал, записываемый всегда
+     * \param channelId - идентификатор канала
+     */
+    void setAllwaysRecordingChannel(const QString &channelId);
+
 private slots:
     void on_selectIndex(QModelIndex index);
     void on_selectionChanged(const QItemSelection &selected, const QItemSelection &deselected);

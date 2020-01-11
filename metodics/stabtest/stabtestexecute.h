@@ -71,6 +71,12 @@ private:
      */
     StabTestParams::ProbeParams probeParams();
 
+    /*!
+     * \brief Формирует список каналов для выбора управления
+     * По формату получаем список каналов этого формата, которые передает драйвер, заносим их в список для выбора
+     */
+    void setChannels();
+
     void initRecSignals();
 
     /*!

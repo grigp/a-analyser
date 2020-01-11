@@ -112,6 +112,14 @@ void StabilogramWidget::enabledControls(const bool enabled)
     ui->cbZScale->setEnabled(enabled);
 }
 
+void StabilogramWidget::setAllwaysRecordingChannel(const QString &channelId)
+{
+    Q_UNUSED(channelId);
+    ui->btnStabRecord->setChecked(true);
+    setRecButton(ui->btnStabRecord, true);
+    ui->btnStabRecord->setVisible(false);
+}
+
 bool StabilogramWidget::eventFilter(QObject *watched, QEvent *event)
 {
     if (watched == ui->lblMassa && event->type() == QEvent::MouseButtonDblClick)

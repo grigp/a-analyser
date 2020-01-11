@@ -50,6 +50,11 @@ public:
      */
     virtual void enabledControls(const bool enabled) = 0;
 
+    /*!
+     * \brief Устанавливает канал, записываемый всегда
+     * \param channelId - идентификатор канала
+     */
+    virtual void setAllwaysRecordingChannel(const QString &channelId) = 0;
 
     QString channelId() {return m_channelId;}
 

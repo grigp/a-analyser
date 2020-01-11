@@ -8,6 +8,7 @@
 #include "channelsutils.h"
 #include "trentakeputpatientwindow.h"
 #include "settingsprovider.h"
+#include "testresultdata.h"
 
 #include <QTimer>
 #include <QMessageBox>
@@ -27,6 +28,7 @@ TrenTakePutExecute::TrenTakePutExecute(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::TrenTakePutExecute)
   , m_scene(new QGraphicsScene(-1000, -1000, 2000, 2000))
+  , m_trd(new TestResultData())
 {
     ui->setupUi(this);
 
@@ -43,6 +45,7 @@ TrenTakePutExecute::TrenTakePutExecute(QWidget *parent) :
     ui->cbScale->addItem("128");
 
     m_filesUsed.clear();
+    ui->wgtAdvChannels->setVisible(false);
 }
 
 TrenTakePutExecute::~TrenTakePutExecute()
@@ -145,16 +148,22 @@ void TrenTakePutExecute::start()
         connect(m_driver, &Driver::sendData, this, &TrenTakePutExecute::getData);
         connect(m_driver, &Driver::communicationError, this, &TrenTakePutExecute::on_communicationError);
 
-//        m_kard = static_cast<AAnalyserApplication*>(QApplication::instance())->getSelectedPatient();
-//        MetodicDefines::MetodicInfo mi = static_cast<AAnalyserApplication*>(QApplication::instance())->getSelectedMetodic();
+        m_kard = static_cast<AAnalyserApplication*>(QApplication::instance())->getSelectedPatient();
+        MetodicDefines::MetodicInfo mi = static_cast<AAnalyserApplication*>(QApplication::instance())->getSelectedMetodic();
 //        ui->lblProbeTitle->setText(probeParams().name + " - " + m_kard.fio);
-//        m_trd->newTest(m_kard.uid, mi.uid);
+        m_trd->newTest(m_kard.uid, mi.uid);
 
         // По формату получаем список каналов этого формата, которые передает драйвер, заносим их в список для выбора
         setChannels();
 
         auto chanUid = ui->cbSelectChannel->currentData(ChannelsUtils::ChannelUidRole).toString();
         m_frequency = m_driver->frequency(chanUid);
+
+        ui->wgtAdvChannels->assignDriver(m_driver, m_trd);
+        //! Стабилограмма будет записана всегда
+        ui->wgtAdvChannels->setAllwaysRecordingChannel(ui->cbSelectChannel->currentData(ChannelsUtils::ChannelUidRole).toString());
+        auto val = SettingsProvider::valueFromRegAppCopy("AdvancedChannelsWidget", "SplitterProbePosition").toByteArray();
+        ui->splitter->restoreState(val);
 
         m_driver->start();
 
@@ -195,6 +204,8 @@ void TrenTakePutExecute::getData(DeviceProtocols::DeviceData *data)
 
                 m_marker->setPos(mx - m_marker->boundingRect().width() / 2,
                                  my - m_marker->boundingRect().height() / 2);
+
+                ui->wgtAdvChannels->getData(data);
 
                 //! Положение фигуры, захваченной маркером
                 if (m_elementTake &&
@@ -240,6 +251,11 @@ void TrenTakePutExecute::on_zeroing()
 void TrenTakePutExecute::on_scaleChange(int scaleIdx)
 {
     Q_UNUSED(scaleIdx);
+}
+
+void TrenTakePutExecute::on_advChannelsClicked(bool checked)
+{
+    ui->wgtAdvChannels->setVisible(checked);
 }
 
 void TrenTakePutExecute::setSceneSize(QSize &size)
@@ -429,6 +445,7 @@ void TrenTakePutExecute::setChannels()
             ui->cbSelectChannel->setItemData(ui->cbSelectChannel->count() - 1, i, ChannelsUtils::SubChanNumRole);
         }
     }
+    ui->frSelectChannel->setVisible(listChanUid.size() > 1);
 }
 
 void TrenTakePutExecute::elementsInteraction()

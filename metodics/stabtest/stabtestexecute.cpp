@@ -6,6 +6,7 @@
 #include "stabilogram.h"
 #include "ballistogram.h"
 #include "channelsdefines.h"
+#include "channelsutils.h"
 #include "testresultdata.h"
 #include "baseutils.h"
 #include "aanalyserapplication.h"
@@ -90,8 +91,12 @@ void StabTestExecute::closeEvent(QCloseEvent *event)
 
 void StabTestExecute::start()
 {
+//    m_driver = static_cast<AAnalyserApplication*>(QApplication::instance())->
+//            getDriverByProtocols(QStringList() << DeviceProtocols::uid_StabProtocol);
+    //! Запрашиваем не протокол, а формат канала, тогда будем работать с любыми данными,
+    //! представляющими собой точку в декартовых координатах, а не только стабилограмму
     m_driver = static_cast<AAnalyserApplication*>(QApplication::instance())->
-            getDriverByProtocols(QStringList() << DeviceProtocols::uid_StabProtocol);
+            getDriverByFormats(QStringList() << ChannelsDefines::cfDecartCoordinates);
     if (m_driver)
     {
         m_stabControl = dynamic_cast<DeviceProtocols::StabControl*>(m_driver);
@@ -100,6 +105,8 @@ void StabTestExecute::start()
 
         connect(m_driver, &Driver::sendData, this, &StabTestExecute::getData);
         connect(m_driver, &Driver::communicationError, this, &StabTestExecute::on_communicationError);
+
+        setChannels();
 
         m_kard = static_cast<AAnalyserApplication*>(QApplication::instance())->getSelectedPatient();
         MetodicDefines::MetodicInfo mi = static_cast<AAnalyserApplication*>(QApplication::instance())->getSelectedMetodic();
@@ -110,6 +117,8 @@ void StabTestExecute::start()
         ui->cbScale->setCurrentIndex(m_params.at(m_probe).scale);
 
         ui->wgtAdvChannels->assignDriver(m_driver, m_trd);
+        //! Стабилограмма будет записана всегда
+        ui->wgtAdvChannels->setAllwaysRecordingChannel(ui->cbSelectChannel->currentData(ChannelsUtils::ChannelUidRole).toString());
         auto val = SettingsProvider::valueFromRegAppCopy("AdvancedChannelsWidget", "SplitterProbePosition").toByteArray();
         ui->splitter->restoreState(val);
 
@@ -134,7 +143,10 @@ void StabTestExecute::scaleChange(int scaleId)
 
 void StabTestExecute::getData(DeviceProtocols::DeviceData *data)
 {
-    if (data->uid() == DeviceProtocols::uid_StabDvcData)
+//    if (data->uid() == DeviceProtocols::uid_StabDvcData)
+    //! Выбранный в переключателе канал, а не просто данные.
+    //! Если драйвер будет передавать несколько стабилограмм, то отображать здесь мы будем только одну
+    if (ui->cbSelectChannel->currentData(ChannelsUtils::ChannelUidRole).toString() == data->channelId())
     {
         ui->lblCommunicationError->setVisible(false);
 
@@ -276,6 +288,24 @@ StabTestParams::ProbeParams StabTestExecute::probeParams()
         return m_params.at(m_probe);
     else
         return StabTestParams::ProbeParams();
+}
+
+void StabTestExecute::setChannels()
+{
+    auto listChanUid = m_driver->getChannelsByFormat(ChannelsDefines::cfDecartCoordinates);
+    foreach (auto channelUid, listChanUid)
+    {
+        auto subChanCnt = m_driver->getSubChannelsCount(channelUid);
+
+        for (int i = 0; i < subChanCnt; ++i)
+        {
+            auto name = ChannelsUtils::instance().channelName(channelUid);
+            ui->cbSelectChannel->addItem(name);
+            ui->cbSelectChannel->setItemData(ui->cbSelectChannel->count() - 1, channelUid, ChannelsUtils::ChannelUidRole);
+            ui->cbSelectChannel->setItemData(ui->cbSelectChannel->count() - 1, i, ChannelsUtils::SubChanNumRole);
+        }
+    }
+    ui->frSelectChannel->setVisible(listChanUid.size() > 1);
 }
 
 void StabTestExecute::initRecSignals()

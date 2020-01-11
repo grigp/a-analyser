@@ -149,6 +149,26 @@ void AdvancedChannels::enabledControls(const bool enabled)
     }
 }
 
+void AdvancedChannels::setAllwaysRecordingChannel(const QString &channelId)
+{
+    for (int id = 0; id < m_mdlDrvChan.rowCount(); ++id)
+    {
+        QModelIndex idxDrv = m_mdlDrvChan.index(id, 0);
+        for (int i = 0; i < m_mdlDrvChan.rowCount(idxDrv); ++i)
+        {
+            QModelIndex index = m_mdlDrvChan.index(i, 0, idxDrv);
+            auto chId = index.data(ChannelIdRole).toString();
+            if (chId == channelId)
+            {
+                QVariant var = index.data(WidgetRole);
+                SignalWidget* wgt = var.value<SignalWidget*>();
+                if (wgt)
+                    wgt->setAllwaysRecordingChannel(channelId);
+            }
+        }
+    }
+}
+
 void AdvancedChannels::on_selectIndex(QModelIndex index)
 {
     QObjectList children = ui->frWidgets->children();

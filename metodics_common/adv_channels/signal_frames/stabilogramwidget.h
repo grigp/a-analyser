@@ -50,6 +50,12 @@ public:
      */
     void enabledControls(const bool enabled) override;
 
+    /*!
+     * \brief Устанавливает канал, записываемый всегда
+     * \param channelId - идентификатор канала
+     */
+    void setAllwaysRecordingChannel(const QString &channelId) override;
+
 protected:
     bool eventFilter(QObject *watched, QEvent *event);
 
