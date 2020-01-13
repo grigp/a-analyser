@@ -7,7 +7,8 @@ HEADERS += \
     $$PWD/jumpplatedata.h \
     $$PWD/channeljsondata.h \
     $$PWD/channeldata.h \
-    $$PWD/anysignal.h
+    $$PWD/anysignal.h \
+    $$PWD/trenresultdata.h
 
 SOURCES += \
     $$PWD/signaldata.cpp \
@@ -16,4 +17,5 @@ SOURCES += \
     $$PWD/jumpplatedata.cpp \
     $$PWD/channeljsondata.cpp \
     $$PWD/channeldata.cpp \
-    $$PWD/anysignal.cpp
+    $$PWD/anysignal.cpp \
+    $$PWD/trenresultdata.cpp

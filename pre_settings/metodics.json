@@ -387,7 +387,8 @@
                 },
                 "stage": "take_put",
                 "delay_after_stage": 0,
-                "scale": 1
+                "scale": 1,
+                "time": 120
             }
         },
         {
@@ -528,7 +529,8 @@
                 },
                 "stage": "all_elements",
                 "delay_after_stage": 0,
-                "scale": 1
+                "scale": 1,
+                "time": 120
             }
         },
         {
@@ -661,7 +663,8 @@
                 },
                 "stage": "take_put",
                 "delay_after_stage": 0,
-                "scale": 1
+                "scale": 1,
+                "time": 120
             }
         },
         {
@@ -787,7 +790,8 @@
                 },
                 "stage": "take_put",
                 "delay_after_stage": 0,
-                "scale": 1
+                "scale": 1,
+                "time": 120
             }
         },
         {
@@ -912,7 +916,8 @@
                 },
                 "stage": "all_elements",
                 "delay_after_stage": 500,
-                "scale": 1
+                "scale": 1,
+                "time": 300
             }
         },
         {
@@ -1035,7 +1040,8 @@
                 },
                 "stage": "all_elements",
                 "delay_after_stage": 0,
-                "scale": 1
+                "scale": 1,
+                "time": 300
             }
         },
         {
@@ -1102,7 +1108,8 @@
                 },
                 "stage": "all_elements",
                 "delay_after_stage": 0,
-                "scale": 1
+                "scale": 1,
+                "time": 120
             }
         },
         {
@@ -1170,7 +1177,8 @@
                 },
                 "stage": "all_elements",
                 "delay_after_stage": 0,
-                "scale": 1
+                "scale": 1,
+                "time": 120
             }
         },
         {
@@ -1264,7 +1272,8 @@
                 },
                 "stage": "all_elements",
                 "delay_after_stage": 0,
-                "scale": 1
+                "scale": 1,
+                "time": 120
             }
         },
         {
@@ -1334,7 +1343,8 @@
                 },
                 "stage": "all_elements",
                 "delay_after_stage": 0,
-                "scale": 1
+                "scale": 1,
+                "time": 120
             }
         },
         {
@@ -1407,7 +1417,8 @@
                 },
                 "stage": "all_elements",
                 "delay_after_stage": 500,
-                "scale": 1
+                "scale": 1,
+                "time": 120
             }
         },
         {

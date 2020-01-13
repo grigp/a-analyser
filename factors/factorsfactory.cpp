@@ -7,6 +7,7 @@
 #include "hoppingfactors.h"
 #include "idsfactors.h"
 #include "targetfactors.h"
+#include "trenresultfactors.h"
 
 #include <QTimer>
 #include <QDebug>
@@ -23,6 +24,7 @@ FactorsFactory::FactorsFactory(QObject *parent) : QObject(parent)
         HoppingFactors::registerFactors();
         IDSFactors::registerFactors();
         TargetFactors::registerFactors();
+        TrenResultFactors::registerFactors();
     });
 }
 

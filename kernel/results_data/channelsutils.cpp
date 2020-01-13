@@ -57,12 +57,17 @@ ChannelsUtils::ChannelsUtils()
                                                                     std::make_tuple(QString("Соскакивание на платформу"),
                                                                                     QString("JOP"),
                                                                                     ChannelsDefines::ctHopping))
+                 , std::pair<QString, ChannelsDefines::ChannelInfo>(ChannelsDefines::chanTrenResult,
+                                                                    std::make_tuple(QString("Результаты сеанса тренинга"),
+                                                                                    QString("TrenRes"),
+                                                                                    ChannelsDefines::ctTrenResult))
                  })
     , m_formats({
                   std::pair<QString, QString>(ChannelsDefines::ctStabilogram, ChannelsDefines::cfDecartCoordinates)
                 , std::pair<QString, QString>(ChannelsDefines::ctBallistogram, ChannelsDefines::cfSinglePositive)
                 , std::pair<QString, QString>(ChannelsDefines::ctJumpHeight, ChannelsDefines::cfNoSignal)
                 , std::pair<QString, QString>(ChannelsDefines::ctHopping, ChannelsDefines::cfNoSignal)
+                , std::pair<QString, QString>(ChannelsDefines::ctTrenResult, ChannelsDefines::cfNoSignal)
                 })
 {
 

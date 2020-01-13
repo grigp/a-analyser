@@ -23,6 +23,7 @@ static QString cfNoSignal = "{90e313c6-8805-4235-8981-1fb85d7aea5f}";          /
  static QString ctBallistogram = "{98CA38D2-8423-4AE5-9AF3-A47AA58F2616}";
  static QString ctJumpHeight = "{828DC7F7-2E70-4912-9ED5-03AA5A8BE729}";
  static QString ctHopping = "{77A6BE07-5937-4A8A-8521-08D6C379BDD8}";
+ static QString ctTrenResult = "{1FC8CB00-550E-4DF2-B6A3-7758B3867278}";
 
 
 /*!
@@ -36,6 +37,7 @@ static QString cfNoSignal = "{90e313c6-8805-4235-8981-1fb85d7aea5f}";          /
  static QString chanMyo = "{E4342137-B1BF-4F68-BC17-2C337b97A642}";
  static QString chanPulse = "{84736B99-7F4B-494A-9958-D6F908E07C32}";
 
+ static QString chanTrenResult = "{BE102815-C928-4120-919E-4BB21A25EB34}";
 
 /*!
  * \brief Структура информации о канале ChannelInfo struct

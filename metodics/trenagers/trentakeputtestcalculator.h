@@ -25,6 +25,13 @@ public:
      */
     void fastCalculate() override;
 
+    int factorsCount() const {return m_factors.size();}
+
+    FactorsDefines::FactorValue factor(const int idx) const;
+
+private:
+    QList<FactorsDefines::FactorValue> m_factors;
+
 };
 
 

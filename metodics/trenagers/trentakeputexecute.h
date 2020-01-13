@@ -71,6 +71,7 @@ private slots:
     void on_selectChannel(int chanIdx);
     void on_zeroing();
     void on_scaleChange(int scaleIdx);
+    void on_recording();
 
     void on_advChannelsClicked(bool checked);
 
@@ -192,10 +193,16 @@ private:
 
     void showFactors();
 
+    void finishTest();
+
     QGraphicsScene* m_scene {nullptr};
     double m_prop = 1;   ///< Пропорция для пересчера базовой сцены 2000 x 2000 в реальные размеры игровой сцены
     double m_propX = 1;
     double m_propY = 1;
+
+    bool m_isRecording {false};     ///< Протекает ли запись данных
+    int m_recCount {0};             ///< Счетчик пакетов данных в пробе
+    int m_recLength {0};            ///< Длительность записи
 
     TrenTakePutDefines::MarkerElement *m_marker {nullptr};
     QJsonObject m_markerObj;

@@ -9,6 +9,8 @@
 #include "trentakeputpatientwindow.h"
 #include "settingsprovider.h"
 #include "testresultdata.h"
+#include "trenresultdata.h"
+#include "trenresultfactors.h"
 
 #include <QTimer>
 #include <QMessageBox>
@@ -104,6 +106,10 @@ void TrenTakePutExecute::setParams(const QJsonObject &params)
 
     auto scale = params["scale"].toInt();
     ui->cbScale->setCurrentIndex(scale);
+
+    m_recLength = params["time"].toInt();
+    auto sRL = BaseUtils::getTimeBySecCount(m_recLength);
+    ui->lblRecLenTitle->setText(QString(tr("Длительность записи") + " %1 " + tr("мин:сек")).arg(sRL));
 
     auto objSS = params["sounds"].toObject();
     m_soundSheme.ok = objSS["ok"].toString();
@@ -220,6 +226,16 @@ void TrenTakePutExecute::getData(DeviceProtocols::DeviceData *data)
                 //! Взаимодействие элементов
                 elementsInteraction();
 
+                if (m_isRecording)
+                {
+                    ++m_recCount;
+                    ui->wgtAdvChannels->record(data);
+                    ui->lblRecLen->setText(BaseUtils::getTimeBySecCount(m_recCount / m_frequency));
+                    ui->pbRec->setValue(100 * m_recCount / (m_recLength * m_frequency));
+                    if (m_recCount >= m_recLength * m_frequency)
+                        finishTest();
+                }
+
                 m_scene->update(m_scene->sceneRect());
             }
         }
@@ -251,6 +267,36 @@ void TrenTakePutExecute::on_zeroing()
 void TrenTakePutExecute::on_scaleChange(int scaleIdx)
 {
     Q_UNUSED(scaleIdx);
+}
+
+void TrenTakePutExecute::on_recording()
+{
+    m_isRecording = ! m_isRecording;
+
+    ui->pbRec->setValue(0);
+    ui->lblRecLen->setText("00:00");
+
+    ui->btnZeroing->setEnabled(!m_isRecording);
+    ui->frScale->setEnabled(!m_isRecording);
+    ui->wgtAdvChannels->enabledControls(!m_isRecording);
+
+    if (m_isRecording)
+    {
+        ui->btnRecord->setIcon(QIcon(":/images/SaveNO.png"));
+        ui->btnRecord->setText(tr("Прервать"));
+
+        MetodicDefines::MetodicInfo mi = static_cast<AAnalyserApplication*>(QApplication::instance())->getSelectedMetodic();
+        m_trd->newProbe(mi.name);
+        ui->wgtAdvChannels->newProbe();
+    }
+    else
+    {
+        ui->btnRecord->setIcon(QIcon(":/images/Save.png"));
+        ui->btnRecord->setText(tr("Запись"));
+
+        ui->wgtAdvChannels->abortProbe();
+    }
+    m_recCount = 0;
 }
 
 void TrenTakePutExecute::on_advChannelsClicked(bool checked)
@@ -1224,4 +1270,17 @@ void TrenTakePutExecute::showFactors()
         m_patientWindow->setScore(score);
         m_patientWindow->setErrors(errors);
     }
+}
+
+void TrenTakePutExecute::finishTest()
+{
+    auto trenRes = new TrenResultData(ChannelsDefines::chanTrenResult);
+    trenRes->addFactor(TrenResultFactorsDefines::ScoreUid, m_score);
+    trenRes->addFactor(TrenResultFactorsDefines::FaultsUid, m_errorsCount);
+    m_trd->addChannel(trenRes);
+
+    hidePatientWindow();
+    m_isRecording = false;
+    m_trd->saveTest();
+    static_cast<ExecuteWidget*>(parent())->showDB();
 }
