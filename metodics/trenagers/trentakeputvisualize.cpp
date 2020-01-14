@@ -1,7 +1,9 @@
 #include "trentakeputvisualize.h"
 #include "ui_trentakeputvisualize.h"
 
+#include "aanalyserapplication.h"
 #include "trentakeputtestcalculator.h"
+#include "factorsfactory.h"
 
 TrenTakePutVisualize::TrenTakePutVisualize(QWidget *parent) :
     QWidget(parent),
@@ -24,10 +26,19 @@ void TrenTakePutVisualize::setTest(const QString &testUid)
 
     m_calculator->calculate();
 
-    if (m_calculator->factorsCount() >= 2)
+    auto model = new QStandardItemModel(ui->tvFactorsTrenResult);
+    for (int i = 0; i < m_calculator->factorsCount(); ++i)
     {
-        ui->lblScore->setText(QString::number(m_calculator->factor(0).value()));
-        ui->lblFaults->setText(QString::number(m_calculator->factor(1).value()));
-    }
+        auto factorUid = m_calculator->factor(i).uid();
+        auto fi = static_cast<AAnalyserApplication*>(QApplication::instance())->getFactorInfo(factorUid);
+        auto itemName = new QStandardItem(fi.name());
+        itemName->setEditable(false);
+        auto itemValue = new QStandardItem(QString::number(m_calculator->factor(i).value()));
+        itemValue->setEditable(false);
 
+        model->appendRow(QList<QStandardItem*>() << itemName << itemValue);
+    }
+    model->setHorizontalHeaderLabels(QStringList() << tr("Показатель") << tr("Значение"));
+    ui->tvFactorsTrenResult->setModel(model);
+    ui->tvFactorsTrenResult->header()->setSectionResizeMode(QHeaderView::ResizeToContents);
 }

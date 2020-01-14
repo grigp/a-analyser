@@ -195,6 +195,8 @@ private:
 
     void finishTest();
 
+    void doneDriver();
+
     QGraphicsScene* m_scene {nullptr};
     double m_prop = 1;   ///< Пропорция для пересчера базовой сцены 2000 x 2000 в реальные размеры игровой сцены
     double m_propX = 1;

@@ -71,6 +71,11 @@ QTreeView
     color: rgb(32,88,103);
 }
 
+QTreeView#tvFactorsTrenResult
+{
+    font-size: 20pt;
+}
+
 QHeaderView::section
 {
     background-color: qlineargradient(x1:0, y1:0, x2:0, y2:1,

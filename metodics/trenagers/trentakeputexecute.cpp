@@ -127,11 +127,7 @@ void TrenTakePutExecute::closeEvent(QCloseEvent *event)
 
     //! Переехало из деструктора. Подозрение на нерегулярный сбой.
     //! Но для срабатывания необходимо перед delete вызывать close();
-    if (m_driver)
-    {
-        m_driver->stop();
-        m_driver->deleteLater();
-    }
+    doneDriver();
     QWidget::closeEvent(event);
 }
 
@@ -233,7 +229,10 @@ void TrenTakePutExecute::getData(DeviceProtocols::DeviceData *data)
                     ui->lblRecLen->setText(BaseUtils::getTimeBySecCount(m_recCount / m_frequency));
                     ui->pbRec->setValue(100 * m_recCount / (m_recLength * m_frequency));
                     if (m_recCount >= m_recLength * m_frequency)
+                    {
                         finishTest();
+                        return;
+                    }
                 }
 
                 m_scene->update(m_scene->sceneRect());
@@ -1274,13 +1273,24 @@ void TrenTakePutExecute::showFactors()
 
 void TrenTakePutExecute::finishTest()
 {
+    m_isClosed = true;
+    doneDriver();
     auto trenRes = new TrenResultData(ChannelsDefines::chanTrenResult);
     trenRes->addFactor(TrenResultFactorsDefines::ScoreUid, m_score);
     trenRes->addFactor(TrenResultFactorsDefines::FaultsUid, m_errorsCount);
     m_trd->addChannel(trenRes);
 
-    hidePatientWindow();
+//    hidePatientWindow();
     m_isRecording = false;
     m_trd->saveTest();
     static_cast<ExecuteWidget*>(parent())->showDB();
+}
+
+void TrenTakePutExecute::doneDriver()
+{
+    if (m_driver)
+    {
+        m_driver->stop();
+        m_driver->deleteLater();
+    }
 }
