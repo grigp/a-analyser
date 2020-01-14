@@ -115,6 +115,7 @@ void ResultsWidget::closeTest()
     if (m_wgtResult)
         delete m_wgtResult;
     m_wgtResult = nullptr;
+    m_selectedRow = -1;
     ui->wgtNoTest->setVisible(!m_wgtResult);
 }
 
