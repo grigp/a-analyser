@@ -1041,7 +1041,7 @@
                 "stage": "all_elements",
                 "delay_after_stage": 0,
                 "scale": 1,
-                "time": 300
+                "time": 120
             }
         },
         {

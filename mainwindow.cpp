@@ -9,6 +9,7 @@
 #include "settingsprovider.h"
 #include "databasepropertydialog.h"
 #include "dataprovider.h"
+#include "aanalysersettings.h"
 
 #include <QFile>
 #include <QCloseEvent>
@@ -30,6 +31,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
     auto val = SettingsProvider::valueFromRegAppCopy("MainWindow", "Geometry").toByteArray();
     restoreGeometry(val);
+
+    connect(ui->acSettings, &QAction::triggered, this, &MainWindow::onSettings);
 }
 
 MainWindow::~MainWindow()
@@ -95,6 +98,12 @@ void MainWindow::closeEvent(QCloseEvent *event)
 void MainWindow::onDeviceControl()
 {
     DeviceControlDialog dlg(this);
+    dlg.exec();
+}
+
+void MainWindow::onSettings()
+{
+    AAnalyserSettings dlg(this);
     dlg.exec();
 }
 
@@ -199,6 +208,7 @@ void MainWindow::initMenu()
 
     QMenu *menuSettings = menuBar()->addMenu(tr("Настройки"));
     menuSettings->addAction(ui->acDeviceControl);
+    menuSettings->addAction(ui->acSettings);
 }
 
 QMenu *MainWindow::initDatabaseClearMenu()

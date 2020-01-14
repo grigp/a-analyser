@@ -49,15 +49,18 @@ SOURCES += \
         main.cpp \
         mainwindow.cpp \
     aanalyserapplication.cpp \
-    settingsprovider.cpp
+    settingsprovider.cpp \
+    aanalysersettings.cpp
 
 HEADERS += \
         mainwindow.h \
     aanalyserapplication.h \
-    settingsprovider.h
+    settingsprovider.h \
+    aanalysersettings.h
 
 FORMS += \
-        mainwindow.ui
+        mainwindow.ui \
+    aanalysersettings.ui
 
 RESOURCES += \
     kernel.qrc
