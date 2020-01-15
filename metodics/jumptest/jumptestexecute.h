@@ -11,7 +11,7 @@ namespace Ui {
 class JumpTestExecute;
 }
 
-class JumpHeightData;
+class JumpHeightSingleData;
 class HoppingData;
 
 /*!
@@ -73,7 +73,7 @@ private:
     int m_timerScenFailure {-1}; ///< id таймера срыва сценария
     int m_scenFailureStage {-1}; ///< Этап, на котором был запущен таймер
 
-    JumpHeightData *m_jhd;
+    JumpHeightSingleData *m_jhd;
     HoppingData *m_hd;
 };
 

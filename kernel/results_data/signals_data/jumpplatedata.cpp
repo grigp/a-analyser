@@ -2,24 +2,24 @@
 
 
 
-JumpHeightData::JumpHeightData(const QString &chanId)
+JumpHeightSingleData::JumpHeightSingleData(const QString &chanId)
     : ChannelJsonData(chanId)
 {
 
 }
 
-JumpHeightData::JumpHeightData(const QByteArray &data)
+JumpHeightSingleData::JumpHeightSingleData(const QByteArray &data)
     : ChannelJsonData()
 {
     fromByteArray(data);
 }
 
-double JumpHeightData::height() const
+double JumpHeightSingleData::height() const
 {
     return data()["jump_height"].toDouble();
 }
 
-void JumpHeightData::setHeight(const double height)
+void JumpHeightSingleData::setHeight(const double height)
 {
     QJsonObject obj = data();
     obj["jump_height"] = height;

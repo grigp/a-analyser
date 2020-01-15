@@ -1,11 +1,11 @@
-#ifndef JUMPHEIGHTFACTORS_H
-#define JUMPHEIGHTFACTORS_H
+#ifndef JUMPHEIGHTSINGLEFACTORS_H
+#define JUMPHEIGHTSINGLEFACTORS_H
 
 #include <QObject>
 
 #include "multifactor.h"
 
-namespace JumpHeightFactorsDefines
+namespace JumpHeightSingleFactorsDefines
 {
 static const QString GroupUid = "{0F0CAD79-7A47-469D-819F-34A48FCBCD82}";
 static const QString JumpHeightUid = "{6A7E2237-49BE-4DF3-AE32-8E32E82208D3}";
@@ -15,13 +15,13 @@ static const QString JumpHeightUid = "{6A7E2237-49BE-4DF3-AE32-8E32E82208D3}";
 /*!
  * \brief Класс показателей высоты прыжка JumpHeightFactors class
  */
-class JumpHeightFactors : public ChannelMultifactor
+class JumpHeightSingleFactors : public ChannelMultifactor
 {
 public:
-    explicit JumpHeightFactors(const QString &testUid,
-                               const QString &probeUid,
-                               const QString &channelId,
-                               QObject *parent = nullptr);
+    explicit JumpHeightSingleFactors(const QString &testUid,
+                                     const QString &probeUid,
+                                     const QString &channelId,
+                                     QObject *parent = nullptr);
 
     /*! \brief Возвращает true, если показатели можно рассчитать для теста с заданным uid
     * uid теста задается в конструкторе
@@ -50,4 +50,4 @@ private:
    double m_height {0};   ///< Высота прыжка
 };
 
-#endif // JUMPHEIGHTFACTORS_H
+#endif // JUMPHEIGHTSINGLEFACTORS_H

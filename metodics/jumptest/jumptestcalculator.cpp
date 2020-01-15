@@ -4,7 +4,7 @@
 #include "dataprovider.h"
 #include "channelsutils.h"
 
-#include "jumpheightfactors.h"
+#include "jumpheightsinglefactors.h"
 #include "hoppingfactors.h"
 
 #include <QDebug>
@@ -32,9 +32,9 @@ void JumpTestCalculator::calculate()
                 if (DataProvider::channelExists(pi.uid, ChannelsDefines::chanJumpHeight))
                 {
                     m_methodic = JumpTestDefines::MetJumpHeight;
-                    auto fct = new JumpHeightFactors(testUid(), pi.uid, ChannelsDefines::chanJumpHeight);
-                    addPrimaryFactor(testUid(), JumpHeightFactorsDefines::JumpHeightUid,
-                                     fct->factorValue(JumpHeightFactorsDefines::JumpHeightUid),
+                    auto fct = new JumpHeightSingleFactors(testUid(), pi.uid, ChannelsDefines::chanJumpHeight);
+                    addPrimaryFactor(testUid(), JumpHeightSingleFactorsDefines::JumpHeightUid,
+                                     fct->factorValue(JumpHeightSingleFactorsDefines::JumpHeightUid),
                                      0, ChannelsDefines::chanJumpHeight, pi.name);
                     delete fct;
                 }

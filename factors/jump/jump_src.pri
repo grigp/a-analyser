@@ -2,11 +2,11 @@ INCLUDEPATH += $$PWD
 
 HEADERS += \
     $$PWD/hoppingfactors.h \
-    $$PWD/jumpheightfactors.h
+    $$PWD/jumpheightsinglefactors.h
 
 SOURCES += \
     $$PWD/hoppingfactors.cpp \
-    $$PWD/jumpheightfactors.cpp
+    $$PWD/jumpheightsinglefactors.cpp
 
 FORMS += \
 

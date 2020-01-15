@@ -8,17 +8,17 @@
 #include "channeljsondata.h"
 
 /*!
- * \brief Класс для записи в БД данные о высоте прыжка JumpHeightData class
+ * \brief Класс для записи в БД данные о высоте одиночного прыжка JumpHeightSingleData class
  */
-class JumpHeightData : public ChannelJsonData
+class JumpHeightSingleData : public ChannelJsonData
 {
 public:
-    JumpHeightData(const QString &chanId);
+    JumpHeightSingleData(const QString &chanId);
     /*!
      * \brief Создает на основе массива байт
      * \param data - сигнал в виде массива байт
      */
-    explicit JumpHeightData(const QByteArray &data);
+    explicit JumpHeightSingleData(const QByteArray &data);
 
     double height() const;
     void setHeight(const double height);

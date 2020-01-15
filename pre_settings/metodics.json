@@ -267,7 +267,7 @@
         },
         {
             "uid": "{ACFA62A1-7F52-477E-B9C9-A7FF14B3E098}",
-            "name": "Анализ высоты прыжка",
+            "name": "Анализ высоты одиночного прыжка",
             "template": "met_jumptest_uid",
             "build_norms": false,
             "params":
@@ -277,7 +277,7 @@
         },
         {
             "uid": "{6855943F-E7C1-477E-B68E-EBC7DAE30E2B}",
-            "name": "Анализ соскакивания",
+            "name": "Дроп - тест одиночный",
             "template": "met_jumptest_uid",
             "build_norms": false,
             "params":
