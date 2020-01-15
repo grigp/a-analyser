@@ -286,6 +286,34 @@
             }
         },
         {
+            "uid": "{8ABFB226-D4AC-486D-97C3-201F5E598531}",
+            "name": "Анализ высоты серии прыжков",
+            "template": "met_jumpheighttest_uid",
+            "build_norms": false,
+            "params":
+            {
+                "finish_kind": "quantity",
+                "jumps_count": 20,
+                "time": 60,
+                "strategy": "height",
+                "min_contact_time": 200
+            }
+        },
+        {
+            "uid": "{11F009F2-F39F-4037-84D7-5EA3C79E6F5F}",
+            "name": "Полиметрический тест",
+            "template": "met_jumpheighttest_uid",
+            "build_norms": false,
+            "params":
+            {
+                "finish_kind": "fixed_time",
+                "jumps_count": 20,
+                "time": 60,
+                "strategy": "min_contact_time",
+                "contact_time_bound": 200
+            }
+        },
+        {
             "uid": "{CFCCCAA0-A520-49EF-9C04-EB57580E8CAD}",
             "name": "Тренажер \"Мячики\"",
             "template": "met_trentakeput_uid",
