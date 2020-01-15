@@ -266,7 +266,7 @@ void JumpPlate::assignByteFromDevice(quint8 b)
             {
                 incBlockCount();
 
-                auto data = new DeviceProtocols::JumpPlateBlockData(this, ChannelsDefines::chanJumpHeight, blockCount(),
+                auto data = new DeviceProtocols::JumpPlateBlockData(this, ChannelsDefines::chanJumpSingleHeight, blockCount(),
                                                                     m_busyPlate1, m_counterPlate1, m_conPlate1,
                                                                     m_busyPlate2, m_counterPlate2, m_conPlate2);
                 emit sendData(data);
@@ -276,7 +276,7 @@ void JumpPlate::assignByteFromDevice(quint8 b)
                 if (m_busyPlate1 != m_flagPlate1)
                 {
                     m_busyPlate1 = m_flagPlate1;
-                    auto data = new DeviceProtocols::JumpPlateDvcData(this, ChannelsDefines::chanJumpHeight,
+                    auto data = new DeviceProtocols::JumpPlateDvcData(this, ChannelsDefines::chanJumpSingleHeight,
                                                                       1, m_busyPlate1, m_timePlate1);
                     emit sendData(data);
                     delete data;
@@ -285,7 +285,7 @@ void JumpPlate::assignByteFromDevice(quint8 b)
                 if (m_busyPlate2 != m_flagPlate2)
                 {
                     m_busyPlate2 = m_flagPlate2;
-                    auto data = new DeviceProtocols::JumpPlateDvcData(this, ChannelsDefines::chanJumpHeight,
+                    auto data = new DeviceProtocols::JumpPlateDvcData(this, ChannelsDefines::chanJumpSingleHeight,
                                                                       2, m_busyPlate2, m_timePlate2);
                     emit sendData(data);
                     delete data;

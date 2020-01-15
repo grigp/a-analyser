@@ -21,7 +21,8 @@ static QString cfNoSignal = "{90e313c6-8805-4235-8981-1fb85d7aea5f}";          /
  */
  static QString ctStabilogram = "{1F7A5F8A-FC64-44E2-B2D2-5245D02ED2CA}";
  static QString ctBallistogram = "{98CA38D2-8423-4AE5-9AF3-A47AA58F2616}";
- static QString ctJumpHeight = "{828DC7F7-2E70-4912-9ED5-03AA5A8BE729}";
+ static QString ctJumpSingleHeight = "{828DC7F7-2E70-4912-9ED5-03AA5A8BE729}";
+ static QString ctJumpHeight = "{53BD9EE2-BB3F-4D3E-BD7F-719D7F73155D}";
  static QString ctHopping = "{77A6BE07-5937-4A8A-8521-08D6C379BDD8}";
  static QString ctTrenResult = "{1FC8CB00-550E-4DF2-B6A3-7758B3867278}";
 
@@ -31,7 +32,8 @@ static QString cfNoSignal = "{90e313c6-8805-4235-8981-1fb85d7aea5f}";          /
  */
  static QString chanStab = "{61E814F9-CE64-46F6-B158-46961964BEE9}";
  static QString chanZ = "{41280317-450F-4CF7-B3D9-15E2D0B87469}";
- static QString chanJumpHeight = "{EF9DF092-7FE0-4F74-9EA6-8BA3318AA91C}";
+ static QString chanJumpSingleHeight = "{EF9DF092-7FE0-4F74-9EA6-8BA3318AA91C}";
+ static QString chanJumpHeight = "{8FE3810D-2A66-4A2E-8921-8E089E577B6E}";
  static QString chanHopping = "{EF4AD6ED-2D10-497A-AB8D-945CF6C0645E}";
 
  static QString chanMyo = "{E4342137-B1BF-4F68-BC17-2C337b97A642}";

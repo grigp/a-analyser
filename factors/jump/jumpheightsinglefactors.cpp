@@ -26,15 +26,15 @@ bool JumpHeightSingleFactors::isValid(const QString &testUid, const QString &pro
 {
     Q_UNUSED(testUid);
     return DataProvider::channelExists(probeUid, channelId) &&
-           ChannelsUtils::instance().channelType(channelId) == ChannelsDefines::ctJumpHeight;
+           ChannelsUtils::instance().channelType(channelId) == ChannelsDefines::ctJumpSingleHeight;
 }
 
 void JumpHeightSingleFactors::calculate()
 {
-    QByteArray baStab;
-    if (DataProvider::getChannel(probeUid(), channelId(), baStab))
+    QByteArray baData;
+    if (DataProvider::getChannel(probeUid(), channelId(), baData))
     {
-        JumpHeightSingleData data(baStab);
+        JumpHeightSingleData data(baData);
         m_height = data.height();
     }
 
@@ -44,7 +44,7 @@ void JumpHeightSingleFactors::calculate()
 void JumpHeightSingleFactors::registerFactors()
 {
     static_cast<AAnalyserApplication*>(QApplication::instance())->
-            registerGroup(JumpHeightSingleFactorsDefines::GroupUid, tr("Показатели высоты прыжка"));
+            registerGroup(JumpHeightSingleFactorsDefines::GroupUid, tr("Показатели высоты одиночного прыжка"));
 
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(JumpHeightSingleFactorsDefines::JumpHeightUid, JumpHeightSingleFactorsDefines::GroupUid,

@@ -6,6 +6,9 @@
 namespace SignalsDefines
 {
 
+/*!
+ * \brief Запись в канале стабилограммы StabRec struct
+ */
 struct StabRec
 {
     double x;
@@ -16,6 +19,17 @@ struct StabRec
         , y(std::get<1>(params))
     {}
 };
+
+/*!
+ * \brief Данные о прыжке JumpRec struct
+ */
+struct JumpRec
+{
+    double height;          ///< Высота
+    double timeContact;     ///< Время контакта
+    JumpRec() {}
+};
+
 
 }
 

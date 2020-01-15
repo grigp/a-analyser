@@ -200,7 +200,7 @@ void JumpTestExecute::saveResult()
     if (m_methodic == JumpTestDefines::MetJumpHeight)
     {
         m_trd.newProbe(tr("Анализ высоты прыжка"));
-        auto *data = new JumpHeightSingleData(ChannelsDefines::chanJumpHeight);
+        auto *data = new JumpHeightSingleData(ChannelsDefines::chanJumpSingleHeight);
         data->setHeight((m_plt1HeightRes + m_plt2HeightRes) / 2);
         m_trd.addChannel(data);
     }

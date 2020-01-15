@@ -49,8 +49,12 @@ ChannelsUtils::ChannelsUtils()
                                                                   std::make_tuple(QString("Баллистограмма"),
                                                                                   QString("Z"),
                                                                                   ChannelsDefines::ctBallistogram))
+                 , std::pair<QString, ChannelsDefines::ChannelInfo>(ChannelsDefines::chanJumpSingleHeight,
+                                                                    std::make_tuple(QString("Высота одиночного прыжка"),
+                                                                                    QString("H"),
+                                                                                    ChannelsDefines::ctJumpSingleHeight))
                  , std::pair<QString, ChannelsDefines::ChannelInfo>(ChannelsDefines::chanJumpHeight,
-                                                                    std::make_tuple(QString("Высота прыжка"),
+                                                                    std::make_tuple(QString("Высота прыжков"),
                                                                                     QString("H"),
                                                                                     ChannelsDefines::ctJumpHeight))
                  , std::pair<QString, ChannelsDefines::ChannelInfo>(ChannelsDefines::chanHopping,
@@ -65,6 +69,7 @@ ChannelsUtils::ChannelsUtils()
     , m_formats({
                   std::pair<QString, QString>(ChannelsDefines::ctStabilogram, ChannelsDefines::cfDecartCoordinates)
                 , std::pair<QString, QString>(ChannelsDefines::ctBallistogram, ChannelsDefines::cfSinglePositive)
+                , std::pair<QString, QString>(ChannelsDefines::ctJumpSingleHeight, ChannelsDefines::cfNoSignal)
                 , std::pair<QString, QString>(ChannelsDefines::ctJumpHeight, ChannelsDefines::cfNoSignal)
                 , std::pair<QString, QString>(ChannelsDefines::ctHopping, ChannelsDefines::cfNoSignal)
                 , std::pair<QString, QString>(ChannelsDefines::ctTrenResult, ChannelsDefines::cfNoSignal)

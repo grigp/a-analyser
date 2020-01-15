@@ -29,13 +29,13 @@ void JumpTestCalculator::calculate()
             DataDefines::ProbeInfo pi;
             if (DataProvider::getProbeInfo(ti.probes.at(i), pi))
             {
-                if (DataProvider::channelExists(pi.uid, ChannelsDefines::chanJumpHeight))
+                if (DataProvider::channelExists(pi.uid, ChannelsDefines::chanJumpSingleHeight))
                 {
                     m_methodic = JumpTestDefines::MetJumpHeight;
-                    auto fct = new JumpHeightSingleFactors(testUid(), pi.uid, ChannelsDefines::chanJumpHeight);
+                    auto fct = new JumpHeightSingleFactors(testUid(), pi.uid, ChannelsDefines::chanJumpSingleHeight);
                     addPrimaryFactor(testUid(), JumpHeightSingleFactorsDefines::JumpHeightUid,
                                      fct->factorValue(JumpHeightSingleFactorsDefines::JumpHeightUid),
-                                     0, ChannelsDefines::chanJumpHeight, pi.name);
+                                     0, ChannelsDefines::chanJumpSingleHeight, pi.name);
                     delete fct;
                 }
                 else
