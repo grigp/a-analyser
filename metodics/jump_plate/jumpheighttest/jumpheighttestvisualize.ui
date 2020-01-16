@@ -1,21 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <author/>
- <comment/>
- <exportmacro/>
  <class>JumpHeightTestVisualize</class>
  <widget class="QWidget" name="JumpHeightTestVisualize">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>300</height>
+    <width>609</width>
+    <height>435</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QLabel" name="lblJumpsCount">
+     <property name="text">
+      <string>Количество прыжков</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLabel" name="lblTimeTest">
+     <property name="text">
+      <string>Общее время прыжков</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLabel" name="lblHeightAvg">
+     <property name="text">
+      <string>Средняя высота прыжков</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLabel" name="lblTimeAvg">
+     <property name="text">
+      <string>Среднее время на платформе</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QTreeView" name="tvJumps"/>
+   </item>
+  </layout>
  </widget>
- <pixmapfunction/>
+ <resources/>
  <connections/>
 </ui>

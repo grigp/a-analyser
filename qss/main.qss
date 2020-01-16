@@ -59,6 +59,21 @@ QLabel#lblMassa
     font-size: 24pt;
 }
 
+QLabel#lblCommentFinishTest,
+QLabel#lblCommentStrategy,
+QLabel#lblCommentStateOnPlate
+{
+    font-size: 18pt;
+}
+
+QLabel#lblJumpsCount,
+QLabel#lblTimeTest,
+QLabel#lblHeightAvg,
+QLabel#lblTimeAvg
+{
+    font-size: 16pt;
+}
+
 QComboBox
 {
     font-size: 11pt;
@@ -74,6 +89,11 @@ QTreeView
 QTreeView#tvFactorsTrenResult
 {
     font-size: 20pt;
+}
+
+QTreeView#tvJumps
+{
+    font-size: 16pt;
 }
 
 QHeaderView::section
