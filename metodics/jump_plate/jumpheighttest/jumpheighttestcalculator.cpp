@@ -65,10 +65,12 @@ int JumpHeightTestCalculator::jumpsCount() const
 {
     if (m_factors)
         return m_factors->jumpsCount();
+    return 0;
 }
 
 SignalsDefines::JumpRec JumpHeightTestCalculator::jump(const int idx) const
 {
     if (m_factors)
         return m_factors->jump(idx);
+    return SignalsDefines::JumpRec();
 }

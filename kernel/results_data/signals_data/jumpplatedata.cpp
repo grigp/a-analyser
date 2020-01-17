@@ -123,3 +123,73 @@ void JumpHeightData::addJump(const double height, const double timeContact)
     obj["jumps"] = arr;
     setData(obj);
 }
+
+TeppingTestData::TeppingTestData(const QString &chanId)
+    : ChannelJsonData(chanId)
+{
+
+}
+
+TeppingTestData::TeppingTestData(const QByteArray &data)
+    : ChannelJsonData()
+{
+    fromByteArray(data);
+}
+
+double TeppingTestData::time() const
+{
+    return data()["time_test"].toDouble();
+}
+
+void TeppingTestData::setTime(const double time)
+{
+    QJsonObject obj = data();
+    obj["time_test"] = time;
+    setData(obj);
+}
+
+int TeppingTestData::stepsCount(const BaseUtils::Side side) const
+{
+    QString sPar = "left_leg";
+    if (side == BaseUtils::Right)
+        sPar = "right_leg";
+
+    auto arr = data()[sPar].toArray();
+    return arr.size();
+}
+
+SignalsDefines::TeppingStepRec TeppingTestData::step(const BaseUtils::Side side, const int idx) const
+{
+    QString sPar = "left_leg";
+    if (side == BaseUtils::Right)
+        sPar = "right_leg";
+
+    auto arr = data()[sPar].toArray();
+    for (int i = 0; i < arr.size(); ++i)
+        if (i == idx)
+        {
+            auto obj = arr.at(i).toObject();
+            SignalsDefines::TeppingStepRec tsr;
+            tsr.timeContact = obj["time_contact"].toDouble();
+            return tsr;
+        }
+
+    return SignalsDefines::TeppingStepRec();
+}
+
+void TeppingTestData::addStep(const BaseUtils::Side side, const double timeContact)
+{
+    QString sPar = "left_leg";
+    if (side == BaseUtils::Right)
+        sPar = "right_leg";
+
+    QJsonObject obj = data();
+    auto arr = obj[sPar].toArray();
+
+    QJsonObject objStep;
+    objStep["time_contact"] = timeContact;
+    arr.append(objStep);
+
+    obj[sPar] = arr;
+    setData(obj);
+}

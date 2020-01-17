@@ -7,6 +7,7 @@
 
 #include "channeljsondata.h"
 #include "signalsdefines.h"
+#include "baseutils.h"
 
 /*!
  * \brief Класс для записи в БД данных о высоте одиночного прыжка JumpHeightSingleData class
@@ -85,4 +86,52 @@ public:
 
  */
 };
+
+
+/*!
+ * \brief Класс для записи в БД данных о результатах теппинг теста TeppingTestData class
+ */
+class TeppingTestData : public ChannelJsonData
+{
+public:
+    TeppingTestData(const QString &chanId);
+
+    /*!
+     * \brief Создает на основе массива байт
+     * \param data - сигнал в виде массива байт
+     */
+    explicit TeppingTestData(const QByteArray &data);
+
+    double time() const;
+    void setTime(const double time);
+
+    int stepsCount(const BaseUtils::Side side) const;
+    SignalsDefines::TeppingStepRec step(const BaseUtils::Side side, const int idx) const;
+
+    void addStep(const BaseUtils::Side side, const double timeContact);
+
+/*
+    Формат канала в json:
+
+    {
+        "time_test": 100.23, // Время теста в секундах. Если задано кол-во шагов, время может быть не целым
+        "left_leg": [           // Массив шагов для левой ноги
+            {
+                "time_contact": 0.123  // Время контакта с платформой (сек)
+            },
+            ...
+        ],
+        "right_leg": [          // Массив шагов для правой ноги
+            {
+                "time_contact": 0.132  // Время контакта с платформой (сек)
+            },
+            ...
+        ]
+    }
+    КОЛ-ВО ШАГОВ ДЛЯ НОГ МОЖЕТ БЫТЬ РАЗНЫМ !!!
+
+ */
+};
+
+
 #endif // JUMPPLATEDATA_H

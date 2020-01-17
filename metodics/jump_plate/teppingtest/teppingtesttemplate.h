@@ -1,18 +1,18 @@
-#ifndef JUMPHEIGHTTESTTEMPLATE_H
-#define JUMPHEIGHTTESTTEMPLATE_H
+#ifndef TEPPINGTESTTEMPLATE_H
+#define TEPPINGTESTTEMPLATE_H
 
 #include <QObject>
 
 #include "metodictemplate.h"
 
 /*!
- * \brief Шаблон методики измерения высоты серии прыжков JumpHeightTestTemplate class
+ * \brief Шаблон методики теппинг - теста JumpHeightTestTemplate class
  */
-class JumpHeightTestTemplate : public MetodicTemplate
+class TeppingTestTemplate : public MetodicTemplate
 {
     Q_OBJECT
 public:
-    explicit JumpHeightTestTemplate(QObject *parent = nullptr);
+    explicit TeppingTestTemplate(QObject *parent = nullptr);
 
     /*!
      * \brief Возвращает уникальный идентификатор методики
@@ -44,4 +44,4 @@ public:
     bool editParams(QWidget *parent, QJsonObject &params)  override;
 };
 
-#endif // JUMPHEIGHTTESTTEMPLATE_H
+#endif // TEPPINGTESTTEMPLATE_H

@@ -8,6 +8,17 @@ namespace BaseUtils
 {
 
 /*!
+ * \brief Константы сторон Side enum
+ */
+enum Side
+{
+      Left = 0
+    , Right
+    , Up
+    , Down
+};
+
+/*!
  * \brief Возвращает время в формате hh:mm:ss по кол-ву секунд
  * \param secCnt - кол-во секунд
  * \param isHour - показывать ли часы

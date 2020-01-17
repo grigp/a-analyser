@@ -30,6 +30,15 @@ struct JumpRec
     JumpRec() {}
 };
 
+/*!
+ * \brief Данные о шаге теппинг теста TeppingStepRec struct
+ */
+struct TeppingStepRec
+{
+    double timeContact;     ///< Время контакта
+    TeppingStepRec() {}
+};
+
 
 }
 

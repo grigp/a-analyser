@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>JumpHeightTestParamsDialog</class>
- <widget class="QDialog" name="JumpHeightTestParamsDialog">
+ <class>TeppingTestParamsDialog</class>
+ <widget class="QDialog" name="TeppingTestParamsDialog">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>327</width>
-    <height>269</height>
+    <width>400</width>
+    <height>300</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Параметры теста высоты прыжков</string>
+   <string>Параметры теппинг теста</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
@@ -49,7 +49,7 @@
        <widget class="QComboBox" name="cbFinishKind"/>
       </item>
       <item>
-       <widget class="QFrame" name="frJumpsCount">
+       <widget class="QFrame" name="frStepsCount">
         <property name="frameShape">
          <enum>QFrame::StyledPanel</enum>
         </property>
@@ -58,7 +58,7 @@
         </property>
         <layout class="QHBoxLayout" name="horizontalLayout">
          <item>
-          <widget class="QLabel" name="lblJumpsCount">
+          <widget class="QLabel" name="lblStepsCount">
            <property name="minimumSize">
             <size>
              <width>170</width>
@@ -66,12 +66,12 @@
             </size>
            </property>
            <property name="text">
-            <string>Количество прыжков</string>
+            <string>Количество шагов</string>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QSpinBox" name="edJumpsCount">
+          <widget class="QSpinBox" name="edStepsCount">
            <property name="minimumSize">
             <size>
              <width>80</width>
@@ -160,89 +160,6 @@
        </widget>
       </item>
       <item>
-       <spacer name="verticalSpacer_2">
-        <property name="orientation">
-         <enum>Qt::Vertical</enum>
-        </property>
-        <property name="sizeType">
-         <enum>QSizePolicy::Fixed</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>20</width>
-          <height>10</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item>
-       <widget class="QLabel" name="lblStrategy">
-        <property name="text">
-         <string>Стратегия</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QComboBox" name="cbStrategy"/>
-      </item>
-      <item>
-       <widget class="QFrame" name="frContactTimeBound">
-        <property name="frameShape">
-         <enum>QFrame::StyledPanel</enum>
-        </property>
-        <property name="frameShadow">
-         <enum>QFrame::Raised</enum>
-        </property>
-        <layout class="QHBoxLayout" name="horizontalLayout_3">
-         <item>
-          <widget class="QLabel" name="lblContactTimeBound">
-           <property name="minimumSize">
-            <size>
-             <width>170</width>
-             <height>0</height>
-            </size>
-           </property>
-           <property name="text">
-            <string>Временной порог, мсек</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QSpinBox" name="edContactTimeBound">
-           <property name="minimumSize">
-            <size>
-             <width>80</width>
-             <height>0</height>
-            </size>
-           </property>
-           <property name="minimum">
-            <number>50</number>
-           </property>
-           <property name="maximum">
-            <number>1500</number>
-           </property>
-           <property name="singleStep">
-            <number>50</number>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <spacer name="horizontalSpacer_3">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>40</width>
-             <height>20</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-        </layout>
-       </widget>
-      </item>
-      <item>
        <spacer name="verticalSpacer">
         <property name="orientation">
          <enum>Qt::Vertical</enum>
@@ -275,70 +192,53 @@
   <connection>
    <sender>buttonBox</sender>
    <signal>accepted()</signal>
-   <receiver>JumpHeightTestParamsDialog</receiver>
+   <receiver>TeppingTestParamsDialog</receiver>
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>248</x>
-     <y>254</y>
+     <x>227</x>
+     <y>282</y>
     </hint>
     <hint type="destinationlabel">
      <x>157</x>
-     <y>268</y>
+     <y>274</y>
     </hint>
    </hints>
   </connection>
   <connection>
    <sender>buttonBox</sender>
    <signal>rejected()</signal>
-   <receiver>JumpHeightTestParamsDialog</receiver>
+   <receiver>TeppingTestParamsDialog</receiver>
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>295</x>
-     <y>257</y>
+     <y>288</y>
     </hint>
     <hint type="destinationlabel">
      <x>286</x>
-     <y>268</y>
+     <y>274</y>
     </hint>
    </hints>
   </connection>
   <connection>
    <sender>cbFinishKind</sender>
    <signal>currentIndexChanged(int)</signal>
-   <receiver>JumpHeightTestParamsDialog</receiver>
+   <receiver>TeppingTestParamsDialog</receiver>
    <slot>on_finishKindChanged(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>127</x>
-     <y>38</y>
+     <x>90</x>
+     <y>32</y>
     </hint>
     <hint type="destinationlabel">
-     <x>328</x>
-     <y>38</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>cbStrategy</sender>
-   <signal>currentIndexChanged(int)</signal>
-   <receiver>JumpHeightTestParamsDialog</receiver>
-   <slot>on_strategyChanged(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>164</x>
-     <y>161</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>329</x>
-     <y>162</y>
+     <x>399</x>
+     <y>40</y>
     </hint>
    </hints>
   </connection>
  </connections>
  <slots>
   <slot>on_finishKindChanged(int)</slot>
-  <slot>on_strategyChanged(int)</slot>
  </slots>
 </ui>

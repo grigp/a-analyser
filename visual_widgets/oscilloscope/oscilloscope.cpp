@@ -256,8 +256,8 @@ OscilloscopeArea::OscilloscopeArea(const QString &name, const int channelCount)
     m_data.clear();
 
     m_offsets.resize(channelCount);
-    foreach (auto offs, m_offsets)
-        offs = 0;
+    for (int i = 0; i < m_offsets.size(); ++i)
+        m_offsets[i] = 0;
 }
 
 QColor OscilloscopeArea::color(const int colorNum) const

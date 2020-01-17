@@ -308,9 +308,21 @@
             {
                 "finish_kind": "fixed_time",
                 "jumps_count": 20,
-                "time": 60,
+                "time": 20,
                 "strategy": "min_contact_time",
                 "contact_time_bound": 200
+            }
+        },
+        {
+            "uid": "{1815B7EA-D022-4E08-A726-A0C4E8AD7DE8}",
+            "name": "Теппинг тест",
+            "template": "met_teppingtest_uid",
+            "build_norms": false,
+            "params":
+            {
+                "finish_kind": "quantity",
+                "steps_count": 20,
+                "time": 20
             }
         },
         {
