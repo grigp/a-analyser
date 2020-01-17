@@ -43,6 +43,13 @@
     </widget>
    </item>
    <item>
+    <widget class="QLabel" name="lblContactTimeBound">
+     <property name="text">
+      <string>Порог времени на платформе</string>
+     </property>
+    </widget>
+   </item>
+   <item>
     <widget class="QTreeView" name="tvJumps"/>
    </item>
   </layout>

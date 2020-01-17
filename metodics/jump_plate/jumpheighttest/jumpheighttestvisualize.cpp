@@ -2,8 +2,11 @@
 #include "ui_jumpheighttestvisualize.h"
 
 #include "jumpheighttestcalculator.h"
+#include "datadefines.h"
+#include "dataprovider.h"
 
 #include <QStandardItemModel>
+#include <QDebug>
 
 JumpHeightTestVisualize::JumpHeightTestVisualize(QWidget *parent) :
     QWidget(parent),
@@ -27,6 +30,8 @@ void JumpHeightTestVisualize::setTest(const QString &testUid)
 
     if (m_calculator->primaryFactorsCount() >= 4)
     {
+        getStrategyParams(testUid);
+
         auto fctJumpsCount = m_calculator->primaryFactor(0);
         auto fctTimeTest = m_calculator->primaryFactor(1);
         auto fctHeightAvg = m_calculator->primaryFactor(2);
@@ -56,5 +61,21 @@ void JumpHeightTestVisualize::setTest(const QString &testUid)
         model->setHorizontalHeaderLabels(QStringList() << tr("N") << tr("Высота прыжка, см") << tr("Время контактной фазы, сек"));
         ui->tvJumps->header()->resizeSections(QHeaderView::ResizeToContents);
         ui->tvJumps->header()->resizeSection(0, 100);
+    }
+}
+
+void JumpHeightTestVisualize::getStrategyParams(const QString &testUid)
+{
+    DataDefines::TestInfo ti;
+    if (DataProvider::getTestInfo(testUid, ti))
+    {
+        auto sStrg = ti.params["strategy"].toString();
+        m_strategy = JumpHeightTestDefines::StrategyIndex.value(sStrg);
+        if (m_strategy == JumpHeightTestDefines::jhsMinContactTime)
+        {
+            m_contactTimeBound = ti.params["contact_time_bound"].toInt() / 1000.0;
+            ui->lblContactTimeBound->setText(QString(tr("Порог времени на платформе") + " %1 " + tr("сек")).arg(m_contactTimeBound));
+        }
+        ui->lblContactTimeBound->setVisible(m_strategy == JumpHeightTestDefines::jhsMinContactTime);
     }
 }

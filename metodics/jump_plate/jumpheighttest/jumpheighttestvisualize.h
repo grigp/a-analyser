@@ -3,6 +3,8 @@
 
 #include <QWidget>
 
+#include "jumpheighttestdefines.h"
+
 namespace Ui {
 class JumpHeightTestVisualize;
 }
@@ -25,7 +27,11 @@ public:
 private:
     Ui::JumpHeightTestVisualize *ui;
 
+    void getStrategyParams(const QString &testUid);
+
     JumpHeightTestCalculator* m_calculator {nullptr};
+    JumpHeightTestDefines::Strategy m_strategy {JumpHeightTestDefines::jhsMaxHeight};
+    double m_contactTimeBound {0};
 };
 
 #endif // JUMPHEIGHTTESTVISUALIZE_H
