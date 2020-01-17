@@ -1,6 +1,7 @@
 #include "jumpheighttestparamsdialog.h"
 #include "ui_jumpheighttestparamsdialog.h"
 
+#include "jumpplatedefines.h"
 #include "jumpheighttestdefines.h"
 
 #include <QDebug>
@@ -24,7 +25,7 @@ JumpHeightTestParamsDialog::~JumpHeightTestParamsDialog()
 void JumpHeightTestParamsDialog::setParams(const QJsonObject &params)
 {
     auto sFK = params["finish_kind"].toString();
-    ui->cbFinishKind->setCurrentIndex(JumpHeightTestDefines::TestFinishKindIndex.value(sFK));
+    ui->cbFinishKind->setCurrentIndex(JumpPlateDefines::TestFinishKindIndex.value(sFK));
     ui->edJumpsCount->setValue(params["jumps_count"].toInt());
     ui->edTestTime->setValue(params["time"].toInt());
     auto sStr = params["strategy"].toString();
@@ -35,8 +36,8 @@ void JumpHeightTestParamsDialog::setParams(const QJsonObject &params)
 QJsonObject JumpHeightTestParamsDialog::getParams()
 {
     QJsonObject retval;
-    auto valFK = static_cast<JumpHeightTestDefines::TestFinishKind>(ui->cbFinishKind->currentIndex());
-    retval["finish_kind"] = JumpHeightTestDefines::TestFinishKindValueName.value(valFK);
+    auto valFK = static_cast<JumpPlateDefines::TestFinishKind>(ui->cbFinishKind->currentIndex());
+    retval["finish_kind"] = JumpPlateDefines::TestFinishKindValueName.value(valFK);
     retval["jumps_count"] = ui->edJumpsCount->value();
     retval["time"] = ui->edTestTime->value();
     auto valStr = static_cast<JumpHeightTestDefines::Strategy>(ui->cbStrategy->currentIndex());

@@ -5,6 +5,7 @@
 #include <QJsonObject>
 #include <QStandardItemModel>
 
+#include "jumpplatedefines.h"
 #include "jumpheighttestdefines.h"
 #include "deviceprotocols.h"
 
@@ -60,7 +61,7 @@ private:
 
     void finishTest();
 
-    JumpHeightTestDefines::TestFinishKind m_testFinishKind {JumpHeightTestDefines::tfkQuantity};
+    JumpPlateDefines::TestFinishKind m_testFinishKind {JumpPlateDefines::tfkQuantity};
     JumpHeightTestDefines::Strategy m_strategy {JumpHeightTestDefines::jhsMaxHeight};
     int m_jumpsMax {1};
     int m_testTime {30};

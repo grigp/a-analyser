@@ -28,7 +28,7 @@ JumpHeightTestExecute::~JumpHeightTestExecute()
 void JumpHeightTestExecute::setParams(const QJsonObject &params)
 {
     auto sFK = params["finish_kind"].toString();
-    m_testFinishKind = JumpHeightTestDefines::TestFinishKindIndex.value(sFK);
+    m_testFinishKind = JumpPlateDefines::TestFinishKindIndex.value(sFK);
 
     m_jumpsMax = params["jumps_count"].toInt();
     m_testTime = params["time"].toInt();
@@ -38,10 +38,10 @@ void JumpHeightTestExecute::setParams(const QJsonObject &params)
 
     m_contactTimeBound = params["contact_time_bound"].toInt();
 
-    if (m_testFinishKind == JumpHeightTestDefines::tfkFixedTime)
+    if (m_testFinishKind == JumpPlateDefines::tfkFixedTime)
         ui->lblCommentFinishTest->setText(QString(tr("Выполняйте прыжки на платформе в течение %1 секунд")).arg(m_testTime));
     else
-    if (m_testFinishKind == JumpHeightTestDefines::tfkQuantity)
+    if (m_testFinishKind == JumpPlateDefines::tfkQuantity)
         ui->lblCommentFinishTest->setText(QString(tr("Выполните %1 прыжков на платформе")).arg(m_jumpsMax));
 
     if (m_strategy == JumpHeightTestDefines::jhsMaxHeight)
@@ -49,7 +49,7 @@ void JumpHeightTestExecute::setParams(const QJsonObject &params)
     else
     if (m_strategy == JumpHeightTestDefines::jhsMinContactTime)
         ui->lblCommentStrategy->setText(QString(tr("с минимальным временем контакта с платформой")));
-    ui->pbTimeTest->setVisible(m_testFinishKind == JumpHeightTestDefines::tfkFixedTime);
+    ui->pbTimeTest->setVisible(m_testFinishKind == JumpPlateDefines::tfkFixedTime);
 }
 
 void JumpHeightTestExecute::closeEvent(QCloseEvent *event)
@@ -70,7 +70,7 @@ void JumpHeightTestExecute::timerEvent(QTimerEvent *event)
     {
         ++m_timeCount;
         ui->pbTimeTest->setValue(100 * m_timeCount / (m_testTime * 50));
-        if (m_testFinishKind == JumpHeightTestDefines::tfkFixedTime &&
+        if (m_testFinishKind == JumpPlateDefines::tfkFixedTime &&
                 m_timeCount >= m_testTime * 50)
         {
             killTimer(m_timerEndOfTest);
@@ -231,7 +231,7 @@ void JumpHeightTestExecute::iterate(const bool isStart)
                 }
 
                 ++m_jumpsCount;
-                if (m_testFinishKind == JumpHeightTestDefines::tfkQuantity && m_jumpsCount > m_jumpsMax)
+                if (m_testFinishKind == JumpPlateDefines::tfkQuantity && m_jumpsCount > m_jumpsMax)
                     finishTest();
             }
         }
