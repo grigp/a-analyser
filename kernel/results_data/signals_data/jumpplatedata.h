@@ -134,4 +134,46 @@ public:
 };
 
 
+/*!
+ * \brief Класс для записи в БД данных о результатах дроп теста DropTestData class
+ */
+class DropTestData : public ChannelJsonData
+{
+public:
+    DropTestData(const QString &chanId);
+
+    /*!
+     * \brief Создает на основе массива байт
+     * \param data - сигнал в виде массива байт
+     */
+    explicit DropTestData(const QByteArray &data);
+
+    double time() const;
+    void setTime(const double time);
+
+    int jumpsCount() const;
+    SignalsDefines::DropJumpRec jump(const int idx) const;
+
+    void addJump(double fallHeight, double height, double timeNoContact, double timeContact);
+
+/*
+    Формат канала в json:
+
+    {
+        "time_test": 100.23, // Время теста в секундах. Если задано кол-во прыжков, время может быть не целым
+        "jumps": [           // Массив прыжков
+            {
+                "fall": 20,              // Высота степ-платформы в сантиметрах
+                "height": 2.1,           // Высота прыжка в сантиметрах
+                "time_contact": 0.123,   // Время контакта с платформой (сек)
+                "time_no_contact":0.232  // Время бесконтактной фазы (сек)
+            },
+            ...
+        ]
+    }
+
+ */
+};
+
+
 #endif // JUMPPLATEDATA_H

@@ -83,7 +83,22 @@ QLabel#lblJumps
     font-size: 14pt;
 }
 
+QLineEdit
+{
+    font-size: 11pt;
+}
+
 QComboBox
+{
+    font-size: 11pt;
+}
+
+QSpinBox
+{
+    font-size: 11pt;
+}
+
+QDateEdit
 {
     font-size: 11pt;
 }

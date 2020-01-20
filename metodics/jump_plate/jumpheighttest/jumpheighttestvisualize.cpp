@@ -51,7 +51,7 @@ void JumpHeightTestVisualize::setTest(const QString &testUid)
             itemN->setEditable(false);
             auto *itemH = new QStandardItem(QString::number(jump.height));
             itemH->setEditable(false);
-            auto *itemT = new QStandardItem(QString::number(jump.timeContact));
+            auto *itemT = new QStandardItem(QString::number(jump.timeJump));
             itemT->setEditable(false);
 
             model->appendRow(QList<QStandardItem*>() << itemN << itemH << itemT);

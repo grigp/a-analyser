@@ -6,6 +6,7 @@
 #include "patientsproxymodel.h"
 #include "patientkarddialog.h"
 #include "aanalyserapplication.h"
+#include "dataprovider.h"
 
 #include <QApplication>
 #include <QMessageBox>
@@ -71,6 +72,8 @@ void PatientsWidget::addPatient()
         patient.fio = dialog->fio();
         patient.born = dialog->born();
         patient.sex = dialog->sex();
+        patient.weight = dialog->weight();
+        patient.height = dialog->height();
         m_mdlPatients->addPatient(patient);
         ui->tvPatients->header()->resizeSections(QHeaderView::ResizeToContents);
     });
@@ -99,12 +102,15 @@ void PatientsWidget::editPatient()
             sex = static_cast<DataDefines::Sex>(idx.data(PatientsModel::PatientSexRole).toInt());
     }
 
-    if (uid != "")
+    DataDefines::PatientKard pi;
+    if (uid != "" && DataProvider::getPatient(uid, pi))
     {
         auto *dialog = new PatientKardDialog(this);
         dialog->setFio(fio);
         dialog->setBorn(born);
         dialog->setSex(sex);
+        dialog->setWeight(pi.weight);
+        dialog->setHeight(pi.height);
 
         connect(dialog, &PatientKardDialog::accepted, this, [=]()
         {
@@ -113,6 +119,8 @@ void PatientsWidget::editPatient()
             patient.fio = dialog->fio();
             patient.born = dialog->born();
             patient.sex = dialog->sex();
+            patient.weight = dialog->weight();
+            patient.height = dialog->height();
             m_mdlPatients->addPatient(patient);
             ui->tvPatients->header()->resizeSections(QHeaderView::ResizeToContents);
         });

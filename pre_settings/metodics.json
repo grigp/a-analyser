@@ -326,6 +326,18 @@
             }
         },
         {
+            "uid": "{8F8673D1-44B1-4213-87D5-BAB2B732E67A}",
+            "name": "Дроп тест",
+            "template": "met_droptest_uid",
+            "build_norms": false,
+            "params":
+            {
+                "finish_kind": "quantity",
+                "steps_count": 10,
+                "time": 30
+            }
+        },
+        {
             "uid": "{CFCCCAA0-A520-49EF-9C04-EB57580E8CAD}",
             "name": "Тренажер \"Мячики\"",
             "template": "met_trentakeput_uid",

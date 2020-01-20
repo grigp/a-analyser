@@ -6,6 +6,7 @@
 #include "jumpheightsinglefactors.h"
 #include "jumpheightfactors.h"
 #include "teppingtestfactors.h"
+#include "droptestfactors.h"
 #include "hoppingfactors.h"
 #include "idsfactors.h"
 #include "targetfactors.h"
@@ -25,6 +26,7 @@ FactorsFactory::FactorsFactory(QObject *parent) : QObject(parent)
         JumpHeightSingleFactors::registerFactors();
         JumpHeightFactors::registerFactors();
         TeppingTestFactors::registerFactors();
+        DropTestFactors::registerFactors();
         HoppingFactors::registerFactors();
         IDSFactors::registerFactors();
         TargetFactors::registerFactors();

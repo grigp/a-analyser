@@ -44,7 +44,7 @@ void JumpHeightFactors::calculate()
         {
             m_jumps.append(data.jump(i));
             avgHeight = avgHeight + data.jump(i).height;
-            avgTime = avgTime + data.jump(i).timeContact;
+            avgTime = avgTime + data.jump(i).timeJump;
         }
         m_time = data.time();
 

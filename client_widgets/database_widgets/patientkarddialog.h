@@ -26,6 +26,12 @@ public:
     DataDefines::Sex sex() const;
     void setSex(const DataDefines::Sex &sex);
 
+    int weight() const;
+    void setWeight(const int w);
+
+    int height() const;
+    void setHeight(const int h);
+
 private:
     Ui::PatientKardDialog *ui;
 };

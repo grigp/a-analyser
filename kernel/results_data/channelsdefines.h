@@ -24,6 +24,7 @@ static QString cfNoSignal = "{90e313c6-8805-4235-8981-1fb85d7aea5f}";          /
  static QString ctJumpSingleHeight = "{828DC7F7-2E70-4912-9ED5-03AA5A8BE729}";
  static QString ctJumpHeight = "{53BD9EE2-BB3F-4D3E-BD7F-719D7F73155D}";
  static QString ctTeppingData = "{45F90DE1-57B7-4987-BC37-8C6654CBC636}";
+ static QString ctDropTestData = "{671EFFCF-4886-490A-B666-7D6ED90847A7}";
  static QString ctHopping = "{77A6BE07-5937-4A8A-8521-08D6C379BDD8}";
  static QString ctTrenResult = "{1FC8CB00-550E-4DF2-B6A3-7758B3867278}";
 
@@ -36,6 +37,7 @@ static QString cfNoSignal = "{90e313c6-8805-4235-8981-1fb85d7aea5f}";          /
  static QString chanJumpSingleHeight = "{EF9DF092-7FE0-4F74-9EA6-8BA3318AA91C}";
  static QString chanJumpHeight = "{8FE3810D-2A66-4A2E-8921-8E089E577B6E}";
  static QString chanTeppingData = "{25544CFD-A203-4BE9-8297-5D672D0EC7D5}";
+ static QString chanDropTestData = "{74B71080-34A4-4480-80D0-E0D85C11B6B5}";
  static QString chanHopping = "{EF4AD6ED-2D10-497A-AB8D-945CF6C0645E}";
 
  static QString chanMyo = "{E4342137-B1BF-4F68-BC17-2C337b97A642}";

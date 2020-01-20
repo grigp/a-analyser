@@ -103,7 +103,7 @@ SignalsDefines::JumpRec JumpHeightData::jump(const int idx) const
             auto obj = arr.at(i).toObject();
             SignalsDefines::JumpRec ji;
             ji.height = obj["height"].toDouble();
-            ji.timeContact = obj["time_contact"].toDouble();
+            ji.timeJump = obj["time_contact"].toDouble();
             return ji;
         }
 
@@ -191,5 +191,69 @@ void TeppingTestData::addStep(const BaseUtils::Side side, const double timeConta
     arr.append(objStep);
 
     obj[sPar] = arr;
+    setData(obj);
+}
+
+DropTestData::DropTestData(const QString &chanId)
+    : ChannelJsonData(chanId)
+{
+
+}
+
+DropTestData::DropTestData(const QByteArray &data)
+    : ChannelJsonData()
+{
+    fromByteArray(data);
+}
+
+double DropTestData::time() const
+{
+    return data()["time_test"].toDouble();
+}
+
+void DropTestData::setTime(const double time)
+{
+    QJsonObject obj = data();
+    obj["time_test"] = time;
+    setData(obj);
+}
+
+int DropTestData::jumpsCount() const
+{
+    auto arr = data()["jumps"].toArray();
+    return arr.size();
+}
+
+SignalsDefines::DropJumpRec DropTestData::jump(const int idx) const
+{
+    auto arr = data()["jumps"].toArray();
+    for (int i = 0; i < arr.size(); ++i)
+        if (i == idx)
+        {
+            auto obj = arr.at(i).toObject();
+            SignalsDefines::DropJumpRec djr;
+            djr.fallHeight = obj["fall"].toInt();
+            djr.height = obj["height"].toDouble();
+            djr.timeContact = obj["time_contact"].toDouble();
+            djr.timeNoContact = obj["time_no_contact"].toDouble();
+            return djr;
+        }
+
+    return SignalsDefines::DropJumpRec();
+}
+
+void DropTestData::addJump(double fallHeight, double height, double timeNoContact, double timeContact)
+{
+    QJsonObject obj = data();
+    auto arr = obj["jumps"].toArray();
+
+    QJsonObject objJump;
+    objJump["fall"] = fallHeight;
+    objJump["height"] = height;
+    objJump["time_contact"] = timeContact;
+    objJump["time_no_contact"] = timeNoContact;
+    arr.append(objJump);
+
+    obj["jumps"] = arr;
     setData(obj);
 }

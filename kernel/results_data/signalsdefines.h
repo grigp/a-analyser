@@ -25,8 +25,8 @@ struct StabRec
  */
 struct JumpRec
 {
-    double height;          ///< Высота
-    double timeContact;     ///< Время контакта
+    double height;       ///< Высота
+    double timeJump;     ///< Время прыжка
     JumpRec() {}
 };
 
@@ -39,6 +39,17 @@ struct TeppingStepRec
     TeppingStepRec() {}
 };
 
+/*!
+ * \brief Данные о прыжке дроп теста DropJumpRec struct
+ */
+struct DropJumpRec
+{
+    double fallHeight;      ///< Высота спрыгивания
+    double height;          ///< Высота прыжка
+    double timeNoContact;   ///< Время безконтактной фазы
+    double timeContact;     ///< Время контакта
+    DropJumpRec() {}
+};
 
 }
 

@@ -47,3 +47,23 @@ void PatientKardDialog::setSex(const DataDefines::Sex &sex)
 {
     ui->cbSex->setCurrentIndex(static_cast<int>(sex));
 }
+
+int PatientKardDialog::weight() const
+{
+    return ui->edWeight->value();
+}
+
+void PatientKardDialog::setWeight(const int w)
+{
+    ui->edWeight->setValue(w);
+}
+
+int PatientKardDialog::height() const
+{
+    return ui->edHeight->value();
+}
+
+void PatientKardDialog::setHeight(const int h)
+{
+    ui->edHeight->setValue(h);
+}
