@@ -4,9 +4,12 @@
 #include "aanalyserapplication.h"
 #include "driver.h"
 #include "executewidget.h"
+#include "testresultdata.h"
+#include "jumpplatedata.h"
 
 #include <QTimer>
 #include <QMessageBox>
+#include <QDebug>
 
 TeppingTestExecute::TeppingTestExecute(QWidget *parent) :
     QWidget(parent),
@@ -88,8 +91,8 @@ void TeppingTestExecute::start()
             }
         });
 
-//        ui->tvJumps->setModel(&m_mdlTable);
-//        setModelGeometry();
+        ui->tvSteps->setModel(&m_mdlTable);
+        setModelGeometry();
     }
     else
     {
@@ -109,15 +112,16 @@ void TeppingTestExecute::getData(DeviceProtocols::DeviceData *data)
         if (jpData->plate() == 1)
         {
             m_plt1Pressed = jpData->busy();
-            m_plt1Time = jpData->time() / 1000;
+            m_plt1Time = jpData->time() / 1000.0;
+            iterate(false, BaseUtils::Right);
         }
         else
         if (jpData->plate() == 2)
         {
             m_plt2Pressed = jpData->busy();
-            m_plt2Time = jpData->time() / 1000;
+            m_plt2Time = jpData->time() / 1000.0;
+            iterate(false, BaseUtils::Left);
         }
-        iterate(false);
     }
 }
 
@@ -150,11 +154,11 @@ void TeppingTestExecute::on_recording()
     m_stepsRightCount = 0;
     m_timeCount = 0;
     m_time = 0;
-//    m_mdlTable.clear();
+    m_mdlTable.clear();
     setModelGeometry();
 }
 
-void TeppingTestExecute::iterate(const bool isStart)
+void TeppingTestExecute::iterate(const bool isStart, BaseUtils::Side side)
 {
     if (m_jumpControl->platformsCount() == 2)
     {
@@ -191,6 +195,34 @@ void TeppingTestExecute::iterate(const bool isStart)
                 ui->btnSave->setVisible(false);
                 ui->lblCommentStateOnPlate->setVisible(true);
             }
+
+            if (m_isRecording)
+            {
+                if (m_plt1Pressed && side == BaseUtils::Right)
+                    ++m_stepsRightCount;
+                else
+                if (m_plt2Pressed && side == BaseUtils::Left)
+                    ++m_stepsLeftCount;
+                if (m_plt1Pressed && m_plt2Pressed &&
+                        m_stepsLeftCount == m_stepsRightCount && m_stepsLeftCount > 0)
+                {
+                    auto *itemN = new QStandardItem(QString::number(m_stepsLeftCount));
+                    itemN->setEditable(false);
+                    itemN->setData(m_stepsLeftCount, NumberRole);
+                    auto *itemLeft = new QStandardItem(QString::number(m_plt2Time));
+                    itemLeft->setEditable(false);
+                    itemLeft->setData(m_plt2Time, ValueRole);
+                    auto *itemRight = new QStandardItem(QString::number(m_plt1Time));
+                    itemRight->setEditable(false);
+                    itemRight->setData(m_plt1Time, ValueRole);
+
+                    m_mdlTable.appendRow(QList<QStandardItem*>() << itemN << itemLeft << itemRight);
+                }
+
+                if (m_testFinishKind == JumpPlateDefines::tfkQuantity &&
+                        m_stepsLeftCount >= m_stepsMax)
+                    finishTest();
+            }
         }
     }
 
@@ -198,10 +230,34 @@ void TeppingTestExecute::iterate(const bool isStart)
 
 void TeppingTestExecute::setModelGeometry()
 {
-
+    m_mdlTable.setHorizontalHeaderLabels(QStringList() << tr("N") << tr("Левая нога") << tr("Правая нога"));
+    ui->tvSteps->header()->resizeSections(QHeaderView::ResizeToContents);
+    ui->tvSteps->header()->resizeSection(0, 80);
 }
 
 void TeppingTestExecute::finishTest()
 {
+    m_isRecording = false;
 
+    auto kard = static_cast<AAnalyserApplication*>(QApplication::instance())->getSelectedPatient();
+    MetodicDefines::MetodicInfo mi = static_cast<AAnalyserApplication*>(QApplication::instance())->getSelectedMetodic();
+
+    TestResultData m_trd;  ///< Объект, записывающий данные в базу
+    m_trd.newTest(kard.uid, mi.uid);
+    m_trd.newProbe(tr("Теппинг тест"));
+
+    auto *data = new TeppingTestData(ChannelsDefines::chanTeppingData);
+    data->setTime(static_cast<double>(m_timeCount) / 50);
+    for (int i = 0; i < m_mdlTable.rowCount(); ++i)
+    {
+        auto l = m_mdlTable.index(i, 1).data(ValueRole).toDouble();
+        auto r = m_mdlTable.index(i, 2).data(ValueRole).toDouble();
+        data->addStep(BaseUtils::Left, l);
+        data->addStep(BaseUtils::Right, r);
+    }
+
+    m_trd.addChannel(data);
+
+    m_trd.saveTest();
+    static_cast<ExecuteWidget*>(parent())->showDB();
 }

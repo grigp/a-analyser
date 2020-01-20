@@ -69,9 +69,18 @@ QLabel#lblCommentStateOnPlate
 QLabel#lblJumpsCount,
 QLabel#lblTimeTest,
 QLabel#lblHeightAvg,
-QLabel#lblTimeAvg
+QLabel#lblTimeAvg,
+QLabel#lblStepsCount,
+QLabel#lblTimeAvgLeftLeg,
+QLabel#lblTimeAvgRightLeg
 {
     font-size: 16pt;
+}
+
+QLabel#lblSteps,
+QLabel#lblJumps
+{
+    font-size: 14pt;
 }
 
 QComboBox
@@ -94,6 +103,11 @@ QTreeView#tvFactorsTrenResult
 QTreeView#tvJumps
 {
     font-size: 16pt;
+}
+
+QTreeView#tvSteps
+{
+    font-size: 18pt;
 }
 
 QHeaderView::section

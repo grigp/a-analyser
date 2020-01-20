@@ -7,6 +7,8 @@ namespace Ui {
 class TeppingTestVisualize;
 }
 
+class TeppingTestCalculator;
+
 /*!
  * \brief Виджет показа результатов теппинг - теста TeppingTestVisualize class
  */
@@ -22,6 +24,8 @@ public:
 
 private:
     Ui::TeppingTestVisualize *ui;
+
+    TeppingTestCalculator* m_calculator {nullptr};
 };
 
 #endif // TEPPINGTESTVISUALIZE_H

@@ -81,8 +81,34 @@ void TeppingTestFactors::registerFactors()
                            tr("Общее время"), tr("Время"), tr("сек"), 3, 1, FactorsDefines::nsAbove, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(TeppingTestFactorsDefines::LeftLegContactTimeAvrUid, TeppingTestFactorsDefines::GroupUid,
-                           tr("Быстрота одиночног движения левой ноги"), tr("Контакт (лев)"), tr("cек"), 4, 2, FactorsDefines::nsAbove, 12);
+                           tr("Быстрота одиночного движения левой ноги"), tr("Контакт (лев)"), tr("cек"), 4, 2, FactorsDefines::nsAbove, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(TeppingTestFactorsDefines::RightLegContactTimeAvrUid, TeppingTestFactorsDefines::GroupUid,
-                           tr("Быстрота одиночног движения правой ноги"), tr("Контакт (прав)"), tr("cек"), 4, 2, FactorsDefines::nsAbove, 12);
+                           tr("Быстрота одиночного движения правой ноги"), tr("Контакт (прав)"), tr("cек"), 4, 2, FactorsDefines::nsAbove, 12);
+}
+
+int TeppingTestFactors::stepsCount(BaseUtils::Side side) const
+{
+    if (side == BaseUtils::Left)
+        return m_stepsLeftLeg.size();
+    else
+    if (side == BaseUtils::Right)
+        return m_stepsRightLeg.size();
+    return 0;
+}
+
+SignalsDefines::TeppingStepRec TeppingTestFactors::step(BaseUtils::Side side, const int idx) const
+{
+    if (side == BaseUtils::Left)
+    {
+        Q_ASSERT(idx >= 0 && idx < m_stepsLeftLeg.size());
+        return m_stepsLeftLeg.at(idx);
+    }
+    else
+    if (side == BaseUtils::Right)
+    {
+        Q_ASSERT(idx >= 0 && idx < m_stepsRightLeg.size());
+        return m_stepsRightLeg.at(idx);
+    }
+    return SignalsDefines::TeppingStepRec();
 }

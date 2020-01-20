@@ -1,23 +1,24 @@
-#ifndef JUMPHEIGHTTESTCALCULATOR_H
-#define JUMPHEIGHTTESTCALCULATOR_H
+#ifndef TEPPINGTESTCALCULATOR_H
+#define TEPPINGTESTCALCULATOR_H
 
 #include <QObject>
 
 #include "testcalculator.h"
 #include "signalsdefines.h"
+#include "baseutils.h"
 
-class JumpHeightFactors;
+class TeppingTestFactors;
 
 /*!
- * \brief Класс модуля расчета данных теста высоты серии прыжков JumpHeightTestCalculator class
+ * \brief Класс модуля расчета данных теппинг теста TeppingTestCalculator class
  */
-class JumpHeightTestCalculator : public TestCalculator
+class TeppingTestCalculator : public TestCalculator
 {
     Q_OBJECT
 public:
-    explicit JumpHeightTestCalculator(const QString &testUid, QObject *parent = nullptr);
+    explicit TeppingTestCalculator(const QString &testUid, QObject *parent = nullptr);
 
-    ~JumpHeightTestCalculator();
+    ~TeppingTestCalculator();
 
     /*!
      * \brief Полный расчет данных теста с записью значений первичных показателей в БД
@@ -34,16 +35,16 @@ public:
     /*!
      * \brief Возвращает кол-во прыжков
      */
-    int jumpsCount() const;
+    int stepsCount(BaseUtils::Side side) const;
 
     /*!
      * \brief Возвращает данные о прыжке по его номеру
      * \param idx
      */
-    SignalsDefines::JumpRec jump(const int idx) const;
+    SignalsDefines::TeppingStepRec step(BaseUtils::Side side, const int idx) const;
 
 private:
-    JumpHeightFactors* m_factors {nullptr};
+    TeppingTestFactors* m_factors {nullptr};
 };
 
-#endif // JUMPHEIGHTTESTCALCULATOR_H
+#endif // TEPPINGTESTCALCULATOR_H

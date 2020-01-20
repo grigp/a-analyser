@@ -3,9 +3,11 @@
 
 #include <QWidget>
 #include <QJsonObject>
+#include <QStandardItemModel>
 
 #include "jumpplatedefines.h"
 #include "deviceprotocols.h"
+#include "baseutils.h"
 
 namespace Ui {
 class TeppingTestExecute;
@@ -44,15 +46,15 @@ private:
     ///< Роли в таблице результатов теста
     enum JumpesTableRoles
     {
-          NumberRole = Qt::UserRole + 1   ///< Доступ к номеру прыжка в столбце 0. int
-        , ValueRole                       ///< Доступ к данных в столбцах 1 и 2 - высоте прыжка и времени. double
+        NumberRole = Qt::UserRole + 1   ///< Доступ к номеру шага в столбце 0. int
+      , ValueRole                       ///< Доступ к данных в столбцах 1 и 2 - времени. double
     };
 
     /*!
      * \brief Итерация выполнения методики
      * \param isStart - признак запуска на старте
      */
-    void iterate(const bool isStart);
+    void iterate(const bool isStart, BaseUtils::Side side = BaseUtils::NoSide);
 
     void setModelGeometry();
 
@@ -78,6 +80,7 @@ private:
     int m_timerEndOfTest {-1};   ///< id таймера времени теста
 
     bool m_isRecording {false};  ///< Проходит ли запись
+    QStandardItemModel m_mdlTable;
 };
 
 #endif // TEPPINGTESTEXECUTE_H

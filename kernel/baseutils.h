@@ -12,7 +12,8 @@ namespace BaseUtils
  */
 enum Side
 {
-      Left = 0
+      NoSide = 0
+    , Left
     , Right
     , Up
     , Down

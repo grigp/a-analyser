@@ -57,8 +57,6 @@ void JumpHeightTestCalculator::calculate()
 void JumpHeightTestCalculator::fastCalculate()
 {
     TestCalculator::fastCalculate();
-
-
 }
 
 int JumpHeightTestCalculator::jumpsCount() const

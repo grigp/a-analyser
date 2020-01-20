@@ -5,6 +5,7 @@
 
 #include "multifactor.h"
 #include "signalsdefines.h"
+#include "baseutils.h"
 
 namespace TeppingTestFactorsDefines
 {
@@ -48,6 +49,17 @@ public:
     * \brief Регистрирует факторсгруппу и показатели
     */
    static void registerFactors();
+
+   /*!
+    * \brief Возвращает кол-во прыжков
+    */
+   int stepsCount(BaseUtils::Side side) const;
+
+   /*!
+    * \brief Возвращает данные о прыжке по его номеру
+    * \param idx
+    */
+   SignalsDefines::TeppingStepRec step(BaseUtils::Side side, const int idx) const;
 
 private:
    double m_time {0};
