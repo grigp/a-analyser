@@ -4,13 +4,15 @@ HEADERS += \
     $$PWD/droptesttemplate.h \
     $$PWD/droptestparamsdialog.h \
     $$PWD/droptestexecute.h \
-    $$PWD/droptestvisualize.h
+    $$PWD/droptestvisualize.h \
+    $$PWD/droptestcalculator.h
 
 SOURCES += \
     $$PWD/droptesttemplate.cpp \
     $$PWD/droptestparamsdialog.cpp \
     $$PWD/droptestexecute.cpp \
-    $$PWD/droptestvisualize.cpp
+    $$PWD/droptestvisualize.cpp \
+    $$PWD/droptestcalculator.cpp
 
 FORMS += \
     $$PWD/droptestparamsdialog.ui \

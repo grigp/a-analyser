@@ -57,11 +57,13 @@ public:
     * \brief Возвращает данные о прыжке по его номеру
     * \param idx
     */
-   SignalsDefines::DropJumpRec jump(const int idx) const;
+   SignalsDefines::DropJumpFactors jump(const int idx) const;
 
 private:
+   int getPatientMassa();
+
    double m_time {0};
-   QList<SignalsDefines::DropJumpRec> m_jumps;
+   QList<SignalsDefines::DropJumpFactors> m_jumps;
 };
 
 #endif // DROPTESTFACTORS_H

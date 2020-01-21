@@ -40,7 +40,7 @@ struct PatientKard
     QString fio;
     QDate born;
     Sex sex;
-    int weight;
+    int massa;
     int height;
     PatientKard() {}
 };

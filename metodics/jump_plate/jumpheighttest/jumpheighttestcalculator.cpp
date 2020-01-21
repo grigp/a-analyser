@@ -15,7 +15,6 @@ JumpHeightTestCalculator::~JumpHeightTestCalculator()
 {
     if (m_factors)
         delete m_factors;
-
 }
 
 void JumpHeightTestCalculator::calculate()

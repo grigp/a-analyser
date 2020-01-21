@@ -36,6 +36,8 @@ void DropTestFactors::calculate()
     double avgContactTime = 0;
     double avgNoContactTime = 0;
 
+    int massa = getPatientMassa();
+
     QByteArray baData;
     if (DataProvider::getChannel(probeUid(), channelId(), baData))
     {
@@ -43,10 +45,32 @@ void DropTestFactors::calculate()
 
         for (int i = 0; i < data.jumpsCount(); ++i)
         {
-            m_jumps.append(data.jump(i));
+            SignalsDefines::DropJumpFactors djf;
+            djf.height = data.jump(i).height;
+            djf.timeContact = data.jump(i).timeContact;
+            djf.timeNoContact = data.jump(i).timeNoContact;
+            djf.fallHeight = data.jump(i).fallHeight;
+
+            djf.power = 0;
+            djf.rsi = 0;
+            if (djf.timeContact > 0)
+            {
+                djf.power = massa * 9.8 * (djf.fallHeight * 1.226 * pow(djf.timeNoContact, 2)) / djf.timeContact;
+                djf.rsi = djf.height / djf.timeContact;
+            }
+
+            double stifZn = (pow(djf.timeContact, 2) *((djf.timeContact + djf.timeNoContact) /* /n */ - djf.timeContact / 4));
+            djf.stiffness = 0;
+            if (stifZn != 0)
+                djf.stiffness = (massa * /* *n */ (djf.timeContact + djf.timeNoContact)) / stifZn;
+            djf.initialSpeed = sqrt(2 * 9.8 * djf.height);  //! sqrt(2*g*h)
+
+
             avgHeight = avgHeight + data.jump(i).height;
             avgContactTime = avgContactTime + data.jump(i).timeContact;
             avgNoContactTime = avgNoContactTime + data.jump(i).timeNoContact;
+
+            m_jumps.append(djf);
         }
         m_time = data.time();
 
@@ -93,8 +117,20 @@ int DropTestFactors::jumpsCount() const
     return m_jumps.size();
 }
 
-SignalsDefines::DropJumpRec DropTestFactors::jump(const int idx) const
+SignalsDefines::DropJumpFactors DropTestFactors::jump(const int idx) const
 {
     Q_ASSERT(idx >= 0 && idx < m_jumps.size());
     return m_jumps.at(idx);
+}
+
+int DropTestFactors::getPatientMassa()
+{
+    DataDefines::TestInfo ti;
+    if (DataProvider::getTestInfo(testUid(), ti))
+    {
+        DataDefines::PatientKard pk;
+        if (DataProvider::getPatient(ti.patientUid, pk))
+            return pk.massa;
+    }
+    return 0;
 }

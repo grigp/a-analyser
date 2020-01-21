@@ -47,7 +47,7 @@ bool DataBase::getPatient(const QString &uid, DataDefines::PatientKard &patient)
         patient.fio = patObj["fio"].toString();
         patient.born = QDate::fromString(patObj["born"].toString(), "dd.MM.yyyy");
         patient.sex = static_cast<DataDefines::Sex>(patObj["sex"].toInt());
-        patient.weight = patObj["weight"].toInt();
+        patient.massa = patObj["massa"].toInt();
         patient.height = patObj["height"].toInt();
         return true;
     }
@@ -786,7 +786,7 @@ void DataBase::createPatientRec(const DataDefines::PatientKard patient)
         root["fio"] = patient.fio;
         root["born"] = patient.born.toString("dd.MM.yyyy");
         root["sex"] = patient.sex;
-        root["weight"] = patient.weight;
+        root["massa"] = patient.massa;
         root["height"] = patient.height;
         QJsonDocument doc(root);
         QByteArray ba = doc.toJson();
@@ -835,7 +835,7 @@ void DataBase::updatePatientRec(const DataDefines::PatientKard &patient)
         patObj["fio"] = patient.fio;
         patObj["born"] = patient.born.toString("dd.MM.yyyy");
         patObj["sex"] = patient.sex;
-        patObj["weight"] = patient.weight;
+        patObj["massa"] = patient.massa;
         patObj["height"] = patient.height;
 
         writeTableRec(dir.absoluteFilePath(patient.uid), patObj);

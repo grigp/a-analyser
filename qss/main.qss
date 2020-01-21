@@ -61,11 +61,13 @@ QLabel#lblMassa
 
 QLabel#lblCommentFinishTest,
 QLabel#lblCommentStrategy,
-QLabel#lblCommentStateOnPlate
+QLabel#lblCommentStateOnPlate,
+QLabel#lblCommentGetOffPlate
 {
     font-size: 18pt;
 }
 
+QLabel#lblCommentStage,
 QLabel#lblJumpsCount,
 QLabel#lblTimeTest,
 QLabel#lblHeightAvg,

@@ -333,8 +333,9 @@
             "params":
             {
                 "finish_kind": "quantity",
-                "steps_count": 10,
-                "time": 30
+                "jumps_count": 10,
+                "time": 30,
+                "fall_height": 40
             }
         },
         {

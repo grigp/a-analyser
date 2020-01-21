@@ -51,6 +51,18 @@ struct DropJumpRec
     DropJumpRec() {}
 };
 
+/*!
+ * \brief Данные о прыжке дроп теста с рассчитанными показателями DropJumpFactors struct
+ */
+struct DropJumpFactors : public DropJumpRec
+{
+    double power;
+    double stiffness;
+    double initialSpeed;
+    double rsi;
+    DropJumpFactors() : DropJumpRec() {}
+};
+
 }
 
 #endif // SIGNALSDEFINES_H
