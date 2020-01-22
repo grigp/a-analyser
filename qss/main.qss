@@ -74,7 +74,9 @@ QLabel#lblHeightAvg,
 QLabel#lblTimeAvg,
 QLabel#lblStepsCount,
 QLabel#lblTimeAvgLeftLeg,
-QLabel#lblTimeAvgRightLeg
+QLabel#lblTimeAvgRightLeg,
+QLabel#lblTimeContactAvg,
+QLabel#lblTimeNoContactAvg
 {
     font-size: 16pt;
 }
@@ -120,6 +122,11 @@ QTreeView#tvFactorsTrenResult
 QTreeView#tvJumps
 {
     font-size: 16pt;
+}
+
+QTreeView#tvJumpsDrop
+{
+    font-size: 12pt;
 }
 
 QTreeView#tvSteps

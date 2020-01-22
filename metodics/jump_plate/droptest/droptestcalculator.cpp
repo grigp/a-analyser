@@ -5,6 +5,8 @@
 #include "dataprovider.h"
 #include "droptestfactors.h"
 
+#include <QDebug>
+
 DropTestCalculator::DropTestCalculator(const QString &testUid, QObject *parent)
     : TestCalculator(testUid, parent)
 {

@@ -7,6 +7,7 @@
 #include "dataprovider.h"
 #include "jumpplatedata.h"
 #include "testresultdata.h"
+#include "droptestfactors.h"
 
 #include <QTimer>
 #include <QMessageBox>
@@ -39,6 +40,7 @@ void DropTestExecute::setParams(const QJsonObject &params)
     if (m_testFinishKind == JumpPlateDefines::tfkQuantity)
         ui->lblCommentFinishTest->setText(QString(tr("Выполните %1 спрыгиваний на платформу")).arg(m_jumpsMax));
     ui->edFallHeight->setValue(params["fall_height"].toInt());
+    ui->pbTimeTest->setVisible(m_testFinishKind == JumpPlateDefines::tfkFixedTime);
 }
 
 void DropTestExecute::closeEvent(QCloseEvent *event)
@@ -211,19 +213,13 @@ void DropTestExecute::iterate(const bool isStart)
                     setStage(dtsResult);
                     m_timeNoContact = (m_plt1Time + m_plt2Time) / 2.0;
                     double height = (9.8 * pow(m_timeNoContact, 2)) / 8 * 100;
-                    double power = 0;
-                    double rsi = 0;
-                    if (m_timeContact > 0)
-                    {
-                        power = m_kard.massa * 9.8 * (ui->edFallHeight->value() * 1.226 * pow(m_timeNoContact, 2)) / m_timeContact;
-                        rsi = height / m_timeContact;
-                    }
 
-                    double stifZn = (pow(m_timeContact, 2) *((m_timeContact + m_timeNoContact) /* /n */ - m_timeContact / 4));
+                    double power = 0;
                     double stiffness = 0;
-                    if (stifZn != 0)
-                        stiffness = (m_kard.massa * /* *n */ (m_timeContact + m_timeNoContact)) / stifZn;
-                    double initialSpeed = sqrt(2 * 9.8 * height);  // sqrt(2*g*h)
+                    double initialSpeed = 0;
+                    double rsi = 0;
+                    DropTestFactors::calculateAdvFactors(m_timeContact, m_timeNoContact, ui->edFallHeight->value(), height, m_kard.massa,
+                                                         power, stiffness, initialSpeed, rsi);
 
                     auto *itemN = new QStandardItem(QString::number(m_jumpsCount + 1));
                     itemN->setEditable(false);

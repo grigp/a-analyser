@@ -61,6 +61,10 @@ ChannelsUtils::ChannelsUtils()
                                                                     std::make_tuple(QString("Теппинг тест"),
                                                                                     QString("Тепп.тест"),
                                                                                     ChannelsDefines::ctTeppingData))
+                 , std::pair<QString, ChannelsDefines::ChannelInfo>(ChannelsDefines::chanDropTestData,
+                                                                    std::make_tuple(QString("Дроп тест"),
+                                                                                    QString("Дроп тест"),
+                                                                                    ChannelsDefines::ctDropTestData))
                  , std::pair<QString, ChannelsDefines::ChannelInfo>(ChannelsDefines::chanHopping,
                                                                     std::make_tuple(QString("Соскакивание на платформу"),
                                                                                     QString("JOP"),
@@ -76,6 +80,7 @@ ChannelsUtils::ChannelsUtils()
                 , std::pair<QString, QString>(ChannelsDefines::ctJumpSingleHeight, ChannelsDefines::cfNoSignal)
                 , std::pair<QString, QString>(ChannelsDefines::ctJumpHeight, ChannelsDefines::cfNoSignal)
                 , std::pair<QString, QString>(ChannelsDefines::ctTeppingData, ChannelsDefines::cfNoSignal)
+                , std::pair<QString, QString>(ChannelsDefines::ctDropTestData, ChannelsDefines::cfNoSignal)
                 , std::pair<QString, QString>(ChannelsDefines::ctHopping, ChannelsDefines::cfNoSignal)
                 , std::pair<QString, QString>(ChannelsDefines::ctTrenResult, ChannelsDefines::cfNoSignal)
                 })

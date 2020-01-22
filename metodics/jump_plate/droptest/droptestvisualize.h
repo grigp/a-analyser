@@ -7,6 +7,8 @@ namespace Ui {
 class DropTestVisualize;
 }
 
+class DropTestCalculator;
+
 /*!
  * \brief Виджет показа результатов дроп теста DropTestVisualize class
  */
@@ -22,6 +24,10 @@ public:
 
 private:
     Ui::DropTestVisualize *ui;
+
+    int getPatientMassa(const QString &testUid);
+
+    DropTestCalculator* m_calculator {nullptr};
 };
 
 #endif // DROPTESTVISUALIZE_H

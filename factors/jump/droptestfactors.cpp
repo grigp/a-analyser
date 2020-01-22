@@ -6,6 +6,8 @@
 #include "channelsutils.h"
 #include "jumpplatedata.h"
 
+#include <QDebug>
+
 DropTestFactors::DropTestFactors(const QString &testUid,
                                const QString &probeUid,
                                const QString &channelId,
@@ -51,20 +53,22 @@ void DropTestFactors::calculate()
             djf.timeNoContact = data.jump(i).timeNoContact;
             djf.fallHeight = data.jump(i).fallHeight;
 
-            djf.power = 0;
-            djf.rsi = 0;
-            if (djf.timeContact > 0)
-            {
-                djf.power = massa * 9.8 * (djf.fallHeight * 1.226 * pow(djf.timeNoContact, 2)) / djf.timeContact;
-                djf.rsi = djf.height / djf.timeContact;
-            }
+//            djf.power = 0;
+//            djf.rsi = 0;
+//            if (djf.timeContact > 0)
+//            {
+//                djf.power = massa * 9.8 * (djf.fallHeight * 1.226 * pow(djf.timeNoContact, 2)) / djf.timeContact;
+//                djf.rsi = djf.height / djf.timeContact;
+//            }
 
-            double stifZn = (pow(djf.timeContact, 2) *((djf.timeContact + djf.timeNoContact) /* /n */ - djf.timeContact / 4));
-            djf.stiffness = 0;
-            if (stifZn != 0)
-                djf.stiffness = (massa * /* *n */ (djf.timeContact + djf.timeNoContact)) / stifZn;
-            djf.initialSpeed = sqrt(2 * 9.8 * djf.height);  //! sqrt(2*g*h)
+//            double stifZn = (pow(djf.timeContact, 2) *((djf.timeContact + djf.timeNoContact) /* /n */ - djf.timeContact / 4));
+//            djf.stiffness = 0;
+//            if (stifZn != 0)
+//                djf.stiffness = (massa * /* *n */ (djf.timeContact + djf.timeNoContact)) / stifZn;
+//            djf.initialSpeed = sqrt(2 * 9.8 * djf.height);  //! sqrt(2*g*h)
 
+            calculateAdvFactors(djf.timeContact, djf.timeNoContact, djf.fallHeight, djf.height, massa,
+                                djf.power, djf.stiffness, djf.initialSpeed, djf.rsi);
 
             avgHeight = avgHeight + data.jump(i).height;
             avgContactTime = avgContactTime + data.jump(i).timeContact;
@@ -121,6 +125,25 @@ SignalsDefines::DropJumpFactors DropTestFactors::jump(const int idx) const
 {
     Q_ASSERT(idx >= 0 && idx < m_jumps.size());
     return m_jumps.at(idx);
+}
+
+void DropTestFactors::calculateAdvFactors(const double timeContact, const double timeNoContact, const double fallHeight,
+                                          const double height, const double massa,
+                                          double &power, double &stiffness, double &initialSpeed, double &rsi)
+{
+    power = 0;
+    rsi = 0;
+    if (timeContact > 0)
+    {
+        power = massa * 9.8 * (fallHeight * 1.226 * pow(timeNoContact, 2)) / timeContact;
+        rsi = height / timeContact;
+    }
+
+    double stifZn = (pow(timeContact, 2) *((timeContact + timeNoContact) /* /n */ - timeContact / 4));
+    stiffness = 0;
+    if (stifZn != 0)
+        stiffness = (massa * /* *n */ (timeContact + timeNoContact)) / stifZn;
+    initialSpeed = sqrt(2 * 9.8 * height);  // sqrt(2*g*h)
 }
 
 int DropTestFactors::getPatientMassa()

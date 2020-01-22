@@ -59,6 +59,24 @@ public:
     */
    SignalsDefines::DropJumpFactors jump(const int idx) const;
 
+   /*!
+    * \brief Расчет дополнительных показателей дроп теста
+    * Входные параметры:
+    * \param timeContact - время контактной фазы
+    * \param timeNoContact - время бесконтактной фазы
+    * \param fallHeight - высота соскакивания
+    * \param height - высота прыжка
+    * \param massa - масса пациента
+    * Рассчитываемые параметры:
+    * \param power - мощность
+    * \param stiffness - жесткость
+    * \param initialSpeed - начальная скорость
+    * \param rsi - индекс прыгучести
+    */
+   static void calculateAdvFactors(const double timeContact, const double timeNoContact, const double fallHeight,
+                                   const double height, const double massa,
+                                   double &power, double &stiffness, double &initialSpeed, double &rsi);
+
 private:
    int getPatientMassa();
 
