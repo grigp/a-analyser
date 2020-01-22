@@ -113,7 +113,9 @@ void StabTestExecute::start()
         ui->lblProbeTitle->setText(probeParams().name + " - " + m_kard.fio);
         m_trd->newTest(m_kard.uid, mi.uid);
 
-        showPatientWindow(m_params.at(m_probe).stimulCode);
+        m_patientWinPresent = SettingsProvider::valueFromRegAppCopy("", "PatientWindow", static_cast<QVariant>(true)).toBool();
+        if (m_patientWinPresent && QApplication::desktop()->screenCount() > 1)
+            showPatientWindow(m_params.at(m_probe).stimulCode);
         ui->cbScale->setCurrentIndex(m_params.at(m_probe).scale);
 
         ui->wgtAdvChannels->assignDriver(m_driver, m_trd);
@@ -249,6 +251,11 @@ void StabTestExecute::recording()
         }
 
         initRecSignals();
+        if (!(m_patientWinPresent && QApplication::desktop()->screenCount() > 1))
+        {
+            showPatientWindow(m_params.at(m_probe).stimulCode);
+            scaleChange(m_params.at(m_probe).scale);
+        }
         if (m_patientWin)
             m_patientWin->run();
     }
@@ -256,6 +263,8 @@ void StabTestExecute::recording()
     {
         if (m_patientWin)
             m_patientWin->stop();
+        if (!(m_patientWinPresent && QApplication::desktop()->screenCount() > 1))
+            hidePatientWindow();
 
         ui->btnRecord->setIcon(QIcon(":/images/Save.png"));
         ui->btnRecord->setText(tr("Запись"));
@@ -340,7 +349,8 @@ void StabTestExecute::nextProbe()
         ui->btnRecord->setText(tr("Запись"));
         ui->pbRec->setValue(0);
 
-        showPatientWindow(m_params.at(m_probe).stimulCode);
+        if (m_patientWinPresent && QApplication::desktop()->screenCount() > 1)
+            showPatientWindow(m_params.at(m_probe).stimulCode);
         ui->cbScale->setCurrentIndex(m_params.at(m_probe).scale);
 
         ui->btnZeroing->setVisible(m_params.at(m_probe).zeroingEnabled);
@@ -378,12 +388,17 @@ void StabTestExecute::showPatientWindow(const int winCode)
 
     if (m_patientWin)
     {
-        auto rect = QApplication::desktop()->screenGeometry(0);
-        if (QApplication::desktop()->screenCount() > 1)
-            rect = QApplication::desktop()->screenGeometry(1);
-
-        m_patientWin->resize(rect.size());
-        m_patientWin->move(rect.x(), rect.y());
+        auto size = QApplication::desktop()->availableGeometry(0).size();
+        auto x = QApplication::desktop()->availableGeometry(0).x();
+        auto y = QApplication::desktop()->availableGeometry(0).y();
+        if (m_patientWinPresent && QApplication::desktop()->screenCount() > 1)
+        {
+            size = QApplication::desktop()->availableGeometry(1).size();
+            x = QApplication::desktop()->availableGeometry(1).x();
+            y = QApplication::desktop()->availableGeometry(1).y();
+        }
+        m_patientWin->resize(size);
+        m_patientWin->move(x, y);
 
         m_patientWin->show();
     }
