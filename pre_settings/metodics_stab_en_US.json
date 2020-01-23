@@ -189,6 +189,1142 @@
                     }
                 ]
             }
+        },
+        {
+            "uid": "{CFCCCAA0-A520-49EF-9C04-EB57580E8CAD}",
+            "name": "Trenager \"Balls\"",
+            "template": "met_trentakeput_uid",
+            "build_norms": false,
+            "params":
+            {
+                "take_zones": [
+                    {
+                        "position": "random",
+                        "x_min": -700,
+                        "x_max": 700,
+                        "y_min": -700,
+                        "y_max": 0,
+                        "width": 50,
+                        "height": 50
+                    }
+                ],
+                "take_elements": [
+                    {
+                        "style": "picture_fixed",
+                        "images": "ball.png",
+                        "repaint": true,
+                        "color": "ffffff00",
+                        "enabled": true,
+                        "code": 1
+                    }
+                ],
+                "take_order": {
+                    "mode": "enabled_primary",
+                    "time": 0
+                },
+                "put_zones": [
+                    {
+                        "position": "fixed",
+                        "x": -670,
+                        "y": 600,
+                        "width": 200,
+                        "height": 200
+                    },
+                    {
+                        "position": "fixed",
+                        "x": 0,
+                        "y": 600,
+                        "width": 200,
+                        "height": 200
+                    },
+                    {
+                        "position": "fixed",
+                        "x": 670,
+                        "y": 600,
+                        "width": 200,
+                        "height": 200
+                    }
+                ],
+                "put_elements": [
+                    {
+                        "style": "picture_fixed",
+                        "images": "basket.png",
+                        "repaint": true,
+                        "color": "ffffff00",
+                        "enabled": true,
+                        "code": 1
+                    },
+                    {
+                        "style": "picture_fixed",
+                        "images": "basket.png",
+                        "repaint": true,
+                        "color": "ffffffff",
+                        "enabled": false,
+                        "code": 0
+                    }
+                ],
+                "put_order": {
+                    "mode": "enabled_primary",
+                    "time": 0
+                },
+                "marker":
+                {
+                    "style": "picture",
+                    "image": "Marker1.png",
+                    "repaint": true,
+                    "color": "ffff0000"
+                },
+                "background": {
+                    "borders": {
+                        "bottom": 130,
+                        "left": 160,
+                        "right": 160,
+                        "top": 130
+                    },
+                    "image": "background_01.png",
+                    "style": "picture"
+                },
+                "sounds":
+                {
+                    "ok": "03.wav",
+                    "error": "04.wav",
+                    "scene": "05.wav"
+                },
+                "stage": "take_put",
+                "delay_after_stage": 0,
+                "scale": 1,
+                "time": 120
+            }
+        },
+        {
+            "uid": "{BE743459-AF91-428A-9862-E177D614ABD3}",
+            "name": "Trenager \"Colored balls\"",
+            "template": "met_trentakeput_uid",
+            "build_norms": false,
+            "params":
+            {
+                "take_zones": [
+                    {
+                        "position": "fixed",
+                        "x": -670,
+                        "y": -800,
+                        "width": 50,
+                        "height": 50
+                    },
+                    {
+                        "position": "fixed",
+                        "x": 0,
+                        "y": -800,
+                        "width": 50,
+                        "height": 50
+                    },
+                    {
+                        "position": "fixed",
+                        "x": 670,
+                        "y": -800,
+                        "width": 50,
+                        "height": 50
+                    }
+                ],
+                "take_elements": [
+                    {
+                        "style": "picture_fixed",
+                        "images": "ball.png",
+                        "repaint": true,
+                        "color": "ffffff00",
+                        "enabled": true,
+                        "code": 1
+                    },
+                    {
+                        "style": "picture_fixed",
+                        "images": "ball.png",
+                        "repaint": true,
+                        "color": "ffff0000",
+                        "enabled": true,
+                        "code": 2
+                    },
+                    {
+                        "style": "picture_fixed",
+                        "images": "ball.png",
+                        "repaint": true,
+                        "color": "ff00ff00",
+                        "enabled": true,
+                        "code": 3
+                    }
+                ],
+                "take_order": {
+                    "mode": "all_by_order",
+                    "time": 0
+                },
+                "put_zones": [
+                    {
+                        "position": "fixed",
+                        "x": -670,
+                        "y": 700,
+                        "width": 200,
+                        "height": 200
+                    },
+                    {
+                        "position": "fixed",
+                        "x": 0,
+                        "y": 700,
+                        "width": 200,
+                        "height": 200
+                    },
+                    {
+                        "position": "fixed",
+                        "x": 670,
+                        "y": 700,
+                        "width": 200,
+                        "height": 200
+                    }
+                ],
+                "put_elements": [
+                    {
+                        "style": "picture_fixed",
+                        "images": "basket.png",
+                        "repaint": true,
+                        "color": "ffffff00",
+                        "enabled": true,
+                        "code": 1
+                    },
+                    {
+                        "style": "picture_fixed",
+                        "images": "basket.png",
+                        "repaint": true,
+                        "color": "ffff0000",
+                        "enabled": true,
+                        "code": 2
+                    },
+                    {
+                        "style": "picture_fixed",
+                        "images": "basket.png",
+                        "repaint": true,
+                        "color": "ff00ff00",
+                        "enabled": true,
+                        "code": 3
+                    }
+                ],
+                "put_order": {
+                    "mode": "all_by_order",
+                    "time": 0
+                },
+                "marker":
+                {
+                    "style": "picture",
+                    "image": "Marker1.png",
+                    "repaint": true,
+                    "color": "ffff0000"
+                },
+                "background": {
+                    "borders": {
+                        "bottom": 50,
+                        "left": 40,
+                        "right": 40,
+                        "top": 50
+                    },
+                    "image": "background_04.png",
+                    "style": "picture"
+                },
+                "sounds":
+                {
+                    "ok": "03.wav",
+                    "error": "04.wav",
+                    "scene": "05.wav"
+                },
+                "stage": "all_elements",
+                "delay_after_stage": 0,
+                "scale": 1,
+                "time": 120
+            }
+        },
+        {
+            "uid": "{24Bf2A64-064F-4264-85BD-F5F62AF7A804}",
+            "name": "Trenager \"Figures\"",
+            "template": "met_trentakeput_uid",
+            "build_norms": false,
+            "params":
+            {
+                "take_zones": [
+                    {
+                        "position": "fixed",
+                        "x": -670,
+                        "y": -700,
+                        "width": 50,
+                        "height": 50
+                    },
+                    {
+                        "position": "fixed",
+                        "x": 0,
+                        "y": -700,
+                        "width": 50,
+                        "height": 50
+                    },
+                    {
+                        "position": "fixed",
+                        "x": 670,
+                        "y": -700,
+                        "width": 50,
+                        "height": 50
+                    }
+                ],
+                "take_elements": [
+                    {
+                        "style": "picture_fixed",
+                        "images": "ball.png",
+                        "repaint": true,
+                        "color": "ffffff00",
+                        "enabled": true,
+                        "code": 1
+                    },
+                    {
+                        "style": "picture_fixed",
+                        "images": "cube.png",
+                        "repaint": true,
+                        "color": "ffffff00",
+                        "enabled": false,
+                        "code": 0
+                    },
+                    {
+                        "style": "picture_fixed",
+                        "images": "piramide.png",
+                        "repaint": true,
+                        "color": "ffffff00",
+                        "enabled": false,
+                        "code": 0
+                    }
+                ],
+                "take_order": {
+                    "mode": "enabled_primary",
+                    "time": 0
+                },
+                "put_zones": [
+                    {
+                        "position": "fixed",
+                        "x": -670,
+                        "y": 600,
+                        "width": 200,
+                        "height": 200
+                    },
+                    {
+                        "position": "fixed",
+                        "x": 0,
+                        "y": 600,
+                        "width": 200,
+                        "height": 200
+                    },
+                    {
+                        "position": "fixed",
+                        "x": 670,
+                        "y": 600,
+                        "width": 200,
+                        "height": 200
+                    }
+                ],
+                "put_elements": [
+                    {
+                        "style": "picture_fixed",
+                        "images": "basket.png",
+                        "repaint": true,
+                        "color": "ffffff00",
+                        "enabled": true,
+                        "code": 1
+                    },
+                    {
+                        "style": "picture_fixed",
+                        "images": "basket.png",
+                        "repaint": true,
+                        "color": "ffffffff",
+                        "enabled": false,
+                        "code": 0
+                    }
+                ],
+                "put_order": {
+                    "mode": "enabled_primary",
+                    "time": 0
+                },
+                "marker":
+                {
+                    "style": "picture",
+                    "image": "Marker1.png",
+                    "repaint": true,
+                    "color": "ffff0000"
+                },
+                "background": {
+                    "borders": {
+                        "bottom": 70,
+                        "left": 75,
+                        "right": 75,
+                        "top": 70
+                    },
+                    "image": "background_02.png",
+                    "style": "picture"
+                },
+                "sounds":
+                {
+                    "ok": "03.wav",
+                    "error": "04.wav",
+                    "scene": "05.wav"
+                },
+                "stage": "take_put",
+                "delay_after_stage": 0,
+                "scale": 1,
+                "time": 120
+            }
+        },
+        {
+            "uid": "{D03ACE59-9144-42CB-B4BC-9970349906D9}",
+            "name": "Trenager \"Figures by cross\"",
+            "template": "met_trentakeput_uid",
+            "build_norms": false,
+            "params":
+            {
+                "take_zones": [
+                    {
+                        "position": "fixed",
+                        "x": 0,
+                        "y": 700,
+                        "width": 50,
+                        "height": 50
+                    },
+                    {
+                        "position": "fixed",
+                        "x": 700,
+                        "y": 0,
+                        "width": 50,
+                        "height": 50
+                    },
+                    {
+                        "position": "fixed",
+                        "x": 0,
+                        "y": -700,
+                        "width": 50,
+                        "height": 50
+                    },
+                    {
+                        "position": "fixed",
+                        "x": -700,
+                        "y": 0,
+                        "width": 50,
+                        "height": 50
+                    }
+                ],
+                "take_elements": [
+                    {
+                        "style": "picture_fixed",
+                        "images": "ball.png",
+                        "repaint": true,
+                        "color": "ffffff00",
+                        "enabled": true,
+                        "code": 1
+                    },
+                    {
+                        "style": "picture_fixed",
+                        "images": "cube.png",
+                        "repaint": true,
+                        "color": "ffffff00",
+                        "enabled": false,
+                        "code": 0
+                    },
+                    {
+                        "style": "picture_fixed",
+                        "images": "piramide.png",
+                        "repaint": true,
+                        "color": "ffffff00",
+                        "enabled": false,
+                        "code": 0
+                    },
+                    {
+                        "style": "picture_fixed",
+                        "images": "cone.png",
+                        "repaint": true,
+                        "color": "ffffff00",
+                        "enabled": false,
+                        "code": 0
+                    }
+                ],
+                "take_order": {
+                    "mode": "enabled_primary",
+                    "time": 0
+                },
+                "put_zones": [
+                    {
+                        "position": "fixed",
+                        "x": 0,
+                        "y": 0,
+                        "width": 200,
+                        "height": 200
+                    }
+                ],
+                "put_elements": [
+                    {
+                        "style": "picture_fixed",
+                        "images": "basket.png",
+                        "repaint": true,
+                        "color": "ffffff00",
+                        "enabled": true,
+                        "code": 1
+                    }
+                ],
+                "put_order": {
+                    "mode": "enabled_primary",
+                    "time": 0
+                },
+                "marker":
+                {
+                    "style": "picture",
+                    "image": "Marker1.png",
+                    "repaint": true,
+                    "color": "ffff0000"
+                },
+                "background": {
+                    "borders": {
+                        "bottom": 110,
+                        "left": 140,
+                        "right": 140,
+                        "top": 110
+                    },
+                    "image": "background_03.png",
+                    "style": "picture"
+                },
+                "sounds":
+                {
+                    "ok": "03.wav",
+                    "error": "04.wav",
+                    "scene": "05.wav"
+                },
+                "stage": "take_put",
+                "delay_after_stage": 0,
+                "scale": 1,
+                "time": 120
+            }
+        },
+        {
+            "uid": "{BDE82084-9568-4A7C-BA11-33A20BB14072}",
+            "name": "Trenager \"Puzzle\"",
+            "template": "met_trentakeput_uid",
+            "build_norms": false,
+            "params":
+            {
+                "take_zones": [
+                    {
+                        "position": "fixed",
+                        "x": -750,
+                        "y": -750,
+                        "width": 500,
+                        "height": 500
+                    },
+                    {
+                        "position": "fixed",
+                        "x": -250,
+                        "y": -750,
+                        "width": 500,
+                        "height": 500
+                    },
+                    {
+                        "position": "fixed",
+                        "x": 250,
+                        "y": -750,
+                        "width": 500,
+                        "height": 500
+                    },
+                    {
+                        "position": "fixed",
+                        "x": 750,
+                        "y": -750,
+                        "width": 500,
+                        "height": 500
+                    }
+                ],
+                "take_elements": [
+                    {
+                        "style": "picture_split",
+                        "images": "pictures//puzzle//",
+                        "repaint": false,
+                        "enabled": true,
+                        "code": -1
+                    }
+                ],
+                "take_order": {
+                    "mode": "all_by_order",
+                    "time": 1
+                },
+                "put_zones": [
+                    {
+                        "position": "fixed",
+                        "x": -250,
+                        "y": 0,
+                        "width": 500,
+                        "height": 500,
+                        "positionCode": 101
+                    },
+                    {
+                        "position": "fixed",
+                        "x": 250,
+                        "y": 0,
+                        "width": 500,
+                        "height": 500,
+                        "positionCode": 102
+                    },
+                    {
+                        "position": "fixed",
+                        "x": -250,
+                        "y": 500,
+                        "width": 500,
+                        "height": 500,
+                        "positionCode": 201
+                    },
+                    {
+                        "position": "fixed",
+                        "x": 250,
+                        "y": 500,
+                        "width": 500,
+                        "height": 500,
+                        "positionCode": 202
+                    }
+                ],
+                "put_elements": [
+                    {
+                        "style": "drawing",
+                        "drawing": "rectangle",
+                        "color": "fff0f0f0",
+                        "enabled": true,
+                        "code": -1
+                    }
+                ],
+                "put_order": {
+                    "mode": "all_by_order",
+                    "time": 1
+                },
+                "marker":
+                {
+                    "style": "picture",
+                    "image": "Marker1.png",
+                    "repaint": true,
+                    "color": "ffff0000"
+                },
+                "background": {
+                    "borders": {
+                        "bottom": 0,
+                        "left": 0,
+                        "right": 0,
+                        "top": 0
+                    },
+                    "image": "01.png",
+                    "style": "plate"
+                },
+                "sounds":
+                {
+                    "ok": "03.wav",
+                    "error": "04.wav",
+                    "scene": "05.wav"
+                },
+                "stage": "all_elements",
+                "delay_after_stage": 500,
+                "scale": 1,
+                "time": 300
+            }
+        },
+        {
+            "uid": "{72EF6357-B6B0-48FF-9206-7A5D56ABB788 }",
+            "name": "Trenager \"World capitals\"",
+            "template": "met_trentakeput_uid",
+            "build_norms": false,
+            "params":
+            {
+                "take_zones": [
+                    {
+                        "position": "fixed",
+                        "x": -750,
+                        "y": -750,
+                        "width": 500,
+                        "height": 500
+                    },
+                    {
+                        "position": "fixed",
+                        "x": -250,
+                        "y": -750,
+                        "width": 500,
+                        "height": 500
+                    },
+                    {
+                        "position": "fixed",
+                        "x": 250,
+                        "y": -750,
+                        "width": 500,
+                        "height": 500
+                    },
+                    {
+                        "position": "fixed",
+                        "x": 750,
+                        "y": -750,
+                        "width": 500,
+                        "height": 500
+                    }
+                ],
+                "take_elements": [
+                    {
+                        "style": "picture_pair",
+                        "images": "pictures//capitals//",
+                        "repaint": false,
+                        "enabled": true,
+                        "code": -1
+                    }
+                ],
+                "take_order": {
+                    "mode": "all_by_order",
+                    "time": 1
+                },
+                "put_zones": [
+                    {
+                        "position": "fixed",
+                        "x": -750,
+                        "y": 600,
+                        "width": 500,
+                        "height": 500
+                    },
+                    {
+                        "position": "fixed",
+                        "x": -250,
+                        "y": 600,
+                        "width": 500,
+                        "height": 500
+                    },
+                    {
+                        "position": "fixed",
+                        "x": 250,
+                        "y": 600,
+                        "width": 500,
+                        "height": 500
+                    },
+                    {
+                        "position": "fixed",
+                        "x": 750,
+                        "y": 600,
+                        "width": 500,
+                        "height": 500
+                    }
+                ],
+                "put_elements": [
+                    {
+                        "style": "picture_pair",
+                        "images": "pictures//capitals//",
+                        "repaint": false,
+                        "enabled": true,
+                        "code": -1
+                    }
+                ],
+                "put_order": {
+                    "mode": "all_by_order",
+                    "time": 1
+                },
+                "marker":
+                {
+                    "style": "picture",
+                    "image": "Marker1.png",
+                    "repaint": true,
+                    "color": "ffff0000"
+                },
+                "background":
+                {
+                     "style": "picture",
+                     "image": "background_01.png",
+                     "borders":
+                     {
+                        "bottom": 60,
+                        "left": 65,
+                        "right": 65,
+                        "top": 60
+                     }
+                },
+                "sounds":
+                {
+                    "ok": "03.wav",
+                    "error": "04.wav",
+                    "scene": "05.wav"
+                },
+                "stage": "all_elements",
+                "delay_after_stage": 0,
+                "scale": 1,
+                "time": 120
+            }
+        },
+        {
+            "uid": "{1E383953-2062-43DA-9AE8-0D73F2258FC5}",
+            "name": "Trenager \"Hunter\"",
+            "template": "met_trentakeput_uid",
+            "build_norms": false,
+            "params":
+            {
+                "take_zones": [
+                    {
+                        "position": "random",
+                        "x_min": -700,
+                        "x_max": 700,
+                        "y_min": -700,
+                        "y_max": 700,
+                        "width": 500,
+                        "height": 500
+                    }
+                ],
+                "take_elements": [
+                    {
+                        "style": "picture_random",
+                        "images": "pictures//animals//",
+                        "repaint": false,
+                        "enabled": true,
+                        "code": 1
+                    }
+                ],
+                "take_order": {
+                    "mode": "enabled_primary",
+                    "time": 2
+                },
+                "put_zones": [
+                ],
+                "put_elements": [
+                ],
+                "put_order": {
+                    "mode": "enabled_primary",
+                    "time": 0
+                },
+                "marker":
+                {
+                    "style": "picture",
+                    "image": "Marker3.png",
+                    "repaint": true,
+                    "color": "ffff0000"
+                },
+                "background": {
+                    "borders": {
+                        "bottom": 0,
+                        "left": 0,
+                        "right": 0,
+                        "top": 0
+                    },
+                    "image": "03.png",
+                    "style": "plate"
+                },
+                "sounds":
+                {
+                    "ok": "02.wav",
+                    "error": "",
+                    "scene": ""
+                },
+                "stage": "all_elements",
+                "delay_after_stage": 0,
+                "scale": 1,
+                "time": 120
+            }
+        },
+        {
+            "uid": "{951DD0E9-E535-4BBB-8F54-DA53859A43C2}",
+            "name": "Trenager \"Hunting with time limit\"",
+            "template": "met_trentakeput_uid",
+            "build_norms": false,
+            "params":
+            {
+                "take_zones": [
+                    {
+                        "position": "random",
+                        "x_min": -700,
+                        "x_max": 700,
+                        "y_min": -700,
+                        "y_max": 700,
+                        "width": 500,
+                        "height": 500
+                    }
+                ],
+                "take_elements": [
+                    {
+                        "style": "picture_random",
+                        "images": "pictures//animals//",
+                        "repaint": false,
+                        "enabled": true,
+                        "code": 1,
+                        "present_time": 5015
+                    }
+                ],
+                "take_order": {
+                    "mode": "enabled_primary",
+                    "time": 2
+                },
+                "put_zones": [
+                ],
+                "put_elements": [
+                ],
+                "put_order": {
+                    "mode": "enabled_primary",
+                    "time": 0
+                },
+                "marker":
+                {
+                    "style": "picture",
+                    "image": "Marker3.png",
+                    "repaint": true,
+                    "color": "ffff0000"
+                },
+                "background": {
+                    "borders": {
+                        "bottom": 0,
+                        "left": 0,
+                        "right": 0,
+                        "top": 0
+                    },
+                    "image": "03.png",
+                    "style": "plate"
+                },
+                "sounds":
+                {
+                    "ok": "02.wav",
+                    "error": "04.wav",
+                    "scene": ""
+                },
+                "stage": "all_elements",
+                "delay_after_stage": 0,
+                "scale": 1,
+                "time": 120
+            }
+        },
+        {
+            "uid": "{7B3EBE0D-E670-4fC3-B4E4-DffC74857A21}",
+            "name": "Trenager \"Shooting gallery\"",
+            "template": "met_trentakeput_uid",
+            "build_norms": false,
+            "params":
+            {
+                "take_zones": [
+                    {
+                        "position": "fixed",
+                        "x": -800,
+                        "y": -500,
+                        "width": 500,
+                        "height": 500
+                    },
+                    {
+                        "position": "fixed",
+                        "x": 0,
+                        "y": -500,
+                        "width": 500,
+                        "height": 500
+                    },
+                    {
+                        "position": "fixed",
+                        "x": 800,
+                        "y": -500,
+                        "width": 500,
+                        "height": 500
+                    },
+                    {
+                        "position": "fixed",
+                        "x": -800,
+                        "y": 300,
+                        "width": 500,
+                        "height": 500
+                    },
+                    {
+                        "position": "fixed",
+                        "x": 800,
+                        "y": 300,
+                        "width": 500,
+                        "height": 500
+                    }
+                ],
+                "take_elements": [
+                    {
+                        "style": "picture_random",
+                        "images": "pictures//animals//",
+                        "repaint": false,
+                        "enabled": true,
+                        "code": 1,
+                        "present_time": 10025
+                    }
+                ],
+                "take_order": {
+                    "mode": "all_by_order",
+                    "time": 2
+                },
+                "put_zones": [
+                ],
+                "put_elements": [
+                ],
+                "put_order": {
+                    "mode": "enabled_primary",
+                    "time": 0
+                },
+                "marker":
+                {
+                    "style": "picture",
+                    "image": "Marker3.png",
+                    "repaint": true,
+                    "color": "ffff0000"
+                },
+                "background": {
+                    "borders": {
+                        "bottom": 0,
+                        "left": 0,
+                        "right": 0,
+                        "top": 0
+                    },
+                    "image": "03.png",
+                    "style": "plate"
+                },
+                "sounds":
+                {
+                    "ok": "02.wav",
+                    "error": "04.wav",
+                    "scene": ""
+                },
+                "stage": "all_elements",
+                "delay_after_stage": 0,
+                "scale": 1,
+                "time": 120
+            }
+        },
+        {
+            "uid": "{00B91519-842A-450D-93F1-1ADf104CDC0E}",
+            "name": "Тренажер \"Bird hunting\"",
+            "template": "met_trentakeput_uid",
+            "build_norms": false,
+            "params":
+            {
+                "take_zones": [
+                    {
+                        "position": "random",
+                        "x_min": -900,
+                        "x_max": -900,
+                        "y_min": -900,
+                        "y_max": 0,
+                        "width": 200,
+                        "height": 200
+                    }
+                ],
+                "take_elements": [
+                    {
+                        "style": "picture_random",
+                        "images": "pictures//birds//",
+                        "repaint": false,
+                        "enabled": true,
+                        "code": 1,
+                        "mobile": true,
+                        "moving_law": "left_to_right",
+                        "moving_max_speed": 7
+                    }
+                ],
+                "take_order": {
+                    "mode": "enabled_primary",
+                    "time": 1
+                },
+                "put_zones": [
+                ],
+                "put_elements": [
+                ],
+                "put_order": {
+                    "mode": "enabled_primary",
+                    "time": 0
+                },
+                "marker":
+                {
+                    "style": "picture",
+                    "image": "Marker3.png",
+                    "repaint": true,
+                    "color": "ffff0000"
+                },
+                "background": {
+                    "borders": {
+                        "bottom": 0,
+                        "left": 0,
+                        "right": 0,
+                        "top": 0
+                    },
+                    "image": "background_07.png",
+                    "style": "picture"
+                },
+                "sounds":
+                {
+                    "ok": "02.wav",
+                    "error": "04.wav",
+                    "scene": ""
+                },
+                "stage": "all_elements",
+                "delay_after_stage": 0,
+                "scale": 1,
+                "time": 120
+            }
+        },
+        {
+            "uid": "{03B9C401-061C-4FA4-BA98-6054FE8AE6BC}",
+            "name": "Trenager \"Air fight\"",
+            "template": "met_trentakeput_uid",
+            "build_norms": false,
+            "params":
+            {
+                "take_zones": [
+                    {
+                        "position": "random",
+                        "x_min": -700,
+                        "x_max": 700,
+                        "y_min": -700,
+                        "y_max": 700,
+                        "width": 500,
+                        "height": 500
+                    }
+                ],
+                "take_elements": [
+                    {
+                        "style": "picture_random",
+                        "images": "pictures//aviation//",
+                        "repaint": false,
+                        "enabled": true,
+                        "code": 1,
+                        "done_process" : "bang",
+                        "mobile": true,
+                        "moving_law": "random_force",
+                        "moving_max_force": 25
+                    }
+                ],
+                "take_order": {
+                    "mode": "enabled_primary",
+                    "time": 2
+                },
+                "put_zones": [
+                ],
+                "put_elements": [
+                ],
+                "put_order": {
+                    "mode": "enabled_primary",
+                    "time": 0
+                },
+                "marker":
+                {
+                    "style": "picture",
+                    "image": "Marker3.png",
+                    "repaint": true,
+                    "color": "ffff0000",
+                    "advanced": "trace_on_target"
+                },
+                "background": {
+                    "borders": {
+                        "bottom": 0,
+                        "left": 0,
+                        "right": 0,
+                        "top": 0
+                    },
+                    "image": "background_06.png",
+                    "style": "picture"
+                },
+                "sounds":
+                {
+                    "ok": "06.wav",
+                    "error": "",
+                    "scene": "",
+                    "on_target": "01.wav"
+                },
+                "stage": "all_elements",
+                "delay_after_stage": 500,
+                "scale": 1,
+                "time": 120
+            }
         }
     ]
 }

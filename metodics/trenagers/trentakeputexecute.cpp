@@ -251,9 +251,10 @@ void TrenTakePutExecute::on_communicationError(const QString &drvName, const QSt
 
 void TrenTakePutExecute::on_selectChannel(int chanIdx)
 {
-    qDebug() << chanIdx
-             << ui->cbSelectChannel->itemData(chanIdx, ChannelsUtils::ChannelUidRole)
-             << ui->cbSelectChannel->itemData(chanIdx, ChannelsUtils::SubChanNumRole);
+    Q_UNUSED(chanIdx);
+//    qDebug() << chanIdx
+//             << ui->cbSelectChannel->itemData(chanIdx, ChannelsUtils::ChannelUidRole)
+//             << ui->cbSelectChannel->itemData(chanIdx, ChannelsUtils::SubChanNumRole);
 }
 
 void TrenTakePutExecute::on_zeroing()
@@ -856,6 +857,9 @@ void TrenTakePutExecute::fixingStage()
         }
         else
         {
+            ++m_score;
+            showFactors();
+
             ++m_putElementCount;
             if (m_soundSheme.ok != "")
             {
