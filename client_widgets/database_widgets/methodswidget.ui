@@ -87,15 +87,34 @@
     </widget>
    </item>
    <item>
-    <widget class="QTreeView" name="tvMetods">
-     <property name="font">
-      <font>
-       <pointsize>11</pointsize>
-      </font>
+    <widget class="QSplitter" name="splitter">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
      </property>
-     <attribute name="headerVisible">
-      <bool>false</bool>
-     </attribute>
+     <widget class="QListView" name="tvKinds">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+        <horstretch>0</horstretch>
+        <verstretch>1</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="viewMode">
+       <enum>QListView::IconMode</enum>
+      </property>
+     </widget>
+     <widget class="QListView" name="tvMetods">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+        <horstretch>0</horstretch>
+        <verstretch>3</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>11</pointsize>
+       </font>
+      </property>
+     </widget>
     </widget>
    </item>
    <item>
@@ -134,34 +153,18 @@
    </hints>
   </connection>
   <connection>
-   <sender>tvMetods</sender>
-   <signal>clicked(QModelIndex)</signal>
-   <receiver>MethodsWidget</receiver>
-   <slot>selectMetodic(QModelIndex)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>200</x>
-     <y>142</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>359</x>
-     <y>125</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>btnUnselect</sender>
    <signal>clicked()</signal>
    <receiver>MethodsWidget</receiver>
-   <slot>unselect()</slot>
+   <slot>unselectMetodic()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>240</x>
-     <y>403</y>
+     <x>296</x>
+     <y>400</y>
     </hint>
     <hint type="destinationlabel">
-     <x>357</x>
-     <y>349</y>
+     <x>356</x>
+     <y>347</y>
     </hint>
    </hints>
   </connection>
@@ -169,6 +172,6 @@
  <slots>
   <slot>editMetodParams()</slot>
   <slot>selectMetodic(QModelIndex)</slot>
-  <slot>unselect()</slot>
+  <slot>unselectMetodic()</slot>
  </slots>
 </ui>

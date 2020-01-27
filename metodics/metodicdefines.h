@@ -27,7 +27,9 @@ namespace MetodicDefines
     {
         QString uid;            ///< uid
         QString name;           ///< Название
+        QString imageName;      ///< Название ресурса картинки
         QString templateId;     ///< id шаблона методики
+        QString kindUid;        ///< uid типа методики
         int condition;          ///< Условия проведения
         bool buildNorms;        ///< Строить нормы по методике
         QJsonObject params;     ///< Параметры
@@ -36,7 +38,23 @@ namespace MetodicDefines
             uid = "";
             name = "";
             templateId = "";
+            kindUid = "";
             params = QJsonObject();
+        }
+    };
+
+    /*!
+     * \brief Структура описания типа методики  MetodicKindInfo struct
+     */
+    struct MetodicKindInfo
+    {
+        QString uid;
+        QString name;
+        QString imageName;
+        MetodicKindInfo()
+        {
+            uid = "";
+            name = "";
         }
     };
 

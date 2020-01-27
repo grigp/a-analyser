@@ -48,7 +48,7 @@ void removePatient(const QString &uid);
 /*!
  * \brief Возвращает полный список методик
  */
-QList<MetodicDefines::MetodicInfo> getListMetodisc();
+QList<MetodicDefines::MetodicInfo> getListMetodics();
 
 /*!
  * \brief Вызывает диалог редактирования параметров методики по uid методики
@@ -64,6 +64,15 @@ bool editMetodicParams(QWidget *parent, const QString &metUid);
  * \param metUid - uid методики
  */
 void execute(QWidget *parent, const QString &metUid);
+
+
+//! ---------------- Типы методик -------------------
+
+/*!
+ * \brief Возвращает полный список типов методик
+ */
+QList<MetodicDefines::MetodicKindInfo> getListMetodicKinds();
+
 
 //! ---------------- Тесты -------------------
 

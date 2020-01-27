@@ -14,7 +14,8 @@ HEADERS += \
     $$PWD/resultswidget.h \
     $$PWD/dynamicdatamodel.h \
     $$PWD/testpropertydialog.h \
-    $$PWD/emptywidget.h
+    $$PWD/emptywidget.h \
+    $$PWD/methodicproxymodel.h
 
 SOURCES += \
     $$PWD/patientswidget.cpp \
@@ -30,7 +31,8 @@ SOURCES += \
     $$PWD/resultswidget.cpp \
     $$PWD/dynamicdatamodel.cpp \
     $$PWD/testpropertydialog.cpp \
-    $$PWD/emptywidget.cpp
+    $$PWD/emptywidget.cpp \
+    $$PWD/methodicproxymodel.cpp
 
 FORMS += \
     $$PWD/patientswidget.ui \

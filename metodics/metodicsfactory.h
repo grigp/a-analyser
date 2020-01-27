@@ -18,6 +18,23 @@ public:
     ~MetodicsFactory();
 
     /*!
+     * \brief Возвращает кол-во типов методик
+     */
+    int metodicKindsCount() const;
+
+    /*!
+     * \brief Возвращает тип методики по номеру
+     * \param i - номер типа методики
+     */
+    MetodicDefines::MetodicKindInfo metodicKind(const int i) const;
+
+    /*!
+     * \brief Возвращает тип методики по uid
+     * \param kindUid - uid типа методики
+     */
+    MetodicDefines::MetodicKindInfo metodicKind(const QString &kindUid) const;
+
+    /*!
      * \brief Возвращает кол-во методик
      */
     int metodicsCount() const;
@@ -74,6 +91,7 @@ private:
     void appendNewMetodic(const QString &fnPreDefMetodics, const QString &fnMetodics);
 
     int getMetodicIndexByUid(const QString &uid) const;
+    int getMetodicKindIndexByUid(const QString &uid) const;
 
     MetodicTemplate *getMetodicTemplate(const QString &metUid) const;
 
@@ -82,6 +100,7 @@ private:
 
     QList<MetodicTemplate*> m_templates;
     QList<MetodicDefines::MetodicInfo> m_metodics;
+    QList<MetodicDefines::MetodicKindInfo> m_metodicKinds;
 };
 
 #endif // METODICSFACTORY_H

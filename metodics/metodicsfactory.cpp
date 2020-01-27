@@ -34,6 +34,24 @@ MetodicsFactory::~MetodicsFactory()
     m_templates.clear();
 }
 
+int MetodicsFactory::metodicKindsCount() const
+{
+    return m_metodicKinds.size();
+}
+
+MetodicDefines::MetodicKindInfo MetodicsFactory::metodicKind(const int i) const
+{
+    Q_ASSERT(i >= 0 && i < m_metodicKinds.size());
+    MetodicDefines::MetodicKindInfo retval = m_metodicKinds.at(i);
+    return retval;
+}
+
+MetodicDefines::MetodicKindInfo MetodicsFactory::metodicKind(const QString &kindUid) const
+{
+    auto mki = getMetodicKindIndexByUid(kindUid);
+    return metodicKind(mki);
+}
+
 int MetodicsFactory::metodicsCount() const
 {
     return m_metodics.size();
@@ -140,19 +158,35 @@ void MetodicsFactory::assignMetodics()
         QByteArray ba = fMet.readAll();
         QJsonDocument doc(QJsonDocument::fromJson(ba));
         QJsonObject root = doc.object();
-        QJsonArray mets = root["tests"].toArray();
 
+        //! Методики
+        QJsonArray mets = root["tests"].toArray();
         for (int i = 0; i < mets.size(); ++i)
         {
             auto met = mets[i].toObject();
             MetodicDefines::MetodicInfo mi;
             mi.uid = met["uid"].toString();
             mi.name = met["name"].toString();
+            mi.imageName = met["image"].toString();
             mi.templateId = met["template"].toString();
+            mi.kindUid = met["kind"].toString();
             mi.buildNorms = met["build_norms"].toBool();
             mi.params = met["params"].toObject();
 
             m_metodics << mi;
+        }
+
+        //! Типы методик
+        QJsonArray kinds = root["tests_kinds"].toArray();
+        for (int i = 0; i < kinds.size(); ++i)
+        {
+            auto kind = kinds[i].toObject();
+            MetodicDefines::MetodicKindInfo mki;
+            mki.uid = kind["uid"].toString();
+            mki.name = kind["name"].toString();
+            mki.imageName = kind["image"].toString();
+
+            m_metodicKinds << mki;
         }
     }
 }
@@ -227,6 +261,14 @@ int MetodicsFactory::getMetodicIndexByUid(const QString &uid) const
 {
     for (int i = 0; i < m_metodics.size(); ++i)
         if (m_metodics.at(i).uid == uid)
+            return i;
+    return -1;
+}
+
+int MetodicsFactory::getMetodicKindIndexByUid(const QString &uid) const
+{
+    for (int i = 0; i < m_metodicKinds.size(); ++i)
+        if (m_metodicKinds.at(i).uid == uid)
             return i;
     return -1;
 }

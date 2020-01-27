@@ -96,5 +96,13 @@
         <file>images/Games/bang.png</file>
         <file>images/tree/device.png</file>
         <file>images/tree/signal.png</file>
+        <file>images/Methodics/Dopusk.png</file>
+        <file>images/Methodics/Games.png</file>
+        <file>images/Methodics/Psychology.png</file>
+        <file>images/Methodics/Romberg.png</file>
+        <file>images/Methodics/Stab.png</file>
+        <file>images/Methodics/Empty.png</file>
+        <file>images/Methodics/Jump.png</file>
+        <file>images/Methodics/HeadRotate.png</file>
     </qresource>
 </RCC>

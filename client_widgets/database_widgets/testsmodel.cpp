@@ -32,7 +32,7 @@ void TestsModel::load()
 {
     clear();
 
-    m_metList = DataProvider::getListMetodisc();
+    m_metList = DataProvider::getListMetodics();
     QStringList uidList = DataProvider::getTests();
 
     foreach (auto uid, uidList)

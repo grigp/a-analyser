@@ -10,6 +10,8 @@ class MethodsWidget;
 }
 
 class MetodicsModel;
+class MetodicsKindModel;
+class MethodicProxyModel;
 
 class MethodsWidget : public QWidget
 {
@@ -25,15 +27,18 @@ public:
 //    bool eventFilter(QObject *watched, QEvent *event);
 
 private slots:
-    void on_selectionChanged(const QItemSelection &selected, const QItemSelection &deselected);
+    void on_selectMetodicChanged(const QItemSelection &selected, const QItemSelection &deselected);
     void selectMetodic(const QModelIndex index);
     void editMetodParams();
+    void unselectMetodic();
 
-    void unselect();
+    void on_selectKindChanged(const QItemSelection &selected, const QItemSelection &deselected);
 
 private:
     Ui::MethodsWidget *ui;
-    MetodicsModel *m_model;
+    MetodicsModel *m_mdlMethodics;
+    MethodicProxyModel *m_pmdlMethodics;
+    MetodicsKindModel *m_mdlKinds;
 };
 
 #endif // METHODSWIDGET_H

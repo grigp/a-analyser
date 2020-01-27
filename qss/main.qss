@@ -134,6 +134,33 @@ QTreeView#tvSteps
     font-size: 18pt;
 }
 
+QListView
+{
+    background-color: rgb(205, 209, 214);
+    font-size: 11pt;
+    color: rgb(32,88,103);
+}
+
+QListView#tvFactorsTrenResult
+{
+    font-size: 20pt;
+}
+
+QListView#tvJumps
+{
+    font-size: 16pt;
+}
+
+QListView#tvJumpsDrop
+{
+    font-size: 12pt;
+}
+
+QListView#tvSteps
+{
+    font-size: 18pt;
+}
+
 QHeaderView::section
 {
     background-color: qlineargradient(x1:0, y1:0, x2:0, y2:1,

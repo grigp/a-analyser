@@ -29,7 +29,7 @@ void DataProvider::removePatient(const QString &uid)
     static_cast<AAnalyserApplication*>(QApplication::instance())->getDB()->removePatient(uid);
 }
 
-QList<MetodicDefines::MetodicInfo> DataProvider::getListMetodisc()
+QList<MetodicDefines::MetodicInfo> DataProvider::getListMetodics()
 {
     MetodicsFactory *metFactory = static_cast<AAnalyserApplication*>(QApplication::instance())->getMetodics();
 
@@ -48,6 +48,16 @@ bool DataProvider::editMetodicParams(QWidget *parent, const QString &metUid)
 void DataProvider::execute(QWidget *parent, const QString &metUid)
 {
     return static_cast<AAnalyserApplication*>(QApplication::instance())->getMetodics()->execute(parent, metUid);
+}
+
+QList<MetodicDefines::MetodicKindInfo> DataProvider::getListMetodicKinds()
+{
+    MetodicsFactory *metFactory = static_cast<AAnalyserApplication*>(QApplication::instance())->getMetodics();
+
+    QList<MetodicDefines::MetodicKindInfo> retval;
+    for (int i = 0; i < metFactory->metodicKindsCount(); ++i)
+        retval << metFactory->metodicKind(i);
+    return retval;
 }
 
 QString DataProvider::addTestStart(const QString &patientUid, const QString &metodUid)
@@ -189,5 +199,6 @@ void DataProvider::importBD(const QString &fileName)
 {
     static_cast<AAnalyserApplication*>(QApplication::instance())->getDB()->importBD(fileName);
 }
+
 
 
