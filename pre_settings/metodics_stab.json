@@ -5,6 +5,7 @@
             "name": "Тест с поворотом головы",
             "template": "met_stabtest_uid",
             "build_norms": false,
+            "kind": "{03FFE24D-56ED-4138-9FC7-A125A020C190}",
             "params":
             {
                 "condition": 0,
@@ -47,6 +48,7 @@
             "name": "Тест с наклоном головы",
             "template": "met_stabtest_uid",
             "build_norms": false,
+            "kind": "{03FFE24D-56ED-4138-9FC7-A125A020C190}",
             "params":
             {
                 "condition": 0,
@@ -109,6 +111,7 @@
             "name": "Допусковый контроль",
             "template": "met_stabtest_uid",
             "build_norms": true,
+            "kind": "{03FFE24D-56ED-4138-9FC7-A125A020C190}",
             "params":
             {
                 "condition": 2,
@@ -151,6 +154,7 @@
             "name": "Стабилографический тест",
             "template": "met_stabtest_uid",
             "build_norms": false,
+            "kind": "{03FFE24D-56ED-4138-9FC7-A125A020C190}",
             "params":
             {
                 "condition": 0,
@@ -173,6 +177,7 @@
             "name": "Тест \"Мишень\"",
             "template": "met_stabtest_uid",
             "build_norms": false,
+            "kind": "{03FFE24D-56ED-4138-9FC7-A125A020C190}",
             "params":
             {
                 "condition": 4,
@@ -195,6 +200,7 @@
             "name": "Тест Ромберга",
             "template": "met_stabtest_uid",
             "build_norms": false,
+            "kind": "{03FFE24D-56ED-4138-9FC7-A125A020C190}",
             "params":
             {
                 "condition": 0,
@@ -227,6 +233,7 @@
             "name": "Тренажер \"Мячики\"",
             "template": "met_trentakeput_uid",
             "build_norms": false,
+            "kind": "{848935A7-394E-42F9-9320-41ABD2ED5E5B}",
             "params":
             {
                 "take_zones": [
@@ -333,6 +340,7 @@
             "name": "Тренажер \"Цветные мячики\"",
             "template": "met_trentakeput_uid",
             "build_norms": false,
+            "kind": "{848935A7-394E-42F9-9320-41ABD2ED5E5B}",
             "params":
             {
                 "take_zones": [
@@ -475,6 +483,7 @@
             "name": "Тренажер \"Фигурки\"",
             "template": "met_trentakeput_uid",
             "build_norms": false,
+            "kind": "{848935A7-394E-42F9-9320-41ABD2ED5E5B}",
             "params":
             {
                 "take_zones": [
@@ -609,6 +618,7 @@
             "name": "Тренажер \"Фигурки по кресту\"",
             "template": "met_trentakeput_uid",
             "build_norms": false,
+            "kind": "{848935A7-394E-42F9-9320-41ABD2ED5E5B}",
             "params":
             {
                 "take_zones": [
@@ -736,6 +746,7 @@
             "name": "Тренажер \"Построение картинок\"",
             "template": "met_trentakeput_uid",
             "build_norms": false,
+            "kind": "{848935A7-394E-42F9-9320-41ABD2ED5E5B}",
             "params":
             {
                 "take_zones": [
@@ -862,6 +873,7 @@
             "name": "Тренажер \"Мировые столицы\"",
             "template": "met_trentakeput_uid",
             "build_norms": false,
+            "kind": "{848935A7-394E-42F9-9320-41ABD2ED5E5B}",
             "params":
             {
                 "take_zones": [
@@ -986,6 +998,7 @@
             "name": "Тренажер \"Охота\"",
             "template": "met_trentakeput_uid",
             "build_norms": false,
+            "kind": "{848935A7-394E-42F9-9320-41ABD2ED5E5B}",
             "params":
             {
                 "take_zones": [
@@ -1054,6 +1067,7 @@
             "name": "Тренажер \"Охота с лимитом времени\"",
             "template": "met_trentakeput_uid",
             "build_norms": false,
+            "kind": "{848935A7-394E-42F9-9320-41ABD2ED5E5B}",
             "params":
             {
                 "take_zones": [
@@ -1123,6 +1137,7 @@
             "name": "Тренажер \"Тир\"",
             "template": "met_trentakeput_uid",
             "build_norms": false,
+            "kind": "{848935A7-394E-42F9-9320-41ABD2ED5E5B}",
             "params":
             {
                 "take_zones": [
@@ -1218,6 +1233,7 @@
             "name": "Тренажер \"Охота на птиц\"",
             "template": "met_trentakeput_uid",
             "build_norms": false,
+            "kind": "{848935A7-394E-42F9-9320-41ABD2ED5E5B}",
             "params":
             {
                 "take_zones": [
@@ -1289,6 +1305,7 @@
             "name": "Тренажер \"Воздушный бой\"",
             "template": "met_trentakeput_uid",
             "build_norms": false,
+            "kind": "{848935A7-394E-42F9-9320-41ABD2ED5E5B}",
             "params":
             {
                 "take_zones": [
@@ -1357,6 +1374,16 @@
                 "scale": 1,
                 "time": 120
             }
+        }
+    ],
+    "tests_kinds": [
+        {
+            "uid": "{03FFE24D-56ED-4138-9FC7-A125A020C190}",
+            "name": "Стабилометрия"
+        },
+        {
+            "uid": "{848935A7-394E-42F9-9320-41ABD2ED5E5B}",
+            "name": "Реабилитационные тренажеры"
         }
     ]
 }

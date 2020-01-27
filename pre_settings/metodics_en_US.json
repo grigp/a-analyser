@@ -5,6 +5,7 @@
             "name": "Head turn test",
             "template": "met_stabtest_uid",
             "build_norms": false,
+            "kind": "{03FFE24D-56ED-4138-9FC7-A125A020C190}",
             "params":
             {
                 "condition": 0,
@@ -47,6 +48,7 @@
             "name": "Head tilt test",
             "template": "met_stabtest_uid",
             "build_norms": false,
+            "kind": "{03FFE24D-56ED-4138-9FC7-A125A020C190}",
             "params":
             {
                 "condition": 0,
@@ -109,6 +111,7 @@
             "name": "Admittance control",
             "template": "met_stabtest_uid",
             "build_norms": true,
+            "kind": "{03FFE24D-56ED-4138-9FC7-A125A020C190}",
             "params":
             {
                 "condition": 2,
@@ -152,6 +155,7 @@
             "name1": "Testing by metodic \"State champions\"",
             "template": "met_stabtest_uid",
             "build_norms": false,
+            "kind": "{03FFE24D-56ED-4138-9FC7-A125A020C190}",
             "params":
             {
                 "condition": 1,
@@ -194,6 +198,7 @@
             "name": "Stabilo test",
             "template": "met_stabtest_uid",
             "build_norms": false,
+            "kind": "{03FFE24D-56ED-4138-9FC7-A125A020C190}",
             "params":
             {
                 "condition": 0,
@@ -216,6 +221,7 @@
             "name": "Test \"Target\"",
             "template": "met_stabtest_uid",
             "build_norms": false,
+            "kind": "{03FFE24D-56ED-4138-9FC7-A125A020C190}",
             "params":
             {
                 "condition": 4,
@@ -258,6 +264,7 @@
             "name": "DCI health level",
             "template": "met_stabtest_uid",
             "build_norms": false,
+            "kind": "{03FFE24D-56ED-4138-9FC7-A125A020C190}",
             "params":
             {
                 "condition": 3,
@@ -280,6 +287,7 @@
             "name": "DCI health level by Romberg's test",
             "template": "met_stabtest_uid",
             "build_norms": false,
+            "kind": "{03FFE24D-56ED-4138-9FC7-A125A020C190}",
             "params":
             {
                 "condition": 3,
@@ -306,6 +314,20 @@
                     }
                 ]
             }
+        }
+    ],
+    "tests_kinds": [
+        {
+            "uid": "{03FFE24D-56ED-4138-9FC7-A125A020C190}",
+            "name": "Stabilometry"
+        },
+        {
+            "uid": "{848935A7-394E-42F9-9320-41ABD2ED5E5B}",
+            "name": "Rehabilitation stabilometric games"
+        },
+        {
+            "uid": "{956A8685-4925-4E0B-826E-E1EB2D1CB0FC}",
+            "name": "Jumping methodics"
         }
     ]
 }

@@ -5,6 +5,7 @@
             "name": "Head turn test",
             "template": "met_stabtest_uid",
             "build_norms": false,
+            "kind": "{03FFE24D-56ED-4138-9FC7-A125A020C190}",
             "params":
             {
                 "condition": 0,
@@ -47,6 +48,7 @@
             "name": "Head tilt test",
             "template": "met_stabtest_uid",
             "build_norms": false,
+            "kind": "{03FFE24D-56ED-4138-9FC7-A125A020C190}",
             "params":
             {
                 "condition": 0,
@@ -109,6 +111,7 @@
             "name": "Admittance control",
             "template": "met_stabtest_uid",
             "build_norms": true,
+            "kind": "{03FFE24D-56ED-4138-9FC7-A125A020C190}",
             "params":
             {
                 "condition": 2,
@@ -151,6 +154,7 @@
             "name": "Test \"Target\"",
             "template": "met_stabtest_uid",
             "build_norms": false,
+            "kind": "{03FFE24D-56ED-4138-9FC7-A125A020C190}",
             "params":
             {
                 "condition": 4,
@@ -173,6 +177,7 @@
             "name": "Stabilo test",
             "template": "met_stabtest_uid",
             "build_norms": false,
+            "kind": "{03FFE24D-56ED-4138-9FC7-A125A020C190}",
             "params":
             {
                 "condition": 0,
@@ -195,6 +200,7 @@
             "name": "Trenager \"Balls\"",
             "template": "met_trentakeput_uid",
             "build_norms": false,
+            "kind": "{848935A7-394E-42F9-9320-41ABD2ED5E5B}",
             "params":
             {
                 "take_zones": [
@@ -301,6 +307,7 @@
             "name": "Trenager \"Colored balls\"",
             "template": "met_trentakeput_uid",
             "build_norms": false,
+            "kind": "{848935A7-394E-42F9-9320-41ABD2ED5E5B}",
             "params":
             {
                 "take_zones": [
@@ -443,6 +450,7 @@
             "name": "Trenager \"Figures\"",
             "template": "met_trentakeput_uid",
             "build_norms": false,
+            "kind": "{848935A7-394E-42F9-9320-41ABD2ED5E5B}",
             "params":
             {
                 "take_zones": [
@@ -577,6 +585,7 @@
             "name": "Trenager \"Figures by cross\"",
             "template": "met_trentakeput_uid",
             "build_norms": false,
+            "kind": "{848935A7-394E-42F9-9320-41ABD2ED5E5B}",
             "params":
             {
                 "take_zones": [
@@ -704,6 +713,7 @@
             "name": "Trenager \"Puzzle\"",
             "template": "met_trentakeput_uid",
             "build_norms": false,
+            "kind": "{848935A7-394E-42F9-9320-41ABD2ED5E5B}",
             "params":
             {
                 "take_zones": [
@@ -830,6 +840,7 @@
             "name": "Trenager \"World capitals\"",
             "template": "met_trentakeput_uid",
             "build_norms": false,
+            "kind": "{848935A7-394E-42F9-9320-41ABD2ED5E5B}",
             "params":
             {
                 "take_zones": [
@@ -954,6 +965,7 @@
             "name": "Trenager \"Hunter\"",
             "template": "met_trentakeput_uid",
             "build_norms": false,
+            "kind": "{848935A7-394E-42F9-9320-41ABD2ED5E5B}",
             "params":
             {
                 "take_zones": [
@@ -1022,6 +1034,7 @@
             "name": "Trenager \"Hunting with time limit\"",
             "template": "met_trentakeput_uid",
             "build_norms": false,
+            "kind": "{848935A7-394E-42F9-9320-41ABD2ED5E5B}",
             "params":
             {
                 "take_zones": [
@@ -1091,6 +1104,7 @@
             "name": "Trenager \"Shooting gallery\"",
             "template": "met_trentakeput_uid",
             "build_norms": false,
+            "kind": "{848935A7-394E-42F9-9320-41ABD2ED5E5B}",
             "params":
             {
                 "take_zones": [
@@ -1186,6 +1200,7 @@
             "name": "Тренажер \"Bird hunting\"",
             "template": "met_trentakeput_uid",
             "build_norms": false,
+            "kind": "{848935A7-394E-42F9-9320-41ABD2ED5E5B}",
             "params":
             {
                 "take_zones": [
@@ -1257,6 +1272,7 @@
             "name": "Trenager \"Air fight\"",
             "template": "met_trentakeput_uid",
             "build_norms": false,
+            "kind": "{848935A7-394E-42F9-9320-41ABD2ED5E5B}",
             "params":
             {
                 "take_zones": [
@@ -1325,6 +1341,16 @@
                 "scale": 1,
                 "time": 120
             }
+        }
+    ],
+    "tests_kinds": [
+        {
+            "uid": "{03FFE24D-56ED-4138-9FC7-A125A020C190}",
+            "name": "Stabilometry"
+        },
+        {
+            "uid": "{848935A7-394E-42F9-9320-41ABD2ED5E5B}",
+            "name": "Rehabilitation stabilometric games"
         }
     ]
 }

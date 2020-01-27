@@ -5,6 +5,7 @@
             "name": "Тест с поворотом головы",
             "template": "met_stabtest_uid",
             "build_norms": false,
+            "kind": "{03FFE24D-56ED-4138-9FC7-A125A020C190}",
             "params":
             {
                 "condition": 0,
@@ -47,6 +48,7 @@
             "name": "Тест с наклоном головы",
             "template": "met_stabtest_uid",
             "build_norms": false,
+            "kind": "{03FFE24D-56ED-4138-9FC7-A125A020C190}",
             "params":
             {
                 "condition": 0,
@@ -109,6 +111,7 @@
             "name": "Допусковый контроль",
             "template": "met_stabtest_uid",
             "build_norms": true,
+            "kind": "{03FFE24D-56ED-4138-9FC7-A125A020C190}",
             "params":
             {
                 "condition": 2,
@@ -151,6 +154,7 @@
             "name": "Стабилометрический тест",
             "name1": "Тестирование по методике \"Стань чемпионом\"",
             "template": "met_stabtest_uid",
+            "kind": "{03FFE24D-56ED-4138-9FC7-A125A020C190}",
             "build_norms": false,
             "params":
             {
@@ -194,6 +198,7 @@
             "name": "Стабилографический тест",
             "template": "met_stabtest_uid",
             "build_norms": false,
+            "kind": "{03FFE24D-56ED-4138-9FC7-A125A020C190}",
             "params":
             {
                 "condition": 0,
@@ -216,6 +221,7 @@
             "name": "Тест \"Мишень\"",
             "template": "met_stabtest_uid",
             "build_norms": false,
+            "kind": "{03FFE24D-56ED-4138-9FC7-A125A020C190}",
             "params":
             {
                 "condition": 4,
@@ -238,6 +244,7 @@
             "name": "Тест Ромберга",
             "template": "met_stabtest_uid",
             "build_norms": false,
+            "kind": "{03FFE24D-56ED-4138-9FC7-A125A020C190}",
             "params":
             {
                 "condition": 0,
@@ -270,6 +277,7 @@
             "name": "Анализ высоты одиночного прыжка",
             "template": "met_jumptest_uid",
             "build_norms": false,
+            "kind": "{956A8685-4925-4E0B-826E-E1EB2D1CB0FC}",
             "params":
             {
                 "methodic": 0
@@ -280,6 +288,7 @@
             "name": "Дроп - тест одиночный",
             "template": "met_jumptest_uid",
             "build_norms": false,
+            "kind": "{956A8685-4925-4E0B-826E-E1EB2D1CB0FC}",
             "params":
             {
                 "methodic": 1
@@ -290,6 +299,7 @@
             "name": "Анализ высоты серии прыжков",
             "template": "met_jumpheighttest_uid",
             "build_norms": false,
+            "kind": "{956A8685-4925-4E0B-826E-E1EB2D1CB0FC}",
             "params":
             {
                 "finish_kind": "quantity",
@@ -304,6 +314,7 @@
             "name": "Полиметрический тест",
             "template": "met_jumpheighttest_uid",
             "build_norms": false,
+            "kind": "{956A8685-4925-4E0B-826E-E1EB2D1CB0FC}",
             "params":
             {
                 "finish_kind": "fixed_time",
@@ -318,6 +329,7 @@
             "name": "Теппинг тест",
             "template": "met_teppingtest_uid",
             "build_norms": false,
+            "kind": "{956A8685-4925-4E0B-826E-E1EB2D1CB0FC}",
             "params":
             {
                 "finish_kind": "quantity",
@@ -330,6 +342,7 @@
             "name": "Дроп тест",
             "template": "met_droptest_uid",
             "build_norms": false,
+            "kind": "{956A8685-4925-4E0B-826E-E1EB2D1CB0FC}",
             "params":
             {
                 "finish_kind": "quantity",
@@ -343,6 +356,7 @@
             "name": "Тренажер \"Мячики\"",
             "template": "met_trentakeput_uid",
             "build_norms": false,
+            "kind": "{848935A7-394E-42F9-9320-41ABD2ED5E5B}",
             "params":
             {
                 "take_zones": [
@@ -449,6 +463,7 @@
             "name": "Тренажер \"Цветные мячики\"",
             "template": "met_trentakeput_uid",
             "build_norms": false,
+            "kind": "{848935A7-394E-42F9-9320-41ABD2ED5E5B}",
             "params":
             {
                 "take_zones": [
@@ -591,6 +606,7 @@
             "name": "Тренажер \"Фигурки\"",
             "template": "met_trentakeput_uid",
             "build_norms": false,
+            "kind": "{848935A7-394E-42F9-9320-41ABD2ED5E5B}",
             "params":
             {
                 "take_zones": [
@@ -725,6 +741,7 @@
             "name": "Тренажер \"Фигурки по кресту\"",
             "template": "met_trentakeput_uid",
             "build_norms": false,
+            "kind": "{848935A7-394E-42F9-9320-41ABD2ED5E5B}",
             "params":
             {
                 "take_zones": [
@@ -852,6 +869,7 @@
             "name": "Тренажер \"Построение картинок\"",
             "template": "met_trentakeput_uid",
             "build_norms": false,
+            "kind": "{848935A7-394E-42F9-9320-41ABD2ED5E5B}",
             "params":
             {
                 "take_zones": [
@@ -978,6 +996,7 @@
             "name": "Тренажер \"Мировые столицы\"",
             "template": "met_trentakeput_uid",
             "build_norms": false,
+            "kind": "{848935A7-394E-42F9-9320-41ABD2ED5E5B}",
             "params":
             {
                 "take_zones": [
@@ -1102,6 +1121,7 @@
             "name": "Тренажер \"Охота\"",
             "template": "met_trentakeput_uid",
             "build_norms": false,
+            "kind": "{848935A7-394E-42F9-9320-41ABD2ED5E5B}",
             "params":
             {
                 "take_zones": [
@@ -1170,6 +1190,7 @@
             "name": "Тренажер \"Охота с лимитом времени\"",
             "template": "met_trentakeput_uid",
             "build_norms": false,
+            "kind": "{848935A7-394E-42F9-9320-41ABD2ED5E5B}",
             "params":
             {
                 "take_zones": [
@@ -1239,6 +1260,7 @@
             "name": "Тренажер \"Тир\"",
             "template": "met_trentakeput_uid",
             "build_norms": false,
+            "kind": "{848935A7-394E-42F9-9320-41ABD2ED5E5B}",
             "params":
             {
                 "take_zones": [
@@ -1334,6 +1356,7 @@
             "name": "Тренажер \"Охота на птиц\"",
             "template": "met_trentakeput_uid",
             "build_norms": false,
+            "kind": "{848935A7-394E-42F9-9320-41ABD2ED5E5B}",
             "params":
             {
                 "take_zones": [
@@ -1405,6 +1428,7 @@
             "name": "Тренажер \"Воздушный бой\"",
             "template": "met_trentakeput_uid",
             "build_norms": false,
+            "kind": "{848935A7-394E-42F9-9320-41ABD2ED5E5B}",
             "params":
             {
                 "take_zones": [
@@ -1479,6 +1503,7 @@
             "name": "Уровень здоровья по ИДС",
             "template": "met_stabtest_uid",
             "build_norms": false,
+            "kind": "{03FFE24D-56ED-4138-9FC7-A125A020C190}",
             "params":
             {
                 "condition": 3,
@@ -1501,6 +1526,7 @@
             "name": "Уровень здоровья по ИДС на базе теста Ромберга",
             "template": "met_stabtest_uid",
             "build_norms": false,
+            "kind": "{03FFE24D-56ED-4138-9FC7-A125A020C190}",
             "params":
             {
                 "condition": 3,
@@ -1527,6 +1553,20 @@
                     }
                 ]
             }
+        }
+    ],
+    "tests_kinds": [
+        {
+            "uid": "{03FFE24D-56ED-4138-9FC7-A125A020C190}",
+            "name": "Стабилометрия"
+        },
+        {
+            "uid": "{848935A7-394E-42F9-9320-41ABD2ED5E5B}",
+            "name": "Реабилитационные тренажеры"
+        },
+        {
+            "uid": "{956A8685-4925-4E0B-826E-E1EB2D1CB0FC}",
+            "name": "Прыжковая платформа"
         }
     ]
 }

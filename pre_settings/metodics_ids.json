@@ -5,6 +5,7 @@
             "name": "Уровень здоровья по ИДС",
             "template": "met_stabtest_uid",
             "build_norms": false,
+            "kind": "{03FFE24D-56ED-4138-9FC7-A125A020C190}",
             "params":
             {
                 "condition": 3,
@@ -27,6 +28,7 @@
             "name": "Уровень здоровья по ИДС на базе теста Ромберга",
             "template": "met_stabtest_uid",
             "build_norms": false,
+            "kind": "{03FFE24D-56ED-4138-9FC7-A125A020C190}",
             "params":
             {
                 "condition": 3,
@@ -53,6 +55,12 @@
                     }
                 ]
             }
+        }
+    ],
+    "tests_kinds": [
+        {
+            "uid": "{03FFE24D-56ED-4138-9FC7-A125A020C190}",
+            "name": "Стабилометрия"
         }
     ]
 }

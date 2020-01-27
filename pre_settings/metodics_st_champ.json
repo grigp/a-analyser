@@ -6,6 +6,7 @@
             "name1": "Тестирование по методике \"Стань чемпионом\"",
             "template": "met_stabtest_uid",
             "build_norms": false,
+            "kind": "{03FFE24D-56ED-4138-9FC7-A125A020C190}",
             "params":
             {
                 "condition": 1,
@@ -48,6 +49,7 @@
             "name": "Анализ высоты серии прыжков",
             "template": "met_jumpheighttest_uid",
             "build_norms": false,
+            "kind": "{956A8685-4925-4E0B-826E-E1EB2D1CB0FC}",
             "params":
             {
                 "finish_kind": "quantity",
@@ -62,6 +64,7 @@
             "name": "Полиметрический тест",
             "template": "met_jumpheighttest_uid",
             "build_norms": false,
+            "kind": "{956A8685-4925-4E0B-826E-E1EB2D1CB0FC}",
             "params":
             {
                 "finish_kind": "fixed_time",
@@ -76,6 +79,7 @@
             "name": "Теппинг тест",
             "template": "met_teppingtest_uid",
             "build_norms": false,
+            "kind": "{956A8685-4925-4E0B-826E-E1EB2D1CB0FC}",
             "params":
             {
                 "finish_kind": "quantity",
@@ -88,6 +92,7 @@
             "name": "Дроп тест",
             "template": "met_droptest_uid",
             "build_norms": false,
+            "kind": "{956A8685-4925-4E0B-826E-E1EB2D1CB0FC}",
             "params":
             {
                 "finish_kind": "quantity",
@@ -101,6 +106,7 @@
             "name": "Анализ высоты одиночного прыжка",
             "template": "met_jumptest_uid",
             "build_norms": false,
+            "kind": "{956A8685-4925-4E0B-826E-E1EB2D1CB0FC}",
             "params":
             {
                 "methodic": 0
@@ -111,10 +117,21 @@
             "name": "Дроп - тест одиочный",
             "template": "met_jumptest_uid",
             "build_norms": false,
+            "kind": "{956A8685-4925-4E0B-826E-E1EB2D1CB0FC}",
             "params":
             {
                 "methodic": 1
             }
+        }
+    ],
+    "tests_kinds": [
+        {
+            "uid": "{03FFE24D-56ED-4138-9FC7-A125A020C190}",
+            "name": "Стабилометрия"
+        },
+        {
+            "uid": "{956A8685-4925-4E0B-826E-E1EB2D1CB0FC}",
+            "name": "Прыжковая платформа"
         }
     ]
 }
