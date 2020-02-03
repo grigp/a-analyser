@@ -47,6 +47,7 @@
         {
             "uid": "{E4140AE9-C6AE-4173-96D4-CE0B632FF340}",
             "name": "Тест с наклоном головы",
+            "image": "HeadTilt.png",
             "template": "met_stabtest_uid",
             "build_norms": false,
             "kind": "{03FFE24D-56ED-4138-9FC7-A125A020C190}",
@@ -223,6 +224,7 @@
         {
             "uid": "{271DB867-0297-4DBD-BD7D-E1BC5675BC2A}",
             "name": "Тест \"Мишень\"",
+            "image": "Target.png",
             "template": "met_stabtest_uid",
             "build_norms": false,
             "kind": "{03FFE24D-56ED-4138-9FC7-A125A020C190}",
@@ -280,6 +282,7 @@
         {
             "uid": "{ACFA62A1-7F52-477E-B9C9-A7FF14B3E098}",
             "name": "Анализ высоты одиночного прыжка",
+            "image": "JumpHeight.png",
             "template": "met_jumptest_uid",
             "build_norms": false,
             "kind": "{956A8685-4925-4E0B-826E-E1EB2D1CB0FC}",
@@ -291,6 +294,7 @@
         {
             "uid": "{6855943F-E7C1-477E-B68E-EBC7DAE30E2B}",
             "name": "Дроп - тест одиночный",
+            "image": "Drop_one.png",
             "template": "met_jumptest_uid",
             "build_norms": false,
             "kind": "{956A8685-4925-4E0B-826E-E1EB2D1CB0FC}",
@@ -302,6 +306,7 @@
         {
             "uid": "{8ABFB226-D4AC-486D-97C3-201F5E598531}",
             "name": "Анализ высоты серии прыжков",
+            "image": "JumpHeight_multi.png",
             "template": "met_jumpheighttest_uid",
             "build_norms": false,
             "kind": "{956A8685-4925-4E0B-826E-E1EB2D1CB0FC}",
@@ -317,6 +322,7 @@
         {
             "uid": "{11F009F2-F39F-4037-84D7-5EA3C79E6F5F}",
             "name": "Полиметрический тест",
+            "image": "Polymetric.png",
             "template": "met_jumpheighttest_uid",
             "build_norms": false,
             "kind": "{956A8685-4925-4E0B-826E-E1EB2D1CB0FC}",
@@ -332,6 +338,7 @@
         {
             "uid": "{1815B7EA-D022-4E08-A726-A0C4E8AD7DE8}",
             "name": "Теппинг тест",
+            "image": "Tepping.png",
             "template": "met_teppingtest_uid",
             "build_norms": false,
             "kind": "{956A8685-4925-4E0B-826E-E1EB2D1CB0FC}",
@@ -345,6 +352,7 @@
         {
             "uid": "{8F8673D1-44B1-4213-87D5-BAB2B732E67A}",
             "name": "Дроп тест",
+            "image": "Drop_multi.png",
             "template": "met_droptest_uid",
             "build_norms": false,
             "kind": "{956A8685-4925-4E0B-826E-E1EB2D1CB0FC}",
@@ -359,6 +367,7 @@
         {
             "uid": "{CFCCCAA0-A520-49EF-9C04-EB57580E8CAD}",
             "name": "Тренажер \"Мячики\"",
+            "image": "Balls.png",
             "template": "met_trentakeput_uid",
             "build_norms": false,
             "kind": "{848935A7-394E-42F9-9320-41ABD2ED5E5B}",
@@ -466,6 +475,7 @@
         {
             "uid": "{BE743459-AF91-428A-9862-E177D614ABD3}",
             "name": "Тренажер \"Цветные мячики\"",
+            "image": "BallsColor.png",
             "template": "met_trentakeput_uid",
             "build_norms": false,
             "kind": "{848935A7-394E-42F9-9320-41ABD2ED5E5B}",
@@ -609,6 +619,7 @@
         {
             "uid": "{24Bf2A64-064F-4264-85BD-F5F62AF7A804}",
             "name": "Тренажер \"Фигурки\"",
+            "image": "Figures.png",
             "template": "met_trentakeput_uid",
             "build_norms": false,
             "kind": "{848935A7-394E-42F9-9320-41ABD2ED5E5B}",
@@ -744,6 +755,7 @@
         {
             "uid": "{D03ACE59-9144-42CB-B4BC-9970349906D9}",
             "name": "Тренажер \"Фигурки по кресту\"",
+            "image": "FiguresCross.png",
             "template": "met_trentakeput_uid",
             "build_norms": false,
             "kind": "{848935A7-394E-42F9-9320-41ABD2ED5E5B}",
@@ -872,6 +884,7 @@
         {
             "uid": "{BDE82084-9568-4A7C-BA11-33A20BB14072}",
             "name": "Тренажер \"Построение картинок\"",
+            "image": "Puzzle.png",
             "template": "met_trentakeput_uid",
             "build_norms": false,
             "kind": "{848935A7-394E-42F9-9320-41ABD2ED5E5B}",
@@ -999,6 +1012,7 @@
         {
             "uid": "{72EF6357-B6B0-48FF-9206-7A5D56ABB788 }",
             "name": "Тренажер \"Мировые столицы\"",
+            "image": "Capitals.png",
             "template": "met_trentakeput_uid",
             "build_norms": false,
             "kind": "{848935A7-394E-42F9-9320-41ABD2ED5E5B}",
@@ -1124,6 +1138,7 @@
         {
             "uid": "{1E383953-2062-43DA-9AE8-0D73F2258FC5}",
             "name": "Тренажер \"Охота\"",
+            "image": "Hunter.png",
             "template": "met_trentakeput_uid",
             "build_norms": false,
             "kind": "{848935A7-394E-42F9-9320-41ABD2ED5E5B}",
@@ -1193,6 +1208,7 @@
         {
             "uid": "{951DD0E9-E535-4BBB-8F54-DA53859A43C2}",
             "name": "Тренажер \"Охота с лимитом времени\"",
+            "image": "HunterTime.png",
             "template": "met_trentakeput_uid",
             "build_norms": false,
             "kind": "{848935A7-394E-42F9-9320-41ABD2ED5E5B}",
@@ -1263,6 +1279,7 @@
         {
             "uid": "{7B3EBE0D-E670-4fC3-B4E4-DffC74857A21}",
             "name": "Тренажер \"Тир\"",
+            "image": "SootingRoom.png",
             "template": "met_trentakeput_uid",
             "build_norms": false,
             "kind": "{848935A7-394E-42F9-9320-41ABD2ED5E5B}",
@@ -1359,6 +1376,7 @@
         {
             "uid": "{00B91519-842A-450D-93F1-1ADf104CDC0E}",
             "name": "Тренажер \"Охота на птиц\"",
+            "image": "HunterBird.png",
             "template": "met_trentakeput_uid",
             "build_norms": false,
             "kind": "{848935A7-394E-42F9-9320-41ABD2ED5E5B}",
@@ -1431,6 +1449,7 @@
         {
             "uid": "{03B9C401-061C-4FA4-BA98-6054FE8AE6BC}",
             "name": "Тренажер \"Воздушный бой\"",
+            "image": "AirFight.png",
             "template": "met_trentakeput_uid",
             "build_norms": false,
             "kind": "{848935A7-394E-42F9-9320-41ABD2ED5E5B}",
@@ -1506,6 +1525,7 @@
         {
             "uid": "{A100CF38-D2E6-4E71-A485-53845E3F116C}",
             "name": "Уровень здоровья по ИДС",
+            "image": "IDS_Stab.png",
             "template": "met_stabtest_uid",
             "build_norms": false,
             "kind": "{03FFE24D-56ED-4138-9FC7-A125A020C190}",
@@ -1529,6 +1549,7 @@
         {
             "uid": "{15265537-77D4-4CF8-B2A3-1A7A7EE580EF}",
             "name": "Уровень здоровья по ИДС на базе теста Ромберга",
+            "image": "IDS_Romberg.png",
             "template": "met_stabtest_uid",
             "build_norms": false,
             "kind": "{03FFE24D-56ED-4138-9FC7-A125A020C190}",

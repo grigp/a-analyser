@@ -104,5 +104,26 @@
         <file>images/Methodics/Empty.png</file>
         <file>images/Methodics/Jump.png</file>
         <file>images/Methodics/HeadRotate.png</file>
+        <file>images/Methodics/HeadTilt.png</file>
+        <file>images/Methodics/Target.png</file>
+        <file>images/Methodics/IDS_Romberg.png</file>
+        <file>images/Methodics/IDS_Stab.png</file>
+        <file>images/Methodics/JumpHeight.png</file>
+        <file>images/Methodics/JumpHeight_multi.png</file>
+        <file>images/Methodics/Drop_multi.png</file>
+        <file>images/Methodics/Drop_one.png</file>
+        <file>images/Methodics/Tepping.png</file>
+        <file>images/Methodics/Polymetric.png</file>
+        <file>images/Methodics/Balls.png</file>
+        <file>images/Methodics/BallsColor.png</file>
+        <file>images/Methodics/Capitals.png</file>
+        <file>images/Methodics/Figures.png</file>
+        <file>images/Methodics/FiguresCross.png</file>
+        <file>images/Methodics/Puzzle.png</file>
+        <file>images/Methodics/AirFight.png</file>
+        <file>images/Methodics/Hunter.png</file>
+        <file>images/Methodics/HunterBird.png</file>
+        <file>images/Methodics/HunterTime.png</file>
+        <file>images/Methodics/SootingRoom.png</file>
     </qresource>
 </RCC>
