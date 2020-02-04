@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <QModelIndex>
+#include <QPushButton>
 #include <QItemSelectionModel>
 
 namespace Ui {
@@ -32,13 +33,18 @@ private slots:
     void editMetodParams();
     void unselectMetodic();
 
-    void on_selectKindChanged(const QItemSelection &selected, const QItemSelection &deselected);
+    void on_btnKindPressed();
 
 private:
     Ui::MethodsWidget *ui;
+
+    void setMethodicKindsButtons();
+
     MetodicsModel *m_mdlMethodics;
     MethodicProxyModel *m_pmdlMethodics;
     MetodicsKindModel *m_mdlKinds;
+
+    QMap<QPushButton*, QString> m_btnToKindUid;
 };
 
 #endif // METHODSWIDGET_H

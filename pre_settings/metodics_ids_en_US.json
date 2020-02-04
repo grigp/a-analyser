@@ -3,6 +3,7 @@
         {
             "uid": "{A100CF38-D2E6-4E71-A485-53845E3F116C}",
             "name": "DCI health level",
+            "image": "IDS_Stab.png",
             "template": "met_stabtest_uid",
             "build_norms": false,
             "kind": "{03FFE24D-56ED-4138-9FC7-A125A020C190}",
@@ -26,6 +27,7 @@
         {
             "uid": "{15265537-77D4-4CF8-B2A3-1A7A7EE580EF}",
             "name": "DCI health level by Romberg's test",
+            "image": "IDS_Romberg.png",
             "template": "met_stabtest_uid",
             "build_norms": false,
             "kind": "{03FFE24D-56ED-4138-9FC7-A125A020C190}",

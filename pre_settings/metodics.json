@@ -155,8 +155,8 @@
         {
             "uid": "{EA27C3B7-9D67-45CC-A80D-F07E22DC2ADB}",
             "name": "Стабилометрический тест",
-            "image": "Stab.png",
             "name1": "Тестирование по методике \"Стань чемпионом\"",
+            "image": "Stab.png",
             "template": "met_stabtest_uid",
             "kind": "{03FFE24D-56ED-4138-9FC7-A125A020C190}",
             "build_norms": false,

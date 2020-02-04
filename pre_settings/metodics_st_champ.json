@@ -4,6 +4,7 @@
             "uid": "{EA27C3B7-9D67-45CC-A80D-F07E22DC2ADB}",
             "name": "Стабилометрический тест",
             "name1": "Тестирование по методике \"Стань чемпионом\"",
+            "image": "Stab.png",
             "template": "met_stabtest_uid",
             "build_norms": false,
             "kind": "{03FFE24D-56ED-4138-9FC7-A125A020C190}",
@@ -47,6 +48,7 @@
         {
             "uid": "{8ABFB226-D4AC-486D-97C3-201F5E598531}",
             "name": "Анализ высоты серии прыжков",
+            "image": "JumpHeight_multi.png",
             "template": "met_jumpheighttest_uid",
             "build_norms": false,
             "kind": "{956A8685-4925-4E0B-826E-E1EB2D1CB0FC}",
@@ -62,6 +64,7 @@
         {
             "uid": "{11F009F2-F39F-4037-84D7-5EA3C79E6F5F}",
             "name": "Полиметрический тест",
+            "image": "Polymetric.png",
             "template": "met_jumpheighttest_uid",
             "build_norms": false,
             "kind": "{956A8685-4925-4E0B-826E-E1EB2D1CB0FC}",
@@ -77,6 +80,7 @@
         {
             "uid": "{1815B7EA-D022-4E08-A726-A0C4E8AD7DE8}",
             "name": "Теппинг тест",
+            "image": "Tepping.png",
             "template": "met_teppingtest_uid",
             "build_norms": false,
             "kind": "{956A8685-4925-4E0B-826E-E1EB2D1CB0FC}",
@@ -90,6 +94,7 @@
         {
             "uid": "{8F8673D1-44B1-4213-87D5-BAB2B732E67A}",
             "name": "Дроп тест",
+            "image": "Drop_multi.png",
             "template": "met_droptest_uid",
             "build_norms": false,
             "kind": "{956A8685-4925-4E0B-826E-E1EB2D1CB0FC}",
@@ -104,6 +109,7 @@
         {
             "uid": "{ACFA62A1-7F52-477E-B9C9-A7FF14B3E098}",
             "name": "Анализ высоты одиночного прыжка",
+            "image": "JumpHeight.png",
             "template": "met_jumptest_uid",
             "build_norms": false,
             "kind": "{956A8685-4925-4E0B-826E-E1EB2D1CB0FC}",
@@ -115,6 +121,7 @@
         {
             "uid": "{6855943F-E7C1-477E-B68E-EBC7DAE30E2B}",
             "name": "Дроп - тест одиочный",
+            "image": "Drop_one.png",
             "template": "met_jumptest_uid",
             "build_norms": false,
             "kind": "{956A8685-4925-4E0B-826E-E1EB2D1CB0FC}",

@@ -125,5 +125,6 @@
         <file>images/Methodics/HunterBird.png</file>
         <file>images/Methodics/HunterTime.png</file>
         <file>images/Methodics/SootingRoom.png</file>
+        <file>images/Methodics/All.png</file>
     </qresource>
 </RCC>
