@@ -62,6 +62,7 @@
     "tests_kinds": [
         {
             "uid": "{03FFE24D-56ED-4138-9FC7-A125A020C190}",
+            "image": "Stab.png",
             "name": "Стабилометрия"
         }
     ]

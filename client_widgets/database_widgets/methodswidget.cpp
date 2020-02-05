@@ -153,5 +153,8 @@ void MethodsWidget::setMethodicKindsButtons()
 
     auto *spacer = new QSpacerItem(10, 20, QSizePolicy::Expanding, QSizePolicy::Expanding);
     ui->frTestKindButtons->layout()->addItem(spacer);
+
+    if (m_mdlKinds->rowCount() <= 2)
+        ui->frTestKindButtons->setVisible(false);
 }
 

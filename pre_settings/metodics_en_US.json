@@ -1582,14 +1582,17 @@
     "tests_kinds": [
         {
             "uid": "{03FFE24D-56ED-4138-9FC7-A125A020C190}",
+            "image": "Stab.png",
             "name": "Stabilometry"
         },
         {
             "uid": "{848935A7-394E-42F9-9320-41ABD2ED5E5B}",
+            "image": "Games.png",
             "name": "Rehabilitation stabilometric games"
         },
         {
             "uid": "{956A8685-4925-4E0B-826E-E1EB2D1CB0FC}",
+            "image": "Jump.png",
             "name": "Jumping methodics"
         }
     ]
