@@ -5,6 +5,7 @@
 #include "dataprovider.h"
 #include "channelsutils.h"
 #include "jumpplatedata.h"
+#include "settingsprovider.h"
 
 #include <QDebug>
 
@@ -52,20 +53,6 @@ void DropTestFactors::calculate()
             djf.timeContact = data.jump(i).timeContact;
             djf.timeNoContact = data.jump(i).timeNoContact;
             djf.fallHeight = data.jump(i).fallHeight;
-
-//            djf.power = 0;
-//            djf.rsi = 0;
-//            if (djf.timeContact > 0)
-//            {
-//                djf.power = massa * 9.8 * (djf.fallHeight * 1.226 * pow(djf.timeNoContact, 2)) / djf.timeContact;
-//                djf.rsi = djf.height / djf.timeContact;
-//            }
-
-//            double stifZn = (pow(djf.timeContact, 2) *((djf.timeContact + djf.timeNoContact) /* /n */ - djf.timeContact / 4));
-//            djf.stiffness = 0;
-//            if (stifZn != 0)
-//                djf.stiffness = (massa * /* *n */ (djf.timeContact + djf.timeNoContact)) / stifZn;
-//            djf.initialSpeed = sqrt(2 * 9.8 * djf.height);  //! sqrt(2*g*h)
 
             calculateAdvFactors(djf.timeContact, djf.timeNoContact, djf.fallHeight, djf.height, massa,
                                 djf.power, djf.stiffness, djf.initialSpeed, djf.rsi);
@@ -131,11 +118,14 @@ void DropTestFactors::calculateAdvFactors(const double timeContact, const double
                                           const double height, const double massa,
                                           double &power, double &stiffness, double &initialSpeed, double &rsi)
 {
+    ///< Ускорение свободного падения. Зависит от местоположения, которое необходимо выбрать в настройках программы
+    auto g = SettingsProvider::valueFromRegAppCopy("UserLocalize", "g", static_cast<QVariant>(9.8)).toDouble();
+
     power = 0;
     rsi = 0;
     if (timeContact > 0)
     {
-        power = massa * 9.8 * (fallHeight * 1.226 * pow(timeNoContact, 2)) / timeContact;
+        power = massa * g * (fallHeight * 1.226 * pow(timeNoContact, 2)) / timeContact;
         rsi = height / timeContact;
     }
 
@@ -143,7 +133,7 @@ void DropTestFactors::calculateAdvFactors(const double timeContact, const double
     stiffness = 0;
     if (stifZn != 0)
         stiffness = (massa * /* *n */ (timeContact + timeNoContact)) / stifZn;
-    initialSpeed = sqrt(2 * 9.8 * height);  // sqrt(2*g*h)
+    initialSpeed = sqrt(2 * g * height);  // sqrt(2*g*h)
 }
 
 int DropTestFactors::getPatientMassa()

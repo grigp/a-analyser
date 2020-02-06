@@ -37,9 +37,11 @@ private:
     void load();
     void save();
 
-    void fillSities();
+    void fillSities(const QString& country, const QString& sity);
 
     QStandardItemModel m_mdlSities;
+    QModelIndex m_idxCountry {QModelIndex()};
+    QModelIndex m_idxSity {QModelIndex()};
 };
 
 #endif // AANALYSERSETTINGS_H
