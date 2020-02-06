@@ -9,6 +9,7 @@
 #include "deviceprotocols.h"
 #include "jumpplatedata.h"
 #include "channelsdefines.h"
+#include "settingsprovider.h"
 
 #include <QTimer>
 #include <QMessageBox>
@@ -62,6 +63,8 @@ void JumpTestExecute::timerEvent(QTimerEvent *event)
 
 void JumpTestExecute::start()
 {
+    m_g = SettingsProvider::valueFromRegAppCopy("UserLocalize", "g", static_cast<QVariant>(9.8)).toDouble();
+
     m_driver = static_cast<AAnalyserApplication*>(QApplication::instance())->
             getDriverByProtocols(QStringList() << DeviceProtocols::uid_JumpPlateProtocol);
     if (m_driver)
@@ -115,7 +118,7 @@ void JumpTestExecute::getData(DeviceProtocols::DeviceData *data)
             ++m_plt1Count;
             ui->lblPlate1Flag->setText(JumpTestDefines::BusyValue.value(jpData->busy()));
             ui->lblPlate1Time->setText(QString(tr("Время, мс") + " : %1").arg(jpData->time()));
-            double h = (9.8 * pow(jpData->time() / 1000, 2)) / 8;
+            double h = (m_g * pow(jpData->time() / 1000, 2)) / 8;
             ui->lblPlate1Height->setText(QString(tr("Высота прыжка, м") + " : %1").arg(h));
             ui->lblPlate1Count->setText(QString(tr("Кол-во") + " : %1").arg(m_plt1Count));
 
@@ -130,7 +133,7 @@ void JumpTestExecute::getData(DeviceProtocols::DeviceData *data)
             ++m_plt2Count;
             ui->lblPlate2Flag->setText(JumpTestDefines::BusyValue.value(jpData->busy()));
             ui->lblPlate2Time->setText(QString(tr("Время, мс") + " : %1").arg(jpData->time()));
-            double h = (9.8 * pow(jpData->time() / 1000, 2)) / 8;
+            double h = (m_g * pow(jpData->time() / 1000, 2)) / 8;
             ui->lblPlate2Height->setText(QString(tr("Высота прыжка, м") + " : %1").arg(h));
             ui->lblPlate2Count->setText(QString(tr("Кол-во") + " : %1").arg(m_plt2Count));
 

@@ -98,6 +98,9 @@ private:
     Stage m_stage {dtsWaiting};  ///< Текущий этап прыжка
 
     QStandardItemModel m_mdlTable;
+
+    ///< Ускорение свободного падения. Зависит от местоположения, которое необходимо выбрать в настройках программы
+    double m_g {9.8};
 };
 
 #endif // DROPTESTEXECUTE_H

@@ -8,6 +8,7 @@
 #include "jumpplatedata.h"
 #include "testresultdata.h"
 #include "droptestfactors.h"
+#include "settingsprovider.h"
 
 #include <QTimer>
 #include <QMessageBox>
@@ -73,6 +74,8 @@ void DropTestExecute::timerEvent(QTimerEvent *event)
 
 void DropTestExecute::start()
 {
+    m_g = SettingsProvider::valueFromRegAppCopy("UserLocalize", "g", static_cast<QVariant>(9.8)).toDouble();
+
     m_driver = static_cast<AAnalyserApplication*>(QApplication::instance())->
             getDriverByProtocols(QStringList() << DeviceProtocols::uid_JumpPlateProtocol);
     if (m_driver)
@@ -119,14 +122,12 @@ void DropTestExecute::getData(DeviceProtocols::DeviceData *data)
         {
             m_plt1Pressed = jpData->busy();
             m_plt1Time = jpData->time() / 1000;
-            //m_plt1Height = (9.8 * pow(jpData->time() / 1000, 2)) / 8 * 100;
         }
         else
         if (jpData->plate() == 2)
         {
             m_plt2Pressed = jpData->busy();
             m_plt2Time = jpData->time() / 1000;
-            //m_plt2Height = (9.8 * pow(jpData->time() / 1000, 2)) / 8 * 100;
         }
         iterate(false);
     }
@@ -212,7 +213,7 @@ void DropTestExecute::iterate(const bool isStart)
                 {
                     setStage(dtsResult);
                     m_timeNoContact = (m_plt1Time + m_plt2Time) / 2.0;
-                    double height = (9.8 * pow(m_timeNoContact, 2)) / 8 * 100;
+                    double height = (m_g * pow(m_timeNoContact, 2)) / 8 * 100;
 
                     double power = 0;
                     double stiffness = 0;

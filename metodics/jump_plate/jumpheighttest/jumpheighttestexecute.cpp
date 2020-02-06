@@ -6,6 +6,7 @@
 #include "executewidget.h"
 #include "testresultdata.h"
 #include "jumpplatedata.h"
+#include "settingsprovider.h"
 
 #include <QTimer>
 #include <QMessageBox>
@@ -81,6 +82,8 @@ void JumpHeightTestExecute::timerEvent(QTimerEvent *event)
 
 void JumpHeightTestExecute::start()
 {
+    m_g = SettingsProvider::valueFromRegAppCopy("UserLocalize", "g", static_cast<QVariant>(9.8)).toDouble();
+
     m_driver = static_cast<AAnalyserApplication*>(QApplication::instance())->
             getDriverByProtocols(QStringList() << DeviceProtocols::uid_JumpPlateProtocol);
     if (m_driver)
@@ -125,14 +128,14 @@ void JumpHeightTestExecute::getData(DeviceProtocols::DeviceData *data)
         {
             m_plt1Pressed = jpData->busy();
             m_plt1Time = jpData->time() / 1000;
-            m_plt1Height = (9.8 * pow(jpData->time() / 1000, 2)) / 8 * 100;
+            m_plt1Height = (m_g * pow(jpData->time() / 1000, 2)) / 8 * 100;
         }
         else
         if (jpData->plate() == 2)
         {
             m_plt2Pressed = jpData->busy();
             m_plt2Time = jpData->time() / 1000;
-            m_plt2Height = (9.8 * pow(jpData->time() / 1000, 2)) / 8 * 100;
+            m_plt2Height = (m_g * pow(jpData->time() / 1000, 2)) / 8 * 100;
         }
         iterate(false);
     }

@@ -14,6 +14,7 @@ AAnalyserSettings::AAnalyserSettings(QWidget *parent) :
     ui(new Ui::AAnalyserSettings)
 {
     ui->setupUi(this);
+    ui->twTabs->setCurrentIndex(0);
 }
 
 AAnalyserSettings::~AAnalyserSettings()

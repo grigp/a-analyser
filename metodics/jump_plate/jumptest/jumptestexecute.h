@@ -75,6 +75,9 @@ private:
 
     JumpHeightSingleData *m_jhd;
     HoppingData *m_hd;
+
+    ///< Ускорение свободного падения. Зависит от местоположения, которое необходимо выбрать в настройках программы
+    double m_g {9.8};
 };
 
 #endif // JUMPTESTEXECUTE_H
