@@ -84,10 +84,22 @@ void TeppingTestExecute::start()
         {
             if (m_jumpControl)
             {
-                m_isBlocked = false;
-                m_plt1Pressed = m_jumpControl->platformState(0);
-                m_plt2Pressed = m_jumpControl->platformState(1);
-                iterate(true);
+                if (m_jumpControl->platformsCount() != 2)
+                {
+                    ui->lblCommentFinishTest->setText(tr("Для выполнения теста необходима платформа, состоящая из двух платформ"));
+                    ui->btnSave->setVisible(false);
+                    ui->lblCommentStateOnPlate->setVisible(false);
+                    ui->frIndicator->setVisible(false);
+                    ui->pbTimeTest->setVisible(false);
+                    ui->frTables->setVisible(false);
+                }
+                else
+                {
+                    m_isBlocked = false;
+                    m_plt1Pressed = m_jumpControl->platformState(0);
+                    m_plt2Pressed = m_jumpControl->platformState(1);
+                    iterate(true);
+                }
             }
         });
 
