@@ -40,7 +40,7 @@ void DropTestExecute::setParams(const QJsonObject &params)
     else
     if (m_testFinishKind == JumpPlateDefines::tfkQuantity)
         ui->lblCommentFinishTest->setText(QString(tr("Выполните %1 спрыгиваний на платформу")).arg(m_jumpsMax));
-    ui->edFallHeight->setValue(params["fall_height"].toInt());
+    ui->edFallHeight->setValue(params["fall_height"].toDouble());
     ui->pbTimeTest->setVisible(m_testFinishKind == JumpPlateDefines::tfkFixedTime);
 }
 
@@ -87,9 +87,21 @@ void DropTestExecute::start()
 
         m_driver->start();
 
+        m_kard = static_cast<AAnalyserApplication*>(QApplication::instance())->getSelectedPatient();
+        if (m_kard.massa == 0)
+        {
+            ui->lblCommentFinishTest->setText(tr("Для пациента не указана масса. Проведение теста невозможно."));
+            ui->lblCommentGetOffPlate->setVisible(false);
+            ui->lblCommentStage->setVisible(false);
+            ui->frFallHeight->setVisible(false);
+            ui->btnSave->setVisible(false);
+            ui->pbTimeTest->setVisible(false);
+            ui->tvJumps->setVisible(false);
+        }
+
         QTimer::singleShot(300, [=]()
         {
-            if (m_jumpControl)
+            if (m_jumpControl && m_kard.massa > 0)
             {
                 m_isBlocked = false;
                 m_plt1Pressed = m_jumpControl->platformState(0);
@@ -100,8 +112,6 @@ void DropTestExecute::start()
 
         ui->tvJumps->setModel(&m_mdlTable);
         setModelGeometry();
-
-        m_kard = static_cast<AAnalyserApplication*>(QApplication::instance())->getSelectedPatient();
     }
     else
     {
@@ -213,7 +223,7 @@ void DropTestExecute::iterate(const bool isStart)
                 {
                     setStage(dtsResult);
                     m_timeNoContact = (m_plt1Time + m_plt2Time) / 2.0;
-                    double height = (m_g * pow(m_timeNoContact, 2)) / 8 * 100;
+                    double height = (m_g * pow(m_timeNoContact, 2)) / 8; // * 100;
 
                     double power = 0;
                     double stiffness = 0;
@@ -296,11 +306,11 @@ void DropTestExecute::setModelGeometry()
                                          << tr("Контактная\nфаза, сек")
                                          << tr("Бесконтактная\nфаза, сек")
                                          << tr("Масса\nпациента, кг")
-                                         << tr("Высота\nспрыгивания, см")
-                                         << tr("Высота\nпрыжка, см")
+                                         << tr("Высота\nспрыгивания, м")
+                                         << tr("Высота\nпрыжка, м")
                                          << tr("Мощность")
                                          << tr("Жесткость")
-                                         << tr("Начальная\nскорость, см/сек")
+                                         << tr("Начальная\nскорость, м/сек")
                                          << tr("Индекс\nпрыгучести"));
     ui->tvJumps->header()->resizeSections(QHeaderView::ResizeToContents);
     ui->tvJumps->header()->resizeSection(0, 100);

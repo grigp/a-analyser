@@ -198,18 +198,32 @@ void MetodicsFactory::saveMetodics()
     if (fMet.open(QIODevice::WriteOnly | QIODevice::Text))
     {
         QJsonObject root;
+
         QJsonArray tests;
         foreach (auto met, m_metodics)
         {
             QJsonObject obj;
             obj["uid"] = met.uid;
             obj["name"] = met.name;
+            obj["image"] = met.imageName;
             obj["template"] = met.templateId;
+            obj["kind"] = met.kindUid;
             obj["build_norms"] = met.buildNorms;
             obj["params"] = met.params;
             tests.append(obj);
         }
         root["tests"] = tests;
+
+        QJsonArray tests_kinds;
+        foreach (auto kind, m_metodicKinds)
+        {
+            QJsonObject obj;
+            obj["uid"] = kind.uid;
+            obj["name"] = kind.name;
+            obj["image"] = kind.imageName;
+            tests_kinds.append(obj);
+        }
+        root["tests_kinds"] = tests_kinds;
 
         QJsonDocument doc(root);
         QByteArray ba = doc.toJson();

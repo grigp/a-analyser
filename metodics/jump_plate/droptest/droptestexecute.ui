@@ -56,7 +56,7 @@
       <item>
        <widget class="QLabel" name="lblFallHeight">
         <property name="text">
-         <string>Высота спрыгивания, см</string>
+         <string>Высота спрыгивания, м</string>
         </property>
        </widget>
       </item>
@@ -77,7 +77,7 @@
        </spacer>
       </item>
       <item>
-       <widget class="QSpinBox" name="edFallHeight"/>
+       <widget class="QDoubleSpinBox" name="edFallHeight"/>
       </item>
       <item>
        <spacer name="horizontalSpacer">

@@ -51,7 +51,7 @@
             </size>
            </property>
            <property name="text">
-            <string>Количество шагов</string>
+            <string>Количество прыжков</string>
            </property>
           </widget>
          </item>
@@ -162,26 +162,17 @@
             </size>
            </property>
            <property name="text">
-            <string>Высота спрыгивания, см</string>
+            <string>Высота спрыгивания, м</string>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QSpinBox" name="edFallHeight">
+          <widget class="QDoubleSpinBox" name="edFallHeight">
            <property name="minimumSize">
             <size>
              <width>80</width>
              <height>0</height>
             </size>
-           </property>
-           <property name="maximum">
-            <number>80</number>
-           </property>
-           <property name="singleStep">
-            <number>5</number>
-           </property>
-           <property name="value">
-            <number>40</number>
            </property>
           </widget>
          </item>

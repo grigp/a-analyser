@@ -5,6 +5,8 @@
 #include "datadefines.h"
 #include "dataprovider.h"
 
+#include <QDebug>
+
 DropTestVisualize::DropTestVisualize(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::DropTestVisualize)
@@ -34,7 +36,7 @@ void DropTestVisualize::setTest(const QString &testUid)
         auto fctTimeNoContactAvg = m_calculator->primaryFactor(4);
         ui->lblJumpsCount->setText(QString(tr("Количество прыжков") + " %1").arg(fctJumpsCount->value()));
         ui->lblTimeTest->setText(QString(tr("Общее время прыжков") + " %1 " + tr("сек")).arg(fctTimeTest->value()));
-        ui->lblHeightAvg->setText(QString(tr("Средняя высота прыжков") + " %1 " + tr("см")).arg(fctHeightAvg->value()));
+        ui->lblHeightAvg->setText(QString(tr("Средняя высота прыжков") + " %1 " + tr("м")).arg(fctHeightAvg->value()));
         ui->lblTimeContactAvg->setText(QString(tr("Среднее время контактной фазы") + " %1 " + tr("сек")).arg(fctTimeContactAvg->value()));
         ui->lblTimeNoContactAvg->setText(QString(tr("Среднее время бесконтактной фазы") + " %1 " + tr("сек")).arg(fctTimeNoContactAvg->value()));
 
@@ -74,11 +76,11 @@ void DropTestVisualize::setTest(const QString &testUid)
                                          << tr("Контактная\nфаза, сек")
                                          << tr("Бесконтактная\nфаза, сек")
                                          << tr("Масса\nпациента, кг")
-                                         << tr("Высота\nспрыгивания, см")
-                                         << tr("Высота\nпрыжка, см")
+                                         << tr("Высота\nспрыгивания, м")
+                                         << tr("Высота\nпрыжка, м")
                                          << tr("Мощность")
                                          << tr("Жесткость")
-                                         << tr("Начальная\nскорость, см/сек")
+                                         << tr("Начальная\nскорость, м/сек")
                                          << tr("Индекс\nпрыгучести"));
         ui->tvJumpsDrop->header()->resizeSections(QHeaderView::ResizeToContents);
         ui->tvJumpsDrop->header()->resizeSection(0, 50);

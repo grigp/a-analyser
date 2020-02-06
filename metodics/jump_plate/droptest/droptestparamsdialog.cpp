@@ -25,7 +25,7 @@ void DropTestParamsDialog::setParams(const QJsonObject &params)
     ui->cbFinishKind->setCurrentIndex(JumpPlateDefines::TestFinishKindIndex.value(sFK));
     ui->edJumpsCount->setValue(params["jumps_count"].toInt());
     ui->edTestTime->setValue(params["time"].toInt());
-    ui->edFallHeight->setValue(params["fall_height"].toInt());
+    ui->edFallHeight->setValue(params["fall_height"].toDouble());
 }
 
 QJsonObject DropTestParamsDialog::getParams()

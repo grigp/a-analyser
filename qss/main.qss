@@ -108,6 +108,11 @@ QSpinBox
     font-size: 11pt;
 }
 
+QDoubleSpinBox
+{
+    font-size: 11pt;
+}
+
 QDateEdit
 {
     font-size: 11pt;

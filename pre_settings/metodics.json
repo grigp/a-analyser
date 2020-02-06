@@ -361,7 +361,7 @@
                 "finish_kind": "quantity",
                 "jumps_count": 10,
                 "time": 30,
-                "fall_height": 40
+                "fall_height": 0.04
             }
         },
         {

@@ -213,7 +213,7 @@
             </size>
            </property>
            <property name="text">
-            <string>Вес, кг</string>
+            <string>Масса, кг</string>
            </property>
           </widget>
          </item>

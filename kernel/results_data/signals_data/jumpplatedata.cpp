@@ -232,7 +232,7 @@ SignalsDefines::DropJumpRec DropTestData::jump(const int idx) const
         {
             auto obj = arr.at(i).toObject();
             SignalsDefines::DropJumpRec djr;
-            djr.fallHeight = obj["fall"].toInt();
+            djr.fallHeight = obj["fall"].toDouble();
             djr.height = obj["height"].toDouble();
             djr.timeContact = obj["time_contact"].toDouble();
             djr.timeNoContact = obj["time_no_contact"].toDouble();
