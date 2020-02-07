@@ -38,7 +38,7 @@ void JumpHeightTestVisualize::setTest(const QString &testUid)
         auto fctTimeAvg = m_calculator->primaryFactor(3);
         ui->lblJumpsCount->setText(QString(tr("Количество прыжков") + " %1").arg(fctJumpsCount->value()));
         ui->lblTimeTest->setText(QString(tr("Общее время прыжков") + " %1 " + tr("сек")).arg(fctTimeTest->value()));
-        ui->lblHeightAvg->setText(QString(tr("Средняя высота прыжков") + " %1 " + tr("см")).arg(fctHeightAvg->value()));
+        ui->lblHeightAvg->setText(QString(tr("Средняя высота прыжков") + " %1 " + tr("м")).arg(fctHeightAvg->value()));
         ui->lblTimeAvg->setText(QString(tr("Среднее время на платформе") + " %1 " + tr("сек")).arg(fctTimeAvg->value()));
 
         auto* model = new QStandardItemModel(ui->tvJumps);
@@ -58,7 +58,7 @@ void JumpHeightTestVisualize::setTest(const QString &testUid)
         }
 
         ui->tvJumps->setModel(model);
-        model->setHorizontalHeaderLabels(QStringList() << tr("N") << tr("Высота прыжка, см") << tr("Время контактной фазы, сек"));
+        model->setHorizontalHeaderLabels(QStringList() << tr("N") << tr("Высота прыжка, м") << tr("Время контактной фазы, сек"));
         ui->tvJumps->header()->resizeSections(QHeaderView::ResizeToContents);
         ui->tvJumps->header()->resizeSection(0, 100);
     }

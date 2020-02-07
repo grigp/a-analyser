@@ -128,14 +128,14 @@ void JumpHeightTestExecute::getData(DeviceProtocols::DeviceData *data)
         {
             m_plt1Pressed = jpData->busy();
             m_plt1Time = jpData->time() / 1000;
-            m_plt1Height = (m_g * pow(jpData->time() / 1000, 2)) / 8 * 100;
+            m_plt1Height = (m_g * pow(jpData->time() / 1000, 2)) / 8; // * 100;
         }
         else
         if (jpData->plate() == 2)
         {
             m_plt2Pressed = jpData->busy();
             m_plt2Time = jpData->time() / 1000;
-            m_plt2Height = (m_g * pow(jpData->time() / 1000, 2)) / 8 * 100;
+            m_plt2Height = (m_g * pow(jpData->time() / 1000, 2)) / 8; // * 100;
         }
         iterate(false);
     }
@@ -243,7 +243,7 @@ void JumpHeightTestExecute::iterate(const bool isStart)
 
 void JumpHeightTestExecute::setModelGeometry()
 {
-    m_mdlTable.setHorizontalHeaderLabels(QStringList() << tr("N") << tr("Высота прыжка, см") << tr("Время контактной фазы, сек"));
+    m_mdlTable.setHorizontalHeaderLabels(QStringList() << tr("N") << tr("Высота прыжка, м") << tr("Время контактной фазы, сек"));
     ui->tvJumps->header()->resizeSections(QHeaderView::ResizeToContents);
     ui->tvJumps->header()->resizeSection(0, 100);
 }
