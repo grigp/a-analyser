@@ -44,6 +44,8 @@ private slots:
 
     void unselect();
 
+    void on_editSearchString(const QString &value);
+
 //protected:
 //    bool eventFilter(QObject *watched, QEvent *event);
 

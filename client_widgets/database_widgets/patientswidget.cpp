@@ -155,6 +155,11 @@ void PatientsWidget::unselect()
     static_cast<AAnalyserApplication*>(QApplication::instance())->doSelectPatient("");
 }
 
+void PatientsWidget::on_editSearchString(const QString &value)
+{
+    m_pmdlPatients->setFilterValue(value);
+}
+
 //bool PatientsWidget::eventFilter(QObject *watched, QEvent *event)
 //{
 //    if (watched == ui->tvPatients->viewport() && event->type() == QEvent::MouseButtonRelease)

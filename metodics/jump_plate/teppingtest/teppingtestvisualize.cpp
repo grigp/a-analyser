@@ -32,7 +32,7 @@ void TeppingTestVisualize::setTest(const QString &testUid)
         auto fctTimeAvg = m_calculator->primaryFactor(3);
         ui->lblStepsCount->setText(QString(tr("Количество шагов") + " %1").arg(fctJumpsCount->value()));
         ui->lblTimeTest->setText(QString(tr("Общее время шагов") + " %1 " + tr("сек")).arg(fctTimeTest->value()));
-        ui->lblTimeAvgLeftLeg->setText(QString(tr("Быстрота одиночного движения левой ноги") + " %1 " + tr("см")).arg(fctHeightAvg->value()));
+        ui->lblTimeAvgLeftLeg->setText(QString(tr("Быстрота одиночного движения левой ноги") + " %1 " + tr("сек")).arg(fctHeightAvg->value()));
         ui->lblTimeAvgRightLeg->setText(QString(tr("Быстрота одиночного движения правой ноги") + " %1 " + tr("сек")).arg(fctTimeAvg->value()));
 
         auto* model = new QStandardItemModel(ui->tvSteps);

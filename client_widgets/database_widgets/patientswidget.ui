@@ -139,6 +139,40 @@
     </widget>
    </item>
    <item>
+    <widget class="QFrame" name="frSearch">
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout_2">
+      <property name="leftMargin">
+       <number>9</number>
+      </property>
+      <property name="topMargin">
+       <number>1</number>
+      </property>
+      <property name="rightMargin">
+       <number>9</number>
+      </property>
+      <property name="bottomMargin">
+       <number>1</number>
+      </property>
+      <item>
+       <widget class="QLabel" name="lblSearch">
+        <property name="text">
+         <string>Поиск</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="edSearch"/>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
     <widget class="QTreeView" name="tvPatients">
      <property name="font">
       <font>
@@ -249,6 +283,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>edSearch</sender>
+   <signal>textChanged(QString)</signal>
+   <receiver>PatientsWidget</receiver>
+   <slot>on_editSearchString(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>122</x>
+     <y>61</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>370</x>
+     <y>55</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>addPatient()</slot>
@@ -256,5 +306,6 @@
   <slot>removePatient()</slot>
   <slot>selectPatient(QModelIndex)</slot>
   <slot>unselect()</slot>
+  <slot>on_editSearchString(QString)</slot>
  </slots>
 </ui>
