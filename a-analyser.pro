@@ -64,3 +64,5 @@ FORMS += \
 
 RESOURCES += \
     kernel.qrc
+
+win32:RC_FILE = a-analyser.rc

@@ -35,6 +35,7 @@ AAnalyserApplication::AAnalyserApplication(int &argc, char **argv, const QString
     setApplicationName("a-analyser");
 //    setApplicationDisplayName(tr("Физиологические исследования a-analyser")); Не переводится
     setOrganizationName("A-Med");
+//    setWindowIcon(QIcon(":/images/MainIcon2.ico"));
 
     QTimer::singleShot(100, [=]()
     {

@@ -33,4 +33,14 @@ void EmptyWidget::paintEvent(QPaintEvent *event)
         }
         x += m_picture.width();
     }
+
+    QImage logo(":/images/Logo_BW.png");
+    if (geometry().width() > logo.width())
+        painter.drawImage(geometry().width() / 2 - logo.width() / 2, geometry().height() / 2 - logo.height() / 2, logo);
+    else
+    {
+        int h = logo.height() * geometry().width() / logo.width();
+        QRect r(0, geometry().height() / 2 - h / 2, geometry().width(), h);
+        painter.drawImage(r, logo);
+    }
 }
