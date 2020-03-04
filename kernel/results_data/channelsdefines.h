@@ -21,6 +21,11 @@ static QString cfNoSignal = "{90e313c6-8805-4235-8981-1fb85d7aea5f}";          /
  */
  static QString ctStabilogram = "{1F7A5F8A-FC64-44E2-B2D2-5245D02ED2CA}";
  static QString ctBallistogram = "{98CA38D2-8423-4AE5-9AF3-A47AA58F2616}";
+ static QString ctRitmogram = "{C211078B-9219-4806-9D1D-52B1A4AC5282}";
+ static QString ctDynamo = "{6534BEE8-F805-4E9D-B972-1279E0A3FA3A}";
+ static QString ctBreath = "{B3366A97-6EBC-4E6C-B004-AE04A96C3260}";
+ static QString ctMyogram = "{0DA6EBB3-15BC-41D6-90F2-59D847A42863}";
+
  static QString ctJumpSingleHeight = "{828DC7F7-2E70-4912-9ED5-03AA5A8BE729}";
  static QString ctJumpHeight = "{53BD9EE2-BB3F-4D3E-BD7F-719D7F73155D}";
  static QString ctTeppingData = "{45F90DE1-57B7-4987-BC37-8C6654CBC636}";
@@ -34,14 +39,23 @@ static QString cfNoSignal = "{90e313c6-8805-4235-8981-1fb85d7aea5f}";          /
  */
  static QString chanStab = "{61E814F9-CE64-46F6-B158-46961964BEE9}";
  static QString chanZ = "{41280317-450F-4CF7-B3D9-15E2D0B87469}";
+ static QString chanRitmogram = "{C9E0639D-D077-4D7D-ABE6-28FC2DE2FA90}";
+ static QString chanDynHand1 = "{A8A04F44-C766-495B-8662-BA4A2B0C2D6C}";
+ static QString chanDynStand1 = "{AE1F3EB7-684D-41ED-8BA9-44CB608E2043}";
+ static QString chanBreath1 = "{77BD2F44-A2E9-4060-8F9D-DE0839894765}";
+ static QString chanDynHand2 = "{37EF498F-822C-4545-B06C-8251A91CEB30}";
+ static QString chanDynStand2 = "{856F89A0-020A-43FE-839A-A2634033AB20}";
+ static QString chanBreath2 = "{F62110AF-F47C-4307-916D-D76A0274D12B}";
+ static QString chanDynHand3 = "{7FF1ABDF-EE82-4907-9CDE-73527CB5CAA1}";
+ static QString chanDynStand3 = "{D4512319-8B39-4B93-B11F-5F9BE321D37D}";
+ static QString chanBreath3 = "{35EC81F9-F56A-409F-B1EB-E84B001E9FBD}";
+ static QString chanMyogram = "{DD5FE1AC-9423-46AD-9EB0-50D52EA6D022}";
+
  static QString chanJumpSingleHeight = "{EF9DF092-7FE0-4F74-9EA6-8BA3318AA91C}";
  static QString chanJumpHeight = "{8FE3810D-2A66-4A2E-8921-8E089E577B6E}";
  static QString chanTeppingData = "{25544CFD-A203-4BE9-8297-5D672D0EC7D5}";
  static QString chanDropTestData = "{74B71080-34A4-4480-80D0-E0D85C11B6B5}";
  static QString chanHopping = "{EF4AD6ED-2D10-497A-AB8D-945CF6C0645E}";
-
- static QString chanMyo = "{E4342137-B1BF-4F68-BC17-2C337b97A642}";
- static QString chanPulse = "{84736B99-7F4B-494A-9958-D6F908E07C32}";
 
  static QString chanTrenResult = "{BE102815-C928-4120-919E-4BB21A25EB34}";
 

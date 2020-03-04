@@ -124,6 +124,7 @@ QList<QString> Stabilan01::getChannels() const
 {
     QList<QString> retval;
     retval << ChannelsDefines::chanStab;
+//    if (m_model == Stabilan01Defines::smcKSK123_21)
     return retval;
 }
 
@@ -169,6 +170,26 @@ void Stabilan01::zeroing(const QString &channelUid)
     m_offsetY = m_Y;
     SettingsProvider::setValueToRegAppCopy("StabilanDriver", "zeroing_x", m_offsetX);
     SettingsProvider::setValueToRegAppCopy("StabilanDriver", "zeroing_y", m_offsetY);
+}
+
+void Stabilan01::calibrateTenso(const QString &channelUid)
+{
+
+}
+
+void Stabilan01::setBoundsDelArtifacts(const int low, const int high)
+{
+
+}
+
+void Stabilan01::zeroingMyo()
+{
+
+}
+
+void Stabilan01::zeroingMyo(const int channel)
+{
+
 }
 
 QString Stabilan01::modelName(const Stabilan01Defines::Model mdlCode)
@@ -363,8 +384,8 @@ QMap<QString, bool> Stabilan01::getChanRecordingDefault(const QJsonObject &obj)
     QMap<QString, bool> retval;
     retval.insert(ChannelsDefines::chanStab, obj["stab"].toBool());
     retval.insert(ChannelsDefines::chanZ, obj["z"].toBool());
-    retval.insert(ChannelsDefines::chanMyo, obj["myo"].toBool());
-    retval.insert(ChannelsDefines::chanPulse, obj["pulse"].toBool());
+    retval.insert(ChannelsDefines::chanMyogram, obj["myo"].toBool());
+    retval.insert(ChannelsDefines::chanRitmogram, obj["pulse"].toBool());
     return retval;
 }
 
@@ -373,8 +394,8 @@ QJsonObject Stabilan01::setChanRecordingDefault(const QMap<QString, bool> &recMa
     QJsonObject recObj;
     recObj["stab"] = recMap.value(ChannelsDefines::chanStab);
     recObj["z"] = recMap.value(ChannelsDefines::chanZ);
-    recObj["myo"] = recMap.value(ChannelsDefines::chanMyo);
-    recObj["pulse"] = recMap.value(ChannelsDefines::chanPulse);
+    recObj["myo"] = recMap.value(ChannelsDefines::chanMyogram);
+    recObj["pulse"] = recMap.value(ChannelsDefines::chanRitmogram);
     return recObj;
 }
 

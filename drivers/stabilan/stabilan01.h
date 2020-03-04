@@ -22,7 +22,12 @@ class SerialPort;
 /*!
  * \brief Класс драйвера стабилоанализатора Стабилан - 01 Stabilan01 class
  */
-class Stabilan01 : public Driver, public DeviceProtocols::StabControl
+class Stabilan01 :
+          public Driver
+        , public DeviceProtocols::StabControl
+        , public DeviceProtocols::TensoControl
+        , public DeviceProtocols::PulseControl
+        , public DeviceProtocols::MyoControl
 {
     Q_OBJECT
 public:
@@ -115,6 +120,13 @@ public:
 
     void calibrate(const QString &channelUid) override;
     void zeroing(const QString &channelUid) override;
+
+    void calibrateTenso(const QString &channelUid) override;
+
+    void setBoundsDelArtifacts(const int low, const int high) override;
+
+    void zeroingMyo() override;
+    void zeroingMyo(const int channel) override;
 
     /*!
      * \brief Возвращает название модели стабилоанализатора по коду

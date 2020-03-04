@@ -49,6 +49,51 @@ ChannelsUtils::ChannelsUtils()
                                                                   std::make_tuple(QString("Баллистограмма"),
                                                                                   QString("Z"),
                                                                                   ChannelsDefines::ctBallistogram))
+               , std::pair<QString, ChannelsDefines::ChannelInfo>(ChannelsDefines::chanRitmogram,
+                                                                    std::make_tuple(QString("Ритмограмма"),
+                                                                                    QString("RR"),
+                                                                                    ChannelsDefines::ctRitmogram))
+               , std::pair<QString, ChannelsDefines::ChannelInfo>(ChannelsDefines::chanDynHand1,
+                                                                    std::make_tuple(QString("Кистевой силомер 1"),
+                                                                                    QString("DH1"),
+                                                                                    ChannelsDefines::ctDynamo))
+               , std::pair<QString, ChannelsDefines::ChannelInfo>(ChannelsDefines::chanDynStand1,
+                                                                      std::make_tuple(QString("Становой силомер 1"),
+                                                                                      QString("SD1"),
+                                                                                      ChannelsDefines::ctDynamo))
+               , std::pair<QString, ChannelsDefines::ChannelInfo>(ChannelsDefines::chanBreath1,
+                                                                        std::make_tuple(QString("Дыхание 1"),
+                                                                                        QString("Br1"),
+                                                                                        ChannelsDefines::ctBreath))
+                 , std::pair<QString, ChannelsDefines::ChannelInfo>(ChannelsDefines::chanDynHand2,
+                                                                      std::make_tuple(QString("Кистевой силомер 2"),
+                                                                                      QString("DH2"),
+                                                                                      ChannelsDefines::ctDynamo))
+                 , std::pair<QString, ChannelsDefines::ChannelInfo>(ChannelsDefines::chanDynStand2,
+                                                                        std::make_tuple(QString("Становой силомер 2"),
+                                                                                        QString("SD2"),
+                                                                                        ChannelsDefines::ctDynamo))
+                 , std::pair<QString, ChannelsDefines::ChannelInfo>(ChannelsDefines::chanBreath2,
+                                                                          std::make_tuple(QString("Дыхание 2"),
+                                                                                          QString("Br2"),
+                                                                                          ChannelsDefines::ctBreath))
+                 , std::pair<QString, ChannelsDefines::ChannelInfo>(ChannelsDefines::chanDynHand3,
+                                                                      std::make_tuple(QString("Кистевой силомер 3"),
+                                                                                      QString("DH3"),
+                                                                                      ChannelsDefines::ctDynamo))
+                 , std::pair<QString, ChannelsDefines::ChannelInfo>(ChannelsDefines::chanDynStand3,
+                                                                        std::make_tuple(QString("Становой силомер 3"),
+                                                                                        QString("SD3"),
+                                                                                        ChannelsDefines::ctDynamo))
+                 , std::pair<QString, ChannelsDefines::ChannelInfo>(ChannelsDefines::chanBreath3,
+                                                                          std::make_tuple(QString("Дыхание 3"),
+                                                                                          QString("Br3"),
+                                                                                          ChannelsDefines::ctBreath))
+                 , std::pair<QString, ChannelsDefines::ChannelInfo>(ChannelsDefines::chanMyogram,
+                                                                          std::make_tuple(QString("Миограмма"),
+                                                                                          QString("Myo"),
+                                                                                          ChannelsDefines::ctMyogram))
+
                  , std::pair<QString, ChannelsDefines::ChannelInfo>(ChannelsDefines::chanJumpSingleHeight,
                                                                     std::make_tuple(QString("Высота одиночного прыжка"),
                                                                                     QString("H"),
@@ -77,6 +122,10 @@ ChannelsUtils::ChannelsUtils()
     , m_formats({
                   std::pair<QString, QString>(ChannelsDefines::ctStabilogram, ChannelsDefines::cfDecartCoordinates)
                 , std::pair<QString, QString>(ChannelsDefines::ctBallistogram, ChannelsDefines::cfSinglePositive)
+                , std::pair<QString, QString>(ChannelsDefines::ctRitmogram, ChannelsDefines::cfSinglePositive)
+                , std::pair<QString, QString>(ChannelsDefines::ctDynamo, ChannelsDefines::cfSinglePositive)
+                , std::pair<QString, QString>(ChannelsDefines::ctBreath, ChannelsDefines::cfSingleDual)
+                , std::pair<QString, QString>(ChannelsDefines::ctMyogram, ChannelsDefines::cfSinglePositive)
                 , std::pair<QString, QString>(ChannelsDefines::ctJumpSingleHeight, ChannelsDefines::cfNoSignal)
                 , std::pair<QString, QString>(ChannelsDefines::ctJumpHeight, ChannelsDefines::cfNoSignal)
                 , std::pair<QString, QString>(ChannelsDefines::ctTeppingData, ChannelsDefines::cfNoSignal)
