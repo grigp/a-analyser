@@ -40,6 +40,10 @@ public:
      */
     void onHide() override;
 
+    /*!
+     * \brief Виртуальный метод, возвращающий true, если допустимы внешние элементы управления (глобальное меню и т.д.)
+     */
+    bool isExternalControl() override {return false;}
 
 public slots:
     void showDB();

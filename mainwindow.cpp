@@ -54,6 +54,7 @@ void MainWindow::showClientPage(const QString &uidPage)
         {
             m_currentClientPage = uidPage;
             static_cast<ClientWidget*>(wgt)->onShow();
+            ui->menuBar->setVisible(static_cast<ClientWidget*>(wgt)->isExternalControl());
         }
     }
 }

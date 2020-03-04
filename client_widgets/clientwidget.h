@@ -41,6 +41,11 @@ public:
      */
     virtual void onHide() {}
 
+    /*!
+     * \brief Виртуальный метод, возвращающий true, если допустимы внешние элементы управления (глобальное меню и т.д.)
+     */
+    virtual bool isExternalControl() = 0;
+
 private:
     Ui::ClientWidget *ui;
 };
