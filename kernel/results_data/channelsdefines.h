@@ -26,6 +26,8 @@ static QString cfNoSignal = "{90e313c6-8805-4235-8981-1fb85d7aea5f}";          /
  static QString ctBreath = "{B3366A97-6EBC-4E6C-B004-AE04A96C3260}";
  static QString ctMyogram = "{0DA6EBB3-15BC-41D6-90F2-59D847A42863}";
 
+ static QString ctTenso = "{A7D6E553-3BE1-4FDF-A29D-A4DB98F88AFC}";  ///< Виртуальный тензоканал
+
  static QString ctJumpSingleHeight = "{828DC7F7-2E70-4912-9ED5-03AA5A8BE729}";
  static QString ctJumpHeight = "{53BD9EE2-BB3F-4D3E-BD7F-719D7F73155D}";
  static QString ctTeppingData = "{45F90DE1-57B7-4987-BC37-8C6654CBC636}";
@@ -50,6 +52,10 @@ static QString cfNoSignal = "{90e313c6-8805-4235-8981-1fb85d7aea5f}";          /
  static QString chanDynStand3 = "{D4512319-8B39-4B93-B11F-5F9BE321D37D}";
  static QString chanBreath3 = "{35EC81F9-F56A-409F-B1EB-E84B001E9FBD}";
  static QString chanMyogram = "{DD5FE1AC-9423-46AD-9EB0-50D52EA6D022}";
+
+ static QString chanTenso1 = "{C8BC30A3-19FD-45E3-965E-39BB28E51D15}";  ///< Виртуальный тензоканал 1
+ static QString chanTenso2 = "{F832E307-F77E-4FE3-8DD8-2A620D6CC9BB}";  ///< Виртуальный тензоканал 2
+ static QString chanTenso3 = "{6615ABFD-B646-4CCA-8F24-59B1CC4DABD6}";  ///< Виртуальный тензоканал 3
 
  static QString chanJumpSingleHeight = "{EF9DF092-7FE0-4F74-9EA6-8BA3318AA91C}";
  static QString chanJumpHeight = "{8FE3810D-2A66-4A2E-8921-8E089E577B6E}";

@@ -26,6 +26,10 @@ public:
     void setRecording(const QMap<QString,  bool>& recMap);
     QMap<QString, bool> getRecording() const;
 
+private slots:
+    void on_selectModel(int modelIdx);
+    void on_selectZeroingType(int zcIdx);
+
 private:
     Ui::Stabilan01ParamsDialog *ui;
 };

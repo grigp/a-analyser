@@ -94,6 +94,19 @@ ChannelsUtils::ChannelsUtils()
                                                                                           QString("Myo"),
                                                                                           ChannelsDefines::ctMyogram))
 
+                 , std::pair<QString, ChannelsDefines::ChannelInfo>(ChannelsDefines::chanTenso1,
+                                                                          std::make_tuple(QString("Тензоканал 1"),
+                                                                                          QString("T1"),
+                                                                                          ChannelsDefines::ctTenso))
+                 , std::pair<QString, ChannelsDefines::ChannelInfo>(ChannelsDefines::chanTenso2,
+                                                                          std::make_tuple(QString("Тензоканал 2"),
+                                                                                          QString("T2"),
+                                                                                          ChannelsDefines::ctTenso))
+                 , std::pair<QString, ChannelsDefines::ChannelInfo>(ChannelsDefines::chanTenso3,
+                                                                          std::make_tuple(QString("Тензоканал 3"),
+                                                                                          QString("T3"),
+                                                                                          ChannelsDefines::ctTenso))
+
                  , std::pair<QString, ChannelsDefines::ChannelInfo>(ChannelsDefines::chanJumpSingleHeight,
                                                                     std::make_tuple(QString("Высота одиночного прыжка"),
                                                                                     QString("H"),
@@ -126,6 +139,7 @@ ChannelsUtils::ChannelsUtils()
                 , std::pair<QString, QString>(ChannelsDefines::ctDynamo, ChannelsDefines::cfSinglePositive)
                 , std::pair<QString, QString>(ChannelsDefines::ctBreath, ChannelsDefines::cfSingleDual)
                 , std::pair<QString, QString>(ChannelsDefines::ctMyogram, ChannelsDefines::cfSinglePositive)
+                , std::pair<QString, QString>(ChannelsDefines::ctTenso, ChannelsDefines::cfSinglePositive)
                 , std::pair<QString, QString>(ChannelsDefines::ctJumpSingleHeight, ChannelsDefines::cfNoSignal)
                 , std::pair<QString, QString>(ChannelsDefines::ctJumpHeight, ChannelsDefines::cfNoSignal)
                 , std::pair<QString, QString>(ChannelsDefines::ctTeppingData, ChannelsDefines::cfNoSignal)

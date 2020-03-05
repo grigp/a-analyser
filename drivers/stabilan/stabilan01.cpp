@@ -8,6 +8,7 @@
 
 #include <QApplication>
 #include <QJsonObject>
+#include <QJsonArray>
 #include <QtMath>
 #include <QDebug>
 
@@ -386,6 +387,17 @@ QMap<QString, bool> Stabilan01::getChanRecordingDefault(const QJsonObject &obj)
     retval.insert(ChannelsDefines::chanZ, obj["z"].toBool());
     retval.insert(ChannelsDefines::chanMyogram, obj["myo"].toBool());
     retval.insert(ChannelsDefines::chanRitmogram, obj["pulse"].toBool());
+    retval.insert(ChannelsDefines::chanTenso1, obj["tenso1"].toBool());
+    retval.insert(ChannelsDefines::chanTenso2, obj["tenso2"].toBool());
+    retval.insert(ChannelsDefines::chanTenso3, obj["tenso3"].toBool());
+
+    auto myoSubChans = obj["myo_chans"].toArray();
+    for (int i = 0; i < myoSubChans.size(); ++i)
+    {
+        auto sco = myoSubChans.at(i).toObject();
+        retval.insert("MyoChan" + QString::number(i), sco["recorded"].toBool());
+    }
+
     return retval;
 }
 
@@ -394,8 +406,21 @@ QJsonObject Stabilan01::setChanRecordingDefault(const QMap<QString, bool> &recMa
     QJsonObject recObj;
     recObj["stab"] = recMap.value(ChannelsDefines::chanStab);
     recObj["z"] = recMap.value(ChannelsDefines::chanZ);
-    recObj["myo"] = recMap.value(ChannelsDefines::chanMyogram);
     recObj["pulse"] = recMap.value(ChannelsDefines::chanRitmogram);
+    recObj["myo"] = recMap.value(ChannelsDefines::chanMyogram);
+    recObj["tenso1"] = recMap.value(ChannelsDefines::chanTenso1);
+    recObj["tenso2"] = recMap.value(ChannelsDefines::chanTenso2);
+    recObj["tenso3"] = recMap.value(ChannelsDefines::chanTenso3);
+
+    QJsonArray myoSubChan;
+    for (int i = 0; i < 4; ++i)
+    {
+        QJsonObject sco;
+        sco["recorded"] = recMap.value("MyoChan" + QString::number(i));
+        myoSubChan.append(sco);
+    }
+    recObj["myo_chans"] = myoSubChan;
+
     return recObj;
 }
 

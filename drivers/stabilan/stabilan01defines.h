@@ -2,6 +2,7 @@
 #define STABILAN01DEFINES_H
 
 #include <QString>
+#include <QSet>
 #include <QCoreApplication>
 
 namespace Stabilan01Defines {
@@ -68,6 +69,48 @@ enum ZeroingType
 static const QString ztnFast = QCoreApplication::tr("Мгновенная");
 static const QString ztnAveragePrev = QCoreApplication::tr("С усреднением после команды");
 static const QString ztnAverageNext = QCoreApplication::tr("С усреднением по предыстории");
+
+//! Исполнения стабилана с пульсом
+static QSet<Model> ModelsWithPulse =
+{
+    smcKSK123_21,
+    smcKSK123_23,
+    smcKSK123_31,
+    smcKSK123_33,
+    smcStabilan01_02,
+    smcStabilan01_03,
+    smcStabilan01_05,
+    smcStabilan01_12,
+    smcStabilan01_13,
+    smcStabilan01_15,
+    smcStabilan01_16,
+    smcStabilan01_05NG,
+    smcStabilan01_12NG,
+};
+
+//! Исполнения стабилана с тензоканалами
+static QSet<Model> ModelsWithTenso =
+{
+    smcStabilan01_05,
+    smcStabilan01_15,
+    smcStabilan01_16,
+    smcStabilan01_12NG,
+};
+
+//! Исполнения стабилана с миограммами
+static QSet<Model> ModelsWithMyo =
+{
+    smcKSK123_22,
+    smcKSK123_23,
+    smcKSK123_32,
+    smcKSK123_33,
+    smcStabilan01_12,
+    smcStabilan01_13,
+    smcStabilan01_15,
+    smcStabilan01_16,
+    smcStabilan01_05NG,
+};
+
 
 }
 
