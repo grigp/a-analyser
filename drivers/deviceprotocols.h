@@ -48,6 +48,17 @@ QList<Ports> comUsbPorts();
 QList<Ports> allPorts();
 
 
+/*!
+ * \brief Тензометрические устройства TensoDevices enum
+ */
+enum TensoDevices
+{
+      tdDynHand = 0 ///< Кистевой силомер
+    , tdDynStand    ///< Становой силомер
+    , tdBreath      ///< Периметрическое дыхание
+    , tdPushDevice  ///< Толкатель
+};
+
 ///<------------------------------------------------------------------------------------------
 ///< Данные от устройств
 
@@ -562,6 +573,19 @@ static QMap<QString, QString> protocolFormat {
   , std::pair<QString, QString> (uid_PulseProtocol, ChannelsDefines::cfSinglePositive)
   , std::pair<QString, QString> (uid_MyoProtocol, ChannelsDefines::cfSinglePositive)
   , std::pair<QString, QString> (uid_JumpPlateProtocol, ChannelsDefines::cfNoSignal)
+};
+
+///< Устройства тензометрические
+static const QString name_DynHand = "Кистевой силомер";
+static const QString name_DynStand = "Становой силомер";
+static const QString name_Breath = "Периметрическое дыхание";
+static const QString name_PushDevice = "Толкатель";
+
+static QMap<TensoDevices, QString> tensoDevices {
+    std::pair<TensoDevices, QString> (tdDynHand, name_DynHand)
+  , std::pair<TensoDevices, QString> (tdDynStand, name_DynStand)
+  , std::pair<TensoDevices, QString> (tdBreath, name_Breath)
+  , std::pair<TensoDevices, QString> (tdPushDevice, name_PushDevice)
 };
 
 }

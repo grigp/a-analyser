@@ -17,9 +17,12 @@ Stabilan01ParamsDialog::Stabilan01ParamsDialog(QWidget *parent) :
     foreach (auto ztCode, Stabilan01::zeroingTypes())
         ui->cbZeroingType->addItem(Stabilan01::zeroingTypeName(ztCode), ztCode);
 
-    ui->cbTensoChan1->addItems(QStringList() << "Кистевой силомер" << "Становой силомер" << "Дыхание");
-    ui->cbTensoChan2->addItems(QStringList() << "Кистевой силомер" << "Становой силомер" << "Дыхание");
-    ui->cbTensoChan3->addItems(QStringList() << "Кистевой силомер" << "Становой силомер" << "Дыхание");
+    foreach (auto tdKey, DeviceProtocols::tensoDevices.keys())
+    {
+        ui->cbTensoChan1->addItem(DeviceProtocols::tensoDevices.value(tdKey), tdKey);
+        ui->cbTensoChan2->addItem(DeviceProtocols::tensoDevices.value(tdKey), tdKey);
+        ui->cbTensoChan3->addItem(DeviceProtocols::tensoDevices.value(tdKey), tdKey);
+    }
 }
 
 Stabilan01ParamsDialog::~Stabilan01ParamsDialog()
@@ -77,6 +80,101 @@ QMap<QString, bool> Stabilan01ParamsDialog::getRecording() const
     retval.insert("MyoChan2", ui->cbRecMyoChan3->isChecked());
     retval.insert("MyoChan3", ui->cbRecMyoChan4->isChecked());
     return retval;
+}
+
+DeviceProtocols::TensoDevices Stabilan01ParamsDialog::kindTenso1() const
+{
+    return static_cast<DeviceProtocols::TensoDevices>(ui->cbTensoChan1->currentData().toInt());
+}
+
+void Stabilan01ParamsDialog::setKindTenso1(const DeviceProtocols::TensoDevices kind)
+{
+    auto name = DeviceProtocols::tensoDevices.value(kind);
+    ui->cbTensoChan1->setCurrentText(name);
+}
+
+DeviceProtocols::TensoDevices Stabilan01ParamsDialog::kindTenso2() const
+{
+    return static_cast<DeviceProtocols::TensoDevices>(ui->cbTensoChan2->currentData().toInt());
+}
+
+void Stabilan01ParamsDialog::setKindTenso2(const DeviceProtocols::TensoDevices kind)
+{
+    auto name = DeviceProtocols::tensoDevices.value(kind);
+    ui->cbTensoChan2->setCurrentText(name);
+}
+
+DeviceProtocols::TensoDevices Stabilan01ParamsDialog::kindTenso3() const
+{
+    return static_cast<DeviceProtocols::TensoDevices>(ui->cbTensoChan3->currentData().toInt());
+}
+
+void Stabilan01ParamsDialog::setKindTenso3(const DeviceProtocols::TensoDevices kind)
+{
+    auto name = DeviceProtocols::tensoDevices.value(kind);
+    ui->cbTensoChan3->setCurrentText(name);
+}
+
+
+
+double Stabilan01ParamsDialog::rkpTenso1() const
+{
+    return ui->edRKP1->value();
+}
+
+void Stabilan01ParamsDialog::setRkpTenso1(const double rkp)
+{
+    ui->edRKP1->setValue(rkp);
+}
+
+double Stabilan01ParamsDialog::rkpTenso2() const
+{
+    return ui->edRKP2->value();
+}
+
+void Stabilan01ParamsDialog::setRkpTenso2(const double rkp)
+{
+    ui->edRKP2->setValue(rkp);
+}
+
+double Stabilan01ParamsDialog::rkpTenso3() const
+{
+    return ui->edRKP3->value();
+}
+
+void Stabilan01ParamsDialog::setRkpTenso3(const double rkp)
+{
+    ui->edRKP3->setValue(rkp);
+}
+
+double Stabilan01ParamsDialog::pnTenso1() const
+{
+    return ui->edPn1->value();
+}
+
+void Stabilan01ParamsDialog::setPnTenso1(const double pn)
+{
+    ui->edPn1->setValue(pn);
+}
+
+double Stabilan01ParamsDialog::pnTenso2() const
+{
+    return ui->edPn2->value();
+}
+
+void Stabilan01ParamsDialog::setPnTenso2(const double pn)
+{
+    ui->edPn2->setValue(pn);
+}
+
+double Stabilan01ParamsDialog::pnTenso3() const
+{
+    return ui->edPn3->value();
+}
+
+void Stabilan01ParamsDialog::setPnTenso3(const double pn)
+{
+    ui->edPn3->setValue(pn);
 }
 
 void Stabilan01ParamsDialog::on_selectModel(int modelIdx)

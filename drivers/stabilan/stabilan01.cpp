@@ -72,11 +72,33 @@ bool Stabilan01::editParams(QJsonObject &params)
     dlg.setModel(static_cast<Stabilan01Defines::Model>(model));
     dlg.setZeroingType(static_cast<Stabilan01Defines::ZeroingType>(zt));
     dlg.setRecording(getChanRecordingDefault(params["chan_recording_default"].toObject()));
+
+    dlg.setKindTenso1(static_cast<DeviceProtocols::TensoDevices>(params["tenso1"].toInt(0)));
+    dlg.setKindTenso2(static_cast<DeviceProtocols::TensoDevices>(params["tenso2"].toInt(1)));
+    dlg.setKindTenso3(static_cast<DeviceProtocols::TensoDevices>(params["tenso3"].toInt(2)));
+    dlg.setRkpTenso1(params["rkp1"].toDouble(1.7));
+    dlg.setRkpTenso2(params["rkp2"].toDouble(1.7));
+    dlg.setRkpTenso3(params["rkp3"].toDouble(1.7));
+    dlg.setPnTenso1(params["pn1"].toDouble(100));
+    dlg.setPnTenso2(params["pn2"].toDouble(500));
+    dlg.setPnTenso3(params["pn3"].toDouble(1));
+
     if (dlg.exec() == QDialog::Accepted)
     {
         params["model"] = static_cast<int>(dlg.model());
         params["zeroing_type"] = static_cast<int>(dlg.zeroingType());
         params["chan_recording_default"] = setChanRecordingDefault(dlg.getRecording());
+
+        params["tenso1"] = dlg.kindTenso1();
+        params["tenso2"] = dlg.kindTenso2();
+        params["tenso3"] = dlg.kindTenso3();
+        params["rkp1"] = dlg.rkpTenso1();
+        params["rkp2"] = dlg.rkpTenso2();
+        params["rkp3"] = dlg.rkpTenso3();
+        params["pn1"] = dlg.pnTenso1();
+        params["pn2"] = dlg.pnTenso2();
+        params["pn3"] = dlg.pnTenso3();
+
         return true;
     }
     return false;
