@@ -37,18 +37,29 @@ void TeppingTestVisualize::setTest(const QString &testUid)
 
         auto* model = new QStandardItemModel(ui->tvSteps);
 
-        int steps = m_calculator->stepsCount(BaseUtils::Left) < m_calculator->stepsCount(BaseUtils::Right) ?
+        int steps = m_calculator->stepsCount(BaseUtils::Left) > m_calculator->stepsCount(BaseUtils::Right) ?
                     m_calculator->stepsCount(BaseUtils::Left) : m_calculator->stepsCount(BaseUtils::Right);
         for (int i = 0; i < steps; ++i)
         {
-            auto stepLeft = m_calculator->step(BaseUtils::Left, i);
-            auto stepRight = m_calculator->step(BaseUtils::Right, i);
+            SignalsDefines::TeppingStepRec stepLeft(0);
+            SignalsDefines::TeppingStepRec stepRight(0);
+            if (i < m_calculator->stepsCount(BaseUtils::Left))
+                stepLeft = m_calculator->step(BaseUtils::Left, i);
+            if (i < m_calculator->stepsCount(BaseUtils::Right))
+                stepRight = m_calculator->step(BaseUtils::Right, i);
+
+            QString sLeft = "-";
+            if (stepLeft.timeContact > 0)
+                sLeft = QString::number(stepLeft.timeContact);
+            QString sRight = "-";
+            if (stepRight.timeContact > 0)
+                sRight = QString::number(stepRight.timeContact);
 
             auto *itemN = new QStandardItem(QString::number(i + 1));
             itemN->setEditable(false);
-            auto *itemL = new QStandardItem(QString::number(stepLeft.timeContact));
+            auto *itemL = new QStandardItem(sLeft);
             itemL->setEditable(false);
-            auto *itemR = new QStandardItem(QString::number(stepRight.timeContact));
+            auto *itemR = new QStandardItem(sRight);
             itemR->setEditable(false);
 
             model->appendRow(QList<QStandardItem*>() << itemN << itemL << itemR);

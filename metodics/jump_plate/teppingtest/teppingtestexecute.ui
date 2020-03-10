@@ -192,10 +192,10 @@
        </spacer>
       </item>
       <item>
-       <widget class="QTreeView" name="tvSteps">
+       <widget class="QTreeView" name="tvStepsLeft">
         <property name="minimumSize">
          <size>
-          <width>300</width>
+          <width>200</width>
           <height>0</height>
          </size>
         </property>
@@ -203,6 +203,16 @@
          <size>
           <width>500</width>
           <height>16777215</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QTreeView" name="tvStepsRight">
+        <property name="minimumSize">
+         <size>
+          <width>200</width>
+          <height>0</height>
          </size>
         </property>
        </widget>

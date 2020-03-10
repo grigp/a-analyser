@@ -103,7 +103,8 @@ void TeppingTestExecute::start()
             }
         });
 
-        ui->tvSteps->setModel(&m_mdlTable);
+        ui->tvStepsLeft->setModel(&m_mdlLeft);
+        ui->tvStepsRight->setModel(&m_mdlRight);
         setModelGeometry();
     }
     else
@@ -166,7 +167,8 @@ void TeppingTestExecute::on_recording()
     m_stepsRightCount = 0;
     m_timeCount = 0;
     m_time = 0;
-    m_mdlTable.clear();
+    m_mdlLeft.clear();
+    m_mdlRight.clear();
     setModelGeometry();
 }
 
@@ -208,31 +210,33 @@ void TeppingTestExecute::iterate(const bool isStart, BaseUtils::Side side)
                 ui->lblCommentStateOnPlate->setVisible(true);
             }
 
+            auto addValue = [&](int stepsCount, double time, QStandardItemModel &model)
+            {
+                auto *itemN = new QStandardItem(QString::number(stepsCount));
+                itemN->setEditable(false);
+                itemN->setData(stepsCount, NumberRole);
+                auto *itemLeg = new QStandardItem(QString::number(time));
+                itemLeg->setEditable(false);
+                itemLeg->setData(time, ValueRole);
+                model.appendRow(QList<QStandardItem*>() << itemN << itemLeg);
+            };
+
             if (m_isRecording)
             {
                 if (m_plt1Pressed && side == BaseUtils::Right)
+                {
                     ++m_stepsRightCount;
+                    addValue(m_stepsRightCount, m_plt1Time, m_mdlRight);
+                }
                 else
                 if (m_plt2Pressed && side == BaseUtils::Left)
-                    ++m_stepsLeftCount;
-                if (m_plt1Pressed && m_plt2Pressed &&
-                        m_stepsLeftCount == m_stepsRightCount && m_stepsLeftCount > 0)
                 {
-                    auto *itemN = new QStandardItem(QString::number(m_stepsLeftCount));
-                    itemN->setEditable(false);
-                    itemN->setData(m_stepsLeftCount, NumberRole);
-                    auto *itemLeft = new QStandardItem(QString::number(m_plt2Time));
-                    itemLeft->setEditable(false);
-                    itemLeft->setData(m_plt2Time, ValueRole);
-                    auto *itemRight = new QStandardItem(QString::number(m_plt1Time));
-                    itemRight->setEditable(false);
-                    itemRight->setData(m_plt1Time, ValueRole);
-
-                    m_mdlTable.appendRow(QList<QStandardItem*>() << itemN << itemLeft << itemRight);
+                    ++m_stepsLeftCount;
+                    addValue(m_stepsLeftCount, m_plt2Time, m_mdlLeft);
                 }
 
                 if (m_testFinishKind == JumpPlateDefines::tfkQuantity &&
-                        m_stepsLeftCount >= m_stepsMax)
+                        m_stepsLeftCount + m_stepsRightCount >= m_stepsMax)
                     finishTest();
             }
         }
@@ -242,9 +246,12 @@ void TeppingTestExecute::iterate(const bool isStart, BaseUtils::Side side)
 
 void TeppingTestExecute::setModelGeometry()
 {
-    m_mdlTable.setHorizontalHeaderLabels(QStringList() << tr("N") << tr("Левая нога") << tr("Правая нога"));
-    ui->tvSteps->header()->resizeSections(QHeaderView::ResizeToContents);
-    ui->tvSteps->header()->resizeSection(0, 80);
+    m_mdlLeft.setHorizontalHeaderLabels(QStringList() << tr("N") << tr("Левая нога"));
+    m_mdlRight.setHorizontalHeaderLabels(QStringList() << tr("N") << tr("Правая нога"));
+    ui->tvStepsLeft->header()->resizeSections(QHeaderView::ResizeToContents);
+    ui->tvStepsLeft->header()->resizeSection(0, 80);
+    ui->tvStepsRight->header()->resizeSections(QHeaderView::ResizeToContents);
+    ui->tvStepsRight->header()->resizeSection(0, 80);
 }
 
 void TeppingTestExecute::finishTest()
@@ -260,11 +267,14 @@ void TeppingTestExecute::finishTest()
 
     auto *data = new TeppingTestData(ChannelsDefines::chanTeppingData);
     data->setTime(static_cast<double>(m_timeCount) / 50);
-    for (int i = 0; i < m_mdlTable.rowCount(); ++i)
+    for (int i = 0; i < m_mdlLeft.rowCount(); ++i)
     {
-        auto l = m_mdlTable.index(i, 1).data(ValueRole).toDouble();
-        auto r = m_mdlTable.index(i, 2).data(ValueRole).toDouble();
+        auto l = m_mdlLeft.index(i, 1).data(ValueRole).toDouble();
         data->addStep(BaseUtils::Left, l);
+    }
+    for (int i = 0; i < m_mdlRight.rowCount(); ++i)
+    {
+        auto r = m_mdlRight.index(i, 1).data(ValueRole).toDouble();
         data->addStep(BaseUtils::Right, r);
     }
 

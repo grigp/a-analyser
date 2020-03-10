@@ -6,6 +6,8 @@
 #include "dataprovider.h"
 #include "jumpplatedata.h"
 
+#include <QDebug>
+
 TeppingTestFactors::TeppingTestFactors(const QString &testUid,
                                        const QString &probeUid,
                                        const QString &channelId,
@@ -63,7 +65,7 @@ void TeppingTestFactors::calculate()
     }
 
     addFactor(TeppingTestFactorsDefines::FullTimeUid, m_time);
-    addFactor(TeppingTestFactorsDefines::StepsCountUid, sLeftCount < sRightCount ? sLeftCount : sRightCount);
+    addFactor(TeppingTestFactorsDefines::StepsCountUid, sLeftCount + sRightCount); //);sLeftCount < sRightCount ? sLeftCount : sRightCount);
     addFactor(TeppingTestFactorsDefines::LeftLegContactTimeAvrUid, avgTimeLeft);
     addFactor(TeppingTestFactorsDefines::RightLegContactTimeAvrUid, avgTimeRight);
 }

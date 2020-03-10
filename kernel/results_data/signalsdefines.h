@@ -37,6 +37,7 @@ struct TeppingStepRec
 {
     double timeContact;     ///< Время контакта
     TeppingStepRec() {}
+    TeppingStepRec(double tc) : timeContact(tc) {}
 };
 
 /*!

@@ -80,7 +80,8 @@ private:
     int m_timerEndOfTest {-1};   ///< id таймера времени теста
 
     bool m_isRecording {false};  ///< Проходит ли запись
-    QStandardItemModel m_mdlTable;
+    QStandardItemModel m_mdlLeft;
+    QStandardItemModel m_mdlRight;
 };
 
 #endif // TEPPINGTESTEXECUTE_H
