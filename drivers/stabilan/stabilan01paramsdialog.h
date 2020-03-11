@@ -27,14 +27,14 @@ public:
     void setRecording(const QMap<QString,  bool>& recMap);
     QMap<QString, bool> getRecording() const;
 
-    DeviceProtocols::TensoDevices kindTenso1() const;
-    void setKindTenso1(const DeviceProtocols::TensoDevices kind);
+    DeviceProtocols::TensoDevice kindTenso1() const;
+    void setKindTenso1(const DeviceProtocols::TensoDevice kind);
 
-    DeviceProtocols::TensoDevices kindTenso2() const;
-    void setKindTenso2(const DeviceProtocols::TensoDevices kind);
+    DeviceProtocols::TensoDevice kindTenso2() const;
+    void setKindTenso2(const DeviceProtocols::TensoDevice kind);
 
-    DeviceProtocols::TensoDevices kindTenso3() const;
-    void setKindTenso3(const DeviceProtocols::TensoDevices kind);
+    DeviceProtocols::TensoDevice kindTenso3() const;
+    void setKindTenso3(const DeviceProtocols::TensoDevice kind);
 
     double rkpTenso1() const;
     void setRkpTenso1(const double rkp);

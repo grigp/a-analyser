@@ -45,12 +45,15 @@ static QString cfNoSignal = "{90e313c6-8805-4235-8981-1fb85d7aea5f}";          /
  static QString chanDynHand1 = "{A8A04F44-C766-495B-8662-BA4A2B0C2D6C}";
  static QString chanDynStand1 = "{AE1F3EB7-684D-41ED-8BA9-44CB608E2043}";
  static QString chanBreath1 = "{77BD2F44-A2E9-4060-8F9D-DE0839894765}";
+ static QString chanDynPush1 = "{6A0E07CC-89E2-413F-BA25-458049BF3A38}";
  static QString chanDynHand2 = "{37EF498F-822C-4545-B06C-8251A91CEB30}";
  static QString chanDynStand2 = "{856F89A0-020A-43FE-839A-A2634033AB20}";
  static QString chanBreath2 = "{F62110AF-F47C-4307-916D-D76A0274D12B}";
+ static QString chanDynPush2 = "{C2DA4910-785B-4C74-BA7F-749FE0C96F6A}";
  static QString chanDynHand3 = "{7FF1ABDF-EE82-4907-9CDE-73527CB5CAA1}";
  static QString chanDynStand3 = "{D4512319-8B39-4B93-B11F-5F9BE321D37D}";
  static QString chanBreath3 = "{35EC81F9-F56A-409F-B1EB-E84B001E9FBD}";
+ static QString chanDynPush3 = "{31C2F1CD-0AEC-4424-9B27-C8C93EBE75D6}";
  static QString chanMyogram = "{DD5FE1AC-9423-46AD-9EB0-50D52EA6D022}";
 
  static QString chanTenso1 = "{C8BC30A3-19FD-45E3-965E-39BB28E51D15}";  ///< Виртуальный тензоканал 1

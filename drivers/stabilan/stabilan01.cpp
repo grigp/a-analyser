@@ -13,7 +13,7 @@
 #include <QDebug>
 
 namespace  {
-  QMap<Stabilan01Defines::Model, QString> StabilanModels =
+  static QMap<Stabilan01Defines::Model, QString> StabilanModels =
   {
       std::pair<Stabilan01Defines::Model, QString> (Stabilan01Defines::smcSt01, Stabilan01Defines::smnSt01)
     , std::pair<Stabilan01Defines::Model, QString> (Stabilan01Defines::smcSt02, Stabilan01Defines::smnSt02)
@@ -37,11 +37,31 @@ namespace  {
     , std::pair<Stabilan01Defines::Model, QString> (Stabilan01Defines::smcStabilan01_12NG, Stabilan01Defines::smnStabilan01_12NG)
   };
 
-  QMap<Stabilan01Defines::ZeroingType, QString> ZeroingTypes =
+  static QMap<Stabilan01Defines::ZeroingType, QString> ZeroingTypes =
   {
       std::pair<Stabilan01Defines::ZeroingType, QString> (Stabilan01Defines::ztFast, Stabilan01Defines::ztnFast)
     , std::pair<Stabilan01Defines::ZeroingType, QString> (Stabilan01Defines::ztAveragePrev, Stabilan01Defines::ztnAveragePrev)
     , std::pair<Stabilan01Defines::ZeroingType, QString> (Stabilan01Defines::ztAverageNext, Stabilan01Defines::ztnAverageNext)
+  };
+
+  ///< Идентификаторы тензоканалов по типу для разъемов
+  static QMap<DeviceProtocols::TensoDevice, QString> td1ChannelsByDevice{
+      std::pair<DeviceProtocols::TensoDevice, QString> (DeviceProtocols::tdDynHand, ChannelsDefines::chanDynHand1)
+    , std::pair<DeviceProtocols::TensoDevice, QString> (DeviceProtocols::tdDynStand, ChannelsDefines::chanDynStand1)
+    , std::pair<DeviceProtocols::TensoDevice, QString> (DeviceProtocols::tdBreath, ChannelsDefines::chanBreath1)
+    , std::pair<DeviceProtocols::TensoDevice, QString> (DeviceProtocols::tdPushDevice, ChannelsDefines::chanDynPush1)
+  };
+  static QMap<DeviceProtocols::TensoDevice, QString> td2ChannelsByDevice{
+      std::pair<DeviceProtocols::TensoDevice, QString> (DeviceProtocols::tdDynHand, ChannelsDefines::chanDynHand2)
+    , std::pair<DeviceProtocols::TensoDevice, QString> (DeviceProtocols::tdDynStand, ChannelsDefines::chanDynStand2)
+    , std::pair<DeviceProtocols::TensoDevice, QString> (DeviceProtocols::tdBreath, ChannelsDefines::chanBreath2)
+    , std::pair<DeviceProtocols::TensoDevice, QString> (DeviceProtocols::tdPushDevice, ChannelsDefines::chanDynPush2)
+  };
+  static QMap<DeviceProtocols::TensoDevice, QString> td3ChannelsByDevice{
+      std::pair<DeviceProtocols::TensoDevice, QString> (DeviceProtocols::tdDynHand, ChannelsDefines::chanDynHand3)
+    , std::pair<DeviceProtocols::TensoDevice, QString> (DeviceProtocols::tdDynStand, ChannelsDefines::chanDynStand3)
+    , std::pair<DeviceProtocols::TensoDevice, QString> (DeviceProtocols::tdBreath, ChannelsDefines::chanBreath3)
+    , std::pair<DeviceProtocols::TensoDevice, QString> (DeviceProtocols::tdPushDevice, ChannelsDefines::chanDynPush3)
   };
 
   const quint8 MarkerValue = 0x80;
@@ -61,6 +81,16 @@ void Stabilan01::setParams(const DeviceProtocols::Ports port, const QJsonObject 
     m_model = static_cast<Stabilan01Defines::Model>(params["model"].toInt());
     m_zt = static_cast<Stabilan01Defines::ZeroingType>(params["zeroing_type"].toInt());
     m_chanRecordingDefault = Stabilan01::getChanRecordingDefault(params["chan_recording_default"].toObject());
+
+    m_tenso1.device = static_cast<DeviceProtocols::TensoDevice>(params["tenso1"].toInt(0));
+    m_tenso2.device = static_cast<DeviceProtocols::TensoDevice>(params["tenso2"].toInt(1));
+    m_tenso3.device = static_cast<DeviceProtocols::TensoDevice>(params["tenso3"].toInt(2));
+    m_tenso1.rkp = params["rkp1"].toDouble(1.7);
+    m_tenso2.rkp = params["rkp2"].toDouble(1.7);
+    m_tenso3.rkp = params["rkp3"].toDouble(1.7);
+    m_tenso1.pn = params["pn1"].toDouble(100);
+    m_tenso2.pn = params["pn2"].toDouble(500);
+    m_tenso3.pn = params["pn3"].toDouble(1);
 }
 
 bool Stabilan01::editParams(QJsonObject &params)
@@ -73,9 +103,9 @@ bool Stabilan01::editParams(QJsonObject &params)
     dlg.setZeroingType(static_cast<Stabilan01Defines::ZeroingType>(zt));
     dlg.setRecording(getChanRecordingDefault(params["chan_recording_default"].toObject()));
 
-    dlg.setKindTenso1(static_cast<DeviceProtocols::TensoDevices>(params["tenso1"].toInt(0)));
-    dlg.setKindTenso2(static_cast<DeviceProtocols::TensoDevices>(params["tenso2"].toInt(1)));
-    dlg.setKindTenso3(static_cast<DeviceProtocols::TensoDevices>(params["tenso3"].toInt(2)));
+    dlg.setKindTenso1(static_cast<DeviceProtocols::TensoDevice>(params["tenso1"].toInt(0)));
+    dlg.setKindTenso2(static_cast<DeviceProtocols::TensoDevice>(params["tenso2"].toInt(1)));
+    dlg.setKindTenso3(static_cast<DeviceProtocols::TensoDevice>(params["tenso3"].toInt(2)));
     dlg.setRkpTenso1(params["rkp1"].toDouble(1.7));
     dlg.setRkpTenso2(params["rkp2"].toDouble(1.7));
     dlg.setRkpTenso3(params["rkp3"].toDouble(1.7));
@@ -131,6 +161,19 @@ QList<QString> Stabilan01::getChannelsByProtocol(const QString &protocolUid) con
     QList<QString> retval;
     if (protocolUid == DeviceProtocols::uid_StabProtocol)
         retval << ChannelsDefines::chanStab;
+    else
+    if (protocolUid == DeviceProtocols::uid_DynProtocol)
+    {
+        if ((m_tenso1.device != DeviceProtocols::tdBreath) && td1ChannelsByDevice.contains(m_tenso1.device))
+            retval << td1ChannelsByDevice.value(m_tenso1.device);
+        if ((m_tenso2.device != DeviceProtocols::tdBreath) && td2ChannelsByDevice.contains(m_tenso2.device))
+            retval << td2ChannelsByDevice.value(m_tenso2.device);
+        if ((m_tenso3.device != DeviceProtocols::tdBreath) && td3ChannelsByDevice.contains(m_tenso3.device))
+            retval << td3ChannelsByDevice.value(m_tenso3.device);
+    }
+    if (protocolUid == DeviceProtocols::uid_MyoProtocol)
+        retval << ChannelsDefines::chanMyogram;
+
     return retval;
 }
 
@@ -140,6 +183,27 @@ QList<QString> Stabilan01::getChannelsByFormat(const QString &formatUid) const
     QList<QString> retval;
     if (formatUid == ChannelsDefines::cfDecartCoordinates)
         retval << ChannelsDefines::chanStab;
+    else
+    if (formatUid == ChannelsDefines::cfSinglePositive)
+    {
+        if ((m_tenso1.device != DeviceProtocols::tdBreath) && td1ChannelsByDevice.contains(m_tenso1.device))
+            retval << td1ChannelsByDevice.value(m_tenso1.device);
+        if ((m_tenso2.device != DeviceProtocols::tdBreath) && td2ChannelsByDevice.contains(m_tenso2.device))
+            retval << td2ChannelsByDevice.value(m_tenso2.device);
+        if ((m_tenso3.device != DeviceProtocols::tdBreath) && td3ChannelsByDevice.contains(m_tenso3.device))
+            retval << td3ChannelsByDevice.value(m_tenso3.device);
+        retval << ChannelsDefines::chanMyogram;
+    }
+    else
+    if (formatUid == ChannelsDefines::cfSingleDual)
+    {
+        if (m_tenso1.device == DeviceProtocols::tdBreath)
+            retval << ChannelsDefines::chanBreath1;
+        if (m_tenso2.device == DeviceProtocols::tdBreath)
+            retval << ChannelsDefines::chanBreath2;
+        if (m_tenso3.device == DeviceProtocols::tdBreath)
+            retval << ChannelsDefines::chanBreath3;
+    }
     return retval;
 }
 
@@ -147,15 +211,33 @@ QList<QString> Stabilan01::getChannels() const
 {
     QList<QString> retval;
     retval << ChannelsDefines::chanStab;
-//    if (m_model == Stabilan01Defines::smcKSK123_21)
+    if (Stabilan01Defines::ModelsWithPulse.contains(m_model))
+        retval << ChannelsDefines::chanRitmogram;
+    if (Stabilan01Defines::ModelsWithTenso.contains(m_model))
+    {
+        if (td1ChannelsByDevice.contains(m_tenso1.device))
+            retval << td1ChannelsByDevice.value(m_tenso1.device);
+        if (td2ChannelsByDevice.contains(m_tenso2.device))
+            retval << td2ChannelsByDevice.value(m_tenso2.device);
+        if (td3ChannelsByDevice.contains(m_tenso3.device))
+            retval << td3ChannelsByDevice.value(m_tenso3.device);
+    }
+    if (Stabilan01Defines::ModelsWithMyo.contains(m_model))
+        retval << ChannelsDefines::chanMyogram;
+
     return retval;
 }
 
 int Stabilan01::getSubChannelsCount(const QString &channelUid) const
 {
     if (ChannelsUtils::instance().channelType(channelUid) == ChannelsDefines::ctStabilogram ||
-        ChannelsUtils::instance().channelType(channelUid) == ChannelsDefines::ctBallistogram)
+        ChannelsUtils::instance().channelType(channelUid) == ChannelsDefines::ctBallistogram ||
+        ChannelsUtils::instance().channelType(channelUid) == ChannelsDefines::ctDynamo ||
+        ChannelsUtils::instance().channelType(channelUid) == ChannelsDefines::ctBreath)
         return 1;
+    else
+    if (ChannelsUtils::instance().channelType(channelUid) == ChannelsDefines::ctMyogram)
+        return 4;
     return 0;
 }
 
@@ -198,6 +280,20 @@ void Stabilan01::zeroing(const QString &channelUid)
 void Stabilan01::calibrateTenso(const QString &channelUid)
 {
 
+}
+
+void Stabilan01::getTensoValueDiapasone(const int chanNumber, double &min, double &max)
+{
+    Q_ASSERT(chanNumber >= 0 && chanNumber < 3);
+    min = m_tensoPercMin[chanNumber];
+    max = m_tensoPercMax[chanNumber];
+}
+
+void Stabilan01::setTensoValueDiapasone(const int chanNumber, const double min, const double max)
+{
+    Q_ASSERT(chanNumber >= 0 && chanNumber < 3);
+    m_tensoPercMin[chanNumber] = min;
+    m_tensoPercMax[chanNumber] = max;
 }
 
 void Stabilan01::setBoundsDelArtifacts(const int low, const int high)
@@ -294,112 +390,218 @@ double r = 0;
 
 void Stabilan01::assignByteFromDevice(quint8 b)
 {
+    //! Обработка байта реакции опоры
+    auto assignBytePlate = [&](double &chan)
+    {
+        if (m_countBytePack % 2 == 0)
+        {
+            m_prevB = b;
+        }
+        else
+        {
+            chan = (b * 256 + m_prevB) / 1000.0;
+        }
+    };
+
+    //! Обработка байта координат
+    auto assignByteStab = [&](double &stabChan)
+    {
+        if (m_countBytePack % 2 == 0)
+        {
+            m_prevB = b;
+        }
+        else
+        {
+            if (b < 128)
+                stabChan = (b * 256 + m_prevB) / 128.0;
+            else
+                stabChan = ((b - 256) * 256 + m_prevB) / 128.0;
+        }
+    };
+
+    //! Обработка байта тензоканала
+    auto assignByteTenso = [&](const DeviceProtocols::TensoChannel tenso, const int chan, double &value)
+    {
+        if (m_countBytePack % 2 == 0)
+        {
+            m_prevB = b;
+        }
+        else
+        {
+            double dynVal = b * 256 + m_prevB;
+            dynVal =- 0x8000;
+            value = (tenso.pn * 1000 * dynVal) / (65535 * 128 * tenso.rkp);
+            if (tenso.device == DeviceProtocols::tdBreath)
+                value = (value - m_tensoPercMin[chan]) / (m_tensoPercMax[chan] - m_tensoPercMin[chan]) * 100;
+        }
+    };
+
+    //! Обработка байта миограммы
+    auto assignByteMyogram = [&](const int rec, const int chan)
+    {
+        if (m_countBytePack % 2 == 0)
+        {
+            m_prevB = b;
+        }
+        else
+        {
+            quint8 v = 0;
+            if ((b & 8) == 0)
+                v = b & 0x0F;
+            else
+                v = b | 0xF0;
+            if (v < 128)
+                m_myoValue[rec][chan] = (v * 256 + m_prevB);
+            else
+                m_myoValue[rec][chan] = ((v - 256) * 256 + m_prevB);
+            m_myoValue[rec][chan] = (m_myoValue[rec][chan] + 2048) / 4096 * m_myoAmplitude + m_myoOffset[chan];
+        }
+    };
+
+
     bool isTwoMarkers = false;
     bool isError = false;
 
-    if (b == MarkerValue)    // Пришел байт маркера
+    if (b == MarkerValue)    //! Пришел байт маркера
     {
-        if (!m_isMarker){    // Ожидание первого байта маркера
+        if (!m_isMarker){    //! Ожидание первого байта маркера
             m_isMarker = true;
-        } else {           // Ожидание второго байта маркера
-            if (m_isPackage){   // Два маркера внутри пакета - ошибка
+        } else {           //! Ожидание второго байта маркера
+            if (m_isPackage){   //! Два маркера внутри пакета - ошибка
                 isError = true;
             }
             m_isMarker = false;
-            m_isPackage = true;    // Признак начала приема пакета
+            m_isPackage = true;    //! Признак начала приема пакета
             m_countBytePack = 0;
             isTwoMarkers = true;
         }
-    } else {            // Не байт маркера
+    } else {            //! Не байт маркера
         m_isMarker = false;
     }
 
-    if (!isTwoMarkers){    // Если не было два маркера подряд, то эта ситуация внутри пакета и нам надо это отрабатывать
+    if (!isTwoMarkers){    //! Если не было два маркера подряд, то эта ситуация внутри пакета и нам надо это отрабатывать
         if (m_isPackage){
             switch (m_countBytePack / 2) {
-                case 0:{     // Фронталь X
+                case 0:{     //! Фронталь X
+                    assignByteStab(m_X);
+                    break;
+                }
+                case 1:{     //! Сагитталь Y
+                    assignByteStab(m_Y);
+                    break;
+                }
+                case 2:{       //! Реакция опоры A
+                    assignBytePlate(m_A);
+                    break;
+                }
+                case 3:{       //! Реакция опоры B
+                    assignBytePlate(m_B);
+                    break;
+                }
+                case 4:{       //! Реакция опоры C
+                    assignBytePlate(m_C);
+                    break;
+                }
+                case 5:{       //! Реакция опоры D
+                    assignBytePlate(m_D);
+                    break;
+                }
+                case 6: {          //! RR + Synchro
                     if (m_countBytePack % 2 == 0){
                         m_prevB = b;
                     } else {
-                        if (b < 128){
-                            m_X = (b * 256 + m_prevB) / 128.0;
-                        } else {
-                            m_X = ((b - 256) * 256 + m_prevB) / 128.0;
+                        if ((m_prevB & 0x1 != 0) && (b & 0x2 == 0))
+                        {
+                            m_rrPor = b;
+                            m_rrMark = true;
+                            m_rrOk = true;
                         }
+                        else
+                            m_rrPor = 0;
+//                        //! Линия синхронизации от устройства
+//                        if FIsInpSynchroEnabled then
+//                          AssignInpSynchro ( (Variables[7] and $6) shr 1 );
                     }
                     break;
                 }
-                case 1:{     // Сагитталь Y
-                    if (m_countBytePack % 2 == 0){
+                case 7: {             //! Тензоканал 1
+                    assignByteTenso(m_tenso1, 0, m_t1);
+                    break;
+                }
+                case 8: {             //! Тензоканал 2
+                    assignByteTenso(m_tenso2, 1, m_t2);
+                    break;
+                }
+                case 9: {             //! Тензоканал 3
+                    assignByteTenso(m_tenso3, 2, m_t3);
+                    break;
+                }
+                case 10: {            //! Пульс
+                    if (m_countBytePack % 2 == 0) {
                         m_prevB = b;
                     } else {
-                        if (b < 128){
-                            m_Y = (b * 256 + m_prevB) / 128.0;
-                        } else {
-                            m_Y = ((b - 256) * 256 + m_prevB) / 128.0;
+                        if (m_rrOk)
+                        {
+                            m_rrPor = 9 - (m_rrPor >> 2);
+                            quint16 mant = ((b << 7) + (m_prevB >> 1)) | 0x8000;
+                            m_valPulse = 60 / (mant * 2e-6 * exp(m_rrPor * log(2)));
+                            m_rrOk = false;
                         }
+                        else
+                            m_valPulse = 0;
                     }
                     break;
                 }
-                case 2:{       // Реакция опоры A
-                    if (m_countBytePack % 2 == 0){
-                        m_prevB = b;
-                    } else {
-                        m_A = (b * 256 + m_prevB) / 1000.0;
-                    }
-                }
-                case 3:{       // Реакция опоры B
-                    if (m_countBytePack % 2 == 0){
-                        m_prevB = b;
-                    } else {
-                        m_B = (b * 256 + m_prevB) / 1000.0;
-                    }
-                }
-                case 4:{       // Реакция опоры C
-                    if (m_countBytePack % 2 == 0){
-                        m_prevB = b;
-                    } else {
-                        m_C = (b * 256 + m_prevB) / 1000.0;
-                    }
-                }
-                case 5:{       // Реакция опоры D
-                    if (m_countBytePack % 2 == 0){
-                        m_prevB = b;
-                    } else {
-                        m_D = (b * 256 + m_prevB) / 1000.0;
-                    }
-                }
+                case 11: {assignByteMyogram(0, 0); break; }  //! Миограммы 4 канала и 4 отведения
+                case 12: {assignByteMyogram(0, 1); break; }
+                case 13: {assignByteMyogram(0, 2); break; }
+                case 14: {assignByteMyogram(0, 3); break; }
+                case 15: {assignByteMyogram(1, 0); break; }
+                case 16: {assignByteMyogram(1, 1); break; }
+                case 17: {assignByteMyogram(1, 2); break; }
+                case 18: {assignByteMyogram(1, 3); break; }
+                case 19: {assignByteMyogram(2, 0); break; }
+                case 20: {assignByteMyogram(2, 1); break; }
+                case 21: {assignByteMyogram(2, 2); break; }
+                case 22: {assignByteMyogram(2, 3); break; }
+                case 23: {assignByteMyogram(3, 0); break; }
+                case 24: {assignByteMyogram(3, 1); break; }
+                case 25: {assignByteMyogram(3, 2); break; }
+                case 26: {assignByteMyogram(3, 3); break; }
             }
 
-            // Окончание разбора пакета
-            if (m_countBytePack == m_countChannels * 2){  // Достигли заданного кол-ва каналов
-                m_Z = m_A + m_B + m_C + m_D;                     // Расчет баллистограммы
+            //! Окончание разбора пакета
+            if (m_countBytePack == m_countChannels * 2){  //! Достигли заданного кол-ва каналов
+                m_Z = m_A + m_B + m_C + m_D;                     //! Расчет баллистограммы
 
                 incBlockCount();
-
-                // Эмуляция стабилограммы кругом
-//                m_X = 10 * sin(r);
-//                m_Y = 10 * cos(r);
-//                r = r + 2 * M_PI / 50;
-
-                // Передача стабилограммы
-                auto stabData = new DeviceProtocols::StabDvcData(this, ChannelsDefines::chanStab,
-                                                                 m_X - m_offsetX, m_Y - m_offsetY,
-                                                                 m_A, m_B, m_C, m_D);
-                emit sendData(stabData);
-                delete stabData;
-
-                m_isPackage = false;                     // Сбросим признак пакета
+                transferData();
+                m_isPackage = false;                     //! Сбросим признак пакета
             }
 
             m_countBytePack++;
         }
     }
 
-    // Передача информации об ошибке маркера внутри пакета
+    //! Передача информации об ошибке маркера внутри пакета
     if (isError){
         emit error(EC_MarkerIinsidePackage);
     }
+}
+
+void Stabilan01::transferData()
+{
+    //! Эмуляция стабилограммы кругом
+//                m_X = 10 * sin(r);
+//                m_Y = 10 * cos(r);
+//                r = r + 2 * M_PI / 50;
+
+    //! Передача стабилограммы
+    auto stabData = new DeviceProtocols::StabDvcData(this, ChannelsDefines::chanStab,
+                                                     m_X - m_offsetX, m_Y - m_offsetY,
+                                                     m_A, m_B, m_C, m_D);
+    emit sendData(stabData);
+    delete stabData;
 }
 
 QMap<QString, bool> Stabilan01::getChanRecordingDefault(const QJsonObject &obj)

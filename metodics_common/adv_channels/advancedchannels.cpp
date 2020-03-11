@@ -43,16 +43,19 @@ void AdvancedChannels::assignDriver(Driver *driver, TestResultData *trd)
         item->setEditable(false);
 
         auto *wgt = createWidget(m_driver, channelId);
-        QVariant var;
-        var.setValue(wgt);
-        item->setData(var, WidgetRole);
-        item->setData(channelId, ChannelIdRole);
-        item->setIcon(QIcon(":/images/tree/signal.png"));
-        wgt->setVisible(false);
-        wgt->setFrequency(driver->frequency(channelId));
-        wgt->assignTestResultDataObject(trd);
+        if (wgt)
+        {
+            QVariant var;
+            var.setValue(wgt);
+            item->setData(var, WidgetRole);
+            item->setData(channelId, ChannelIdRole);
+            item->setIcon(QIcon(":/images/tree/signal.png"));
+            wgt->setVisible(false);
+            wgt->setFrequency(driver->frequency(channelId));
+            wgt->assignTestResultDataObject(trd);
 
-        itemDrv->appendRow(item);
+            itemDrv->appendRow(item);
+        }
     }
 
     ui->tvDrvChannels->setModel(&m_mdlDrvChan);

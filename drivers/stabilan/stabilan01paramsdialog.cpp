@@ -82,34 +82,34 @@ QMap<QString, bool> Stabilan01ParamsDialog::getRecording() const
     return retval;
 }
 
-DeviceProtocols::TensoDevices Stabilan01ParamsDialog::kindTenso1() const
+DeviceProtocols::TensoDevice Stabilan01ParamsDialog::kindTenso1() const
 {
-    return static_cast<DeviceProtocols::TensoDevices>(ui->cbTensoChan1->currentData().toInt());
+    return static_cast<DeviceProtocols::TensoDevice>(ui->cbTensoChan1->currentData().toInt());
 }
 
-void Stabilan01ParamsDialog::setKindTenso1(const DeviceProtocols::TensoDevices kind)
+void Stabilan01ParamsDialog::setKindTenso1(const DeviceProtocols::TensoDevice kind)
 {
     auto name = DeviceProtocols::tensoDevices.value(kind);
     ui->cbTensoChan1->setCurrentText(name);
 }
 
-DeviceProtocols::TensoDevices Stabilan01ParamsDialog::kindTenso2() const
+DeviceProtocols::TensoDevice Stabilan01ParamsDialog::kindTenso2() const
 {
-    return static_cast<DeviceProtocols::TensoDevices>(ui->cbTensoChan2->currentData().toInt());
+    return static_cast<DeviceProtocols::TensoDevice>(ui->cbTensoChan2->currentData().toInt());
 }
 
-void Stabilan01ParamsDialog::setKindTenso2(const DeviceProtocols::TensoDevices kind)
+void Stabilan01ParamsDialog::setKindTenso2(const DeviceProtocols::TensoDevice kind)
 {
     auto name = DeviceProtocols::tensoDevices.value(kind);
     ui->cbTensoChan2->setCurrentText(name);
 }
 
-DeviceProtocols::TensoDevices Stabilan01ParamsDialog::kindTenso3() const
+DeviceProtocols::TensoDevice Stabilan01ParamsDialog::kindTenso3() const
 {
-    return static_cast<DeviceProtocols::TensoDevices>(ui->cbTensoChan3->currentData().toInt());
+    return static_cast<DeviceProtocols::TensoDevice>(ui->cbTensoChan3->currentData().toInt());
 }
 
-void Stabilan01ParamsDialog::setKindTenso3(const DeviceProtocols::TensoDevices kind)
+void Stabilan01ParamsDialog::setKindTenso3(const DeviceProtocols::TensoDevice kind)
 {
     auto name = DeviceProtocols::tensoDevices.value(kind);
     ui->cbTensoChan3->setCurrentText(name);

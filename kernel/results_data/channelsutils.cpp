@@ -65,6 +65,10 @@ ChannelsUtils::ChannelsUtils()
                                                                         std::make_tuple(QString("Дыхание 1"),
                                                                                         QString("Br1"),
                                                                                         ChannelsDefines::ctBreath))
+                 , std::pair<QString, ChannelsDefines::ChannelInfo>(ChannelsDefines::chanDynPush1,
+                                                                          std::make_tuple(QString("Толкатель 1"),
+                                                                                          QString("Push1"),
+                                                                                          ChannelsDefines::ctDynamo))
                  , std::pair<QString, ChannelsDefines::ChannelInfo>(ChannelsDefines::chanDynHand2,
                                                                       std::make_tuple(QString("Кистевой силомер 2"),
                                                                                       QString("DH2"),
@@ -77,6 +81,10 @@ ChannelsUtils::ChannelsUtils()
                                                                           std::make_tuple(QString("Дыхание 2"),
                                                                                           QString("Br2"),
                                                                                           ChannelsDefines::ctBreath))
+                 , std::pair<QString, ChannelsDefines::ChannelInfo>(ChannelsDefines::chanDynPush2,
+                                                                          std::make_tuple(QString("Толкатель 2"),
+                                                                                          QString("Push2"),
+                                                                                          ChannelsDefines::ctDynamo))
                  , std::pair<QString, ChannelsDefines::ChannelInfo>(ChannelsDefines::chanDynHand3,
                                                                       std::make_tuple(QString("Кистевой силомер 3"),
                                                                                       QString("DH3"),
@@ -89,6 +97,10 @@ ChannelsUtils::ChannelsUtils()
                                                                           std::make_tuple(QString("Дыхание 3"),
                                                                                           QString("Br3"),
                                                                                           ChannelsDefines::ctBreath))
+                 , std::pair<QString, ChannelsDefines::ChannelInfo>(ChannelsDefines::chanDynPush2,
+                                                                          std::make_tuple(QString("Толкатель 2"),
+                                                                                          QString("Push2"),
+                                                                                          ChannelsDefines::ctDynamo))
                  , std::pair<QString, ChannelsDefines::ChannelInfo>(ChannelsDefines::chanMyogram,
                                                                           std::make_tuple(QString("Миограмма"),
                                                                                           QString("Myo"),

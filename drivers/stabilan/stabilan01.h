@@ -122,6 +122,14 @@ public:
     void zeroing(const QString &channelUid) override;
 
     void calibrateTenso(const QString &channelUid) override;
+    /*!
+     * \brief запрос / установка диапазонов значений для каналов
+     * \param chanNumber - номер канала 0 - ...
+     * \param min - минимальное значение
+     * \param max - максимальное значение
+     */
+    void getTensoValueDiapasone(const int chanNumber, double &min, double &max);
+    void setTensoValueDiapasone(const int chanNumber, const double min, const double max);
 
     void setBoundsDelArtifacts(const int low, const int high) override;
 
@@ -157,19 +165,42 @@ private:
      */
     void assignByteFromDevice(quint8 b);
 
+    /*!
+     * \brief Передача данных
+     */
+    void transferData();
+
     static QMap<QString, bool> getChanRecordingDefault(const QJsonObject &obj);
     static QJsonObject setChanRecordingDefault(const QMap<QString, bool>& recMap);
 
-    // разбор принятых данных
-    bool m_isMarker = false;      // Счетчик байтов маркера. При первом 0x80 становится true. При втором 0x80 начинается прием пакета. При true и не 0x80 сбрасывается
-    bool m_isPackage = false;     // true - идет разбор пакета, false - нет разбора пакета
-    int m_countBytePack = 0;      // Счетчик байтов пакета
-    int m_countChannels = 11;     // Кол-во каналов. Должно инициализироваться как параметр драйвера
-    quint8 m_prevB;               // Первый принятый байт
-    double m_X, m_Y, m_A, m_B, m_C, m_D, m_Z; // Принятые и разобранные данные
+    ///< Разбор принятых данных
+    bool m_isMarker = false;      ///< Счетчик байтов маркера. При первом 0x80 становится true. При втором 0x80 начинается прием пакета. При true и не 0x80 сбрасывается
+    bool m_isPackage = false;     ///< true - идет разбор пакета, false - нет разбора пакета
+    int m_countBytePack = 0;      ///< Счетчик байтов пакета
+    int m_countChannels = 11;     ///< Кол-во каналов. Должно инициализироваться как параметр драйвера
+    quint8 m_prevB;               ///< Первый принятый байт
+    double m_X, m_Y, m_A, m_B, m_C, m_D, m_Z; ///< Принятые и разобранные данные
+    double m_t1, m_t2, m_t3;                  ///< Значения тензоканалов
+
+    ///< Пульс
+    quint8 m_rrPor {0};
+    bool m_rrMark {false};
+    bool m_rrOk {false};
+    double m_valPulse {0};
 
     Stabilan01Defines::Model m_model;
     Stabilan01Defines::ZeroingType m_zt;
+
+    DeviceProtocols::TensoChannel m_tenso1 {DeviceProtocols::TensoChannel(DeviceProtocols::tdDynHand, 1.7, 100)};
+    DeviceProtocols::TensoChannel m_tenso2 {DeviceProtocols::TensoChannel(DeviceProtocols::tdDynStand, 1.7, 500)};
+    DeviceProtocols::TensoChannel m_tenso3 {DeviceProtocols::TensoChannel(DeviceProtocols::tdBreath, 1.7, 1)};
+    double m_tensoPercMin[3] {-100, -100, -100};
+    double m_tensoPercMax[3] {100, 100, 100};
+
+    ///< Миограмма
+    double m_myoValue[4][4];   ///< Данные миограммы. Первый индекс - номер записи, второй - номер подканала.
+    double m_myoAmplitude {2}; ///< Амплитуда миограммы
+    double m_myoOffset[4] {0, 0, 0, 0};     ///< Смещения по каналам миограмм
 
     ///< Точки центровки
     double m_offsetX {0};

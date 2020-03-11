@@ -49,14 +49,27 @@ QList<Ports> allPorts();
 
 
 /*!
- * \brief Тензометрические устройства TensoDevices enum
+ * \brief Тензометрические устройства TensoDevice enum
  */
-enum TensoDevices
+enum TensoDevice
 {
       tdDynHand = 0 ///< Кистевой силомер
     , tdDynStand    ///< Становой силомер
     , tdBreath      ///< Периметрическое дыхание
     , tdPushDevice  ///< Толкатель
+};
+
+/*!
+ * \brief Параметры тензометрического канала TensoChannel struct
+ */
+struct TensoChannel
+{
+    TensoDevice device;
+    double rkp;
+    int pn;
+    TensoChannel() {}
+    TensoChannel(TensoDevice dvc, double r, int p)
+        : device(dvc), rkp(r), pn(p) {}
 };
 
 ///<------------------------------------------------------------------------------------------
@@ -413,6 +426,15 @@ class TensoControl : public LinearChanControl
 public:
     virtual void calibrateTenso(const QString &channelUid) = 0;
 
+    /*!
+     * \brief запрос / установка диапазонов значений для каналов
+     * \param chanNumber - номер канала 0 - ...
+     * \param min - минимальное значение
+     * \param max - максимальное значение
+     */
+    virtual void getTensoValueDiapasone(const int chanNumber, double &min, double &max) = 0;
+    virtual void setTensoValueDiapasone(const int chanNumber, const double min, const double max) = 0;
+
     static QString uid() {return uid_TensoControl;}
 
     ~TensoControl() {}
@@ -581,11 +603,11 @@ static const QString name_DynStand = "Становой силомер";
 static const QString name_Breath = "Периметрическое дыхание";
 static const QString name_PushDevice = "Толкатель";
 
-static QMap<TensoDevices, QString> tensoDevices {
-    std::pair<TensoDevices, QString> (tdDynHand, name_DynHand)
-  , std::pair<TensoDevices, QString> (tdDynStand, name_DynStand)
-  , std::pair<TensoDevices, QString> (tdBreath, name_Breath)
-  , std::pair<TensoDevices, QString> (tdPushDevice, name_PushDevice)
+static QMap<TensoDevice, QString> tensoDevices {
+    std::pair<TensoDevice, QString> (tdDynHand, name_DynHand)
+  , std::pair<TensoDevice, QString> (tdDynStand, name_DynStand)
+  , std::pair<TensoDevice, QString> (tdBreath, name_Breath)
+  , std::pair<TensoDevice, QString> (tdPushDevice, name_PushDevice)
 };
 
 }
