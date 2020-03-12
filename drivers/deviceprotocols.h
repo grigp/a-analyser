@@ -209,6 +209,8 @@ public:
     int subChanCount() const override {return 1;}
     QVariant value(const int idx) const override {Q_UNUSED(idx); return m_value;}
 
+    QString uid() const override {return uid_DynDvcData;}
+
 private:
     double m_value;
 };
@@ -245,6 +247,8 @@ public:
     int subChanCount() const override {return 1;}
     QVariant value(const int idx) const override {Q_UNUSED(idx); return m_value;}
 
+    QString uid() const override {return uid_PulseDvcData;}
+
 private:
     double m_value;
 };
@@ -264,6 +268,8 @@ public:
         Q_ASSERT(idx >= 0 && idx < m_data.size());
         return m_data.at(idx);
     }
+
+    QString uid() const override {return uid_MyoDvcData;}
 
 private:
     QVector<double> m_data;

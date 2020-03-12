@@ -166,9 +166,29 @@ private:
     void assignByteFromDevice(quint8 b);
 
     /*!
-     * \brief Передача данных
+     * \brief Передача данных пакета
      */
-    void transferData();
+    void sendDataBlock();
+
+    /*!
+     * \brief Передача данных стабилограммы
+     */
+    void sendStab();
+
+    /*!
+     * \brief Передача данных вариационной пульсометрии
+     */
+    void sendPulse();
+
+    /*!
+     * \brief Передача данных миограммы
+     */
+    void sendMyogram();
+
+    /*!
+     * \brief Передача данных тензоканалов
+     */
+    void sendTensoChannels();
 
     static QMap<QString, bool> getChanRecordingDefault(const QJsonObject &obj);
     static QJsonObject setChanRecordingDefault(const QMap<QString, bool>& recMap);

@@ -279,6 +279,7 @@ void Stabilan01::zeroing(const QString &channelUid)
 
 void Stabilan01::calibrateTenso(const QString &channelUid)
 {
+    Q_UNUSED(channelUid);
 
 }
 
@@ -298,6 +299,8 @@ void Stabilan01::setTensoValueDiapasone(const int chanNumber, const double min, 
 
 void Stabilan01::setBoundsDelArtifacts(const int low, const int high)
 {
+    Q_UNUSED(low);
+    Q_UNUSED(high);
 
 }
 
@@ -308,6 +311,7 @@ void Stabilan01::zeroingMyo()
 
 void Stabilan01::zeroingMyo(const int channel)
 {
+    Q_UNUSED(channel);
 
 }
 
@@ -510,7 +514,7 @@ void Stabilan01::assignByteFromDevice(quint8 b)
                     if (m_countBytePack % 2 == 0){
                         m_prevB = b;
                     } else {
-                        if ((m_prevB & 0x1 != 0) && (b & 0x2 == 0))
+                        if (((m_prevB & 0x1) != 0) && ((b & 0x2) == 0))
                         {
                             m_rrPor = b;
                             m_rrMark = true;
@@ -575,7 +579,7 @@ void Stabilan01::assignByteFromDevice(quint8 b)
                 m_Z = m_A + m_B + m_C + m_D;                     //! Расчет баллистограммы
 
                 incBlockCount();
-                transferData();
+                sendDataBlock();
                 m_isPackage = false;                     //! Сбросим признак пакета
             }
 
@@ -589,7 +593,15 @@ void Stabilan01::assignByteFromDevice(quint8 b)
     }
 }
 
-void Stabilan01::transferData()
+void Stabilan01::sendDataBlock()
+{
+    sendStab();
+    sendPulse();
+    sendTensoChannels();
+    sendMyogram();
+}
+
+void Stabilan01::sendStab()
 {
     //! Эмуляция стабилограммы кругом
 //                m_X = 10 * sin(r);
@@ -602,6 +614,50 @@ void Stabilan01::transferData()
                                                      m_A, m_B, m_C, m_D);
     emit sendData(stabData);
     delete stabData;
+}
+
+void Stabilan01::sendPulse()
+{
+
+}
+
+void Stabilan01::sendMyogram()
+{
+    QVector<double> data;
+    data.resize(4);
+
+    for (int i = 0; i < 4; ++i)
+    {
+        for (int j = 0; j < 4; ++j)
+            data[j] = m_myoValue[i][j];
+        auto myogrData = new DeviceProtocols::MyogramDvcData(this, ChannelsDefines::chanMyogram, data);
+        emit sendData(myogrData);
+        delete myogrData;
+    }
+}
+
+void Stabilan01::sendTensoChannels()
+{
+    if (td1ChannelsByDevice.contains(m_tenso1.device))
+    {
+        auto tenso1 = new DeviceProtocols::TensoDvcData(this, td1ChannelsByDevice.value(m_tenso1.device), m_t1);
+        emit sendData(tenso1);
+        delete tenso1;
+    }
+
+    if (td2ChannelsByDevice.contains(m_tenso2.device))
+    {
+        auto tenso2 = new DeviceProtocols::TensoDvcData(this, td2ChannelsByDevice.value(m_tenso2.device), m_t2);
+        emit sendData(tenso2);
+        delete tenso2;
+    }
+
+    if (td3ChannelsByDevice.contains(m_tenso3.device))
+    {
+        auto tenso3 = new DeviceProtocols::TensoDvcData(this, td3ChannelsByDevice.value(m_tenso3.device), m_t3);
+        emit sendData(tenso3);
+        delete tenso3;
+    }
 }
 
 QMap<QString, bool> Stabilan01::getChanRecordingDefault(const QJsonObject &obj)

@@ -192,6 +192,7 @@ void Stabilan01ParamsDialog::on_selectModel(int modelIdx)
 
 void Stabilan01ParamsDialog::on_selectZeroingType(int zcIdx)
 {
+    Q_UNUSED(zcIdx);
 
 }
 
