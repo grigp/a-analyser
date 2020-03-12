@@ -2,6 +2,7 @@
 #define SIGNALSDEFINES_H
 
 #include <QObject>
+#include <QVector>
 
 namespace SignalsDefines
 {
@@ -17,6 +18,18 @@ struct StabRec
     StabRec(std::tuple<double, double> params)
         : x(std::get<0>(params))
         , y(std::get<1>(params))
+    {}
+};
+
+/*!
+ * \brief Запись в канале миограммы MyoRec struct
+ */
+struct MyoRec
+{
+    QVector<double> data;
+    MyoRec() {}
+    MyoRec(QVector<double> rec)
+        : data(rec)
     {}
 };
 

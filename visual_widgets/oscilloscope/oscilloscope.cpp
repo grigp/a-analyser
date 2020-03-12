@@ -136,6 +136,7 @@ void Oscilloscope::addValue(const QVector<double> value)
         for (int i = 0; i < area->channelsCount(); ++i)
             rec.append(value.at(n + i));
         area->addValue(rec, m_cursorPos);
+        ++n;
     }
 
     ++m_cursorPos;

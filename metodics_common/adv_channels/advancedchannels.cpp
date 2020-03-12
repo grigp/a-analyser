@@ -6,6 +6,7 @@
 #include "channelsutils.h"
 #include "settingsprovider.h"
 #include "stabilogramwidget.h"
+#include "myogramwidget.h"
 
 #include <QDebug>
 
@@ -205,10 +206,13 @@ SignalWidget *AdvancedChannels::createWidget(Driver* driver, const QString chann
 
     auto channelType = ChannelsUtils::instance().channelType(channelId);
     if (channelType == ChannelsDefines::ctStabilogram)
-    {
         retval = new StabilogramWidget(driver, channelId, ui->frWidgets);
+    else
+    if (channelType == ChannelsDefines::ctMyogram)
+        retval = new MyogramWidget(driver, channelId, ui->frWidgets);
+
+    if (retval)
         ui->frWidgets->layout()->addWidget(retval);
-    }
 
     return retval;
 }

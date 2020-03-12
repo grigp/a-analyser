@@ -8,7 +8,8 @@ HEADERS += \
     $$PWD/channeljsondata.h \
     $$PWD/channeldata.h \
     $$PWD/anysignal.h \
-    $$PWD/trenresultdata.h
+    $$PWD/trenresultdata.h \
+    $$PWD/myogram.h
 
 SOURCES += \
     $$PWD/signaldata.cpp \
@@ -18,4 +19,5 @@ SOURCES += \
     $$PWD/channeljsondata.cpp \
     $$PWD/channeldata.cpp \
     $$PWD/anysignal.cpp \
-    $$PWD/trenresultdata.cpp
+    $$PWD/trenresultdata.cpp \
+    $$PWD/myogram.cpp

@@ -37,6 +37,30 @@ namespace  {
     , std::pair<Stabilan01Defines::Model, QString> (Stabilan01Defines::smcStabilan01_12NG, Stabilan01Defines::smnStabilan01_12NG)
   };
 
+  static QMap<Stabilan01Defines::Model, int> ChannelsCount =
+  {
+      std::pair<Stabilan01Defines::Model, int> (Stabilan01Defines::smcSt01, 2)
+    , std::pair<Stabilan01Defines::Model, int> (Stabilan01Defines::smcSt02, 2)
+    , std::pair<Stabilan01Defines::Model, int> (Stabilan01Defines::smcKSK123_20, 2)
+    , std::pair<Stabilan01Defines::Model, int> (Stabilan01Defines::smcKSK123_21, 4)
+    , std::pair<Stabilan01Defines::Model, int> (Stabilan01Defines::smcKSK123_22, 6)
+    , std::pair<Stabilan01Defines::Model, int> (Stabilan01Defines::smcKSK123_23, 4)
+    , std::pair<Stabilan01Defines::Model, int> (Stabilan01Defines::smcKSK123_30, 7)
+    , std::pair<Stabilan01Defines::Model, int> (Stabilan01Defines::smcKSK123_31, 7)
+    , std::pair<Stabilan01Defines::Model, int> (Stabilan01Defines::smcKSK123_32, 7)
+    , std::pair<Stabilan01Defines::Model, int> (Stabilan01Defines::smcKSK123_33, 7)
+    , std::pair<Stabilan01Defines::Model, int> (Stabilan01Defines::smcStabilan01_01, 11)
+    , std::pair<Stabilan01Defines::Model, int> (Stabilan01Defines::smcStabilan01_02, 11)
+    , std::pair<Stabilan01Defines::Model, int> (Stabilan01Defines::smcStabilan01_03, 11)
+    , std::pair<Stabilan01Defines::Model, int> (Stabilan01Defines::smcStabilan01_05, 12)
+    , std::pair<Stabilan01Defines::Model, int> (Stabilan01Defines::smcStabilan01_12, 27)
+    , std::pair<Stabilan01Defines::Model, int> (Stabilan01Defines::smcStabilan01_13, 27)
+    , std::pair<Stabilan01Defines::Model, int> (Stabilan01Defines::smcStabilan01_15, 27)
+    , std::pair<Stabilan01Defines::Model, int> (Stabilan01Defines::smcStabilan01_16, 27)
+    , std::pair<Stabilan01Defines::Model, int> (Stabilan01Defines::smcStabilan01_05NG, 27)
+    , std::pair<Stabilan01Defines::Model, int> (Stabilan01Defines::smcStabilan01_12NG, 27)
+  };
+
   static QMap<Stabilan01Defines::ZeroingType, QString> ZeroingTypes =
   {
       std::pair<Stabilan01Defines::ZeroingType, QString> (Stabilan01Defines::ztFast, Stabilan01Defines::ztnFast)
@@ -91,6 +115,8 @@ void Stabilan01::setParams(const DeviceProtocols::Ports port, const QJsonObject 
     m_tenso1.pn = params["pn1"].toDouble(100);
     m_tenso2.pn = params["pn2"].toDouble(500);
     m_tenso3.pn = params["pn3"].toDouble(1);
+
+    m_countChannels = ChannelsCount.value(m_model);
 }
 
 bool Stabilan01::editParams(QJsonObject &params)
@@ -147,11 +173,17 @@ void Stabilan01::stop()
 
 int Stabilan01::frequency(const QString &channelId) const
 {
-    if (ChannelsUtils::instance().channelType(channelId) == ChannelsDefines::ctStabilogram)
-        return 50;
-    else
-    if (ChannelsUtils::instance().channelType(channelId) == ChannelsDefines::ctBallistogram)
-        return 50;
+    static QMap<QString, int> ChannelsFreq =
+    {
+        std::pair<QString, int> (ChannelsDefines::ctStabilogram, 50)
+      , std::pair<QString, int> (ChannelsDefines::ctBallistogram, 50)
+      , std::pair<QString, int> (ChannelsDefines::ctDynamo, 50)
+      , std::pair<QString, int> (ChannelsDefines::ctBreath, 50)
+      , std::pair<QString, int> (ChannelsDefines::ctMyogram, 200)
+    };
+
+    if (ChannelsFreq.contains(ChannelsUtils::instance().channelType(channelId)))
+        return ChannelsFreq.value(ChannelsUtils::instance().channelType(channelId));
     return 1;
 }
 

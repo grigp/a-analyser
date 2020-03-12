@@ -1,24 +1,22 @@
-#ifndef STABILOGRAM_H
-#define STABILOGRAM_H
+#ifndef MYOGRAM_H
+#define MYOGRAM_H
+
+#include <QVector>
 
 #include "signaldata.h"
 #include "signalsdefines.h"
 
-#include <QVector>
 
-/*!
- * \brief Класс сигнала стабилограммы Stabilogram class
- */
-class Stabilogram : public SignalData
+class Myogram : public SignalData
 {
 public:
-    explicit Stabilogram(const QString &chanId, const int freq);
+    explicit Myogram(const QString &chanId, const int subChansCount, const int freq);
 
     /*!
      * \brief Создает на основе массива байт
      * \param data - сигнал в виде массива байт
      */
-    explicit Stabilogram(const QByteArray &data);
+    explicit Myogram(const QByteArray &data);
 
     /*!
      * \brief Перекрытая функция, возвращающая идентификатор канала
@@ -49,16 +47,16 @@ public:
     double value(const int subChan, const int rec) const override;
 
     /*!
-     * \brief Возвращает значение, как запсиь стабилограммы по номеру записи
+     * \brief Возвращает значение, как запись миограммы по номеру записи
      * \param rec - номер записи
      */
-    SignalsDefines::StabRec value(const int rec) const;
+    QVector<double> value(const int rec) const;
 
     /*!
      * \brief Добавляет значение
-     * \param rec - значение стабилограммы
+     * \param rec - значение миограммы
      */
-    void addValue(const SignalsDefines::StabRec rec);
+    void addValue(const QVector<double> rec);
 
     /*!
      * \brief Читает данные из массива байт и заполняет буфер m_data
@@ -78,10 +76,11 @@ public:
     void clear() override;
 
 private:
-    QString m_channelId;
-    int m_frequency;
+    QString m_channelId {""};
+    int m_subChansCount {0};
+    int m_frequency {0};
 
-    QVector<SignalsDefines::StabRec> m_data;
+    QVector<SignalsDefines::MyoRec> m_data;
 };
 
-#endif // STABILOGRAM_H
+#endif // MYOGRAM_H

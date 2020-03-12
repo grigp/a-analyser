@@ -146,6 +146,17 @@ void StabTestExecute::scaleChange(int scaleId)
 void StabTestExecute::getData(DeviceProtocols::DeviceData *data)
 {
 //    if (data->uid() == DeviceProtocols::uid_StabDvcData)
+
+    //! Любой канал от драйвера надо передавать окну дополнительных каналов
+    ui->wgtAdvChannels->getData(data);
+    if (m_isRecording)
+    {
+        //! Запись, если не задержка привыкания
+        if (m_recCount >= probeParams().latentTime * m_freqStab)
+            ui->wgtAdvChannels->record(data);
+    }
+
+
     //! Выбранный в переключателе канал, а не просто данные.
     //! Если драйвер будет передавать несколько стабилограмм, то отображать здесь мы будем только одну
     if (ui->cbSelectChannel->currentData(ChannelsUtils::ChannelUidRole).toString() == data->channelId())
@@ -158,18 +169,16 @@ void StabTestExecute::getData(DeviceProtocols::DeviceData *data)
         ui->lblZ->setText(QString("Z = %1").arg(stabData->z(), 0, 'f', 2));
         ui->wgtSKG->setMarker(stabData->x(), stabData->y());
 
-        ui->wgtAdvChannels->getData(data);
-
         if (m_patientWin)
             m_patientWin->setMarker(stabData->x(), stabData->y());
 
         if (m_isRecording)
         {
             //! Запись, если не задержка привыкания
-            if (m_recCount >= probeParams().latentTime * m_freqStab)
-            {
-                ui->wgtAdvChannels->record(data);
-            }
+//            if (m_recCount >= probeParams().latentTime * m_freqStab)
+//            {
+//                ui->wgtAdvChannels->record(data);
+//            }
 
             ++m_recCount;
             //! Вывод времени теста и прогресса
