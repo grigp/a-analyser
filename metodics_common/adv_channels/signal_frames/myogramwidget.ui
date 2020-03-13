@@ -199,8 +199,25 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>cbScale</sender>
+   <signal>currentIndexChanged(int)</signal>
+   <receiver>MyogramWidget</receiver>
+   <slot>on_myoScaleChange(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>211</x>
+     <y>314</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>756</x>
+     <y>176</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>on_recMyoClick(bool)</slot>
+  <slot>on_myoScaleChange(int)</slot>
  </slots>
 </ui>

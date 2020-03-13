@@ -129,12 +129,15 @@ public:
      * \param max - максимальное значение
      */
     void getTensoValueDiapasone(const int chanNumber, double &min, double &max);
+    void getTensoValueDiapasone(const QString channelId, double &min, double &max);
     void setTensoValueDiapasone(const int chanNumber, const double min, const double max);
 
     void setBoundsDelArtifacts(const int low, const int high) override;
 
     void zeroingMyo() override;
     void zeroingMyo(const int channel) override;
+    double amplitudeMyo() override;
+
 
     /*!
      * \brief Возвращает название модели стабилоанализатора по коду

@@ -7,6 +7,7 @@
 #include "settingsprovider.h"
 #include "stabilogramwidget.h"
 #include "myogramwidget.h"
+#include "dynamowidget.h"
 
 #include <QDebug>
 
@@ -210,6 +211,9 @@ SignalWidget *AdvancedChannels::createWidget(Driver* driver, const QString chann
     else
     if (channelType == ChannelsDefines::ctMyogram)
         retval = new MyogramWidget(driver, channelId, ui->frWidgets);
+    else
+    if (channelType == ChannelsDefines::ctDynamo)
+        retval = new DynamoWidget(driver, channelId, ui->frWidgets);
 
     if (retval)
         ui->frWidgets->layout()->addWidget(retval);

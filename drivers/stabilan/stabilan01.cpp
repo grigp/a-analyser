@@ -277,6 +277,17 @@ bool Stabilan01::isChannelRecordingDefault(const QString &channelUid) const
 {
     if (m_chanRecordingDefault.contains(channelUid))
         return m_chanRecordingDefault.value(channelUid);
+    else
+    {
+        if (td1ChannelsByDevice.value(m_tenso1.device) == channelUid)
+            return m_chanRecordingDefault.value(ChannelsDefines::chanTenso1);
+        else
+        if (td2ChannelsByDevice.value(m_tenso2.device) == channelUid)
+            return m_chanRecordingDefault.value(ChannelsDefines::chanTenso2);
+        else
+        if (td3ChannelsByDevice.value(m_tenso3.device) == channelUid)
+            return m_chanRecordingDefault.value(ChannelsDefines::chanTenso3);
+    }
     return false;
 }
 
@@ -311,15 +322,70 @@ void Stabilan01::zeroing(const QString &channelUid)
 
 void Stabilan01::calibrateTenso(const QString &channelUid)
 {
-    Q_UNUSED(channelUid);
-
+    quint8 chan = 0;
+    if (td1ChannelsByDevice.value(m_tenso1.device) == channelUid)
+        chan = 0xA;
+    else
+    if (td2ChannelsByDevice.value(m_tenso2.device) == channelUid)
+        chan = 0xB;
+    else
+    if (td3ChannelsByDevice.value(m_tenso3.device) == channelUid)
+        chan = 0xC;
+    if (chan != 0)
+    {
+        QByteArray cmd;
+        cmd.resize(4);
+        cmd[0] = 0x33;
+        cmd[1] = chan;
+        cmd[2] = 0x33;
+        cmd[3] = 0x7;
+        emit writeData(cmd);
+    }
 }
 
 void Stabilan01::getTensoValueDiapasone(const int chanNumber, double &min, double &max)
 {
     Q_ASSERT(chanNumber >= 0 && chanNumber < 3);
-    min = m_tensoPercMin[chanNumber];
-    max = m_tensoPercMax[chanNumber];
+    auto getMinMax = [&](DeviceProtocols::TensoChannel tenso)
+    {
+        if (tenso.device != DeviceProtocols::tdBreath)
+        {
+            min = 0;
+            max = tenso.pn;
+        }
+        else
+        {
+            min = m_tensoPercMin[chanNumber];
+            max = m_tensoPercMax[chanNumber];
+        }
+    };
+
+    if (chanNumber == 0)
+        getMinMax(m_tenso1);
+    else
+    if (chanNumber == 1)
+        getMinMax(m_tenso2);
+    else
+    if (chanNumber == 2)
+        getMinMax(m_tenso3);
+}
+
+void Stabilan01::getTensoValueDiapasone(const QString channelId, double &min, double &max)
+{
+
+    if (channelId == td1ChannelsByDevice.value(m_tenso1.device))
+        getTensoValueDiapasone(0, min, max);
+    else
+    if (channelId == td2ChannelsByDevice.value(m_tenso2.device))
+        getTensoValueDiapasone(1, min, max);
+    else
+    if (channelId == td3ChannelsByDevice.value(m_tenso3.device))
+        getTensoValueDiapasone(2, min, max);
+    else
+    {
+        min = 0;
+        max = 100;
+    }
 }
 
 void Stabilan01::setTensoValueDiapasone(const int chanNumber, const double min, const double max)
@@ -345,6 +411,11 @@ void Stabilan01::zeroingMyo(const int channel)
 {
     Q_UNUSED(channel);
 
+}
+
+double Stabilan01::amplitudeMyo()
+{
+    return 2;
 }
 
 QString Stabilan01::modelName(const Stabilan01Defines::Model mdlCode)
@@ -465,7 +536,7 @@ void Stabilan01::assignByteFromDevice(quint8 b)
         else
         {
             double dynVal = b * 256 + m_prevB;
-            dynVal =- 0x8000;
+            dynVal = dynVal - 0x8000;
             value = (tenso.pn * 1000 * dynVal) / (65535 * 128 * tenso.rkp);
             if (tenso.device == DeviceProtocols::tdBreath)
                 value = (value - m_tensoPercMin[chan]) / (m_tensoPercMax[chan] - m_tensoPercMin[chan]) * 100;

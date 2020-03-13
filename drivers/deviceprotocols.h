@@ -439,6 +439,7 @@ public:
      * \param max - максимальное значение
      */
     virtual void getTensoValueDiapasone(const int chanNumber, double &min, double &max) = 0;
+    virtual void getTensoValueDiapasone(const QString channelId, double &min, double &max) = 0;
     virtual void setTensoValueDiapasone(const int chanNumber, const double min, const double max) = 0;
 
     static QString uid() {return uid_TensoControl;}
@@ -480,6 +481,7 @@ class MyoControl : public LinearChanControl
 public:
     virtual void zeroingMyo() = 0;
     virtual void zeroingMyo(const int channel) = 0;
+    virtual double amplitudeMyo() = 0;
 
     static QString uid() {return uid_MyoControl;}
 

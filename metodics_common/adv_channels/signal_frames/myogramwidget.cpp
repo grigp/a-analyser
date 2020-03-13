@@ -7,21 +7,21 @@
 
 #include <QDebug>
 
-MyogramWidget::MyogramWidget(Driver *driver, const QString channelId, QWidget *parent)
-    : SignalWidget(driver, channelId, parent),
+MyogramWidget::MyogramWidget(Driver *drv, const QString channelId, QWidget *parent)
+    : SignalWidget(drv, channelId, parent),
     ui(new Ui::MyogramWidget)
 {
     ui->setupUi(this);
 
-    ui->wgtMyoOscill->appendArea(tr("Отведение 1"), 1);
-    ui->wgtMyoOscill->appendArea(tr("Отведение 2"), 1);
-    ui->wgtMyoOscill->appendArea(tr("Отведение 3"), 1);
-    ui->wgtMyoOscill->appendArea(tr("Отведение 4"), 1);
-    ui->wgtMyoOscill->setDiapazone(0, 0, 2);
-    ui->wgtMyoOscill->setDiapazone(1, 0, 2);
-    ui->wgtMyoOscill->setDiapazone(2, 0, 2);
-    ui->wgtMyoOscill->setDiapazone(3, 0, 2);
-//    ui->wgtMyoOscill->setFrequency(driver->frequency(channelId));
+    m_myoControl = dynamic_cast<DeviceProtocols::MyoControl*>(driver());
+    if (m_myoControl)
+        m_amplMyo = m_myoControl->amplitudeMyo();
+
+
+    for (int i = 0; i < driver()->getSubChannelsCount(channelId); ++i)
+        ui->wgtMyoOscill->appendArea(QString(tr("Отведение") + " %1").arg(i + 1), 1);
+    for (int i = 0; i < driver()->getSubChannelsCount(channelId); ++i)
+        ui->wgtMyoOscill->setDiapazone(i, 0, m_amplMyo);
 
     ui->cbScale->addItems(QStringList() <<  "1" << "2" << "4" << "8" << "16" << "32" << "64" << "128" << "256" << "512");
 
@@ -108,6 +108,18 @@ void MyogramWidget::on_recMyoClick(bool checked)
 void MyogramWidget::on_recMyoChanClick(bool checked)
 {
     setRecButton(static_cast<QPushButton*>(sender()), checked);
+}
+
+void MyogramWidget::on_myoScaleChange(int scaleIdx)
+{
+    int scale = 1;
+    for (int i = 0; i < scaleIdx; ++i)
+        scale *= 2;
+
+    double maxV = m_amplMyo / scale;
+
+    for (int i = 0; i < driver()->getSubChannelsCount(channelId()); ++i)
+        ui->wgtMyoOscill->setDiapazone(i, 0, maxV);
 }
 
 void MyogramWidget::setSubChannelsRecButtons()

@@ -9,7 +9,9 @@ HEADERS += \
     $$PWD/channeldata.h \
     $$PWD/anysignal.h \
     $$PWD/trenresultdata.h \
-    $$PWD/myogram.h
+    $$PWD/myogram.h \
+    $$PWD/singlesignal.h \
+    $$PWD/dynamosignal.h
 
 SOURCES += \
     $$PWD/signaldata.cpp \
@@ -20,4 +22,6 @@ SOURCES += \
     $$PWD/channeldata.cpp \
     $$PWD/anysignal.cpp \
     $$PWD/trenresultdata.cpp \
-    $$PWD/myogram.cpp
+    $$PWD/myogram.cpp \
+    $$PWD/singlesignal.cpp \
+    $$PWD/dynamosignal.cpp

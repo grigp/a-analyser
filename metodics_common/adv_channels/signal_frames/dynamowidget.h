@@ -1,5 +1,5 @@
-#ifndef MYOGRAMWIDGET_H
-#define MYOGRAMWIDGET_H
+#ifndef DYNAMOWIDGET_H
+#define DYNAMOWIDGET_H
 
 #include <QWidget>
 #include <QPushButton>
@@ -7,21 +7,21 @@
 #include "signalwidget.h"
 
 namespace Ui {
-class MyogramWidget;
+class DynamoWidget;
 }
 
-class Myogram;
+class DynamoSignal;
 
 /*!
- * \brief Класс виджета - миограммы MyogramWidget class
+ * \brief Класс виджета - силомера DynamoWidget class
  */
-class MyogramWidget : public SignalWidget
+class DynamoWidget : public SignalWidget
 {
     Q_OBJECT
 
 public:
-    explicit MyogramWidget(Driver *drv, const QString channelId, QWidget *parent = 0);
-    ~MyogramWidget();
+    explicit DynamoWidget(Driver *drv, const QString channelId, QWidget *parent = 0);
+    ~DynamoWidget();
 
     /*!
      * \brief Начало новой пробы
@@ -55,34 +55,28 @@ public:
     void setAllwaysRecordingChannel(const QString &channelId) override;
 
 private slots:
-    /*!
-     * \brief Изменение режима записи всех отведений миограмм
-     */
-    void on_recMyoClick(bool checked);
+    void on_resetValueMax();
 
-    /*!
-     * \brief Изменение режима записи одного из отведений миограмм
-     */
-    void on_recMyoChanClick(bool checked);
+    void on_calibrate();
 
-    void on_myoScaleChange(int scaleIdx);
+    void on_scaleChange(int scaleIdx);
 
+    void on_dynRecChange(bool checked);
 
 private:
-    Ui::MyogramWidget *ui;
-
-    void setSubChannelsRecButtons();
+    Ui::DynamoWidget *ui;
 
     void setRecordedChannels();
 
     void setRecButton(QPushButton *btn, const bool checked);
 
-    DeviceProtocols::MyoControl* m_myoControl {nullptr};
+    DeviceProtocols::TensoControl* m_dynControl {nullptr};
+    double m_min {0};
+    double m_max {10};
+    double m_valueMax {0};
 
-    QList<QPushButton*> m_btnSubChans;  ///< Указатели на кнопки записи подканалов
+    DynamoSignal* m_dynamo {nullptr};
 
-    Myogram *m_myo;
-    double m_amplMyo {2};
 };
 
-#endif // MYOGRAMWIDGET_H
+#endif // DYNAMOWIDGET_H
