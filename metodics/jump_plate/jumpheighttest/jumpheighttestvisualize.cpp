@@ -4,6 +4,8 @@
 #include "jumpheighttestcalculator.h"
 #include "datadefines.h"
 #include "dataprovider.h"
+#include "dynamicdiagram.h"
+#include "settingsprovider.h"
 
 #include <QStandardItemModel>
 #include <QDebug>
@@ -13,6 +15,7 @@ JumpHeightTestVisualize::JumpHeightTestVisualize(QWidget *parent) :
     ui(new Ui::JumpHeightTestVisualize)
 {
     ui->setupUi(this);
+    ui->twPages->setCurrentIndex(0);
 }
 
 JumpHeightTestVisualize::~JumpHeightTestVisualize()
@@ -43,27 +46,53 @@ void JumpHeightTestVisualize::setTest(const QString &testUid)
         ui->lblHeightMax->setText(QString(tr("Максимальная высота прыжков") + " %1 " + tr("м")).arg(fctHeightMax->value()));
         ui->lblTimeAvg->setText(QString(tr("Среднее время на платформе") + " %1 " + tr("сек")).arg(fctTimeAvg->value()));
 
-        auto* model = new QStandardItemModel(ui->tvJumps);
-
-        for (int i = 0; i < m_calculator->jumpsCount(); ++i)
-        {
-            auto jump = m_calculator->jump(i);
-
-            auto *itemN = new QStandardItem(QString::number(i + 1));
-            itemN->setEditable(false);
-            auto *itemH = new QStandardItem(QString::number(jump.height));
-            itemH->setEditable(false);
-            auto *itemT = new QStandardItem(QString::number(jump.timeJump));
-            itemT->setEditable(false);
-
-            model->appendRow(QList<QStandardItem*>() << itemN << itemH << itemT);
-        }
-
-        ui->tvJumps->setModel(model);
-        model->setHorizontalHeaderLabels(QStringList() << tr("N") << tr("Высота прыжка, м") << tr("Время контактной фазы, сек"));
-        ui->tvJumps->header()->resizeSections(QHeaderView::ResizeToContents);
-        ui->tvJumps->header()->resizeSection(0, 100);
+        setTable();
+        setDiagrams();
     }
+}
+
+void JumpHeightTestVisualize::on_selectGraph()
+{
+    ui->wgtDiagHeight->setKind(DynamicDiagram::KindGraph);
+    ui->wgtDiagTime->setKind(DynamicDiagram::KindGraph);
+
+    SettingsProvider::setValueToRegAppCopy("JumpTest", "HeightTestDiagKind", static_cast<int>(DynamicDiagram::KindGraph));
+}
+
+void JumpHeightTestVisualize::on_selectBar()
+{
+    ui->wgtDiagHeight->setKind(DynamicDiagram::KindBar);
+    ui->wgtDiagTime->setKind(DynamicDiagram::KindBar);
+
+    SettingsProvider::setValueToRegAppCopy("JumpTest", "HeightTestDiagKind", static_cast<int>(DynamicDiagram::KindBar));
+}
+
+void JumpHeightTestVisualize::on_select3D(bool checked)
+{
+    if (checked)
+    {
+        ui->wgtDiagHeight->setVolume(DynamicDiagram::Volume3D);
+        ui->wgtDiagTime->setVolume(DynamicDiagram::Volume3D);
+        SettingsProvider::setValueToRegAppCopy("JumpTest", "HeightTestDiagVolume", static_cast<int>(DynamicDiagram::Volume3D));
+    }
+    else
+    {
+        ui->wgtDiagHeight->setVolume(DynamicDiagram::Volume2D);
+        ui->wgtDiagTime->setVolume(DynamicDiagram::Volume2D);
+        SettingsProvider::setValueToRegAppCopy("JumpTest", "HeightTestDiagVolume", static_cast<int>(DynamicDiagram::Volume2D));
+    }
+}
+
+void JumpHeightTestVisualize::on_selectDiagItemHeight(const int idx)
+{
+    if (idx >= 0 && idx < m_calculator->jumpsCount())
+        ui->wgtDiagHeight->setTitle(tr("Высота прыжка, м") + QString(" (%1)").arg(m_calculator->jump(idx).height));
+}
+
+void JumpHeightTestVisualize::on_selectDiagItemTime(const int idx)
+{
+    if (idx >= 0 && idx < m_calculator->jumpsCount())
+        ui->wgtDiagTime->setTitle(tr("Время контактной фазы, сек") + QString(" (%1)").arg(m_calculator->jump(idx).timeJump));
 }
 
 void JumpHeightTestVisualize::getStrategyParams(const QString &testUid)
@@ -80,4 +109,64 @@ void JumpHeightTestVisualize::getStrategyParams(const QString &testUid)
         }
         ui->lblContactTimeBound->setVisible(m_strategy == JumpHeightTestDefines::jhsMinContactTime);
     }
+}
+
+void JumpHeightTestVisualize::setDiagrams()
+{
+    restoreGraphParams();
+    ui->wgtDiagHeight->setTitle(tr("Высота прыжка, м"));
+    ui->wgtDiagTime->setTitle(tr("Время контактной фазы, сек"));
+
+    for (int i = 0; i < m_calculator->jumpsCount(); ++i)
+    {
+        auto jump = m_calculator->jump(i);
+
+        auto itemH = new DiagItem(jump.height, QString::number(i + 1));
+        ui->wgtDiagHeight->appendItem(itemH);
+
+        auto itemT = new DiagItem(jump.timeJump, QString::number(i + 1));
+        ui->wgtDiagTime->appendItem(itemT);
+    }
+    connect(ui->wgtDiagHeight, &DynamicDiagram::selectItem, this, &JumpHeightTestVisualize::on_selectDiagItemHeight);
+    connect(ui->wgtDiagTime, &DynamicDiagram::selectItem, this, &JumpHeightTestVisualize::on_selectDiagItemTime);
+}
+
+void JumpHeightTestVisualize::setTable()
+{
+    auto* model = new QStandardItemModel(ui->tvJumps);
+
+    for (int i = 0; i < m_calculator->jumpsCount(); ++i)
+    {
+        auto jump = m_calculator->jump(i);
+
+        auto *itemN = new QStandardItem(QString::number(i + 1));
+        itemN->setEditable(false);
+        auto *itemH = new QStandardItem(QString::number(jump.height));
+        itemH->setEditable(false);
+        auto *itemT = new QStandardItem(QString::number(jump.timeJump));
+        itemT->setEditable(false);
+
+        model->appendRow(QList<QStandardItem*>() << itemN << itemH << itemT);
+    }
+
+    ui->tvJumps->setModel(model);
+    model->setHorizontalHeaderLabels(QStringList() << tr("N") << tr("Высота прыжка, м") << tr("Время контактной фазы, сек"));
+    ui->tvJumps->header()->resizeSections(QHeaderView::ResizeToContents);
+    ui->tvJumps->header()->resizeSection(0, 100);
+}
+
+void JumpHeightTestVisualize::restoreGraphParams()
+{
+    auto kindCode = SettingsProvider::valueFromRegAppCopy("JumpTest", "HeightTestDiagKind", 1).toInt();
+    DynamicDiagram::Kind kind = static_cast<DynamicDiagram::Kind>(kindCode);
+    ui->wgtDiagHeight->setKind(kind);
+    ui->wgtDiagTime->setKind(kind);
+    ui->btnGraph->setChecked(kind == DynamicDiagram::KindGraph);
+    ui->btnBar->setChecked(kind == DynamicDiagram::KindBar);
+
+    auto volumeCode = SettingsProvider::valueFromRegAppCopy("JumpTest", "HeightTestDiagVolume", 1).toInt();
+    DynamicDiagram::Volume volume = static_cast<DynamicDiagram::Volume>(volumeCode);
+    ui->wgtDiagHeight->setVolume(volume);
+    ui->wgtDiagTime->setVolume(volume);
+    ui->btn3D->setChecked(volume == DynamicDiagram::Volume3D);
 }
