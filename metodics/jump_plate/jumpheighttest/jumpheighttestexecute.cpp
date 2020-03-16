@@ -44,6 +44,9 @@ void JumpHeightTestExecute::setParams(const QJsonObject &params)
     else
     if (m_testFinishKind == JumpPlateDefines::tfkQuantity)
         ui->lblCommentFinishTest->setText(QString(tr("Выполните %1 прыжков на платформе")).arg(m_jumpsMax));
+    else
+    if (m_testFinishKind == JumpPlateDefines::tfkCommand)
+        ui->lblCommentFinishTest->setText(tr("Выполняйте прыжки на платформе"));
 
     if (m_strategy == JumpHeightTestDefines::jhsMaxHeight)
         ui->lblCommentStrategy->setText(QString(tr("с максимальной высотой прыжка")));
@@ -154,8 +157,13 @@ void JumpHeightTestExecute::on_recording()
     m_isRecording = !m_isRecording;
     if (m_isRecording)
     {
-        ui->btnSave->setIcon(QIcon(":/images/SaveNO.png"));
-        ui->btnSave->setText(tr("Прервать прыжки"));
+        if (m_testFinishKind == JumpPlateDefines::tfkCommand)
+            ui->btnSave->setText(tr("Завершить прыжки"));
+        else
+        {
+            ui->btnSave->setIcon(QIcon(":/images/SaveNO.png"));
+            ui->btnSave->setText(tr("Прервать прыжки"));
+        }
         m_timerEndOfTest = startTimer(20);
     }
     else
@@ -165,13 +173,18 @@ void JumpHeightTestExecute::on_recording()
         killTimer(m_timerEndOfTest);
     }
 
-    ui->pbTimeTest->setValue(0);
-    m_jumpsCount = 0;
-    m_timeCount = 0;
-    m_height = 0;
-    m_time = 0;
-    m_mdlTable.clear();
-    setModelGeometry();
+    if (!m_isRecording && (m_testFinishKind == JumpPlateDefines::tfkCommand))
+        finishTest();
+    else
+    {
+        ui->pbTimeTest->setValue(0);
+        m_jumpsCount = 0;
+        m_timeCount = 0;
+        m_height = 0;
+        m_time = 0;
+        m_mdlTable.clear();
+        setModelGeometry();
+    }
 }
 
 void JumpHeightTestExecute::iterate(const bool isStart)
@@ -218,7 +231,7 @@ void JumpHeightTestExecute::iterate(const bool isStart)
                 m_time = m_plt1Time;
                 if (platformsCount == 2)
                     m_time = (m_plt1Time + m_plt2Time) / 2;
-                if (m_height > 0 && m_time > 0) //(m_jumpsCount > 0)
+                if (m_height > 0 && m_height < 2 && m_time > 0) //(m_jumpsCount > 0)
                 {
                     auto *itemN = new QStandardItem(QString::number(m_jumpsCount));
                     itemN->setEditable(false);

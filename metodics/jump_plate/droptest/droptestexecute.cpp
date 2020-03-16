@@ -40,6 +40,9 @@ void DropTestExecute::setParams(const QJsonObject &params)
     else
     if (m_testFinishKind == JumpPlateDefines::tfkQuantity)
         ui->lblCommentFinishTest->setText(QString(tr("Выполните %1 спрыгиваний на платформу")).arg(m_jumpsMax));
+    else
+    if (m_testFinishKind == JumpPlateDefines::tfkCommand)
+        ui->lblCommentFinishTest->setText(tr("Выполняйте спрыгивания на платформу"));
     ui->edFallHeight->setValue(params["fall_height"].toDouble());
     ui->pbTimeTest->setVisible(m_testFinishKind == JumpPlateDefines::tfkFixedTime);
 }
@@ -156,8 +159,13 @@ void DropTestExecute::on_recording()
     m_isRecording = !m_isRecording;
     if (m_isRecording)
     {
-        ui->btnSave->setIcon(QIcon(":/images/SaveNO.png"));
-        ui->btnSave->setText(tr("Прервать прыжки"));
+        if (m_testFinishKind == JumpPlateDefines::tfkCommand)
+            ui->btnSave->setText(tr("Завершить прыжки"));
+        else
+        {
+            ui->btnSave->setIcon(QIcon(":/images/SaveNO.png"));
+            ui->btnSave->setText(tr("Прервать прыжки"));
+        }
         m_timerEndOfTest = startTimer(20);
     }
     else
@@ -167,12 +175,17 @@ void DropTestExecute::on_recording()
         killTimer(m_timerEndOfTest);
     }
 
-    ui->pbTimeTest->setValue(0);
-    m_jumpsCount = 0;
-    m_timeCount = 0;
-    setStage(dtsWaiting);
-    m_mdlTable.clear();
-    setModelGeometry();
+    if (!m_isRecording && (m_testFinishKind == JumpPlateDefines::tfkCommand))
+        finishTest();
+    else
+    {
+        ui->pbTimeTest->setValue(0);
+        m_jumpsCount = 0;
+        m_timeCount = 0;
+        setStage(dtsWaiting);
+        m_mdlTable.clear();
+        setModelGeometry();
+    }
 }
 
 void DropTestExecute::iterate(const bool isStart)
@@ -311,7 +324,7 @@ void DropTestExecute::setModelGeometry()
                                          << tr("Мощность")
                                          << tr("Жесткость")
                                          << tr("Начальная\nскорость, м/сек")
-                                         << tr("Индекс\nпрыгучести"));
+                                         << tr("Индекс\nреактивной силы"));
     ui->tvJumps->header()->resizeSections(QHeaderView::ResizeToContents);
     ui->tvJumps->header()->resizeSection(0, 100);
 }

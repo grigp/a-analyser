@@ -44,6 +44,9 @@ void JumpHeightTestCalculator::calculate()
                     addPrimaryFactor(testUid(), JumpHeightFactorsDefines::JumpsHeightAvrUid,
                                      m_factors->factorValue(JumpHeightFactorsDefines::JumpsHeightAvrUid),
                                      0, ChannelsDefines::chanJumpHeight, pi.name);
+                    addPrimaryFactor(testUid(), JumpHeightFactorsDefines::JumpsHeightMaxUid,
+                                     m_factors->factorValue(JumpHeightFactorsDefines::JumpsHeightMaxUid),
+                                     0, ChannelsDefines::chanJumpHeight, pi.name);
                     addPrimaryFactor(testUid(), JumpHeightFactorsDefines::JumpsContactTimeAvrUid,
                                      m_factors->factorValue(JumpHeightFactorsDefines::JumpsContactTimeAvrUid),
                                      0, ChannelsDefines::chanJumpHeight, pi.name);

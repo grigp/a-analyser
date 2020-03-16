@@ -11,7 +11,9 @@ DropTestParamsDialog::DropTestParamsDialog(QWidget *parent) :
 {
     ui->setupUi(this);
     initUi();
-    ui->cbFinishKind->addItems(QStringList() << tr("После заданного количества прыжков") << tr("По истечению времени"));
+    ui->cbFinishKind->addItems(QStringList() << tr("После заданного количества прыжков")
+                                             << tr("По истечению времени")
+                                             << tr("По команде оператора"));
 }
 
 DropTestParamsDialog::~DropTestParamsDialog()

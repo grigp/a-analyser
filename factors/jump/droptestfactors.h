@@ -71,7 +71,7 @@ public:
     * \param power - мощность
     * \param stiffness - жесткость
     * \param initialSpeed - начальная скорость
-    * \param rsi - индекс прыгучести
+    * \param rsi - индекс реактивной силы
     */
    static void calculateAdvFactors(const double timeContact, const double timeNoContact, const double fallHeight,
                                    const double height, const double massa,

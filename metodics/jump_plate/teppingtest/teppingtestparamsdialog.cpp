@@ -11,7 +11,9 @@ TeppingTestParamsDialog::TeppingTestParamsDialog(QWidget *parent) :
 {
     ui->setupUi(this);
     initUi();
-    ui->cbFinishKind->addItems(QStringList() << tr("После заданного количества шагов") << tr("По истечению времени"));
+    ui->cbFinishKind->addItems(QStringList() << tr("После заданного количества шагов")
+                                             << tr("По истечению времени")
+                                             << tr("По команде оператора"));
 }
 
 TeppingTestParamsDialog::~TeppingTestParamsDialog()

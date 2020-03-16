@@ -28,17 +28,19 @@ void JumpHeightTestVisualize::setTest(const QString &testUid)
         m_calculator->calculate();
     }
 
-    if (m_calculator->primaryFactorsCount() >= 4)
+    if (m_calculator->primaryFactorsCount() >= 5)
     {
         getStrategyParams(testUid);
 
         auto fctJumpsCount = m_calculator->primaryFactor(0);
         auto fctTimeTest = m_calculator->primaryFactor(1);
         auto fctHeightAvg = m_calculator->primaryFactor(2);
-        auto fctTimeAvg = m_calculator->primaryFactor(3);
+        auto fctHeightMax = m_calculator->primaryFactor(3);
+        auto fctTimeAvg = m_calculator->primaryFactor(4);
         ui->lblJumpsCount->setText(QString(tr("Количество прыжков") + " %1").arg(fctJumpsCount->value()));
         ui->lblTimeTest->setText(QString(tr("Общее время прыжков") + " %1 " + tr("сек")).arg(fctTimeTest->value()));
         ui->lblHeightAvg->setText(QString(tr("Средняя высота прыжков") + " %1 " + tr("м")).arg(fctHeightAvg->value()));
+        ui->lblHeightMax->setText(QString(tr("Максимальная высота прыжков") + " %1 " + tr("м")).arg(fctHeightMax->value()));
         ui->lblTimeAvg->setText(QString(tr("Среднее время на платформе") + " %1 " + tr("сек")).arg(fctTimeAvg->value()));
 
         auto* model = new QStandardItemModel(ui->tvJumps);

@@ -33,6 +33,7 @@ void JumpHeightFactors::calculate()
     m_jumps.clear();
     int jCount = 0;
     double avgHeight = 0;
+    double maxHeight = 0;
     double avgTime = 0;
 
     QByteArray baData;
@@ -44,6 +45,8 @@ void JumpHeightFactors::calculate()
         {
             m_jumps.append(data.jump(i));
             avgHeight = avgHeight + data.jump(i).height;
+            if (data.jump(i).height > maxHeight)
+                maxHeight = data.jump(i).height;
             avgTime = avgTime + data.jump(i).timeJump;
         }
         m_time = data.time();
@@ -59,6 +62,7 @@ void JumpHeightFactors::calculate()
     addFactor(JumpHeightFactorsDefines::FullTimeUid, m_time);
     addFactor(JumpHeightFactorsDefines::JumpsCountUid, jCount);
     addFactor(JumpHeightFactorsDefines::JumpsHeightAvrUid, avgHeight);
+    addFactor(JumpHeightFactorsDefines::JumpsHeightMaxUid, maxHeight);
     addFactor(JumpHeightFactorsDefines::JumpsContactTimeAvrUid, avgTime);
 }
 
@@ -75,7 +79,10 @@ void JumpHeightFactors::registerFactors()
                            tr("Общее время"), tr("Время"), tr("сек"), 3, 1, FactorsDefines::nsAbove, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(JumpHeightFactorsDefines::JumpsHeightAvrUid, JumpHeightFactorsDefines::GroupUid,
-                           tr("Средняя высота прыжка"), tr("h"), tr("cм"), 4, 2, FactorsDefines::nsAbove, 12);
+                           tr("Средняя высота прыжка"), tr("h"), tr("м"), 4, 2, FactorsDefines::nsAbove, 12);
+    static_cast<AAnalyserApplication*>(QApplication::instance())->
+            registerFactor(JumpHeightFactorsDefines::JumpsHeightMaxUid, JumpHeightFactorsDefines::GroupUid,
+                           tr("Максимальная высота прыжка"), tr("h"), tr("м"), 4, 2, FactorsDefines::nsAbove, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(JumpHeightFactorsDefines::JumpsContactTimeAvrUid, JumpHeightFactorsDefines::GroupUid,
                            tr("Среднее время контакта"), tr("Контакт"), tr("cек"), 4, 2, FactorsDefines::nsAbove, 12);

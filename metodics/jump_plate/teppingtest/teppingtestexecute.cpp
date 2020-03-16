@@ -37,6 +37,9 @@ void TeppingTestExecute::setParams(const QJsonObject &params)
     else
     if (m_testFinishKind == JumpPlateDefines::tfkQuantity)
         ui->lblCommentFinishTest->setText(QString(tr("Выполните %1 шагов на платформе")).arg(m_stepsMax));
+    else
+    if (m_testFinishKind == JumpPlateDefines::tfkCommand)
+        ui->lblCommentFinishTest->setText(tr("Выполняйте шаги на платформе"));
     ui->pbTimeTest->setVisible(m_testFinishKind == JumpPlateDefines::tfkFixedTime);
 }
 
@@ -151,8 +154,13 @@ void TeppingTestExecute::on_recording()
     m_isRecording = !m_isRecording;
     if (m_isRecording)
     {
-        ui->btnSave->setIcon(QIcon(":/images/SaveNO.png"));
-        ui->btnSave->setText(tr("Прервать шаги"));
+        if (m_testFinishKind == JumpPlateDefines::tfkCommand)
+            ui->btnSave->setText(tr("Завершить шаги"));
+        else
+        {
+            ui->btnSave->setIcon(QIcon(":/images/SaveNO.png"));
+            ui->btnSave->setText(tr("Прервать шаги"));
+        }
         m_timerEndOfTest = startTimer(20);
     }
     else
@@ -162,14 +170,19 @@ void TeppingTestExecute::on_recording()
         killTimer(m_timerEndOfTest);
     }
 
-    ui->pbTimeTest->setValue(0);
-    m_stepsLeftCount = 0;
-    m_stepsRightCount = 0;
-    m_timeCount = 0;
-    m_time = 0;
-    m_mdlLeft.clear();
-    m_mdlRight.clear();
-    setModelGeometry();
+    if (!m_isRecording && (m_testFinishKind == JumpPlateDefines::tfkCommand))
+        finishTest();
+    else
+    {
+        ui->pbTimeTest->setValue(0);
+        m_stepsLeftCount = 0;
+        m_stepsRightCount = 0;
+        m_timeCount = 0;
+        m_time = 0;
+        m_mdlLeft.clear();
+        m_mdlRight.clear();
+        setModelGeometry();
+    }
 }
 
 void TeppingTestExecute::iterate(const bool isStart, BaseUtils::Side side)

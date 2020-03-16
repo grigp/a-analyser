@@ -81,7 +81,7 @@ void DropTestVisualize::setTest(const QString &testUid)
                                          << tr("Мощность")
                                          << tr("Жесткость")
                                          << tr("Начальная\nскорость, м/сек")
-                                         << tr("Индекс\nпрыгучести"));
+                                         << tr("Индекс\nреактивной силы"));
         ui->tvJumpsDrop->header()->resizeSections(QHeaderView::ResizeToContents);
         ui->tvJumpsDrop->header()->resizeSection(0, 50);
     }

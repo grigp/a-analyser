@@ -13,8 +13,11 @@ JumpHeightTestParamsDialog::JumpHeightTestParamsDialog(QWidget *parent) :
 {
     ui->setupUi(this);
     initUi();
-    ui->cbFinishKind->addItems(QStringList() << tr("После заданного количества прыжков") << tr("По истечению времени"));
-    ui->cbStrategy->addItems(QStringList() << tr("Максимальная высота прыжка") << tr("Минимальное время на платформе"));
+    ui->cbFinishKind->addItems(QStringList() << tr("После заданного количества прыжков")
+                                             << tr("По истечению времени")
+                                             << tr("По команде оператора"));
+    ui->cbStrategy->addItems(QStringList() << tr("Максимальная высота прыжка")
+                                           << tr("Минимальное время на платформе"));
 }
 
 JumpHeightTestParamsDialog::~JumpHeightTestParamsDialog()

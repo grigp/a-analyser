@@ -36,6 +36,13 @@
     </widget>
    </item>
    <item>
+    <widget class="QLabel" name="lblHeightMax">
+     <property name="text">
+      <string>Максимальная высота прыжков</string>
+     </property>
+    </widget>
+   </item>
+   <item>
     <widget class="QLabel" name="lblTimeAvg">
      <property name="text">
       <string>Среднее время на платформе</string>
