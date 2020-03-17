@@ -4,6 +4,7 @@
 
 #include <QSettings>
 #include <QApplication>
+#include <QDebug>
 
 QVariant SettingsProvider::valueFromRegAppCopy(const QString &group, const QString &param, const QVariant &defValue)
 {

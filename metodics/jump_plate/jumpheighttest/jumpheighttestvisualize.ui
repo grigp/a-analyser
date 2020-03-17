@@ -376,10 +376,27 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>twPages</sender>
+   <signal>currentChanged(int)</signal>
+   <receiver>JumpHeightTestVisualize</receiver>
+   <slot>on_selectPage(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>82</x>
+     <y>415</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>611</x>
+     <y>215</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>on_selectGraph()</slot>
   <slot>on_selectBar()</slot>
   <slot>on_select3D(bool)</slot>
+  <slot>on_selectPage(int)</slot>
  </slots>
 </ui>

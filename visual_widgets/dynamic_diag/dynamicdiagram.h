@@ -79,6 +79,15 @@ public:
     QColor titleColor() const;
     void setTitleColor(const QColor &color);
 
+    int titleHeight() const {return m_titleHeight;}
+    void setTitleHeight(const int height);
+
+    int axisSpaceLeft() const {return m_axisSpaceLeft;}
+    void setAxisSpaceLeft(const int left);
+
+    int axisSpaceBottom() const {return m_axisSpaceBottom;}
+    void setAxisSpaceBottom(const int bottom);
+
     void appendItem(DiagItem* item);
     void insertItem(const int idx, DiagItem* item);
 
@@ -88,6 +97,12 @@ public:
     QString itemName(const int idx) const;
 
     void clear();
+
+    /*!
+     * \brief Команда выделения итема снаружи
+     * \param idx - индекс выделяемого элемента
+     */
+    void doSelectItem(const int idx);
 
 signals:
     /*!
@@ -126,6 +141,10 @@ private:
     void showValuesGrid(QPainter &painter,
                         const double min, const double max,
                         const double prop);
+
+    int m_titleHeight {25};
+    int m_axisSpaceLeft {50};
+    int m_axisSpaceBottom {50};
 
     Kind m_kind {KindGraph};
     Volume m_volume {Volume2D};

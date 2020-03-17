@@ -32,6 +32,8 @@ private slots:
     void on_selectDiagItemHeight(const int idx);
     void on_selectDiagItemTime(const int idx);
 
+    void on_selectPage(const int pageIdx);
+
 private:
     Ui::JumpHeightTestVisualize *ui;
 

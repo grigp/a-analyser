@@ -8,9 +8,6 @@
 #include <QDebug>
 
 namespace  {
-static const int TitleHeight = 25;
-static const int AxisSpace = 50;
-
 }
 
 DynamicDiagram::DynamicDiagram(QWidget *parent) :
@@ -112,6 +109,24 @@ void DynamicDiagram::setTitleColor(const QColor &color)
     update();
 }
 
+void DynamicDiagram::setTitleHeight(const int height)
+{
+    m_titleHeight = height;
+    update();
+}
+
+void DynamicDiagram::setAxisSpaceLeft(const int left)
+{
+    m_axisSpaceLeft = left;
+    update();
+}
+
+void DynamicDiagram::setAxisSpaceBottom(const int bottom)
+{
+    m_axisSpaceBottom = bottom;
+    update();
+}
+
 void DynamicDiagram::appendItem(DiagItem *item)
 {
     m_items.append(item);
@@ -143,6 +158,15 @@ void DynamicDiagram::clear()
     update();
 }
 
+void DynamicDiagram::doSelectItem(const int idx)
+{
+    if (idx >= 0 && idx < m_items.size())
+    {
+        m_selectItem = idx;
+        update();
+    }
+}
+
 void DynamicDiagram::paintEvent(QPaintEvent *event)
 {
     QWidget::paintEvent(event);
@@ -154,11 +178,11 @@ void DynamicDiagram::paintEvent(QPaintEvent *event)
     double min = 0;
     double max = 0;
     computeDiap(min, max);
-    m_sizeH = (geometry().width() - 3 - 2 * AxisSpace) / (m_items.size() + 1);
+    m_sizeH = (geometry().width() - 3 - 2 * m_axisSpaceLeft) / (m_items.size() + 1);
     double prop = 0;
     if (max > min)
-        prop = (geometry().height() - AxisSpace - TitleHeight - 3) / (max - min);
-    int zeroY = geometry().height() - AxisSpace - (0 - min) * prop;
+        prop = (geometry().height() - m_axisSpaceBottom - m_titleHeight - 3) / (max - min);
+    int zeroY = geometry().height() - m_axisSpaceBottom - (0 - min) * prop;
 
     //! Фон
     painter.setBrush(QBrush(m_backgroundColor, Qt::SolidPattern));
@@ -167,20 +191,20 @@ void DynamicDiagram::paintEvent(QPaintEvent *event)
 
     //! Заголовок
     painter.setPen(QPen(m_titleColor, 1, Qt::SolidLine, Qt::FlatCap));
-    painter.drawText(QRect(0, 0, geometry().width(), TitleHeight - 5), m_title, QTextOption(Qt::AlignHCenter | Qt::AlignVCenter));
+    painter.drawText(QRect(0, 0, geometry().width(), m_titleHeight - 5), m_title, QTextOption(Qt::AlignHCenter | Qt::AlignVCenter));
 
-    painter.drawText(QRect(0, geometry().height() - AxisSpace + TitleHeight, geometry().width(), TitleHeight - 5),
+    painter.drawText(QRect(0, geometry().height() - m_axisSpaceBottom + m_titleHeight, geometry().width(), m_titleHeight - 5),
                      m_bottomText, QTextOption(Qt::AlignHCenter | Qt::AlignVCenter));
 
     //painter.drawRect(QRect(0, TitleHeight, geometry().width() - 3, geometry().height() - TitleHeight - 3));
 
     //! Оси
-    painter.drawLine(AxisSpace, geometry().height() - AxisSpace, AxisSpace, TitleHeight);
-    painter.drawLine(AxisSpace, geometry().height() - AxisSpace,
-                     geometry().width() - AxisSpace, geometry().height() - AxisSpace);
+    painter.drawLine(m_axisSpaceLeft, geometry().height() - m_axisSpaceBottom, m_axisSpaceLeft, m_titleHeight);
+    painter.drawLine(m_axisSpaceLeft, geometry().height() - m_axisSpaceBottom,
+                     geometry().width() - m_axisSpaceLeft, geometry().height() - m_axisSpaceBottom);
     //! Линия 0
     if (min <= 0 && max >= 0)
-        painter.drawLine(AxisSpace, zeroY, geometry().width() - AxisSpace, zeroY);
+        painter.drawLine(m_axisSpaceLeft, zeroY, geometry().width() - m_axisSpaceLeft, zeroY);
 
     //! Размер шрифта для отметок
     QFont font = painter.font();
@@ -194,8 +218,8 @@ void DynamicDiagram::paintEvent(QPaintEvent *event)
     int oy = -1;
     for (int i = 0; i < m_items.size(); ++i)
     {
-        int xv = AxisSpace + (i + 1) * m_sizeH;
-        int yv = geometry().height() - AxisSpace - (m_items.at(i)->value() - min) * prop;
+        int xv = m_axisSpaceLeft + (i + 1) * m_sizeH;
+        int yv = geometry().height() - m_axisSpaceBottom - (m_items.at(i)->value() - min) * prop;
         if (m_kind == KindBar)
         {
             int x = xv - m_sizeH / 10;
@@ -266,16 +290,16 @@ void DynamicDiagram::paintEvent(QPaintEvent *event)
             }
             //! Вертикальный отстчет
             painter.setPen(QPen(m_titleColor, 1, Qt::DotLine, Qt::FlatCap));
-            painter.drawLine(xv, geometry().height() - AxisSpace,
-                             xv, geometry().height() - AxisSpace - (max - min) * prop);
+            painter.drawLine(xv, geometry().height() - m_axisSpaceBottom,
+                             xv, geometry().height() - m_axisSpaceBottom - (max - min) * prop);
 
             if (i == m_selectItem)
             {
                 if (m_volume == Volume2D)
                 {
                     painter.setPen(QPen(m_selectItemColor, 3, Qt::SolidLine, Qt::FlatCap));
-                    painter.drawLine(xv, geometry().height() - AxisSpace,
-                                     xv, geometry().height() - AxisSpace - (max - min) * prop);
+                    painter.drawLine(xv, geometry().height() - m_axisSpaceBottom,
+                                     xv, geometry().height() - m_axisSpaceBottom - (max - min) * prop);
                 }
                 else
                 if (m_volume == Volume3D)
@@ -283,10 +307,10 @@ void DynamicDiagram::paintEvent(QPaintEvent *event)
                     painter.setBrush(QBrush(m_selectItemColor, Qt::SolidPattern));
                     painter.setPen(QPen(m_titleColor, 1, Qt::SolidLine, Qt::FlatCap));
                     QPoint points[4] = {
-                        QPoint(xv, geometry().height() - AxisSpace),
-                        QPoint(xv, geometry().height() - AxisSpace - (max - min) * prop),
-                        QPoint(xv + 10, geometry().height() - AxisSpace - (max - min) * prop - 10),
-                        QPoint(xv + 10, geometry().height() - AxisSpace - 10)
+                        QPoint(xv, geometry().height() - m_axisSpaceBottom),
+                        QPoint(xv, geometry().height() - m_axisSpaceBottom - (max - min) * prop),
+                        QPoint(xv + 10, geometry().height() - m_axisSpaceBottom - (max - min) * prop - 10),
+                        QPoint(xv + 10, geometry().height() - m_axisSpaceBottom - 10)
                     };
                     painter.drawPolygon(points, 4);
                 }
@@ -298,7 +322,7 @@ void DynamicDiagram::paintEvent(QPaintEvent *event)
 
         auto size = BaseUtils::getTextSize(&painter, m_items.at(i)->name());
         painter.setPen(QPen(m_titleColor, 1, Qt::SolidLine, Qt::FlatCap));
-        painter.drawText(xv - size.width() / 2, geometry().height() - AxisSpace + size.height(), m_items.at(i)->name());
+        painter.drawText(xv - size.width() / 2, geometry().height() - m_axisSpaceBottom + size.height(), m_items.at(i)->name());
     }
 
     painter.restore();
@@ -307,7 +331,7 @@ void DynamicDiagram::paintEvent(QPaintEvent *event)
 void DynamicDiagram::mousePressEvent(QMouseEvent *event)
 {
     //! Выделение элемента
-    int idx = (event->x() + m_sizeH / 2 - AxisSpace) / m_sizeH - 1;
+    int idx = (event->x() + m_sizeH / 2 - m_axisSpaceLeft) / m_sizeH - 1;
     if (idx < 0)
         idx = 0;
     if (idx >= m_items.size())
@@ -401,12 +425,12 @@ void DynamicDiagram::showValuesGrid(QPainter &painter,
     double cnt = min;
     while (cnt < max)
     {
-        int y = geometry().height() - AxisSpace - (cnt - min) * prop;
+        int y = geometry().height() - m_axisSpaceBottom - (cnt - min) * prop;
         painter.setPen(QPen(m_titleColor, 1, Qt::DotLine, Qt::FlatCap));
-        painter.drawLine(AxisSpace, y, geometry().width() - AxisSpace, y);
+        painter.drawLine(m_axisSpaceLeft, y, geometry().width() - m_axisSpaceLeft, y);
 
         QString lblMark = QString::number(cnt, 'f', prec);
-        painter.drawText(QRect(0, y - 5, AxisSpace, 10), lblMark, QTextOption(Qt::AlignHCenter | Qt::AlignVCenter));
+        painter.drawText(QRect(0, y - 5, m_axisSpaceLeft, 10), lblMark, QTextOption(Qt::AlignHCenter | Qt::AlignVCenter));
 
         cnt = cnt + step;
     }
