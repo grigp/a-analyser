@@ -721,7 +721,14 @@ void Stabilan01::sendStab()
 
 void Stabilan01::sendPulse()
 {
-
+    if (m_valPulse > 0)
+    {
+        auto pulseData = new DeviceProtocols::PulseDvcData(this,
+                                                           ChannelsDefines::chanRitmogram,
+                                                           m_valPulse);
+        emit sendData(pulseData);
+        delete pulseData;
+    }
 }
 
 void Stabilan01::sendMyogram()
