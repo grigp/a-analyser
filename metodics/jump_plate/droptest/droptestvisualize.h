@@ -37,6 +37,8 @@ private slots:
     void on_selectDiag2Item(const int idx);
     void on_selectDiag3Item(const int idx);
 
+    void on_selectPage(const int pageIdx);
+
 private:
     Ui::DropTestVisualize *ui;
 

@@ -66,7 +66,7 @@ struct TensoChannel
 {
     TensoDevice device;
     double rkp;
-    int pn;
+    double pn;
     TensoChannel() {}
     TensoChannel(TensoDevice dvc, double r, int p)
         : device(dvc), rkp(r), pn(p) {}

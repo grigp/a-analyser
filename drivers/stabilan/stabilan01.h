@@ -217,7 +217,7 @@ private:
     DeviceProtocols::TensoChannel m_tenso1 {DeviceProtocols::TensoChannel(DeviceProtocols::tdDynHand, 1.7, 100)};
     DeviceProtocols::TensoChannel m_tenso2 {DeviceProtocols::TensoChannel(DeviceProtocols::tdDynStand, 1.7, 500)};
     DeviceProtocols::TensoChannel m_tenso3 {DeviceProtocols::TensoChannel(DeviceProtocols::tdBreath, 1.7, 1)};
-    double m_tensoPercMin[3] {-100, -100, -100};
+    double m_tensoPercMin[3] {0, 0, 0};
     double m_tensoPercMax[3] {100, 100, 100};
 
     ///< Миограмма

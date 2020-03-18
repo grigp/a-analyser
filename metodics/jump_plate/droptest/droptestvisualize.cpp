@@ -193,6 +193,11 @@ void DropTestVisualize::on_selectDiag3Item(const int idx)
     }
 }
 
+void DropTestVisualize::on_selectPage(const int pageIdx)
+{
+    ui->frDiagTool->setVisible(pageIdx == 0);
+}
+
 void DropTestVisualize::showSelectedValues(const int idx)
 {
     {

@@ -11,7 +11,8 @@ HEADERS += \
     $$PWD/trenresultdata.h \
     $$PWD/myogram.h \
     $$PWD/singlesignal.h \
-    $$PWD/dynamosignal.h
+    $$PWD/dynamosignal.h \
+    $$PWD/breathsignal.h
 
 SOURCES += \
     $$PWD/signaldata.cpp \
@@ -24,4 +25,5 @@ SOURCES += \
     $$PWD/trenresultdata.cpp \
     $$PWD/myogram.cpp \
     $$PWD/singlesignal.cpp \
-    $$PWD/dynamosignal.cpp
+    $$PWD/dynamosignal.cpp \
+    $$PWD/breathsignal.cpp

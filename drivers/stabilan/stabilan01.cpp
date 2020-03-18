@@ -539,7 +539,7 @@ void Stabilan01::assignByteFromDevice(quint8 b)
             dynVal = dynVal - 0x8000;
             value = (tenso.pn * 1000 * dynVal) / (65535 * 128 * tenso.rkp);
             if (tenso.device == DeviceProtocols::tdBreath)
-                value = (value - m_tensoPercMin[chan]) / (m_tensoPercMax[chan] - m_tensoPercMin[chan]) * 100;
+                value = ((value * 100) + (m_tensoPercMax[chan] - m_tensoPercMin[chan]) / 2);
         }
     };
 

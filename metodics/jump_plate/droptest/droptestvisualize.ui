@@ -673,6 +673,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>twPages</sender>
+   <signal>currentChanged(int)</signal>
+   <receiver>DropTestVisualize</receiver>
+   <slot>on_selectPage(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>121</x>
+     <y>486</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>674</x>
+     <y>445</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>on_selectGraph()</slot>
@@ -681,5 +697,6 @@
   <slot>on_selectFactorDiag1(int)</slot>
   <slot>on_selectFactorDiag2(int)</slot>
   <slot>on_selectFactorDiag3(int)</slot>
+  <slot>on_selectPage(int)</slot>
  </slots>
 </ui>

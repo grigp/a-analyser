@@ -8,7 +8,7 @@
 #include "stabilogramwidget.h"
 #include "myogramwidget.h"
 #include "dynamowidget.h"
-
+#include "breathwidget.h"
 #include <QDebug>
 
 AdvancedChannels::AdvancedChannels(QWidget *parent) :
@@ -214,6 +214,9 @@ SignalWidget *AdvancedChannels::createWidget(Driver* driver, const QString chann
     else
     if (channelType == ChannelsDefines::ctDynamo)
         retval = new DynamoWidget(driver, channelId, ui->frWidgets);
+    else
+    if (channelType == ChannelsDefines::ctBreath)
+        retval = new BreathWidget(driver, channelId, ui->frWidgets);
 
     if (retval)
         ui->frWidgets->layout()->addWidget(retval);
