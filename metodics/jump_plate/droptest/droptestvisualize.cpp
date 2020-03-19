@@ -34,18 +34,20 @@ void DropTestVisualize::setTest(const QString &testUid)
         m_calculator->calculate();
     }
 
-    if (m_calculator->primaryFactorsCount() >= 5)
+    if (m_calculator->primaryFactorsCount() >= 6)
     {
         auto fctJumpsCount = m_calculator->primaryFactor(0);
         auto fctTimeTest = m_calculator->primaryFactor(1);
         auto fctHeightAvg = m_calculator->primaryFactor(2);
         auto fctTimeContactAvg = m_calculator->primaryFactor(3);
         auto fctTimeNoContactAvg = m_calculator->primaryFactor(4);
+        auto fctReactiveForceIdxAvg = m_calculator->primaryFactor(5);
         ui->lblJumpsCount->setText(QString(tr("Количество прыжков") + " %1").arg(fctJumpsCount->value()));
         ui->lblTimeTest->setText(QString(tr("Общее время прыжков") + " %1 " + tr("сек")).arg(fctTimeTest->value()));
         ui->lblHeightAvg->setText(QString(tr("Средняя высота прыжков") + " %1 " + tr("м")).arg(fctHeightAvg->value()));
         ui->lblTimeContactAvg->setText(QString(tr("Среднее время контактной фазы") + " %1 " + tr("сек")).arg(fctTimeContactAvg->value()));
         ui->lblTimeNoContactAvg->setText(QString(tr("Среднее время бесконтактной фазы") + " %1 " + tr("сек")).arg(fctTimeNoContactAvg->value()));
+        ui->lblReactiveForceIndexAvg->setText(QString(tr("Индекс реактивной силы") + " %1").arg(fctReactiveForceIdxAvg->value()));
 
         auto* model = new QStandardItemModel(ui->tvJumpsDrop);
 

@@ -82,6 +82,13 @@
            </property>
           </widget>
          </item>
+         <item>
+          <widget class="QLabel" name="lblReactiveForceIndexAvg">
+           <property name="text">
+            <string>Индекс реактивной силы</string>
+           </property>
+          </widget>
+         </item>
         </layout>
        </widget>
       </item>

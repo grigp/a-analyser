@@ -14,6 +14,7 @@ static const QString FullTimeUid = "{256972A2-9CCF-4779-A898-40B85D461E65}";
 static const QString JumpsHeightAvrUid = "{6D3A84EB-F8B3-4F9C-A2DF-A9D9D8568F0D}";
 static const QString JumpsContactTimeAvrUid = "{39D37FBA-79F0-4EF5-A729-9F3198233C91}";
 static const QString JumpsNoContactTimeAvrUid = "{C4485A08-65FA-4184-993E-2D236A5CF536}";
+static const QString ReactiveForceIndexUid = "{0751A4B2-0269-43C2-B379-48DAEB5BA075}";
 }
 
 

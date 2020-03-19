@@ -83,7 +83,8 @@ QLabel#lblStepsCount,
 QLabel#lblTimeAvgLeftLeg,
 QLabel#lblTimeAvgRightLeg,
 QLabel#lblTimeContactAvg,
-QLabel#lblTimeNoContactAvg
+QLabel#lblTimeNoContactAvg,
+QLabel#lblReactiveForceIndexAvg
 {
     font-size: 16pt;
 }

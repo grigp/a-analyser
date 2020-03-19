@@ -52,6 +52,9 @@ void DropTestCalculator::calculate()
                     addPrimaryFactor(testUid(), DropTestFactorsDefines::JumpsNoContactTimeAvrUid,
                                      m_factors->factorValue(DropTestFactorsDefines::JumpsNoContactTimeAvrUid),
                                      0, ChannelsDefines::chanJumpHeight, pi.name);
+                    addPrimaryFactor(testUid(), DropTestFactorsDefines::ReactiveForceIndexUid,
+                                     m_factors->factorValue(DropTestFactorsDefines::ReactiveForceIndexUid),
+                                     0, ChannelsDefines::chanJumpHeight, pi.name);
                 }
             }
         }

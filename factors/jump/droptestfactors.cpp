@@ -38,6 +38,7 @@ void DropTestFactors::calculate()
     double avgHeight = 0;
     double avgContactTime = 0;
     double avgNoContactTime = 0;
+    double avgReactiveForceIdx = 0;
 
     int massa = getPatientMassa();
 
@@ -60,6 +61,7 @@ void DropTestFactors::calculate()
             avgHeight = avgHeight + data.jump(i).height;
             avgContactTime = avgContactTime + data.jump(i).timeContact;
             avgNoContactTime = avgNoContactTime + data.jump(i).timeNoContact;
+            avgReactiveForceIdx = avgReactiveForceIdx + djf.rsi;
 
             m_jumps.append(djf);
         }
@@ -71,6 +73,7 @@ void DropTestFactors::calculate()
             avgHeight = avgHeight / jCount;
             avgContactTime = avgContactTime / jCount;
             avgNoContactTime = avgNoContactTime / jCount;
+            avgReactiveForceIdx = avgReactiveForceIdx / jCount;
         }
     }
 
@@ -79,6 +82,7 @@ void DropTestFactors::calculate()
     addFactor(DropTestFactorsDefines::JumpsHeightAvrUid, avgHeight);
     addFactor(DropTestFactorsDefines::JumpsContactTimeAvrUid, avgContactTime);
     addFactor(DropTestFactorsDefines::JumpsNoContactTimeAvrUid, avgNoContactTime);
+    addFactor(DropTestFactorsDefines::ReactiveForceIndexUid, avgReactiveForceIdx);
 }
 
 void DropTestFactors::registerFactors()
@@ -101,6 +105,9 @@ void DropTestFactors::registerFactors()
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(DropTestFactorsDefines::JumpsNoContactTimeAvrUid, DropTestFactorsDefines::GroupUid,
                            tr("Среднее время бесконтактной фазы"), tr("Бесконтакт"), tr("cек"), 4, 2, FactorsDefines::nsAbove, 12);
+    static_cast<AAnalyserApplication*>(QApplication::instance())->
+            registerFactor(DropTestFactorsDefines::ReactiveForceIndexUid, DropTestFactorsDefines::GroupUid,
+                           tr("Индекс реактивной силы"), tr("ИРС"), tr(""), 4, 2, FactorsDefines::nsAbove, 12);
 }
 
 int DropTestFactors::jumpsCount() const
