@@ -12,7 +12,8 @@ HEADERS += \
     $$PWD/myogram.h \
     $$PWD/singlesignal.h \
     $$PWD/dynamosignal.h \
-    $$PWD/breathsignal.h
+    $$PWD/breathsignal.h \
+    $$PWD/ritmogram.h
 
 SOURCES += \
     $$PWD/signaldata.cpp \
@@ -26,4 +27,5 @@ SOURCES += \
     $$PWD/myogram.cpp \
     $$PWD/singlesignal.cpp \
     $$PWD/dynamosignal.cpp \
-    $$PWD/breathsignal.cpp
+    $$PWD/breathsignal.cpp \
+    $$PWD/ritmogram.cpp

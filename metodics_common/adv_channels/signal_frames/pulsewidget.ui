@@ -242,6 +242,26 @@
               </property>
              </spacer>
             </item>
+            <item>
+             <widget class="QPushButton" name="btnRecord">
+              <property name="text">
+               <string/>
+              </property>
+              <property name="icon">
+               <iconset resource="../../../kernel.qrc">
+                <normaloff>:/images/SaveOK.png</normaloff>:/images/SaveOK.png</iconset>
+              </property>
+              <property name="iconSize">
+               <size>
+                <width>22</width>
+                <height>22</height>
+               </size>
+              </property>
+              <property name="checkable">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
            </layout>
           </widget>
          </item>
@@ -304,7 +324,9 @@
    <container>1</container>
   </customwidget>
  </customwidgets>
- <resources/>
+ <resources>
+  <include location="../../../kernel.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>btnReset</sender>
@@ -322,8 +344,25 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>btnRecord</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>PulseWidget</receiver>
+   <slot>on_pulseRecChange(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>567</x>
+     <y>201</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>926</x>
+     <y>183</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>on_resetPulse()</slot>
+  <slot>on_pulseRecChange(bool)</slot>
  </slots>
 </ui>

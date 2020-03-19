@@ -49,6 +49,8 @@ public:
     double offset(const int numChan) const;
     void setOffset(const int numChan, const double offset);
 
+    void clear() {m_data.clear();}
+
 private:
     QString m_name;
     int m_channelCount;
@@ -115,6 +117,9 @@ public:
     int frequency() const {return m_frequency;}
     void setFrequency(const int frequency) {m_frequency = frequency;}
 
+    bool isSecundLabels() const {return m_isSecundLabels;}
+    void setSecundLabels(const bool isSecLabels) {m_isSecundLabels = isSecLabels;}
+
     /*!
      * \brief Устанавливает диапазоны для одной зоны графиков одинаковыми
      * \param numArea - номер зоны графиков
@@ -157,6 +162,7 @@ private:
     int m_cursorPos {0};                      ///< Позиция курсора
     int m_dataCounter {0};                    ///< Счетчик переданных данных
     int m_frequency {50};                     ///< Частота дискретизации
+    bool m_isSecundLabels {true};             ///< Секундные метки
 };
 
 #endif // OSCILLOSCOPE_H

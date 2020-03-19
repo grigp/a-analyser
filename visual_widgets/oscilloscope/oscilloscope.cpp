@@ -60,6 +60,7 @@ void Oscilloscope::clear()
     foreach (auto* area, m_areases)
         delete area;
     m_areases.clear();
+    m_cursorPos = 0;
     update();
 }
 
@@ -192,7 +193,7 @@ void Oscilloscope::paintEvent(QPaintEvent *event)
                 }
 
                 //! Секундная метка
-                if (i % m_frequency == 0)
+                if (m_isSecundLabels && (i % m_frequency == 0))
                 {
                     painter.setPen(QPen(m_envColors.colorCursor, 1, Qt::DotLine, Qt::FlatCap));
                     painter.drawLine(x, TopSpace, x, height() - BottomSpace);

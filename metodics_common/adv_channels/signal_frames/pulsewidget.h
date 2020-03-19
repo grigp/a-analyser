@@ -2,12 +2,15 @@
 #define PULSEWIDGET_H
 
 #include <QWidget>
+#include <QPushButton>
 
 #include "signalwidget.h"
 
 namespace Ui {
 class PulseWidget;
 }
+
+class Ritmogram;
 
 /*!
  * \brief Класс виджета - пульсометрии PulseWidget class
@@ -53,12 +56,19 @@ public:
 
 private slots:
     void on_resetPulse();
+    void on_pulseRecChange(bool checked);
 
 private:
     Ui::PulseWidget *ui;
 
+    void setRecordedChannels();
+
+    void setRecButton(QPushButton *btn, const bool checked);
+
     double m_pulseMiddle {0};
     int m_pulseCount {0};
+
+    Ritmogram* m_ritmogram {nullptr};
 };
 
 #endif // PULSEWIDGET_H
