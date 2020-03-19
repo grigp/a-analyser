@@ -110,6 +110,12 @@ void JumpHeightTestExecute::start()
         });
 
         ui->tvJumps->setModel(&m_mdlTable);
+        ui->wgtJumpsHeight->setTitle(tr("Высота прыжка, м"));
+        ui->wgtTimeContact->setTitle(tr("Время контактной фазы, сек"));
+        ui->wgtJumpsHeight->setVolume(DynamicDiagram::Volume3D);
+        ui->wgtJumpsHeight->setKind(DynamicDiagram::KindGraph);
+        ui->wgtTimeContact->setVolume(DynamicDiagram::Volume3D);
+        ui->wgtTimeContact->setKind(DynamicDiagram::KindGraph);
         setModelGeometry();
     }
     else
@@ -244,6 +250,11 @@ void JumpHeightTestExecute::iterate(const bool isStart)
                     itemT->setData(m_time, ValueRole);
 
                     m_mdlTable.appendRow(QList<QStandardItem*>() << itemN << itemH << itemT);
+
+                    auto diH = new DiagItem(m_height, QString::number(m_jumpsCount));
+                    ui->wgtJumpsHeight->appendItem(diH);
+                    auto diTC = new DiagItem(m_time, QString::number(m_jumpsCount));
+                    ui->wgtTimeContact->appendItem(diTC);
                 }
 
                 ++m_jumpsCount;
