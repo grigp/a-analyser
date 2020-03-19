@@ -319,7 +319,7 @@
         },
         {
             "uid": "{11F009F2-F39F-4037-84D7-5EA3C79E6F5F}",
-            "name": "Polymetric test",
+            "name": "Plyometric test",
             "image": "Polymetric.png",
             "template": "met_jumpheighttest_uid",
             "build_norms": false,

@@ -37,6 +37,8 @@ private slots:
 private:
     Ui::JumpHeightTestVisualize *ui;
 
+    void showCurrentValues(const int idx);
+
     void getStrategyParams(const QString &testUid);
 
     void setDiagrams();

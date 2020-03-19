@@ -87,7 +87,7 @@ void JumpHeightTestVisualize::on_selectDiagItemHeight(const int idx)
 {
     if (idx >= 0 && idx < m_calculator->jumpsCount())
     {
-        ui->wgtDiagHeight->setTitle(tr("Высота прыжка, м") + QString(" (%1)").arg(m_calculator->jump(idx).height));
+        showCurrentValues(idx);
         ui->wgtDiagTime->doSelectItem(idx);
     }
 }
@@ -96,7 +96,7 @@ void JumpHeightTestVisualize::on_selectDiagItemTime(const int idx)
 {
     if (idx >= 0 && idx < m_calculator->jumpsCount())
     {
-        ui->wgtDiagTime->setTitle(tr("Время контактной фазы, сек") + QString(" (%1)").arg(m_calculator->jump(idx).timeJump));
+        showCurrentValues(idx);
         ui->wgtDiagHeight->doSelectItem(idx);
     }
 }
@@ -104,6 +104,12 @@ void JumpHeightTestVisualize::on_selectDiagItemTime(const int idx)
 void JumpHeightTestVisualize::on_selectPage(const int pageIdx)
 {
     ui->frDiagTool->setVisible(pageIdx == 0);
+}
+
+void JumpHeightTestVisualize::showCurrentValues(const int idx)
+{
+    ui->wgtDiagHeight->setTitle(tr("Высота прыжка, м") + QString(" (%1)").arg(m_calculator->jump(idx).height));
+    ui->wgtDiagTime->setTitle(tr("Время контактной фазы, сек") + QString(" (%1)").arg(m_calculator->jump(idx).timeJump));
 }
 
 void JumpHeightTestVisualize::getStrategyParams(const QString &testUid)
