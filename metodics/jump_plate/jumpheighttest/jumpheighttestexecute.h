@@ -41,6 +41,10 @@ private slots:
 
     void on_recording();
 
+    void on_selectGraph();
+    void on_selectBar();
+    void on_select3D(bool checked);
+
 private:
     Ui::JumpHeightTestExecute *ui;
 
@@ -60,6 +64,8 @@ private:
     void setModelGeometry();
 
     void finishTest();
+
+    void restoreGraphParams();
 
     JumpPlateDefines::TestFinishKind m_testFinishKind {JumpPlateDefines::tfkQuantity};
     JumpHeightTestDefines::Strategy m_strategy {JumpHeightTestDefines::jhsMaxHeight};

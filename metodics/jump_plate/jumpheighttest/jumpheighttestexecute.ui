@@ -201,6 +201,146 @@
         </layout>
        </widget>
       </item>
+      <item>
+       <widget class="QFrame" name="frDiagTool">
+        <property name="frameShape">
+         <enum>QFrame::StyledPanel</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Raised</enum>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout_6">
+         <property name="leftMargin">
+          <number>1</number>
+         </property>
+         <property name="rightMargin">
+          <number>1</number>
+         </property>
+         <item>
+          <widget class="QPushButton" name="btnGraph">
+           <property name="toolTip">
+            <string>Показать в виде графика</string>
+           </property>
+           <property name="statusTip">
+            <string/>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset resource="../../../kernel.qrc">
+             <normaloff>:/images/Dynamic/DynAsGraph.png</normaloff>:/images/Dynamic/DynAsGraph.png</iconset>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>20</width>
+             <height>20</height>
+            </size>
+           </property>
+           <property name="checkable">
+            <bool>true</bool>
+           </property>
+           <property name="checked">
+            <bool>false</bool>
+           </property>
+           <property name="autoExclusive">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="btnBar">
+           <property name="toolTip">
+            <string>Показать в виде гистограммы</string>
+           </property>
+           <property name="statusTip">
+            <string/>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset resource="../../../kernel.qrc">
+             <normaloff>:/images/Dynamic/DynAsBar.png</normaloff>:/images/Dynamic/DynAsBar.png</iconset>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>20</width>
+             <height>20</height>
+            </size>
+           </property>
+           <property name="checkable">
+            <bool>true</bool>
+           </property>
+           <property name="checked">
+            <bool>true</bool>
+           </property>
+           <property name="autoExclusive">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="verticalSpacer_2">
+           <property name="orientation">
+            <enum>Qt::Vertical</enum>
+           </property>
+           <property name="sizeType">
+            <enum>QSizePolicy::Fixed</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>20</width>
+             <height>10</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QPushButton" name="btn3D">
+           <property name="toolTip">
+            <string>Объемное представление</string>
+           </property>
+           <property name="statusTip">
+            <string/>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset resource="../../../kernel.qrc">
+             <normaloff>:/images/Dynamic/Dyn3D.png</normaloff>:/images/Dynamic/Dyn3D.png</iconset>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>20</width>
+             <height>20</height>
+            </size>
+           </property>
+           <property name="checkable">
+            <bool>true</bool>
+           </property>
+           <property name="checked">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="verticalSpacer">
+           <property name="orientation">
+            <enum>Qt::Vertical</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>20</width>
+             <height>105</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+        </layout>
+       </widget>
+      </item>
      </layout>
     </widget>
    </item>
@@ -339,8 +479,8 @@
    <slot>on_recording()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>258</x>
-     <y>228</y>
+     <x>267</x>
+     <y>115</y>
     </hint>
     <hint type="destinationlabel">
      <x>715</x>
@@ -348,8 +488,59 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>btnGraph</sender>
+   <signal>clicked()</signal>
+   <receiver>JumpHeightTestExecute</receiver>
+   <slot>on_selectGraph()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>682</x>
+     <y>169</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>714</x>
+     <y>140</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btnBar</sender>
+   <signal>clicked()</signal>
+   <receiver>JumpHeightTestExecute</receiver>
+   <slot>on_selectBar()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>690</x>
+     <y>216</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>715</x>
+     <y>192</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btn3D</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>JumpHeightTestExecute</receiver>
+   <slot>on_select3D(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>681</x>
+     <y>258</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>713</x>
+     <y>247</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>on_recording()</slot>
+  <slot>on_selectGraph()</slot>
+  <slot>on_selectBar()</slot>
+  <slot>on_select3D(bool)</slot>
  </slots>
 </ui>

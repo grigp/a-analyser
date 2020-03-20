@@ -6,6 +6,7 @@
 #include "dataprovider.h"
 #include "dynamicdiagram.h"
 #include "settingsprovider.h"
+#include "droptestdefines.h"
 
 #include <QDebug>
 
@@ -245,18 +246,18 @@ void DropTestVisualize::setDiagram()
     ui->wgtDiag3->setAxisSpaceBottom(15);
     ui->wgtDiag3->setTitleHeight(1);
 
-    foreach (auto key, FactorsByColumn.keys())
+    foreach (auto key, DropTestDefines::FactorsByColumn.keys())
     {
-        ui->cbFactors1->addItem(FactorsByColumn.value(key), key);
-        ui->cbFactors2->addItem(FactorsByColumn.value(key), key);
-        ui->cbFactors3->addItem(FactorsByColumn.value(key), key);
+        ui->cbFactors1->addItem(DropTestDefines::FactorsByColumn.value(key), key);
+        ui->cbFactors2->addItem(DropTestDefines::FactorsByColumn.value(key), key);
+        ui->cbFactors3->addItem(DropTestDefines::FactorsByColumn.value(key), key);
     }
-    ui->cbFactors1->setCurrentText(FactorsByColumn.value(factor1));
-    showDiagram(ColHeight, ui->wgtDiag1);
-    ui->cbFactors2->setCurrentText(FactorsByColumn.value(factor2));
-    showDiagram(ColContact, ui->wgtDiag2);
-    ui->cbFactors3->setCurrentText(FactorsByColumn.value(factor3));
-    showDiagram(ColRSI, ui->wgtDiag3);
+    ui->cbFactors1->setCurrentText(DropTestDefines::FactorsByColumn.value(factor1));
+    showDiagram(DropTestDefines::ColHeight, ui->wgtDiag1);
+    ui->cbFactors2->setCurrentText(DropTestDefines::FactorsByColumn.value(factor2));
+    showDiagram(DropTestDefines::ColContact, ui->wgtDiag2);
+    ui->cbFactors3->setCurrentText(DropTestDefines::FactorsByColumn.value(factor3));
+    showDiagram(DropTestDefines::ColRSI, ui->wgtDiag3);
 
     connect(ui->wgtDiag1, &DynamicDiagram::selectItem, this, &DropTestVisualize::on_selectDiag1Item);
     connect(ui->wgtDiag2, &DynamicDiagram::selectItem, this, &DropTestVisualize::on_selectDiag2Item);

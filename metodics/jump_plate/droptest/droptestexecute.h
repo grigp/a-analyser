@@ -40,6 +40,10 @@ private slots:
 
     void on_recording();
 
+    void on_selectGraph();
+    void on_selectBar();
+    void on_select3D(bool checked);
+
 private:
     Ui::DropTestExecute *ui;
 
@@ -61,17 +65,23 @@ private:
         , ValueRole                       ///< Доступ к данных в столбцах 1 и 2 - высоте прыжка и времени. double
     };
 
+    void setDiagParams();
+
     /*!
      * \brief Итерация выполнения методики
      * \param isStart - признак запуска на старте
      */
     void iterate(const bool isStart);
 
+    void addItemToDiag();
+
     void setStage(const Stage stage);
 
     void setModelGeometry();
 
     void finishTest();
+
+    void restoreGraphParams();
 
     DataDefines::PatientKard m_kard;
 

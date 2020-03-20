@@ -117,6 +117,7 @@ void JumpHeightTestExecute::start()
         ui->wgtTimeContact->setVolume(DynamicDiagram::Volume3D);
         ui->wgtTimeContact->setKind(DynamicDiagram::KindGraph);
         setModelGeometry();
+        restoreGraphParams();
     }
     else
     {
@@ -190,6 +191,37 @@ void JumpHeightTestExecute::on_recording()
         m_time = 0;
         m_mdlTable.clear();
         setModelGeometry();
+    }
+}
+
+void JumpHeightTestExecute::on_selectGraph()
+{
+    ui->wgtJumpsHeight->setKind(DynamicDiagram::KindGraph);
+    ui->wgtTimeContact->setKind(DynamicDiagram::KindGraph);
+
+    SettingsProvider::setValueToRegAppCopy("JumpTest", "HeightTestExecuteDiagKind", static_cast<int>(DynamicDiagram::KindGraph));
+}
+
+void JumpHeightTestExecute::on_selectBar()
+{
+    ui->wgtJumpsHeight->setKind(DynamicDiagram::KindBar);
+    ui->wgtTimeContact->setKind(DynamicDiagram::KindBar);
+    SettingsProvider::setValueToRegAppCopy("JumpTest", "HeightTestExecuteDiagKind", static_cast<int>(DynamicDiagram::KindBar));
+}
+
+void JumpHeightTestExecute::on_select3D(bool checked)
+{
+    if (checked)
+    {
+        ui->wgtJumpsHeight->setVolume(DynamicDiagram::Volume3D);
+        ui->wgtTimeContact->setVolume(DynamicDiagram::Volume3D);
+        SettingsProvider::setValueToRegAppCopy("JumpTest", "HeightTestExecuteDiagVolume", static_cast<int>(DynamicDiagram::Volume3D));
+    }
+    else
+    {
+        ui->wgtJumpsHeight->setVolume(DynamicDiagram::Volume2D);
+        ui->wgtTimeContact->setVolume(DynamicDiagram::Volume2D);
+        SettingsProvider::setValueToRegAppCopy("JumpTest", "HeightTestExecuteDiagVolume", static_cast<int>(DynamicDiagram::Volume2D));
     }
 }
 
@@ -296,4 +328,20 @@ void JumpHeightTestExecute::finishTest()
 
     m_trd.saveTest();
     static_cast<ExecuteWidget*>(parent())->showDB();
+}
+
+void JumpHeightTestExecute::restoreGraphParams()
+{
+    auto kindCode = SettingsProvider::valueFromRegAppCopy("JumpTest", "HeightTestExecuteDiagKind", 1).toInt();
+    DynamicDiagram::Kind kind = static_cast<DynamicDiagram::Kind>(kindCode);
+    ui->wgtJumpsHeight->setKind(kind);
+    ui->wgtTimeContact->setKind(kind);
+    ui->btnGraph->setChecked(kind == DynamicDiagram::KindGraph);
+    ui->btnBar->setChecked(kind == DynamicDiagram::KindBar);
+
+    auto volumeCode = SettingsProvider::valueFromRegAppCopy("JumpTest", "HeightTestExecuteDiagVolume", 1).toInt();
+    DynamicDiagram::Volume volume = static_cast<DynamicDiagram::Volume>(volumeCode);
+    ui->wgtJumpsHeight->setVolume(volume);
+    ui->wgtTimeContact->setVolume(volume);
+    ui->btn3D->setChecked(volume == DynamicDiagram::Volume3D);
 }

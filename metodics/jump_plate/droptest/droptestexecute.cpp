@@ -9,9 +9,11 @@
 #include "testresultdata.h"
 #include "droptestfactors.h"
 #include "settingsprovider.h"
+#include "droptestdefines.h"
 
 #include <QTimer>
 #include <QMessageBox>
+#include <QDebug>
 
 DropTestExecute::DropTestExecute(QWidget *parent) :
     QWidget(parent),
@@ -21,6 +23,7 @@ DropTestExecute::DropTestExecute(QWidget *parent) :
     ui->lblCommunicationError->setVisible(false);
     ui->lblCommentStage->setVisible(false);
     QTimer::singleShot(0, this, &DropTestExecute::start);
+    ui->twPages->setCurrentIndex(0);
 }
 
 DropTestExecute::~DropTestExecute()
@@ -115,6 +118,7 @@ void DropTestExecute::start()
 
         ui->tvJumps->setModel(&m_mdlTable);
         setModelGeometry();
+        setDiagParams();
     }
     else
     {
@@ -186,6 +190,68 @@ void DropTestExecute::on_recording()
         m_mdlTable.clear();
         setModelGeometry();
     }
+
+    ui->cbFactors1->setEnabled(!m_isRecording);
+    ui->cbFactors2->setEnabled(!m_isRecording);
+    ui->cbFactors3->setEnabled(!m_isRecording);
+}
+
+void DropTestExecute::on_selectGraph()
+{
+    ui->wgtDiag1->setKind(DynamicDiagram::KindGraph);
+    ui->wgtDiag2->setKind(DynamicDiagram::KindGraph);
+    ui->wgtDiag3->setKind(DynamicDiagram::KindGraph);
+    SettingsProvider::setValueToRegAppCopy("JumpTest", "DropTestExecuteDiagKind", static_cast<int>(DynamicDiagram::KindGraph));
+}
+
+void DropTestExecute::on_selectBar()
+{
+    ui->wgtDiag1->setKind(DynamicDiagram::KindBar);
+    ui->wgtDiag2->setKind(DynamicDiagram::KindBar);
+    ui->wgtDiag3->setKind(DynamicDiagram::KindBar);
+    SettingsProvider::setValueToRegAppCopy("JumpTest", "DropTestExecuteDiagKind", static_cast<int>(DynamicDiagram::KindBar));
+}
+
+void DropTestExecute::on_select3D(bool checked)
+{
+    if (checked)
+    {
+        ui->wgtDiag1->setVolume(DynamicDiagram::Volume3D);
+        ui->wgtDiag2->setVolume(DynamicDiagram::Volume3D);
+        ui->wgtDiag3->setVolume(DynamicDiagram::Volume3D);
+        SettingsProvider::setValueToRegAppCopy("JumpTest", "DropTestExecuteDiagVolume", static_cast<int>(DynamicDiagram::Volume3D));
+    }
+    else
+    {
+        ui->wgtDiag1->setVolume(DynamicDiagram::Volume2D);
+        ui->wgtDiag2->setVolume(DynamicDiagram::Volume2D);
+        ui->wgtDiag3->setVolume(DynamicDiagram::Volume2D);
+        SettingsProvider::setValueToRegAppCopy("JumpTest", "DropTestExecuteDiagVolume", static_cast<int>(DynamicDiagram::Volume2D));
+    }
+}
+
+void DropTestExecute::setDiagParams()
+{
+    ui->wgtDiag1->setAxisSpaceBottom(15);
+    ui->wgtDiag1->setTitleHeight(1);
+    ui->wgtDiag2->setAxisSpaceBottom(15);
+    ui->wgtDiag2->setTitleHeight(1);
+    ui->wgtDiag3->setAxisSpaceBottom(15);
+    ui->wgtDiag3->setTitleHeight(1);
+
+    auto factor1 = SettingsProvider::valueFromRegAppCopy("JumpTest", "DropTestFactor1", 5).toInt();
+    auto factor2 = SettingsProvider::valueFromRegAppCopy("JumpTest", "DropTestFactor2", 1).toInt();
+    auto factor3 = SettingsProvider::valueFromRegAppCopy("JumpTest", "DropTestFactor3", 9).toInt();
+    foreach (auto key, DropTestDefines::FactorsByColumn.keys())
+    {
+        ui->cbFactors1->addItem(DropTestDefines::FactorsByColumn.value(key), key);
+        ui->cbFactors2->addItem(DropTestDefines::FactorsByColumn.value(key), key);
+        ui->cbFactors3->addItem(DropTestDefines::FactorsByColumn.value(key), key);
+    }
+    ui->cbFactors1->setCurrentText(DropTestDefines::FactorsByColumn.value(factor1));
+    ui->cbFactors2->setCurrentText(DropTestDefines::FactorsByColumn.value(factor2));
+    ui->cbFactors3->setCurrentText(DropTestDefines::FactorsByColumn.value(factor3));
+    restoreGraphParams();
 }
 
 void DropTestExecute::iterate(const bool isStart)
@@ -256,6 +322,7 @@ void DropTestExecute::iterate(const bool isStart)
                     itemTV->setData(m_timeNoContact, ValueRole);
                     auto *itemM = new QStandardItem(QString::number(m_kard.massa));
                     itemM->setEditable(false);
+                    itemM->setData(m_kard.massa, ValueRole);
                     auto *itemFall = new QStandardItem(QString::number(ui->edFallHeight->value()));
                     itemFall->setEditable(false);
                     itemFall->setData(ui->edFallHeight->value(), ValueRole);
@@ -264,16 +331,21 @@ void DropTestExecute::iterate(const bool isStart)
                     itemH->setData(height, ValueRole);
                     auto *itemPower = new QStandardItem(QString::number(power));
                     itemPower->setEditable(false);
+                    itemPower->setData(power, ValueRole);
                     auto *itemStiff = new QStandardItem(QString::number(stiffness));
                     itemStiff->setEditable(false);
+                    itemStiff->setData(stiffness, ValueRole);
                     auto *itemIS = new QStandardItem(QString::number(initialSpeed));
                     itemIS->setEditable(false);
+                    itemIS->setData(initialSpeed, ValueRole);
                     auto *itemRSI = new QStandardItem(QString::number(rsi));
                     itemRSI->setEditable(false);
+                    itemRSI->setData(rsi, ValueRole);
 
                     m_mdlTable.appendRow(QList<QStandardItem*>() << itemN << itemTC << itemTV << itemM << itemFall
                                          << itemH << itemPower << itemStiff << itemIS << itemRSI);
 
+                    addItemToDiag();
                     ++m_jumpsCount;
                     if (m_testFinishKind == JumpPlateDefines::tfkQuantity && m_jumpsCount >= m_jumpsMax)
                         finishTest();
@@ -287,6 +359,24 @@ void DropTestExecute::iterate(const bool isStart)
             }
         }
     }
+}
+
+void DropTestExecute::addItemToDiag()
+{
+    auto col1 = ui->cbFactors1->currentData().toInt();
+    auto v1 = m_mdlTable.index(m_mdlTable.rowCount() - 1, col1).data(ValueRole).toDouble();
+    auto item1 = new DiagItem(v1, QString::number(m_mdlTable.rowCount()));
+    ui->wgtDiag1->appendItem(item1);
+
+    auto col2 = ui->cbFactors2->currentData().toInt();
+    auto v2 = m_mdlTable.index(m_mdlTable.rowCount() - 1, col2).data(ValueRole).toDouble();
+    auto item2 = new DiagItem(v2, QString::number(m_mdlTable.rowCount()));
+    ui->wgtDiag2->appendItem(item2);
+
+    auto col3 = ui->cbFactors3->currentData().toInt();
+    auto v3 = m_mdlTable.index(m_mdlTable.rowCount() - 1, col3).data(ValueRole).toDouble();
+    auto item3 = new DiagItem(v3, QString::number(m_mdlTable.rowCount()));
+    ui->wgtDiag3->appendItem(item3);
 }
 
 void DropTestExecute::setStage(const DropTestExecute::Stage stage)
@@ -354,4 +444,22 @@ void DropTestExecute::finishTest()
 
     m_trd.saveTest();
     static_cast<ExecuteWidget*>(parent())->showDB();
+}
+
+void DropTestExecute::restoreGraphParams()
+{
+    auto kindCode = SettingsProvider::valueFromRegAppCopy("JumpTest", "DropTestExecuteDiagKind", 1).toInt();
+    DynamicDiagram::Kind kind = static_cast<DynamicDiagram::Kind>(kindCode);
+    ui->wgtDiag1->setKind(kind);
+    ui->wgtDiag2->setKind(kind);
+    ui->wgtDiag3->setKind(kind);
+    ui->btnGraph->setChecked(kind == DynamicDiagram::KindGraph);
+    ui->btnBar->setChecked(kind == DynamicDiagram::KindBar);
+
+    auto volumeCode = SettingsProvider::valueFromRegAppCopy("JumpTest", "DropTestExecuteDiagVolume", 1).toInt();
+    DynamicDiagram::Volume volume = static_cast<DynamicDiagram::Volume>(volumeCode);
+    ui->wgtDiag1->setVolume(volume);
+    ui->wgtDiag2->setVolume(volume);
+    ui->wgtDiag3->setVolume(volume);
+    ui->btn3D->setChecked(volume == DynamicDiagram::Volume3D);
 }
