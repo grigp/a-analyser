@@ -38,6 +38,7 @@ private slots:
     void on_selectDiag3Item(const int idx);
 
     void on_selectPage(const int pageIdx);
+    void on_exportToMSExcel();
 
 private:
     Ui::DropTestVisualize *ui;

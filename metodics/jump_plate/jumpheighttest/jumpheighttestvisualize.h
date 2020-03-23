@@ -33,6 +33,7 @@ private slots:
     void on_selectDiagItemTime(const int idx);
 
     void on_selectPage(const int pageIdx);
+    void on_exportToMSExcel();
 
 private:
     Ui::JumpHeightTestVisualize *ui;

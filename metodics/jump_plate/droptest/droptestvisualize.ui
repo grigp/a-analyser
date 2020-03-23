@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>674</width>
-    <height>508</height>
+    <width>844</width>
+    <height>588</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -16,6 +16,12 @@
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
     <widget class="QFrame" name="frame">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
      <property name="frameShape">
       <enum>QFrame::StyledPanel</enum>
      </property>
@@ -40,6 +46,12 @@
       </property>
       <item>
        <widget class="QFrame" name="frFactors">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
         <property name="frameShape">
          <enum>QFrame::StyledPanel</enum>
         </property>
@@ -47,8 +59,26 @@
          <enum>QFrame::Raised</enum>
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_6">
+         <property name="leftMargin">
+          <number>1</number>
+         </property>
+         <property name="topMargin">
+          <number>1</number>
+         </property>
+         <property name="rightMargin">
+          <number>1</number>
+         </property>
+         <property name="bottomMargin">
+          <number>1</number>
+         </property>
          <item>
           <widget class="QLabel" name="lblJumpsCount">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
            <property name="text">
             <string>Количество прыжков</string>
            </property>
@@ -56,6 +86,12 @@
          </item>
          <item>
           <widget class="QLabel" name="lblTimeTest">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
            <property name="text">
             <string>Общее время прыжков</string>
            </property>
@@ -63,6 +99,12 @@
          </item>
          <item>
           <widget class="QLabel" name="lblHeightAvg">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
            <property name="text">
             <string>Средняя высота прыжков</string>
            </property>
@@ -70,6 +112,12 @@
          </item>
          <item>
           <widget class="QLabel" name="lblTimeContactAvg">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
            <property name="text">
             <string>Среднее время контактной фазы</string>
            </property>
@@ -77,6 +125,12 @@
          </item>
          <item>
           <widget class="QLabel" name="lblTimeNoContactAvg">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
            <property name="text">
             <string>Среднее время бесконтактной фазы</string>
            </property>
@@ -84,10 +138,98 @@
          </item>
          <item>
           <widget class="QLabel" name="lblReactiveForceIndexAvg">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
            <property name="text">
             <string>Индекс реактивной силы</string>
            </property>
           </widget>
+         </item>
+         <item>
+          <spacer name="verticalSpacer">
+           <property name="orientation">
+            <enum>Qt::Vertical</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>20</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item>
+       <widget class="QFrame" name="frTableTool">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::StyledPanel</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Raised</enum>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout_7">
+         <property name="leftMargin">
+          <number>1</number>
+         </property>
+         <property name="rightMargin">
+          <number>1</number>
+         </property>
+         <item>
+          <widget class="QPushButton" name="btnExportToExcel">
+           <property name="toolTip">
+            <string>Экспортировать в MS Excel...</string>
+           </property>
+           <property name="statusTip">
+            <string/>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset resource="../../../kernel.qrc">
+             <normaloff>:/images/Excel.png</normaloff>:/images/Excel.png</iconset>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>20</width>
+             <height>20</height>
+            </size>
+           </property>
+           <property name="checkable">
+            <bool>false</bool>
+           </property>
+           <property name="checked">
+            <bool>false</bool>
+           </property>
+           <property name="autoExclusive">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="verticalSpacer_4">
+           <property name="orientation">
+            <enum>Qt::Vertical</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>20</width>
+             <height>40</height>
+            </size>
+           </property>
+          </spacer>
          </item>
         </layout>
        </widget>
@@ -95,7 +237,7 @@
       <item>
        <widget class="QFrame" name="frDiagTool">
         <property name="sizePolicy">
-         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+         <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
@@ -108,19 +250,19 @@
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_5">
          <property name="spacing">
-          <number>1</number>
+          <number>6</number>
          </property>
          <property name="leftMargin">
           <number>1</number>
          </property>
          <property name="topMargin">
-          <number>1</number>
+          <number>9</number>
          </property>
          <property name="rightMargin">
           <number>1</number>
          </property>
          <property name="bottomMargin">
-          <number>1</number>
+          <number>9</number>
          </property>
          <item>
           <widget class="QPushButton" name="btnGraph">
@@ -231,40 +373,11 @@
            </property>
           </widget>
          </item>
-         <item>
-          <spacer name="verticalSpacer_3">
-           <property name="orientation">
-            <enum>Qt::Vertical</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>20</width>
-             <height>10</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
         </layout>
        </widget>
       </item>
      </layout>
     </widget>
-   </item>
-   <item>
-    <spacer name="verticalSpacer">
-     <property name="orientation">
-      <enum>Qt::Vertical</enum>
-     </property>
-     <property name="sizeType">
-      <enum>QSizePolicy::Fixed</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>20</width>
-       <height>20</height>
-      </size>
-     </property>
-    </spacer>
    </item>
    <item>
     <widget class="QLabel" name="lblJumps">
@@ -623,8 +736,8 @@
    <slot>on_select3D(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>649</x>
-     <y>101</y>
+     <x>660</x>
+     <y>132</y>
     </hint>
     <hint type="destinationlabel">
      <x>677</x>
@@ -639,8 +752,8 @@
    <slot>on_selectFactorDiag1(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>332</x>
-     <y>195</y>
+     <x>396</x>
+     <y>294</y>
     </hint>
     <hint type="destinationlabel">
      <x>674</x>
@@ -655,8 +768,8 @@
    <slot>on_selectFactorDiag2(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>363</x>
-     <y>291</y>
+     <x>396</x>
+     <y>358</y>
     </hint>
     <hint type="destinationlabel">
      <x>674</x>
@@ -671,8 +784,8 @@
    <slot>on_selectFactorDiag3(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>365</x>
-     <y>380</y>
+     <x>396</x>
+     <y>422</y>
     </hint>
     <hint type="destinationlabel">
      <x>673</x>
@@ -696,6 +809,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>btnExportToExcel</sender>
+   <signal>clicked()</signal>
+   <receiver>DropTestVisualize</receiver>
+   <slot>on_exportToMSExcel()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>604</x>
+     <y>32</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>675</x>
+     <y>10</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>on_selectGraph()</slot>
@@ -705,5 +834,6 @@
   <slot>on_selectFactorDiag2(int)</slot>
   <slot>on_selectFactorDiag3(int)</slot>
   <slot>on_selectPage(int)</slot>
+  <slot>on_exportToMSExcel()</slot>
  </slots>
 </ui>

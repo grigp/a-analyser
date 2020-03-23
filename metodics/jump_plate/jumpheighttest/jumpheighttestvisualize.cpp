@@ -6,8 +6,10 @@
 #include "dataprovider.h"
 #include "dynamicdiagram.h"
 #include "settingsprovider.h"
+#include "baseutils.h"
 
 #include <QStandardItemModel>
+#include <QFileDialog>
 #include <QDebug>
 
 JumpHeightTestVisualize::JumpHeightTestVisualize(QWidget *parent) :
@@ -16,6 +18,7 @@ JumpHeightTestVisualize::JumpHeightTestVisualize(QWidget *parent) :
 {
     ui->setupUi(this);
     ui->twPages->setCurrentIndex(0);
+    ui->frTableTool->setVisible(false);
 }
 
 JumpHeightTestVisualize::~JumpHeightTestVisualize()
@@ -104,6 +107,18 @@ void JumpHeightTestVisualize::on_selectDiagItemTime(const int idx)
 void JumpHeightTestVisualize::on_selectPage(const int pageIdx)
 {
     ui->frDiagTool->setVisible(pageIdx == 0);
+    ui->frTableTool->setVisible(pageIdx == 1);
+}
+
+void JumpHeightTestVisualize::on_exportToMSExcel()
+{
+    QString path = DataDefines::aanalyserDocumentsPath();
+    auto fileName = QFileDialog::getSaveFileName(this,
+                                                 tr("Файл для экспорта таблицы"),
+                                                 path,
+                                                 tr("Файлы с разделенными значениями *.csv (*.csv)"));
+    if (fileName != "")
+        BaseUtils::modelToMSExcel(ui->tvJumps->model(), fileName);
 }
 
 void JumpHeightTestVisualize::showCurrentValues(const int idx)

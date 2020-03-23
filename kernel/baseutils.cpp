@@ -1,5 +1,6 @@
 #include "baseutils.h"
 
+#include <QTextStream>
 #include <QDir>
 
 QString BaseUtils::getTimeBySecCount(const int secCnt, const bool isHour)
@@ -120,4 +121,45 @@ void BaseUtils::setColoredPicture(QPixmap &pixmap, const QColor &color)
             }
         }
     pixmap.convertFromImage(image);
+}
+
+
+/*!
+ * \brief Заменяет в строке str символы \n на пробелы
+ * \return Возвращает строку с пробелами
+ */
+QString enterToSpace(const QString &str)
+{
+    auto sl = str.split('\n');
+    QString retval = "";
+    foreach (auto s, sl)
+        retval = retval + s + " ";
+    return retval;
+}
+
+void BaseUtils::modelToMSExcel(const QAbstractItemModel *model, const QString &fileName)
+{
+    QFile csvFile(fileName);
+    if (csvFile.open(QIODevice::WriteOnly))
+    {
+        QTextStream ts(&csvFile);
+        QStringList sl;
+
+        sl.clear();
+        for (int j = 0; j < model->columnCount(); ++j)
+            sl << enterToSpace(model->headerData(j, Qt::Horizontal).toString());
+        ts << sl.join(";") + "\n";
+
+        for (int i = 0; i < model->rowCount(); ++i)
+        {
+            sl.clear();
+
+            for (int j = 0; j < model->columnCount(); ++j)
+                sl << model->index(i, j).data(Qt::DisplayRole).toString();
+
+            ts << sl.join(";") + "\n";
+        }
+
+        csvFile.close();
+    }
 }

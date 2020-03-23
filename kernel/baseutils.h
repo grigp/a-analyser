@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QPainter>
+#include <QAbstractItemModel>
 
 namespace BaseUtils
 {
@@ -72,6 +73,20 @@ QColor strRGBAToColor(const QString rgbaStr);
  * \param color - заданный цвет
  */
 void setColoredPicture(QPixmap &pixmap, const QColor &color);
+
+/*!
+ * \brief Записывает данные табличной модели в файл для последующего открытия в MS Excel или OO Calc
+ * Данные сохраняются в виде csv файла.
+ * CSV (от англ. Comma-Separated Values — значения, разделённые запятыми) — текстовый формат,
+ * предназначенный для представления табличных данных.
+ * Каждая строка файла — это одна строка таблицы. Значения отдельных колонок разделяются разделительным
+ * символом (delimiter) — запятой ( , ).
+ * Однако, большинство программ вольно трактует стандарт CSV и допускают использование иных символов
+ * в качестве разделителя.
+ * \param model - указатель на модель
+ * \param fileName - имя файла csv
+ */
+void modelToMSExcel(const QAbstractItemModel* model, const QString &fileName);
 
 
 }
