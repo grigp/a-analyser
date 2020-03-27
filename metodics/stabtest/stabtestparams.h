@@ -18,7 +18,7 @@ enum ProbeKinds
     , pkBackground         ///< Фоновая
     , pkCloseEyes          ///< Закрытые глаза
     , pkTarget             ///< Мишень
-    , pkFourZones          ///< Четыре зоны
+    , pkFiveZones          ///< Четыре зоны
     , pkRugStand           ///< Стойка на коврике
     , pkMandibular         ///< Мандибулярная (сжатые челюсти)
     , pkHeadToRight        ///< Голова повернута направо
@@ -31,7 +31,7 @@ enum ProbeKinds
     , pkLinesToLeft        ///< Движение полос влево
     , pkLinesUp            ///< Движение полос вверх
     , pkLinesDown          ///< Движение полос вниз
-    , pkDynamic            ///< Динамическая
+//    , pkDynamic            ///< Динамическая
     , pkLastValue          ///< Последнее значение
 };
 

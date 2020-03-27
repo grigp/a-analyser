@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>TargetWindow</class>
- <widget class="QDialog" name="TargetWindow">
+ <class>FiveZonesWindow</class>
+ <widget class="QDialog" name="FiveZonesWindow">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -13,7 +13,7 @@
   <property name="windowTitle">
    <string/>
   </property>
-  <layout class="QHBoxLayout" name="horizontalLayout">
+  <layout class="QVBoxLayout" name="verticalLayout">
    <property name="spacing">
     <number>0</number>
    </property>
@@ -30,15 +30,15 @@
     <number>0</number>
    </property>
    <item>
-    <widget class="TargetArea" name="widget" native="true"/>
+    <widget class="FiveZoneArea" name="wgtFiveZones" native="true"/>
    </item>
   </layout>
  </widget>
  <customwidgets>
   <customwidget>
-   <class>TargetArea</class>
+   <class>FiveZoneArea</class>
    <extends>QWidget</extends>
-   <header location="global">targetarea.h</header>
+   <header location="global">fivezonearea.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

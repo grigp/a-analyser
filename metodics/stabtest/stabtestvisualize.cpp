@@ -46,6 +46,7 @@ void StabTestVisualize::setTest(const QString &testUid)
     {
         auto params = ti.params;
         auto cnd = params["condition"].toInt();
+        qDebug() << cnd;
         for (int i = 0; i < ui->wgtMain->layout()->count(); ++i)
         {
             auto *wgt = ui->wgtMain->layout()->itemAt(i)->widget();

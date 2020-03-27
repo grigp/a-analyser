@@ -17,6 +17,7 @@
 #include "coloredcirclewindow.h"
 #include "soundpickwindow.h"
 #include "targetwindow.h"
+#include "fivezoneswindow.h"
 
 #include <QJsonObject>
 #include <QJsonArray>
@@ -389,6 +390,9 @@ void StabTestExecute::showPatientWindow(const int winCode)
         break;
     case 3:
         m_patientWin = new TargetWindow(this);
+        break;
+    case 4:
+        m_patientWin = new FiveZonesWindow(this);
         break;
     default:
         m_patientWin = nullptr;

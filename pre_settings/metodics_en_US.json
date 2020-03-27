@@ -246,6 +246,40 @@
             }
         },
         {
+            "uid": "{07D48174-C325-4300-97A0-34E7BD640949}",
+            "name": "Strategy evaluation in stress testing ",
+            "image": "LateralAsym.png",
+            "template": "met_stabtest_uid",
+            "build_norms": false,
+            "kind": "{03FFE24D-56ED-4138-9FC7-A125A020C190}",
+            "params":
+            {
+                "condition": 5,
+                "probes": [
+                    {
+                        "name": "With visible cursor",
+                        "kind": 3,
+                        "autoend": 1,
+                        "time": 20,
+                        "latent_time": 5,
+                        "stimul": 3,
+                        "zeroing": 1,
+                        "scale": 3
+                    },
+                    {
+                        "name": "With selected zone",
+                        "kind": 4,
+                        "autoend": 1,
+                        "time": 20,
+                        "latent_time": 5,
+                        "stimul": 4,
+                        "zeroing": 1,
+                        "scale": 3
+                    }
+                ]
+            }
+        },
+        {
             "uid": "{02D4EC93-C0C2-42BD-979C-D9F472A3CCEE}",
             "name": "Romberg's test",
             "image": "Romberg.png",

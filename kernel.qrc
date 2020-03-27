@@ -129,5 +129,6 @@
         <file>images/Info.png</file>
         <file>images/Logo_BW.png</file>
         <file>images/Excel.png</file>
+        <file>images/Methodics/LateralAsym.png</file>
     </qresource>
 </RCC>

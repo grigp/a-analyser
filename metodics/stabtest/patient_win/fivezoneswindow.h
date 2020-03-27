@@ -1,25 +1,24 @@
-#ifndef TARGETWINDOW_H
-#define TARGETWINDOW_H
+#ifndef FIVEZONESWINDOW_H
+#define FIVEZONESWINDOW_H
 
 #include <QDialog>
 
 #include "patientwindow.h"
 
 namespace Ui {
-class TargetWindow;
+class FiveZonesWindow;
 }
 
-
 /*!
- * \brief Форма пациента "Мишень" TargetWindow class
+ * \brief Форма пациента "С выделенной зоной" FiveZonesWindow class
  */
-class TargetWindow : public PatientWindow
+class FiveZonesWindow : public PatientWindow
 {
     Q_OBJECT
 
 public:
-    explicit TargetWindow(QWidget *parent = 0);
-    ~TargetWindow();
+    explicit FiveZonesWindow(QWidget *parent = 0);
+    ~FiveZonesWindow();
 
     void setDiap(const int diap) override;
     void setMarker(const double x, const double y) override;
@@ -32,8 +31,9 @@ public:
      */
     QVariant result() override;
 
+
 private:
-    Ui::TargetWindow *ui;
+    Ui::FiveZonesWindow *ui;
 };
 
-#endif // TARGETWINDOW_H
+#endif // FIVEZONESWINDOW_H
