@@ -40,6 +40,10 @@ private slots:
 
     void on_recording();
 
+    void on_selectGraph();
+    void on_selectBar();
+    void on_select3D(bool checked);
+
 private:
     Ui::TeppingTestExecute *ui;
 
@@ -60,6 +64,10 @@ private:
 
     void finishTest();
 
+    void setDiagParams();
+
+    void restoreGraphParams();
+
     JumpPlateDefines::TestFinishKind m_testFinishKind;
     int m_stepsMax {20};
     int m_testTime {10};
@@ -72,6 +80,8 @@ private:
     bool m_plt2Pressed {false};
     double m_plt1Time {0};       ///< Время платформы
     double m_plt2Time {0};
+    double m_plt1TimeNoContact {0}; ///< Время бесконтактной фазы
+    double m_plt2TimeNoContact {0};
 
     int m_stepsLeftCount {0};
     int m_stepsRightCount {0};

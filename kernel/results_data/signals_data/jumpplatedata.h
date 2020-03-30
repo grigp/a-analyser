@@ -87,7 +87,6 @@ public:
  */
 };
 
-
 /*!
  * \brief Класс для записи в БД данных о результатах теппинг теста TeppingTestData class
  */
@@ -108,7 +107,7 @@ public:
     int stepsCount(const BaseUtils::Side side) const;
     SignalsDefines::TeppingStepRec step(const BaseUtils::Side side, const int idx) const;
 
-    void addStep(const BaseUtils::Side side, const double timeContact);
+    void addStep(const BaseUtils::Side side, const double timeContact, const double timeNoContact);
 
 /*
     Формат канала в json:
@@ -118,12 +117,14 @@ public:
         "left_leg": [           // Массив шагов для левой ноги
             {
                 "time_contact": 0.123  // Время контакта с платформой (сек)
+                "time_no_contact": 0.234  // Время бесконтактной фазы (сек)
             },
             ...
         ],
         "right_leg": [          // Массив шагов для правой ноги
             {
                 "time_contact": 0.132  // Время контакта с платформой (сек)
+                "time_no_contact": 0.453  // Время бесконтактной фазы (сек)
             },
             ...
         ]

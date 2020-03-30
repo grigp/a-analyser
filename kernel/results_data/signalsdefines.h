@@ -48,9 +48,10 @@ struct JumpRec
  */
 struct TeppingStepRec
 {
-    double timeContact;     ///< Время контакта
+    double timeContact;     ///< Время контактной фазы
+    double timeNoContact;   ///< Время бесконтактной фазы
     TeppingStepRec() {}
-    TeppingStepRec(double tc) : timeContact(tc) {}
+    TeppingStepRec(double tc, double tnc) : timeContact(tc), timeNoContact(tnc) {}
 };
 
 /*!

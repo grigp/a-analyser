@@ -171,13 +171,16 @@ SignalsDefines::TeppingStepRec TeppingTestData::step(const BaseUtils::Side side,
             auto obj = arr.at(i).toObject();
             SignalsDefines::TeppingStepRec tsr;
             tsr.timeContact = obj["time_contact"].toDouble();
+            tsr.timeNoContact = obj["time_no_contact"].toDouble();
             return tsr;
         }
 
     return SignalsDefines::TeppingStepRec();
 }
 
-void TeppingTestData::addStep(const BaseUtils::Side side, const double timeContact)
+void TeppingTestData::addStep(const BaseUtils::Side side,
+                              const double timeContact,
+                              const double timeNoContact)
 {
     QString sPar = "left_leg";
     if (side == BaseUtils::Right)
@@ -188,6 +191,7 @@ void TeppingTestData::addStep(const BaseUtils::Side side, const double timeConta
 
     QJsonObject objStep;
     objStep["time_contact"] = timeContact;
+    objStep["time_no_contact"] = timeNoContact;
     arr.append(objStep);
 
     obj[sPar] = arr;

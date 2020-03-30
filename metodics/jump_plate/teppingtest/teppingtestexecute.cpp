@@ -6,6 +6,8 @@
 #include "executewidget.h"
 #include "testresultdata.h"
 #include "jumpplatedata.h"
+#include "settingsprovider.h"
+#include "dynamicdiagram.h"
 
 #include <QTimer>
 #include <QMessageBox>
@@ -18,6 +20,7 @@ TeppingTestExecute::TeppingTestExecute(QWidget *parent) :
     ui->setupUi(this);
     ui->lblCommunicationError->setVisible(false);
     QTimer::singleShot(0, this, &TeppingTestExecute::start);
+    ui->twPages->setCurrentIndex(0);
 }
 
 TeppingTestExecute::~TeppingTestExecute()
@@ -109,6 +112,7 @@ void TeppingTestExecute::start()
         ui->tvStepsLeft->setModel(&m_mdlLeft);
         ui->tvStepsRight->setModel(&m_mdlRight);
         setModelGeometry();
+        setDiagParams();
     }
     else
     {
@@ -185,6 +189,36 @@ void TeppingTestExecute::on_recording()
     }
 }
 
+void TeppingTestExecute::on_selectGraph()
+{
+    ui->wgtDiagLeftLeg->setKind(DynamicDiagram::KindGraph);
+    ui->wgtDiagRightLeg->setKind(DynamicDiagram::KindGraph);
+    SettingsProvider::setValueToRegAppCopy("JumpTest", "TeppingTestExecuteDiagKind", static_cast<int>(DynamicDiagram::KindGraph));
+}
+
+void TeppingTestExecute::on_selectBar()
+{
+    ui->wgtDiagLeftLeg->setKind(DynamicDiagram::KindBar);
+    ui->wgtDiagRightLeg->setKind(DynamicDiagram::KindBar);
+    SettingsProvider::setValueToRegAppCopy("JumpTest", "TeppingTestExecuteDiagKind", static_cast<int>(DynamicDiagram::KindBar));
+}
+
+void TeppingTestExecute::on_select3D(bool checked)
+{
+    if (checked)
+    {
+        ui->wgtDiagLeftLeg->setVolume(DynamicDiagram::Volume3D);
+        ui->wgtDiagRightLeg->setVolume(DynamicDiagram::Volume3D);
+        SettingsProvider::setValueToRegAppCopy("JumpTest", "TeppingTestExecuteDiagVolume", static_cast<int>(DynamicDiagram::Volume3D));
+    }
+    else
+    {
+        ui->wgtDiagLeftLeg->setVolume(DynamicDiagram::Volume2D);
+        ui->wgtDiagRightLeg->setVolume(DynamicDiagram::Volume2D);
+        SettingsProvider::setValueToRegAppCopy("JumpTest", "TeppingTestExecuteDiagVolume", static_cast<int>(DynamicDiagram::Volume2D));
+    }
+}
+
 void TeppingTestExecute::iterate(const bool isStart, BaseUtils::Side side)
 {
     if (m_jumpControl->platformsCount() == 2)
@@ -206,46 +240,65 @@ void TeppingTestExecute::iterate(const bool isStart, BaseUtils::Side side)
         }
         else
         {
-            if (m_plt1Pressed && m_plt2Pressed)
+            auto addValue = [&](int &stepsCount, double timeContact, double timeNoContact, QStandardItemModel &model,
+                                int rc, DynamicDiagram *diag)
             {
-                if (!ui->lblCommentFinishTest->isVisible())
-                    ui->lblCommentFinishTest->setVisible(true);
-                if (!ui->btnSave->isVisible())
-                    ui->btnSave->setVisible(true);
-                if (ui->lblCommentStateOnPlate->isVisible())
-                    ui->lblCommentStateOnPlate->setVisible(false);
-            }
-            else
-            if (!m_plt1Pressed && !m_plt2Pressed)
-            {
-                ui->lblCommentFinishTest->setVisible(false);
-                ui->btnSave->setVisible(false);
-                ui->lblCommentStateOnPlate->setVisible(true);
-            }
+                if (timeContact > 0 && timeContact < 2 && timeNoContact > 0 && timeNoContact < 2)
+                {
+                    ++stepsCount;
+                    auto *itemN = new QStandardItem(QString::number(stepsCount));
+                    itemN->setEditable(false);
+                    itemN->setData(stepsCount, NumberRole);
+                    auto *itemContact = new QStandardItem(QString::number(timeContact));
+                    itemContact->setEditable(false);
+                    itemContact->setData(timeContact, ValueRole);
+                    auto *itemNoContact = new QStandardItem(QString::number(timeNoContact));
+                    itemNoContact->setEditable(false);
+                    itemNoContact->setData(timeContact, ValueRole);
+                    model.appendRow(QList<QStandardItem*>() << itemN << itemContact << itemNoContact);
 
-            auto addValue = [&](int stepsCount, double time, QStandardItemModel &model)
-            {
-                auto *itemN = new QStandardItem(QString::number(stepsCount));
-                itemN->setEditable(false);
-                itemN->setData(stepsCount, NumberRole);
-                auto *itemLeg = new QStandardItem(QString::number(time));
-                itemLeg->setEditable(false);
-                itemLeg->setData(time, ValueRole);
-                model.appendRow(QList<QStandardItem*>() << itemN << itemLeg);
+                    auto item = new DiagItem(timeNoContact, QString::number(rc));
+                    diag->appendItem(item);
+                }
             };
 
-            if (m_isRecording)
+            if (!m_isRecording)
             {
-                if (m_plt1Pressed && side == BaseUtils::Right)
+                if (m_plt1Pressed && m_plt2Pressed)
                 {
-                    ++m_stepsRightCount;
-                    addValue(m_stepsRightCount, m_plt1Time, m_mdlRight);
+                    if (!ui->lblCommentFinishTest->isVisible())
+                        ui->lblCommentFinishTest->setVisible(true);
+                    if (!ui->btnSave->isVisible())
+                        ui->btnSave->setVisible(true);
+                    if (ui->lblCommentStateOnPlate->isVisible())
+                        ui->lblCommentStateOnPlate->setVisible(false);
                 }
                 else
-                if (m_plt2Pressed && side == BaseUtils::Left)
+                if (!m_plt1Pressed && !m_plt2Pressed)
                 {
-                    ++m_stepsLeftCount;
-                    addValue(m_stepsLeftCount, m_plt2Time, m_mdlLeft);
+                    ui->lblCommentFinishTest->setVisible(false);
+                    ui->btnSave->setVisible(false);
+                    ui->lblCommentStateOnPlate->setVisible(true);
+                }
+            }
+            else
+            {
+                if (side == BaseUtils::Right)
+                {
+                    if (m_plt1Pressed)
+                        m_plt1TimeNoContact = m_plt1Time;
+                    else
+                        addValue(m_stepsRightCount, m_plt1Time, m_plt1TimeNoContact, m_mdlRight,
+                                 m_mdlRight.rowCount(), ui->wgtDiagRightLeg);
+                }
+                else
+                if (side == BaseUtils::Left)
+                {
+                    if (m_plt2Pressed)
+                        m_plt2TimeNoContact = m_plt2Time;
+                    else
+                        addValue(m_stepsLeftCount, m_plt2Time, m_plt2TimeNoContact, m_mdlLeft,
+                                 m_mdlRight.rowCount(), ui->wgtDiagLeftLeg);
                 }
 
                 if (m_testFinishKind == JumpPlateDefines::tfkQuantity &&
@@ -259,8 +312,8 @@ void TeppingTestExecute::iterate(const bool isStart, BaseUtils::Side side)
 
 void TeppingTestExecute::setModelGeometry()
 {
-    m_mdlLeft.setHorizontalHeaderLabels(QStringList() << tr("N") << tr("Левая нога"));
-    m_mdlRight.setHorizontalHeaderLabels(QStringList() << tr("N") << tr("Правая нога"));
+    m_mdlLeft.setHorizontalHeaderLabels(QStringList() << tr("N") << tr("Время контакта, сек") << tr("Бесконтактная фаза, сек"));
+    m_mdlRight.setHorizontalHeaderLabels(QStringList() << tr("N") << tr("Время контакта, сек") << tr("Бесконтактная фаза, сек"));
     ui->tvStepsLeft->header()->resizeSections(QHeaderView::ResizeToContents);
     ui->tvStepsLeft->header()->resizeSection(0, 80);
     ui->tvStepsRight->header()->resizeSections(QHeaderView::ResizeToContents);
@@ -271,28 +324,53 @@ void TeppingTestExecute::finishTest()
 {
     m_isRecording = false;
 
-    auto kard = static_cast<AAnalyserApplication*>(QApplication::instance())->getSelectedPatient();
-    MetodicDefines::MetodicInfo mi = static_cast<AAnalyserApplication*>(QApplication::instance())->getSelectedMetodic();
+//    auto kard = static_cast<AAnalyserApplication*>(QApplication::instance())->getSelectedPatient();
+//    MetodicDefines::MetodicInfo mi = static_cast<AAnalyserApplication*>(QApplication::instance())->getSelectedMetodic();
 
-    TestResultData m_trd;  ///< Объект, записывающий данные в базу
-    m_trd.newTest(kard.uid, mi.uid);
-    m_trd.newProbe(tr("Теппинг тест"));
+//    TestResultData m_trd;  ///< Объект, записывающий данные в базу
+//    m_trd.newTest(kard.uid, mi.uid);
+//    m_trd.newProbe(tr("Теппинг тест"));
 
-    auto *data = new TeppingTestData(ChannelsDefines::chanTeppingData);
-    data->setTime(static_cast<double>(m_timeCount) / 50);
-    for (int i = 0; i < m_mdlLeft.rowCount(); ++i)
-    {
-        auto l = m_mdlLeft.index(i, 1).data(ValueRole).toDouble();
-        data->addStep(BaseUtils::Left, l);
-    }
-    for (int i = 0; i < m_mdlRight.rowCount(); ++i)
-    {
-        auto r = m_mdlRight.index(i, 1).data(ValueRole).toDouble();
-        data->addStep(BaseUtils::Right, r);
-    }
+//    auto *data = new TeppingTestData(ChannelsDefines::chanTeppingData);
+//    data->setTime(static_cast<double>(m_timeCount) / 50);
+//    for (int i = 0; i < m_mdlLeft.rowCount(); ++i)
+//    {
+//        auto l = m_mdlLeft.index(i, 1).data(ValueRole).toDouble();
+//        data->addStep(BaseUtils::Left, l);
+//    }
+//    for (int i = 0; i < m_mdlRight.rowCount(); ++i)
+//    {
+//        auto r = m_mdlRight.index(i, 1).data(ValueRole).toDouble();
+//        data->addStep(BaseUtils::Right, r);
+//    }
 
-    m_trd.addChannel(data);
+//    m_trd.addChannel(data);
 
-    m_trd.saveTest();
+//    m_trd.saveTest();
     static_cast<ExecuteWidget*>(parent())->showDB();
+}
+
+void TeppingTestExecute::setDiagParams()
+{
+    ui->wgtDiagLeftLeg->setAxisSpaceBottom(15);
+    ui->wgtDiagLeftLeg->setTitleHeight(1);
+    ui->wgtDiagRightLeg->setAxisSpaceBottom(15);
+    ui->wgtDiagRightLeg->setTitleHeight(1);
+    restoreGraphParams();
+}
+
+void TeppingTestExecute::restoreGraphParams()
+{
+    auto kindCode = SettingsProvider::valueFromRegAppCopy("JumpTest", "TeppingTestExecuteDiagKind", 1).toInt();
+    DynamicDiagram::Kind kind = static_cast<DynamicDiagram::Kind>(kindCode);
+    ui->wgtDiagLeftLeg->setKind(kind);
+    ui->wgtDiagRightLeg->setKind(kind);
+    ui->btnGraph->setChecked(kind == DynamicDiagram::KindGraph);
+    ui->btnBar->setChecked(kind == DynamicDiagram::KindBar);
+
+    auto volumeCode = SettingsProvider::valueFromRegAppCopy("JumpTest", "TeppingTestExecuteDiagVolume", 1).toInt();
+    DynamicDiagram::Volume volume = static_cast<DynamicDiagram::Volume>(volumeCode);
+    ui->wgtDiagLeftLeg->setVolume(volume);
+    ui->wgtDiagRightLeg->setVolume(volume);
+    ui->btn3D->setChecked(volume == DynamicDiagram::Volume3D);
 }
