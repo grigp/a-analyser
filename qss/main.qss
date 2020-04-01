@@ -84,6 +84,8 @@ QLabel#lblTimeAvgLeftLeg,
 QLabel#lblTimeAvgRightLeg,
 QLabel#lblTimeContactAvg,
 QLabel#lblTimeNoContactAvg,
+QLabel#lblContactAvgLeftLeg,
+QLabel#lblContactAvgRightLeg,
 QLabel#lblReactiveForceIndexAvg
 {
     font-size: 16pt;

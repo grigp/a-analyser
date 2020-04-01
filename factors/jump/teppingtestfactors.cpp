@@ -36,8 +36,10 @@ void TeppingTestFactors::calculate()
     m_stepsRightLeg.clear();
     int sLeftCount = 0;
     int sRightCount = 0;
-    double avgTimeLeft = 0;
-    double avgTimeRight = 0;
+    double avgContactLeft = 0;
+    double avgNoContactLeft = 0;
+    double avgContactRight = 0;
+    double avgNoContactRight = 0;
 
     QByteArray baData;
     if (DataProvider::getChannel(probeUid(), channelId(), baData))
@@ -47,27 +49,38 @@ void TeppingTestFactors::calculate()
         for (int i = 0; i < data.stepsCount(BaseUtils::Left); ++i)
         {
             m_stepsLeftLeg.append(data.step(BaseUtils::Left, i));
-            avgTimeLeft = avgTimeLeft + data.step(BaseUtils::Left, i).timeContact;
+            avgContactLeft = avgContactLeft + data.step(BaseUtils::Left, i).timeContact;
+            avgNoContactLeft = avgNoContactLeft + data.step(BaseUtils::Left, i).timeNoContact;
         }
         sLeftCount = data.stepsCount(BaseUtils::Left);
+
         for (int i = 0; i < data.stepsCount(BaseUtils::Right); ++i)
         {
             m_stepsRightLeg.append(data.step(BaseUtils::Right, i));
-            avgTimeRight = avgTimeRight + data.step(BaseUtils::Right, i).timeContact;
+            avgContactRight = avgContactRight + data.step(BaseUtils::Right, i).timeContact;
+            avgNoContactRight = avgNoContactRight + data.step(BaseUtils::Right, i).timeNoContact;
         }
         sRightCount = data.stepsCount(BaseUtils::Right);
         m_time = data.time();
 
         if (sLeftCount > 0)
-            avgTimeLeft = avgTimeLeft / sLeftCount;
+        {
+            avgContactLeft = avgContactLeft / sLeftCount;
+            avgNoContactLeft = avgNoContactLeft / sLeftCount;
+        }
         if (sRightCount > 0)
-            avgTimeRight = avgTimeRight / sRightCount;
+        {
+            avgContactRight = avgContactRight / sRightCount;
+            avgNoContactRight = avgNoContactRight / sRightCount;
+        }
     }
 
     addFactor(TeppingTestFactorsDefines::FullTimeUid, m_time);
     addFactor(TeppingTestFactorsDefines::StepsCountUid, sLeftCount + sRightCount); //);sLeftCount < sRightCount ? sLeftCount : sRightCount);
-    addFactor(TeppingTestFactorsDefines::LeftLegContactTimeAvrUid, avgTimeLeft);
-    addFactor(TeppingTestFactorsDefines::RightLegContactTimeAvrUid, avgTimeRight);
+    addFactor(TeppingTestFactorsDefines::LeftLegNoContactTimeAvrUid, avgNoContactLeft);
+    addFactor(TeppingTestFactorsDefines::RightLegNoContactTimeAvrUid, avgNoContactRight);
+    addFactor(TeppingTestFactorsDefines::LeftLegContactTimeAvrUid, avgContactLeft);
+    addFactor(TeppingTestFactorsDefines::RightLegContactTimeAvrUid, avgContactRight);
 }
 
 void TeppingTestFactors::registerFactors()

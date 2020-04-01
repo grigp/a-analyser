@@ -43,6 +43,12 @@ void TeppingTestCalculator::calculate()
                     addPrimaryFactor(testUid(), TeppingTestFactorsDefines::FullTimeUid,
                                      m_factors->factorValue(TeppingTestFactorsDefines::FullTimeUid),
                                      0, ChannelsDefines::chanTeppingData, pi.name);
+                    addPrimaryFactor(testUid(), TeppingTestFactorsDefines::LeftLegNoContactTimeAvrUid,
+                                     m_factors->factorValue(TeppingTestFactorsDefines::LeftLegNoContactTimeAvrUid),
+                                     0, ChannelsDefines::chanTeppingData, pi.name);
+                    addPrimaryFactor(testUid(), TeppingTestFactorsDefines::RightLegNoContactTimeAvrUid,
+                                     m_factors->factorValue(TeppingTestFactorsDefines::RightLegNoContactTimeAvrUid),
+                                     0, ChannelsDefines::chanTeppingData, pi.name);
                     addPrimaryFactor(testUid(), TeppingTestFactorsDefines::LeftLegContactTimeAvrUid,
                                      m_factors->factorValue(TeppingTestFactorsDefines::LeftLegContactTimeAvrUid),
                                      0, ChannelsDefines::chanTeppingData, pi.name);

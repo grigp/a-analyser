@@ -22,8 +22,26 @@ public:
 
     void setTest(const QString &testUid);
 
+private slots:
+    void on_selectGraph();
+    void on_selectBar();
+    void on_select3D(bool checked);
+
+    void on_selectPage(const int pageIdx);
+    void on_exportToMSExcel();
+
+    void on_selectDiagItemLeft(const int idx);
+    void on_selectDiagItemRight(const int idx);
+
 private:
     Ui::TeppingTestVisualize *ui;
+
+    void setTable();
+    void setDiags();
+
+    void restoreGraphParams();
+
+    void showCurrentValues(const int idx);
 
     TeppingTestCalculator* m_calculator {nullptr};
 };

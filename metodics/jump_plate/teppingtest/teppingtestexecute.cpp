@@ -254,7 +254,7 @@ void TeppingTestExecute::iterate(const bool isStart, BaseUtils::Side side)
                     itemContact->setData(timeContact, ValueRole);
                     auto *itemNoContact = new QStandardItem(QString::number(timeNoContact));
                     itemNoContact->setEditable(false);
-                    itemNoContact->setData(timeContact, ValueRole);
+                    itemNoContact->setData(timeNoContact, ValueRole);
                     model.appendRow(QList<QStandardItem*>() << itemN << itemContact << itemNoContact);
 
                     auto item = new DiagItem(timeNoContact, QString::number(rc));
@@ -324,29 +324,31 @@ void TeppingTestExecute::finishTest()
 {
     m_isRecording = false;
 
-//    auto kard = static_cast<AAnalyserApplication*>(QApplication::instance())->getSelectedPatient();
-//    MetodicDefines::MetodicInfo mi = static_cast<AAnalyserApplication*>(QApplication::instance())->getSelectedMetodic();
+    auto kard = static_cast<AAnalyserApplication*>(QApplication::instance())->getSelectedPatient();
+    MetodicDefines::MetodicInfo mi = static_cast<AAnalyserApplication*>(QApplication::instance())->getSelectedMetodic();
 
-//    TestResultData m_trd;  ///< Объект, записывающий данные в базу
-//    m_trd.newTest(kard.uid, mi.uid);
-//    m_trd.newProbe(tr("Теппинг тест"));
+    TestResultData m_trd;  ///< Объект, записывающий данные в базу
+    m_trd.newTest(kard.uid, mi.uid);
+    m_trd.newProbe(tr("Теппинг тест"));
 
-//    auto *data = new TeppingTestData(ChannelsDefines::chanTeppingData);
-//    data->setTime(static_cast<double>(m_timeCount) / 50);
-//    for (int i = 0; i < m_mdlLeft.rowCount(); ++i)
-//    {
-//        auto l = m_mdlLeft.index(i, 1).data(ValueRole).toDouble();
-//        data->addStep(BaseUtils::Left, l);
-//    }
-//    for (int i = 0; i < m_mdlRight.rowCount(); ++i)
-//    {
-//        auto r = m_mdlRight.index(i, 1).data(ValueRole).toDouble();
-//        data->addStep(BaseUtils::Right, r);
-//    }
+    auto *data = new TeppingTestData(ChannelsDefines::chanTeppingData);
+    data->setTime(static_cast<double>(m_timeCount) / 50);
+    for (int i = 0; i < m_mdlLeft.rowCount(); ++i)
+    {
+        auto tContact = m_mdlLeft.index(i, 1).data(ValueRole).toDouble();
+        auto tNoContact = m_mdlLeft.index(i, 2).data(ValueRole).toDouble();
+        data->addStep(BaseUtils::Left, tContact, tNoContact);
+    }
+    for (int i = 0; i < m_mdlRight.rowCount(); ++i)
+    {
+        auto tContact = m_mdlRight.index(i, 1).data(ValueRole).toDouble();
+        auto tNoContact = m_mdlRight.index(i, 2).data(ValueRole).toDouble();
+        data->addStep(BaseUtils::Right, tContact, tNoContact);
+    }
 
-//    m_trd.addChannel(data);
+    m_trd.addChannel(data);
 
-//    m_trd.saveTest();
+    m_trd.saveTest();
     static_cast<ExecuteWidget*>(parent())->showDB();
 }
 
