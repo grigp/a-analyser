@@ -86,9 +86,15 @@ QLabel#lblTimeContactAvg,
 QLabel#lblTimeNoContactAvg,
 QLabel#lblContactAvgLeftLeg,
 QLabel#lblContactAvgRightLeg,
+QLabel#lblTemp,
 QLabel#lblReactiveForceIndexAvg
 {
     font-size: 16pt;
+}
+
+QLabel#lblRunCount
+{
+    font-size: 120pt;
 }
 
 QLabel#lblSteps,

@@ -40,6 +40,7 @@ void TeppingTestFactors::calculate()
     double avgNoContactLeft = 0;
     double avgContactRight = 0;
     double avgNoContactRight = 0;
+    double avgTemp = 0;
 
     QByteArray baData;
     if (DataProvider::getChannel(probeUid(), channelId(), baData))
@@ -73,6 +74,8 @@ void TeppingTestFactors::calculate()
             avgContactRight = avgContactRight / sRightCount;
             avgNoContactRight = avgNoContactRight / sRightCount;
         }
+
+        avgTemp = (data.stepsCount(BaseUtils::Left) + data.stepsCount(BaseUtils::Right)) / m_time * 60;
     }
 
     addFactor(TeppingTestFactorsDefines::FullTimeUid, m_time);
@@ -81,6 +84,7 @@ void TeppingTestFactors::calculate()
     addFactor(TeppingTestFactorsDefines::RightLegNoContactTimeAvrUid, avgNoContactRight);
     addFactor(TeppingTestFactorsDefines::LeftLegContactTimeAvrUid, avgContactLeft);
     addFactor(TeppingTestFactorsDefines::RightLegContactTimeAvrUid, avgContactRight);
+    addFactor(TeppingTestFactorsDefines::TempAvrUid, avgTemp);
 }
 
 void TeppingTestFactors::registerFactors()
@@ -95,11 +99,20 @@ void TeppingTestFactors::registerFactors()
             registerFactor(TeppingTestFactorsDefines::FullTimeUid, TeppingTestFactorsDefines::GroupUid,
                            tr("Общее время"), tr("Время"), tr("сек"), 3, 1, FactorsDefines::nsAbove, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
+            registerFactor(TeppingTestFactorsDefines::LeftLegNoContactTimeAvrUid, TeppingTestFactorsDefines::GroupUid,
+                           tr("Быстрота одиночного движения левой ноги"), tr("Быстрота (лев)"), tr("cек"), 4, 2, FactorsDefines::nsAbove, 12);
+    static_cast<AAnalyserApplication*>(QApplication::instance())->
+            registerFactor(TeppingTestFactorsDefines::RightLegNoContactTimeAvrUid, TeppingTestFactorsDefines::GroupUid,
+                           tr("Быстрота одиночного движения правой ноги"), tr("Быстрота (прав)"), tr("cек"), 4, 2, FactorsDefines::nsAbove, 12);
+    static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(TeppingTestFactorsDefines::LeftLegContactTimeAvrUid, TeppingTestFactorsDefines::GroupUid,
-                           tr("Быстрота одиночного движения левой ноги"), tr("Контакт (лев)"), tr("cек"), 4, 2, FactorsDefines::nsAbove, 12);
+                           tr("Время контакта левой ноги"), tr("Контакт (лев)"), tr("cек"), 4, 2, FactorsDefines::nsAbove, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(TeppingTestFactorsDefines::RightLegContactTimeAvrUid, TeppingTestFactorsDefines::GroupUid,
-                           tr("Быстрота одиночного движения правой ноги"), tr("Контакт (прав)"), tr("cек"), 4, 2, FactorsDefines::nsAbove, 12);
+                           tr("Время контакта правой ноги"), tr("Контакт (прав)"), tr("cек"), 4, 2, FactorsDefines::nsAbove, 12);
+    static_cast<AAnalyserApplication*>(QApplication::instance())->
+            registerFactor(TeppingTestFactorsDefines::TempAvrUid, TeppingTestFactorsDefines::GroupUid,
+                           tr("Темп шагов"), tr("темп"), tr("шагов/мин"), 2, 2, FactorsDefines::nsAbove, 12);
 }
 
 int TeppingTestFactors::stepsCount(BaseUtils::Side side) const

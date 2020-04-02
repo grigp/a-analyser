@@ -88,6 +88,8 @@ private:
     int m_timeCount {0};
     int m_time {0};
     int m_timerEndOfTest {-1};   ///< id таймера времени теста
+    int m_timerBeforeRun {-1};   ///< id таймера запуска записи
+    int m_runCounter {3};        ///< Счетчик времени запуска записи
 
     bool m_isRecording {false};  ///< Проходит ли запись
     QStandardItemModel m_mdlLeft;

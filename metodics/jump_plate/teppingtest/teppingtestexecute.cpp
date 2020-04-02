@@ -19,6 +19,8 @@ TeppingTestExecute::TeppingTestExecute(QWidget *parent) :
 {
     ui->setupUi(this);
     ui->lblCommunicationError->setVisible(false);
+    ui->lblRunCount->setVisible(false);
+    ui->twPages->setVisible(false);
     QTimer::singleShot(0, this, &TeppingTestExecute::start);
     ui->twPages->setCurrentIndex(0);
 }
@@ -69,6 +71,21 @@ void TeppingTestExecute::timerEvent(QTimerEvent *event)
         {
             killTimer(m_timerEndOfTest);
             finishTest();
+        }
+    }
+    else
+    if (event->timerId() == m_timerBeforeRun)
+    {
+        --m_runCounter;
+        ui->lblRunCount->setText(QString::number(m_runCounter));
+        if (m_runCounter == 0)
+        {
+            if (m_isRecording)
+            {
+                m_timerEndOfTest = startTimer(20);
+                ui->twPages->setVisible(true);
+                ui->lblRunCount->setVisible(false);
+            }
         }
     }
 }
@@ -165,13 +182,19 @@ void TeppingTestExecute::on_recording()
             ui->btnSave->setIcon(QIcon(":/images/SaveNO.png"));
             ui->btnSave->setText(tr("Прервать шаги"));
         }
-        m_timerEndOfTest = startTimer(20);
+        m_runCounter = 3;
+        ui->lblRunCount->setVisible(true);
+        ui->lblRunCount->setText(QString::number(m_runCounter));
+        m_timerBeforeRun = startTimer(1000);
     }
     else
     {
         ui->btnSave->setIcon(QIcon(":/images/Save.png"));
         ui->btnSave->setText(tr("Начать шаги"));
         killTimer(m_timerEndOfTest);
+        ui->twPages->setVisible(false);
+        ui->lblRunCount->setVisible(false);
+        m_runCounter = 3;
     }
 
     if (!m_isRecording && (m_testFinishKind == JumpPlateDefines::tfkCommand))
@@ -185,6 +208,8 @@ void TeppingTestExecute::on_recording()
         m_time = 0;
         m_mdlLeft.clear();
         m_mdlRight.clear();
+        ui->wgtDiagLeftLeg->clear();
+        ui->wgtDiagRightLeg->clear();
         setModelGeometry();
     }
 }

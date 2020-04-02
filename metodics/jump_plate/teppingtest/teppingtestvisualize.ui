@@ -105,6 +105,13 @@
           </widget>
          </item>
          <item>
+          <widget class="QLabel" name="lblTemp">
+           <property name="text">
+            <string>Темп</string>
+           </property>
+          </widget>
+         </item>
+         <item>
           <spacer name="verticalSpacer_4">
            <property name="orientation">
             <enum>Qt::Vertical</enum>

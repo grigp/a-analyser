@@ -30,7 +30,7 @@ void TeppingTestVisualize::setTest(const QString &testUid)
         m_calculator = new TeppingTestCalculator(testUid, this);
         m_calculator->calculate();
     }
-    if (m_calculator->primaryFactorsCount() >= 6)
+    if (m_calculator->primaryFactorsCount() >= 7)
     {
         auto fctJumpsCount = m_calculator->primaryFactor(0);
         auto fctTimeTest = m_calculator->primaryFactor(1);
@@ -38,12 +38,14 @@ void TeppingTestVisualize::setTest(const QString &testUid)
         auto fctTNoContactRightAvg = m_calculator->primaryFactor(3);
         auto fctTContactLeftAvg = m_calculator->primaryFactor(4);
         auto fctTContactRightAvg = m_calculator->primaryFactor(5);
+        auto fctTemp = m_calculator->primaryFactor(6);
         ui->lblStepsCount->setText(QString(tr("Количество шагов") + " %1").arg(fctJumpsCount->value()));
         ui->lblTimeTest->setText(QString(tr("Общее время шагов") + " %1 " + tr("сек")).arg(fctTimeTest->value()));
         ui->lblTimeAvgLeftLeg->setText(QString(tr("Быстрота одиночного движения левой ноги") + " %1 " + tr("сек")).arg(fctTNoContactLeftAvg->value()));
         ui->lblTimeAvgRightLeg->setText(QString(tr("Быстрота одиночного движения правой ноги") + " %1 " + tr("сек")).arg(fctTNoContactRightAvg->value()));
         ui->lblContactAvgLeftLeg->setText(QString(tr("Время контакта с опорой левой ноги") + " %1 " + tr("сек")).arg(fctTContactLeftAvg->value()));
         ui->lblContactAvgRightLeg->setText(QString(tr("Время контакта с опорой правой ноги") + " %1 " + tr("сек")).arg(fctTContactRightAvg->value()));
+        ui->lblTemp->setText(QString(tr("Темп") + " %1 " + tr("шагов/мин")).arg(fctTemp->value()));
 
         setTable();
         setDiags();

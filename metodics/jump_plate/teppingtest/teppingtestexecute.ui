@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>806</width>
-    <height>540</height>
+    <width>820</width>
+    <height>610</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -470,6 +470,29 @@
       </layout>
      </widget>
     </widget>
+   </item>
+   <item>
+    <widget class="QLabel" name="lblRunCount">
+     <property name="text">
+      <string>3</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <spacer name="verticalSpacer">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>40</height>
+      </size>
+     </property>
+    </spacer>
    </item>
    <item>
     <widget class="QLabel" name="lblCommunicationError">
