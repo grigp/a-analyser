@@ -190,6 +190,8 @@ void JumpHeightTestExecute::on_recording()
         m_height = 0;
         m_time = 0;
         m_mdlTable.clear();
+        ui->wgtJumpsHeight->clear();
+        ui->wgtTimeContact->clear();
         setModelGeometry();
     }
 }

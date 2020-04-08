@@ -188,6 +188,9 @@ void DropTestExecute::on_recording()
         m_timeCount = 0;
         setStage(dtsWaiting);
         m_mdlTable.clear();
+        ui->wgtDiag1->clear();
+        ui->wgtDiag2->clear();
+        ui->wgtDiag3->clear();
         setModelGeometry();
     }
 
