@@ -368,6 +368,8 @@ void StabTestExecute::nextProbe()
         ui->btnCalibrate->setEnabled(!m_isRecording);
         ui->frScale->setEnabled(!m_isRecording);
         ui->wgtAdvChannels->enabledControls(!m_isRecording);
+
+        scaleChange(ui->cbScale->currentIndex());
     }
 }
 

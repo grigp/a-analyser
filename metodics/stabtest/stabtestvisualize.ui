@@ -65,6 +65,9 @@
       <item>
        <widget class="TargetWidget" name="wgtTarget" native="true"/>
       </item>
+      <item>
+       <widget class="StressStrategyWidget" name="wgtStressStrategy" native="true"/>
+      </item>
      </layout>
     </widget>
    </item>
@@ -99,6 +102,12 @@
    <class>TargetWidget</class>
    <extends>QWidget</extends>
    <header location="global">targetwidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>StressStrategyWidget</class>
+   <extends>QWidget</extends>
+   <header location="global">stressstrategywidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

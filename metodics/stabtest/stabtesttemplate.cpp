@@ -11,6 +11,7 @@
 #include "statechampionstestcalculator.h"
 #include "idscalculator.h"
 #include "targetcalculator.h"
+#include "stressstrategycalculator.h"
 
 #include <QLayout>
 #include <QDebug>
@@ -82,6 +83,9 @@ TestCalculator *StabTestTemplate::calculator(const QString &testUid)
         else
         if (cnd == 4)
             return new TargetCalculator(testUid);
+        else
+        if (cnd == 5)
+            return new StressStrategyCalculator(testUid);
     }
     return nullptr;
 }

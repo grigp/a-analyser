@@ -14,12 +14,14 @@
 #include "statechampionstestcalculator.h"
 #include "idscalculator.h"
 #include "targetcalculator.h"
+#include "stressstrategycalculator.h"
 
 #include "stabsignalstestwidget.h"
 #include "dopuskwidget.h"
 #include "statechampionswidget.h"
 #include "idswidget.h"
 #include "targetwidget.h"
+#include "stressstrategywidget.h"
 
 #include <QDebug>
 
@@ -46,7 +48,6 @@ void StabTestVisualize::setTest(const QString &testUid)
     {
         auto params = ti.params;
         auto cnd = params["condition"].toInt();
-        qDebug() << cnd;
         for (int i = 0; i < ui->wgtMain->layout()->count(); ++i)
         {
             auto *wgt = ui->wgtMain->layout()->itemAt(i)->widget();
@@ -58,6 +59,7 @@ void StabTestVisualize::setTest(const QString &testUid)
                          || (cnd == 2 && wgt->objectName() == "wgtDopusk")
                          || (cnd == 3 && wgt->objectName() == "wgtIDSAnalysis")
                          || (cnd == 4 && wgt->objectName() == "wgtTarget")
+                         || (cnd == 5 && wgt->objectName() == "wgtStressStrategy")
                                 );
                 if (cnd == 0 && wgt->objectName() == "wgtSignals")
                     static_cast<StabSignalsTestWidget*>(wgt)->
@@ -78,6 +80,10 @@ void StabTestVisualize::setTest(const QString &testUid)
                 if (cnd == 4 && wgt->objectName() == "wgtTarget")
                     static_cast<TargetWidget*>(wgt)->
                         calculate(static_cast<TargetCalculator*>(m_calculator), testUid);
+                else
+                if (cnd == 5 && wgt->objectName() == "wgtStressStrategy")
+                    static_cast<StressStrategyWidget*>(wgt)->
+                        calculate(static_cast<StressStrategyCalculator*>(m_calculator), testUid);
             }
         }
     }
