@@ -1,6 +1,8 @@
 #include "baseutils.h"
 
+#include <QCoreApplication>
 #include <QTextStream>
+#include <QDebug>
 #include <QDir>
 
 QString BaseUtils::getTimeBySecCount(const int secCnt, const bool isHour)
@@ -21,8 +23,8 @@ QString BaseUtils::getTimeBySecCount(const int secCnt, const bool isHour)
 
 bool BaseUtils::getTranslatorFileName(QString &fileName, QString &langCode)
 {
-    QDir dir("translations");
-    QFileInfoList list = dir.entryInfoList(QDir::NoDotAndDotDot);
+    QDir dir(QCoreApplication::applicationDirPath() + "/translations");
+    QFileInfoList list = dir.entryInfoList(); //QDir::NoDotAndDotDot);
     foreach (auto fileInfo, list)
         if (fileInfo.fileName() != "." && fileInfo.fileName() != "..")
         {

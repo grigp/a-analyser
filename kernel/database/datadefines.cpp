@@ -49,8 +49,7 @@ QJsonArray readCopiesFile(const QString &fn)
 
 QString DataDefines::aanalyserDataPath()
 {
-    QString path = QStandardPaths::locate(QStandardPaths::GenericDataLocation, QString(), QStandardPaths::LocateDirectory);
-    return path + QApplication::applicationName() + '/';
+    return QStandardPaths::writableLocation(QStandardPaths::AppDataLocation) + '/';
 }
 
 QString DataDefines::aanalyserDocumentsPath()

@@ -22,7 +22,7 @@ class AAnalyserApplication : public QApplication
 {
     Q_OBJECT
 public:
-    AAnalyserApplication(int &argc, char **argv, const QString &languargeCode);
+    AAnalyserApplication(int &argc, char **argv);
     ~AAnalyserApplication();
 
     QMainWindow* mainWindow() const;

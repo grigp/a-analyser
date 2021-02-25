@@ -13,15 +13,18 @@ int main(int argc, char *argv[])
 {
     qsrand(QDateTime::currentMSecsSinceEpoch());
 
+    AAnalyserApplication a(argc, argv);
+
     QString fn = "";
     QString code = DataDefines::LANG_CODE_RUS;
+    //QString code = DataDefines::LANG_CODE_ENGUSA;
     auto trLoaded = BaseUtils::getTranslatorFileName(fn, code);
 
     QTranslator translator;
     if (trLoaded)
         translator.load(fn);
 
-    AAnalyserApplication a(argc, argv, code);
+    a.setLanguargeCode(code);
     if (trLoaded)
         a.installTranslator(&translator);
 

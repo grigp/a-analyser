@@ -19,23 +19,21 @@
 #include "exitcodes.h"
 #include "log.h"
 
-AAnalyserApplication::AAnalyserApplication(int &argc, char **argv, const QString &languargeCode)
+AAnalyserApplication::AAnalyserApplication(int &argc, char **argv)
     : QApplication(argc, argv)
-    , m_languargeCode(languargeCode)
     , m_metodics(new MetodicsFactory(this))
     , m_drivers(new DriversFactory(this))
     , m_factors(new FactorsFactory(this))
     , m_normsManager(new NormsManager(this))
 {
-
-    //! Это необходимо сделать сдесь, чтоб получить и запомнить uid приложения,
-    //! чтобы использовать его дальше, в настройках и файлах
-    DataDefines::appCopyUid();
-
     setApplicationName("a-analyser");
 //    setApplicationDisplayName(tr("Физиологические исследования a-analyser")); Не переводится
     setOrganizationName("A-Med");
 //    setWindowIcon(QIcon(":/images/MainIcon2.ico"));
+
+    //! Это необходимо сделать сдесь, чтоб получить и запомнить uid приложения,
+    //! чтобы использовать его дальше, в настройках и файлах
+    DataDefines::appCopyUid();
 
     QTimer::singleShot(100, [=]()
     {
