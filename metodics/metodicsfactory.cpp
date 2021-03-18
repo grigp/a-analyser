@@ -151,6 +151,10 @@ void MetodicsFactory::assignMetodics()
     else
         appendNewMetodic(resName, DataDefines::appCopyPath() + "metodics.json");
 
+    QString path = DataDefines::amedDataPath();
+    // Цикл по пути path + "Shared\AutoImport\" с поиском файлов *.json и импорт из них методик
+    qDebug() << path;
+
     QFile fMet(DataDefines::appCopyPath() + "metodics.json");
     fMet.setPermissions((((fMet.permissions() |= QFile::WriteOwner) |= QFile::WriteUser) |= QFile::WriteGroup) |= QFile::WriteOther);
     if (fMet.open(QIODevice::ReadOnly | QIODevice::Text))
@@ -236,10 +240,10 @@ void MetodicsFactory::appendNewMetodic(const QString &fnPreDefMetodics, const QS
     auto metPD = readMetodicsFile(fnPreDefMetodics);
     auto met = readMetodicsFile(fnMetodics);
 
-    //! Если кол-во элементов в массивах равно, то и добавлять ничего не надо
-    //! Методики будут только добавляться
-    if (met.size() == metPD.size())
-        return;
+//    //! Если кол-во элементов в массивах равно, то и добавлять ничего не надо
+//    //! Методики будут только добавляться
+//    if (met.size() == metPD.size())
+//        return;
 
     QList<int> newMetIdx;
 

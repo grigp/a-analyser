@@ -47,6 +47,14 @@ QJsonArray readCopiesFile(const QString &fn)
 }
 
 
+QString DataDefines::amedDataPath()
+{
+    QString pathFull = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
+    int ls = pathFull.lastIndexOf('/');
+    QString path = pathFull.left(ls) + '/';
+    return path;
+}
+
 QString DataDefines::aanalyserDataPath()
 {
     return QStandardPaths::writableLocation(QStandardPaths::AppDataLocation) + '/';
@@ -214,3 +222,4 @@ QColor DataDefines::normValueToColorDark(const DataDefines::NormValue val)
     };
     return normColors.value(val);
 }
+
