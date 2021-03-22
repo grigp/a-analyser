@@ -81,6 +81,7 @@ public slots:
 private:
     void assignTemplates();
     void assignMetodics();
+    void assignMetodicsFromAutoImport();
     void saveMetodics();
 
     /*!
@@ -89,14 +90,16 @@ private:
      * \param fnMetodics - имя файла методик
      */
     void appendNewMetodic(const QString &fnPreDefMetodics, const QString &fnMetodics);
+    bool appendInArray(QJsonArray &arr, QJsonArray &arrPD);
+
 
     int getMetodicIndexByUid(const QString &uid) const;
     int getMetodicKindIndexByUid(const QString &uid) const;
 
     MetodicTemplate *getMetodicTemplate(const QString &metUid) const;
 
-    void writeMetodicsFile(const QJsonArray &arr, const QString &fn);
-    QJsonArray readMetodicsFile(const QString &fn);
+    void writeMetodicsFile(const QJsonArray &arrMethods, const QJsonArray &arrKinds, const QString &fn);
+    QJsonArray readMetodicsFile(const QString &fn, const QString &secName);
 
     QList<MetodicTemplate*> m_templates;
     QList<MetodicDefines::MetodicInfo> m_metodics;

@@ -130,5 +130,12 @@
         <file>images/Logo_BW.png</file>
         <file>images/Excel.png</file>
         <file>images/Methodics/LateralAsym.png</file>
+        <file>images/Methodics/3D_Games.png</file>
+        <file>images/Methodics/BallBalance.png</file>
+        <file>images/Methodics/CyclistBeachSity.png</file>
+        <file>images/Methodics/CyclistHills.png</file>
+        <file>images/Methodics/CyclistValley.png</file>
+        <file>images/Methodics/CyclistVolcano.png</file>
+        <file>images/Methodics/StarWars.png</file>
     </qresource>
 </RCC>

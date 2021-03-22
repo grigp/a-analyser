@@ -151,9 +151,7 @@ void MetodicsFactory::assignMetodics()
     else
         appendNewMetodic(resName, DataDefines::appCopyPath() + "metodics.json");
 
-    QString path = DataDefines::amedDataPath();
-    // Цикл по пути path + "Shared\AutoImport\" с поиском файлов *.json и импорт из них методик
-    qDebug() << path;
+    assignMetodicsFromAutoImport();
 
     QFile fMet(DataDefines::appCopyPath() + "metodics.json");
     fMet.setPermissions((((fMet.permissions() |= QFile::WriteOwner) |= QFile::WriteUser) |= QFile::WriteGroup) |= QFile::WriteOther);
@@ -193,6 +191,21 @@ void MetodicsFactory::assignMetodics()
             m_metodicKinds << mki;
         }
     }
+}
+
+void MetodicsFactory::assignMetodicsFromAutoImport()
+{
+    QString path = DataDefines::amedDataPath();
+    //Цикл по пути path + "Shared\AutoImport\" с поиском файлов *.json и импорт из них методик
+    QDir dir(path + "Shared/AutoImport/");
+    QFileInfoList list = dir.entryInfoList(); //QDir::NoDotAndDotDot);
+    foreach (auto fileInfo, list)
+        if (fileInfo.fileName() != "." && fileInfo.fileName() != "..")
+        {
+            if (fileInfo.completeSuffix() == "json")
+                appendNewMetodic(path + "Shared/AutoImport/" + fileInfo.fileName(),
+                                 DataDefines::appCopyPath() + "metodics.json");
+        }
 }
 
 void MetodicsFactory::saveMetodics()
@@ -237,23 +250,29 @@ void MetodicsFactory::saveMetodics()
 
 void MetodicsFactory::appendNewMetodic(const QString &fnPreDefMetodics, const QString &fnMetodics)
 {
-    auto metPD = readMetodicsFile(fnPreDefMetodics);
-    auto met = readMetodicsFile(fnMetodics);
+    auto metPD = readMetodicsFile(fnPreDefMetodics, "tests");
+    auto met = readMetodicsFile(fnMetodics, "tests");
+    auto kindPD = readMetodicsFile(fnPreDefMetodics, "tests_kinds");
+    auto kind = readMetodicsFile(fnMetodics, "tests_kinds");
 
-//    //! Если кол-во элементов в массивах равно, то и добавлять ничего не надо
-//    //! Методики будут только добавляться
-//    if (met.size() == metPD.size())
-//        return;
+    bool chngMet = appendInArray(met, metPD);
+    bool chngKind = appendInArray(kind, kindPD);
+    if (chngMet || chngKind)
+        writeMetodicsFile(met, kind, fnMetodics);
+}
 
-    QList<int> newMetIdx;
+bool MetodicsFactory::appendInArray(QJsonArray &arr, QJsonArray &arrPD)
+{
+    QList<int> newIdxList;
+    bool retval = false;
 
-    for (int i = 0; i < metPD.size(); ++i)
+    for (int i = 0; i < arrPD.size(); ++i)
     {
-        auto objMetPD = metPD.at(i).toObject();
+        auto objMetPD = arrPD.at(i).toObject();
         bool fnd = false;
-        for (int j = 0; j < met.size(); ++j)
+        for (int j = 0; j < arr.size(); ++j)
         {
-            auto objMet = met.at(j).toObject();
+            auto objMet = arr.at(j).toObject();
             if (objMet["uid"].toString() == objMetPD["uid"].toString())
             {
                 fnd = true;
@@ -261,18 +280,20 @@ void MetodicsFactory::appendNewMetodic(const QString &fnPreDefMetodics, const QS
             }
         }
         if (!fnd)
-            newMetIdx << i;
+            newIdxList << i;
     }
 
-    if (newMetIdx.size() > 0)
+    if (newIdxList.size() > 0)
     {
-        foreach (auto nmIdx, newMetIdx)
+        foreach (auto nmIdx, newIdxList)
         {
-            auto objMetPD = metPD.at(nmIdx).toObject();
-            met.append(objMetPD);
+            auto objMetPD = arrPD.at(nmIdx).toObject();
+            arr.append(objMetPD);
+            retval = true;
         }
-        writeMetodicsFile(met, fnMetodics);
     }
+
+    return retval;
 }
 
 int MetodicsFactory::getMetodicIndexByUid(const QString &uid) const
@@ -303,13 +324,14 @@ MetodicTemplate *MetodicsFactory::getMetodicTemplate(const QString &metUid) cons
     return nullptr;
 }
 
-void MetodicsFactory::writeMetodicsFile(const QJsonArray &arr, const QString &fn)
+void MetodicsFactory::writeMetodicsFile(const QJsonArray &arrMethods, const QJsonArray &arrKinds, const QString &fn)
 {
     QFile fMetodics(fn);
     if (fMetodics.open(QIODevice::WriteOnly | QIODevice::Text))
     {
         QJsonObject obj;
-        obj["tests"] = arr;
+        obj["tests"] = arrMethods;
+        obj["tests_kinds"] = arrKinds;
 
         QJsonDocument doc(obj);
         QByteArray ba = doc.toJson();
@@ -318,7 +340,7 @@ void MetodicsFactory::writeMetodicsFile(const QJsonArray &arr, const QString &fn
     }
 }
 
-QJsonArray MetodicsFactory::readMetodicsFile(const QString &fn)
+QJsonArray MetodicsFactory::readMetodicsFile(const QString &fn, const QString &secName)
 {
     QFile fMetodics(fn);
     if (fMetodics.open(QIODevice::ReadOnly | QIODevice::Text))
@@ -328,7 +350,7 @@ QJsonArray MetodicsFactory::readMetodicsFile(const QString &fn)
         QJsonObject obj = doc.object();
         fMetodics.close();
 
-        return obj["tests"].toArray();
+        return obj[secName].toArray();
     }
     return QJsonArray();
 }
