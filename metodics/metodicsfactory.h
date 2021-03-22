@@ -79,6 +79,12 @@ signals:
 public slots:
 
 private:
+    enum MethodicSubject
+    {
+        msMethodic = 0,
+        msMethodicKind = 1
+    };
+
     void assignTemplates();
     void assignMetodics();
     void assignMetodicsFromAutoImport();
@@ -90,7 +96,7 @@ private:
      * \param fnMetodics - имя файла методик
      */
     void appendNewMetodic(const QString &fnPreDefMetodics, const QString &fnMetodics);
-    bool appendInArray(QJsonArray &arr, QJsonArray &arrPD);
+    bool appendInArray(QJsonArray &arr, QJsonArray &arrPD, const MethodicSubject ms);
 
 
     int getMetodicIndexByUid(const QString &uid) const;
@@ -100,6 +106,13 @@ private:
 
     void writeMetodicsFile(const QJsonArray &arrMethods, const QJsonArray &arrKinds, const QString &fn);
     QJsonArray readMetodicsFile(const QString &fn, const QString &secName);
+
+    /*!
+     * \brief Возвращает true, если есть шаблон методики с заданным uid
+     * \param templateUID - uid методики
+     */
+    bool isMethodicExists(const QString templateUID) const;
+    bool isMethodicKindExists(const QString templateUID) const;
 
     QList<MetodicTemplate*> m_templates;
     QList<MetodicDefines::MetodicInfo> m_metodics;

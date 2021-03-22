@@ -20,6 +20,7 @@
 #include <QTimer>
 #include <QDebug>
 
+
 MetodicsFactory::MetodicsFactory(QObject *parent) : QObject(parent)
 {
     QTimer::singleShot(0, [=]()
@@ -255,13 +256,13 @@ void MetodicsFactory::appendNewMetodic(const QString &fnPreDefMetodics, const QS
     auto kindPD = readMetodicsFile(fnPreDefMetodics, "tests_kinds");
     auto kind = readMetodicsFile(fnMetodics, "tests_kinds");
 
-    bool chngMet = appendInArray(met, metPD);
-    bool chngKind = appendInArray(kind, kindPD);
+    bool chngMet = appendInArray(met, metPD, msMethodic);
+    bool chngKind = appendInArray(kind, kindPD, msMethodicKind);
     if (chngMet || chngKind)
         writeMetodicsFile(met, kind, fnMetodics);
 }
 
-bool MetodicsFactory::appendInArray(QJsonArray &arr, QJsonArray &arrPD)
+bool MetodicsFactory::appendInArray(QJsonArray &arr, QJsonArray &arrPD, const MethodicSubject ms)
 {
     QList<int> newIdxList;
     bool retval = false;
@@ -269,18 +270,36 @@ bool MetodicsFactory::appendInArray(QJsonArray &arr, QJsonArray &arrPD)
     for (int i = 0; i < arrPD.size(); ++i)
     {
         auto objMetPD = arrPD.at(i).toObject();
+
+        //! Поиск методики в перечне шаблонов
         bool fnd = false;
-        for (int j = 0; j < arr.size(); ++j)
-        {
-            auto objMet = arr.at(j).toObject();
-            if (objMet["uid"].toString() == objMetPD["uid"].toString())
+        // Список шаблонов формируется после добавления их здесь в файл. Думать
+//        if (ms == msMethodic)
+//            fnd = isMethodicExists(objMetPD["uid"].toString());
+//        else
+//        if (ms == msMethodicKind)
+//            fnd = isMethodicKindExists(objMetPD["uid"].toString());
+
+//        if (!fnd)
+//            qDebug() << "not found: " + objMetPD["name"].toString();
+
+//        //! Нашли - можно искать в уже подключенных
+//        if (fnd)
+//        {
+            //! Поиск методики в перечне подключенных
+//            fnd = false;
+            for (int j = 0; j < arr.size(); ++j)
             {
-                fnd = true;
-                break;
+                auto objMet = arr.at(j).toObject();
+                if (objMet["uid"].toString() == objMetPD["uid"].toString())
+                {
+                    fnd = true;
+                    break;
+                }
             }
-        }
-        if (!fnd)
-            newIdxList << i;
+            if (!fnd)
+                newIdxList << i;
+//        }
     }
 
     if (newIdxList.size() > 0)
@@ -327,6 +346,7 @@ MetodicTemplate *MetodicsFactory::getMetodicTemplate(const QString &metUid) cons
 void MetodicsFactory::writeMetodicsFile(const QJsonArray &arrMethods, const QJsonArray &arrKinds, const QString &fn)
 {
     QFile fMetodics(fn);
+    fMetodics.setPermissions((((fMetodics.permissions() |= QFile::WriteOwner) |= QFile::WriteUser) |= QFile::WriteGroup) |= QFile::WriteOther);
     if (fMetodics.open(QIODevice::WriteOnly | QIODevice::Text))
     {
         QJsonObject obj;
@@ -343,6 +363,7 @@ void MetodicsFactory::writeMetodicsFile(const QJsonArray &arrMethods, const QJso
 QJsonArray MetodicsFactory::readMetodicsFile(const QString &fn, const QString &secName)
 {
     QFile fMetodics(fn);
+    fMetodics.setPermissions((((fMetodics.permissions() |= QFile::WriteOwner) |= QFile::WriteUser) |= QFile::WriteGroup) |= QFile::WriteOther);
     if (fMetodics.open(QIODevice::ReadOnly | QIODevice::Text))
     {
         QByteArray ba = fMetodics.readAll();
@@ -353,5 +374,21 @@ QJsonArray MetodicsFactory::readMetodicsFile(const QString &fn, const QString &s
         return obj[secName].toArray();
     }
     return QJsonArray();
+}
+
+bool MetodicsFactory::isMethodicExists(const QString templateUID) const
+{
+    foreach (auto tmplt, m_metodics)
+        if (tmplt.uid == templateUID)
+            return true;
+    return  false;
+}
+
+bool MetodicsFactory::isMethodicKindExists(const QString templateUID) const
+{
+    foreach (auto tmplt, m_metodicKinds)
+        if (tmplt.uid == templateUID)
+            return true;
+    return  false;
 }
 
