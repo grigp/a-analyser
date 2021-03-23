@@ -272,22 +272,15 @@ bool MetodicsFactory::appendInArray(QJsonArray &arr, QJsonArray &arrPD, const Me
         auto objMetPD = arrPD.at(i).toObject();
 
         //! Поиск методики в перечне шаблонов
-        bool fnd = false;
-        // Список шаблонов формируется после добавления их здесь в файл. Думать
-//        if (ms == msMethodic)
-//            fnd = isMethodicExists(objMetPD["uid"].toString());
-//        else
-//        if (ms == msMethodicKind)
-//            fnd = isMethodicKindExists(objMetPD["uid"].toString());
+        bool fnd = true;
+        if (ms == msMethodic)
+            fnd = isTemplateExists(objMetPD["uid"].toString());
 
-//        if (!fnd)
-//            qDebug() << "not found: " + objMetPD["name"].toString();
-
-//        //! Нашли - можно искать в уже подключенных
-//        if (fnd)
-//        {
+        //! Нашли - можно искать в уже подключенных
+        if (fnd)
+        {
             //! Поиск методики в перечне подключенных
-//            fnd = false;
+            fnd = false;
             for (int j = 0; j < arr.size(); ++j)
             {
                 auto objMet = arr.at(j).toObject();
@@ -299,7 +292,7 @@ bool MetodicsFactory::appendInArray(QJsonArray &arr, QJsonArray &arrPD, const Me
             }
             if (!fnd)
                 newIdxList << i;
-//        }
+        }
     }
 
     if (newIdxList.size() > 0)
@@ -376,19 +369,12 @@ QJsonArray MetodicsFactory::readMetodicsFile(const QString &fn, const QString &s
     return QJsonArray();
 }
 
-bool MetodicsFactory::isMethodicExists(const QString templateUID) const
+bool MetodicsFactory::isTemplateExists(const QString templateUID) const
 {
-    foreach (auto tmplt, m_metodics)
-        if (tmplt.uid == templateUID)
+    foreach (auto tmplt, m_templates)
+        if (tmplt->uid() == templateUID)
             return true;
     return  false;
 }
 
-bool MetodicsFactory::isMethodicKindExists(const QString templateUID) const
-{
-    foreach (auto tmplt, m_metodicKinds)
-        if (tmplt.uid == templateUID)
-            return true;
-    return  false;
-}
 

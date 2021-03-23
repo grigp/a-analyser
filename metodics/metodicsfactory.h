@@ -111,8 +111,7 @@ private:
      * \brief Возвращает true, если есть шаблон методики с заданным uid
      * \param templateUID - uid методики
      */
-    bool isMethodicExists(const QString templateUID) const;
-    bool isMethodicKindExists(const QString templateUID) const;
+    bool isTemplateExists(const QString templateUID) const;
 
     QList<MetodicTemplate*> m_templates;
     QList<MetodicDefines::MetodicInfo> m_metodics;
