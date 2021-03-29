@@ -4,6 +4,7 @@
 #include "aanalyserdefines.h"
 #include "metodictemplate.h"
 #include "stabtesttemplate.h"
+#include "extend3dgamestemplate.h"
 #include "jumptesttemplate.h"
 #include "jumpheighttesttemplate.h"
 #include "teppingtesttemplate.h"
@@ -127,6 +128,7 @@ void MetodicsFactory::assignTemplates()
 {
 
     m_templates << new StabTestTemplate(this)
+                << new Extend3DGamesTemplate(this)
                 << new JumpTestTemplate(this)
                 << new JumpHeightTestTemplate(this)
                 << new TeppingTestTemplate(this)
@@ -274,7 +276,7 @@ bool MetodicsFactory::appendInArray(QJsonArray &arr, QJsonArray &arrPD, const Me
         //! Поиск методики в перечне шаблонов
         bool fnd = true;
         if (ms == msMethodic)
-            fnd = isTemplateExists(objMetPD["uid"].toString());
+            fnd = isTemplateExists(objMetPD["template"].toString());
 
         //! Нашли - можно искать в уже подключенных
         if (fnd)

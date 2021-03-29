@@ -86,6 +86,8 @@ public:
      */
     virtual bool isChannelRecordingDefault(const QString &channelUid) const = 0;
 
+    DeviceProtocols::Ports portName() const {return m_portName;}
+
 
 signals:
     void sendData(DeviceProtocols::DeviceData *data);
@@ -106,7 +108,7 @@ protected slots:
     virtual void on_error(const QString &err);
 
 protected:
-    DeviceProtocols::Ports portName() const {return m_portName;}
+//    DeviceProtocols::Ports portName() const {return m_portName;}
     void setPortName(const DeviceProtocols::Ports portName) {m_portName = portName;}
 
     SerialPort* port() const {return m_port;}

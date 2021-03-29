@@ -149,6 +149,10 @@ public:
     static QString zeroingTypeName(const Stabilan01Defines::ZeroingType ztCode);
     static QList<Stabilan01Defines::ZeroingType> zeroingTypes();
 
+    DeviceProtocols::TensoChannel tenso1Params() const {return m_tenso1;}
+    DeviceProtocols::TensoChannel tenso2Params() const {return m_tenso2;}
+    DeviceProtocols::TensoChannel tenso3Params() const {return m_tenso3;}
+
 protected:
     /*!
      * \brief Возвращает настройки порта
