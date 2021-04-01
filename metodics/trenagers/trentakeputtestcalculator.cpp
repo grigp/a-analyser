@@ -5,6 +5,8 @@
 #include "dataprovider.h"
 #include "trenresultfactors.h"
 
+#include <QDebug>
+
 TrenTakePutTestCalculator::TrenTakePutTestCalculator(const QString &testUid, QObject *parent)
     : TestCalculator(testUid, parent)
 {
@@ -24,16 +26,15 @@ void TrenTakePutTestCalculator::calculate()
             if (DataProvider::getProbeInfo(ti.probes.at(i), pi))
             {
                 auto factors = new TrenResultFactors(testUid(), pi.uid, ChannelsDefines::chanTrenResult);
-                auto score = factors->factorValue(TrenResultFactorsDefines::ScoreUid);
-                addPrimaryFactor(testUid(), TrenResultFactorsDefines::ScoreUid, score,
-                                 i, ChannelsDefines::chanTrenResult, pi.name);
-                auto faults = factors->factorValue(TrenResultFactorsDefines::FaultsUid);
-                addPrimaryFactor(testUid(), TrenResultFactorsDefines::FaultsUid, faults,
-                                 i, ChannelsDefines::chanTrenResult, pi.name);
 
-                FactorsDefines::FactorValue fvScore(TrenResultFactorsDefines::ScoreUid, score);
-                FactorsDefines::FactorValue fvFaults(TrenResultFactorsDefines::FaultsUid, faults);
-                m_factors << fvScore << fvFaults;
+                for (int j = 0; j < factors->size(); ++j)
+                {
+                    addPrimaryFactor(testUid(), factors->factorUid(j), factors->factorValue(j),
+                                     i, ChannelsDefines::chanTrenResult, pi.name);
+
+                    FactorsDefines::FactorValue fv(factors->factorUid(j), factors->factorValue(j));
+                    m_factors << fv;
+                }
 
                 return;  //! Только для одной пробы
             }

@@ -11,6 +11,15 @@ class Extend3DGamesExecute;
 
 class Driver;
 
+/*!
+ * \brief Структура параметров показателя в результатах игры GameResultsFactorInfo struct
+ */
+struct GameResultsFactorInfo
+{
+    QString uid;   //! uid показателя
+    double value;  //! Значение показателя
+};
+
 class Extend3DGamesExecute : public QWidget
 {
     Q_OBJECT
@@ -34,6 +43,12 @@ private:
     void savePatientData() const;
 
     void saveGameParams() const;
+
+    void getGameResult() const;
+
+    QList<GameResultsFactorInfo> getResultsFactors(const QString fn) const;
+    QString getAAnalyserUIDByGamesUid(const QString fUID) const;
+    double stringToDouble(const QString strVal) const;
 
     QString m_program = "";
     QString m_paramStr = "";

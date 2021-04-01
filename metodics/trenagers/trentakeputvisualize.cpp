@@ -3,7 +3,9 @@
 
 #include "aanalyserapplication.h"
 #include "trentakeputtestcalculator.h"
+#include "trenresultfactors.h"
 #include "factorsfactory.h"
+#include "baseutils.h"
 
 TrenTakePutVisualize::TrenTakePutVisualize(QWidget *parent) :
     QWidget(parent),
@@ -33,7 +35,13 @@ void TrenTakePutVisualize::setTest(const QString &testUid)
         auto fi = static_cast<AAnalyserApplication*>(QApplication::instance())->getFactorInfo(factorUid);
         auto itemName = new QStandardItem(fi.name());
         itemName->setEditable(false);
-        auto itemValue = new QStandardItem(QString::number(m_calculator->factor(i).value()));
+        QString sval = "";
+        //! Время обрабатываем отдельно
+        if (m_calculator->factor(i).uid() == TrenResultFactorsDefines::TimeUid)
+            sval = BaseUtils::getTimeBySecCount(m_calculator->factor(i).value());
+        else
+            sval = QString::number(m_calculator->factor(i).value());
+        auto itemValue = new QStandardItem(sval);
         itemValue->setEditable(false);
 
         model->appendRow(QList<QStandardItem*>() << itemName << itemValue);

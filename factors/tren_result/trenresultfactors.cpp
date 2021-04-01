@@ -53,4 +53,7 @@ void TrenResultFactors::registerFactors()
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(TrenResultFactorsDefines::FaultsUid, TrenResultFactorsDefines::GroupUid,
                            tr("Количество ошибок"), tr("Ошибки"), tr(""), 0, 3, FactorsDefines::nsDual, 12);
+    static_cast<AAnalyserApplication*>(QApplication::instance())->
+            registerFactor(TrenResultFactorsDefines::TimeUid, TrenResultFactorsDefines::GroupUid,
+                           tr("Время игры"), tr("Время"), tr("сек"), 0, 3, FactorsDefines::nsDual, 12);
 }
