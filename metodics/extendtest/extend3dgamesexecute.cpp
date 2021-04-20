@@ -46,6 +46,10 @@ void Extend3DGamesExecute::programExecute()
     savePatientData();
     saveGameParams();
 
+    QString fn = QStandardPaths::writableLocation(QStandardPaths::TempLocation) + "/A-Med/Shared/3d_games_result.txt";
+    if (QFile::exists(fn))
+        QFile::remove(fn);
+
     m_process = new QProcess(this);
     connect(m_process,
             static_cast<void(QProcess::*)(int, QProcess::ExitStatus)>(&QProcess::finished),
