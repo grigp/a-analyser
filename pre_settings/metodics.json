@@ -338,6 +338,22 @@
             }
         },
         {
+            "uid": "{60164BDD-78E1-4A0D-8B9E-F1485D268227}",
+            "name": "Тест на устойчивость",
+            "image": "Cross.png",
+            "template": "met_cross_uid",
+            "build_norms": false,
+            "kind": "{03FFE24D-56ED-4138-9FC7-A125A020C190}",
+            "params":
+            {
+                "stage_time": 15,
+                "direction_mode": "random",
+                "repeat_count": 1,
+                "change_stage_mode": "return",
+                "center_size": 15
+            }
+        },
+        {
             "uid": "{ACFA62A1-7F52-477E-B9C9-A7FF14B3E098}",
             "name": "Анализ высоты одиночного прыжка",
             "image": "JumpHeight.png",

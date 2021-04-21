@@ -137,5 +137,6 @@
         <file>images/Methodics/CyclistValley.png</file>
         <file>images/Methodics/CyclistVolcano.png</file>
         <file>images/Methodics/StarWars.png</file>
+        <file>images/Methodics/Cross.png</file>
     </qresource>
 </RCC>

@@ -10,6 +10,7 @@
 #include "teppingtesttemplate.h"
 #include "trentakeputtemplate.h"
 #include "droptesttemplate.h"
+#include "crosstemplate.h"
 #include "datadefines.h"
 #include "dataprovider.h"
 
@@ -133,7 +134,8 @@ void MetodicsFactory::assignTemplates()
                 << new JumpHeightTestTemplate(this)
                 << new TeppingTestTemplate(this)
                 << new DropTestTemplate(this)
-                << new TrenTakePutTemplate(this);
+                << new TrenTakePutTemplate(this)
+                << new CrossTemplate(this);
 }
 
 void MetodicsFactory::assignMetodics()

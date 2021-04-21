@@ -16,7 +16,7 @@ class DropTestParamsDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit DropTestParamsDialog(QWidget *parent = 0);
+    explicit DropTestParamsDialog(QWidget *parent = nullptr);
     ~DropTestParamsDialog();
 
     /*!
