@@ -7,6 +7,7 @@
 #include "datadefines.h"
 #include "crossdefines.h"
 #include "deviceprotocols.h"
+#include "metodicdefines.h"
 
 namespace Ui {
 class StabDynamicTestExecute;
@@ -45,12 +46,42 @@ protected:
     Driver* driver() {return m_driver;}
 
     bool isRecording() {return m_isRecording;}
+    bool isPause() {return m_isPause;}
+    void setIsPause(const bool isp) {m_isPause = isp;} ///< Пауза может быть по любой причине и управлять ею надо в подклассах
+
     int recCount() {return m_recCount;}
     int freqStab() {return m_freqStab;}
     int freqZ() {return m_freqZ;}
 
     void isShowValues(const bool isShow);
     void isTraceControl(const bool isTrace);
+
+    /*!
+     * \brief Виртуальная функция, показывающая, будет ли запись завершаться автоматически или вручную
+     * Подклассы могут менять это поведение, и запись может быть завершена вручную
+     * \return true - запись завершается автоматически по истечению сценария
+     */
+    virtual bool isAutoFinishRecord() {return true;}
+
+    /*!
+     * \brief Добавляет маркер
+     */
+    void addMarker();
+
+    /*!
+     * \brief Добавляет метку цели
+     * \param x, y - координаты цели
+     * \param colorBackground - цвет фона
+     * \param colorBorder - цвет границы
+     */
+    void addTarget(const double x, const double y, const QColor colorBackground, const QColor colorBorder);
+
+    /*!
+     * \brief setTarget - Устанавливает цель на позицию
+     * \param x, y - координаты цели
+     * \param idx - номер цели в списке
+     */
+    void setTarget(const double x, const double y, const int idx = 0);
 
 protected slots:
     virtual void start();
@@ -95,8 +126,11 @@ private:
     int m_freqZ {50};           ///< Частота дискретизации баллистограммы
 
     DataDefines::PatientKard m_kard;
+    MetodicDefines::MetodicInfo m_metInfo;
 
     bool m_isRecording {false};     ///< Протекает ли запись данных
+    bool m_isPause {false};         ///< Есть ли пауза в записи в настоящий момент
+                                    ///< Пауза может быть по любой причине и управлять ею надо в подклассах
     int m_recCount {0};             ///< Счетчик пакетов данных в пробе
 
     Driver* m_driver {nullptr};                             ///< Драйвер передающий данные

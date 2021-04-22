@@ -34,6 +34,7 @@ StabTestExecute::StabTestExecute(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    ui->wgtSKG->addMarker();
     ui->lblCommunicationError->setVisible(false);
     QTimer::singleShot(0, this, &StabTestExecute::start);
 

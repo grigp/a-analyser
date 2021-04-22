@@ -17,6 +17,7 @@ AreaSKG::AreaSKG(QWidget *parent) :
   , m_lineSKG(new LineSKG(128))
 {
     ui->setupUi(this);
+    m_targets.clear();
     setAreaSKG();
 }
 
@@ -39,16 +40,33 @@ void AreaSKG::setDiap(const int diap)
     ui->panSKG->ensureVisible(QRectF(-m_diap, -m_diap, m_diap * 2, m_diap * 2));
 }
 
+void AreaSKG::addMarker()
+{
+    m_marker = m_sceneSKG->addRect(QRectF(0, 0, 10, 10), QPen(Qt::darkRed), QBrush(Qt::red));
+}
+
 void AreaSKG::setMarker(const double x, const double y)
 {
-    int minS = qMin(ui->panSKG->width(), ui->panSKG->height());
-    double prop = static_cast<double>(minS / 2) / static_cast<double>(m_diap);
+    if (m_marker)
+    {
+        int minS = qMin(ui->panSKG->width(), ui->panSKG->height());
+        double prop = static_cast<double>(minS / 2) / static_cast<double>(m_diap);
 
-    m_marker->setPos(x * prop - m_marker->boundingRect().width() / 2,
-                     - y * prop - m_marker->boundingRect().height() / 2);
+        m_marker->setPos(x * prop - m_marker->boundingRect().width() / 2,
+                         - y * prop - m_marker->boundingRect().height() / 2);
 
-    if (m_isShowTrace)
-        m_traceSKG->add(x, y);
+        if (m_isShowTrace)
+            m_traceSKG->add(x, y);
+    }
+}
+
+void AreaSKG::setMarkerColor(const QColor colorBackground, const QColor colorBorder)
+{
+    if (m_marker)
+    {
+        m_marker->setBrush(colorBackground);
+        m_marker->setPen(colorBorder);
+    }
 }
 
 void AreaSKG::showTrace(const bool trace)
@@ -108,6 +126,22 @@ void AreaSKG::setColorEllipse(const QColor &color)
         m_lineSKG->setColorEllipse(color);
 }
 
+void AreaSKG::addTarget(const double x, const double y, const QColor colorBackground, const QColor colorBorder)
+{
+    QGraphicsRectItem* target = m_sceneSKG->addRect(QRectF(0, 0, 10, 10), colorBorder, colorBackground);
+    m_targets.append(target);
+
+    setTarget(x, y, m_targets.size() - 1);
+}
+
+void AreaSKG::setTarget(const double x, const double y, const int idx)
+{
+    int minS = qMin(ui->panSKG->width(), ui->panSKG->height());
+    double prop = static_cast<double>(minS / 2) / static_cast<double>(m_diap);
+    m_targets.at(idx)->setPos(x * prop - m_targets.at(idx)->boundingRect().width() / 2,
+                              - y * prop - m_targets.at(idx)->boundingRect().height() / 2);
+}
+
 void AreaSKG::resizeEvent(QResizeEvent *event)
 {
     ui->panSKG->ensureVisible(QRectF(-m_diap, -m_diap, m_diap * 2, m_diap * 2));
@@ -120,5 +154,4 @@ void AreaSKG::setAreaSKG()
     m_sceneSKG->addItem(m_gridSKG);
     m_sceneSKG->addItem(m_traceSKG);
     m_sceneSKG->addItem(m_lineSKG);
-    m_marker = m_sceneSKG->addRect(QRectF(0, 0, 10, 10), QPen(Qt::darkRed), QBrush(Qt::red));
 }

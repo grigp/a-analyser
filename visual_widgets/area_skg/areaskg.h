@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <QGraphicsScene>
+#include <QList>
 
 namespace Ui {
 class AreaSKG;
@@ -18,17 +19,29 @@ class AreaSKG : public QWidget
     Q_OBJECT
 
 public:
-    explicit AreaSKG(QWidget *parent = 0);
+    explicit AreaSKG(QWidget *parent = nullptr);
     ~AreaSKG();
 
     int diap() const;
     void setDiap(const int diap);
 
     /*!
+     * \brief Добавляет маркер
+     */
+    void addMarker();
+
+    /*!
      * \brief Устанавливает маркер
      * \param x и y - координаты маркера
      */
     void setMarker(const double x, const double y);
+
+    /*!
+     * \brief Устанавливает цвет маркера
+     * \param colorBackground - цвет фона
+     * \param colorBorder - цвет рамки
+     */
+    void setMarkerColor(const QColor colorBackground, const QColor colorBorder);
 
     /*!
      * \brief Переключает режим рисования следа
@@ -70,6 +83,21 @@ public:
      */
     void setColorEllipse(const QColor &color);
 
+    /*!
+     * \brief Добавляет метку цели
+     * \param x, y - координаты цели
+     * \param colorBackground - цвет фона
+     * \param colorBorder - цвет границы
+     */
+    void addTarget(const double x, const double y, const QColor colorBackground, const QColor colorBorder);
+
+    /*!
+     * \brief setTarget - Устанавливает цель на позицию
+     * \param x, y - координаты цели
+     * \param idx - номер цели в списке
+     */
+    void setTarget(const double x, const double y, const int idx = 0);
+
 protected:
     void resizeEvent(QResizeEvent *event);
 
@@ -83,6 +111,7 @@ private:
     TraceSKG* m_traceSKG {nullptr};
     LineSKG* m_lineSKG {nullptr};
     QGraphicsRectItem* m_marker {nullptr};
+    QList<QGraphicsItem*> m_targets;
 
     int m_diap {128};
     bool m_isShowTrace {false};

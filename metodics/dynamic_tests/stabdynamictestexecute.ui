@@ -614,9 +614,26 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>btnRecord</sender>
+   <signal>clicked()</signal>
+   <receiver>StabDynamicTestExecute</receiver>
+   <slot>recording()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>857</x>
+     <y>128</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1059</x>
+     <y>134</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>on_advChannelsClicked(bool)</slot>
   <slot>zeroing()</slot>
+  <slot>recording()</slot>
  </slots>
 </ui>

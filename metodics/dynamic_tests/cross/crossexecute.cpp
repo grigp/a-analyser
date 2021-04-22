@@ -1,15 +1,6 @@
 #include "crossexecute.h"
 #include "ui_crossexecute.h"
 
-//#include "testresultdata.h"
-//#include "aanalyserapplication.h"
-//#include "driver.h"
-//#include "channelsutils.h"
-//#include "settingsprovider.h"
-//#include "executewidget.h"
-
-//#include <QTimer>
-//#include <QMessageBox>
 #include <QDebug>
 
 CrossExecute::CrossExecute(QWidget *parent) :
@@ -17,6 +8,9 @@ CrossExecute::CrossExecute(QWidget *parent) :
     ui(new Ui::CrossExecute)
 {
     ui->setupUi(this);
+
+    addTarget(0, 0, Qt::green, Qt::darkGreen);
+    addMarker();
 
     setTitle("Тест на устойчивость");
     isShowValues(false);
@@ -47,50 +41,19 @@ void CrossExecute::start()
     StabDynamicTestExecute::start();
 }
 
-//void CrossExecute::closeEvent(QCloseEvent *event)
-//{
+void CrossExecute::getData(DeviceProtocols::DeviceData *data)
+{
+    StabDynamicTestExecute::getData(data);
+}
 
-//}
+void CrossExecute::on_communicationError(const QString &drvName, const QString &port, const int errorCode)
+{
+    StabDynamicTestExecute::on_communicationError(drvName, port, errorCode);
+}
 
-//void CrossExecute::start()
-//{
-//}
+void CrossExecute::recording()
+{
 
-//void CrossExecute::scaleChange(int scaleId)
-//{
-
-//}
-
-//void CrossExecute::getData(DeviceProtocols::DeviceData *data)
-//{
-//}
-
-//void CrossExecute::on_communicationError(const QString &drvName, const QString &port, const int errorCode)
-//{
-
-//}
-
-//void CrossExecute::zeroing()
-//{
-
-//}
-
-//void CrossExecute::calibrate()
-//{
-
-//}
-
-//void CrossExecute::recording()
-//{
-
-//}
-
-//void CrossExecute::on_advChannelsClicked(bool checked)
-//{
-//}
-
-//void CrossExecute::splitterMoved(int pos, int index)
-//{
-
-//}
+    StabDynamicTestExecute::recording();
+}
 

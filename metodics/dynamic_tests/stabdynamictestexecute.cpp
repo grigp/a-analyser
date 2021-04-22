@@ -72,6 +72,21 @@ void StabDynamicTestExecute::isTraceControl(const bool isTrace)
     ui->cbShowTrace->setVisible(isTrace);
 }
 
+void StabDynamicTestExecute::addMarker()
+{
+    ui->wgtSKG->addMarker();
+}
+
+void StabDynamicTestExecute::addTarget(const double x, const double y, const QColor colorBackground, const QColor colorBorder)
+{
+    ui->wgtSKG->addTarget(x, y, colorBackground, colorBorder);
+}
+
+void StabDynamicTestExecute::setTarget(const double x, const double y, const int idx)
+{
+   ui->wgtSKG->setTarget(x, y, idx);
+}
+
 void StabDynamicTestExecute::start()
 {
     //! Запрашиваем не протокол, а формат канала, тогда будем работать с любыми данными,
@@ -90,8 +105,8 @@ void StabDynamicTestExecute::start()
         setChannels();
 
         m_kard = static_cast<AAnalyserApplication*>(QApplication::instance())->getSelectedPatient();
-        MetodicDefines::MetodicInfo mi = static_cast<AAnalyserApplication*>(QApplication::instance())->getSelectedMetodic();
-        m_trd->newTest(m_kard.uid, mi.uid);
+        m_metInfo = static_cast<AAnalyserApplication*>(QApplication::instance())->getSelectedMetodic();
+        m_trd->newTest(m_kard.uid, m_metInfo.uid);
 
 //        m_patientWinPresent = SettingsProvider::valueFromRegAppCopy("", "PatientWindow", static_cast<QVariant>(true)).toBool();
 //        if (m_patientWinPresent && QApplication::desktop()->screenCount() > 1)
@@ -117,13 +132,9 @@ void StabDynamicTestExecute::getData(DeviceProtocols::DeviceData *data)
 {
     //! Любой канал от драйвера надо передавать окну дополнительных каналов
     ui->wgtAdvChannels->getData(data);
-//    if (m_isRecording)
-//    {
-//        //! Запись, если не задержка привыкания
-//        if (m_recCount >= probeParams().latentTime * m_freqStab)
-//            ui->wgtAdvChannels->record(data);
-//    }
-
+    //! Запись, если она запущена и нет паузы
+    if (m_isRecording && !m_isPause)
+        ui->wgtAdvChannels->record(data);
 
     //! Выбранный в переключателе канал, а не просто данные.
     //! Если драйвер будет передавать несколько стабилограмм, то отображать здесь мы будем только одну
@@ -180,7 +191,57 @@ void StabDynamicTestExecute::on_communicationError(const QString &drvName, const
 
 void StabDynamicTestExecute::recording()
 {
+    m_isRecording = ! m_isRecording;
 
+    ui->pbRec->setValue(0);
+    ui->lblRecLen->setText("00:00");
+
+    ui->btnZeroing->setEnabled(!m_isRecording);
+    ui->btnCalibrate->setEnabled(!m_isRecording);
+    ui->frScale->setEnabled(!m_isRecording);
+    ui->wgtAdvChannels->enabledControls(!m_isRecording);
+
+    if (m_isRecording)
+    {
+        if (isAutoFinishRecord())
+        {
+            ui->btnRecord->setIcon(QIcon(":/images/SaveNO.png"));
+            ui->btnRecord->setText(tr("Прервать"));
+        }
+        else
+        {
+            ui->btnRecord->setIcon(QIcon(":/images/SaveOK.png"));
+            ui->btnRecord->setText(tr("Завершить"));
+        }
+
+        m_trd->newProbe(m_metInfo.name);
+        ui->wgtAdvChannels->newProbe();
+
+
+//        if (!(m_patientWinPresent && QApplication::desktop()->screenCount() > 1))
+//        {
+//            showPatientWindow(m_params.at(m_probe).stimulCode);
+//            scaleChange(m_params.at(m_probe).scale);
+//        }
+//        if (m_patientWin)
+//            m_patientWin->run();
+    }
+    else
+    {
+//        if (m_patientWin)
+//            m_patientWin->stop();
+//        if (!(m_patientWinPresent && QApplication::desktop()->screenCount() > 1))
+//            hidePatientWindow();
+
+        ui->wgtAdvChannels->abortProbe();
+
+
+        ui->btnRecord->setIcon(QIcon(":/images/Save.png"));
+        ui->btnRecord->setText(tr("Запись"));
+//        if (! probeParams().autoEnd)
+//            finishTest();
+    }
+    m_recCount = 0;
 }
 
 void StabDynamicTestExecute::scaleChange(int scaleId)
@@ -226,3 +287,4 @@ void StabDynamicTestExecute::setChannels()
     }
     ui->frSelectChannel->setVisible(listChanUid.size() > 1);
 }
+

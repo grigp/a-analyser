@@ -31,32 +31,15 @@ protected:
 protected slots:
     void start() override;
 
+    /*!
+     * \brief Управляет началом / остановом / прерыванием записи
+     */
+    void recording() override;
 
-private slots:
+    void getData(DeviceProtocols::DeviceData *data) override;
 
-//    void scaleChange(int scaleId);
+    void on_communicationError(const QString &drvName, const QString &port, const int errorCode) override;
 
-//    void getData(DeviceProtocols::DeviceData *data);
-//    void on_communicationError(const QString &drvName, const QString &port, const int errorCode);
-
-//    /*!
-//     * \brief Центровка
-//     */
-//    void zeroing();
-
-//    /*!
-//     * \brief Калибровка
-//     */
-//    void calibrate();
-
-//    /*!
-//     * \brief Управляет началом / остановом / прерыванием записи
-//     */
-//    void recording();
-
-//    void on_advChannelsClicked(bool checked);
-
-//    void splitterMoved(int pos,int index);
 
 private:
     Ui::CrossExecute *ui;
@@ -67,18 +50,6 @@ private:
     CrossDefines::ChangeStateMode m_changeStateMode{CrossDefines::csmReturn};
     CrossDefines::DirectionMode m_directionMode{CrossDefines::dmRandom};
 
-//    int m_freqStab = 50;        ///< Частота дискретизации стабилограммы
-//    int m_freqZ = 50;           ///< Частота дискретизации баллистограммы
-
-//    DataDefines::PatientKard m_kard;
-
-//    bool m_isRecording = false;     ///< Протекает ли запись данных
-//    int m_recCount = 0;             ///< Счетчик пакетов данных в пробе
-
-//    Driver* m_driver {nullptr};     ///< Драйвер передающий данные
-//    DeviceProtocols::StabControl* m_stabControl;  ///< Управление стабилографией в драйвере
-
-//    TestResultData *m_trd;  ///< Объект, записывающий данные в базу
 };
 
 #endif // CROSSEXECUTE_H
