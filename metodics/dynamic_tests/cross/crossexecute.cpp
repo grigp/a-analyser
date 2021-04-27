@@ -1,6 +1,8 @@
 #include "crossexecute.h"
 #include "ui_crossexecute.h"
 
+#include "crosspatientwindow.h"
+
 #include <QDebug>
 
 CrossExecute::CrossExecute(QWidget *parent) :
@@ -27,6 +29,7 @@ void CrossExecute::setParams(const QJsonObject &params)
     m_stageTime = params["stage_time"].toInt();
     m_repeatCount = params["repeat_count"].toInt();
     m_centerSize = params["center_size"].toInt();
+    m_delayTime = params["delay_time"].toInt();
 
     auto csm = params["change_stage_mode"].toString();
     m_changeStateMode = CrossDefines::ChangeStateModeValueIndex.value(csm);
@@ -34,6 +37,11 @@ void CrossExecute::setParams(const QJsonObject &params)
     m_directionMode = CrossDefines::DirectionModeValueIndex.value(dm);
 
     StabDynamicTestExecute::setParams(params);
+}
+
+StabDynamicTestPatientWindow *CrossExecute::createPatientWindow()
+{
+    return new CrossPatientWindow(this);
 }
 
 void CrossExecute::start()

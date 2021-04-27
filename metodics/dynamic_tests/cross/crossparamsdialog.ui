@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>549</width>
-    <height>336</height>
+    <height>350</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -73,6 +73,12 @@
              <width>70</width>
              <height>0</height>
             </size>
+           </property>
+           <property name="minimum">
+            <number>5</number>
+           </property>
+           <property name="maximum">
+            <number>30</number>
            </property>
           </widget>
          </item>
@@ -158,6 +164,12 @@
              <height>0</height>
             </size>
            </property>
+           <property name="minimum">
+            <number>1</number>
+           </property>
+           <property name="maximum">
+            <number>10</number>
+           </property>
           </widget>
          </item>
         </layout>
@@ -175,7 +187,7 @@
          <item>
           <widget class="QLabel" name="lblChangeStateMode">
            <property name="text">
-            <string>После завершения этапа ожиждать</string>
+            <string>После завершения этапа ожидать</string>
            </property>
           </widget>
          </item>
@@ -242,6 +254,63 @@
              <height>0</height>
             </size>
            </property>
+           <property name="minimum">
+            <number>10</number>
+           </property>
+           <property name="maximum">
+            <number>40</number>
+           </property>
+           <property name="singleStep">
+            <number>5</number>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item>
+       <widget class="QFrame" name="frDelayTime">
+        <property name="frameShape">
+         <enum>QFrame::StyledPanel</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Raised</enum>
+        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout_6">
+         <item>
+          <widget class="QLabel" name="lblDelayTime">
+           <property name="text">
+            <string>Время задержки перед следующим этапом, сек</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer_6">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QSpinBox" name="edDelayTime">
+           <property name="minimumSize">
+            <size>
+             <width>70</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="minimum">
+            <number>1</number>
+           </property>
+           <property name="maximum">
+            <number>15</number>
+           </property>
           </widget>
          </item>
         </layout>
@@ -284,8 +353,8 @@
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>248</x>
-     <y>254</y>
+     <x>259</x>
+     <y>338</y>
     </hint>
     <hint type="destinationlabel">
      <x>157</x>
@@ -300,8 +369,8 @@
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>316</x>
-     <y>260</y>
+     <x>327</x>
+     <y>338</y>
     </hint>
     <hint type="destinationlabel">
      <x>286</x>
@@ -309,5 +378,24 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>cbChangeStateMode</sender>
+   <signal>currentIndexChanged(int)</signal>
+   <receiver>CrossParamsDialog</receiver>
+   <slot>onChangeStateMode(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>407</x>
+     <y>183</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>553</x>
+     <y>152</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
+ <slots>
+  <slot>onChangeStateMode(int)</slot>
+ </slots>
 </ui>

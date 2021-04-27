@@ -7,9 +7,11 @@
 #include "channelsutils.h"
 #include "settingsprovider.h"
 #include "executewidget.h"
+#include "stabdynamictestpatientwindow.h"
 
 #include <QTimer>
 #include <QMessageBox>
+#include <QDesktopWidget>
 #include <QDebug>
 
 StabDynamicTestExecute::StabDynamicTestExecute(QWidget *parent) :
@@ -84,7 +86,20 @@ void StabDynamicTestExecute::addTarget(const double x, const double y, const QCo
 
 void StabDynamicTestExecute::setTarget(const double x, const double y, const int idx)
 {
-   ui->wgtSKG->setTarget(x, y, idx);
+    ui->wgtSKG->setTarget(x, y, idx);
+}
+
+StabDynamicTestPatientWindow *StabDynamicTestExecute::createPatientWindow()
+{
+    return nullptr;
+}
+
+void StabDynamicTestExecute::finishTest()
+{
+    hidePatientWindow();
+    m_isRecording = false;
+    m_trd->saveTest();
+    static_cast<ExecuteWidget*>(parent())->showDB();
 }
 
 void StabDynamicTestExecute::start()
@@ -108,9 +123,9 @@ void StabDynamicTestExecute::start()
         m_metInfo = static_cast<AAnalyserApplication*>(QApplication::instance())->getSelectedMetodic();
         m_trd->newTest(m_kard.uid, m_metInfo.uid);
 
-//        m_patientWinPresent = SettingsProvider::valueFromRegAppCopy("", "PatientWindow", static_cast<QVariant>(true)).toBool();
-//        if (m_patientWinPresent && QApplication::desktop()->screenCount() > 1)
-//            showPatientWindow(m_params.at(m_probe).stimulCode);
+        m_patientWinPresent = SettingsProvider::valueFromRegAppCopy("", "PatientWindow", static_cast<QVariant>(true)).toBool();
+        if (m_patientWinPresent && QApplication::desktop()->screenCount() > 1)
+            createAndShowPatientWindow();
         ui->cbScale->setCurrentIndex(0);
 
         ui->wgtAdvChannels->assignDriver(m_driver, m_trd);
@@ -148,8 +163,8 @@ void StabDynamicTestExecute::getData(DeviceProtocols::DeviceData *data)
         ui->lblZ->setText(QString("Z = %1").arg(stabData->z(), 0, 'f', 2));
         ui->wgtSKG->setMarker(stabData->x(), stabData->y());
 
-//        if (m_patientWin)
-//            m_patientWin->setMarker(stabData->x(), stabData->y());
+        if (m_patientWin)
+            m_patientWin->setMarker(stabData->x(), stabData->y());
 
 //        if (m_isRecording)
 //        {
@@ -217,29 +232,26 @@ void StabDynamicTestExecute::recording()
         m_trd->newProbe(m_metInfo.name);
         ui->wgtAdvChannels->newProbe();
 
-
-//        if (!(m_patientWinPresent && QApplication::desktop()->screenCount() > 1))
-//        {
-//            showPatientWindow(m_params.at(m_probe).stimulCode);
+        if (!(m_patientWinPresent && QApplication::desktop()->screenCount() > 1))
+        {
+            createAndShowPatientWindow();
 //            scaleChange(m_params.at(m_probe).scale);
-//        }
-//        if (m_patientWin)
-//            m_patientWin->run();
+        }
+        if (m_patientWin)
+            m_patientWin->run();
     }
     else
     {
-//        if (m_patientWin)
-//            m_patientWin->stop();
-//        if (!(m_patientWinPresent && QApplication::desktop()->screenCount() > 1))
-//            hidePatientWindow();
+        if (m_patientWin)
+            m_patientWin->stop();
+        if (!(m_patientWinPresent && QApplication::desktop()->screenCount() > 1))
+            hidePatientWindow();
 
         ui->wgtAdvChannels->abortProbe();
 
 
         ui->btnRecord->setIcon(QIcon(":/images/Save.png"));
         ui->btnRecord->setText(tr("Запись"));
-//        if (! probeParams().autoEnd)
-//            finishTest();
     }
     m_recCount = 0;
 }
@@ -286,5 +298,36 @@ void StabDynamicTestExecute::setChannels()
         }
     }
     ui->frSelectChannel->setVisible(listChanUid.size() > 1);
+}
+
+void StabDynamicTestExecute::createAndShowPatientWindow()
+{
+    m_patientWin = createPatientWindow();
+
+    if (m_patientWin)
+    {
+        auto size = QApplication::desktop()->availableGeometry(0).size();
+        auto x = QApplication::desktop()->availableGeometry(0).x();
+        auto y = QApplication::desktop()->availableGeometry(0).y();
+        if (m_patientWinPresent && QApplication::desktop()->screenCount() > 1)
+        {
+            size = QApplication::desktop()->availableGeometry(1).size();
+            x = QApplication::desktop()->availableGeometry(1).x();
+            y = QApplication::desktop()->availableGeometry(1).y();
+        }
+        m_patientWin->resize(size);
+        m_patientWin->move(x, y);
+
+        m_patientWin->show();
+    }
+}
+
+void StabDynamicTestExecute::hidePatientWindow()
+{
+    if (m_patientWin)
+    {
+        delete m_patientWin;
+        m_patientWin = nullptr;
+    }
 }
 

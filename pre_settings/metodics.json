@@ -350,7 +350,8 @@
                 "direction_mode": "random",
                 "repeat_count": 1,
                 "change_stage_mode": "return",
-                "center_size": 15
+                "center_size": 15,
+                "delay_time": 5
             }
         },
         {

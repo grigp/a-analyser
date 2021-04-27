@@ -13,6 +13,8 @@ namespace Ui {
 class CrossExecute;
 }
 
+class StabDynamicTestPatientWindow;
+
 /*!
  * \brief Виджет выполнения теста на устойчивость CrossExecute class
  */
@@ -27,6 +29,10 @@ public:
     void setParams(const QJsonObject &params) override;
 
 protected:
+    /*!
+     * \brief Виртуальная функция, создающая окно пациента. Ложна быть перекрыта в подклассах
+     */
+    StabDynamicTestPatientWindow* createPatientWindow() override;
 
 protected slots:
     void start() override;
@@ -47,6 +53,7 @@ private:
     int m_stageTime {10};
     int m_repeatCount {1};
     int m_centerSize {15};
+    int m_delayTime {5};
     CrossDefines::ChangeStateMode m_changeStateMode{CrossDefines::csmReturn};
     CrossDefines::DirectionMode m_directionMode{CrossDefines::dmRandom};
 

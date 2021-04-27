@@ -30,6 +30,7 @@ void CrossParamsDialog::setParams(const QJsonObject &params)
     ui->edStageTime->setValue(params["stage_time"].toInt());
     ui->edRepeatCount->setValue(params["repeat_count"].toInt());
     ui->edCenterSize->setValue(params["center_size"].toInt());
+    ui->edDelayTime->setValue(params["delay_time"].toInt());
 
     auto csm = params["change_stage_mode"].toString();
     ui->cbChangeStateMode->setCurrentIndex(CrossDefines::ChangeStateModeValueIndex.value(csm));
@@ -43,6 +44,7 @@ QJsonObject CrossParamsDialog::getParams()
     retval["stage_time"] = ui->edStageTime->value();
     retval["repeat_count"] = ui->edRepeatCount->value();
     retval["center_size"] = ui->edCenterSize->value();
+    retval["delay_time"] = ui->edDelayTime->value();
 
     auto valCSM = static_cast<CrossDefines::ChangeStateMode>(ui->cbChangeStateMode->currentIndex());
     retval["change_stage_mode"] = CrossDefines::ChangeStateModeValueName.value(valCSM);
@@ -50,4 +52,10 @@ QJsonObject CrossParamsDialog::getParams()
     retval["direction_mode"] = CrossDefines::DirectionModeValueName.value(valDM);
 
     return retval;
+}
+
+void CrossParamsDialog::onChangeStateMode(int index)
+{
+    ui->frCenterSize->setVisible(index == 0);
+    ui->frDelayTime->setVisible(index == 1);
 }

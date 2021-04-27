@@ -17,6 +17,7 @@ class TestResultData;
 class Stabilogram;
 class Ballistogram;
 class Driver;
+class StabDynamicTestPatientWindow;
 
 /*!
  * \brief Базовый класс виджета выполнения стабилометрического динамического теста StabDynamicTestExecute class
@@ -83,6 +84,17 @@ protected:
      */
     void setTarget(const double x, const double y, const int idx = 0);
 
+    /*!
+     * \brief Виртуальная функция, создающая окно пациента. Ложна быть перекрыта в подклассах
+     */
+    virtual StabDynamicTestPatientWindow* createPatientWindow();
+
+    /*!
+     * \brief Действия по завершению теста
+     */
+    virtual void finishTest();
+
+
 protected slots:
     virtual void start();
 
@@ -122,6 +134,17 @@ private:
      */
     void setChannels();
 
+    /*!
+     * \brief Создает и показывает окно пациента
+     */
+    void createAndShowPatientWindow();
+
+    /*!
+     * \brief Прячет окно пациента
+     */
+    void hidePatientWindow();
+
+
     int m_freqStab {50};        ///< Частота дискретизации стабилограммы
     int m_freqZ {50};           ///< Частота дискретизации баллистограммы
 
@@ -137,6 +160,9 @@ private:
     DeviceProtocols::StabControl* m_stabControl {nullptr};  ///< Управление стабилографией в драйвере
 
     TestResultData *m_trd;  ///< Объект, записывающий данные в базу
+
+    bool m_patientWinPresent {false};
+    StabDynamicTestPatientWindow *m_patientWin {nullptr};
 };
 
 #endif // STABDYNAMICTESTEXECUTE_H

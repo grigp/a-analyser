@@ -27,6 +27,9 @@ public:
      */
     QJsonObject getParams();
 
+private slots:
+    void onChangeStateMode(int index);
+
 private:
     Ui::CrossParamsDialog *ui;
 };
