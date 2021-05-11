@@ -8,6 +8,7 @@ CrossPatientWindow::CrossPatientWindow(QWidget *parent) :
     ui(new Ui::CrossPatientWindow)
 {
     ui->setupUi(this);
+    setVisibleMarker(true);
 }
 
 CrossPatientWindow::~CrossPatientWindow()
@@ -15,10 +16,17 @@ CrossPatientWindow::~CrossPatientWindow()
     delete ui;
 }
 
+void CrossPatientWindow::setMarker(const double x, const double y)
+{
+    StabDynamicTestPatientWindow::setMarker(x, y);
+}
+
 void CrossPatientWindow::run()
 {
+    StabDynamicTestPatientWindow::run();
 }
 
 void CrossPatientWindow::stop()
 {
+    StabDynamicTestPatientWindow::stop();
 }

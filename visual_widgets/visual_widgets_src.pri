@@ -10,6 +10,7 @@ include(area_graph/area_graph_src.pri)
 include(oscilloscope/oscilloscope_src.pri)
 include(rgbled/rgbled_src.pri)
 include(circlenormindicator/circlenormindicator_src.pri)
+include(dynamic_test_stimul/dynamic_test_stimul_src.pri)
 
 HEADERS += \
 

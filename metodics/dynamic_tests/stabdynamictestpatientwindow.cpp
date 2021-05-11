@@ -1,6 +1,8 @@
 #include "stabdynamictestpatientwindow.h"
 #include "ui_stabdynamictestpatientwindow.h"
 
+#include "dynamicteststimul.h"
+
 StabDynamicTestPatientWindow::StabDynamicTestPatientWindow(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::StabDynamicTestPatientWindow)
@@ -30,13 +32,25 @@ void StabDynamicTestPatientWindow::stop()
 
 }
 
+void StabDynamicTestPatientWindow::setDiap(const int diap)
+{
+    m_diap = diap;
+    ui->wgtStimul->setDiap(diap);
+}
+
 void StabDynamicTestPatientWindow::setMarker(const double x, const double y)
 {
     m_X = x;
     m_Y = y;
+    ui->wgtStimul->setMarker(x, y);
 }
 
 void StabDynamicTestPatientWindow::setVisibleMarker(const bool isVisible)
 {
-    m_isVisibleMarker = isVisible;
+    ui->wgtStimul->setVisibleMarker(isVisible);
+}
+
+bool StabDynamicTestPatientWindow::isVisibleMarker() const
+{
+    return ui->wgtStimul->visibleMarker();
 }

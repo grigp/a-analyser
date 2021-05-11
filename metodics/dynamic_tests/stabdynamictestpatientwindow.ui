@@ -1,6 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
  <class>StabDynamicTestPatientWindow</class>
- <widget name="StabDynamicTestPatientWindow" class="QDialog">
+ <widget class="QDialog" name="StabDynamicTestPatientWindow">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -12,7 +13,35 @@
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <property name="spacing">
+    <number>1</number>
+   </property>
+   <property name="leftMargin">
+    <number>1</number>
+   </property>
+   <property name="topMargin">
+    <number>1</number>
+   </property>
+   <property name="rightMargin">
+    <number>1</number>
+   </property>
+   <property name="bottomMargin">
+    <number>1</number>
+   </property>
+   <item>
+    <widget class="DynamicTestStimul" name="wgtStimul" native="true"/>
+   </item>
+  </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>DynamicTestStimul</class>
+   <extends>QWidget</extends>
+   <header location="global">dynamicteststimul.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

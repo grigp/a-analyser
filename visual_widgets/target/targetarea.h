@@ -15,8 +15,8 @@ class TargetArea : public QWidget
     Q_OBJECT
 
 public:
-    explicit TargetArea(QWidget *parent = 0);
-    ~TargetArea();
+    explicit TargetArea(QWidget *parent = nullptr);
+    ~TargetArea() override;
 
     void setDiap(const int diap);
     int diap() const;

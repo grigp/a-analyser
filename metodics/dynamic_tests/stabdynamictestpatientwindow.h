@@ -29,7 +29,7 @@ public:
      * \brief Виртуальная функция установки диапазона изменения координат
      * \param diap - диапазон
      */
-    virtual void setDiap(const int diap) {m_diap = diap;}
+    virtual void setDiap(const int diap);
     int diap() const {return  m_diap;}
 
     /*!
@@ -44,7 +44,7 @@ public:
      * \brief Управление видимостью маркера
      */
     virtual void setVisibleMarker(const bool isVisible);
-    bool isVisibleMarker() const {return m_isVisibleMarker;}
+    bool isVisibleMarker() const;
 
 private:
     Ui::StabDynamicTestPatientWindow *ui;
@@ -52,7 +52,6 @@ private:
     int m_diap {128};
     double m_X {0};
     double m_Y {0};
-    bool m_isVisibleMarker {false};
 };
 
 #endif // STABDYNAMICTESTPATIENTWINDOW_H

@@ -18,6 +18,12 @@ public:
     ~CrossPatientWindow() override;
 
     /*!
+     * \brief Установка маркера
+     * \param x, y - координаты маркера
+     */
+    void setMarker(const double x, const double y) override;
+
+    /*!
      * \brief Действия при начале записи
      */
     void run() override;
