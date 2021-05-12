@@ -9,6 +9,7 @@ CrossPatientWindow::CrossPatientWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     setVisibleMarker(true);
+    addTarget(0, 0, Qt::green, 30);
 }
 
 CrossPatientWindow::~CrossPatientWindow()

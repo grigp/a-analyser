@@ -46,6 +46,20 @@ static QMap<DirectionMode, QString> DirectionModeValueName {
   , std::pair<DirectionMode, QString> (dmCounterClockwise, "counter_clockwise")
 };
 
+/*!
+ * \brief Коды направлений Directions enum
+ * Нумеруются по часовой стрелке
+ */
+enum Directions
+{
+      dirNone = -1
+    , dirUp = 0
+    , dirRight
+    , dirDown
+    , dirLeft
+};
+
+
 }
 
 #endif // CROSSDEFINES_H

@@ -54,3 +54,23 @@ bool StabDynamicTestPatientWindow::isVisibleMarker() const
 {
     return ui->wgtStimul->visibleMarker();
 }
+
+void StabDynamicTestPatientWindow::initTargets(const int count, const QColor color, const int size)
+{
+    ui->wgtStimul->initTargets(count, color, size);
+}
+
+void StabDynamicTestPatientWindow::addTarget(const double x, const double y, const QColor color, const int size, const QString label)
+{
+    ui->wgtStimul->addTarget(x, y, color, size, label);
+}
+
+void StabDynamicTestPatientWindow::setTargetInfo(const int idx, const QColor color, const int size, const QString label)
+{
+    ui->wgtStimul->setTargetInfo(idx, color, size, label);
+}
+
+void StabDynamicTestPatientWindow::setTarget(const double x, const double y, const int idx )
+{
+    ui->wgtStimul->setTarget(x, y, idx);
+}

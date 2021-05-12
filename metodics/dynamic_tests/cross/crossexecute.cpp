@@ -52,11 +52,50 @@ void CrossExecute::start()
 void CrossExecute::getData(DeviceProtocols::DeviceData *data)
 {
     StabDynamicTestExecute::getData(data);
+
+//    setTarget(0, n);
+
 }
 
 void CrossExecute::on_communicationError(const QString &drvName, const QString &port, const int errorCode)
 {
     StabDynamicTestExecute::on_communicationError(drvName, port, errorCode);
+}
+
+bool CrossExecute::newDirection()
+{
+    if (m_curDirection != CrossDefines::dirNone)
+        m_stagesProcess[m_curDirection]++;
+
+    if (m_directionMode == CrossDefines::dmClockwise)
+    {
+        if (m_curDirection < CrossDefines::dirLeft)
+        {
+            int d = static_cast<int>(m_curDirection);
+            d++;
+            m_curDirection = static_cast<CrossDefines::Directions>(d);
+        }
+        else
+            m_curDirection = CrossDefines::dirUp;
+    }
+    else
+    if (m_directionMode == CrossDefines::dmCounterClockwise)
+    {
+        if (m_curDirection > CrossDefines::dirUp)
+        {
+            int d = static_cast<int>(m_curDirection);
+            d--;
+            m_curDirection = static_cast<CrossDefines::Directions>(d);
+        }
+        else
+            m_curDirection = CrossDefines::dirLeft;
+    }
+    else
+    if (m_directionMode == CrossDefines::dmRandom)
+    {
+        int d = qrand() % 4;
+
+    }
 }
 
 void CrossExecute::recording()

@@ -50,6 +50,13 @@ protected slots:
 private:
     Ui::CrossExecute *ui;
 
+    /*!
+     * \brief Возвращает направление прохода в зависимости от этапа теста
+     * \return true, если движение определено или false, если тест окончен
+     * m_curDirection - текущее направление;
+     */
+    bool newDirection();
+
     int m_stageTime {10};
     int m_repeatCount {1};
     int m_centerSize {15};
@@ -57,6 +64,12 @@ private:
     CrossDefines::ChangeStateMode m_changeStateMode{CrossDefines::csmReturn};
     CrossDefines::DirectionMode m_directionMode{CrossDefines::dmRandom};
 
+    //! Прохождение этапов теста. Значение - кол-во повторений на каждом этапе. 0 -> m_repeatCount.
+    //! Индексы CrossDefines::dirUp .. CrossDefines::dirLeft
+    int m_stagesProcess[4] {0};
+
+    //! Текущее направление перемещения
+    CrossDefines::Directions m_curDirection {CrossDefines::dirNone};
 };
 
 #endif // CROSSEXECUTE_H

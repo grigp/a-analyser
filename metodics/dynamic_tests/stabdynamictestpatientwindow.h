@@ -46,6 +46,39 @@ public:
     virtual void setVisibleMarker(const bool isVisible);
     bool isVisibleMarker() const;
 
+    /*!
+     * \brief Инициализирует count целей по центру с заданным цветом и размером
+     * \param count - кол-во целей
+     * \param color - цвет целей
+     * \param size - размер целей
+     */
+    void initTargets(const int count, const QColor color, const int size);
+
+    /*!
+     * \brief Добавляет цель
+     * \param x, y - координаты цели в мм
+     * \param color - цвет цели
+     * \param size - размер цели
+     * \param label - подпись цели
+     */
+    void addTarget(const double x, const double y, const QColor color, const int size, const QString label = "");
+
+    /*!
+     * \brief Устанавливает параметры цели с заданным номером
+     * \param idx - номер цели
+     * \param color - цвет цели
+     * \param size - размер цели
+     * \param label - подпись цели
+     */
+    void setTargetInfo(const int idx, const QColor color, const int size, const QString label = "");
+
+    /*!
+     * \brief Устанавливает цель с номером на позицию в миллиметрах
+     * \param idx - номер цели
+     * \param x, y - координаты цели
+     */
+    void setTarget(const double x, const double y, const int idx = 0);
+
 private:
     Ui::StabDynamicTestPatientWindow *ui;
 

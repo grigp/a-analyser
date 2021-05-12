@@ -87,6 +87,8 @@ void StabDynamicTestExecute::addTarget(const double x, const double y, const QCo
 void StabDynamicTestExecute::setTarget(const double x, const double y, const int idx)
 {
     ui->wgtSKG->setTarget(x, y, idx);
+    if (m_patientWin)
+        m_patientWin->setTarget(x, y, idx);
 }
 
 StabDynamicTestPatientWindow *StabDynamicTestExecute::createPatientWindow()

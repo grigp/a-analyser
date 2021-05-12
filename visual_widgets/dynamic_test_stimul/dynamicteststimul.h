@@ -78,7 +78,7 @@ public:
      * \param idx - номер цели
      * \param x, y - координаты цели
      */
-    void setTarget(const int idx, const double x, const double y);
+    void setTarget(const double x, const double y, const int idx = 0);
 
 protected:
     void paintEvent(QPaintEvent *event) override;

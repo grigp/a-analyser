@@ -49,17 +49,15 @@ void DynamicTestStimul::setTargetInfo(const int idx, const QColor color, const i
     ti.size = size;
     ti.label = label;
     m_targets.replace(idx, ti);
-    repaint();
 }
 
-void DynamicTestStimul::setTarget(const int idx, const double x, const double y)
+void DynamicTestStimul::setTarget(const double x, const double y, const int idx)
 {
     Q_ASSERT((idx >= 0) && (idx < m_targets.size()));
     TargetInfo ti = m_targets.at(idx);
     ti.x = x;
     ti.y = y;
     m_targets.replace(idx, ti);
-    repaint();
 }
 
 void DynamicTestStimul::paintEvent(QPaintEvent *event)
