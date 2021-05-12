@@ -166,6 +166,7 @@ void StabDynamicTestExecute::getData(DeviceProtocols::DeviceData *data)
         if (m_patientWin)
             m_patientWin->setMarker(stabData->x(), stabData->y());
 
+
 //        if (m_isRecording)
 //        {
 //            ++m_recCount;
