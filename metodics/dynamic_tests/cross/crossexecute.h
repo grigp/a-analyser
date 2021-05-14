@@ -14,6 +14,7 @@ class CrossExecute;
 }
 
 class StabDynamicTestPatientWindow;
+class CrossResultData;
 
 /*!
  * \brief Виджет выполнения теста на устойчивость CrossExecute class
@@ -33,6 +34,11 @@ protected:
      * \brief Виртуальная функция, создающая окно пациента. Ложна быть перекрыта в подклассах
      */
     StabDynamicTestPatientWindow* createPatientWindow() override;
+
+    /*!
+     * \brief Действия по завершению теста
+     */
+    void finishTest() override;
 
 protected slots:
     void start() override;
@@ -97,6 +103,8 @@ private:
 
     //! Текущий этап (переход / ожидание)
     CrossDefines::Stage m_stage {CrossDefines::stgNo};
+
+    CrossResultData* m_res {nullptr};
 };
 
 #endif // CROSSEXECUTE_H

@@ -2,12 +2,15 @@
 #include "ui_crossexecute.h"
 
 #include "crosspatientwindow.h"
+#include "crossresultdata.h"
+#include "testresultdata.h"
 
 #include <QDebug>
 
 CrossExecute::CrossExecute(QWidget *parent) :
     StabDynamicTestExecute(parent),
     ui(new Ui::CrossExecute)
+  , m_res (new CrossResultData(ChannelsDefines::chanCrossResult))
 {
     ui->setupUi(this);
 
@@ -44,6 +47,13 @@ StabDynamicTestPatientWindow *CrossExecute::createPatientWindow()
     return new CrossPatientWindow(this);
 }
 
+void CrossExecute::finishTest()
+{
+    trd()->addChannel(m_res);
+
+    StabDynamicTestExecute::finishTest();
+}
+
 void CrossExecute::start()
 {
     StabDynamicTestExecute::start();
@@ -72,6 +82,7 @@ void CrossExecute::getData(DeviceProtocols::DeviceData *data)
                     setTarget(m_tx, m_ty);
                     m_stage = CrossDefines::stgWait;
                     m_waitCounter = 0;
+                    m_res->addEvent(0, m_curDirection, recCount());
                 }
             }
             else
@@ -82,7 +93,10 @@ void CrossExecute::getData(DeviceProtocols::DeviceData *data)
                 if (waitingSuccessful())
                 {
                     if (newDirection())  //! Новое направление
+                    {
+                        m_res->addEvent(1, m_curDirection, recCount());
                         m_stage = CrossDefines::stgGo;  //! Успешно - двигаем цель
+                    }
                     else
                         finishTest();                   //! Нет - надо выходить, тест закончен
                 }
@@ -211,6 +225,9 @@ void CrossExecute::recording()
             m_stagesProcess[i] = 0;
         m_stage = CrossDefines::stgGo;
         newDirection();
+        m_res->setFreq(freqStab());
+        m_res->setStageTime(m_stageTime);
+        m_res->addEvent(1, m_curDirection, recCount());
     }
     else
     {
