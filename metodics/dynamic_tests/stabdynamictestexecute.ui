@@ -630,10 +630,27 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>cbScale</sender>
+   <signal>currentIndexChanged(int)</signal>
+   <receiver>StabDynamicTestExecute</receiver>
+   <slot>scaleChange(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>985</x>
+     <y>89</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1056</x>
+     <y>98</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>on_advChannelsClicked(bool)</slot>
   <slot>zeroing()</slot>
   <slot>recording()</slot>
+  <slot>scaleChange(int)</slot>
  </slots>
 </ui>

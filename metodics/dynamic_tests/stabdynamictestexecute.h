@@ -35,6 +35,9 @@ public:
 protected:
     void closeEvent(QCloseEvent *event) override;
 
+    double x() {return m_x;}
+    double y() {return m_y;}
+
     /*!
      * \brief Устанавливает заголовок окна
      */
@@ -46,16 +49,22 @@ protected:
 
     Driver* driver() {return m_driver;}
 
-    bool isRecording() {return m_isRecording;}
-    bool isPause() {return m_isPause;}
+    bool isRecording() const {return m_isRecording;}
+    bool isPause() const {return m_isPause;}
     void setIsPause(const bool isp) {m_isPause = isp;} ///< Пауза может быть по любой причине и управлять ею надо в подклассах
 
-    int recCount() {return m_recCount;}
-    int freqStab() {return m_freqStab;}
-    int freqZ() {return m_freqZ;}
+    int recCount() const {return m_recCount;}
+    int freqStab() const {return m_freqStab;}
+    int freqZ() const {return m_freqZ;}
+    int diap() const;
 
     void isShowValues(const bool isShow);
     void isTraceControl(const bool isTrace);
+
+    /*!
+     * \brief Возвращает id выбранного канала
+     */
+    QString selectedChannel() const;
 
     /*!
      * \brief Виртуальная функция, показывающая, будет ли запись завершаться автоматически или вручную
@@ -144,6 +153,10 @@ private:
      */
     void hidePatientWindow();
 
+    ///< Координаты маркера
+    double m_x {0};
+    double m_y {0};
+    double m_z {0};
 
     int m_freqStab {50};        ///< Частота дискретизации стабилограммы
     int m_freqZ {50};           ///< Частота дискретизации баллистограммы

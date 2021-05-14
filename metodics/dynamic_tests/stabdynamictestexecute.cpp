@@ -64,6 +64,14 @@ void StabDynamicTestExecute::setTitle(const QString &title)
     ui->lblProbeTitle->setText(title);
 }
 
+int StabDynamicTestExecute::diap() const
+{
+    int v = 1;
+    for (int i = 0; i < ui->cbScale->currentIndex(); ++i)
+        v = v * 2;
+    return  128 / v;
+}
+
 void StabDynamicTestExecute::isShowValues(const bool isShow)
 {
     ui->frValues->setVisible(isShow);
@@ -72,6 +80,11 @@ void StabDynamicTestExecute::isShowValues(const bool isShow)
 void StabDynamicTestExecute::isTraceControl(const bool isTrace)
 {
     ui->cbShowTrace->setVisible(isTrace);
+}
+
+QString StabDynamicTestExecute::selectedChannel() const
+{
+    return ui->cbSelectChannel->currentData(ChannelsUtils::ChannelUidRole).toString();
 }
 
 void StabDynamicTestExecute::addMarker()
@@ -160,13 +173,16 @@ void StabDynamicTestExecute::getData(DeviceProtocols::DeviceData *data)
         ui->lblCommunicationError->setVisible(false);
 
         DeviceProtocols::StabDvcData *stabData = static_cast<DeviceProtocols::StabDvcData*>(data);
-        ui->lblX->setText(QString("X = %1").arg(stabData->x(), 0, 'f', 2));
-        ui->lblY->setText(QString("Y = %1").arg(stabData->y(), 0, 'f', 2));
-        ui->lblZ->setText(QString("Z = %1").arg(stabData->z(), 0, 'f', 2));
-        ui->wgtSKG->setMarker(stabData->x(), stabData->y());
+        m_x = stabData->x();
+        m_y = stabData->y();
+        m_z = stabData->z();
+        ui->lblX->setText(QString("X = %1").arg(m_x, 0, 'f', 2));
+        ui->lblY->setText(QString("Y = %1").arg(m_y, 0, 'f', 2));
+        ui->lblZ->setText(QString("Z = %1").arg(m_z, 0, 'f', 2));
+        ui->wgtSKG->setMarker(m_x, m_y);
 
         if (m_patientWin)
-            m_patientWin->setMarker(stabData->x(), stabData->y());
+            m_patientWin->setMarker(m_x, m_y);
 
 
 //        if (m_isRecording)
@@ -261,7 +277,12 @@ void StabDynamicTestExecute::recording()
 
 void StabDynamicTestExecute::scaleChange(int scaleId)
 {
-
+    int v = 1;
+    for (int i = 0; i < scaleId; ++i)
+        v = v * 2;
+    ui->wgtSKG->setDiap(128 / v);
+    if (m_patientWin)
+        m_patientWin->setDiap(128 / v);
 }
 
 void StabDynamicTestExecute::zeroing()

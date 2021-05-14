@@ -59,6 +59,15 @@ enum Directions
     , dirLeft
 };
 
+/*!
+ * \brief Перечень этапов Stage enum
+ */
+enum Stage
+{
+      stgNo = 0
+    , stgGo
+    , stgWait
+};
 
 }
 

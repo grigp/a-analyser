@@ -57,6 +57,28 @@ private:
      */
     bool newDirection();
 
+    /*!
+     * \brief Проверяет, завершен ли тест
+     * Все значения массива m_stagesProcess[] должны равняться m_repeatCount
+     */
+    bool isTestFinished();
+
+    /*!
+     * \brief Генерирует новые координаты цели
+     * \param tx, ty - новые координаты
+     * \return true, если не достигли края
+     */
+    bool newCoordinatesTarget(double &tx, double &ty);
+
+    /*!
+     * \brief Вызывается на этапе ожидания и возвращает true, если цель можно двигать в следущем направлении
+     */
+    bool waitingSuccessful();
+
+    ///< Координаты цели
+    double m_tx {0};
+    double m_ty {0};
+
     int m_stageTime {10};
     int m_repeatCount {1};
     int m_centerSize {15};
@@ -68,8 +90,13 @@ private:
     //! Индексы CrossDefines::dirUp .. CrossDefines::dirLeft
     int m_stagesProcess[4] {0};
 
+    int m_waitCounter {0};   ///< Счетчик в режиме ожидания
+
     //! Текущее направление перемещения
     CrossDefines::Directions m_curDirection {CrossDefines::dirNone};
+
+    //! Текущий этап (переход / ожидание)
+    CrossDefines::Stage m_stage {CrossDefines::stgNo};
 };
 
 #endif // CROSSEXECUTE_H
