@@ -3,6 +3,7 @@
 #include "metodicdefines.h"
 #include "crossparamsdialog.h"
 #include "crossexecute.h"
+#include "crossvisualize.h"
 
 #include <QLayout>
 
@@ -32,11 +33,10 @@ QWidget *CrossTemplate::execute(QWidget *parent, const QJsonObject &params)
 
 QWidget *CrossTemplate::visualize(QWidget *parent, const QString &testUid)
 {
-    return nullptr;
-//    auto *retval = new DropTestVisualize(parent);
-//    parent->layout()->addWidget(retval);
-//    retval->setTest(testUid);
-//    return retval;
+    auto *retval = new CrossVisualize(parent);
+    parent->layout()->addWidget(retval);
+    retval->setTest(testUid);
+    return retval;
 }
 
 bool CrossTemplate::editParams(QWidget *parent, QJsonObject &params)

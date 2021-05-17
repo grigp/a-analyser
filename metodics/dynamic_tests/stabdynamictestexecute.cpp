@@ -82,6 +82,13 @@ void StabDynamicTestExecute::isTraceControl(const bool isTrace)
     ui->cbShowTrace->setVisible(isTrace);
 }
 
+void StabDynamicTestExecute::setVisibleRecordLength(const bool visible)
+{
+    ui->lblRecLenTitle->setVisible(visible);
+    ui->lblRecLen->setVisible(visible);
+    ui->pbRec->setVisible(visible);
+}
+
 QString StabDynamicTestExecute::selectedChannel() const
 {
     return ui->cbSelectChannel->currentData(ChannelsUtils::ChannelUidRole).toString();

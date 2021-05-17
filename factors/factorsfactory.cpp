@@ -11,6 +11,7 @@
 #include "idsfactors.h"
 #include "targetfactors.h"
 #include "trenresultfactors.h"
+#include "crossfactors.h"
 
 #include <QTimer>
 #include <QDebug>
@@ -31,6 +32,7 @@ FactorsFactory::FactorsFactory(QObject *parent) : QObject(parent)
         IDSFactors::registerFactors();
         TargetFactors::registerFactors();
         TrenResultFactors::registerFactors();
+        CrossFactors::registerFactors();
     });
 }
 

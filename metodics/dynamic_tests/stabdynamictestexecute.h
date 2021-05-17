@@ -61,6 +61,8 @@ protected:
     void isShowValues(const bool isShow);
     void isTraceControl(const bool isTrace);
 
+    void setVisibleRecordLength(const bool visible);
+
     /*!
      * \brief Возвращает id выбранного канала
      */

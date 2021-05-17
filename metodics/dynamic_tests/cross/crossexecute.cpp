@@ -20,6 +20,7 @@ CrossExecute::CrossExecute(QWidget *parent) :
     setTitle("Тест на устойчивость");
     isShowValues(false);
     isTraceControl(false);
+    setVisibleRecordLength(false);
 }
 
 CrossExecute::~CrossExecute()

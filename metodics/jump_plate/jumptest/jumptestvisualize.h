@@ -17,7 +17,7 @@ class JumpTestVisualize : public QWidget
     Q_OBJECT
 
 public:
-    explicit JumpTestVisualize(QWidget *parent = 0);
+    explicit JumpTestVisualize(QWidget *parent = nullptr);
     ~JumpTestVisualize();
 
     void setTest(const QString &testUid);
