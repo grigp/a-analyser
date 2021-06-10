@@ -39,6 +39,18 @@ void CrossResultData::setFreq(const int freq)
     setData(obj);
 }
 
+int CrossResultData::diap() const
+{
+    return data()["diap"].toInt();
+}
+
+void CrossResultData::setDiap(const int diap)
+{
+    QJsonObject obj = data();
+    obj["diap"] = diap;
+    setData(obj);
+}
+
 int CrossResultData::eventsCount() const
 {
     auto arr = data()["events"].toArray();

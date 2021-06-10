@@ -5,6 +5,7 @@
 
 #include "multifactor.h"
 #include "signalsdefines.h"
+#include "crossdefines.h"
 
 namespace CrossFactorsDefines
 {
@@ -18,6 +19,8 @@ static const QString UDUid = "{0E81D341-A33C-4262-B82D-FC23B4871B6D}";
 static const QString RLUid = "{69CB9D08-8A58-42AA-9726-0700A2C01F5B}";
 static const QString SFUid = "{6613B36C-EDD1-4E1D-B405-E94D6843FFC7}";
 }
+
+class CrossResultData;
 
 /*!
  * \brief Класс показателей теста на устойчивость CrossFactors class
@@ -53,6 +56,31 @@ public:
     static void registerFactors();
 
 private:
+    /*!
+     * \brief Получает список событийных меток
+     */
+    void getEventLablels();
+    /*!
+     * \brief Заполняет буферы сигналов
+     */
+    void fillBuffers();
+
+    /*!
+     * \brief Рассчитывает амплитуду отклонения в одну из сторон
+     * \param buffer - массив усредненных данных отклонения
+     * \param direction - направление
+     * \return отклонение в миллиметрах
+     */
+    int computeDistance(QList<SignalsDefines::StabRec> &buffer, const CrossDefines::Directions direction);
+
+    CrossResultData *m_crdata {nullptr};  ///< Сырые данные меток на сигнале
+
+    ///< Буфера сигнала
+    QList<SignalsDefines::StabRec> m_bufferUp;
+    QList<SignalsDefines::StabRec> m_bufferDn;
+    QList<SignalsDefines::StabRec> m_bufferLf;
+    QList<SignalsDefines::StabRec> m_bufferRt;
+
     double m_LUp {0};
     double m_LDn {0};
     double m_LLf {0};

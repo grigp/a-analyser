@@ -26,6 +26,9 @@ public:
     int freq() const;
     void setFreq(const int freq);
 
+    int diap() const;
+    void setDiap(const int diap);
+
     int eventsCount() const;
     bool event(const int idx, int& kind, int& direction, int& counter);
 

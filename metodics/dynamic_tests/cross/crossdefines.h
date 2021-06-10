@@ -69,6 +69,9 @@ enum Stage
     , stgWait
 };
 
+//! Значение порога отклонения
+static const int DeviationThresholdValue = 38;
+
 }
 
 #endif // CROSSDEFINES_H

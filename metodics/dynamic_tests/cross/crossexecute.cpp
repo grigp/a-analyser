@@ -227,6 +227,7 @@ void CrossExecute::recording()
         m_stage = CrossDefines::stgGo;
         newDirection();
         m_res->setFreq(freqStab());
+        m_res->setDiap(diap());
         m_res->setStageTime(m_stageTime);
         m_res->addEvent(1, m_curDirection, recCount());
     }

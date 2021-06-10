@@ -31,7 +31,10 @@ void CrossVisualize::setTest(const QString &testUid)
         {
             auto factor = m_calculator->primaryFactor(i);
             auto fi = static_cast<AAnalyserApplication*>(QApplication::instance())->getFactorInfo(factor->uid());
-            auto *itemName = new QStandardItem(fi.name());
+            QString fn = fi.name();
+            if (fi.measure() != "")
+                fn = fn + ", " + fi.measure();
+            auto *itemName = new QStandardItem(fn);
             itemName->setEditable(false);
             auto *itemValue = new QStandardItem(QString::number(factor->value()));
             itemValue->setEditable(false);
