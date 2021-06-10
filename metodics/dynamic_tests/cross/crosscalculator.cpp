@@ -27,39 +27,14 @@ void CrossCalculator::calculate()
                 if (DataProvider::channelExists(pi.uid, ChannelsDefines::chanStab) &&
                     DataProvider::channelExists(pi.uid, ChannelsDefines::chanCrossResult))
                 {
-                    auto factors = new CrossFactors(testUid(), pi.uid);
+                    m_factors = new CrossFactors(testUid(), pi.uid);
 
-                    for (int i = 0; i < factors->size(); ++i)
+                    for (int i = 0; i < m_factors->size(); ++i)
                     {
-                        addPrimaryFactor(testUid(), factors->factorUid(i),
-                                         factors->factorValue(factors->factorUid(i)),
+                        addPrimaryFactor(testUid(), m_factors->factorUid(i),
+                                         m_factors->factorValue(m_factors->factorUid(i)),
                                          0, ChannelsDefines::chanStab, pi.name);
                     }
-
-//                    addPrimaryFactor(testUid(), CrossFactorsDefines::LUpUid,
-//                                     factors->factorValue(CrossFactorsDefines::LUpUid),
-//                                     0, ChannelsDefines::chanStab, pi.name);
-//                    addPrimaryFactor(testUid(), CrossFactorsDefines::LDnUid,
-//                                     factors->factorValue(CrossFactorsDefines::LDnUid),
-//                                     0, ChannelsDefines::chanStab, pi.name);
-//                    addPrimaryFactor(testUid(), CrossFactorsDefines::LRtUid,
-//                                     factors->factorValue(CrossFactorsDefines::LRtUid),
-//                                     0, ChannelsDefines::chanStab, pi.name);
-//                    addPrimaryFactor(testUid(), CrossFactorsDefines::LLfUid,
-//                                     factors->factorValue(CrossFactorsDefines::LLfUid),
-//                                     0, ChannelsDefines::chanStab, pi.name);
-//                    addPrimaryFactor(testUid(), CrossFactorsDefines::SZoneUid,
-//                                     factors->factorValue(CrossFactorsDefines::SZoneUid),
-//                                     0, ChannelsDefines::chanStab, pi.name);
-//                    addPrimaryFactor(testUid(), CrossFactorsDefines::UDUid,
-//                                     factors->factorValue(CrossFactorsDefines::UDUid),
-//                                     0, ChannelsDefines::chanStab, pi.name);
-//                    addPrimaryFactor(testUid(), CrossFactorsDefines::RLUid,
-//                                     factors->factorValue(CrossFactorsDefines::RLUid),
-//                                     0, ChannelsDefines::chanStab, pi.name);
-//                    addPrimaryFactor(testUid(), CrossFactorsDefines::SFUid,
-//                                     factors->factorValue(CrossFactorsDefines::SFUid),
-//                                     0, ChannelsDefines::chanStab, pi.name);
                 }
             }
         }
@@ -70,4 +45,44 @@ void CrossCalculator::calculate()
 void CrossCalculator::fastCalculate()
 {
     TestCalculator::fastCalculate();
+}
+
+int CrossCalculator::diap() const
+{
+    if (m_factors)
+        return m_factors->diap();
+    else
+        return 0;
+}
+
+double CrossCalculator::valueUp() const
+{
+    if (m_factors)
+        return m_factors->factorValue(CrossFactorsDefines::LUpUid);
+    else
+        return 0;
+}
+
+double CrossCalculator::valueDown() const
+{
+    if (m_factors)
+        return m_factors->factorValue(CrossFactorsDefines::LDnUid);
+    else
+        return 0;
+}
+
+double CrossCalculator::valueRight() const
+{
+    if (m_factors)
+        return m_factors->factorValue(CrossFactorsDefines::LRtUid);
+    else
+        return 0;
+}
+
+double CrossCalculator::valueLeft() const
+{
+    if (m_factors)
+        return m_factors->factorValue(CrossFactorsDefines::LLfUid);
+    else
+        return 0;
 }

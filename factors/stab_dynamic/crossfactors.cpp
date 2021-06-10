@@ -98,6 +98,14 @@ void CrossFactors::registerFactors()
                            tr("Отношение сагитталь / фронталь"), tr("Sg/Fr"), tr(""), 0, 3, FactorsDefines::nsDual, 12);
 }
 
+int CrossFactors::diap() const
+{
+    if (m_crdata)
+        return m_crdata->diap();
+    else
+        return 0;
+}
+
 void CrossFactors::getEventLablels()
 {
     QByteArray baData;

@@ -4,6 +4,7 @@
 #include "testcalculator.h"
 #include "crossdefines.h"
 
+class CrossFactors;
 
 class CrossCalculator : public TestCalculator
 {
@@ -21,6 +22,16 @@ public:
      * Чтение первичных показателей из БД
      */
     void fastCalculate() override;
+
+    int diap() const;
+
+    double valueUp() const;
+    double valueDown() const;
+    double valueRight() const;
+    double valueLeft() const;
+
+private:
+    CrossFactors *m_factors {nullptr};
 };
 
 #endif // CROSSCALCULATOR_H

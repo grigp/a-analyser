@@ -46,5 +46,11 @@ void CrossVisualize::setTest(const QString &testUid)
         ui->tvFactors->setModel(model);
         ui->tvFactors->header()->resizeSections(QHeaderView::ResizeToContents);
         ui->tvFactors->header()->resizeSection(0, 450);
+
+        ui->wgtDiag->setDiap(m_calculator->diap());
+        ui->wgtDiag->setValueUp(static_cast<int>(m_calculator->valueUp()));
+        ui->wgtDiag->setValueDown(static_cast<int>(m_calculator->valueDown()));
+        ui->wgtDiag->setValueRight(static_cast<int>(m_calculator->valueRight()));
+        ui->wgtDiag->setValueLeft(static_cast<int>(m_calculator->valueLeft()));
     }
 }

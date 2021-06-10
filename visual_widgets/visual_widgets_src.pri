@@ -11,6 +11,7 @@ include(oscilloscope/oscilloscope_src.pri)
 include(rgbled/rgbled_src.pri)
 include(circlenormindicator/circlenormindicator_src.pri)
 include(dynamic_test_stimul/dynamic_test_stimul_src.pri)
+include(diag_cross/diag_cross_src.pri)
 
 HEADERS += \
 

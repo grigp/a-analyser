@@ -90,7 +90,7 @@
           <number>1</number>
          </property>
          <item>
-          <widget class="QWidget" name="wgtDiag" native="true"/>
+          <widget class="DiagCross" name="wgtDiag" native="true"/>
          </item>
         </layout>
        </widget>
@@ -158,6 +158,14 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>DiagCross</class>
+   <extends>QWidget</extends>
+   <header location="global">diagcross.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

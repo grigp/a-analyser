@@ -55,6 +55,8 @@ public:
      */
     static void registerFactors();
 
+    int diap() const ;
+
 private:
     /*!
      * \brief Получает список событийных меток

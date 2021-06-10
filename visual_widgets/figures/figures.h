@@ -20,8 +20,8 @@ class Figures : public QWidget
     };
 
 public:
-    explicit Figures(QWidget *parent = 0);
-    ~Figures();
+    explicit Figures(QWidget *parent = nullptr);
+    ~Figures() override;
 
     void setSize(const int size);
     void setFigureType(const FigureType ft);
