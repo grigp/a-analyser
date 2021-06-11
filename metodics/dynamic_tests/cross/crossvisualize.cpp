@@ -2,6 +2,7 @@
 #include "ui_crossvisualize.h"
 
 #include <QStandardItemModel>
+#include <QDebug>
 
 #include "aanalyserapplication.h"
 #include "crosscalculator.h"
