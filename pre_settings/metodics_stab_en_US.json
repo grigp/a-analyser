@@ -269,6 +269,23 @@
             }
         },
         {
+            "uid": "{60164BDD-78E1-4A0D-8B9E-F1485D268227}",
+            "name": "Stability margin test",
+            "image": "Cross.png",
+            "template": "met_cross_uid",
+            "build_norms": false,
+            "kind": "{03FFE24D-56ED-4138-9FC7-A125A020C190}",
+            "params":
+            {
+                "stage_time": 15,
+                "direction_mode": "random",
+                "repeat_count": 1,
+                "change_stage_mode": "return",
+                "center_size": 15,
+                "delay_time": 5
+            }
+        },
+        {
             "uid": "{CFCCCAA0-A520-49EF-9C04-EB57580E8CAD}",
             "name": "Trenager \"Balls\"",
             "image": "Balls.png",

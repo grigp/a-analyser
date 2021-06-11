@@ -138,5 +138,7 @@
         <file>images/Methodics/CyclistVolcano.png</file>
         <file>images/Methodics/StarWars.png</file>
         <file>images/Methodics/Cross.png</file>
+        <file>pre_settings/metodics_dopusk.json</file>
+        <file>pre_settings/metodics_dopusk_en_US.json</file>
     </qresource>
 </RCC>

@@ -156,7 +156,8 @@ void MetodicsFactory::assignMetodics()
     else
         appendNewMetodic(resName, DataDefines::appCopyPath() + "metodics.json");
 
-    assignMetodicsFromAutoImport();
+    if (AAnalyserDefines::isAutoImportDatabases)
+        assignMetodicsFromAutoImport();
 
     QFile fMet(DataDefines::appCopyPath() + "metodics.json");
     fMet.setPermissions((((fMet.permissions() |= QFile::WriteOwner) |= QFile::WriteUser) |= QFile::WriteGroup) |= QFile::WriteOther);

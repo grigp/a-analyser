@@ -1,0 +1,55 @@
+{
+    "tests": [
+        {
+            "uid": "{EBEA57B4-A791-4F35-87C2-BEDEC6406D2D}",
+            "name": "Допусковый контроль",
+            "image": "Dopusk.png",
+            "template": "met_stabtest_uid",
+            "build_norms": true,
+            "kind": "{03FFE24D-56ED-4138-9FC7-A125A020C190}",
+            "params":
+            {
+                "condition": 2,
+                "probes": [
+                    {
+                        "name": "Открытые глаза",
+                        "kind": 1,
+                        "autoend": 1,
+                        "time": 20,
+                        "latent_time": 0,
+                        "stimul": 1,
+                        "zeroing": 1,
+                        "scale": 1
+                    },
+                    {
+                        "name": "Закрытые глаза",
+                        "kind": 2,
+                        "autoend": 1,
+                        "time": 20,
+                        "latent_time": 0,
+                        "stimul": 2,
+                        "zeroing": 0,
+                        "scale": 1
+                    },
+                    {
+                        "name": "Мишень",
+                        "kind": 3,
+                        "autoend": 1,
+                        "time": 20,
+                        "latent_time": 5,
+                        "stimul": 3,
+                        "zeroing": 0,
+                        "scale": 3
+                    }
+                ]
+            }
+        }
+    ],
+    "tests_kinds": [
+        {
+            "uid": "{03FFE24D-56ED-4138-9FC7-A125A020C190}",
+            "image": "Stab.png",
+            "name": "Стабилометрия"
+        }
+    ]
+}

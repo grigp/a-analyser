@@ -25,6 +25,9 @@ static const QString BuildUid = "{2932CDB1-5DA2-4243-A37A-F21A2FC1091B}";
 //! PresetsMetodicsFileName + '_en_US.json - английская версия
 static const QString PresetsMetodicsFileName = "metodics_st_champ";
 
+//! Будет ли проходить автоимпорт БД
+static const bool isAutoImportDatabases = true;
+
 }
 
 #endif // AANALYSERDEFINES_H
