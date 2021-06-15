@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <QJsonObject>
+#include <QLabel>
 
 #include "datadefines.h"
 #include "crossdefines.h"
@@ -39,6 +40,12 @@ protected:
      * \brief Действия по завершению теста
      */
     void finishTest() override;
+
+    /*!
+     * \brief Перекрытая функция заполнения панели специфичных элеменов управления для методики
+     * \param frSpecific - указатель на фрейм
+     */
+    void fillSpecific(QFrame *frSpecific) override;
 
 protected slots:
     void start() override;
@@ -81,6 +88,8 @@ private:
      */
     bool waitingSuccessful();
 
+    QString stagesRemained(const CrossDefines::Directions dir) const;
+
     ///< Координаты цели
     double m_tx {0};
     double m_ty {0};
@@ -97,6 +106,11 @@ private:
     int m_stagesProcess[4] {0};
 
     int m_waitCounter {0};   ///< Счетчик в режиме ожидания
+
+    QLabel* m_lblUp;
+    QLabel* m_lblDn;
+    QLabel* m_lblRt;
+    QLabel* m_lblLf;
 
     //! Текущее направление перемещения
     CrossDefines::Directions m_curDirection {CrossDefines::dirNone};

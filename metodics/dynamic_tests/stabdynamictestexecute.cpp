@@ -35,6 +35,7 @@ StabDynamicTestExecute::StabDynamicTestExecute(QWidget *parent) :
 
     ui->wgtAdvChannels->setVisible(false);
     ui->btnCalibrate->setVisible(false);
+
 }
 
 StabDynamicTestExecute::~StabDynamicTestExecute()
@@ -124,8 +125,15 @@ void StabDynamicTestExecute::finishTest()
     static_cast<ExecuteWidget*>(parent())->showDB();
 }
 
+void StabDynamicTestExecute::fillSpecific(QFrame *frSpecific)
+{
+    Q_UNUSED(frSpecific);
+}
+
 void StabDynamicTestExecute::start()
 {
+    fillSpecific(ui->frSpecific);
+
     //! Запрашиваем не протокол, а формат канала, тогда будем работать с любыми данными,
     //! представляющими собой точку в декартовых координатах, а не только стабилограмму
     m_driver = static_cast<AAnalyserApplication*>(QApplication::instance())->
@@ -315,7 +323,8 @@ void StabDynamicTestExecute::on_advChannelsClicked(bool checked)
 
 void StabDynamicTestExecute::splitterMoved(int pos, int index)
 {
-
+    Q_UNUSED(pos);
+    Q_UNUSED(index);
 }
 
 void StabDynamicTestExecute::setChannels()

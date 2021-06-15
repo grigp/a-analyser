@@ -21,6 +21,7 @@ CrossExecute::CrossExecute(QWidget *parent) :
     isShowValues(false);
     isTraceControl(false);
     setVisibleRecordLength(false);
+
 }
 
 CrossExecute::~CrossExecute()
@@ -53,6 +54,27 @@ void CrossExecute::finishTest()
     trd()->addChannel(m_res);
 
     StabDynamicTestExecute::finishTest();
+}
+
+void CrossExecute::fillSpecific(QFrame *frSpecific)
+{
+    StabDynamicTestExecute::fillSpecific(frSpecific);
+
+    auto lblTitle = new QLabel(frSpecific);
+    lblTitle->setText("Осталось проходов");
+    frSpecific->layout()->addWidget(lblTitle);
+    m_lblUp = new QLabel(frSpecific);
+    m_lblUp->setText("Вперед - " + stagesRemained(CrossDefines::dirUp));
+    frSpecific->layout()->addWidget(m_lblUp);
+    m_lblDn = new QLabel(frSpecific);
+    m_lblDn->setText("Назад - " + stagesRemained(CrossDefines::dirDown));
+    frSpecific->layout()->addWidget(m_lblDn);
+    m_lblRt = new QLabel(frSpecific);
+    m_lblRt->setText("Вправо - " + stagesRemained(CrossDefines::dirRight));
+    frSpecific->layout()->addWidget(m_lblRt);
+    m_lblLf = new QLabel(frSpecific);
+    m_lblLf->setText("Влево - " + stagesRemained(CrossDefines::dirLeft));
+    frSpecific->layout()->addWidget(m_lblLf);
 }
 
 void CrossExecute::start()
@@ -115,6 +137,17 @@ bool CrossExecute::newDirection()
 {
     if (m_curDirection != CrossDefines::dirNone)
         m_stagesProcess[m_curDirection]++;
+    if (m_curDirection == CrossDefines::dirUp)
+        m_lblUp->setText("Вперед - " + stagesRemained(m_curDirection));
+    else
+    if (m_curDirection == CrossDefines::dirDown)
+        m_lblDn->setText("Назад - " + stagesRemained(m_curDirection));
+    else
+    if (m_curDirection == CrossDefines::dirRight)
+        m_lblRt->setText("Вправо - " + stagesRemained(m_curDirection));
+    else
+    if (m_curDirection == CrossDefines::dirLeft)
+        m_lblLf->setText("Влево - " + stagesRemained(m_curDirection));
 
     if (isTestFinished())
     {
@@ -214,6 +247,12 @@ bool CrossExecute::waitingSuccessful()
             return true;
     }
     return false;
+}
+
+QString CrossExecute::stagesRemained(const CrossDefines::Directions dir) const
+{
+    int n = m_repeatCount - m_stagesProcess[dir];
+    return QString::number(n);
 }
 
 void CrossExecute::recording()

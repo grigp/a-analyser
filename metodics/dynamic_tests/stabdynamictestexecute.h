@@ -2,6 +2,7 @@
 #define STABDYNAMICTESTEXECUTE_H
 
 #include <QWidget>
+#include <QFrame>
 #include <QJsonObject>
 
 #include "datadefines.h"
@@ -104,6 +105,12 @@ protected:
      * \brief Действия по завершению теста
      */
     virtual void finishTest();
+
+    /*!
+     * \brief Виртуальная функция заполнения панели специфичных элеменов управления для методики
+     * \param frSpecific - указатель на фрейм
+     */
+    virtual void fillSpecific(QFrame *frSpecific);
 
 
 protected slots:
