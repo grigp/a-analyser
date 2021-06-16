@@ -2,6 +2,7 @@
 #include "ui_stepoffsetexecute.h"
 
 #include "stepoffsettpatientwindow.h"
+#include "setmaxforcedialog.h"
 
 StepOffsetExecute::StepOffsetExecute(QWidget *parent) :
     StabDynamicTestExecute(parent),
@@ -57,15 +58,32 @@ void StepOffsetExecute::start()
 
 void StepOffsetExecute::recording()
 {
-    StabDynamicTestExecute::recording();
+    if(!isRecording())
+    {
+        if (!m_mfd)
+        {
+            m_mfd = new SetMaxForceDialog();
+            connect(m_mfd, &SetMaxForceDialog::accepted, this, &StepOffsetExecute::setMaxForceDialogAccepted);
+        }
+        m_mfd->showFullScreen();
+    }
+    else
+        StabDynamicTestExecute::recording();
 }
 
 void StepOffsetExecute::getData(DeviceProtocols::DeviceData *data)
 {
     StabDynamicTestExecute::getData(data);
+    if (m_mfd)
+        m_mfd->getData(x(), y());
 }
 
 void StepOffsetExecute::on_communicationError(const QString &drvName, const QString &port, const int errorCode)
 {
     StabDynamicTestExecute::on_communicationError(drvName, port, errorCode);
+}
+
+void StepOffsetExecute::setMaxForceDialogAccepted()
+{
+    StabDynamicTestExecute::recording();
 }

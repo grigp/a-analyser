@@ -10,6 +10,8 @@ namespace Ui {
 class StepOffsetExecute;
 }
 
+class SetMaxForceDialog;
+
 class StepOffsetExecute : public StabDynamicTestExecute
 {
     Q_OBJECT
@@ -49,6 +51,8 @@ protected slots:
 
     void on_communicationError(const QString &drvName, const QString &port, const int errorCode) override;
 
+private slots:
+    void setMaxForceDialogAccepted();
 
 private:
     Ui::StepOffsetExecute *ui;
@@ -58,6 +62,8 @@ private:
     int m_repeatCount {4};
     int m_force {50};
     BaseUtils::Directions m_direction {BaseUtils::dirUp};
+
+    SetMaxForceDialog* m_mfd {nullptr};
 };
 
 #endif // STEPOFFSETEXECUTE_H
