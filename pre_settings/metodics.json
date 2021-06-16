@@ -355,6 +355,21 @@
             }
         },
         {
+            "uid": "{3664D67C-8D21-4AC8-B2DD-D5DECA43360D}",
+            "name": "Тест \"Ступени\"",
+            "image": "StepOffset.png",
+            "template": "met_step_offset_uid",
+            "build_norms": false,
+            "kind": "{03FFE24D-56ED-4138-9FC7-A125A020C190}",
+            "params":
+            {
+                "stage_time": 8,
+                "direction": "up",
+                "repeat_count": 4,
+                "force": 50
+            }
+        },
+        {
             "uid": "{ACFA62A1-7F52-477E-B9C9-A7FF14B3E098}",
             "name": "Анализ высоты одиночного прыжка",
             "image": "JumpHeight.png",

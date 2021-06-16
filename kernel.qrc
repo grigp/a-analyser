@@ -140,5 +140,6 @@
         <file>images/Methodics/Cross.png</file>
         <file>pre_settings/metodics_dopusk.json</file>
         <file>pre_settings/metodics_dopusk_en_US.json</file>
+        <file>images/Methodics/StepOffset.png</file>
     </qresource>
 </RCC>

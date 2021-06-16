@@ -1,6 +1,7 @@
 INCLUDEPATH += $$PWD
 
 include(cross/cross_src.pri)
+include(step_offset/step_offset_src.pri)
 
 HEADERS += \
     $$PWD/stabdynamictestexecute.h \

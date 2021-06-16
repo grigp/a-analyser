@@ -3,6 +3,7 @@
 
 #include <QObject>
 
+#include "baseutils.h"
 #include "multifactor.h"
 #include "signalsdefines.h"
 #include "crossdefines.h"
@@ -73,7 +74,7 @@ private:
      * \param direction - направление
      * \return отклонение в миллиметрах
      */
-    int computeDistance(QList<SignalsDefines::StabRec> &buffer, const CrossDefines::Directions direction);
+    int computeDistance(QList<SignalsDefines::StabRec> &buffer, const BaseUtils::Directions direction);
 
     CrossResultData *m_crdata {nullptr};  ///< Сырые данные меток на сигнале
 

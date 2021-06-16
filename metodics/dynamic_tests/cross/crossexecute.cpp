@@ -64,16 +64,16 @@ void CrossExecute::fillSpecific(QFrame *frSpecific)
     lblTitle->setText("Осталось проходов");
     frSpecific->layout()->addWidget(lblTitle);
     m_lblUp = new QLabel(frSpecific);
-    m_lblUp->setText("Вперед - " + stagesRemained(CrossDefines::dirUp));
+    m_lblUp->setText("Вперед - " + stagesRemained(BaseUtils::dirUp));
     frSpecific->layout()->addWidget(m_lblUp);
     m_lblDn = new QLabel(frSpecific);
-    m_lblDn->setText("Назад - " + stagesRemained(CrossDefines::dirDown));
+    m_lblDn->setText("Назад - " + stagesRemained(BaseUtils::dirDown));
     frSpecific->layout()->addWidget(m_lblDn);
     m_lblRt = new QLabel(frSpecific);
-    m_lblRt->setText("Вправо - " + stagesRemained(CrossDefines::dirRight));
+    m_lblRt->setText("Вправо - " + stagesRemained(BaseUtils::dirRight));
     frSpecific->layout()->addWidget(m_lblRt);
     m_lblLf = new QLabel(frSpecific);
-    m_lblLf->setText("Влево - " + stagesRemained(CrossDefines::dirLeft));
+    m_lblLf->setText("Влево - " + stagesRemained(BaseUtils::dirLeft));
     frSpecific->layout()->addWidget(m_lblLf);
 }
 
@@ -135,48 +135,48 @@ void CrossExecute::on_communicationError(const QString &drvName, const QString &
 
 bool CrossExecute::newDirection()
 {
-    if (m_curDirection != CrossDefines::dirNone)
+    if (m_curDirection != BaseUtils::dirNone)
         m_stagesProcess[m_curDirection]++;
-    if (m_curDirection == CrossDefines::dirUp)
+    if (m_curDirection == BaseUtils::dirUp)
         m_lblUp->setText("Вперед - " + stagesRemained(m_curDirection));
     else
-    if (m_curDirection == CrossDefines::dirDown)
+    if (m_curDirection == BaseUtils::dirDown)
         m_lblDn->setText("Назад - " + stagesRemained(m_curDirection));
     else
-    if (m_curDirection == CrossDefines::dirRight)
+    if (m_curDirection == BaseUtils::dirRight)
         m_lblRt->setText("Вправо - " + stagesRemained(m_curDirection));
     else
-    if (m_curDirection == CrossDefines::dirLeft)
+    if (m_curDirection == BaseUtils::dirLeft)
         m_lblLf->setText("Влево - " + stagesRemained(m_curDirection));
 
     if (isTestFinished())
     {
-        m_curDirection = CrossDefines::dirNone;
+        m_curDirection = BaseUtils::dirNone;
         return false;
     }
 
     if (m_directionMode == CrossDefines::dmClockwise)  //! По часовой
     {
-        if (m_curDirection < CrossDefines::dirLeft)
+        if (m_curDirection < BaseUtils::dirLeft)
         {
             int d = static_cast<int>(m_curDirection);
             d++;
-            m_curDirection = static_cast<CrossDefines::Directions>(d);
+            m_curDirection = static_cast<BaseUtils::Directions>(d);
         }
         else
-            m_curDirection = CrossDefines::dirUp;
+            m_curDirection = BaseUtils::dirUp;
     }
     else
     if (m_directionMode == CrossDefines::dmCounterClockwise)  //! Против часовой
     {
-        if (m_curDirection > CrossDefines::dirUp)
+        if (m_curDirection > BaseUtils::dirUp)
         {
             int d = static_cast<int>(m_curDirection);
             d--;
-            m_curDirection = static_cast<CrossDefines::Directions>(d);
+            m_curDirection = static_cast<BaseUtils::Directions>(d);
         }
         else
-            m_curDirection = CrossDefines::dirLeft;
+            m_curDirection = BaseUtils::dirLeft;
     }
     else
     if (m_directionMode == CrossDefines::dmRandom)
@@ -187,7 +187,7 @@ bool CrossExecute::newDirection()
             d = qrand() % 4;
         }
         while (m_stagesProcess[d] >= m_repeatCount);
-        m_curDirection = static_cast<CrossDefines::Directions>(d);
+        m_curDirection = static_cast<BaseUtils::Directions>(d);
     }
     return true;
 }
@@ -205,22 +205,22 @@ bool CrossExecute::newCoordinatesTarget(double &tx, double &ty)
     double stepCount = m_stageTime * freqStab();
     switch (m_curDirection)
     {
-    case CrossDefines::dirUp:
+    case BaseUtils::dirUp:
     {
         ty = ty + (diap() / (stepCount));
         return ty < diap();
     };
-    case CrossDefines::dirRight:
+    case BaseUtils::dirRight:
     {
         tx = tx + (diap() / (stepCount));
         return tx < diap();
     };
-    case CrossDefines::dirDown:
+    case BaseUtils::dirDown:
     {
         ty = ty - (diap() / (stepCount));
         return ty > -diap();
     };
-    case CrossDefines::dirLeft:
+    case BaseUtils::dirLeft:
     {
         tx = tx - (diap() / (stepCount));
         return tx > -diap();
@@ -249,7 +249,7 @@ bool CrossExecute::waitingSuccessful()
     return false;
 }
 
-QString CrossExecute::stagesRemained(const CrossDefines::Directions dir) const
+QString CrossExecute::stagesRemained(const BaseUtils::Directions dir) const
 {
     int n = m_repeatCount - m_stagesProcess[dir];
     return QString::number(n);

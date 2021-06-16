@@ -21,6 +21,33 @@ enum Side
 };
 
 /*!
+ * \brief Коды направлений Directions enum
+ * Нумеруются по часовой стрелке
+ */
+enum Directions
+{
+      dirNone = -1
+    , dirUp = 0
+    , dirRight
+    , dirDown
+    , dirLeft
+};
+
+static QMap<QString, Directions> DirectionValueIndex {
+    std::pair<QString, Directions> ("up", dirUp)
+  , std::pair<QString, Directions> ("right", dirRight)
+  , std::pair<QString, Directions> ("down", dirDown)
+  , std::pair<QString, Directions> ("left", dirLeft)
+};
+
+static QMap<Directions, QString> DirectionValueName {
+    std::pair<Directions, QString> (dirUp, "up")
+  , std::pair<Directions, QString> (dirRight, "right")
+  , std::pair<Directions, QString> (dirDown, "down")
+  , std::pair<Directions, QString> (dirLeft, "left")
+};
+
+/*!
  * \brief Возвращает время в формате hh:mm:ss по кол-ву секунд
  * \param secCnt - кол-во секунд
  * \param isHour - показывать ли часы

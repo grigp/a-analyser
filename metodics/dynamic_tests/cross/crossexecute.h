@@ -9,6 +9,7 @@
 #include "crossdefines.h"
 #include "stabdynamictestexecute.h"
 #include "deviceprotocols.h"
+#include "baseutils.h"
 
 namespace Ui {
 class CrossExecute;
@@ -88,7 +89,7 @@ private:
      */
     bool waitingSuccessful();
 
-    QString stagesRemained(const CrossDefines::Directions dir) const;
+    QString stagesRemained(const BaseUtils::Directions dir) const;
 
     ///< Координаты цели
     double m_tx {0};
@@ -113,7 +114,7 @@ private:
     QLabel* m_lblLf;
 
     //! Текущее направление перемещения
-    CrossDefines::Directions m_curDirection {CrossDefines::dirNone};
+    BaseUtils::Directions m_curDirection {BaseUtils::dirNone};
 
     //! Текущий этап (переход / ожидание)
     CrossDefines::Stage m_stage {CrossDefines::stgNo};
