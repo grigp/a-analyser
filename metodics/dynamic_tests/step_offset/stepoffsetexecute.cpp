@@ -1,6 +1,8 @@
 #include "stepoffsetexecute.h"
 #include "ui_stepoffsetexecute.h"
 
+#include <QDebug>
+
 #include "stepoffsettpatientwindow.h"
 #include "setmaxforcedialog.h"
 
@@ -30,7 +32,7 @@ void StepOffsetExecute::setParams(const QJsonObject &params)
 
     m_stageTime = params["stage_time"].toInt();
     m_repeatCount = params["repeat_count"].toInt();
-    m_force = params["force"].toInt();
+    m_forcePercent = params["force"].toInt();
 
     auto d = params["direction"].toString();
     m_direction = BaseUtils::DirectionValueIndex.value(d);
@@ -63,6 +65,7 @@ void StepOffsetExecute::recording()
         if (!m_mfd)
         {
             m_mfd = new SetMaxForceDialog();
+            m_mfd->setDirection(m_direction);
             connect(m_mfd, &SetMaxForceDialog::accepted, this, &StepOffsetExecute::setMaxForceDialogAccepted);
         }
         m_mfd->showFullScreen();
@@ -85,5 +88,9 @@ void StepOffsetExecute::on_communicationError(const QString &drvName, const QStr
 
 void StepOffsetExecute::setMaxForceDialogAccepted()
 {
-    StabDynamicTestExecute::recording();
+    if (m_mfd)
+    {
+        m_force = m_mfd->value() * m_forcePercent / 100;
+        StabDynamicTestExecute::recording();
+    }
 }

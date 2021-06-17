@@ -41,8 +41,10 @@ void DiagCross::paintEvent(QPaintEvent *event)
         painter.drawRect(mx - 10 - w, my - 10, w, 20);
         w = (mx - 10) * m_valueRight / m_diap;
         painter.drawRect(mx + 10, my - 10, w, 20);
-        painter.drawText(10, my + 35, QString::number(m_valueLeft));
-        painter.drawText(geometry().width() - 50, my + 35, QString::number(m_valueRight));
+        if (m_isShowValueLeft)
+            painter.drawText(10, my + 35, QString::number(m_valueLeft));
+        if (m_isShowValueRight)
+            painter.drawText(geometry().width() - 50, my + 35, QString::number(m_valueRight));
 
         painter.setBrush(QBrush(m_sagittalColor, Qt::SolidPattern));
         painter.setPen(QPen(m_sagittalColor, 1, Qt::SolidLine, Qt::FlatCap));
@@ -50,15 +52,17 @@ void DiagCross::paintEvent(QPaintEvent *event)
         painter.drawRect(mx - 10, my - 10 - h, 20, h);
         h = (my - 10) * m_valueDown / m_diap;
         painter.drawRect(mx - 10, my + 10, 20, h);
-        painter.drawText(mx + 15, 22, QString::number(m_valueUp));
-        painter.drawText(mx + 15, geometry().height() - 10, QString::number(m_valueDown));
+        if (m_isShowValueUp)
+            painter.drawText(mx + 15, 22, QString::number(m_valueUp));
+        if (m_isShowValueDown)
+            painter.drawText(mx + 15, geometry().height() - 10, QString::number(m_valueDown));
     }
 
     painter.setPen(QPen(m_frameColor, 1, Qt::SolidLine, Qt::FlatCap));
     painter.setBrush(QBrush(m_frameColor, Qt::NoBrush));
     painter.drawRect(0, my - 10, mx - 10, 20);
-    painter.drawRect(mx + 10, my - 10, mx - 10, 20);
+    painter.drawRect(mx + 10, my - 10, mx - 10 - 1, 20);
     painter.drawRect(mx - 10, 0, 20, my - 10);
-    painter.drawRect(mx - 10, my + 10, 20, my - 10);
+    painter.drawRect(mx - 10, my + 10, 20, my - 10 - 1);
 
 }

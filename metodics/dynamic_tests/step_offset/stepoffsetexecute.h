@@ -60,8 +60,9 @@ private:
 
     int m_stageTime {8};
     int m_repeatCount {4};
-    int m_force {50};
+    int m_forcePercent {50};
     BaseUtils::Directions m_direction {BaseUtils::dirUp};
+    int m_force {0};
 
     SetMaxForceDialog* m_mfd {nullptr};
 };

@@ -45,6 +45,18 @@ public:
     void setDiap(const int value) {m_diap = value;}
     int diap() const {return m_diap;}
 
+    void setIsShowValueUp(const bool value) {m_isShowValueUp = value;}
+    bool isShowValueUp() const {return m_isShowValueUp;}
+
+    void setIsShowValueDown(const bool value) {m_isShowValueDown = value;}
+    bool isShowValueDown() const {return m_isShowValueDown;}
+
+    void setIsShowValueRight(const bool value) {m_isShowValueRight = value;}
+    bool isShowValueRight() const {return m_isShowValueRight;}
+
+    void setIsShowValueLeft(const bool value) {m_isShowValueLeft = value;}
+    bool isShowValueLeft() const {return m_isShowValueLeft;}
+
 protected:
     void paintEvent(QPaintEvent *event) override;
 
@@ -61,6 +73,11 @@ private:
     int m_valueRight {0};
     int m_valueLeft {0};
     int m_diap {1};
+
+    bool m_isShowValueUp {true};
+    bool m_isShowValueDown {true};
+    bool m_isShowValueRight {true};
+    bool m_isShowValueLeft {true};
 };
 
 #endif // DIAGCROSS_H
