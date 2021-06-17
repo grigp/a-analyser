@@ -5,7 +5,8 @@ HEADERS += \
     $$PWD/stepoffsetparamsdialog.h \
     $$PWD/stepoffsetexecute.h \
     $$PWD/stepoffsettpatientwindow.h \
-    $$PWD/setmaxforcedialog.h
+    $$PWD/setmaxforcedialog.h \
+    $$PWD/stepoffsetdefines.h
 
 SOURCES += \
     $$PWD/stepoffsettemplate.cpp \

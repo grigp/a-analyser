@@ -14,7 +14,8 @@ HEADERS += \
     $$PWD/dynamosignal.h \
     $$PWD/breathsignal.h \
     $$PWD/ritmogram.h \
-    $$PWD/crossresultdata.h
+    $$PWD/crossresultdata.h \
+    $$PWD/stepoffsetresultdata.h
 
 SOURCES += \
     $$PWD/signaldata.cpp \
@@ -30,4 +31,5 @@ SOURCES += \
     $$PWD/dynamosignal.cpp \
     $$PWD/breathsignal.cpp \
     $$PWD/ritmogram.cpp \
-    $$PWD/crossresultdata.cpp
+    $$PWD/crossresultdata.cpp \
+    $$PWD/stepoffsetresultdata.cpp

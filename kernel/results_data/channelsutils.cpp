@@ -143,6 +143,14 @@ ChannelsUtils::ChannelsUtils()
                                                                     std::make_tuple(QString("Результаты сеанса тренинга"),
                                                                                     QString("TrenRes"),
                                                                                     ChannelsDefines::ctTrenResult))
+                 , std::pair<QString, ChannelsDefines::ChannelInfo>(ChannelsDefines::chanCrossResult,
+                                                                    std::make_tuple(QString("Результаты теста на устойчивость"),
+                                                                                    QString("CrossRes"),
+                                                                                    ChannelsDefines::ctCrossResult))
+                 , std::pair<QString, ChannelsDefines::ChannelInfo>(ChannelsDefines::chanStepOffsetResult,
+                                                                    std::make_tuple(QString("Результаты теста \"Ступени\""),
+                                                                                    QString("StepOffsRes"),
+                                                                                    ChannelsDefines::ctStepOffsetResult))
                  })
     , m_formats({
                   std::pair<QString, QString>(ChannelsDefines::ctStabilogram, ChannelsDefines::cfDecartCoordinates)
@@ -158,6 +166,8 @@ ChannelsUtils::ChannelsUtils()
                 , std::pair<QString, QString>(ChannelsDefines::ctDropTestData, ChannelsDefines::cfNoSignal)
                 , std::pair<QString, QString>(ChannelsDefines::ctHopping, ChannelsDefines::cfNoSignal)
                 , std::pair<QString, QString>(ChannelsDefines::ctTrenResult, ChannelsDefines::cfNoSignal)
+                , std::pair<QString, QString>(ChannelsDefines::ctCrossResult, ChannelsDefines::cfNoSignal)
+                , std::pair<QString, QString>(ChannelsDefines::ctStepOffsetResult, ChannelsDefines::cfNoSignal)
                 })
 {
 

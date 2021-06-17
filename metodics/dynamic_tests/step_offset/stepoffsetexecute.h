@@ -5,12 +5,14 @@
 
 #include "stabdynamictestexecute.h"
 #include "baseutils.h"
+#include "stepoffsetdefines.h"
 
 namespace Ui {
 class StepOffsetExecute;
 }
 
 class SetMaxForceDialog;
+class StepOffsetResultData;
 
 class StepOffsetExecute : public StabDynamicTestExecute
 {
@@ -57,6 +59,7 @@ private slots:
 private:
     Ui::StepOffsetExecute *ui;
 
+    void setTargetCoordinates();
 
     int m_stageTime {8};
     int m_repeatCount {4};
@@ -65,6 +68,17 @@ private:
     int m_force {0};
 
     SetMaxForceDialog* m_mfd {nullptr};
+    StepOffsetResultData* m_res {nullptr};
+
+    StepOffsetDefines::Stage m_stage {StepOffsetDefines::stgWaiting};  //! Этап теста
+    int m_stageCounter {0};                                            //! Счетчик пакетов на этапе
+    int m_recordCounter {0};                                           //! Счетчик пакетов записи
+    int m_lastCompensation {0};                                        //! Отсчет начала последнего участка компенсации
+    int m_repatCounter {0};                                            //! Счетчик кол-ва повторений
+
+    ///< Координаты цели
+    double m_tx {0};
+    double m_ty {0};
 };
 
 #endif // STEPOFFSETEXECUTE_H

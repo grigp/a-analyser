@@ -5,10 +5,13 @@
 
 #include "stepoffsettpatientwindow.h"
 #include "setmaxforcedialog.h"
+#include "stepoffsetresultdata.h"
+#include "testresultdata.h"
 
 StepOffsetExecute::StepOffsetExecute(QWidget *parent) :
     StabDynamicTestExecute(parent),
     ui(new Ui::StepOffsetExecute)
+  , m_res(new StepOffsetResultData(ChannelsDefines::chanStepOffsetResult))
 {
     ui->setupUi(this);
 
@@ -45,6 +48,7 @@ StabDynamicTestPatientWindow *StepOffsetExecute::createPatientWindow()
 
 void StepOffsetExecute::finishTest()
 {
+    trd()->addChannel(m_res);
     StabDynamicTestExecute::finishTest();
 }
 
@@ -72,13 +76,60 @@ void StepOffsetExecute::recording()
     }
     else
         StabDynamicTestExecute::recording();
+    m_recordCounter = 0;
 }
 
 void StepOffsetExecute::getData(DeviceProtocols::DeviceData *data)
 {
     StabDynamicTestExecute::getData(data);
-    if (m_mfd)
-        m_mfd->getData(x(), y());
+    if (selectedChannel() == data->channelId())
+    {
+        if (m_mfd)
+            m_mfd->getData(x(), y());
+
+        if (isRecording())
+        {
+            //! Счетчик этапа
+            ++m_stageCounter;
+            ++m_recordCounter;
+
+            //! Достигли конца этапа
+            if (m_stageCounter >= m_stageTime * freqStab())
+            {
+                //! После этапа возврата добавляем и инкрементируем счетчик повторений
+                if (m_stage == StepOffsetDefines::stgReturn)
+                    ++m_repatCounter;
+
+                if (m_repatCounter < m_repeatCount)
+                {
+                    //! Переход к этапу компенсации
+                    if (m_stage == StepOffsetDefines::stgWaiting ||
+                        m_stage == StepOffsetDefines::stgReturn)
+                    {
+                        m_stage = StepOffsetDefines::stgCompensaton;
+                        setTargetCoordinates();
+                        m_lastCompensation = m_recordCounter;
+                    }
+                    else
+                    //! Переход к этапу возврата
+                    {
+                        m_stage = StepOffsetDefines::stgReturn;
+                        m_tx = 0;
+                        m_ty = 0;
+                        m_res->addStep(m_lastCompensation, m_recordCounter);
+                    }
+                    setTarget(m_tx, m_ty);
+                }
+                else
+                //! Прошло заданное число повторений
+                {
+                    finishTest();
+                }
+
+                m_stageCounter = 0;
+            }
+        }
+    }
 }
 
 void StepOffsetExecute::on_communicationError(const QString &drvName, const QString &port, const int errorCode)
@@ -92,5 +143,48 @@ void StepOffsetExecute::setMaxForceDialogAccepted()
     {
         m_force = m_mfd->value() * m_forcePercent / 100;
         StabDynamicTestExecute::recording();
+
+        if (isRecording())
+        {
+            m_stage = StepOffsetDefines::stgWaiting;
+            m_res->setFreq(freqStab());
+            m_res->setDiap(diap());
+            m_res->setForce(m_force);
+            m_res->setStageTime(m_stageTime);
+        }
+        else
+        {
+            m_stage = StepOffsetDefines::stgWaiting;
+            m_tx = 0;
+            m_ty = 0;
+            setTarget(m_tx, m_ty);
+        }
+    }
+}
+
+void StepOffsetExecute::setTargetCoordinates()
+{
+    if (m_direction == BaseUtils::dirUp)
+    {
+        m_tx = 0;
+        m_ty = m_force;
+    }
+    else
+    if (m_direction == BaseUtils::dirRight)
+    {
+        m_tx = m_force;
+        m_ty = 0;
+    }
+    else
+    if (m_direction == BaseUtils::dirDown)
+    {
+        m_tx = 0;
+        m_ty = -m_force;
+    }
+    else
+    if (m_direction == BaseUtils::dirLeft)
+    {
+        m_tx = -m_force;
+        m_ty = 0;
     }
 }

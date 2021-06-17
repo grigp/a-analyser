@@ -1,6 +1,8 @@
 #include "setmaxforcedialog.h"
 #include "ui_setmaxforcedialog.h"
 
+#include "stepoffsetdefines.h"
+
 #include <QDebug>
 
 SetMaxForceDialog::SetMaxForceDialog(QWidget *parent) :
@@ -35,26 +37,45 @@ void SetMaxForceDialog::getData(const double x, const double y)
     if (m_direction == BaseUtils::dirUp)
     {
         if (iy > ui->wgtDiag->valueUp())
+        {
             ui->wgtDiag->setValueUp(iy);
+            qDebug() << iy << StepOffsetDefines::MinValueOffset;
+            if (iy > StepOffsetDefines::MinValueOffset)
+                ui->btnOK->setEnabled(true);
+        }
     }
     else
     if (m_direction == BaseUtils::dirDown)
     {
         if (abs(iy) > ui->wgtDiag->valueDown())
+        {
             ui->wgtDiag->setValueDown(abs(iy));
+            if (abs(iy) > StepOffsetDefines::MinValueOffset)
+                ui->btnOK->setEnabled(true);
+        }
     }
     else
     if (m_direction == BaseUtils::dirRight)
     {
         if (ix > ui->wgtDiag->valueRight())
+        {
             ui->wgtDiag->setValueRight(ix);
+            if (ix > StepOffsetDefines::MinValueOffset)
+                ui->btnOK->setEnabled(true);
+        }
     }
     else
     if (m_direction == BaseUtils::dirLeft)
     {
         if (abs(ix) > ui->wgtDiag->valueLeft())
+        {
             ui->wgtDiag->setValueLeft(abs(ix));
+            if (abs(ix) > StepOffsetDefines::MinValueOffset)
+                ui->btnOK->setEnabled(true);
+        }
     }
+
+    ui->btnOK->setEnabled(false);
 }
 
 int SetMaxForceDialog::value() const
@@ -81,6 +102,7 @@ void SetMaxForceDialog::showEvent(QShowEvent *event)
     ui->wgtDiag->setValueDown(0);
     ui->wgtDiag->setValueRight(0);
     ui->wgtDiag->setValueLeft(0);
+    ui->btnOK->setEnabled(false);
 }
 
 void SetMaxForceDialog::resizeEvent(QResizeEvent *event)

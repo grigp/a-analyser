@@ -41,6 +41,7 @@ public:
   {
       "stage_time": 15,
       "freq": 50,
+      "diap": 128,
       "events": [
           {
               "event_kind": 1,        // 1 - начало движения; 0 - конец движения
