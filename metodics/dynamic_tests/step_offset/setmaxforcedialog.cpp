@@ -39,7 +39,6 @@ void SetMaxForceDialog::getData(const double x, const double y)
         if (iy > ui->wgtDiag->valueUp())
         {
             ui->wgtDiag->setValueUp(iy);
-            qDebug() << iy << StepOffsetDefines::MinValueOffset;
             if (iy > StepOffsetDefines::MinValueOffset)
                 ui->btnOK->setEnabled(true);
         }
@@ -74,8 +73,6 @@ void SetMaxForceDialog::getData(const double x, const double y)
                 ui->btnOK->setEnabled(true);
         }
     }
-
-    ui->btnOK->setEnabled(false);
 }
 
 int SetMaxForceDialog::value() const
