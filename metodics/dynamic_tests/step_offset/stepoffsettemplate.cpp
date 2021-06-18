@@ -3,6 +3,7 @@
 #include "metodicdefines.h"
 #include "stepoffsetparamsdialog.h"
 #include "stepoffsetexecute.h"
+#include "stepoffsetvisualize.h"
 
 #include <QLayout>
 
@@ -32,11 +33,10 @@ QWidget *StepOffsetTemplate::execute(QWidget *parent, const QJsonObject &params)
 
 QWidget *StepOffsetTemplate::visualize(QWidget *parent, const QString &testUid)
 {
-    return nullptr;
-//    auto *retval = new CrossVisualize(parent);
-//    parent->layout()->addWidget(retval);
-//    retval->setTest(testUid);
-//    return retval;
+    auto *retval = new StepOffsetVisualize(parent);
+    parent->layout()->addWidget(retval);
+    retval->setTest(testUid);
+    return retval;
 }
 
 bool StepOffsetTemplate::editParams(QWidget *parent, QJsonObject &params)

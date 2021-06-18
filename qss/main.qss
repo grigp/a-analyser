@@ -103,6 +103,15 @@ QLabel#lblJumps
     font-size: 14pt;
 }
 
+QLabel#lblResultativnstTitle,
+QLabel#lblEffectivenessTitle,
+QLabel#lblStrategyTitle
+{
+    font-size: 18pt;
+    color: rgb(0, 80, 110);
+    background-color: rgb(205, 209, 214);
+}
+
 QLineEdit
 {
     font-size: 11pt;
