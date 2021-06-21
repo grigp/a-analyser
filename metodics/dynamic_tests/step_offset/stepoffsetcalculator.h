@@ -5,6 +5,8 @@
 
 #include "testcalculator.h"
 
+class StepOffsetFactors;
+
 class StepOffsetCalculator : public TestCalculator
 {
     Q_OBJECT
@@ -24,7 +26,7 @@ public:
 
 
 private:
-//    CrossFactors *m_factors {nullptr};
+    StepOffsetFactors *m_factors {nullptr};
 };
 
 #endif // STEPOFFSETCALCULATOR_H

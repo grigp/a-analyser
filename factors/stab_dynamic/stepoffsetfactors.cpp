@@ -1,10 +1,13 @@
 #include "stepoffsetfactors.h"
 
+#include <qmath.h>
+
 #include "aanalyserapplication.h"
 #include "datadefines.h"
 #include "dataprovider.h"
 #include "channelsdefines.h"
 #include "stabilogram.h"
+#include "stepoffsetresultdata.h"
 
 StepOffsetFactors::StepOffsetFactors(const QString &testUid,
                                      const QString &probeUid,
@@ -223,10 +226,100 @@ void StepOffsetFactors::registerFactors()
 
 void StepOffsetFactors::getStepsLablels()
 {
+    QByteArray baData;
+    if (DataProvider::getChannel(probeUid(), ChannelsDefines::chanCrossResult, baData))
+    {
+        m_sordata = new StepOffsetResultData(baData);
 
+        for (int i = 0; i < m_sordata->stepsCount(); ++i)
+        {
+            StepRec step;
+            m_sordata->step(i, step.counterTo, step.counterFrom);
+            m_steps.append(step);
+        }
+    }
 }
 
 void StepOffsetFactors::fillBuffers()
 {
+    QList<QList<SignalsDefines::StabRec>> buffersComp;
+    QList<QList<SignalsDefines::StabRec>> buffersRet;
 
+    readSignal(buffersComp, buffersRet);
+    averaging(buffersComp, m_bufferComp);
+    averaging(buffersRet, m_bufferRet);
 }
+
+void StepOffsetFactors::readSignal(QList<QList<SignalsDefines::StabRec> > &bufComp,
+                                   QList<QList<SignalsDefines::StabRec> > &bufRet)
+{
+    QByteArray baStab;
+    if (DataProvider::getChannel(probeUid(), ChannelsDefines::chanStab, baStab))
+    {
+        Stabilogram stab(baStab);
+
+        //! По ступеням
+        for (int si = 0; si < m_steps.size(); ++si)
+        {
+            //! Значения границ ступени
+            int counterTo = m_steps.at(si).counterTo;
+            int counterFrom = m_steps.at(si).counterFrom;
+            //! Конец этапа возврата
+            int counterToN = stab.size();   //! Для последнего - конец сигнала
+            if (si < m_steps.size() - 1)    //! Для предыдущих - начала следующей ступени
+                counterToN = m_steps.at(si + 1).counterTo;
+
+            //! Контроль границ с сигналом
+            if (counterTo >= 0 && counterTo < stab.size() &&
+                counterFrom >= 0 && counterFrom < stab.size() &&
+                counterToN >= 0 && counterToN < stab.size())
+            {
+                //! Компенсация воздействия
+                QList<SignalsDefines::StabRec> buf;
+                for (int i = counterTo; i < counterFrom; ++i)
+                {
+                    SignalsDefines::StabRec rec = stab.value(i);
+                    buf.append(rec);
+                }
+                bufComp.append(buf);
+
+                //! Возврат в исходное состояние
+                buf.clear();
+                for (int i = counterFrom; i < counterToN; ++i)
+                {
+                    SignalsDefines::StabRec rec = stab.value(i);
+                    buf.append(rec);
+                }
+                bufRet.append(buf);
+            }
+        }
+    }
+}
+
+void StepOffsetFactors::averaging(QList<QList<SignalsDefines::StabRec> > &buffers,
+                                  QList<SignalsDefines::StabRec> &buffer)
+{
+    //! Так как с индексами не очень удобно, то сначала минимальный размер
+    int size = INT_MAX;
+    for (int i = 0; i < buffers.size(); ++i)
+        if (buffers[i].size() < size)
+            size = buffers[i].size();
+
+    //! А затем расчет среднего для каждого отсчета
+    for (int i = 0; i < size; ++i)
+    {
+        SignalsDefines::StabRec rec;
+        rec.x = 0;
+        rec.y = 0;
+        for (int j = 0; j < buffers.size(); ++j)
+        {
+            rec.x = rec.x + buffers[j][i].x;
+            rec.y = rec.y + buffers[j][i].y;
+        }
+        rec.x = rec.x / buffers.size();
+        rec.y = rec.y / buffers.size();
+
+        buffer.append(rec);
+    }
+}
+

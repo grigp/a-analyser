@@ -126,6 +126,11 @@ public:
      */
     static void registerFactors();
 
+    int bufferCompensationCount() const {return m_bufferComp.size();}
+    SignalsDefines::StabRec bufferCompensationValue(const int i) {return m_bufferComp.at(i);}
+    int bufferReturnCount() const {return m_bufferRet.size();}
+    SignalsDefines::StabRec bufferReturnValue(const int i) {return m_bufferRet.at(i);}
+
 private:
     /*!
      * \brief Получение меток ступеней
@@ -137,8 +142,26 @@ private:
      */
     void fillBuffers();
 
+    void readSignal(QList<QList<SignalsDefines::StabRec>> &bufComp,
+                    QList<QList<SignalsDefines::StabRec>> &bufRet);
+
+    void averaging(QList<QList<SignalsDefines::StabRec>> &buffers,
+                   QList<SignalsDefines::StabRec> &buffer);
+
     StepOffsetFactorsDefines::FactorValues m_fctComp;
     StepOffsetFactorsDefines::FactorValues m_fctRet;
+    StepOffsetResultData *m_sordata;
+
+    ///< Буфера сигнала
+    QList<SignalsDefines::StabRec> m_bufferComp;
+    QList<SignalsDefines::StabRec> m_bufferRet;
+
+    struct StepRec
+    {
+        int counterTo;
+        int counterFrom;
+    };
+    QList<StepRec> m_steps;
 
 };
 

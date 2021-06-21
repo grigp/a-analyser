@@ -15,7 +15,7 @@ void CrossCalculator::calculate()
 {
     TestCalculator::calculate();
 
-    //! Необходимо в тесте, в котором будет возможно ни одна прба найти нужную пробу
+    //! Необходимо в тесте, в котором будет возможно ни одна проба найти нужную пробу
     DataDefines::TestInfo ti;
     if (DataProvider::getTestInfo(testUid(), ti))
     {
