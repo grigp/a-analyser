@@ -169,6 +169,32 @@
       <item>
        <widget class="QLineEdit" name="edSearch"/>
       </item>
+      <item>
+       <widget class="QPushButton" name="btnUnselect">
+        <property name="minimumSize">
+         <size>
+          <width>20</width>
+          <height>20</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="toolTip">
+         <string>Снять выделение</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset resource="../../kernel.qrc">
+          <normaloff>:/images/Unselect1.png</normaloff>:/images/Unselect1.png</iconset>
+        </property>
+       </widget>
+      </item>
      </layout>
     </widget>
    </item>
@@ -181,19 +207,6 @@
      </property>
      <property name="sortingEnabled">
       <bool>true</bool>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QPushButton" name="btnUnselect">
-     <property name="maximumSize">
-      <size>
-       <width>16777215</width>
-       <height>18</height>
-      </size>
-     </property>
-     <property name="text">
-      <string>Снять выделение</string>
      </property>
     </widget>
    </item>
@@ -274,8 +287,8 @@
    <slot>unselect()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>62</x>
-     <y>482</y>
+     <x>358</x>
+     <y>81</y>
     </hint>
     <hint type="destinationlabel">
      <x>369</x>

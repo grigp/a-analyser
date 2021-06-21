@@ -141,5 +141,7 @@
         <file>pre_settings/metodics_dopusk.json</file>
         <file>pre_settings/metodics_dopusk_en_US.json</file>
         <file>images/Methodics/StepOffset.png</file>
+        <file>images/Unselect.png</file>
+        <file>images/Unselect1.png</file>
     </qresource>
 </RCC>

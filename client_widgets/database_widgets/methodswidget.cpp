@@ -23,6 +23,7 @@ MethodsWidget::MethodsWidget(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    ui->btnUnselect->setVisible(false);
 //    ui->tvMetods->viewport()->installEventFilter(this);
 }
 
@@ -119,6 +120,9 @@ void MethodsWidget::on_btnKindPressed()
     QString title = tr("Методики");
     if (m_btnToKindUid.value(btn) != QUuid().toString())
         title = title + " (" + btn->toolTip() + ")";
+ //   else
+        unselectMetodic();
+
     ui->lblTitle->setText(title);
 
     selectMetodic(QModelIndex());
