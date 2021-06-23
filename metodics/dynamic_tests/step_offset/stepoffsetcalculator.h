@@ -4,6 +4,7 @@
 #include <QObject>
 
 #include "testcalculator.h"
+#include "signalsdefines.h"
 
 class StepOffsetFactors;
 
@@ -24,6 +25,15 @@ public:
      */
     void fastCalculate() override;
 
+    int stageTime() const;
+    int freq() const;
+    int diap() const;
+    int force() const;
+
+    int bufferCompensationCount() const;
+    double bufferCompensationValue(const int i) const;
+    int bufferReturnCount() const;
+    double bufferReturnValue(const int i) const;
 
 private:
     StepOffsetFactors *m_factors {nullptr};

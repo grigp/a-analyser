@@ -62,6 +62,18 @@ void StepOffsetResultData::setForce(const int force)
     setData(obj);
 }
 
+int StepOffsetResultData::direction() const
+{
+    return data()["direction"].toInt();
+}
+
+void StepOffsetResultData::setDirection(const int dir)
+{
+    QJsonObject obj = data();
+    obj["direction"] = dir;
+    setData(obj);
+}
+
 int StepOffsetResultData::stepsCount() const
 {
     auto arr = data()["steps"].toArray();

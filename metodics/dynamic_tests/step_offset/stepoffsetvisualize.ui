@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>904</width>
-    <height>574</height>
+    <height>638</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -35,7 +35,7 @@
       <enum>QTabWidget::South</enum>
      </property>
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="tabTransientProcess">
       <attribute name="title">
@@ -59,7 +59,7 @@
          <property name="orientation">
           <enum>Qt::Vertical</enum>
          </property>
-         <widget class="QWidget" name="wgtProcess" native="true"/>
+         <widget class="Transients" name="wgtProcess" native="true"/>
          <widget class="QTreeView" name="tvFactors"/>
         </widget>
        </item>
@@ -481,6 +481,14 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>Transients</class>
+   <extends>QWidget</extends>
+   <header location="global">transients.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections>
   <connection>

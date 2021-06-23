@@ -224,10 +224,46 @@ void StepOffsetFactors::registerFactors()
                            tr("Средняя ошибка траектории когнитивных коррекций"), tr("RetCorrKE"), tr("мм"), 2, 3, FactorsDefines::nsDual, 12);
 }
 
+int StepOffsetFactors::stageTime() const
+{
+    if (m_sordata)
+        return m_sordata->stageTime();
+    return 0;
+}
+
+int StepOffsetFactors::freq() const
+{
+    if (m_sordata)
+        return m_sordata->freq();
+    return 0;
+}
+
+int StepOffsetFactors::diap() const
+{
+    if (m_sordata)
+        return m_sordata->diap();
+    return 0;
+}
+
+BaseUtils::Directions StepOffsetFactors::direction() const
+{
+    if (m_sordata)
+        return static_cast<BaseUtils::Directions>(m_sordata->direction());
+    return BaseUtils::dirUp;
+}
+
+int StepOffsetFactors::force() const
+{
+    if (m_sordata)
+        return m_sordata->force();
+    return 0;
+}
+
+
 void StepOffsetFactors::getStepsLablels()
 {
     QByteArray baData;
-    if (DataProvider::getChannel(probeUid(), ChannelsDefines::chanCrossResult, baData))
+    if (DataProvider::getChannel(probeUid(), ChannelsDefines::chanStepOffsetResult, baData))
     {
         m_sordata = new StepOffsetResultData(baData);
 
@@ -297,7 +333,7 @@ void StepOffsetFactors::readSignal(QList<QList<SignalsDefines::StabRec> > &bufCo
 }
 
 void StepOffsetFactors::averaging(QList<QList<SignalsDefines::StabRec> > &buffers,
-                                  QList<SignalsDefines::StabRec> &buffer)
+                                  QList<double> &buffer)
 {
     //! Так как с индексами не очень удобно, то сначала минимальный размер
     int size = INT_MAX;
@@ -308,18 +344,16 @@ void StepOffsetFactors::averaging(QList<QList<SignalsDefines::StabRec> > &buffer
     //! А затем расчет среднего для каждого отсчета
     for (int i = 0; i < size; ++i)
     {
-        SignalsDefines::StabRec rec;
-        rec.x = 0;
-        rec.y = 0;
+        double val = 0;
         for (int j = 0; j < buffers.size(); ++j)
         {
-            rec.x = rec.x + buffers[j][i].x;
-            rec.y = rec.y + buffers[j][i].y;
+            if (m_sordata->direction() == BaseUtils::dirUp || m_sordata->direction() == BaseUtils::dirDown)
+                val = val + buffers[j][i].y;
+            else
+                val = val + buffers[j][i].x;
         }
-        rec.x = rec.x / buffers.size();
-        rec.y = rec.y / buffers.size();
-
-        buffer.append(rec);
+        val = val / buffers.size();
+        buffer.append(val);
     }
 }
 

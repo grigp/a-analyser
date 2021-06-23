@@ -31,12 +31,12 @@ void StepOffsetCalculator::calculate()
                 {
                     m_factors = new StepOffsetFactors(testUid(), pi.uid);
 
-                    int min = qMin(m_factors->bufferCompensationCount(), m_factors->bufferReturnCount());
-                    for (int i = 0; i < min; ++i)
-                    {
-                        qDebug() << m_factors->bufferCompensationValue(i).x << m_factors->bufferCompensationValue(i).y << "    " <<
-                                    m_factors->bufferReturnValue(i).x << m_factors->bufferReturnValue(i).y;
-                    }
+//                    int min = qMin(m_factors->bufferCompensationCount(), m_factors->bufferReturnCount());
+//                    for (int i = 0; i < min; ++i)
+//                    {
+//                        qDebug() << m_factors->bufferCompensationValue(i).x << m_factors->bufferCompensationValue(i).y << "    " <<
+//                                    m_factors->bufferReturnValue(i).x << m_factors->bufferReturnValue(i).y;
+//                    }
 
                 }
             }
@@ -48,4 +48,60 @@ void StepOffsetCalculator::fastCalculate()
 {
     TestCalculator::fastCalculate();
 
+}
+
+int StepOffsetCalculator::stageTime() const
+{
+    if (m_factors)
+        return m_factors->stageTime();
+    return 0;
+}
+
+int StepOffsetCalculator::freq() const
+{
+    if (m_factors)
+        return m_factors->freq();
+    return 0;
+}
+
+int StepOffsetCalculator::diap() const
+{
+    if (m_factors)
+        return m_factors->diap();
+    return 0;
+}
+
+int StepOffsetCalculator::force() const
+{
+    if (m_factors)
+        return m_factors->force();
+    return 0;
+}
+
+int StepOffsetCalculator::bufferCompensationCount() const
+{
+    if (m_factors)
+        return m_factors->bufferCompensationCount();
+    return 0;
+}
+
+double StepOffsetCalculator::bufferCompensationValue(const int i) const
+{
+    if (m_factors)
+        return m_factors->bufferCompensationValue(i);
+    return 0;
+}
+
+int StepOffsetCalculator::bufferReturnCount() const
+{
+    if (m_factors)
+        return m_factors->bufferReturnCount();
+    return 0;
+}
+
+double StepOffsetCalculator::bufferReturnValue(const int i) const
+{
+    if (m_factors)
+        return m_factors->bufferReturnValue(i);
+    return 0;
 }

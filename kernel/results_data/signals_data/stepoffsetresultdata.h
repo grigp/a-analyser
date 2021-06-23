@@ -28,6 +28,9 @@ public:
     int force() const;
     void setForce(const int force);
 
+    int direction() const;
+    void setDirection(const int dir);
+
     int stepsCount() const;
     bool step(const int idx, int& counterTo, int& counterFrom);
 

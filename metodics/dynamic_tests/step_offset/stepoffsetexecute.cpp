@@ -151,6 +151,7 @@ void StepOffsetExecute::setMaxForceDialogAccepted()
             m_res->setDiap(diap());
             m_res->setForce(m_force);
             m_res->setStageTime(m_stageTime);
+            m_res->setDirection(m_direction);
         }
         else
         {

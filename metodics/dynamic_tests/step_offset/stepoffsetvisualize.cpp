@@ -30,6 +30,18 @@ void StepOffsetVisualize::setTest(const QString &testUid)
     {
         m_calculator = new StepOffsetCalculator(testUid, this);
         m_calculator->calculate();
+
+        int min = qMin(m_calculator->bufferCompensationCount(), m_calculator->bufferReturnCount());
+        ui->wgtProcess->beginAddValues();
+        for (int i = 0; i < min; ++i)
+        {
+            ui->wgtProcess->setCompensationValue(m_calculator->bufferCompensationValue(i));
+            ui->wgtProcess->setReturnValue(m_calculator->bufferReturnValue(i));
+
+//            qDebug() << m_factors->bufferCompensationValue(i).x << m_factors->bufferCompensationValue(i).y << "    " <<
+//                        m_factors->bufferReturnValue(i).x << m_factors->bufferReturnValue(i).y;
+        }
+        ui->wgtProcess->endAddValues();
     }
 }
 

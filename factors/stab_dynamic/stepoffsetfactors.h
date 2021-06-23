@@ -126,10 +126,16 @@ public:
      */
     static void registerFactors();
 
+    int stageTime() const;
+    int freq() const;
+    int diap() const;
+    BaseUtils::Directions direction() const;
+    int force() const;
+
     int bufferCompensationCount() const {return m_bufferComp.size();}
-    SignalsDefines::StabRec bufferCompensationValue(const int i) {return m_bufferComp.at(i);}
+    double bufferCompensationValue(const int i) const {return m_bufferComp.at(i);}
     int bufferReturnCount() const {return m_bufferRet.size();}
-    SignalsDefines::StabRec bufferReturnValue(const int i) {return m_bufferRet.at(i);}
+    double bufferReturnValue(const int i) const {return m_bufferRet.at(i);}
 
 private:
     /*!
@@ -146,15 +152,15 @@ private:
                     QList<QList<SignalsDefines::StabRec>> &bufRet);
 
     void averaging(QList<QList<SignalsDefines::StabRec>> &buffers,
-                   QList<SignalsDefines::StabRec> &buffer);
+                   QList<double> &buffer);
 
     StepOffsetFactorsDefines::FactorValues m_fctComp;
     StepOffsetFactorsDefines::FactorValues m_fctRet;
     StepOffsetResultData *m_sordata;
 
     ///< Буфера сигнала
-    QList<SignalsDefines::StabRec> m_bufferComp;
-    QList<SignalsDefines::StabRec> m_bufferRet;
+    QList<double> m_bufferComp;
+    QList<double> m_bufferRet;
 
     struct StepRec
     {
