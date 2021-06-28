@@ -4,6 +4,7 @@
 #include <QTextStream>
 #include <QDebug>
 #include <QDir>
+#include <QtMath>
 
 QString BaseUtils::getTimeBySecCount(const int secCnt, const bool isHour)
 {
@@ -165,3 +166,89 @@ void BaseUtils::modelToMSExcel(const QAbstractItemModel *model, const QString &f
         csvFile.close();
     }
 }
+
+double getCoef1(const BaseUtils::FilterKind tf)
+{
+    switch (tf) {
+    case BaseUtils::fkCriticalAttenuation: return 1.2872;
+    case BaseUtils::fkBessel: return 1.3617;
+    case BaseUtils::fkBatterwort: return 1.4142;
+    case BaseUtils::fkChebyshev: return 1.3614;
+    }
+}
+
+double getCoef2(const BaseUtils::FilterKind tf)
+{
+    switch (tf) {
+    case BaseUtils::fkCriticalAttenuation: return 0.4142;
+    case BaseUtils::fkBessel: return 0.618;
+    case BaseUtils::fkBatterwort: return 1.0;
+    case BaseUtils::fkChebyshev: return 1.3827;
+    }
+}
+
+void BaseUtils::filterLowFreq(QVector<double> &buffer, const double fd, const double fc, const BaseUtils::FilterKind tf, const int n1, const int n2)
+{
+    double w = fd / fc;
+    double alf = M_PI / w;
+    double l = qCos(alf) / qSin(alf);
+    double dd0 = 1;
+    double dd1 = 0;
+    double dd2 = dd1;
+    double cc0 = 1;
+
+    double cc1 = getCoef1(tf);
+    double cc2 = getCoef2(tf);
+
+    double d0 = (dd0 - dd1 * l + dd2 * l * l) / (cc0 + cc1 * l + cc2 * l * l);
+    double d1 = 2 * (dd0 - dd2 * l * l) / (cc0 + cc1 * l + cc2 * l * l);
+    double d2 = (dd0 + dd1 * l + dd2 * l * l) / (cc0 + cc1 * l + cc2 * l * l);
+    double c0 = (cc0 - cc1 * l + cc2 * l * l) / (cc0 + cc1 * l + cc2 * l * l);
+    double c1 = 2 * (cc0 - cc2 * l * l) / (cc0 + cc1 * l + cc2 * l * l);
+
+    QVector<double> X;
+    X.resize(buffer.size() + 40);
+    for (int i = 0; i < 20; ++i)
+        X[i] = buffer[0];
+    for (int i = n1; i < buffer.size(); ++i)
+        X[20 + i] = buffer[i];
+    for (int i = 0; i < 20; ++i)
+        X[n2 + i] = buffer[buffer.size() - 1];
+
+    QVector<double> Y;
+    Y.resize(X.size());
+
+    Y[0] = 0;
+    int n22 = Y.size() - 1;
+    for (int i = 0; i < 0 + 2; ++i)
+        Y[0] = Y[0] + X[i];
+    Y[n22-1] = Y[0] / 3;
+    Y[n22] = Y[n22-1];
+
+    for (int k = 1; k <= l; ++k) //! кратность фильтра
+    {
+        for (int i = 0; i <= n22; ++i)
+        {
+            int i1 = i-1;
+            int i2 = i-2;
+            if (i == 0)
+            {
+                i1 = n22;
+                i2 = n22 - 1;
+            }
+            else
+            if (i == 0 + 1)
+            {
+                i1 = 0;
+                i2 = n22;
+            }
+
+            Y[i] = (d2 * X[i] + d1 * X[i1] - c1 * Y[i1] + d0 * X[i2] - c0 * Y[i2]);  // фильтр Пол.
+        }
+    }
+
+    for (int i = n1; i <= n2; ++i)
+        buffer[i] = Y[20 + i];
+}
+
+

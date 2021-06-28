@@ -123,6 +123,32 @@ void setColoredPicture(QPixmap &pixmap, const QColor &color);
  */
 void modelToMSExcel(const QAbstractItemModel* model, const QString &fileName);
 
+/*!
+ * \brief Типы фильтров ФНЧ FilterKind enum
+ */
+enum FilterKind
+{
+      fkCriticalAttenuation = 0  ///< Критического затухания
+    , fkBessel                   ///< Бесселя
+    , fkBatterwort               ///< Баттерворта
+    , fkChebyshev                ///< Чебышева с неравн. 0,5 дБ
+};
+
+/*!
+ * \brief Фильтр низкой частоты. Тип фильтра 2-го порядка табл. 13.6 стр. 194
+ * \param buffer - фильтруемый массив
+ * \param fd - частота дискретизации
+ * \param fc - частота среза
+ * \param tf - тип фиьтра
+ * \param n1, n2 - границы
+ */
+void filterLowFreq(QVector<double> &buffer,
+                   const double fd,
+                   const double fc,
+                   const FilterKind tf,
+                   const int n1,
+                   const int n2);
+
 
 }
 

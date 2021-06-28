@@ -36,6 +36,8 @@ void StepOffsetFactors::calculate()
     getStepsLablels();
     fillBuffers();
 
+    calculateFactors(m_bufferComp, m_fctComp);
+    calculateFactors(m_bufferRet, m_fctRet);
 
     addFactor(StepOffsetFactorsDefines::Compensation::LatentUid, m_fctComp.latent);
     addFactor(StepOffsetFactorsDefines::Compensation::SwingTimeUid, m_fctComp.swingTime);
@@ -333,7 +335,7 @@ void StepOffsetFactors::readSignal(QList<QList<SignalsDefines::StabRec> > &bufCo
 }
 
 void StepOffsetFactors::averaging(QList<QList<SignalsDefines::StabRec> > &buffers,
-                                  QList<double> &buffer,
+                                  QVector<double> &buffer,
                                   bool isInverce)
 {
     //! Так как с индексами не очень удобно, то сначала минимальный размер
@@ -358,5 +360,12 @@ void StepOffsetFactors::averaging(QList<QList<SignalsDefines::StabRec> > &buffer
             val = 100 - val;
         buffer.append(val);
     }
+
+    BaseUtils::filterLowFreq(buffer, m_sordata->freq(), 3, BaseUtils::fkChebyshev, 0, buffer.size() - 1);
+}
+
+void StepOffsetFactors::calculateFactors(const QVector<double> buffer, StepOffsetFactorsDefines::FactorValues &factors)
+{
+
 }
 

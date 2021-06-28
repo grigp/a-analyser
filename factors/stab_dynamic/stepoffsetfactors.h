@@ -153,16 +153,23 @@ private:
                     QList<QList<SignalsDefines::StabRec>> &bufRet);
 
     void averaging(QList<QList<SignalsDefines::StabRec>> &buffers,
-                   QList<double> &buffer,
+                   QVector<double> &buffer,
                    bool isInverce);
+
+    /*!
+     * \brief Расчет показателей
+     * \param buffer - буфер компенсации или возврата
+     * \param factors - показатели
+     */
+    void calculateFactors(const QVector<double> buffer, StepOffsetFactorsDefines::FactorValues &factors);
 
     StepOffsetFactorsDefines::FactorValues m_fctComp;
     StepOffsetFactorsDefines::FactorValues m_fctRet;
     StepOffsetResultData *m_sordata;
 
     ///< Буфера сигнала
-    QList<double> m_bufferComp;
-    QList<double> m_bufferRet;
+    QVector<double> m_bufferComp;
+    QVector<double> m_bufferRet;
 
     struct StepRec
     {
