@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QPainter>
 #include <QAbstractItemModel>
+#include <QCoreApplication>
 
 namespace BaseUtils
 {
@@ -40,11 +41,18 @@ static QMap<QString, Directions> DirectionValueIndex {
   , std::pair<QString, Directions> ("left", dirLeft)
 };
 
-static QMap<Directions, QString> DirectionValueName {
+static QMap<Directions, QString> DirectionValueUIDName {
     std::pair<Directions, QString> (dirUp, "up")
   , std::pair<Directions, QString> (dirRight, "right")
   , std::pair<Directions, QString> (dirDown, "down")
   , std::pair<Directions, QString> (dirLeft, "left")
+};
+
+static QMap<Directions, QString> DirectionValueName {
+    std::pair<Directions, QString> (dirUp, QCoreApplication::tr("вперед"))
+  , std::pair<Directions, QString> (dirRight, QCoreApplication::tr("вправо"))
+  , std::pair<Directions, QString> (dirDown, QCoreApplication::tr("назад"))
+  , std::pair<Directions, QString> (dirLeft, QCoreApplication::tr("влево"))
 };
 
 /*!

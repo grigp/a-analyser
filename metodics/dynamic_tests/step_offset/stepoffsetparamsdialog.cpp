@@ -39,7 +39,7 @@ QJsonObject StepOffsetParamsDialog::getParams()
     retval["force"] = ui->edForce->value();
 
     auto valD = static_cast<BaseUtils::Directions>(ui->cbDirection->currentIndex());
-    retval["direction"] = BaseUtils::DirectionValueName.value(valD);
+    retval["direction"] = BaseUtils::DirectionValueUIDName.value(valD);
 
     return retval;
 }

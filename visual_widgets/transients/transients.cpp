@@ -6,7 +6,7 @@
 namespace
 {
 static const int FieldH = 20;  ///< Размер поля для горизонтальной шкалы
-static const int FieldV = 40;  ///< Размер поля для вертикальной шкалы
+static const int FieldV = 36;  ///< Размер поля для вертикальной шкалы
 
 static double comp_min = INT_MAX;
 static double comp_max = -INT_MAX;
@@ -66,18 +66,18 @@ void Transients::paintEvent(QPaintEvent *event)
     painter.setPen(QPen(m_backgroundColor, 1, Qt::SolidLine, Qt::FlatCap));
     painter.drawRect(geometry());
 
-    //! Координата Y нижней линии (0 для графика возврата)
-    int line2Y = geometry().height() - FieldH;
-    //! Координата Y верхней линии (0 для графика компенсации)
-    int line1Y = (line2Y) / 2;
+    //! Координата Y нижней линии (Низ для графика возврата)
+    int lineRetY = geometry().height() - FieldH;
+    //! Координата Y верхней линии (Низ для графика компенсации)
+    int lineCompY = (lineRetY) / 2;
     //! Высота зоны для одного графика
-    int areaSize = line1Y;
+    int areaSize = lineCompY;
 
     //! Оси
     painter.setPen(QPen(m_axisColor, 1, Qt::SolidLine, Qt::FlatCap));
-    painter.drawLine(4, line2Y, geometry().width(), line2Y);
-    painter.drawLine(4, line1Y, geometry().width(), line1Y);
-    painter.drawLine(FieldV, line2Y, FieldV, 0);
+    painter.drawLine(4, lineRetY, geometry().width(), lineRetY);
+    painter.drawLine(4, lineCompY, geometry().width(), lineCompY);
+    painter.drawLine(FieldV, lineRetY, FieldV, 0);
 
     //! Если заданы корректные данные, то строим график
     if (comp_min < comp_max && ret_min < ret_max &&
@@ -98,20 +98,45 @@ void Transients::paintEvent(QPaintEvent *event)
         double propRet = 1;
         if (maxRet - minRet > 0) propRet = areaSize / (maxRet - minRet);
 
-        double step = (geometry().width() - FieldV) / m_compensation.size();
+        //! Линии 0% и 100%
+        painter.setPen(QPen(m_axisColor, 1, Qt::DashLine, Qt::FlatCap));
+        int lineComp0 = static_cast<int>(lineCompY - (-minComp) * propComp);
+        int lineComp100 = static_cast<int>(lineCompY - (100-minComp) * propComp);
+        painter.drawLine(FieldV, lineComp0, geometry().width(), lineComp0);
+        painter.drawLine(FieldV, lineComp100, geometry().width(), lineComp100);
+        painter.drawText(6, lineComp0 + 4, "0%");
+        painter.drawText(1, lineComp100 + 4, "100%");
+        int lineRet0 = static_cast<int>(lineRetY - (-minRet) * propRet);
+        int lineRet100 = static_cast<int>(lineRetY - (100-minRet) * propRet);
+        painter.drawLine(FieldV, lineRet0, geometry().width(), lineRet0);
+        painter.drawLine(FieldV, lineRet100, geometry().width(), lineRet100);
+        painter.drawText(6, lineRet0 + 4, "0%");
+        painter.drawText(1, lineRet100 + 4, "100%");
 
+        double step = static_cast<double>(geometry().width() - FieldV) / static_cast<double>(m_compensation.size());
         for (int i = 0; i < m_compensation.size() - 1; ++i)
         {
+            painter.setPen(QPen(Qt::blue, 1, Qt::SolidLine, Qt::FlatCap));
+
             int x1 = static_cast<int>(FieldV + i * step);
             int x2 = static_cast<int>(FieldV + (i + 1) * step);
 
-            int y1 = static_cast<int>(line1Y - m_compensation[i] * propComp);
-            int y2 = static_cast<int>(line1Y - m_compensation[i + 1] * propComp);
+            int y1 = static_cast<int>(lineComp0 - m_compensation[i] * propComp);
+            int y2 = static_cast<int>(lineComp0 - m_compensation[i + 1] * propComp);
             painter.drawLine(x1, y1, x2, y2);
 
-            y1 = static_cast<int>(line2Y - m_return[i] * propRet);
-            y2 = static_cast<int>(line2Y - m_return[i + 1] * propRet);
+            y1 = static_cast<int>(lineRet0 - m_return[i] * propRet);
+            y2 = static_cast<int>(lineRet0 - m_return[i + 1] * propRet);
             painter.drawLine(x1, y1, x2, y2);
+
+            //! Секундные метки
+            if ((i % m_freq) == 0 )
+            {
+                painter.setPen(QPen(m_axisColor, 1, Qt::DotLine, Qt::FlatCap));
+                painter.drawLine(x1, 0, x1, lineRetY);
+                painter.drawText(x1 - 4, lineRetY + 15, QString::number(i / m_freq));
+
+            }
         }
 
 

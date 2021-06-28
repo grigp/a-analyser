@@ -19,11 +19,14 @@ public:
     explicit Transients(QWidget *parent = nullptr);
     ~Transients() override;
 
-    void setBackgroundColor(const QColor color) {m_backgroundColor = color;}
     QColor backgroundColor() const {return m_backgroundColor;}
+    void setBackgroundColor(const QColor color) {m_backgroundColor = color;}
 
-    void setAxisColor(const QColor color) {m_axisColor = color;}
     QColor axisColor() const {return m_axisColor;}
+    void setAxisColor(const QColor color) {m_axisColor = color;}
+
+    int freq() {return m_freq;}
+    void setFreq(const int freq) {m_freq = freq;}
 
     /*!
      * \brief Запускает режим добавления значений
@@ -53,6 +56,8 @@ private:
 
     QVector<double> m_compensation;
     QVector<double> m_return;
+
+    int m_freq {50};
 };
 
 #endif // TRANSIENTS_H

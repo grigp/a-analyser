@@ -131,6 +131,7 @@ public:
     int diap() const;
     BaseUtils::Directions direction() const;
     int force() const;
+    int stepsCount() const {return m_steps.size();}
 
     int bufferCompensationCount() const {return m_bufferComp.size();}
     double bufferCompensationValue(const int i) const {return m_bufferComp.at(i);}
@@ -152,7 +153,8 @@ private:
                     QList<QList<SignalsDefines::StabRec>> &bufRet);
 
     void averaging(QList<QList<SignalsDefines::StabRec>> &buffers,
-                   QList<double> &buffer);
+                   QList<double> &buffer,
+                   bool isInverce);
 
     StepOffsetFactorsDefines::FactorValues m_fctComp;
     StepOffsetFactorsDefines::FactorValues m_fctRet;

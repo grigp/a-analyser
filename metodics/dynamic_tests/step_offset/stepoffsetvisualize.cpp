@@ -32,16 +32,21 @@ void StepOffsetVisualize::setTest(const QString &testUid)
         m_calculator->calculate();
 
         int min = qMin(m_calculator->bufferCompensationCount(), m_calculator->bufferReturnCount());
+        ui->wgtProcess->setFreq(m_calculator->freq());
         ui->wgtProcess->beginAddValues();
         for (int i = 0; i < min; ++i)
         {
             ui->wgtProcess->setCompensationValue(m_calculator->bufferCompensationValue(i));
             ui->wgtProcess->setReturnValue(m_calculator->bufferReturnValue(i));
-
-//            qDebug() << m_factors->bufferCompensationValue(i).x << m_factors->bufferCompensationValue(i).y << "    " <<
-//                        m_factors->bufferReturnValue(i).x << m_factors->bufferReturnValue(i).y;
         }
         ui->wgtProcess->endAddValues();
+
+        ui->lblForce->setText(tr("Усилие") + " - " + QString::number(m_calculator->force()) + " " + tr("%"));
+        ui->lblDirection->setText(tr("Направление") + " - " + BaseUtils::DirectionValueName.value(m_calculator->direction()));
+        ui->lblDeviation->setText(tr("Отклонение") + " - " +
+                                  QString::number(m_calculator->diap() * m_calculator->force() / 100) +
+                                  " " + tr("мм"));
+        ui->lblRepeatCount->setText(tr("Кол-во повторений") + " - " + QString::number(m_calculator->stepsCount()));
     }
 }
 

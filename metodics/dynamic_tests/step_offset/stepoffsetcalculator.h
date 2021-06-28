@@ -5,6 +5,7 @@
 
 #include "testcalculator.h"
 #include "signalsdefines.h"
+#include "baseutils.h"
 
 class StepOffsetFactors;
 
@@ -29,6 +30,8 @@ public:
     int freq() const;
     int diap() const;
     int force() const;
+    BaseUtils::Directions direction() const;
+    int stepsCount() const;
 
     int bufferCompensationCount() const;
     double bufferCompensationValue(const int i) const;

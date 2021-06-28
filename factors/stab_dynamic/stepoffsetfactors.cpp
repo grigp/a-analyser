@@ -282,8 +282,8 @@ void StepOffsetFactors::fillBuffers()
     QList<QList<SignalsDefines::StabRec>> buffersRet;
 
     readSignal(buffersComp, buffersRet);
-    averaging(buffersComp, m_bufferComp);
-    averaging(buffersRet, m_bufferRet);
+    averaging(buffersComp, m_bufferComp, false);
+    averaging(buffersRet, m_bufferRet, true);
 }
 
 void StepOffsetFactors::readSignal(QList<QList<SignalsDefines::StabRec> > &bufComp,
@@ -333,7 +333,8 @@ void StepOffsetFactors::readSignal(QList<QList<SignalsDefines::StabRec> > &bufCo
 }
 
 void StepOffsetFactors::averaging(QList<QList<SignalsDefines::StabRec> > &buffers,
-                                  QList<double> &buffer)
+                                  QList<double> &buffer,
+                                  bool isInverce)
 {
     //! Так как с индексами не очень удобно, то сначала минимальный размер
     int size = INT_MAX;
@@ -352,7 +353,9 @@ void StepOffsetFactors::averaging(QList<QList<SignalsDefines::StabRec> > &buffer
             else
                 val = val + buffers[j][i].x;
         }
-        val = val / buffers.size();
+        val = val / buffers.size() * 100.0 / m_sordata->force();
+        if (isInverce)
+            val = 100 - val;
         buffer.append(val);
     }
 }
