@@ -13,7 +13,18 @@ enum Stage
     , stgReturn        //! Возврат в исходное состояние
 };
 
+///< Минимальное значение смещения при выборе диапазона отклонения
 static const int MinValueOffset = 50;
+///< Минимальная длительность переходного процесса в секундах
+static const int MinLengthTransient = 3;
+///< Время стартового участка в секундах для определения латентного периода
+static const double StartFindTimeLatent = 0.2;
+///< Допустимый разброс для латентного периода в мм +-
+static const int DeltaLatenet = 5;
+///< Допустимый разброс скорости
+static const double Delta0Speed = 0.05;
+///< Допустимый разброс статизма
+static const double DeltaReady = 3.0;
 
 }
 

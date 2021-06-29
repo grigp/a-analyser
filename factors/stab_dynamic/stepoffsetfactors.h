@@ -87,6 +87,7 @@ struct FactorValues
     double correctKognAmpl;
     double correctKognPower;
     double correctKognError;
+    double q;
 };
 
 }
@@ -159,9 +160,15 @@ private:
     /*!
      * \brief Расчет показателей
      * \param buffer - буфер компенсации или возврата
-     * \param factors - показатели
+     * \param factors - показатели этапа
      */
     void calculateFactors(const QVector<double> buffer, StepOffsetFactorsDefines::FactorValues &factors);
+
+    /*!
+     * \brief Рассчитывает тип переходного процесса
+     * \param factors - показатели этапа
+     */
+    void calculateTrancientKind(StepOffsetFactorsDefines::FactorValues &factors) const;
 
     StepOffsetFactorsDefines::FactorValues m_fctComp;
     StepOffsetFactorsDefines::FactorValues m_fctRet;

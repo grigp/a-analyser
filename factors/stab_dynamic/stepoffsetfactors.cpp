@@ -1,9 +1,11 @@
 #include "stepoffsetfactors.h"
 
 #include <qmath.h>
+#include <QDebug>
 
 #include "aanalyserapplication.h"
 #include "datadefines.h"
+#include "stepoffsetdefines.h"
 #include "dataprovider.h"
 #include "channelsdefines.h"
 #include "stabilogram.h"
@@ -38,6 +40,8 @@ void StepOffsetFactors::calculate()
 
     calculateFactors(m_bufferComp, m_fctComp);
     calculateFactors(m_bufferRet, m_fctRet);
+    calculateTrancientKind(m_fctComp);
+    calculateTrancientKind(m_fctRet);
 
     addFactor(StepOffsetFactorsDefines::Compensation::LatentUid, m_fctComp.latent);
     addFactor(StepOffsetFactorsDefines::Compensation::SwingTimeUid, m_fctComp.swingTime);
@@ -364,8 +368,205 @@ void StepOffsetFactors::averaging(QList<QList<SignalsDefines::StabRec> > &buffer
     BaseUtils::filterLowFreq(buffer, m_sordata->freq(), 3, BaseUtils::fkChebyshev, 0, buffer.size() - 1);
 }
 
+double getSpeed(const QVector<double> buffer, const int idx)
+{
+    if ((idx > 0) && (idx < buffer.size()))
+        return buffer[idx] - buffer[idx - 1];
+    else
+    if (idx == 0 and buffer.size() > 1)
+        return buffer[1] - buffer[0];
+    else
+        return 0;
+}
+
 void StepOffsetFactors::calculateFactors(const QVector<double> buffer, StepOffsetFactorsDefines::FactorValues &factors)
 {
+    //! Возврат, если длина буфера меньше, чем StepOffsetDefines::MinLengthTransient секунды
+    if (buffer.size() < m_sordata->freq() * StepOffsetDefines::MinLengthTransient)
+        return;
 
+    //! ********************* Латентный период
+    int ln = static_cast<int>(m_sordata->freq() * StepOffsetDefines::StartFindTimeLatent);
+    double mo = 0;
+    for (int i = 0; i < ln; ++i)
+        mo = mo + buffer[i];
+    mo = mo / ln;
+    int i = 0;
+    while ((i < buffer.size()) && (fabs(buffer[i] - mo) < StepOffsetDefines::DeltaLatenet))
+        ++i;
+    factors.latent = static_cast<double>(i) / static_cast<double>(m_sordata->freq());
+
+    int iLat = i;  ///< Запомним позицию латентного периода
+
+    //! ********************* Размах
+    double q = mo;
+    int j = buffer.size() + 1;
+//    double val;
+//    if (i < buffer.size())
+//        val = buffer[i];
+//    else
+//        val = buffer[buffer.size() - 1];
+    while (i <= buffer.size() - 1) //! Найти глобальный минимум, меньший MO
+    {
+        if (buffer[i] <= q)
+        {
+            q = buffer[i];  //! q - минимум, j - время минимума
+            j = i;
+        };
+        ++i;
+    }
+    i = j;
+    if (i < buffer.size() - 1)           //! Установить i
+      while ((i <= buffer.size() - 1) && ( buffer[i] < mo ))
+        ++i;
+
+    if (i < buffer.size() - 1)       //! Есть размах
+    {
+        factors.swingAmpl = q - mo;
+        factors.swingTime = static_cast<double>(j) / static_cast<double>(m_sordata->freq());
+    }
+    else                            //! Нет размаха
+    {
+        factors.swingAmpl = 0.0;
+        factors.swingTime = 0.0;
+    }
+    if (factors.swingTime > 0) //! Скорость размаха
+        factors.swingSpeed = fabs(factors.swingAmpl / factors.swingTime);
+    else
+        factors.swingSpeed = 0;
+
+    //! ********************* Бросок
+    double aMin = q;
+    double tMin = factors.swingTime;
+    if (factors.swingTime == 0)
+    {
+      aMin = mo;
+      tMin = factors.latent;
+      i = iLat;
+    }
+    q = 0;
+    while ((i <= buffer.size() - 1) and (getSpeed(buffer, i) > StepOffsetDefines::Delta0Speed))
+    {
+      q = q + getSpeed(buffer, i);
+      ++i;
+    }
+    if (i > buffer.size() - 1) i = buffer.size() - 1;
+    double aMax = buffer[i];
+    double tMax = i;
+    factors.spurtAmpl = aMax - aMin;     //! Амплитуда
+    factors.spurtTime = (tMax / static_cast<double>(m_sordata->freq()) - tMin); //! Время
+    if (fabs(tMax / static_cast<double>(m_sordata->freq()) - tMin) > 0.001)                  //! Макс. скорость
+        factors.spurtSpeed = q / (tMax / static_cast<double>(m_sordata->freq()) - tMin);
+    else
+        factors.spurtSpeed = 0;
+    factors.spurtSpeedMM = factors.spurtSpeed / 100.0 * m_sordata->diap() * static_cast<double>(m_sordata->force()) / 100.0;
+
+    //! ********************* Статизм
+    mo = 0;
+    q = 0;
+    for (i = buffer.size() - 1; i > buffer.size() - 2 * m_sordata->freq() - 1; --i)   //! Мат.ожидание последних двух секунд
+    {
+        if (i < 0) break;
+        mo = mo + buffer[i];
+    }
+    mo = mo / (2 * m_sordata->freq());
+    for (i = buffer.size() - 1; i > buffer.size() - 2 * m_sordata->freq() - 1; --i)  //! СКО последних двух секунд
+    {
+        if (i < 0) break;
+        q = q + qPow(buffer[i] - mo, 2);
+    }
+    q = qSqrt(q / (2 * m_sordata->freq()));
+    q = StepOffsetDefines::DeltaReady * q; //! Коридор допуска
+    factors.q = q;
+    //TODO: ????? QReadyK:=Round(Q);
+    factors.statism = mo - 100;
+
+    //! ********************* Время реакции
+    i = buffer.size() - 2 * m_sordata->freq() - 1;
+    if (i < 0) i = 0;
+    while ((i >= 1) && (fabs(mo - buffer[i]) < q))
+        --i;
+    if (i > 1)
+        factors.reactionTime = i / m_sordata->freq();
+    else
+        factors.reactionTime = 0;
+    //! Время реакции не может быть меньше, чем время размаха + время броска
+    if (factors.reactionTime < factors.swingTime + factors.spurtTime)
+        factors.reactionTime = factors.swingTime + factors.spurtTime;
+
+    //! ********************* Ампл. перерег.
+    aMax = 0;
+    for (int i = 0; i < buffer.size(); ++i)
+    {
+        //val = buffer[i];
+        if ((buffer[i] > aMax) and (buffer[i] > (mo + q)))
+            aMax = buffer[i];
+    }
+    factors.overshootAmpl = aMax;
+
+    //! ********************* СКО стабилизации
+    mo = 0;
+    int b = static_cast<int>((factors.latent + factors.swingTime + factors.spurtTime) * m_sordata->freq());
+    int e = static_cast<int>(factors.reactionTime * m_sordata->freq()) - 1;
+    for (int i = b; i <= e; ++i)
+        mo = mo + buffer[i];
+    if (e - b > 1)
+    {
+        mo = mo / (e - b);
+        for (int i = b; i <= e; ++i)
+            q = q + qPow(buffer[i] - mo, 2) / (e - b - 1);
+        q = qSqrt(q);
+    }
+    else
+        q = 0;
+    factors.stabilityDeviation = q / 100 * static_cast<double>(m_sordata->diap() * m_sordata->force()) / 100;
+
+    //! ********************* СКО удержания
+    b = static_cast<int>(factors.reactionTime * m_sordata->freq());
+    e = buffer.size() - 1;
+    for (int i = b; i <= e; ++i)
+        mo = mo + buffer[i];
+    if (e - b > 1)
+    {
+        mo = mo / (e - b);
+        for (int i = b; i <= e; ++i)
+            q = q + qPow(buffer[i] - mo, 2) / (e - b - 1);
+        q = qSqrt(q);
+    }
+    factors.retentionDeviation = q / 100 * static_cast<double>(m_sordata->diap() * m_sordata->force()) / 100;
+}
+
+void StepOffsetFactors::calculateTrancientKind(StepOffsetFactorsDefines::FactorValues &factors) const
+{
+    double min = factors.latent;
+    if (factors.swingAmpl < 0)
+        min = factors.swingTime;
+
+    if (factors.spurtAmpl + factors.swingAmpl > 110 &&
+//        factors.overshootAmpl > 110 &&
+        factors.spurtSpeed > 200)
+        factors.processKind = 1;
+    else
+    if (factors.spurtAmpl + factors.swingAmpl > 110 &&
+//        factors.overshootAmpl > 110 &&
+        factors.spurtSpeed < 200)
+        factors.processKind = 2;
+    else
+    if (min + factors.spurtTime < 2.5 &&
+        factors.spurtAmpl + factors.swingAmpl > 75 &&
+        factors.spurtAmpl + factors.swingAmpl <= 110 and
+        factors.spurtSpeed >= 150)
+        factors.processKind = 3;
+    else
+    if (//(min + factors.spurtTime < 2.5) &&
+        factors.spurtAmpl + factors.swingAmpl > 75 &&
+        factors.spurtAmpl + factors.swingAmpl <= 110 &&
+        factors.spurtSpeed >= 150)
+        factors.processKind = 4;
+    else
+    if (factors.reactionTime - factors.spurtTime - min < 3)
+        factors.processKind = 5;
+    else
+        factors.processKind = 6;
 }
 

@@ -1,5 +1,6 @@
 #include "stepoffsetcalculator.h"
 
+#include <QUuid>
 #include <QDebug>
 
 #include "datadefines.h"
@@ -117,5 +118,33 @@ double StepOffsetCalculator::bufferReturnValue(const int i) const
 {
     if (m_factors)
         return m_factors->bufferReturnValue(i);
+    return 0;
+}
+
+int StepOffsetCalculator::factorsCount() const
+{
+    if (m_factors)
+        return m_factors->size();
+    return 0;
+}
+
+QString StepOffsetCalculator::factorUid(const int id) const
+{
+    if (m_factors)
+        return m_factors->factorUid(id);
+    return QString(QUuid().toString());
+}
+
+double StepOffsetCalculator::factorValue(const int id) const
+{
+    if (m_factors)
+        return m_factors->factorValue(id);
+    return 0;
+}
+
+double StepOffsetCalculator::factorValue(const QString &uid) const
+{
+    if (m_factors)
+        return m_factors->factorValue(uid);
     return 0;
 }

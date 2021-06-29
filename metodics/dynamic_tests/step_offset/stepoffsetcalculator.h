@@ -38,6 +38,29 @@ public:
     int bufferReturnCount() const;
     double bufferReturnValue(const int i) const;
 
+    /*!
+     * \brief Возвращает кол-во показателей в группе
+     */
+    int factorsCount() const;
+
+    /*!
+     * \brief Возвращает uid показателя по номеру в списке
+     * \param id - номер показателя в списке
+     */
+    QString factorUid(const int id) const;
+
+    /*!
+     * \brief Возвращает значение показателя по номеру в списке
+     * \param id - номер показателя в списке
+     */
+    double factorValue(const int id) const;
+
+    /*!
+     * \brief Возвращает значение показателя по uid показателя
+     * \param uid - uid показателя
+     */
+    double factorValue(const QString &uid) const;
+
 private:
     StepOffsetFactors *m_factors {nullptr};
 };

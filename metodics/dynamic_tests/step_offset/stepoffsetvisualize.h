@@ -32,6 +32,21 @@ private:
     void saveSplitterPosition();
     void restoreSplitterPosition();
 
+    /*!
+     * \brief Показывает переходные процессы
+     */
+    void showTransients();
+
+    /*!
+     * \brief Показывает таблицу показателей
+     */
+    void showTable();
+
+    /*!
+     * \brief Показывает параметры теста
+     */
+    void showParams();
+
     StepOffsetCalculator* m_calculator {nullptr};
 };
 
