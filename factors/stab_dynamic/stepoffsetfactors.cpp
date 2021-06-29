@@ -438,7 +438,7 @@ void StepOffsetFactors::calculateFactors(const QVector<double> buffer, StepOffse
     //! ********************* Бросок
     double aMin = q;
     double tMin = factors.swingTime;
-    if (factors.swingTime == 0)
+    if (static_cast<int>(factors.swingTime) == 0)
     {
       aMin = mo;
       tMin = factors.latent;
