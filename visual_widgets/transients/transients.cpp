@@ -116,14 +116,28 @@ void Transients::paintEvent(QPaintEvent *event)
         double step = static_cast<double>(geometry().width() - FieldV) / static_cast<double>(m_compensation.size());
         for (int i = 0; i < m_compensation.size() - 1; ++i)
         {
-            painter.setPen(QPen(Qt::blue, 1, Qt::SolidLine, Qt::FlatCap));
-
             int x1 = static_cast<int>(FieldV + i * step);
             int x2 = static_cast<int>(FieldV + (i + 1) * step);
+
+            if (i < m_latentComp * m_freq)
+                painter.setPen(QPen(m_latentColor, 1, Qt::SolidLine, Qt::FlatCap));
+            else
+            if (i < m_swingComp * m_freq)
+                painter.setPen(QPen(m_swingColor, 1, Qt::SolidLine, Qt::FlatCap));
+            else
+                painter.setPen(QPen(Qt::blue, 1, Qt::SolidLine, Qt::FlatCap));
 
             int y1 = static_cast<int>(lineComp0 - m_compensation[i] * propComp);
             int y2 = static_cast<int>(lineComp0 - m_compensation[i + 1] * propComp);
             painter.drawLine(x1, y1, x2, y2);
+
+            if (i < m_latentRet * m_freq)
+                painter.setPen(QPen(m_latentColor, 1, Qt::SolidLine, Qt::FlatCap));
+            else
+            if (i < m_swingRet * m_freq)
+                painter.setPen(QPen(m_swingColor, 1, Qt::SolidLine, Qt::FlatCap));
+            else
+                painter.setPen(QPen(Qt::blue, 1, Qt::SolidLine, Qt::FlatCap));
 
             y1 = static_cast<int>(lineRet0 - m_return[i] * propRet);
             y2 = static_cast<int>(lineRet0 - m_return[i + 1] * propRet);
@@ -139,7 +153,19 @@ void Transients::paintEvent(QPaintEvent *event)
             }
         }
 
+        //! Метки латентного периода
+        painter.setPen(QPen(m_latentColor, 1, Qt::DashLine, Qt::FlatCap));
+        int x = static_cast<int>(FieldV + m_latentComp * m_freq * step);
+        painter.drawLine(x, 0, x, lineCompY);
+        x = static_cast<int>(FieldV + m_latentRet * m_freq * step);
+        painter.drawLine(x, lineCompY, x, lineRetY);
 
+        //! Метки броска
+        painter.setPen(QPen(m_swingColor, 1, Qt::DashLine, Qt::FlatCap));
+        x = static_cast<int>(FieldV + m_swingComp * m_freq * step);
+        painter.drawLine(x, 0, x, lineCompY);
+        x = static_cast<int>(FieldV + m_swingRet * m_freq * step);
+        painter.drawLine(x, lineCompY, x, lineRetY);
     }
 
 }

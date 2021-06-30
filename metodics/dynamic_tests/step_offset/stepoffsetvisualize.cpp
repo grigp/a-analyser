@@ -7,6 +7,7 @@
 
 #include "aanalyserapplication.h"
 #include "stepoffsetcalculator.h"
+#include "stepoffsetfactors.h"
 #include "settingsprovider.h"
 
 StepOffsetVisualize::StepOffsetVisualize(QWidget *parent) :
@@ -66,6 +67,10 @@ void StepOffsetVisualize::showTransients()
 {
     int min = qMin(m_calculator->bufferCompensationCount(), m_calculator->bufferReturnCount());
     ui->wgtProcess->setFreq(m_calculator->freq());
+    ui->wgtProcess->setLatentComp(m_calculator->factorValue(StepOffsetFactorsDefines::Compensation::LatentUid));
+    ui->wgtProcess->setLatentRet(m_calculator->factorValue(StepOffsetFactorsDefines::Return::LatentUid));
+    ui->wgtProcess->setSwingComp(m_calculator->factorValue(StepOffsetFactorsDefines::Compensation::SwingTimeUid));
+    ui->wgtProcess->setSwingRet(m_calculator->factorValue(StepOffsetFactorsDefines::Return::SwingTimeUid));
     ui->wgtProcess->beginAddValues();
     for (int i = 0; i < min; ++i)
     {
