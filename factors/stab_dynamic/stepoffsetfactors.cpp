@@ -438,7 +438,7 @@ void StepOffsetFactors::calculateFactors(const QVector<double> buffer, StepOffse
     //! ********************* Бросок
     double aMin = q;
     double tMin = factors.swingTime;
-    if (static_cast<int>(factors.swingTime) == 0)
+    if (fabs(factors.swingTime - 0) < 1e-10)  ///< Равносильно   if (factors.swingTime == 0)
     {
       aMin = mo;
       tMin = factors.latent;
@@ -487,7 +487,7 @@ void StepOffsetFactors::calculateFactors(const QVector<double> buffer, StepOffse
     while ((i >= 1) && (fabs(mo - buffer[i]) < q))
         --i;
     if (i > 1)
-        factors.reactionTime = i / m_sordata->freq();
+        factors.reactionTime = static_cast<double>(i) / static_cast<double>(m_sordata->freq());
     else
         factors.reactionTime = 0;
     //! Время реакции не может быть меньше, чем время размаха + время броска

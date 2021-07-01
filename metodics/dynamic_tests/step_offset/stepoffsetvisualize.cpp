@@ -67,10 +67,33 @@ void StepOffsetVisualize::showTransients()
 {
     int min = qMin(m_calculator->bufferCompensationCount(), m_calculator->bufferReturnCount());
     ui->wgtProcess->setFreq(m_calculator->freq());
-    ui->wgtProcess->setLatentComp(m_calculator->factorValue(StepOffsetFactorsDefines::Compensation::LatentUid));
-    ui->wgtProcess->setLatentRet(m_calculator->factorValue(StepOffsetFactorsDefines::Return::LatentUid));
-    ui->wgtProcess->setSwingComp(m_calculator->factorValue(StepOffsetFactorsDefines::Compensation::SwingTimeUid));
-    ui->wgtProcess->setSwingRet(m_calculator->factorValue(StepOffsetFactorsDefines::Return::SwingTimeUid));
+
+    //! Время броска от стимула = время броска + время размаха.
+    //! Если время размаха == 0, то время броска + латентный период.
+    double spurtTime = m_calculator->factorValue(StepOffsetFactorsDefines::Compensation::SpurtTimeUid) +
+                       m_calculator->factorValue(StepOffsetFactorsDefines::Compensation::SwingTimeUid);
+    if (m_calculator->factorValue(StepOffsetFactorsDefines::Compensation::SwingTimeUid) - 0 < 1e-10)
+        spurtTime = spurtTime + m_calculator->factorValue(StepOffsetFactorsDefines::Compensation::LatentUid);
+    ui->wgtProcess->setParams(StepOffsetDefines::stgCompensaton,
+                              m_calculator->factorValue(StepOffsetFactorsDefines::Compensation::LatentUid),
+                              m_calculator->factorValue(StepOffsetFactorsDefines::Compensation::SwingTimeUid),
+                              spurtTime,
+                              m_calculator->factorValue(StepOffsetFactorsDefines::Compensation::ReactionTimeUid),
+                              m_calculator->factorValue(StepOffsetFactorsDefines::Compensation::StatismUid),
+                              m_calculator->factorValue(StepOffsetFactorsDefines::Compensation::RetentionDeviationUid));
+
+    spurtTime = m_calculator->factorValue(StepOffsetFactorsDefines::Return::SpurtTimeUid) +
+                           m_calculator->factorValue(StepOffsetFactorsDefines::Return::SwingTimeUid);
+        if (m_calculator->factorValue(StepOffsetFactorsDefines::Return::SwingTimeUid) - 0 < 1e-10)
+            spurtTime = spurtTime + m_calculator->factorValue(StepOffsetFactorsDefines::Return::LatentUid);
+    ui->wgtProcess->setParams(StepOffsetDefines::stgReturn,
+                              m_calculator->factorValue(StepOffsetFactorsDefines::Return::LatentUid),
+                              m_calculator->factorValue(StepOffsetFactorsDefines::Return::SwingTimeUid),
+                              spurtTime,
+                              m_calculator->factorValue(StepOffsetFactorsDefines::Return::ReactionTimeUid),
+                              m_calculator->factorValue(StepOffsetFactorsDefines::Return::StatismUid),
+                              m_calculator->factorValue(StepOffsetFactorsDefines::Return::RetentionDeviationUid));
+
     ui->wgtProcess->beginAddValues();
     for (int i = 0; i < min; ++i)
     {
