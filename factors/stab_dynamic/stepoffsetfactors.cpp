@@ -68,6 +68,7 @@ void StepOffsetFactors::calculate()
     addFactor(StepOffsetFactorsDefines::Compensation::CorrectKognAmplUid, m_fctComp.correctKognAmpl);
     addFactor(StepOffsetFactorsDefines::Compensation::CorrectKognPowerUid, m_fctComp.correctKognPower);
     addFactor(StepOffsetFactorsDefines::Compensation::CorrectKognErrorUid, m_fctComp.correctKognError);
+    addFactor(StepOffsetFactorsDefines::Compensation::CorrectDominanceUid, m_fctComp.correctDominance);
 
     addFactor(StepOffsetFactorsDefines::Return::LatentUid, m_fctRet.latent);
     addFactor(StepOffsetFactorsDefines::Return::SwingTimeUid, m_fctRet.swingTime);
@@ -91,6 +92,7 @@ void StepOffsetFactors::calculate()
     addFactor(StepOffsetFactorsDefines::Return::CorrectKognAmplUid, m_fctRet.correctKognAmpl);
     addFactor(StepOffsetFactorsDefines::Return::CorrectKognPowerUid, m_fctRet.correctKognPower);
     addFactor(StepOffsetFactorsDefines::Return::CorrectKognErrorUid, m_fctRet.correctKognError);
+    addFactor(StepOffsetFactorsDefines::Return::CorrectDominanceUid, m_fctRet.correctDominance);
 }
 
 void StepOffsetFactors::registerFactors()
@@ -164,6 +166,9 @@ void StepOffsetFactors::registerFactors()
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(StepOffsetFactorsDefines::Compensation::CorrectKognErrorUid, StepOffsetFactorsDefines::GroupUid,
                            tr("Средняя ошибка траектории когнитивных коррекций"), tr("KompCorrKE"), tr("мм"), 2, 3, FactorsDefines::nsDual, 12);
+    static_cast<AAnalyserApplication*>(QApplication::instance())->
+            registerFactor(StepOffsetFactorsDefines::Compensation::CorrectDominanceUid, StepOffsetFactorsDefines::GroupUid,
+                           tr("Преобладание коррекций"), tr("CorrDomin"), tr("%"), 0, 3, FactorsDefines::nsDual, 12);
 
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(StepOffsetFactorsDefines::Return::LatentUid, StepOffsetFactorsDefines::GroupUid,
@@ -231,6 +236,9 @@ void StepOffsetFactors::registerFactors()
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(StepOffsetFactorsDefines::Return::CorrectKognErrorUid, StepOffsetFactorsDefines::GroupUid,
                            tr("Средняя ошибка траектории когнитивных коррекций"), tr("RetCorrKE"), tr("мм"), 2, 3, FactorsDefines::nsDual, 12);
+    static_cast<AAnalyserApplication*>(QApplication::instance())->
+            registerFactor(StepOffsetFactorsDefines::Return::CorrectDominanceUid, StepOffsetFactorsDefines::GroupUid,
+                           tr("Преобладание коррекций"), tr("CorrDomin"), tr("%"), 0, 3, FactorsDefines::nsDual, 12);
 }
 
 int StepOffsetFactors::stageTime() const
@@ -652,6 +660,13 @@ void StepOffsetFactors::calculateCorrectionFactors(QList<QList<double>> buffersS
                                  factors.correctMotorAmpl * factors.correctMotorCount;
       factors.correctMotorError = factors.correctMotorError / factors.correctMotorCount;
     }
+
+    //! Доминирование типа коррекций
+    if (factors.correctKognPower + factors.correctMotorPower > 0)
+        factors.correctDominance = (factors.correctKognPower - factors.correctMotorPower) /
+                                   (factors.correctKognPower + factors.correctMotorPower) * 100;
+    else
+        factors.correctDominance = 0;
 }
 
 void StepOffsetFactors::addExtremum(QList<StepOffsetFactorsDefines::CorrectValue> &corrects,

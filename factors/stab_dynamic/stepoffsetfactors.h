@@ -35,6 +35,7 @@ static const QString CorrectKognTimeUid = "{13C83BF5-98C4-4D05-93B0-D7A580BDEAF6
 static const QString CorrectKognAmplUid = "{E1128E46-2280-49CE-BB28-286B7048BA6A}";
 static const QString CorrectKognPowerUid = "{898D009A-FB31-43B9-9205-9BB977F0BC3B}";
 static const QString CorrectKognErrorUid = "{1622A98F-023F-4522-B3B7-0AD596D5C68E}";
+static const QString CorrectDominanceUid = "{3D846323-E8D0-420D-9FE7-C3B143EA1DD7}";
 }
 
 namespace Return {
@@ -60,6 +61,7 @@ static const QString CorrectKognTimeUid = "{67280DFC-507C-49D0-9D3D-4D7D659B5DF3
 static const QString CorrectKognAmplUid = "{16A99D70-1046-4AA9-A78B-EC874CF07A16}";
 static const QString CorrectKognPowerUid = "{663E77A6-E25A-4665-BDB1-96FD9EA3946B}";
 static const QString CorrectKognErrorUid = "{E3A50002-2785-4EC0-A7B5-2E1D20899C26}";
+static const QString CorrectDominanceUid = "{309B5BA3-EA25-4477-946C-BE48C1CE0D72}";
 }
 
 ///< Рассчитанные показатели для этапа
@@ -89,6 +91,7 @@ struct FactorValues
     double correctKognAmpl;
     double correctKognPower;
     double correctKognError;
+    double correctDominance;
     double q;
 };
 

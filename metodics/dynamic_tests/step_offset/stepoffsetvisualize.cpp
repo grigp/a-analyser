@@ -38,6 +38,7 @@ void StepOffsetVisualize::setTest(const QString &testUid)
         showTable();
         showParams();
         showConslution();
+        showConslutionStrategy();
     }
 }
 
@@ -191,4 +192,41 @@ void StepOffsetVisualize::showConslution()
     fi = static_cast<AAnalyserApplication*>(QApplication::instance())->getFactorInfo(StepOffsetFactorsDefines::Compensation::ProcessKindUid);
     v = m_calculator->factorValue(StepOffsetFactorsDefines::Compensation::ProcessKindUid);
     ui->lblProcessKind->setText(tr("Тип переходного процесса") + " : " + QString::number(v, 'f', fi.format()));
+}
+
+void StepOffsetVisualize::showConslutionStrategy()
+{
+    auto fi = static_cast<AAnalyserApplication*>(QApplication::instance())->getFactorInfo(StepOffsetFactorsDefines::Compensation::CorrectDominanceUid);
+    double v = m_calculator->factorValue(StepOffsetFactorsDefines::Compensation::CorrectDominanceUid);
+    ui->lblCorrectionPredominace->setText(tr("Преобладание коррекций") + " : " + QString::number(v, 'f', fi.format()) + " " + tr("%"));
+
+    QString korr = "";
+    QColor colorResume = Qt::darkCyan;
+    if ((fabs(v) > 10) && (fabs(v) <= 30))
+    {
+        korr = tr("незначительно");
+        colorResume = Qt::green;
+    }
+    else
+    if ((fabs(v) > 30) && (fabs(v) <= 50))
+    {
+        korr = tr("умеренно");
+        colorResume = Qt::darkYellow;
+    }
+    else
+    {
+        korr = tr("выражено");
+        colorResume = Qt::darkRed;
+    }
+
+    QString resume = "";
+    if (v > 10)
+        resume = tr("Преобладание моторных коррекций") + ' ' + korr;
+    else
+    if (v < -10)
+      resume = tr("Преобладание когнитивных коррекций") + ' ' + korr;
+    else
+      resume = tr("Нет преобладания типа коррекции");
+
+    ui->lblCorrectionResume->setText(resume);
 }

@@ -52,6 +52,11 @@ private:
      */
     void showConslution();
 
+    /*!
+     * \brief Показывает заключение по стратегии
+     */
+    void showConslutionStrategy();
+
     StepOffsetCalculator* m_calculator {nullptr};
 };
 

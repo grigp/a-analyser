@@ -1,6 +1,8 @@
 #ifndef STEPOFFSETDEFINES_H
 #define STEPOFFSETDEFINES_H
 
+#include <QString>
+
 namespace StepOffsetDefines {
 
 /*!
@@ -31,6 +33,15 @@ static const double MotorCorrectTimeBoundLo = 0.1;
 static const double MotorCorrectTimeBoundHi = 0.16;
 static const double KognCorrectTimeBoundLo = 0.2;
 static const double KognCorrectTimeBoundHi = 0.28;
+
+
+static const QString S_KorrectKogn  = "Преобладание когнитивных коррекций";
+static const QString S_KorrectMotor = "Преобладание моторных коррекций";
+static const QString S_KorrectNo    = "Нет преобладания типа коррекции";
+
+static const QString S_Insignificantly = "незначительно";
+static const QString S_Moderate        = "умеренно";
+static const QString S_Average         = "выражено";
 
 }
 
