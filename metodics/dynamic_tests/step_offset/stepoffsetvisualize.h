@@ -47,6 +47,11 @@ private:
      */
     void showParams();
 
+    /*!
+     * \brief Показывает заключение
+     */
+    void showConslution();
+
     StepOffsetCalculator* m_calculator {nullptr};
 };
 

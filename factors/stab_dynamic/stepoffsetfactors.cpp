@@ -43,6 +43,9 @@ void StepOffsetFactors::calculate()
     calculateTrancientKind(m_fctComp);
     calculateTrancientKind(m_fctRet);
 
+    calculateCorrectionFactors(m_buffersSeparateComp, m_correctsComp, m_fctComp);
+    calculateCorrectionFactors(m_buffersSeparateRet, m_correctsRet, m_fctRet);
+
     addFactor(StepOffsetFactorsDefines::Compensation::LatentUid, m_fctComp.latent);
     addFactor(StepOffsetFactorsDefines::Compensation::SwingTimeUid, m_fctComp.swingTime);
     addFactor(StepOffsetFactorsDefines::Compensation::SwingAmplUid, m_fctComp.swingAmpl);
@@ -121,7 +124,7 @@ void StepOffsetFactors::registerFactors()
                            tr("Скорость броска"), tr("KompSpurtV"), tr("мм/сек"), 1, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(StepOffsetFactorsDefines::Compensation::StatismUid, StepOffsetFactorsDefines::GroupUid,
-                           tr("Статизм"), tr("KompStatism"), tr("%"), 1, 3, FactorsDefines::nsDual, 12);
+                           tr("Статизм"), tr("KompStatism"), tr("%"), 2, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(StepOffsetFactorsDefines::Compensation::ReactionTimeUid, StepOffsetFactorsDefines::GroupUid,
                            tr("Время реакции"), tr("KompReactT"), tr("сек"), 2, 3, FactorsDefines::nsDual, 12);
@@ -188,7 +191,7 @@ void StepOffsetFactors::registerFactors()
                            tr("Скорость броска"), tr("RetSpurtV"), tr("мм/сек"), 1, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(StepOffsetFactorsDefines::Return::StatismUid, StepOffsetFactorsDefines::GroupUid,
-                           tr("Статизм"), tr("RetStatism"), tr("%"), 1, 3, FactorsDefines::nsDual, 12);
+                           tr("Статизм"), tr("RetStatism"), tr("%"), 2, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(StepOffsetFactorsDefines::Return::ReactionTimeUid, StepOffsetFactorsDefines::GroupUid,
                            tr("Время реакции"), tr("RetReactT"), tr("сек"), 2, 3, FactorsDefines::nsDual, 12);
@@ -286,10 +289,9 @@ void StepOffsetFactors::fillBuffers()
 {
     QList<QList<SignalsDefines::StabRec>> buffersComp;
     QList<QList<SignalsDefines::StabRec>> buffersRet;
-
     readSignal(buffersComp, buffersRet);
-    averaging(buffersComp, m_bufferComp, false);
-    averaging(buffersRet, m_bufferRet, true);
+    averaging(buffersComp, m_buffersSeparateComp, m_bufferComp, false);
+    averaging(buffersRet, m_buffersSeparateRet, m_bufferRet, true);
 }
 
 void StepOffsetFactors::readSignal(QList<QList<SignalsDefines::StabRec> > &bufComp,
@@ -338,31 +340,40 @@ void StepOffsetFactors::readSignal(QList<QList<SignalsDefines::StabRec> > &bufCo
     }
 }
 
-void StepOffsetFactors::averaging(QList<QList<SignalsDefines::StabRec> > &buffers,
+void StepOffsetFactors::averaging(QList<QList<SignalsDefines::StabRec>> &buffers,
+                                  QList<QList<double>> &buffersSeparate,
                                   QVector<double> &buffer,
                                   bool isInverce)
 {
+    buffersSeparate.clear();
+    buffer.clear();
+
     //! Так как с индексами не очень удобно, то сначала минимальный размер
     int size = INT_MAX;
     for (int i = 0; i < buffers.size(); ++i)
+    {
         if (buffers[i].size() < size)
             size = buffers[i].size();
+        buffersSeparate.append(QList<double>());
+    }
 
     //! А затем расчет среднего для каждого отсчета
     for (int i = 0; i < size; ++i)
     {
-        double val = 0;
+        double average = 0;
         for (int j = 0; j < buffers.size(); ++j)
         {
+            double val = buffers[j][i].x;
             if (m_sordata->direction() == BaseUtils::dirUp || m_sordata->direction() == BaseUtils::dirDown)
-                val = val + buffers[j][i].y;
-            else
-                val = val + buffers[j][i].x;
+                val = buffers[j][i].y;
+            val = val * 100.0 / m_sordata->force();
+            if (isInverce)
+                val = 100 - val;
+            buffersSeparate[j].append(val);
+            average = average + val;
         }
-        val = val / buffers.size() * 100.0 / m_sordata->force();
-        if (isInverce)
-            val = 100 - val;
-        buffer.append(val);
+        average = average / buffers.size();
+        buffer.append(average);
     }
 
     BaseUtils::filterLowFreq(buffer, m_sordata->freq(), 3, BaseUtils::fkChebyshev, 0, buffer.size() - 1);
@@ -569,4 +580,104 @@ void StepOffsetFactors::calculateTrancientKind(StepOffsetFactorsDefines::FactorV
     else
         factors.processKind = 6;
 }
+
+void StepOffsetFactors::calculateCorrectionFactors(QList<QList<double>> buffersSeparate,
+                                                   QList<StepOffsetFactorsDefines::CorrectValue> &corrects,
+                                                   StepOffsetFactorsDefines::FactorValues &factors)
+{
+    corrects.clear();
+    factors.correctKognCount = 0.0;
+    factors.correctKognTime = 0.0;
+    factors.correctKognAmpl = 0.0;
+    factors.correctKognPower = 0.0;
+    factors.correctKognError = 0.0;
+    factors.correctMotorCount = 0.0;
+    factors.correctMotorTime = 0.0;
+    factors.correctMotorAmpl = 0.0;
+    factors.correctMotorPower = 0.0;
+    factors.correctMotorError = 0.0;
+
+    for (int ib = 0; ib < buffersSeparate.size(); ++ib)
+    {
+        int dir = 0;
+        int oi = -1;
+        double ov = 0.0;
+        //! От времени размаха до конца участка
+        for (int i = static_cast<int>(factors.swingTime * m_sordata->freq()); i < buffersSeparate[ib].size(); ++i)
+        {
+            if (i > 0)
+            {
+              //! Начали движение вниз
+              if ((dir == 1) && (buffersSeparate[ib][i] - buffersSeparate[ib][i - 1] < 0))
+              {
+                  if (oi > -1)
+                      addExtremum(corrects, factors, i, oi, buffersSeparate[ib][i], ov);
+                  oi = i;
+                  ov = buffersSeparate[ib][i];
+              }
+
+              //! Начали движение вверх
+              if ((dir == -1) && (buffersSeparate[ib][i] - buffersSeparate[ib][i - 1] > 0))
+              {
+                  if (oi > -1)
+                      addExtremum(corrects, factors, i, oi, buffersSeparate[ib][i], ov);
+                  oi = i;
+                  ov = buffersSeparate[ib][i];
+              }
+
+              //! Запомнить направление
+              if (buffersSeparate[ib][i] - buffersSeparate[ib][i - 1] > 0)
+                  dir = 1;
+              else
+              if (buffersSeparate[ib][i] - buffersSeparate[ib][i - 1] < 0)
+                  dir = -1;
+            }
+        }
+    }
+
+    //! Окончательный расчет
+    if (factors.correctKognCount > 0)
+    {
+      factors.correctKognTime = factors.correctKognTime / factors.correctKognCount;
+      factors.correctKognAmpl = factors.correctKognAmpl / factors.correctKognCount;
+      factors.correctKognPower = (factors.correctKognTime - StepOffsetDefines::KognCorrectTimeBoundLo) *
+                                 factors.correctKognAmpl * factors.correctKognCount;
+      factors.correctKognError = factors.correctKognError / factors.correctKognCount;
+    }
+    if (factors.correctMotorCount > 0)
+    {
+      factors.correctMotorTime = factors.correctMotorTime / factors.correctMotorCount;
+      factors.correctMotorAmpl = factors.correctMotorAmpl / factors.correctMotorCount;
+      factors.correctMotorPower = (factors.correctMotorTime - StepOffsetDefines::MotorCorrectTimeBoundLo) *
+                                 factors.correctMotorAmpl * factors.correctMotorCount;
+      factors.correctMotorError = factors.correctMotorError / factors.correctMotorCount;
+    }
+}
+
+void StepOffsetFactors::addExtremum(QList<StepOffsetFactorsDefines::CorrectValue> &corrects,
+                                    StepOffsetFactorsDefines::FactorValues &factors,
+                                    const int i, const int oi, const double v, const double ov)
+{
+    StepOffsetFactorsDefines::CorrectValue cv;
+    cv.time = static_cast<double>(i - oi) / static_cast<double>(m_sordata->freq());
+    cv.ampl = fabs(v - ov);
+    corrects.append(cv);
+
+    if ((cv.time >= StepOffsetDefines::MotorCorrectTimeBoundLo) && (cv.time <= StepOffsetDefines::MotorCorrectTimeBoundHi))
+    {
+        factors.correctMotorTime = factors.correctMotorTime + cv.time;
+        factors.correctMotorAmpl = factors.correctMotorAmpl + cv.ampl;
+        factors.correctMotorError = factors.correctMotorError + fabs(100.0 - v);
+        ++factors.correctMotorCount;
+    }
+    else
+    if ((cv.time >= StepOffsetDefines::KognCorrectTimeBoundLo) && (cv.time <= StepOffsetDefines::KognCorrectTimeBoundHi))
+    {
+        factors.correctKognTime = factors.correctKognTime + cv.time;
+        factors.correctKognAmpl = factors.correctKognAmpl + cv.ampl;
+        factors.correctKognError = factors.correctKognError + fabs(100.0 - v);
+        ++factors.correctKognCount;
+    }
+}
+
 

@@ -37,6 +37,7 @@ void StepOffsetVisualize::setTest(const QString &testUid)
         showTransients();
         showTable();
         showParams();
+        showConslution();
     }
 }
 
@@ -147,4 +148,47 @@ void StepOffsetVisualize::showParams()
                               QString::number(m_calculator->diap() * m_calculator->force() / 100) +
                               " " + tr("мм"));
     ui->lblRepeatCount->setText(tr("Кол-во повторений") + " - " + QString::number(m_calculator->stepsCount()));
+}
+
+void StepOffsetVisualize::showConslution()
+{
+    auto fi = static_cast<AAnalyserApplication*>(QApplication::instance())->getFactorInfo(StepOffsetFactorsDefines::Compensation::ReactionTimeUid);
+    double v = m_calculator->factorValue(StepOffsetFactorsDefines::Compensation::ReactionTimeUid);
+    ui->lblReactionTime->setText(tr("Время реакции") + " : " + QString::number(v, 'f', fi.format()) + " " + tr("сек"));
+
+    fi = static_cast<AAnalyserApplication*>(QApplication::instance())->getFactorInfo(StepOffsetFactorsDefines::Compensation::StatismUid);
+    v = m_calculator->factorValue(StepOffsetFactorsDefines::Compensation::StatismUid);
+    ui->lblStatism->setText(tr("Статизм") + " : " + QString::number(v, 'f', fi.format()) + " " + tr("мм"));
+
+    fi = static_cast<AAnalyserApplication*>(QApplication::instance())->getFactorInfo(StepOffsetFactorsDefines::Compensation::LatentUid);
+    v = m_calculator->factorValue(StepOffsetFactorsDefines::Compensation::LatentUid);
+    ui->lblLatent->setText(tr("Латентный период") + " : " + QString::number(v, 'f', fi.format()) + " " + tr("сек"));
+
+    fi = static_cast<AAnalyserApplication*>(QApplication::instance())->getFactorInfo(StepOffsetFactorsDefines::Compensation::SpurtSpeedMMUid);
+    v = m_calculator->factorValue(StepOffsetFactorsDefines::Compensation::SpurtSpeedMMUid);
+    ui->lblSpurtSpeed->setText(tr("Скорость броска") + " : " + QString::number(v, 'f', fi.format()) + " " + tr("мм/сек"));
+
+    fi = static_cast<AAnalyserApplication*>(QApplication::instance())->getFactorInfo(StepOffsetFactorsDefines::Compensation::SpurtAmplUid);
+    v = m_calculator->factorValue(StepOffsetFactorsDefines::Compensation::SpurtAmplUid);
+    ui->lblSpurtAmpl->setText(tr("Амплитуда броска") + " : " + QString::number(v, 'f', fi.format()) + " " + tr("мм"));
+
+    fi = static_cast<AAnalyserApplication*>(QApplication::instance())->getFactorInfo(StepOffsetFactorsDefines::Compensation::StabilityDeviationUid);
+    v = m_calculator->factorValue(StepOffsetFactorsDefines::Compensation::StabilityDeviationUid);
+    ui->lblStabilityDeviation->setText(tr("Разброс на этапе стабилизации") + " : " + QString::number(v, 'f', fi.format()) + " " + tr("мм"));
+
+    fi = static_cast<AAnalyserApplication*>(QApplication::instance())->getFactorInfo(StepOffsetFactorsDefines::Compensation::RetentionDeviationUid);
+    v = m_calculator->factorValue(StepOffsetFactorsDefines::Compensation::RetentionDeviationUid);
+    ui->lblRetentionDeviation->setText(tr("Разброс на этапе удержания") + " : " + QString::number(v, 'f', fi.format()) + " " + tr("мм"));
+
+    fi = static_cast<AAnalyserApplication*>(QApplication::instance())->getFactorInfo(StepOffsetFactorsDefines::Compensation::CorrectKognErrorUid);
+    v = m_calculator->factorValue(StepOffsetFactorsDefines::Compensation::CorrectKognErrorUid);
+    ui->lblPrecisionKogn->setText(tr("Точность выполнения когнитивным сигналом") + " : " + QString::number(v, 'f', fi.format()) + " " + tr("мм"));
+
+    fi = static_cast<AAnalyserApplication*>(QApplication::instance())->getFactorInfo(StepOffsetFactorsDefines::Compensation::CorrectMotorErrorUid);
+    v = m_calculator->factorValue(StepOffsetFactorsDefines::Compensation::CorrectMotorErrorUid);
+    ui->lblPrecisionMotor->setText(tr("Точность моторной коррекции") + " : " + QString::number(v, 'f', fi.format()) + " " + tr("мм"));
+
+    fi = static_cast<AAnalyserApplication*>(QApplication::instance())->getFactorInfo(StepOffsetFactorsDefines::Compensation::ProcessKindUid);
+    v = m_calculator->factorValue(StepOffsetFactorsDefines::Compensation::ProcessKindUid);
+    ui->lblProcessKind->setText(tr("Тип переходного процесса") + " : " + QString::number(v, 'f', fi.format()));
 }

@@ -26,6 +26,12 @@ static const double Delta0Speed = 0.05;
 ///< Допустимый разброс статизма
 static const double DeltaReady = 3.0;
 
+///< Границы временных зон для анализа "коррекций"
+static const double MotorCorrectTimeBoundLo = 0.1;
+static const double MotorCorrectTimeBoundHi = 0.16;
+static const double KognCorrectTimeBoundLo = 0.2;
+static const double KognCorrectTimeBoundHi = 0.28;
+
 }
 
 #endif // STEPOFFSETDEFINES_H

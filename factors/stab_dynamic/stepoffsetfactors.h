@@ -79,15 +79,26 @@ struct FactorValues
     double stabilityDeviation;
     double retentionDeviation;
     double processKind;
+    double correctMotorCount;
     double correctMotorTime;
     double correctMotorAmpl;
     double correctMotorPower;
     double correctMotorError;
+    double correctKognCount;
     double correctKognTime;
     double correctKognAmpl;
     double correctKognPower;
     double correctKognError;
     double q;
+};
+
+/*!
+ * \brief Параметры одиночной коррекции CorrectValue struct
+ */
+struct CorrectValue
+{
+    double time;
+    double ampl;
 };
 
 }
@@ -153,7 +164,15 @@ private:
     void readSignal(QList<QList<SignalsDefines::StabRec>> &bufComp,
                     QList<QList<SignalsDefines::StabRec>> &bufRet);
 
+    /*!
+     * \brief Усреднение и создание переходного процесса для этапа
+     * \param buffers - сигналы для этапа
+     * \param buffersSeparate - разделенные буферы переходныъх процессов для этапа
+     * \param buffer - усредненные переходные процессы
+     * \param isInverce - будет ли инверсия (для возврата)
+     */
     void averaging(QList<QList<SignalsDefines::StabRec>> &buffers,
+                   QList<QList<double>> &buffersSeparate,
                    QVector<double> &buffer,
                    bool isInverce);
 
@@ -170,11 +189,37 @@ private:
      */
     void calculateTrancientKind(StepOffsetFactorsDefines::FactorValues &factors) const;
 
+    /*!
+     * \brief Расчет показателей коррекций для этапа
+     * \param buffersSeparate - раздельные буфера для этапа
+     * \param corrects - список коррекций
+     * \param factors - показатели для этапа, включая показатели коорекций
+     */
+    void calculateCorrectionFactors(QList<QList<double>> buffersSeparate,
+                                    QList<StepOffsetFactorsDefines::CorrectValue> &corrects,
+                                    StepOffsetFactorsDefines::FactorValues &factors);
+
+    /*!
+     * \brief Добавляет экстремум в список
+     * \param corrects - список коррекций для этапа
+     * \param factors - показатели этапа
+     * \param i, oi - индексы
+     * \param v, ov - значения
+     */
+    void addExtremum(QList<StepOffsetFactorsDefines::CorrectValue> &corrects,
+                     StepOffsetFactorsDefines::FactorValues &factors,
+                     const int i,
+                     const int oi,
+                     const double v,
+                     const double ov);
+
     StepOffsetFactorsDefines::FactorValues m_fctComp;
     StepOffsetFactorsDefines::FactorValues m_fctRet;
     StepOffsetResultData *m_sordata;
 
     ///< Буфера сигнала
+    QList<QList<double>> m_buffersSeparateComp;
+    QList<QList<double>> m_buffersSeparateRet;
     QVector<double> m_bufferComp;
     QVector<double> m_bufferRet;
 
@@ -184,6 +229,10 @@ private:
         int counterFrom;
     };
     QList<StepRec> m_steps;
+
+    //! Списки коррекций
+    QList<StepOffsetFactorsDefines::CorrectValue> m_correctsComp;  //! Для компенсации
+    QList<StepOffsetFactorsDefines::CorrectValue> m_correctsRet;   //! Для возврата
 
 };
 
