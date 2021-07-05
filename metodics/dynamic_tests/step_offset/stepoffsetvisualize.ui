@@ -450,11 +450,11 @@
            </widget>
           </item>
           <item>
-           <widget class="QWidget" name="wgtCorrectionDiag" native="true">
+           <widget class="DualStateDiagram" name="wgtCorrectionDiag" native="true">
             <property name="minimumSize">
              <size>
               <width>0</width>
-              <height>70</height>
+              <height>100</height>
              </size>
             </property>
            </widget>
@@ -486,6 +486,12 @@
    <class>Transients</class>
    <extends>QWidget</extends>
    <header location="global">transients.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>DualStateDiagram</class>
+   <extends>QWidget</extends>
+   <header location="global">dualstatediagram.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

@@ -201,22 +201,22 @@ void StepOffsetVisualize::showConslutionStrategy()
     ui->lblCorrectionPredominace->setText(tr("Преобладание коррекций") + " : " + QString::number(v, 'f', fi.format()) + " " + tr("%"));
 
     QString korr = "";
-    QColor colorResume = Qt::darkCyan;
+    QString colorResume = "color: rgb(100, 100, 100)";
     if ((fabs(v) > 10) && (fabs(v) <= 30))
     {
         korr = tr("незначительно");
-        colorResume = Qt::green;
+        colorResume = "color: rgb(0, 150, 0)";
     }
     else
     if ((fabs(v) > 30) && (fabs(v) <= 50))
     {
         korr = tr("умеренно");
-        colorResume = Qt::darkYellow;
+        colorResume = "color: rgb(150, 150, 0)";
     }
     else
     {
         korr = tr("выражено");
-        colorResume = Qt::darkRed;
+        colorResume = "color: rgb(150, 0, 0)";
     }
 
     QString resume = "";
@@ -227,6 +227,10 @@ void StepOffsetVisualize::showConslutionStrategy()
       resume = tr("Преобладание когнитивных коррекций") + ' ' + korr;
     else
       resume = tr("Нет преобладания типа коррекции");
-
     ui->lblCorrectionResume->setText(resume);
+    ui->lblCorrectionResume->setStyleSheet(colorResume);
+
+    ui->wgtCorrectionDiag->setValue(v);
+    ui->wgtCorrectionDiag->setDescriptionLeft(tr("Быстрые коррекции"));
+    ui->wgtCorrectionDiag->setDescriptionRight(tr("Медленные коррекции"));
 }

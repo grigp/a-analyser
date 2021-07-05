@@ -13,6 +13,7 @@ include(circlenormindicator/circlenormindicator_src.pri)
 include(dynamic_test_stimul/dynamic_test_stimul_src.pri)
 include(diag_cross/diag_cross_src.pri)
 include(transients/transients_src.pri)
+include(dual_state_diagram/dual_state_diagram_src.pri)
 
 HEADERS += \
 
