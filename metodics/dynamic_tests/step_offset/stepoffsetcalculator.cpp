@@ -8,6 +8,26 @@
 #include "channelsdefines.h"
 #include "stepoffsetfactors.h"
 
+namespace
+{
+  QSet<QString> PrimaryFactors =
+  {
+        QString(StepOffsetFactorsDefines::Compensation::ReactionTimeUid)
+      , QString(StepOffsetFactorsDefines::Compensation::ReactionTimeUid)
+      , QString(StepOffsetFactorsDefines::Compensation::StatismUid)
+      , QString(StepOffsetFactorsDefines::Compensation::LatentUid)
+      , QString(StepOffsetFactorsDefines::Compensation::SpurtSpeedMMUid)
+      , QString(StepOffsetFactorsDefines::Compensation::SpurtAmplUid)
+      , QString(StepOffsetFactorsDefines::Compensation::StabilityDeviationUid)
+      , QString(StepOffsetFactorsDefines::Compensation::RetentionDeviationUid)
+      , QString(StepOffsetFactorsDefines::Compensation::CorrectKognErrorUid)
+      , QString(StepOffsetFactorsDefines::Compensation::CorrectMotorErrorUid)
+      , QString(StepOffsetFactorsDefines::Compensation::ProcessKindUid)
+      , QString(StepOffsetFactorsDefines::Compensation::CorrectDominanceUid)
+  };
+
+}
+
 StepOffsetCalculator::StepOffsetCalculator(const QString &testUid, QObject *parent)
     : TestCalculator (testUid, parent)
 {
@@ -32,13 +52,10 @@ void StepOffsetCalculator::calculate()
                 {
                     m_factors = new StepOffsetFactors(testUid(), pi.uid);
 
-//                    int min = qMin(m_factors->bufferCompensationCount(), m_factors->bufferReturnCount());
-//                    for (int i = 0; i < min; ++i)
-//                    {
-//                        qDebug() << m_factors->bufferCompensationValue(i).x << m_factors->bufferCompensationValue(i).y << "    " <<
-//                                    m_factors->bufferReturnValue(i).x << m_factors->bufferReturnValue(i).y;
-//                    }
-
+                    //! Добавление приоритетных показателей
+                    foreach (auto uid, PrimaryFactors)
+                        addPrimaryFactor(testUid(), uid, m_factors->factorValue(uid),
+                                         0, ChannelsDefines::chanStab, pi.name);
                 }
             }
         }
