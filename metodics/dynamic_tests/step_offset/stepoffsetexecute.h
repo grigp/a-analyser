@@ -2,6 +2,7 @@
 #define STEPOFFSETEXECUTE_H
 
 #include <QWidget>
+#include <QLabel>
 
 #include "stabdynamictestexecute.h"
 #include "baseutils.h"
@@ -74,11 +75,13 @@ private:
     int m_stageCounter {0};                                            //! Счетчик пакетов на этапе
     int m_recordCounter {0};                                           //! Счетчик пакетов записи
     int m_lastCompensation {0};                                        //! Отсчет начала последнего участка компенсации
-    int m_repatCounter {0};                                            //! Счетчик кол-ва повторений
+    int m_repeatCounter {0};                                           //! Счетчик кол-ва повторений
 
     ///< Координаты цели
     double m_tx {0};
     double m_ty {0};
+
+    QLabel* m_lblRemain;
 };
 
 #endif // STEPOFFSETEXECUTE_H

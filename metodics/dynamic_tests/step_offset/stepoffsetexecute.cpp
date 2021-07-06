@@ -1,6 +1,7 @@
 #include "stepoffsetexecute.h"
 #include "ui_stepoffsetexecute.h"
 
+#include <QLayout>
 #include <QDebug>
 
 #include "stepoffsettpatientwindow.h"
@@ -55,6 +56,10 @@ void StepOffsetExecute::finishTest()
 void StepOffsetExecute::fillSpecific(QFrame *frSpecific)
 {
     StabDynamicTestExecute::fillSpecific(frSpecific);
+
+    m_lblRemain = new QLabel(frSpecific);
+    m_lblRemain->setText(tr("Осталось проходов") + " - " + QString::number(m_repeatCount - m_repeatCounter));
+    frSpecific->layout()->addWidget(m_lblRemain);
 }
 
 void StepOffsetExecute::start()
@@ -98,9 +103,9 @@ void StepOffsetExecute::getData(DeviceProtocols::DeviceData *data)
             {
                 //! После этапа возврата добавляем и инкрементируем счетчик повторений
                 if (m_stage == StepOffsetDefines::stgReturn)
-                    ++m_repatCounter;
+                    ++m_repeatCounter;
 
-                if (m_repatCounter < m_repeatCount)
+                if (m_repeatCounter < m_repeatCount)
                 {
                     //! Переход к этапу компенсации
                     if (m_stage == StepOffsetDefines::stgWaiting ||
@@ -109,6 +114,7 @@ void StepOffsetExecute::getData(DeviceProtocols::DeviceData *data)
                         m_stage = StepOffsetDefines::stgCompensaton;
                         setTargetCoordinates();
                         m_lastCompensation = m_recordCounter;
+                        m_lblRemain->setText(tr("Осталось проходов") + " - " + QString::number(m_repeatCount - m_repeatCounter));
                     }
                     else
                     //! Переход к этапу возврата

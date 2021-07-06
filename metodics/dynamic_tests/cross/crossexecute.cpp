@@ -61,19 +61,19 @@ void CrossExecute::fillSpecific(QFrame *frSpecific)
     StabDynamicTestExecute::fillSpecific(frSpecific);
 
     auto lblTitle = new QLabel(frSpecific);
-    lblTitle->setText("Осталось проходов");
+    lblTitle->setText(tr("Осталось проходов"));
     frSpecific->layout()->addWidget(lblTitle);
     m_lblUp = new QLabel(frSpecific);
-    m_lblUp->setText("Вперед - " + stagesRemained(BaseUtils::dirUp));
+    m_lblUp->setText(tr("Вперед") + " - " + stagesRemained(BaseUtils::dirUp));
     frSpecific->layout()->addWidget(m_lblUp);
     m_lblDn = new QLabel(frSpecific);
-    m_lblDn->setText("Назад - " + stagesRemained(BaseUtils::dirDown));
+    m_lblDn->setText(tr("Назад") +" - " + stagesRemained(BaseUtils::dirDown));
     frSpecific->layout()->addWidget(m_lblDn);
     m_lblRt = new QLabel(frSpecific);
-    m_lblRt->setText("Вправо - " + stagesRemained(BaseUtils::dirRight));
+    m_lblRt->setText(tr("Вправо") + " - " + stagesRemained(BaseUtils::dirRight));
     frSpecific->layout()->addWidget(m_lblRt);
     m_lblLf = new QLabel(frSpecific);
-    m_lblLf->setText("Влево - " + stagesRemained(BaseUtils::dirLeft));
+    m_lblLf->setText(tr("Влево") + " - " + stagesRemained(BaseUtils::dirLeft));
     frSpecific->layout()->addWidget(m_lblLf);
 }
 
