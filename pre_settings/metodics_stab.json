@@ -286,6 +286,21 @@
             }
         },
         {
+            "uid": "{3664D67C-8D21-4AC8-B2DD-D5DECA43360D}",
+            "name": "Тест \"Ступени\"",
+            "image": "StepOffset.png",
+            "template": "met_step_offset_uid",
+            "build_norms": false,
+            "kind": "{03FFE24D-56ED-4138-9FC7-A125A020C190}",
+            "params":
+            {
+                "stage_time": 8,
+                "direction": "up",
+                "repeat_count": 4,
+                "force": 50
+            }
+        },
+        {
             "uid": "{CFCCCAA0-A520-49EF-9C04-EB57580E8CAD}",
             "name": "Тренажер \"Мячики\"",
             "image": "Balls.png",
