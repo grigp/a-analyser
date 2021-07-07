@@ -39,7 +39,7 @@ void CrossExecute::setParams(const QJsonObject &params)
     auto csm = params["change_stage_mode"].toString();
     m_changeStateMode = CrossDefines::ChangeStateModeValueIndex.value(csm);
     auto dm = params["direction_mode"].toString();
-    m_directionMode = CrossDefines::DirectionModeValueIndex.value(dm);
+    m_directionMode = BaseUtils::DirectionModeValueIndex.value(dm);
 
     StabDynamicTestExecute::setParams(params);
 }
@@ -155,7 +155,7 @@ bool CrossExecute::newDirection()
         return false;
     }
 
-    if (m_directionMode == CrossDefines::dmClockwise)  //! По часовой
+    if (m_directionMode == BaseUtils::dmClockwise)  //! По часовой
     {
         if (m_curDirection < BaseUtils::dirLeft)
         {
@@ -167,7 +167,7 @@ bool CrossExecute::newDirection()
             m_curDirection = BaseUtils::dirUp;
     }
     else
-    if (m_directionMode == CrossDefines::dmCounterClockwise)  //! Против часовой
+    if (m_directionMode == BaseUtils::dmCounterClockwise)  //! Против часовой
     {
         if (m_curDirection > BaseUtils::dirUp)
         {
@@ -179,7 +179,7 @@ bool CrossExecute::newDirection()
             m_curDirection = BaseUtils::dirLeft;
     }
     else
-    if (m_directionMode == CrossDefines::dmRandom)
+    if (m_directionMode == BaseUtils::dmRandom)
     {
         int d = -1;
         do

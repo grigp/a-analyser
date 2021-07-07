@@ -370,6 +370,21 @@
             }
         },
         {
+            "uid": "94021282-6B50-432F-A715-D34B3FEC4FD7",
+            "name": "Тест \"Эвольвента\"",
+            "image": "Evolventa.png",
+            "template": "met_evolventa_uid",
+            "build_norms": false,
+            "kind": "{03FFE24D-56ED-4138-9FC7-A125A020C190}",
+            "params":
+            {
+                "direction_mode": "clockwise",
+                "max_speed": 20,
+                "max_radius": 40,
+                "circles": 4
+            }
+        },
+        {
             "uid": "{ACFA62A1-7F52-477E-B9C9-A7FF14B3E098}",
             "name": "Анализ высоты одиночного прыжка",
             "image": "JumpHeight.png",

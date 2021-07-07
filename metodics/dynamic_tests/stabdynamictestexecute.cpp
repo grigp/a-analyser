@@ -371,8 +371,9 @@ void StabDynamicTestExecute::hidePatientWindow()
 {
     if (m_patientWin)
     {
-        delete m_patientWin;
+        StabDynamicTestPatientWindow *pw = m_patientWin;
         m_patientWin = nullptr;
+        delete pw;
     }
 }
 

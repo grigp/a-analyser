@@ -100,7 +100,7 @@ private:
     int m_centerSize {15};
     int m_delayTime {5};
     CrossDefines::ChangeStateMode m_changeStateMode{CrossDefines::csmReturn};
-    CrossDefines::DirectionMode m_directionMode{CrossDefines::dmRandom};
+    BaseUtils::DirectionMode m_directionMode{BaseUtils::dmRandom};
 
     //! Прохождение этапов теста. Значение - кол-во повторений на каждом этапе. 0 -> m_repeatCount.
     //! Индексы CrossDefines::dirUp .. CrossDefines::dirLeft

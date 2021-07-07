@@ -56,6 +56,28 @@ static QMap<Directions, QString> DirectionValueName {
 };
 
 /*!
+ * \brief Выбрать направления ChangeStateMode enum
+ */
+enum DirectionMode
+{
+      dmRandom = 0         ///< По случайному закону
+    , dmClockwise          ///< По часовой стрелке
+    , dmCounterClockwise   ///< Против часовой стрелке
+};
+
+static QMap<QString, DirectionMode> DirectionModeValueIndex {
+    std::pair<QString, DirectionMode> ("return", dmRandom)
+  , std::pair<QString, DirectionMode> ("clockwise", dmClockwise)
+  , std::pair<QString, DirectionMode> ("counter_clockwise", dmCounterClockwise)
+};
+
+static QMap<DirectionMode, QString> DirectionModeValueName {
+    std::pair<DirectionMode, QString> (dmRandom, "return")
+  , std::pair<DirectionMode, QString> (dmClockwise, "clockwise")
+  , std::pair<DirectionMode, QString> (dmCounterClockwise, "counter_clockwise")
+};
+
+/*!
  * \brief Возвращает время в формате hh:mm:ss по кол-ву секунд
  * \param secCnt - кол-во секунд
  * \param isHour - показывать ли часы

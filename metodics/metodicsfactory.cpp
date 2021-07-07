@@ -12,6 +12,7 @@
 #include "droptesttemplate.h"
 #include "crosstemplate.h"
 #include "stepoffsettemplate.h"
+#include "evolventatemplate.h"
 #include "datadefines.h"
 #include "dataprovider.h"
 
@@ -137,7 +138,8 @@ void MetodicsFactory::assignTemplates()
                 << new DropTestTemplate(this)
                 << new TrenTakePutTemplate(this)
                 << new CrossTemplate(this)
-                << new StepOffsetTemplate(this);
+                << new StepOffsetTemplate(this)
+                << new EvolventaTemplate(this);
 }
 
 void MetodicsFactory::assignMetodics()
