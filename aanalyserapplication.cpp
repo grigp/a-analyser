@@ -127,6 +127,13 @@ void AAnalyserApplication::doSelectMetodic(const QString &uid)
     emit selectMetodic(m_metodicUid);
 }
 
+void AAnalyserApplication::doSelectBugTest(const QString &uid)
+{
+    //! Возможно много лишних срабатываний
+    if (uid != m_testUid)
+        m_testUid = uid;
+}
+
 void AAnalyserApplication::doSelectTest(const QString &uid)
 {
     //! Возможно много лишних срабатываний

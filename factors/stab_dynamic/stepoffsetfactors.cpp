@@ -317,8 +317,8 @@ void StepOffsetFactors::readSignal(QList<QList<SignalsDefines::StabRec> > &bufCo
             int counterTo = m_steps.at(si).counterTo;
             int counterFrom = m_steps.at(si).counterFrom;
             //! Конец этапа возврата
-            int counterToN = stab.size();   //! Для последнего - конец сигнала
-            if (si < m_steps.size() - 1)    //! Для предыдущих - начала следующей ступени
+            int counterToN = stab.size() - 1;   //! Для последнего - конец сигнала
+            if (si < m_steps.size() - 1)        //! Для предыдущих - начала следующей ступени
                 counterToN = m_steps.at(si + 1).counterTo;
 
             //! Контроль границ с сигналом

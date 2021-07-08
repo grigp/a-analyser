@@ -99,6 +99,17 @@ void DataProvider::setTestProperty(const QString &testUid,
             setTestProperty(testUid, comment, condition, isNorm);
 }
 
+bool DataProvider::isTestOpening(const QString &testUid)
+{
+    return static_cast<AAnalyserApplication*>(QApplication::instance())->getDB()->
+            isTestOpening(testUid);
+}
+void DataProvider::setTestIsOpening(const QString &testUid, const bool isOpening)
+{
+    static_cast<AAnalyserApplication*>(QApplication::instance())->getDB()->
+            setTestIsOpening(testUid, isOpening);
+}
+
 bool DataProvider::getProbeInfo(const QString &probeUid, DataDefines::ProbeInfo &pi)
 {
     return static_cast<AAnalyserApplication*>(QApplication::instance())->getDB()->getProbeInfo(probeUid, pi);
@@ -199,6 +210,5 @@ void DataProvider::importBD(const QString &fileName)
 {
     static_cast<AAnalyserApplication*>(QApplication::instance())->getDB()->importBD(fileName);
 }
-
 
 

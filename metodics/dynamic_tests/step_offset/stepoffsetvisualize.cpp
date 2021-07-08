@@ -202,6 +202,9 @@ void StepOffsetVisualize::showConslutionStrategy()
 
     QString korr = "";
     QString colorResume = "color: rgb(100, 100, 100)";
+    if (fabs(v) <= 10)
+        colorResume = "color: rgb(32, 88, 103)";
+    else
     if ((fabs(v) > 10) && (fabs(v) <= 30))
     {
         korr = tr("незначительно");

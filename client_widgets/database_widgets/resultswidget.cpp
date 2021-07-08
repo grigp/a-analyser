@@ -6,6 +6,7 @@
 #include "aanalyserapplication.h"
 #include "metodicsfactory.h"
 #include "settingsprovider.h"
+#include "dataprovider.h"
 
 #include <QPainter>
 #include <QException>
@@ -31,6 +32,7 @@ ResultsWidget::ResultsWidget(QWidget *parent) :
             &AAnalyserApplication::selectMetodic, this, &ResultsWidget::on_selectMetodic);
 
     restoreSplitterPosition();
+    ui->wgtBugTest->setVisible(false);
 
     //    m_pmp = new ScaledPixmap(this);
     //    ui->wgtResults->layout()->addWidget(m_pmp);
@@ -93,14 +95,7 @@ void ResultsWidget::selectTest(const QModelIndex &index)
         {
             auto uid = m_mdlTest->index(index.row(), TestsModel::ColPatient, index.parent()).
                     data(TestsModel::TestUidRole).toString();
-
-            MetodicsFactory *metFactory = static_cast<AAnalyserApplication*>(QApplication::instance())->getMetodics();
-            if (m_wgtResult)
-                delete m_wgtResult;
-            m_wgtResult = metFactory->visualize(ui->wgtResults, uid);
-            ui->wgtNoTest->setVisible(!m_wgtResult);
-
-            static_cast<AAnalyserApplication*>(QApplication::instance())->doSelectTest(uid);
+            openTest(uid);
         }
     }
     catch(QException &e)
@@ -164,6 +159,47 @@ void ResultsWidget::on_selectMetodic(const QString &metodicUid)
     {
         ui->tvTests->header()->resizeSections(QHeaderView::ResizeToContents);
     });
+}
+
+void ResultsWidget::onPressButtonOpenTestAgain()
+{
+    DataProvider::setTestIsOpening(m_uidOpenedTest, false);  //! Помечаем тест, что тест открыт успешно
+    openTest(m_uidOpenedTest);                               //! Открываем тест
+}
+
+void ResultsWidget::onPressButtonRemoveBadTest()
+{
+    static_cast<AAnalyserApplication*>(QApplication::instance())->deleteTest();
+}
+
+void ResultsWidget::openTest(const QString testUid)
+{
+    MetodicsFactory *metFactory = static_cast<AAnalyserApplication*>(QApplication::instance())->getMetodics();
+    if (m_wgtResult)
+        delete m_wgtResult;
+    m_wgtResult = nullptr;
+
+    m_uidOpenedTest = testUid;
+
+    //! Если тест с этим uid находится в процессе открытия isTestOpened(uid) == true, то
+    //! есть подозрения, что он прошлый раз открылся со сбоем и его открывать опасно.
+    //! Поэтому его не открываем
+    if (!DataProvider::isTestOpening(testUid))
+    {
+        DataProvider::setTestIsOpening(testUid, true);   //! Помечаем тест, как в процессе открытия
+
+        m_wgtResult = metFactory->visualize(ui->wgtResults, testUid);
+        ui->wgtNoTest->setVisible(!m_wgtResult);
+        ui->wgtBugTest->setVisible(false);
+
+        static_cast<AAnalyserApplication*>(QApplication::instance())->doSelectTest(testUid);
+        DataProvider::setTestIsOpening(testUid, false);  //! Помечаем тест, что он открыт успешно
+    }
+    else
+    {
+        static_cast<AAnalyserApplication*>(QApplication::instance())->doSelectBugTest(testUid);
+        ui->wgtBugTest->setVisible(true);
+    }
 }
 
 void ResultsWidget::closeTestIfNotSelection()

@@ -81,6 +81,12 @@ public:
      * \brief Получение информации о выбранном тесте
      * \param uid
      */
+    void doSelectBugTest(const QString &uid);
+
+    /*!
+     * \brief Получение информации о выбранном тесте
+     * \param uid
+     */
     void doSelectTest(const QString &uid);
 
     /*!

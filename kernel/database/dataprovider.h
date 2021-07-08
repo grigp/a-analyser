@@ -137,6 +137,19 @@ void setTestProperty(const QString &testUid,
                      const bool isNorm);
 
 /*!
+ * \brief Возвращает признак открывающегося теста
+ * \param testUid - uid теста
+ */
+bool isTestOpening(const QString &testUid);
+
+/*!
+ * \brief Устанавливает или сбрасывает признак открывающегося теста
+ * \param testUid - uid теста
+ * \param isOpening - признак открывающегося теста
+ */
+void setTestIsOpening(const QString &testUid, const bool isOpening);
+
+/*!
  * \brief Возвращает запись о пробе по uid
  * \param probeUid - uid пробы
  * \param pi - структура данных с возвращаемой пробой

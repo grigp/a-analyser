@@ -66,8 +66,23 @@ private slots:
     void on_selectPatient(const QString &patientUid);
     void on_selectMetodic(const QString &metodicUid);
 
+    /*!
+     * \brief Нажали кнопку повторного открытия сбойного теста
+     */
+    void onPressButtonOpenTestAgain();
+    /*!
+     * \brief Нажали кнопку удаления сбойного теста
+     */
+    void onPressButtonRemoveBadTest();
+
 private:
     Ui::ResultsWidget *ui;
+
+    /*!
+     * \brief Функция открытия теста по его uid
+     * \param testUid
+     */
+    void openTest(const QString testUid);
 
     void closeTestIfNotSelection();
 
@@ -81,6 +96,7 @@ private:
 
     QWidget *m_wgtResult {nullptr};  ///< Текущий виджет для показа результатов теста
     int m_selectedRow {-1};          ///< Номер выбранной строки в списке
+    QString m_uidOpenedTest {""};    ///< uid открытого теста
 
 };
 

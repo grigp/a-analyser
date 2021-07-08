@@ -196,6 +196,7 @@ bool DataBase::getTestInfo(const QString &testUid, DataDefines::TestInfo &ti) co
         ti.comment = testObj["comment"].toString();
         ti.condition = testObj["condition"].toString();
         ti.isNormContained = testObj["norm_contained"].toBool();
+        ti.isOpening = testObj["is_opening"].toBool();
 
         auto prbArr = testObj["probes"].toArray();
         ti.probes.clear();
@@ -263,6 +264,26 @@ void DataBase::setTestProperty(const QString &testUid,
                 }
             }
         }
+    }
+}
+
+bool DataBase::isTestOpening(const QString &testUid)
+{
+    QDir dir = testsDir();
+    QJsonObject testObj;
+    if (readTableRec(dir.absoluteFilePath(testUid), testObj))
+        return  testObj["is_opening"].toBool();
+    return false;
+}
+
+void DataBase::setTestIsOpening(const QString &testUid, const bool isOpening)
+{
+    QDir dir = testsDir();
+    QJsonObject testObj;
+    if (readTableRec(dir.absoluteFilePath(testUid), testObj))
+    {
+        testObj["is_opening"] = isOpening;
+        writeTableRec(dir.absoluteFilePath(testUid), testObj);
     }
 }
 

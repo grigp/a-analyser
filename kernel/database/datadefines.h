@@ -59,6 +59,8 @@ struct TestInfo
     QString comment;          ///< комментарий к тесту
     QString condition;        ///< условия проведения
     bool isNormContained;     ///< нормообразующее
+    bool isOpening;           ///< открывающийся. Ставится в false перед открытием и в true после него.
+                              ///< Если перед открытием false, то предыдущая попытка была неудачной
 
     TestInfo() {}
 };

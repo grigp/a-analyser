@@ -68,6 +68,78 @@
        <item>
         <widget class="EmptyWidget" name="wgtNoTest" native="true"/>
        </item>
+       <item>
+        <widget class="QWidget" name="wgtBugTest" native="true">
+         <layout class="QVBoxLayout" name="verticalLayout">
+          <item>
+           <spacer name="verticalSpacer">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>40</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QLabel" name="lblBugTestInfo">
+            <property name="text">
+             <string>Предыдущая попытка открыть выбранный тест привела к сбою.</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="verticalSpacer_3">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::Fixed</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QPushButton" name="btnOpenTest">
+            <property name="text">
+             <string>Открыть тест заново</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="btnDeleteTest">
+            <property name="text">
+             <string>Удалить тест</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="verticalSpacer_2">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>40</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </widget>
+       </item>
       </layout>
      </widget>
     </widget>
@@ -100,8 +172,42 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>btnOpenTest</sender>
+   <signal>clicked()</signal>
+   <receiver>ResultsWidget</receiver>
+   <slot>onPressButtonOpenTestAgain()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>405</x>
+     <y>173</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>579</x>
+     <y>110</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btnDeleteTest</sender>
+   <signal>clicked()</signal>
+   <receiver>ResultsWidget</receiver>
+   <slot>onPressButtonRemoveBadTest()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>498</x>
+     <y>191</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>573</x>
+     <y>135</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>splitterMoved(int,int)</slot>
+  <slot>onPressButtonOpenTestAgain()</slot>
+  <slot>onPressButtonRemoveBadTest()</slot>
  </slots>
 </ui>
