@@ -124,6 +124,12 @@ protected slots:
      */
     virtual void recording();
 
+    /*!
+     * \brief Устанавливает диапазон в окне пациента
+     * \param diap - значение диапазона
+     */
+    virtual void setPatientWinDiap(const int diap);
+
 private slots:
 
     void scaleChange(int scaleId);

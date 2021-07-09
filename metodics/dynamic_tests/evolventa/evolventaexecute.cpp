@@ -39,7 +39,7 @@ void EvolventaExecute::setParams(const QJsonObject &params)
 
 StabDynamicTestPatientWindow *EvolventaExecute::createPatientWindow()
 {
-    return new EvolventaPatientWindow(this);
+    return new EvolventaPatientWindow(static_cast<int>(m_radiusMax * 1.2), this);
 }
 
 void EvolventaExecute::finishTest()

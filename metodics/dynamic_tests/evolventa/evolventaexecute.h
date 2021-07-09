@@ -42,6 +42,7 @@ protected:
      */
     void fillSpecific(QFrame *frSpecific) override;
 
+
 protected slots:
     void start() override;
 

@@ -32,6 +32,10 @@ StabDynamicTestExecute::StabDynamicTestExecute(QWidget *parent) :
     ui->cbScale->addItem("32");
     ui->cbScale->addItem("64");
     ui->cbScale->addItem("128");
+    QTimer::singleShot(100, [=]
+    {
+        scaleChange(ui->cbScale->currentIndex());
+    });
 
     ui->wgtAdvChannels->setVisible(false);
     ui->btnCalibrate->setVisible(false);
@@ -295,14 +299,19 @@ void StabDynamicTestExecute::recording()
     m_recCount = 0;
 }
 
+void StabDynamicTestExecute::setPatientWinDiap(const int diap)
+{
+    if (m_patientWin)
+        m_patientWin->setDiap(diap);
+}
+
 void StabDynamicTestExecute::scaleChange(int scaleId)
 {
     int v = 1;
     for (int i = 0; i < scaleId; ++i)
         v = v * 2;
     ui->wgtSKG->setDiap(128 / v);
-    if (m_patientWin)
-        m_patientWin->setDiap(128 / v);
+    setPatientWinDiap(128 / v);
 }
 
 void StabDynamicTestExecute::zeroing()

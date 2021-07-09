@@ -14,7 +14,7 @@ class EvolventaPatientWindow : public StabDynamicTestPatientWindow
     Q_OBJECT
 
 public:
-    explicit EvolventaPatientWindow(QWidget *parent = nullptr);
+    explicit EvolventaPatientWindow(const int diap, QWidget *parent = nullptr);
     ~EvolventaPatientWindow() override;
 
     /*!
@@ -33,8 +33,16 @@ public:
      */
     void stop() override;
 
+    /*!
+     * \brief Перекрытая функция установки диапазона изменения координат
+     * \param diap - диапазон
+     */
+    void setDiap(const int diap) override;
+
 private:
     Ui::EvolventaPatientWindow *ui;
+
+    int m_diap {128};
 };
 
 #endif // EVOLVENTAPATIENTWINDOW_H
