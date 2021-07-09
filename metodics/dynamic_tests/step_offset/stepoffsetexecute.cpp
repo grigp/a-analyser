@@ -44,7 +44,8 @@ void StepOffsetExecute::setParams(const QJsonObject &params)
 
 StabDynamicTestPatientWindow *StepOffsetExecute::createPatientWindow()
 {
-    return new StepOffsettPatientWindow(this);
+    m_patientWin = new StepOffsettPatientWindow(this);
+    return m_patientWin;
 }
 
 void StepOffsetExecute::finishTest()
@@ -158,6 +159,9 @@ void StepOffsetExecute::setMaxForceDialogAccepted()
             m_res->setForce(m_force);
             m_res->setStageTime(m_stageTime);
             m_res->setDirection(m_direction);
+
+            if (m_patientWin)
+                m_patientWin->setDiapSpecific(static_cast<int>(m_force * 1.2));
         }
         else
         {

@@ -30,3 +30,15 @@ void StepOffsettPatientWindow::stop()
 {
     StabDynamicTestPatientWindow::stop();
 }
+
+void StepOffsettPatientWindow::setDiap(const int diap)
+{
+    Q_UNUSED(diap);
+    StabDynamicTestPatientWindow::setDiap(m_diap);
+}
+
+void StepOffsettPatientWindow::setDiapSpecific(const int diap)
+{
+    m_diap = diap;
+    setDiap(diap);
+}

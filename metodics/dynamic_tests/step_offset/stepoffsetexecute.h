@@ -14,6 +14,7 @@ class StepOffsetExecute;
 
 class SetMaxForceDialog;
 class StepOffsetResultData;
+class StepOffsettPatientWindow;
 
 class StepOffsetExecute : public StabDynamicTestExecute
 {
@@ -82,6 +83,7 @@ private:
     double m_ty {0};
 
     QLabel* m_lblRemain;
+    StepOffsettPatientWindow* m_patientWin {nullptr};
 };
 
 #endif // STEPOFFSETEXECUTE_H

@@ -32,9 +32,22 @@ public:
      */
     void stop() override;
 
+    /*!
+     * \brief Перекрытая функция установки диапазона изменения координат
+     * \param diap - диапазон
+     */
+    void setDiap(const int diap) override;
+
+    /*!
+     * \brief Установка специфичного диапаона
+     * \param diap - диапазон
+     */
+    void setDiapSpecific(const int diap);
 
 private:
     Ui::StepOffsettPatientWindow *ui;
+
+    int m_diap {128};
 };
 
 #endif // STEPOFFSETTPATIENTWINDOW_H
