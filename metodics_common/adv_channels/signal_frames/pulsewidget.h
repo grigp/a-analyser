@@ -67,6 +67,7 @@ private:
 
     double m_pulseMiddle {0};
     int m_pulseCount {0};
+    bool m_isFinish {false};
 
     Ritmogram* m_ritmogram {nullptr};
 };

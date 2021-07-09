@@ -168,6 +168,7 @@ void Stabilan01::start()
 
 void Stabilan01::stop()
 {
+
     Driver::stop();
 }
 

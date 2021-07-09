@@ -29,11 +29,11 @@ void SerialPort :: WriteSettingsPort(QString name, int baudrate,int DataBits,
                          int Parity,int StopBits, int FlowControl)
 {
     m_SettingsPort.name = name;
-    m_SettingsPort.baudRate = (QSerialPort::BaudRate) baudrate;
-    m_SettingsPort.dataBits = (QSerialPort::DataBits) DataBits;
-    m_SettingsPort.parity = (QSerialPort::Parity) Parity;
-    m_SettingsPort.stopBits = (QSerialPort::StopBits) StopBits;
-    m_SettingsPort.flowControl = (QSerialPort::FlowControl) FlowControl;
+    m_SettingsPort.baudRate = static_cast<QSerialPort::BaudRate>(baudrate);
+    m_SettingsPort.dataBits = static_cast<QSerialPort::DataBits>(DataBits);
+    m_SettingsPort.parity = static_cast<QSerialPort::Parity>(Parity);
+    m_SettingsPort.stopBits = static_cast<QSerialPort::StopBits>(StopBits);
+    m_SettingsPort.flowControl = static_cast<QSerialPort::FlowControl>(FlowControl);
 }
 
 void SerialPort :: ConnectPort(void)
@@ -98,7 +98,6 @@ void SerialPort :: ReadInPort()
 {
     QByteArray data;
     data.append(m_nativePort.readAll());
-    outPortS(data);
     outPortD(data);
     //((QString)(adr.toInt())).toLatin1().toHex()
 }

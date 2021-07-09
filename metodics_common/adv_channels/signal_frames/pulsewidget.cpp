@@ -6,6 +6,7 @@
 #include "testresultdata.h"
 
 #include <QTimer>
+#include <QDebug>
 
 PulseWidget::PulseWidget(Driver *drv, const QString channelId, QWidget *parent) :
     SignalWidget(drv, channelId, parent),
@@ -22,6 +23,7 @@ PulseWidget::PulseWidget(Driver *drv, const QString channelId, QWidget *parent) 
 
 PulseWidget::~PulseWidget()
 {
+    m_isFinish = true;
     delete ui;
 }
 
@@ -50,7 +52,7 @@ void PulseWidget::getData(DeviceProtocols::DeviceData *data)
         DeviceProtocols::PulseDvcData *pulseData = static_cast<DeviceProtocols::PulseDvcData*>(data);
 
         double value = pulseData->value(0).toDouble();
-        ui->pbPulse->setValue(value);
+        ui->pbPulse->setValue(static_cast<int>(value));
         ui->lblPulse->setText(QString("ЧСС - %1 уд/мин").arg(value));
 
         m_pulseMiddle = m_pulseMiddle + value;
@@ -61,7 +63,10 @@ void PulseWidget::getData(DeviceProtocols::DeviceData *data)
         //! Погасим индикатор через 100 мс
         QTimer::singleShot(100, [=]
         {
-            ui->pbPulse->setValue(0);
+            if (!m_isFinish)
+            {
+                ui->pbPulse->setValue(0);
+            }
         });
 
         QVector<double> recPulse;

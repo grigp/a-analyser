@@ -41,6 +41,7 @@ void Driver::start()
 
 void Driver::stop()
 {
+    disconnect(m_port, &SerialPort::outPortD, this, &Driver::on_readData);
     emit disconnectPort();
 
 }
