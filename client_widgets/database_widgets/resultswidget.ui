@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>572</width>
-    <height>300</height>
+    <width>806</width>
+    <height>511</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -85,6 +85,35 @@
            </spacer>
           </item>
           <item>
+           <widget class="QLabel" name="lblSmile">
+            <property name="text">
+             <string/>
+            </property>
+            <property name="pixmap">
+             <pixmap resource="../../kernel.qrc">:/images/SmileSadnees200x200.png</pixmap>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="verticalSpacer_4">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::Fixed</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>60</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
            <widget class="QLabel" name="lblBugTestInfo">
             <property name="text">
              <string>Предыдущая попытка открыть выбранный тест привела к сбою.</string>
@@ -154,7 +183,9 @@
    <container>1</container>
   </customwidget>
  </customwidgets>
- <resources/>
+ <resources>
+  <include location="../../kernel.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>splitter</sender>
