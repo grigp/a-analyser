@@ -2,6 +2,7 @@
 #define EVOLVENTAEXECUTE_H
 
 #include <QWidget>
+#include <QLabel>
 
 #include "datadefines.h"
 #include "stabdynamictestexecute.h"
@@ -14,6 +15,8 @@ class EvolventaExecute;
 }
 
 class StabDynamicTestPatientWindow;
+class EvolventaResultData;
+class DecartCoordinatesSignal;
 
 class EvolventaExecute : public StabDynamicTestExecute
 {
@@ -79,6 +82,11 @@ private:
     double m_targetAngle {0};    ///< Угол при анимировании эвольвенты
     double m_targetAmpl {0};     ///< Амплитуда при анимировании эвольвенты
     double m_endStageCount {0};  ///< Значение m_targetAngle при окончании этапа круга
+
+    EvolventaResultData *m_res {nullptr};
+    DecartCoordinatesSignal *m_targetSign {nullptr};
+
+    QLabel *m_lblStage {nullptr};
 };
 
 #endif // EVOLVENTAEXECUTE_H

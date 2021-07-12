@@ -15,7 +15,9 @@ HEADERS += \
     $$PWD/breathsignal.h \
     $$PWD/ritmogram.h \
     $$PWD/crossresultdata.h \
-    $$PWD/stepoffsetresultdata.h
+    $$PWD/stepoffsetresultdata.h \
+    $$PWD/evolventaresultdata.h \
+    $$PWD/decartcoordinatessignal.h
 
 SOURCES += \
     $$PWD/signaldata.cpp \
@@ -32,4 +34,6 @@ SOURCES += \
     $$PWD/breathsignal.cpp \
     $$PWD/ritmogram.cpp \
     $$PWD/crossresultdata.cpp \
-    $$PWD/stepoffsetresultdata.cpp
+    $$PWD/stepoffsetresultdata.cpp \
+    $$PWD/evolventaresultdata.cpp \
+    $$PWD/decartcoordinatessignal.cpp

@@ -1,13 +1,20 @@
 #include "evolventaexecute.h"
 #include "ui_evolventaexecute.h"
 
+#include <QLabel>
+#include <QLayout>
 #include <QDebug>
 
 #include "evolventapatientwindow.h"
+#include "evolventaresultdata.h"
+#include "testresultdata.h"
+#include "decartcoordinatessignal.h"
 
 EvolventaExecute::EvolventaExecute(QWidget *parent) :
     StabDynamicTestExecute(parent),
     ui(new Ui::EvolventaExecute)
+  , m_res(new EvolventaResultData(ChannelsDefines::chanEvolventaResult))
+
 {
     ui->setupUi(this);
 
@@ -18,10 +25,13 @@ EvolventaExecute::EvolventaExecute(QWidget *parent) :
     isShowValues(false);
     isTraceControl(false);
     setVisibleRecordLength(false);
+
+    m_targetSign = new DecartCoordinatesSignal(ChannelsDefines::chanTargetTraectory, freqStab());
 }
 
 EvolventaExecute::~EvolventaExecute()
 {
+//    delete m_targetSign;
     delete ui;
 }
 
@@ -44,12 +54,19 @@ StabDynamicTestPatientWindow *EvolventaExecute::createPatientWindow()
 
 void EvolventaExecute::finishTest()
 {
+    trd()->addChannel(m_res);
+    trd()->addChannel(m_targetSign);
     StabDynamicTestExecute::finishTest();
 }
 
 void EvolventaExecute::fillSpecific(QFrame *frSpecific)
 {
     StabDynamicTestExecute::fillSpecific(frSpecific);
+
+    auto lblTitle = new QLabel(frSpecific);
+    m_lblStage = new QLabel(frSpecific);
+    m_lblStage->setText(tr("Этап") + " : " + tr("ожидание"));
+    frSpecific->layout()->addWidget(m_lblStage);
 }
 
 void EvolventaExecute::start()
@@ -69,11 +86,18 @@ void EvolventaExecute::recording()
     m_targetAmpl = 0;
     m_targetAngle = 0;
 
+    m_targetSign->clear();
+
     if (isRecording())
     {
+        m_res->setFreq(freqStab());
+        m_res->setDiap(diap());
+        m_res->setTimeUpwinding(recCount());
+        m_lblStage->setText(tr("Этап") + " : " + EvolventaDefines::StageValueName.value(m_stage));
     }
     else
     {
+        m_lblStage->setText(tr("Этап") + " : " + tr("ожидание"));
     }
 }
 
@@ -101,7 +125,8 @@ void EvolventaExecute::getData(DeviceProtocols::DeviceData *data)
                 {
                     m_stage = EvolventaDefines::stgHold;
                     m_endStageCount = m_targetAngle + 2 * M_PI * m_circleCount;
-                    //TODO! Установка маркера смены этапа на удержание
+                    m_res->setTimeHold(recCount());
+                    m_lblStage->setText(tr("Этап") + " : " + EvolventaDefines::StageValueName.value(m_stage));
                 }
             }
             else
@@ -111,7 +136,8 @@ void EvolventaExecute::getData(DeviceProtocols::DeviceData *data)
                 if (m_targetAngle >= m_endStageCount)
                 {
                     m_stage = EvolventaDefines::stgConvolution;
-                    //TODO! Установка маркера смены этапа на сворачивание
+                    m_res->setTimeConvolution(recCount());
+                    m_lblStage->setText(tr("Этап") + " : " + EvolventaDefines::StageValueName.value(m_stage));
                 }
             }
             else
@@ -158,6 +184,10 @@ void EvolventaExecute::setTargetPolar(const double angle, const double ampl)
         mx = ampl * cos(angle);
         my = ampl * sin(angle);
     }
+
+    //! Сохраняем траекторию в БД
+    SignalsDefines::StabRec rec(std::make_tuple(mx, my));
+    m_targetSign->addValue(rec);
 
     setTarget(mx, my);
 }

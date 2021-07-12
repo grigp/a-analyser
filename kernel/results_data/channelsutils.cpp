@@ -151,9 +151,18 @@ ChannelsUtils::ChannelsUtils()
                                                                     std::make_tuple(QString("Результаты теста \"Ступени\""),
                                                                                     QString("StepOffsRes"),
                                                                                     ChannelsDefines::ctStepOffsetResult))
+                 , std::pair<QString, ChannelsDefines::ChannelInfo>(ChannelsDefines::chanEvolventaResult,
+                                                                    std::make_tuple(QString("Результаты теста \"Эвольвента\""),
+                                                                                    QString("EvolventaRes"),
+                                                                                    ChannelsDefines::ctStepOffsetResult))
+                 , std::pair<QString, ChannelsDefines::ChannelInfo>(ChannelsDefines::chanTargetTraectory,
+                                                                    std::make_tuple(QString("Траектория цели"),
+                                                                                    QString("TargetTraectory"),
+                                                                                    ChannelsDefines::ctDecartTraectory))
                  })
     , m_formats({
-                  std::pair<QString, QString>(ChannelsDefines::ctStabilogram, ChannelsDefines::cfDecartCoordinates)
+                  std::pair<QString, QString>(ChannelsDefines::ctDecartTraectory, ChannelsDefines::cfDecartCoordinates)
+                , std::pair<QString, QString>(ChannelsDefines::ctStabilogram, ChannelsDefines::cfDecartCoordinates)
                 , std::pair<QString, QString>(ChannelsDefines::ctBallistogram, ChannelsDefines::cfSinglePositive)
                 , std::pair<QString, QString>(ChannelsDefines::ctRitmogram, ChannelsDefines::cfSinglePositive)
                 , std::pair<QString, QString>(ChannelsDefines::ctDynamo, ChannelsDefines::cfSinglePositive)
@@ -168,6 +177,7 @@ ChannelsUtils::ChannelsUtils()
                 , std::pair<QString, QString>(ChannelsDefines::ctTrenResult, ChannelsDefines::cfNoSignal)
                 , std::pair<QString, QString>(ChannelsDefines::ctCrossResult, ChannelsDefines::cfNoSignal)
                 , std::pair<QString, QString>(ChannelsDefines::ctStepOffsetResult, ChannelsDefines::cfNoSignal)
+                , std::pair<QString, QString>(ChannelsDefines::ctEvolventaResult, ChannelsDefines::cfNoSignal)
                 })
 {
 

@@ -19,6 +19,7 @@ static QString cfNoSignal = "{90e313c6-8805-4235-8981-1fb85d7aea5f}";          /
 /*!
  * \brief Идентификаторы типов каналов
  */
+ static QString ctDecartTraectory = "{589AC0CD-CC3C-467D-9C48-90223F673ACC}";
  static QString ctStabilogram = "{1F7A5F8A-FC64-44E2-B2D2-5245D02ED2CA}";
  static QString ctBallistogram = "{98CA38D2-8423-4AE5-9AF3-A47AA58F2616}";
  static QString ctRitmogram = "{C211078B-9219-4806-9D1D-52B1A4AC5282}";
@@ -36,6 +37,7 @@ static QString cfNoSignal = "{90e313c6-8805-4235-8981-1fb85d7aea5f}";          /
  static QString ctTrenResult = "{1FC8CB00-550E-4DF2-B6A3-7758B3867278}";
  static QString ctCrossResult = "{E58B0706-5868-4232-8C78-30F02556BA94}";
  static QString ctStepOffsetResult = "{5A085503-191D-493E-AB99-F44E5277A465}";
+ static QString ctEvolventaResult = "{00C24635-99EF-4811-AFEF-DA375AAC332A}";
 
 
 /*!
@@ -58,6 +60,8 @@ static QString cfNoSignal = "{90e313c6-8805-4235-8981-1fb85d7aea5f}";          /
  static QString chanDynPush3 = "{31C2F1CD-0AEC-4424-9B27-C8C93EBE75D6}";
  static QString chanMyogram = "{DD5FE1AC-9423-46AD-9EB0-50D52EA6D022}";
 
+ static QString chanTargetTraectory = "{28983087-1ED3-422C-9AC3-9805002FA6F2}";
+
  static QString chanTenso1 = "{C8BC30A3-19FD-45E3-965E-39BB28E51D15}";  ///< Виртуальный тензоканал 1
  static QString chanTenso2 = "{F832E307-F77E-4FE3-8DD8-2A620D6CC9BB}";  ///< Виртуальный тензоканал 2
  static QString chanTenso3 = "{6615ABFD-B646-4CCA-8F24-59B1CC4DABD6}";  ///< Виртуальный тензоканал 3
@@ -71,6 +75,7 @@ static QString cfNoSignal = "{90e313c6-8805-4235-8981-1fb85d7aea5f}";          /
  static QString chanTrenResult = "{BE102815-C928-4120-919E-4BB21A25EB34}";
  static QString chanCrossResult = "{D0382F32-69DC-41C6-8057-DEf52A743B55}";
  static QString chanStepOffsetResult = "{62720541-7467-466E-9C18-2208AB303280}";
+ static QString chanEvolventaResult = "{C3513F54-08B4-4E30-A2E0-D07987FAB84A}";
 
 /*!
  * \brief Структура информации о канале ChannelInfo struct
