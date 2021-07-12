@@ -86,11 +86,11 @@ void EvolventaExecute::getData(DeviceProtocols::DeviceData *data)
         if (isRecording())
         {
             //! Управление углом цели относительно 0
-            //if (m_targetAmpl > m_radiusMax / (2 * M_PI * 0.1))  <<< логично - же ???
-//            if (m_targetAmpl > m_speedMax / (2 * M_PI * 0.1))
-//                m_targetAngle = m_targetAngle + static_cast<double>(m_speedMax) / static_cast<double>(freqStab()) * m_targetAmpl;
-//            else
-                m_targetAngle = m_targetAngle + (2 * M_PI / static_cast<double>(freqStab())) * 0.1;
+            double w = (2 * M_PI / static_cast<double>(freqStab())) * 0.1;
+            if (w * static_cast<double>(freqStab()) * m_targetAmpl > m_speedMax)
+                m_targetAngle = m_targetAngle + (static_cast<double>(m_speedMax) / (static_cast<double>(freqStab()) * m_targetAmpl));
+            else
+                m_targetAngle = m_targetAngle + w;
 
             //! Раскручивание
             if (m_stage == EvolventaDefines::stgUpwinding)

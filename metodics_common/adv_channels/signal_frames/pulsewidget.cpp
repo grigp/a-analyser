@@ -5,7 +5,6 @@
 #include "ritmogram.h"
 #include "testresultdata.h"
 
-#include <QTimer>
 #include <QDebug>
 
 PulseWidget::PulseWidget(Driver *drv, const QString channelId, QWidget *parent) :
