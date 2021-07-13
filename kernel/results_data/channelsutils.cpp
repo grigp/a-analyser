@@ -159,6 +159,10 @@ ChannelsUtils::ChannelsUtils()
                                                                     std::make_tuple(QString("Траектория цели"),
                                                                                     QString("TargetTraectory"),
                                                                                     ChannelsDefines::ctDecartTraectory))
+                 , std::pair<QString, ChannelsDefines::ChannelInfo>(ChannelsDefines::chanAnySignalDual,
+                                                                    std::make_tuple(QString("Сигнал двухканальный"),
+                                                                                    QString("AnySignalDual"),
+                                                                                    ChannelsDefines::ctDecartTraectory))
                  })
     , m_formats({
                   std::pair<QString, QString>(ChannelsDefines::ctDecartTraectory, ChannelsDefines::cfDecartCoordinates)

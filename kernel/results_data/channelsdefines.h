@@ -61,6 +61,7 @@ static QString cfNoSignal = "{90e313c6-8805-4235-8981-1fb85d7aea5f}";          /
  static QString chanMyogram = "{DD5FE1AC-9423-46AD-9EB0-50D52EA6D022}";
 
  static QString chanTargetTraectory = "{28983087-1ED3-422C-9AC3-9805002FA6F2}";
+ static QString chanAnySignalDual = "{848E3446-5573-4C5B-8268-0D0A5AADD41E}";
 
  static QString chanTenso1 = "{C8BC30A3-19FD-45E3-965E-39BB28E51D15}";  ///< Виртуальный тензоканал 1
  static QString chanTenso2 = "{F832E307-F77E-4FE3-8DD8-2A620D6CC9BB}";  ///< Виртуальный тензоканал 2

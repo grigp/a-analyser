@@ -570,7 +570,6 @@ void StabSignalsTestWidget::showSKG(StabSignalsTestCalculator *calculator, const
                 skg->setVisibleMarker(false);
 
                 auto *sig = probe->signal(ChannelsDefines::chanStab);
-                //todo: подумать, как быть с обследованиями, которые невозможно открыть: сбой или зависание. Такие обследования нужно иметь возможность удалить
                 if (sig && sig->size() > 0)
                 {
                     skg->setSignal(sig);

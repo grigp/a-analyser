@@ -28,6 +28,7 @@ AreaGraph::AreaGraph(QWidget *parent) :
     m_envColors.colorGrid = Qt::darkGray;
     m_envColors.colorLabels = Qt::black;
     m_envColors.colorCursor = Qt::darkGray;
+    m_envColors.colorMarkers = Qt::darkRed;
 
     m_areases.clear();
     ui->setupUi(this);
@@ -127,10 +128,28 @@ void AreaGraph::setDiapazone(const double minVal, const double maxVal)
     update();
 }
 
-void AreaGraph::setCursor(const int zoneNum, const int pos)
+int AreaGraph::markerCount(const int numArea) const
 {
-    Q_ASSERT(zoneNum >= 0 && zoneNum < m_areases.size());
-    m_areases.at(zoneNum)->setCursor(pos);
+    Q_ASSERT(numArea >= 0 && numArea < m_areases.size());
+    return m_areases.at(numArea)->markerCount();
+}
+
+MarkerInfo AreaGraph::marker(const int numArea, const int idx) const
+{
+    Q_ASSERT(numArea >= 0 && numArea < m_areases.size());
+    return m_areases.at(numArea)->marker(idx);
+}
+
+void AreaGraph::addMarker(const int numArea, const int pos, const QString comment)
+{
+    Q_ASSERT(numArea >= 0 && numArea < m_areases.size());
+    m_areases.at(numArea)->addMarker(pos, comment);
+}
+
+void AreaGraph::setCursor(const int numArea, const int pos)
+{
+    Q_ASSERT(numArea >= 0 && numArea < m_areases.size());
+    m_areases.at(numArea)->setCursor(pos);
     update();
 }
 
@@ -186,7 +205,7 @@ void AreaGraph::paintEvent(QPaintEvent *event)
             //! Линия нуля
             if (m_areases.at(iz)->maxValue() > 0 && m_areases.at(iz)->minValue() < 0)
             {
-                int line0 = trunc(axisY - (0 - m_areases.at(iz)->minValue()) * prop);
+                int line0 = static_cast<int>(axisY - (0 - m_areases.at(iz)->minValue()) * prop);
                 painter.drawLine(LeftSpace, line0, width() - RightSpace, line0);
                 auto size = BaseUtils::getTextSize(&painter, "0");
                 painter.drawText(LeftSpace - size.width() - 5, line0 + size.height()/2, "0");
@@ -203,8 +222,8 @@ void AreaGraph::paintEvent(QPaintEvent *event)
             //! По сигналу
             for (int i = 0; i < m_areases.at(iz)->signal()->size() - 1; ++i)
             {
-                int x1 = LeftSpace + trunc((i - startPoint) * step * hScale);
-                int x2 = LeftSpace + trunc((i - startPoint + 1) * step * hScale);
+                int x1 = LeftSpace + static_cast<int>((i - startPoint) * step * hScale);
+                int x2 = LeftSpace + static_cast<int>((i - startPoint + 1) * step * hScale);
 
                 if (i > startPoint)
                 {
@@ -222,8 +241,8 @@ void AreaGraph::paintEvent(QPaintEvent *event)
                             v1 = v1 - m_areases.at(iz)->average(chan);
                             v2 = v2 - m_areases.at(iz)->average(chan);
                         }
-                        int y1 = axisY - trunc((v1 - m_areases.at(iz)->minValue()) * prop);
-                        int y2 = axisY - trunc((v2 - m_areases.at(iz)->minValue()) * prop);
+                        int y1 = axisY - static_cast<int>((v1 - m_areases.at(iz)->minValue()) * prop);
+                        int y2 = axisY - static_cast<int>((v2 - m_areases.at(iz)->minValue()) * prop);
                         painter.setPen(QPen(m_areases.at(iz)->color(chan), 1, Qt::SolidLine, Qt::FlatCap));
                         painter.drawLine(x1, y1, x2, y2);
                     };
@@ -257,9 +276,18 @@ void AreaGraph::paintEvent(QPaintEvent *event)
             //! Курсор в зоне
             if (m_areases.at(iz)->cursorPos() > -1)
             {
-                int x = LeftSpace + trunc((m_areases.at(iz)->cursorPos() - startPoint) * step * hScale);
+                int x = LeftSpace + static_cast<int>((m_areases.at(iz)->cursorPos() - startPoint) * step * hScale);
                 painter.setPen(QPen(m_envColors.colorCursor, 1, Qt::SolidLine, Qt::FlatCap));
                 painter.drawLine(x, axisY, x, axisY - zoneH);
+            }
+
+            //! Маркеры
+            painter.setPen(QPen(m_envColors.colorMarkers, 1, Qt::SolidLine, Qt::FlatCap));
+            for (int i = 0; i < m_areases.at(iz)->markerCount(); ++i)
+            {
+                int x = LeftSpace + static_cast<int>((m_areases.at(iz)->marker(i).position - startPoint) * step * hScale);
+                painter.drawLine(x, axisY, x, axisY - zoneH);
+                painter.drawText(x + 5, axisY - 5, m_areases.at(iz)->marker(i).comment);
             }
         }
     }
@@ -320,6 +348,20 @@ void GraphArea::setDiapazone(const double minVal, const double maxVal)
 void GraphArea::setCursor(const int pos)
 {
     m_cursorPos = pos;
+}
+
+MarkerInfo GraphArea::marker(const int idx) const
+{
+    Q_ASSERT(idx >=0 && idx < m_markers.size());
+    return m_markers.at(idx);
+}
+
+void GraphArea::addMarker(const int pos, const QString comment)
+{
+    MarkerInfo mi;
+    mi.position = pos;
+    mi.comment = comment;
+    m_markers.append(mi);
 }
 
 void GraphArea::computeAverageValue()

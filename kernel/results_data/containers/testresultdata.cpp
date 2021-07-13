@@ -86,6 +86,9 @@ void TestResultData::openTest(const QString &uid)
                     else
                     if (ci.channelId == ChannelsDefines::chanZ)
                         signal = new Ballistogram(chan);
+                    else
+                    if (ci.channelId == ChannelsDefines::chanTargetTraectory)
+                        signal = new DecartCoordinatesSignal(chan);
                     if (signal)
                         probe->addChannel(signal);
                 }

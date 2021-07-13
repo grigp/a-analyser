@@ -54,8 +54,23 @@ SignalsDefines::StabRec DecartCoordinatesSignal::value(const int rec) const
 
 void DecartCoordinatesSignal::addValue(const SignalsDefines::StabRec rec)
 {
+    //! Минимум и максимум
+    if (rec.x > m_maxValue)
+        m_maxValue = rec.x;
+    if (rec.y > m_maxValue)
+        m_maxValue = rec.y;
+    if (rec.x < m_minValue)
+        m_minValue = rec.x;
+    if (rec.y < m_minValue)
+        m_minValue = rec.y;
     //todo: потенциально тормозное место при постоянных добавлениях
     m_data.append(rec);
+}
+
+void DecartCoordinatesSignal::addValue(const double x, const double y)
+{
+    SignalsDefines::StabRec rec(std::make_tuple(x, y));
+    addValue(rec);
 }
 
 void DecartCoordinatesSignal::fromByteArray(const QByteArray &data)

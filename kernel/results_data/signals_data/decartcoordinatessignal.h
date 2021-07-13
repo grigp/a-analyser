@@ -62,6 +62,12 @@ public:
     void addValue(const SignalsDefines::StabRec rec);
 
     /*!
+     * \brief Добавляет значение
+     * \param x, y - координаты
+     */
+    void addValue(const double x, const double y);
+
+    /*!
      * \brief Читает данные из массива байт и заполняет буфер m_data
      * \param data - данные в виде массива байт
      */

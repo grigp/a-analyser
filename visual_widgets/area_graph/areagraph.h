@@ -17,11 +17,21 @@ struct GraphEnvColors
     QColor colorGrid;
     QColor colorLabels;
     QColor colorCursor;
+    QColor colorMarkers;
 
     GraphEnvColors() {}
 };
 
 class SignalAccess;
+
+/*!
+ * \brief Параметры маркера MarkerInfo struct
+ */
+struct MarkerInfo
+{
+    int position;      ///< Положение
+    QString comment;   ///< Комментарий
+};
 
 /*!
  * \brief Класс, содержащий данные для зоны построения графика GraphArea class
@@ -50,6 +60,14 @@ public:
     int cursorPos() {return m_cursorPos;}
     void setCursor(const int pos);
 
+    /*!
+     * \brief Доступ к маркерам в зоне
+     */
+    int markerCount() const {return m_markers.size();}
+    MarkerInfo marker(const int idx) const;
+    void addMarker(const int pos, const QString comment);
+
+
 private:
     /*!
      * \brief Расчет среднего значения по каждому отведению сигнала
@@ -66,6 +84,7 @@ private:
     double m_maxVal {0};
     QList<double> m_average;
     int m_cursorPos {-1};   ///< Номер отсчета, на котором стоит курсор
+    QList<MarkerInfo> m_markers;
 };
 
 /*!
@@ -76,8 +95,8 @@ class AreaGraph : public QWidget
     Q_OBJECT
 
 public:
-    explicit AreaGraph(QWidget *parent = 0);
-    ~AreaGraph();
+    explicit AreaGraph(QWidget *parent = nullptr);
+    ~AreaGraph() override;
 
     /*!
      * \brief Добавляет зону построения графика с (блэкджеком и шлюхами) сигналом и номером отведения
@@ -117,6 +136,9 @@ public:
     QColor colorCursor() const {return m_envColors.colorCursor;}
     void setColorCursor(const QColor &color);
 
+    QColor colorMarker() const {return m_envColors.colorMarkers;}
+    void setColorMarker(const QColor &color);
+
     /*!
      * \brief Режимы отображения сигнала по горизонтали XCoordSignalMode enum
      */
@@ -151,11 +173,18 @@ public:
     void setDiapazone(const double minVal, const double maxVal);
 
     /*!
+     * \brief Доступ к маркерам
+     */
+    int markerCount(const int numArea) const;
+    MarkerInfo marker(const int numArea, const int idx) const;
+    void addMarker(const int numArea, const int pos, const QString comment);
+
+    /*!
      * \brief Устанавливает курсор в зоне zoneNum на позицию pos
      * \param zoneNum - номер зоны
      * \param pos - позиция (номер отсчета)
      */
-    void setCursor(const int zoneNum, const int pos);
+    void setCursor(const int numArea, const int pos);
 
 protected:
     void paintEvent(QPaintEvent *event) override;

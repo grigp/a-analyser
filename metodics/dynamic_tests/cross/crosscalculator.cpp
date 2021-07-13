@@ -39,7 +39,6 @@ void CrossCalculator::calculate()
             }
         }
     }
-
 }
 
 void CrossCalculator::fastCalculate()

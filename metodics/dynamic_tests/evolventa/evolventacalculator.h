@@ -1,0 +1,64 @@
+#ifndef EVOLVENTACALCULATOR_H
+#define EVOLVENTACALCULATOR_H
+
+#include <QObject>
+
+#include "testcalculator.h"
+#include "evolventadefines.h"
+
+class EvolventaFactors;
+class EvolventaResultData;
+class TestResultData;
+class DecartCoordinatesSignal;
+class ProbeResultInfo;
+
+class EvolventaCalculator : public TestCalculator
+{
+    Q_OBJECT
+public:
+    explicit EvolventaCalculator(const QString &testUid, QObject *parent = nullptr);
+
+    ~EvolventaCalculator() override;
+
+    /*!
+     * \brief Полный расчет данных теста с записью значений первичных показателей в БД
+     */
+    void calculate() override;
+
+    /*!
+     * \brief Быстрый расчет данных теста
+     * Чтение первичных показателей из БД
+     */
+    void fastCalculate() override;
+
+    /*!
+     * \brief Доступ к сигналаи, содержащим координату стабилограммы и ее целевую траекторию
+     */
+    DecartCoordinatesSignal *frontal() const {return m_frontal;}
+    DecartCoordinatesSignal *sagittal() const {return m_sagittal;}
+
+    int timeUpwinding() const;
+    int timeHold() const;
+    int timeConvolution() const;
+
+    int diap() const;
+    int freq() const;
+
+private:
+
+    /*!
+     * \brief ProbeResultInfo
+     * \param pri - результаты пробы
+     */
+    void fillEvolventaSignal(ProbeResultInfo *pri);
+
+    TestResultData* m_trd {nullptr};
+    //  EvolventaFactors *m_factors {nullptr};
+
+    DecartCoordinatesSignal *m_frontal {nullptr};
+    DecartCoordinatesSignal *m_sagittal {nullptr};
+
+    EvolventaResultData *m_erData {nullptr};
+};
+
+#endif // EVOLVENTACALCULATOR_H

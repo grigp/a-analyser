@@ -5,6 +5,7 @@
 #include "metodicdefines.h"
 #include "evolventaparamsdialog.h"
 #include "evolventaexecute.h"
+#include "evolventavisualize.h"
 
 EvolventaTemplate::EvolventaTemplate(QObject *parent)
     : MetodicTemplate (parent)
@@ -32,7 +33,10 @@ QWidget *EvolventaTemplate::execute(QWidget *parent, const QJsonObject &params)
 
 QWidget *EvolventaTemplate::visualize(QWidget *parent, const QString &testUid)
 {
-    return nullptr;
+    auto *retval = new EvolventaVisualize(parent);
+    parent->layout()->addWidget(retval);
+    retval->setTest(testUid);
+    return retval;
 }
 
 bool EvolventaTemplate::editParams(QWidget *parent, QJsonObject &params)
