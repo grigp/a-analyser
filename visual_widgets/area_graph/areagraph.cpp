@@ -17,6 +17,15 @@ static const int BottomSpace = 20;
 
 static const QVector<QColor> PaletteDefault = {Qt::darkGreen, Qt::blue, Qt::darkCyan, Qt::red, Qt::darkYellow, Qt::darkMagenta};
 
+///< Шаг секундных меток
+enum LabelStep
+{
+      lsOne = 1     ///< Каждую секунду
+    , lsFive = 5    ///< Каждые пять секунд
+    , lsTen = 10    ///< Каждые десять секунд
+    , lsSixty = 60  ///< Каждую минуту
+};
+
 }
 
 AreaGraph::AreaGraph(QWidget *parent) :
@@ -187,6 +196,20 @@ void AreaGraph::paintEvent(QPaintEvent *event)
             if (m_xcsm == xsm_fullSignal)
                 step = static_cast<double>(width() - LeftSpace - RightSpace) /
                        static_cast<double>(m_areases.at(iz)->signal()->size());
+            //! Определение шага секундных меток
+            double stepMark = step * m_areases.at(iz)->signal()->frequency();
+            int secCount = m_areases.at(iz)->signal()->size() / m_areases.at(iz)->signal()->frequency();
+            QString s = QString::number(secCount);
+            auto sizeOne = BaseUtils::getTextSize(&painter, s);
+            LabelStep ls = lsOne;
+            if ((stepMark < (sizeOne.width() + 7)) && (stepMark * 5 >= (sizeOne.width() + 7)))
+                ls = lsFive;
+            else
+            if ((stepMark * 5 < (sizeOne.width() + 7)) && (stepMark * 10 >= (sizeOne.width() + 7)))
+                ls = lsTen;
+            else
+            if ((stepMark * 10 < (sizeOne.width() + 7)) && (stepMark * 60 >= (sizeOne.width() + 7)))
+                ls = lsSixty;
 
             //! Минимальное значение
             QString sMin = QString::number(trunc(m_areases.at(iz)->minValue()));
@@ -258,16 +281,23 @@ void AreaGraph::paintEvent(QPaintEvent *event)
                         m_areases.at(iz)->numSubChan() < m_areases.at(iz)->signal()->subChansCount())
                         drawLine(m_areases.at(iz)->numSubChan());
 
+                    //! Секундные метки
                     if (iz == 0)
                     {
-                        if (i % m_areases.at(iz)->signal()->frequency() == 0 && i != 0)
+                        if (i != 0)
                         {
-                            painter.setPen(QPen(m_envColors.colorGrid, 1, Qt::DotLine, Qt::FlatCap));
-                            painter.drawLine(x1, TopSpace, x1, height() - BottomSpace);
-                            QString s = QString::number(i / m_areases.at(iz)->signal()->frequency());
-                            auto size = BaseUtils::getTextSize(&painter, s);
-                            painter.setPen(QPen(m_envColors.colorAxis, 1, Qt::SolidLine, Qt::FlatCap));
-                            painter.drawText(x1 - size.width() / 2, height() - BottomSpace + size.height() + 1, s);
+                            if ((ls == lsOne && i % m_areases.at(iz)->signal()->frequency() == 0) ||
+                                (ls == lsFive && i % (m_areases.at(iz)->signal()->frequency() * 5) == 0) ||
+                                (ls == lsTen && i % (m_areases.at(iz)->signal()->frequency() * 10) == 0) ||
+                                (ls == lsSixty && i % (m_areases.at(iz)->signal()->frequency() * 60) == 0))
+                            {
+                                painter.setPen(QPen(m_envColors.colorGrid, 1, Qt::DotLine, Qt::FlatCap));
+                                painter.drawLine(x1, TopSpace, x1, height() - BottomSpace);
+                                QString s = QString::number(i / m_areases.at(iz)->signal()->frequency());
+                                auto size = BaseUtils::getTextSize(&painter, s);
+                                painter.setPen(QPen(m_envColors.colorAxis, 1, Qt::SolidLine, Qt::FlatCap));
+                                painter.drawText(x1 - size.width() / 2, height() - BottomSpace + size.height() + 1, s);
+                            }
                         }
                     }
                 }
