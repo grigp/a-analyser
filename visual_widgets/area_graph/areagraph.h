@@ -18,6 +18,7 @@ struct GraphEnvColors
     QColor colorLabels;
     QColor colorCursor;
     QColor colorMarkers;
+    QColor colorFillBetweenSubchans;
 
     GraphEnvColors() {}
 };
@@ -67,6 +68,8 @@ public:
     MarkerInfo marker(const int idx) const;
     void addMarker(const int pos, const QString comment);
 
+    bool isFillBetweenSubchans() const {return m_isFillBetweenSubchans;}
+    void setIsFillBetweenSubchans(const bool isFill) {m_isFillBetweenSubchans = isFill;}
 
 private:
     /*!
@@ -85,6 +88,7 @@ private:
     QList<double> m_average;
     int m_cursorPos {-1};   ///< Номер отсчета, на котором стоит курсор
     QList<MarkerInfo> m_markers;
+    bool m_isFillBetweenSubchans {false};
 };
 
 /*!
@@ -139,6 +143,10 @@ public:
     QColor colorMarker() const {return m_envColors.colorMarkers;}
     void setColorMarker(const QColor &color);
 
+    QColor colorFillBetweenSubchans() const {return m_envColors.colorFillBetweenSubchans;}
+    void setColorFillBetweenSubchans(const QColor &color);
+
+
     /*!
      * \brief Режимы отображения сигнала по горизонтали XCoordSignalMode enum
      */
@@ -185,6 +193,12 @@ public:
      * \param pos - позиция (номер отсчета)
      */
     void setCursor(const int numArea, const int pos);
+
+    /*!
+     * \brief Доступ к свойству isFillBetweenSubchans
+     */
+    bool isFillBetweenSubchans(const int numArea) const;
+    void setIsFillBetweenSubchans(const int numArea, const bool isFill);
 
 protected:
     void paintEvent(QPaintEvent *event) override;

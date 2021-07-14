@@ -38,6 +38,7 @@ AreaGraph::AreaGraph(QWidget *parent) :
     m_envColors.colorLabels = Qt::black;
     m_envColors.colorCursor = Qt::darkGray;
     m_envColors.colorMarkers = Qt::darkRed;
+    m_envColors.colorFillBetweenSubchans = Qt::cyan;
 
     m_areases.clear();
     ui->setupUi(this);
@@ -162,6 +163,18 @@ void AreaGraph::setCursor(const int numArea, const int pos)
     update();
 }
 
+bool AreaGraph::isFillBetweenSubchans(const int numArea) const
+{
+    Q_ASSERT(numArea >= 0 && numArea < m_areases.size());
+    return m_areases.at(numArea)->isFillBetweenSubchans();
+}
+
+void AreaGraph::setIsFillBetweenSubchans(const int numArea, const bool isFill)
+{
+    Q_ASSERT(numArea >= 0 && numArea < m_areases.size());
+    m_areases.at(numArea)->setIsFillBetweenSubchans(isFill);
+}
+
 void AreaGraph::paintEvent(QPaintEvent *event)
 {
     QWidget::paintEvent(event);
@@ -255,31 +268,37 @@ void AreaGraph::paintEvent(QPaintEvent *event)
 
                     //! Лямбда функция вывода линии.
                     //! Необходима, чтобы не передавать кучу параметров в приватный метод
-                    auto drawLine = [&](const int chan)
+                    auto drawLine = [&](const int chan1, const int chan2, const QColor color)
                     {
-                        double v1 = m_areases.at(iz)->signal()->value(chan, i);
-                        double v2 = m_areases.at(iz)->signal()->value(chan, i + 1);
+                        double v1 = m_areases.at(iz)->signal()->value(chan1, i);
+                        double v2 = m_areases.at(iz)->signal()->value(chan2, i + 1);
                         if (m_isZeroing)
                         {
-                            v1 = v1 - m_areases.at(iz)->average(chan);
-                            v2 = v2 - m_areases.at(iz)->average(chan);
+                            v1 = v1 - m_areases.at(iz)->average(chan1);
+                            v2 = v2 - m_areases.at(iz)->average(chan2);
                         }
                         int y1 = axisY - static_cast<int>((v1 - m_areases.at(iz)->minValue()) * prop);
                         int y2 = axisY - static_cast<int>((v2 - m_areases.at(iz)->minValue()) * prop);
-                        painter.setPen(QPen(m_areases.at(iz)->color(chan), 1, Qt::SolidLine, Qt::FlatCap));
+                        painter.setPen(QPen(color, 1, Qt::SolidLine, Qt::FlatCap));
                         painter.drawLine(x1, y1, x2, y2);
                     };
+
+                    //! Межканальная заливка. Только для первых двух каналов
+                    if (m_areases.at(iz)->isFillBetweenSubchans())
+                        drawLine(0, 1, m_envColors.colorFillBetweenSubchans);
 
                     //! Все подканалы
                     if (m_areases.at(iz)->numSubChan() == -1)
                         //! По подканалам
                         for (int j = 0; j < m_areases.at(iz)->signal()->subChansCount(); ++j)
-                            drawLine(j);
+                            drawLine(j, j, m_areases.at(iz)->color(j));
                     else
                     //! Только выбранный подканал
                     if (m_areases.at(iz)->numSubChan() >= 0 &&
                         m_areases.at(iz)->numSubChan() < m_areases.at(iz)->signal()->subChansCount())
-                        drawLine(m_areases.at(iz)->numSubChan());
+                        drawLine(m_areases.at(iz)->numSubChan(),
+                                 m_areases.at(iz)->numSubChan(),
+                                 m_areases.at(iz)->color(m_areases.at(iz)->numSubChan()));
 
                     //! Секундные метки
                     if (iz == 0)

@@ -30,6 +30,7 @@ void EvolventaVisualize::setTest(const QString &testUid)
         ui->wgtGraphX->addMarker(0, m_calculator->timeUpwinding(), EvolventaDefines::StageValueName.value(EvolventaDefines::stgUpwinding));
         ui->wgtGraphX->addMarker(0, m_calculator->timeHold(), EvolventaDefines::StageValueName.value(EvolventaDefines::stgHold));
         ui->wgtGraphX->addMarker(0, m_calculator->timeConvolution(), EvolventaDefines::StageValueName.value(EvolventaDefines::stgConvolution));
+        ui->wgtGraphX->setIsFillBetweenSubchans(0, true);
 
         auto *sigY = m_calculator->sagittal();
         max = sigY->absMaxValue();
@@ -38,6 +39,7 @@ void EvolventaVisualize::setTest(const QString &testUid)
         ui->wgtGraphY->addMarker(0, m_calculator->timeUpwinding(), EvolventaDefines::StageValueName.value(EvolventaDefines::stgUpwinding));
         ui->wgtGraphY->addMarker(0, m_calculator->timeHold(), EvolventaDefines::StageValueName.value(EvolventaDefines::stgHold));
         ui->wgtGraphY->addMarker(0, m_calculator->timeConvolution(), EvolventaDefines::StageValueName.value(EvolventaDefines::stgConvolution));
+        ui->wgtGraphY->setIsFillBetweenSubchans(0, true);
     }
 
 }
