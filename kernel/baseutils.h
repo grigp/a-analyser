@@ -171,6 +171,13 @@ void filterLowFreq(QVector<double> &buffer,
                    const int n1,
                    const int n2);
 
+/*!
+ * \brief Возвращает знак числа number
+ * Если number > 0 возвразщает 1
+ * Если number < 0 возвразщает -1
+ */
+int sign(const double number);
+
 
 }
 

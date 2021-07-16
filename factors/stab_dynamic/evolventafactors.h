@@ -13,22 +13,53 @@ namespace EvolventaFactorsDefines
 
 static const QString GroupUid = "{8A2DA8DD-7560-498A-9AB7-7B2DC4614343}";
 
-namespace Frontal {
+namespace CommonErrorsFrontal {
 static const QString SummErr = "{8DE01E39-D491-4113-A01D-9A5367C6EC2C}";   ///< Суммарная ошибка
 static const QString MidErr = "{4907F954-76E6-48D7-A0DF-F256FCE9D47C}";   ///< Средняя ошибка
-static const QString MidErrE = "{66AE00BD-E4E2-4383-905B-164229C0CB88}";   ///< Средняя ошибка на экстремуме
-static const QString MidErrB = "{EF4B2F65-3CD9-4C92-A389-7B0FEEA2FC23}";   ///< Средняя ошибка на переходе
-static const QString CrsCntE = "{0B5B98C6-DFC5-4003-9FB3-0B35A05824EE}";   ///< Сред. кол-во пересечений на экстремуме
-static const QString CrsCntB = "{C3F29A31-29D6-4218-8FC6-56CA1D670AA3}";   ///< Сред. кол-во пересечений на переходе
+}
 
-static const QString ExtrCntE = "{8A59D4EF-2BBE-42B0-8E4B-177DC20DE9B3}";   ///< Среднее кол-во пиков на экстремуме
-static const QString ExtrCntB = "{A5932391-F6DC-4FB6-804B-86F1B2920C49}";   ///< Среднее кол-во пиков на переходе
-static const QString MidAmplE = "{1FE0F3A3-D406-45F5-A12D-88009C696A47}";   ///< Средняя амплитуда между пиками на экстремуме
-static const QString MidAmplB = "{6FB2F58E-6B9C-436C-9246-EAED464C5518}";   ///< Средняя амплитуда между пиками на переходе
+namespace CommonErrorsSagittal {
+static const QString SummErr = "{5150A24B-1FD8-4EBD-BC73-233353B64912}";   ///< Суммарная ошибка
+static const QString MidErr = "{28579B65-D5EF-4E7C-9CB1-CCE9ED61FF3F}";   ///< Средняя ошибка
+}
 
-static const QString CMidErrE = "{97D24A27-7766-4C8E-BF2E-5FA49538257B}";   ///< Изменение средней ошибки на экстремуме
-static const QString CMidAmpE = "{507F4217-7513-4576-A8E2-1B636AAC8FED}";   ///< Изменение средней амплитуды на экстремуме
+namespace FragmentExtremumFrontal {
+static const QString MidErr = "{66AE00BD-E4E2-4383-905B-164229C0CB88}";   ///< Средняя ошибка
+static const QString CrsCnt = "{0B5B98C6-DFC5-4003-9FB3-0B35A05824EE}";   ///< Сред. кол-во пересечений
+static const QString ExtrCnt = "{8A59D4EF-2BBE-42B0-8E4B-177DC20DE9B3}";   ///< Среднее кол-во пиков
+static const QString MidAmpl = "{1FE0F3A3-D406-45F5-A12D-88009C696A47}";   ///< Средняя амплитуда между пиками
+static const QString CMidErr = "{97D24A27-7766-4C8E-BF2E-5FA49538257B}";   ///< Изменение средней ошибки
+static const QString CMidAmp = "{507F4217-7513-4576-A8E2-1B636AAC8FED}";   ///< Изменение средней амплитуды
+}
 
+namespace FragmentBranchFrontal {
+static const QString MidErr = "{EF4B2F65-3CD9-4C92-A389-7B0FEEA2FC23}";   ///< Средняя ошибка
+static const QString CrsCnt = "{C3F29A31-29D6-4218-8FC6-56CA1D670AA3}";   ///< Сред. кол-во пересечений
+static const QString ExtrCnt = "{A5932391-F6DC-4FB6-804B-86F1B2920C49}";   ///< Среднее кол-во пиков
+static const QString MidAmpl = "{6FB2F58E-6B9C-436C-9246-EAED464C5518}";   ///< Средняя амплитуда между пиками
+static const QString CMidErr = "{FF9518E2-68F7-4912-81AC-DD532E1F3F13}";   ///< Изменение средней ошибки
+static const QString CMidAmp = "{291ADDFC-8123-4871-9984-1B86C15E0588}";   ///< Изменение средней амплитуды
+}
+
+namespace FragmentExtremumSagittal {
+static const QString MidErr = "{D0DDAF96-647C-496F-BC7C-F7E53829B98C}";   ///< Средняя ошибка
+static const QString CrsCnt = "{DABE21CD-7CE9-4344-8A48-DDA70E82F908}";   ///< Сред. кол-во пересечений
+static const QString ExtrCnt = "{76743F36-A4CD-4D0F-846D-30317776BAA4}";   ///< Среднее кол-во пиков
+static const QString MidAmpl = "{24AEDFD8-ACEB-48F8-A73F-54DF6E07B7E0}";   ///< Средняя амплитуда между пиками
+static const QString CMidErr = "{F9755F6B-A19F-487F-BE01-9853A5CD7326}";   ///< Изменение средней ошибки
+static const QString CMidAmp = "{3912D71C-BBDC-4358-843D-34EDAADF2E6E}";   ///< Изменение средней амплитуды
+}
+
+namespace FragmentBranchSagittal {
+static const QString MidErr = "{72B54237-EEB0-4A39-B2DE-7D5D7CF78140}";   ///< Средняя ошибка
+static const QString CrsCnt = "{174549A7-A0E0-4108-9D10-4FC91631E6B7}";   ///< Сред. кол-во пересечений
+static const QString ExtrCnt = "{1E6BC893-7223-45F4-9DB6-FC02D9AEF8DC}";   ///< Среднее кол-во пиков
+static const QString MidAmpl = "{39F90FCD-BB94-4276-BCD6-C61E3A154F9A}";   ///< Средняя амплитуда между пиками
+static const QString CMidErr = "{0CD1536A-DB20-43A8-A529-C39B6342A187}";   ///< Изменение средней ошибки
+static const QString CMidAmp = "{9789D912-5DE9-49D8-9F8B-896B3E7DEC81}";   ///< Изменение средней амплитуды
+}
+
+namespace Frontal {
 // R - retention
 static const QString InterCntR = "{F1D6C5A6-81FF-417A-BD42-848ABEDD7E95}";   ///< Кол-во пересечений траектории цели при удержании
 static const QString InterLenR = "{88BA04FB-0B70-4503-91D5-9655A357C318}";   ///< Длит. между пересечениями траектории цели при удержании
@@ -38,21 +69,6 @@ static const QString SemiWavAmpl = "{22BCF336-BC9E-4571-A4ED-A0C16EB555D6}";   /
 }
 
 namespace Sagittal {
-static const QString SummErr = "{5150A24B-1FD8-4EBD-BC73-233353B64912}";   ///< Суммарная ошибка
-static const QString MidErr = "{28579B65-D5EF-4E7C-9CB1-CCE9ED61FF3F}";   ///< Средняя ошибка
-static const QString MidErrE = "{D0DDAF96-647C-496F-BC7C-F7E53829B98C}";   ///< Средняя ошибка на экстремуме
-static const QString MidErrB = "{72B54237-EEB0-4A39-B2DE-7D5D7CF78140}";   ///< Средняя ошибка на переходе
-static const QString CrsCntE = "{DABE21CD-7CE9-4344-8A48-DDA70E82F908}";   ///< Сред. кол-во пересечений на экстремуме
-static const QString CrsCntB = "{174549A7-A0E0-4108-9D10-4FC91631E6B7}";   ///< Сред. кол-во пересечений на переходе
-
-static const QString ExtrCntE = "{76743F36-A4CD-4D0F-846D-30317776BAA4}";   ///< Среднее кол-во пиков на экстремуме
-static const QString ExtrCntB = "{1E6BC893-7223-45F4-9DB6-FC02D9AEF8DC}";   ///< Среднее кол-во пиков на переходе
-static const QString MidAmplE = "{24AEDFD8-ACEB-48F8-A73F-54DF6E07B7E0}";   ///< Средняя амплитуда между пиками на экстремуме
-static const QString MidAmplB = "{39F90FCD-BB94-4276-BCD6-C61E3A154F9A}";   ///< Средняя амплитуда между пиками на переходе
-
-static const QString CMidErrE = "{F9755F6B-A19F-487F-BE01-9853A5CD7326}";   ///< Изменение средней ошибки на экстремуме
-static const QString CMidAmpE = "{3912D71C-BBDC-4358-843D-34EDAADF2E6E}";   ///< Изменение средней амплитуды на экстремуме
-
 static const QString InterCntR = "{04A95915-99B2-41CE-91FB-11C8927C760B}";   ///< Кол-во пересечений траектории цели при удержании
 static const QString InterLenR = "{4A21FD78-BDD3-48EB-B59B-4833085F4748}";   ///< Длит. между пересечениями траектории цели при удержании
 
@@ -86,9 +102,74 @@ static const QString TimeMid   = "{F27A6793-1E69-494A-A3DE-541858024A05}"; ///< 
 static const QString Power     = "{D09F6375-EC9D-4BB4-A035-B406B98B8814}"; ///< Мощность коррекций
 }
 
+/*!
+ * \brief Значения показателей общих ошибок для фронтали или сагиттали CommonErrorsFactorValues struct
+ */
+struct CommonErrorsFactorValues
+{
+    double summErr;   ///< Суммарная ошибка
+    double midErr;    ///< Средняя ошибка
+};
+
+/*!
+ * \brief Значения показателей для фрагментов экстремума или перехода для фронтали или сагиттали  FragmentFactors struct
+ */
+struct FragmentFactors
+{
+    double midErr;   ///< Средняя ошибка
+    double crsCnt;   ///< Сред. кол-во пересечений
+
+    double extrCnt;   ///< Среднее кол-во пиков
+    double midAmpl;   ///< Средняя амплитуда между пиками
+
+    double cMidErr;   ///< Изменение средней ошибки
+    double cMidAmp;   ///< Изменение средней амплитуды
+};
+
+/*!
+ * \brief Значения показателей для фронтали или сагиттали SubChannelFactorValues struct
+ */
+struct SubChannelFactorValues
+{
+    // R - retention
+    double interCntR;   ///< Кол-во пересечений траектории цели при удержании
+    double interLenR;   ///< Длит. между пересечениями траектории цели при удержании
+
+    double semiWavLen;   ///< Длительность полуволны
+    double semiWavAmpl;  ///< Амплитуда полуволны
+};
+
+/*!
+ * \brief Значения показателей общих CommonFactorValues struct
+ */
+struct CommonFactorValues
+{
+    double dAPercent;      ///< Опережение маркера цели
+    double dAhead;         ///< Суммарное опережение маркера цели
+    double semiWavLenDAC;  ///< Длительность полуволны при опережении
+    double semiWavAmplDAC; ///< Амплитуда полуволны при опережении
+    double korrCount;      ///< Общее количество коррекций
+};
+
+/*!
+ * \brief Значение показателей коррекций CorrectionsFactorValues struct
+ */
+struct CorrectionsFactorValues
+{
+    double percent;   ///< Процент коррекций
+    double error;     ///< Средняя ошибка траектории
+    double amplitude; ///< Средняя амплитуда
+    double timeSumm;  ///< Суммарная длительность
+    double timeMid;   ///< Средняя длительность
+    double power;     ///< Мощность коррекций
+};
+
 }
 
 class EvolventaResultData;
+class Stabilogram;
+class DecartCoordinatesSignal;
+class Fragment;
 
 /*!
  * \brief Класс показателей теста Эвольвента EvolventaFactors class
@@ -99,6 +180,7 @@ public:
     explicit EvolventaFactors(const QString &testUid,
                               const QString &probeUid,
                               QObject *parent = nullptr);
+    ~EvolventaFactors() override;
 
     /*!
      * \brief Возвращает true, если показатели можно рассчитать для теста с заданным uid
@@ -122,6 +204,77 @@ public:
      * \brief Регистрирует факторсгруппу и показатели
      */
     static void registerFactors();
+
+private:
+    /*!
+     * \brief Получение меток этапов
+     */
+    void getMarkStages();
+    /*!
+     * \brief Получение стабилограммы и траектории цели
+     */
+    void getSignals();
+
+    /*!
+     * \brief Заполняет списки фрагментов
+     * \param chan - подканал. 0 - x, 1 - y
+     * \param extList - создаваемый список экстремумов
+     * \param brnList - создаваемый список переходов
+     */
+    void fillListsFragments(const int chan, QList<Fragment*> &extList, QList<Fragment*> &brnList);
+
+    /*!
+     * \brief Возвращает true, если idx - точка экстремума
+     * \param begin, end - границы участка
+     * \param v, vp, vn - точки: текущая, предыдущая и последующая
+     */
+    bool isExtremum(const int idx, const int begin, const int end,
+                    const double v, const double vp, const double vn);
+
+    /*!
+     * \brief Рассчитывает показатели для фрагментов сигнала (экстремумы или переходы, фронталь сагитталь)
+     * \param chan - подканал. 0 - x, 1 - y
+     * \param fragList - список фрагментов
+     * \param factors - показатели
+     */
+    void calculateFragmentsFactors(const int chan,
+                                   QList<Fragment*> &fragList,
+                                   EvolventaFactorsDefines::FragmentFactors &factors);
+
+    /*!
+     * \brief Расчет показателей ошибки
+     */
+    void calculateErrorsFactors(const int chan, EvolventaFactorsDefines::CommonErrorsFactorValues &factors);
+
+    /*!
+     * \brief Расчет показателей с вычтенной эвольвентой
+     */
+    void calculateWEFactors();
+
+    int m_freq {50};
+    int m_timeUpwinding {0};
+    int m_timeHold {0};
+    int m_timeConvolution {0};
+
+    Stabilogram *m_stab {nullptr};                 ///< Стабилограмма
+    DecartCoordinatesSignal *m_target {nullptr};   ///< Траектория цели
+
+    ///< Фрагменты экстремумов и переходов
+    QList<Fragment*> m_extXList, m_extYList;
+    QList<Fragment*> m_brnXList, m_brnYList;
+
+    ///< Значения показателей
+    EvolventaFactorsDefines::CommonErrorsFactorValues m_ceValuesX;       ///< Общих ошибок по фронтали
+    EvolventaFactorsDefines::CommonErrorsFactorValues m_ceValuesY;       ///< Общих ошибок по сагиттали
+    EvolventaFactorsDefines::FragmentFactors m_fragExtValuesX;           ///< Фрагментов экстремумов по фронтали
+    EvolventaFactorsDefines::FragmentFactors m_fragBrnValuesX;           ///< Фрагментов переходов по фронтали
+    EvolventaFactorsDefines::FragmentFactors m_fragExtValuesY;           ///< Фрагментов экстремумов по сагиттали
+    EvolventaFactorsDefines::FragmentFactors m_fragBrnValuesY;           ///< Фрагментов переходов по сагиттали
+    EvolventaFactorsDefines::SubChannelFactorValues m_frontalValues;     ///< Фронтали
+    EvolventaFactorsDefines::SubChannelFactorValues m_sagittalValues;    ///< Сагиттали
+    EvolventaFactorsDefines::CommonFactorValues m_commonValues;          ///< Общие
+    EvolventaFactorsDefines::CorrectionsFactorValues m_motorCorrValues;  ///< Моторных коррекций
+    EvolventaFactorsDefines::CorrectionsFactorValues m_kognCorrValues;   ///< Когнитиыных коррекций
 };
 
 #endif // EVOLVENTAFACTORS_H

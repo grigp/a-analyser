@@ -9,6 +9,7 @@
 #include "resultinfo.h"
 #include "decartcoordinatessignal.h"
 #include "evolventaresultdata.h"
+#include "evolventafactors.h"
 
 EvolventaCalculator::EvolventaCalculator(const QString &testUid, QObject *parent)
     : TestCalculator (testUid, parent)
@@ -19,6 +20,8 @@ EvolventaCalculator::EvolventaCalculator(const QString &testUid, QObject *parent
 
 EvolventaCalculator::~EvolventaCalculator()
 {
+    if (m_factors)
+        delete m_factors;
     if (m_trd)
         delete m_trd;
 }
@@ -50,7 +53,7 @@ void EvolventaCalculator::calculate()
                     //! Сигналы с эвольвентой
                     auto* probe = m_trd->probe(i);
                     fillEvolventaSignal(probe);
-//                    m_factors = new CrossFactors(testUid(), pi.uid);
+                    m_factors = new EvolventaFactors(testUid(), pi.uid);
 
 //                    for (int i = 0; i < m_factors->size(); ++i)
 //                    {

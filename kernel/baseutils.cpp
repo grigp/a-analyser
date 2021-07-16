@@ -252,3 +252,17 @@ void BaseUtils::filterLowFreq(QVector<double> &buffer, const double fd, const do
 }
 
 
+
+int BaseUtils::sign(const double number)
+{
+    double num = number;
+    if (fabs(num) < 1)
+    {
+        if (num > 0)
+            num = num + 1;
+        else
+            num = num - 1;
+    }
+    int retval = static_cast<int>(num);
+    return retval / abs(retval);
+}

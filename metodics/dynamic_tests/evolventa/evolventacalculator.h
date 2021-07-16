@@ -53,7 +53,7 @@ private:
     void fillEvolventaSignal(ProbeResultInfo *pri);
 
     TestResultData* m_trd {nullptr};
-    //  EvolventaFactors *m_factors {nullptr};
+    EvolventaFactors *m_factors {nullptr};
 
     DecartCoordinatesSignal *m_frontal {nullptr};
     DecartCoordinatesSignal *m_sagittal {nullptr};
