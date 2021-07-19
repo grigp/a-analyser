@@ -9,6 +9,11 @@
 namespace BaseUtils
 {
 
+static const int NegativeValue = -1;
+static const int ZeroValue = 0;
+static const int PositiveValue = 1;
+
+
 /*!
  * \brief Константы сторон Side enum
  */
@@ -177,6 +182,14 @@ void filterLowFreq(QVector<double> &buffer,
  * Если number < 0 возвразщает -1
  */
 int sign(const double number);
+
+/*!
+ * \brief Преобразует коодинаты из декартовой ситемы в полярную
+ * \param x, y - координаты в декартовой системе
+ * \param r - радиус
+ * \param ph - угол
+ */
+void convertDecartToPolar ( const double x, const double y, double &r, double &ph);
 
 
 }

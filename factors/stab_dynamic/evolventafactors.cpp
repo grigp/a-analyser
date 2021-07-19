@@ -534,10 +534,23 @@ void EvolventaFactors::calculateErrorsFactors(const int chan, EvolventaFactorsDe
 
 void EvolventaFactors::calculateWEFactors()
 {
-    double x = 0;
-    double y = 0;
-    double tx = 0;
-    double ty = 0;
+    double x{0}, y{0};
+    double tx{0}, ty{0};
+    bool firstFC = true;                       //! Первая итерация расчета показателей
+    int posVX{0}, posVY{0};
+    int sWLenX{0}, sWLenY{0};                  //! Счетчики длительности полуволн
+    int sWCountX{0}, sWCountY{0};
+    double dAheadCur = 0;                      //! Опережение или отставание
+    int dAPlCnt{0}, dAMiCnt{0};                //! Кол-во опережений и отставаний
+    double ovx{0}, ovy{0}, ovDAC{0};           //! Предыдущие значения отклонений
+    int dirX{0}, dirY{0}, dirDAC{0};           //! Направление изменения сигнала
+    int extrIX{-1}, extrIY{-1}, extrIDAC{-1};  //! Индекс точки экстремума
+    double extrVX{0}, extrVY{0}, extrDAC{0};   //! Значение сигнала в точке экстремума
+    double timeX{0}, timeY{0}, timeDAC{0}, timeI{0};  //! Средние длительность и амплитуда
+    double amplX{0}, amplY{0}, amplDAC{0}, amplI{0};
+    int extrCntX{0}, extrCntY{0}, extrCntDAC{0};      //! Кол-во экстремумов
+    double errExtr{0};                                //! Ошибка на экстремуме
+    int zoneMotor{0}, zoneKogn{0};                    //! Кол-во полуволн для каждой зоны
 
     //! У стабилограммы и траектории цели могут быть разные размеры
     int size = qMin(m_stab->size(), m_target->size());
@@ -549,11 +562,191 @@ void EvolventaFactors::calculateWEFactors()
         tx = m_target->value(0, i);
         ty = m_target->value(1, i);
 
+        double vx = x - tx;
+        double vy = y - ty;
+
         //! На этапе удержания амплитуды
         if (i >= m_timeHold && i < m_timeConvolution)
         {
-
+            if (firstFC)
+            {
+                posVX = BaseUtils::sign(vx);
+                posVY = BaseUtils::sign(vy);
+            }
+            else
+            {
+                if (BaseUtils::sign(vx) != posVX && BaseUtils::sign(vx) != 0)
+                {
+                    m_frontalValues.interCntR = m_frontalValues.interCntR + 1;
+                    posVX = BaseUtils::sign(vx);
+                    m_frontalValues.interLenR = m_frontalValues.interLenR + (sWLenX / m_freq);
+                    ++sWCountX;
+                    sWLenX = 0;
+                }
+                else
+                    ++sWLenX;
+                if (BaseUtils::sign(vy) != posVY && BaseUtils::sign(vy) != 0)
+                {
+                    m_sagittalValues.interCntR = m_sagittalValues.interCntR + 1;
+                    posVY = BaseUtils::sign(vy);
+                    m_sagittalValues.interLenR = m_sagittalValues.interLenR + (sWLenY / m_freq);
+                    ++sWCountY;
+                    sWLenY = 0;
+                }
+                else
+                    ++sWLenY;
+            }
         }
+
+        //! Определение, опережает ли маркер цель
+        dAheadCur = getAheadValue (tx, ty, x, y);
+        m_commonValues.dAhead = m_commonValues.dAhead + dAheadCur;
+        if (dAheadCur > 0)
+            ++dAPlCnt;
+        else
+            ++dAMiCnt;
+
+        //! Амплитуда и длительность полуволны
+        if (i > 0)
+        {
+            //! Экстремум по фронтали
+            if (((vx < ovx) && (dirX = BaseUtils::PositiveValue)) ||
+                ((vx > ovx) && (dirX = BaseUtils::NegativeValue)))
+            {
+                if ((extrIX > -1) && (static_cast<double>(i - extrIX) / static_cast<double>(m_freq) >= 0.05))
+                {
+                  timeX = timeX + static_cast<double>(i - extrIX) / static_cast<double>(m_freq);
+                  amplX = amplX + fabs(vx - extrVX);
+
+                  ++extrCntX;
+                }
+
+                extrIX = i;
+                extrVX = vx;
+            }
+
+            //! Экстремум по сагиттали
+            if (((vy < ovy) && (dirY = BaseUtils::PositiveValue)) ||
+                ((vy > ovy) && (dirY = BaseUtils::NegativeValue)))
+            {
+                if ((extrIY > -1) && (static_cast<double>(i - extrIY) / static_cast<double>(m_freq) >= 0.05))
+                {
+                  timeY = timeY + static_cast<double>(i - extrIY) / static_cast<double>(m_freq);
+                  amplY = amplY + fabs(vx - extrVY);
+
+                  ++extrCntY;
+                }
+
+                extrIY = i;
+                extrVY = vy;
+            }
+
+            //! Экстремум по динамике опережения
+            if (((dAheadCur < ovDAC) && (dirDAC = BaseUtils::PositiveValue)) ||
+                ((dAheadCur > ovDAC) && (dirDAC = BaseUtils::NegativeValue)))
+            {
+              if (extrDAC > -1)
+              {
+                timeI = static_cast<double>(i - extrIDAC) / static_cast<double>(m_freq);
+                amplI = fabs(dAheadCur - extrDAC);
+                timeDAC = timeDAC + timeI;
+                amplDAC = amplDAC + amplI;
+
+                //! Ошибка на экстремуме
+                errExtr = sqrt(pow(vx, 2) + pow(vy, 2));
+
+                //! Расчет кол-ва экстремумов по зонам
+                if ((timeI >= EvolventaFactorsDefines::ZoneMotorLo) && (timeI <= EvolventaFactorsDefines::ZoneMotorHi))
+                {
+                  ++zoneMotor;
+                  m_motorCorrValues.error = m_motorCorrValues.error + errExtr;
+                  m_motorCorrValues.amplitude = m_motorCorrValues.amplitude + amplI;
+                  m_motorCorrValues.timeSumm = m_motorCorrValues.timeSumm + timeI;
+                }
+                else
+                if ((timeI >= EvolventaFactorsDefines::ZoneKognLo) && (timeI <= EvolventaFactorsDefines::ZoneKognHi))
+                {
+                  ++zoneKogn;
+                  m_kognCorrValues.error = m_kognCorrValues.error + errExtr;
+                  m_kognCorrValues.amplitude = m_kognCorrValues.amplitude + amplI;
+                  m_kognCorrValues.timeSumm = m_kognCorrValues.timeSumm + timeI;
+                }
+                ++extrCntDAC;
+              }
+
+              extrIDAC = i;
+              extrDAC = dAheadCur;
+            }
+        }
+
+        dirX = BaseUtils::sign(vx - ovx);
+        dirY = BaseUtils::sign(vy - ovy);
+        dirDAC = BaseUtils::sign(dAheadCur - ovDAC);
+        ovx = vx;
+        ovy = vy;
+        ovDAC = dAheadCur;
+        firstFC = false;
     }
+
+    if (extrCntX > 0)
+    {
+        m_frontalValues.semiWavLen = timeX / static_cast<double>(extrCntX);
+        m_frontalValues.semiWavAmpl = amplX / static_cast<double>(extrCntX);
+    }
+    if (extrCntY > 0)
+    {
+        m_sagittalValues.semiWavLen = timeY / static_cast<double>(extrCntY);
+        m_sagittalValues.semiWavAmpl = amplY / static_cast<double>(extrCntY);
+    }
+    if (extrCntDAC > 0)
+    {
+        m_commonValues.semiWavLenDAC = timeDAC / static_cast<double>(extrCntDAC);
+        m_commonValues.semiWavAmplDAC = amplDAC / static_cast<double>(extrCntDAC);
+    }
+
+    if (sWCountX > 0)
+        m_frontalValues.interLenR = m_frontalValues.interLenR / sWCountX;
+    if (sWCountY > 0)
+        m_sagittalValues.interLenR = m_sagittalValues.interLenR / sWCountY;
+    if (dAPlCnt + dAMiCnt > 0)
+        m_commonValues.dAPercent = static_cast<double>(dAPlCnt - dAMiCnt) / static_cast<double>(dAPlCnt + dAMiCnt) * 100;
+
+    m_commonValues.korrCount = extrCntDAC;
+    if (extrCntDAC > 0)
+    {
+        m_motorCorrValues.percent = static_cast<double>(zoneMotor) / static_cast<double>(extrCntDAC) * 100;
+        m_kognCorrValues.percent = static_cast<double>(zoneKogn) / static_cast<double>(extrCntDAC) * 100;
+    }
+
+    if (zoneMotor > 0)
+    {
+        m_motorCorrValues.error = m_motorCorrValues.error / static_cast<double>(zoneMotor);
+        m_motorCorrValues.amplitude = m_motorCorrValues.amplitude / static_cast<double>(zoneMotor);
+        m_motorCorrValues.timeMid = m_motorCorrValues.timeSumm / static_cast<double>(zoneMotor);
+    }
+    if (zoneKogn > 0)
+    {
+        m_kognCorrValues.error = m_kognCorrValues.error / static_cast<double>(zoneKogn);
+        m_kognCorrValues.amplitude = m_kognCorrValues.amplitude / static_cast<double>(zoneKogn);
+        m_kognCorrValues.timeMid = m_kognCorrValues.timeSumm / static_cast<double>(zoneKogn);
+    }
+    m_motorCorrValues.power = (m_motorCorrValues.timeMid - EvolventaFactorsDefines::ZoneMotorLo) * m_motorCorrValues.amplitude * zoneMotor;
+    m_kognCorrValues.power = (m_kognCorrValues.timeMid - EvolventaFactorsDefines::ZoneKognLo) * m_kognCorrValues.amplitude * zoneKogn;
+}
+
+double EvolventaFactors::getAheadValue(const double tx, const double ty, const double x, const double y) const
+{
+    double tr{0}, tph{0}, mr{0}, mph{0};
+
+    BaseUtils::convertDecartToPolar(tx, ty, tr, tph );
+    BaseUtils::convertDecartToPolar(x, y, mr, mph );
+
+    if ((tph < M_PI_4) && (mph > 7 * M_PI_4))
+        return  tph - (mph - 2 * M_PI);
+    else
+    if ((mph < M_PI_4) && (tph > 7 * M_PI_4))
+        return tph - M_PI * 2 - mph;
+    else
+        return tph - mph;
 }
 

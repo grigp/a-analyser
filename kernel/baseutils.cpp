@@ -266,3 +266,22 @@ int BaseUtils::sign(const double number)
     int retval = static_cast<int>(num);
     return retval / abs(retval);
 }
+
+void BaseUtils::convertDecartToPolar(const double x, const double y, double &r, double &ph)
+{
+    r = sqrt(pow(x, 2) + pow(y, 2));
+
+    if (x > 0 && y >= 0)
+        ph = qAtan(y/x);
+    else
+    if (x <= 0 && y > 0)
+        ph = M_PI / 2 + qAtan(fabs(x)/y);
+    else
+    if (x < 0 && y <= 0)
+        ph = M_PI + qAtan(fabs(y/x));
+    else
+    if (x >= 0 && y < 0)
+        ph = 3 * M_PI / 2 + qAtan(x/fabs(y));
+    else
+        ph = 0;
+}

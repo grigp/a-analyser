@@ -164,6 +164,12 @@ struct CorrectionsFactorValues
     double power;     ///< Мощность коррекций
 };
 
+static const double ZoneMotorLo = 0.1;   ///< dZone100160Min
+static const double ZoneMotorHi = 0.16;  ///< dZone100160Max
+static const double ZoneKognLo = 0.2;    ///< dZone200280Min
+static const double ZoneKognHi = 0.28;   ///< dZone200280Max
+
+
 }
 
 class EvolventaResultData;
@@ -250,6 +256,14 @@ private:
      * \brief Расчет показателей с вычтенной эвольвентой
      */
     void calculateWEFactors();
+
+    /*!
+     * \brief Определяет, опережает ли маркер цель
+     * \param tx, ty - координаты цели
+     * \param x, y - координаты маркера
+     * \return > 0 - маркер опережает цель, < 0 - маркер отстает от цели,  = 0 - маркер на цели
+     */
+    double getAheadValue(const double tx, const double ty, const double x, const double y) const;
 
     int m_freq {50};
     int m_timeUpwinding {0};
