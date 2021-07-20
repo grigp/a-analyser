@@ -25,6 +25,21 @@ public:
 private:
     Ui::EvolventaVisualize *ui;
 
+    /*!
+     * \brief Показывает эвольвенту
+     */
+    void showEvolventa();
+
+    /*!
+     * \brief Показывает таблицу основных показателей
+     */
+    void showMainFactorsTable();
+
+    /*!
+     * \brief Показывает таблицу показателей коррекций
+     */
+    void showKorrectionFactorsTable();
+
     EvolventaCalculator* m_calculator {nullptr};
 };
 

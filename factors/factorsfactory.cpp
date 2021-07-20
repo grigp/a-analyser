@@ -13,6 +13,7 @@
 #include "trenresultfactors.h"
 #include "crossfactors.h"
 #include "stepoffsetfactors.h"
+#include "evolventafactors.h"
 
 #include <QTimer>
 #include <QDebug>
@@ -35,6 +36,7 @@ FactorsFactory::FactorsFactory(QObject *parent) : QObject(parent)
         TrenResultFactors::registerFactors();
         CrossFactors::registerFactors();
         StepOffsetFactors::registerFactors();
+        EvolventaFactors::registerFactors();
     });
 }
 

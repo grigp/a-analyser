@@ -1,5 +1,6 @@
 #include "evolventacalculator.h"
 
+#include <QUuid>
 #include <QDebug>
 
 #include "datadefines.h"
@@ -105,6 +106,34 @@ int EvolventaCalculator::freq() const
     if (m_erData)
         return m_erData->freq();
     return 50;
+}
+
+int EvolventaCalculator::factorCount() const
+{
+    if (m_factors)
+        return m_factors->size();
+    return 0;
+}
+
+QString EvolventaCalculator::factorUid(const int id) const
+{
+    if (m_factors)
+        return m_factors->factorUid(id);
+    return QUuid().toString();
+}
+
+double EvolventaCalculator::factorValue(const int id) const
+{
+    if (m_factors)
+        return m_factors->factorValue(id);
+    return 0;
+}
+
+double EvolventaCalculator::factorValue(const QString &uid) const
+{
+    if (m_factors)
+        return m_factors->factorValue(uid);
+    return 0;
 }
 
 void EvolventaCalculator::fillEvolventaSignal(ProbeResultInfo *pri)
