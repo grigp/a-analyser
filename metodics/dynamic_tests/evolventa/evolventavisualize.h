@@ -40,6 +40,8 @@ private:
      */
     void showKorrectionFactorsTable();
 
+    void setTableSpecialStyle();
+
     EvolventaCalculator* m_calculator {nullptr};
 };
 

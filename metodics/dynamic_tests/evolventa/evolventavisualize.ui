@@ -245,7 +245,7 @@
              <number>0</number>
             </property>
             <item>
-             <widget class="QTreeView" name="tvMainFactors"/>
+             <widget class="QTreeView" name="tvEvolvMainFactors"/>
             </item>
            </layout>
           </widget>
@@ -369,7 +369,7 @@
              </widget>
             </item>
             <item>
-             <widget class="QTreeView" name="tvKorrectionFactors"/>
+             <widget class="QTreeView" name="tvEvolvKorrectionFactors"/>
             </item>
            </layout>
           </widget>

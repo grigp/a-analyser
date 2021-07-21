@@ -164,6 +164,12 @@ QTreeView#tvSteps
     font-size: 18pt;
 }
 
+QTreeView#tvEvolvMainFactors,
+QTreeView#tvEvolvKorrectionFactors
+{
+    font-size: 8pt;
+}
+
 QListView
 {
     background-color: rgb(205, 209, 214);
@@ -201,6 +207,7 @@ QHeaderView::section
     padding-left: 4px;
     border: 1px solid #6c6c6c;
 }
+
 
 QSplitter::handle:horizontal
 {

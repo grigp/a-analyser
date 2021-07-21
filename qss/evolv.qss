@@ -1,0 +1,5 @@
+QHeaderView::section
+{
+    font-size: 8pt;
+}
+

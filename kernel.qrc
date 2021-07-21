@@ -145,5 +145,6 @@
         <file>images/Unselect1.png</file>
         <file>images/Methodics/Evolventa.png</file>
         <file>images/SmileSadnees200x200.png</file>
+        <file>qss/evolv.qss</file>
     </qresource>
 </RCC>
