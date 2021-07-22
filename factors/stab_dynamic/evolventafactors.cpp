@@ -54,6 +54,14 @@ bool EvolventaFactors::isValid(const QString &testUid, const QString &probeUid)
     return de && se;
 }
 
+void showFragment(QList<Fragment*> &fragments, const QString name)
+{
+    QString s = "";
+    foreach (auto frag, fragments)
+        s = s + QString::number(frag->begin()) + ":" + QString::number(frag->end()) + " ";
+    qDebug() << name + " ) " + s;
+}
+
 void EvolventaFactors::calculate()
 {
     getMarkStages();
@@ -411,6 +419,13 @@ void EvolventaFactors::calculateFragmentsFactors(const int chan,
                                                  QList<Fragment *> &fragList,
                                                  EvolventaFactorsDefines::FragmentFactors &factors)
 {
+    factors.midErr = 0;
+    factors.crsCnt = 0;
+    factors.extrCnt = 0;
+    factors.midAmpl = 0;
+    factors.cMidErr = 0;
+    factors.cMidAmp = 0;
+
     int cf = 0;   ///< Текущий фрагмент
     bool isFrag = false;
     bool isFirstExtr = true;
@@ -534,6 +549,18 @@ void EvolventaFactors::calculateErrorsFactors(const int chan, EvolventaFactorsDe
 
 void EvolventaFactors::calculateWEFactors()
 {
+    m_frontalValues.interCntR = 0;
+    m_frontalValues.interLenR = 0;
+    m_sagittalValues.interCntR = 0;
+    m_sagittalValues.interLenR = 0;
+    m_commonValues.dAhead = 0;
+    m_motorCorrValues.error = 0;
+    m_motorCorrValues.amplitude = 0;
+    m_motorCorrValues.timeSumm = 0;
+    m_kognCorrValues.error = 0;
+    m_kognCorrValues.amplitude = 0;
+    m_kognCorrValues.timeSumm = 0;
+
     double x{0}, y{0};
     double tx{0}, ty{0};
     bool firstFC = true;                       //! Первая итерация расчета показателей
@@ -610,8 +637,8 @@ void EvolventaFactors::calculateWEFactors()
         if (i > 0)
         {
             //! Экстремум по фронтали
-            if (((vx < ovx) && (dirX = BaseUtils::PositiveValue)) ||
-                ((vx > ovx) && (dirX = BaseUtils::NegativeValue)))
+            if (((vx < ovx) && (dirX == BaseUtils::PositiveValue)) ||
+                ((vx > ovx) && (dirX == BaseUtils::NegativeValue)))
             {
                 if ((extrIX > -1) && (static_cast<double>(i - extrIX) / static_cast<double>(m_freq) >= 0.05))
                 {
@@ -626,8 +653,8 @@ void EvolventaFactors::calculateWEFactors()
             }
 
             //! Экстремум по сагиттали
-            if (((vy < ovy) && (dirY = BaseUtils::PositiveValue)) ||
-                ((vy > ovy) && (dirY = BaseUtils::NegativeValue)))
+            if (((vy < ovy) && (dirY == BaseUtils::PositiveValue)) ||
+                ((vy > ovy) && (dirY == BaseUtils::NegativeValue)))
             {
                 if ((extrIY > -1) && (static_cast<double>(i - extrIY) / static_cast<double>(m_freq) >= 0.05))
                 {
@@ -642,8 +669,8 @@ void EvolventaFactors::calculateWEFactors()
             }
 
             //! Экстремум по динамике опережения
-            if (((dAheadCur < ovDAC) && (dirDAC = BaseUtils::PositiveValue)) ||
-                ((dAheadCur > ovDAC) && (dirDAC = BaseUtils::NegativeValue)))
+            if (((dAheadCur < ovDAC) && (dirDAC == BaseUtils::PositiveValue)) ||
+                ((dAheadCur > ovDAC) && (dirDAC == BaseUtils::NegativeValue)))
             {
               if (extrDAC > -1)
               {

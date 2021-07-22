@@ -1,5 +1,9 @@
 #include "multifactor.h"
 
+#include <QDebug>
+
+#include "aanalyserapplication.h"
+
 MultiFactor::MultiFactor(QObject *parent)
     : QObject(parent)
 {
@@ -25,6 +29,13 @@ double MultiFactor::factorValue(const QString &uid) const
             return fi->value();
     }
     return 0;
+}
+
+QString MultiFactor::factorValueFormatted(const QString &uid) const
+{
+    auto val = factorValue(uid);
+    auto fi = static_cast<AAnalyserApplication*>(QApplication::instance())->getFactorInfo(uid);
+    return  QString::number(val, 'f', fi.format());
 }
 
 void MultiFactor::addFactor(const QString &uid, const double value)

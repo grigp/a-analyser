@@ -37,7 +37,7 @@ void CrossVisualize::setTest(const QString &testUid)
                 fn = fn + ", " + fi.measure();
             auto *itemName = new QStandardItem(fn);
             itemName->setEditable(false);
-            auto *itemValue = new QStandardItem(QString::number(factor->value()));
+            auto *itemValue = new QStandardItem(QString::number(factor->value(), 'f', fi.format()));
             itemValue->setEditable(false);
             model->appendRow(QList<QStandardItem*>() << itemName << itemValue);
         }

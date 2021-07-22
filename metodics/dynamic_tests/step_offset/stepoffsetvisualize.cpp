@@ -111,14 +111,14 @@ void StepOffsetVisualize::showTable()
     for (int i = 0; i < m_calculator->factorsCount() / 2; ++i)
     {
         auto factorCompUid = m_calculator->factorUid(i);
-        auto factorCompVal = m_calculator->factorValue(i);
+        auto factorCompVal = m_calculator->factorValueFormatted(factorCompUid);
         auto fiComp = static_cast<AAnalyserApplication*>(QApplication::instance())->getFactorInfo(factorCompUid);
         QString fnComp = fiComp.name();
         if (fiComp.measure() != "")
             fnComp = fnComp + ", " + fiComp.measure();
 
         auto factorRetUid = m_calculator->factorUid(m_calculator->factorsCount() / 2 + i);
-        auto factorRetVal = m_calculator->factorValue(m_calculator->factorsCount() / 2 + i);
+        auto factorRetVal = m_calculator->factorValueFormatted(factorRetUid);
         auto fiRet = static_cast<AAnalyserApplication*>(QApplication::instance())->getFactorInfo(factorRetUid);
         QString fnRet = fiRet.name();
         if (fiRet.measure() != "")
@@ -126,9 +126,9 @@ void StepOffsetVisualize::showTable()
 
         auto *itemName = new QStandardItem(fnComp);
         itemName->setEditable(false);
-        auto *itemValueComp = new QStandardItem(QString::number(factorCompVal));
+        auto *itemValueComp = new QStandardItem(factorCompVal);
         itemValueComp->setEditable(false);
-        auto *itemValueRet = new QStandardItem(QString::number(factorRetVal));
+        auto *itemValueRet = new QStandardItem(factorRetVal);
         itemValueRet->setEditable(false);
         model->appendRow(QList<QStandardItem*>() << itemName << itemValueComp << itemValueRet);
     }

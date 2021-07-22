@@ -49,6 +49,12 @@ public:
      */
     double factorValue(const QString &uid) const;
 
+    /*!
+     * \brief Возвращает форматированное значение показателя в строковом виде по uid показателя
+     * \param uid - uid показателя
+     */
+    QString factorValueFormatted(const QString &uid) const;
+
 signals:
 
 public slots:

@@ -165,3 +165,10 @@ double StepOffsetCalculator::factorValue(const QString &uid) const
         return m_factors->factorValue(uid);
     return 0;
 }
+
+QString StepOffsetCalculator::factorValueFormatted(const QString &uid) const
+{
+    if (m_factors)
+        return m_factors->factorValueFormatted(uid);
+    return QString("0");
+}

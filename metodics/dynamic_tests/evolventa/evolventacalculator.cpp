@@ -136,6 +136,13 @@ double EvolventaCalculator::factorValue(const QString &uid) const
     return 0;
 }
 
+QString EvolventaCalculator::factorValueFormatted(const QString &uid) const
+{
+    if (m_factors)
+        return  m_factors->factorValueFormatted(uid);
+    return QString("0");
+}
+
 void EvolventaCalculator::fillEvolventaSignal(ProbeResultInfo *pri)
 {
     auto *sigStab = pri->signal(ChannelsDefines::chanStab);

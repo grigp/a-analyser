@@ -289,6 +289,7 @@ private:
     EvolventaFactorsDefines::CommonFactorValues m_commonValues;          ///< Общие
     EvolventaFactorsDefines::CorrectionsFactorValues m_motorCorrValues;  ///< Моторных коррекций
     EvolventaFactorsDefines::CorrectionsFactorValues m_kognCorrValues;   ///< Когнитиыных коррекций
+
 };
 
 #endif // EVOLVENTAFACTORS_H

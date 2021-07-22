@@ -42,6 +42,11 @@ private:
 
     void setTableSpecialStyle();
 
+    /*!
+     * \brief Показывает показатели без таблиц
+     */
+    void showWithoutTableFactors();
+
     EvolventaCalculator* m_calculator {nullptr};
 };
 

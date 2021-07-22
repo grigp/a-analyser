@@ -89,13 +89,13 @@ void CrossFactors::registerFactors()
                            tr("Площадь зоны перермещения"), tr("SZone"), tr("кв.мм"), 0, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(CrossFactorsDefines::UDUid, CrossFactorsDefines::GroupUid,
-                           tr("Отношение вперед / назад"), tr("Up/Dn"), tr(""), 0, 3, FactorsDefines::nsDual, 12);
+                           tr("Отношение вперед / назад"), tr("Up/Dn"), tr(""), 2, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(CrossFactorsDefines::RLUid, CrossFactorsDefines::GroupUid,
-                           tr("Отношение вправо / влево"), tr("Rt/Lf"), tr(""), 0, 3, FactorsDefines::nsDual, 12);
+                           tr("Отношение вправо / влево"), tr("Rt/Lf"), tr(""), 2, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(CrossFactorsDefines::SFUid, CrossFactorsDefines::GroupUid,
-                           tr("Отношение сагитталь / фронталь"), tr("Sg/Fr"), tr(""), 0, 3, FactorsDefines::nsDual, 12);
+                           tr("Отношение сагитталь / фронталь"), tr("Sg/Fr"), tr(""), 2, 3, FactorsDefines::nsDual, 12);
 }
 
 int CrossFactors::diap() const

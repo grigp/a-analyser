@@ -77,6 +77,7 @@ void EvolventaVisualize::setTest(const QString &testUid)
         showEvolventa();
         showMainFactorsTable();
         showKorrectionFactorsTable();
+        showWithoutTableFactors();
     }
 
     setTableSpecialStyle();
@@ -118,9 +119,9 @@ void EvolventaVisualize::showMainFactorsTable()
             fn = fn + ", " + fi.measure();
         auto *itemName = new QStandardItem(fn);
         itemName->setEditable(false);
-        auto *itemX = new QStandardItem(QString::number(m_calculator->factorValue(uidFctX)));
+        auto *itemX = new QStandardItem(m_calculator->factorValueFormatted(uidFctX));
         itemX->setEditable(false);
-        auto *itemY = new QStandardItem(QString::number(m_calculator->factorValue(uidFctY)));
+        auto *itemY = new QStandardItem(m_calculator->factorValueFormatted(uidFctY));
         itemY->setEditable(false);
         model->appendRow(QList<QStandardItem*>() << itemName << itemX << itemY);
 
@@ -146,9 +147,9 @@ void EvolventaVisualize::showKorrectionFactorsTable()
             fn = fn + ", " + fi.measure();
         auto *itemName = new QStandardItem(fn);
         itemName->setEditable(false);
-        auto *itemM = new QStandardItem(QString::number(m_calculator->factorValue(uidFctM)));
+        auto *itemM = new QStandardItem(m_calculator->factorValueFormatted(uidFctM));
         itemM->setEditable(false);
-        auto *itemK = new QStandardItem(QString::number(m_calculator->factorValue(uidFctK)));
+        auto *itemK = new QStandardItem(m_calculator->factorValueFormatted(uidFctK));
         itemK->setEditable(false);
         model->appendRow(QList<QStandardItem*>() << itemName << itemM << itemK);
 
@@ -211,4 +212,18 @@ void EvolventaVisualize::setTableSpecialStyle()
     ui->tvEvolvMainFactors->setStyleSheet(ba);
     ui->tvEvolvKorrectionFactors->setStyleSheet(ba);
     styleSheet.close();
+}
+
+void EvolventaVisualize::showWithoutTableFactors()
+{
+    auto valKorCount = m_calculator->factorValueFormatted(EvolventaFactorsDefines::KorrCount);
+    ui->lblCorrectionsCount->setText(tr("Общее количество коррекций") + " - " + valKorCount);
+
+    auto valOrv = m_calculator->factorValueFormatted(EvolventaFactorsDefines::DAPercent);
+    ui->lblOutrunningValue->setText(tr("Опережение маркера цели") + " " + valOrv + "%");
+
+    auto valPM = m_calculator->factorValue(EvolventaFactorsDefines::CorrectionsMotor::Power);
+    auto valPK = m_calculator->factorValue(EvolventaFactorsDefines::CorrectionsKognitive::Power);
+    auto valCdv = (valPK - valPM) / (valPK + valPM) * 100;
+    ui->lblCorrectionDominanceValue->setText(tr("Преобладание коррекций") + " " + QString::number(valCdv, 'f', 0) + "%");
 }
