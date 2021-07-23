@@ -151,6 +151,13 @@ void setColoredPicture(QPixmap &pixmap, const QColor &color);
 void modelToMSExcel(const QAbstractItemModel* model, const QString &fileName);
 
 /*!
+ * \brief modelToText Записывает данные табличной модели в текстовый файл
+ * \param model - указатель на модель
+ * \param fileName - имя файла csv
+ */
+void modelToText(const QAbstractItemModel* model, const QString &fileName);
+
+/*!
  * \brief Типы фильтров ФНЧ FilterKind enum
  */
 enum FilterKind
@@ -190,6 +197,23 @@ int sign(const double number);
  * \param ph - угол
  */
 void convertDecartToPolar ( const double x, const double y, double &r, double &ph);
+
+/*!
+ * \brief Возвращает текст резюме к преобладанию коррекций
+ * \param cdv - значение параметра преобладания
+ * \param resume - возвращаемый текст резюме
+ * \param resumeColor - цвет текста резюме
+ */
+void setCorrectionsDominanceResume(const double cdv, QString &resume, QString &resumeColor);
+
+/*!
+ * \brief Возвращает текст резюме к опережению маркера
+ * \param orv - значение параметра преобладания
+ * \param resume - возвращаемый текст резюме
+ * \param resumeColor - цвет текста резюме
+ */
+void setOutrunningResume(const double orv, QString &resume, QString &resumeColor);
+
 
 
 }

@@ -22,6 +22,17 @@ public:
 
     void setTest(const QString &testUid);
 
+private slots:
+    /*!
+     * \brief Сохраняет таблицу показателей коррекций
+     */
+    void saveFactorsCorrections();
+
+    /*!
+     * \brief Сохраняет эвольвенту
+     */
+    void saveEvolventa();
+
 private:
     Ui::EvolventaVisualize *ui;
 

@@ -167,6 +167,33 @@ void BaseUtils::modelToMSExcel(const QAbstractItemModel *model, const QString &f
     }
 }
 
+void BaseUtils::modelToText(const QAbstractItemModel *model, const QString &fileName)
+{
+    QFile file(fileName);
+    if (file.open(QIODevice::WriteOnly))
+    {
+        QTextStream ts(&file);
+        QStringList sl;
+
+        sl.clear();
+        for (int j = 0; j < model->columnCount(); ++j)
+            sl << enterToSpace(model->headerData(j, Qt::Horizontal).toString());
+        ts << sl.join("         ") + "\n";
+
+        for (int i = 0; i < model->rowCount(); ++i)
+        {
+            sl.clear();
+
+            for (int j = 0; j < model->columnCount(); ++j)
+                sl << model->index(i, j).data(Qt::DisplayRole).toString();
+
+            ts << sl.join("        ") + "\n";
+        }
+
+        file.close();
+    }
+}
+
 double getCoef1(const BaseUtils::FilterKind tf)
 {
     switch (tf) {
@@ -285,3 +312,72 @@ void BaseUtils::convertDecartToPolar(const double x, const double y, double &r, 
     else
         ph = 0;
 }
+
+void BaseUtils::setCorrectionsDominanceResume(const double cdv, QString &resume, QString &resumeColor)
+{
+    QString korr = "";
+    resumeColor = "color: rgb(100, 100, 100)";
+    if (fabs(cdv) <= 10)
+        resumeColor = "color: rgb(32, 88, 103)";
+    else
+    if ((fabs(cdv) > 10) && (fabs(cdv) <= 30))
+    {
+        korr = QCoreApplication::tr("незначительно");
+        resumeColor = "color: rgb(0, 150, 0)";
+    }
+    else
+    if ((fabs(cdv) > 30) && (fabs(cdv) <= 50))
+    {
+        korr = QCoreApplication::tr("умеренно");
+        resumeColor = "color: rgb(150, 150, 0)";
+    }
+    else
+    {
+        korr = QCoreApplication::tr("выражено");
+        resumeColor = "color: rgb(150, 0, 0)";
+    }
+
+    resume = "";
+    if (cdv > 10)
+        resume = QCoreApplication::tr("Преобладание когнитивных коррекций") + ' ' + korr;
+    else
+    if (cdv < -10)
+      resume = QCoreApplication::tr("Преобладание моторных коррекций") + ' ' + korr;
+    else
+      resume = QCoreApplication::tr("Нет преобладания типа коррекции");
+}
+
+void BaseUtils::setOutrunningResume(const double orv, QString &resume, QString &resumeColor)
+{
+    QString rate = "";
+    resumeColor = "color: rgb(100, 100, 100)";
+    if (fabs(orv) <= 10)
+        resumeColor = "color: rgb(32, 88, 103)";
+    else
+    if ((fabs(orv) > 10) && (fabs(orv) <= 30))
+    {
+        rate = QCoreApplication::tr("незначительно");
+        resumeColor = "color: rgb(0, 150, 0)";
+    }
+    else
+    if ((fabs(orv) > 30) && (fabs(orv) <= 50))
+    {
+        rate = QCoreApplication::tr("умеренно");
+        resumeColor = "color: rgb(150, 150, 0)";
+    }
+    else
+    {
+        rate = QCoreApplication::tr("выражено");
+        resumeColor = "color: rgb(150, 0, 0)";
+    }
+
+    resume = "";
+    if (orv > 10)
+        resume = QCoreApplication::tr("Маркер опережает цель") + ' ' + rate;
+    else
+    if (orv < -10)
+      resume = QCoreApplication::tr("Маркер отстает от цели") + ' ' + rate;
+    else
+      resume = QCoreApplication::tr("Маркер на цели");
+}
+

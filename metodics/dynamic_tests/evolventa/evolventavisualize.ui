@@ -371,6 +371,20 @@
             <item>
              <widget class="QTreeView" name="tvEvolvKorrectionFactors"/>
             </item>
+            <item>
+             <widget class="QLabel" name="lblSemiWaveLen">
+              <property name="text">
+               <string>Длительность полуволны при опережении 0 сек</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="lblSemiWaveAmpl">
+              <property name="text">
+               <string>Амплитуда полуволны при опережении 0 мм</string>
+              </property>
+             </widget>
+            </item>
            </layout>
           </widget>
          </item>
@@ -414,7 +428,7 @@
           <number>2</number>
          </property>
          <item>
-          <widget class="QFrame" name="frOutrunningText">
+          <widget class="DualStateDiagram" name="wgtOutrunningDiag" native="true">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
              <horstretch>0</horstretch>
@@ -430,6 +444,28 @@
            <property name="maximumSize">
             <size>
              <width>300</width>
+             <height>16777215</height>
+            </size>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QFrame" name="frOutrunningText">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>16777215</width>
              <height>16777215</height>
             </size>
            </property>
@@ -473,28 +509,6 @@
           </widget>
          </item>
          <item>
-          <widget class="DualStateDiagram" name="wgtOutrunningDiag" native="true">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="minimumSize">
-            <size>
-             <width>300</width>
-             <height>0</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>300</width>
-             <height>16777215</height>
-            </size>
-           </property>
-          </widget>
-         </item>
-         <item>
           <spacer name="horizontalSpacer">
            <property name="orientation">
             <enum>Qt::Horizontal</enum>
@@ -508,7 +522,7 @@
           </spacer>
          </item>
          <item>
-          <widget class="QPushButton" name="btnSave">
+          <widget class="QPushButton" name="btnSaveEvolvent">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
              <horstretch>0</horstretch>
@@ -564,10 +578,10 @@
           <number>1</number>
          </property>
          <item>
-          <widget class="QFrame" name="frCorrectionDominanceText">
+          <widget class="DualStateDiagram" name="wgtCorrectionDominanceDiag" native="true">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-             <horstretch>0</horstretch>
+             <horstretch>30</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
            </property>
@@ -577,9 +591,25 @@
              <height>0</height>
             </size>
            </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QFrame" name="frCorrectionDominanceText">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>0</height>
+            </size>
+           </property>
            <property name="maximumSize">
             <size>
-             <width>300</width>
+             <width>16777215</width>
              <height>16777215</height>
             </size>
            </property>
@@ -623,22 +653,6 @@
           </widget>
          </item>
          <item>
-          <widget class="DualStateDiagram" name="wgtCorrectionDominanceDiag" native="true">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-             <horstretch>30</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="minimumSize">
-            <size>
-             <width>300</width>
-             <height>0</height>
-            </size>
-           </property>
-          </widget>
-         </item>
-         <item>
           <widget class="QFrame" name="frCorrectionDominanceFactorsAdv">
            <property name="frameShape">
             <enum>QFrame::StyledPanel</enum>
@@ -662,20 +676,6 @@
             <property name="bottomMargin">
              <number>1</number>
             </property>
-            <item>
-             <widget class="QLabel" name="lblSemiWaveLen">
-              <property name="text">
-               <string>Длительность полуволны при опережении 0 сек</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QLabel" name="lblSemiWaveAmpl">
-              <property name="text">
-               <string>Амплитуда полуволны при опережении 0 мм</string>
-              </property>
-             </widget>
-            </item>
            </layout>
           </widget>
          </item>
@@ -702,20 +702,57 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>AreaGraph</class>
-   <extends>QWidget</extends>
-   <header location="global">areagraph.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
    <class>DualStateDiagram</class>
    <extends>QWidget</extends>
    <header location="global">dualstatediagram.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>AreaGraph</class>
+   <extends>QWidget</extends>
+   <header location="global">areagraph.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
  <resources>
   <include location="../../../kernel.qrc"/>
  </resources>
- <connections/>
+ <connections>
+  <connection>
+   <sender>btnSaveFactors</sender>
+   <signal>clicked()</signal>
+   <receiver>EvolventaVisualize</receiver>
+   <slot>saveFactorsCorrections()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1100</x>
+     <y>312</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1127</x>
+     <y>213</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btnSaveEvolvent</sender>
+   <signal>clicked()</signal>
+   <receiver>EvolventaVisualize</receiver>
+   <slot>saveEvolventa()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1100</x>
+     <y>590</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1128</x>
+     <y>563</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>saveFactorsCorrections()</slot>
+  <slot>saveEvolventa()</slot>
+ </slots>
 </ui>

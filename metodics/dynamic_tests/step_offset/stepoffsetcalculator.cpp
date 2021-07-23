@@ -10,7 +10,7 @@
 
 namespace
 {
-  QSet<QString> PrimaryFactors =
+  QSet<QString> PrimaryFactors =   ///:TODO QSet заменить на QList
   {
         QString(StepOffsetFactorsDefines::Compensation::ReactionTimeUid)
       , QString(StepOffsetFactorsDefines::Compensation::ReactionTimeUid)
@@ -52,7 +52,7 @@ void StepOffsetCalculator::calculate()
                 {
                     m_factors = new StepOffsetFactors(testUid(), pi.uid);
 
-                    //! Добавление приоритетных показателей
+                    //! Добавление первичных показателей
                     foreach (auto uid, PrimaryFactors)
                         addPrimaryFactor(testUid(), uid, m_factors->factorValue(uid),
                                          0, ChannelsDefines::chanStab, pi.name);

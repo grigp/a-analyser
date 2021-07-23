@@ -2,6 +2,7 @@
 #include "ui_evolventavisualize.h"
 
 #include <QStandardItemModel>
+#include <QFileDialog>
 #include <QDebug>
 
 #include "aanalyserapplication.h"
@@ -81,6 +82,58 @@ void EvolventaVisualize::setTest(const QString &testUid)
     }
 
     setTableSpecialStyle();
+}
+
+void EvolventaVisualize::saveFactorsCorrections()
+{
+    QString path = DataDefines::aanalyserDocumentsPath();
+    auto fileName = QFileDialog::getSaveFileName(this,
+                                                 tr("Файл для экспорта таблицы"),
+                                                 path,
+                                                 tr("Файлы с разделенными значениями *.csv (*.csv)"));
+    if (fileName != "")
+        BaseUtils::modelToText(ui->tvEvolvKorrectionFactors->model(), fileName);
+}
+
+void EvolventaVisualize::saveEvolventa()
+{
+    QString path = DataDefines::aanalyserDocumentsPath();
+    auto fileName = QFileDialog::getSaveFileName(this,
+                                                 tr("Файл для экспорта эвольвенты"),
+                                                 path,
+                                                 tr("текстовые файлы *.txt (*.txt)"));
+    if (fileName != "")
+    {
+        QFile file(fileName);
+        if (file.open(QIODevice::WriteOnly))
+        {
+            QTextStream ts(&file);
+            QStringList sl;
+
+            sl.clear();
+            sl << "Stab_X" << "Stab_Y" << "Evolv_X" << "Evolv_Y";
+            ts << sl.join("             ") + "\n";
+
+            int size = m_calculator->frontal()->size();
+            if (m_calculator->sagittal()->size() < size)
+                size = m_calculator->sagittal()->size();
+
+            for (int i = 0; i < size; ++i)
+            {
+                double x = m_calculator->frontal()->value(0, i);
+                double tx = m_calculator->frontal()->value(1, i);
+                double y = m_calculator->sagittal()->value(0, i);
+                double ty = m_calculator->sagittal()->value(1, i);
+
+                sl.clear();
+                sl << QString::number(x) << QString::number(y) << QString::number(tx) << QString::number(ty);
+                ts << sl.join("             ") + "\n";
+            }
+
+
+            file.close();
+        }
+    }
 }
 
 void EvolventaVisualize::showEvolventa()
@@ -219,11 +272,32 @@ void EvolventaVisualize::showWithoutTableFactors()
     auto valKorCount = m_calculator->factorValueFormatted(EvolventaFactorsDefines::KorrCount);
     ui->lblCorrectionsCount->setText(tr("Общее количество коррекций") + " - " + valKorCount);
 
-    auto valOrv = m_calculator->factorValueFormatted(EvolventaFactorsDefines::DAPercent);
-    ui->lblOutrunningValue->setText(tr("Опережение маркера цели") + " " + valOrv + "%");
+    auto valOrvF = m_calculator->factorValueFormatted(EvolventaFactorsDefines::DAPercent);
+    auto valOrv = m_calculator->factorValue(EvolventaFactorsDefines::DAPercent);
+    ui->lblOutrunningValue->setText(tr("Опережение маркера цели") + " " + valOrvF + "%");
+    ui->wgtOutrunningDiag->setValue(valOrv);
+    QString resume = "";
+    QString resumeColor = "";
+    BaseUtils::setOutrunningResume(valOrv, resume, resumeColor);
+    ui->lblOutrunningResume->setText(resume);
+    ui->lblOutrunningResume->setStyleSheet(resumeColor);
 
     auto valPM = m_calculator->factorValue(EvolventaFactorsDefines::CorrectionsMotor::Power);
     auto valPK = m_calculator->factorValue(EvolventaFactorsDefines::CorrectionsKognitive::Power);
     auto valCdv = (valPK - valPM) / (valPK + valPM) * 100;
     ui->lblCorrectionDominanceValue->setText(tr("Преобладание коррекций") + " " + QString::number(valCdv, 'f', 0) + "%");
+    ui->wgtCorrectionDominanceDiag->setValue(valCdv);
+    resume = "";
+    resumeColor = "";
+    BaseUtils::setCorrectionsDominanceResume(valCdv, resume, resumeColor);
+    ui->lblCorrectionDominanceResume->setText(resume);
+    ui->lblCorrectionDominanceResume->setStyleSheet(resumeColor);
+
+    auto valSvl = m_calculator->factorValueFormatted(EvolventaFactorsDefines::SemiWavLenDAC);
+    ui->lblSemiWaveLen->setText(tr("Длительность полуволны при опережении") + " " + valSvl + " " + tr("сек"));
+    ui->lblSemiWaveLen->setStyleSheet("font-size: 8pt;");
+    auto valSva = m_calculator->factorValueFormatted(EvolventaFactorsDefines::SemiWavAmplDAC);
+    ui->lblSemiWaveAmpl->setText(tr("Амплитуда полуволны при опережении") + " " + valSva + " " + tr("мм"));
+    ui->lblSemiWaveAmpl->setStyleSheet("font-size: 8pt;");
 }
+

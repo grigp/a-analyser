@@ -12,6 +12,24 @@
 #include "evolventaresultdata.h"
 #include "evolventafactors.h"
 
+
+namespace
+{
+  QSet<QString> PrimaryFactors =  ///:TODO QSet заменить на QList
+  {
+        QString(EvolventaFactorsDefines::CommonErrorsFrontal::SummErr)
+      , QString(EvolventaFactorsDefines::CommonErrorsSagittal::SummErr)
+      , QString(EvolventaFactorsDefines::CommonErrorsFrontal::MidErr)
+      , QString(EvolventaFactorsDefines::CommonErrorsSagittal::MidErr)
+      , QString(EvolventaFactorsDefines::CorrectionsMotor::Percent)
+      , QString(EvolventaFactorsDefines::CorrectionsKognitive::Percent)
+      , QString(EvolventaFactorsDefines::CorrectionsMotor::Power)
+      , QString(EvolventaFactorsDefines::CorrectionsKognitive::Power)
+      , QString(EvolventaFactorsDefines::DAPercent)
+  };
+
+}
+
 EvolventaCalculator::EvolventaCalculator(const QString &testUid, QObject *parent)
     : TestCalculator (testUid, parent)
     , m_trd(new TestResultData())
@@ -56,12 +74,10 @@ void EvolventaCalculator::calculate()
                     fillEvolventaSignal(probe);
                     m_factors = new EvolventaFactors(testUid(), pi.uid);
 
-//                    for (int i = 0; i < m_factors->size(); ++i)
-//                    {
-//                        addPrimaryFactor(testUid(), m_factors->factorUid(i),
-//                                         m_factors->factorValue(m_factors->factorUid(i)),
-//                                         0, ChannelsDefines::chanStab, pi.name);
-//                    }
+                    //! Добавление первичных показателей
+                    foreach (auto uid, PrimaryFactors)
+                        addPrimaryFactor(testUid(), uid, m_factors->factorValue(uid),
+                                         0, ChannelsDefines::chanStab, pi.name);
                 }
             }
         }
