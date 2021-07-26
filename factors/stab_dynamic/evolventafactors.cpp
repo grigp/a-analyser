@@ -119,6 +119,7 @@ void EvolventaFactors::calculate()
     addFactor(EvolventaFactorsDefines::SemiWavLenDAC, m_commonValues.semiWavLenDAC);
     addFactor(EvolventaFactorsDefines::SemiWavAmplDAC, m_commonValues.semiWavAmplDAC);
     addFactor(EvolventaFactorsDefines::KorrCount, m_commonValues.korrCount);
+    addFactor(EvolventaFactorsDefines::KorrDominance, m_commonValues.korrDominance);
 
     addFactor(EvolventaFactorsDefines::CorrectionsMotor::Percent, m_motorCorrValues.percent);
     addFactor(EvolventaFactorsDefines::CorrectionsMotor::Error, m_motorCorrValues.error);
@@ -281,6 +282,9 @@ void EvolventaFactors::registerFactors()
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(EvolventaFactorsDefines::KorrCount, EvolventaFactorsDefines::GroupUid,
                            tr("Общее количество коррекций"), tr("CorrCount"), tr(""), 0, 3, FactorsDefines::nsDual, 12);
+    static_cast<AAnalyserApplication*>(QApplication::instance())->
+            registerFactor(EvolventaFactorsDefines::KorrDominance, EvolventaFactorsDefines::GroupUid,
+                           tr("Преобладание коррекций"), tr("CorrDominance"), tr(""), 0, 3, FactorsDefines::nsDual, 12);
 
     ///<---------------------------------------------------------------------------
     ///< Моторные коррекции
@@ -759,6 +763,11 @@ void EvolventaFactors::calculateWEFactors()
     }
     m_motorCorrValues.power = (m_motorCorrValues.timeMid - EvolventaFactorsDefines::ZoneMotorLo) * m_motorCorrValues.amplitude * zoneMotor;
     m_kognCorrValues.power = (m_kognCorrValues.timeMid - EvolventaFactorsDefines::ZoneKognLo) * m_kognCorrValues.amplitude * zoneKogn;
+    if (m_kognCorrValues.power + m_motorCorrValues.power > 0)
+        m_commonValues.korrDominance = (m_kognCorrValues.power - m_motorCorrValues.power) /
+                                       (m_kognCorrValues.power + m_motorCorrValues.power) * 100;
+    else
+        m_commonValues.korrDominance = 0;
 }
 
 double EvolventaFactors::getAheadValue(const double tx, const double ty, const double x, const double y) const

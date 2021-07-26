@@ -25,6 +25,7 @@ namespace
       , QString(EvolventaFactorsDefines::CorrectionsKognitive::Percent)
       , QString(EvolventaFactorsDefines::CorrectionsMotor::Power)
       , QString(EvolventaFactorsDefines::CorrectionsKognitive::Power)
+      , QString(EvolventaFactorsDefines::KorrDominance)
       , QString(EvolventaFactorsDefines::DAPercent)
   };
 

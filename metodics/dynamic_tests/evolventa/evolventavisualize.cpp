@@ -213,50 +213,6 @@ void EvolventaVisualize::showKorrectionFactorsTable()
     ui->tvEvolvKorrectionFactors->header()->resizeSection(0, 200);
 }
 
-//void EvolventaVisualize::showKorrectionFactorsTable()
-//{
-//    auto *model = new QStandardItemModel(ui->tvEvolvKorrectionFactors);
-
-//    QStringList header;
-//    QList<QStandardItem*> itemsMC;
-//    QList<QStandardItem*> itemsKC;
-
-//    auto *itemNameM = new QStandardItem(tr("100 - 160 мс"));
-//    itemNameM->setEditable(false);
-//    itemsMC << itemNameM;
-//    auto *itemNameK = new QStandardItem(tr("200 - 280 мс"));
-//    itemNameK->setEditable(false);
-//    itemsKC << itemNameK;
-//    header << tr("длительность");
-
-//    foreach (auto uids, FactorsKorrect)
-//    {
-//        auto uidFctM = uids.first;
-//        auto uidFctK = uids.second;
-
-//        auto fi = static_cast<AAnalyserApplication*>(QApplication::instance())->getFactorInfo(uidFctM);
-//        QString fn = fi.name();
-//        if (fi.measure() != "")
-//            fn = fn + ", " + fi.measure();
-//        header << fn;
-
-//        auto *itemM = new QStandardItem(QString::number(m_calculator->factorValue(uidFctM)));
-//        itemM->setEditable(false);
-//        auto *itemK = new QStandardItem(QString::number(m_calculator->factorValue(uidFctK)));
-//        itemK->setEditable(false);
-
-//        itemsMC << itemM;
-//        itemsKC << itemK;
-//    }
-
-//    model->appendRow(itemsMC);
-//    model->appendRow(itemsKC);
-//    model->setHorizontalHeaderLabels(header);
-//    ui->tvEvolvKorrectionFactors->setModel(model);
-//    for (int i = 0; i < header.size(); ++i)
-//        ui->tvEvolvMainFactors->header()->resizeSection(i, 70);
-//}
-
 void EvolventaVisualize::setTableSpecialStyle()
 {
     QFile styleSheet(":/qss/evolv.qss");
@@ -282,14 +238,12 @@ void EvolventaVisualize::showWithoutTableFactors()
     ui->lblOutrunningResume->setText(resume);
     ui->lblOutrunningResume->setStyleSheet(resumeColor);
 
-    auto valPM = m_calculator->factorValue(EvolventaFactorsDefines::CorrectionsMotor::Power);
-    auto valPK = m_calculator->factorValue(EvolventaFactorsDefines::CorrectionsKognitive::Power);
-    auto valCdv = (valPK - valPM) / (valPK + valPM) * 100;
-    ui->lblCorrectionDominanceValue->setText(tr("Преобладание коррекций") + " " + QString::number(valCdv, 'f', 0) + "%");
-    ui->wgtCorrectionDominanceDiag->setValue(valCdv);
+    auto valCD = m_calculator->factorValue(EvolventaFactorsDefines::KorrDominance);
+    ui->lblCorrectionDominanceValue->setText(tr("Преобладание коррекций") + " " + QString::number(valCD, 'f', 0) + "%");
+    ui->wgtCorrectionDominanceDiag->setValue(valCD);
     resume = "";
     resumeColor = "";
-    BaseUtils::setCorrectionsDominanceResume(valCdv, resume, resumeColor);
+    BaseUtils::setCorrectionsDominanceResume(valCD, resume, resumeColor);
     ui->lblCorrectionDominanceResume->setText(resume);
     ui->lblCorrectionDominanceResume->setStyleSheet(resumeColor);
 

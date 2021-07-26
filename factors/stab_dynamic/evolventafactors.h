@@ -81,6 +81,7 @@ static const QString DAhead         = "{45B4A53C-F917-46FE-9FBD-0229756F1193}"; 
 static const QString SemiWavLenDAC  = "{48054FEF-E300-441B-A7EC-C5AFD6AE1B7D}"; ///< Длительность полуволны при опережении
 static const QString SemiWavAmplDAC = "{D910A2f5-3E4A-4BA0-B37C-57CB2781EC42}"; ///< Амплитуда полуволны при опережении
 static const QString KorrCount      = "{81E931D0-0FE2-490F-898B-CEE3F0C8630E}"; ///< Общее количество коррекций
+static const QString KorrDominance  = "{111E79D2-F723-4588-9C1A-A6C8FF40ED88}"; ///< Преобладание коррекций
 
 namespace CorrectionsMotor
 {
@@ -149,6 +150,7 @@ struct CommonFactorValues
     double semiWavLenDAC;  ///< Длительность полуволны при опережении
     double semiWavAmplDAC; ///< Амплитуда полуволны при опережении
     double korrCount;      ///< Общее количество коррекций
+    double korrDominance;  ///< Преобладание коррекций
 };
 
 /*!
