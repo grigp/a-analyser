@@ -38,8 +38,8 @@ class DynamicDiagram : public QWidget
     Q_OBJECT
 
 public:
-    explicit DynamicDiagram(QWidget *parent = 0);
-    ~DynamicDiagram();
+    explicit DynamicDiagram(QWidget *parent = nullptr);
+    ~DynamicDiagram() override;
 
     ///< Вид динамики
     enum Kind

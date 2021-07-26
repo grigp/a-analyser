@@ -10,7 +10,7 @@
 
 namespace
 {
-  QSet<QString> PrimaryFactors =   ///:TODO QSet заменить на QList
+  QList<QString> PrimaryFactors =
   {
         QString(StepOffsetFactorsDefines::Compensation::ReactionTimeUid)
       , QString(StepOffsetFactorsDefines::Compensation::ReactionTimeUid)

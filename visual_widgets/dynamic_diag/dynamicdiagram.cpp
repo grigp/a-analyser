@@ -182,7 +182,7 @@ void DynamicDiagram::paintEvent(QPaintEvent *event)
     double prop = 0;
     if (max > min)
         prop = (geometry().height() - m_axisSpaceBottom - m_titleHeight - 3) / (max - min);
-    int zeroY = geometry().height() - m_axisSpaceBottom - (0 - min) * prop;
+    int zeroY = geometry().height() - m_axisSpaceBottom - static_cast<int>((0 - min) * prop);
 
     //! Фон
     painter.setBrush(QBrush(m_backgroundColor, Qt::SolidPattern));
@@ -218,12 +218,12 @@ void DynamicDiagram::paintEvent(QPaintEvent *event)
     int oy = -1;
     for (int i = 0; i < m_items.size(); ++i)
     {
-        int xv = m_axisSpaceLeft + (i + 1) * m_sizeH;
-        int yv = geometry().height() - m_axisSpaceBottom - (m_items.at(i)->value() - min) * prop;
+        int xv = m_axisSpaceLeft + static_cast<int>((i + 1) * m_sizeH);
+        int yv = geometry().height() - m_axisSpaceBottom - static_cast<int>((m_items.at(i)->value() - min) * prop);
         if (m_kind == KindBar)
         {
-            int x = xv - m_sizeH / 10;
-            int w = m_sizeH / 5;
+            int x = xv - static_cast<int>(m_sizeH / 10);
+            int w = static_cast<int>(m_sizeH / 5);
             int y = zeroY;
             int h = 0;
             if (m_items.at(i)->value() > 0)
@@ -288,10 +288,10 @@ void DynamicDiagram::paintEvent(QPaintEvent *event)
                     painter.drawPolygon(points, 4);
                 }
             }
-            //! Вертикальный отстчет
+            //! Вертикальный отсчет
             painter.setPen(QPen(m_titleColor, 1, Qt::DotLine, Qt::FlatCap));
             painter.drawLine(xv, geometry().height() - m_axisSpaceBottom,
-                             xv, geometry().height() - m_axisSpaceBottom - (max - min) * prop);
+                             xv, geometry().height() - m_axisSpaceBottom - static_cast<int>((max - min) * prop));
 
             if (i == m_selectItem)
             {
@@ -299,7 +299,7 @@ void DynamicDiagram::paintEvent(QPaintEvent *event)
                 {
                     painter.setPen(QPen(m_selectItemColor, 3, Qt::SolidLine, Qt::FlatCap));
                     painter.drawLine(xv, geometry().height() - m_axisSpaceBottom,
-                                     xv, geometry().height() - m_axisSpaceBottom - (max - min) * prop);
+                                     xv, geometry().height() - static_cast<int>(m_axisSpaceBottom - (max - min) * prop));
                 }
                 else
                 if (m_volume == Volume3D)
@@ -308,8 +308,8 @@ void DynamicDiagram::paintEvent(QPaintEvent *event)
                     painter.setPen(QPen(m_titleColor, 1, Qt::SolidLine, Qt::FlatCap));
                     QPoint points[4] = {
                         QPoint(xv, geometry().height() - m_axisSpaceBottom),
-                        QPoint(xv, geometry().height() - m_axisSpaceBottom - (max - min) * prop),
-                        QPoint(xv + 10, geometry().height() - m_axisSpaceBottom - (max - min) * prop - 10),
+                        QPoint(xv, geometry().height() - m_axisSpaceBottom - static_cast<int>((max - min) * prop)),
+                        QPoint(xv + 10, geometry().height() - m_axisSpaceBottom - static_cast<int>((max - min) * prop - 10)),
                         QPoint(xv + 10, geometry().height() - m_axisSpaceBottom - 10)
                     };
                     painter.drawPolygon(points, 4);
@@ -331,7 +331,7 @@ void DynamicDiagram::paintEvent(QPaintEvent *event)
 void DynamicDiagram::mousePressEvent(QMouseEvent *event)
 {
     //! Выделение элемента
-    int idx = (event->x() + m_sizeH / 2 - m_axisSpaceLeft) / m_sizeH - 1;
+    int idx = static_cast<int>((event->x() + m_sizeH / 2 - m_axisSpaceLeft) / m_sizeH - 1);
     if (idx < 0)
         idx = 0;
     if (idx >= m_items.size())
@@ -415,6 +415,15 @@ void DynamicDiagram::showValuesGrid(QPainter &painter,
     else
     if (max - min < 20000)
         step = 1000;
+    else
+    if (max - min < 100000)
+        step = 5000;
+    else
+    if (max - min < 200000)
+        step = 10000;
+    else
+    if (max - min < 1000000)
+        step = 50000;
 
     int prec = 0;
     if (step < 1)
@@ -425,7 +434,7 @@ void DynamicDiagram::showValuesGrid(QPainter &painter,
     double cnt = min;
     while (cnt < max)
     {
-        int y = geometry().height() - m_axisSpaceBottom - (cnt - min) * prop;
+        int y = geometry().height() - m_axisSpaceBottom - static_cast<int>((cnt - min) * prop);
         painter.setPen(QPen(m_titleColor, 1, Qt::DotLine, Qt::FlatCap));
         painter.drawLine(m_axisSpaceLeft, y, geometry().width() - m_axisSpaceLeft, y);
 

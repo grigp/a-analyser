@@ -15,7 +15,7 @@
 
 namespace
 {
-  QSet<QString> PrimaryFactors =  ///:TODO QSet заменить на QList
+  QList<QString> PrimaryFactors =
   {
         QString(EvolventaFactorsDefines::CommonErrorsFrontal::SummErr)
       , QString(EvolventaFactorsDefines::CommonErrorsSagittal::SummErr)
