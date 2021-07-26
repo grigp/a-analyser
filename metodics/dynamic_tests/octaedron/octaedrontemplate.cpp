@@ -1,0 +1,45 @@
+#include "octaedrontemplate.h"
+
+#include <QLayout>
+
+#include "metodicdefines.h"
+#include "octaedronparamsdialog.h"
+
+OctaedronTemplate::OctaedronTemplate(QObject *parent)
+    : MetodicTemplate (parent)
+{
+
+}
+
+QString OctaedronTemplate::uid()
+{
+    return MetodicDefines::MetUid_Octaedron;
+}
+
+QString OctaedronTemplate::name()
+{
+    return MetodicDefines::MetName_Octaedron;
+}
+
+QWidget *OctaedronTemplate::execute(QWidget *parent, const QJsonObject &params)
+{
+    return nullptr;
+}
+
+QWidget *OctaedronTemplate::visualize(QWidget *parent, const QString &testUid)
+{
+    return nullptr;
+}
+
+bool OctaedronTemplate::editParams(QWidget *parent, QJsonObject &params)
+{
+    auto dialog = new OctaedronParamsDialog(parent);
+    dialog->setParams(params);
+    bool retval = false;
+    if (dialog->exec() == QDialog::Accepted)
+    {
+        params = dialog->getParams();
+        retval = true;
+    }
+    return retval;
+}

@@ -301,6 +301,21 @@
             }
         },
         {
+            "uid": "94021282-6B50-432F-A715-D34B3FEC4FD7",
+            "name": "Test \"Evolvent\"",
+            "image": "Evolventa.png",
+            "template": "met_evolventa_uid",
+            "build_norms": false,
+            "kind": "{03FFE24D-56ED-4138-9FC7-A125A020C190}",
+            "params":
+            {
+                "direction_mode": "clockwise",
+                "max_speed": 20,
+                "max_radius": 40,
+                "circles": 4
+            }
+        },
+        {
             "uid": "{CFCCCAA0-A520-49EF-9C04-EB57580E8CAD}",
             "name": "Trenager \"Balls\"",
             "image": "Balls.png",

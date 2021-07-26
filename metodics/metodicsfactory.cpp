@@ -13,6 +13,7 @@
 #include "crosstemplate.h"
 #include "stepoffsettemplate.h"
 #include "evolventatemplate.h"
+#include "octaedrontemplate.h"
 #include "datadefines.h"
 #include "dataprovider.h"
 
@@ -139,7 +140,8 @@ void MetodicsFactory::assignTemplates()
                 << new TrenTakePutTemplate(this)
                 << new CrossTemplate(this)
                 << new StepOffsetTemplate(this)
-                << new EvolventaTemplate(this);
+                << new EvolventaTemplate(this)
+                << new OctaedronTemplate(this);
 }
 
 void MetodicsFactory::assignMetodics()

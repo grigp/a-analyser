@@ -61,7 +61,7 @@ static QMap<Directions, QString> DirectionValueName {
 };
 
 /*!
- * \brief Выбрать направления ChangeStateMode enum
+ * \brief Выбрать режима смены направления DirectionMode enum
  */
 enum DirectionMode
 {
@@ -80,6 +80,25 @@ static QMap<DirectionMode, QString> DirectionModeValueName {
     std::pair<DirectionMode, QString> (dmRandom, "return")
   , std::pair<DirectionMode, QString> (dmClockwise, "clockwise")
   , std::pair<DirectionMode, QString> (dmCounterClockwise, "counter_clockwise")
+};
+
+/*!
+ * \brief Выбрать кольцевое правило обхода CirceRoundRuleMode enum
+ */
+enum CirceRoundRuleMode
+{
+      crmRadial = 0         ///< Радиальное
+    , crmCircle             ///< Кольцевое
+};
+
+static QMap<QString, CirceRoundRuleMode> CirceRoundRuleModeValueIndex {
+    std::pair<QString, CirceRoundRuleMode> ("radial", crmRadial)
+  , std::pair<QString, CirceRoundRuleMode> ("circle", crmCircle)
+};
+
+static QMap<CirceRoundRuleMode, QString> CirceRoundRuleModeValueName {
+    std::pair<CirceRoundRuleMode, QString> (crmRadial, "radial")
+  , std::pair<CirceRoundRuleMode, QString> (crmCircle, "circle")
 };
 
 /*!
