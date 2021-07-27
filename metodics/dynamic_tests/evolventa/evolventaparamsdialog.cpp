@@ -19,12 +19,6 @@ EvolventaParamsDialog::~EvolventaParamsDialog()
     delete ui;
 }
 
-//"direction_mode": "clockwise",
-//"max_speed": 20,
-//"max_radius": 40,
-//"circles": 4
-
-
 void EvolventaParamsDialog::setParams(const QJsonObject &params)
 {
     ui->edSpeedMax->setValue(params["max_speed"].toInt());
