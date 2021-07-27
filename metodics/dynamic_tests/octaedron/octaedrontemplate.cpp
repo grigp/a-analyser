@@ -4,6 +4,7 @@
 
 #include "metodicdefines.h"
 #include "octaedronparamsdialog.h"
+#include "octaedronexecute.h"
 
 OctaedronTemplate::OctaedronTemplate(QObject *parent)
     : MetodicTemplate (parent)
@@ -23,7 +24,10 @@ QString OctaedronTemplate::name()
 
 QWidget *OctaedronTemplate::execute(QWidget *parent, const QJsonObject &params)
 {
-    return nullptr;
+    auto *retval = new OctaedronExecute(parent);
+    parent->layout()->addWidget(retval);
+    retval->setParams(params);
+    return retval;
 }
 
 QWidget *OctaedronTemplate::visualize(QWidget *parent, const QString &testUid)

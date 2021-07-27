@@ -17,7 +17,7 @@ CrossExecute::CrossExecute(QWidget *parent) :
     addTarget(0, 0, Qt::green, Qt::darkGreen);
     addMarker();
 
-    setTitle("Тест на устойчивость");
+    setTitle(tr("Тест на устойчивость"));
     isShowValues(false);
     isTraceControl(false);
     setVisibleRecordLength(false);

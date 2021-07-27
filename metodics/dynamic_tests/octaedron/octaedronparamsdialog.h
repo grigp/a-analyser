@@ -30,6 +30,10 @@ public:
      */
     QJsonObject getParams();
 
+private slots:
+    void onCirceRoundRuleMode(int idx);
+    void onDirectionModeChange(int idx);
+
 private:
     Ui::OctaedronParamsDialog *ui;
 };

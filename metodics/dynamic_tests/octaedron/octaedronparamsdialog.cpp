@@ -47,3 +47,17 @@ QJsonObject OctaedronParamsDialog::getParams()
 
     return retval;
 }
+
+void OctaedronParamsDialog::onCirceRoundRuleMode(int idx)
+{
+    if (idx == BaseUtils::crmCircle)
+        if (ui->cbDirectionMode->currentIndex() == BaseUtils::dmRandom)
+            ui->cbDirectionMode->setCurrentIndex(BaseUtils::dmCounterClockwise);
+}
+
+void OctaedronParamsDialog::onDirectionModeChange(int idx)
+{
+    if (idx == BaseUtils::dmRandom)
+        if (ui->cbCirceRoundRuleMode->currentIndex() == BaseUtils::crmCircle)
+            ui->cbCirceRoundRuleMode->setCurrentIndex(BaseUtils::crmRadial);
+}

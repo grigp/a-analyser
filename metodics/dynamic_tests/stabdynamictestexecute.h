@@ -97,7 +97,7 @@ protected:
     void setTarget(const double x, const double y, const int idx = 0);
 
     /*!
-     * \brief Виртуальная функция, создающая окно пациента. Ложна быть перекрыта в подклассах
+     * \brief Виртуальная функция, создающая окно пациента. Должна быть перекрыта в подклассах
      */
     virtual StabDynamicTestPatientWindow* createPatientWindow();
 

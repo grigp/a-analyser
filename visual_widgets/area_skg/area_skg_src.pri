@@ -5,7 +5,8 @@ HEADERS += \
     $$PWD/traceskg.h \
     $$PWD/areaskg.h \
     $$PWD/viewskg.h \
-    $$PWD/lineskg.h
+    $$PWD/lineskg.h \
+    $$PWD/gridskgdefines.h
 
 SOURCES += \
     $$PWD/gridskg.cpp \

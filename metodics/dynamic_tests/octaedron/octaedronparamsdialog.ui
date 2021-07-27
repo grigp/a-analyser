@@ -267,8 +267,8 @@
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>248</x>
-     <y>254</y>
+     <x>253</x>
+     <y>300</y>
     </hint>
     <hint type="destinationlabel">
      <x>157</x>
@@ -283,8 +283,8 @@
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>316</x>
-     <y>260</y>
+     <x>321</x>
+     <y>300</y>
     </hint>
     <hint type="destinationlabel">
      <x>286</x>
@@ -292,5 +292,41 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>cbCirceRoundRuleMode</sender>
+   <signal>currentIndexChanged(int)</signal>
+   <receiver>OctaedronParamsDialog</receiver>
+   <slot>onCirceRoundRuleMode(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>432</x>
+     <y>30</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>505</x>
+     <y>60</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>cbDirectionMode</sender>
+   <signal>currentIndexChanged(int)</signal>
+   <receiver>OctaedronParamsDialog</receiver>
+   <slot>onDirectionModeChange(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>360</x>
+     <y>85</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>506</x>
+     <y>90</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
+ <slots>
+  <slot>onCirceRoundRuleMode(int)</slot>
+  <slot>onDirectionModeChange(int)</slot>
+ </slots>
 </ui>

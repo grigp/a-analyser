@@ -5,6 +5,7 @@
 #include "traceskg.h"
 #include "lineskg.h"
 #include "signalaccess.h"
+#include "gridskgdefines.h"
 
 #include <QDebug>
 
@@ -50,7 +51,7 @@ void AreaSKG::setMarker(const double x, const double y)
     if (m_marker)
     {
         int minS = qMin(ui->panSKG->width(), ui->panSKG->height());
-        double prop = static_cast<double>(minS / 2) / static_cast<double>(m_diap);
+        double prop = static_cast<double>(minS / 2 - GridSKGDefines::I_LABEL_SPACE) / static_cast<double>(m_diap);
 
         m_marker->setPos(x * prop - m_marker->boundingRect().width() / 2,
                          - y * prop - m_marker->boundingRect().height() / 2);
@@ -137,7 +138,7 @@ void AreaSKG::addTarget(const double x, const double y, const QColor colorBackgr
 void AreaSKG::setTarget(const double x, const double y, const int idx)
 {
     int minS = qMin(ui->panSKG->width(), ui->panSKG->height());
-    double prop = static_cast<double>(minS / 2) / static_cast<double>(m_diap);
+    double prop = static_cast<double>(minS / 2 - GridSKGDefines::I_LABEL_SPACE) / static_cast<double>(m_diap);
     m_targets.at(idx)->setPos(x * prop - m_targets.at(idx)->boundingRect().width() / 2,
                               - y * prop - m_targets.at(idx)->boundingRect().height() / 2);
 }

@@ -19,7 +19,7 @@ StepOffsetExecute::StepOffsetExecute(QWidget *parent) :
     addTarget(0, 0, Qt::green, Qt::darkGreen);
     addMarker();
 
-    setTitle("Тест \"Ступени\"");
+    setTitle(tr("Тест \"Ступени\""));
     isShowValues(false);
     isTraceControl(false);
     setVisibleRecordLength(false);

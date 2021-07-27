@@ -21,7 +21,7 @@ EvolventaExecute::EvolventaExecute(QWidget *parent) :
     addTarget(0, 0, Qt::green, Qt::darkGreen);
     addMarker();
 
-    setTitle("Тест \"Эвольвента\"");
+    setTitle(tr("Тест \"Эвольвента\""));
     isShowValues(false);
     isTraceControl(false);
     setVisibleRecordLength(false);
