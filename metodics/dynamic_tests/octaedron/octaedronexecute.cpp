@@ -74,11 +74,40 @@ void OctaedronExecute::start()
 void OctaedronExecute::recording()
 {
     StabDynamicTestExecute::recording();
+
+    m_stage = -1;
+    m_stageCounter = 0;
+    m_passed.clear();
+
+    if (isRecording())
+    {
+        getFirstStage();
+        setCurrentTarget();
+    }
 }
 
 void OctaedronExecute::getData(DeviceProtocols::DeviceData *data)
 {
     StabDynamicTestExecute::getData(data);
+
+    if (selectedChannel() == data->channelId())
+    {
+        if (isRecording())
+        {
+            ++m_stageCounter;
+            //! Достигли конца этапа
+            if (m_stageCounter >= m_stageTime * freqStab())
+            {
+                if (getNextStage())
+                {
+                    m_stageCounter = 0;
+                    setCurrentTarget();
+                }
+                else
+                    finishTest();
+            }
+        }
+    }
 }
 
 void OctaedronExecute::on_communicationError(const QString &drvName, const QString &port, const int errorCode)
@@ -111,4 +140,111 @@ void OctaedronExecute::createMarkerAndTargets()
     if (m_patientWin)
         m_patientWin->addTarget(0, 0, Qt::green, 30);
     addMarker();
+}
+
+void OctaedronExecute::getFirstStage()
+{
+    m_stage = 0;
+    if (m_circeRoundRuleMode == BaseUtils::crmRadial)
+    {
+        if (m_directionMode == BaseUtils::dmCounterClockwise)
+            m_stage = 0;
+        else
+        if (m_directionMode == BaseUtils::dmClockwise)
+            m_stage = SequenceRadial.size() - 1;
+        else
+        if (m_directionMode == BaseUtils::dmRandom)
+            m_stage = getRandomStage();
+    }
+    else
+    if (m_circeRoundRuleMode == BaseUtils::crmCircle)
+    {
+        if (m_directionMode == BaseUtils::dmCounterClockwise)
+            m_stage = 0;
+        else
+        if (m_directionMode == BaseUtils::dmClockwise)
+            m_stage = SequenceCircle.size() - 1;
+    }
+}
+
+bool OctaedronExecute::getNextStage()
+{
+    auto nextStage = [&]()
+    {
+        if (m_directionMode == BaseUtils::dmCounterClockwise)
+            ++m_stage;
+        else
+        if (m_directionMode == BaseUtils::dmClockwise)
+            --m_stage;
+    };
+    ///--------------
+
+    if (m_circeRoundRuleMode == BaseUtils::crmRadial)
+    {
+        nextStage();
+        if (m_directionMode == BaseUtils::dmRandom)
+        {
+            m_stage = getRandomStage();
+            if (m_stage == -1)
+                return false;
+        }
+        else
+        {
+            if (m_stage < 0 || m_stage >= SequenceRadial.size())
+                return  false;
+        }
+    }
+    else
+    if (m_circeRoundRuleMode == BaseUtils::crmCircle)
+    {
+        nextStage();
+        if (m_stage < 0 || m_stage >= SequenceCircle.size())
+            return  false;
+    }
+
+    return true;
+}
+
+int OctaedronExecute::getRandomStage()
+{
+    //! Поиск в списке пройденных этапов хотя бы одного непройденного
+    int idx = -1;
+    for (int i = 0; i < 8; ++i)
+        if (!m_passed.contains(i))
+        {
+            idx = i;
+            break;
+        }
+    //! Все уже пройдены
+    if (idx == -1)
+        return -1;
+
+    //! Генерация нового
+    do
+    {
+        idx = qrand() % SequenceRadial.size();
+    }
+    while(SequenceRadial.at(idx) == -1 || m_passed.contains(idx));
+    m_passed.insert(idx);
+
+    return idx;
+}
+
+int OctaedronExecute::getCurrentTargetPosition()
+{
+    if (m_circeRoundRuleMode == BaseUtils::crmRadial)
+        return SequenceRadial.at(m_stage);
+    else
+    if (m_circeRoundRuleMode == BaseUtils::crmCircle)
+        return SequenceCircle.at(m_stage);
+    return -1;
+}
+
+void OctaedronExecute::setCurrentTarget()
+{
+   auto tp = getCurrentTargetPosition();
+   if (tp > -1)
+       setTarget(m_targets.at(tp).x, m_targets.at(tp).y, 8);
+   else
+       setTarget(0, 0, 8);
 }

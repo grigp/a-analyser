@@ -62,6 +62,32 @@ private:
 
     void createMarkerAndTargets();
 
+    /*!
+     * \brief Генерирует номер первого этапа
+     */
+    void getFirstStage();
+
+    /*!
+     * \brief Генерирует номер следующего этапа
+     * \return true, если есть следующий этап и false, если нет (пора завершать тест)
+     */
+    bool getNextStage();
+
+    /*!
+     * \brief Возвращает номер следующего этапа в случае случайного выбора
+     */
+    int getRandomStage();
+
+    /*!
+     * \brief Возвращает позицию цели в зависимости от текущего этапа
+     */
+    int getCurrentTargetPosition();
+
+    /*!
+     * \brief Устанавливает текущую цель
+     */
+    void setCurrentTarget();
+
     BaseUtils::CirceRoundRuleMode m_circeRoundRuleMode {BaseUtils::crmRadial};
     BaseUtils::DirectionMode m_directionMode {BaseUtils::dmCounterClockwise};
     int m_stageTime {5};
@@ -70,8 +96,11 @@ private:
     OctaedronPatientWindow *m_patientWin {nullptr};
 
     QList<SignalsDefines::StabRec> m_targets; ///< Список целей
-    int m_stage {-1};                         ///< Этап пробы. Совпадает с номером подсвеченной цели. Если -1, то для радиального - возврат в центр
+    int m_stage {-1};                         ///< Индекс в списке этапов пробы.
+                                              ///< SequenceRadial.at(m_stage) - номер подсвеченной цели
+                                              ///< Если -1, то для радиального - возврат в центр
     QSet<int> m_passed;                       ///< Множество пройденных этапов. Только для случайной последовательности при радиальном проходе
+    int m_stageCounter {0};                   ///< Счетчик пакетов на этапе
 };
 
 #endif // OCTAEDRONEXECUTE_H
