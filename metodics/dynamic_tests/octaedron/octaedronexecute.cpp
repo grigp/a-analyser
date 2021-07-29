@@ -1,7 +1,10 @@
 #include "octaedronexecute.h"
 #include "ui_octaedronexecute.h"
 
+#include "channelsdefines.h"
+#include "testresultdata.h"
 #include "octaedronpatientwindow.h"
+#include "octaedronresultdata.h"
 
 #include <QTimer>
 #include <QDebug>
@@ -15,6 +18,7 @@ static const QList<int> SequenceCircle = {0, 1, 2, 3, 4, 5, 6, 7, 0};
 OctaedronExecute::OctaedronExecute(QWidget *parent) :
     StabDynamicTestExecute(parent),
     ui(new Ui::OctaedronExecute)
+  , m_res(new OctaedronResultData(ChannelsDefines::chanOctaedronResult))
 {
     ui->setupUi(this);
 
@@ -58,6 +62,7 @@ StabDynamicTestPatientWindow *OctaedronExecute::createPatientWindow()
 
 void OctaedronExecute::finishTest()
 {
+    trd()->addChannel(m_res);
     StabDynamicTestExecute::finishTest();
 }
 
@@ -83,6 +88,13 @@ void OctaedronExecute::recording()
     {
         getFirstStage();
         setCurrentTarget();
+
+        m_res->setFreq(freqStab());
+        m_res->setDiap(diap());
+        m_res->setRadius(m_radius);
+        m_res->setStageTime(m_stageTime);
+        m_res->setCirceRoundRuleMode(BaseUtils::CirceRoundRuleModeValueName.value(m_circeRoundRuleMode));
+        addStageToResult();
     }
 }
 
@@ -102,6 +114,7 @@ void OctaedronExecute::getData(DeviceProtocols::DeviceData *data)
                 {
                     m_stageCounter = 0;
                     setCurrentTarget();
+                    addStageToResult();
                 }
                 else
                     finishTest();
@@ -250,4 +263,15 @@ void OctaedronExecute::setCurrentTarget()
        setTarget(m_targets.at(tp).x, m_targets.at(tp).y, 8);
    else
        setTarget(0, 0, 8);
+}
+
+void OctaedronExecute::addStageToResult()
+{
+    if (m_circeRoundRuleMode == BaseUtils::crmRadial)
+        m_res->addStage(SequenceRadial.at(m_stage), recCount(),
+                        m_targets.at(SequenceRadial.at(m_stage)).x, m_targets.at(SequenceRadial.at(m_stage)).y);
+    else
+    if (m_circeRoundRuleMode == BaseUtils::crmCircle)
+        m_res->addStage(SequenceCircle.at(m_stage), recCount(),
+                        m_targets.at(SequenceCircle.at(m_stage)).x, m_targets.at(SequenceCircle.at(m_stage)).y);
 }

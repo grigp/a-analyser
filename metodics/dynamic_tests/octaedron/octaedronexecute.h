@@ -14,6 +14,7 @@ class OctaedronExecute;
 }
 
 class OctaedronPatientWindow;
+class OctaedronResultData;
 
 class OctaedronExecute : public StabDynamicTestExecute
 {
@@ -88,6 +89,8 @@ private:
      */
     void setCurrentTarget();
 
+    void addStageToResult();
+
     BaseUtils::CirceRoundRuleMode m_circeRoundRuleMode {BaseUtils::crmRadial};
     BaseUtils::DirectionMode m_directionMode {BaseUtils::dmCounterClockwise};
     int m_stageTime {5};
@@ -101,6 +104,8 @@ private:
                                               ///< Если -1, то для радиального - возврат в центр
     QSet<int> m_passed;                       ///< Множество пройденных этапов. Только для случайной последовательности при радиальном проходе
     int m_stageCounter {0};                   ///< Счетчик пакетов на этапе
+
+    OctaedronResultData *m_res {nullptr};
 };
 
 #endif // OCTAEDRONEXECUTE_H

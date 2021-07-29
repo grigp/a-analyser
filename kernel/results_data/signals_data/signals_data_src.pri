@@ -17,7 +17,8 @@ HEADERS += \
     $$PWD/crossresultdata.h \
     $$PWD/stepoffsetresultdata.h \
     $$PWD/evolventaresultdata.h \
-    $$PWD/decartcoordinatessignal.h
+    $$PWD/decartcoordinatessignal.h \
+    $$PWD/octaedronresultdata.h
 
 SOURCES += \
     $$PWD/signaldata.cpp \
@@ -36,4 +37,5 @@ SOURCES += \
     $$PWD/crossresultdata.cpp \
     $$PWD/stepoffsetresultdata.cpp \
     $$PWD/evolventaresultdata.cpp \
-    $$PWD/decartcoordinatessignal.cpp
+    $$PWD/decartcoordinatessignal.cpp \
+    $$PWD/octaedronresultdata.cpp
