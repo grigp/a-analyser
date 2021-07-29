@@ -75,7 +75,7 @@ void OctaedronExecute::recording()
 {
     StabDynamicTestExecute::recording();
 
-    m_stage = -1;
+    m_stage = 0;
     m_stageCounter = 0;
     m_passed.clear();
 
@@ -154,7 +154,7 @@ void OctaedronExecute::getFirstStage()
             m_stage = SequenceRadial.size() - 1;
         else
         if (m_directionMode == BaseUtils::dmRandom)
-            m_stage = getRandomStage();
+            m_stage = 0;
     }
     else
     if (m_circeRoundRuleMode == BaseUtils::crmCircle)
@@ -184,8 +184,11 @@ bool OctaedronExecute::getNextStage()
         nextStage();
         if (m_directionMode == BaseUtils::dmRandom)
         {
-            m_stage = getRandomStage();
-            if (m_stage == -1)
+            if (m_stage == 0)
+                m_stage = getRandomStage();
+            else
+                m_stage = 0;
+            if (m_stage == -2)
                 return false;
         }
         else
@@ -217,15 +220,15 @@ int OctaedronExecute::getRandomStage()
         }
     //! Все уже пройдены
     if (idx == -1)
-        return -1;
+        return -2;
 
     //! Генерация нового
     do
     {
         idx = qrand() % SequenceRadial.size();
     }
-    while(SequenceRadial.at(idx) == -1 || m_passed.contains(idx));
-    m_passed.insert(idx);
+    while(SequenceRadial.at(idx) == -1 || m_passed.contains(SequenceRadial.at(idx)));
+    m_passed.insert(SequenceRadial.at(idx));
 
     return idx;
 }
