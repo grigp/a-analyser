@@ -267,11 +267,15 @@ void OctaedronExecute::setCurrentTarget()
 
 void OctaedronExecute::addStageToResult()
 {
+    int trgtPos = -1;
     if (m_circeRoundRuleMode == BaseUtils::crmRadial)
-        m_res->addStage(SequenceRadial.at(m_stage), recCount(),
-                        m_targets.at(SequenceRadial.at(m_stage)).x, m_targets.at(SequenceRadial.at(m_stage)).y);
+        trgtPos = SequenceRadial.at(m_stage);
     else
     if (m_circeRoundRuleMode == BaseUtils::crmCircle)
-        m_res->addStage(SequenceCircle.at(m_stage), recCount(),
-                        m_targets.at(SequenceCircle.at(m_stage)).x, m_targets.at(SequenceCircle.at(m_stage)).y);
+        trgtPos = SequenceCircle.at(m_stage);
+
+    if (trgtPos > -1)
+        m_res->addStage(trgtPos, recCount(), m_targets.at(trgtPos).x, m_targets.at(trgtPos).y);
+    else
+        m_res->addStage(trgtPos, recCount(), 0, 0);
 }
