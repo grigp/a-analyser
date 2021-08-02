@@ -52,15 +52,15 @@ class TrenTakePutExecute : public QWidget
     Q_OBJECT
 
 public:
-    explicit TrenTakePutExecute(QWidget *parent = 0);
-    ~TrenTakePutExecute();
+    explicit TrenTakePutExecute(QWidget *parent = nullptr);
+    ~TrenTakePutExecute() override;
 
     void setParams(const QJsonObject &probeParams);
 
 protected:
-    void closeEvent(QCloseEvent *event);
+    void closeEvent(QCloseEvent *event) override;
 
-    void resizeEvent(QResizeEvent* event);
+    void resizeEvent(QResizeEvent* event) override;
 
 private slots:
     void start();

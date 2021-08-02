@@ -135,7 +135,11 @@ void TrenTakePutExecute::resizeEvent(QResizeEvent *event)
 {
     Q_UNUSED(event);
 //    QSize size = event->size();
+
+    auto winPresent = SettingsProvider::valueFromRegAppCopy("", "PatientWindow", static_cast<QVariant>(true)).toBool();
     QSize size = ui->gvGame->geometry().size();
+    if (m_patientWindow && winPresent && QApplication::desktop()->screenCount() > 1)
+        size = m_patientWindow->sceneSize();
     setSceneSize(size);
 }
 
@@ -170,7 +174,10 @@ void TrenTakePutExecute::start()
         m_driver->start();
 
         showPatientWindow();
-        generateNewScene(false);
+        QTimer::singleShot(0, [=]   // Без singleShot другие размеры
+        {
+            generateNewScene(false);
+        });
     }
     else
     {
@@ -1235,6 +1242,8 @@ void TrenTakePutExecute::showPatientWindow()
         if (!m_patientWindow)
             m_patientWindow = new TrenTakePutPatientWindow(this);
         m_patientWindow->setScene(m_scene);
+        QSize size = m_patientWindow->sceneSize();
+        setSceneSize(size);
         m_patientWindow->resize(QApplication::desktop()->availableGeometry(1).size());
         m_patientWindow->move(QApplication::desktop()->availableGeometry(1).x(),
                               QApplication::desktop()->availableGeometry(1).y());

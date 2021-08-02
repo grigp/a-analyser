@@ -53,6 +53,11 @@ void TrenTakePutPatientWindow::setSamplePixmap(const QPixmap &pixmap)
     ui->lblFullPicture->setVisible(true);
 }
 
+QSize TrenTakePutPatientWindow::sceneSize() const
+{
+    return ui->gvGame->geometry().size();
+}
+
 void TrenTakePutPatientWindow::resizeEvent(QResizeEvent *event)
 {
     Q_UNUSED(event);

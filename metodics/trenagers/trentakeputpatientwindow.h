@@ -17,8 +17,8 @@ class TrenTakePutPatientWindow : public QDialog
     Q_OBJECT
 
 public:
-    explicit TrenTakePutPatientWindow(QWidget *parent = 0);
-    ~TrenTakePutPatientWindow();
+    explicit TrenTakePutPatientWindow(QWidget *parent = nullptr);
+    ~TrenTakePutPatientWindow() override;
 
     void setScene(QGraphicsScene *scene);
 
@@ -31,8 +31,10 @@ public:
 
     void setSamplePixmap(const QPixmap &pixmap);
 
+    QSize sceneSize() const;
+
 protected:
-    void resizeEvent(QResizeEvent* event);
+    void resizeEvent(QResizeEvent* event) override;
 
 
 private:
