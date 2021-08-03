@@ -36,6 +36,9 @@ public:
     void setCirceRoundRuleMode(const int mode) {m_mode = mode;}
     int circeRoundRuleMode() const {return m_mode;}
 
+    void setDirection(const int dir) {m_direction = dir;}
+    int direction() const {return m_direction;}
+
     void setData(const int idx, const int value);
     int data(const int idx) const;
 
@@ -51,8 +54,9 @@ private:
     QColor m_labelTextColor {Qt::white};
     QColor m_labelFrameColor {Qt::black};
 
-    int m_mode {0};   ///< Режим просмотра 0 - радиальный, 1 - кольцевой
-    int m_data[8] {100, 10, 20, 30, 40, 50, 60, 70};   ///< Данные m_data[0] - верх -> далее против часовой до m_data[7]
+    int m_mode {0};      ///< Режим просмотра 0 - радиальный, 1 - кольцевой
+    int m_direction {1}; ///< Направление обхода 1 - по часовой, 2 - против часовой (для кольцевого режима)
+    int m_data[8] {0, 0, 0, 0, 0, 0, 0, 0};   ///< Данные m_data[0] - верх -> далее против часовой до m_data[7]
 };
 
 #endif // DIAGOCTAEDRON_H

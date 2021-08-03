@@ -15,5 +15,6 @@ OctaedronVisualize::~OctaedronVisualize()
 
 void OctaedronVisualize::setTest(const QString &testUid)
 {
-
+    ui->wgtDiag->setCirceRoundRuleMode(1);
+    ui->wgtDiag->setDirection(1);
 }

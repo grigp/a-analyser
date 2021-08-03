@@ -2,6 +2,45 @@
 #include "ui_diagoctaedron.h"
 
 #include <QPainter>
+#include <QDebug>
+
+namespace
+{
+struct ArrowIndexes
+{
+    int from;
+    int to;
+    ArrowIndexes(const int f, const int t)
+        : from(f), to(t) {}
+};
+
+//! Порядок индексов для прохода в кольцевом режиме по часовой стрелке
+static const QList<ArrowIndexes> CircleCWIndexes =
+{
+    ArrowIndexes(0, 1),
+    ArrowIndexes(1, 2),
+    ArrowIndexes(2, 3),
+    ArrowIndexes(3, 4),
+    ArrowIndexes(4, 5),
+    ArrowIndexes(5, 6),
+    ArrowIndexes(6, 7),
+    ArrowIndexes(7, 0)
+};
+
+//! Порядок индексов для прохода в кольцевом режиме против часовой стрелки
+static const QList<ArrowIndexes> CircleCCWIndexes =
+{
+    ArrowIndexes(0, 7),
+    ArrowIndexes(1, 0),
+    ArrowIndexes(2, 1),
+    ArrowIndexes(3, 2),
+    ArrowIndexes(4, 3),
+    ArrowIndexes(5, 4),
+    ArrowIndexes(6, 5),
+    ArrowIndexes(7, 6)
+};
+
+}
 
 DiagOctaedron::DiagOctaedron(QWidget *parent) :
     QWidget(parent),
@@ -81,7 +120,17 @@ void DiagOctaedron::paintEvent(QPaintEvent *event)
     //! Кольцевой режим
     if (m_mode == 1)
     {
-
+        QList<ArrowIndexes> indexes = CircleCWIndexes;
+        if (m_direction == 2)
+            indexes = CircleCCWIndexes;
+        for (int i = 0; i < labels.size(); ++i)
+        {
+            int lx = labels.at(indexes.at(i).to).center().x();
+            int ly = labels.at(indexes.at(i).to).center().y();
+            int tx = labels.at(indexes.at(i).from).center().x();
+            int ty = labels.at(indexes.at(i).from).center().y();
+            painter.drawLine(lx, ly, lx + (tx - lx) * m_data[i] / 100, ly + (ty - ly) * m_data[i] / 100);
+        }
     }
 
     //! Метки
