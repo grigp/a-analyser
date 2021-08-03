@@ -13,6 +13,13 @@
 #include <QTimer>
 #include <QDebug>
 
+namespace
+{
+static const int WidthColumn0 = 250;
+static const int WidthColumn1 = 50;
+
+}
+
 ResultsWidget::ResultsWidget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::ResultsWidget)
@@ -54,6 +61,8 @@ void ResultsWidget::onDbConnect()
     if (m_mdlTest)
         m_mdlTest->load();
     ui->tvTests->header()->resizeSections(QHeaderView::ResizeToContents);
+    ui->tvTests->header()->resizeSection(0, WidthColumn0);
+    ui->tvTests->header()->resizeSection(1, WidthColumn1);
     ui->tvTests->sortByColumn(TestsModel::ColDateTime, Qt::DescendingOrder);
 
     connect(m_mdlTest, &TestsModel::rowsInserted, this, &ResultsWidget::onNewTests);
@@ -148,6 +157,8 @@ void ResultsWidget::on_selectPatient(const QString &patientUid)
     QTimer::singleShot(100, [=]
     {
         ui->tvTests->header()->resizeSections(QHeaderView::ResizeToContents);
+        ui->tvTests->header()->resizeSection(0, WidthColumn0);
+        ui->tvTests->header()->resizeSection(1, WidthColumn1);
     });
 }
 
@@ -158,6 +169,8 @@ void ResultsWidget::on_selectMetodic(const QString &metodicUid)
     QTimer::singleShot(100, [=]
     {
         ui->tvTests->header()->resizeSections(QHeaderView::ResizeToContents);
+        ui->tvTests->header()->resizeSection(0, WidthColumn0);
+        ui->tvTests->header()->resizeSection(1, WidthColumn1);
     });
 }
 

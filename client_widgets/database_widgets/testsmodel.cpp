@@ -71,21 +71,25 @@ void TestsModel::addTest(const QString &testUid)
         DataDefines::PatientKard patient;
         DataProvider::getPatient(ti.patientUid, patient);
         QString metName = "";
+        QString metImageName = "";
         foreach (auto mi, m_metList)
         {
             if (mi.uid == ti.metodUid)
             {
                 metName = mi.name;
+                metImageName = mi.imageName;
                 break;
             }
         }
 
-        QStandardItem* itemPatient = new QStandardItem(patient.fio);
+//        QStandardItem* itemPatient = new QStandardItem(patient.fio);
+        QStandardItem* itemPatient = new QStandardItem(patient.fio + "\n" + metName); // + "\n" + ti.dateTime.toString("dd.MM.yyyy hh:mm"));
         itemPatient->setData(testUid, TestUidRole);
         itemPatient->setData(ti.patientUid, PatientUidRole);
         itemPatient->setEditable(false);
 
         QStandardItem* itemMetod = new QStandardItem(metName);
+        itemMetod->setIcon(QIcon(":/images/Methodics/" + metImageName));
         itemMetod->setData(ti.metodUid, MetodicUidRole);
         itemMetod->setEditable(false);
 
