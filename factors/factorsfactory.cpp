@@ -14,6 +14,7 @@
 #include "crossfactors.h"
 #include "stepoffsetfactors.h"
 #include "evolventafactors.h"
+#include "octaedronfactors.h"
 
 #include <QTimer>
 #include <QDebug>
@@ -37,6 +38,7 @@ FactorsFactory::FactorsFactory(QObject *parent) : QObject(parent)
         CrossFactors::registerFactors();
         StepOffsetFactors::registerFactors();
         EvolventaFactors::registerFactors();
+        OctaedronFactors::registerFactors();
     });
 }
 
