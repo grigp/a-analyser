@@ -4,6 +4,7 @@
 #include <QTimer>
 #include <QMessageBox>
 #include <QLayout>
+#include <QDesktopWidget>
 #include <QDebug>
 
 #include "mainwindow.h"
@@ -17,6 +18,7 @@
 #include "database.h"
 #include "datadefines.h"
 #include "exitcodes.h"
+#include "settingsprovider.h"
 #include "log.h"
 
 AAnalyserApplication::AAnalyserApplication(int &argc, char **argv)
@@ -78,6 +80,38 @@ void AAnalyserApplication::setMainWindow(QMainWindow *mw)
     m_mw = mw;
     connect(this, &AAnalyserApplication::dbConnected, static_cast<MainWindow*>(m_mw), &MainWindow::onDbConnected);
     connect(this, &AAnalyserApplication::dbDisconnected, static_cast<MainWindow*>(m_mw), &MainWindow::obDbDisconnected);
+}
+
+QRect AAnalyserApplication::getPatientWindowGeometry()
+{
+    if (desktop()->screenCount() == 1)
+    {
+        for (int i = 0; i < desktop()->screenCount(); ++i)
+            if (desktop()->availableGeometry(i).contains(m_mw->geometry().center()))
+                return desktop()->availableGeometry(i);
+    }
+    else
+    {
+        int n = -1;
+        for (int i = 0; i < desktop()->screenCount(); ++i)
+            if (desktop()->availableGeometry(i).contains(m_mw->geometry().center()))
+            {
+                n = i;
+                break;
+            }
+
+        auto wpn = SettingsProvider::valueFromRegAppCopy("", "PatientWindowNumber", static_cast<QVariant>(1)).toInt();
+
+        if (wpn != n && wpn >= 0 && wpn < desktop()->screenCount())
+            return desktop()->availableGeometry(wpn);
+        else
+        if (n == 0)
+            return desktop()->availableGeometry(1);
+        else
+            return desktop()->availableGeometry(0);
+    }
+
+    return desktop()->availableGeometry();
 }
 
 void AAnalyserApplication::showClientPage(const QString &uidPage)

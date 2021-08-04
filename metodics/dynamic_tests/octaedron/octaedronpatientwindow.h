@@ -4,6 +4,7 @@
 #include <QDialog>
 
 #include "stabdynamictestpatientwindow.h"
+#include "signalsdefines.h"
 
 namespace Ui {
 class OctaedronPatientWindow;
@@ -14,7 +15,7 @@ class OctaedronPatientWindow : public StabDynamicTestPatientWindow
     Q_OBJECT
 
 public:
-    explicit OctaedronPatientWindow(const int diap, QWidget *parent = nullptr);
+    explicit OctaedronPatientWindow(const int diap, QList<SignalsDefines::StabRec> targets, QWidget *parent = nullptr);
     ~OctaedronPatientWindow() override;
 
     /*!
@@ -42,7 +43,10 @@ public:
 private:
     Ui::OctaedronPatientWindow *ui;
 
+    void createTargets();
+
     int m_diap {128};
+    QList<SignalsDefines::StabRec> m_targets;
 };
 
 #endif // OCTAEDRONPATIENTWINDOW_H

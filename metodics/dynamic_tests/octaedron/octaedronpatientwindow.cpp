@@ -1,15 +1,19 @@
 #include "octaedronpatientwindow.h"
 #include "ui_octaedronpatientwindow.h"
 
-OctaedronPatientWindow::OctaedronPatientWindow(const int diap, QWidget *parent) :
+#include <QTimer>
+#include <QDebug>
+
+OctaedronPatientWindow::OctaedronPatientWindow(const int diap,  QList<SignalsDefines::StabRec> targets, QWidget *parent) :
     StabDynamicTestPatientWindow(parent),
     ui(new Ui::OctaedronPatientWindow)
   , m_diap(diap)
+  , m_targets(targets)
 {
     ui->setupUi(this);
 
     setVisibleMarker(true);
-//    addTarget(0, 0, Qt::green, 30);
+    createTargets();
 }
 
 OctaedronPatientWindow::~OctaedronPatientWindow()
@@ -36,4 +40,13 @@ void OctaedronPatientWindow::setDiap(const int diap)
 {
     Q_UNUSED(diap);
     StabDynamicTestPatientWindow::setDiap(m_diap);
+}
+
+void OctaedronPatientWindow::createTargets()
+{
+    foreach (auto target, m_targets)
+    {
+        addTarget(target.x, target.y, Qt::gray, 30);
+    }
+    addTarget(0, 0, Qt::green, 30);
 }

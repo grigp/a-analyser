@@ -157,8 +157,7 @@ void StabDynamicTestExecute::start()
         m_metInfo = static_cast<AAnalyserApplication*>(QApplication::instance())->getSelectedMetodic();
         m_trd->newTest(m_kard.uid, m_metInfo.uid);
 
-        m_patientWinPresent = SettingsProvider::valueFromRegAppCopy("", "PatientWindow", static_cast<QVariant>(true)).toBool();
-        if (m_patientWinPresent && QApplication::desktop()->screenCount() > 1)
+        if (QApplication::desktop()->screenCount() > 1)
             createAndShowPatientWindow();
         ui->cbScale->setCurrentIndex(0);
 
@@ -278,10 +277,10 @@ void StabDynamicTestExecute::recording()
         m_trd->newProbe(m_metInfo.name);
         ui->wgtAdvChannels->newProbe();
 
-        if (!(m_patientWinPresent && QApplication::desktop()->screenCount() > 1))
+        if (QApplication::desktop()->screenCount() == 1)
         {
             createAndShowPatientWindow();
-//            scaleChange(m_params.at(m_probe).scale);
+            scaleChange(ui->cbScale->currentIndex());
         }
         if (m_patientWin)
             m_patientWin->run();
@@ -290,7 +289,7 @@ void StabDynamicTestExecute::recording()
     {
         if (m_patientWin)
             m_patientWin->stop();
-        if (!(m_patientWinPresent && QApplication::desktop()->screenCount() > 1))
+        if (QApplication::desktop()->screenCount() == 1)
             hidePatientWindow();
 
         ui->wgtAdvChannels->abortProbe();
@@ -363,18 +362,9 @@ void StabDynamicTestExecute::createAndShowPatientWindow()
 
     if (m_patientWin)
     {
-        auto size = QApplication::desktop()->availableGeometry(0).size();
-        auto x = QApplication::desktop()->availableGeometry(0).x();
-        auto y = QApplication::desktop()->availableGeometry(0).y();
-        if (m_patientWinPresent && QApplication::desktop()->screenCount() > 1)
-        {
-            size = QApplication::desktop()->availableGeometry(1).size();
-            x = QApplication::desktop()->availableGeometry(1).x();
-            y = QApplication::desktop()->availableGeometry(1).y();
-        }
-        m_patientWin->resize(size);
-        m_patientWin->move(x, y);
-
+        auto rect = static_cast<AAnalyserApplication*>(QApplication::instance())->getPatientWindowGeometry();
+        m_patientWin->resize(rect.size());
+        m_patientWin->move(rect.x(), rect.y());
         m_patientWin->show();
     }
 }

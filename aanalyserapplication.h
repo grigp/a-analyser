@@ -23,10 +23,19 @@ class AAnalyserApplication : public QApplication
     Q_OBJECT
 public:
     AAnalyserApplication(int &argc, char **argv);
-    ~AAnalyserApplication();
+    ~AAnalyserApplication() override;
 
     QMainWindow* mainWindow() const;
     void setMainWindow(QMainWindow *mw);
+
+    /*!
+     * \brief Возвращает геометрию окна пациента, положение и размеры
+     * Использует положение окна MainWindow и геометрию рабочего стола.
+     * Если в системе один монитор, то возвращает его геометрию.
+     * Если более одного, то, если MainWindow на первом, то возвращает геометрию второго, а если
+     * MainWindow на втором или далее, то возвращает первый
+     */
+    QRect getPatientWindowGeometry();
 
     /*!
      * \brief Показывает страницу с заданным uid

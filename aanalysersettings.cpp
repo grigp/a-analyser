@@ -15,6 +15,7 @@ AAnalyserSettings::AAnalyserSettings(QWidget *parent) :
 {
     ui->setupUi(this);
     ui->twTabs->setCurrentIndex(0);
+    ui->cbUsePatientWindow->setVisible(false);
 }
 
 AAnalyserSettings::~AAnalyserSettings()
@@ -40,6 +41,9 @@ void AAnalyserSettings::load()
     auto winPresent = SettingsProvider::valueFromRegAppCopy("", "PatientWindow", static_cast<QVariant>(true)).toBool();
     ui->cbUsePatientWindow->setChecked(winPresent);
 
+    auto winPatientNumber = SettingsProvider::valueFromRegAppCopy("", "PatientWindowNumber", static_cast<QVariant>(1)).toInt();
+    ui->edPatientWindowNumber->setValue(winPatientNumber);
+
     auto country = SettingsProvider::valueFromRegAppCopy("UserLocalize", "Country", static_cast<QVariant>("")).toString();
     auto sity = SettingsProvider::valueFromRegAppCopy("UserLocalize", "Sity", static_cast<QVariant>("")).toString();
     fillSities(country, sity);
@@ -55,6 +59,8 @@ void AAnalyserSettings::load()
 void AAnalyserSettings::save()
 {
     SettingsProvider::setValueToRegAppCopy("", "PatientWindow", ui->cbUsePatientWindow->isChecked());
+
+    SettingsProvider::setValueToRegAppCopy("", "PatientWindowNumber", ui->edPatientWindowNumber->value());
 
     auto selIdxs = ui->tvUserLocalize->selectionModel()->selectedIndexes();
     if ((selIdxs.size() > 0) && selIdxs.at(0).parent().isValid())

@@ -189,7 +189,6 @@ private:
 
     TestResultData *m_trd;  ///< Объект, записывающий данные в базу
 
-    bool m_patientWinPresent {false};
     StabDynamicTestPatientWindow *m_patientWin {nullptr};
 };
 

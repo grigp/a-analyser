@@ -56,7 +56,7 @@ void OctaedronExecute::setParams(const QJsonObject &params)
 
 StabDynamicTestPatientWindow *OctaedronExecute::createPatientWindow()
 {
-    m_patientWin = new OctaedronPatientWindow(static_cast<int>(m_radius * 1.2), this);
+    m_patientWin = new OctaedronPatientWindow(static_cast<int>(m_radius * 1.2), m_targets, this);
     return m_patientWin;
 }
 
@@ -147,12 +147,12 @@ void OctaedronExecute::createMarkerAndTargets()
     foreach (auto target, m_targets)
     {
         addTarget(target.x, target.y, Qt::gray, Qt::darkGray);
-        if (m_patientWin)
-            m_patientWin->addTarget(target.x, target.y, Qt::gray, 30);
+//        if (m_patientWin)
+//            m_patientWin->addTarget(target.x, target.y, Qt::gray, 30);
     }
     addTarget(0, 0, Qt::green, Qt::darkGreen);
-    if (m_patientWin)
-        m_patientWin->addTarget(0, 0, Qt::green, 30);
+//    if (m_patientWin)
+//        m_patientWin->addTarget(0, 0, Qt::green, 30);
     addMarker();
 }
 
