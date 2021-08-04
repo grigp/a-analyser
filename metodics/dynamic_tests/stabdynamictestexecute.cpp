@@ -244,7 +244,10 @@ void StabDynamicTestExecute::getData(DeviceProtocols::DeviceData *data)
 
 void StabDynamicTestExecute::on_communicationError(const QString &drvName, const QString &port, const int errorCode)
 {
-
+    Q_UNUSED(errorCode);
+    ui->lblCommunicationError->setText(QString(tr("Ошибка связи с устройством") + ": %1 (" + tr("порт") + ": %2)").
+                                       arg(drvName).arg(port));
+    ui->lblCommunicationError->setVisible(true);
 }
 
 void StabDynamicTestExecute::recording()
