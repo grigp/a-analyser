@@ -42,6 +42,8 @@ public:
     void setData(const int idx, const int value);
     int data(const int idx) const;
 
+    void endUpdate();
+
 protected:
     void paintEvent(QPaintEvent *event) override;
 

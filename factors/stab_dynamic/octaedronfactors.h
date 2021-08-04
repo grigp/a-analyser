@@ -53,6 +53,13 @@ public:
      */
     static void registerFactors();
 
+    int stageTime() const;
+    QString circeRoundRuleMode() const;
+    QString directionMode() const;
+    int radius() const;
+    int freq() const;
+    int diap() const;
+
 private:
     void getEventLablels();
 

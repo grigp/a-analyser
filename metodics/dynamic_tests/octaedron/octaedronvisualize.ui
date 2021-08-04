@@ -17,6 +17,19 @@
    <item>
     <widget class="DiagOctaedron" name="wgtDiag" native="true"/>
    </item>
+   <item>
+    <widget class="QLabel" name="lblAverageQuality">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="text">
+      <string>TextLabel</string>
+     </property>
+    </widget>
+   </item>
   </layout>
  </widget>
  <customwidgets>

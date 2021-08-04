@@ -7,6 +7,8 @@ namespace Ui {
 class OctaedronVisualize;
 }
 
+class OctaedronCalculator;
+
 /*!
  * \brief Класс виджета показа результатов тренажера "Октаэдр" OctaedronVisualize class
  */
@@ -22,6 +24,8 @@ public:
 
 private:
     Ui::OctaedronVisualize *ui;
+
+    OctaedronCalculator* m_calculator {nullptr};
 };
 
 #endif // OCTAEDRONVISUALIZE_H

@@ -66,6 +66,11 @@ int DiagOctaedron::data(const int idx) const
     return m_data[idx];
 }
 
+void DiagOctaedron::endUpdate()
+{
+    update();
+}
+
 void DiagOctaedron::paintEvent(QPaintEvent *event)
 {
     Q_UNUSED(event);

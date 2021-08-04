@@ -22,6 +22,9 @@ public:
     QString circeRoundRuleMode() const;
     void setCirceRoundRuleMode(const QString crm);
 
+    QString directionMode() const;
+    void setDirectionMode(const QString dm);
+
     int radius() const;
     void setRadius(const int radius);
 

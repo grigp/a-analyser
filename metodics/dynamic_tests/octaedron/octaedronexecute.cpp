@@ -94,6 +94,7 @@ void OctaedronExecute::recording()
         m_res->setRadius(m_radius);
         m_res->setStageTime(m_stageTime);
         m_res->setCirceRoundRuleMode(BaseUtils::CirceRoundRuleModeValueName.value(m_circeRoundRuleMode));
+        m_res->setDirectionMode(BaseUtils::DirectionModeValueName.value(m_directionMode));
         addStageToResult();
     }
 }

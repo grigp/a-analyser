@@ -38,6 +38,18 @@ void OctaedronResultData::setCirceRoundRuleMode(const QString crm)
     setData(obj);
 }
 
+QString OctaedronResultData::directionMode() const
+{
+    return data()["direction_mode"].toString();
+}
+
+void OctaedronResultData::setDirectionMode(const QString dm)
+{
+    QJsonObject obj = data();
+    obj["direction_mode"] = dm;
+    setData(obj);
+}
+
 int OctaedronResultData::radius() const
 {
     return data()["radius"].toInt();

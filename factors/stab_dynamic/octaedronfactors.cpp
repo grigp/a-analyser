@@ -1,5 +1,7 @@
 #include "octaedronfactors.h"
 
+#include <QDebug>
+
 #include "aanalyserapplication.h"
 #include "dataprovider.h"
 #include "channelsdefines.h"
@@ -84,6 +86,48 @@ void OctaedronFactors::registerFactors()
 
 }
 
+int OctaedronFactors::stageTime() const
+{
+    if (m_resData)
+        return m_resData->stageTime();
+    return 5;
+}
+
+QString OctaedronFactors::circeRoundRuleMode() const
+{
+    if (m_resData)
+        return m_resData->circeRoundRuleMode();
+    return BaseUtils::CirceRoundRuleModeValueName.value(BaseUtils::crmRadial);
+}
+
+QString OctaedronFactors::directionMode() const
+{
+    if (m_resData)
+        return m_resData->directionMode();
+    return BaseUtils::DirectionModeValueName.value(BaseUtils::dmCounterClockwise);
+}
+
+int OctaedronFactors::radius() const
+{
+    if (m_resData)
+        return m_resData->radius();
+    return 50;
+}
+
+int OctaedronFactors::freq() const
+{
+    if (m_resData)
+        return m_resData->freq();
+    return 50;
+}
+
+int OctaedronFactors::diap() const
+{
+    if (m_resData)
+        return m_resData->diap();
+    return 128;
+}
+
 void OctaedronFactors::getEventLablels()
 {
     QByteArray baData;
@@ -113,7 +157,7 @@ void OctaedronFactors::calculateBaseFactors()
             {
                 //! Конечная точка этапа
                 int end = begin + m_resData->stageTime() * m_resData->freq();
-                if (stab.size() >= begin && stab.size() < end)
+                if (begin <= stab.size() && end <= stab.size())
                 {
                     //! По сигналу
                     double r = 0;

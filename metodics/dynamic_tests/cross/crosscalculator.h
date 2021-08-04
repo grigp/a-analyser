@@ -6,6 +6,9 @@
 
 class CrossFactors;
 
+/*!
+ * \brief Класс расчета результатов теста на устойчивость CrossCalculator class
+ */
 class CrossCalculator : public TestCalculator
 {
     Q_OBJECT
