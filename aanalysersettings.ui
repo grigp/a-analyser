@@ -25,13 +25,6 @@
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout_4">
        <item>
-        <widget class="QCheckBox" name="cbUsePatientWindow">
-         <property name="text">
-          <string>Использовать окно пациента на дополнительном мониторе</string>
-         </property>
-        </widget>
-       </item>
-       <item>
         <widget class="QFrame" name="frame">
          <property name="frameShape">
           <enum>QFrame::StyledPanel</enum>
@@ -48,18 +41,12 @@
            </widget>
           </item>
           <item>
-           <widget class="QSpinBox" name="edPatientWindowNumber">
+           <widget class="QComboBox" name="cbPatientWindowNumber">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
-            </property>
-            <property name="minimumSize">
-             <size>
-              <width>50</width>
-              <height>0</height>
-             </size>
             </property>
            </widget>
           </item>

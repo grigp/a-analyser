@@ -1,6 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
  <class>OctaedronPatientWindow</class>
- <widget name="OctaedronPatientWindow" class="QDialog">
+ <widget class="QDialog" name="OctaedronPatientWindow">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -10,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>Тренажер &quot;Октаэдр&quot;</string>
   </property>
  </widget>
  <resources/>

@@ -1,8 +1,11 @@
 #include "aanalysersettings.h"
 #include "ui_aanalysersettings.h"
 
+#include "aanalyserapplication.h"
 #include "settingsprovider.h"
 
+#include <QApplication>
+#include <QDesktopWidget>
 #include <QJsonArray>
 #include <QJsonObject>
 #include <QJsonDocument>
@@ -15,7 +18,7 @@ AAnalyserSettings::AAnalyserSettings(QWidget *parent) :
 {
     ui->setupUi(this);
     ui->twTabs->setCurrentIndex(0);
-    ui->cbUsePatientWindow->setVisible(false);
+    fillListMonitors();
 }
 
 AAnalyserSettings::~AAnalyserSettings()
@@ -38,11 +41,8 @@ void AAnalyserSettings::accept()
 
 void AAnalyserSettings::load()
 {
-    auto winPresent = SettingsProvider::valueFromRegAppCopy("", "PatientWindow", static_cast<QVariant>(true)).toBool();
-    ui->cbUsePatientWindow->setChecked(winPresent);
-
     auto winPatientNumber = SettingsProvider::valueFromRegAppCopy("", "PatientWindowNumber", static_cast<QVariant>(1)).toInt();
-    ui->edPatientWindowNumber->setValue(winPatientNumber);
+    ui->cbPatientWindowNumber->setCurrentText(QString::number(winPatientNumber));
 
     auto country = SettingsProvider::valueFromRegAppCopy("UserLocalize", "Country", static_cast<QVariant>("")).toString();
     auto sity = SettingsProvider::valueFromRegAppCopy("UserLocalize", "Sity", static_cast<QVariant>("")).toString();
@@ -58,9 +58,7 @@ void AAnalyserSettings::load()
 
 void AAnalyserSettings::save()
 {
-    SettingsProvider::setValueToRegAppCopy("", "PatientWindow", ui->cbUsePatientWindow->isChecked());
-
-    SettingsProvider::setValueToRegAppCopy("", "PatientWindowNumber", ui->edPatientWindowNumber->value());
+    SettingsProvider::setValueToRegAppCopy("", "PatientWindowNumber", ui->cbPatientWindowNumber->currentText().toInt());
 
     auto selIdxs = ui->tvUserLocalize->selectionModel()->selectedIndexes();
     if ((selIdxs.size() > 0) && selIdxs.at(0).parent().isValid())
@@ -72,6 +70,16 @@ void AAnalyserSettings::save()
         SettingsProvider::setValueToRegAppCopy("UserLocalize", "Country", country);
         SettingsProvider::setValueToRegAppCopy("UserLocalize", "Sity", sity);
         SettingsProvider::setValueToRegAppCopy("UserLocalize", "g", g);
+    }
+}
+
+void AAnalyserSettings::fillListMonitors()
+{
+    auto app = static_cast<AAnalyserApplication*>(QApplication::instance());
+    for (int i = 0; i < app->desktop()->screenCount(); ++i)
+    {
+        if (!app->desktop()->availableGeometry(i).contains(app->mainWindow()->geometry().center()))
+            ui->cbPatientWindowNumber->addItem(QString::number(i + 1), i);
     }
 }
 

@@ -17,8 +17,8 @@ class AAnalyserSettings : public QDialog
     Q_OBJECT
 
 public:
-    explicit AAnalyserSettings(QWidget *parent = 0);
-    ~AAnalyserSettings();
+    explicit AAnalyserSettings(QWidget *parent = nullptr);
+    ~AAnalyserSettings() override;
 
 public slots:
     int exec() override;
@@ -36,6 +36,8 @@ private:
 
     void load();
     void save();
+
+    void fillListMonitors();
 
     void fillSities(const QString& country, const QString& sity);
 

@@ -136,9 +136,8 @@ void TrenTakePutExecute::resizeEvent(QResizeEvent *event)
     Q_UNUSED(event);
 //    QSize size = event->size();
 
-    auto winPresent = SettingsProvider::valueFromRegAppCopy("", "PatientWindow", static_cast<QVariant>(true)).toBool();
     QSize size = ui->gvGame->geometry().size();
-    if (m_patientWindow && winPresent && QApplication::desktop()->screenCount() > 1)
+    if (m_patientWindow && QApplication::desktop()->screenCount() > 1)
         size = m_patientWindow->sceneSize();
     setSceneSize(size);
 }
@@ -1010,8 +1009,8 @@ void TrenTakePutExecute::allocSplitPictures()
         m_patientWindow->setSamplePixmap(pixAll);
 
     //! Масштабирование
-    pixAll = pixAll.scaled(m_zonesTake.at(0).width * 2 * m_prop,
-                           m_zonesTake.at(0).height * 2 * m_prop,
+    pixAll = pixAll.scaled(static_cast<int>(m_zonesTake.at(0).width * 2 * m_prop),
+                           static_cast<int>(m_zonesTake.at(0).height * 2 * m_prop),
                            Qt::KeepAspectRatio);
 
     if (m_zonesTake.size() == 4 && m_zonesPut.size() == 4) // || m_zonesTake.size() == 9)
@@ -1244,9 +1243,9 @@ void TrenTakePutExecute::showPatientWindow()
         m_patientWindow->setScene(m_scene);
         QSize size = m_patientWindow->sceneSize();
         setSceneSize(size);
-        m_patientWindow->resize(QApplication::desktop()->availableGeometry(1).size());
-        m_patientWindow->move(QApplication::desktop()->availableGeometry(1).x(),
-                              QApplication::desktop()->availableGeometry(1).y());
+        auto rect = static_cast<AAnalyserApplication*>(QApplication::instance())->getPatientWindowGeometry();
+        m_patientWindow->resize(rect.size());
+        m_patientWindow->move(rect.x(), rect.y());
         m_patientWindow->show();
         m_prop = m_patientWindow->prop();
         m_propX = m_patientWindow->propX();

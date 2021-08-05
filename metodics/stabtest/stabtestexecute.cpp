@@ -115,8 +115,7 @@ void StabTestExecute::start()
         ui->lblProbeTitle->setText(probeParams().name + " - " + m_kard.fio);
         m_trd->newTest(m_kard.uid, mi.uid);
 
-        m_patientWinPresent = SettingsProvider::valueFromRegAppCopy("", "PatientWindow", static_cast<QVariant>(true)).toBool();
-        if (m_patientWinPresent && QApplication::desktop()->screenCount() > 1)
+        if (QApplication::desktop()->screenCount() > 1)
             showPatientWindow(m_params.at(m_probe).stimulCode);
         ui->cbScale->setCurrentIndex(m_params.at(m_probe).scale);
 
@@ -192,10 +191,10 @@ void StabTestExecute::getData(DeviceProtocols::DeviceData *data)
                 if (m_recCount < probeParams().latentTime * m_freqStab)
                     ui->lblRecLen->setText(tr("Задержка привыкания"));
                 else
-                    ui->lblRecLen->setText(BaseUtils::getTimeBySecCount(rc / m_freqStab) + " / " +
+                    ui->lblRecLen->setText(BaseUtils::getTimeBySecCount(static_cast<int>(rc / m_freqStab)) + " / " +
                                            BaseUtils::getTimeBySecCount(probeParams().time));
                 double mrc = probeParams().time * m_freqStab;
-                ui->pbRec->setValue(rc / mrc * 100);
+                ui->pbRec->setValue(static_cast<int>(rc / mrc * 100));
             }
             else
                 ui->lblRecLen->setText(BaseUtils::getTimeBySecCount(m_recCount / m_freqStab));
@@ -262,7 +261,7 @@ void StabTestExecute::recording()
         }
 
         initRecSignals();
-        if (!(m_patientWinPresent && QApplication::desktop()->screenCount() > 1))
+        if (QApplication::desktop()->screenCount() == 1)
         {
             showPatientWindow(m_params.at(m_probe).stimulCode);
             scaleChange(m_params.at(m_probe).scale);
@@ -274,7 +273,7 @@ void StabTestExecute::recording()
     {
         if (m_patientWin)
             m_patientWin->stop();
-        if (!(m_patientWinPresent && QApplication::desktop()->screenCount() > 1))
+        if (QApplication::desktop()->screenCount() == 1)
             hidePatientWindow();
 
         ui->btnRecord->setIcon(QIcon(":/images/Save.png"));
@@ -360,7 +359,7 @@ void StabTestExecute::nextProbe()
         ui->btnRecord->setText(tr("Запись"));
         ui->pbRec->setValue(0);
 
-        if (m_patientWinPresent && QApplication::desktop()->screenCount() > 1)
+        if (QApplication::desktop()->screenCount() > 1)
             showPatientWindow(m_params.at(m_probe).stimulCode);
         ui->cbScale->setCurrentIndex(m_params.at(m_probe).scale);
 
@@ -404,17 +403,9 @@ void StabTestExecute::showPatientWindow(const int winCode)
 
     if (m_patientWin)
     {
-        auto size = QApplication::desktop()->availableGeometry(0).size();
-        auto x = QApplication::desktop()->availableGeometry(0).x();
-        auto y = QApplication::desktop()->availableGeometry(0).y();
-        if (m_patientWinPresent && QApplication::desktop()->screenCount() > 1)
-        {
-            size = QApplication::desktop()->availableGeometry(1).size();
-            x = QApplication::desktop()->availableGeometry(1).x();
-            y = QApplication::desktop()->availableGeometry(1).y();
-        }
-        m_patientWin->resize(size);
-        m_patientWin->move(x, y);
+        auto rect = static_cast<AAnalyserApplication*>(QApplication::instance())->getPatientWindowGeometry();
+        m_patientWin->resize(rect.size());
+        m_patientWin->move(rect.x(), rect.y());
 
         m_patientWin->show();
     }

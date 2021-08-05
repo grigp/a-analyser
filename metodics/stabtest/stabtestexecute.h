@@ -114,7 +114,7 @@ private:
 
     TestResultData *m_trd;  ///< Объект, записывающий данные в базу
 
-    bool m_patientWinPresent {false};
+//    bool m_patientWinPresent {false};
     PatientWindow* m_patientWin {nullptr};  ///< Окно пациента
 };
 
