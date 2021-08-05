@@ -87,6 +87,7 @@ void EvolventaExecute::recording()
     m_targetAngle = 0;
 
     m_targetSign->clear();
+    m_res->clear();
 
     if (isRecording())
     {
@@ -109,6 +110,9 @@ void EvolventaExecute::getData(DeviceProtocols::DeviceData *data)
     {
         if (isRecording())
         {
+            //! Установка цели
+            setTargetPolar(m_targetAngle, m_targetAmpl);
+
             //! Управление углом цели относительно 0
             double w = (2 * M_PI / static_cast<double>(freqStab())) * 0.1;
             if (w * static_cast<double>(freqStab()) * m_targetAmpl > m_speedMax)
@@ -151,9 +155,6 @@ void EvolventaExecute::getData(DeviceProtocols::DeviceData *data)
                     finishTest();
                 }
             }
-
-            //! Установка цели
-            setTargetPolar(m_targetAngle, m_targetAmpl);
         }
     }
 }

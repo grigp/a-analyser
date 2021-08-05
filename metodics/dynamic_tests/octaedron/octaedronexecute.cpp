@@ -83,11 +83,11 @@ void OctaedronExecute::recording()
     m_stage = 0;
     m_stageCounter = 0;
     m_passed.clear();
+    m_res->clear();
 
     if (isRecording())
     {
         getFirstStage();
-        setCurrentTarget();
 
         m_res->setFreq(freqStab());
         m_res->setDiap(diap());
@@ -97,6 +97,8 @@ void OctaedronExecute::recording()
         m_res->setDirectionMode(BaseUtils::DirectionModeValueName.value(m_directionMode));
         addStageToResult();
     }
+
+    setCurrentTarget();
 }
 
 void OctaedronExecute::getData(DeviceProtocols::DeviceData *data)

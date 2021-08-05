@@ -81,8 +81,19 @@ void StepOffsetExecute::recording()
         m_mfd->showFullScreen();
     }
     else
+    {
+        m_stage = StepOffsetDefines::stgWaiting;
         StabDynamicTestExecute::recording();
+    }
+
+    m_repeatCounter = 0;
+    m_lblRemain->setText(tr("Осталось проходов") + " - " + QString::number(m_repeatCount - m_repeatCounter));
+    m_stageCounter = 0;
     m_recordCounter = 0;
+    m_tx = 0;
+    m_ty = 0;
+    setTarget(m_tx, m_ty);
+    m_res->clear();
 }
 
 void StepOffsetExecute::getData(DeviceProtocols::DeviceData *data)

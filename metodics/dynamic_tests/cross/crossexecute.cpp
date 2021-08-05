@@ -138,16 +138,16 @@ bool CrossExecute::newDirection()
     if (m_curDirection != BaseUtils::dirNone)
         m_stagesProcess[m_curDirection]++;
     if (m_curDirection == BaseUtils::dirUp)
-        m_lblUp->setText("Вперед - " + stagesRemained(m_curDirection));
+        m_lblUp->setText(tr("Вперед") + " - " + stagesRemained(m_curDirection));
     else
     if (m_curDirection == BaseUtils::dirDown)
-        m_lblDn->setText("Назад - " + stagesRemained(m_curDirection));
+        m_lblDn->setText(tr("Назад") + " - " + stagesRemained(m_curDirection));
     else
     if (m_curDirection == BaseUtils::dirRight)
-        m_lblRt->setText("Вправо - " + stagesRemained(m_curDirection));
+        m_lblRt->setText(tr("Вправо") + " - " + stagesRemained(m_curDirection));
     else
     if (m_curDirection == BaseUtils::dirLeft)
-        m_lblLf->setText("Влево - " + stagesRemained(m_curDirection));
+        m_lblLf->setText(tr("Влево") + " - " + stagesRemained(m_curDirection));
 
     if (isTestFinished())
     {
@@ -259,10 +259,17 @@ void CrossExecute::recording()
 {
     StabDynamicTestExecute::recording();
 
+    m_res->clear();
+
+    for (int i = 0; i < 4; ++i)
+        m_stagesProcess[i] = 0;
+    m_lblUp->setText(tr("Вперед") + " - " + stagesRemained(BaseUtils::dirUp));
+    m_lblDn->setText(tr("Назад") + " - " + stagesRemained(BaseUtils::dirDown));
+    m_lblRt->setText(tr("Вправо") + " - " + stagesRemained(BaseUtils::dirRight));
+    m_lblLf->setText(tr("Влево") + " - " + stagesRemained(BaseUtils::dirLeft));
+
     if (isRecording())
     {
-        for (int i = 0; i < 4; ++i)
-            m_stagesProcess[i] = 0;
         m_stage = CrossDefines::stgGo;
         newDirection();
         m_res->setFreq(freqStab());
@@ -273,6 +280,7 @@ void CrossExecute::recording()
     else
     {
         m_stage = CrossDefines::stgNo;
+        m_curDirection = BaseUtils::dirNone;
         m_tx = 0;
         m_ty = 0;
         setTarget(m_tx, m_ty);
