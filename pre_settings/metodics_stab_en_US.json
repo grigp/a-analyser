@@ -316,6 +316,21 @@
             }
         },
         {
+            "uid": "005ADEA5-EF51-4BFD-9E8D-F5CF41EE0B9D",
+            "name": "Trenager \"Octaedron\"",
+            "image": "Octaedron.png",
+            "template": "met_octaedron_uid",
+            "build_norms": false,
+            "kind": "{848935A7-394E-42F9-9320-41ABD2ED5E5B}",
+            "params":
+            {
+                "circe_round_rule_mode": "radial",
+                "direction_mode": "counter_clockwise",
+                "radius": 50,
+                "stage_time": 5
+            }
+        },
+        {
             "uid": "{CFCCCAA0-A520-49EF-9C04-EB57580E8CAD}",
             "name": "Trenager \"Balls\"",
             "image": "Balls.png",
