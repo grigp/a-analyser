@@ -486,14 +486,69 @@
         },
         {
             "uid": "{EBD6CB19-6B14-4E18-8171-1C9685DF56C0}",
-            "name": "Тренажер \"Тетрис\"",
-            "image": "Tetris.png",
-            "template": "met_tetris_uid",
+            "name": "Тренажер \"Тетрис с захватом\"",
+            "image": "TetrisTake.png",
+            "template": "met_trentetris_uid",
             "build_norms": false,
             "kind": "{E7829C54-4F99-4870-A91C-404238B43E50}",
             "params":
             {
-                "moving_mode": "auto",
+                "moving_mode": "take",
+                "complexity": "figures",
+                "deleting": "rows",
+                "height": 21,
+                "width": 15,
+                "cube_image": "cube.png",
+                "rows_deleting_mode":
+                {
+                    "cube_color": "ffffff00",
+                    "glass_color": "ffff00ff",
+                    "last_color": "ff00ffff"
+                },
+                "colored_deleting_mode":
+                {
+                    "count": 3,
+                    "colors": [
+                        {
+                            "color": "ff00ffff"
+                        },
+                        {
+                            "color": "ff0000ff"
+                        },
+                        {
+                            "color": "0000ffff"
+                        },
+                        {
+                            "color": "ff00ff00"
+                        }
+                    ]
+                },
+                "take_moving_mode":
+                {
+                    "marker": "marker.png",
+                    "marker_color": "ff00000000"
+                },
+                "auto_moving_mode":
+                {
+                    "speed": 3
+                },
+                "background": {
+                     "style": "plate",
+                     "image": "01.png",
+                     "borders": {
+                         "left": 0,
+                         "top": 0,
+                         "right": 0,
+                         "bottom": 0
+                     }
+                },
+                "sounds": {
+                    "take": "03.wav",
+                    "put": "04.wav",
+                    "delete": "05.wav"
+                },
+                "scale": 2,
+                "time": 240
             }
         },
         {

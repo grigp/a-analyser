@@ -147,5 +147,14 @@
         <file>images/SmileSadnees200x200.png</file>
         <file>qss/evolv.qss</file>
         <file>images/Methodics/Octaedron.png</file>
+        <file>images/Methodics/Tetris.png</file>
+        <file>images/Methodics/TetrisColor.png</file>
+        <file>images/Methodics/TetrisColorTake.png</file>
+        <file>images/Methodics/TetrisCubes.png</file>
+        <file>images/Methodics/TetrisCubesColor.png</file>
+        <file>images/Methodics/TetrisCubesColorTake.png</file>
+        <file>images/Methodics/TetrisCubesTake.png</file>
+        <file>images/Methodics/TetrisTake.png</file>
+        <file>images/Methodics/GamesHard.png</file>
     </qresource>
 </RCC>
