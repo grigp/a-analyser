@@ -27,7 +27,7 @@ void TrenTetrisParamsDialog::setParams(const QJsonObject &params)
     m_params = params;
 
     ui->edGameTime->setValue(params["time"].toInt());
-    ui->cbScale->setCurrentText(QString::number(params["scale"].toInt()));
+    ui->cbScale->setCurrentIndex(params["scale"].toInt());
 
     auto mm = TrenTetrisDefines::MovingModeValueIndex.value(params["moving_mode"].toString());
     ui->cbMovingMode->setCurrentIndex(mm);
@@ -40,7 +40,7 @@ void TrenTetrisParamsDialog::setParams(const QJsonObject &params)
 QJsonObject TrenTetrisParamsDialog::getParams()
 {
     m_params["time"] = ui->edGameTime->value();
-    m_params["scale"] = ui->cbScale->currentText().toInt();
+    m_params["scale"] = ui->cbScale->currentIndex();
 
     auto mm = TrenTetrisDefines::MovingModeValueName.value(static_cast<TrenTetrisDefines::MovingMode>(ui->cbMovingMode->currentIndex()));
     m_params["moving_mode"] = mm;

@@ -62,14 +62,14 @@ void TrenTakePutExecute::setParams(const QJsonObject &params)
     setZones(arrTakeZones, m_zonesTake);
     setElements(arrTakeElements, m_elementsTake, TrenTakePutDefines::gsTake);
 
-    if ((m_elementsTake.size() == 1) && (m_elementsTake.at(0).style == TrenTakePutDefines::esPictureSplit))
+    if ((m_elementsTake.size() == 1) && (m_elementsTake.at(0).style == GraphicCommon::esPictureSplit))
         loadPicturesSingle(m_elementsTake.at(0).images, "png");
-    if ((m_elementsTake.size() >= 1) && (m_elementsTake.at(0).style == TrenTakePutDefines::esPictureRandom))
+    if ((m_elementsTake.size() >= 1) && (m_elementsTake.at(0).style == GraphicCommon::esPictureRandom))
         loadPicturesSingle(m_elementsTake.at(0).images, "png"); //"gif");
     ui->lblFullPicture->setVisible((m_elementsTake.size() == 1) &&
-                                   (m_elementsTake.at(0).style == TrenTakePutDefines::esPictureSplit));
+                                   (m_elementsTake.at(0).style == GraphicCommon::esPictureSplit));
 
-    if ((m_elementsTake.size() == 1) && (m_elementsTake.at(0).style == TrenTakePutDefines::esPicturePair))
+    if ((m_elementsTake.size() == 1) && (m_elementsTake.at(0).style == GraphicCommon::esPicturePair))
         loadPicturesPair(m_elementsTake.at(0).images);
 
     m_markerObj = params["marker"].toObject();
@@ -198,8 +198,8 @@ void TrenTakePutExecute::getData(DeviceProtocols::DeviceData *data)
             if (m_marker)
             {
                 //! Установка маркера
-                double mx = rec.x() / (128 / scaleMultiplier()) * (m_scene->sceneRect().width() / 2);
-                double my = - rec.y() / (128 / scaleMultiplier()) * (m_scene->sceneRect().height() / 2);
+                double mx = rec.x() / (128 / BaseUtils::scaleMultiplier(ui->cbScale->currentIndex())) * (m_scene->sceneRect().width() / 2);
+                double my = - rec.y() / (128 / BaseUtils::scaleMultiplier(ui->cbScale->currentIndex())) * (m_scene->sceneRect().height() / 2);
 
                 if (mx - m_marker->boundingRect().width() / 2 < m_scene->sceneRect().x() + m_bndLeft * m_propX)
                     mx = m_scene->sceneRect().x() + m_bndLeft * m_propX + m_marker->boundingRect().width() / 2;
@@ -352,30 +352,30 @@ void TrenTakePutExecute::setZones(const QJsonArray &arrZones, QList<TrenTakePutD
 }
 
 void TrenTakePutExecute::setElements(const QJsonArray &arrElements,
-                                     QList<TrenTakePutDefines::GameElementInfo> &elements,
+                                     QList<GraphicCommon::GameElementInfo> &elements,
                                      TrenTakePutDefines::GameStage stage)
 {
     elements.clear();
     for (int i = 0; i < arrElements.size(); ++i)
     {
         auto obj = arrElements.at(i).toObject();
-        TrenTakePutDefines::GameElementInfo ei;
+        GraphicCommon::GameElementInfo ei;
 
         auto sStyle = obj["style"].toString();
         if (sStyle == "picture_fixed")
-            ei.style = TrenTakePutDefines::esPictureFixed;
+            ei.style = GraphicCommon::esPictureFixed;
         else
         if (sStyle == "picture_random")
-            ei.style = TrenTakePutDefines::esPictureRandom;
+            ei.style = GraphicCommon::esPictureRandom;
         else
         if (sStyle == "picture_pair")
-            ei.style = TrenTakePutDefines::esPicturePair;
+            ei.style = GraphicCommon::esPicturePair;
         else
         if (sStyle == "picture_split")
-            ei.style = TrenTakePutDefines::esPictureSplit;
+            ei.style = GraphicCommon::esPictureSplit;
         else
         if (sStyle == "drawing")
-            ei.style = TrenTakePutDefines::esDrawing;
+            ei.style = GraphicCommon::esDrawing;
 
         ei.enabled = obj["enabled"].toBool();
         ei.code = obj["code"].toInt();
@@ -398,10 +398,10 @@ void TrenTakePutExecute::setElements(const QJsonArray &arrElements,
 
         auto drawing = obj["drawing"].toString();
         if (drawing == "rectangle")
-            ei.drawing = TrenTakePutDefines::edRectangle;
+            ei.drawing = GraphicCommon::edRectangle;
         else
         if (drawing == "circle")
-            ei.drawing = TrenTakePutDefines::edCircle;
+            ei.drawing = GraphicCommon::edCircle;
 
         ei.isMobile = obj["mobile"].toBool();
         ei.movingMaxForce = obj["moving_max_force"].toInt();
@@ -409,29 +409,29 @@ void TrenTakePutExecute::setElements(const QJsonArray &arrElements,
 
         auto ml = obj["moving_law"].toString();
         if (ml == "random_force")
-            ei.movingLaw = TrenTakePutDefines::mlRandomForce;
+            ei.movingLaw = GraphicCommon::mlRandomForce;
         else
         if (ml == "right_to_left")
-            ei.movingLaw = TrenTakePutDefines::mlRightToLeft;
+            ei.movingLaw = GraphicCommon::mlRightToLeft;
         else
         if (ml == "left_to_right")
-            ei.movingLaw = TrenTakePutDefines::mlLeftToRight;
+            ei.movingLaw = GraphicCommon::mlLeftToRight;
         else
         if (ml == "up_to_down")
-            ei.movingLaw = TrenTakePutDefines::mlUpToDown;
+            ei.movingLaw = GraphicCommon::mlUpToDown;
         else
         if (ml == "down_to_up")
-            ei.movingLaw = TrenTakePutDefines::mlDownToUp;
+            ei.movingLaw = GraphicCommon::mlDownToUp;
 
         auto dp = obj["done_process"].toString();
         if (dp == "hide")
-            ei.doneProcess = TrenTakePutDefines::dpHide;
+            ei.doneProcess = GraphicCommon::dpHide;
         else
         if (dp == "show")
-            ei.doneProcess = TrenTakePutDefines::dpShow;
+            ei.doneProcess = GraphicCommon::dpShow;
         else
         if (dp == "bang")
-            ei.doneProcess = TrenTakePutDefines::dpBang;
+            ei.doneProcess = GraphicCommon::dpBang;
 
         elements << ei;
     }
@@ -445,7 +445,7 @@ void TrenTakePutExecute::setMarker(const QJsonObject &objMarker)
         QPixmap mpmp(":/images/Games/" + objMarker["image"].toString());
         if (objMarker["repaint"].toBool())
             BaseUtils::setColoredPicture(mpmp, BaseUtils::strRGBAToColor(objMarker["color"].toString()));
-        m_marker = new TrenTakePutDefines::MarkerElement(mpmp);
+        m_marker = new GraphicCommon::MarkerElement(mpmp);
 
         auto stAdv = objMarker["advanced"].toString();
         if (stAdv == "trace_on_target")
@@ -459,7 +459,7 @@ void TrenTakePutExecute::setBackground(const QJsonObject &objBackground)
     auto style = objBackground["style"].toString();
     if (style == "picture")
     {
-        m_background = new TrenTakePutDefines::BackgroundElement(TrenTakePutDefines::bkgmPicture);
+        m_background = new GraphicCommon::BackgroundElement(GraphicCommon::bkgmPicture);
         m_background->assignPixmap(":/images/backgrounds/" + objBackground["image"].toString());
         m_background->setRect(m_scene->sceneRect());
         m_background->setZValue(zlvlBackground);
@@ -467,7 +467,7 @@ void TrenTakePutExecute::setBackground(const QJsonObject &objBackground)
     else
     if (style == "plate")
     {
-        m_background = new TrenTakePutDefines::BackgroundElement(TrenTakePutDefines::bkgmPlate);
+        m_background = new GraphicCommon::BackgroundElement(GraphicCommon::bkgmPlate);
         m_background->assignPixmap(":/images/plite_textures/" + objBackground["image"].toString());
         m_background->setRect(m_scene->sceneRect());
         m_background->setZValue(zlvlBackground);
@@ -683,7 +683,7 @@ void TrenTakePutExecute::elementsTimeLimitWorking()
         auto* item = items[i];
         if (item != m_marker && item != m_background)
         {
-            auto* ge = static_cast<TrenTakePutDefines::GameElement*>(item);
+            auto* ge = static_cast<GraphicCommon::GameElement*>(item);
             if (ge->presentTime() > 0)
             {
                 ge->incTimeCounter(1.0 / m_frequency);
@@ -719,16 +719,16 @@ void TrenTakePutExecute::elementsMobileWorking()
         auto* item = items[i];
         if (item != m_marker && item != m_background)
         {
-            auto* ge = static_cast<TrenTakePutDefines::GameElement*>(item);
+            auto* ge = static_cast<GraphicCommon::GameElement*>(item);
             if (!ge->isProcessed() && ge->elementInfo()->isMobile)
             {
-                if (ge->elementInfo()->movingLaw == TrenTakePutDefines::mlRandomForce)
+                if (ge->elementInfo()->movingLaw == GraphicCommon::mlRandomForce)
                     setRandomWorkMobilePosition(ge);
                 else
-                if (ge->elementInfo()->movingLaw == TrenTakePutDefines::mlLeftToRight ||
-                    ge->elementInfo()->movingLaw == TrenTakePutDefines::mlRightToLeft ||
-                    ge->elementInfo()->movingLaw == TrenTakePutDefines::mlUpToDown ||
-                    ge->elementInfo()->movingLaw == TrenTakePutDefines::mlDownToUp)
+                if (ge->elementInfo()->movingLaw == GraphicCommon::mlLeftToRight ||
+                    ge->elementInfo()->movingLaw == GraphicCommon::mlRightToLeft ||
+                    ge->elementInfo()->movingLaw == GraphicCommon::mlUpToDown ||
+                    ge->elementInfo()->movingLaw == GraphicCommon::mlDownToUp)
                 {
                     setLinearMovingMobilePosition(ge);
                     if (!m_scene->sceneRect().contains(ge->pos()))
@@ -747,7 +747,7 @@ void TrenTakePutExecute::elementsMobileWorking()
     }
 }
 
-void TrenTakePutExecute::setRandomWorkMobilePosition(TrenTakePutDefines::GameElement *ge)
+void TrenTakePutExecute::setRandomWorkMobilePosition(GraphicCommon::GameElement *ge)
 {
     auto randomForce = [&](const double v, const double min, const double max) -> double
     {
@@ -775,7 +775,7 @@ void TrenTakePutExecute::setRandomWorkMobilePosition(TrenTakePutDefines::GameEle
     ge->setPos(x, y);
 }
 
-void TrenTakePutExecute::setLinearMovingMobilePosition(TrenTakePutDefines::GameElement *ge)
+void TrenTakePutExecute::setLinearMovingMobilePosition(GraphicCommon::GameElement *ge)
 {
     double vx = ge->vx();
     double vy = ge->vy();
@@ -785,28 +785,28 @@ void TrenTakePutExecute::setLinearMovingMobilePosition(TrenTakePutDefines::GameE
     int maxSpeed = 10;
     if (ge->elementInfo()->movingMaxSpeed > 0)
         maxSpeed = ge->elementInfo()->movingMaxSpeed;
-    if (ge->elementInfo()->movingLaw == TrenTakePutDefines::mlLeftToRight)
+    if (ge->elementInfo()->movingLaw == GraphicCommon::mlLeftToRight)
     {
         if (vx == 0)
             vx = qrand() % maxSpeed;
         x = x + vx;
     }
     else
-    if (ge->elementInfo()->movingLaw == TrenTakePutDefines::mlRightToLeft)
+    if (ge->elementInfo()->movingLaw == GraphicCommon::mlRightToLeft)
     {
         if (vx == 0)
             vx = qrand() % maxSpeed;
         x = x - vx;
     }
     else
-    if (ge->elementInfo()->movingLaw == TrenTakePutDefines::mlUpToDown)
+    if (ge->elementInfo()->movingLaw == GraphicCommon::mlUpToDown)
     {
         if (vy == 0)
             vy = qrand() % maxSpeed;
         y = y + vy;
     }
     else
-    if (ge->elementInfo()->movingLaw == TrenTakePutDefines::mlDownToUp)
+    if (ge->elementInfo()->movingLaw == GraphicCommon::mlDownToUp)
     {
         if (vy == 0)
             vy = qrand() % maxSpeed;
@@ -830,7 +830,7 @@ void TrenTakePutExecute::fixingTake()
 void TrenTakePutExecute::fixingStage()
 {
     //! Нарисовать взрыв
-    if (m_elementTake->elementInfo()->doneProcess == TrenTakePutDefines::dpBang)
+    if (m_elementTake->elementInfo()->doneProcess == GraphicCommon::dpBang)
     {
         auto *ei = m_elementTake->elementInfo();
         QPixmap pm(":/images/Games/bang.png");
@@ -839,9 +839,9 @@ void TrenTakePutExecute::fixingStage()
 
     m_gameStage = TrenTakePutDefines::gsTake;
     m_elementTake->setProcessed(true);
-    if (m_elementTake->elementInfo()->style != TrenTakePutDefines::esPictureSplit)
+    if (m_elementTake->elementInfo()->style != GraphicCommon::esPictureSplit)
     {
-        if (m_elementTake->elementInfo()->doneProcess == TrenTakePutDefines::dpHide)
+        if (m_elementTake->elementInfo()->doneProcess == GraphicCommon::dpHide)
             m_elementTake->setVisible(false);
     }
     else
@@ -925,21 +925,21 @@ void TrenTakePutExecute::generateNewScene(const bool isAddScore)
             m_zonesTake.size() > 0 && m_zonesPut.size() > 0)
         {
             //! Распределение по отдельным позициям
-            if (m_elementsTake.at(0).style == TrenTakePutDefines::esPictureFixed ||
-                m_elementsTake.at(0).style == TrenTakePutDefines::esDrawing)
+            if (m_elementsTake.at(0).style == GraphicCommon::esPictureFixed ||
+                m_elementsTake.at(0).style == GraphicCommon::esDrawing)
             {
                 allocBySeparatePositions(m_takeTakeOrder, m_zonesTake, m_elementsTake, zlvlElements);
                 allocBySeparatePositions(m_putTakeOrder, m_zonesPut, m_elementsPut, zlvlZones);
             }
             else
             //! Распределение парных
-            if (m_elementsTake.at(0).style == TrenTakePutDefines::esPicturePair)
+            if (m_elementsTake.at(0).style == GraphicCommon::esPicturePair)
             {
                 allocPairPictires();
             }
             else
             //! Распределение разделенных
-            if (m_elementsTake.at(0).style == TrenTakePutDefines::esPictureSplit)
+            if (m_elementsTake.at(0).style == GraphicCommon::esPictureSplit)
             {
                 allocSplitPictures();
             }
@@ -949,7 +949,7 @@ void TrenTakePutExecute::generateNewScene(const bool isAddScore)
             m_zonesTake.size() > 0 && m_zonesPut.size() == 0)
         {
             //! Распределение по отдельным позициям
-            if (m_elementsTake.at(0).style == TrenTakePutDefines::esPictureRandom)
+            if (m_elementsTake.at(0).style == GraphicCommon::esPictureRandom)
             {
                 allocByRandomPositions(m_zonesTake, m_elementsTake);
             }
@@ -1036,8 +1036,8 @@ void TrenTakePutExecute::allocSplitPictures()
 //        putElements.clear();
 //        putElements << putLT << putRT << putLD << putRD;
 
-        auto assignCode = [&](TrenTakePutDefines::GameElement* elementTake,
-                              TrenTakePutDefines::GameElement* elementPut)
+        auto assignCode = [&](GraphicCommon::GameElement* elementTake,
+                              GraphicCommon::GameElement* elementPut)
         {
             auto posPutCode = m_zonesPut.at(elementPut->zoneIdx()).position;
             elementPut->setCode(posPutCode);
@@ -1100,7 +1100,7 @@ void TrenTakePutExecute::loadPicturesPair(const QString &folder)
 }
 
 void TrenTakePutExecute::allocByRandomPositions(QList<TrenTakePutDefines::GameZoneInfo> &zones,
-                                                QList<TrenTakePutDefines::GameElementInfo> &elements)
+                                                QList<GraphicCommon::GameElementInfo> &elements)
 {
     if (elements.size() != 1)
         return;
@@ -1115,7 +1115,7 @@ void TrenTakePutExecute::allocByRandomPositions(QList<TrenTakePutDefines::GameZo
 
 void TrenTakePutExecute::allocBySeparatePositions(TrenTakePutDefines::TakeOrder &takeOrder,
                                                   QList<TrenTakePutDefines::GameZoneInfo> &zones,
-                                                  QList<TrenTakePutDefines::GameElementInfo> &elements,
+                                                  QList<GraphicCommon::GameElementInfo> &elements,
                                                   const int zOrder)
 {
     //! Сначала допустимые, потом остальные
@@ -1133,7 +1133,7 @@ void TrenTakePutExecute::allocBySeparatePositions(TrenTakePutDefines::TakeOrder 
 }
 
 void TrenTakePutExecute::allocElements(QList<TrenTakePutDefines::GameZoneInfo> &zones,
-                                       QList<TrenTakePutDefines::GameElementInfo> &elements,
+                                       QList<GraphicCommon::GameElementInfo> &elements,
                                        int enabled,
                                        const int zOrder)
 {
@@ -1142,13 +1142,13 @@ void TrenTakePutExecute::allocElements(QList<TrenTakePutDefines::GameZoneInfo> &
             allocElement(zones, &elements[i], nullptr, zOrder);
 }
 
-TrenTakePutDefines::GameElement* TrenTakePutExecute::allocElement(QList<TrenTakePutDefines::GameZoneInfo> &zones,
-                                                                  TrenTakePutDefines::GameElementInfo *element,
+GraphicCommon::GameElement* TrenTakePutExecute::allocElement(QList<TrenTakePutDefines::GameZoneInfo> &zones,
+                                                                  GraphicCommon::GameElementInfo *element,
                                                                   const QPixmap *pixmap,
                                                                   const int zOrder,
                                                                   const int zoneIdx)
 {
-    auto* gameElement = new TrenTakePutDefines::GameElement();
+    auto* gameElement = new GraphicCommon::GameElement();
     gameElement->assignElementInfo(element, pixmap);
 
     int zoneNum = zoneIdx;
@@ -1193,16 +1193,7 @@ bool TrenTakePutExecute::isEmptyZonesPresent(QList<TrenTakePutDefines::GameZoneI
     return false;
 }
 
-int TrenTakePutExecute::scaleMultiplier() const
-{
-    int idx = ui->cbScale->currentIndex();
-    int retval = 1;
-    for (int i = 0; i < idx; ++i)
-        retval *= 2;
-    return retval;
-}
-
-TrenTakePutDefines::GameElement *TrenTakePutExecute::markerOnGameElement()
+GraphicCommon::GameElement *TrenTakePutExecute::markerOnGameElement()
 {
     double mx = m_marker->x() + m_marker->boundingRect().width() / 2;
     double my = m_marker->y() + m_marker->boundingRect().height() / 2;
@@ -1213,7 +1204,7 @@ TrenTakePutDefines::GameElement *TrenTakePutExecute::markerOnGameElement()
         auto* item = items[i];
         if (item != m_marker && item != m_background)
         {
-            auto* ge = static_cast<TrenTakePutDefines::GameElement*>(item);
+            auto* ge = static_cast<GraphicCommon::GameElement*>(item);
             if (!ge->isProcessed())
                 if ((((m_gameStage == TrenTakePutDefines::gsTake) || (m_gameStage == TrenTakePutDefines::gsTakeProcess))
                      && (ge->elementInfo()->movableWithMarker))

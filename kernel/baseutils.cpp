@@ -381,3 +381,11 @@ void BaseUtils::setOutrunningResume(const double orv, QString &resume, QString &
       resume = QCoreApplication::tr("Маркер на цели");
 }
 
+
+int BaseUtils::scaleMultiplier(const int idx)
+{
+    int retval = 1;
+    for (int i = 0; i < idx; ++i)
+        retval *= 2;
+    return retval;
+}

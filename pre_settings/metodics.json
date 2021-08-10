@@ -523,14 +523,16 @@
                         }
                     ]
                 },
-                "take_moving_mode":
-                {
-                    "marker": "marker.png",
-                    "marker_color": "ff00000000"
-                },
                 "auto_moving_mode":
                 {
                     "speed": 3
+                },
+                "marker": {
+                    "style": "picture",
+                    "image": "Marker3.png",
+                    "repaint": true,
+                    "color": "ff404040",
+                    "advanced": "none"
                 },
                 "background": {
                      "style": "plate",

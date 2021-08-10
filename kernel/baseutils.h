@@ -233,6 +233,7 @@ void setCorrectionsDominanceResume(const double cdv, QString &resume, QString &r
  */
 void setOutrunningResume(const double orv, QString &resume, QString &resumeColor);
 
+int scaleMultiplier(const int idx);
 
 
 }

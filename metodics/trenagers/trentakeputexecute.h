@@ -13,6 +13,7 @@
 #include "datadefines.h"
 #include "deviceprotocols.h"
 #include "trentakeputdefines.h"
+#include "graphiccommon.h"
 
 namespace Ui {
 class TrenTakePutExecute;
@@ -91,7 +92,7 @@ private:
     void setSceneSize(QSize &size);
     void setZones(const QJsonArray &arrZones, QList<TrenTakePutDefines::GameZoneInfo> &zones);
     void setElements(const QJsonArray &arrElements,
-                     QList<TrenTakePutDefines::GameElementInfo> &elements,
+                     QList<GraphicCommon::GameElementInfo> &elements,
                      TrenTakePutDefines::GameStage stage);
     void setMarker(const QJsonObject &objMarker);
     void setBackground(const QJsonObject &objBackground);
@@ -116,9 +117,9 @@ private:
      */
     void elementsMobileWorking();
 
-    void setRandomWorkMobilePosition(TrenTakePutDefines::GameElement* ge);
+    void setRandomWorkMobilePosition(GraphicCommon::GameElement* ge);
 
-    void setLinearMovingMobilePosition(TrenTakePutDefines::GameElement* ge);
+    void setLinearMovingMobilePosition(GraphicCommon::GameElement* ge);
 
     void fixingTake();
 
@@ -158,27 +159,25 @@ private:
     void loadPicturesPair(const QString &folder);
 
     void allocByRandomPositions(QList<TrenTakePutDefines::GameZoneInfo> &zones,
-                                QList<TrenTakePutDefines::GameElementInfo> &elements);
+                                QList<GraphicCommon::GameElementInfo> &elements);
 
     void allocBySeparatePositions(TrenTakePutDefines::TakeOrder &takeOrder,
                                   QList<TrenTakePutDefines::GameZoneInfo> &zones,
-                                  QList<TrenTakePutDefines::GameElementInfo> &elements,
+                                  QList<GraphicCommon::GameElementInfo> &elements,
                                   const int zOrder);
 
     void allocElements(QList<TrenTakePutDefines::GameZoneInfo> &zones,
-                       QList<TrenTakePutDefines::GameElementInfo> &elements,
+                       QList<GraphicCommon::GameElementInfo> &elements,
                        int enabled,         ///< -1 - все, 1 - только enabled == true, 0 - только enabled == false
                        const int zOrder);
 
-    TrenTakePutDefines::GameElement* allocElement(QList<TrenTakePutDefines::GameZoneInfo> &zones,
-                                                  TrenTakePutDefines::GameElementInfo *element,
+    GraphicCommon::GameElement* allocElement(QList<TrenTakePutDefines::GameZoneInfo> &zones,
+                                                  GraphicCommon::GameElementInfo *element,
                                                   const QPixmap *pixmap,
                                                   const int zOrder,
                                                   const int zoneIdx = -1);
 
     bool isEmptyZonesPresent(QList<TrenTakePutDefines::GameZoneInfo> &zones) const;
-
-    int scaleMultiplier() const;
 
     /*!
      * \brief Проверяет, находится ли маркер на элементе
@@ -186,7 +185,7 @@ private:
      * в режиме укладки m_gameStage == gmPut берет только элементы с movableWithMarker == false
      * \return указатель на элемент или nullptr, если не на элементе
      */
-    TrenTakePutDefines::GameElement* markerOnGameElement();
+    GraphicCommon::GameElement* markerOnGameElement();
 
     void showPatientWindow();
     void hidePatientWindow();
@@ -206,11 +205,11 @@ private:
     int m_recCount {0};             ///< Счетчик пакетов данных в пробе
     int m_recLength {0};            ///< Длительность записи
 
-    TrenTakePutDefines::MarkerElement *m_marker {nullptr};
+    GraphicCommon::MarkerElement *m_marker {nullptr};
     QJsonObject m_markerObj;
     TrenTakePutDefines::TargetAdvMode m_targetAdvMode {TrenTakePutDefines::tamNone};
 
-    TrenTakePutDefines::BackgroundElement *m_background {nullptr};
+    GraphicCommon::BackgroundElement *m_background {nullptr};
     QJsonObject m_backgroundObj;
 
     ///< Границы зоны рамки
@@ -238,11 +237,11 @@ private:
     ///< Зоны игры и элементы
     QList<TrenTakePutDefines::GameZoneInfo> m_zonesTake;
     QList<TrenTakePutDefines::GameZoneInfo> m_zonesPut;
-    QList<TrenTakePutDefines::GameElementInfo> m_elementsTake;
-    QList<TrenTakePutDefines::GameElementInfo> m_elementsPut;
+    QList<GraphicCommon::GameElementInfo> m_elementsTake;
+    QList<GraphicCommon::GameElementInfo> m_elementsPut;
 
-    TrenTakePutDefines::GameElement *m_elementTake {nullptr};
-    TrenTakePutDefines::GameElement *m_elementPut {nullptr};
+    GraphicCommon::GameElement *m_elementTake {nullptr};
+    GraphicCommon::GameElement *m_elementPut {nullptr};
     int m_putElementCount {0}; ///< Счетчик элементов, уложенных в корзину
     int m_fixCount {0};        ///< Счетчик пакетов для фиксации захвата или укладки
     int m_score {0};           ///< Очки, набранные в пробе

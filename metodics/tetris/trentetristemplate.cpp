@@ -1,7 +1,10 @@
 #include "trentetristemplate.h"
 
+#include <QLayout>
+
 #include "metodicdefines.h"
 #include "trentetrisparamsdialog.h"
+#include "trentetrisexecute.h"
 
 TrenTetrisTemplate::TrenTetrisTemplate(QObject *parent)
     : MetodicTemplate (parent)
@@ -21,7 +24,10 @@ QString TrenTetrisTemplate::name()
 
 QWidget *TrenTetrisTemplate::execute(QWidget *parent, const QJsonObject &params)
 {
-
+    auto *retval = new TrenTetrisExecute(parent);
+    retval->setParams(params);
+    parent->layout()->addWidget(retval);
+    return retval;
 }
 
 QWidget *TrenTetrisTemplate::visualize(QWidget *parent, const QString &testUid)

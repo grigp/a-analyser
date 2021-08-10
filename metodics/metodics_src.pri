@@ -11,12 +11,14 @@ HEADERS += \
     $$PWD/metodictemplate.h \
     $$PWD/metodicsfactory.h \
     $$PWD/metodicdefines.h \
-    $$PWD/testcalculator.h
+    $$PWD/testcalculator.h \
+    $$PWD/graphiccommon.h
 
 SOURCES += \
     $$PWD/metodictemplate.cpp \
     $$PWD/metodicsfactory.cpp \
-    $$PWD/testcalculator.cpp
+    $$PWD/testcalculator.cpp \
+    $$PWD/graphiccommon.cpp
 
 FORMS += \
 
