@@ -2,6 +2,7 @@
 #include "ui_trentetrisexecute.h"
 
 #include <QTimer>
+#include <QDesktopWidget>
 #include <QMessageBox>
 
 #include "aanalyserapplication.h"
@@ -9,7 +10,7 @@
 #include "executewidget.h"
 #include "baseutils.h"
 #include "channelsutils.h"
-//#include "trentakeputpatientwindow.h"
+#include "trentetrispatientwindow.h"
 #include "settingsprovider.h"
 #include "testresultdata.h"
 #include "trenresultdata.h"
@@ -87,12 +88,21 @@ void TrenTetrisExecute::setParams(const QJsonObject &params)
 
 void TrenTetrisExecute::closeEvent(QCloseEvent *event)
 {
+    hidePatientWindow();
 
+    //! Переехало из деструктора. Подозрение на нерегулярный сбой.
+    //! Но для срабатывания необходимо перед delete вызывать close();
+    doneDriver();
+    QWidget::closeEvent(event);
 }
 
 void TrenTetrisExecute::resizeEvent(QResizeEvent *event)
 {
-
+    Q_UNUSED(event);
+    QSize size = ui->gvGame->geometry().size();
+    if (m_patientWindow && QApplication::desktop()->screenCount() > 1)
+        size = m_patientWindow->sceneSize();
+    setSceneSize(size);
 }
 
 void TrenTetrisExecute::start()
@@ -153,14 +163,14 @@ void TrenTetrisExecute::getData(DeviceProtocols::DeviceData *data)
                 double mx = rec.x() / (128 / BaseUtils::scaleMultiplier(ui->cbScale->currentIndex())) * (m_scene->sceneRect().width() / 2);
                 double my = - rec.y() / (128 / BaseUtils::scaleMultiplier(ui->cbScale->currentIndex())) * (m_scene->sceneRect().height() / 2);
 
-//                if (mx - m_marker->boundingRect().width() / 2 < m_scene->sceneRect().x() + m_bndLeft * m_propX)
-//                    mx = m_scene->sceneRect().x() + m_bndLeft * m_propX + m_marker->boundingRect().width() / 2;
-//                if (mx > m_scene->sceneRect().x() + m_scene->sceneRect().width() - m_bndRight * m_propX - m_marker->boundingRect().width() / 2)
-//                    mx = m_scene->sceneRect().x() + m_scene->sceneRect().width() - m_bndRight * m_propX - m_marker->boundingRect().width() / 2;
-//                if (my - m_marker->boundingRect().height() / 2 < m_scene->sceneRect().y() + m_bndTop * m_propY)
-//                    my = m_scene->sceneRect().y() + m_bndTop * m_propY + m_marker->boundingRect().height() / 2;
-//                if (my > m_scene->sceneRect().y() + m_scene->sceneRect().height() - m_bndBottom * m_propY - m_marker->boundingRect().height() / 2)
-//                    my = m_scene->sceneRect().y() + m_scene->sceneRect().height() - m_bndBottom * m_propY - m_marker->boundingRect().height() / 2;
+                if (mx - m_marker->boundingRect().width() / 2 < m_scene->sceneRect().x() + m_bndLeft * m_propX)
+                    mx = m_scene->sceneRect().x() + m_bndLeft * m_propX + m_marker->boundingRect().width() / 2;
+                if (mx > m_scene->sceneRect().x() + m_scene->sceneRect().width() - m_bndRight * m_propX - m_marker->boundingRect().width() / 2)
+                    mx = m_scene->sceneRect().x() + m_scene->sceneRect().width() - m_bndRight * m_propX - m_marker->boundingRect().width() / 2;
+                if (my - m_marker->boundingRect().height() / 2 < m_scene->sceneRect().y() + m_bndTop * m_propY)
+                    my = m_scene->sceneRect().y() + m_bndTop * m_propY + m_marker->boundingRect().height() / 2;
+                if (my > m_scene->sceneRect().y() + m_scene->sceneRect().height() - m_bndBottom * m_propY - m_marker->boundingRect().height() / 2)
+                    my = m_scene->sceneRect().y() + m_scene->sceneRect().height() - m_bndBottom * m_propY - m_marker->boundingRect().height() / 2;
 
                 m_marker->setPos(mx - m_marker->boundingRect().width() / 2,
                                  my - m_marker->boundingRect().height() / 2);
@@ -252,9 +262,31 @@ void TrenTetrisExecute::on_advChannelsClicked(bool checked)
     ui->wgtAdvChannels->setVisible(checked);
 }
 
+void TrenTetrisExecute::setSceneSize(QSize &size)
+{
+    int sideSize = size.height();
+    if (size.width() < size.height())
+        sideSize = size.width();
+    m_prop = static_cast<double>(sideSize) / 2000;
+    if (m_scene)
+        m_scene->setSceneRect(-size.width() * 0.995 / 2, - size.height() * 0.995 / 2, size.width() * 0.995, size.height() * 0.995);
+    m_propX = static_cast<double>(size.width()) / 2000;
+    m_propY = static_cast<double>(size.height()) / 2000;
+}
+
 void TrenTetrisExecute::generateNewScene()
 {
+    m_scene->clear();
 
+    setBackground(m_backgroundObj);
+
+    m_scene->addItem(m_background);
+
+    setMarker(m_markerObj);
+    m_scene->addItem(m_marker);
+    m_marker->setZValue(zlvlMarker);
+    m_marker->setPos(0 - m_marker->boundingRect().width() / 2,
+                     0 - m_marker->boundingRect().height() / 2);
 }
 
 void TrenTetrisExecute::setChannels()
@@ -282,12 +314,81 @@ void TrenTetrisExecute::elementsInteraction()
 
 void TrenTetrisExecute::showPatientWindow()
 {
+    auto winPresent = SettingsProvider::valueFromRegAppCopy("", "PatientWindow", static_cast<QVariant>(true)).toBool();
 
+    if (winPresent && QApplication::desktop()->screenCount() > 1)
+    {
+        if (!m_patientWindow)
+            m_patientWindow = new TrenTetrisPatientWindow(this);
+        m_patientWindow->setScene(m_scene);
+        QSize size = m_patientWindow->sceneSize();
+        setSceneSize(size);
+        auto rect = static_cast<AAnalyserApplication*>(QApplication::instance())->getPatientWindowGeometry();
+        m_patientWindow->resize(rect.size());
+        m_patientWindow->move(rect.x(), rect.y());
+        m_patientWindow->show();
+        m_prop = m_patientWindow->prop();
+        m_propX = m_patientWindow->propX();
+        m_propY = m_patientWindow->propY();
+    }
+    else
+    {
+        ui->gvGame->setScene(m_scene);
+        QSize size = ui->gvGame->geometry().size();
+        setSceneSize(size);
+    }
 }
 
 void TrenTetrisExecute::hidePatientWindow()
 {
+    if (m_patientWindow)
+    {
+        m_patientWindow->hide();
+        auto* p = m_patientWindow;
+        m_patientWindow = nullptr;
+        delete p;
+    }
+}
 
+void TrenTetrisExecute::setMarker(const QJsonObject &objMarker)
+{
+    auto style = objMarker["style"].toString();
+    if (style == "picture")
+    {
+        QPixmap mpmp(":/images/Games/" + objMarker["image"].toString());
+        if (objMarker["repaint"].toBool())
+            BaseUtils::setColoredPicture(mpmp, BaseUtils::strRGBAToColor(objMarker["color"].toString()));
+        m_marker = new GraphicCommon::MarkerElement(mpmp);
+
+//        auto stAdv = objMarker["advanced"].toString();
+//        if (stAdv == "trace_on_target")
+//            m_targetAdvMode = TrenTakePutDefines::tamTraceOnTarget;
+    }
+}
+
+void TrenTetrisExecute::setBackground(const QJsonObject &objBackground)
+{
+    auto style = objBackground["style"].toString();
+    if (style == "picture")
+    {
+        m_background = new GraphicCommon::BackgroundElement(GraphicCommon::bkgmPicture);
+        m_background->assignPixmap(":/images/backgrounds/" + objBackground["image"].toString());
+        m_background->setRect(m_scene->sceneRect());
+        m_background->setZValue(zlvlBackground);
+    }
+    else
+    if (style == "plate")
+    {
+        m_background = new GraphicCommon::BackgroundElement(GraphicCommon::bkgmPlate);
+        m_background->assignPixmap(":/images/plite_textures/" + objBackground["image"].toString());
+        m_background->setRect(m_scene->sceneRect());
+        m_background->setZValue(zlvlBackground);
+    }
+    auto bo = objBackground["borders"].toObject();
+    m_bndTop = bo["top"].toInt();
+    m_bndBottom = bo["bottom"].toInt();
+    m_bndLeft = bo["left"].toInt();
+    m_bndRight = bo["right"].toInt();
 }
 
 void TrenTetrisExecute::finishTest()

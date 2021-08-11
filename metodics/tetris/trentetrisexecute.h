@@ -17,6 +17,7 @@
 
 class Driver;
 class TestResultData;
+class TrenTetrisPatientWindow;
 
 namespace Ui {
 class TrenTetrisExecute;
@@ -57,6 +58,17 @@ private slots:
 private:
     Ui::TrenTetrisExecute *ui;
 
+    ///< Слои игрового поля
+    enum ZLevels
+    {
+        zlvlBackground = 1,
+        zlvlGlass = 2,
+        zlvlFigure = 3,
+        zlvlMarker = 4
+    };
+
+    void setSceneSize(QSize &size);
+
     void generateNewScene();
 
     /*!
@@ -70,11 +82,17 @@ private:
     void showPatientWindow();
     void hidePatientWindow();
 
+    void setMarker(const QJsonObject &objMarker);
+    void setBackground(const QJsonObject &objBackground);
+
     void finishTest();
 
     void doneDriver();
 
     QGraphicsScene* m_scene {nullptr};
+    double m_prop = 1;   ///< Пропорция для пересчера базовой сцены 2000 x 2000 в реальные размеры игровой сцены
+    double m_propX = 1;
+    double m_propY = 1;
 
     int m_frequency = 50;        ///< Частота дискретизации
     DataDefines::PatientKard m_kard;
@@ -82,6 +100,8 @@ private:
     Driver* m_driver {nullptr};     ///< Драйвер передающий данные
     DeviceProtocols::DecartCoordControl* m_dcControl;  ///< Управление декартовыми данными в драйвере
     TestResultData *m_trd;  ///< Объект, записывающий данные в базу
+
+    TrenTetrisPatientWindow* m_patientWindow {nullptr};
 
     bool m_isRecording {false};     ///< Протекает ли запись данных
     int m_recCount {0};             ///< Счетчик пакетов данных в пробе
@@ -110,6 +130,12 @@ private:
 
     GraphicCommon::MarkerElement *m_marker {nullptr};
     GraphicCommon::BackgroundElement *m_background {nullptr};
+
+    ///< Границы зоны рамки
+    int m_bndLeft {0};
+    int m_bndTop {0};
+    int m_bndRight {0};
+    int m_bndBottom {0};
 };
 
 #endif // TRENTETRISEXECUTE_H

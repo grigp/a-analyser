@@ -48,6 +48,12 @@ QLabel#lblGameScore
     color: rgb(0,150,0);
 }
 
+QLabel#lblGameLines
+{
+    font-size: 18pt;
+    color: rgb(9,105,156);
+}
+
 QLabel#lblGameErrors
 {
     font-size: 18pt;

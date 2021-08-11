@@ -531,7 +531,7 @@
                     "style": "picture",
                     "image": "Marker3.png",
                     "repaint": true,
-                    "color": "ff404040",
+                    "color": "ffff0000",
                     "advanced": "none"
                 },
                 "background": {

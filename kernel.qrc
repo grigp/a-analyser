@@ -156,5 +156,9 @@
         <file>images/Methodics/TetrisCubesTake.png</file>
         <file>images/Methodics/TetrisTake.png</file>
         <file>images/Methodics/GamesHard.png</file>
+        <file>images/Games/Cube1.png</file>
+        <file>images/Games/Cube2.png</file>
+        <file>images/Games/Cube3.png</file>
+        <file>images/Games/Cube4.png</file>
     </qresource>
 </RCC>
