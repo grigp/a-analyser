@@ -67,10 +67,6 @@ void TrenTetrisPatientWindow::resizeEvent(QResizeEvent *event)
                                           - ui->gvGame->geometry().size().height() / 2,
                                           ui->gvGame->geometry().size().width(),
                                           ui->gvGame->geometry().size().height());
-//        ui->gvGame->scene()->setSceneRect(-ui->gvGame->geometry().size().width() * 0.995 / 2,
-//                                          - ui->gvGame->geometry().size().height() * 0.995 / 2,
-//                                          ui->gvGame->geometry().size().width() * 0.995,
-//                                          ui->gvGame->geometry().size().height() * 0.995);
     m_prop = static_cast<double>(sideSize) / 2000;
     m_propX = static_cast<double>(ui->gvGame->geometry().size().width()) / 2000;
     m_propY = static_cast<double>(ui->gvGame->geometry().size().height()) / 2000;
