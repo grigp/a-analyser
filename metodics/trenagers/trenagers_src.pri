@@ -1,0 +1,19 @@
+INCLUDEPATH += $$PWD
+
+#include(cross/cross_src.pri)
+
+HEADERS += \
+    $$PWD/trenexecute.h \
+    $$PWD/trenagerpatientwindow.h \
+    $$PWD/trenstabexecute.h
+
+SOURCES += \
+    $$PWD/trenexecute.cpp \
+    $$PWD/trenagerpatientwindow.cpp \
+    $$PWD/trenstabexecute.cpp
+
+FORMS += \
+    $$PWD/trenexecute.ui \
+    $$PWD/trenagerpatientwindow.ui \
+    $$PWD/trenstabexecute.ui
+
