@@ -3,6 +3,8 @@
 
 #include <QDialog>
 #include <QGraphicsScene>
+#include <QLabel>
+#include <QList>
 
 namespace Ui {
 class TrenagerPatientWindow;
@@ -26,6 +28,19 @@ public:
 
     QSize sceneSize() const;
 
+    /*!
+     * \brief Добавляет метку для отображения игрового параметра
+     * \param text - имя метки
+     * \param styleSheet - визуальный стиль
+     */
+    void setGameParamLabel(const QString text, const QString styleSheet);
+    /*!
+     * \brief Изменяет значение текста метки игрового параметра по индексу параметра
+     * \param idxParam - индекс параметра
+     * \param value - значение
+     */
+    void setGameParamLabelValue(const int idxParam, const QString value);
+
 protected:
     void resizeEvent(QResizeEvent* event) override;
 
@@ -36,6 +51,8 @@ private:
     double m_prop = 1; ///< Пропорция для пересчера базовой сцены 2000 x 2000 в реальные размеры игровой сцены
     double m_propX = 1;
     double m_propY = 1;
+
+    QList<QLabel*> m_gameParamLabels;
 };
 
 #endif // TRENAGERPATIENTWINDOW_H

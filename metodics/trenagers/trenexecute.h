@@ -2,6 +2,7 @@
 #define TRENEXECUTE_H
 
 #include <QFrame>
+#include <QLabel>
 #include <QWidget>
 #include <QJsonObject>
 #include <QGraphicsScene>
@@ -58,9 +59,9 @@ protected:
 
     /*!
      * \brief Взаимодействие элементов
-     * Все управление сценой, маркеры и т.д. писать в перекрытом методе в наследниках
+     * Все управление сценой, маркеры и т.д. писать в перекрытом методе в подклассах
      */
-    virtual void elementsInteraction();
+    virtual void elementsInteraction(DeviceProtocols::DeviceData *data);
 
     /*!
      * \brief Формирует список каналов для выбора управления
@@ -89,10 +90,50 @@ protected:
      */
     virtual void fillGameParams(QFrame *frame);
 
+    /*!
+     * \brief Возвращает uid выбранного канала
+     */
+    QString currentChannelUID();
+
+    /*!
+     * \brief Возвращает указательна драйвер
+     */
+    Driver* driver() {return  m_driver;}
+    QGraphicsScene* scene() {return  m_scene;}
+    double prop() {return m_prop;}
+    double propX() {return m_propX;}
+    double propY() {return m_propY;}
+    int bndLeft() {return m_bndLeft;}
+    int bndTop() {return m_bndTop;}
+    int bndRight() {return m_bndRight;}
+    int bndBottom() {return m_bndBottom;}
+
+    /*!
+     * \brief Изменяет значение числа очков
+     * Значение кол-ва очков не может быть отрицательным
+     * \param value - значение, на которое меняем. Если +, то увеличиваем, если -, уменьшаем
+     */
+    void changeGameScore(const int value);
+
+    /*!
+     * \brief Добавляет метку для отображения игрового параметра на окне пациента
+     * \param text - имя метки
+     * \param styleSheet - визуальный стиль
+     */
+    void pwSetGameParamLabel(const QString text, const QString styleSheet);
+    /*!
+     * \brief Изменяет значение текста метки игрового параметра по индексу параметра на окне пациента
+     * \param idxParam - индекс параметра
+     * \param value - значение
+     */
+    void pwSetGameParamLabelValue(const int idxParam, const QString value);
+
 private slots:
     void getData(DeviceProtocols::DeviceData *data);
 
 private:
+    Ui::TrenExecute *ui;
+
     QGraphicsScene* m_scene {nullptr};
     double m_prop = 1;   ///< Пропорция для пересчета базовой сцены 2000 x 2000 в реальные размеры игровой сцены
     double m_propX = 1;
@@ -102,7 +143,7 @@ private:
     DataDefines::PatientKard m_kard;
 
     Driver* m_driver {nullptr};     ///< Драйвер передающий данные
-    DeviceProtocols::DecartCoordControl* m_dcControl;  ///< Управление декартовыми данными в драйвере
+//    DeviceProtocols::DecartCoordControl* m_dcControl;  ///< Управление декартовыми данными в драйвере
     TestResultData *m_trd;  ///< Объект, записывающий данные в базу
 
     TrenagerPatientWindow* m_patientWindow {nullptr};
@@ -121,8 +162,9 @@ private:
     int m_bndRight {0};
     int m_bndBottom {0};
 
-private:
-    Ui::TrenExecute *ui;
+    QLabel* m_lblGameScore {nullptr};    ///< Индикатор очков игры
+    int m_gameScore {0};                 ///< Значние кол-ва очков
+
 };
 
 #endif // TRENEXECUTE_H

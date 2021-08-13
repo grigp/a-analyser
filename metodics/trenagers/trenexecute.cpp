@@ -5,6 +5,8 @@
 #include <QTimer>
 #include <QDesktopWidget>
 #include <QMessageBox>
+#include <QUuid>
+#include <QDebug>
 
 #include "aanalyserapplication.h"
 #include "driver.h"
@@ -38,6 +40,8 @@ void TrenExecute::setParams(const QJsonObject &params)
     auto sRL = BaseUtils::getTimeBySecCount(m_recLength);
     ui->lblRecLenTitle->setText(QString(tr("Длительность записи") + " %1 " + tr("мин:сек")).arg(sRL));
 
+    m_backgroundObj = params["background"].toObject();
+
     QTimer::singleShot(0, this, &TrenExecute::start);
 }
 
@@ -62,15 +66,10 @@ void TrenExecute::resizeEvent(QResizeEvent *event)
 
 void TrenExecute::start()
 {
-    fillGameControl(ui->frGameControl);
-    fillGameParams(ui->frGameParams);
-
     m_driver = static_cast<AAnalyserApplication*>(QApplication::instance())->
             getDriverByFormats(QStringList() << ChannelsDefines::cfDecartCoordinates);
     if (m_driver)
     {
-        m_dcControl = dynamic_cast<DeviceProtocols::DecartCoordControl*>(m_driver);
-
         connect(m_driver, &Driver::sendData, this, &TrenExecute::getData);
         connect(m_driver, &Driver::communicationError, this, &TrenExecute::on_communicationError);
 
@@ -103,6 +102,9 @@ void TrenExecute::start()
         QMessageBox::warning(this, tr("Предупреждение"), tr("Отсутствует необходимое подключение для работы теста"));
         static_cast<ExecuteWidget*>(parent())->showDB();
     }
+
+    fillGameControl(ui->frGameControl);
+    fillGameParams(ui->frGameParams);
 }
 
 void TrenExecute::getData(DeviceProtocols::DeviceData *data)
@@ -117,7 +119,7 @@ void TrenExecute::getData(DeviceProtocols::DeviceData *data)
             ui->wgtAdvChannels->getData(data);
 
             //! Взаимодействие элементов
-            elementsInteraction();
+            elementsInteraction(data);
 
             if (m_isRecording)
             {
@@ -202,9 +204,9 @@ void TrenExecute::generateNewScene()
     m_scene->addItem(m_background);
 }
 
-void TrenExecute::elementsInteraction()
+void TrenExecute::elementsInteraction(DeviceProtocols::DeviceData *data)
 {
-
+    Q_UNUSED(data);
 }
 
 void TrenExecute::setChannels()
@@ -319,5 +321,45 @@ void TrenExecute::fillGameControl(QFrame *frame)
 
 void TrenExecute::fillGameParams(QFrame *frame)
 {
-    Q_UNUSED(frame);
+    QString style = "font-size: 18pt; font-weight: 900; color: rgb(0,150,0);";
+    QString name = tr("Очки");
+    m_lblGameScore = new QLabel(frame);
+    m_lblGameScore->setText(name);
+    m_lblGameScore->setStyleSheet(style);
+    frame->layout()->addWidget(m_lblGameScore);
+    if (m_patientWindow && QApplication::desktop()->screenCount() > 1)
+        m_patientWindow->setGameParamLabel(name, style);
+
+    changeGameScore(0);
+}
+
+QString TrenExecute::currentChannelUID()
+{
+    if (ui->cbSelectChannel->count() > 0)
+        return ui->cbSelectChannel->currentData(ChannelsUtils::ChannelUidRole).toString();
+    return "";
+}
+
+void TrenExecute::changeGameScore(const int value)
+{
+    m_gameScore += value;
+    if (m_gameScore < 0)
+        m_gameScore = 0;
+    QString text = tr("Очки") + " - " + QString::number(m_gameScore);
+    m_lblGameScore->setText(text);
+
+    if (m_patientWindow && QApplication::desktop()->screenCount() > 1)
+        m_patientWindow->setGameParamLabelValue(0, text);
+}
+
+void TrenExecute::pwSetGameParamLabel(const QString text, const QString styleSheet)
+{
+    if (m_patientWindow && QApplication::desktop()->screenCount() > 1)
+        m_patientWindow->setGameParamLabel(text, styleSheet);
+}
+
+void TrenExecute::pwSetGameParamLabelValue(const int idxParam, const QString value)
+{
+    if (m_patientWindow && QApplication::desktop()->screenCount() > 1)
+        m_patientWindow->setGameParamLabelValue(idxParam, value);
 }

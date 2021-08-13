@@ -18,7 +18,6 @@
 
 class Driver;
 class TestResultData;
-class TrenTetrisPatientWindow;
 
 namespace Ui {
 class TrenTetrisExecute;
@@ -27,7 +26,7 @@ class TrenTetrisExecute;
 /*!
  * \brief Класс виджета проведения сеанса тренинга Тетрис TrenTetrisExecute class
  */
-class TrenTetrisExecute : public TrenStabExecute //QWidget
+class TrenTetrisExecute : public TrenStabExecute
 {
     Q_OBJECT
 
@@ -38,105 +37,65 @@ public:
     void setParams(const QJsonObject &params) override;
 
 protected:
-//    void closeEvent(QCloseEvent *event) override;
+    /*!
+     * \brief Взаимодействие элементов
+     * Все управление сценой, маркеры и т.д.
+     */
+    void elementsInteraction(DeviceProtocols::DeviceData *data) override;
 
-//    void resizeEvent(QResizeEvent* event) override;
+    void generateNewScene() override;
 
-//private slots:
-//    void start();
-
-//    void getData(DeviceProtocols::DeviceData *data);
-//    void on_communicationError(const QString &drvName, const QString &port, const int errorCode);
-
-//    void on_selectChannel(int chanIdx);
-//    void on_zeroing();
-//    void on_scaleChange(int scaleIdx);
-//    void on_recording();
-
-//    void on_advChannelsClicked(bool checked);
+    /*!
+     * \brief Заполнить frame своими элементами, отображающими процесс игры
+     * \param frame - указатель на фрейм, куда добавлять
+     */
+    void fillGameParams(QFrame *frame) override;
 
 
 private:
     Ui::TrenTetrisExecute *ui;
 
-//    ///< Слои игрового поля
-//    enum ZLevels
-//    {
-//        zlvlBackground = 1,
-//        zlvlGlass = 2,
-//        zlvlFigure = 3,
-//        zlvlMarker = 4
-//    };
+    ///< Слои игрового поля
+    enum ZLevels
+    {
+        zlvlMarker = 4
+    };
 
-//    void setSceneSize(QSize &size);
+    void setMarker(const QJsonObject &objMarker);
 
-//    void generateNewScene();
+    TrenTetrisDefines::MovingMode m_movingMode {TrenTetrisDefines::mmTake};
+    TrenTetrisDefines::ComplexityMode m_complexityMode {TrenTetrisDefines::cmFigures};
+    TrenTetrisDefines::DeletingMode m_deletingMode {TrenTetrisDefines::dmRows};
 
-//    /*!
-//     * \brief Формирует список каналов для выбора управления
-//     * По формату получаем список каналов этого формата, которые передает драйвер, заносим их в список для выбора
-//     */
-//    void setChannels();
+    int m_glassHCount {21};         ///< Кол-во позиций в стакане по горизонтали
+    int m_glassVCount {15};         ///< Кол-во позиций в стакане по вертикали
 
-//    void elementsInteraction();
+    QString m_cubeImageFileName {""}; ///< Имя файла, содержащего картинку кубика
 
-//    void showPatientWindow();
-//    void hidePatientWindow();
+    ///< Цвета в режиме удаления строк (обычный, не цветной, вариант)
+    QColor m_cubeColor {Qt::yellow};    ///< Цвет перемещаемой фигуры
+    QColor m_glassColor {Qt::cyan};     ///< Цвет фигур, уложенных в стакан
+    QColor m_lastColor {Qt::magenta};   ///< Цвет последней уложенной фигуры
 
-//    void setMarker(const QJsonObject &objMarker);
-//    void setBackground(const QJsonObject &objBackground);
+    int m_deletingCubeCount {3};      ///< Кол-во кубиков одного цвета, удаляемых одновременно
+    QList<QColor> m_colorModeColors;  ///< Цвета для вариантов цветного тетриса
 
-//    void finishTest();
+    int m_autoMovingSpeed {3};          ///< Скорость спуска в режиме автоматического спуска
 
-//    void doneDriver();
+    /*!
+     * \brief Изменяет значение кол-ва удаленных строк
+     * \param value - значение, на которое меняем.
+     */
+    void changeRowsDeleted(const int value);
 
-//    QGraphicsScene* m_scene {nullptr};
-//    double m_prop = 1;   ///< Пропорция для пересчера базовой сцены 2000 x 2000 в реальные размеры игровой сцены
-//    double m_propX = 1;
-//    double m_propY = 1;
 
-//    int m_frequency = 50;        ///< Частота дискретизации
-//    DataDefines::PatientKard m_kard;
+    QJsonObject m_markerObj;            ///< Объект с данными маркера
 
-//    Driver* m_driver {nullptr};     ///< Драйвер передающий данные
-//    DeviceProtocols::DecartCoordControl* m_dcControl;  ///< Управление декартовыми данными в драйвере
-//    TestResultData *m_trd;  ///< Объект, записывающий данные в базу
+    GraphicCommon::MarkerElement *m_marker {nullptr};
 
-//    TrenTetrisPatientWindow* m_patientWindow {nullptr};
+    QLabel* m_lblRowsDel {nullptr};
 
-//    bool m_isRecording {false};     ///< Протекает ли запись данных
-//    int m_recCount {0};             ///< Счетчик пакетов данных в пробе
-//    int m_recLength {0};            ///< Длительность записи
-
-//    TrenTetrisDefines::MovingMode m_movingMode {TrenTetrisDefines::mmTake};
-//    TrenTetrisDefines::ComplexityMode m_complexityMode {TrenTetrisDefines::cmFigures};
-//    TrenTetrisDefines::DeletingMode m_deletingMode {TrenTetrisDefines::dmRows};
-
-//    int m_glassHCount {21};         ///< Кол-во позиций в стакане по горизонтали
-//    int m_glassVCount {15};         ///< Кол-во позиций в стакане по вертикали
-
-//    QString m_cubeImageFileName {""}; ///< Имя файла, содержащего картинку кубика
-
-//    ///< Цвета в режиме удаления строк (обычный, не цветной, вариант)
-//    QColor m_cubeColor {Qt::yellow};    ///< Цвет перемещаемой фигуры
-//    QColor m_glassColor {Qt::cyan};     ///< Цвет фигур, уложенных в стакан
-//    QColor m_lastColor {Qt::magenta};   ///< Цвет последней уложенной фигуры
-
-//    int m_deletingCubeCount {3};      ///< Кол-во кубиков одного цвета, удаляемых одновременно
-//    QList<QColor> m_colorModeColors;  ///< Цвета для вариантов цветного тетриса
-
-//    QJsonObject m_markerObj;            ///< Объект с данными маркера
-//    QJsonObject m_backgroundObj;        ///< Объект с данными фона
-//    int m_autoMovingSpeed {3};          ///< Скорость спуска в режиме автоматического спуска
-
-//    GraphicCommon::MarkerElement *m_marker {nullptr};
-//    GraphicCommon::BackgroundElement *m_background {nullptr};
-
-//    ///< Границы зоны рамки
-//    int m_bndLeft {0};
-//    int m_bndTop {0};
-//    int m_bndRight {0};
-//    int m_bndBottom {0};
+    int m_rowsDeleted {0};
 };
 
 #endif // TRENTETRISEXECUTE_H

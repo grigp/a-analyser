@@ -4,17 +4,14 @@ HEADERS += \
     $$PWD/trentetristemplate.h \
     $$PWD/trentetrisparamsdialog.h \
     $$PWD/trentetrisdefines.h \
-    $$PWD/trentetrisexecute.h \
-    $$PWD/trentetrispatientwindow.h
+    $$PWD/trentetrisexecute.h
 
 SOURCES += \
     $$PWD/trentetristemplate.cpp \
     $$PWD/trentetrisparamsdialog.cpp \
-    $$PWD/trentetrisexecute.cpp \
-    $$PWD/trentetrispatientwindow.cpp
+    $$PWD/trentetrisexecute.cpp
 
 FORMS += \
     $$PWD/trentetrisparamsdialog.ui \
-    $$PWD/trentetrisexecute.ui \
-    $$PWD/trentetrispatientwindow.ui
+    $$PWD/trentetrisexecute.ui
 
