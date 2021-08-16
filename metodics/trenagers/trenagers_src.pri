@@ -1,6 +1,7 @@
 INCLUDEPATH += $$PWD
 
-#include(cross/cross_src.pri)
+include(take_put/take_put_src.pri)
+include(tetris/tetris_src.pri)
 
 HEADERS += \
     $$PWD/trenexecute.h \

@@ -3,8 +3,6 @@ INCLUDEPATH += $$PWD
 include(stabtest/stabtest_src.pri)
 include(jump_plate/jump_plate_src.pri)
 include(trenagers/trenagers_src.pri)
-include(take_put/take_put_src.pri)
-include(tetris/tetris_src.pri)
 include(extendtest/extendtest_src.pri)
 include(dynamic_tests/dynamic_tests_src.pri)
 
