@@ -61,6 +61,11 @@ void TrenStabExecute::elementsInteraction(DeviceProtocols::DeviceData *data)
     TrenExecute::elementsInteraction(data);
 }
 
+int TrenStabExecute::scale()
+{
+    return m_cbScale->currentIndex();
+}
+
 void TrenStabExecute::on_zeroing()
 {
     auto chanUid = currentChannelUID();

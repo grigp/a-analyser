@@ -1,6 +1,8 @@
 #include "trenagerpatientwindow.h"
 #include "ui_trenagerpatientwindow.h"
 
+#include <QDebug>
+
 TrenagerPatientWindow::TrenagerPatientWindow(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::TrenagerPatientWindow)

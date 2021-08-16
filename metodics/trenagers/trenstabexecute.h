@@ -41,6 +41,12 @@ protected:
      */
     void elementsInteraction(DeviceProtocols::DeviceData *data) override;
 
+    /*!
+     * \brief Возвращает индекс масштаба 0, 1, 2, 3, ...
+     * Для получения масштабного множителя воспользоваться BaseUtils::scaleMultiplier(scale())
+     */
+    int scale();
+
 private slots:
     void on_zeroing();
     void on_scaleChange(int scaleIdx);

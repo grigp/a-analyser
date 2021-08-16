@@ -74,8 +74,8 @@ void TrenTetrisExecute::elementsInteraction(DeviceProtocols::DeviceData *data)
         if (m_marker)
         {
             //! Установка маркера
-            double mx = rec.x() / (128 / BaseUtils::scaleMultiplier(ui->cbScale->currentIndex())) * (scene()->sceneRect().width() / 2);
-            double my = - rec.y() / (128 / BaseUtils::scaleMultiplier(ui->cbScale->currentIndex())) * (scene()->sceneRect().height() / 2);
+            double mx = rec.x() / (128 / BaseUtils::scaleMultiplier(scale())) * (scene()->sceneRect().width() / 2);
+            double my = - rec.y() / (128 / BaseUtils::scaleMultiplier(scale())) * (scene()->sceneRect().height() / 2);
 
             if (mx - m_marker->boundingRect().width() / 2 < scene()->sceneRect().x() + bndLeft() * propX())
                 mx = scene()->sceneRect().x() + bndLeft() * propX() + m_marker->boundingRect().width() / 2;
@@ -109,7 +109,7 @@ void TrenTetrisExecute::fillGameParams(QFrame *frame)
     TrenStabExecute::fillGameParams(frame);
 
     QString style = "font-size: 16pt; color: rgb(9,105,156);";
-    QString name = tr("Удаленные строки");
+    QString name = tr("Строки");
     m_lblRowsDel = new QLabel(frame);
     m_lblRowsDel->setText(name);
     m_lblRowsDel->setStyleSheet(style);
@@ -138,7 +138,7 @@ void TrenTetrisExecute::setMarker(const QJsonObject &objMarker)
 void TrenTetrisExecute::changeRowsDeleted(const int value)
 {
     m_rowsDeleted += value;
-    QString text = tr("Удаленные строки") + " - " + QString::number(m_rowsDeleted);
+    QString text = tr("Cтроки") + " - " + QString::number(m_rowsDeleted);
     pwSetGameParamLabelValue(1, text);
 }
 
