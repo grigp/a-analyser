@@ -14,6 +14,8 @@
 #include "baseutils.h"
 #include "channelsutils.h"
 #include "testresultdata.h"
+#include "trenresultdata.h"
+#include "trenresultfactors.h"
 #include "trenagerpatientwindow.h"
 #include "settingsprovider.h"
 
@@ -292,17 +294,17 @@ void TrenExecute::setBackground(const QJsonObject &objBackground)
 
 void TrenExecute::finishTest()
 {
-    //    m_isClosed = true;
-        doneDriver();
-//        auto trenRes = new TrenResultData(ChannelsDefines::chanTrenResult);
-    //    trenRes->addFactor(TrenResultFactorsDefines::ScoreUid, m_score);
-    //    trenRes->addFactor(TrenResultFactorsDefines::FaultsUid, m_errorsCount);
-//        m_trd->addChannel(trenRes);
+    m_isClosed = true;
+    doneDriver();
+    auto trenRes = new TrenResultData(ChannelsDefines::chanTrenResult);
+    trenRes->addFactor(TrenResultFactorsDefines::ScoreUid, m_gameScore);
+    foreach (auto fct, m_gameFactors)
+        trenRes->addFactor(fct.uid, fct.value);
+    m_trd->addChannel(trenRes);
 
-    //    hidePatientWindow();
-        m_isRecording = false;
-        m_trd->saveTest();
-        static_cast<ExecuteWidget*>(parent())->showDB();
+    m_isRecording = false;
+    m_trd->saveTest();
+    static_cast<ExecuteWidget*>(parent())->showDB();
 }
 
 void TrenExecute::doneDriver()
@@ -362,4 +364,12 @@ void TrenExecute::pwSetGameParamLabelValue(const int idxParam, const QString val
 {
     if (m_patientWindow && QApplication::desktop()->screenCount() > 1)
         m_patientWindow->setGameParamLabelValue(idxParam, value);
+}
+
+void TrenExecute::addFactorValue(const QString &uid, const double value)
+{
+    GameFactors fct;
+    fct.uid = uid;
+    fct.value = value;
+    m_gameFactors << fct;
 }

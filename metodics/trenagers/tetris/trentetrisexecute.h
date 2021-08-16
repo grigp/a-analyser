@@ -63,6 +63,13 @@ private:
 
     void setMarker(const QJsonObject &objMarker);
 
+    /*!
+     * \brief Изменяет значение кол-ва удаленных строк
+     * \param value - значение, на которое меняем.
+     */
+    void changeRowsDeleted(const int value);
+
+
     TrenTetrisDefines::MovingMode m_movingMode {TrenTetrisDefines::mmTake};
     TrenTetrisDefines::ComplexityMode m_complexityMode {TrenTetrisDefines::cmFigures};
     TrenTetrisDefines::DeletingMode m_deletingMode {TrenTetrisDefines::dmRows};
@@ -81,13 +88,6 @@ private:
     QList<QColor> m_colorModeColors;  ///< Цвета для вариантов цветного тетриса
 
     int m_autoMovingSpeed {3};          ///< Скорость спуска в режиме автоматического спуска
-
-    /*!
-     * \brief Изменяет значение кол-ва удаленных строк
-     * \param value - значение, на которое меняем.
-     */
-    void changeRowsDeleted(const int value);
-
 
     QJsonObject m_markerObj;            ///< Объект с данными маркера
 

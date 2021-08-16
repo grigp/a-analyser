@@ -139,6 +139,7 @@ void TrenTetrisExecute::changeRowsDeleted(const int value)
 {
     m_rowsDeleted += value;
     QString text = tr("Cтроки") + " - " + QString::number(m_rowsDeleted);
+    m_lblRowsDel->setText(text);
     pwSetGameParamLabelValue(1, text);
 }
 

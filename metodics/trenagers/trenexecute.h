@@ -96,10 +96,11 @@ protected:
     QString currentChannelUID();
 
     /*!
-     * \brief Возвращает указательна драйвер
+     * \brief Возвращает указатель на драйвер
      */
     Driver* driver() {return  m_driver;}
     QGraphicsScene* scene() {return  m_scene;}
+
     double prop() {return m_prop;}
     double propX() {return m_propX;}
     double propY() {return m_propY;}
@@ -107,6 +108,11 @@ protected:
     int bndTop() {return m_bndTop;}
     int bndRight() {return m_bndRight;}
     int bndBottom() {return m_bndBottom;}
+
+    /*!
+     * \brief Возвращает частоту дискретизации
+     */
+    int frequency() {return  m_frequency;}
 
     /*!
      * \brief Изменяет значение числа очков
@@ -127,6 +133,29 @@ protected:
      * \param value - значение
      */
     void pwSetGameParamLabelValue(const int idxParam, const QString value);
+
+    /*!
+     * \brief Возвращает указатель на элемент игровой сцены - фон
+     */
+    GraphicCommon::BackgroundElement* background() {return  m_background;}
+
+    /*!
+     * \brief Возвращает указатель на окно пациента
+     */
+    TrenagerPatientWindow* patientWindow() {return m_patientWindow;}
+
+    bool isClosed() const {return m_isClosed;}
+
+    /*!
+     * \brief Структура для записи показателей тренажеров GameFactors struct
+     */
+    struct GameFactors
+    {
+        QString uid;
+        double value;
+    };
+    void addFactorValue(const QString &uid, const double value);
+
 
 private slots:
     void getData(DeviceProtocols::DeviceData *data);
@@ -164,7 +193,9 @@ private:
 
     QLabel* m_lblGameScore {nullptr};    ///< Индикатор очков игры
     int m_gameScore {0};                 ///< Значние кол-ва очков
+    QList<GameFactors> m_gameFactors;    ///< Список показателей тренажера. Заполняется подклассами через addFactorValue
 
+    bool m_isClosed {false};
 };
 
 #endif // TRENEXECUTE_H

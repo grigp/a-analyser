@@ -14,14 +14,11 @@
 #include "deviceprotocols.h"
 #include "trentakeputdefines.h"
 #include "graphiccommon.h"
+#include "trenstabexecute.h"
 
 namespace Ui {
 class TrenTakePutExecute;
 }
-
-class Driver;
-class TrenTakePutPatientWindow;
-class TestResultData;
 
 /*!
  * \brief Структура записи о парных файлов FilesPair struct
@@ -48,7 +45,7 @@ struct SoundSheme
 /*!
  * \brief Класс виджета проведения сеанса тренинга TrenagerExecute class
  */
-class TrenTakePutExecute : public QWidget
+class TrenTakePutExecute : public TrenStabExecute
 {
     Q_OBJECT
 
@@ -56,25 +53,32 @@ public:
     explicit TrenTakePutExecute(QWidget *parent = nullptr);
     ~TrenTakePutExecute() override;
 
-    void setParams(const QJsonObject &probeParams);
+    void setParams(const QJsonObject &probeParams) override;
 
 protected:
-    void closeEvent(QCloseEvent *event) override;
+    /*!
+     * \brief Взаимодействие элементов
+     * Все управление сценой, маркеры и т.д.
+     */
+    void elementsInteraction(DeviceProtocols::DeviceData *data) override;
 
-    void resizeEvent(QResizeEvent* event) override;
+
+    /*!
+     * \brief Генерация новой сцены
+     */
+    void generateNewScene() override;
+
+    void addScoreNewScene();
+
+    /*!
+     * \brief Заполнить frame своими элементами, отображающими процесс игры
+     * \param frame - указатель на фрейм, куда добавлять
+     */
+    void fillGameParams(QFrame *frame) override;
+
 
 private slots:
-    void start();
-
-    void getData(DeviceProtocols::DeviceData *data);
-    void on_communicationError(const QString &drvName, const QString &port, const int errorCode);
-
-    void on_selectChannel(int chanIdx);
-    void on_zeroing();
-    void on_scaleChange(int scaleIdx);
-    void on_recording();
-
-    void on_advChannelsClicked(bool checked);
+    void on_recording() override;
 
 private:
     Ui::TrenTakePutExecute *ui;
@@ -82,28 +86,17 @@ private:
     ///< Слои игрового поля
     enum ZLevels
     {
-        zlvlBackground = 1,
         zlvlZones = 2,
         zlvlElements = 3,
         zlvlTakeElements = 4,
         zlvlMarker = 5
     };
 
-    void setSceneSize(QSize &size);
     void setZones(const QJsonArray &arrZones, QList<TrenTakePutDefines::GameZoneInfo> &zones);
     void setElements(const QJsonArray &arrElements,
                      QList<GraphicCommon::GameElementInfo> &elements,
                      TrenTakePutDefines::GameStage stage);
     void setMarker(const QJsonObject &objMarker);
-    void setBackground(const QJsonObject &objBackground);
-
-    /*!
-     * \brief Формирует список каналов для выбора управления
-     * По формату получаем список каналов этого формата, которые передает драйвер, заносим их в список для выбора
-     */
-    void setChannels();
-
-    void elementsInteraction();
 
     void processStageWorking();
 
@@ -134,11 +127,6 @@ private:
      * \brief Задержка, чтобы зафиксировать собранную сцену перед генерацией новой
      */
     void delayScene();
-
-    /*!
-     * \brief Генерация новой сцены
-     */
-    void generateNewScene(const bool isAddScore);
 
     void allocPairPictires();
 
@@ -187,43 +175,18 @@ private:
      */
     GraphicCommon::GameElement* markerOnGameElement();
 
-    void showPatientWindow();
-    void hidePatientWindow();
+    void finishTest() override;
 
-    void showFactors();
+    /*!
+     * \brief Изменяет значение кол-ва ошибок
+     * \param value - значение, на которое меняем.
+     */
+    void changeErrors(const int value);
 
-    void finishTest();
-
-    void doneDriver();
-
-    QGraphicsScene* m_scene {nullptr};
-    double m_prop = 1;   ///< Пропорция для пересчера базовой сцены 2000 x 2000 в реальные размеры игровой сцены
-    double m_propX = 1;
-    double m_propY = 1;
-
-    bool m_isRecording {false};     ///< Протекает ли запись данных
-    int m_recCount {0};             ///< Счетчик пакетов данных в пробе
-    int m_recLength {0};            ///< Длительность записи
 
     GraphicCommon::MarkerElement *m_marker {nullptr};
     QJsonObject m_markerObj;
     TrenTakePutDefines::TargetAdvMode m_targetAdvMode {TrenTakePutDefines::tamNone};
-
-    GraphicCommon::BackgroundElement *m_background {nullptr};
-    QJsonObject m_backgroundObj;
-
-    ///< Границы зоны рамки
-    int m_bndLeft {0};
-    int m_bndTop {0};
-    int m_bndRight {0};
-    int m_bndBottom {0};
-
-    int m_frequency = 50;        ///< Частота дискретизации
-    DataDefines::PatientKard m_kard;
-
-    Driver* m_driver {nullptr};     ///< Драйвер передающий данные
-    DeviceProtocols::DecartCoordControl* m_dcControl;  ///< Управление декартовыми данными в драйвере
-    TestResultData *m_trd;  ///< Объект, записывающий данные в базу
 
     TrenTakePutDefines::GameStage m_gameStage {TrenTakePutDefines::gsTake};
 
@@ -244,21 +207,16 @@ private:
     GraphicCommon::GameElement *m_elementPut {nullptr};
     int m_putElementCount {0}; ///< Счетчик элементов, уложенных в корзину
     int m_fixCount {0};        ///< Счетчик пакетов для фиксации захвата или укладки
-    int m_score {0};           ///< Очки, набранные в пробе
     int m_errorsCount {0};     ///< Счетчик ошибок
     bool m_isError {false};    ///< Признак ошибки. Для исключения "лишних" ошибок
     QPointF m_pos;
+    QLabel* m_lblErrors {nullptr};
 
     QMediaPlayer m_player;
     SoundSheme m_soundSheme;
-    TrenTakePutPatientWindow* m_patientWindow {nullptr};   ///< Окно пациента
     QList<QString> m_filesSingle;      ///< Список одиночных файлов для построения картинок или для охоты
     QList<FilesPair> m_filesPair;      ///< Список файлов для парных файлов
     QSet<int> m_filesUsed;   ///< Номера файлов, которые уже использовались
-
-    bool m_isClosed {false};
-//    DataDefines::PatientKard m_kard;
-
 };
 
 

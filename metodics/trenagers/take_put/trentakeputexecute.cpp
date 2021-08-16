@@ -6,7 +6,7 @@
 #include "executewidget.h"
 #include "baseutils.h"
 #include "channelsutils.h"
-#include "trentakeputpatientwindow.h"
+#include "trenagerpatientwindow.h"
 #include "settingsprovider.h"
 #include "testresultdata.h"
 #include "trenresultdata.h"
@@ -27,27 +27,12 @@
 //}
 
 TrenTakePutExecute::TrenTakePutExecute(QWidget *parent) :
-    QWidget(parent),
+    TrenStabExecute(parent),
     ui(new Ui::TrenTakePutExecute)
-  , m_scene(new QGraphicsScene(-1000, -1000, 2000, 2000))
-  , m_trd(new TestResultData())
 {
     ui->setupUi(this);
 
-    ui->lblCommunicationError->setVisible(false);
-//    QTimer::singleShot(0, this, &TrenTakePutExecute::start);
-
-    ui->cbScale->addItem("1");
-    ui->cbScale->addItem("2");
-    ui->cbScale->addItem("4");
-    ui->cbScale->addItem("8");
-    ui->cbScale->addItem("16");
-    ui->cbScale->addItem("32");
-    ui->cbScale->addItem("64");
-    ui->cbScale->addItem("128");
-
     m_filesUsed.clear();
-    ui->wgtAdvChannels->setVisible(false);
 }
 
 TrenTakePutExecute::~TrenTakePutExecute()
@@ -57,6 +42,8 @@ TrenTakePutExecute::~TrenTakePutExecute()
 
 void TrenTakePutExecute::setParams(const QJsonObject &params)
 {
+    TrenStabExecute::setParams(params);
+
     auto arrTakeZones = params["take_zones"].toArray();
     auto arrTakeElements = params["take_elements"].toArray();
     setZones(arrTakeZones, m_zonesTake);
@@ -66,14 +53,13 @@ void TrenTakePutExecute::setParams(const QJsonObject &params)
         loadPicturesSingle(m_elementsTake.at(0).images, "png");
     if ((m_elementsTake.size() >= 1) && (m_elementsTake.at(0).style == GraphicCommon::esPictureRandom))
         loadPicturesSingle(m_elementsTake.at(0).images, "png"); //"gif");
-    ui->lblFullPicture->setVisible((m_elementsTake.size() == 1) &&
-                                   (m_elementsTake.at(0).style == GraphicCommon::esPictureSplit));
+//    ui->lblFullPicture->setVisible((m_elementsTake.size() == 1) &&                                               TODO!!!!
+//                                   (m_elementsTake.at(0).style == GraphicCommon::esPictureSplit));
 
     if ((m_elementsTake.size() == 1) && (m_elementsTake.at(0).style == GraphicCommon::esPicturePair))
         loadPicturesPair(m_elementsTake.at(0).images);
 
     m_markerObj = params["marker"].toObject();
-    m_backgroundObj = params["background"].toObject();
 
     auto objTakeOrder = params["take_order"].toObject();
     auto tto = objTakeOrder["mode"].toString();
@@ -104,222 +90,271 @@ void TrenTakePutExecute::setParams(const QJsonObject &params)
         m_stageMode = TrenTakePutDefines::smAllElements;
     m_delayAfterStage = params["delay_after_stage"].toInt();
 
-    auto scale = params["scale"].toInt();
-    ui->cbScale->setCurrentIndex(scale);
-
-    m_recLength = params["time"].toInt();
-    auto sRL = BaseUtils::getTimeBySecCount(m_recLength);
-    ui->lblRecLenTitle->setText(QString(tr("Длительность записи") + " %1 " + tr("мин:сек")).arg(sRL));
-
     auto objSS = params["sounds"].toObject();
     m_soundSheme.ok = objSS["ok"].toString();
     m_soundSheme.error = objSS["error"].toString();
     m_soundSheme.scene = objSS["scene"].toString();
     m_soundSheme.onTarget = objSS["on_target"].toString();
-
-    QTimer::singleShot(0, this, &TrenTakePutExecute::start);
 }
 
-void TrenTakePutExecute::closeEvent(QCloseEvent *event)
+void TrenTakePutExecute::elementsInteraction(DeviceProtocols::DeviceData *data)
 {
-    m_isClosed = true;
-    hidePatientWindow();
+    TrenStabExecute::elementsInteraction(data);
 
-    //! Переехало из деструктора. Подозрение на нерегулярный сбой.
-    //! Но для срабатывания необходимо перед delete вызывать close();
-    doneDriver();
-    QWidget::closeEvent(event);
-}
-
-void TrenTakePutExecute::resizeEvent(QResizeEvent *event)
-{
-    Q_UNUSED(event);
-//    QSize size = event->size();
-
-    QSize size = ui->gvGame->geometry().size();
-    if (m_patientWindow && QApplication::desktop()->screenCount() > 1)
-        size = m_patientWindow->sceneSize();
-    setSceneSize(size);
-}
-
-void TrenTakePutExecute::start()
-{
-    m_driver = static_cast<AAnalyserApplication*>(QApplication::instance())->
-            getDriverByFormats(QStringList() << ChannelsDefines::cfDecartCoordinates);
-    if (m_driver)
+    auto* multiData = static_cast<DeviceProtocols::MultiData*>(data);
+    if (multiData->subChanCount() > 0)
     {
-        m_dcControl = dynamic_cast<DeviceProtocols::DecartCoordControl*>(m_driver);
-
-        connect(m_driver, &Driver::sendData, this, &TrenTakePutExecute::getData);
-        connect(m_driver, &Driver::communicationError, this, &TrenTakePutExecute::on_communicationError);
-
-        m_kard = static_cast<AAnalyserApplication*>(QApplication::instance())->getSelectedPatient();
-        MetodicDefines::MetodicInfo mi = static_cast<AAnalyserApplication*>(QApplication::instance())->getSelectedMetodic();
-//        ui->lblProbeTitle->setText(probeParams().name + " - " + m_kard.fio);
-        m_trd->newTest(m_kard.uid, mi.uid);
-
-        // По формату получаем список каналов этого формата, которые передает драйвер, заносим их в список для выбора
-        setChannels();
-
-        auto chanUid = ui->cbSelectChannel->currentData(ChannelsUtils::ChannelUidRole).toString();
-        m_frequency = m_driver->frequency(chanUid);
-
-        ui->wgtAdvChannels->assignDriver(m_driver, m_trd);
-        //! Стабилограмма будет записана всегда
-        ui->wgtAdvChannels->setAllwaysRecordingChannel(ui->cbSelectChannel->currentData(ChannelsUtils::ChannelUidRole).toString());
-        auto val = SettingsProvider::valueFromRegAppCopy("AdvancedChannelsWidget", "SplitterProbePosition").toByteArray();
-        ui->splitter->restoreState(val);
-
-        m_driver->start();
-
-        showPatientWindow();
-        QTimer::singleShot(0, [=]   // Без singleShot другие размеры
+        //! Управление маркером
+        QPointF rec = qvariant_cast<QPointF>(multiData->value(0));
+        if (m_marker)
         {
-            generateNewScene(false);
-        });
+            //! Установка маркера
+            double mx = rec.x() / (128 / BaseUtils::scaleMultiplier(scale())) * (scene()->sceneRect().width() / 2);
+            double my = - rec.y() / (128 / BaseUtils::scaleMultiplier(scale())) * (scene()->sceneRect().height() / 2);
+
+            if (mx - m_marker->boundingRect().width() / 2 < scene()->sceneRect().x() + bndLeft() * propX())
+                mx = scene()->sceneRect().x() + bndLeft() * propX() + m_marker->boundingRect().width() / 2;
+            if (mx > scene()->sceneRect().x() + scene()->sceneRect().width() - bndRight() * propX() - m_marker->boundingRect().width() / 2)
+                mx = scene()->sceneRect().x() + scene()->sceneRect().width() - bndRight() * propX() - m_marker->boundingRect().width() / 2;
+            if (my - m_marker->boundingRect().height() / 2 < scene()->sceneRect().y() + bndTop() * propY())
+                my = scene()->sceneRect().y() + bndTop() * propY() + m_marker->boundingRect().height() / 2;
+            if (my > scene()->sceneRect().y() + scene()->sceneRect().height() - bndBottom() * propY() - m_marker->boundingRect().height() / 2)
+                my = scene()->sceneRect().y() + scene()->sceneRect().height() - bndBottom() * propY() - m_marker->boundingRect().height() / 2;
+
+            m_marker->setPos(mx - m_marker->boundingRect().width() / 2,
+                             my - m_marker->boundingRect().height() / 2);
+        }
+    }
+
+    //! Проверка, захватил ли маркер элемент
+    auto* element = markerOnGameElement();
+
+    //! На этапах фиксации захвата или фиксации укладки
+    if (m_gameStage == TrenTakePutDefines::gsTakeProcess ||
+        m_gameStage == TrenTakePutDefines::gsPutProcess)
+    {
+        if (m_targetAdvMode == TrenTakePutDefines::tamTraceOnTarget)
+        {
+            m_marker->setShotTrace(element);
+            if (m_soundSheme.onTarget != "")
+            {
+                if (element)
+                {
+                    if (m_player.state() != QMediaPlayer::PlayingState)
+                    {
+                        m_player.setMedia(QUrl("qrc:/sound/" + m_soundSheme.onTarget));
+                        m_player.play();
+                    }
+                }
+                else
+                    m_player.stop();
+            }
+        }
+
+        //! Элемент потерян
+        if (!element)
+        {
+            if (m_gameStage == TrenTakePutDefines::gsTakeProcess)
+            {
+                m_gameStage = TrenTakePutDefines::gsTake;
+                m_elementTake = nullptr;
+            }
+            else
+            if (m_gameStage == TrenTakePutDefines::gsPutProcess)
+            {
+                m_gameStage = TrenTakePutDefines::gsPut;
+                m_elementPut = nullptr;
+            }
+        }
+        else
+        //! Элемент не потерян
+        {
+            m_pos = element->pos();
+            if (m_gameStage == TrenTakePutDefines::gsTakeProcess)
+            {
+                //! Перешли на другой элемент при захвате - потерять предыдущий
+                if (element != m_elementTake)
+                {
+                    m_gameStage = TrenTakePutDefines::gsTake;
+                    m_elementTake = nullptr;
+                }
+            }
+            else
+            if (m_gameStage == TrenTakePutDefines::gsPutProcess)
+            {
+                //! Перешли на другой элемент при укладке - потерять предыдущий
+                if (element != m_elementPut)
+                {
+                    m_gameStage = TrenTakePutDefines::gsPut;
+                    m_elementPut = nullptr;
+                }
+            }
+        }
+
+        processStageWorking();
     }
     else
     {
-        QMessageBox::warning(this, tr("Предупреждение"), tr("Отсутствует необходимое подключение для работы теста"));
-        static_cast<ExecuteWidget*>(parent())->showDB();
+        //! Захватили ли элемент или положили ли элемент в зону
+        if (element)
+        {
+            m_pos = element->pos();
+            if (element->elementInfo()->enabled
+                    &&
+                    ((m_gameStage == TrenTakePutDefines::gsTake) ||
+                     ((m_gameStage == TrenTakePutDefines::gsPut) &&
+                      (element->code() == m_elementTake->code()))))
+            {
+                if (m_gameStage == TrenTakePutDefines::gsTake)
+                {
+                    if (m_timeFixTake == 0)
+                    {
+                        m_elementTake = element;
+                        fixingTake();
+                    }
+                    else
+                    {
+                        m_gameStage = TrenTakePutDefines::gsTakeProcess;
+                        m_elementTake = element;
+                        m_fixCount = 0;
+                    }
+                }
+                else
+                if (m_gameStage == TrenTakePutDefines::gsPut)
+                {
+                    if (m_timeFixPut == 0)
+                    {
+                        m_elementPut = element;
+                        fixingStage();
+                    }
+                    else
+                    {
+                        m_gameStage = TrenTakePutDefines::gsPutProcess;
+                        m_elementPut = element;
+                        m_fixCount = 0;
+                    }
+                }
+                m_isError = false;
+            }
+            else
+            {
+                if (m_gameStage == TrenTakePutDefines::gsTake)
+                    fixingError();
+                else
+                if (m_gameStage == TrenTakePutDefines::gsPut)
+                {
+                    if (m_timeFixPut == 0)
+                        fixingError();
+                    else
+                    {
+                        m_gameStage = TrenTakePutDefines::gsPutProcess;
+                        m_elementPut = element;
+                        m_fixCount = 0;
+                    }
+                }
+            }
+        }
+        else
+        {
+            //! Игры без этапа укладки - сразу, как перешли к укладке, генерим новую сцену
+            if (m_zonesPut.size() == 0 && m_elementsPut.size() == 0 &&
+                    m_gameStage == TrenTakePutDefines::gsPut)
+                fixingStage();
+            m_isError = false;
+        }
+    }
+
+    elementsTimeLimitWorking();
+    elementsMobileWorking();
+}
+
+void TrenTakePutExecute::generateNewScene()
+{
+    TrenStabExecute::generateNewScene();
+
+    if (!isClosed())
+    {
+        for (int i = 0; i < m_zonesTake.size(); ++i)
+            m_zonesTake[i].clearElement();
+        for (int i = 0; i < m_zonesPut.size(); ++i)
+            m_zonesPut[i].clearElement();
+        m_elementTake = nullptr;
+        m_elementPut = nullptr;
+
+        if (m_elementsTake.size() > 0 && m_elementsPut.size() > 0 &&
+            m_zonesTake.size() > 0 && m_zonesPut.size() > 0)
+        {
+            //! Распределение по отдельным позициям
+            if (m_elementsTake.at(0).style == GraphicCommon::esPictureFixed ||
+                m_elementsTake.at(0).style == GraphicCommon::esDrawing)
+            {
+                allocBySeparatePositions(m_takeTakeOrder, m_zonesTake, m_elementsTake, zlvlElements);
+                allocBySeparatePositions(m_putTakeOrder, m_zonesPut, m_elementsPut, zlvlZones);
+            }
+            else
+            //! Распределение парных
+            if (m_elementsTake.at(0).style == GraphicCommon::esPicturePair)
+            {
+                allocPairPictires();
+            }
+            else
+            //! Распределение разделенных
+            if (m_elementsTake.at(0).style == GraphicCommon::esPictureSplit)
+            {
+                allocSplitPictures();
+            }
+        }
+        else
+        if (m_elementsTake.size() > 0 && m_elementsPut.size() == 0 &&
+            m_zonesTake.size() > 0 && m_zonesPut.size() == 0)
+        {
+            //! Распределение по отдельным позициям
+            if (m_elementsTake.at(0).style == GraphicCommon::esPictureRandom)
+            {
+                allocByRandomPositions(m_zonesTake, m_elementsTake);
+            }
+        }
+
+        setMarker(m_markerObj);
+        scene()->addItem(m_marker);
+        m_marker->setZValue(zlvlMarker);
+        m_marker->setPos(0 - m_marker->boundingRect().width() / 2,
+                         0 - m_marker->boundingRect().height() / 2);
+        m_putElementCount = 0;
     }
 }
 
-void TrenTakePutExecute::getData(DeviceProtocols::DeviceData *data)
+void TrenTakePutExecute::addScoreNewScene()
 {
-    if (ui->cbSelectChannel->currentData(ChannelsUtils::ChannelUidRole).toString() == data->channelId())
+    if (!isClosed())
     {
-        ui->lblCommunicationError->setVisible(false);
-
-        auto* multiData = static_cast<DeviceProtocols::MultiData*>(data);
-        if (multiData->subChanCount() > 0)
+        changeGameScore(m_zonesTake.size() * 2);
+        if (m_soundSheme.scene != "")
         {
-            QPointF rec = qvariant_cast<QPointF>(multiData->value(0));
-            if (m_marker)
-            {
-                //! Установка маркера
-                double mx = rec.x() / (128 / BaseUtils::scaleMultiplier(ui->cbScale->currentIndex())) * (m_scene->sceneRect().width() / 2);
-                double my = - rec.y() / (128 / BaseUtils::scaleMultiplier(ui->cbScale->currentIndex())) * (m_scene->sceneRect().height() / 2);
-
-                if (mx - m_marker->boundingRect().width() / 2 < m_scene->sceneRect().x() + m_bndLeft * m_propX)
-                    mx = m_scene->sceneRect().x() + m_bndLeft * m_propX + m_marker->boundingRect().width() / 2;
-                if (mx > m_scene->sceneRect().x() + m_scene->sceneRect().width() - m_bndRight * m_propX - m_marker->boundingRect().width() / 2)
-                    mx = m_scene->sceneRect().x() + m_scene->sceneRect().width() - m_bndRight * m_propX - m_marker->boundingRect().width() / 2;
-                if (my - m_marker->boundingRect().height() / 2 < m_scene->sceneRect().y() + m_bndTop * m_propY)
-                    my = m_scene->sceneRect().y() + m_bndTop * m_propY + m_marker->boundingRect().height() / 2;
-                if (my > m_scene->sceneRect().y() + m_scene->sceneRect().height() - m_bndBottom * m_propY - m_marker->boundingRect().height() / 2)
-                    my = m_scene->sceneRect().y() + m_scene->sceneRect().height() - m_bndBottom * m_propY - m_marker->boundingRect().height() / 2;
-
-                m_marker->setPos(mx - m_marker->boundingRect().width() / 2,
-                                 my - m_marker->boundingRect().height() / 2);
-
-                ui->wgtAdvChannels->getData(data);
-
-                //! Положение фигуры, захваченной маркером
-                if (m_elementTake &&
-                        (m_gameStage == TrenTakePutDefines::gsPut ||
-                         m_gameStage == TrenTakePutDefines::gsPutProcess))
-                {
-                    double x = m_marker->pos().x() + m_marker->boundingRect().width() / 2 - m_elementTake->boundingRect().width() / 2;
-                    double y = m_marker->pos().y() + m_marker->boundingRect().height() / 2 - m_elementTake->boundingRect().height() / 2;
-                    m_elementTake->setPos(x, y);
-                }
-
-                //! Взаимодействие элементов
-                elementsInteraction();
-
-                if (m_isRecording)
-                {
-                    ++m_recCount;
-                    ui->wgtAdvChannels->record(data);
-                    ui->lblRecLen->setText(BaseUtils::getTimeBySecCount(m_recCount / m_frequency));
-                    ui->pbRec->setValue(100 * m_recCount / (m_recLength * m_frequency));
-                    if (m_recCount >= m_recLength * m_frequency)
-                    {
-                        finishTest();
-                        return;
-                    }
-                }
-
-                m_scene->update(m_scene->sceneRect());
-            }
+            m_player.setMedia(QUrl("qrc:/sound/" + m_soundSheme.scene));
+            m_player.play();
         }
     }
 }
 
-void TrenTakePutExecute::on_communicationError(const QString &drvName, const QString &port, const int errorCode)
+void TrenTakePutExecute::fillGameParams(QFrame *frame)
 {
-    Q_UNUSED(errorCode);
-    ui->lblCommunicationError->setText(QString(tr("Ошибка связи с устройством") + ": %1 (" + tr("порт") + ": %2)").
-                                       arg(drvName).arg(port));
-    ui->lblCommunicationError->setVisible(true);
-}
+    TrenStabExecute::fillGameParams(frame);
 
-void TrenTakePutExecute::on_selectChannel(int chanIdx)
-{
-    Q_UNUSED(chanIdx);
-//    qDebug() << chanIdx
-//             << ui->cbSelectChannel->itemData(chanIdx, ChannelsUtils::ChannelUidRole)
-//             << ui->cbSelectChannel->itemData(chanIdx, ChannelsUtils::SubChanNumRole);
-}
+    QString style = "font-size: 16pt; color: rgb(255,0,0);";
+    QString name = tr("Ошибки");
+    m_lblErrors = new QLabel(frame);
+    m_lblErrors->setText(name);
+    m_lblErrors->setStyleSheet(style);
+    frame->layout()->addWidget(m_lblErrors);
+    pwSetGameParamLabel(name, style);
 
-void TrenTakePutExecute::on_zeroing()
-{
-    auto chanUid = ui->cbSelectChannel->currentData(ChannelsUtils::ChannelUidRole).toString();
-    if (m_dcControl && chanUid != "")
-        m_dcControl->zeroing(chanUid);
-}
-
-void TrenTakePutExecute::on_scaleChange(int scaleIdx)
-{
-    Q_UNUSED(scaleIdx);
+    changeErrors(0);
 }
 
 void TrenTakePutExecute::on_recording()
 {
-    m_isRecording = ! m_isRecording;
-
-    ui->pbRec->setValue(0);
-    ui->lblRecLen->setText("00:00");
-
-    ui->btnZeroing->setEnabled(!m_isRecording);
-    ui->frScale->setEnabled(!m_isRecording);
-    ui->wgtAdvChannels->enabledControls(!m_isRecording);
-
-    if (m_isRecording)
-    {
-        ui->btnRecord->setIcon(QIcon(":/images/SaveNO.png"));
-        ui->btnRecord->setText(tr("Прервать"));
-
-        MetodicDefines::MetodicInfo mi = static_cast<AAnalyserApplication*>(QApplication::instance())->getSelectedMetodic();
-        m_trd->newProbe(mi.name);
-        ui->wgtAdvChannels->newProbe();
-    }
-    else
-    {
-        ui->btnRecord->setIcon(QIcon(":/images/Save.png"));
-        ui->btnRecord->setText(tr("Запись"));
-
-        ui->wgtAdvChannels->abortProbe();
-    }
-    m_recCount = 0;
-}
-
-void TrenTakePutExecute::on_advChannelsClicked(bool checked)
-{
-    ui->wgtAdvChannels->setVisible(checked);
-}
-
-void TrenTakePutExecute::setSceneSize(QSize &size)
-{
-    int sideSize = size.height();
-    if (size.width() < size.height())
-        sideSize = size.width();
-    m_prop = static_cast<double>(sideSize) / 2000;
-    if (m_scene)
-        m_scene->setSceneRect(-size.width() * 0.995 / 2, - size.height() * 0.995 / 2, size.width() * 0.995, size.height() * 0.995);
-    m_propX = static_cast<double>(size.width()) / 2000;
-    m_propY = static_cast<double>(size.height()) / 2000;
+    TrenStabExecute::on_recording();
 }
 
 void TrenTakePutExecute::setZones(const QJsonArray &arrZones, QList<TrenTakePutDefines::GameZoneInfo> &zones)
@@ -453,204 +488,13 @@ void TrenTakePutExecute::setMarker(const QJsonObject &objMarker)
     }
 }
 
-void TrenTakePutExecute::setBackground(const QJsonObject &objBackground)
-{
-
-    auto style = objBackground["style"].toString();
-    if (style == "picture")
-    {
-        m_background = new GraphicCommon::BackgroundElement(GraphicCommon::bkgmPicture);
-        m_background->assignPixmap(":/images/backgrounds/" + objBackground["image"].toString());
-        m_background->setRect(m_scene->sceneRect());
-        m_background->setZValue(zlvlBackground);
-    }
-    else
-    if (style == "plate")
-    {
-        m_background = new GraphicCommon::BackgroundElement(GraphicCommon::bkgmPlate);
-        m_background->assignPixmap(":/images/plite_textures/" + objBackground["image"].toString());
-        m_background->setRect(m_scene->sceneRect());
-        m_background->setZValue(zlvlBackground);
-    }
-    auto bo = objBackground["borders"].toObject();
-    m_bndTop = bo["top"].toInt();
-    m_bndBottom = bo["bottom"].toInt();
-    m_bndLeft = bo["left"].toInt();
-    m_bndRight = bo["right"].toInt();
-
-//    QSize size = ui->gvGame->geometry().size();
-//    setSceneSize(size);
-}
-
-void TrenTakePutExecute::setChannels()
-{
-    auto listChanUid = m_driver->getChannelsByFormat(ChannelsDefines::cfDecartCoordinates);
-    foreach (auto channelUid, listChanUid)
-    {
-        auto subChanCnt = m_driver->getSubChannelsCount(channelUid);
-
-        for (int i = 0; i < subChanCnt; ++i)
-        {
-            auto name = ChannelsUtils::instance().channelName(channelUid);
-            ui->cbSelectChannel->addItem(name);
-            ui->cbSelectChannel->setItemData(ui->cbSelectChannel->count() - 1, channelUid, ChannelsUtils::ChannelUidRole);
-            ui->cbSelectChannel->setItemData(ui->cbSelectChannel->count() - 1, i, ChannelsUtils::SubChanNumRole);
-        }
-    }
-    ui->frSelectChannel->setVisible(listChanUid.size() > 1);
-}
-
-void TrenTakePutExecute::elementsInteraction()
-{
-    //! Проверка, захватил ли маркер элемент
-    auto* element = markerOnGameElement();
-
-    //! На этапах фиксации захвата или фиксации укладки
-    if (m_gameStage == TrenTakePutDefines::gsTakeProcess ||
-        m_gameStage == TrenTakePutDefines::gsPutProcess)
-    {
-        if (m_targetAdvMode == TrenTakePutDefines::tamTraceOnTarget)
-        {
-            m_marker->setShotTrace(element);
-            if (m_soundSheme.onTarget != "")
-            {
-                if (element)
-                {
-                    if (m_player.state() != QMediaPlayer::PlayingState)
-                    {
-                        m_player.setMedia(QUrl("qrc:/sound/" + m_soundSheme.onTarget));
-                        m_player.play();
-                    }
-                }
-                else
-                    m_player.stop();
-            }
-        }
-
-        //! Элемент потерян
-        if (!element)
-        {
-            if (m_gameStage == TrenTakePutDefines::gsTakeProcess)
-            {
-                m_gameStage = TrenTakePutDefines::gsTake;
-                m_elementTake = nullptr;
-            }
-            else
-            if (m_gameStage == TrenTakePutDefines::gsPutProcess)
-            {
-                m_gameStage = TrenTakePutDefines::gsPut;
-                m_elementPut = nullptr;
-            }
-        }
-        else
-        //! Элемент не потерян
-        {
-            m_pos = element->pos();
-            if (m_gameStage == TrenTakePutDefines::gsTakeProcess)
-            {
-                //! Перешли на другой элемент при захвате - потерять предыдущий
-                if (element != m_elementTake)
-                {
-                    m_gameStage = TrenTakePutDefines::gsTake;
-                    m_elementTake = nullptr;
-                }
-            }
-            else
-            if (m_gameStage == TrenTakePutDefines::gsPutProcess)
-            {
-                //! Перешли на другой элемент при укладке - потерять предыдущий
-                if (element != m_elementPut)
-                {
-                    m_gameStage = TrenTakePutDefines::gsPut;
-                    m_elementPut = nullptr;
-                }
-            }
-        }
-
-        processStageWorking();
-    }
-    else
-    {
-        //! Захватили ли элемент или положили ли элемент в зону
-        if (element)
-        {
-            m_pos = element->pos();
-            if (element->elementInfo()->enabled
-                    &&
-                    ((m_gameStage == TrenTakePutDefines::gsTake) ||
-                     ((m_gameStage == TrenTakePutDefines::gsPut) &&
-                      (element->code() == m_elementTake->code()))))
-            {
-                if (m_gameStage == TrenTakePutDefines::gsTake)
-                {
-                    if (m_timeFixTake == 0)
-                    {
-                        m_elementTake = element;
-                        fixingTake();
-                    }
-                    else
-                    {
-                        m_gameStage = TrenTakePutDefines::gsTakeProcess;
-                        m_elementTake = element;                        
-                        m_fixCount = 0;
-                    }
-                }
-                else
-                if (m_gameStage == TrenTakePutDefines::gsPut)
-                {
-                    if (m_timeFixPut == 0)
-                    {
-                        m_elementPut = element;
-                        fixingStage();
-                    }
-                    else
-                    {
-                        m_gameStage = TrenTakePutDefines::gsPutProcess;
-                        m_elementPut = element;
-                        m_fixCount = 0;
-                    }
-                }
-                m_isError = false;
-            }
-            else
-            {
-                if (m_gameStage == TrenTakePutDefines::gsTake)
-                    fixingError();
-                else
-                if (m_gameStage == TrenTakePutDefines::gsPut)
-                {
-                    if (m_timeFixPut == 0)
-                        fixingError();
-                    else
-                    {
-                        m_gameStage = TrenTakePutDefines::gsPutProcess;
-                        m_elementPut = element;
-                        m_fixCount = 0;
-                    }
-                }
-            }
-        }
-        else
-        {
-            //! Игры без этапа укладки - сразу, как перешли к укладке, генерим новую сцену
-            if (m_zonesPut.size() == 0 && m_elementsPut.size() == 0 &&
-                    m_gameStage == TrenTakePutDefines::gsPut)
-                fixingStage();
-            m_isError = false;
-        }
-    }
-
-    elementsTimeLimitWorking();
-    elementsMobileWorking();
-}
-
 void TrenTakePutExecute::processStageWorking()
 {
     ++m_fixCount;
     int timeTake = m_timeFixTake;
     if (m_gameStage == TrenTakePutDefines::gsPutProcess)
         timeTake = m_timeFixPut;
-    if (m_fixCount >= timeTake * m_frequency)
+    if (m_fixCount >= timeTake * frequency())
     {
         if (m_gameStage == TrenTakePutDefines::gsTakeProcess)
         {
@@ -677,16 +521,16 @@ void TrenTakePutExecute::processStageWorking()
 void TrenTakePutExecute::elementsTimeLimitWorking()
 {
     bool allIsProcessed = true;
-    auto items = m_scene->items();
+    auto items = scene()->items();
     for (int i = 0; i < items.size(); ++i)
     {
         auto* item = items[i];
-        if (item != m_marker && item != m_background)
+        if (item != m_marker && item != background())
         {
             auto* ge = static_cast<GraphicCommon::GameElement*>(item);
             if (ge->presentTime() > 0)
             {
-                ge->incTimeCounter(1.0 / m_frequency);
+                ge->incTimeCounter(1.0 / frequency());
                 if (!ge->isProcessed())
                 {
                     if (ge->timeCounter() >= ge->presentTime())
@@ -713,11 +557,11 @@ void TrenTakePutExecute::elementsTimeLimitWorking()
 
 void TrenTakePutExecute::elementsMobileWorking()
 {
-    auto items = m_scene->items();
+    auto items = scene()->items();
     for (int i = 0; i < items.size(); ++i)
     {
         auto* item = items[i];
-        if (item != m_marker && item != m_background)
+        if (item != m_marker && item != background())
         {
             auto* ge = static_cast<GraphicCommon::GameElement*>(item);
             if (!ge->isProcessed() && ge->elementInfo()->isMobile)
@@ -731,7 +575,7 @@ void TrenTakePutExecute::elementsMobileWorking()
                     ge->elementInfo()->movingLaw == GraphicCommon::mlDownToUp)
                 {
                     setLinearMovingMobilePosition(ge);
-                    if (!m_scene->sceneRect().contains(ge->pos()))
+                    if (!scene()->sceneRect().contains(ge->pos()))
                     {
                         ge->setProcessed(true);
                         ge->setVisible(false);
@@ -760,10 +604,10 @@ void TrenTakePutExecute::setRandomWorkMobilePosition(GraphicCommon::GameElement 
             return - qrand() % ge->elementInfo()->movingMaxForce * 2;
     };
 
-    double f = randomForce(ge->pos().x(), m_scene->sceneRect().x(), m_scene->sceneRect().right());
+    double f = randomForce(ge->pos().x(), scene()->sceneRect().x(), scene()->sceneRect().right());
     double vx = f / 50 + ge->vx();
     double x = ge->pos().x() + vx;
-    f = randomForce(ge->pos().y(), m_scene->sceneRect().y(), m_scene->sceneRect().bottom());
+    f = randomForce(ge->pos().y(), scene()->sceneRect().y(), scene()->sceneRect().bottom());
     double vy = f / 50 + ge->vy();
     double y = ge->pos().y() + vy;
     if (fabs(vx) > 5)
@@ -851,7 +695,10 @@ void TrenTakePutExecute::fixingStage()
     }
     m_elementTake = nullptr;
     if (m_stageMode == TrenTakePutDefines::smTakePut)
-        generateNewScene(true);
+    {
+        generateNewScene();
+        addScoreNewScene();
+    }
     else
     if (m_stageMode == TrenTakePutDefines::smAllElements)
     {
@@ -859,12 +706,12 @@ void TrenTakePutExecute::fixingStage()
         {
             //! Задержка, чтобы зафиксировать собранную сцену перед генерацией новой
             delayScene();
-            generateNewScene(true);
+            generateNewScene();
+            addScoreNewScene();
         }
         else
         {
-            ++m_score;
-            showFactors();
+            changeGameScore(1);
 
             ++m_putElementCount;
             if (m_soundSheme.ok != "")
@@ -880,10 +727,8 @@ void TrenTakePutExecute::fixingError()
 {
     if (!m_isError)
     {
-        ++m_errorsCount;
-        if (m_score > 0)
-            --m_score;
-        showFactors();
+        changeErrors(1);
+        changeGameScore(-1);
         m_isError = true;
         if (m_soundSheme.error != "")
         {
@@ -897,82 +742,12 @@ void TrenTakePutExecute::delayScene()
 {
     if (m_delayAfterStage > 0)
     {
-        m_scene->update(m_scene->sceneRect());
+        scene()->update(scene()->sceneRect());
         QTime time;
         time.start();
         while (time.elapsed() < m_delayAfterStage)
         {
             QApplication::processEvents();
-        }
-    }
-}
-
-void TrenTakePutExecute::generateNewScene(const bool isAddScore)
-{
-    if (!m_isClosed)
-    {
-        m_scene->clear();
-        for (int i = 0; i < m_zonesTake.size(); ++i)
-            m_zonesTake[i].clearElement();
-        for (int i = 0; i < m_zonesPut.size(); ++i)
-            m_zonesPut[i].clearElement();
-        m_elementTake = nullptr;
-        m_elementPut = nullptr;
-
-        setBackground(m_backgroundObj);
-
-        if (m_elementsTake.size() > 0 && m_elementsPut.size() > 0 &&
-            m_zonesTake.size() > 0 && m_zonesPut.size() > 0)
-        {
-            //! Распределение по отдельным позициям
-            if (m_elementsTake.at(0).style == GraphicCommon::esPictureFixed ||
-                m_elementsTake.at(0).style == GraphicCommon::esDrawing)
-            {
-                allocBySeparatePositions(m_takeTakeOrder, m_zonesTake, m_elementsTake, zlvlElements);
-                allocBySeparatePositions(m_putTakeOrder, m_zonesPut, m_elementsPut, zlvlZones);
-            }
-            else
-            //! Распределение парных
-            if (m_elementsTake.at(0).style == GraphicCommon::esPicturePair)
-            {
-                allocPairPictires();
-            }
-            else
-            //! Распределение разделенных
-            if (m_elementsTake.at(0).style == GraphicCommon::esPictureSplit)
-            {
-                allocSplitPictures();
-            }
-        }
-        else
-        if (m_elementsTake.size() > 0 && m_elementsPut.size() == 0 &&
-            m_zonesTake.size() > 0 && m_zonesPut.size() == 0)
-        {
-            //! Распределение по отдельным позициям
-            if (m_elementsTake.at(0).style == GraphicCommon::esPictureRandom)
-            {
-                allocByRandomPositions(m_zonesTake, m_elementsTake);
-            }
-        }
-
-        m_scene->addItem(m_background);
-
-        setMarker(m_markerObj);
-        m_scene->addItem(m_marker);
-        m_marker->setZValue(zlvlMarker);
-        m_marker->setPos(0 - m_marker->boundingRect().width() / 2,
-                         0 - m_marker->boundingRect().height() / 2);
-        m_putElementCount = 0;
-
-        if (isAddScore)
-        {
-            m_score += (m_zonesTake.size() * 2);
-            showFactors();
-            if (m_soundSheme.scene != "")
-            {
-                m_player.setMedia(QUrl("qrc:/sound/" + m_soundSheme.scene));
-                m_player.play();
-            }
         }
     }
 }
@@ -1004,13 +779,13 @@ void TrenTakePutExecute::allocSplitPictures()
     int picNum = getNextPictureNumber(m_filesSingle.size());
 
     QPixmap pixAll(m_elementsTake.at(0).images + m_filesSingle.at(picNum));
-    ui->lblFullPicture->setPixmap(pixAll.scaled(ui->frControl->geometry().width(), ui->frControl->geometry().width()));
-    if (m_patientWindow)
-        m_patientWindow->setSamplePixmap(pixAll);
+//    ui->lblFullPicture->setPixmap(pixAll.scaled(ui->frControl->geometry().width(), ui->frControl->geometry().width()));  TODO!!!!
+    if (patientWindow())
+        patientWindow()->setSamplePixmap(pixAll);
 
     //! Масштабирование
-    pixAll = pixAll.scaled(static_cast<int>(m_zonesTake.at(0).width * 2 * m_prop),
-                           static_cast<int>(m_zonesTake.at(0).height * 2 * m_prop),
+    pixAll = pixAll.scaled(static_cast<int>(m_zonesTake.at(0).width * 2 * prop()),
+                           static_cast<int>(m_zonesTake.at(0).height * 2 * prop()),
                            Qt::KeepAspectRatio);
 
     if (m_zonesTake.size() == 4 && m_zonesPut.size() == 4) // || m_zonesTake.size() == 9)
@@ -1162,11 +937,11 @@ GraphicCommon::GameElement* TrenTakePutExecute::allocElement(QList<TrenTakePutDe
     zones[zoneNum].setElement(gameElement);
     gameElement->setZoneIdx(zoneNum);
 
-    gameElement->setSize(QSizeF(zones[zoneNum].width * m_prop, zones[zoneNum].height * m_prop));
+    gameElement->setSize(QSizeF(zones[zoneNum].width * prop(), zones[zoneNum].height * prop()));
 
     if (zones[zoneNum].posKind == TrenTakePutDefines::pkFixed)
-        gameElement->setPos(zones[zoneNum].x * m_prop - gameElement->boundingRect().width() / 2,
-                            zones[zoneNum].y * m_prop - gameElement->boundingRect().height() / 2);
+        gameElement->setPos(zones[zoneNum].x * prop() - gameElement->boundingRect().width() / 2,
+                            zones[zoneNum].y * prop() - gameElement->boundingRect().height() / 2);
     else
     if (zones[zoneNum].posKind == TrenTakePutDefines::pkRandom)
     {
@@ -1176,12 +951,12 @@ GraphicCommon::GameElement* TrenTakePutExecute::allocElement(QList<TrenTakePutDe
         int y = zones[zoneNum].y_max;
         if (zones[zoneNum].y_max > zones[zoneNum].y_min)
             y = zones[zoneNum].y_min + qrand() % (zones[zoneNum].y_max - zones[zoneNum].y_min);
-        gameElement->setPos(x * m_prop - gameElement->boundingRect().width() / 2,
-                            y * m_prop - gameElement->boundingRect().height() / 2);
+        gameElement->setPos(x * prop() - gameElement->boundingRect().width() / 2,
+                            y * prop() - gameElement->boundingRect().height() / 2);
     }
 
     gameElement->setZValue(zOrder);
-    m_scene->addItem(gameElement);
+    scene()->addItem(gameElement);
     return gameElement;
 }
 
@@ -1198,11 +973,11 @@ GraphicCommon::GameElement *TrenTakePutExecute::markerOnGameElement()
     double mx = m_marker->x() + m_marker->boundingRect().width() / 2;
     double my = m_marker->y() + m_marker->boundingRect().height() / 2;
 
-    auto items = m_scene->items();
+    auto items = scene()->items();
     for (int i = 0; i < items.size(); ++i)
     {
         auto* item = items[i];
-        if (item != m_marker && item != m_background)
+        if (item != m_marker && item != background())
         {
             auto* ge = static_cast<GraphicCommon::GameElement*>(item);
             if (!ge->isProcessed())
@@ -1223,77 +998,19 @@ GraphicCommon::GameElement *TrenTakePutExecute::markerOnGameElement()
     return nullptr;
 }
 
-void TrenTakePutExecute::showPatientWindow()
-{
-    auto winPresent = SettingsProvider::valueFromRegAppCopy("", "PatientWindow", static_cast<QVariant>(true)).toBool();
-
-    if (winPresent && QApplication::desktop()->screenCount() > 1)
-    {
-        if (!m_patientWindow)
-            m_patientWindow = new TrenTakePutPatientWindow(this);
-        m_patientWindow->setScene(m_scene);
-        QSize size = m_patientWindow->sceneSize();
-        setSceneSize(size);
-        auto rect = static_cast<AAnalyserApplication*>(QApplication::instance())->getPatientWindowGeometry();
-        m_patientWindow->resize(rect.size());
-        m_patientWindow->move(rect.x(), rect.y());
-        m_patientWindow->show();
-        m_prop = m_patientWindow->prop();
-        m_propX = m_patientWindow->propX();
-        m_propY = m_patientWindow->propY();
-    }
-    else
-    {
-        ui->gvGame->setScene(m_scene);
-        QSize size = ui->gvGame->geometry().size();
-        setSceneSize(size);
-    }
-}
-
-void TrenTakePutExecute::hidePatientWindow()
-{
-    if (m_patientWindow)
-    {
-        m_patientWindow->hide();
-        auto* p = m_patientWindow;
-        m_patientWindow = nullptr;
-        delete p;
-    }
-}
-
-void TrenTakePutExecute::showFactors()
-{
-    QString score = QString(tr("Очки") + " : %1").arg(m_score);
-    QString errors = QString(tr("Ошибки") + " : %1").arg(m_errorsCount);
-    ui->lblGameScore->setText(score);
-    ui->lblGameErrors->setText(errors);
-    if (m_patientWindow)
-    {
-        m_patientWindow->setScore(score);
-        m_patientWindow->setErrors(errors);
-    }
-}
-
 void TrenTakePutExecute::finishTest()
 {
-    m_isClosed = true;
-    doneDriver();
-    auto trenRes = new TrenResultData(ChannelsDefines::chanTrenResult);
-    trenRes->addFactor(TrenResultFactorsDefines::ScoreUid, m_score);
-    trenRes->addFactor(TrenResultFactorsDefines::FaultsUid, m_errorsCount);
-    m_trd->addChannel(trenRes);
+    //! Добавляем значение специфического показателя для подкласса TrenTakePutExecute: количество ошибок
+    addFactorValue(TrenResultFactorsDefines::FaultsUid, m_errorsCount);
 
-//    hidePatientWindow();
-    m_isRecording = false;
-    m_trd->saveTest();
-    static_cast<ExecuteWidget*>(parent())->showDB();
+    TrenStabExecute::finishTest();
 }
 
-void TrenTakePutExecute::doneDriver()
+void TrenTakePutExecute::changeErrors(const int value)
 {
-    if (m_driver)
-    {
-        m_driver->stop();
-        m_driver->deleteLater();
-    }
+    m_errorsCount += value;
+    QString text = tr("Ошибки") + " - " + QString::number(m_errorsCount);
+    m_lblErrors->setText(text);
+    pwSetGameParamLabelValue(1, text);
 }
+
