@@ -424,5 +424,59 @@
  <resources>
   <include location="../../kernel.qrc"/>
  </resources>
- <connections/>
+ <connections>
+  <connection>
+   <sender>cbAdvChannels</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>TrenExecute</receiver>
+   <slot>on_advChannelsClicked(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>758</x>
+     <y>322</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1031</x>
+     <y>294</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btnRecord</sender>
+   <signal>clicked()</signal>
+   <receiver>TrenExecute</receiver>
+   <slot>on_recording()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>789</x>
+     <y>98</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1033</x>
+     <y>87</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>cbSelectChannel</sender>
+   <signal>currentIndexChanged(int)</signal>
+   <receiver>TrenExecute</receiver>
+   <slot>on_selectChannel(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>834</x>
+     <y>224</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1033</x>
+     <y>212</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>on_advChannelsClicked(bool)</slot>
+  <slot>on_recording()</slot>
+  <slot>on_selectChannel(int)</slot>
+ </slots>
 </ui>

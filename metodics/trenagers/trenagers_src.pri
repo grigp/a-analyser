@@ -1,5 +1,6 @@
 INCLUDEPATH += $$PWD
 
+include(graphics_utils/graphics_utils_src.pri)
 include(take_put/take_put_src.pri)
 include(tetris/tetris_src.pri)
 

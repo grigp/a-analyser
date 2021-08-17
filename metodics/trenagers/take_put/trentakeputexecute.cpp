@@ -53,8 +53,8 @@ void TrenTakePutExecute::setParams(const QJsonObject &params)
         loadPicturesSingle(m_elementsTake.at(0).images, "png");
     if ((m_elementsTake.size() >= 1) && (m_elementsTake.at(0).style == GraphicCommon::esPictureRandom))
         loadPicturesSingle(m_elementsTake.at(0).images, "png"); //"gif");
-//    ui->lblFullPicture->setVisible((m_elementsTake.size() == 1) &&                                               TODO!!!!
-//                                   (m_elementsTake.at(0).style == GraphicCommon::esPictureSplit));
+    setSamplePixmapVisible((m_elementsTake.size() == 1) &&
+                           (m_elementsTake.at(0).style == GraphicCommon::esPictureSplit));
 
     if ((m_elementsTake.size() == 1) && (m_elementsTake.at(0).style == GraphicCommon::esPicturePair))
         loadPicturesPair(m_elementsTake.at(0).images);
@@ -124,6 +124,16 @@ void TrenTakePutExecute::elementsInteraction(DeviceProtocols::DeviceData *data)
             m_marker->setPos(mx - m_marker->boundingRect().width() / 2,
                              my - m_marker->boundingRect().height() / 2);
         }
+    }
+
+    //! Положение фигуры, захваченной маркером
+    if (m_elementTake &&
+            (m_gameStage == TrenTakePutDefines::gsPut ||
+             m_gameStage == TrenTakePutDefines::gsPutProcess))
+    {
+        double x = m_marker->pos().x() + m_marker->boundingRect().width() / 2 - m_elementTake->boundingRect().width() / 2;
+        double y = m_marker->pos().y() + m_marker->boundingRect().height() / 2 - m_elementTake->boundingRect().height() / 2;
+        m_elementTake->setPos(x, y);
     }
 
     //! Проверка, захватил ли маркер элемент
@@ -355,6 +365,9 @@ void TrenTakePutExecute::fillGameParams(QFrame *frame)
 void TrenTakePutExecute::on_recording()
 {
     TrenStabExecute::on_recording();
+
+    m_errorsCount = 0;
+    changeErrors(0);
 }
 
 void TrenTakePutExecute::setZones(const QJsonArray &arrZones, QList<TrenTakePutDefines::GameZoneInfo> &zones)
@@ -779,7 +792,7 @@ void TrenTakePutExecute::allocSplitPictures()
     int picNum = getNextPictureNumber(m_filesSingle.size());
 
     QPixmap pixAll(m_elementsTake.at(0).images + m_filesSingle.at(picNum));
-//    ui->lblFullPicture->setPixmap(pixAll.scaled(ui->frControl->geometry().width(), ui->frControl->geometry().width()));  TODO!!!!
+    setSamplePixmap(pixAll);
     if (patientWindow())
         patientWindow()->setSamplePixmap(pixAll);
 
@@ -1010,7 +1023,10 @@ void TrenTakePutExecute::changeErrors(const int value)
 {
     m_errorsCount += value;
     QString text = tr("Ошибки") + " - " + QString::number(m_errorsCount);
-    m_lblErrors->setText(text);
-    pwSetGameParamLabelValue(1, text);
+    if (m_lblErrors)
+    {
+        m_lblErrors->setText(text);
+        pwSetGameParamLabelValue(1, text);
+    }
 }
 

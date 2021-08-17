@@ -179,7 +179,10 @@ void TrenExecute::on_recording()
 
         ui->wgtAdvChannels->abortProbe();
     }
+
     m_recCount = 0;
+    m_gameScore = 0;
+    changeGameScore(0);
 }
 
 void TrenExecute::on_advChannelsClicked(bool checked)
@@ -340,6 +343,17 @@ QString TrenExecute::currentChannelUID()
     if (ui->cbSelectChannel->count() > 0)
         return ui->cbSelectChannel->currentData(ChannelsUtils::ChannelUidRole).toString();
     return "";
+}
+
+void TrenExecute::setSamplePixmapVisible(const bool visible)
+{
+    ui->lblFullPicture->setVisible(visible);
+}
+
+void TrenExecute::setSamplePixmap(const QPixmap &pixmap)
+{
+    ui->lblFullPicture->setPixmap(pixmap.scaled(ui->frControl->geometry().width(), ui->frControl->geometry().width()));
+    ui->lblFullPicture->setVisible(true);
 }
 
 void TrenExecute::changeGameScore(const int value)

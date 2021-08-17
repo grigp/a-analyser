@@ -6,14 +6,13 @@
 #include <QMessageBox>
 
 #include "aanalyserapplication.h"
-#include "driver.h"
 #include "executewidget.h"
 #include "baseutils.h"
 #include "channelsutils.h"
 #include "settingsprovider.h"
-#include "testresultdata.h"
 #include "trenresultdata.h"
 #include "trenresultfactors.h"
+#include "tetrisglass.h"
 
 TrenTetrisExecute::TrenTetrisExecute(QWidget *parent) :
     TrenStabExecute (parent),
@@ -62,6 +61,14 @@ void TrenTetrisExecute::setParams(const QJsonObject &params)
     m_markerObj = params["marker"].toObject();
 }
 
+void TrenTetrisExecute::on_recording()
+{
+    TrenStabExecute::on_recording();
+
+    m_rowsDeleted = 0;
+    changeRowsDeleted(0);
+}
+
 void TrenTetrisExecute::elementsInteraction(DeviceProtocols::DeviceData *data)
 {
     TrenStabExecute::elementsInteraction(data);
@@ -97,6 +104,14 @@ void TrenTetrisExecute::generateNewScene()
 {
     TrenStabExecute::generateNewScene();
 
+    m_glass = new TetrisGlass();
+    m_glass->setGeometry(scene()->width(), scene()->height(), m_glassHCount, m_glassVCount);
+    scene()->addItem(m_glass);
+    m_glass->setZValue(zlvlGlass);
+    qDebug() <<  m_glass->boundingRect().width() << m_glass->boundingRect().height();
+    m_glass->setPos(0 - m_glass->boundingRect().width() / 2,
+                    0 - m_glass->boundingRect().height() / 2);
+
     setMarker(m_markerObj);
     scene()->addItem(m_marker);
     m_marker->setZValue(zlvlMarker);
@@ -128,12 +143,9 @@ void TrenTetrisExecute::setMarker(const QJsonObject &objMarker)
         if (objMarker["repaint"].toBool())
             BaseUtils::setColoredPicture(mpmp, BaseUtils::strRGBAToColor(objMarker["color"].toString()));
         m_marker = new GraphicCommon::MarkerElement(mpmp);
-
-//        auto stAdv = objMarker["advanced"].toString();
-//        if (stAdv == "trace_on_target")
-//            m_targetAdvMode = TrenTakePutDefines::tamTraceOnTarget;
     }
 }
+
 
 void TrenTetrisExecute::changeRowsDeleted(const int value)
 {

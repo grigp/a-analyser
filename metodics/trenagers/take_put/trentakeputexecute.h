@@ -77,7 +77,7 @@ protected:
     void fillGameParams(QFrame *frame) override;
 
 
-private slots:
+protected slots:
     void on_recording() override;
 
 private:

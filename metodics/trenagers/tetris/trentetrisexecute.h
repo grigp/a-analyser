@@ -16,8 +16,7 @@
 #include "graphiccommon.h"
 #include "trenstabexecute.h"
 
-class Driver;
-class TestResultData;
+class TetrisGlass;
 
 namespace Ui {
 class TrenTetrisExecute;
@@ -35,6 +34,9 @@ public:
     ~TrenTetrisExecute() override;
 
     void setParams(const QJsonObject &params) override;
+
+protected slots:
+    void on_recording() override;
 
 protected:
     /*!
@@ -58,10 +60,16 @@ private:
     ///< Слои игрового поля
     enum ZLevels
     {
+        zlvlGlass = 3,
         zlvlMarker = 4
     };
 
+    /*!
+     * \brief Установка маркера на игровую сцену
+     * \param objMarker - объект описания маркера из параметров
+     */
     void setMarker(const QJsonObject &objMarker);
+
 
     /*!
      * \brief Изменяет значение кол-ва удаленных строк
@@ -90,8 +98,9 @@ private:
     int m_autoMovingSpeed {3};          ///< Скорость спуска в режиме автоматического спуска
 
     QJsonObject m_markerObj;            ///< Объект с данными маркера
-
     GraphicCommon::MarkerElement *m_marker {nullptr};
+
+    TetrisGlass* m_glass {nullptr};
 
     QLabel* m_lblRowsDel {nullptr};
 
