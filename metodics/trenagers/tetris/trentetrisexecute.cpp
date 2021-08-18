@@ -34,8 +34,8 @@ void TrenTetrisExecute::setParams(const QJsonObject &params)
     m_complexityMode = TrenTetrisDefines::ComplexityModeValueIndex.value(params["complexity"].toString());
     m_deletingMode = TrenTetrisDefines::DeletingModeValueIndex.value(params["deleting"].toString());
 
-    m_glassHCount = params["height"].toInt();
-    m_glassVCount = params["width"].toInt();
+    m_glassHCount = params["width"].toInt();
+    m_glassVCount = params["height"].toInt();
 
     m_cubeImageFileName = params["cube_image"].toString();
 
@@ -59,6 +59,7 @@ void TrenTetrisExecute::setParams(const QJsonObject &params)
     m_autoMovingSpeed = objAmm["speed"].toInt();
 
     m_markerObj = params["marker"].toObject();
+    m_glassObj = params["glass"].toObject();
 }
 
 void TrenTetrisExecute::on_recording()
@@ -104,13 +105,11 @@ void TrenTetrisExecute::generateNewScene()
 {
     TrenStabExecute::generateNewScene();
 
-    m_glass = new TetrisGlass();
+    setGlass(m_glassObj);
     m_glass->setGeometry(scene()->width(), scene()->height(), m_glassHCount, m_glassVCount);
     scene()->addItem(m_glass);
     m_glass->setZValue(zlvlGlass);
-    qDebug() <<  m_glass->boundingRect().width() << m_glass->boundingRect().height();
-    m_glass->setPos(0 - m_glass->boundingRect().width() / 2,
-                    0 - m_glass->boundingRect().height() / 2);
+    m_glass->setPos(-scene()->width() / 2, -scene()->height()/ 2);
 
     setMarker(m_markerObj);
     scene()->addItem(m_marker);
@@ -146,6 +145,29 @@ void TrenTetrisExecute::setMarker(const QJsonObject &objMarker)
     }
 }
 
+void TrenTetrisExecute::setGlass(const QJsonObject &objGlass)
+{
+    m_glass = new TetrisGlass();
+
+    auto style = objGlass["style"].toString();
+    if (style == "plate")
+        m_glass->setStyle(TetrisGlass::stlPlate);
+    else
+    if (style == "color")
+        m_glass->setStyle(TetrisGlass::stlColor);
+
+    m_glass->setPliteImage(objGlass["image"].toString());
+    m_glass->setColor(BaseUtils::strRGBAToColor(objGlass["color"].toString()));
+
+    auto objFrames = objGlass["frames"].toObject();
+    m_glass->setFrameColor(BaseUtils::strRGBAToColor(objFrames["color"].toString()));
+    m_glass->setFrameLeftImage(objFrames["left"].toString());
+    m_glass->setFrameRightImage(objFrames["right"].toString());
+    m_glass->setFrameBottomImage(objFrames["bottom"].toString());
+    m_glass->setFrameCornerLeftImage(objFrames["corner_left"].toString());
+    m_glass->setFrameCornerRightImage(objFrames["corner_right"].toString());
+    m_glass->setCubeImage(m_cubeImageFileName);
+}
 
 void TrenTetrisExecute::changeRowsDeleted(const int value)
 {

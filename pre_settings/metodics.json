@@ -498,7 +498,7 @@
                 "deleting": "rows",
                 "height": 21,
                 "width": 15,
-                "cube_image": "cube.png",
+                "cube_image": "cube1.png",
                 "rows_deleting_mode":
                 {
                     "cube_color": "ffffff00",
@@ -543,6 +543,19 @@
                          "right": 0,
                          "bottom": 0
                      }
+                },
+                "glass": {
+                     "style": "plate",
+                     "image": "09.png",
+                     "color": "f8f8f8ff",
+                     "frames": {
+                        "bottom": "01_bottom.png",
+                        "corner_left": "01_corner_left.png",
+                        "corner_right": "01_corner_right.png",
+                        "left": "01_left.png",
+                        "right": "01_right.png",
+                        "color": "0000ffff"
+                    }
                 },
                 "sounds": {
                     "take": "03.wav",

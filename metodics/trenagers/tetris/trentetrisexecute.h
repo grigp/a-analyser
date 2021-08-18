@@ -70,6 +70,12 @@ private:
      */
     void setMarker(const QJsonObject &objMarker);
 
+    /*!
+     * \brief Установка стакана на игровую сцену
+     * \param objGlass - объект описания стакана из параметров
+     */
+    void setGlass(const QJsonObject &objGlass);
+
 
     /*!
      * \brief Изменяет значение кол-ва удаленных строк
@@ -100,6 +106,7 @@ private:
     QJsonObject m_markerObj;            ///< Объект с данными маркера
     GraphicCommon::MarkerElement *m_marker {nullptr};
 
+    QJsonObject m_glassObj;            ///< Объект с данными стакана
     TetrisGlass* m_glass {nullptr};
 
     QLabel* m_lblRowsDel {nullptr};

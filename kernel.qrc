@@ -160,5 +160,10 @@
         <file>images/Games/Cube2.png</file>
         <file>images/Games/Cube3.png</file>
         <file>images/Games/Cube4.png</file>
+        <file>images/Frames/01_bottom.png</file>
+        <file>images/Frames/01_corner_left.png</file>
+        <file>images/Frames/01_corner_right.png</file>
+        <file>images/Frames/01_left.png</file>
+        <file>images/Frames/01_right.png</file>
     </qresource>
 </RCC>
