@@ -3,6 +3,8 @@
 
 #include <QObject>
 #include <QGraphicsItem>
+#include <QMap>
+#include <QPixmap>
 
 /*!
  * \brief Класс, реализующий "Стакан" в тетрисе TetrisGlass class
@@ -52,9 +54,24 @@ public:
 
     void setCubeImage(const QString fn);
 
+    /*!
+     * \brief Доступ к цвтеам в ячейках Qt::black - ячейка пустая
+     * \param h, v - позиции по горизонтали и вертикали
+     */
     QColor value(const int h, const int v) const;
     void setValue(const int h, const int v, const QColor value);
 
+    /*!
+     * \brief Добавляет цвет в список допустимых
+     * \param color - цвет
+     */
+    void addColor(const QColor color);
+
+    /*!
+     * \brief Пересоздает фигуру на сцене
+     * \param figure - двумерный массив данных фигуры
+     */
+    void setNewFigure(QVector<QVector<QColor>> figure);
 
 private:
 
@@ -85,7 +102,10 @@ private:
     int m_hCount {15};       ///< Кол-во кубиков по горизонтали
     int m_vCount {21};       ///< Кол-во кубиков по вертикали
 
-    QVector<QVector<QColor>> m_data;  ///< Данные заполнения стакана
+    QVector<QVector<QColor>> m_data;    ///< Данные заполнения стакана
+    QMap<int, QPixmap> m_allowColors;   ///< Допустимые цвета
+
+    QVector<QVector<QColor>> m_figure;  ///< Данные переносимой фигуры
 };
 
 #endif // TETRISGLASS_H

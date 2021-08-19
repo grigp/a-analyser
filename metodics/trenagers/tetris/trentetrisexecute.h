@@ -83,13 +83,17 @@ private:
      */
     void changeRowsDeleted(const int value);
 
+    /*!
+     * \brief Создает и возвращает массив фигур
+     */
+    QVector<QVector<QColor>> newFigure();
 
     TrenTetrisDefines::MovingMode m_movingMode {TrenTetrisDefines::mmTake};
     TrenTetrisDefines::ComplexityMode m_complexityMode {TrenTetrisDefines::cmFigures};
     TrenTetrisDefines::DeletingMode m_deletingMode {TrenTetrisDefines::dmRows};
 
-    int m_glassHCount {21};         ///< Кол-во позиций в стакане по горизонтали
-    int m_glassVCount {15};         ///< Кол-во позиций в стакане по вертикали
+    int m_glassHCount {15};         ///< Кол-во позиций в стакане по горизонтали
+    int m_glassVCount {21};         ///< Кол-во позиций в стакане по вертикали
 
     QString m_cubeImageFileName {""}; ///< Имя файла, содержащего картинку кубика
 

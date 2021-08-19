@@ -84,9 +84,11 @@ void TetrisGlass::paint(QPainter *painter, const QStyleOptionGraphicsItem *optio
             {
                 if (m_data[v][h] != Qt::black)
                 {
-                    QRectF source(0, 0, m_pixmapCube.width(), m_pixmapCube.height());
-                    QRectF target(x, y, m_cubeSize, m_cubeSize);
-                    painter->drawPixmap(target, m_pixmapCube, source);
+                    int colorCode = m_data[v][h].red() * 16777216 + m_data[v][h].green() * 65536 + m_data[v][h].blue() * 256 + m_data[v][h].alpha();
+                    if (m_allowColors.contains(colorCode))
+                    {
+                        painter->drawPixmap(static_cast<int>(x), static_cast<int>(y), m_allowColors.value(colorCode));
+                    }
                 }
                 x += m_cubeSize;
             }
@@ -169,6 +171,20 @@ void TetrisGlass::setValue(const int h, const int v, const QColor value)
     m_data[v][h] = value;
 }
 
+void TetrisGlass::addColor(const QColor color)
+{
+    int colorCode = color.red() * 16777216 + color.green() * 65536 + color.blue() * 256 + color.alpha();
+    QPixmap cube(m_pixmapCube);
+    cube.scaled(static_cast<int>(m_cubeSize), static_cast<int>(m_cubeSize), Qt::KeepAspectRatio);
+    BaseUtils::setColoredPicture(cube, color);
+    m_allowColors.insert(colorCode, cube);
+}
+
+void TetrisGlass::setNewFigure(QVector<QVector<QColor> > figure)
+{
+    m_figure = figure;
+}
+
 void TetrisGlass::fillData()
 {
     m_data.resize(m_vCount);
@@ -179,12 +195,6 @@ void TetrisGlass::fillData()
             m_data[v][h] = QColor(Qt::black);
 
     }
-//    foreach (auto row, m_data)
-//    {
-//        row.resize(m_hCount);
-//        foreach (auto rc, row)
-//            rc = QColor(Qt::black);
-//    }
 }
 
 

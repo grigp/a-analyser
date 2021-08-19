@@ -510,16 +510,22 @@
                     "count": 3,
                     "colors": [
                         {
-                            "color": "ff00ffff"
+                            "color": "ffff0000"
+                        },
+                        {
+                            "color": "ff00ff00"
                         },
                         {
                             "color": "ff0000ff"
                         },
                         {
-                            "color": "0000ffff"
+                            "color": "ffffff00"
                         },
                         {
-                            "color": "ff00ff00"
+                            "color": "ffff00ff"
+                        },
+                        {
+                            "color": "ff00ffff"
                         }
                     ]
                 },
