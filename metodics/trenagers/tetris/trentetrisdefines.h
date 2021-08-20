@@ -67,6 +67,17 @@ static QMap<DeletingMode, QString> DeletingValueName {
 };
 
 
+/*!
+ * \brief Этапы игры в режиме MovingMode == mmTake TakeModeStage enum
+ */
+enum TakeModeStage
+{
+      tmsTake = 0     ///< Поиск захвата
+    , tmsPut          ///< Поиск укладки
+};
+
+
+
 }
 
 #endif // TRENTETRISDEFINES_H

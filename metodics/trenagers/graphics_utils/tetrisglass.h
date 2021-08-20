@@ -73,9 +73,31 @@ public:
      */
     void setNewFigure(QVector<QVector<QColor>> figure);
 
+    /*!
+     * \brief Поворачивает фигуру на 90 градусов по часовой стрелке
+     */
+    void rotateFigure();
+
+    /*!
+     * \brief Возвращает прямоугольник позицию фигуры
+     */
+    QRectF getFigurePosition() const;
+
+    /*!
+     * \brief Перемещает фигуру на позицию
+     * \param x, y - координаты позиции
+     * \return true, если фигура коснулась конфигурации или дна стакана и false в противном случае
+     */
+    bool setFigurePosition(const qreal x, const qreal y);
+
 private:
 
     void fillData();
+
+    /*!
+     * \brief Прорисовывает фигуру с помощью указанного рисователя
+     */
+    void showFigure(QPainter *painter);
 
     qreal m_left {-100};
     qreal m_top {-200};
@@ -106,6 +128,9 @@ private:
     QMap<int, QPixmap> m_allowColors;   ///< Допустимые цвета
 
     QVector<QVector<QColor>> m_figure;  ///< Данные переносимой фигуры
+    qreal m_figX {0};         ///< Координаты фигуры
+    qreal m_figY {0};
+    int m_figAngleCode {0};   ///< Код угла фигуры m_figAngleCode % 4 = 0 - 0гр., 1 - 90гр., 2 - 180гр., 4 - 270гр. Каждый поворот ++m_figAngleCode;
 };
 
 #endif // TETRISGLASS_H

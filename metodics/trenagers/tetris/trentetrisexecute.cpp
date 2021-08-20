@@ -101,6 +101,8 @@ void TrenTetrisExecute::on_recording()
     changeRowsDeleted(0);
 }
 
+//int n = 0; Для вращения
+
 void TrenTetrisExecute::elementsInteraction(DeviceProtocols::DeviceData *data)
 {
     TrenStabExecute::elementsInteraction(data);
@@ -127,6 +129,45 @@ void TrenTetrisExecute::elementsInteraction(DeviceProtocols::DeviceData *data)
 
             m_marker->setPos(mx - m_marker->boundingRect().width() / 2,
                              my - m_marker->boundingRect().height() / 2);
+//            m_marker->setVisible((m_movingMode == TrenTetrisDefines::mmTake) && (m_tmStage == TrenTetrisDefines::tmsTake));
+
+            //! Координаты маркера в координатах сцены
+            qreal mxs = mx + scene()->sceneRect().width() / 2;
+            qreal mys = my + scene()->sceneRect().height() / 2;
+            //! На этапе поиска захвата
+            if (m_tmStage == TrenTetrisDefines::tmsTake)
+            {
+                auto fig = m_glass->getFigurePosition();
+                //! Маркер на фигуре
+                if (fig.contains(mxs, mys))
+                {
+                    m_offsX = mxs - fig.center().x();
+                    m_offsY = mys - fig.center().y();
+                    m_tmStage = TrenTetrisDefines::tmsPut;
+                    m_marker->setVisible(false);
+                }
+            }
+            else
+            //! На этапе поиска укладки
+            if (m_tmStage == TrenTetrisDefines::tmsPut)
+            {
+                //! Устанавливаем фигуру на позицию согласно координатам маркера и
+                //! проверяем, положена ли фигура
+                if (m_glass->setFigurePosition(mx + scene()->sceneRect().width() / 2 - m_offsX,
+                                               my + scene()->sceneRect().height() / 2 - m_offsY))
+                {
+                    //! Если положена, то...
+                    m_tmStage = TrenTetrisDefines::tmsTake;
+                    //! Добавление новой фигуры
+                    m_glass->setNewFigure(newFigure());
+                    m_marker->setVisible(true);
+                }
+
+            }
+
+//            ++n; Вращение
+//            if (n % 250 == 0)
+//                m_glass->rotateFigure();
         }
     }
 }
@@ -147,6 +188,7 @@ void TrenTetrisExecute::generateNewScene()
     {
         m_glass->addColor(m_glassColor);
         m_glass->addColor(m_lastColor);
+        m_glass->addColor(m_cubeColor);
     }
     else
     if (m_deletingMode == TrenTetrisDefines::dmColored)

@@ -97,6 +97,9 @@ void TetrisGlass::paint(QPainter *painter, const QStyleOptionGraphicsItem *optio
         }
     }
 
+    //! Фигура
+    showFigure(painter);
+
 //    painter->setBrush(QBrush(Qt::red, Qt::NoBrush));
 //    painter->setPen(QPen(Qt::red, 1, Qt::SolidLine, Qt::FlatCap));
 //    painter->drawRect(boundingRect());
@@ -180,9 +183,38 @@ void TetrisGlass::addColor(const QColor color)
     m_allowColors.insert(colorCode, cube);
 }
 
-void TetrisGlass::setNewFigure(QVector<QVector<QColor> > figure)
+void TetrisGlass::setNewFigure(QVector<QVector<QColor>> figure)
 {
     m_figure = figure;
+    int size = qMax(m_figure.size(), m_figure[0].size());
+    m_figX = boundingRect().x() + boundingRect().width() / 2;
+    m_figY = boundingRect().y() + m_cubeSize * size / 2;
+}
+
+void TetrisGlass::rotateFigure()
+{
+    ++m_figAngleCode;
+}
+
+QRectF TetrisGlass::getFigurePosition() const
+{
+    int iSize = m_figure.size();
+    int jSize = m_figure[0].size();
+    if (m_figAngleCode == 0 || m_figAngleCode == 2)
+        return QRectF(m_figX - jSize * m_cubeSize / 2, m_figY - iSize * m_cubeSize / 2, jSize * m_cubeSize, iSize * m_cubeSize);
+    else
+    if (m_figAngleCode == 1 || m_figAngleCode == 3)
+        return QRectF(m_figX - iSize * m_cubeSize / 2, m_figY - jSize * m_cubeSize / 2, iSize * m_cubeSize, jSize * m_cubeSize);
+
+    return QRectF(0, 0, 0, 0);
+}
+
+bool TetrisGlass::setFigurePosition(const qreal x, const qreal y)
+{
+    m_figX = x;
+    m_figY = y;
+    return false;
+
 }
 
 void TetrisGlass::fillData()
@@ -194,6 +226,46 @@ void TetrisGlass::fillData()
         for (int h = 0; h < m_data[v].size(); ++h)
             m_data[v][h] = QColor(Qt::black);
 
+    }
+}
+
+void TetrisGlass::showFigure(QPainter *painter)
+{
+    int figAngle = m_figAngleCode % 4;  //! В диапазон 0 - 4
+    int iSize = m_figure.size();
+    for (int i = 0; i < iSize; ++i)
+    {
+        int jSize = m_figure[i].size();
+        for (int j = 0; j < jSize; ++j)
+        {
+            QColor color = m_figure[i][j];
+            if (color != Qt::black)
+            {
+                int colorCode = color.red() * 16777216 + color.green() * 65536 + color.blue() * 256 + color.alpha();
+                if (m_allowColors.contains(colorCode))
+                {
+                    if (figAngle == 0)
+                        painter->drawPixmap(static_cast<int>(m_figX - jSize * m_cubeSize / 2 + j * m_cubeSize),
+                                            static_cast<int>(m_figY - iSize * m_cubeSize / 2 + i * m_cubeSize),
+                                            m_allowColors.value(colorCode));
+                    else
+                    if (figAngle == 1)
+                        painter->drawPixmap(static_cast<int>(m_figX - iSize * m_cubeSize / 2 + (iSize - i - 1) * m_cubeSize),
+                                            static_cast<int>(m_figY - jSize * m_cubeSize / 2 + j * m_cubeSize),
+                                            m_allowColors.value(colorCode));
+                    else
+                    if (figAngle == 2)
+                        painter->drawPixmap(static_cast<int>(m_figX - jSize * m_cubeSize / 2 + (jSize - j - 1) * m_cubeSize),
+                                            static_cast<int>(m_figY - iSize * m_cubeSize / 2 + (iSize - i - 1) * m_cubeSize),
+                                            m_allowColors.value(colorCode));
+                    else
+                    if (figAngle == 3)
+                        painter->drawPixmap(static_cast<int>(m_figX - iSize * m_cubeSize / 2 + i * m_cubeSize),
+                                            static_cast<int>(m_figY - jSize * m_cubeSize / 2 + (jSize - j - 1) * m_cubeSize),
+                                            m_allowColors.value(colorCode));
+                }
+            }
+        }
     }
 }
 

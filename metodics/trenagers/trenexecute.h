@@ -165,6 +165,11 @@ protected:
     };
     void addFactorValue(const QString &uid, const double value);
 
+    /*!
+     * \brief Возвращает кол-во отсчетов после начала записи
+     */
+    int recCount() {return m_recCount;}
+
 
 private slots:
     void getData(DeviceProtocols::DeviceData *data);

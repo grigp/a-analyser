@@ -109,13 +109,16 @@ private:
 
     QJsonObject m_markerObj;            ///< Объект с данными маркера
     GraphicCommon::MarkerElement *m_marker {nullptr};
+    qreal m_offsX {0};                 ///< Координаты смещения маркера относительно центра фигуры при захвате
+    qreal m_offsY {0};
 
     QJsonObject m_glassObj;            ///< Объект с данными стакана
     TetrisGlass* m_glass {nullptr};
 
     QLabel* m_lblRowsDel {nullptr};
-
     int m_rowsDeleted {0};
+
+    TrenTetrisDefines::TakeModeStage m_tmStage {TrenTetrisDefines::tmsTake};   ///< Этап а режиме захвата - укладки
 };
 
 #endif // TRENTETRISEXECUTE_H
