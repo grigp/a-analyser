@@ -118,56 +118,84 @@ void TrenTetrisExecute::elementsInteraction(DeviceProtocols::DeviceData *data)
             double mx = rec.x() / (128 / BaseUtils::scaleMultiplier(scale())) * (scene()->sceneRect().width() / 2);
             double my = - rec.y() / (128 / BaseUtils::scaleMultiplier(scale())) * (scene()->sceneRect().height() / 2);
 
-            if (mx < scene()->sceneRect().x() + m_glass->boundingRect().left())
-                mx = scene()->sceneRect().x() + m_glass->boundingRect().left();
-            if (mx > scene()->sceneRect().x() + m_glass->boundingRect().left() + m_glass->boundingRect().width())
-                mx = scene()->sceneRect().x() + m_glass->boundingRect().left() + m_glass->boundingRect().width();
-            if (my < scene()->sceneRect().y() + m_glass->boundingRect().top())
-                my = scene()->sceneRect().y() + m_glass->boundingRect().top();
-            if (my > scene()->sceneRect().y() + m_glass->boundingRect().top() + m_glass->boundingRect().height())
-                my = scene()->sceneRect().y() + m_glass->boundingRect().top() + m_glass->boundingRect().height();
-
-            m_marker->setPos(mx - m_marker->boundingRect().width() / 2,
-                             my - m_marker->boundingRect().height() / 2);
 //            m_marker->setVisible((m_movingMode == TrenTetrisDefines::mmTake) && (m_tmStage == TrenTetrisDefines::tmsTake));
 
-            //! Координаты маркера в координатах сцены
-            qreal mxs = mx + scene()->sceneRect().width() / 2;
-            qreal mys = my + scene()->sceneRect().height() / 2;
-            //! На этапе поиска захвата
-            if (m_tmStage == TrenTetrisDefines::tmsTake)
-            {
-                auto fig = m_glass->getFigurePosition();
-                //! Маркер на фигуре
-                if (fig.contains(mxs, mys))
-                {
-                    m_offsX = mxs - fig.center().x();
-                    m_offsY = mys - fig.center().y();
-                    m_tmStage = TrenTetrisDefines::tmsPut;
-                    m_marker->setVisible(false);
-                }
-            }
-            else
-            //! На этапе поиска укладки
-            if (m_tmStage == TrenTetrisDefines::tmsPut)
-            {
-                //! Устанавливаем фигуру на позицию согласно координатам маркера и
-                //! проверяем, положена ли фигура
-                if (m_glass->setFigurePosition(mx + scene()->sceneRect().width() / 2 - m_offsX,
-                                               my + scene()->sceneRect().height() / 2 - m_offsY))
-                {
-                    //! Если положена, то...
-                    m_tmStage = TrenTetrisDefines::tmsTake;
-                    //! Добавление новой фигуры
-                    m_glass->setNewFigure(newFigure());
-                    m_marker->setVisible(true);
-                }
-
-            }
+            if (m_movingMode == TrenTetrisDefines::mmTake)
+                takeModeInteraction(mx, my);
 
 //            ++n; Вращение
 //            if (n % 250 == 0)
 //                m_glass->rotateFigure();
+        }
+    }
+}
+
+void TrenTetrisExecute::boundingMarker(double &mx, double &my)
+{
+    if (mx < scene()->sceneRect().x() + m_glass->boundingRect().left() + m_glass->borderLR())
+        mx = scene()->sceneRect().x() + m_glass->boundingRect().left() + m_glass->borderLR();
+    if (mx > scene()->sceneRect().x() + m_glass->boundingRect().left() + m_glass->boundingRect().width() - m_glass->borderLR())
+        mx = scene()->sceneRect().x() + m_glass->boundingRect().left() + m_glass->boundingRect().width() - m_glass->borderLR();
+    if (my < scene()->sceneRect().y() + m_glass->boundingRect().top())
+        my = scene()->sceneRect().y() + m_glass->boundingRect().top();
+    if (my > scene()->sceneRect().y() + m_glass->boundingRect().top() + m_glass->boundingRect().height() - m_glass->borderB())
+        my = scene()->sceneRect().y() + m_glass->boundingRect().top() + m_glass->boundingRect().height() - m_glass->borderB();
+}
+
+void TrenTetrisExecute::boundingFigure(double &mx, double &my)
+{
+    QRectF fig = m_glass->getFigurePosition();
+
+    if (mx < scene()->sceneRect().x() + m_glass->boundingRect().left() + m_glass->borderLR() + m_offsX + fig.width() / 2)
+        mx = scene()->sceneRect().x() + m_glass->boundingRect().left() + m_glass->borderLR() + m_offsX + fig.width() / 2;
+    if (mx > scene()->sceneRect().x() + m_glass->boundingRect().left() + m_glass->boundingRect().width() - m_glass->borderLR() + m_offsX - fig.width() / 2)
+        mx = scene()->sceneRect().x() + m_glass->boundingRect().left() + m_glass->boundingRect().width() - m_glass->borderLR() + m_offsX - fig.width() / 2;
+    if (my < scene()->sceneRect().y() + m_glass->boundingRect().top() + m_offsY + fig.height() / 2)
+        my = scene()->sceneRect().y() + m_glass->boundingRect().top() + m_offsY + fig.height() / 2;
+    if (my > scene()->sceneRect().y() + m_glass->boundingRect().top() + m_glass->boundingRect().height() - m_glass->borderB() + m_offsY - fig.height() / 2)
+        my = scene()->sceneRect().y() + m_glass->boundingRect().top() + m_glass->boundingRect().height() - m_glass->borderB() + m_offsY - fig.height() / 2;
+}
+
+void TrenTetrisExecute::takeModeInteraction(double &mx, double &my)
+{
+    //! На этапе поиска захвата
+    if (m_tmStage == TrenTetrisDefines::tmsTake)
+    {
+        boundingMarker(mx, my);
+
+        m_marker->setPos(mx - m_marker->boundingRect().width() / 2,
+                         my - m_marker->boundingRect().height() / 2);
+
+        //! Координаты маркера в координатах сцены
+        qreal mxs = mx + scene()->sceneRect().width() / 2;
+        qreal mys = my + scene()->sceneRect().height() / 2;
+
+        auto fig = m_glass->getFigurePosition();
+        //! Маркер на фигуре
+        if (fig.contains(mxs, mys))
+        {
+            m_offsX = mxs - fig.center().x();
+            m_offsY = mys - fig.center().y();
+            m_tmStage = TrenTetrisDefines::tmsPut;
+            m_marker->setVisible(false);
+        }
+    }
+    else
+    //! На этапе поиска укладки
+    if (m_tmStage == TrenTetrisDefines::tmsPut)
+    {
+        boundingFigure(mx, my);
+
+        //! Устанавливаем фигуру на позицию согласно координатам маркера и
+        //! проверяем, положена ли фигура
+        if (m_glass->setFigurePosition(mx + scene()->sceneRect().width() / 2 - m_offsX,
+                                       my + scene()->sceneRect().height() / 2 - m_offsY))
+        {
+            //! Если положена, то...
+            m_tmStage = TrenTetrisDefines::tmsTake;
+            //! Добавление новой фигуры
+            m_glass->setNewFigure(newFigure());
+            m_marker->setVisible(true);
         }
     }
 }

@@ -90,6 +90,9 @@ public:
      */
     bool setFigurePosition(const qreal x, const qreal y);
 
+    qreal borderLR() {return  m_glassBorderLR;}
+    qreal borderB()  {return m_glassBorderB;}
+
 private:
 
     void fillData();

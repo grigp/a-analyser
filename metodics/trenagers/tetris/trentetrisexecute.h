@@ -45,6 +45,24 @@ protected:
      */
     void elementsInteraction(DeviceProtocols::DeviceData *data) override;
 
+    /*!
+     * \brief Ограничение хождения маркера в зоне стакана
+     * \param mx, my - координаты маркера вход и выход
+     */
+    void boundingMarker(double &mx, double &my);
+
+    /*!
+     * \brief Ограничение хождения фигуры в зоне стакана
+     * \param mx, my - координаты фигуры вход и выход
+     */
+    void boundingFigure(double &mx, double &my);
+
+    /*!
+     * \brief Взаимодействие элементов в режиме захвата - укладки
+     * \param mx, my - координаты маркера
+     */
+    void takeModeInteraction(double &mx, double &my);
+
     void generateNewScene() override;
 
     /*!
