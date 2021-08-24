@@ -90,6 +90,17 @@ void TetrisGlass::paint(QPainter *painter, const QStyleOptionGraphicsItem *optio
                         painter->drawPixmap(static_cast<int>(x), static_cast<int>(y), m_allowColors.value(colorCode));
                     }
                 }
+
+
+                //! Сетка
+                painter->setPen(QPen(Qt::darkGray, 1, Qt::DotLine, Qt::FlatCap));
+                painter->drawLine(static_cast<int>(x), 0,
+                                  static_cast<int>(x), static_cast<int>(boundingRect().y() + boundingRect().height() - m_pixmapFrmBottom.height()));
+                painter->drawText(static_cast<int>(x + m_cubeSize / 2),
+                                  static_cast<int>(boundingRect().y() + boundingRect().height() - m_pixmapFrmBottom.height() - 30),
+                                  QString::number(h));
+
+
                 x += m_cubeSize;
             }
 
@@ -211,10 +222,36 @@ QRectF TetrisGlass::getFigurePosition() const
 
 bool TetrisGlass::setFigurePosition(const qreal x, const qreal y)
 {
-    m_figX = x;
+    m_figX = x;                                   //! Фигуру на новую позицию (предварительно)
     m_figY = y;
+    auto p = getFigurePosition();                 //! Позиция и размер фигуры
+    qreal d = x - p.x();                          //! Смещение переданной позиции относительно верхнего левого угла
+    auto pos = getPositionByCoord(p.x(), p.y());  //! Позицию для левого верхнего угла фигуры
+    auto pos_c = getCoordinatesOfPosition(pos);   //! Координаты фиксированной позиции для левого верхнего угла фигуры
+    m_figX = pos_c.x() + d;                       //! Устанавливаем фигуру на фиксированную позицию + смещение
+    qDebug() << pos.x();
+//    m_figY = y; //pos_c.center().y();
     return false;
 
+}
+
+QPoint TetrisGlass::getPositionByCoord(const qreal x, const qreal y) const
+{
+    int px = static_cast<int>((x - boundingRect().left() - m_glassBorderLR) / m_cubeSize);
+    int py = static_cast<int>((boundingRect().top() + boundingRect().height() - m_glassBorderB - y) / m_cubeSize);
+//    qDebug() << x - boundingRect().left() - m_glassBorderLR << m_cubeSize << "  " << px << py;
+//    qDebug() << px << py;
+    return QPoint(px, py);
+}
+
+QRectF TetrisGlass::getCoordinatesOfPosition(const QPoint pos) const
+{
+//    Q_ASSERT(pos.x() >= 0 && pos.x() < m_hCount);
+//    Q_ASSERT(pos.y() >= 0 && pos.y() < m_vCount);
+
+    qreal left = boundingRect().left() + m_glassBorderLR + pos.x() * m_cubeSize;
+    qreal top = boundingRect().top() + boundingRect().height() - m_glassBorderB - pos.y() * m_cubeSize;
+    return QRectF(left, top, m_cubeSize, m_cubeSize);
 }
 
 void TetrisGlass::fillData()

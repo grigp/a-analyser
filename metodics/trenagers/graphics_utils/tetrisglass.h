@@ -90,6 +90,19 @@ public:
      */
     bool setFigurePosition(const qreal x, const qreal y);
 
+    /*!
+     * \brief Возвращает позицию в стакане по координатам сцены
+     * \param x, y - координаты сцены
+     * \return позиция в стакане, правый нижний угол - нули
+     */
+    QPoint getPositionByCoord(const qreal x, const qreal y) const;
+
+    /*!
+     * \brief Возвращает прямоугольник с координатами позиции
+     * \param pos - позиция в стакане, правый нижний угол - нули
+     */
+    QRectF getCoordinatesOfPosition(const QPoint pos) const;
+
     qreal borderLR() {return  m_glassBorderLR;}
     qreal borderB()  {return m_glassBorderB;}
 
