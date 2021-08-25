@@ -146,10 +146,10 @@ void TrenTetrisExecute::boundingFigure(double &mx, double &my)
 {
     QRectF fig = m_glass->getFigurePosition();
 
-    if (mx < scene()->sceneRect().x() + m_glass->boundingRect().left() + m_glass->borderLR() + m_offsX + fig.width() / 2)
-        mx = scene()->sceneRect().x() + m_glass->boundingRect().left() + m_glass->borderLR() + m_offsX + fig.width() / 2;
-    if (mx > scene()->sceneRect().x() + m_glass->boundingRect().left() + m_glass->boundingRect().width() - m_glass->borderLR() + m_offsX - fig.width() / 2)
-        mx = scene()->sceneRect().x() + m_glass->boundingRect().left() + m_glass->boundingRect().width() - m_glass->borderLR() + m_offsX - fig.width() / 2;
+//    if (mx < scene()->sceneRect().x() + m_glass->boundingRect().left() + m_glass->borderLR() + m_offsX + fig.width() / 2)
+//        mx = scene()->sceneRect().x() + m_glass->boundingRect().left() + m_glass->borderLR() + m_offsX + fig.width() / 2;
+//    if (mx > scene()->sceneRect().x() + m_glass->boundingRect().left() + m_glass->boundingRect().width() - m_glass->borderLR() + m_offsX - fig.width() / 2)
+//        mx = scene()->sceneRect().x() + m_glass->boundingRect().left() + m_glass->boundingRect().width() - m_glass->borderLR() + m_offsX - fig.width() / 2;
     if (my < scene()->sceneRect().y() + m_glass->boundingRect().top() + m_offsY + fig.height() / 2)
         my = scene()->sceneRect().y() + m_glass->boundingRect().top() + m_offsY + fig.height() / 2;
     if (my > scene()->sceneRect().y() + m_glass->boundingRect().top() + m_glass->boundingRect().height() - m_glass->borderB() + m_offsY - fig.height() / 2)

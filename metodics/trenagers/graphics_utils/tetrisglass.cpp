@@ -222,14 +222,18 @@ QRectF TetrisGlass::getFigurePosition() const
 
 bool TetrisGlass::setFigurePosition(const qreal x, const qreal y)
 {
+//    qDebug() << x - m_figX << "   " << y - m_figY << m_cubeSize;
     m_figX = x;                                   //! Фигуру на новую позицию (предварительно)
     m_figY = y;
     auto p = getFigurePosition();                 //! Позиция и размер фигуры
     qreal d = x - p.x();                          //! Смещение переданной позиции относительно верхнего левого угла
     auto pos = getPositionByCoord(p.x(), p.y());  //! Позицию для левого верхнего угла фигуры
+    if (pos.x() < 0)                              //! Корректируем, чтобы остаться внутри стакана
+        pos.setX(0);
+    if (pos.x() > m_hCount - p.width() / m_cubeSize)
+        pos.setX(static_cast<int>(m_hCount - p.width() / m_cubeSize));
     auto pos_c = getCoordinatesOfPosition(pos);   //! Координаты фиксированной позиции для левого верхнего угла фигуры
     m_figX = pos_c.x() + d;                       //! Устанавливаем фигуру на фиксированную позицию + смещение
-    qDebug() << pos.x();
 //    m_figY = y; //pos_c.center().y();
     return false;
 
@@ -239,8 +243,6 @@ QPoint TetrisGlass::getPositionByCoord(const qreal x, const qreal y) const
 {
     int px = static_cast<int>((x - boundingRect().left() - m_glassBorderLR) / m_cubeSize);
     int py = static_cast<int>((boundingRect().top() + boundingRect().height() - m_glassBorderB - y) / m_cubeSize);
-//    qDebug() << x - boundingRect().left() - m_glassBorderLR << m_cubeSize << "  " << px << py;
-//    qDebug() << px << py;
     return QPoint(px, py);
 }
 
