@@ -144,6 +144,7 @@ void TrenTetrisExecute::boundingMarker(double &mx, double &my)
 
 void TrenTetrisExecute::boundingFigure(double &mx, double &my)
 {
+    Q_UNUSED(mx);
     QRectF fig = m_glass->getFigurePosition();
 
 //    if (mx < scene()->sceneRect().x() + m_glass->boundingRect().left() + m_glass->borderLR() + m_offsX + fig.width() / 2)

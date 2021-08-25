@@ -115,6 +115,17 @@ private:
      */
     void showFigure(QPainter *painter);
 
+    /*!
+     * \brief Возвращает true, если фигура коснулась конфигурации или дна стакана
+     */
+    bool figureOnConfig();
+
+    /*!
+     * \brief Корректирует позицию фигуры по сетке по фронтали прежде всего
+     * \param x, y - координаты
+     */
+    void correctFigurePosition(const qreal x, const qreal y);
+
     qreal m_left {-100};
     qreal m_top {-200};
     qreal m_width {200};
