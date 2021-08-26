@@ -304,7 +304,11 @@ bool TetrisGlass::setFigureCoordinates(const qreal x, const qreal y)
 QPoint TetrisGlass::getPositionByCoord(const qreal x, const qreal y) const
 {
     int px = static_cast<int>((x - boundingRect().left() - m_glassBorderLR) / m_cubeSize);
+    if (px < 0)
+        px = 0;
     int py = static_cast<int>((boundingRect().top() + boundingRect().height() - m_glassBorderB - y) / m_cubeSize);
+    if (py >= m_vCount)
+        py = m_vCount - 1;
     return QPoint(px, py);
 }
 
@@ -379,9 +383,14 @@ bool TetrisGlass::figureOnConfig()
     {
         auto y = p.y() + p.height() - m_cubeSize / 2;
         auto pos = getPositionByCoord(x, y);  //! Позицию для кубика в фигуре
-        if ((pos.x() >= 0 && pos.x() < m_hCount) &&
-            (pos.y() == 0 || m_data[pos.y()][pos.x()] != Qt::black))
-            return true;
+
+        //! В рамках стакана
+        if (pos.x() >= 0 && pos.x() < m_hCount)
+        {
+            //! Достигли дна или фигур снизу
+            if (pos.y() == 0 || m_data[pos.y() - 1][pos.x()] != Qt::black)
+                return true;
+        }
 
         x = x + m_cubeSize;
     }
@@ -395,13 +404,69 @@ void TetrisGlass::correctFigurePosition(const qreal x, const qreal y)
     auto p = getFigureRect();                 //! Позиция и размер фигуры
     qreal d = x - p.x();                          //! Смещение переданной позиции относительно верхнего левого угла
     auto pos = getPositionByCoord(p.x(), p.y());  //! Позицию для левого верхнего угла фигуры
-    if (pos.x() < 0)                              //! Корректируем, чтобы остаться внутри стакана
-        pos.setX(0);
-    if (pos.x() > m_hCount - p.width() / m_cubeSize)
-        pos.setX(static_cast<int>(m_hCount - p.width() / m_cubeSize));
+
+    //! Корректируем, чтобы остаться внутри стакана
+    int left = 0;
+    int right = static_cast<int>(m_hCount - p.width() / m_cubeSize);
+    getMovingDiapazone(pos.x(), pos.y(), static_cast<int>(p.width() / m_cubeSize), static_cast<int>(p.height() / m_cubeSize), left, right);
+    if (pos.x() < left)
+        pos.setX(left);
+    if (pos.x() > right - p.width() / m_cubeSize)
+        pos.setX(static_cast<int>(right - p.width() / m_cubeSize));
+
+//    if (pos.x() < 0)
+//        pos.setX(0);
+//    if (pos.x() > m_hCount - p.width() / m_cubeSize)
+//        pos.setX(static_cast<int>(m_hCount - p.width() / m_cubeSize));
+
     auto pos_c = getCoordinatesOfPosition(pos);   //! Координаты фиксированной позиции для левого верхнего угла фигуры
     m_figX = pos_c.x() + d;                       //! Устанавливаем фигуру на фиксированную позицию + смещение
 //    m_figY = y; //pos_c.center().y();
+
+//    auto fgp = getFigurePosition();
+//    if (fgp.x() >= 0)
+//        for (int i = fgp.y(); i < fgp.y() + fgp.height(); ++i)
+//        {
+//            qDebug() << fgp.x() << i << m_data[i][fgp.x()];
+//            if (m_data[i][fgp.x()] != Qt::black)
+//            {
+//                pos.setX(fgp.x() + 1);
+//                auto pos_c = getCoordinatesOfPosition(pos);   //! Координаты фиксированной позиции для левого верхнего угла фигуры
+//                m_figX = pos_c.x() + d;                       //! Устанавливаем фигуру на фиксированную позицию + смещение
+//            }
+//        }
+
+//    qDebug() << fgp.x() << fgp.x() + fgp.width();
+
+}
+
+void TetrisGlass::getMovingDiapazone(const int x, const int y, const int w, const int h, int &left, int &right)
+{
+    left = INT_MAX;
+    right = -INT_MAX;
+    for (int i = 0; i < h; ++i)
+    {
+        for (int j = x; j >= 0; --j)
+            if (m_data[y - i][j] != Qt::black)
+            {
+                if (j < left) left = j + 1;
+                break;
+            }
+
+        for (int j = x + w; j < m_hCount; ++j)
+        {
+            if (m_data[y - i][j] != Qt::black)
+            {
+                if (j > right) right = j;
+                break;
+            }
+        }
+    }
+
+    if (left == INT_MAX)
+        left = 0;
+    if (right == -INT_MAX)
+        right = m_hCount;
 }
 
 

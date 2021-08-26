@@ -209,7 +209,6 @@ void TrenTetrisExecute::putFigure()
     {
         for (int j = 0; j < pos.height(); ++j)
         {
-            qDebug() << i << j;
             auto color = m_glass->getFigureColor(i, j);
             if (color != Qt::black)
                 m_glass->setValue(pos.x() + i, pos.y() + j, color);

@@ -137,6 +137,16 @@ private:
      */
     void correctFigurePosition(const qreal x, const qreal y);
 
+    /*!
+     * \brief Возвращает диапазон допустимого перемещения фигуры в зависимости от конфигурации
+     * Оперирует с ячейками стакана
+     * \param x, y - левая верхняя ячейка
+     * \param w, h - ширина и высота в ячейках
+     * \param left - возвращаемый номер ячейки, левее которой уйти нельзя
+     * \param right - возвращаемый номер ячейки, правее которой уйти нельзя
+     */
+    void getMovingDiapazone(const int x, const int y, const int w, const int h, int& left, int& right);
+
     qreal m_left {-100};
     qreal m_top {-200};
     qreal m_width {200};
