@@ -79,16 +79,27 @@ public:
     void rotateFigure();
 
     /*!
-     * \brief Возвращает прямоугольник позицию фигуры
+     * \brief Возвращает прямоугольник положение фигуры в координатах сцены
      */
-    QRectF getFigurePosition() const;
+    QRectF getFigureRect() const;
+
+    /*!
+     * \brief Возвращает прямоугольник позицию фигуры в номерах позиций в стакане
+     */
+    QRect getFigurePosition() const;
+
+    /*!
+     * \brief Возвращает цвет кубика фигуры в повернутом положении
+     * \param h, v - номер кубика по ширине и высота
+     */
+    QColor getFigureColor(const int h, const int v);
 
     /*!
      * \brief Перемещает фигуру на позицию
      * \param x, y - координаты позиции
      * \return true, если фигура коснулась конфигурации или дна стакана и false в противном случае
      */
-    bool setFigurePosition(const qreal x, const qreal y);
+    bool setFigureCoordinates(const qreal x, const qreal y);
 
     /*!
      * \brief Возвращает позицию в стакане по координатам сцены

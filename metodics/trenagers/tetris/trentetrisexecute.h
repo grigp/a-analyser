@@ -63,6 +63,11 @@ protected:
      */
     void takeModeInteraction(double &mx, double &my);
 
+    /*!
+     * \brief Укладывает фигуру
+     */
+    void putFigure();
+
     void generateNewScene() override;
 
     /*!

@@ -207,7 +207,7 @@ void TetrisGlass::rotateFigure()
     ++m_figAngleCode;
 }
 
-QRectF TetrisGlass::getFigurePosition() const
+QRectF TetrisGlass::getFigureRect() const
 {
     int iSize = m_figure.size();
     int jSize = m_figure[0].size();
@@ -220,24 +220,77 @@ QRectF TetrisGlass::getFigurePosition() const
     return QRectF(0, 0, 0, 0);
 }
 
-bool TetrisGlass::setFigurePosition(const qreal x, const qreal y)
+QRect TetrisGlass::getFigurePosition() const
 {
-    //! Смещаем фигуру от точки (m_figX, m_figY) к точке (x, y) по шагам.
-    //! Размер шага - +-1 по большей длине изменения между фронталью и сагитталью
-    int stepCnt = static_cast<int>(fmax(x - m_figX, y - m_figY));  //! Кол-во шагов
-    qreal vx = m_figX;
-    qreal vy = m_figY;
-    //! Цикл по шагам
-    for (int i = 0; i < stepCnt; ++i)
+    int xMin = INT_MAX;
+    int xMax = -INT_MAX;
+    int yMin = INT_MAX;
+    int yMax = -INT_MAX;
+
+    auto p = getFigureRect();                 //! Позиция и размер фигуры
+
+    auto x = p.x() + m_cubeSize / 2;
+    while (x < p.x() + p.width())
     {
-        //! Смещаем фигуру
-        vx += (x - m_figX) / fabs(x - m_figX);  // +-1
-        vy += (y - m_figY) / fabs(y - m_figY);  // +-1
-        //! Коррекция позиции
-        correctFigurePosition(x, y);
-        //! Если в процессе поставили на целевую позицию, то выходим и сообщаем, что надо укладывать
-        if (figureOnConfig())
-            return true;
+        auto y = p.y() + m_cubeSize / 2;
+        while (y < p.y() + p.height())
+        {
+            auto pos = getPositionByCoord(x, y);  //! Позицию для кубика в фигуре
+
+            if (pos.x() < xMin) xMin = pos.x();
+            if (pos.x() > xMax) xMax = pos.x();
+            if (pos.y() < yMin) yMin = pos.y();
+            if (pos.y() > yMax) yMax = pos.y();
+
+            y += m_cubeSize;
+        }
+
+        x += m_cubeSize;
+    }
+
+    return QRect(xMin, yMin, xMax - xMin + 1, yMax - yMin + 1);
+}
+
+QColor TetrisGlass::getFigureColor(const int h, const int v)
+{
+    if (m_figAngleCode == 0 || m_figAngleCode == 2)
+    {
+        Q_ASSERT(v >= 0 && v < m_figure.size());
+        Q_ASSERT(h >= 0 && h < m_figure[0].size());
+        return  m_figure[v][h];
+    }
+    else
+    if (m_figAngleCode == 1 || m_figAngleCode == 3)
+    {
+        Q_ASSERT(h >= 0 && h < m_figure.size());
+        Q_ASSERT(v >= 0 && v < m_figure[0].size());
+        return  m_figure[h][v];
+    }
+    return Qt::black;
+}
+
+bool TetrisGlass::setFigureCoordinates(const qreal x, const qreal y)
+{
+    auto pos = getFigurePosition();
+    if (x >= 0 && (x + pos.width()) * m_cubeSize < boundingRect().x() + boundingRect().width())
+    {
+        //! Смещаем фигуру от точки (m_figX, m_figY) к точке (x, y) по шагам.
+        //! Размер шага - +-1 по большей длине изменения между фронталью и сагитталью
+        int stepCnt = static_cast<int>(fmax(x - m_figX, y - m_figY));  //! Кол-во шагов
+        qreal vx = m_figX;
+        qreal vy = m_figY;
+        //! Цикл по шагам
+        for (int i = 0; i < stepCnt; ++i)
+        {
+            //! Смещаем фигуру
+            vx += (x - m_figX) / fabs(x - m_figX);  // +-1
+            vy += (y - m_figY) / fabs(y - m_figY);  // +-1
+            //! Коррекция позиции
+            correctFigurePosition(x, y);
+            //! Если в процессе поставили на целевую позицию, то выходим и сообщаем, что надо укладывать
+            if (figureOnConfig())
+                return true;
+        }
     }
 
     //! Фигуру на конечную позицию
@@ -319,21 +372,19 @@ void TetrisGlass::showFigure(QPainter *painter)
 
 bool TetrisGlass::figureOnConfig()
 {
-    auto p = getFigurePosition();                 //! Позиция и размер фигуры
+    auto p = getFigureRect();                 //! Позиция и размер фигуры
 
     auto x = p.x() + m_cubeSize / 2;
     while (x < p.x() + p.width())
     {
         auto y = p.y() + p.height() - m_cubeSize / 2;
         auto pos = getPositionByCoord(x, y);  //! Позицию для кубика в фигуре
-        qDebug() << pos.x() << pos.y();
         if ((pos.x() >= 0 && pos.x() < m_hCount) &&
             (pos.y() == 0 || m_data[pos.y()][pos.x()] != Qt::black))
             return true;
 
         x = x + m_cubeSize;
     }
-    qDebug() << "-----------";
 
     return false;
 }
@@ -341,7 +392,7 @@ bool TetrisGlass::figureOnConfig()
 void TetrisGlass::correctFigurePosition(const qreal x, const qreal y)
 {
     Q_UNUSED(y);
-    auto p = getFigurePosition();                 //! Позиция и размер фигуры
+    auto p = getFigureRect();                 //! Позиция и размер фигуры
     qreal d = x - p.x();                          //! Смещение переданной позиции относительно верхнего левого угла
     auto pos = getPositionByCoord(p.x(), p.y());  //! Позицию для левого верхнего угла фигуры
     if (pos.x() < 0)                              //! Корректируем, чтобы остаться внутри стакана

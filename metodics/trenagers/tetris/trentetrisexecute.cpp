@@ -145,7 +145,7 @@ void TrenTetrisExecute::boundingMarker(double &mx, double &my)
 void TrenTetrisExecute::boundingFigure(double &mx, double &my)
 {
     Q_UNUSED(mx);
-    QRectF fig = m_glass->getFigurePosition();
+    QRectF fig = m_glass->getFigureRect();
 
 //    if (mx < scene()->sceneRect().x() + m_glass->boundingRect().left() + m_glass->borderLR() + m_offsX + fig.width() / 2)
 //        mx = scene()->sceneRect().x() + m_glass->boundingRect().left() + m_glass->borderLR() + m_offsX + fig.width() / 2;
@@ -171,7 +171,7 @@ void TrenTetrisExecute::takeModeInteraction(double &mx, double &my)
         qreal mxs = mx + scene()->sceneRect().width() / 2;
         qreal mys = my + scene()->sceneRect().height() / 2;
 
-        auto fig = m_glass->getFigurePosition();
+        auto fig = m_glass->getFigureRect();
         //! Маркер на фигуре
         if (fig.contains(mxs, mys))
         {
@@ -189,14 +189,30 @@ void TrenTetrisExecute::takeModeInteraction(double &mx, double &my)
 
         //! Устанавливаем фигуру на позицию согласно координатам маркера и
         //! проверяем, положена ли фигура
-        if (m_glass->setFigurePosition(mx + scene()->sceneRect().width() / 2 - m_offsX,
+        if (m_glass->setFigureCoordinates(mx + scene()->sceneRect().width() / 2 - m_offsX,
                                        my + scene()->sceneRect().height() / 2 - m_offsY))
         {
             //! Если положена, то...
+            putFigure();
             m_tmStage = TrenTetrisDefines::tmsTake;
             //! Добавление новой фигуры
             m_glass->setNewFigure(newFigure());
             m_marker->setVisible(true);
+        }
+    }
+}
+
+void TrenTetrisExecute::putFigure()
+{
+    auto pos = m_glass->getFigurePosition();
+    for (int i = 0; i < pos.width(); ++i)
+    {
+        for (int j = 0; j < pos.height(); ++j)
+        {
+            qDebug() << i << j;
+            auto color = m_glass->getFigureColor(i, j);
+            if (color != Qt::black)
+                m_glass->setValue(pos.x() + i, pos.y() + j, color);
         }
     }
 }
