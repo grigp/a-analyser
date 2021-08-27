@@ -129,23 +129,18 @@ private:
     /*!
      * \brief Возвращает true, если фигура коснулась конфигурации или дна стакана
      */
-    bool figureOnConfig();
+    bool figureOnConfigOrBottom();
+
+    /*!
+     * \brief Возвращает true, если фигура внутри конфигурации
+     */
+    bool figureIntoConfig();
 
     /*!
      * \brief Корректирует позицию фигуры по сетке по фронтали прежде всего
-     * \param x, y - координаты
+     * \param ox, oy - координаты предыдущей позиции
      */
-    void correctFigurePosition(const qreal x, const qreal y);
-
-    /*!
-     * \brief Возвращает диапазон допустимого перемещения фигуры в зависимости от конфигурации
-     * Оперирует с ячейками стакана
-     * \param x, y - левая верхняя ячейка
-     * \param w, h - ширина и высота в ячейках
-     * \param left - возвращаемый номер ячейки, левее которой уйти нельзя
-     * \param right - возвращаемый номер ячейки, правее которой уйти нельзя
-     */
-    void getMovingDiapazone(const int x, const int y, const int w, const int h, int& left, int& right);
+    void correctFigurePosition(const qreal ox, const qreal oy);
 
     qreal m_left {-100};
     qreal m_top {-200};
