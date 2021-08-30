@@ -140,7 +140,7 @@ private:
      * \brief Корректирует позицию фигуры по сетке по фронтали прежде всего
      * \param ox, oy - координаты предыдущей позиции
      */
-    void correctFigurePosition(const qreal ox, const qreal oy);
+    void correctFigurePosition(const qreal tx, const qreal ty);
 
     qreal m_left {-100};
     qreal m_top {-200};

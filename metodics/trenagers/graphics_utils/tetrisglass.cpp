@@ -285,38 +285,59 @@ QColor TetrisGlass::getFigureColor(const int h, const int v)
 
 bool TetrisGlass::setFigureCoordinates(const qreal x, const qreal y)
 {
-//    auto pos = getFigurePosition();
-//    if (x >= 0 && (x + pos.width()) * m_cubeSize < boundingRect().x() + boundingRect().width())
-//    {
-//        //! Смещаем фигуру от точки (m_figX, m_figY) к точке (x, y) по шагам.
-//        //! Размер шага - +-1 по большей длине изменения между фронталью и сагитталью
-//        int stepCnt = static_cast<int>(fmax(x - m_figX, y - m_figY));  //! Кол-во шагов
-//        qreal vx = m_figX;
-//        qreal vy = m_figY;
-//        //! Цикл по шагам
-//        for (int i = 0; i < stepCnt; ++i)
-//        {
-//            //! Смещаем фигуру
-//            vx += (x - m_figX) / fabs(x - m_figX);  // +-1
-//            vy += (y - m_figY) / fabs(y - m_figY);  // +-1
-//            //! Коррекция позиции
-//            correctFigurePosition(x, y);
-//            //! Если в процессе поставили на целевую позицию, то выходим и сообщаем, что надо укладывать
-//            if (figureOnConfig())
-//                return true;
-//        }
-//    }
+    auto pos = getFigurePosition();
+    if (x >= 0 && (x + pos.width() * m_cubeSize) < boundingRect().x() + boundingRect().width())
+    {
+        //! Смещаем фигуру от точки (m_figX, m_figY) к точке (x, y) по шагам.
+        //! Размер шага - +-1 по большей длине изменения между фронталью и сагитталью
+        int stepCnt = static_cast<int>(fmax(fabs(x - m_figX), fabs(y - m_figY)));  //! Кол-во шагов
+
+        if (stepCnt > 0)
+        {
+            qreal dx = (x - m_figX) / stepCnt;  //! Инкремент на каждом шаге
+            qreal dy = (y - m_figY) / stepCnt;
+//            qDebug() << x << m_figX << "  " << y << m_figY << "  " << stepCnt << "  " << dx << dy;
+            //! Цикл по шагам
+            for (int i = 0; i < stepCnt; ++i)
+            {
+                //! Смещаем фигуру
+                if (((dx / fabs(dx) < 0) && (m_figX > x)) ||  //! dx < 0 и m_figX не достигло конечной точки сверху
+                    ((dx / fabs(dx) > 0) && (m_figX < x)))    //! dx > 0 и m_figX не достигло конечной точки снизу
+                    m_figX += dx;                             //! Только тогда инкремент!
+                m_figY += dy;
+
+                //! Коррекция позиции
+//                auto bx = m_figX;
+                correctFigurePosition(m_figX, m_figY);
+  //              qDebug() << i << ")" << bx << m_figX << "  " << m_figX - bx << "  " << m_cubeSize << "        " << m_figY;
+
+                if (figureIntoConfig())
+                {
+                    auto bx = m_figX;
+                    auto by = m_figY;
+                    m_figX -= dx;
+                    m_figY -= dy;
+                    correctFigurePosition(m_figX, m_figY);
+                    qDebug() << "true" << bx << "->" << m_figX << "     " << by << "->" << m_figY;
+                }
+
+                //! Если в процессе поставили на целевую позицию, то выходим и сообщаем, что надо укладывать
+                if (figureOnConfigOrBottom())
+                    return true;
+            }
+        }
+        }
 
     //! Фигуру на конечную позицию
-    qreal ox = m_figX;
-    qreal oy = m_figY;
+    qreal tx = x;
+    qreal ty = y;
     m_figX = x;
     m_figY = y;
 
 //    qDebug() << "<<<<<<<<<<<<<<<<<<" << m_figX << m_figY;
 
     //! Если поставили на целевую позицию, то выходим и сообщаем, что надо укладывать
-    correctFigurePosition(ox, oy);
+    correctFigurePosition(tx, ty);
 
 //    qDebug() << ">>>>>>>>>>>>>>>>>>" << m_figX << m_figY;
 
@@ -438,7 +459,6 @@ bool TetrisGlass::figureIntoConfig()
                 //! Находимся внутри конфигурации - нужна корректировка
                 if (m_data[pos.y()][pos.x()] != Qt::black)
                 {
-                    qDebug() << pos.x() << pos.y();
                     return true;
                 }
             }
@@ -452,7 +472,7 @@ bool TetrisGlass::figureIntoConfig()
     return false;
 }
 
-void TetrisGlass::correctFigurePosition(const qreal ox, const qreal oy)
+void TetrisGlass::correctFigurePosition(const qreal tx, const qreal ty)
 {
     auto correct = [&]()
     {
@@ -472,63 +492,71 @@ void TetrisGlass::correctFigurePosition(const qreal ox, const qreal oy)
 
     correct();
 
-    //! Фигура внутри конфигурации - надо корректировать
-    if (figureIntoConfig())
-    {
-        m_figX = ox;
-        m_figY = oy;
+//    //! Фигура внутри конфигурации - надо корректировать
+//    if (figureIntoConfig())
+//    {
+//        qreal dx = tx - m_figX;
+//        qreal dy = ty - m_figY;
 
-//        qreal dx = m_figX - ox;
-//        qreal dy = m_figY - oy;
-
-//        qDebug() << "----------" << m_figX << ox << "   " << m_figY << oy;
+//        qDebug() << "----------" << m_figX << tx << "   " << m_figY << ty;
 //        qDebug() << "----------" << dx << dy;
+//        qreal vx = m_figX;
+//        qreal vy = m_figY;
+
 //        if (fabs(dx) >= fabs(dy))
 //        {
-//            qreal vx = m_figX;
-//            qreal vy = m_figY;
-//            qDebug() << vx << vy << fabs(vx - ox);
-//            while (fabs(vx - ox) > 1)
+//            qDebug() << vx << vy << fabs(vx - tx);
+//            while (fabs(vx - tx) > 1)
 //            {
-//                vy -= m_cubeSize * fabs(dy / dx) * (dy / fabs(dy));
-//                vx -= m_cubeSize * (dx / fabs(dx));   //! +-m_cubeSize
+//                vy += m_cubeSize * fabs(dy / dx) * (dy / fabs(dy));
+//                vx += m_cubeSize * (dx / fabs(dx));   //! +-m_cubeSize
 
+//                auto oFigX = m_figX;
+//                auto oFigY = m_figY;
 //                m_figX = vx;
 //                m_figY = vy;
 
 //               // correct();
 
-//                bool foc = figureIntoConfig(true);
+//                bool foc = figureIntoConfig();
 //                qDebug() << "x" << m_figX << m_figY << foc;
 
 //                if (!foc)
+//                {
+//                    m_figX = oFigX;
+//                    m_figY = oFigY;
 //                    break;
+//                }
 //            }
 //        }
 //        else
 //        {
-//            qreal vx = m_figX;
-//            qreal vy = m_figY;
-//            qDebug() << vx << vy << fabs(vx - ox);
-//            while (fabs(vy - oy) > 1)
+//            qDebug() << vx << vy << fabs(vx - tx);
+//            while (fabs(vy - ty) > 1)
 //            {
-//                vx -= m_cubeSize * fabs(dx / dy) * (dx / fabs(dx));
-//                vy -= m_cubeSize * (dy / fabs(dy));   //! +-m_cubeSize
+//                vx += m_cubeSize * fabs(dx / dy) * (dx / fabs(dx));
+//                vy += m_cubeSize * (dy / fabs(dy));   //! +-m_cubeSize
 
+//                auto oFigX = m_figX;
+//                auto oFigY = m_figY;
 //                m_figX = vx;
 //                m_figY = vy;
 
 //               // correct();
 
-//                bool foc = figureIntoConfig(true);
+//                bool foc = figureIntoConfig();
 //                qDebug() << "y" << m_figX << m_figY << foc;
 
 //                if (!foc)
+//                {
+//                    m_figX = oFigX;
+//                    m_figY = oFigY;
 //                    break;
+//                }
 //            }
 //        }
 
-    }
+//    }
 
 }
 
