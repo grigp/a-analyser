@@ -107,6 +107,27 @@ private:
     void changeRowsDeleted(const int value);
 
     /*!
+     * \brief Сброс цвета последнего выделенного в режиме построчного удаления
+     */
+    void clearLastColor();
+
+    /*!
+     * \brief Анализ и удаление строк
+     */
+    void deleteRows();
+
+    /*!
+     * \brief Удаление строки. Все строки, начиная с row + 1 смещаются вниз
+     * \param row - номер строки
+     */
+    void deleteRow(const int row);
+
+    /*!
+     * \brief Анализ и удаление кубиков одного цвета
+     */
+    void deleteOneColorCubes();
+
+    /*!
      * \brief Создает и возвращает массив фигур
      */
     QVector<QVector<QColor>> newFigure();

@@ -204,16 +204,37 @@ void TrenTetrisExecute::takeModeInteraction(double &mx, double &my)
 
 void TrenTetrisExecute::putFigure()
 {
+    //! Снятие пометки последней фигуры в режиме удаления строк
+    if (m_deletingMode == TrenTetrisDefines::dmRows)
+        clearLastColor();
+
+    //! Установка новой фигуры
     auto pos = m_glass->getFigurePosition();
     for (int i = 0; i < pos.width(); ++i)
     {
         for (int j = 0; j < pos.height(); ++j)
         {
-            auto color = m_glass->getFigureColor(i, j);
-            if (color != Qt::black)
-                m_glass->setValue(pos.x() + i, pos.y() + j, color);
+            if (m_deletingMode == TrenTetrisDefines::dmColored)
+            {
+                auto color = m_glass->getFigureColor(i, j);
+                if (color != Qt::black)
+                    m_glass->setValue(pos.x() + i, pos.y() + j, color);
+            }
+            else
+            if (m_deletingMode == TrenTetrisDefines::dmRows)
+            {
+                if (m_glass->getFigureColor(i, j) != Qt::black)
+                    m_glass->setValue(pos.x() + i, pos.y() + j, m_lastColor);
+            }
         }
     }
+
+    //! Анализ и удаление кубиков
+    if (m_deletingMode == TrenTetrisDefines::dmColored)
+        deleteOneColorCubes();
+    else
+    if (m_deletingMode == TrenTetrisDefines::dmRows)
+        deleteRows();
 }
 
 
@@ -307,6 +328,56 @@ void TrenTetrisExecute::changeRowsDeleted(const int value)
     QString text = tr("Cтроки") + " - " + QString::number(m_rowsDeleted);
     m_lblRowsDel->setText(text);
     pwSetGameParamLabelValue(1, text);
+}
+
+void TrenTetrisExecute::clearLastColor()
+{
+    for (int i = 0; i < m_glassHCount; ++i)
+        for (int j = 0; j < m_glassVCount; ++j)
+            if (m_glass->value(i, j) != Qt::black)
+                m_glass->setValue(i, j, m_glassColor);
+}
+
+void TrenTetrisExecute::deleteRows()
+{
+    //! Анализ и составление списка строк
+    QList<int> fullRows;
+    fullRows.clear();
+    for (int j = 0; j < m_glassVCount - 1; ++j)
+    {
+        bool full = true;
+        for (int i = 0; i < m_glassHCount; ++i)
+        {
+            if (m_glass->value(i, j) == Qt::black)
+            {
+                full = false;
+                break;
+            }
+        }
+        if (full)
+            fullRows << j;
+    }
+
+    //! Удаление строк
+    foreach (auto row, fullRows)
+        deleteRow(row);
+}
+
+void TrenTetrisExecute::deleteRow(const int row)
+{
+    //! Смещение строк
+    for (int j = row; j < m_glassVCount - 1; ++j)
+        for (int i = 0; i < m_glassHCount; ++i)
+            m_glass->setValue(i, j, m_glass->value(i, j + 1));
+
+    //! Заполнение верхней строки пустым
+    for (int i = 0; i < m_glassHCount; ++i)
+        m_glass->setValue(i, m_glassVCount - 1, Qt::black);
+}
+
+void TrenTetrisExecute::deleteOneColorCubes()
+{
+
 }
 
 QVector<QVector<QColor>> TrenTetrisExecute::newFigure()

@@ -283,6 +283,26 @@ QColor TetrisGlass::getFigureColor(const int h, const int v)
     return Qt::black;
 }
 
+//bool TetrisGlass::setFigureCoordinates(const qreal x, const qreal y)
+//{
+//    m_figX = x;
+//    m_figY = y;
+//    auto pos = getFigurePosition();
+//    qreal w = pos.width();
+//    qreal h = pos.height();
+////    if (x >= 0 && x < m_hCount)
+////    {
+
+
+////    }
+
+////    m_figX = boundingRect().x() + m_glassBorderLR + pos.x() * m_cubeSize + w / 2;
+////    m_figY = boundingRect().y() + (m_vCount - pos.y() - 1) * m_cubeSize - h / 2;
+//    qDebug() << x << y << pos << "  " << m_figX << m_figY;
+
+//    return false;
+//}
+
 bool TetrisGlass::setFigureCoordinates(const qreal x, const qreal y)
 {
     auto pos = getFigurePosition();
@@ -304,25 +324,33 @@ bool TetrisGlass::setFigureCoordinates(const qreal x, const qreal y)
                 if (((dx / fabs(dx) < 0) && (m_figX > x)) ||  //! dx < 0 и m_figX не достигло конечной точки сверху
                     ((dx / fabs(dx) > 0) && (m_figX < x)))    //! dx > 0 и m_figX не достигло конечной точки снизу
                     m_figX += dx;                             //! Только тогда инкремент!
-                m_figY += dy;
+                if (((dy / fabs(dy) < 0) && (m_figY > y)) ||  //! dy < 0 и m_figY не достигло конечной точки сверху
+                    ((dy / fabs(dy) > 0) && (m_figY < y)))    //! dy > 0 и m_figY не достигло конечной точки снизу
+                    m_figY += dy;
 
                 //! Коррекция позиции
 //                auto bx = m_figX;
                 correctFigurePosition(m_figX, m_figY);
   //              qDebug() << i << ")" << bx << m_figX << "  " << m_figX - bx << "  " << m_cubeSize << "        " << m_figY;
 
-                if (figureIntoConfig())
-                {
-                    auto bx = m_figX;
-                    auto by = m_figY;
-                    m_figX -= dx;
-                    m_figY -= dy;
-                    correctFigurePosition(m_figX, m_figY);
-                    qDebug() << "true" << bx << "->" << m_figX << "     " << by << "->" << m_figY;
-                }
+//                qDebug() << figureIntoConfig();
+//                if (figureIntoConfig())
+//                {
+//                    qreal vx = m_figX;
+//                    do {
+//                        auto bx = m_figX;
+//                        auto by = m_figY;
+//                        vx -= dx/fabs(dx) * m_cubeSize;
+//                        m_figY -= dy / fabs(dy) * m_cubeSize;
+//                        m_figX = vx;
+//                        correctFigurePosition(m_figX, m_figY);
+//                        qDebug() << "true" << bx << "->" << m_figX << "     " << by << "->" << m_figY << "   " << dx << dy;
+//                    }
+//                    while (figureIntoConfig());
+//                }
 
                 //! Если в процессе поставили на целевую позицию, то выходим и сообщаем, что надо укладывать
-                if (figureOnConfigOrBottom())
+                if (!figureIntoConfig() && figureOnConfigOrBottom())
                     return true;
             }
         }
@@ -341,7 +369,7 @@ bool TetrisGlass::setFigureCoordinates(const qreal x, const qreal y)
 
 //    qDebug() << ">>>>>>>>>>>>>>>>>>" << m_figX << m_figY;
 
-    return figureOnConfigOrBottom();
+    return !figureIntoConfig() && figureOnConfigOrBottom();
 }
 
 QPoint TetrisGlass::getPositionByCoord(const qreal x, const qreal y) const
@@ -349,6 +377,8 @@ QPoint TetrisGlass::getPositionByCoord(const qreal x, const qreal y) const
     int px = static_cast<int>((x - boundingRect().left() - m_glassBorderLR) / m_cubeSize);
     if (px < 0)
         px = 0;
+    if (px >= m_hCount)
+        px = m_hCount - 1;
     int py = static_cast<int>((boundingRect().top() + boundingRect().height() - m_glassBorderB - y) / m_cubeSize);
     if (py >= m_vCount)
         py = m_vCount - 1;
@@ -445,11 +475,11 @@ bool TetrisGlass::figureIntoConfig()
 {
     auto p = getFigureRect();                 //! Позиция и размер фигуры
 
-    auto x = p.x();// + m_cubeSize / 2;
+    auto x = p.x() + m_cubeSize / 2;
     while (x < p.x() + p.width())
     {
-        auto y = p.y();// + m_cubeSize / 2;
-        while (y < p.y() + p.width())
+        auto y = p.y() + m_cubeSize / 2;
+        while (y < p.y() + p.height())
         {
             auto pos = getPositionByCoord(x, y);  //! Позицию для кубика в фигуре
 
@@ -477,7 +507,8 @@ void TetrisGlass::correctFigurePosition(const qreal tx, const qreal ty)
     auto correct = [&]()
     {
         auto p = getFigureRect();                 //! Позиция и размер фигуры
-        qreal d = m_figX - p.x();                          //! Смещение переданной позиции относительно верхнего левого угла
+        qreal dx = m_figX - p.x();                          //! Смещение переданной позиции относительно верхнего левого угла
+        qreal dy = m_figY - p.y();
         auto pos = getPositionByCoord(p.x(), p.y());  //! Позицию для левого верхнего угла фигуры
 
         if (pos.x() < 0)
@@ -486,8 +517,8 @@ void TetrisGlass::correctFigurePosition(const qreal tx, const qreal ty)
             pos.setX(static_cast<int>(m_hCount - p.width() / m_cubeSize));
 
         auto pos_c = getCoordinatesOfPosition(pos);   //! Координаты фиксированной позиции для левого верхнего угла фигуры
-        m_figX = pos_c.x() + d;                       //! Устанавливаем фигуру на фиксированную позицию + смещение
-    //    m_figY = y; //pos_c.center().y();
+        m_figX = pos_c.x() + dx;                       //! Устанавливаем фигуру на фиксированную позицию + смещение
+        m_figY = pos_c.y() + dy;
     };
 
     correct();
