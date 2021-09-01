@@ -84,7 +84,11 @@ void TetrisGlass::paint(QPainter *painter, const QStyleOptionGraphicsItem *optio
             {
                 if (m_data[v][h] != Qt::black)
                 {
-                    int colorCode = m_data[v][h].red() * 16777216 + m_data[v][h].green() * 65536 + m_data[v][h].blue() * 256 + m_data[v][h].alpha();
+                    QColor color = m_data[v][h];
+                    if (m_deletingCubes.contains(QPoint(h, v)))
+                        color = m_deletingCubesColor;
+
+                    int colorCode = color.red() * 16777216 + color.green() * 65536 + color.blue() * 256 + color.alpha();
                     if (m_allowColors.contains(colorCode))
                     {
                         painter->drawPixmap(static_cast<int>(x), static_cast<int>(y), m_allowColors.value(colorCode));
@@ -306,6 +310,10 @@ QColor TetrisGlass::getFigureColor(const int h, const int v)
 bool TetrisGlass::setFigureCoordinates(const qreal x, const qreal y)
 {
     auto pos = getFigurePosition();
+    qreal left = 0;
+    qreal right =0;
+    getAvaibleDiap(pos, left, right);
+
     if (x >= 0 && (x + pos.width() * m_cubeSize) < boundingRect().x() + boundingRect().width())
     {
         //! Смещаем фигуру от точки (m_figX, m_figY) к точке (x, y) по шагам.
@@ -393,6 +401,21 @@ QRectF TetrisGlass::getCoordinatesOfPosition(const QPoint pos) const
     qreal left = boundingRect().left() + m_glassBorderLR + pos.x() * m_cubeSize;
     qreal top = boundingRect().top() + boundingRect().height() - m_glassBorderB - pos.y() * m_cubeSize;
     return QRectF(left, top, m_cubeSize, m_cubeSize);
+}
+
+void TetrisGlass::setDeletingCube(const int h, const int v)
+{
+    m_deletingCubes.append(QPoint(h, v));
+}
+
+void TetrisGlass::clearDeletingCubes()
+{
+    m_deletingCubes.clear();
+}
+
+void TetrisGlass::setDeletingCubesColor(const QColor color)
+{
+    m_deletingCubesColor = color;
 }
 
 void TetrisGlass::fillData()
@@ -589,6 +612,34 @@ void TetrisGlass::correctFigurePosition(const qreal tx, const qreal ty)
 
 //    }
 
+}
+
+void TetrisGlass::getAvaibleDiap(const QRect pos, qreal &left, qreal &right)
+{
+    left = -INT_MAX;
+    right = INT_MAX;
+    for (int i = pos.y(); i < pos.y() + pos.height(); ++i)
+    {
+        for (int j = pos.x() - 1; j >= 0; --j)
+        {
+            if (m_data[i][j] != Qt::black)
+            {
+                if (j > left)
+                    left = j;
+                break;
+            }
+        }
+
+        for (int j = pos.x() + pos.width(); j < m_hCount; ++j)
+            if (m_data[i][j] != Qt::black)
+            {
+                if (j < right)
+                    right = j;
+                break;
+            }
+    }
+
+    qDebug() << pos << left << right;
 }
 
 

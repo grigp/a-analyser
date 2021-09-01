@@ -117,6 +117,22 @@ public:
     qreal borderLR() {return  m_glassBorderLR;}
     qreal borderB()  {return m_glassBorderB;}
 
+    /*!
+     * \brief Устанавливает признак удаления кубика
+     * \param h, v - позиция в стакане
+     */
+    void setDeletingCube(const int h, const int v);
+
+    /*!
+     * \brief Сбрасывает признаки удаления кубиков
+     */
+    void clearDeletingCubes();
+
+    /*!
+     * \brief Устанавливает цвет для удаляемых кубиков
+     */
+    void setDeletingCubesColor(const QColor color);
+
 private:
 
     void fillData();
@@ -141,6 +157,14 @@ private:
      * \param ox, oy - координаты предыдущей позиции
      */
     void correctFigurePosition(const qreal tx, const qreal ty);
+
+    /*!
+     * \brief Возвращает допустимый диапазон перемещений вигуры влево и вправо
+     * \param pos - положение фигуры в позициях стакана
+     * \param left - допустимое перемещение влево в координатах поля игры
+     * \param right  - допустимое перемещение вправо в координатах поля игры
+     */
+    void getAvaibleDiap(const QRect pos, qreal& left, qreal& right);
 
     qreal m_left {-100};
     qreal m_top {-200};
@@ -174,6 +198,9 @@ private:
     qreal m_figX {0};         ///< Координаты фигуры
     qreal m_figY {0};
     int m_figAngleCode {0};   ///< Код угла фигуры m_figAngleCode % 4 = 0 - 0гр., 1 - 90гр., 2 - 180гр., 4 - 270гр. Каждый поворот ++m_figAngleCode;
+
+    QList<QPoint> m_deletingCubes;  ///< Удаляемые кубики
+    QColor m_deletingCubesColor {Qt::lightGray};
 };
 
 #endif // TETRISGLASS_H

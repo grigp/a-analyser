@@ -124,8 +124,17 @@ private:
 
     /*!
      * \brief Анализ и удаление кубиков одного цвета
+     * \param lastFigCubes - список кубиков последней фигуры
      */
-    void deleteOneColorCubes();
+    void deleteOneColorCubes(const QList<QPoint> lastFigCubes);
+
+    /*!
+     * \brief Рекурсивная функция заполнения списка позиций с кубиками одного цвета
+     * \param oneColorCubes - заполняемый список
+     * \param pos - позиция
+     * \param color - цвет
+     */
+    void fillOneColorCubesList(QList<QPoint>& oneColorCubes, const QPoint pos, const QColor color) const;
 
     /*!
      * \brief Создает и возвращает массив фигур
@@ -145,6 +154,7 @@ private:
     QColor m_cubeColor {Qt::yellow};    ///< Цвет перемещаемой фигуры
     QColor m_glassColor {Qt::cyan};     ///< Цвет фигур, уложенных в стакан
     QColor m_lastColor {Qt::magenta};   ///< Цвет последней уложенной фигуры
+    QColor m_deletingColor {Qt::lightGray};  ///< Цвет фигур, подлежащих удалению
 
     int m_deletingCubeCount {3};      ///< Кол-во кубиков одного цвета, удаляемых одновременно
     QList<QColor> m_colorModeColors;  ///< Цвета для вариантов цветного тетриса

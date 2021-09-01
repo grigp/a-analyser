@@ -209,6 +209,8 @@ void TrenTetrisExecute::putFigure()
         clearLastColor();
 
     //! Установка новой фигуры
+    QList<QPoint> lastFigCubes;
+    lastFigCubes.clear();
     auto pos = m_glass->getFigurePosition();
     for (int i = 0; i < pos.width(); ++i)
     {
@@ -218,7 +220,10 @@ void TrenTetrisExecute::putFigure()
             {
                 auto color = m_glass->getFigureColor(i, j);
                 if (color != Qt::black)
-                    m_glass->setValue(pos.x() + i, pos.y() + j, color);
+                {
+                    m_glass->setValue(pos.x() + i, pos.y() + pos.height() - 1 - j, color);
+                    lastFigCubes << QPoint(pos.x() + i, pos.y() + pos.height() - 1 - j);
+                }
             }
             else
             if (m_deletingMode == TrenTetrisDefines::dmRows)
@@ -231,7 +236,7 @@ void TrenTetrisExecute::putFigure()
 
     //! Анализ и удаление кубиков
     if (m_deletingMode == TrenTetrisDefines::dmColored)
-        deleteOneColorCubes();
+        deleteOneColorCubes(lastFigCubes);
     else
     if (m_deletingMode == TrenTetrisDefines::dmRows)
         deleteRows();
@@ -261,6 +266,9 @@ void TrenTetrisExecute::generateNewScene()
         foreach (auto color, m_colorModeColors)
             m_glass->addColor(color);
     }
+    m_glass->addColor(m_deletingColor);
+    m_glass->setDeletingCubesColor(m_deletingColor);
+
     //! Добавление новой фигуры
     m_glass->setNewFigure(newFigure());
 
@@ -359,8 +367,22 @@ void TrenTetrisExecute::deleteRows()
     }
 
     //! Удаление строк
-    foreach (auto row, fullRows)
-        deleteRow(row);
+    if (fullRows.size() > 0)
+    {
+        //! Пометить кубики, как удаляемые
+        foreach (auto row, fullRows)
+            for (int i = 0; i < m_glassHCount; ++i)
+                m_glass->setDeletingCube(i, row);
+
+        //! Отложенное удаление, чтоб видеть, что удаляем
+        QTimer::singleShot(1000, [=]
+        {
+            m_glass->clearDeletingCubes();
+            //! Удаляем, начиная с верхней строчки, ибо, если наоборот, то номера последующих удаляемых строчек меняются
+            for (int i = fullRows.size() - 1; i >= 0; --i)
+                deleteRow(fullRows.at(i));
+        });
+    }
 }
 
 void TrenTetrisExecute::deleteRow(const int row)
@@ -375,9 +397,50 @@ void TrenTetrisExecute::deleteRow(const int row)
         m_glass->setValue(i, m_glassVCount - 1, Qt::black);
 }
 
-void TrenTetrisExecute::deleteOneColorCubes()
+void TrenTetrisExecute::deleteOneColorCubes(const QList<QPoint> lastFigCubes)
 {
+    foreach (auto pos, lastFigCubes)
+    {
+        if (m_glass->value(pos.x(), pos.y()) != Qt::black)
+        {
+            QList<QPoint> oneColorCubes;
+            oneColorCubes.clear();
+            fillOneColorCubesList(oneColorCubes, pos, m_glass->value(pos.x(), pos.y()));
 
+            if (oneColorCubes.size() >= m_deletingCubeCount)
+            {
+                //! Пометить кубики, как удаляемые
+                foreach (auto cube, oneColorCubes)
+                    m_glass->setDeletingCube(cube.x(), cube.y());
+
+                //! Отложенное удаление, чтоб видеть, что удаляем
+                QTimer::singleShot(1000, [=]
+                {
+                    m_glass->clearDeletingCubes();
+                    foreach (auto cube, oneColorCubes)
+                        m_glass->setValue(cube.x(), cube.y(), Qt::black);
+                });
+            };
+        }
+    }
+}
+
+void TrenTetrisExecute::fillOneColorCubesList(QList<QPoint> &oneColorCubes, const QPoint pos, const QColor color) const
+{
+    if (!oneColorCubes.contains(QPoint(pos.x(), pos.y())) &&
+        m_glass->value(pos.x(), pos.y()) == color)
+    {
+        oneColorCubes << pos;
+
+        if (pos.x() > 0)
+            fillOneColorCubesList(oneColorCubes, QPoint(pos.x() - 1, pos.y()), color);
+        if (pos.x() < m_glassHCount - 1)
+            fillOneColorCubesList(oneColorCubes, QPoint(pos.x() + 1, pos.y()), color);
+        if (pos.y() > 0)
+            fillOneColorCubesList(oneColorCubes, QPoint(pos.x(), pos.y() - 1), color);
+        if (pos.y() < m_glassVCount - 1)
+            fillOneColorCubesList(oneColorCubes, QPoint(pos.x(), pos.y() + 1), color);
+    }
 }
 
 QVector<QVector<QColor>> TrenTetrisExecute::newFigure()
