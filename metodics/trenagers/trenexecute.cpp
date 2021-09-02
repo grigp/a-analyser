@@ -29,6 +29,7 @@ TrenExecute::TrenExecute(QWidget *parent) :
 
     ui->lblCommunicationError->setVisible(false);
     ui->wgtAdvChannels->setVisible(false);
+    ui->lblFullPicture->setVisible(false);
 }
 
 TrenExecute::~TrenExecute()

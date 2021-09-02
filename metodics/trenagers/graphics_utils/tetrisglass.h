@@ -162,9 +162,17 @@ private:
      * \brief Возвращает допустимый диапазон перемещений вигуры влево и вправо
      * \param pos - положение фигуры в позициях стакана
      * \param left - допустимое перемещение влево в координатах поля игры
-     * \param right  - допустимое перемещение вправо в координатах поля игры
+     * \param right - допустимое перемещение вправо в координатах поля игры
      */
-    void getAvaibleDiap(const QRect pos, qreal& left, qreal& right);
+    void getAvaibleDiapHorizontal(const QRect pos, qreal& left, qreal& right);
+
+    /*!
+     * \brief Возвращает допустимый диапазон перемещений вигуры вверх и вниз
+     * \param pos - положение фигуры в позициях стакана
+     * \param up - допустимое перемещение вверх в координатах поля игры
+     * \param down - допустимое перемещение вниз в координатах поля игры
+     */
+    void getAvaibleDiapVertical(const QRect pos, qreal& up, qreal& down);
 
     qreal m_left {-100};
     qreal m_top {-200};

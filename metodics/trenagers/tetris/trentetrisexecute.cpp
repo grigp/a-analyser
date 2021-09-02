@@ -233,6 +233,7 @@ void TrenTetrisExecute::putFigure()
             }
         }
     }
+    changeGameScore(1);
 
     //! Анализ и удаление кубиков
     if (m_deletingMode == TrenTetrisDefines::dmColored)
@@ -380,7 +381,11 @@ void TrenTetrisExecute::deleteRows()
             m_glass->clearDeletingCubes();
             //! Удаляем, начиная с верхней строчки, ибо, если наоборот, то номера последующих удаляемых строчек меняются
             for (int i = fullRows.size() - 1; i >= 0; --i)
+            {
                 deleteRow(fullRows.at(i));
+                changeRowsDeleted(1);
+                changeGameScore(m_glassHCount * 3);
+            }
         });
     }
 }

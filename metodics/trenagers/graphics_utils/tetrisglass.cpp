@@ -311,8 +311,23 @@ bool TetrisGlass::setFigureCoordinates(const qreal x, const qreal y)
 {
     auto pos = getFigurePosition();
     qreal left = 0;
-    qreal right =0;
-    getAvaibleDiap(pos, left, right);
+    qreal right = 0;
+    qreal up = 0;
+    qreal down = 0;
+    getAvaibleDiapHorizontal(pos, left, right);
+    getAvaibleDiapVertical(pos, up, down);
+
+    auto correctByAvaibleDiap = [&]()
+    {
+        if (m_figX - static_cast<double>(pos.width()) / 2 * m_cubeSize < left)
+            m_figX = left + static_cast<double>(pos.width()) / 2 * m_cubeSize;
+        if (m_figX + static_cast<double>(pos.width()) / 2 * m_cubeSize > right)
+            m_figX = right - static_cast<double>(pos.width()) / 2 * m_cubeSize;
+        if (m_figY + static_cast<double>(pos.height()) / 2 * m_cubeSize > down)
+            m_figY = down - static_cast<double>(pos.height()) / 2 * m_cubeSize;
+        if (m_figY - static_cast<double>(pos.height()) / 2 * m_cubeSize < up)
+            m_figY = up + static_cast<double>(pos.height()) / 2 * m_cubeSize;
+    };
 
     if (x >= 0 && (x + pos.width() * m_cubeSize) < boundingRect().x() + boundingRect().width())
     {
@@ -324,7 +339,6 @@ bool TetrisGlass::setFigureCoordinates(const qreal x, const qreal y)
         {
             qreal dx = (x - m_figX) / stepCnt;  //! Инкремент на каждом шаге
             qreal dy = (y - m_figY) / stepCnt;
-//            qDebug() << x << m_figX << "  " << y << m_figY << "  " << stepCnt << "  " << dx << dy;
             //! Цикл по шагам
             for (int i = 0; i < stepCnt; ++i)
             {
@@ -338,44 +352,26 @@ bool TetrisGlass::setFigureCoordinates(const qreal x, const qreal y)
 
                 //! Коррекция позиции
 //                auto bx = m_figX;
-                correctFigurePosition(m_figX, m_figY);
-  //              qDebug() << i << ")" << bx << m_figX << "  " << m_figX - bx << "  " << m_cubeSize << "        " << m_figY;
 
-//                qDebug() << figureIntoConfig();
-//                if (figureIntoConfig())
-//                {
-//                    qreal vx = m_figX;
-//                    do {
-//                        auto bx = m_figX;
-//                        auto by = m_figY;
-//                        vx -= dx/fabs(dx) * m_cubeSize;
-//                        m_figY -= dy / fabs(dy) * m_cubeSize;
-//                        m_figX = vx;
-//                        correctFigurePosition(m_figX, m_figY);
-//                        qDebug() << "true" << bx << "->" << m_figX << "     " << by << "->" << m_figY << "   " << dx << dy;
-//                    }
-//                    while (figureIntoConfig());
-//                }
+                correctByAvaibleDiap();
+
+                //correctFigurePosition(m_figX, m_figY);
 
                 //! Если в процессе поставили на целевую позицию, то выходим и сообщаем, что надо укладывать
                 if (!figureIntoConfig() && figureOnConfigOrBottom())
                     return true;
             }
         }
-        }
+    }
 
     //! Фигуру на конечную позицию
-    qreal tx = x;
-    qreal ty = y;
     m_figX = x;
     m_figY = y;
 
-//    qDebug() << "<<<<<<<<<<<<<<<<<<" << m_figX << m_figY;
+    correctByAvaibleDiap();
 
     //! Если поставили на целевую позицию, то выходим и сообщаем, что надо укладывать
-    correctFigurePosition(tx, ty);
-
-//    qDebug() << ">>>>>>>>>>>>>>>>>>" << m_figX << m_figY;
+    //correctFigurePosition(m_figX, m_figY);
 
     return !figureIntoConfig() && figureOnConfigOrBottom();
 }
@@ -468,6 +464,12 @@ void TetrisGlass::showFigure(QPainter *painter)
             }
         }
     }
+
+    //! Точка позиционирования фигуры - служебное
+    int n = 7;
+    painter->setPen(QPen(Qt::red, 1, Qt::SolidLine, Qt::FlatCap));
+    painter->drawLine(static_cast<int>(m_figX), static_cast<int>(m_figY - n), static_cast<int>(m_figX), static_cast<int>(m_figY + n));
+    painter->drawLine(static_cast<int>(m_figX - n), static_cast<int>(m_figY), static_cast<int>(m_figX + n), static_cast<int>(m_figY));
 }
 
 bool TetrisGlass::figureOnConfigOrBottom()
@@ -614,8 +616,9 @@ void TetrisGlass::correctFigurePosition(const qreal tx, const qreal ty)
 
 }
 
-void TetrisGlass::getAvaibleDiap(const QRect pos, qreal &left, qreal &right)
+void TetrisGlass::getAvaibleDiapHorizontal(const QRect pos, qreal &left, qreal &right)
 {
+    //! Границы в позициях
     left = -INT_MAX;
     right = INT_MAX;
     for (int i = pos.y(); i < pos.y() + pos.height(); ++i)
@@ -639,7 +642,55 @@ void TetrisGlass::getAvaibleDiap(const QRect pos, qreal &left, qreal &right)
             }
     }
 
-    qDebug() << pos << left << right;
+    //! Границы в координатах
+    if (left >= 0)
+        left = boundingRect().x() + m_glassBorderLR + (left + 1) * m_cubeSize;
+    else
+        left = boundingRect().x() + m_glassBorderLR;
+
+    if (right < m_hCount)
+        right = boundingRect().x() + m_glassBorderLR + right * m_cubeSize;
+    else
+        right = boundingRect().x() + boundingRect().width() - m_glassBorderLR;
+}
+
+void TetrisGlass::getAvaibleDiapVertical(const QRect pos, qreal &up, qreal &down)
+{
+    //! Границы в позициях
+    up = INT_MAX;
+    down = -INT_MAX;
+
+    for (int i = pos.x(); i < pos.x() + pos.width(); ++i)
+    {
+        for (int j = pos.y(); j >= 0; --j)
+        {
+            if (m_data[j][i] != Qt::black)
+            {
+                if (j > down)
+                    down = j;
+                break;
+            }
+        }
+
+        for (int j = pos.y() + pos.height(); j < m_vCount; ++j)
+            if (m_data[j][i] != Qt::black)
+            {
+                if (j < up)
+                    up = j;
+                break;
+            }
+    }
+
+    //! Границы в координатах
+    if (down >= 0)
+        down = boundingRect().y() + boundingRect().height() - m_glassBorderB - (down + 1) * m_cubeSize;
+    else
+        down = boundingRect().y() + boundingRect().height() - m_glassBorderB;
+
+    if (up < m_vCount)
+        up = boundingRect().y() + boundingRect().height() - m_glassBorderB - up * m_cubeSize;
+    else
+        up = boundingRect().y();
 }
 
 
