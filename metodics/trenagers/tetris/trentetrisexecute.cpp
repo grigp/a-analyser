@@ -302,8 +302,18 @@ void TrenTetrisExecute::fillGameHints(QFrame *frame)
 {
     TrenStabExecute::fillGameHints(frame);
 
+    auto lblCaption = new QLabel(frame);
+    lblCaption->setText(tr("Следующая фигура"));
+    lblCaption->setAlignment(Qt::AlignHCenter);
+    frame->layout()->addWidget(lblCaption);
+
     m_wgtNextFigure = new TetrisFigure(frame);
     frame->layout()->addWidget(m_wgtNextFigure);
+
+    lblCaption = new QLabel(frame);
+    lblCaption->setText(tr("Следующая фигура"));
+    lblCaption->setAlignment(Qt::AlignHCenter);
+    pwAddHintWidget(lblCaption);
 
     m_wgtNextFigurePW = new TetrisFigure();
     pwAddHintWidget(m_wgtNextFigurePW);
@@ -346,6 +356,9 @@ void TrenTetrisExecute::setGlass(const QJsonObject &objGlass)
 
     static_cast<TetrisFigure*>(m_wgtNextFigure)->setCubeFileName(":/images/Games/" + m_cubeImageFileName);
     static_cast<TetrisFigure*>(m_wgtNextFigurePW)->setCubeFileName(":/images/Games/" + m_cubeImageFileName);
+
+//    m_glass->setIsShowGrid(true);
+//    m_glass->setIsShowFigurePos(true);
 }
 
 void TrenTetrisExecute::changeRowsDeleted(const int value)

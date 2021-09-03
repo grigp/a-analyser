@@ -133,6 +133,15 @@ public:
      */
     void setDeletingCubesColor(const QColor color);
 
+    /*!
+     * \brief Показывать центр фигуры
+     */
+    void setIsShowFigurePos(const bool isShow) {m_isShowFigurePos = isShow;}
+    /*!
+     * \brief Показыать сетку
+     */
+    void setIsShowGrid(const bool isShow) {m_isShowGrid = isShow;}
+
 private:
 
     void fillData();
@@ -209,6 +218,9 @@ private:
 
     QList<QPoint> m_deletingCubes;  ///< Удаляемые кубики
     QColor m_deletingCubesColor {Qt::lightGray};
+
+    bool m_isShowFigurePos {false};  ///< Показывать центр фигуры
+    bool m_isShowGrid {false};       ///< Показыать сетку
 };
 
 #endif // TETRISGLASS_H

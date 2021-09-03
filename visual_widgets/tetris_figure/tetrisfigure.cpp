@@ -36,6 +36,11 @@ void TetrisFigure::paintEvent(QPaintEvent *event)
 
     QPainter painter(this);
 
+    //! Рамка
+    painter.setBrush(QBrush(Qt::gray, Qt::NoBrush));
+    painter.setPen(QPen(Qt::gray, 1, Qt::DashLine, Qt::FlatCap));
+    painter.drawRect(0, 0, geometry().width() - 1, geometry().height() - 1);
+
     qreal cubeSize = static_cast<double>(geometry().width()) / 4;
     if (cubeSize > qMin(m_cube.width(), m_cube.height()))
         cubeSize = qMin(m_cube.width(), m_cube.height());
@@ -47,10 +52,7 @@ void TetrisFigure::paintEvent(QPaintEvent *event)
             qreal x = geometry().width() / 2 - m_figure.at(i).size() * cubeSize / 2 + j * cubeSize;
             qreal y = geometry().height() / 2 - m_figure.size() * cubeSize / 2 + i * cubeSize;
 
-//            QRectF rect(x, y, cubeSize, cubeSize);
-
             QColor color = m_figure[i][j];
-//            int colorCode = color.red() * 16777216 + m_figure[i][j].green() * 65536 + m_figure[i][j].blue() * 256 + m_figure[i][j].alpha();
             QPixmap cube(m_cube);
             cube.scaled(static_cast<int>(cubeSize), static_cast<int>(cubeSize), Qt::KeepAspectRatio);
             BaseUtils::setColoredPicture(cube, color);

@@ -97,29 +97,34 @@ void TetrisGlass::paint(QPainter *painter, const QStyleOptionGraphicsItem *optio
 
 
                 //! Сетка
-                painter->setPen(QPen(Qt::darkGray, 1, Qt::DotLine, Qt::FlatCap));
-                painter->drawLine(static_cast<int>(x), 0,
-                                  static_cast<int>(x), static_cast<int>(boundingRect().y() + boundingRect().height() - m_pixmapFrmBottom.height()));
-                painter->drawText(static_cast<int>(x + m_cubeSize / 2),
-                                  static_cast<int>(boundingRect().y() + boundingRect().height() - m_pixmapFrmBottom.height() - 30),
-                                  QString::number(h));
-
+                if (m_isShowGrid)
+                {
+                    painter->setPen(QPen(Qt::darkGray, 1, Qt::DotLine, Qt::FlatCap));
+                    painter->drawLine(static_cast<int>(x), 0,
+                                      static_cast<int>(x), static_cast<int>(boundingRect().y() + boundingRect().height() - m_pixmapFrmBottom.height()));
+                    painter->drawText(static_cast<int>(x + m_cubeSize / 2),
+                                      static_cast<int>(boundingRect().y() + boundingRect().height() - m_pixmapFrmBottom.height() - 30),
+                                      QString::number(h));
+                }
 
                 x += m_cubeSize;
             }
 
             //! Сетка
-            painter->setPen(QPen(Qt::darkGray, 1, Qt::DotLine, Qt::FlatCap));
-            painter->drawLine(static_cast<int>(boundingRect().x()), static_cast<int>(y),
-                              static_cast<int>(boundingRect().x() + boundingRect().width()), static_cast<int>(y));
-            if (v != 0)
+            if (m_isShowGrid)
             {
-                painter->drawText(static_cast<int>(boundingRect().x() + m_pixmapFrmLeft.width() + m_cubeSize / 2),
-                                  static_cast<int>(y + m_cubeSize / 2),
-                                  QString::number(v));
-                painter->drawText(static_cast<int>(boundingRect().x() + boundingRect().width() - m_pixmapFrmRight.width() - m_cubeSize / 2),
-                                  static_cast<int>(y + m_cubeSize / 2),
-                                  QString::number(v));
+                painter->setPen(QPen(Qt::darkGray, 1, Qt::DotLine, Qt::FlatCap));
+                painter->drawLine(static_cast<int>(boundingRect().x()), static_cast<int>(y),
+                                  static_cast<int>(boundingRect().x() + boundingRect().width()), static_cast<int>(y));
+                if (v != 0)
+                {
+                    painter->drawText(static_cast<int>(boundingRect().x() + m_pixmapFrmLeft.width() + m_cubeSize / 2),
+                                      static_cast<int>(y + m_cubeSize / 2),
+                                      QString::number(v));
+                    painter->drawText(static_cast<int>(boundingRect().x() + boundingRect().width() - m_pixmapFrmRight.width() - m_cubeSize / 2),
+                                      static_cast<int>(y + m_cubeSize / 2),
+                                      QString::number(v));
+                }
             }
 
             y -= m_cubeSize;
@@ -466,10 +471,13 @@ void TetrisGlass::showFigure(QPainter *painter)
     }
 
     //! Точка позиционирования фигуры - служебное
-    int n = 7;
-    painter->setPen(QPen(Qt::red, 1, Qt::SolidLine, Qt::FlatCap));
-    painter->drawLine(static_cast<int>(m_figX), static_cast<int>(m_figY - n), static_cast<int>(m_figX), static_cast<int>(m_figY + n));
-    painter->drawLine(static_cast<int>(m_figX - n), static_cast<int>(m_figY), static_cast<int>(m_figX + n), static_cast<int>(m_figY));
+    if (m_isShowFigurePos)
+    {
+        int n = 7;
+        painter->setPen(QPen(Qt::red, 1, Qt::SolidLine, Qt::FlatCap));
+        painter->drawLine(static_cast<int>(m_figX), static_cast<int>(m_figY - n), static_cast<int>(m_figX), static_cast<int>(m_figY + n));
+        painter->drawLine(static_cast<int>(m_figX - n), static_cast<int>(m_figY), static_cast<int>(m_figX + n), static_cast<int>(m_figY));
+    }
 }
 
 bool TetrisGlass::figureOnConfigOrBottom()
