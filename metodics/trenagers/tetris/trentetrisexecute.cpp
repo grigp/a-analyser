@@ -13,6 +13,7 @@
 #include "trenresultdata.h"
 #include "trenresultfactors.h"
 #include "tetrisglass.h"
+#include "tetrisfigure.h"
 
 namespace  {
 ///< Список фигур а-ля тетрис
@@ -295,6 +296,17 @@ void TrenTetrisExecute::fillGameParams(QFrame *frame)
     changeRowsDeleted(0);
 }
 
+void TrenTetrisExecute::fillGameHints(QFrame *frame)
+{
+    TrenStabExecute::fillGameHints(frame);
+
+    m_nextFigure = new TetrisFigure(frame);
+    frame->layout()->addWidget(m_nextFigure);
+
+    m_nextFigurePW = new TetrisFigure();
+    pwAddHintWidget(m_nextFigurePW);
+}
+
 void TrenTetrisExecute::setMarker(const QJsonObject &objMarker)
 {
     auto style = objMarker["style"].toString();
@@ -328,7 +340,10 @@ void TrenTetrisExecute::setGlass(const QJsonObject &objGlass)
     m_glass->setFrameBottomImage(objFrames["bottom"].toString());
     m_glass->setFrameCornerLeftImage(objFrames["corner_left"].toString());
     m_glass->setFrameCornerRightImage(objFrames["corner_right"].toString());
-    m_glass->setCubeImage(m_cubeImageFileName);
+    m_glass->setCubeImage(":/images/Games/" + m_cubeImageFileName);
+
+    static_cast<TetrisFigure*>(m_nextFigure)->setCubeFileName(":/images/Games/" + m_cubeImageFileName);
+    static_cast<TetrisFigure*>(m_nextFigurePW)->setCubeFileName(":/images/Games/" + m_cubeImageFileName);
 }
 
 void TrenTetrisExecute::changeRowsDeleted(const int value)
@@ -477,6 +492,9 @@ QVector<QVector<QColor>> TrenTetrisExecute::newFigure()
                     retval[i][j] = m_colorModeColors.at(colIdx);
                 }
             }
+
+    static_cast<TetrisFigure*>(m_nextFigure)->setFigure(retval);
+    static_cast<TetrisFigure*>(m_nextFigurePW)->setFigure(retval);
 
     return retval;
 }

@@ -186,7 +186,7 @@ void TetrisGlass::setFrameCornerRightImage(const QString fn)
 
 void TetrisGlass::setCubeImage(const QString fn)
 {
-    m_pixmapCube.load(":/images/Games/" + fn);
+    m_pixmapCube.load(fn);
 }
 
 QColor TetrisGlass::value(const int h, const int v) const

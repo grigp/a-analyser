@@ -76,6 +76,11 @@ protected:
      */
     void fillGameParams(QFrame *frame) override;
 
+    /*!
+     * \brief Заполнить frame своими элементами, отображающими подсказки в процессе игры
+     * \param frame - указатель на фрейм, куда добавлять
+     */
+    void fillGameHints(QFrame *frame) override;
 
 private:
     Ui::TrenTetrisExecute *ui;
@@ -169,8 +174,13 @@ private:
     QJsonObject m_glassObj;            ///< Объект с данными стакана
     TetrisGlass* m_glass {nullptr};
 
+    QVector<QVector<QColor>> nextFigure; ///< Следующая фигура
+
     QLabel* m_lblRowsDel {nullptr};
     int m_rowsDeleted {0};
+
+    QWidget* m_nextFigure {nullptr};    ///< Виджет для отображения следующей фигуры
+    QWidget* m_nextFigurePW {nullptr};  ///< Виджет для отображения следующей фигуры в окне пациента
 
     TrenTetrisDefines::TakeModeStage m_tmStage {TrenTetrisDefines::tmsTake};   ///< Этап а режиме захвата - укладки
 };
