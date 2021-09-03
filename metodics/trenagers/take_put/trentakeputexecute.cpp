@@ -53,8 +53,6 @@ void TrenTakePutExecute::setParams(const QJsonObject &params)
         loadPicturesSingle(m_elementsTake.at(0).images, "png");
     if ((m_elementsTake.size() >= 1) && (m_elementsTake.at(0).style == GraphicCommon::esPictureRandom))
         loadPicturesSingle(m_elementsTake.at(0).images, "png"); //"gif");
-    setSamplePixmapVisible((m_elementsTake.size() == 1) &&
-                           (m_elementsTake.at(0).style == GraphicCommon::esPictureSplit));
 
     if ((m_elementsTake.size() == 1) && (m_elementsTake.at(0).style == GraphicCommon::esPicturePair))
         loadPicturesPair(m_elementsTake.at(0).images);
@@ -360,6 +358,23 @@ void TrenTakePutExecute::fillGameParams(QFrame *frame)
     pwSetGameParamLabel(name, style);
 
     changeErrors(0);
+}
+
+void TrenTakePutExecute::fillGameHints(QFrame *frame)
+{
+    TrenStabExecute::fillGameHints(frame);
+
+    m_lblPicture = new QLabel(frame);
+    m_lblPicture->setText("pic");
+    m_lblPicture->setVisible((m_elementsTake.size() == 1) &&
+                             (m_elementsTake.at(0).style == GraphicCommon::esPictureSplit));
+    frame->layout()->addWidget(m_lblPicture);
+
+    m_lblPicturePW = new QLabel();
+    m_lblPicturePW->setText("pic");
+    m_lblPicturePW->setVisible((m_elementsTake.size() == 1) &&
+                               (m_elementsTake.at(0).style == GraphicCommon::esPictureSplit));
+    pwAddHintWidget(m_lblPicturePW);
 }
 
 void TrenTakePutExecute::on_recording()
@@ -792,9 +807,10 @@ void TrenTakePutExecute::allocSplitPictures()
     int picNum = getNextPictureNumber(m_filesSingle.size());
 
     QPixmap pixAll(m_elementsTake.at(0).images + m_filesSingle.at(picNum));
-    setSamplePixmap(pixAll);
-    if (patientWindow())
-        patientWindow()->setSamplePixmap(pixAll);
+    m_lblPicture->setPixmap(pixAll.scaled(getFrameControlWidth(), getFrameControlWidth()));
+    m_lblPicture->setVisible(true);
+    m_lblPicturePW->setPixmap(pixAll.scaled(pwGetFrameParamsWidth(), pwGetFrameParamsWidth()));
+    m_lblPicturePW->setVisible(true);
 
     //! Масштабирование
     pixAll = pixAll.scaled(static_cast<int>(m_zonesTake.at(0).width * 2 * prop()),
@@ -813,16 +829,10 @@ void TrenTakePutExecute::allocSplitPictures()
         auto* takeLD = allocElement(m_zonesTake, &m_elementsTake[0], &pixLD, zlvlElements);
         auto* takeRD = allocElement(m_zonesTake, &m_elementsTake[0], &pixRD, zlvlElements);
 
-//        takeElements.clear();
-//        takeElements << takeLT << takeRT << takeLD << takeRD;
-
         auto* putLT = allocElement(m_zonesPut, &m_elementsPut[0], nullptr, zlvlZones, 0);
         auto* putRT = allocElement(m_zonesPut, &m_elementsPut[0], nullptr, zlvlZones, 1);
         auto* putLD = allocElement(m_zonesPut, &m_elementsPut[0], nullptr, zlvlZones, 2);
         auto* putRD = allocElement(m_zonesPut, &m_elementsPut[0], nullptr, zlvlZones, 3);
-
-//        putElements.clear();
-//        putElements << putLT << putRT << putLD << putRD;
 
         auto assignCode = [&](GraphicCommon::GameElement* elementTake,
                               GraphicCommon::GameElement* elementPut)

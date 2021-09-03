@@ -9,7 +9,6 @@ TrenagerPatientWindow::TrenagerPatientWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     setWindowFlags(Qt::Dialog | Qt::FramelessWindowHint);
-    ui->lblFullPicture->setVisible(false);
 }
 
 TrenagerPatientWindow::~TrenagerPatientWindow()
@@ -37,12 +36,6 @@ double TrenagerPatientWindow::propY() const
     return m_propY;
 }
 
-void TrenagerPatientWindow::setSamplePixmap(const QPixmap &pixmap)
-{
-    ui->lblFullPicture->setPixmap(pixmap.scaled(ui->frParams->geometry().width(), ui->frParams->geometry().width()));
-    ui->lblFullPicture->setVisible(true);
-}
-
 QSize TrenagerPatientWindow::sceneSize() const
 {
     return ui->gvGame->geometry().size();
@@ -61,6 +54,17 @@ void TrenagerPatientWindow::setGameParamLabelValue(const int idxParam, const QSt
 {
     Q_ASSERT(idxParam >= 0 && idxParam < m_gameParamLabels.size());
     m_gameParamLabels.at(idxParam)->setText(value);
+}
+
+void TrenagerPatientWindow::addHintWidget(QWidget *widget)
+{
+    widget->setParent(ui->frGameHints);
+    ui->frGameHints->layout()->addWidget(widget);
+}
+
+int TrenagerPatientWindow::getFrameParamsWidth()
+{
+    return  ui->frParams->width();
 }
 
 void TrenagerPatientWindow::resizeEvent(QResizeEvent *event)

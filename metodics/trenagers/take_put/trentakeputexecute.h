@@ -76,6 +76,12 @@ protected:
      */
     void fillGameParams(QFrame *frame) override;
 
+    /*!
+     * \brief Заполнить frame своими элементами, отображающими подсказки в процессе игры
+     * \param frame - указатель на фрейм, куда добавлять
+     */
+    void fillGameHints(QFrame *frame) override;
+
 
 protected slots:
     void on_recording() override;
@@ -211,6 +217,9 @@ private:
     bool m_isError {false};    ///< Признак ошибки. Для исключения "лишних" ошибок
     QPointF m_pos;
     QLabel* m_lblErrors {nullptr};
+
+    QLabel* m_lblPicture {nullptr};    ///< Подсказка - собираемая картинка
+    QLabel* m_lblPicturePW {nullptr};  ///< Подсказка - собираемая картинка для окна пациентов
 
     QMediaPlayer m_player;
     SoundSheme m_soundSheme;

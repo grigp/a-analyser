@@ -85,6 +85,12 @@ protected:
     virtual void fillGameControl(QFrame *frame);
 
     /*!
+     * \brief Здесь подклассы должны заполнить frame своими управляющими элементами подсказок для игры
+     * \param frame - указатель на фрейм, куда добавлять
+     */
+    virtual void fillGameHints(QFrame *frame);
+
+    /*!
      * \brief Здесь подклассы должны заполнить frame своими элементами, отображающими процесс игры
      * \param frame - указатель на фрейм, куда добавлять
      */
@@ -115,13 +121,14 @@ protected:
     int frequency() {return  m_frequency;}
 
     /*!
-     * \brief Устанавливает видимость картинки в нижней части панели управления, показывающей образец для сборки
+     * \brief Возвращает ширину фрейма управления
      */
-    void setSamplePixmapVisible(const bool visible);
+    int getFrameControlWidth();
+
     /*!
-     * \brief Устанавливает картинку в нижней части панели управления, показывающую образец для сборки
+     * \brief Возвращает ширину фрейма параметров в окне пациента
      */
-    void setSamplePixmap(const QPixmap &pixmap);
+    int pwGetFrameParamsWidth();
 
     /*!
      * \brief Изменяет значение числа очков
@@ -142,6 +149,12 @@ protected:
      * \param value - значение
      */
     void pwSetGameParamLabelValue(const int idxParam, const QString value);
+
+    /*!
+     * \brief Добваляет виджет для отображения подсказок
+     * \param widget - указатель на добавляемый виджет
+     */
+    void pwAddHintWidget(QWidget* widget);
 
     /*!
      * \brief Возвращает указатель на элемент игровой сцены - фон
@@ -186,7 +199,6 @@ private:
     DataDefines::PatientKard m_kard;
 
     Driver* m_driver {nullptr};     ///< Драйвер передающий данные
-//    DeviceProtocols::DecartCoordControl* m_dcControl;  ///< Управление декартовыми данными в драйвере
     TestResultData *m_trd;  ///< Объект, записывающий данные в базу
 
     TrenagerPatientWindow* m_patientWindow {nullptr};

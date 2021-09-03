@@ -24,8 +24,6 @@ public:
     double propX() const;
     double propY() const;
 
-    void setSamplePixmap(const QPixmap &pixmap);
-
     QSize sceneSize() const;
 
     /*!
@@ -40,6 +38,17 @@ public:
      * \param value - значение
      */
     void setGameParamLabelValue(const int idxParam, const QString value);
+
+    /*!
+     * \brief Добваляет виджет для отображения подсказок
+     * \param widget - указатель на добавляемый виджет
+     */
+    void addHintWidget(QWidget* widget);
+
+    /*!
+     * \brief Возвращает ширину фрейма параметров
+     */
+    int getFrameParamsWidth();
 
 protected:
     void resizeEvent(QResizeEvent* event) override;

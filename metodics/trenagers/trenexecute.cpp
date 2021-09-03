@@ -29,7 +29,6 @@ TrenExecute::TrenExecute(QWidget *parent) :
 
     ui->lblCommunicationError->setVisible(false);
     ui->wgtAdvChannels->setVisible(false);
-    ui->lblFullPicture->setVisible(false);
 }
 
 TrenExecute::~TrenExecute()
@@ -108,6 +107,7 @@ void TrenExecute::start()
 
     fillGameControl(ui->frGameControl);
     fillGameParams(ui->frGameParams);
+    fillGameHints(ui->frGameHints);
 }
 
 void TrenExecute::getData(DeviceProtocols::DeviceData *data)
@@ -325,6 +325,11 @@ void TrenExecute::fillGameControl(QFrame *frame)
     Q_UNUSED(frame);
 }
 
+void TrenExecute::fillGameHints(QFrame *frame)
+{
+    Q_UNUSED(frame);
+}
+
 void TrenExecute::fillGameParams(QFrame *frame)
 {
     QString style = "font-size: 18pt; font-weight: 900; color: rgb(0,150,0);";
@@ -346,15 +351,16 @@ QString TrenExecute::currentChannelUID()
     return "";
 }
 
-void TrenExecute::setSamplePixmapVisible(const bool visible)
+int TrenExecute::getFrameControlWidth()
 {
-    ui->lblFullPicture->setVisible(visible);
+    return ui->frControl->width();
 }
 
-void TrenExecute::setSamplePixmap(const QPixmap &pixmap)
+int TrenExecute::pwGetFrameParamsWidth()
 {
-    ui->lblFullPicture->setPixmap(pixmap.scaled(ui->frControl->geometry().width(), ui->frControl->geometry().width()));
-    ui->lblFullPicture->setVisible(true);
+    if (m_patientWindow && QApplication::desktop()->screenCount() > 1)
+        return m_patientWindow->getFrameParamsWidth();
+    return 0;
 }
 
 void TrenExecute::changeGameScore(const int value)
@@ -379,6 +385,12 @@ void TrenExecute::pwSetGameParamLabelValue(const int idxParam, const QString val
 {
     if (m_patientWindow && QApplication::desktop()->screenCount() > 1)
         m_patientWindow->setGameParamLabelValue(idxParam, value);
+}
+
+void TrenExecute::pwAddHintWidget(QWidget *widget)
+{
+    if (m_patientWindow && QApplication::desktop()->screenCount() > 1)
+        m_patientWindow->addHintWidget(widget);
 }
 
 void TrenExecute::addFactorValue(const QString &uid, const double value)
