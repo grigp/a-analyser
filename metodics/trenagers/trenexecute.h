@@ -181,7 +181,12 @@ protected:
     /*!
      * \brief Возвращает кол-во отсчетов после начала записи
      */
-    int recCount() {return m_recCount;}
+    int recCount() const {return m_recCount;}
+
+    /*!
+     * \brief Возвращает true, если проходит запись
+     */
+    bool isRecording() const {return m_isRecording;}
 
 
 private slots:

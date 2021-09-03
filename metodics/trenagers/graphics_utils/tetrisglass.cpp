@@ -419,6 +419,15 @@ void TetrisGlass::setDeletingCubesColor(const QColor color)
     m_deletingCubesColor = color;
 }
 
+void TetrisGlass::clear()
+{
+    for (int i = 0; i < m_vCount; ++i)
+        for (int j = 0; j < m_hCount; ++j)
+        {
+            m_data[i][j] = Qt::black;
+        }
+}
+
 void TetrisGlass::fillData()
 {
     m_data.resize(m_vCount);

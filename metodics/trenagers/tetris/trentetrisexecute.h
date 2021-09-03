@@ -82,6 +82,9 @@ protected:
      */
     void fillGameHints(QFrame *frame) override;
 
+    void finishTest() override;
+
+
 private:
     Ui::TrenTetrisExecute *ui;
 
@@ -140,6 +143,12 @@ private:
      * \param color - цвет
      */
     void fillOneColorCubesList(QList<QPoint>& oneColorCubes, const QPoint pos, const QColor color) const;
+
+    /*!
+     * \brief Анализ стакана на заполнение
+     * \return true, если стакан заполнен (есть элементы на последней строке)
+     */
+    bool isGlassFull();
 
     /*!
      * \brief Создает и возвращает массив фигур

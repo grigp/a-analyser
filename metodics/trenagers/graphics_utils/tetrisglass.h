@@ -134,6 +134,11 @@ public:
     void setDeletingCubesColor(const QColor color);
 
     /*!
+     * \brief Очищает стакан
+     */
+    void clear();
+
+    /*!
      * \brief Показывать центр фигуры
      */
     void setIsShowFigurePos(const bool isShow) {m_isShowFigurePos = isShow;}

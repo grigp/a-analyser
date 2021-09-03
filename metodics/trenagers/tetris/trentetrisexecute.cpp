@@ -127,6 +127,14 @@ void TrenTetrisExecute::elementsInteraction(DeviceProtocols::DeviceData *data)
 //            ++n; Вращение
 //            if (n % 250 == 0)
 //                m_glass->rotateFigure();
+
+            if (isGlassFull())
+            {
+                if (!isRecording())
+                    m_glass->clear();
+                else
+                    finishTest();
+            }
         }
     }
 }
@@ -319,6 +327,15 @@ void TrenTetrisExecute::fillGameHints(QFrame *frame)
     pwAddHintWidget(m_wgtNextFigurePW);
 }
 
+void TrenTetrisExecute::finishTest()
+{
+    //! Добавляем значение специфического показателя для подкласса TrenTakePutExecute: время игры и количество удаленных строк
+    addFactorValue(TrenResultFactorsDefines::TimeUid, recCount() / frequency());
+    addFactorValue(TrenResultFactorsDefines::FaultsUid, m_rowsDeleted);
+
+    TrenStabExecute::finishTest();
+}
+
 void TrenTetrisExecute::setMarker(const QJsonObject &objMarker)
 {
     auto style = objMarker["style"].toString();
@@ -476,6 +493,14 @@ void TrenTetrisExecute::fillOneColorCubesList(QList<QPoint> &oneColorCubes, cons
         if (pos.y() < m_glassVCount - 1)
             fillOneColorCubesList(oneColorCubes, QPoint(pos.x(), pos.y() + 1), color);
     }
+}
+
+bool TrenTetrisExecute::isGlassFull()
+{
+    for (int i = 0; i < m_glassHCount; ++i)
+        if (m_glass->value(i, m_glassVCount - 1) != Qt::black)
+            return true;
+    return false;
 }
 
 QVector<QVector<QColor>> TrenTetrisExecute::newFigure()

@@ -56,4 +56,8 @@ void TrenResultFactors::registerFactors()
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(TrenResultFactorsDefines::TimeUid, TrenResultFactorsDefines::GroupUid,
                            tr("Время игры"), tr("Время"), tr("сек"), 0, 3, FactorsDefines::nsDual, 12);
+    static_cast<AAnalyserApplication*>(QApplication::instance())->
+            registerFactor(TrenResultFactorsDefines::RowsDeletedUid, TrenResultFactorsDefines::GroupUid,
+                           tr("Количество удаленных строк"), tr("Строки"), tr(""), 0, 3, FactorsDefines::nsDual, 12);
+
 }
