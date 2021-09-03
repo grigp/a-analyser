@@ -197,7 +197,8 @@ void TrenTetrisExecute::takeModeInteraction(double &mx, double &my)
             putFigure();
             m_tmStage = TrenTetrisDefines::tmsTake;
             //! Добавление новой фигуры
-            m_glass->setNewFigure(newFigure());
+            m_glass->setNewFigure(m_nextFigure);
+            m_nextFigure = newFigure();
             m_marker->setVisible(true);
         }
     }
@@ -273,6 +274,7 @@ void TrenTetrisExecute::generateNewScene()
 
     //! Добавление новой фигуры
     m_glass->setNewFigure(newFigure());
+    m_nextFigure = newFigure();
 
     setMarker(m_markerObj);
     scene()->addItem(m_marker);
@@ -300,11 +302,11 @@ void TrenTetrisExecute::fillGameHints(QFrame *frame)
 {
     TrenStabExecute::fillGameHints(frame);
 
-    m_nextFigure = new TetrisFigure(frame);
-    frame->layout()->addWidget(m_nextFigure);
+    m_wgtNextFigure = new TetrisFigure(frame);
+    frame->layout()->addWidget(m_wgtNextFigure);
 
-    m_nextFigurePW = new TetrisFigure();
-    pwAddHintWidget(m_nextFigurePW);
+    m_wgtNextFigurePW = new TetrisFigure();
+    pwAddHintWidget(m_wgtNextFigurePW);
 }
 
 void TrenTetrisExecute::setMarker(const QJsonObject &objMarker)
@@ -342,8 +344,8 @@ void TrenTetrisExecute::setGlass(const QJsonObject &objGlass)
     m_glass->setFrameCornerRightImage(objFrames["corner_right"].toString());
     m_glass->setCubeImage(":/images/Games/" + m_cubeImageFileName);
 
-    static_cast<TetrisFigure*>(m_nextFigure)->setCubeFileName(":/images/Games/" + m_cubeImageFileName);
-    static_cast<TetrisFigure*>(m_nextFigurePW)->setCubeFileName(":/images/Games/" + m_cubeImageFileName);
+    static_cast<TetrisFigure*>(m_wgtNextFigure)->setCubeFileName(":/images/Games/" + m_cubeImageFileName);
+    static_cast<TetrisFigure*>(m_wgtNextFigurePW)->setCubeFileName(":/images/Games/" + m_cubeImageFileName);
 }
 
 void TrenTetrisExecute::changeRowsDeleted(const int value)
@@ -493,8 +495,8 @@ QVector<QVector<QColor>> TrenTetrisExecute::newFigure()
                 }
             }
 
-    static_cast<TetrisFigure*>(m_nextFigure)->setFigure(retval);
-    static_cast<TetrisFigure*>(m_nextFigurePW)->setFigure(retval);
+    static_cast<TetrisFigure*>(m_wgtNextFigure)->setFigure(retval);
+    static_cast<TetrisFigure*>(m_wgtNextFigurePW)->setFigure(retval);
 
     return retval;
 }

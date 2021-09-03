@@ -37,6 +37,8 @@ void TetrisFigure::paintEvent(QPaintEvent *event)
     QPainter painter(this);
 
     qreal cubeSize = static_cast<double>(geometry().width()) / 4;
+    if (cubeSize > qMin(m_cube.width(), m_cube.height()))
+        cubeSize = qMin(m_cube.width(), m_cube.height());
 
     for (int i = 0; i < m_figure.size(); ++i)
     {
