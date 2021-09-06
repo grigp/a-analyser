@@ -145,6 +145,13 @@ private:
     void fillOneColorCubesList(QList<QPoint>& oneColorCubes, const QPoint pos, const QColor color) const;
 
     /*!
+     * \brief Сдвигает кубики в столбце стакана вниз
+     * \param x - номер столбца
+     * \param y - начальная позиция сдвига
+     */
+    void shiftCol(const int x, const int y);
+
+    /*!
      * \brief Анализ стакана на заполнение
      * \return true, если стакан заполнен (есть элементы на последней строке)
      */

@@ -37,7 +37,19 @@ QList<QVector<QVector<QColor>>> FiguresRectis = {
     {{Qt::white, Qt::white}, {Qt::white, Qt::white}},
     {{Qt::white, Qt::white, Qt::white}},
     {{Qt::white}, {Qt::white}, {Qt::white}},
+    {{Qt::white, Qt::white, Qt::white}, {Qt::white, Qt::white, Qt::white}},
+    {{Qt::white, Qt::white}, {Qt::white, Qt::white}, {Qt::white, Qt::white}},
     {{Qt::white, Qt::white, Qt::white}, {Qt::white, Qt::white, Qt::white}, {Qt::white, Qt::white, Qt::white}},
+};
+
+///< Список фигур а-ля rectis для цветного тетриса
+QList<QVector<QVector<QColor>>> FiguresColored = {
+    {{Qt::white}},
+    {{Qt::white, Qt::white}},
+    {{Qt::white}, {Qt::white}},
+    {{Qt::white, Qt::white}, {Qt::white, Qt::white}},
+    {{Qt::white, Qt::white, Qt::white}},
+    {{Qt::white}, {Qt::white}, {Qt::white}},
 };
 
 ///< Фигура для кубиков. Один кубик. Для единства обработки - список. Безобразно, но однообразно
@@ -374,7 +386,7 @@ void TrenTetrisExecute::setGlass(const QJsonObject &objGlass)
     static_cast<TetrisFigure*>(m_wgtNextFigure)->setCubeFileName(":/images/Games/" + m_cubeImageFileName);
     static_cast<TetrisFigure*>(m_wgtNextFigurePW)->setCubeFileName(":/images/Games/" + m_cubeImageFileName);
 
-//    m_glass->setIsShowGrid(true);
+    m_glass->setIsShowGrid(true);
 //    m_glass->setIsShowFigurePos(true);
 }
 
@@ -471,6 +483,8 @@ void TrenTetrisExecute::deleteOneColorCubes(const QList<QPoint> lastFigCubes)
                     m_glass->clearDeletingCubes();
                     foreach (auto cube, oneColorCubes)
                         m_glass->setValue(cube.x(), cube.y(), Qt::black);
+                    foreach (auto cube, oneColorCubes)
+                        shiftCol(cube.x(), cube.y());
                 });
             };
         }
@@ -495,6 +509,42 @@ void TrenTetrisExecute::fillOneColorCubesList(QList<QPoint> &oneColorCubes, cons
     }
 }
 
+void TrenTetrisExecute::shiftCol(const int x, const int y)
+{
+    qDebug() << "------------" << x << y;
+    //! Поиск нижней точки, в которую сдвигать кубики
+    int down = -1;
+    for (int i = y; i >= 0; --i)
+    {
+        qDebug() << "-" << x << i << "   " <<
+                    m_glass->value(x, i) << Qt::black << (m_glass->value(x, i) != Qt::black);
+        if (m_glass->value(x, i) != Qt::black)
+        {
+            down = i;
+            break;
+        }
+    }
+    ++down;
+
+    qDebug() << "down :" << down;
+    if (y >= down)
+    {
+        //! Все кубики, что сверху, опустить к нижней точке
+        int n = 0;
+        for (int i = y; i < m_glassVCount; ++i)
+        {
+            if (m_glass->value(x, i) != Qt::black)
+            {
+                qDebug() << down << n << "    " << x << down + n << " <- " << x << i << "   " <<
+                            m_glass->value(x, i) << Qt::black << (m_glass->value(x, i) != Qt::black);
+                m_glass->setValue(x, down + n, m_glass->value(x, i));
+                m_glass->setValue(x, i, Qt::black);
+                ++n;
+            }
+        }
+    }
+}
+
 bool TrenTetrisExecute::isGlassFull()
 {
     for (int i = 0; i < m_glassHCount; ++i)
@@ -507,13 +557,20 @@ QVector<QVector<QColor>> TrenTetrisExecute::newFigure()
 {
     //! Выбор списка фигур в зависимости от режима
     QList<QVector<QVector<QColor>>> listFigures;
+//    if (m_complexityMode == TrenTetrisDefines::cmCubes)
+//        listFigures = OneCube;
+//    else
+//    if (m_movingMode == TrenTetrisDefines::mmTake && m_complexityMode == TrenTetrisDefines::cmFigures)
+//        listFigures = FiguresRectis;
+//    else
+//        listFigures = FiguresTetris;
     if (m_complexityMode == TrenTetrisDefines::cmCubes)
         listFigures = OneCube;
     else
-    if (m_movingMode == TrenTetrisDefines::mmTake && m_complexityMode == TrenTetrisDefines::cmFigures)
+    if (m_deletingMode == TrenTetrisDefines::dmRows && m_complexityMode == TrenTetrisDefines::cmFigures)
         listFigures = FiguresRectis;
     else
-        listFigures = FiguresTetris;
+        listFigures = FiguresColored;
 
     //! Выбор фигуры из списка фигур
     int r = qrand() % listFigures.size();
