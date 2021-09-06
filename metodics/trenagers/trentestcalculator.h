@@ -1,18 +1,18 @@
-#ifndef TRENTAKEPUTTESTCALCULATOR_H
-#define TRENTAKEPUTTESTCALCULATOR_H
+#ifndef TRENTESTCALCULATOR_H
+#define TRENTESTCALCULATOR_H
 
 #include <QObject>
 
 #include "testcalculator.h"
 
 /*!
- * \brief Класс расчета результатов тренажеров захвата - укладки TrenTakePutTestCalculator class
+ * \brief Класс калькулятора для расчета тестов тренажеров TrenTestCalculator class
  */
-class TrenTakePutTestCalculator : public TestCalculator
+class TrenTestCalculator : public TestCalculator
 {
     Q_OBJECT
 public:
-    explicit TrenTakePutTestCalculator(const QString &testUid, QObject *parent = nullptr);
+    explicit TrenTestCalculator(const QString &testUid, QObject *parent = nullptr);
 
     /*!
      * \brief Полный расчет данных теста с записью значений первичных показателей в БД
@@ -34,5 +34,4 @@ private:
 
 };
 
-
-#endif // TRENTAKEPUTTESTCALCULATOR_H
+#endif // TRENTESTCALCULATOR_H

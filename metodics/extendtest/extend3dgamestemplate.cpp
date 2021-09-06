@@ -5,7 +5,7 @@
 #include "testcalculator.h"
 #include "extend3dgamesparamsdialog.h"
 #include "extend3dgamesexecute.h"
-#include "trentakeputvisualize.h"
+#include "trenvisualize.h"
 
 #include <QLayout>
 #include <QDebug>
@@ -36,7 +36,7 @@ QWidget *Extend3DGamesTemplate::execute(QWidget *parent, const QJsonObject &para
 
 QWidget *Extend3DGamesTemplate::visualize(QWidget *parent, const QString &testUid)
 {
-    auto *retval = new TrenTakePutVisualize(parent);
+    auto *retval = new TrenVisualize(parent);
     parent->layout()->addWidget(retval);
     retval->setTest(testUid);
     return retval;

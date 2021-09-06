@@ -331,7 +331,7 @@ void TrenTetrisExecute::finishTest()
 {
     //! Добавляем значение специфического показателя для подкласса TrenTakePutExecute: время игры и количество удаленных строк
     addFactorValue(TrenResultFactorsDefines::TimeUid, recCount() / frequency());
-    addFactorValue(TrenResultFactorsDefines::FaultsUid, m_rowsDeleted);
+    addFactorValue(TrenResultFactorsDefines::RowsDeletedUid, m_rowsDeleted);
 
     TrenStabExecute::finishTest();
 }

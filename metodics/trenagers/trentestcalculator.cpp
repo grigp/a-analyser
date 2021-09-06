@@ -1,4 +1,4 @@
-#include "trentakeputtestcalculator.h"
+#include "trentestcalculator.h"
 
 #include "channelsdefines.h"
 #include "datadefines.h"
@@ -7,13 +7,14 @@
 
 #include <QDebug>
 
-TrenTakePutTestCalculator::TrenTakePutTestCalculator(const QString &testUid, QObject *parent)
-    : TestCalculator(testUid, parent)
+
+TrenTestCalculator::TrenTestCalculator(const QString &testUid, QObject *parent)
+    : TestCalculator (testUid, parent)
 {
 
 }
 
-void TrenTakePutTestCalculator::calculate()
+void TrenTestCalculator::calculate()
 {
     TestCalculator::calculate();
 
@@ -42,13 +43,12 @@ void TrenTakePutTestCalculator::calculate()
     }
 }
 
-void TrenTakePutTestCalculator::fastCalculate()
+void TrenTestCalculator::fastCalculate()
 {
     TestCalculator::fastCalculate();
-
 }
 
-FactorsDefines::FactorValue TrenTakePutTestCalculator::factor(const int idx) const
+FactorsDefines::FactorValue TrenTestCalculator::factor(const int idx) const
 {
     Q_ASSERT(idx >= 0 && idx < m_factors.size());
     return m_factors.at(idx);

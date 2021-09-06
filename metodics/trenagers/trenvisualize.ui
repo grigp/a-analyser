@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>TrenTakePutVisualize</class>
- <widget class="QWidget" name="TrenTakePutVisualize">
+ <class>TrenVisualize</class>
+ <widget class="QWidget" name="TrenVisualize">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>559</width>
-    <height>471</height>
+    <width>633</width>
+    <height>491</height>
    </rect>
   </property>
   <property name="windowTitle">

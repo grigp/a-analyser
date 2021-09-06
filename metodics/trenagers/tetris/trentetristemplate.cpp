@@ -5,6 +5,7 @@
 #include "metodicdefines.h"
 #include "trentetrisparamsdialog.h"
 #include "trentetrisexecute.h"
+#include "trenvisualize.h"
 
 TrenTetrisTemplate::TrenTetrisTemplate(QObject *parent)
     : MetodicTemplate (parent)
@@ -32,7 +33,10 @@ QWidget *TrenTetrisTemplate::execute(QWidget *parent, const QJsonObject &params)
 
 QWidget *TrenTetrisTemplate::visualize(QWidget *parent, const QString &testUid)
 {
-
+    auto *retval = new TrenVisualize(parent);
+    parent->layout()->addWidget(retval);
+    retval->setTest(testUid);
+    return retval;
 }
 
 bool TrenTetrisTemplate::editParams(QWidget *parent, QJsonObject &params)

@@ -1,30 +1,30 @@
-#include "trentakeputvisualize.h"
-#include "ui_trentakeputvisualize.h"
+#include "trenvisualize.h"
+#include "ui_trenvisualize.h"
 
 #include "aanalyserapplication.h"
-#include "trentakeputtestcalculator.h"
+#include "trentestcalculator.h"
 #include "trenresultfactors.h"
 #include "factorsfactory.h"
 #include "baseutils.h"
 
-TrenTakePutVisualize::TrenTakePutVisualize(QWidget *parent) :
+TrenVisualize::TrenVisualize(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::TrenTakePutVisualize)
+    ui(new Ui::TrenVisualize)
 {
     ui->setupUi(this);
 }
 
-TrenTakePutVisualize::~TrenTakePutVisualize()
+TrenVisualize::~TrenVisualize()
 {
     if (m_calculator)
         delete m_calculator;
     delete ui;
 }
 
-void TrenTakePutVisualize::setTest(const QString &testUid)
+void TrenVisualize::setTest(const QString &testUid)
 {
     if (!m_calculator)
-        m_calculator = new TrenTakePutTestCalculator(testUid);
+        m_calculator = new TrenTestCalculator(testUid);
 
     m_calculator->calculate();
 

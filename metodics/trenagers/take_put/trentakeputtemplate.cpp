@@ -2,7 +2,7 @@
 
 #include "metodicdefines.h"
 #include "trentakeputexecute.h"
-#include "trentakeputvisualize.h"
+#include "trenvisualize.h"
 #include "trentakeputparamsdialog.h"
 
 #include <QLayout>
@@ -33,7 +33,7 @@ QWidget *TrenTakePutTemplate::execute(QWidget *parent, const QJsonObject &params
 
 QWidget *TrenTakePutTemplate::visualize(QWidget *parent, const QString &testUid)
 {
-    auto *retval = new TrenTakePutVisualize(parent);
+    auto *retval = new TrenVisualize(parent);
     parent->layout()->addWidget(retval);
     retval->setTest(testUid);
     return retval;
