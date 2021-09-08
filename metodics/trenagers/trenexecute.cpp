@@ -112,6 +112,15 @@ void TrenExecute::start()
 
 void TrenExecute::getData(DeviceProtocols::DeviceData *data)
 {
+    //! Любой канал от драйвера надо передавать окну дополнительных каналов
+    ui->wgtAdvChannels->getData(data);
+    if (m_isRecording)
+    {
+        ui->wgtAdvChannels->record(data);
+    }
+
+
+
     if (ui->cbSelectChannel->currentData(ChannelsUtils::ChannelUidRole).toString() == data->channelId())
     {
         ui->lblCommunicationError->setVisible(false);
@@ -119,15 +128,12 @@ void TrenExecute::getData(DeviceProtocols::DeviceData *data)
         auto* multiData = static_cast<DeviceProtocols::MultiData*>(data);
         if (multiData->subChanCount() > 0)
         {
-            ui->wgtAdvChannels->getData(data);
-
             //! Взаимодействие элементов
             elementsInteraction(data);
 
             if (m_isRecording)
             {
                 ++m_recCount;
-                ui->wgtAdvChannels->record(data);
                 ui->lblRecLen->setText(BaseUtils::getTimeBySecCount(m_recCount / m_frequency));
                 ui->pbRec->setValue(100 * m_recCount / (m_recLength * m_frequency));
                 if (m_recCount >= m_recLength * m_frequency)

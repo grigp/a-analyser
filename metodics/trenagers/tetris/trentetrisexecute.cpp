@@ -473,6 +473,7 @@ void TrenTetrisExecute::deleteOneColorCubes(const QList<QPoint> lastFigCubes)
 
             if (oneColorCubes.size() >= m_deletingCubeCount)
             {
+                qDebug() << oneColorCubes;
                 //! Пометить кубики, как удаляемые
                 foreach (auto cube, oneColorCubes)
                     m_glass->setDeletingCube(cube.x(), cube.y());
@@ -485,6 +486,8 @@ void TrenTetrisExecute::deleteOneColorCubes(const QList<QPoint> lastFigCubes)
                         m_glass->setValue(cube.x(), cube.y(), Qt::black);
                     foreach (auto cube, oneColorCubes)
                         shiftCol(cube.x(), cube.y());
+                    changeRowsDeleted(1);
+                    changeGameScore(oneColorCubes.size() * 3);
                 });
             };
         }
@@ -516,8 +519,6 @@ void TrenTetrisExecute::shiftCol(const int x, const int y)
     int down = -1;
     for (int i = y; i >= 0; --i)
     {
-        qDebug() << "-" << x << i << "   " <<
-                    m_glass->value(x, i) << Qt::black << (m_glass->value(x, i) != Qt::black);
         if (m_glass->value(x, i) != Qt::black)
         {
             down = i;
@@ -526,7 +527,6 @@ void TrenTetrisExecute::shiftCol(const int x, const int y)
     }
     ++down;
 
-    qDebug() << "down :" << down;
     if (y >= down)
     {
         //! Все кубики, что сверху, опустить к нижней точке
@@ -535,8 +535,6 @@ void TrenTetrisExecute::shiftCol(const int x, const int y)
         {
             if (m_glass->value(x, i) != Qt::black)
             {
-                qDebug() << down << n << "    " << x << down + n << " <- " << x << i << "   " <<
-                            m_glass->value(x, i) << Qt::black << (m_glass->value(x, i) != Qt::black);
                 m_glass->setValue(x, down + n, m_glass->value(x, i));
                 m_glass->setValue(x, i, Qt::black);
                 ++n;
