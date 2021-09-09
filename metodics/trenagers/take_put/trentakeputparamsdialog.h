@@ -27,8 +27,13 @@ public:
      */
     QJsonObject getParams();
 
+private slots:
+    void onPhisioChanEnabledChange(bool enabled);
+
 private:
     Ui::TrenTakePutParamsDialog *ui;
+
+    QJsonObject m_params;
 
     void initUi();
 };

@@ -44,6 +44,11 @@ void TrenExecute::setParams(const QJsonObject &params)
 
     m_backgroundObj = params["background"].toObject();
 
+    auto objPhisioChan = params["phisio_chan"].toObject();
+    m_isPhisioChannel = objPhisioChan["enabled"].toBool();
+    m_boundForce = objPhisioChan["force"].toInt(20);
+    m_boundMyogram = objPhisioChan["myogram"].toInt(200);
+
     QTimer::singleShot(0, this, &TrenExecute::start);
 }
 
@@ -80,7 +85,8 @@ void TrenExecute::start()
         m_trd->newTest(m_kard.uid, mi.uid);
 
         //! По формату получаем список каналов этого формата, которые передает драйвер, заносим их в список для выбора
-        setChannels();
+        setMainChannels();
+        setAdvancedChannels();
 
         auto chanUid = ui->cbSelectChannel->currentData(ChannelsUtils::ChannelUidRole).toString();
         m_frequency = m_driver->frequency(chanUid);
@@ -119,8 +125,6 @@ void TrenExecute::getData(DeviceProtocols::DeviceData *data)
         ui->wgtAdvChannels->record(data);
     }
 
-
-
     if (ui->cbSelectChannel->currentData(ChannelsUtils::ChannelUidRole).toString() == data->channelId())
     {
         ui->lblCommunicationError->setVisible(false);
@@ -145,6 +149,13 @@ void TrenExecute::getData(DeviceProtocols::DeviceData *data)
 
             m_scene->update(m_scene->sceneRect());
         }
+    }
+
+    if (ui->cbSelectAdvChannel->currentData(ChannelsUtils::ChannelUidRole).toString() == data->channelId())
+    {
+        auto* multiData = static_cast<DeviceProtocols::MultiData*>(data);
+        if (multiData->subChanCount() > 0)
+            m_phisioValue = qvariant_cast<double>(multiData->value(0));
     }
 }
 
@@ -221,7 +232,7 @@ void TrenExecute::elementsInteraction(DeviceProtocols::DeviceData *data)
     Q_UNUSED(data);
 }
 
-void TrenExecute::setChannels()
+void TrenExecute::setMainChannels()
 {
     auto listChanUid = m_driver->getChannelsByFormat(ChannelsDefines::cfDecartCoordinates);
     foreach (auto channelUid, listChanUid)
@@ -237,6 +248,26 @@ void TrenExecute::setChannels()
         }
     }
     ui->frSelectChannel->setVisible(listChanUid.size() > 1);
+}
+
+void TrenExecute::setAdvancedChannels()
+{
+    auto listChanUid = m_driver->getChannelsByFormat(ChannelsDefines::cfSinglePositive);
+    foreach (auto channelUid, listChanUid)
+    {
+        auto subChanCnt = m_driver->getSubChannelsCount(channelUid);
+
+        for (int i = 0; i < subChanCnt; ++i)
+        {
+            auto name = ChannelsUtils::instance().channelName(channelUid);
+            if (subChanCnt > 1)
+                name += (" " + QString::number(i + 1));
+            ui->cbSelectAdvChannel->addItem(name);
+            ui->cbSelectAdvChannel->setItemData(ui->cbSelectAdvChannel->count() - 1, channelUid, ChannelsUtils::ChannelUidRole);
+            ui->cbSelectAdvChannel->setItemData(ui->cbSelectAdvChannel->count() - 1, i, ChannelsUtils::SubChanNumRole);
+        }
+    }
+    ui->frSelectAdvChannel->setVisible(m_isPhisioChannel);
 }
 
 void TrenExecute::showPatientWindow()
@@ -405,4 +436,29 @@ void TrenExecute::addFactorValue(const QString &uid, const double value)
     fct.uid = uid;
     fct.value = value;
     m_gameFactors << fct;
+}
+
+bool TrenExecute::isPhisioChannelAboveBound()
+{
+   //! Пока только для силомера, TODO - доделать для миограммы
+   if (m_isPhisioChannel)
+       return m_phisioValue > m_boundForce;
+   else
+       return true;
+}
+
+bool TrenExecute::isPhisioChannelAboveBoundNow()
+{
+    if (m_isPhisioChannel)
+    {
+        auto above = isPhisioChannelAboveBound();
+        bool retval = false;
+        if (above && !m_isPhisioChannelAboveBound)
+            retval = true;
+        m_isPhisioChannelAboveBound = above;
+        return retval;
+    }
+    else
+        return false;
+
 }

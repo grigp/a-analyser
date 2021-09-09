@@ -223,6 +223,7 @@ void TetrisGlass::setNewFigure(QVector<QVector<QColor>> figure)
     int size = qMax(m_figure.size(), m_figure[0].size());
     m_figX = boundingRect().x() + boundingRect().width() / 2;
     m_figY = boundingRect().y() + m_cubeSize * size / 2;
+    m_figAngleCode = 0;
 }
 
 void TetrisGlass::rotateFigure()
@@ -232,12 +233,13 @@ void TetrisGlass::rotateFigure()
 
 QRectF TetrisGlass::getFigureRect() const
 {
+    qDebug() << m_figAngleCode;
     int iSize = m_figure.size();
     int jSize = m_figure[0].size();
-    if (m_figAngleCode == 0 || m_figAngleCode == 2)
+    if (m_figAngleCode % 4 == 0 || m_figAngleCode % 4 == 2)
         return QRectF(m_figX - jSize * m_cubeSize / 2, m_figY - iSize * m_cubeSize / 2, jSize * m_cubeSize, iSize * m_cubeSize);
     else
-    if (m_figAngleCode == 1 || m_figAngleCode == 3)
+    if (m_figAngleCode % 4 == 1 || m_figAngleCode % 4 == 3)
         return QRectF(m_figX - iSize * m_cubeSize / 2, m_figY - jSize * m_cubeSize / 2, iSize * m_cubeSize, jSize * m_cubeSize);
 
     return QRectF(0, 0, 0, 0);
@@ -276,14 +278,14 @@ QRect TetrisGlass::getFigurePosition() const
 
 QColor TetrisGlass::getFigureColor(const int h, const int v)
 {
-    if (m_figAngleCode == 0 || m_figAngleCode == 2)
+    if (m_figAngleCode % 4 == 0 || m_figAngleCode % 4 == 2)
     {
         Q_ASSERT(v >= 0 && v < m_figure.size());
         Q_ASSERT(h >= 0 && h < m_figure[0].size());
         return  m_figure[v][h];
     }
     else
-    if (m_figAngleCode == 1 || m_figAngleCode == 3)
+    if (m_figAngleCode % 4 == 1 || m_figAngleCode % 4 == 3)
     {
         Q_ASSERT(h >= 0 && h < m_figure.size());
         Q_ASSERT(v >= 0 && v < m_figure[0].size());

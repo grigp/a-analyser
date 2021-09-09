@@ -11,6 +11,7 @@ TrenTetrisParamsDialog::TrenTetrisParamsDialog(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    ui->tabWidget->setCurrentIndex(0);
     ui->cbScale->addItems(QStringList() << "1" << "2" << "4" << "8" << "16" << "32" << "64" << "128");
     ui->cbMovingMode->addItems(QStringList() << tr("Захват и спуск") << tr("Автоматический"));
     ui->cbComplexityMode->addItems(QStringList() << tr("Фигуры") << tr("Кубики"));
@@ -35,6 +36,12 @@ void TrenTetrisParamsDialog::setParams(const QJsonObject &params)
     ui->cbComplexityMode->setCurrentIndex(cm);
     auto dm = TrenTetrisDefines::DeletingModeValueIndex.value(params["deleting"].toString());
     ui->cbDeleteMode->setCurrentIndex(dm);
+
+    auto objPhisioChan = params["phisio_chan"].toObject();
+    ui->cbUseAdvancedChannel->setChecked(objPhisioChan["enabled"].toBool());
+    ui->edForce->setValue(objPhisioChan["force"].toInt(20));
+    ui->edMyogram->setValue(objPhisioChan["myogram"].toInt(200));
+    onPhisioChanEnabledChange(objPhisioChan["enabled"].toBool());
 }
 
 QJsonObject TrenTetrisParamsDialog::getParams()
@@ -49,5 +56,18 @@ QJsonObject TrenTetrisParamsDialog::getParams()
     auto dm = TrenTetrisDefines::DeletingValueName.value(static_cast<TrenTetrisDefines::DeletingMode>(ui->cbDeleteMode->currentIndex()));
     m_params["deleting"] = dm;
 
+
+    QJsonObject objPhisioChan;
+    objPhisioChan["enabled"] = ui->cbUseAdvancedChannel->isChecked();
+    objPhisioChan["force"] = ui->edForce->value();
+    objPhisioChan["myogram"] = ui->edMyogram->value();
+    m_params["phisio_chan"] = objPhisioChan;
+
     return m_params;
+}
+
+void TrenTetrisParamsDialog::onPhisioChanEnabledChange(bool enabled)
+{
+    ui->frForce->setEnabled(enabled);
+    ui->frMyogram->setEnabled(enabled);
 }

@@ -28,6 +28,9 @@ public:
     QJsonObject getParams();
 
 
+private slots:
+    void onPhisioChanEnabledChange(bool enabled);
+
 private:
     Ui::TrenTetrisParamsDialog *ui;
 

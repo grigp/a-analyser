@@ -136,6 +136,9 @@ void TrenTetrisExecute::elementsInteraction(DeviceProtocols::DeviceData *data)
             if (m_movingMode == TrenTetrisDefines::mmTake)
                 takeModeInteraction(mx, my);
 
+            if (isPhisioChannelAboveBoundNow())
+                m_glass->rotateFigure();
+
 //            ++n; Вращение
 //            if (n % 250 == 0)
 //                m_glass->rotateFigure();

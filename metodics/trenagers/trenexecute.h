@@ -67,7 +67,13 @@ protected:
      * \brief Формирует список каналов для выбора управления
      * По формату получаем список каналов этого формата, которые передает драйвер, заносим их в список для выбора
      */
-    void setChannels();
+    void setMainChannels();
+
+    /*!
+     * \brief Формирует список дополнительных каналов для выбора управления
+     * По формату получаем список каналов этого формата, которые передает драйвер, заносим их в список для выбора
+     */
+    void setAdvancedChannels();
 
     virtual void showPatientWindow();
     virtual void hidePatientWindow();
@@ -188,6 +194,20 @@ protected:
      */
     bool isRecording() const {return m_isRecording;}
 
+    bool isPhisioChannel() {return m_isPhisioChannel;}
+    int boundForce() {return m_boundForce;}
+    int boundMyogram() {return m_boundMyogram;}
+    double phisioValue() {return m_phisioValue;}
+    /*!
+     * \brief Возвращает true, если физиологический канал разрешен и превысил пороговое значение
+     * Возвращает true, если физиологический канал запрещен
+     */
+    bool isPhisioChannelAboveBound();
+    /*!
+     * \brief Возвращает true, если физиологический канал разрешен и только что превысил пороговое значение
+     * Возвращает false, если физиологический канал запрещен
+     */
+    bool isPhisioChannelAboveBoundNow();
 
 private slots:
     void getData(DeviceProtocols::DeviceData *data);
@@ -227,6 +247,12 @@ private:
     QList<GameFactors> m_gameFactors;    ///< Список показателей тренажера. Заполняется подклассами через addFactorValue
 
     bool m_isClosed {false};
+
+    bool m_isPhisioChannel {false};     ///< Будет ли использоваться дополнительный канал физиологии
+    int m_boundForce {20};              ///< Пороговое значение для силомера
+    int m_boundMyogram {200};           ///< Пороговое значение для миограммы
+    double m_phisioValue {0};           ///< Значение канала физиологии
+    bool m_isPhisioChannelAboveBound {false};  ///< превышает ли значение физиологического канала порог
 };
 
 #endif // TRENEXECUTE_H
