@@ -233,7 +233,6 @@ void TetrisGlass::rotateFigure()
 
 QRectF TetrisGlass::getFigureRect() const
 {
-    qDebug() << m_figAngleCode;
     int iSize = m_figure.size();
     int jSize = m_figure[0].size();
     if (m_figAngleCode % 4 == 0 || m_figAngleCode % 4 == 2)
@@ -282,14 +281,22 @@ QColor TetrisGlass::getFigureColor(const int h, const int v)
     {
         Q_ASSERT(v >= 0 && v < m_figure.size());
         Q_ASSERT(h >= 0 && h < m_figure[0].size());
-        return  m_figure[v][h];
+        if (m_figAngleCode % 4 == 0)
+            return  m_figure[v][h];
+        else
+        if (m_figAngleCode % 4 == 2)
+            return  m_figure[m_figure.size() - 1 - v][m_figure[0].size() - 1 - h];
     }
     else
     if (m_figAngleCode % 4 == 1 || m_figAngleCode % 4 == 3)
     {
         Q_ASSERT(h >= 0 && h < m_figure.size());
         Q_ASSERT(v >= 0 && v < m_figure[0].size());
-        return  m_figure[h][v];
+        if (m_figAngleCode % 4 == 1)
+            return  m_figure[m_figure.size() - 1 - h][v];
+        else
+        if (m_figAngleCode % 4 == 3)
+            return  m_figure[h][m_figure[0].size() - 1 - v];
     }
     return Qt::black;
 }

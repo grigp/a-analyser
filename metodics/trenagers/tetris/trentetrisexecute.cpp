@@ -476,7 +476,7 @@ void TrenTetrisExecute::deleteOneColorCubes(const QList<QPoint> lastFigCubes)
 
             if (oneColorCubes.size() >= m_deletingCubeCount)
             {
-                qDebug() << oneColorCubes;
+//                qDebug() << oneColorCubes;
                 //! Пометить кубики, как удаляемые
                 foreach (auto cube, oneColorCubes)
                     m_glass->setDeletingCube(cube.x(), cube.y());
@@ -517,7 +517,7 @@ void TrenTetrisExecute::fillOneColorCubesList(QList<QPoint> &oneColorCubes, cons
 
 void TrenTetrisExecute::shiftCol(const int x, const int y)
 {
-    qDebug() << "------------" << x << y;
+//    qDebug() << "------------" << x << y;
     //! Поиск нижней точки, в которую сдвигать кубики
     int down = -1;
     for (int i = y; i >= 0; --i)
