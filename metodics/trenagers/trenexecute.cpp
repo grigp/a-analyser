@@ -155,7 +155,14 @@ void TrenExecute::getData(DeviceProtocols::DeviceData *data)
     {
         auto* multiData = static_cast<DeviceProtocols::MultiData*>(data);
         if (multiData->subChanCount() > 0)
-            m_phisioValue = qvariant_cast<double>(multiData->value(0));
+            m_adv0Value = qvariant_cast<double>(multiData->value(0));
+    }
+
+    if (ui->cbSelectAdvChannel_2->currentData(ChannelsUtils::ChannelUidRole).toString() == data->channelId())
+    {
+        auto* multiData = static_cast<DeviceProtocols::MultiData*>(data);
+        if (multiData->subChanCount() > 0)
+            m_adv1Value = qvariant_cast<double>(multiData->value(0));
     }
 }
 
@@ -265,9 +272,30 @@ void TrenExecute::setAdvancedChannels()
             ui->cbSelectAdvChannel->addItem(name);
             ui->cbSelectAdvChannel->setItemData(ui->cbSelectAdvChannel->count() - 1, channelUid, ChannelsUtils::ChannelUidRole);
             ui->cbSelectAdvChannel->setItemData(ui->cbSelectAdvChannel->count() - 1, i, ChannelsUtils::SubChanNumRole);
+            ui->cbSelectAdvChannel_2->addItem(name);
+            ui->cbSelectAdvChannel_2->setItemData(ui->cbSelectAdvChannel_2->count() - 1, channelUid, ChannelsUtils::ChannelUidRole);
+            ui->cbSelectAdvChannel_2->setItemData(ui->cbSelectAdvChannel_2->count() - 1, i, ChannelsUtils::SubChanNumRole);
         }
     }
-    ui->frSelectAdvChannel->setVisible(m_isPhisioChannel);
+    ui->frAdvChannels->setVisible(m_isPhisioChannel);
+}
+
+void TrenExecute::setAdvancedChannelEnable(const int chan, const bool enable)
+{
+    if (chan == 0)
+        ui->frSelectAdvChannel->setVisible(enable);
+    else
+    if (chan == 1)
+        ui->frSelectAdvChannel_2->setVisible(enable);
+}
+
+void TrenExecute::setAdvancedFunctionTitle(const int chan, const QString title)
+{
+    if (chan == 0)
+        ui->lblSelectAdvChannel->setText(title);
+    else
+    if (chan == 1)
+        ui->lblSelectAdvChannel_2->setText(title);
 }
 
 void TrenExecute::showPatientWindow()
@@ -438,24 +466,50 @@ void TrenExecute::addFactorValue(const QString &uid, const double value)
     m_gameFactors << fct;
 }
 
-bool TrenExecute::isPhisioChannelAboveBound()
+bool TrenExecute::isAdvancedChannelAboveBound(const int chan)
 {
-   //! Пока только для силомера, TODO - доделать для миограммы
+    auto isAboveBound = [&](QComboBox* comboBox, double& value)
+    {
+        auto chanId = comboBox->currentData(ChannelsUtils::ChannelUidRole).toString();
+        auto chanType = ChannelsUtils::instance().channelType(chanId);
+        if (chanType == ChannelsDefines::ctDynamo)
+            return value > m_boundForce;
+        else
+        if (chanType == ChannelsDefines::ctMyogram)
+            return value > m_boundMyogram;
+        return true;
+    };
+
    if (m_isPhisioChannel)
-       return m_phisioValue > m_boundForce;
-   else
-       return true;
+   {
+       if (chan == 0)
+           return isAboveBound(ui->cbSelectAdvChannel, m_adv0Value);
+       else
+           return isAboveBound(ui->cbSelectAdvChannel_2, m_adv1Value);
+   }
+
+   return true;
 }
 
-bool TrenExecute::isPhisioChannelAboveBoundNow()
+bool TrenExecute::isAdvancedChannelAboveBoundNow(const int chan)
 {
     if (m_isPhisioChannel)
     {
-        auto above = isPhisioChannelAboveBound();
+        auto above = isAdvancedChannelAboveBound(chan);
         bool retval = false;
-        if (above && !m_isPhisioChannelAboveBound)
-            retval = true;
-        m_isPhisioChannelAboveBound = above;
+        if (chan == 0)
+        {
+            if (above && !m_isAdv0ChannelAboveBound)
+                retval = true;
+            m_isAdv0ChannelAboveBound = above;
+        }
+        else
+        if (chan == 1)
+        {
+            if (above && !m_isAdv1ChannelAboveBound)
+                retval = true;
+            m_isAdv1ChannelAboveBound = above;
+        }
         return retval;
     }
     else

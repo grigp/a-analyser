@@ -75,6 +75,20 @@ protected:
      */
     void setAdvancedChannels();
 
+    /*!
+     * \brief Устанавливает, будет ли использоваться дополнительный канал управления
+     * \param chan - номер канала
+     * \param enable - будет ли использоваться
+     */
+    void setAdvancedChannelEnable(const int chan, const bool enable);
+
+    /*!
+     * \brief Устанавливает название действия, связанного с дополнительным каналом управления
+     * \param chan - номер канала
+     * \param title - название функции
+     */
+    void setAdvancedFunctionTitle(const int chan, const QString title);
+
     virtual void showPatientWindow();
     virtual void hidePatientWindow();
 
@@ -197,17 +211,17 @@ protected:
     bool isPhisioChannel() {return m_isPhisioChannel;}
     int boundForce() {return m_boundForce;}
     int boundMyogram() {return m_boundMyogram;}
-    double phisioValue() {return m_phisioValue;}
+    double advanced0Value() {return m_adv0Value;}
     /*!
      * \brief Возвращает true, если физиологический канал разрешен и превысил пороговое значение
      * Возвращает true, если физиологический канал запрещен
      */
-    bool isPhisioChannelAboveBound();
+    bool isAdvancedChannelAboveBound(const int chan);
     /*!
      * \brief Возвращает true, если физиологический канал разрешен и только что превысил пороговое значение
      * Возвращает false, если физиологический канал запрещен
      */
-    bool isPhisioChannelAboveBoundNow();
+    bool isAdvancedChannelAboveBoundNow(const int chan);
 
 private slots:
     void getData(DeviceProtocols::DeviceData *data);
@@ -251,8 +265,10 @@ private:
     bool m_isPhisioChannel {false};     ///< Будет ли использоваться дополнительный канал физиологии
     int m_boundForce {20};              ///< Пороговое значение для силомера
     int m_boundMyogram {200};           ///< Пороговое значение для миограммы
-    double m_phisioValue {0};           ///< Значение канала физиологии
-    bool m_isPhisioChannelAboveBound {false};  ///< превышает ли значение физиологического канала порог
+    double m_adv0Value {0};           ///< Значение канала физиологии 0
+    double m_adv1Value {0};           ///< Значение канала физиологии 1
+    bool m_isAdv0ChannelAboveBound {false};  ///< превышает ли значение физиологического канала 0 порог
+    bool m_isAdv1ChannelAboveBound {false};  ///< превышает ли значение физиологического канала 1 порог
 };
 
 #endif // TRENEXECUTE_H

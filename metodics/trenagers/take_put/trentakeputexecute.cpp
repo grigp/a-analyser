@@ -93,6 +93,9 @@ void TrenTakePutExecute::setParams(const QJsonObject &params)
     m_soundSheme.error = objSS["error"].toString();
     m_soundSheme.scene = objSS["scene"].toString();
     m_soundSheme.onTarget = objSS["on_target"].toString();
+
+    setAdvancedChannelEnable(1, false);
+    setAdvancedFunctionTitle(0, tr("для захвата и укладки"));
 }
 
 void TrenTakePutExecute::elementsInteraction(DeviceProtocols::DeviceData *data)

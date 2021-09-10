@@ -104,6 +104,8 @@ void TrenTetrisExecute::setParams(const QJsonObject &params)
 
     m_markerObj = params["marker"].toObject();
     m_glassObj = params["glass"].toObject();
+
+    assignParams();
 }
 
 void TrenTetrisExecute::on_recording()
@@ -113,8 +115,6 @@ void TrenTetrisExecute::on_recording()
     m_rowsDeleted = 0;
     changeRowsDeleted(0);
 }
-
-//int n = 0; Для вращения
 
 void TrenTetrisExecute::elementsInteraction(DeviceProtocols::DeviceData *data)
 {
@@ -136,12 +136,8 @@ void TrenTetrisExecute::elementsInteraction(DeviceProtocols::DeviceData *data)
             if (m_movingMode == TrenTetrisDefines::mmTake)
                 takeModeInteraction(mx, my);
 
-            if (isPhisioChannelAboveBoundNow())
+            if (isAdvancedChannelAboveBoundNow(1))
                 m_glass->rotateFigure();
-
-//            ++n; Вращение
-//            if (n % 250 == 0)
-//                m_glass->rotateFigure();
 
             if (isGlassFull())
             {
@@ -349,6 +345,16 @@ void TrenTetrisExecute::finishTest()
     addFactorValue(TrenResultFactorsDefines::RowsDeletedUid, m_rowsDeleted);
 
     TrenStabExecute::finishTest();
+}
+
+void TrenTetrisExecute::assignParams()
+{
+    if (m_movingMode == TrenTetrisDefines::mmTake)
+        setAdvancedFunctionTitle(0, tr("для захвата и укладки"));
+    else
+    if (m_movingMode == TrenTetrisDefines::mmAuto)
+        setAdvancedFunctionTitle(0, tr("для сброса фигуры"));
+    setAdvancedFunctionTitle(1, tr("для поворота фигуры"));
 }
 
 void TrenTetrisExecute::setMarker(const QJsonObject &objMarker)
