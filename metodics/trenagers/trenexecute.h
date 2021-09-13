@@ -49,6 +49,8 @@ protected slots:
 
     virtual void on_selectAdvChannelClicked(int index);
 
+    virtual void on_enabledAdvChannelChanged(bool enabled);
+
 protected:
     ///< Слои игрового поля
     enum ZLevels
@@ -273,9 +275,10 @@ private:
     bool m_isAdv0ChannelAboveBound {false};  ///< превышает ли значение физиологического канала 0 порог
     bool m_isAdv1ChannelAboveBound {false};  ///< превышает ли значение физиологического канала 1 порог
 
-//    bool m_isAdvChannelSelectReaded {false}; ///< Семафор, были ли прочитаны выбранные дополнительные каналы
-    SettingsValue* m_AdvChannel0Select {nullptr};
-    SettingsValue* m_AdvChannel1Select {nullptr};
+    SettingsValue* m_AdvChannel0Select  {nullptr};  ///< Выбранный дополнительный канал 0 - параметр из хранилища
+    SettingsValue* m_AdvChannel1Select  {nullptr};  ///< Выбранный канал 1 - параметр из хранилища
+    SettingsValue* m_AdvChannel0Enabled {nullptr};  ///< Будет ли управление по дополнительному каналу 0 - параметр из хранилища
+    SettingsValue* m_AdvChannel1Enabled {nullptr};  ///< Будет ли управление по дополнительному каналу 1 - параметр из хранилища
 };
 
 #endif // TRENEXECUTE_H

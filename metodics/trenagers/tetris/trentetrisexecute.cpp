@@ -136,6 +136,7 @@ void TrenTetrisExecute::elementsInteraction(DeviceProtocols::DeviceData *data)
             if (m_movingMode == TrenTetrisDefines::mmTake)
                 takeModeInteraction(mx, my);
 
+            //! Поворот фигуры с помощью доп. канала
             if (isAdvancedChannelAboveBoundNow(1))
                 m_glass->rotateFigure();
 
@@ -193,7 +194,7 @@ void TrenTetrisExecute::takeModeInteraction(double &mx, double &my)
 
         auto fig = m_glass->getFigureRect();
         //! Маркер на фигуре
-        if (fig.contains(mxs, mys))
+        if (fig.contains(mxs, mys) && isAdvancedChannelAboveBound(0))
         {
             m_offsX = mxs - fig.center().x();
             m_offsY = mys - fig.center().y();
@@ -210,7 +211,8 @@ void TrenTetrisExecute::takeModeInteraction(double &mx, double &my)
         //! Устанавливаем фигуру на позицию согласно координатам маркера и
         //! проверяем, положена ли фигура
         if (m_glass->setFigureCoordinates(mx + scene()->sceneRect().width() / 2 - m_offsX,
-                                       my + scene()->sceneRect().height() / 2 - m_offsY))
+                                          my + scene()->sceneRect().height() / 2 - m_offsY) &&
+                isAdvancedChannelAboveBound(0))
         {
             //! Если положена, то...
             putFigure();

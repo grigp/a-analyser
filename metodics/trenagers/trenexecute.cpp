@@ -230,6 +230,21 @@ void TrenExecute::on_selectAdvChannelClicked(int index)
     }
 }
 
+void TrenExecute::on_enabledAdvChannelChanged(bool enabled)
+{
+    if (sender() == ui->chbSelectAdvChannel)
+    {
+        if (m_AdvChannel0Enabled)
+            m_AdvChannel0Enabled->set(enabled);
+    }
+    else
+    if (sender() == ui->chbSelectAdvChannel_2)
+    {
+        if (m_AdvChannel1Enabled)
+            m_AdvChannel1Enabled->set(enabled);
+    }
+}
+
 void TrenExecute::setSceneSize(QSize &size)
 {
     int sideSize = size.height();
@@ -301,6 +316,11 @@ void TrenExecute::setAdvancedChannels()
         ui->cbSelectAdvChannel->setCurrentIndex(m_AdvChannel0Select->value().toInt());
     if (ui->cbSelectAdvChannel_2->count() > m_AdvChannel1Select->value().toInt())
         ui->cbSelectAdvChannel_2->setCurrentIndex(m_AdvChannel1Select->value().toInt());
+
+    m_AdvChannel0Enabled = new SettingsValue("SelectionValues/TrenagerType1", "AdvChannel0Enabled", true);
+    m_AdvChannel1Enabled = new SettingsValue("SelectionValues/TrenagerType1", "AdvChannel1Enabled", true);
+    ui->chbSelectAdvChannel->setChecked(m_AdvChannel0Enabled->value().toBool());
+    ui->chbSelectAdvChannel_2->setChecked(m_AdvChannel1Enabled->value().toBool());
 }
 
 void TrenExecute::setAdvancedChannelEnable(const int chan, const bool enable)
@@ -315,10 +335,10 @@ void TrenExecute::setAdvancedChannelEnable(const int chan, const bool enable)
 void TrenExecute::setAdvancedFunctionTitle(const int chan, const QString title)
 {
     if (chan == 0)
-        ui->lblSelectAdvChannel->setText(title);
+        ui->chbSelectAdvChannel->setText(title);
     else
     if (chan == 1)
-        ui->lblSelectAdvChannel_2->setText(title);
+        ui->chbSelectAdvChannel_2->setText(title);
 }
 
 void TrenExecute::showPatientWindow()
@@ -516,9 +536,13 @@ bool TrenExecute::isAdvancedChannelAboveBound(const int chan)
    if (m_isPhisioChannel)
    {
        if (chan == 0)
-           return isAboveBound(ui->cbSelectAdvChannel, m_adv0Value);
+       {
+           if (ui->chbSelectAdvChannel->isChecked())
+               return isAboveBound(ui->cbSelectAdvChannel, m_adv0Value);
+       }
        else
-           return isAboveBound(ui->cbSelectAdvChannel_2, m_adv1Value);
+           if (ui->chbSelectAdvChannel_2->isChecked())
+               return isAboveBound(ui->cbSelectAdvChannel_2, m_adv1Value);
    }
 
    return true;
@@ -532,14 +556,14 @@ bool TrenExecute::isAdvancedChannelAboveBoundNow(const int chan)
         bool retval = false;
         if (chan == 0)
         {
-            if (above && !m_isAdv0ChannelAboveBound)
+            if (ui->chbSelectAdvChannel->isChecked() && above && !m_isAdv0ChannelAboveBound)
                 retval = true;
             m_isAdv0ChannelAboveBound = above;
         }
         else
         if (chan == 1)
         {
-            if (above && !m_isAdv1ChannelAboveBound)
+            if (ui->chbSelectAdvChannel_2->isChecked() && above && !m_isAdv1ChannelAboveBound)
                 retval = true;
             m_isAdv1ChannelAboveBound = above;
         }

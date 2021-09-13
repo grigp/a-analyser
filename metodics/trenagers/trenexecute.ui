@@ -250,9 +250,9 @@
                  <number>3</number>
                 </property>
                 <item>
-                 <widget class="QLabel" name="lblSelectAdvChannel">
+                 <widget class="QCheckBox" name="chbSelectAdvChannel">
                   <property name="text">
-                   <string>Выбор дополнительного канала</string>
+                   <string>CheckBox</string>
                   </property>
                  </widget>
                 </item>
@@ -284,9 +284,9 @@
                  <number>3</number>
                 </property>
                 <item>
-                 <widget class="QLabel" name="lblSelectAdvChannel_2">
+                 <widget class="QCheckBox" name="chbSelectAdvChannel_2">
                   <property name="text">
-                   <string>Выбор дополнительного канала</string>
+                   <string>CheckBox</string>
                   </property>
                  </widget>
                 </item>
@@ -619,11 +619,43 @@
    <hints>
     <hint type="sourcelabel">
      <x>945</x>
-     <y>346</y>
+     <y>354</y>
     </hint>
     <hint type="destinationlabel">
      <x>1033</x>
      <y>264</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>chbSelectAdvChannel</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>TrenExecute</receiver>
+   <slot>on_enabledAdvChannelChanged(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>798</x>
+     <y>283</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1034</x>
+     <y>150</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>chbSelectAdvChannel_2</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>TrenExecute</receiver>
+   <slot>on_enabledAdvChannelChanged(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>779</x>
+     <y>338</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1033</x>
+     <y>180</y>
     </hint>
    </hints>
   </connection>
@@ -633,5 +665,6 @@
   <slot>on_recording()</slot>
   <slot>on_selectChannel(int)</slot>
   <slot>on_selectAdvChannelClicked(int)</slot>
+  <slot>on_enabledAdvChannelChanged(bool)</slot>
  </slots>
 </ui>
