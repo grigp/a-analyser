@@ -554,8 +554,8 @@
    <slot>on_advChannelsClicked(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>758</x>
-     <y>322</y>
+     <x>1016</x>
+     <y>451</y>
     </hint>
     <hint type="destinationlabel">
      <x>1031</x>
@@ -595,10 +595,43 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>cbSelectAdvChannel</sender>
+   <signal>currentIndexChanged(int)</signal>
+   <receiver>TrenExecute</receiver>
+   <slot>on_selectAdvChannelClicked(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>900</x>
+     <y>306</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1032</x>
+     <y>237</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>cbSelectAdvChannel_2</sender>
+   <signal>currentIndexChanged(int)</signal>
+   <receiver>TrenExecute</receiver>
+   <slot>on_selectAdvChannelClicked(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>945</x>
+     <y>346</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1033</x>
+     <y>264</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>on_advChannelsClicked(bool)</slot>
   <slot>on_recording()</slot>
   <slot>on_selectChannel(int)</slot>
+  <slot>on_selectAdvChannelClicked(int)</slot>
  </slots>
 </ui>

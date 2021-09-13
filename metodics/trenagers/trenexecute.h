@@ -46,6 +46,8 @@ protected slots:
 
     virtual void on_advChannelsClicked(bool checked);
 
+    virtual void on_selectAdvChannelClicked(int index);
+
 protected:
     ///< Слои игрового поля
     enum ZLevels
@@ -211,7 +213,7 @@ protected:
     bool isPhisioChannel() {return m_isPhisioChannel;}
     int boundForce() {return m_boundForce;}
     int boundMyogram() {return m_boundMyogram;}
-    double advanced0Value() {return m_adv0Value;}
+    double advancedValue(const int chan);
     /*!
      * \brief Возвращает true, если физиологический канал разрешен и превысил пороговое значение
      * Возвращает true, если физиологический канал запрещен
@@ -269,6 +271,7 @@ private:
     double m_adv1Value {0};           ///< Значение канала физиологии 1
     bool m_isAdv0ChannelAboveBound {false};  ///< превышает ли значение физиологического канала 0 порог
     bool m_isAdv1ChannelAboveBound {false};  ///< превышает ли значение физиологического канала 1 порог
+    bool m_isAdvChannelSelectReaded {false}; ///< Семафор, были ли прочитаны выбранные дополнительные каналы
 };
 
 #endif // TRENEXECUTE_H
