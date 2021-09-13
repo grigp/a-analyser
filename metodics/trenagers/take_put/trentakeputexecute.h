@@ -82,6 +82,7 @@ protected:
      */
     void fillGameHints(QFrame *frame) override;
 
+    QString getAutoSaveParamsSectionName() const override {return "TrenagerType1";}
 
 protected slots:
     void on_recording() override;

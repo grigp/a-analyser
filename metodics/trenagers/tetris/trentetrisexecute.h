@@ -84,6 +84,7 @@ protected:
 
     void finishTest() override;
 
+    QString getAutoSaveParamsSectionName() const override {return "TrenagerType2";}
 
 private:
     Ui::TrenTetrisExecute *ui;

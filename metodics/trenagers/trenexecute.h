@@ -213,10 +213,10 @@ protected:
      */
     bool isRecording() const {return m_isRecording;}
 
-    bool isPhisioChannel() {return m_isPhisioChannel;}
-    int boundForce() {return m_boundForce;}
-    int boundMyogram() {return m_boundMyogram;}
-    double advancedValue(const int chan);
+    bool isPhisioChannel() const {return m_isPhisioChannel;}
+    int boundForce() const {return m_boundForce;}
+    int boundMyogram() const {return m_boundMyogram;}
+    double advancedValue(const int chan) const;
     /*!
      * \brief Возвращает true, если физиологический канал разрешен и превысил пороговое значение
      * Возвращает true, если физиологический канал запрещен
@@ -227,6 +227,8 @@ protected:
      * Возвращает false, если физиологический канал запрещен
      */
     bool isAdvancedChannelAboveBoundNow(const int chan);
+
+    virtual QString getAutoSaveParamsSectionName() const {return "Trenager";}
 
 private slots:
     void getData(DeviceProtocols::DeviceData *data);

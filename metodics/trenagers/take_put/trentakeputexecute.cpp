@@ -1015,7 +1015,7 @@ GraphicCommon::GameElement *TrenTakePutExecute::markerOnGameElement()
                 {
                     if (mx >= item->x() && mx <= item->x() + item->boundingRect().width() &&
                         my >= item->y() && my <= item->y() + item->boundingRect().height() &&
-                            isAdvancedChannelAboveBound(0))
+                            isAdvancedChannelAboveBound(0))   //! Учесть усилие на дополнительном канале, если это необходимо
                     {
                         return ge;
                     }

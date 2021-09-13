@@ -310,15 +310,15 @@ void TrenExecute::setAdvancedChannels()
     ui->frAdvChannels->setVisible(m_isPhisioChannel);
 
     //! Установка дефолтных значений
-    m_AdvChannel0Select = new SettingsValue("SelectionValues/TrenagerType1", "AdvChannel0", 0);
-    m_AdvChannel1Select = new SettingsValue("SelectionValues/TrenagerType1", "AdvChannel1", 1);
+    m_AdvChannel0Select = new SettingsValue("SelectionValues/" + getAutoSaveParamsSectionName(), "AdvChannel0", 0);
+    m_AdvChannel1Select = new SettingsValue("SelectionValues/" + getAutoSaveParamsSectionName(), "AdvChannel1", 1);
     if (ui->cbSelectAdvChannel->count() > m_AdvChannel0Select->value().toInt())
         ui->cbSelectAdvChannel->setCurrentIndex(m_AdvChannel0Select->value().toInt());
     if (ui->cbSelectAdvChannel_2->count() > m_AdvChannel1Select->value().toInt())
         ui->cbSelectAdvChannel_2->setCurrentIndex(m_AdvChannel1Select->value().toInt());
 
-    m_AdvChannel0Enabled = new SettingsValue("SelectionValues/TrenagerType1", "AdvChannel0Enabled", true);
-    m_AdvChannel1Enabled = new SettingsValue("SelectionValues/TrenagerType1", "AdvChannel1Enabled", true);
+    m_AdvChannel0Enabled = new SettingsValue("SelectionValues/" + getAutoSaveParamsSectionName(), "AdvChannel0Enabled", true);
+    m_AdvChannel1Enabled = new SettingsValue("SelectionValues/" + getAutoSaveParamsSectionName(), "AdvChannel1Enabled", true);
     ui->chbSelectAdvChannel->setChecked(m_AdvChannel0Enabled->value().toBool());
     ui->chbSelectAdvChannel_2->setChecked(m_AdvChannel1Enabled->value().toBool());
 }
@@ -509,7 +509,7 @@ void TrenExecute::addFactorValue(const QString &uid, const double value)
     m_gameFactors << fct;
 }
 
-double TrenExecute::advancedValue(const int chan)
+double TrenExecute::advancedValue(const int chan) const
 {
     if (chan == 0)
         return m_adv0Value;
