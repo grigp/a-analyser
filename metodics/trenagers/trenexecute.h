@@ -17,6 +17,7 @@ class TrenExecute;
 
 class TestResultData;
 class TrenagerPatientWindow;
+class SettingsValue;
 
 /*!
  * \brief Базовый класс тренажеров с получением данных от устройства TrenExecute class
@@ -271,7 +272,10 @@ private:
     double m_adv1Value {0};           ///< Значение канала физиологии 1
     bool m_isAdv0ChannelAboveBound {false};  ///< превышает ли значение физиологического канала 0 порог
     bool m_isAdv1ChannelAboveBound {false};  ///< превышает ли значение физиологического канала 1 порог
-    bool m_isAdvChannelSelectReaded {false}; ///< Семафор, были ли прочитаны выбранные дополнительные каналы
+
+//    bool m_isAdvChannelSelectReaded {false}; ///< Семафор, были ли прочитаны выбранные дополнительные каналы
+    SettingsValue* m_AdvChannel0Select {nullptr};
+    SettingsValue* m_AdvChannel1Select {nullptr};
 };
 
 #endif // TRENEXECUTE_H

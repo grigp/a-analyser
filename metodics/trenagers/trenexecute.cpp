@@ -217,12 +217,16 @@ void TrenExecute::on_advChannelsClicked(bool checked)
 
 void TrenExecute::on_selectAdvChannelClicked(int index)
 {
-    if (m_isAdvChannelSelectReaded)
+    if (sender() == ui->cbSelectAdvChannel)
     {
-        if (sender() == ui->cbSelectAdvChannel)
-            SettingsProvider::setValueToRegAppCopy("SelectionValues/TrenagerType1", "AdvChannel0", index);
-        if (sender() == ui->cbSelectAdvChannel_2)
-            SettingsProvider::setValueToRegAppCopy("SelectionValues/TrenagerType1", "AdvChannel1", index);
+        if (m_AdvChannel0Select)
+            m_AdvChannel0Select->set(index);
+    }
+    else
+    if (sender() == ui->cbSelectAdvChannel_2)
+    {
+        if (m_AdvChannel1Select)
+            m_AdvChannel1Select->set(index);
     }
 }
 
@@ -291,13 +295,12 @@ void TrenExecute::setAdvancedChannels()
     ui->frAdvChannels->setVisible(m_isPhisioChannel);
 
     //! Установка дефолтных значений
-    auto index = SettingsProvider::valueFromRegAppCopy("SelectionValues/TrenagerType1", "AdvChannel0", 0);
-    auto index_2 = SettingsProvider::valueFromRegAppCopy("SelectionValues/TrenagerType1", "AdvChannel1", 1);
-    m_isAdvChannelSelectReaded = true;
-    if (ui->cbSelectAdvChannel->count() > index.toInt())
-        ui->cbSelectAdvChannel->setCurrentIndex(index.toInt());
-    if (ui->cbSelectAdvChannel_2->count() > index_2.toInt())
-        ui->cbSelectAdvChannel_2->setCurrentIndex(index_2.toInt());
+    m_AdvChannel0Select = new SettingsValue("SelectionValues/TrenagerType1", "AdvChannel0", 0);
+    m_AdvChannel1Select = new SettingsValue("SelectionValues/TrenagerType1", "AdvChannel1", 1);
+    if (ui->cbSelectAdvChannel->count() > m_AdvChannel0Select->value().toInt())
+        ui->cbSelectAdvChannel->setCurrentIndex(m_AdvChannel0Select->value().toInt());
+    if (ui->cbSelectAdvChannel_2->count() > m_AdvChannel1Select->value().toInt())
+        ui->cbSelectAdvChannel_2->setCurrentIndex(m_AdvChannel1Select->value().toInt());
 }
 
 void TrenExecute::setAdvancedChannelEnable(const int chan, const bool enable)

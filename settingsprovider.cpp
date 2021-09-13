@@ -31,3 +31,17 @@ void SettingsProvider::setValueToRegAppCopy(const QString &group, const QString 
     set.endGroup();
 }
 
+
+
+SettingsValue::SettingsValue(const QString &group, const QString &param, const QVariant &defValue)
+{
+    m_group = group;
+    m_param = param;
+    m_value = SettingsProvider::valueFromRegAppCopy(group, param, defValue);
+}
+
+void SettingsValue::set(const QVariant &value)
+{
+    m_value = value;
+    SettingsProvider::setValueToRegAppCopy(m_group, m_param, value);
+}
