@@ -1014,7 +1014,8 @@ GraphicCommon::GameElement *TrenTakePutExecute::markerOnGameElement()
                      && (!ge->elementInfo()->movableWithMarker)))
                 {
                     if (mx >= item->x() && mx <= item->x() + item->boundingRect().width() &&
-                        my >= item->y() && my <= item->y() + item->boundingRect().height())
+                        my >= item->y() && my <= item->y() + item->boundingRect().height() &&
+                            isAdvancedChannelAboveBound(0))
                     {
                         return ge;
                     }
