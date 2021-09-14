@@ -63,6 +63,8 @@ protected:
      */
     void takeModeInteraction(double &mx, double &my);
 
+    void autoDescentModeInteraction(double &mx, double &my);
+
     /*!
      * \brief Укладывает фигуру
      */

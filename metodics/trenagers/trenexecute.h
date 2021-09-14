@@ -55,7 +55,8 @@ protected:
     ///< Слои игрового поля
     enum ZLevels
     {
-        zlvlBackground = 1  ///< Слой фона. Всегда внизу
+          zlvlBackground = 1        ///< Слой фона. Всегда внизу
+        , zlvlVidioIrritant = 100   ///< Слой видеораздражителя. Оптокинетическая стимуляция
     };
 
     virtual void setSceneSize(QSize &size);
@@ -98,6 +99,11 @@ protected:
     virtual void hidePatientWindow();
 
     virtual void setBackground(const QJsonObject &objBackground);
+
+    /*!
+     * \brief Устанавливает объект - раздражитель на сцену
+     */
+    virtual void setVideoIrritant();
 
     virtual void finishTest();
 
@@ -184,7 +190,12 @@ protected:
     /*!
      * \brief Возвращает указатель на элемент игровой сцены - фон
      */
-    GraphicCommon::BackgroundElement* background() {return  m_background;}
+    GraphicCommon::BackgroundElement* background() {return m_background;}
+
+    /*!
+     * \brief Возвращает указатель на элемент игровой сцены - видео раздражитель
+     */
+    GraphicCommon::VidioIrritant* videoIrritant() {return m_videoIrritant;}
 
     /*!
      * \brief Возвращает указатель на окно пациента
@@ -256,6 +267,8 @@ private:
     QJsonObject m_backgroundObj;        ///< Объект с данными фона
 
     GraphicCommon::BackgroundElement *m_background {nullptr};
+
+    GraphicCommon::VidioIrritant* m_videoIrritant {nullptr};   ///< Слой видеораздражителя (оптокинетической стимуляции)
 
     ///< Границы зоны рамки
     int m_bndLeft {0};

@@ -262,6 +262,9 @@ void TrenExecute::generateNewScene()
     m_scene->clear();
     setBackground(m_backgroundObj);
     m_scene->addItem(m_background);
+    setVideoIrritant();
+    m_scene->addItem(m_videoIrritant);
+
 }
 
 void TrenExecute::elementsInteraction(DeviceProtocols::DeviceData *data)
@@ -402,6 +405,12 @@ void TrenExecute::setBackground(const QJsonObject &objBackground)
     m_bndBottom = bo["bottom"].toInt();
     m_bndLeft = bo["left"].toInt();
     m_bndRight = bo["right"].toInt();
+}
+
+void TrenExecute::setVideoIrritant()
+{
+    m_videoIrritant = new GraphicCommon::VidioIrritant(m_scene->sceneRect());
+    m_videoIrritant->setZValue(zlvlVidioIrritant);
 }
 
 void TrenExecute::finishTest()

@@ -135,6 +135,9 @@ void TrenTetrisExecute::elementsInteraction(DeviceProtocols::DeviceData *data)
 
             if (m_movingMode == TrenTetrisDefines::mmTake)
                 takeModeInteraction(mx, my);
+            else
+            if (m_movingMode == TrenTetrisDefines::mmAuto)
+                autoDescentModeInteraction(mx, my);
 
             //! Поворот фигуры с помощью доп. канала
             if (isAdvancedChannelAboveBoundNow(1))
@@ -223,6 +226,11 @@ void TrenTetrisExecute::takeModeInteraction(double &mx, double &my)
             m_marker->setVisible(true);
         }
     }
+}
+
+void TrenTetrisExecute::autoDescentModeInteraction(double &mx, double &my)
+{
+
 }
 
 void TrenTetrisExecute::putFigure()

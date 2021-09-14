@@ -185,3 +185,29 @@ void GraphicCommon::MarkerElement::setShotTrace(const bool isShotTrace)
         m_traceCounter = 0;
     m_isShotTrace = isShotTrace;
 }
+
+GraphicCommon::VidioIrritant::VidioIrritant(const QRectF &rect, QGraphicsItem *parent)
+    : QGraphicsItem (parent)
+{
+    m_rect = rect;
+    setOpacity(0.5);
+}
+
+QRectF GraphicCommon::VidioIrritant::boundingRect() const
+{
+    return m_rect;
+}
+
+void GraphicCommon::VidioIrritant::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
+{
+    Q_UNUSED(option);
+    Q_UNUSED(widget);
+
+    QRect rect(static_cast<int>(boundingRect().x()), static_cast<int>(boundingRect().y()),
+               static_cast<int>(boundingRect().width() / 2), static_cast<int>(boundingRect().height() / 2));
+
+    painter->setPen(QPen(Qt::red, 1, Qt::SolidLine, Qt::FlatCap));
+    painter->setBrush(QBrush(Qt::red, Qt::SolidPattern));
+    painter->drawRect(rect);
+
+}
