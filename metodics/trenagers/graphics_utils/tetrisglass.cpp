@@ -211,8 +211,7 @@ void TetrisGlass::setValue(const int h, const int v, const QColor value)
 void TetrisGlass::addColor(const QColor color)
 {
     int colorCode = color.red() * 16777216 + color.green() * 65536 + color.blue() * 256 + color.alpha();
-    QPixmap cube(m_pixmapCube);
-    cube.scaled(static_cast<int>(m_cubeSize), static_cast<int>(m_cubeSize), Qt::KeepAspectRatio);
+    QPixmap cube = m_pixmapCube.scaled(static_cast<int>(m_cubeSize), static_cast<int>(m_cubeSize)); //, Qt::KeepAspectRatio);
     BaseUtils::setColoredPicture(cube, color);
     m_allowColors.insert(colorCode, cube);
 }

@@ -53,8 +53,7 @@ void TetrisFigure::paintEvent(QPaintEvent *event)
             qreal y = geometry().height() / 2 - m_figure.size() * cubeSize / 2 + i * cubeSize;
 
             QColor color = m_figure[i][j];
-            QPixmap cube(m_cube);
-            cube.scaled(static_cast<int>(cubeSize), static_cast<int>(cubeSize), Qt::KeepAspectRatio);
+            QPixmap cube = m_cube.scaled(static_cast<int>(cubeSize), static_cast<int>(cubeSize));
             BaseUtils::setColoredPicture(cube, color);
 
             painter.drawPixmap(static_cast<int>(x), static_cast<int>(y), cube);
