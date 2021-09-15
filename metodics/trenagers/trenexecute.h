@@ -18,6 +18,7 @@ class TrenExecute;
 class TestResultData;
 class TrenagerPatientWindow;
 class SettingsValue;
+class VideoIrritant;
 
 /*!
  * \brief Базовый класс тренажеров с получением данных от устройства TrenExecute class
@@ -56,7 +57,7 @@ protected:
     enum ZLevels
     {
           zlvlBackground = 1        ///< Слой фона. Всегда внизу
-        , zlvlVidioIrritant = 100   ///< Слой видеораздражителя. Оптокинетическая стимуляция
+        , zlvlVideoIrritant = 100   ///< Слой видеораздражителя. Оптокинетическая стимуляция
     };
 
     virtual void setSceneSize(QSize &size);
@@ -195,7 +196,7 @@ protected:
     /*!
      * \brief Возвращает указатель на элемент игровой сцены - видео раздражитель
      */
-    GraphicCommon::VidioIrritant* videoIrritant() {return m_videoIrritant;}
+    VideoIrritant* videoIrritant() {return m_videoIrritant;}
 
     /*!
      * \brief Возвращает указатель на окно пациента
@@ -268,7 +269,7 @@ private:
 
     GraphicCommon::BackgroundElement *m_background {nullptr};
 
-    GraphicCommon::VidioIrritant* m_videoIrritant {nullptr};   ///< Слой видеораздражителя (оптокинетической стимуляции)
+    VideoIrritant* m_videoIrritant {nullptr};   ///< Слой видеораздражителя (оптокинетической стимуляции)
 
     ///< Границы зоны рамки
     int m_bndLeft {0};

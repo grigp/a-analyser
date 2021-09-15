@@ -196,21 +196,21 @@ struct GameElementInfo
     GameElementInfo() {}
 };
 
-/*!
- * \brief Класс видеораздражителя для игр (оптокинетическая стимуляция) VidioIrritant class
- */
-class VidioIrritant : public QGraphicsItem
-{
-public:
-    explicit VidioIrritant(const QRectF &rect, QGraphicsItem *parent = nullptr);
+///*!
+// * \brief Класс видеораздражителя для игр (оптокинетическая стимуляция) VidioIrritant class
+// */
+//class VidioIrritant : public QGraphicsItem
+//{
+//public:
+//    explicit VidioIrritant(const QRectF &rect, QGraphicsItem *parent = nullptr);
 
-    QRectF boundingRect() const override;
+//    QRectF boundingRect() const override;
 
-    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
+//    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
 
-private:
-    QRectF m_rect;
-};
+//private:
+//    QRectF m_rect;
+//};
 
 }
 

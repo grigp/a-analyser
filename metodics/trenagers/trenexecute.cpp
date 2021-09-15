@@ -18,6 +18,7 @@
 #include "trenresultfactors.h"
 #include "trenagerpatientwindow.h"
 #include "settingsprovider.h"
+#include "videoirritant.h"
 
 TrenExecute::TrenExecute(QWidget *parent) :
     QWidget(parent),
@@ -409,8 +410,15 @@ void TrenExecute::setBackground(const QJsonObject &objBackground)
 
 void TrenExecute::setVideoIrritant()
 {
-    m_videoIrritant = new GraphicCommon::VidioIrritant(m_scene->sceneRect());
-    m_videoIrritant->setZValue(zlvlVidioIrritant);
+    m_videoIrritant = new VideoIrritant(m_scene->sceneRect());
+    m_videoIrritant->setZValue(zlvlVideoIrritant);
+
+    ui->cbIrriants->clear();
+    ui->cbIrriants->addItem("<" + tr("нет") + ">");
+    for (int i = 0; i < m_videoIrritant->irriantsCount(); ++i)
+    {
+        ui->cbIrriants->addItem(m_videoIrritant->irriant(i)->name());
+    }
 }
 
 void TrenExecute::finishTest()

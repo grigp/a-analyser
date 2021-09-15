@@ -556,10 +556,11 @@ void TrenTakePutExecute::elementsTimeLimitWorking()
     for (int i = 0; i < items.size(); ++i)
     {
         auto* item = items[i];
-        if (item != m_marker && item != background() && item != videoIrritant())  ///< TODO Кривизна, что надо перечислять все элементы игры. dynamic_cast - потенциально тормозно
+        if (item != m_marker) // && item != background()) // && item != videoIrritant())
         {
-            auto* ge = static_cast<GraphicCommon::GameElement*>(item);
-            if (ge->presentTime() > 0)
+//            auto* ge = static_cast<GraphicCommon::GameElement*>(item);
+            auto* ge = dynamic_cast<GraphicCommon::GameElement*>(item);///< TODO Кривизна, потенциально тормозно. Но иначе надо перечислять все элементы игры.
+            if (ge && ge->presentTime() > 0)
             {
                 ge->incTimeCounter(1.0 / frequency());
                 if (!ge->isProcessed())
@@ -592,10 +593,11 @@ void TrenTakePutExecute::elementsMobileWorking()
     for (int i = 0; i < items.size(); ++i)
     {
         auto* item = items[i];
-        if (item != m_marker && item != background() && item != videoIrritant())  ///< TODO Кривизна, что надо перечислять все элементы игры. dynamic_cast - потенциально тормозно
+        if (item != m_marker)// && item != background()) // && item != videoIrritant())
         {
-            auto* ge = static_cast<GraphicCommon::GameElement*>(item);
-            if (!ge->isProcessed() && ge->elementInfo()->isMobile)
+//            auto* ge = static_cast<GraphicCommon::GameElement*>(item);
+            auto* ge = dynamic_cast<GraphicCommon::GameElement*>(item); ///< TODO Кривизна, потенциально тормозно. Но иначе надо перечислять все элементы игры.
+            if (ge && !ge->isProcessed() && ge->elementInfo()->isMobile)
             {
                 if (ge->elementInfo()->movingLaw == GraphicCommon::mlRandomForce)
                     setRandomWorkMobilePosition(ge);
@@ -1003,10 +1005,11 @@ GraphicCommon::GameElement *TrenTakePutExecute::markerOnGameElement()
     for (int i = 0; i < items.size(); ++i)
     {
         auto* item = items[i];
-        if (item != m_marker && item != background() && item != videoIrritant())  ///< TODO Кривизна, что надо перечислять все элементы игры. dynamic_cast - потенциально тормозно
+        if (item != m_marker) // && item != background()) // && item != videoIrritant())
         {
-            auto* ge = static_cast<GraphicCommon::GameElement*>(item);
-            if (!ge->isProcessed())
+//            auto* ge = static_cast<GraphicCommon::GameElement*>(item);
+            auto* ge = dynamic_cast<GraphicCommon::GameElement*>(item);  ///< TODO Кривизна, потенциально тормозно. Но иначе надо перечислять все элементы игры.
+            if (ge && !ge->isProcessed())
                 if ((((m_gameStage == TrenTakePutDefines::gsTake) || (m_gameStage == TrenTakePutDefines::gsTakeProcess))
                      && (ge->elementInfo()->movableWithMarker))
                         ||
