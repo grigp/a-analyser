@@ -327,6 +327,7 @@ void TrenTakePutExecute::generateNewScene()
         }
 
         setMarker(m_markerObj);
+        m_marker->setData(edKindElement, ekMarker);
         scene()->addItem(m_marker);
         m_marker->setZValue(zlvlMarker);
         m_marker->setPos(0 - m_marker->boundingRect().width() / 2,
@@ -556,10 +557,10 @@ void TrenTakePutExecute::elementsTimeLimitWorking()
     for (int i = 0; i < items.size(); ++i)
     {
         auto* item = items[i];
-        if (item != m_marker) // && item != background()) // && item != videoIrritant())
+        auto ke = item->data(edKindElement);
+        if (ke != ekMarker && ke != ekBackground && ke != ekIrriant)
         {
-//            auto* ge = static_cast<GraphicCommon::GameElement*>(item);
-            auto* ge = dynamic_cast<GraphicCommon::GameElement*>(item);///< TODO Кривизна, потенциально тормозно. Но иначе надо перечислять все элементы игры.
+            auto* ge = static_cast<GraphicCommon::GameElement*>(item);
             if (ge && ge->presentTime() > 0)
             {
                 ge->incTimeCounter(1.0 / frequency());
@@ -593,10 +594,10 @@ void TrenTakePutExecute::elementsMobileWorking()
     for (int i = 0; i < items.size(); ++i)
     {
         auto* item = items[i];
-        if (item != m_marker)// && item != background()) // && item != videoIrritant())
+        auto ke = item->data(edKindElement);
+        if (ke != ekMarker && ke != ekBackground && ke != ekIrriant)
         {
-//            auto* ge = static_cast<GraphicCommon::GameElement*>(item);
-            auto* ge = dynamic_cast<GraphicCommon::GameElement*>(item); ///< TODO Кривизна, потенциально тормозно. Но иначе надо перечислять все элементы игры.
+            auto* ge = static_cast<GraphicCommon::GameElement*>(item);
             if (ge && !ge->isProcessed() && ge->elementInfo()->isMobile)
             {
                 if (ge->elementInfo()->movingLaw == GraphicCommon::mlRandomForce)
@@ -984,6 +985,7 @@ GraphicCommon::GameElement* TrenTakePutExecute::allocElement(QList<TrenTakePutDe
     }
 
     gameElement->setZValue(zOrder);
+    gameElement->setData(edKindElement, ekTakePut);
     scene()->addItem(gameElement);
     return gameElement;
 }
@@ -1005,10 +1007,10 @@ GraphicCommon::GameElement *TrenTakePutExecute::markerOnGameElement()
     for (int i = 0; i < items.size(); ++i)
     {
         auto* item = items[i];
-        if (item != m_marker) // && item != background()) // && item != videoIrritant())
+        auto ke = item->data(edKindElement);
+        if (ke != ekMarker && ke != ekBackground && ke != ekIrriant)
         {
-//            auto* ge = static_cast<GraphicCommon::GameElement*>(item);
-            auto* ge = dynamic_cast<GraphicCommon::GameElement*>(item);  ///< TODO Кривизна, потенциально тормозно. Но иначе надо перечислять все элементы игры.
+            auto* ge = static_cast<GraphicCommon::GameElement*>(item);
             if (ge && !ge->isProcessed())
                 if ((((m_gameStage == TrenTakePutDefines::gsTake) || (m_gameStage == TrenTakePutDefines::gsTakeProcess))
                      && (ge->elementInfo()->movableWithMarker))

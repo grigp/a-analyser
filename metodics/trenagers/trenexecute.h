@@ -60,6 +60,22 @@ protected:
         , zlvlVideoIrritant = 100   ///< Слой видеораздражителя. Оптокинетическая стимуляция
     };
 
+    ///< Данные, хранящиеся в элементах
+    enum ElementData
+    {
+        edKindElement = 0 ///< Тип элемента
+    };
+
+    ///< Типы элементов
+    enum ElementKinds
+    {
+          ekBackground = 0   ///< Фон
+        , ekMarker           ///< Маркер
+        , ekIrriant          ///< Возмущение
+        , ekUser = 100       ///< Первая позиция элементов, определяемых в подклассах
+    };
+
+
     virtual void setSceneSize(QSize &size);
 
     virtual void generateNewScene();

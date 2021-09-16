@@ -262,8 +262,10 @@ void TrenExecute::generateNewScene()
 {
     m_scene->clear();
     setBackground(m_backgroundObj);
+    m_background->setData(edKindElement, ekBackground);
     m_scene->addItem(m_background);
     setVideoIrritant();
+    m_videoIrritant->setData(edKindElement, ekIrriant);
     m_scene->addItem(m_videoIrritant);
 
 }

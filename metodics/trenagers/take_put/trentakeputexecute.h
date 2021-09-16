@@ -99,6 +99,13 @@ private:
         zlvlMarker = 5
     };
 
+    ///< Типы элементов
+    enum ElementKinds
+    {
+          ekTakePut = ekUser + 0   ///< захват / укладка
+    };
+
+
     void setZones(const QJsonArray &arrZones, QList<TrenTakePutDefines::GameZoneInfo> &zones);
     void setElements(const QJsonArray &arrElements,
                      QList<GraphicCommon::GameElementInfo> &elements,
