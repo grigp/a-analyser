@@ -3,6 +3,7 @@
 #include "linesirriantsettingswidget.h"
 
 #include <QPainter>
+#include <QDebug>
 
 LinesIrriant::LinesIrriant()
     : Irriant ()
@@ -15,16 +16,30 @@ void LinesIrriant::paint(QPainter *painter, const QStyleOptionGraphicsItem *opti
     Q_UNUSED(option);
     Q_UNUSED(widget);
 
-    QRect rect(static_cast<int>(boundingRect.x()), static_cast<int>(boundingRect.y()),
-               static_cast<int>(boundingRect.width() / 2), static_cast<int>(boundingRect.height() / 2));
+    painter->setPen(QPen(m_color, 1, Qt::SolidLine, Qt::FlatCap));
+    painter->setBrush(QBrush(m_color, Qt::SolidPattern));
 
-    painter->setPen(QPen(Qt::red, 1, Qt::SolidLine, Qt::FlatCap));
-    painter->setBrush(QBrush(Qt::red, Qt::SolidPattern));
-    painter->drawRect(rect);
+//    int msec = m_time.msecsTo(QTime::currentTime());
+//    m_time = QTime::currentTime();
+//    qDebug() << msec;
+
+    if (m_direction == BaseUtils::dirRight)
+    {
+        auto x = boundingRect.x() - m_width * (m_dutyCycle + 1) + m_position % (m_width * (m_dutyCycle + 1));
+        while (x < boundingRect.x() + boundingRect.width())
+        {
+            painter->drawRect(static_cast<int>(x), static_cast<int>(boundingRect.y()),
+                              m_width, static_cast<int>(boundingRect.height()));
+
+            x += m_width * (m_dutyCycle + 1);
+        }
+    }
+
+    m_position += m_speed;
 }
 
 QWidget* LinesIrriant::getSettingsWidget()
 {
-    return new LinesIrriantSettingsWidget();
+    return new LinesIrriantSettingsWidget(this);
 }
 

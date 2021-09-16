@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1032</width>
-    <height>683</height>
+    <height>696</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -380,19 +380,40 @@
             </property>
             <layout class="QVBoxLayout" name="verticalLayout_10">
              <property name="spacing">
-              <number>5</number>
+              <number>1</number>
              </property>
              <property name="topMargin">
-              <number>2</number>
+              <number>1</number>
              </property>
              <property name="bottomMargin">
-              <number>2</number>
+              <number>1</number>
              </property>
              <item>
               <widget class="QComboBox" name="cbIrriants"/>
              </item>
              <item>
-              <widget class="QWidget" name="wgtIrriantsParams" native="true"/>
+              <widget class="QSlider" name="sldTransparent">
+               <property name="minimum">
+                <number>5</number>
+               </property>
+               <property name="maximum">
+                <number>80</number>
+               </property>
+               <property name="value">
+                <number>42</number>
+               </property>
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="tickPosition">
+                <enum>QSlider::NoTicks</enum>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QWidget" name="wgtIrriantsParams" native="true">
+               <layout class="QVBoxLayout" name="verticalLayout_11"/>
+              </widget>
              </item>
             </layout>
            </widget>
@@ -585,7 +606,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>1016</x>
-     <y>451</y>
+     <y>566</y>
     </hint>
     <hint type="destinationlabel">
      <x>1031</x>
@@ -604,7 +625,7 @@
      <y>98</y>
     </hint>
     <hint type="destinationlabel">
-     <x>1033</x>
+     <x>1031</x>
      <y>87</y>
     </hint>
    </hints>
@@ -620,7 +641,7 @@
      <y>224</y>
     </hint>
     <hint type="destinationlabel">
-     <x>1033</x>
+     <x>1031</x>
      <y>212</y>
     </hint>
    </hints>
@@ -636,7 +657,7 @@
      <y>306</y>
     </hint>
     <hint type="destinationlabel">
-     <x>1032</x>
+     <x>1031</x>
      <y>237</y>
     </hint>
    </hints>
@@ -652,7 +673,7 @@
      <y>354</y>
     </hint>
     <hint type="destinationlabel">
-     <x>1033</x>
+     <x>1031</x>
      <y>264</y>
     </hint>
    </hints>
@@ -668,7 +689,7 @@
      <y>283</y>
     </hint>
     <hint type="destinationlabel">
-     <x>1034</x>
+     <x>1031</x>
      <y>150</y>
     </hint>
    </hints>
@@ -684,8 +705,40 @@
      <y>338</y>
     </hint>
     <hint type="destinationlabel">
-     <x>1033</x>
+     <x>1031</x>
      <y>180</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>cbIrriants</sender>
+   <signal>currentIndexChanged(int)</signal>
+   <receiver>TrenExecute</receiver>
+   <slot>on_selectIrriant(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>823</x>
+     <y>467</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1033</x>
+     <y>396</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>sldTransparent</sender>
+   <signal>sliderMoved(int)</signal>
+   <receiver>TrenExecute</receiver>
+   <slot>on_changeTransparent(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>880</x>
+     <y>493</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1033</x>
+     <y>421</y>
     </hint>
    </hints>
   </connection>
@@ -696,5 +749,7 @@
   <slot>on_selectChannel(int)</slot>
   <slot>on_selectAdvChannelClicked(int)</slot>
   <slot>on_enabledAdvChannelChanged(bool)</slot>
+  <slot>on_selectIrriant(int)</slot>
+  <slot>on_changeTransparent(int)</slot>
  </slots>
 </ui>

@@ -8,7 +8,7 @@ VideoIrritant::VideoIrritant(const QRectF &rect, QGraphicsItem *parent)
     : QGraphicsItem (parent)
 {
     m_rect = rect;
-    setOpacity(0.5);
+    setOpacity(m_opacity);
 
     m_irriants << new LinesIrriant();
 }
@@ -44,8 +44,14 @@ Irriant *VideoIrritant::irriant(const int idx) const
 
 void VideoIrritant::setCurrentIrriant(const int idx)
 {
-    Q_ASSERT(idx >= 0 && idx < m_irriants.size());
+    Q_ASSERT(idx >= -1 && idx < m_irriants.size());
     m_current = idx;
+}
+
+void VideoIrritant::setTransparent(const double value)
+{
+    m_opacity = value;
+    setOpacity(m_opacity);
 }
 
 Irriant::Irriant()

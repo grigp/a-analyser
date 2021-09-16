@@ -246,6 +246,30 @@ void TrenExecute::on_enabledAdvChannelChanged(bool enabled)
     }
 }
 
+void TrenExecute::on_selectIrriant(int idx)
+{
+    m_videoIrritant->setCurrentIrriant(idx - 1);
+
+    //! Очистка панели параметров видеораздражителя
+    while (QLayoutItem* item = ui->wgtIrriantsParams->layout()->takeAt(0))
+    {
+        delete item->widget();
+        delete item;
+    }
+
+    //! Добавление виджета управления видеораздражителем
+    if (idx > 0)
+    {
+        auto widget = m_videoIrritant->irriant(idx - 1)->getSettingsWidget();
+        ui->wgtIrriantsParams->layout()->addWidget(widget);
+    }
+}
+
+void TrenExecute::on_changeTransparent(int value)
+{
+    m_videoIrritant->setTransparent(static_cast<double>(value) / static_cast<double>(100));
+}
+
 void TrenExecute::setSceneSize(QSize &size)
 {
     int sideSize = size.height();

@@ -52,6 +52,10 @@ protected slots:
 
     virtual void on_enabledAdvChannelChanged(bool enabled);
 
+    virtual void on_selectIrriant(int idx);
+
+    void on_changeTransparent(int value);
+
 protected:
     ///< Слои игрового поля
     enum ZLevels

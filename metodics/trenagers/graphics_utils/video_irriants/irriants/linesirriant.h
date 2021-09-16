@@ -2,8 +2,10 @@
 #define LINESIRRIANT_H
 
 #include <QObject>
+#include <QTime>
 
 #include "videoirritant.h"
+#include "baseutils.h"
 
 class LinesIrriant : public Irriant
 {
@@ -32,6 +34,26 @@ public:
      * \brief Возвращает указатель на виджет редактирования параметров раздражителя
      */
     QWidget* getSettingsWidget() override;
+
+
+    /*!
+     * \brief Установка параметров рисования
+     */
+    void setDirection(const BaseUtils::Directions direction) {m_direction = direction;}
+    void setWidth(const int width) {m_width = width;}
+    void setSpeed(const int speed) {m_speed = speed;}
+    void setDutyCycle(const int dutyCycle) {m_dutyCycle = dutyCycle;}
+    void setColor(const QColor color) {m_color = color;}
+
+private:
+    BaseUtils::Directions m_direction {BaseUtils::dirRight};
+    int m_width {120};
+    int m_speed {2};
+    int m_dutyCycle {1};
+    QColor m_color {Qt::black};
+    QTime m_time {QTime()};
+    int m_position = 0;
+
 };
 
 #endif // LINESIRRIANT_H

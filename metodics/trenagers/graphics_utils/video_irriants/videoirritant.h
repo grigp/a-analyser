@@ -64,10 +64,17 @@ public:
      */
     void setCurrentIrriant(const int idx);
 
+    /*!
+     * \brief Задает прозрачность элемента
+     * \param value - значение прозрачности
+     */
+    void setTransparent(const double value);
+
 private:
     QRectF m_rect;
     QList<Irriant*> m_irriants; ///< Список допустимых раздражителей
     int m_current {-1};         ///< Индекс текущего раздражителя в списке
+    double m_opacity {0.5};
 };
 
 #endif // VIDEOIRRITANT_H
