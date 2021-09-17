@@ -263,6 +263,7 @@ void TrenExecute::on_selectIrriant(int idx)
         if (idx > 0)
         {
             auto widget = m_videoIrritant->irriant(idx - 1)->getSettingsWidget();
+            widget->setStyleSheet("font-size: 9pt;");
             ui->wgtIrriantsParams->layout()->addWidget(widget);
         }
     }
@@ -441,6 +442,7 @@ void TrenExecute::setVideoIrritant()
 {
     m_videoIrritant = new VideoIrritant(m_scene->sceneRect());
     m_videoIrritant->setZValue(zlvlVideoIrritant);
+    m_videoIrritant->setTransparent(static_cast<double>(ui->sldTransparent->value()) / static_cast<double>(100));
 
     ui->cbIrriants->clear();
     ui->cbIrriants->addItem("<" + tr("нет") + ">");

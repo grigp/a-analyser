@@ -48,11 +48,11 @@ public:
 private:
     BaseUtils::Directions m_direction {BaseUtils::dirRight};
     int m_width {120};
-    int m_speed {2};
+    int m_speed {200};
     int m_dutyCycle {1};
     QColor m_color {Qt::black};
     QTime m_time {QTime()};
-    int m_position = 0;
+    qreal m_position = 0.0;
 
 };
 

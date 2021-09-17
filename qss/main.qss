@@ -30,6 +30,11 @@ QCheckBox
     color: rgb(32,88,103);
 }
 
+QGroupBox
+{
+    font-size: 11pt;
+    color: rgb(32,88,103);
+}
 
 QLabel
 {
