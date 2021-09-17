@@ -3,6 +3,7 @@
 #include "linesirriant.h"
 
 #include <QPainter>
+#include <QDebug>
 
 VideoIrritant::VideoIrritant(const QRectF &rect, QGraphicsItem *parent)
     : QGraphicsItem (parent)

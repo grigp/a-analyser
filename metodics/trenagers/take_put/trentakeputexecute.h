@@ -197,6 +197,11 @@ private:
      */
     void changeErrors(const int value);
 
+    /*!
+     * \brief Пересоздает временные элементы при генерации новой сцены
+     */
+    void setTemporaryElements();
+
 
     GraphicCommon::MarkerElement *m_marker {nullptr};
     QJsonObject m_markerObj;
@@ -234,6 +239,8 @@ private:
     QList<QString> m_filesSingle;      ///< Список одиночных файлов для построения картинок или для охоты
     QList<FilesPair> m_filesPair;      ///< Список файлов для парных файлов
     QSet<int> m_filesUsed;   ///< Номера файлов, которые уже использовались
+
+    QList<QGraphicsItem*> m_tempElements;
 };
 
 

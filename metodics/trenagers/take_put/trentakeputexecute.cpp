@@ -283,57 +283,7 @@ void TrenTakePutExecute::generateNewScene()
 {
     TrenStabExecute::generateNewScene();
 
-    if (!isClosed())
-    {
-        for (int i = 0; i < m_zonesTake.size(); ++i)
-            m_zonesTake[i].clearElement();
-        for (int i = 0; i < m_zonesPut.size(); ++i)
-            m_zonesPut[i].clearElement();
-        m_elementTake = nullptr;
-        m_elementPut = nullptr;
-
-        if (m_elementsTake.size() > 0 && m_elementsPut.size() > 0 &&
-            m_zonesTake.size() > 0 && m_zonesPut.size() > 0)
-        {
-            //! Распределение по отдельным позициям
-            if (m_elementsTake.at(0).style == GraphicCommon::esPictureFixed ||
-                m_elementsTake.at(0).style == GraphicCommon::esDrawing)
-            {
-                allocBySeparatePositions(m_takeTakeOrder, m_zonesTake, m_elementsTake, zlvlElements);
-                allocBySeparatePositions(m_putTakeOrder, m_zonesPut, m_elementsPut, zlvlZones);
-            }
-            else
-            //! Распределение парных
-            if (m_elementsTake.at(0).style == GraphicCommon::esPicturePair)
-            {
-                allocPairPictires();
-            }
-            else
-            //! Распределение разделенных
-            if (m_elementsTake.at(0).style == GraphicCommon::esPictureSplit)
-            {
-                allocSplitPictures();
-            }
-        }
-        else
-        if (m_elementsTake.size() > 0 && m_elementsPut.size() == 0 &&
-            m_zonesTake.size() > 0 && m_zonesPut.size() == 0)
-        {
-            //! Распределение по отдельным позициям
-            if (m_elementsTake.at(0).style == GraphicCommon::esPictureRandom)
-            {
-                allocByRandomPositions(m_zonesTake, m_elementsTake);
-            }
-        }
-
-        setMarker(m_markerObj);
-        m_marker->setData(edKindElement, ekMarker);
-        scene()->addItem(m_marker);
-        m_marker->setZValue(zlvlMarker);
-        m_marker->setPos(0 - m_marker->boundingRect().width() / 2,
-                         0 - m_marker->boundingRect().height() / 2);
-        m_putElementCount = 0;
-    }
+    setTemporaryElements();
 }
 
 void TrenTakePutExecute::addScoreNewScene()
@@ -730,7 +680,7 @@ void TrenTakePutExecute::fixingStage()
     m_elementTake = nullptr;
     if (m_stageMode == TrenTakePutDefines::smTakePut)
     {
-        generateNewScene();
+        setTemporaryElements();
         addScoreNewScene();
     }
     else
@@ -740,7 +690,7 @@ void TrenTakePutExecute::fixingStage()
         {
             //! Задержка, чтобы зафиксировать собранную сцену перед генерацией новой
             delayScene();
-            generateNewScene();
+            setTemporaryElements();
             addScoreNewScene();
         }
         else
@@ -986,6 +936,7 @@ GraphicCommon::GameElement* TrenTakePutExecute::allocElement(QList<TrenTakePutDe
 
     gameElement->setZValue(zOrder);
     gameElement->setData(edKindElement, ekTakePut);
+    m_tempElements << gameElement;
     scene()->addItem(gameElement);
     return gameElement;
 }
@@ -1000,31 +951,34 @@ bool TrenTakePutExecute::isEmptyZonesPresent(QList<TrenTakePutDefines::GameZoneI
 
 GraphicCommon::GameElement *TrenTakePutExecute::markerOnGameElement()
 {
-    double mx = m_marker->x() + m_marker->boundingRect().width() / 2;
-    double my = m_marker->y() + m_marker->boundingRect().height() / 2;
-
-    auto items = scene()->items();
-    for (int i = 0; i < items.size(); ++i)
+    if (m_marker)
     {
-        auto* item = items[i];
-        auto ke = item->data(edKindElement);
-        if (ke != ekMarker && ke != ekBackground && ke != ekIrriant)
+        double mx = m_marker->x() + m_marker->boundingRect().width() / 2;
+        double my = m_marker->y() + m_marker->boundingRect().height() / 2;
+
+        auto items = scene()->items();
+        for (int i = 0; i < items.size(); ++i)
         {
-            auto* ge = static_cast<GraphicCommon::GameElement*>(item);
-            if (ge && !ge->isProcessed())
-                if ((((m_gameStage == TrenTakePutDefines::gsTake) || (m_gameStage == TrenTakePutDefines::gsTakeProcess))
-                     && (ge->elementInfo()->movableWithMarker))
-                        ||
-                    (((m_gameStage == TrenTakePutDefines::gsPut) || (m_gameStage == TrenTakePutDefines::gsPutProcess))
-                     && (!ge->elementInfo()->movableWithMarker)))
-                {
-                    if (mx >= item->x() && mx <= item->x() + item->boundingRect().width() &&
-                        my >= item->y() && my <= item->y() + item->boundingRect().height() &&
-                            isAdvancedChannelAboveBound(0))   //! Учесть усилие на дополнительном канале, если это необходимо
+            auto* item = items[i];
+            auto ke = item->data(edKindElement);
+            if (ke != ekMarker && ke != ekBackground && ke != ekIrriant)
+            {
+                auto* ge = static_cast<GraphicCommon::GameElement*>(item);
+                if (ge && !ge->isProcessed())
+                    if ((((m_gameStage == TrenTakePutDefines::gsTake) || (m_gameStage == TrenTakePutDefines::gsTakeProcess))
+                         && (ge->elementInfo()->movableWithMarker))
+                            ||
+                        (((m_gameStage == TrenTakePutDefines::gsPut) || (m_gameStage == TrenTakePutDefines::gsPutProcess))
+                         && (!ge->elementInfo()->movableWithMarker)))
                     {
-                        return ge;
+                        if (mx >= item->x() && mx <= item->x() + item->boundingRect().width() &&
+                            my >= item->y() && my <= item->y() + item->boundingRect().height() &&
+                                isAdvancedChannelAboveBound(0))   //! Учесть усилие на дополнительном канале, если это необходимо
+                        {
+                            return ge;
+                        }
                     }
-                }
+            }
         }
     }
     return nullptr;
@@ -1046,6 +1000,71 @@ void TrenTakePutExecute::changeErrors(const int value)
     {
         m_lblErrors->setText(text);
         pwSetGameParamLabelValue(1, text);
+    }
+}
+
+void TrenTakePutExecute::setTemporaryElements()
+{
+    //! Удаление временных элементов
+    if (m_tempElements.size() > 0)
+    {
+        foreach (auto item, m_tempElements)
+            scene()->removeItem(item);
+        m_tempElements.clear();
+    }
+
+    //! Добавление новых временных элементов
+    if (!isClosed())
+    {
+        for (int i = 0; i < m_zonesTake.size(); ++i)
+            m_zonesTake[i].clearElement();
+        for (int i = 0; i < m_zonesPut.size(); ++i)
+            m_zonesPut[i].clearElement();
+        m_elementTake = nullptr;
+        m_elementPut = nullptr;
+
+        if (m_elementsTake.size() > 0 && m_elementsPut.size() > 0 &&
+            m_zonesTake.size() > 0 && m_zonesPut.size() > 0)
+        {
+            //! Распределение по отдельным позициям
+            if (m_elementsTake.at(0).style == GraphicCommon::esPictureFixed ||
+                m_elementsTake.at(0).style == GraphicCommon::esDrawing)
+            {
+                allocBySeparatePositions(m_takeTakeOrder, m_zonesTake, m_elementsTake, zlvlElements);
+                allocBySeparatePositions(m_putTakeOrder, m_zonesPut, m_elementsPut, zlvlZones);
+            }
+            else
+            //! Распределение парных
+            if (m_elementsTake.at(0).style == GraphicCommon::esPicturePair)
+            {
+                allocPairPictires();
+            }
+            else
+            //! Распределение разделенных
+            if (m_elementsTake.at(0).style == GraphicCommon::esPictureSplit)
+            {
+                allocSplitPictures();
+            }
+        }
+        else
+        if (m_elementsTake.size() > 0 && m_elementsPut.size() == 0 &&
+            m_zonesTake.size() > 0 && m_zonesPut.size() == 0)
+        {
+            //! Распределение по отдельным позициям
+            if (m_elementsTake.at(0).style == GraphicCommon::esPictureRandom)
+            {
+                allocByRandomPositions(m_zonesTake, m_elementsTake);
+            }
+        }
+
+        setMarker(m_markerObj);
+        m_marker->setData(edKindElement, ekMarker);
+        m_tempElements << m_marker;
+        scene()->addItem(m_marker);
+        m_marker->setZValue(zlvlMarker);
+        m_marker->setPos(0 - m_marker->boundingRect().width() / 2,
+                         0 - m_marker->boundingRect().height() / 2);
+        m_putElementCount = 0;
     }
 }
 
