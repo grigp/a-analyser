@@ -1,6 +1,7 @@
 #include "videoirritant.h"
 
 #include "linesirriant.h"
+#include "bubblesirriant.h"
 
 #include <QPainter>
 #include <QDebug>
@@ -11,7 +12,8 @@ VideoIrritant::VideoIrritant(const QRectF &rect, QGraphicsItem *parent)
     m_rect = rect;
     setOpacity(m_opacity);
 
-    m_irriants << new LinesIrriant();
+    m_irriants << new LinesIrriant()
+               << new BubblesIrriant();
 }
 
 VideoIrritant::~VideoIrritant()

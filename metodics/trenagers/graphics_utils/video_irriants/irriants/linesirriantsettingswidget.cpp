@@ -6,10 +6,10 @@
 #include <QColorDialog>
 #include <QDebug>
 
-LinesIrriantSettingsWidget::LinesIrriantSettingsWidget(LinesIrriant* iritant, QWidget *parent) :
+LinesIrriantSettingsWidget::LinesIrriantSettingsWidget(LinesIrriant* irritant, QWidget *parent) :
     QWidget(parent),
     ui(new Ui::LinesIrriantSettingsWidget)
-  , m_irritant(iritant)
+  , m_irritant(irritant)
 {
     ui->setupUi(this);
 

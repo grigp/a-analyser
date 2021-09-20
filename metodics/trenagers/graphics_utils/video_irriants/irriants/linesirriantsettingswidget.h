@@ -14,7 +14,7 @@ class LinesIrriantSettingsWidget : public QWidget
     Q_OBJECT
 
 public:
-    explicit LinesIrriantSettingsWidget(LinesIrriant* iritant, QWidget *parent = nullptr);
+    explicit LinesIrriantSettingsWidget(LinesIrriant* irritant, QWidget *parent = nullptr);
     ~LinesIrriantSettingsWidget();
 
 private slots:
