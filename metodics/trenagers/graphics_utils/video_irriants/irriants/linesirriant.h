@@ -37,12 +37,33 @@ public:
 
 
     /*!
-     * \brief Установка параметров рисования
+     * \brief Доступ к m_direction
      */
+    BaseUtils::Directions direction() const {return m_direction;}
     void setDirection(const BaseUtils::Directions direction) {m_direction = direction;}
+
+    /*!
+     * \brief Доступ к m_width
+     */
+    int width() const {return m_width;}
     void setWidth(const int width) {m_width = width;}
+
+    /*!
+     * \brief Доступ к m_speed
+     */
+    int speed() const {return m_speed;}
     void setSpeed(const int speed) {m_speed = speed;}
+
+    /*!
+     * \brief Доступ к m_dutyCycle
+     */
+    int dutyCycle() const {return m_dutyCycle;}
     void setDutyCycle(const int dutyCycle) {m_dutyCycle = dutyCycle;}
+
+    /*!
+     * \brief досуп к m_color
+     */
+    QColor color() const {return m_color;}
     void setColor(const QColor color) {m_color = color;}
 
 private:

@@ -263,7 +263,6 @@ void TrenExecute::on_selectIrriant(int idx)
         if (idx > 0)
         {
             auto widget = m_videoIrritant->irriant(idx - 1)->getSettingsWidget();
-            widget->setStyleSheet("font-size: 9pt;");
             ui->wgtIrriantsParams->layout()->addWidget(widget);
         }
     }
