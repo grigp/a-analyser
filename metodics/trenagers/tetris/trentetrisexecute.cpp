@@ -230,7 +230,22 @@ void TrenTetrisExecute::takeModeInteraction(double &mx, double &my)
 
 void TrenTetrisExecute::autoDescentModeInteraction(double &mx, double &my)
 {
+    Q_UNUSED(my);
+    auto y = m_glass->figureY();
+    y += m_autoMovingSpeed;
 
+    //! Устанавливаем фигуру на позицию согласно координатам маркера и
+    //! проверяем, положена ли фигура
+    if (m_glass->setFigureCoordinates(mx + scene()->sceneRect().width() / 2 - m_offsX, y) &&
+            isAdvancedChannelAboveBound(0))
+    {
+        //! Если положена, то...
+        putFigure();
+        m_tmStage = TrenTetrisDefines::tmsTake;
+        //! Добавление новой фигуры
+        m_glass->setNewFigure(m_nextFigure);
+        m_nextFigure = newFigure();
+    }
 }
 
 void TrenTetrisExecute::putFigure()
@@ -310,6 +325,7 @@ void TrenTetrisExecute::generateNewScene()
     m_marker->setZValue(zlvlMarker);
     m_marker->setPos(0 - m_marker->boundingRect().width() / 2,
                      0 - m_marker->boundingRect().height() / 2);
+    m_marker->setVisible(m_movingMode == TrenTetrisDefines::mmTake);
 }
 
 void TrenTetrisExecute::fillGameParams(QFrame *frame)

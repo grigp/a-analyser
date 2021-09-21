@@ -189,6 +189,7 @@ private:
     QList<QColor> m_colorModeColors;  ///< Цвета для вариантов цветного тетриса
 
     int m_autoMovingSpeed {3};          ///< Скорость спуска в режиме автоматического спуска
+    qreal m_autoY {0};                  ///< Положение фигуры по y в режиме автоматического спуска
 
     QJsonObject m_markerObj;            ///< Объект с данными маркера
     GraphicCommon::MarkerElement *m_marker {nullptr};

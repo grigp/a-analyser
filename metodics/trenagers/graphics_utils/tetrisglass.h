@@ -147,6 +147,13 @@ public:
      */
     void setIsShowGrid(const bool isShow) {m_isShowGrid = isShow;}
 
+    /*!
+     * \brief Координаты фигуры
+     */
+    qreal figureX() const {return m_figX;}
+    qreal figureY() const {return m_figY;}
+
+
 private:
 
     void fillData();
