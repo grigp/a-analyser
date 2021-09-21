@@ -234,10 +234,15 @@ void TrenTetrisExecute::autoDescentModeInteraction(double &mx, double &my)
     auto y = m_glass->figureY();
     y += m_autoMovingSpeed;
 
+    //! Сброс фигуры
+    if (isAdvancedChannelAboveBoundNow(0))
+    {
+        y = 1000;
+    }
+
     //! Устанавливаем фигуру на позицию согласно координатам маркера и
     //! проверяем, положена ли фигура
-    if (m_glass->setFigureCoordinates(mx + scene()->sceneRect().width() / 2 - m_offsX, y) &&
-            isAdvancedChannelAboveBound(0))
+    if (m_glass->setFigureCoordinates(mx + scene()->sceneRect().width() / 2 - m_offsX, y))
     {
         //! Если положена, то...
         putFigure();
