@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>325</width>
-    <height>96</height>
+    <height>141</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -82,13 +82,146 @@
          <number>10</number>
         </property>
         <property name="maximum">
-         <number>80</number>
+         <number>150</number>
         </property>
         <property name="singleStep">
          <number>10</number>
         </property>
         <property name="value">
          <number>50</number>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QFrame" name="frMaxSize">
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout_15">
+      <property name="leftMargin">
+       <number>4</number>
+      </property>
+      <property name="topMargin">
+       <number>2</number>
+      </property>
+      <property name="rightMargin">
+       <number>4</number>
+      </property>
+      <property name="bottomMargin">
+       <number>2</number>
+      </property>
+      <item>
+       <widget class="QLabel" name="lblMaxSize">
+        <property name="text">
+         <string>Максимальный размер</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <spacer name="horizontalSpacer_15">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
+       <widget class="QSpinBox" name="edMaxSize">
+        <property name="minimumSize">
+         <size>
+          <width>70</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="minimum">
+         <number>10</number>
+        </property>
+        <property name="maximum">
+         <number>120</number>
+        </property>
+        <property name="singleStep">
+         <number>5</number>
+        </property>
+        <property name="value">
+         <number>60</number>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QFrame" name="frColor">
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout_14">
+      <property name="leftMargin">
+       <number>4</number>
+      </property>
+      <property name="topMargin">
+       <number>2</number>
+      </property>
+      <property name="rightMargin">
+       <number>4</number>
+      </property>
+      <property name="bottomMargin">
+       <number>2</number>
+      </property>
+      <item>
+       <widget class="QLabel" name="lblColor">
+        <property name="text">
+         <string>Цвет</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <spacer name="horizontalSpacer_14">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
+       <widget class="QFrame" name="frColorSample">
+        <property name="minimumSize">
+         <size>
+          <width>40</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::StyledPanel</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Raised</enum>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btnSetColor">
+        <property name="text">
+         <string>Выбрать...</string>
         </property>
        </widget>
       </item>
@@ -123,13 +256,47 @@
      <y>10</y>
     </hint>
     <hint type="destinationlabel">
-     <x>329</x>
+     <x>324</x>
      <y>3</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>edMaxSize</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>BubblesIrriantSettingsWidget</receiver>
+   <slot>on_MaxSizeChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>292</x>
+     <y>41</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>325</x>
+     <y>31</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btnSetColor</sender>
+   <signal>pressed()</signal>
+   <receiver>BubblesIrriantSettingsWidget</receiver>
+   <slot>on_btnSetColorClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>291</x>
+     <y>71</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>325</x>
+     <y>61</y>
     </hint>
    </hints>
   </connection>
  </connections>
  <slots>
   <slot>on_bubblesCountChanged(int)</slot>
+  <slot>on_MaxSizeChanged(int)</slot>
+  <slot>on_btnSetColorClicked()</slot>
  </slots>
 </ui>

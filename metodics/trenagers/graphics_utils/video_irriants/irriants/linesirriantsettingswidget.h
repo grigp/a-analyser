@@ -27,6 +27,8 @@ private slots:
 private:
     Ui::LinesIrriantSettingsWidget *ui;
 
+    void setSampleColor(const QColor color);
+
     LinesIrriant* m_irritant {nullptr};
 };
 

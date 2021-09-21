@@ -20,6 +20,7 @@ LinesIrriantSettingsWidget::LinesIrriantSettingsWidget(LinesIrriant* irritant, Q
     ui->edSpeed->setValue(m_irritant->speed());
     ui->edWidth->setValue(m_irritant->width());
     ui->edDutyCicle->setValue(m_irritant->dutyCycle());
+    setSampleColor(m_irritant->color());
 
     setStyleSheet("font-size: 9pt;");
     ui->edSpeed->setStyleSheet("font-size: 8pt;");
@@ -62,10 +63,14 @@ void LinesIrriantSettingsWidget::on_dutyCicleChanged(int dc)
 void LinesIrriantSettingsWidget::on_btnSetColorClicked()
 {
     auto palette = ui->frColorSample->palette();
-    auto color = QColorDialog::getColor(palette.color(QPalette::Background));
+    auto col = QColorDialog::getColor(palette.color(QPalette::Background));
+    setSampleColor(col);
+    m_irritant->setColor(col);
+}
 
+void LinesIrriantSettingsWidget::setSampleColor(const QColor color)
+{
     ui->frColorSample->setStyleSheet("background-color:rgb(" + QString::number(color.red()) + ", "
                                                              + QString::number(color.green()) + ", "
                                                              + QString::number(color.blue()) + ")");
-    m_irritant->setColor(color);
 }

@@ -19,10 +19,14 @@ public:
 
 private slots:
     void on_bubblesCountChanged(int value);
+    void on_MaxSizeChanged(int size);
+    void on_btnSetColorClicked();
 
 
 private:
     Ui::BubblesIrriantSettingsWidget *ui;
+
+    void setSampleColor(const QColor color);
 
     BubblesIrriant* m_irritant {nullptr};
 };
