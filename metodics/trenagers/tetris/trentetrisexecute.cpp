@@ -105,6 +105,11 @@ void TrenTetrisExecute::setParams(const QJsonObject &params)
     m_markerObj = params["marker"].toObject();
     m_glassObj = params["glass"].toObject();
 
+    auto objSS = params["sounds"].toObject();
+    m_soundSheme.take = objSS["take"].toString();
+    m_soundSheme.put = objSS["put"].toString();
+    m_soundSheme.deleteRow = objSS["delete"].toString();
+
     assignParams();
 }
 
@@ -114,6 +119,12 @@ void TrenTetrisExecute::on_recording()
 
     m_rowsDeleted = 0;
     changeRowsDeleted(0);
+}
+
+void TrenTetrisExecute::setAdvancedChannels()
+{
+    TrenStabExecute::setAdvancedChannels();
+    setAdvancedChannelEnable(1, m_complexityMode == TrenTetrisDefines::cmFigures);
 }
 
 void TrenTetrisExecute::elementsInteraction(DeviceProtocols::DeviceData *data)
@@ -140,7 +151,7 @@ void TrenTetrisExecute::elementsInteraction(DeviceProtocols::DeviceData *data)
                 autoDescentModeInteraction(mx, my);
 
             //! Поворот фигуры с помощью доп. канала
-            if (isAdvancedChannelAboveBoundNow(1))
+            if (isAdvancedChannelAboveBoundNow(1, false))
                 m_glass->rotateFigure();
 
             if (isGlassFull())
@@ -203,6 +214,12 @@ void TrenTetrisExecute::takeModeInteraction(double &mx, double &my)
             m_offsY = mys - fig.center().y();
             m_tmStage = TrenTetrisDefines::tmsPut;
             m_marker->setVisible(false);
+
+            if (m_soundSheme.take != "")
+            {
+                m_player.setMedia(QUrl("qrc:/sound/" + m_soundSheme.take));
+                m_player.play();
+            }
         }
     }
     else
@@ -224,6 +241,12 @@ void TrenTetrisExecute::takeModeInteraction(double &mx, double &my)
             m_glass->setNewFigure(m_nextFigure);
             m_nextFigure = newFigure();
             m_marker->setVisible(true);
+
+            if (m_soundSheme.put != "")
+            {
+                m_player.setMedia(QUrl("qrc:/sound/" + m_soundSheme.put));
+                m_player.play();
+            }
         }
     }
 }
@@ -478,6 +501,13 @@ void TrenTetrisExecute::deleteRows()
         QTimer::singleShot(1000, [=]
         {
             m_glass->clearDeletingCubes();
+
+            if (fullRows.size() > 0 && m_soundSheme.deleteRow != "")
+            {
+                m_player.setMedia(QUrl("qrc:/sound/" + m_soundSheme.deleteRow));
+                m_player.play();
+            }
+
             //! Удаляем, начиная с верхней строчки, ибо, если наоборот, то номера последующих удаляемых строчек меняются
             for (int i = fullRows.size() - 1; i >= 0; --i)
             {
@@ -522,6 +552,13 @@ void TrenTetrisExecute::deleteOneColorCubes(const QList<QPoint> lastFigCubes)
                 QTimer::singleShot(1000, [=]
                 {
                     m_glass->clearDeletingCubes();
+
+                    if (oneColorCubes.size() > 0 && m_soundSheme.deleteRow != "")
+                    {
+                        m_player.setMedia(QUrl("qrc:/sound/" + m_soundSheme.deleteRow));
+                        m_player.play();
+                    }
+
                     foreach (auto cube, oneColorCubes)
                         m_glass->setValue(cube.x(), cube.y(), Qt::black);
                     foreach (auto cube, oneColorCubes)

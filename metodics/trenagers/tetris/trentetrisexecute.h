@@ -16,6 +16,17 @@
 #include "graphiccommon.h"
 #include "trenstabexecute.h"
 
+/*!
+ * \brief Структура параметров звуковой схемы SoundSheme struct
+ */
+struct SoundSheme
+{
+    QString take;
+    QString put;
+    QString deleteRow;
+};
+
+
 class TetrisGlass;
 
 namespace Ui {
@@ -39,6 +50,12 @@ protected slots:
     void on_recording() override;
 
 protected:
+    /*!
+     * \brief Формирует список дополнительных каналов для выбора управления
+     * По формату получаем список каналов этого формата, которые передает драйвер, заносим их в список для выбора
+     */
+    void setAdvancedChannels() override;
+
     /*!
      * \brief Взаимодействие элементов
      * Все управление сценой, маркеры и т.д.
@@ -208,6 +225,9 @@ private:
     QWidget* m_wgtNextFigurePW {nullptr};  ///< Виджет для отображения следующей фигуры в окне пациента
 
     TrenTetrisDefines::TakeModeStage m_tmStage {TrenTetrisDefines::tmsTake};   ///< Этап а режиме захвата - укладки
+
+    QMediaPlayer m_player;
+    SoundSheme m_soundSheme;
 };
 
 #endif // TRENTETRISEXECUTE_H

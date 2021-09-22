@@ -68,6 +68,7 @@ QJsonObject TrenTetrisParamsDialog::getParams()
 
 void TrenTetrisParamsDialog::onPhisioChanEnabledChange(bool enabled)
 {
-    ui->frForce->setEnabled(enabled);
-    ui->frMyogram->setEnabled(enabled);
+    Q_UNUSED(enabled);
+//    ui->frForce->setEnabled(enabled);
+//    ui->frMyogram->setEnabled(enabled);
 }

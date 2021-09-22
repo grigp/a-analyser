@@ -100,7 +100,7 @@ protected:
      * \brief Формирует список дополнительных каналов для выбора управления
      * По формату получаем список каналов этого формата, которые передает драйвер, заносим их в список для выбора
      */
-    void setAdvancedChannels();
+    virtual void setAdvancedChannels();
 
     /*!
      * \brief Устанавливает, будет ли использоваться дополнительный канал управления
@@ -252,13 +252,15 @@ protected:
     /*!
      * \brief Возвращает true, если физиологический канал разрешен и превысил пороговое значение
      * Возвращает true, если физиологический канал запрещен
+     * \param isCommonAllowing - учитывать ли глобальное запрещение
      */
-    bool isAdvancedChannelAboveBound(const int chan);
+    bool isAdvancedChannelAboveBound(const int chan, const bool isCommonAllowing = true);
     /*!
      * \brief Возвращает true, если физиологический канал разрешен и только что превысил пороговое значение
      * Возвращает false, если физиологический канал запрещен
+     * \param isCommonAllowing - учитывать ли глобальное запрещение
      */
-    bool isAdvancedChannelAboveBoundNow(const int chan);
+    bool isAdvancedChannelAboveBoundNow(const int chan, const bool isCommonAllowing = true);
 
     virtual QString getAutoSaveParamsSectionName() const {return "Trenager";}
 

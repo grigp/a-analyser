@@ -341,6 +341,8 @@ void TrenExecute::setAdvancedChannels()
         }
     }
     ui->frAdvChannels->setVisible(m_isPhisioChannel);
+    ui->frSelectAdvChannel->setVisible(m_isPhisioChannel);
+    ui->frSelectAdvChannel_2->setVisible(m_isPhisioChannel);
 
     //! Установка дефолтных значений
     m_AdvChannel0Select = new SettingsValue("SelectionValues/" + getAutoSaveParamsSectionName(), "AdvChannel0", 0);
@@ -358,6 +360,10 @@ void TrenExecute::setAdvancedChannels()
 
 void TrenExecute::setAdvancedChannelEnable(const int chan, const bool enable)
 {
+    //! Глобальное включение. И именно так, ui->frAdvChannels->setVisible(enable) выключит, если выключим для одного канала, а для другого может быть включен
+    if (enable)
+        ui->frAdvChannels->setVisible(true);
+
     if (chan == 0)
         ui->frSelectAdvChannel->setVisible(enable);
     else
@@ -566,7 +572,7 @@ double TrenExecute::advancedValue(const int chan) const
     return 0;
 }
 
-bool TrenExecute::isAdvancedChannelAboveBound(const int chan)
+bool TrenExecute::isAdvancedChannelAboveBound(const int chan, const bool isCommonAllowing)
 {
     auto isAboveBound = [&](QComboBox* comboBox, double& value)
     {
@@ -580,7 +586,7 @@ bool TrenExecute::isAdvancedChannelAboveBound(const int chan)
         return true;
     };
 
-   if (m_isPhisioChannel)
+    if ((isCommonAllowing && m_isPhisioChannel) || (!isCommonAllowing))
    {
        if (chan == 0)
        {
@@ -595,11 +601,11 @@ bool TrenExecute::isAdvancedChannelAboveBound(const int chan)
    return true;
 }
 
-bool TrenExecute::isAdvancedChannelAboveBoundNow(const int chan)
+bool TrenExecute::isAdvancedChannelAboveBoundNow(const int chan, const bool isCommonAllowing)
 {
-    if (m_isPhisioChannel)
+    if ((isCommonAllowing && m_isPhisioChannel) || (!isCommonAllowing))
     {
-        auto above = isAdvancedChannelAboveBound(chan);
+        auto above = isAdvancedChannelAboveBound(chan, isCommonAllowing);
         bool retval = false;
         if (chan == 0)
         {
