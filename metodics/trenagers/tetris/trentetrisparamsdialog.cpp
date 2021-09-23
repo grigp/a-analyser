@@ -39,7 +39,7 @@ void TrenTetrisParamsDialog::setParams(const QJsonObject &params)
 
     auto objPhisioChan = params["phisio_chan"].toObject();
     ui->cbUseAdvancedChannel->setChecked(objPhisioChan["enabled"].toBool());
-    ui->edForce->setValue(objPhisioChan["force"].toInt(20));
+    ui->edForce->setValue(objPhisioChan["force"].toInt(10));
     ui->edMyogram->setValue(objPhisioChan["myogram"].toInt(200));
     onPhisioChanEnabledChange(objPhisioChan["enabled"].toBool());
 }

@@ -47,7 +47,7 @@ void TrenExecute::setParams(const QJsonObject &params)
 
     auto objPhisioChan = params["phisio_chan"].toObject();
     m_isPhisioChannel = objPhisioChan["enabled"].toBool();
-    m_boundForce = objPhisioChan["force"].toInt(20);
+    m_boundForce = objPhisioChan["force"].toInt(10);
     m_boundMyogram = objPhisioChan["myogram"].toInt(200);
 
     QTimer::singleShot(0, this, &TrenExecute::start);

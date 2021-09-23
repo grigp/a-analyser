@@ -317,7 +317,7 @@
         },
         {
             "uid": "005ADEA5-EF51-4BFD-9E8D-F5CF41EE0B9D",
-            "name": "Trenager \"Octaedron\"",
+            "name": "Trainer \"Octaedron\"",
             "image": "Octaedron.png",
             "template": "met_octaedron_uid",
             "build_norms": false,
@@ -332,7 +332,7 @@
         },
         {
             "uid": "{CFCCCAA0-A520-49EF-9C04-EB57580E8CAD}",
-            "name": "Trenager \"Balls\"",
+            "name": "Trainer \"Balls\"",
             "image": "Balls.png",
             "template": "met_trentakeput_uid",
             "build_norms": false,
@@ -440,7 +440,7 @@
         },
         {
             "uid": "{BE743459-AF91-428A-9862-E177D614ABD3}",
-            "name": "Trenager \"Colored balls\"",
+            "name": "Trainer \"Colored balls\"",
             "image": "BallsColor.png",
             "template": "met_trentakeput_uid",
             "build_norms": false,
@@ -584,7 +584,7 @@
         },
         {
             "uid": "{24Bf2A64-064F-4264-85BD-F5F62AF7A804}",
-            "name": "Trenager \"Figures\"",
+            "name": "Trainer \"Figures\"",
             "image": "Figures.png",
             "template": "met_trentakeput_uid",
             "build_norms": false,
@@ -720,7 +720,7 @@
         },
         {
             "uid": "{D03ACE59-9144-42CB-B4BC-9970349906D9}",
-            "name": "Trenager \"Figures by cross\"",
+            "name": "Trainer \"Figures by cross\"",
             "image": "FiguresCross.png",
             "template": "met_trentakeput_uid",
             "build_norms": false,
@@ -849,7 +849,7 @@
         },
         {
             "uid": "{BDE82084-9568-4A7C-BA11-33A20BB14072}",
-            "name": "Trenager \"Puzzle\"",
+            "name": "Trainer \"Puzzle\"",
             "image": "Puzzle.png",
             "template": "met_trentakeput_uid",
             "build_norms": false,
@@ -977,7 +977,7 @@
         },
         {
             "uid": "{72EF6357-B6B0-48FF-9206-7A5D56ABB788 }",
-            "name": "Trenager \"World capitals\"",
+            "name": "Trainer \"World capitals\"",
             "image": "Capitals.png",
             "template": "met_trentakeput_uid",
             "build_norms": false,
@@ -1103,7 +1103,7 @@
         },
         {
             "uid": "{1E383953-2062-43DA-9AE8-0D73F2258FC5}",
-            "name": "Trenager \"Hunter\"",
+            "name": "Trainer \"Hunter\"",
             "image": "Hunter.png",
             "template": "met_trentakeput_uid",
             "build_norms": false,
@@ -1173,7 +1173,7 @@
         },
         {
             "uid": "{951DD0E9-E535-4BBB-8F54-DA53859A43C2}",
-            "name": "Trenager \"Hunting with time limit\"",
+            "name": "Trainer \"Hunting with a time limit\"",
             "image": "HunterTime.png",
             "template": "met_trentakeput_uid",
             "build_norms": false,
@@ -1244,7 +1244,7 @@
         },
         {
             "uid": "{7B3EBE0D-E670-4fC3-B4E4-DffC74857A21}",
-            "name": "Trenager \"Shooting gallery\"",
+            "name": "Trainer \"Shooting gallery\"",
             "image": "SootingRoom.png",
             "template": "met_trentakeput_uid",
             "build_norms": false,
@@ -1341,7 +1341,7 @@
         },
         {
             "uid": "{00B91519-842A-450D-93F1-1ADf104CDC0E}",
-            "name": "Тренажер \"Bird hunting\"",
+            "name": "Trainer \"Bird hunting\"",
             "image": "HunterBird.png",
             "template": "met_trentakeput_uid",
             "build_norms": false,
@@ -1414,7 +1414,7 @@
         },
         {
             "uid": "{03B9C401-061C-4FA4-BA98-6054FE8AE6BC}",
-            "name": "Trenager \"Air fight\"",
+            "name": "Trainer \"Air fight\"",
             "image": "AirFight.png",
             "template": "met_trentakeput_uid",
             "build_norms": false,
@@ -1485,6 +1485,710 @@
                 "stage": "all_elements",
                 "delay_after_stage": 500,
                 "scale": 1,
+                "time": 120
+            }
+        },
+        {
+            "uid": "{EBD6CB19-6B14-4E18-8171-1C9685DF56C0}",
+            "name": "Trainer \"Tetris with a capture\"",
+            "image": "TetrisTake.png",
+            "template": "met_trentetris_uid",
+            "build_norms": false,
+            "kind": "{E7829C54-4F99-4870-A91C-404238B43E50}",
+            "params":
+            {
+                "moving_mode": "take",
+                "complexity": "figures",
+                "deleting": "rows",
+                "height": 21,
+                "width": 15,
+                "cube_image": "Cube1.png",
+                "rows_deleting_mode":
+                {
+                    "cube_color": "ffffff00",
+                    "glass_color": "ff00ffff",
+                    "last_color": "ffff00ff"
+                },
+                "colored_deleting_mode":
+                {
+                    "count": 3,
+                    "colors": [
+                        {
+                            "color": "ffff0000"
+                        },
+                        {
+                            "color": "ff00ff00"
+                        },
+                        {
+                            "color": "ff0000ff"
+                        },
+                        {
+                            "color": "ffffff00"
+                        },
+                        {
+                            "color": "ffff00ff"
+                        },
+                        {
+                            "color": "ff00ffff"
+                        }
+                    ]
+                },
+                "auto_moving_mode":
+                {
+                    "speed": 3
+                },
+                "marker": {
+                    "style": "picture",
+                    "image": "Marker3.png",
+                    "repaint": true,
+                    "color": "ffff0000",
+                    "advanced": "none"
+                },
+                "background": {
+                     "style": "plate",
+                     "image": "01.png",
+                     "borders": {
+                         "left": 0,
+                         "top": 0,
+                         "right": 0,
+                         "bottom": 0
+                     }
+                },
+                "glass": {
+                     "style": "plate",
+                     "image": "09.png",
+                     "color": "f8f8f8ff",
+                     "frames": {
+                        "bottom": "01_bottom.png",
+                        "corner_left": "01_corner_left.png",
+                        "corner_right": "01_corner_right.png",
+                        "left": "01_left.png",
+                        "right": "01_right.png",
+                        "color": "0000ffff"
+                    }
+                },
+                "sounds": {
+                    "take": "03.wav",
+                    "put": "04.wav",
+                    "delete": "05.wav"
+                },
+                "scale": 2,
+                "time": 240
+            }
+        },
+        {
+            "uid": "{A172B635-136E-4602-B735-51391551A3A7}",
+            "name": "Trainer \"Colored tetris with a capture\"",
+            "image": "TetrisColorTake.png",
+            "template": "met_trentetris_uid",
+            "build_norms": false,
+            "kind": "{E7829C54-4F99-4870-A91C-404238B43E50}",
+            "params":
+            {
+                "moving_mode": "take",
+                "complexity": "figures",
+                "deleting": "colored",
+                "height": 21,
+                "width": 15,
+                "cube_image": "Cube1.png",
+                "rows_deleting_mode":
+                {
+                    "cube_color": "ffffff00",
+                    "glass_color": "ff00ffff",
+                    "last_color": "ffff00ff"
+                },
+                "colored_deleting_mode":
+                {
+                    "count": 3,
+                    "colors": [
+                        {
+                            "color": "ffff0000"
+                        },
+                        {
+                            "color": "ff00ff00"
+                        },
+                        {
+                            "color": "ff0000ff"
+                        },
+                        {
+                            "color": "ffffff00"
+                        },
+                        {
+                            "color": "ffff00ff"
+                        },
+                        {
+                            "color": "ff00ffff"
+                        }
+                    ]
+                },
+                "auto_moving_mode":
+                {
+                    "speed": 3
+                },
+                "marker": {
+                    "style": "picture",
+                    "image": "Marker3.png",
+                    "repaint": true,
+                    "color": "ffff0000",
+                    "advanced": "none"
+                },
+                "background": {
+                     "style": "plate",
+                     "image": "01.png",
+                     "borders": {
+                         "left": 0,
+                         "top": 0,
+                         "right": 0,
+                         "bottom": 0
+                     }
+                },
+                "glass": {
+                     "style": "plate",
+                     "image": "09.png",
+                     "color": "f8f8f8ff",
+                     "frames": {
+                        "bottom": "01_bottom.png",
+                        "corner_left": "01_corner_left.png",
+                        "corner_right": "01_corner_right.png",
+                        "left": "01_left.png",
+                        "right": "01_right.png",
+                        "color": "0000ffff"
+                    }
+                },
+                "sounds": {
+                    "take": "03.wav",
+                    "put": "04.wav",
+                    "delete": "05.wav"
+                },
+                "scale": 2,
+                "time": 240
+            }
+        },
+        {
+            "uid": "{B13FA83F-0447-4871-A238-FC0496A4D06C}",
+            "name": "Trainer \"Tetris\"",
+            "image": "Tetris.png",
+            "template": "met_trentetris_uid",
+            "build_norms": false,
+            "kind": "{E7829C54-4F99-4870-A91C-404238B43E50}",
+            "params":
+            {
+                "moving_mode": "auto",
+                "complexity": "figures",
+                "deleting": "rows",
+                "height": 21,
+                "width": 15,
+                "cube_image": "Cube1.png",
+                "rows_deleting_mode":
+                {
+                    "cube_color": "ffffff00",
+                    "glass_color": "ff00ffff",
+                    "last_color": "ffff00ff"
+                },
+                "colored_deleting_mode":
+                {
+                    "count": 3,
+                    "colors": [
+                        {
+                            "color": "ffff0000"
+                        },
+                        {
+                            "color": "ff00ff00"
+                        },
+                        {
+                            "color": "ff0000ff"
+                        },
+                        {
+                            "color": "ffffff00"
+                        },
+                        {
+                            "color": "ffff00ff"
+                        },
+                        {
+                            "color": "ff00ffff"
+                        }
+                    ]
+                },
+                "auto_moving_mode":
+                {
+                    "speed": 3
+                },
+                "marker": {
+                    "style": "picture",
+                    "image": "Marker3.png",
+                    "repaint": true,
+                    "color": "ffff0000",
+                    "advanced": "none"
+                },
+                "background": {
+                     "style": "plate",
+                     "image": "01.png",
+                     "borders": {
+                         "left": 0,
+                         "top": 0,
+                         "right": 0,
+                         "bottom": 0
+                     }
+                },
+                "glass": {
+                     "style": "plate",
+                     "image": "09.png",
+                     "color": "f8f8f8ff",
+                     "frames": {
+                        "bottom": "01_bottom.png",
+                        "corner_left": "01_corner_left.png",
+                        "corner_right": "01_corner_right.png",
+                        "left": "01_left.png",
+                        "right": "01_right.png",
+                        "color": "0000ffff"
+                    }
+                },
+                "sounds": {
+                    "take": "03.wav",
+                    "put": "04.wav",
+                    "delete": "05.wav"
+                },
+                "scale": 2,
+                "time": 240
+            }
+        },
+        {
+            "uid": "{021EF208-1339-4513-83D9-904BA06A1458}",
+            "name": "Trainer \"Colored tetris\"",
+            "image": "TetrisColor.png",
+            "template": "met_trentetris_uid",
+            "build_norms": false,
+            "kind": "{E7829C54-4F99-4870-A91C-404238B43E50}",
+            "params":
+            {
+                "moving_mode": "auto",
+                "complexity": "figures",
+                "deleting": "colored",
+                "height": 21,
+                "width": 15,
+                "cube_image": "Cube1.png",
+                "rows_deleting_mode":
+                {
+                    "cube_color": "ffffff00",
+                    "glass_color": "ff00ffff",
+                    "last_color": "ffff00ff"
+                },
+                "colored_deleting_mode":
+                {
+                    "count": 3,
+                    "colors": [
+                        {
+                            "color": "ffff0000"
+                        },
+                        {
+                            "color": "ff00ff00"
+                        },
+                        {
+                            "color": "ff0000ff"
+                        },
+                        {
+                            "color": "ffffff00"
+                        },
+                        {
+                            "color": "ffff00ff"
+                        },
+                        {
+                            "color": "ff00ffff"
+                        }
+                    ]
+                },
+                "auto_moving_mode":
+                {
+                    "speed": 3
+                },
+                "marker": {
+                    "style": "picture",
+                    "image": "Marker3.png",
+                    "repaint": true,
+                    "color": "ffff0000",
+                    "advanced": "none"
+                },
+                "background": {
+                     "style": "plate",
+                     "image": "01.png",
+                     "borders": {
+                         "left": 0,
+                         "top": 0,
+                         "right": 0,
+                         "bottom": 0
+                     }
+                },
+                "glass": {
+                     "style": "plate",
+                     "image": "09.png",
+                     "color": "f8f8f8ff",
+                     "frames": {
+                        "bottom": "01_bottom.png",
+                        "corner_left": "01_corner_left.png",
+                        "corner_right": "01_corner_right.png",
+                        "left": "01_left.png",
+                        "right": "01_right.png",
+                        "color": "0000ffff"
+                    }
+                },
+                "sounds": {
+                    "take": "03.wav",
+                    "put": "04.wav",
+                    "delete": "05.wav"
+                },
+                "scale": 2,
+                "time": 240
+            }
+        },
+        {
+            "uid": "{5130376D-623B-43E6-A15A-3FFF092C493B}",
+            "name": "Trainer \"Cubes with a capture\"",
+            "image": "TetrisCubesTake.png",
+            "template": "met_trentetris_uid",
+            "build_norms": false,
+            "kind": "{848935A7-394E-42F9-9320-41ABD2ED5E5B}",
+            "params":
+            {
+                "moving_mode": "take",
+                "complexity": "cubes",
+                "deleting": "rows",
+                "height": 7,
+                "width": 5,
+                "cube_image": "Cube1.png",
+                "rows_deleting_mode":
+                {
+                    "cube_color": "ffffff00",
+                    "glass_color": "ff00ffff",
+                    "last_color": "ffff00ff"
+                },
+                "colored_deleting_mode":
+                {
+                    "count": 3,
+                    "colors": [
+                        {
+                            "color": "ffff0000"
+                        },
+                        {
+                            "color": "ff00ff00"
+                        },
+                        {
+                            "color": "ff0000ff"
+                        },
+                        {
+                            "color": "ffffff00"
+                        },
+                        {
+                            "color": "ffff00ff"
+                        },
+                        {
+                            "color": "ff00ffff"
+                        }
+                    ]
+                },
+                "auto_moving_mode":
+                {
+                    "speed": 3
+                },
+                "marker": {
+                    "style": "picture",
+                    "image": "Marker3.png",
+                    "repaint": true,
+                    "color": "ffff0000",
+                    "advanced": "none"
+                },
+                "background": {
+                     "style": "plate",
+                     "image": "01.png",
+                     "borders": {
+                         "left": 0,
+                         "top": 0,
+                         "right": 0,
+                         "bottom": 0
+                     }
+                },
+                "glass": {
+                     "style": "plate",
+                     "image": "09.png",
+                     "color": "f8f8f8ff",
+                     "frames": {
+                        "bottom": "01_bottom.png",
+                        "corner_left": "01_corner_left.png",
+                        "corner_right": "01_corner_right.png",
+                        "left": "01_left.png",
+                        "right": "01_right.png",
+                        "color": "0000ffff"
+                    }
+                },
+                "sounds": {
+                    "take": "03.wav",
+                    "put": "04.wav",
+                    "delete": "05.wav"
+                },
+                "scale": 2,
+                "time": 120
+            }
+        },
+        {
+            "uid": "{F14869E1-BCAD-47B7-9E9B-6A82B3BA3F33}",
+            "name": "Trainer \"Colored cubes with a capture\"",
+            "image": "TetrisCubesColorTake.png",
+            "template": "met_trentetris_uid",
+            "build_norms": false,
+            "kind": "{848935A7-394E-42F9-9320-41ABD2ED5E5B}",
+            "params":
+            {
+                "moving_mode": "take",
+                "complexity": "cubes",
+                "deleting": "colored",
+                "height": 7,
+                "width": 5,
+                "cube_image": "Cube1.png",
+                "rows_deleting_mode":
+                {
+                    "cube_color": "ffffff00",
+                    "glass_color": "ff00ffff",
+                    "last_color": "ffff00ff"
+                },
+                "colored_deleting_mode":
+                {
+                    "count": 3,
+                    "colors": [
+                        {
+                            "color": "ffff0000"
+                        },
+                        {
+                            "color": "ff00ff00"
+                        },
+                        {
+                            "color": "ff0000ff"
+                        },
+                        {
+                            "color": "ffffff00"
+                        },
+                        {
+                            "color": "ffff00ff"
+                        },
+                        {
+                            "color": "ff00ffff"
+                        }
+                    ]
+                },
+                "auto_moving_mode":
+                {
+                    "speed": 3
+                },
+                "marker": {
+                    "style": "picture",
+                    "image": "Marker3.png",
+                    "repaint": true,
+                    "color": "ffff0000",
+                    "advanced": "none"
+                },
+                "background": {
+                     "style": "plate",
+                     "image": "01.png",
+                     "borders": {
+                         "left": 0,
+                         "top": 0,
+                         "right": 0,
+                         "bottom": 0
+                     }
+                },
+                "glass": {
+                     "style": "plate",
+                     "image": "09.png",
+                     "color": "f8f8f8ff",
+                     "frames": {
+                        "bottom": "01_bottom.png",
+                        "corner_left": "01_corner_left.png",
+                        "corner_right": "01_corner_right.png",
+                        "left": "01_left.png",
+                        "right": "01_right.png",
+                        "color": "0000ffff"
+                    }
+                },
+                "sounds": {
+                    "take": "03.wav",
+                    "put": "04.wav",
+                    "delete": "05.wav"
+                },
+                "scale": 2,
+                "time": 120
+            }
+        },
+        {
+            "uid": "{74BE1B57-EB41-49C1-BE23-7BD38426035E}",
+            "name": "Trainer \"Cubes\"",
+            "image": "TetrisCubes.png",
+            "template": "met_trentetris_uid",
+            "build_norms": false,
+            "kind": "{848935A7-394E-42F9-9320-41ABD2ED5E5B}",
+            "params":
+            {
+                "moving_mode": "auto",
+                "complexity": "cubes",
+                "deleting": "rows",
+                "height": 7,
+                "width": 5,
+                "cube_image": "Cube1.png",
+                "rows_deleting_mode":
+                {
+                    "cube_color": "ffffff00",
+                    "glass_color": "ff00ffff",
+                    "last_color": "ffff00ff"
+                },
+                "colored_deleting_mode":
+                {
+                    "count": 3,
+                    "colors": [
+                        {
+                            "color": "ffff0000"
+                        },
+                        {
+                            "color": "ff00ff00"
+                        },
+                        {
+                            "color": "ff0000ff"
+                        },
+                        {
+                            "color": "ffffff00"
+                        },
+                        {
+                            "color": "ffff00ff"
+                        },
+                        {
+                            "color": "ff00ffff"
+                        }
+                    ]
+                },
+                "auto_moving_mode":
+                {
+                    "speed": 3
+                },
+                "marker": {
+                    "style": "picture",
+                    "image": "Marker3.png",
+                    "repaint": true,
+                    "color": "ffff0000",
+                    "advanced": "none"
+                },
+                "background": {
+                     "style": "plate",
+                     "image": "01.png",
+                     "borders": {
+                         "left": 0,
+                         "top": 0,
+                         "right": 0,
+                         "bottom": 0
+                     }
+                },
+                "glass": {
+                     "style": "plate",
+                     "image": "09.png",
+                     "color": "f8f8f8ff",
+                     "frames": {
+                        "bottom": "01_bottom.png",
+                        "corner_left": "01_corner_left.png",
+                        "corner_right": "01_corner_right.png",
+                        "left": "01_left.png",
+                        "right": "01_right.png",
+                        "color": "0000ffff"
+                    }
+                },
+                "sounds": {
+                    "take": "03.wav",
+                    "put": "04.wav",
+                    "delete": "05.wav"
+                },
+                "scale": 2,
+                "time": 120
+            }
+        },
+        {
+            "uid": "{770851F5-980D-44B7-9C2F-A35703137CF2}",
+            "name": "Trainer \"Colored cubes\"",
+            "image": "TetrisCubesColor.png",
+            "template": "met_trentetris_uid",
+            "build_norms": false,
+            "kind": "{848935A7-394E-42F9-9320-41ABD2ED5E5B}",
+            "params":
+            {
+                "moving_mode": "auto",
+                "complexity": "cubes",
+                "deleting": "colored",
+                "height": 7,
+                "width": 5,
+                "cube_image": "Cube1.png",
+                "rows_deleting_mode":
+                {
+                    "cube_color": "ffffff00",
+                    "glass_color": "ff00ffff",
+                    "last_color": "ffff00ff"
+                },
+                "colored_deleting_mode":
+                {
+                    "count": 3,
+                    "colors": [
+                        {
+                            "color": "ffff0000"
+                        },
+                        {
+                            "color": "ff00ff00"
+                        },
+                        {
+                            "color": "ff0000ff"
+                        },
+                        {
+                            "color": "ffffff00"
+                        },
+                        {
+                            "color": "ffff00ff"
+                        },
+                        {
+                            "color": "ff00ffff"
+                        }
+                    ]
+                },
+                "auto_moving_mode":
+                {
+                    "speed": 3
+                },
+                "marker": {
+                    "style": "picture",
+                    "image": "Marker3.png",
+                    "repaint": true,
+                    "color": "ffff0000",
+                    "advanced": "none"
+                },
+                "background": {
+                     "style": "plate",
+                     "image": "01.png",
+                     "borders": {
+                         "left": 0,
+                         "top": 0,
+                         "right": 0,
+                         "bottom": 0
+                     }
+                },
+                "glass": {
+                     "style": "plate",
+                     "image": "09.png",
+                     "color": "f8f8f8ff",
+                     "frames": {
+                        "bottom": "01_bottom.png",
+                        "corner_left": "01_corner_left.png",
+                        "corner_right": "01_corner_right.png",
+                        "left": "01_left.png",
+                        "right": "01_right.png",
+                        "color": "0000ffff"
+                    }
+                },
+                "sounds": {
+                    "take": "03.wav",
+                    "put": "04.wav",
+                    "delete": "05.wav"
+                },
+                "scale": 2,
                 "time": 120
             }
         }
