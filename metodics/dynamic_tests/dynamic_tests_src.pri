@@ -4,6 +4,7 @@ include(cross/cross_src.pri)
 include(step_offset/step_offset_src.pri)
 include(evolventa/evolventa_src.pri)
 include(octaedron/octaedron_src.pri)
+include(boxer_dodging/boxer_dodging_src.pri)
 
 HEADERS += \
     $$PWD/stabdynamictestexecute.h \

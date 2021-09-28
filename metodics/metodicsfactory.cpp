@@ -15,6 +15,7 @@
 #include "stepoffsettemplate.h"
 #include "evolventatemplate.h"
 #include "octaedrontemplate.h"
+#include "boxerdodgingtemplate.h"
 #include "datadefines.h"
 #include "dataprovider.h"
 
@@ -143,7 +144,9 @@ void MetodicsFactory::assignTemplates()
                 << new CrossTemplate(this)
                 << new StepOffsetTemplate(this)
                 << new EvolventaTemplate(this)
-                << new OctaedronTemplate(this);
+                << new OctaedronTemplate(this)
+                << new BoxerDodgingTemplate(this);
+
 }
 
 void MetodicsFactory::assignMetodics()

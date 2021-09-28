@@ -485,6 +485,21 @@
             }
         },
         {
+            "uid": "3E45F4DE-F959-425E-8067-D2B91F8B8B1D",
+            "name": "Тренажер с уклонением для боксеров",
+            "image": "BoxingDodging.png",
+            "template": "met_boxer_dodging_uid",
+            "build_norms": false,
+            "kind": "{E7829C54-4F99-4870-A91C-404238B43E50}",
+            "params":
+            {
+                "deviation_threshold": 30,
+                "time": 120,
+                "min_len": 4,
+                "max_len": 10
+            }
+        },
+        {
             "uid": "{CFCCCAA0-A520-49EF-9C04-EB57580E8CAD}",
             "name": "Тренажер \"Мячики\"",
             "image": "Balls.png",

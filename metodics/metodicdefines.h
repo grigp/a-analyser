@@ -19,6 +19,7 @@ namespace MetodicDefines
     static const QString MetUid_StepOffset = "met_step_offset_uid";
     static const QString MetUid_Evolventa = "met_evolventa_uid";
     static const QString MetUid_Octaedron = "met_octaedron_uid";
+    static const QString MetUid_BoxerDodging = "met_boxer_dodging_uid";
 
     static const QString MetName_StabTest = "Стабилометрическое тестирование";
     static const QString MetName_TrenTakePut = "Тренажер захвата - укладки";
@@ -33,6 +34,7 @@ namespace MetodicDefines
     static const QString MetName_StepOffset = "Тест \"Ступени\"";
     static const QString MetName_Evolventa = "Тест \"Эвольвента\"";
     static const QString MetName_Octaedron = "Тест \"Октаэдр\"";
+    static const QString MetName_BoxerDodging = "Тренажер с уклонением для боксеров";
 
     /*!
      * \brief Структура описания методики MetodicInfo struct
