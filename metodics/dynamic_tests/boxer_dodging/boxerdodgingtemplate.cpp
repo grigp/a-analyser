@@ -1,7 +1,10 @@
 #include "boxerdodgingtemplate.h"
 
+#include <QLayout>
+
 #include "metodicdefines.h"
 #include "boxerdodgingparamsdialog.h"
+#include "boxerdodgingexecute.h"
 
 BoxerDodgingTemplate::BoxerDodgingTemplate(QObject *parent)
     : MetodicTemplate(parent)
@@ -21,12 +24,10 @@ QString BoxerDodgingTemplate::name()
 
 QWidget *BoxerDodgingTemplate::execute(QWidget *parent, const QJsonObject &params)
 {
-//    auto *retval = new OctaedronExecute(parent);
-//    parent->layout()->addWidget(retval);
-//    retval->setParams(params);
-//    return retval;
-
-    return nullptr;
+    auto *retval = new BoxerDodgingExecute(parent);
+    parent->layout()->addWidget(retval);
+    retval->setParams(params);
+    return retval;
 }
 
 QWidget *BoxerDodgingTemplate::visualize(QWidget *parent, const QString &testUid)
