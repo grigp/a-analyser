@@ -1,5 +1,9 @@
 #include "boxerdodgingexecute.h"
 
+#include "boxerdodgingpatientwindow.h"
+#include "aanalyserapplication.h"
+
+#include <QDesktopWidget>
 #include <QTimer>
 
 BoxerDodgingExecute::BoxerDodgingExecute(QWidget *parent)
@@ -47,11 +51,25 @@ void BoxerDodgingExecute::fillSpecific(QFrame *frSpecific)
 void BoxerDodgingExecute::start()
 {
     StabDynamicTestExecute::start();
+
+    if (QApplication::desktop()->screenCount() > 1)
+        createAndShowPatientWindow();
 }
 
 void BoxerDodgingExecute::recording()
 {
     StabDynamicTestExecute::recording();
+
+    if (isRecording())
+    {
+        if (QApplication::desktop()->screenCount() == 1)
+            createAndShowPatientWindow();
+    }
+    else
+    {
+        if (QApplication::desktop()->screenCount() == 1)
+            hidePatientWindow();
+    }
 }
 
 void BoxerDodgingExecute::getData(DeviceProtocols::DeviceData *data)
@@ -67,4 +85,27 @@ void BoxerDodgingExecute::on_communicationError(const QString &drvName, const QS
 void BoxerDodgingExecute::createMarker()
 {
     addMarker();
+}
+
+void BoxerDodgingExecute::createAndShowPatientWindow()
+{
+    m_patientWin = new BoxerDodgingPatientWindow(this);
+
+    if (m_patientWin)
+    {
+        auto rect = static_cast<AAnalyserApplication*>(QApplication::instance())->getPatientWindowGeometry();
+        m_patientWin->resize(rect.size());
+        m_patientWin->move(rect.x(), rect.y());
+        m_patientWin->show();
+    }
+}
+
+void BoxerDodgingExecute::hidePatientWindow()
+{
+    if (m_patientWin)
+    {
+        BoxerDodgingPatientWindow *pw = m_patientWin;
+        m_patientWin = nullptr;
+        delete pw;
+    }
 }

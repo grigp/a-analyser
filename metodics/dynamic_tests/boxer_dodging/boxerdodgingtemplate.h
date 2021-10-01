@@ -5,6 +5,9 @@
 
 #include "metodictemplate.h"
 
+/*!
+ * \brief Класс шаблона методики тренажера с уклонением для боксеров BoxerDodgingTemplate class
+ */
 class BoxerDodgingTemplate : public MetodicTemplate
 {
     Q_OBJECT

@@ -8,6 +8,9 @@ namespace Ui {
 class BoxerDodgingParamsDialog;
 }
 
+/*!
+ * \brief Класс диалога параметров тренажера с уклонением для боксеров BoxerDodgingParamsDialog class
+ */
 class BoxerDodgingParamsDialog : public QDialog
 {
     Q_OBJECT

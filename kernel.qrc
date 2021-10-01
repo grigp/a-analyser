@@ -167,5 +167,7 @@
         <file>images/Frames/01_right.png</file>
         <file>images/info32.png</file>
         <file>images/Methodics/BoxingDodging.png</file>
+        <file>images/Boxing/Ring.png</file>
+        <file>images/Boxing/BoxerBase.png</file>
     </qresource>
 </RCC>

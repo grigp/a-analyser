@@ -6,6 +6,11 @@
 #include "stabdynamictestexecute.h"
 
 
+class BoxerDodgingPatientWindow;
+
+/*!
+ * \brief Класс проведения теста тренажера с уклонением для боксеров BoxerDodgingExecute class
+ */
 class BoxerDodgingExecute : public StabDynamicTestExecute
 {
     Q_OBJECT
@@ -49,6 +54,17 @@ protected slots:
 private:
     void createMarker();
 
+    /*!
+     * \brief Создает и показывает окно пациента
+     */
+    void createAndShowPatientWindow();
+
+    /*!
+     * \brief Прячет окно пациента
+     */
+    void hidePatientWindow();
+
+    BoxerDodgingPatientWindow* m_patientWin {nullptr};
 };
 
 #endif // BOXERDODGINGEXECUTE_H

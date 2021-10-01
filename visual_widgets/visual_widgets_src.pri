@@ -16,6 +16,7 @@ include(transients/transients_src.pri)
 include(dual_state_diagram/dual_state_diagram_src.pri)
 include(diag_octaedron/diag_octaedron_src.pri)
 include(tetris_figure/tetris_figure.pri)
+include(paint_mix/paint_mix_src.pri)
 
 HEADERS += \
 
