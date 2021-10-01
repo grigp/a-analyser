@@ -494,8 +494,8 @@
             "params":
             {
                 "deviation_threshold": 30,
-                "time": 120,
-                "min_len": 4,
+                "time": 180,
+                "min_len": 3,
                 "max_len": 10
             }
         },

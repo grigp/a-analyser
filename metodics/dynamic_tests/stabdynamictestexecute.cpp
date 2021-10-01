@@ -8,6 +8,7 @@
 #include "settingsprovider.h"
 #include "executewidget.h"
 #include "stabdynamictestpatientwindow.h"
+#include "baseutils.h"
 
 #include <QTimer>
 #include <QMessageBox>
@@ -92,6 +93,13 @@ void StabDynamicTestExecute::setVisibleRecordLength(const bool visible)
     ui->lblRecLenTitle->setVisible(visible);
     ui->lblRecLen->setVisible(visible);
     ui->pbRec->setVisible(visible);
+}
+
+void StabDynamicTestExecute::setRecordLength(const int length)
+{
+    m_recLength = length;
+    ui->lblRecLen->setText(BaseUtils::getTimeBySecCount(m_recLength / m_freqStab));
+
 }
 
 QString StabDynamicTestExecute::selectedChannel() const
@@ -206,6 +214,13 @@ void StabDynamicTestExecute::getData(DeviceProtocols::DeviceData *data)
         if (m_isRecording)
         {
             ++m_recCount;
+
+            if (m_recLength > 0)
+            {
+                ui->lblRecLen->setText(BaseUtils::getTimeBySecCount(m_recCount / m_freqStab) + " / " +
+                                       BaseUtils::getTimeBySecCount(m_recLength / m_freqStab));
+                ui->pbRec->setValue( m_recCount * 100 / m_recLength);
+            }
         }
 
 //        if (m_isRecording)

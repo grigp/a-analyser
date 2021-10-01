@@ -1,6 +1,8 @@
 #ifndef BOXERDODGINGPATIENTWINDOW_H
 #define BOXERDODGINGPATIENTWINDOW_H
 
+#include "boxerdodgingdefines.h"
+
 #include <QDialog>
 
 namespace Ui {
@@ -17,6 +19,13 @@ class BoxerDodgingPatientWindow : public QDialog
 public:
     explicit BoxerDodgingPatientWindow(QWidget *parent = nullptr);
     ~BoxerDodgingPatientWindow();
+
+    /*!
+     * \brief Устанавливает позицию боксера для этапа
+     * \param stage - код этапа
+     * \param visible - видимость
+     */
+    void setVisibleStage(const BoxerDodgingDefines::Stages stage, const bool visible);
 
 private:
     Ui::BoxerDodgingPatientWindow *ui;

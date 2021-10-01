@@ -63,6 +63,11 @@ protected:
     void isTraceControl(const bool isTrace);
 
     void setVisibleRecordLength(const bool visible);
+    /*!
+     * \brief Устанавливает длительность записи для отображения
+     * \param length - Длительность записи в пакетах
+     */
+    void setRecordLength(const int length);
 
     /*!
      * \brief Возвращает id выбранного канала
@@ -183,6 +188,7 @@ private:
     bool m_isPause {false};         ///< Есть ли пауза в записи в настоящий момент
                                     ///< Пауза может быть по любой причине и управлять ею надо в подклассах
     int m_recCount {0};             ///< Счетчик пакетов данных в пробе
+    int m_recLength {0};            ///< Длительность записи
 
     Driver* m_driver {nullptr};                             ///< Драйвер передающий данные
     DeviceProtocols::StabControl* m_stabControl {nullptr};  ///< Управление стабилографией в драйвере

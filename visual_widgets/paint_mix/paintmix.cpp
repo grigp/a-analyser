@@ -41,6 +41,7 @@ void PaintMix::setIsVisible(const int code, const bool isVisible)
     auto pi = m_pixmaps.value(code);
     pi.isVisible = isVisible;
     m_pixmaps.insert(code, pi);
+    update();
 }
 
 void PaintMix::paintEvent(QPaintEvent *event)

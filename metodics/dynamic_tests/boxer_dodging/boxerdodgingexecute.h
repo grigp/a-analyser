@@ -5,6 +5,8 @@
 #include <QWidget>
 #include "stabdynamictestexecute.h"
 
+#include "boxerdodgingdefines.h"
+
 
 class BoxerDodgingPatientWindow;
 
@@ -64,7 +66,21 @@ private:
      */
     void hidePatientWindow();
 
-    BoxerDodgingPatientWindow* m_patientWin {nullptr};
+    /*!
+     * \brief Переход на следующий этап
+     */
+    void nextStage(const bool isStart);
+
+    int m_deviationThreshold {30};
+    int m_time {180};
+    int m_stimulTimeMin {3};
+    int m_stimulTimeMax {10};
+
+    BoxerDodgingPatientWindow* m_patientWin {nullptr};                     ///< Окно пациента
+    BoxerDodgingDefines::Stages m_stage {BoxerDodgingDefines::bdsBase};    ///< Этап
+
+    int m_stageCounter {0};            ///< Счетчик пакетов на этапе
+    int m_nextStageCount {0};          ///< Кол-во пакетов для этапа
 };
 
 #endif // BOXERDODGINGEXECUTE_H

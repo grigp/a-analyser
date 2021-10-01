@@ -5,6 +5,7 @@
 
 #include <QDesktopWidget>
 #include <QTimer>
+#include <QDebug>
 
 BoxerDodgingExecute::BoxerDodgingExecute(QWidget *parent)
     : StabDynamicTestExecute (parent)
@@ -12,7 +13,6 @@ BoxerDodgingExecute::BoxerDodgingExecute(QWidget *parent)
     setTitle(tr("Тренажер с уклонением для боксеров"));
     isShowValues(false);
     isTraceControl(false);
-    setVisibleRecordLength(false);
 
     QTimer::singleShot(10, [=]
     {
@@ -28,6 +28,12 @@ BoxerDodgingExecute::~BoxerDodgingExecute()
 void BoxerDodgingExecute::setParams(const QJsonObject &params)
 {
     StabDynamicTestExecute::setParams(params);
+
+    m_deviationThreshold = params["deviation_threshold"].toInt();
+    m_time = params["time"].toInt();
+    m_stimulTimeMin = params["min_len"].toInt();
+    m_stimulTimeMax = params["max_len"].toInt();
+    setRecordLength(m_time * freqStab());
 }
 
 StabDynamicTestPatientWindow *BoxerDodgingExecute::createPatientWindow()
@@ -60,6 +66,9 @@ void BoxerDodgingExecute::recording()
 {
     StabDynamicTestExecute::recording();
 
+    m_stageCounter = 0;
+    nextStage(true);
+
     if (isRecording())
     {
         if (QApplication::desktop()->screenCount() == 1)
@@ -75,6 +84,22 @@ void BoxerDodgingExecute::recording()
 void BoxerDodgingExecute::getData(DeviceProtocols::DeviceData *data)
 {
     StabDynamicTestExecute::getData(data);
+
+    if (selectedChannel() == data->channelId())
+    {
+        if (isRecording())
+        {
+            ++m_stageCounter;
+            if (m_stageCounter >= m_nextStageCount)
+            {
+                nextStage(false);
+                m_stageCounter = 0;
+            }
+
+            if (recCount() >= m_time * freqStab())
+                finishTest();
+        }
+    }
 }
 
 void BoxerDodgingExecute::on_communicationError(const QString &drvName, const QString &port, const int errorCode)
@@ -108,4 +133,23 @@ void BoxerDodgingExecute::hidePatientWindow()
         m_patientWin = nullptr;
         delete pw;
     }
+}
+
+void BoxerDodgingExecute::nextStage(const bool isStart)
+{
+    //! Длительность следующего этапа в пакетах
+    m_nextStageCount = m_stimulTimeMin * freqStab() + qrand() % (freqStab() * (m_stimulTimeMax - m_stimulTimeMin));
+
+    //! Выбор следующего этапа
+    m_patientWin->setVisibleStage(m_stage, false);
+    if (isStart)  //! Для старта - всегда базовый
+        m_stage = BoxerDodgingDefines::bdsBase;
+    else          //! Для послеующих по очереди
+    {
+        if (m_stage == BoxerDodgingDefines::bdsBase)  //! Случайный
+            m_stage = static_cast<BoxerDodgingDefines::Stages>(qrand() % 4 + 1);
+        else                                          //! Базовый
+            m_stage = BoxerDodgingDefines::bdsBase;
+    }
+    m_patientWin->setVisibleStage(m_stage, true);
 }
