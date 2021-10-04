@@ -39,6 +39,7 @@ static QString cfNoSignal = "{90e313c6-8805-4235-8981-1fb85d7aea5f}";          /
  static QString ctStepOffsetResult = "{5A085503-191D-493E-AB99-F44E5277A465}";
  static QString ctEvolventaResult = "{00C24635-99EF-4811-AFEF-DA375AAC332A}";
  static QString ctOctaedronResult = "{2A1C5BE8-4862-4CC8-BE74-47E562722692}";
+ static QString ctBoxerDodgingResult = "{79CC9B9F-E327-41A2-811D-51E6A7D3CE9F}";
 
 
 /*!
@@ -79,6 +80,7 @@ static QString cfNoSignal = "{90e313c6-8805-4235-8981-1fb85d7aea5f}";          /
  static QString chanStepOffsetResult = "{62720541-7467-466E-9C18-2208AB303280}";
  static QString chanEvolventaResult = "{C3513F54-08B4-4E30-A2E0-D07987FAB84A}";
  static QString chanOctaedronResult = "{2B1AF94A-C4B7-4FA9-A173-1667413C2B99}";
+ static QString chanBoxerDodgingResult = "{0B1C5B04-3F5F-4A49-86DC-AC12047AD5CF}";
 
 /*!
  * \brief Структура информации о канале ChannelInfo struct

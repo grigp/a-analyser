@@ -49,5 +49,5 @@ void ChannelJsonData::toByteArray(QByteArray &data) const
 void ChannelJsonData::clear()
 {
     m_data = QJsonObject();
-    m_data["channel-id"] = m_channelId;
+    m_data["channel_id"] = m_channelId;
 }

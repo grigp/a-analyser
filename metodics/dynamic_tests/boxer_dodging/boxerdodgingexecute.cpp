@@ -1,7 +1,10 @@
 #include "boxerdodgingexecute.h"
 
+#include "channelsdefines.h"
 #include "boxerdodgingpatientwindow.h"
 #include "aanalyserapplication.h"
+#include "boxerdodgingresultdata.h"
+#include "testresultdata.h"
 
 #include <QDesktopWidget>
 #include <QTimer>
@@ -9,6 +12,7 @@
 
 BoxerDodgingExecute::BoxerDodgingExecute(QWidget *parent)
     : StabDynamicTestExecute (parent)
+    , m_res(new BoxerDodgingResultData(ChannelsDefines::chanBoxerDodgingResult))
 {
     setTitle(tr("Тренажер с уклонением для боксеров"));
     isShowValues(false);
@@ -46,6 +50,7 @@ StabDynamicTestPatientWindow *BoxerDodgingExecute::createPatientWindow()
 
 void BoxerDodgingExecute::finishTest()
 {
+    trd()->addChannel(m_res);
     StabDynamicTestExecute::finishTest();
 }
 
@@ -69,10 +74,15 @@ void BoxerDodgingExecute::recording()
     m_stageCounter = 0;
     nextStage(true);
 
+    m_res->clear();
+
     if (isRecording())
     {
         if (QApplication::desktop()->screenCount() == 1)
             createAndShowPatientWindow();
+        m_res->setFreq(freqStab());
+        m_res->setDiap(diap());
+        m_res->setDeviationThreshold(m_deviationThreshold);
     }
     else
     {
@@ -137,6 +147,8 @@ void BoxerDodgingExecute::hidePatientWindow()
 
 void BoxerDodgingExecute::nextStage(const bool isStart)
 {
+    m_res->addStage(m_stage, recCount());
+
     //! Длительность следующего этапа в пакетах
     m_nextStageCount = m_stimulTimeMin * freqStab() + qrand() % (freqStab() * (m_stimulTimeMax - m_stimulTimeMin));
 

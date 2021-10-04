@@ -9,6 +9,7 @@
 
 
 class BoxerDodgingPatientWindow;
+class BoxerDodgingResultData;
 
 /*!
  * \brief Класс проведения теста тренажера с уклонением для боксеров BoxerDodgingExecute class
@@ -81,6 +82,8 @@ private:
 
     int m_stageCounter {0};            ///< Счетчик пакетов на этапе
     int m_nextStageCount {0};          ///< Кол-во пакетов для этапа
+
+    BoxerDodgingResultData * m_res {nullptr};
 };
 
 #endif // BOXERDODGINGEXECUTE_H

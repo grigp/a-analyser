@@ -159,6 +159,10 @@ ChannelsUtils::ChannelsUtils()
                                                                     std::make_tuple(QString("Результаты тренажера \"Октаедр\""),
                                                                                     QString("OctaedronRes"),
                                                                                     ChannelsDefines::ctOctaedronResult))
+                 , std::pair<QString, ChannelsDefines::ChannelInfo>(ChannelsDefines::chanBoxerDodgingResult,
+                                                                    std::make_tuple(QString("Результаты тренажера с уклонением"),
+                                                                                    QString("OctaedronRes"),
+                                                                                    ChannelsDefines::ctBoxerDodgingResult))
                  , std::pair<QString, ChannelsDefines::ChannelInfo>(ChannelsDefines::chanTargetTraectory,
                                                                     std::make_tuple(QString("Траектория цели"),
                                                                                     QString("TargetTraectory"),
