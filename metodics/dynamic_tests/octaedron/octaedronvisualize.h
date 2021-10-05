@@ -18,7 +18,7 @@ class OctaedronVisualize : public QWidget
 
 public:
     explicit OctaedronVisualize(QWidget *parent = nullptr);
-    ~OctaedronVisualize();
+    ~OctaedronVisualize() override;
 
     void setTest(const QString &testUid);
 

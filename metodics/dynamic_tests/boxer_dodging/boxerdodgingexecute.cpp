@@ -147,8 +147,6 @@ void BoxerDodgingExecute::hidePatientWindow()
 
 void BoxerDodgingExecute::nextStage(const bool isStart)
 {
-    m_res->addStage(m_stage, recCount());
-
     //! Длительность следующего этапа в пакетах
     m_nextStageCount = m_stimulTimeMin * freqStab() + qrand() % (freqStab() * (m_stimulTimeMax - m_stimulTimeMin));
 
@@ -164,4 +162,6 @@ void BoxerDodgingExecute::nextStage(const bool isStart)
             m_stage = BoxerDodgingDefines::bdsBase;
     }
     m_patientWin->setVisibleStage(m_stage, true);
+
+    m_res->addStage(m_stage, recCount());
 }
