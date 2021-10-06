@@ -1,9 +1,9 @@
 #include "boxerdodgingmultifactor.h"
 
+#include "baseutils.h"
 #include "aanalyserapplication.h"
 #include "dataprovider.h"
 #include "channelsdefines.h"
-#include "boxerdodgingdefines.h"
 #include "boxerdodgingresultdata.h"
 #include "stabilogram.h"
 
@@ -230,13 +230,43 @@ void BoxerDodgingMultifactor::calculateFactors(Stabilogram* stab)
     m_fctBack.count = m_secBack.size();
 
     //! Расчет по направлениям
-        calculateFactorsForDirection(m_secLeft, m_fctLeft, stab);
-        calculateFactorsForDirection(m_secRight, m_fctRight, stab);
-        calculateFactorsForDirection(m_secAhead, m_fctAhead, stab);
-        calculateFactorsForDirection(m_secBack, m_fctBack, stab);
+    calculateFactorsForDirection(BoxerDodgingDefines::bdsLeftDodging, m_secLeft, m_fctLeft, stab);
+    calculateFactorsForDirection(BoxerDodgingDefines::bdsRightDodging, m_secRight, m_fctRight, stab);
+    calculateFactorsForDirection(BoxerDodgingDefines::bdsAheadBend, m_secAhead, m_fctAhead, stab);
+    calculateFactorsForDirection(BoxerDodgingDefines::bdsBackBend, m_secBack, m_fctBack, stab);
 }
 
-void BoxerDodgingMultifactor::calculateFactorsForDirection(const QList<BoxerDodgingMultifactor::Section> sections,
+void BoxerDodgingMultifactor::getDataBuffer(Stabilogram *stab, QVector<double> *buf,
+                                            const BoxerDodgingDefines::Stages code,
+                                            const int begin, const int end)
+{
+    //! Проверка границ участка
+    int b = begin;
+    if (b > stab->size()) b = stab->size();
+    int e = end;
+    if (e > stab->size()) e = stab->size();
+
+    //! Буфер должен быть пуст
+    buf->clear();
+    //! Заполнение
+    for (int i = b; i < e; ++i)
+    {
+        if (code == BoxerDodgingDefines::bdsLeftDodging)
+            buf->append(-stab->value(0, i));
+        else
+        if (code == BoxerDodgingDefines::bdsRightDodging)
+            buf->append(stab->value(0, i));
+        else
+        if (code == BoxerDodgingDefines::bdsAheadBend)
+            buf->append(stab->value(1, i));
+        else
+        if (code == BoxerDodgingDefines::bdsBackBend)
+            buf->append(-stab->value(1, i));
+    }
+}
+
+void BoxerDodgingMultifactor::calculateFactorsForDirection(const BoxerDodgingDefines::Stages code,
+                                                           const QList<BoxerDodgingMultifactor::Section> sections,
                                                            BoxerDodgingMultifactor::FactorsDirection &factors,
                                                            Stabilogram* stab)
 {
@@ -249,11 +279,49 @@ void BoxerDodgingMultifactor::calculateFactorsForDirection(const QList<BoxerDodg
     //! По участкам направления
     for (int i = 0; i < sections.size(); ++i)
     {
-        //! По сигналу на участке
-        for (int j = sections.at(i).begin; j < sections.at(i).end; ++j)
-        {
+        //! Выделение участка в отдельный буфер с диапзоном сигнала 0 - n
+        QVector<double> buffer;
+        getDataBuffer(stab, &buffer, code, sections.at(i).begin, sections.at(i).end);
 
+        //! Латентный период
+        BaseUtils::MidAndStandardDeviation msd;
+        //! Среднее за 0,5 сек от начала
+        for (int j = 0; j < buffer.size() && j < 0.5 * m_resData->freq(); ++j)
+            msd.add(buffer[j]);
+        double m = 0;
+        double q = 0;
+        msd.calculate(m, q);
+        //! Расчет латентного периода
+        int l = 0;
+        for (int j = m_resData->freq() / 4; j < buffer.size() && fabs(buffer[j] - m) < 1 * q; ++j)
+            l = j;
+        factors.latent += (static_cast<double>(l) / static_cast<double>(m_resData->freq()));
+
+        //! Время реакции
+        int t = 0;
+        for (int j = 0; j < buffer.size(); ++j)
+            if (buffer[j] > m_resData->deviationThreshold())
+            {
+                t = j;
+                break;
+            }
+        factors.time += (static_cast<double>(t) / static_cast<double>(m_resData->freq()));
+
+        //! Амплитуда
+        double a = 0;
+        for (int j = 0; j < buffer.size(); ++j)
+        {
+            if (buffer[j] > a)
+                a = buffer[j];
         }
+        factors.ampl += a;
     }
+
+    //! Усреднение
+    factors.latent /= static_cast<double>(sections.size());
+    factors.time /= static_cast<double>(sections.size());
+    factors.ampl /= static_cast<double>(sections.size());
+
+    qDebug() << code << factors.latent << factors.time << factors.ampl << factors.errors;
 }
 

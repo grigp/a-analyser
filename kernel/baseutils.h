@@ -233,8 +233,44 @@ void setCorrectionsDominanceResume(const double cdv, QString &resume, QString &r
  */
 void setOutrunningResume(const double orv, QString &resume, QString &resumeColor);
 
+/*!
+ * \brief Возвращает масштабный множитель по индексу масштаба
+ * \param idx - индекс масштаба 1, 2, 3, ...
+ * \return 1, 2, 4, 8, 16, 32, ....
+ */
 int scaleMultiplier(const int idx);
 
+
+/*!
+ * \brief Класс, рассчитывающий математическое ожидание и стандартное отклонение с итеративным добавлением MidAndStandardDeviation class
+ */
+class MidAndStandardDeviation
+{
+public:
+    MidAndStandardDeviation() {clear();}
+
+    /*!
+     * \brief Добавляет значение в список
+     */
+    void add(const double value) {m_values.append(value);}
+
+    /*!
+     * \brief Расчет
+     * \param mid - возвращает среднее арифметическое
+     * \param stdDev - возвращает стандартное отклонение
+     */
+    void calculate(double& mid, double& stdDev) const;
+
+    /*!
+     * \brief очищает список значений
+     */
+    void clear() {m_values.clear();}
+
+    int count() const {return m_values.size();}
+
+private:
+    QVector<double> m_values;
+};
 
 }
 

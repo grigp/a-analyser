@@ -2,8 +2,10 @@
 #define BOXERDODGINGMULTIFACTOR_H
 
 #include <QObject>
+#include <QVector>
 
 #include "multifactor.h"
+#include "boxerdodgingdefines.h"
 
 namespace BoxerDodgingFactorsDefines
 {
@@ -113,12 +115,24 @@ private:
     void calculateFactors(Stabilogram* stab);
 
     /*!
+     * \brief На основании направления выбирает из стабилограммы составляющую для анализа
+     * \param stab - стабилограмма
+     * \param buf - составляющая для анализа 0 - max
+     * \param code - код направления
+     * \param begin, end - границы участка
+     */
+    void getDataBuffer(Stabilogram* stab, QVector<double>* buf,
+                       const BoxerDodgingDefines::Stages code,
+                       const int begin, const int end);
+
+    /*!
      * \brief Рассчитывает показатели для направления
      * \param sections - список участков сигнала для направления
      * \param factors - показатели
      * \param stab - указатель на сигнал
      */
-    void calculateFactorsForDirection(const QList<Section> sections,
+    void calculateFactorsForDirection(const BoxerDodgingDefines::Stages code,
+                                      const QList<Section> sections,
                                       FactorsDirection& factors,
                                       Stabilogram* stab);
 

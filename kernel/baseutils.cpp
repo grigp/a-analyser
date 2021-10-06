@@ -389,3 +389,21 @@ int BaseUtils::scaleMultiplier(const int idx)
         retval *= 2;
     return retval;
 }
+
+void BaseUtils::MidAndStandardDeviation::calculate(double &mid, double &stdDev) const
+{
+    mid = 0;
+    stdDev = 0;
+
+    if (m_values.size() > 0)
+    {
+        foreach (auto val, m_values)
+            mid += val;
+        mid /= m_values.size();
+
+        foreach (auto val, m_values)
+            stdDev += pow(fabs(val - mid), 2) / (m_values.size() - 1);
+        if (stdDev > 0)
+            stdDev = sqrt(stdDev);
+    }
+}
