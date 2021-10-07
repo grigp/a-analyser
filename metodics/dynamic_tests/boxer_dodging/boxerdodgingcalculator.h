@@ -4,6 +4,7 @@
 #include <QObject>
 
 #include "testcalculator.h"
+#include "boxerdodgingdefines.h"
 
 class BoxerDodgingMultifactor;
 
@@ -24,6 +25,30 @@ public:
      * Чтение первичных показателей из БД
      */
     void fastCalculate() override;
+
+    /*!
+     * \brief Возвращает значение показателя по его uid
+     */
+    double factorValue(const QString uid) const;
+
+    /*!
+     * \brief Возвращает форматированное значение показателя в строковом виде по uid показателя
+     */
+    QString factorValueFormatted(const QString &uid) const;
+
+    /*!
+     * \brief Доступ к отдельным данным расчета
+     */
+    int deviationThreshold() const;
+    int freq() const;
+    int diap() const;
+
+    int tryesCount() const;
+    int leftCount() const;
+    int rightCount() const;
+    int aheadCount() const;
+    int backCount() const;
+    int count(const BoxerDodgingDefines::Stages stage) const;
 
 private:
     BoxerDodgingMultifactor *m_factors {nullptr};

@@ -228,12 +228,19 @@ void BoxerDodgingMultifactor::calculateFactors(Stabilogram* stab)
     m_fctRight.count = m_secRight.size();
     m_fctAhead.count = m_secAhead.size();
     m_fctBack.count = m_secBack.size();
+    m_fctAverage.count = m_secLeft.size() + m_secRight.size() + m_secAhead.size() + m_secBack.size();
 
     //! Расчет по направлениям
     calculateFactorsForDirection(BoxerDodgingDefines::bdsLeftDodging, m_secLeft, m_fctLeft, stab);
     calculateFactorsForDirection(BoxerDodgingDefines::bdsRightDodging, m_secRight, m_fctRight, stab);
     calculateFactorsForDirection(BoxerDodgingDefines::bdsAheadBend, m_secAhead, m_fctAhead, stab);
     calculateFactorsForDirection(BoxerDodgingDefines::bdsBackBend, m_secBack, m_fctBack, stab);
+
+    //! Усредненнве по направлениям
+    m_fctAverage.latent = (m_fctLeft.latent + m_fctRight.latent + m_fctAhead.latent + m_fctBack.latent) / 4;
+    m_fctAverage.time = (m_fctLeft.time + m_fctRight.time + m_fctAhead.time + m_fctBack.time) / 4;
+    m_fctAverage.ampl = (m_fctLeft.ampl + m_fctRight.ampl + m_fctAhead.ampl + m_fctBack.ampl) / 4;
+    m_fctAverage.errors = m_fctLeft.errors + m_fctRight.errors + m_fctAhead.errors + m_fctBack.errors;
 }
 
 void BoxerDodgingMultifactor::getDataBuffer(Stabilogram *stab, QVector<double> *buf,
@@ -306,6 +313,9 @@ void BoxerDodgingMultifactor::calculateFactorsForDirection(const BoxerDodgingDef
                 break;
             }
         factors.time += (static_cast<double>(t) / static_cast<double>(m_resData->freq()));
+        //! Ошибки
+        if (t == 0)
+            ++factors.errors;
 
         //! Амплитуда
         double a = 0;
@@ -318,10 +328,13 @@ void BoxerDodgingMultifactor::calculateFactorsForDirection(const BoxerDodgingDef
     }
 
     //! Усреднение
-    factors.latent /= static_cast<double>(sections.size());
-    factors.time /= static_cast<double>(sections.size());
-    factors.ampl /= static_cast<double>(sections.size());
+    if (sections.size() > 0)
+    {
+        factors.latent /= static_cast<double>(sections.size());
+        factors.time /= static_cast<double>(sections.size());
+        factors.ampl /= static_cast<double>(sections.size());
+    }
 
-    qDebug() << code << factors.latent << factors.time << factors.ampl << factors.errors;
+//    qDebug() << code << factors.latent << factors.time << factors.ampl << factors.errors;
 }
 
