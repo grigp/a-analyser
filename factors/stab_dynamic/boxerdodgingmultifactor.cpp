@@ -237,10 +237,40 @@ void BoxerDodgingMultifactor::calculateFactors(Stabilogram* stab)
     calculateFactorsForDirection(BoxerDodgingDefines::bdsBackBend, m_secBack, m_fctBack, stab);
 
     //! Усредненнве по направлениям
-    m_fctAverage.latent = (m_fctLeft.latent + m_fctRight.latent + m_fctAhead.latent + m_fctBack.latent) / 4;
-    m_fctAverage.time = (m_fctLeft.time + m_fctRight.time + m_fctAhead.time + m_fctBack.time) / 4;
-    m_fctAverage.ampl = (m_fctLeft.ampl + m_fctRight.ampl + m_fctAhead.ampl + m_fctBack.ampl) / 4;
+    averaging();
+}
+
+void BoxerDodgingMultifactor::averaging()
+{
     m_fctAverage.errors = m_fctLeft.errors + m_fctRight.errors + m_fctAhead.errors + m_fctBack.errors;
+    m_fctAverage.latent = 0;
+    m_fctAverage.time = 0;
+    m_fctAverage.ampl = 0;
+
+    int n = 0;
+
+    auto addValues = [&](FactorsDirection& factors)
+    {
+        if (factors.count > 0)
+        {
+            m_fctAverage.latent += factors.latent;
+            m_fctAverage.time += factors.time;
+            m_fctAverage.ampl += factors.ampl;
+            ++n;
+        }
+    };
+
+    addValues(m_fctLeft);
+    addValues(m_fctRight);
+    addValues(m_fctAhead);
+    addValues(m_fctBack);
+
+    if (n > 0)
+    {
+        m_fctAverage.latent /= n;
+        m_fctAverage.time /= n;
+        m_fctAverage.ampl /= n;
+    }
 }
 
 void BoxerDodgingMultifactor::getDataBuffer(Stabilogram *stab, QVector<double> *buf,

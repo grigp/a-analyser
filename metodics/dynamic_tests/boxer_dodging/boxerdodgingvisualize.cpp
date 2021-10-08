@@ -52,20 +52,6 @@ void BoxerDodgingVisualize::setTest(const QString &testUid)
                     BoxerDodgingFactorsDefines::BackErrorsUid);
 
         showTable();
-
-//        auto crm = BaseUtils::CirceRoundRuleModeValueIndex.value(m_calculator->circeRoundRuleMode());
-//        ui->wgtDiag->setCirceRoundRuleMode(crm);
-//        auto dm = BaseUtils::DirectionModeValueIndex.value(m_calculator->directionMode());
-//        ui->wgtDiag->setDirection(dm);
-
-//        for (int i = 0; i < 8; ++i)
-//            ui->wgtDiag->setData(i, static_cast<int>(m_calculator->getValue(i)));
-
-//        ui->wgtDiag->endUpdate();
-
-//        ui->lblAverageQuality->setText(tr("Среднее качество выполнения задания") + " " +
-//                                       QString::number(m_calculator->getAverageValue(), 'f', 0) + " " + tr("%"));
-//        ui->lblAverageQuality->setStyleSheet("font-size: 18pt;");
     }
 }
 
@@ -94,20 +80,6 @@ void BoxerDodgingVisualize::showTable()
 {
     auto *model = new QStandardItemModel(ui->tvTable);
 
-//    auto *itemName = new QStandardItem(tr("Влево"));
-//    itemName->setEditable(false);
-//    auto *itemLat = new QStandardItem(m_calculator->factorValueFormatted(BoxerDodgingFactorsDefines::LeftLatUid));
-//    itemLat->setEditable(false);
-//    auto *itemTime = new QStandardItem(m_calculator->factorValueFormatted(BoxerDodgingFactorsDefines::LeftTimeUid));
-//    itemTime->setEditable(false);
-//    auto *itemAmpl = new QStandardItem(m_calculator->factorValueFormatted(BoxerDodgingFactorsDefines::LeftAmplUid));
-//    itemAmpl->setEditable(false);
-//    auto *itemTryes = new QStandardItem(QString::number(m_calculator->count(BoxerDodgingDefines::bdsLeftDodging)));
-//    itemTryes->setEditable(false);
-//    auto *itemErrors = new QStandardItem(m_calculator->factorValueFormatted(BoxerDodgingFactorsDefines::LeftErrorsUid));
-//    itemErrors->setEditable(false);
-//    model->appendRow(QList<QStandardItem*>() << itemName << itemLat << itemTime << itemAmpl << itemTryes << itemErrors);
-
     model->appendRow(
                 getLineItems(tr("Влево"),
                              BoxerDodgingFactorsDefines::LeftLatUid,
@@ -135,7 +107,7 @@ void BoxerDodgingVisualize::showTable()
                              BoxerDodgingFactorsDefines::BackTimeUid,
                              BoxerDodgingFactorsDefines::BackAmplUid,
                              BoxerDodgingFactorsDefines::BackErrorsUid,
-                             BoxerDodgingDefines::bdsAheadBend));
+                             BoxerDodgingDefines::bdsBackBend));
     model->appendRow(
                 getLineItems(tr("Среднее / Сумма"),
                              BoxerDodgingFactorsDefines::AverageLatUid,

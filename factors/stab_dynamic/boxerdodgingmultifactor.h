@@ -115,6 +115,11 @@ private:
     void calculateFactors(Stabilogram* stab);
 
     /*!
+     * \brief Усреднение
+     */
+    void averaging();
+
+    /*!
      * \brief На основании направления выбирает из стабилограммы составляющую для анализа
      * \param stab - стабилограмма
      * \param buf - составляющая для анализа 0 - max
