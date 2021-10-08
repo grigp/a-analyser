@@ -63,8 +63,7 @@ void BoxerDodgingVisualize::showDiagram(DynamicDiagram* diag, const QString titl
     diag->setVolume(DynamicDiagram::Volume3D);
     diag->setTitle(title);
 
-    diag->setAxisSpaceLeft(20);
-    diag->setAxisSpaceBottom(20);
+    diag->setAxisSpaceLeft(30);
 
     auto itemL = new DiagItem(m_calculator->factorValue(leftFctUid), tr("Влево"));
     diag->appendItem(itemL);
@@ -125,7 +124,7 @@ void BoxerDodgingVisualize::showTable()
                                                    << tr("Ошибки"));
     ui->tvTable->setModel(model);
     ui->tvTable->header()->resizeSections(QHeaderView::ResizeToContents);
-    ui->tvTable->header()->resizeSection(0, 150);
+    ui->tvTable->header()->resizeSection(0, 250);
 
 }
 
