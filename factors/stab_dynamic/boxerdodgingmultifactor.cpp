@@ -313,6 +313,7 @@ void BoxerDodgingMultifactor::calculateFactorsForDirection(const BoxerDodgingDef
     factors.ampl = 0;
     factors.errors = 0;
 
+    int ln = 0;  //! Счетчик попыток для латентного периода
     //! По участкам направления
     for (int i = 0; i < sections.size(); ++i)
     {
@@ -332,7 +333,8 @@ void BoxerDodgingMultifactor::calculateFactorsForDirection(const BoxerDodgingDef
         int l = 0;
         for (int j = m_resData->freq() / 4; j < buffer.size() && fabs(buffer[j] - m) < 1 * q; ++j)
             l = j;
-        factors.latent += (static_cast<double>(l) / static_cast<double>(m_resData->freq()));
+//        factors.latent += (static_cast<double>(l) / static_cast<double>(m_resData->freq()));
+//        ++ln;
 
         //! Время реакции
         int t = 0;
@@ -346,21 +348,28 @@ void BoxerDodgingMultifactor::calculateFactorsForDirection(const BoxerDodgingDef
         //! Ошибки
         if (t == 0)
             ++factors.errors;
+        else
+        {
+            factors.latent += (static_cast<double>(l) / static_cast<double>(m_resData->freq()));
+            ++ln;
+        }
 
         //! Амплитуда
         double a = 0;
         for (int j = 0; j < buffer.size(); ++j)
         {
-            if (buffer[j] > a)
+            if (buffer[j] > a && buffer[j] > m_resData->deviationThreshold())
                 a = buffer[j];
         }
         factors.ampl += a;
     }
 
     //! Усреднение
+    if (ln > 0)
+        factors.latent /= static_cast<double>(ln);
     if (sections.size() > 0)
     {
-        factors.latent /= static_cast<double>(sections.size());
+//        factors.latent /= static_cast<double>(sections.size());
         factors.time /= static_cast<double>(sections.size());
         factors.ampl /= static_cast<double>(sections.size());
     }
