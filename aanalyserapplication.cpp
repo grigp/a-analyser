@@ -161,6 +161,11 @@ void AAnalyserApplication::doSelectMetodic(const QString &uid)
     emit selectMetodic(m_metodicUid);
 }
 
+void AAnalyserApplication::getMethodicCount(const int count)
+{
+    emit methodicCount(count);
+}
+
 void AAnalyserApplication::doSelectBugTest(const QString &uid)
 {
     //! Возможно много лишних срабатываний

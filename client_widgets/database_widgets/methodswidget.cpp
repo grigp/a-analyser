@@ -43,6 +43,14 @@ void MethodsWidget::onDbConnect()
         connect(ui->tvMetods->selectionModel(), &QItemSelectionModel::selectionChanged,
                 this, &MethodsWidget::on_selectMetodicChanged);
 
+        //! Если методика одна, то уберем виджет ее выбора и выберем ее для использования
+        static_cast<AAnalyserApplication*>(QApplication::instance())->getMethodicCount(m_mdlMethodics->rowCount());
+        if (m_mdlMethodics->rowCount() == 1)
+        {
+            selectMetodic(m_mdlMethodics->index(0, 0));
+            setVisible(false);
+        }
+
         m_mdlKinds->clear();
         m_mdlKinds->load();
         setMethodicKindsButtons();

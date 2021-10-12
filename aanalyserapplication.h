@@ -87,6 +87,11 @@ public:
     void doSelectMetodic(const QString &uid);
 
     /*!
+     * \brief Получает данные о кол-ве методик в БД и осуществляет рассылку
+     */
+    void getMethodicCount(const int count);
+
+    /*!
      * \brief Получение информации о выбранном тесте
      * \param uid
      */
@@ -325,6 +330,8 @@ signals:
     void selectPatient(const QString &patientUid);
     void selectMetodic(const QString &metodicUid);
     void selectTest(const QString &testUid);
+
+    void methodicCount(const int count);
 
     void sendData(DeviceProtocols::DeviceData *data);
 
