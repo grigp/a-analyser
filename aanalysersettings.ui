@@ -25,7 +25,7 @@
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout_4">
        <item>
-        <widget class="QFrame" name="frame">
+        <widget class="QFrame" name="frPatientWindowNumber">
          <property name="frameShape">
           <enum>QFrame::StyledPanel</enum>
          </property>
@@ -48,6 +48,50 @@
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QFrame" name="frOnePatient">
+         <property name="frameShape">
+          <enum>QFrame::StyledPanel</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Plain</enum>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_2">
+          <item>
+           <widget class="QCheckBox" name="cbOnePatient">
+            <property name="text">
+             <string>Работать с одним пациентом</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QFrame" name="frOnePatientFIO">
+            <property name="frameShape">
+             <enum>QFrame::StyledPanel</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Raised</enum>
+            </property>
+            <layout class="QHBoxLayout" name="horizontalLayout_3">
+             <property name="spacing">
+              <number>15</number>
+             </property>
+             <item>
+              <widget class="QLabel" name="lblOnePatientFIO">
+               <property name="text">
+                <string>ФИО пациента</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLineEdit" name="edOnePatientFIO"/>
+             </item>
+            </layout>
            </widget>
           </item>
          </layout>
@@ -188,8 +232,8 @@
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>248</x>
-     <y>254</y>
+     <x>259</x>
+     <y>446</y>
     </hint>
     <hint type="destinationlabel">
      <x>157</x>
@@ -204,8 +248,8 @@
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>316</x>
-     <y>260</y>
+     <x>327</x>
+     <y>446</y>
     </hint>
     <hint type="destinationlabel">
      <x>286</x>
@@ -213,5 +257,24 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>cbOnePatient</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>AAnalyserSettings</receiver>
+   <slot>cbOnePatientClicked(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>127</x>
+     <y>116</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>522</x>
+     <y>113</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
+ <slots>
+  <slot>cbOnePatientClicked(bool)</slot>
+ </slots>
 </ui>

@@ -38,15 +38,31 @@ void AAnalyserSettings::accept()
     QDialog::accept();
 }
 
+void AAnalyserSettings::cbOnePatientClicked(bool checked)
+{
+    ui->edOnePatientFIO->setEnabled(checked);
+    ui->lblOnePatientFIO->setEnabled(checked);
+}
+
 
 void AAnalyserSettings::load()
 {
-    auto winPatientNumber = SettingsProvider::valueFromRegAppCopy("", "PatientWindowNumber", static_cast<QVariant>(1)).toInt();
-    ui->cbPatientWindowNumber->setCurrentText(QString::number(winPatientNumber));
+    m_winPatientNumber = SettingsProvider::valueFromRegAppCopy("", AAnalyserSettingsParams::pn_patientWindowNumber, static_cast<QVariant>(1)).toInt();
+    ui->cbPatientWindowNumber->setCurrentText(QString::number(m_winPatientNumber));
 
-    auto country = SettingsProvider::valueFromRegAppCopy("UserLocalize", "Country", static_cast<QVariant>("")).toString();
-    auto sity = SettingsProvider::valueFromRegAppCopy("UserLocalize", "Sity", static_cast<QVariant>("")).toString();
-    fillSities(country, sity);
+    m_isOnePatient = SettingsProvider::valueFromRegAppCopy("", AAnalyserSettingsParams::pn_onePatientMode, static_cast<QVariant>(false)).toBool();
+    ui->cbOnePatient->setChecked(m_isOnePatient);
+    cbOnePatientClicked(m_isOnePatient);
+    m_onePatientFIO = SettingsProvider::valueFromRegAppCopy("", AAnalyserSettingsParams::pn_onePatientFIO).toString();
+    ui->edOnePatientFIO->setText(m_onePatientFIO);
+
+    m_country = SettingsProvider::valueFromRegAppCopy(AAnalyserSettingsParams::pc_userLocalize,
+                                                      AAnalyserSettingsParams::pn_country,
+                                                      static_cast<QVariant>("")).toString();
+    m_sity = SettingsProvider::valueFromRegAppCopy(AAnalyserSettingsParams::pc_userLocalize,
+                                                   AAnalyserSettingsParams::pn_sity,
+                                                   static_cast<QVariant>("")).toString();
+    fillSities(m_country, m_sity);
     if (m_idxCountry.isValid())
         ui->tvUserLocalize->expand(m_idxCountry);
     if (m_idxSity.isValid())
@@ -58,7 +74,21 @@ void AAnalyserSettings::load()
 
 void AAnalyserSettings::save()
 {
-    SettingsProvider::setValueToRegAppCopy("", "PatientWindowNumber", ui->cbPatientWindowNumber->currentText().toInt());
+    auto pwn = ui->cbPatientWindowNumber->currentText().toInt();
+    SettingsProvider::setValueToRegAppCopy("",  AAnalyserSettingsParams::pn_patientWindowNumber, pwn);
+    if (pwn != m_winPatientNumber)
+        static_cast<AAnalyserApplication*>(QApplication::instance())->changeApplicationParam("", AAnalyserSettingsParams::pn_patientWindowNumber, pwn);
+
+    auto opm = ui->cbOnePatient->isChecked();
+    SettingsProvider::setValueToRegAppCopy("", AAnalyserSettingsParams::pn_onePatientMode, opm);
+    if (opm != m_isOnePatient)
+        static_cast<AAnalyserApplication*>(QApplication::instance())->changeApplicationParam("", AAnalyserSettingsParams::pn_onePatientMode, opm);
+
+    auto opfio = ui->edOnePatientFIO->text();
+    SettingsProvider::setValueToRegAppCopy("", AAnalyserSettingsParams::pn_onePatientFIO, opfio);
+    if (opfio != m_onePatientFIO)
+        static_cast<AAnalyserApplication*>(QApplication::instance())->changeApplicationParam("", AAnalyserSettingsParams::pn_onePatientFIO, opfio);
+
 
     auto selIdxs = ui->tvUserLocalize->selectionModel()->selectedIndexes();
     if ((selIdxs.size() > 0) && selIdxs.at(0).parent().isValid())
@@ -67,9 +97,9 @@ void AAnalyserSettings::save()
         auto country = selIdxs.at(0).parent().data().toString();
         auto g = selIdxs.at(0).data(SMRAccelerationGravityRole).toDouble();
 
-        SettingsProvider::setValueToRegAppCopy("UserLocalize", "Country", country);
-        SettingsProvider::setValueToRegAppCopy("UserLocalize", "Sity", sity);
-        SettingsProvider::setValueToRegAppCopy("UserLocalize", "g", g);
+        SettingsProvider::setValueToRegAppCopy(AAnalyserSettingsParams::pc_userLocalize, AAnalyserSettingsParams::pn_country, country);
+        SettingsProvider::setValueToRegAppCopy(AAnalyserSettingsParams::pc_userLocalize, AAnalyserSettingsParams::pn_sity, sity);
+        SettingsProvider::setValueToRegAppCopy(AAnalyserSettingsParams::pc_userLocalize, AAnalyserSettingsParams::pn_g, g);
     }
 }
 

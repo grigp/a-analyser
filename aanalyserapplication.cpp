@@ -438,6 +438,11 @@ QString AAnalyserApplication::languargeCode() const
     return m_languargeCode;
 }
 
+void AAnalyserApplication::changeApplicationParam(const QString &group, const QString &param, const QVariant &value)
+{
+    emit applicationParamChanged(group, param, value);
+}
+
 bool AAnalyserApplication::notify(QObject *re, QEvent *ev)
 {
     try

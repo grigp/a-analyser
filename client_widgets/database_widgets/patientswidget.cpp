@@ -7,9 +7,12 @@
 #include "patientkarddialog.h"
 #include "aanalyserapplication.h"
 #include "dataprovider.h"
+#include "aanalysersettings.h"
+#include "settingsprovider.h"
 
 #include <QApplication>
 #include <QMessageBox>
+#include <QTimer>
 #include <QDebug>
 
 PatientsWidget::PatientsWidget(QWidget *parent) :
@@ -28,6 +31,9 @@ PatientsWidget::PatientsWidget(QWidget *parent) :
 
     connect(ui->tvPatients->selectionModel(), &QItemSelectionModel::selectionChanged,
             this, &PatientsWidget::on_selectionChanged);
+
+    connect(static_cast<AAnalyserApplication*>(QApplication::instance()), &AAnalyserApplication::applicationParamChanged,
+            this, &PatientsWidget::on_applicationParamChanged);
 }
 
 PatientsWidget::~PatientsWidget()
@@ -43,6 +49,14 @@ void PatientsWidget::onDbConnect()
 //    ui->tvPatients->header()->resizeSection(PatientsModel::ColFio, 200);
 //    ui->tvPatients->header()->resizeSection(PatientsModel::ColBorn, 120);
     //    ui->tvPatients->header()->resizeSection(PatientsModel::colSex, 50);
+
+    QTimer::singleShot(100, [=]()
+    {
+        m_isOnePatientMode = SettingsProvider::valueFromRegAppCopy("", AAnalyserSettingsParams::pn_onePatientMode, static_cast<QVariant>(false)).toBool();
+        m_onePatientFIO = SettingsProvider::valueFromRegAppCopy("", AAnalyserSettingsParams::pn_onePatientFIO, static_cast<QVariant>(false)).toString();
+        onePatientHandle();
+    });
+
 }
 
 void PatientsWidget::on_selectionChanged(const QItemSelection &selected, const QItemSelection &deselected)
@@ -158,6 +172,40 @@ void PatientsWidget::unselect()
 void PatientsWidget::on_editSearchString(const QString &value)
 {
     m_pmdlPatients->setFilterValue(value);
+}
+
+void PatientsWidget::on_applicationParamChanged(const QString &group, const QString &param, const QVariant &value)
+{
+    if (group == "" && param == AAnalyserSettingsParams::pn_onePatientMode)
+    {
+        m_isOnePatientMode = value.toBool();
+        onePatientHandle();
+    }
+    if (group == "" && param == AAnalyserSettingsParams::pn_onePatientFIO)
+    {
+        m_onePatientFIO = value.toString();
+        onePatientHandle();
+    }
+}
+
+void PatientsWidget::onePatientHandle()
+{
+    setVisible(!m_isOnePatientMode);
+    if (DataProvider::getPatients().size() == 0)
+    {
+        DataDefines::PatientKard patient;
+        patient.fio = m_onePatientFIO;
+        patient.born = QDate(2000, 1, 1);
+        patient.sex = DataDefines::male;
+        patient.massa = 80;
+        patient.height = 170;
+        m_mdlPatients->addPatient(patient);
+//        selectPatient(m_mdlPatients->index(0, 0));
+    }
+    else
+    {
+//        selectPatient(m_mdlPatients->index(0, 0));
+    }
 }
 
 //bool PatientsWidget::eventFilter(QObject *watched, QEvent *event)

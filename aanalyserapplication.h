@@ -319,6 +319,14 @@ public:
      */
     QString languargeCode() const;
 
+    /*!
+     * \brief Получение информации об изменении параметра приложения
+     * \param group - группа параметров
+     * \param param - имя параметра
+     * \param value - новое значение
+     */
+    void changeApplicationParam(const QString &group, const QString &param, const QVariant &value);
+
 signals:
     void dbConnected();
 
@@ -364,6 +372,14 @@ signals:
      * \param testUid - uid теста
      */
     void changeTestCondition(const QString &testUid);
+
+    /*!
+     * \brief Изменение параметра приложения
+     * \param group - группа параметров
+     * \param param - имя параметра
+     * \param value - новое значение
+     */
+    void applicationParamChanged(const QString &group, const QString &param, const QVariant &value);
 
 protected:
     //! Обработка исключений основного цикла программы

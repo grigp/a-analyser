@@ -46,6 +46,10 @@ private slots:
     void splitterVMoved(int pos,int index);
     void splitterHMoved(int pos,int index);
 
+    void on_applicationParamChanged(const QString &group, const QString &param, const QVariant &value);
+    void on_methodicCount(const int count);
+
+
 private:
     Ui::DataBaseResultWidget *ui;
 
@@ -53,6 +57,7 @@ private:
     void restoreSplittersPosition();
 
     QWidget *m_wgtResult {nullptr};  ///< Текущий виджет для показа результатов теста
+    int m_metCnt {1};
 };
 
 #endif // DATABASERESULTWIDGET_H

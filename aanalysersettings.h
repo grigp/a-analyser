@@ -4,6 +4,19 @@
 #include <QDialog>
 #include <QStandardItemModel>
 
+namespace AAnalyserSettingsParams
+{
+    static const QString pn_patientWindowNumber = "PatientWindowNumber";
+    static const QString pn_onePatientMode = "OnePatientMode";
+    static const QString pn_onePatientFIO = "OnePatientFIO";
+    static const QString pn_country = "Country";
+    static const QString pn_sity = "Sity";
+    static const QString pn_g = "g";
+
+    static const QString pc_userLocalize = "UserLocalize";
+
+}
+
 namespace Ui {
 class AAnalyserSettings;
 }
@@ -24,6 +37,7 @@ public slots:
     int exec() override;
     void accept() override;
 
+    void cbOnePatientClicked(bool checked);
 
 private:
     Ui::AAnalyserSettings *ui;
@@ -44,6 +58,12 @@ private:
     QStandardItemModel m_mdlSities;
     QModelIndex m_idxCountry {QModelIndex()};
     QModelIndex m_idxSity {QModelIndex()};
+
+    QString m_country {""};
+    QString m_sity {""};
+    int m_winPatientNumber {1};
+    bool m_isOnePatient {false};
+    QString m_onePatientFIO {""};
 };
 
 #endif // AANALYSERSETTINGS_H

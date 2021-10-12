@@ -46,11 +46,18 @@ private slots:
 
     void on_editSearchString(const QString &value);
 
+    void on_applicationParamChanged(const QString &group, const QString &param, const QVariant &value);
+
 //protected:
 //    bool eventFilter(QObject *watched, QEvent *event);
 
 private:
     Ui::PatientsWidget *ui;
+
+    void onePatientHandle();
+
+    bool m_isOnePatientMode {false};
+    QString m_onePatientFIO {""};
 
     PatientsModel *m_mdlPatients;
     PatientsProxyModel *m_pmdlPatients;
