@@ -173,5 +173,7 @@
         <file>images/Boxing/BoxerBackBend.png</file>
         <file>images/Boxing/BoxerLeftDodging.png</file>
         <file>images/Boxing/BoxerRightDodging.png</file>
+        <file>pre_settings/metodics_tester.json</file>
+        <file>pre_settings/metodics_tester_en_US.json</file>
     </qresource>
 </RCC>

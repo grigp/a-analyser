@@ -1,0 +1,35 @@
+{
+    "tests": [
+        {
+            "uid": "{8BFC7928-8DAF-429B-8AB5-C689C63BECC9}",
+            "name": "Стабилографический тест",
+            "image": "Stab.png",
+            "template": "met_stabtest_uid",
+            "build_norms": false,
+            "kind": "{03FFE24D-56ED-4138-9FC7-A125A020C190}",
+            "params":
+            {
+                "condition": 0,
+                "probes": [
+                    {
+                        "name": "Стабилографическая проба",
+                        "kind": 1,
+                        "autoend": 0,
+                        "time": 20,
+                        "latent_time": 0,
+                        "stimul": 0,
+                        "zeroing": 1,
+                        "scale": 0
+                    }
+                ]
+            }
+        }
+    ],
+    "tests_kinds": [
+        {
+            "uid": "{03FFE24D-56ED-4138-9FC7-A125A020C190}",
+            "image": "Stab.png",
+            "name": "Стабилометрия"
+        }
+    ]
+}

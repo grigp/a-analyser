@@ -203,30 +203,34 @@ void PatientsWidget::on_applicationParamChanged(const QString &group, const QStr
 void PatientsWidget::onePatientHandle()
 {
     setVisible(!m_isOnePatientMode);
-    if (DataProvider::getPatients().size() == 0)
-    {
-        DataDefines::PatientKard patient;
-        patient.fio = m_onePatientFIO;
-        patient.born = QDate(2000, 1, 1);
-        patient.sex = DataDefines::male;
-        patient.massa = 80;
-        patient.height = 170;
-        m_mdlPatients->addPatient(patient);
-    }
-    else
-    {
-        auto idx = m_pmdlPatients->index(0, 0);
-        auto uid = idx.data(PatientsModel::PatientUidRole).toString();
-        auto fio = idx.data().toString();
 
-        DataDefines::PatientKard patient;
-        if (DataProvider::getPatient(uid, patient))
+    if (m_isOnePatientMode)
+    {
+        if (DataProvider::getPatients().size() == 0)
         {
+            DataDefines::PatientKard patient;
             patient.fio = m_onePatientFIO;
+            patient.born = QDate(2000, 1, 1);
+            patient.sex = DataDefines::male;
+            patient.massa = 80;
+            patient.height = 170;
             m_mdlPatients->addPatient(patient);
         }
+        else
+        {
+            auto idx = m_pmdlPatients->index(0, 0);
+            auto uid = idx.data(PatientsModel::PatientUidRole).toString();
+            auto fio = idx.data().toString();
+
+            DataDefines::PatientKard patient;
+            if (DataProvider::getPatient(uid, patient))
+            {
+                patient.fio = m_onePatientFIO;
+                m_mdlPatients->addPatient(patient);
+            }
+        }
+        selectPatient(m_pmdlPatients->index(0, 0));
     }
-    selectPatient(m_pmdlPatients->index(0, 0));
 }
 
 //bool PatientsWidget::eventFilter(QObject *watched, QEvent *event)
