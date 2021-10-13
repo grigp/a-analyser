@@ -77,6 +77,18 @@ void PatientsWidget::selectPatient(const QModelIndex index)
     }
 }
 
+//void MethodsWidget::selectMetodic(const QModelIndex index)
+//{
+//    if (index.isValid())
+//    {
+//        auto uid = index.data(MetodicsModel::MetodicUidRole).toString();
+//        static_cast<AAnalyserApplication*>(QApplication::instance())->doSelectMetodic(uid);
+//    }
+//    else
+//        static_cast<AAnalyserApplication*>(QApplication::instance())->doSelectMetodic("");
+//}
+
+
 void PatientsWidget::addPatient()
 {
     auto *dialog = new PatientKardDialog(this);
@@ -200,12 +212,21 @@ void PatientsWidget::onePatientHandle()
         patient.massa = 80;
         patient.height = 170;
         m_mdlPatients->addPatient(patient);
-//        selectPatient(m_mdlPatients->index(0, 0));
     }
     else
     {
-//        selectPatient(m_mdlPatients->index(0, 0));
+        auto idx = m_pmdlPatients->index(0, 0);
+        auto uid = idx.data(PatientsModel::PatientUidRole).toString();
+        auto fio = idx.data().toString();
+
+        DataDefines::PatientKard patient;
+        if (DataProvider::getPatient(uid, patient))
+        {
+            patient.fio = m_onePatientFIO;
+            m_mdlPatients->addPatient(patient);
+        }
     }
+    selectPatient(m_pmdlPatients->index(0, 0));
 }
 
 //bool PatientsWidget::eventFilter(QObject *watched, QEvent *event)
