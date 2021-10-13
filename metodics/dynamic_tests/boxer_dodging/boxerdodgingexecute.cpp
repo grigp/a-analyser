@@ -14,7 +14,8 @@ BoxerDodgingExecute::BoxerDodgingExecute(QWidget *parent)
     : StabDynamicTestExecute (parent)
     , m_res(new BoxerDodgingResultData(ChannelsDefines::chanBoxerDodgingResult))
 {
-    setTitle(tr("Тренажер с уклонением для боксеров"));
+    auto kard = static_cast<AAnalyserApplication*>(QApplication::instance())->getSelectedPatient();
+    setTitle(tr("Тренажер с уклонением для боксеров") + " - " + kard.fio);
     isShowValues(false);
     isTraceControl(false);
 

@@ -30,6 +30,10 @@ TrenExecute::TrenExecute(QWidget *parent) :
 
     ui->lblCommunicationError->setVisible(false);
     ui->wgtAdvChannels->setVisible(false);
+
+    m_kard = static_cast<AAnalyserApplication*>(QApplication::instance())->getSelectedPatient();
+    MetodicDefines::MetodicInfo mi = static_cast<AAnalyserApplication*>(QApplication::instance())->getSelectedMetodic();
+    ui->lblTrenTitle->setText(mi.name + " - " + m_kard.fio);
 }
 
 TrenExecute::~TrenExecute()

@@ -4,6 +4,7 @@
 #include <QLayout>
 #include <QDebug>
 
+#include "aanalyserapplication.h"
 #include "stepoffsettpatientwindow.h"
 #include "setmaxforcedialog.h"
 #include "stepoffsetresultdata.h"
@@ -19,7 +20,8 @@ StepOffsetExecute::StepOffsetExecute(QWidget *parent) :
     addTarget(0, 0, Qt::green, Qt::darkGreen);
     addMarker();
 
-    setTitle(tr("Тест \"Ступени\""));
+    auto kard = static_cast<AAnalyserApplication*>(QApplication::instance())->getSelectedPatient();
+    setTitle(tr("Тест \"Ступени\"") + " - " + kard.fio);
     isShowValues(false);
     isTraceControl(false);
     setVisibleRecordLength(false);

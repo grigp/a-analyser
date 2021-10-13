@@ -1,6 +1,7 @@
 #include "crossexecute.h"
 #include "ui_crossexecute.h"
 
+#include "aanalyserapplication.h"
 #include "crosspatientwindow.h"
 #include "crossresultdata.h"
 #include "testresultdata.h"
@@ -17,7 +18,8 @@ CrossExecute::CrossExecute(QWidget *parent) :
     addTarget(0, 0, Qt::green, Qt::darkGreen);
     addMarker();
 
-    setTitle(tr("Тест на устойчивость"));
+    auto kard = static_cast<AAnalyserApplication*>(QApplication::instance())->getSelectedPatient();
+    setTitle(tr("Тест на устойчивость") + " - " + kard.fio);
     isShowValues(false);
     isTraceControl(false);
     setVisibleRecordLength(false);

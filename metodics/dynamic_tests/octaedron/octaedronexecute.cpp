@@ -1,6 +1,7 @@
 #include "octaedronexecute.h"
 #include "ui_octaedronexecute.h"
 
+#include "aanalyserapplication.h"
 #include "channelsdefines.h"
 #include "testresultdata.h"
 #include "octaedronpatientwindow.h"
@@ -22,7 +23,8 @@ OctaedronExecute::OctaedronExecute(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    setTitle(tr("Тренажер \"Остаедр\""));
+    auto kard = static_cast<AAnalyserApplication*>(QApplication::instance())->getSelectedPatient();
+    setTitle(tr("Тренажер \"Остаедр\"") + " - " + kard.fio);
     isShowValues(false);
     isTraceControl(false);
     setVisibleRecordLength(false);

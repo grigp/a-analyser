@@ -5,6 +5,7 @@
 #include <QLayout>
 #include <QDebug>
 
+#include "aanalyserapplication.h"
 #include "evolventapatientwindow.h"
 #include "evolventaresultdata.h"
 #include "testresultdata.h"
@@ -21,7 +22,8 @@ EvolventaExecute::EvolventaExecute(QWidget *parent) :
     addTarget(0, 0, Qt::green, Qt::darkGreen);
     addMarker();
 
-    setTitle(tr("Тест \"Эвольвента\""));
+    auto kard = static_cast<AAnalyserApplication*>(QApplication::instance())->getSelectedPatient();
+    setTitle(tr("Тест \"Эвольвента\"") + " - " + kard.fio);
     isShowValues(false);
     isTraceControl(false);
     setVisibleRecordLength(false);
