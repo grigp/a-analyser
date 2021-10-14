@@ -139,6 +139,14 @@ void MethodsWidget::on_btnKindPressed()
 void MethodsWidget::setMethodicKindsButtons()
 {
     m_btnToKindUid.clear();
+
+    //! Очистка панели кнопок
+    while (QLayoutItem* item = ui->frTestKindButtons->layout()->takeAt(0))
+    {
+        delete item->widget();
+        delete item;
+    }
+
     for (int i = 0; i < m_mdlKinds->rowCount(); ++i)
     {
         auto btn = new QPushButton(ui->frTestKindButtons);
