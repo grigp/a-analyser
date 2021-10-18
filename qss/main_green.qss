@@ -1,0 +1,334 @@
+
+/*PatientsWidget#wgtPatients,
+MethodsWidget#wgtMetods,
+TestsWidget#wgtTests
+PatientsWidget,
+MethodsWidget,
+TestsWidget*/
+QWidget#wgtPatients,
+QWidget#wgtMetods,
+QWidget#wgtTests
+{
+    background-color: rgb(31, 64, 140);
+}
+
+QFrame#frTestKindButtons
+{
+    background-color: rgb(205, 209, 214);
+/*    background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 rgb(1, 59, 86), stop: 0.5 rgb(2, 112, 164), stop: 1 rgb(1, 59, 86));*/
+}
+
+QFrame#frTitle
+{
+    font-size: 11pt;
+    background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 rgb(0, 80, 50), stop: 0.5 rgb(0, 140, 80), stop: 1 rgb(0, 80, 50));
+}
+
+QCheckBox
+{
+    font-size: 11pt;
+    color: rgb(32,88,103);
+}
+
+QGroupBox
+{
+    font-size: 11pt;
+    color: rgb(32,88,103);
+}
+
+QLabel
+{
+    font-size: 11pt;
+    color: rgb(32,88,103);
+}
+
+QLabel#lblTitle
+{
+    font-size: 11pt;
+    color: rgb(255, 255, 255);
+}
+
+QLabel#lblScore
+{
+    font-size: 18pt;
+    color: rgb(32,88,103);
+}
+
+QLabel#lblGameScore
+{
+    font-size: 18pt;
+    color: rgb(0,150,0);
+}
+
+QLabel#lblGameLines
+{
+    font-size: 18pt;
+    color: rgb(9,105,156);
+}
+
+QLabel#lblGameErrors
+{
+    font-size: 18pt;
+    color: rgb(255,0,0);
+}
+
+QLabel#lblCommunicationError
+{
+    font-size: 14pt;
+    color: rgb(255,0,0);
+}
+
+QLabel#lblMassa
+{
+    font-size: 24pt;
+}
+
+QLabel#lblCommentFinishTest,
+QLabel#lblCommentStrategy,
+QLabel#lblCommentStateOnPlate,
+QLabel#lblCommentGetOffPlate
+{
+    font-size: 18pt;
+}
+
+QLabel#lblCommentStage,
+QLabel#lblJumpsCount,
+QLabel#lblTimeTest,
+QLabel#lblHeightAvg,
+QLabel#lblHeightMax,
+QLabel#lblTimeAvg,
+QLabel#lblStepsCount,
+QLabel#lblTimeAvgLeftLeg,
+QLabel#lblTimeAvgRightLeg,
+QLabel#lblTimeContactAvg,
+QLabel#lblTimeNoContactAvg,
+QLabel#lblContactAvgLeftLeg,
+QLabel#lblContactAvgRightLeg,
+QLabel#lblTemp,
+QLabel#lblReactiveForceIndexAvg
+{
+    font-size: 16pt;
+}
+
+QLabel#lblRunCount
+{
+    font-size: 120pt;
+}
+
+QLabel#lblSteps,
+QLabel#lblJumps
+{
+    font-size: 14pt;
+}
+
+QLabel#lblResultativnstTitle,
+QLabel#lblEffectivenessTitle,
+QLabel#lblStrategyTitle
+{
+    font-size: 18pt;
+    color: rgb(0, 80, 110);
+    background-color: rgb(205, 209, 214);
+}
+
+QLineEdit
+{
+    font-size: 11pt;
+}
+
+QComboBox
+{
+    font-size: 11pt;
+}
+
+QSpinBox
+{
+    font-size: 11pt;
+}
+
+QDoubleSpinBox
+{
+    font-size: 11pt;
+}
+
+QDateEdit
+{
+    font-size: 11pt;
+}
+
+QTreeView
+{
+    background-color: rgb(205, 209, 214);
+    font-size: 11pt;
+    color: rgb(32,88,103);
+}
+
+QTreeView#tvFactorsTrenResult
+{
+    font-size: 20pt;
+}
+
+QTreeView#tvJumps
+{
+    font-size: 16pt;
+}
+
+QTreeView#tvJumpsDrop
+{
+    font-size: 12pt;
+}
+
+QTreeView#tvSteps
+{
+    font-size: 18pt;
+}
+
+QTreeView#tvEvolvMainFactors,
+QTreeView#tvEvolvKorrectionFactors
+{
+    font-size: 8pt;
+}
+
+QListView
+{
+    background-color: rgb(205, 209, 214);
+    font-size: 11pt;
+    color: rgb(32,88,103);
+}
+
+QListView#tvFactorsTrenResult
+{
+    font-size: 20pt;
+}
+
+QListView#tvJumps
+{
+    font-size: 16pt;
+}
+
+QListView#tvJumpsDrop
+{
+    font-size: 12pt;
+}
+
+QListView#tvSteps
+{
+    font-size: 18pt;
+}
+
+QHeaderView::section
+{
+    background-color: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                                      stop:0 #616161, stop: 0.5 #505050,
+                                      stop: 0.6 #434343, stop:1 #656565);
+    font-size: 11pt;
+    color: white;
+    padding-left: 4px;
+    border: 1px solid #6c6c6c;
+}
+
+
+QSplitter::handle:horizontal
+{
+    background: qlineargradient(x1: 0, y1: 0, x2: 1, y2: 0, stop: 0 #205867, stop: 0.5 #40b0ce, stop: 1 #205867);
+}
+
+QSplitter::handle:vertical
+{
+    background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #205867, stop: 0.5 #40b0ce, stop: 1 #205867);
+}
+
+QPushButton#btnParams,
+QPushButton#btnNewTest,
+QPushButton#btnDelTest,
+QPushButton#btnAdd,
+QPushButton#btnCard,
+QPushButton#btnDelete,
+QPushButton#btnTestProperty
+{
+    border: 2px solid #8f8f91;
+    border-radius: 6px;
+    background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 rgb(83, 136, 180), stop: 0.5 rgb(143, 179, 219), stop: 1 rgb(83, 136, 180));
+    min-width: 60px;
+}
+
+QPushButton#btnParams:hover,
+QPushButton#btnNewTest:hover,
+QPushButton#btnDelTest:hover,
+QPushButton#btnAdd:hover,
+QPushButton#btnCard:hover,
+QPushButton#btnDelete:hover,
+QPushButton#btnTestProperty:hover
+{
+    background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 rgb(103, 156, 200), stop: 0.5 rgb(163, 199, 239), stop: 1 rgb(103, 156, 200));
+}
+
+QPushButton#btnParams:pressed,
+QPushButton#btnNewTest:pressed,
+QPushButton#btnDelTest:pressed,
+QPushButton#btnAdd:pressed,
+QPushButton#btnCard:pressed,
+QPushButton#btnDelete:pressed,
+QPushButton#btnTestProperty:pressed
+{
+    background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 rgb(63, 116, 160), stop: 0.5 rgb(123, 159, 199), stop: 1 rgb(63, 116, 160));
+}
+
+QPushButton#btnResults,
+QPushButton#btnDynamic
+{
+    border: 2px solid rgb(55, 55, 55);
+    border-radius: 6px;
+    background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 rgb(50, 50, 50), stop: 0.5 rgb(90, 90, 90), stop: 1 rgb(50, 50, 50));
+    color: rgb(255, 255, 255);
+    min-width: 60px;
+}
+
+QPushButton#btnResults:checked,
+QPushButton#btnDynamic:checked
+{
+    background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 rgb(80, 80, 80), stop: 0.5 rgb(150, 150, 150), stop: 1 rgb(80, 80, 80));
+}
+
+QPushButton#btnResults:hover,
+QPushButton#btnDynamic:hover
+{
+    background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 rgb(120, 120, 120), stop: 0.5 rgb(180, 180, 180), stop: 1 rgb(120, 120, 120));
+}
+
+QPushButton#btnResults:pressed,
+QPushButton#btnDynamic:pressed
+{
+    background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 rgb(50, 50, 50), stop: 0.5 rgb(90, 90, 90), stop: 1 rgb(50, 50, 50));
+}
+
+
+QPushButton#btnUnselect
+{
+    font-size: 8pt;
+}
+
+QPushButton#MethodicKind
+{
+    border: 2px solid #8f8f91;
+    border-radius: 6px;
+/*    background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 rgb(83, 136, 180), stop: 0.5 rgb(143, 179, 219), stop: 1 rgb(83, 136, 180));*/
+    background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 rgb(150, 150, 150), stop: 0.5 rgb(200, 200, 200), stop: 1 rgb(150, 150, 150));
+    min-width: 50px;
+}
+
+QPushButton#MethodicKind:checked
+{
+    background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 rgb(80, 80, 80), stop: 0.5 rgb(150, 150, 150), stop: 1 rgb(80, 80, 80));
+}
+
+QPushButton#MethodicKind:hover
+{
+/*    background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 rgb(103, 156, 200), stop: 0.5 rgb(163, 199, 239), stop: 1 rgb(103, 156, 200));*/
+    background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 rgb(180, 180, 180), stop: 0.5 rgb(220, 220, 220), stop: 1 rgb(180, 180, 180));
+}
+
+QPushButton#MethodicKind:pressed
+{
+/*    background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 rgb(63, 116, 160), stop: 0.5 rgb(123, 159, 199), stop: 1 rgb(63, 116, 160));*/
+    background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 rgb(120, 120, 120), stop: 0.5 rgb(160, 160, 160), stop: 1 rgb(120, 120, 120));
+}

@@ -28,6 +28,8 @@ static const QString PresetsMetodicsFileName = "metodics_dopusk";
 //! Будет ли проходить автоимпорт БД
 static const bool isAutoImportDatabases = false;
 
+static const QString MainStyleSheetFile = ":/qss/main_green.qss";
+//static const QString MainStyleSheetFile = ":/qss/main.qss";
 }
 
 #endif // AANALYSERDEFINES_H

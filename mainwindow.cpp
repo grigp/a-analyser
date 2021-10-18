@@ -10,6 +10,7 @@
 #include "databasepropertydialog.h"
 #include "dataprovider.h"
 #include "aanalysersettings.h"
+#include "aanalyserdefines.h"
 
 #include <QFile>
 #include <QCloseEvent>
@@ -181,7 +182,7 @@ void MainWindow::on_selectDatabase()
 
 void MainWindow::initUi()
 {
-    QFile style( ":/qss/main.qss" );
+    QFile style(AAnalyserDefines::MainStyleSheetFile);
     style.open( QFile::ReadOnly );
     QString stlDetail(style.readAll() );
     setStyleSheet(stlDetail);
