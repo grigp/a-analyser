@@ -176,5 +176,6 @@
         <file>pre_settings/metodics_tester.json</file>
         <file>pre_settings/metodics_tester_en_US.json</file>
         <file>qss/main_green.qss</file>
+        <file>qss/main_red.qss</file>
     </qresource>
 </RCC>
