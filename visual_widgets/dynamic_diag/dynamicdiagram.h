@@ -37,6 +37,10 @@ class DynamicDiagram : public QWidget
 {
     Q_OBJECT
 
+    Q_PROPERTY(QColor back_color READ backgroundColor WRITE setBackgroundColor DESIGNABLE true)
+    Q_PROPERTY(QColor diag_color READ diagColor WRITE setDiagColor DESIGNABLE true)
+    Q_PROPERTY(QColor selectItem_color READ selectItemColor WRITE setSelectItemColor DESIGNABLE true)
+
 public:
     explicit DynamicDiagram(QWidget *parent = nullptr);
     ~DynamicDiagram() override;

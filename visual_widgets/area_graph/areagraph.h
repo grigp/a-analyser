@@ -40,7 +40,8 @@ struct MarkerInfo
 class GraphArea
 {
 public:
-    explicit GraphArea(SignalAccess* signal,
+    explicit GraphArea(QWidget* parent,
+                       SignalAccess* signal,
                        const int numSubChan,
                        const QString &name);
 
@@ -79,6 +80,7 @@ private:
      */
     void computeAverageValue();
 
+    QWidget* m_parent {nullptr};
     SignalAccess* m_signal {nullptr};
     int m_numSubChan {-1};   ///< Номер отображаемого подканала. Если он равен -1, то отображаются все подканалы сигнала в одной зоне
     QString m_name;
@@ -97,6 +99,15 @@ private:
 class AreaGraph : public QWidget
 {
     Q_OBJECT
+
+    Q_PROPERTY(QColor back_color READ colorBackground WRITE setColorBackground DESIGNABLE true)
+    Q_PROPERTY(QColor line1_color MEMBER m_line1Color DESIGNABLE true)
+    Q_PROPERTY(QColor line2_color MEMBER m_line2Color DESIGNABLE true)
+    Q_PROPERTY(QColor line3_color MEMBER m_line3Color DESIGNABLE true)
+    Q_PROPERTY(QColor line4_color MEMBER m_line4Color DESIGNABLE true)
+    Q_PROPERTY(QColor line5_color MEMBER m_line5Color DESIGNABLE true)
+    Q_PROPERTY(QColor line6_color MEMBER m_line6Color DESIGNABLE true)
+    Q_PROPERTY(QColor fillBetweenSubchans_color READ colorFillBetweenSubchans WRITE setColorFillBetweenSubchans DESIGNABLE true)
 
 public:
     explicit AreaGraph(QWidget *parent = nullptr);
@@ -145,6 +156,13 @@ public:
 
     QColor colorFillBetweenSubchans() const {return m_envColors.colorFillBetweenSubchans;}
     void setColorFillBetweenSubchans(const QColor &color);
+
+    QColor line1Color() const {return m_line1Color;}
+    QColor line2Color() const {return m_line2Color;}
+    QColor line3Color() const {return m_line3Color;}
+    QColor line4Color() const {return m_line4Color;}
+    QColor line5Color() const {return m_line5Color;}
+    QColor line6Color() const {return m_line6Color;}
 
 
     /*!
@@ -209,6 +227,12 @@ private:
 
     QList<GraphArea*> m_areases;
     GraphEnvColors m_envColors;
+    QColor m_line1Color {Qt::darkGreen};
+    QColor m_line2Color {Qt::blue};
+    QColor m_line3Color {Qt::darkCyan};
+    QColor m_line4Color {Qt::red};
+    QColor m_line5Color {Qt::darkYellow};
+    QColor m_line6Color {Qt::darkMagenta};
 
     XCoordSignalMode m_xcsm {xsm_fullSignal}; ///< Режим отображения сигнала по горизонтали
     int m_startPoint {0};                     ///< Начальная точка прорисовки в режиме скроллинга

@@ -1,6 +1,7 @@
 #include "diagcross.h"
 #include "ui_diagcross.h"
 
+#include <QDebug>
 #include <QPainter>
 
 DiagCross::DiagCross(QWidget *parent) :
@@ -18,6 +19,7 @@ DiagCross::~DiagCross()
 void DiagCross::paintEvent(QPaintEvent *event)
 {
     Q_UNUSED(event);
+
 
     QPainter painter(this);
 

@@ -52,7 +52,7 @@ AreaGraph::~AreaGraph()
 
 void AreaGraph::appendSignal(SignalAccess *signal, const QString &name, const int numSubChan)
 {
-    m_areases.append(new GraphArea(signal, numSubChan, name));
+    m_areases.append(new GraphArea(this, signal, numSubChan, name));
     update();
 }
 
@@ -97,6 +97,18 @@ void AreaGraph::setColorLabels(const QColor &color)
 void AreaGraph::setColorCursor(const QColor &color)
 {
     m_envColors.colorCursor = color;
+    update();
+}
+
+void AreaGraph::setColorMarker(const QColor &color)
+{
+    m_envColors.colorMarkers = color;
+    update();
+}
+
+void AreaGraph::setColorFillBetweenSubchans(const QColor &color)
+{
+    m_envColors.colorFillBetweenSubchans = color;
     update();
 }
 
@@ -352,14 +364,28 @@ void AreaGraph::mousePressEvent(QMouseEvent *event)
 
 //! --------------------------------------------------------------------------------------
 //! Реализация GraphArea
-GraphArea::GraphArea(SignalAccess *signal,
+GraphArea::GraphArea(QWidget* parent,
+                     SignalAccess *signal,
                      const int numSubChan,
                      const QString &name)
-    : m_signal(signal)
+    : m_parent(parent)
+    , m_signal(signal)
     , m_numSubChan(numSubChan)
     , m_name(name)
-    , m_palette(PaletteDefault)
+    , m_palette(QVector<QColor>() << static_cast<AreaGraph*>(m_parent)->line1Color()
+                                  << static_cast<AreaGraph*>(m_parent)->line2Color()
+                                  << static_cast<AreaGraph*>(m_parent)->line3Color()
+                                  << static_cast<AreaGraph*>(m_parent)->line4Color()
+                                  << static_cast<AreaGraph*>(m_parent)->line5Color()
+                                  << static_cast<AreaGraph*>(m_parent)->line6Color())
+//    , m_palette(PaletteDefault)
 {
+//    m_palette << static_cast<AreaGraph*>(m_parent)->line1Color()
+//              << static_cast<AreaGraph*>(m_parent)->line2Color()
+//              << static_cast<AreaGraph*>(m_parent)->line3Color()
+//              << static_cast<AreaGraph*>(m_parent)->line4Color()
+//              << static_cast<AreaGraph*>(m_parent)->line5Color()
+//              << static_cast<AreaGraph*>(m_parent)->line6Color();
     computeAverageValue();
 }
 

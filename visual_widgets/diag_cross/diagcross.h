@@ -2,6 +2,8 @@
 #define DIAGCROSS_H
 
 #include <QWidget>
+//#include <QComboBox>
+
 
 namespace Ui {
 class DiagCross;
@@ -14,6 +16,10 @@ class DiagCross : public QWidget
 {
     Q_OBJECT
 
+    Q_PROPERTY(QColor back_color READ backgroundColor WRITE setBackgroundColor DESIGNABLE true)
+    Q_PROPERTY(QColor frontal_color READ frontalColor WRITE setFrontalColor DESIGNABLE true)
+    Q_PROPERTY(QColor sagittal_color READ sagittalColor WRITE setSagittalColor DESIGNABLE true)
+
 public:
     explicit DiagCross(QWidget *parent = nullptr);
     ~DiagCross() override;
@@ -25,10 +31,7 @@ public:
     QColor frameColor() const {return m_frameColor;}
 
     void setFrontalColor(const QColor color) {m_frontalColor = color;}
-    QColor frontalColor() const {return m_frontalColor;}
-
     void setSagittalColor(const QColor color) {m_sagittalColor = color;}
-    QColor sagittalColor() const {return m_sagittalColor;}
 
     void setValueUp(const int value) {m_valueUp = value; repaint();}
     int valueUp() const {return m_valueUp;}
@@ -57,12 +60,17 @@ public:
     void setIsShowValueLeft(const bool value) {m_isShowValueLeft = value;}
     bool isShowValueLeft() const {return m_isShowValueLeft;}
 
+public slots:
+    QColor frontalColor() const {return m_frontalColor;}
+    QColor sagittalColor() const {return m_sagittalColor;}
+
 protected:
     void paintEvent(QPaintEvent *event) override;
 
 private:
     Ui::DiagCross *ui;
 
+    //QComboBox box;
     QColor m_backgroundColor {Qt::white};
     QColor m_frameColor {Qt::darkGray};
     QColor m_frontalColor {QColor(0, 118, 163)};

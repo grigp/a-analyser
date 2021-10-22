@@ -74,7 +74,6 @@ QColor DynamicDiagram::backgroundColor() const
 void DynamicDiagram::setBackgroundColor(const QColor &color)
 {
     m_backgroundColor = color;
-    update();
 }
 
 QColor DynamicDiagram::diagColor() const
