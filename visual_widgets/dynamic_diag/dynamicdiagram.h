@@ -37,7 +37,6 @@ class DynamicDiagram : public QWidget
 {
     Q_OBJECT
 
-    Q_PROPERTY(QColor back_color READ backgroundColor WRITE setBackgroundColor DESIGNABLE true)
     Q_PROPERTY(QColor diag_color READ diagColor WRITE setDiagColor DESIGNABLE true)
     Q_PROPERTY(QColor selectItem_color READ selectItemColor WRITE setSelectItemColor DESIGNABLE true)
 
@@ -70,9 +69,6 @@ public:
 
     QString bottomText() const;
     void setBottomText(const QString &text);
-
-    QColor backgroundColor() const;
-    void setBackgroundColor(const QColor &color);
 
     QColor diagColor() const;
     void setDiagColor(const QColor &color);
@@ -155,7 +151,6 @@ private:
     QString m_title {""};
     QString m_bottomText {""};
 
-    QColor m_backgroundColor {Qt::white};
     QColor m_diagColor {Qt::darkCyan};
     QColor m_selectItemColor {QColor(0, 194, 194)};
     QColor m_titleColor {Qt::black};

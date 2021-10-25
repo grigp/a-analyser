@@ -12,7 +12,6 @@ SetMaxForceDialog::SetMaxForceDialog(QWidget *parent) :
     ui->setupUi(this);
     setWindowFlags(Qt::WindowStaysOnTopHint);
     ui->wgtDiag->setDiap(128);
-    ui->wgtDiag->setBackgroundColor(Qt::lightGray);
 }
 
 SetMaxForceDialog::~SetMaxForceDialog()

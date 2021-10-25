@@ -16,16 +16,12 @@ class DiagCross : public QWidget
 {
     Q_OBJECT
 
-    Q_PROPERTY(QColor back_color READ backgroundColor WRITE setBackgroundColor DESIGNABLE true)
     Q_PROPERTY(QColor frontal_color READ frontalColor WRITE setFrontalColor DESIGNABLE true)
     Q_PROPERTY(QColor sagittal_color READ sagittalColor WRITE setSagittalColor DESIGNABLE true)
 
 public:
     explicit DiagCross(QWidget *parent = nullptr);
     ~DiagCross() override;
-
-    void setBackgroundColor(const QColor color) {m_backgroundColor = color;}
-    QColor backgroundColor() const {return m_backgroundColor;}
 
     void setFrameColor(const QColor color) {m_frameColor = color;}
     QColor frameColor() const {return m_frameColor;}
@@ -71,7 +67,6 @@ private:
     Ui::DiagCross *ui;
 
     //QComboBox box;
-    QColor m_backgroundColor {Qt::white};
     QColor m_frameColor {Qt::darkGray};
     QColor m_frontalColor {QColor(0, 118, 163)};
     QColor m_sagittalColor {QColor(0, 166, 80)};

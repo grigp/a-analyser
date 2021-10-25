@@ -12,7 +12,6 @@ class AreaGraph;
  */
 struct GraphEnvColors
 {
-    QColor colorBackground;
     QColor colorAxis;
     QColor colorGrid;
     QColor colorLabels;
@@ -100,7 +99,6 @@ class AreaGraph : public QWidget
 {
     Q_OBJECT
 
-    Q_PROPERTY(QColor back_color READ colorBackground WRITE setColorBackground DESIGNABLE true)
     Q_PROPERTY(QColor line1_color MEMBER m_line1Color DESIGNABLE true)
     Q_PROPERTY(QColor line2_color MEMBER m_line2Color DESIGNABLE true)
     Q_PROPERTY(QColor line3_color MEMBER m_line3Color DESIGNABLE true)
@@ -135,9 +133,6 @@ public:
      * \brief Очищает все зоны построения и удаляет их
      */
     void clear();
-
-    QColor colorBackground() const {return m_envColors.colorBackground;}
-    void setColorBackground(const QColor &color);
 
     QColor colorAxis() const {return m_envColors.colorAxis;}
     void setColorAxis(const QColor &color);

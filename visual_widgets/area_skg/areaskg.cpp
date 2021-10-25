@@ -1,12 +1,14 @@
 #include "areaskg.h"
 #include "ui_areaskg.h"
 
+#include "aanalyserapplication.h"
 #include "gridskg.h"
 #include "traceskg.h"
 #include "lineskg.h"
 #include "signalaccess.h"
 #include "gridskgdefines.h"
 
+#include <QTimer>
 #include <QDebug>
 
 AreaSKG::AreaSKG(QWidget *parent) :
@@ -19,7 +21,10 @@ AreaSKG::AreaSKG(QWidget *parent) :
 {
     ui->setupUi(this);
     m_targets.clear();
-    setAreaSKG();
+    QTimer::singleShot(20, [=]()
+    {
+        setAreaSKG();
+    });
 }
 
 AreaSKG::~AreaSKG()
@@ -151,6 +156,9 @@ void AreaSKG::resizeEvent(QResizeEvent *event)
 
 void AreaSKG::setAreaSKG()
 {
+    auto backColor = palette().background().color();
+    m_sceneSKG->setBackgroundBrush(QBrush(backColor));
+
     ui->panSKG->setScene(m_sceneSKG);
     m_sceneSKG->addItem(m_gridSKG);
     m_sceneSKG->addItem(m_traceSKG);

@@ -33,7 +33,6 @@ AreaGraph::AreaGraph(QWidget *parent) :
     ui(new Ui::AreaGraph)
 {
     m_envColors.colorAxis = Qt::black;
-    m_envColors.colorBackground = Qt::white;
     m_envColors.colorGrid = Qt::darkGray;
     m_envColors.colorLabels = Qt::black;
     m_envColors.colorCursor = Qt::darkGray;
@@ -67,12 +66,6 @@ void AreaGraph::clear()
     foreach (auto* area, m_areases)
         delete area;
     m_areases.clear();
-    update();
-}
-
-void AreaGraph::setColorBackground(const QColor &color)
-{
-    m_envColors.colorBackground = color;
     update();
 }
 
@@ -195,8 +188,9 @@ void AreaGraph::paintEvent(QPaintEvent *event)
     painter.save();
 
     //! Фон
-    painter.setBrush(QBrush(m_envColors.colorBackground, Qt::SolidPattern));
-    painter.setPen(QPen(m_envColors.colorBackground, 1, Qt::SolidLine, Qt::FlatCap));
+    auto backColor = palette().background().color();
+    painter.setBrush(QBrush(backColor, Qt::SolidPattern));
+    painter.setPen(QPen(backColor, 1, Qt::SolidLine, Qt::FlatCap));
     painter.drawRect(0, 0, width(), height());
 
     painter.setPen(QPen(m_envColors.colorAxis, 1, Qt::SolidLine, Qt::FlatCap));

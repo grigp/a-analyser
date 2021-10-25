@@ -66,16 +66,6 @@ void DynamicDiagram::setBottomText(const QString &text)
     update();
 }
 
-QColor DynamicDiagram::backgroundColor() const
-{
-    return m_backgroundColor;
-}
-
-void DynamicDiagram::setBackgroundColor(const QColor &color)
-{
-    m_backgroundColor = color;
-}
-
 QColor DynamicDiagram::diagColor() const
 {
     return m_diagColor;
@@ -184,8 +174,9 @@ void DynamicDiagram::paintEvent(QPaintEvent *event)
     int zeroY = geometry().height() - m_axisSpaceBottom - static_cast<int>((0 - min) * prop);
 
     //! Фон
-    painter.setBrush(QBrush(m_backgroundColor, Qt::SolidPattern));
-    painter.setPen(QPen(m_backgroundColor, 1, Qt::SolidLine, Qt::FlatCap));
+    auto backColor = palette().background().color();
+    painter.setBrush(QBrush(backColor, Qt::SolidPattern));
+    painter.setPen(QPen(backColor, 1, Qt::SolidLine, Qt::FlatCap));
     painter.drawRect(geometry());
 
     //! Заголовок

@@ -29,10 +29,10 @@ void GridSKG::paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWi
     m_height = widget->size().height();
     int minS = qMin(m_width, m_height);
     m_prop = static_cast<double>(minS / 2 - GridSKGDefines::I_LABEL_SPACE) / static_cast<double>(m_diap);
-    int left = -m_diap * m_prop;
-    int top = -m_diap * m_prop;
-    int right = m_diap * m_prop;
-    int bottom = m_diap * m_prop;
+    int left = -static_cast<int>(m_diap * m_prop);
+    int top = -static_cast<int>(m_diap * m_prop);
+    int right = static_cast<int>(m_diap * m_prop);
+    int bottom = static_cast<int>(m_diap * m_prop);
 
     painter->save();
 
