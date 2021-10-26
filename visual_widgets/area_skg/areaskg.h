@@ -18,6 +18,10 @@ class AreaSKG : public QWidget
 {
     Q_OBJECT
 
+    Q_PROPERTY(QColor skg_color READ colorSKG WRITE setColorSKG DESIGNABLE true)
+    Q_PROPERTY(QColor ellipse_color READ colorEllipse WRITE setColorEllipse DESIGNABLE true)
+    Q_PROPERTY(QColor marker_color READ colorMarker WRITE setColorMarker DESIGNABLE true)
+
 public:
     explicit AreaSKG(QWidget *parent = nullptr);
     ~AreaSKG();
@@ -77,11 +81,16 @@ public:
      * \brief Устанавливает цвет СКГ
      */
     void setColorSKG(const QColor &color);
+    QColor colorSKG() const;
 
     /*!
      * \brief Устанавливает цвет эллипса
      */
     void setColorEllipse(const QColor &color);
+    QColor colorEllipse() const;
+
+    QColor colorMarker() const;
+    void setColorMarker(const QColor &color);
 
     /*!
      * \brief Добавляет метку цели
@@ -106,12 +115,16 @@ private:
 
     void setAreaSKG();
 
+    QColor getFrameColor(const QColor color) const;
+
     QGraphicsScene* m_sceneSKG {nullptr};
     GridSKG* m_gridSKG {nullptr};
     TraceSKG* m_traceSKG {nullptr};
     LineSKG* m_lineSKG {nullptr};
     QGraphicsRectItem* m_marker {nullptr};
     QList<QGraphicsItem*> m_targets;
+
+    QColor m_markerColor {Qt::red};
 
     int m_diap {128};
     bool m_isShowTrace {false};

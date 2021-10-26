@@ -44,11 +44,13 @@ public:
      * \brief Устанавливает цвет СКГ
      */
     void setColorSKG(const QColor &color) {m_colorSKG = color;}
+    QColor colorSKG() const {return m_colorSKG;}
 
     /*!
      * \brief Устанавливает цвет эллипса
      */
     void setColorEllipse(const QColor &color) {m_colorEllipse = color;}
+    QColor colorEllipse() const {return m_colorEllipse;}
 
 private:
     void updateItem();

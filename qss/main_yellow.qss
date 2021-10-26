@@ -352,6 +352,9 @@ QWidget#wgtSKGAreases
 AreaSKG
 {
     background-color: rgb(250, 250, 240);
+    qproperty-skg_color: rgb(100, 100, 0);
+    qproperty-ellipse_color: rgb(10, 210, 0);
+    qproperty-marker_color: rgb(210, 60, 0);
 }
 
 DynamicDiagram

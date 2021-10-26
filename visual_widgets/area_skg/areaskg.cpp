@@ -48,7 +48,7 @@ void AreaSKG::setDiap(const int diap)
 
 void AreaSKG::addMarker()
 {
-    m_marker = m_sceneSKG->addRect(QRectF(0, 0, 10, 10), QPen(Qt::darkRed), QBrush(Qt::red));
+    m_marker = m_sceneSKG->addRect(QRectF(0, 0, 10, 10), QPen(getFrameColor(m_markerColor)), QBrush(m_markerColor));
 }
 
 void AreaSKG::setMarker(const double x, const double y)
@@ -92,7 +92,7 @@ void AreaSKG::setVisibleMarker(const bool visibleMarker)
     m_isVisibleMarker = visibleMarker;
     if (m_isVisibleMarker)
         if (!m_marker)
-            m_marker = m_sceneSKG->addRect(QRectF(0, 0, 10, 10), QPen(Qt::darkRed), QBrush(Qt::red));
+            m_marker = m_sceneSKG->addRect(QRectF(0, 0, 10, 10), QPen(getFrameColor(m_markerColor)), QBrush(m_markerColor));
         else
             return;
     else
@@ -126,10 +126,34 @@ void AreaSKG::setColorSKG(const QColor &color)
         m_traceSKG->setColorSKG(color);
 }
 
+QColor AreaSKG::colorSKG() const
+{
+    if (m_lineSKG)
+        return m_lineSKG->colorSKG();
+    return Qt::darkCyan;
+}
+
 void AreaSKG::setColorEllipse(const QColor &color)
 {
     if (m_lineSKG)
         m_lineSKG->setColorEllipse(color);
+}
+
+QColor AreaSKG::colorEllipse() const
+{
+    if (m_lineSKG)
+        return m_lineSKG->colorEllipse();
+    return Qt::darkBlue;
+}
+
+QColor AreaSKG::colorMarker() const
+{
+    return m_markerColor;
+}
+
+void AreaSKG::setColorMarker(const QColor &color)
+{
+    m_markerColor = color;
 }
 
 void AreaSKG::addTarget(const double x, const double y, const QColor colorBackground, const QColor colorBorder)
@@ -163,4 +187,12 @@ void AreaSKG::setAreaSKG()
     m_sceneSKG->addItem(m_gridSKG);
     m_sceneSKG->addItem(m_traceSKG);
     m_sceneSKG->addItem(m_lineSKG);
+}
+
+QColor AreaSKG::getFrameColor(const QColor color) const
+{
+    auto r = color.red();
+    auto g = color.green();
+    auto b = color.blue();
+    return QColor(r / 10, g / 10, b / 10);
 }
