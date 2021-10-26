@@ -1,7 +1,6 @@
 #include "areaskg.h"
 #include "ui_areaskg.h"
 
-#include "aanalyserapplication.h"
 #include "gridskg.h"
 #include "traceskg.h"
 #include "lineskg.h"

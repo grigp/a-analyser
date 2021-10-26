@@ -23,7 +23,6 @@ Oscilloscope::Oscilloscope(QWidget *parent) :
     ui(new Ui::Oscilloscope)
 {
     m_envColors.colorAxis = Qt::black;
-    m_envColors.colorBackground = Qt::white;
     m_envColors.colorGrid = Qt::darkGray;
     m_envColors.colorLabels = Qt::black;
     m_envColors.colorCursor = Qt::darkGray;
@@ -43,7 +42,7 @@ Oscilloscope::~Oscilloscope()
 
 void Oscilloscope::appendArea(const QString &areaName, const int channelCount)
 {
-    auto *area = new OscilloscopeArea(areaName, channelCount);
+    auto *area = new OscilloscopeArea(this, areaName, channelCount);
     m_areases.append(area);
     area->dataResize(m_graphWidth);
     update();
@@ -61,12 +60,6 @@ void Oscilloscope::clear()
         delete area;
     m_areases.clear();
     m_cursorPos = 0;
-    update();
-}
-
-void Oscilloscope::setColorBackground(const QColor &color)
-{
-    m_envColors.colorBackground = color;
     update();
 }
 
@@ -156,8 +149,9 @@ void Oscilloscope::paintEvent(QPaintEvent *event)
     painter.save();
 
     //! Фон
-    painter.setBrush(QBrush(m_envColors.colorBackground, Qt::SolidPattern));
-    painter.setPen(QPen(m_envColors.colorBackground, 1, Qt::SolidLine, Qt::FlatCap));
+    auto backColor = palette().background().color();
+    painter.setBrush(QBrush(backColor, Qt::SolidPattern));
+    painter.setPen(QPen(backColor, 1, Qt::SolidLine, Qt::FlatCap));
     painter.drawRect(0, 0, width(), height());
 
     painter.setPen(QPen(m_envColors.colorAxis, 1, Qt::SolidLine, Qt::FlatCap));
@@ -250,10 +244,19 @@ void Oscilloscope::resizeEvent(QResizeEvent *event)
         m_cursorPos = 0;
 }
 
-OscilloscopeArea::OscilloscopeArea(const QString &name, const int channelCount)
-    : m_name(name)
+OscilloscopeArea::OscilloscopeArea(QWidget* parent,
+                                   const QString &name,
+                                   const int channelCount)
+    :  m_parent(parent)
+    , m_name(name)
     , m_channelCount(channelCount)
-    , m_palette(PaletteDefault)
+    , m_palette(QVector<QColor>() << static_cast<Oscilloscope*>(m_parent)->line1Color()
+                                  << static_cast<Oscilloscope*>(m_parent)->line2Color()
+                                  << static_cast<Oscilloscope*>(m_parent)->line3Color()
+                                  << static_cast<Oscilloscope*>(m_parent)->line4Color()
+                                  << static_cast<Oscilloscope*>(m_parent)->line5Color()
+                                  << static_cast<Oscilloscope*>(m_parent)->line6Color())
+//    , m_palette(PaletteDefault)
 {
     m_data.clear();
 

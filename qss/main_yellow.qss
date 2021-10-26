@@ -353,7 +353,7 @@ AreaSKG
 {
     background-color: rgb(250, 250, 240);
     qproperty-skg_color: rgb(100, 100, 0);
-    qproperty-ellipse_color: rgb(10, 210, 0);
+    qproperty-ellipse_color: rgb(10, 80, 0);
     qproperty-marker_color: rgb(210, 60, 0);
 }
 
@@ -362,5 +362,26 @@ DynamicDiagram
     background-color: rgb(250, 250, 240);
     qproperty-diag_color: rgb(120, 120, 0);
     qproperty-selectItem_color: rgb(210, 210, 0);
+}
+
+DiagOctaedron
+{
+    background-color: rgb(250, 250, 240);
+    qproperty-line_color: rgb(120, 120, 0);
+    qproperty-label_color: rgb(120, 120, 0);
+    qproperty-labelText_color: rgb(250, 250, 240);
+    qproperty-labelFrame_color: rgb(60, 60, 0);
+}
+
+Oscilloscope
+{
+    background-color: rgb(250, 250, 240);
+    qproperty-line1_color: rgb(120, 120, 0);
+    qproperty-line2_color: rgb(210, 20, 0);
+}
+
+Transients
+{
+    background-color: rgb(250, 250, 240);
 }
 

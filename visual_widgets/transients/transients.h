@@ -34,9 +34,6 @@ public:
         double deviation;    //! Разброс на этапе удержания
     };
 
-    QColor backgroundColor() const {return m_backgroundColor;}
-    void setBackgroundColor(const QColor color) {m_backgroundColor = color;}
-
     QColor axisColor() const {return m_axisColor;}
     void setAxisColor(const QColor color) {m_axisColor = color;}
 
@@ -96,7 +93,6 @@ private:
      */
     QColor getColorTransient(const int cnt, const Params &params) const;
 
-    QColor m_backgroundColor {Qt::white};
     QColor m_axisColor {Qt::black};
 
     QColor m_latentColor {Qt::darkYellow};

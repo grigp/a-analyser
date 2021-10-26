@@ -374,12 +374,6 @@ GraphArea::GraphArea(QWidget* parent,
                                   << static_cast<AreaGraph*>(m_parent)->line6Color())
 //    , m_palette(PaletteDefault)
 {
-//    m_palette << static_cast<AreaGraph*>(m_parent)->line1Color()
-//              << static_cast<AreaGraph*>(m_parent)->line2Color()
-//              << static_cast<AreaGraph*>(m_parent)->line3Color()
-//              << static_cast<AreaGraph*>(m_parent)->line4Color()
-//              << static_cast<AreaGraph*>(m_parent)->line5Color()
-//              << static_cast<AreaGraph*>(m_parent)->line6Color();
     computeAverageValue();
 }
 

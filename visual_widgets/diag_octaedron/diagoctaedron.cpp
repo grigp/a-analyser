@@ -77,8 +77,9 @@ void DiagOctaedron::paintEvent(QPaintEvent *event)
 
     QPainter painter(this);
 
-    painter.setBrush(QBrush(m_backgroundColor, Qt::SolidPattern));
-    painter.setPen(QPen(m_backgroundColor, 1, Qt::SolidLine, Qt::FlatCap));
+    auto backColor = palette().background().color();
+    painter.setBrush(QBrush(backColor, Qt::SolidPattern));
+    painter.setPen(QPen(backColor, 1, Qt::SolidLine, Qt::FlatCap));
     painter.drawRect(geometry());
 
     int mx = geometry().width() / 2;

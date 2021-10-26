@@ -14,12 +14,14 @@ class DiagOctaedron : public QWidget
 {
     Q_OBJECT
 
+    Q_PROPERTY(QColor line_color READ lineColor WRITE setLineColor DESIGNABLE true)
+    Q_PROPERTY(QColor label_color READ labelColor WRITE setLabelColor DESIGNABLE true)
+    Q_PROPERTY(QColor labelText_color READ labelTextColor WRITE setLabelTextColor DESIGNABLE true)
+    Q_PROPERTY(QColor labelFrame_color READ labelFrameColor WRITE setLabelFrameColor DESIGNABLE true)
+
 public:
     explicit DiagOctaedron(QWidget *parent = nullptr);
     ~DiagOctaedron() override;
-
-    void setBackgroundColor(const QColor color) {m_backgroundColor = color;}
-    QColor backgroundColor() const {return m_backgroundColor;}
 
     void setLineColor(const QColor color) {m_lineColor = color;}
     QColor lineColor() const {return m_lineColor;}
@@ -50,7 +52,6 @@ protected:
 private:
     Ui::DiagOctaedron *ui;
 
-    QColor m_backgroundColor {Qt::white};
     QColor m_lineColor {QColor(0, 90, 150)};
     QColor m_labelColor {QColor(0, 90, 150)};
     QColor m_labelTextColor {Qt::white};

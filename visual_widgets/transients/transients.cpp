@@ -111,8 +111,9 @@ void Transients::paintEvent(QPaintEvent *event)
 
     QPainter painter(this);
 
-    painter.setBrush(QBrush(m_backgroundColor, Qt::SolidPattern));
-    painter.setPen(QPen(m_backgroundColor, 1, Qt::SolidLine, Qt::FlatCap));
+    auto backColor = palette().background().color();
+    painter.setBrush(QBrush(backColor, Qt::SolidPattern));
+    painter.setPen(QPen(backColor, 1, Qt::SolidLine, Qt::FlatCap));
     painter.drawRect(geometry());
 
     //! Координата Y нижней линии (Низ для графика возврата)
@@ -159,7 +160,7 @@ void Transients::paintEvent(QPaintEvent *event)
         y1 = static_cast<int>(lineRet0 - (100 + m_parRet.statism + 3 * m_parRet.deviation) * propRet);
         h = static_cast<int>(2 * 3 * m_parRet.deviation * propRet);
         painter.drawRect(x, y1, geometry().width() - x, h);
-        painter.setBrush(QBrush(m_backgroundColor, Qt::SolidPattern));
+        painter.setBrush(QBrush(backColor, Qt::SolidPattern));
 
         //! Оси
         painter.setPen(QPen(m_axisColor, 1, Qt::SolidLine, Qt::FlatCap));
