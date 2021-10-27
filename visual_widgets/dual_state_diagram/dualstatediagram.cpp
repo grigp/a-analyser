@@ -28,8 +28,9 @@ void DualStateDiagram::paintEvent(QPaintEvent *event)
 
     QPainter painter(this);
 
-    painter.setBrush(QBrush(m_backgroundColor, Qt::SolidPattern));
-    painter.setPen(QPen(m_backgroundColor, 1, Qt::SolidLine, Qt::FlatCap));
+    auto backColor = palette().background().color();
+    painter.setBrush(QBrush(backColor, Qt::SolidPattern));
+    painter.setPen(QPen(backColor, 1, Qt::SolidLine, Qt::FlatCap));
     painter.drawRect(geometry());
 
     int x0 = geometry().width() / 2;
@@ -63,7 +64,7 @@ void DualStateDiagram::paintEvent(QPaintEvent *event)
 
     //! Рамка диаграммы
     painter.setPen(QPen(m_frameColor, 1, Qt::SolidLine, Qt::FlatCap));
-    painter.setBrush(QBrush(m_backgroundColor, Qt::NoBrush));
+    painter.setBrush(QBrush(backColor, Qt::NoBrush));
     painter.drawRect(Field, ym - yh / 2, geometry().width() - 2 * Field, yh);
 
     auto font = painter.font();

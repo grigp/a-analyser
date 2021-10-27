@@ -18,9 +18,6 @@ public:
     explicit DualStateDiagram(QWidget *parent = nullptr);
     ~DualStateDiagram() override;
 
-    QColor backgroundColor() const {return m_backgroundColor;}
-    void setBackgroundColor(const QColor color) {m_backgroundColor = color;}
-
     QColor frameColor() const {return m_frameColor;}
     void setFrameColor(const QColor color) {m_frameColor = color;}
 
@@ -66,7 +63,6 @@ protected:
 private:
     Ui::DualStateDiagram *ui;
 
-    QColor m_backgroundColor {Qt::white};
     QColor m_frameColor {Qt::darkGray};
     QColor m_labelsColor {Qt::black};
     QColor m_insignificantlyColor {Qt::green};

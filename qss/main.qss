@@ -14,7 +14,7 @@ QWidget#wgtTests
 
 QFrame#frTestKindButtons
 {
-    background-color: rgb(205, 209, 214);
+    background-color: rgb(240, 240, 245);
 /*    background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 rgb(1, 59, 86), stop: 0.5 rgb(2, 112, 164), stop: 1 rgb(1, 59, 86));*/
 }
 
@@ -127,7 +127,7 @@ QLabel#lblStrategyTitle
 {
     font-size: 18pt;
     color: rgb(0, 80, 110);
-    background-color: rgb(205, 209, 214);
+    background-color: rgb(240, 240, 245);
 }
 
 QLineEdit
@@ -157,7 +157,7 @@ QDateEdit
 
 QTreeView
 {
-    background-color: rgb(205, 209, 214);
+    background-color: rgb(240, 240, 245);
     font-size: 11pt;
     color: rgb(32,88,103);
 }
@@ -190,7 +190,7 @@ QTreeView#tvEvolvKorrectionFactors
 
 QListView
 {
-    background-color: rgb(205, 209, 214);
+    background-color: rgb(240, 240, 245);
     font-size: 11pt;
     color: rgb(32,88,103);
 }
@@ -331,4 +331,66 @@ QPushButton#MethodicKind:pressed
 {
 /*    background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 rgb(63, 116, 160), stop: 0.5 rgb(123, 159, 199), stop: 1 rgb(63, 116, 160));*/
     background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 rgb(120, 120, 120), stop: 0.5 rgb(160, 160, 160), stop: 1 rgb(120, 120, 120));
+}
+
+
+DiagCross
+{
+    background-color: rgb(250, 250, 255);
+    qproperty-frontal_color: rgb(0, 40, 120);
+    qproperty-sagittal_color: rgb(0, 120, 40);
+}
+
+AreaGraph
+{
+    background-color: rgb(250, 250, 255);
+    qproperty-line1_color: rgb(0, 40, 120);
+    qproperty-line2_color: rgb(200, 0, 0);
+    qproperty-fillBetweenSubchans_color: rgb(160, 240, 255);
+}
+
+QWidget#wgtSKGAreases
+{
+    background-color: rgb(250, 250, 255);
+}
+
+AreaSKG
+{
+    background-color: rgb(250, 250, 255);
+    qproperty-skg_color: rgb(0, 40, 120);
+    qproperty-ellipse_color: rgb(0, 120, 110);
+    qproperty-marker_color: rgb(200, 0, 0);
+}
+
+DynamicDiagram
+{
+    background-color: rgb(250, 250, 255);
+    qproperty-diag_color: rgb(0, 40, 120);
+    qproperty-selectItem_color: rgb(0, 80, 250);
+}
+
+DiagOctaedron
+{
+    background-color: rgb(250, 250, 255);
+    qproperty-line_color: rgb(120, 0, 0);
+    qproperty-label_color: rgb(120, 0, 0);
+    qproperty-labelText_color: rgb(250, 250, 255);
+    qproperty-labelFrame_color: rgb(60, 0, 0);
+}
+
+Oscilloscope
+{
+    background-color: rgb(250, 250, 255);
+    qproperty-line1_color: rgb(120, 0, 0);
+    qproperty-line2_color: rgb(30, 120, 0);
+}
+
+Transients
+{
+    background-color: rgb(250, 250, 255);
+}
+
+DualStateDiagram
+{
+    background-color: rgb(250, 250, 255);
 }
