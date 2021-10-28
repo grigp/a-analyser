@@ -337,15 +337,15 @@ QPushButton#MethodicKind:pressed
 DiagCross
 {
     background-color: rgb(250, 250, 255);
-    qproperty-frontal_color: rgb(0, 40, 120);
-    qproperty-sagittal_color: rgb(0, 120, 40);
+    qproperty-frontal_color: rgb(0, 120, 160);
+    qproperty-sagittal_color: rgb(0, 170, 80);
 }
 
 AreaGraph
 {
     background-color: rgb(250, 250, 255);
-    qproperty-line1_color: rgb(0, 40, 120);
-    qproperty-line2_color: rgb(200, 0, 0);
+    qproperty-line1_color: rgb(0, 0, 255);
+    qproperty-line2_color: rgb(0, 150, 0);
     qproperty-fillBetweenSubchans_color: rgb(160, 240, 255);
 }
 
@@ -357,7 +357,7 @@ QWidget#wgtSKGAreases
 AreaSKG
 {
     background-color: rgb(250, 250, 255);
-    qproperty-skg_color: rgb(0, 40, 120);
+    qproperty-skg_color: rgb(0, 0, 255);
     qproperty-ellipse_color: rgb(0, 120, 110);
     qproperty-marker_color: rgb(200, 0, 0);
 }
@@ -365,24 +365,24 @@ AreaSKG
 DynamicDiagram
 {
     background-color: rgb(250, 250, 255);
-    qproperty-diag_color: rgb(0, 40, 120);
-    qproperty-selectItem_color: rgb(0, 80, 250);
+    qproperty-diag_color: rgb(0, 120, 160);
+    qproperty-selectItem_color: rgb(0, 190, 190);
 }
 
 DiagOctaedron
 {
     background-color: rgb(250, 250, 255);
-    qproperty-line_color: rgb(120, 0, 0);
-    qproperty-label_color: rgb(120, 0, 0);
+    qproperty-line_color: rgb(0, 120, 160);
+    qproperty-label_color: rgb(0, 120, 160);
     qproperty-labelText_color: rgb(250, 250, 255);
-    qproperty-labelFrame_color: rgb(60, 0, 0);
+    qproperty-labelFrame_color: rgb(0, 50, 70);
 }
 
 Oscilloscope
 {
     background-color: rgb(250, 250, 255);
-    qproperty-line1_color: rgb(120, 0, 0);
-    qproperty-line2_color: rgb(30, 120, 0);
+    qproperty-line1_color: rgb(0, 0, 255);
+    qproperty-line2_color: rgb(0, 150, 0);
 }
 
 Transients

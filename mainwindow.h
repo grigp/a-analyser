@@ -6,6 +6,7 @@
 
 class DataBaseResultWidget;
 class ExecuteWidget;
+class SettingsValue;
 
 namespace Ui {
 class MainWindow;
@@ -54,11 +55,12 @@ private slots:
     void onDataBaseCreate();
 
     void on_selectDatabase();
+    void on_selectColorSheme();
 
 private:
     Ui::MainWindow *ui;
 
-    void initUi();
+    void initUi(const QString& colorSheme);
 
     void initMenu();
     QMenu* initDatabaseClearMenu();
@@ -73,6 +75,8 @@ private:
     QString m_currentClientPage = ""; ///< Текущая страница с данными
     QMenu m_menuSelectDatabase;       ///< Меню выбора БД
 
+    QActionGroup* m_agColorShemes {nullptr};
+    SettingsValue* m_curColorSheme  {nullptr};  ///< Выбранная цветовая схема
 };
 
 #endif // MAINWINDOW_H

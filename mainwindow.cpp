@@ -19,6 +19,47 @@
 #include <QAction>
 #include <QDebug>
 
+namespace
+{
+    /*!
+     * \brief Идентификаторы цветовых схем ColorShemesId enum
+     */
+    enum ColorShemesId
+    {
+          csiMain = 0
+        , csiGreen
+        , csiYellow
+        , csiRed
+    };
+
+    /*!
+     * \brief Перечень цветовых схем ColorShemesList
+     */
+    QList<ColorShemesId> ColorShemesList = {csiMain, csiGreen, csiYellow, csiRed};
+
+    /*!
+     * \brief Названия цветовых схем ColorShemesName
+     */
+    static QMap<ColorShemesId, QString> ColorShemesName =
+    {
+          std::pair<ColorShemesId, QString> (csiMain, QCoreApplication::tr("Основная"))
+        , std::pair<ColorShemesId, QString> (csiGreen, QCoreApplication::tr("Зеленая"))
+        , std::pair<ColorShemesId, QString> (csiYellow, QCoreApplication::tr("Желтая"))
+        , std::pair<ColorShemesId, QString> (csiRed, QCoreApplication::tr("Красная"))
+    };
+
+    /*!
+     * \brief Названия файлов цветовых схем ColorShemesFile
+     */
+    static QMap<ColorShemesId, QString> ColorShemesFile =
+    {
+          std::pair<ColorShemesId, QString> (csiMain, ":/qss/main.qss")
+        , std::pair<ColorShemesId, QString> (csiGreen, ":/qss/main_green.qss")
+        , std::pair<ColorShemesId, QString> (csiYellow, ":/qss/main_yellow.qss")
+        , std::pair<ColorShemesId, QString> (csiRed, ":/qss/main_red.qss")
+    };
+}
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -27,7 +68,8 @@ MainWindow::MainWindow(QWidget *parent) :
     setWindowIcon(QIcon(":/images/MainIcon2.ico"));
     createClientWidgets();
 
-    initUi();
+    m_curColorSheme = new SettingsValue("", "ColorSheme", AAnalyserDefines::MainStyleSheetFile);
+    initUi(m_curColorSheme->value().toString());
     initMenu();
 
     auto val = SettingsProvider::valueFromRegAppCopy("MainWindow", "Geometry").toByteArray();
@@ -180,9 +222,20 @@ void MainWindow::on_selectDatabase()
     initSelectDatabaseMenu();
 }
 
-void MainWindow::initUi()
+void MainWindow::on_selectColorSheme()
 {
-    QFile style(AAnalyserDefines::MainStyleSheetFile);
+    if (sender())
+    {
+        auto* action = static_cast<QAction*>(sender());
+        action->setChecked(true);
+        initUi(action->data().toString());
+        m_curColorSheme->set(action->data());
+    }
+}
+
+void MainWindow::initUi(const QString& colorSheme)
+{
+    QFile style(colorSheme);
     style.open( QFile::ReadOnly );
     QString stlDetail(style.readAll() );
     setStyleSheet(stlDetail);
@@ -211,6 +264,20 @@ void MainWindow::initMenu()
     QMenu *menuSettings = menuBar()->addMenu(tr("Настройки"));
     menuSettings->addAction(ui->acDeviceControl);
     menuSettings->addAction(ui->acSettings);
+
+    QMenu *menuColorShemes = menuSettings->addMenu(tr("Цветовые схемы"));
+    m_agColorShemes = new QActionGroup(this);
+    foreach (auto colSheme, ColorShemesList)
+    {
+        auto *ac = new QAction(ColorShemesName.value(colSheme));
+        ac->setData(ColorShemesFile.value(colSheme));
+        menuColorShemes->addAction(ac);
+        m_agColorShemes->addAction(ac);
+        ac->setCheckable(true);
+        if (ColorShemesFile.value(colSheme) == m_curColorSheme->value().toString())
+            ac->setChecked(true);
+        connect(ac, &QAction::triggered, this, &MainWindow::on_selectColorSheme);
+    }
 }
 
 QMenu *MainWindow::initDatabaseClearMenu()
