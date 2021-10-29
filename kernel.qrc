@@ -178,5 +178,6 @@
         <file>qss/main_green.qss</file>
         <file>qss/main_red.qss</file>
         <file>qss/main_yellow.qss</file>
+        <file>images/Print.png</file>
     </qresource>
 </RCC>

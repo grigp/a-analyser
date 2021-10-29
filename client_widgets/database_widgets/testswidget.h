@@ -2,6 +2,8 @@
 #define TESTSWIDGET_H
 
 #include <QWidget>
+#include <QPrinter>
+
 
 namespace Ui {
 class TestsWidget;
@@ -31,9 +33,14 @@ private slots:
     void deleteTest();
 
     void editTestProperty();
+    void printReport();
 
     void selectResult();
     void selectDynamic();
+
+private slots:
+    void print(QPrinter* printer);
+
 
 private:
     Ui::TestsWidget *ui;

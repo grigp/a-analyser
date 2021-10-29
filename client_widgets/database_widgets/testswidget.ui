@@ -139,6 +139,23 @@
        </widget>
       </item>
       <item>
+       <widget class="QPushButton" name="btnTestPrint">
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset resource="../../kernel.qrc">
+          <normaloff>:/images/Print.png</normaloff>:/images/Print.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>32</width>
+          <height>32</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item>
        <spacer name="horizontalSpacer_2">
         <property name="orientation">
          <enum>Qt::Horizontal</enum>
@@ -333,6 +350,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>btnTestPrint</sender>
+   <signal>clicked()</signal>
+   <receiver>TestsWidget</receiver>
+   <slot>printReport()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>234</x>
+     <y>25</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>719</x>
+     <y>88</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>runTest()</slot>
@@ -340,5 +373,6 @@
   <slot>selectDynamic()</slot>
   <slot>deleteTest()</slot>
   <slot>editTestProperty()</slot>
+  <slot>printReport()</slot>
  </slots>
 </ui>

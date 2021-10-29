@@ -4,6 +4,8 @@
 #include <QApplication>
 #include <QFile>
 #include <QMessageBox>
+#include <QPrintPreviewDialog>
+#include <QPainter>
 #include <QDebug>
 
 #include "aanalyserapplication.h"
@@ -84,6 +86,38 @@ void TestsWidget::editTestProperty()
     }
     else
         QMessageBox::information(nullptr, tr("Предупрежение"), tr("Не выбран тест"));
+}
+
+void TestsWidget::printReport()
+{
+    if (m_selectedTestUid != "")
+    {
+        QPrinter printer(QPrinter::HighResolution);
+        printer.setFullPage(true);
+        QPrintPreviewDialog preview(&printer, this);
+        preview.setWindowTitle(tr("Печать результатов теста"));
+        preview.setWindowFlags(Qt::Window | Qt::WindowCloseButtonHint);
+        preview.setWindowState(Qt::WindowMaximized);
+        connect(&preview, &QPrintPreviewDialog::paintRequested, this, &TestsWidget::print);
+        preview.exec();
+    }
+    else
+        QMessageBox::information(nullptr, tr("Предупрежение"), tr("Не выбран тест"));
+}
+
+void TestsWidget::print( QPrinter* printer)
+{
+    QPainter *painter = new QPainter(printer);
+    QRect paper = printer->pageRect();
+    qDebug() << "print" << paper << printer->pageSize() << printer->paperRect();
+
+    painter->begin(printer);
+    painter->setPen(Qt::black);
+    painter->setBrush(QBrush(Qt::red));
+    painter->drawRect(10, 10, 410, 410);
+    painter->setFont(QFont("Sans",64,0,0));
+    painter->drawText(QRect(0,0,3000,800), Qt::AlignLeft | Qt::AlignTop, "page1");
+    painter->end();
 }
 
 void TestsWidget::selectResult()
