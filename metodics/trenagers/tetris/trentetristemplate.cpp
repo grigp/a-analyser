@@ -39,6 +39,12 @@ QWidget *TrenTetrisTemplate::visualize(QWidget *parent, const QString &testUid)
     return retval;
 }
 
+void TrenTetrisTemplate::print(QPrinter *printer, const QString &testUid)
+{
+    Q_UNUSED(printer);
+    Q_UNUSED(testUid);
+}
+
 bool TrenTetrisTemplate::editParams(QWidget *parent, QJsonObject &params)
 {
     auto dialog = new TrenTetrisParamsDialog(parent);

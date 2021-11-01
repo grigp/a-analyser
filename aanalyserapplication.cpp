@@ -221,7 +221,7 @@ void AAnalyserApplication::deleteTest()
         DataDefines::PatientKard patient;
         m_database->getPatient(ti.patientUid, patient);
         auto mi = m_metodics->metodic(ti.metodUid);
-        auto mr = QMessageBox::question(nullptr, tr("Подтверждение"), QString(tr("Удалить запись о методике?") + "\n" +
+        auto mr = QMessageBox::question(nullptr, tr("Подтверждение"), QString(tr("Удалить запись о тесте?") + "\n" +
                                                                               tr("Пациент") + ": %1\n" +
                                                                               tr("Методика") + ": %2\n" +
                                                                               tr("Дата и время проведения") + ": %3")

@@ -39,6 +39,12 @@ QWidget *TeppingTestTemplate::visualize(QWidget *parent, const QString &testUid)
     return retval;
 }
 
+void TeppingTestTemplate::print(QPrinter *printer, const QString &testUid)
+{
+    Q_UNUSED(printer);
+    Q_UNUSED(testUid);
+}
+
 bool TeppingTestTemplate::editParams(QWidget *parent, QJsonObject &params)
 {
     auto dialog = new TeppingTestParamsDialog(parent);

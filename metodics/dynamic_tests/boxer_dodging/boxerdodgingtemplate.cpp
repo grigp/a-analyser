@@ -39,6 +39,11 @@ QWidget *BoxerDodgingTemplate::visualize(QWidget *parent, const QString &testUid
     return retval;
 }
 
+void BoxerDodgingTemplate::print(QPrinter *printer, const QString &testUid)
+{
+    BoxerDodgingVisualize::print(printer, testUid);
+}
+
 bool BoxerDodgingTemplate::editParams(QWidget *parent, QJsonObject &params)
 {
     auto dialog = new BoxerDodgingParamsDialog(parent);

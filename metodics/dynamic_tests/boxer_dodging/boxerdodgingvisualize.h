@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <QStandardItem>
+#include <QPrinter>
 
 #include "boxerdodgingdefines.h"
 
@@ -26,6 +27,13 @@ public:
     ~BoxerDodgingVisualize() override;
 
     void setTest(const QString &testUid);
+
+    /*!
+     * \brief Печать отчета о результатах теста
+     * \param printer - принтер
+     * \param testUid - uid теста
+     */
+    static void print(QPrinter *printer, const QString &testUid);
 
 private:
     Ui::BoxerDodgingVisualize *ui;

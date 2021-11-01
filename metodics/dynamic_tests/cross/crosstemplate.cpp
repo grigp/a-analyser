@@ -6,6 +6,7 @@
 #include "crossvisualize.h"
 
 #include <QLayout>
+#include <QDebug>
 
 CrossTemplate::CrossTemplate(QObject *parent)
     : MetodicTemplate (parent)
@@ -37,6 +38,11 @@ QWidget *CrossTemplate::visualize(QWidget *parent, const QString &testUid)
     parent->layout()->addWidget(retval);
     retval->setTest(testUid);
     return retval;
+}
+
+void CrossTemplate::print(QPrinter *printer, const QString &testUid)
+{
+    CrossVisualize::print(printer, testUid);
 }
 
 bool CrossTemplate::editParams(QWidget *parent, QJsonObject &params)

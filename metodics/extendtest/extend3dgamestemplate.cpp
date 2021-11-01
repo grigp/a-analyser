@@ -42,6 +42,12 @@ QWidget *Extend3DGamesTemplate::visualize(QWidget *parent, const QString &testUi
     return retval;
 }
 
+void Extend3DGamesTemplate::print(QPrinter *printer, const QString &testUid)
+{
+    Q_UNUSED(printer);
+    Q_UNUSED(testUid);
+}
+
 bool Extend3DGamesTemplate::editParams(QWidget *parent, QJsonObject &params)
 {
     auto dialog = new Extend3DGamesParamsDialog(parent);

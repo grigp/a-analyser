@@ -130,6 +130,23 @@ QWidget *MetodicsFactory::visualize(QWidget *parent, const QString &testUid) con
     return nullptr;
 }
 
+void MetodicsFactory::print(QPrinter *printer, const QString &testUid) const
+{
+    DataDefines::TestInfo ti;
+    if (DataProvider::getTestInfo(testUid, ti))
+    {
+        auto *mt = getMetodicTemplate(ti.metodUid);
+        if (mt)
+        {
+            auto mi = getMetodicIndexByUid(ti.metodUid);
+            if (mi > -1)
+            {
+                return mt->print(printer, testUid);
+            }
+        }
+    }
+}
+
 void MetodicsFactory::assignTemplates()
 {
 

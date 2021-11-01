@@ -39,6 +39,12 @@ QWidget *JumpHeightTestTemplate::visualize(QWidget *parent, const QString &testU
     return retval;
 }
 
+void JumpHeightTestTemplate::print(QPrinter *printer, const QString &testUid)
+{
+    Q_UNUSED(printer);
+    Q_UNUSED(testUid);
+}
+
 bool JumpHeightTestTemplate::editParams(QWidget *parent, QJsonObject &params)
 {
     auto dialog = new JumpHeightTestParamsDialog(parent);

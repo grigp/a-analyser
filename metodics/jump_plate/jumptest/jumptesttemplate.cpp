@@ -39,6 +39,12 @@ QWidget *JumpTestTemplate::visualize(QWidget *parent, const QString &testUid)
     return retval;
 }
 
+void JumpTestTemplate::print(QPrinter *printer, const QString &testUid)
+{
+    Q_UNUSED(printer);
+    Q_UNUSED(testUid);
+}
+
 bool JumpTestTemplate::editParams(QWidget *parent, QJsonObject &params)
 {
     auto dialog = new JumpTestParamsDialog(parent);

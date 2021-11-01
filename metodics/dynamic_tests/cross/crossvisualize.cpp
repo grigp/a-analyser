@@ -2,11 +2,17 @@
 #include "ui_crossvisualize.h"
 
 #include <QStandardItemModel>
+#include <QPainter>
 #include <QDebug>
 
 #include "aanalyserapplication.h"
 #include "crosscalculator.h"
 
+namespace
+{
+    DiagCross *wgtDiag {nullptr};
+
+}
 
 CrossVisualize::CrossVisualize(QWidget *parent) :
     QWidget(parent),
@@ -53,5 +59,35 @@ void CrossVisualize::setTest(const QString &testUid)
         ui->wgtDiag->setValueDown(static_cast<int>(m_calculator->valueDown()));
         ui->wgtDiag->setValueRight(static_cast<int>(m_calculator->valueRight()));
         ui->wgtDiag->setValueLeft(static_cast<int>(m_calculator->valueLeft()));
+
+        wgtDiag = ui->wgtDiag;
     }
+}
+
+void CrossVisualize::print(QPrinter *printer, const QString &testUid)
+{
+    QPainter *painter = new QPainter(printer);
+    QRect paper = printer->pageRect();
+    qDebug() << "print" << paper << printer->pageSize();
+
+    painter->begin(printer);
+    painter->setPen(Qt::black);
+    painter->setBrush(QBrush(Qt::red));
+    painter->drawRect(10, 10, 410, 410);
+    painter->setFont(QFont("Sans",64,0,0));
+    painter->drawText(QRect(0,0,3000,800), Qt::AlignLeft | Qt::AlignTop, "page1");
+
+    double xscale = (paper.width() * 0.8) / static_cast<double>(wgtDiag->width());
+    double yscale = (paper.height() * 0.8) / static_cast<double>(wgtDiag->height());
+    double scale = qMin(xscale, yscale);
+    painter->translate(paper.x() + paper.width()/10,
+                       paper.y() + paper.height()/4);
+    painter->scale(scale, scale);
+//    painter->translate(100, 1000);
+////    painter->translate(-paper.width()/2, -paper.height()/2);
+//    painter->translate(paper.width()/2, paper.height()/2);
+
+    wgtDiag->render(painter);
+    painter->end();
+
 }

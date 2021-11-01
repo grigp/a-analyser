@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QJsonObject>
+#include <QPrinter>
 
 /*!
  * \brief Базовый класс шаблона методики MetodicTemplate class
@@ -34,6 +35,13 @@ public:
      *  \param testUid - uid теста
      */
     virtual QWidget *visualize(QWidget *parent, const QString &testUid) = 0;
+
+    /*!
+     * \brief Печать результатов теста
+     * \param printer - принтер
+     * \param testUid - uid теста
+     */
+    virtual void print(QPrinter *printer, const QString &testUid) = 0;
 
     /*!
      * \brief Редактирование параметров методики

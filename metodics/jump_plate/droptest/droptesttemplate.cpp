@@ -24,6 +24,12 @@ QString DropTestTemplate::name()
     return MetodicDefines::MetName_DropTest;
 }
 
+void DropTestTemplate::print(QPrinter *printer, const QString &testUid)
+{
+    Q_UNUSED(printer);
+    Q_UNUSED(testUid);
+}
+
 QWidget *DropTestTemplate::execute(QWidget *parent, const QJsonObject &params)
 {
     auto *retval = new DropTestExecute(parent);

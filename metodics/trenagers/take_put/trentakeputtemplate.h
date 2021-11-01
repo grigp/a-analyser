@@ -37,6 +37,13 @@ public:
     QWidget *visualize(QWidget *parent, const QString &testUid)  override;
 
     /*!
+     * \brief Печать результатов теста
+     * \param printer - принтер
+     * \param testUid - uid теста
+     */
+    void print(QPrinter *printer, const QString &testUid) override;
+
+    /*!
      * \brief Редактирование параметров методики
      *  \param params - параметры методики
      *  \return true, если нужно сохранить параметры

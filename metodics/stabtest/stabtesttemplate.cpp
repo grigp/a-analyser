@@ -48,6 +48,12 @@ QWidget *StabTestTemplate::visualize(QWidget *parent, const QString &testUid)
     return retval;
 }
 
+void StabTestTemplate::print(QPrinter *printer, const QString &testUid)
+{
+    Q_UNUSED(printer);
+    Q_UNUSED(testUid);
+}
+
 bool StabTestTemplate::editParams(QWidget *parent, QJsonObject &params)
 {
     auto dialog = new StabTestParamsDialog(parent);

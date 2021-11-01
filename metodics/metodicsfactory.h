@@ -2,6 +2,7 @@
 #define METODICSFACTORY_H
 
 #include <QObject>
+#include <QPrinter>
 
 #include "metodicdefines.h"
 
@@ -74,9 +75,17 @@ public:
      */
     QWidget *visualize(QWidget *parent, const QString &testUid) const;
 
+    /*!
+     * \brief Печать результатов теста с предпросмотром
+     * \param printer - указатель на объект принтера
+     * \param testUid - uid теста
+     */
+    void print(QPrinter *printer, const QString &testUid) const;
+
 signals:
 
 public slots:
+
 
 private:
     enum MethodicSubject

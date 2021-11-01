@@ -25,6 +25,13 @@ public:
     QString name()  override;
 
     /*!
+     * \brief Печать результатов теста
+     * \param printer - принтер
+     * \param testUid - uid теста
+     */
+    void print(QPrinter *printer, const QString &testUid) override;
+
+    /*!
      * \brief Создает и возвращает виджет выполнения теста по методике
      *  \param params - параметры методики
      */
