@@ -11,6 +11,7 @@
 #include "dataprovider.h"
 #include "aanalysersettings.h"
 #include "aanalyserdefines.h"
+#include "aboutdialog.h"
 
 #include <QFile>
 #include <QCloseEvent>
@@ -151,6 +152,12 @@ void MainWindow::onSettings()
     dlg.exec();
 }
 
+void MainWindow::onAbout()
+{
+    AboutDialog dlg(this);
+    dlg.exec();
+}
+
 void MainWindow::onDataBaseProperty()
 {
     DataBasePropertyDialog dlg(this);
@@ -278,6 +285,10 @@ void MainWindow::initMenu()
             ac->setChecked(true);
         connect(ac, &QAction::triggered, this, &MainWindow::on_selectColorSheme);
     }
+
+    QMenu *menuHelp = menuBar()->addMenu(tr("Помощь"));
+    menuHelp->addAction(ui->acAbout);
+
 }
 
 QMenu *MainWindow::initDatabaseClearMenu()

@@ -179,5 +179,6 @@
         <file>qss/main_red.qss</file>
         <file>qss/main_yellow.qss</file>
         <file>images/Print.png</file>
+        <file>images/Logo.png</file>
     </qresource>
 </RCC>

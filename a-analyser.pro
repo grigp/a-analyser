@@ -50,17 +50,23 @@ SOURCES += \
         mainwindow.cpp \
     aanalyserapplication.cpp \
     settingsprovider.cpp \
-    aanalysersettings.cpp
+    aanalysersettings.cpp \
+    aboutdialog.cpp \
+    userinfodialog.cpp
 
 HEADERS += \
         mainwindow.h \
     aanalyserapplication.h \
     settingsprovider.h \
-    aanalysersettings.h
+    aanalysersettings.h \
+    aboutdialog.h \
+    userinfodialog.h
 
 FORMS += \
         mainwindow.ui \
-    aanalysersettings.ui
+    aanalysersettings.ui \
+    aboutdialog.ui \
+    userinfodialog.ui
 
 RESOURCES += \
     kernel.qrc

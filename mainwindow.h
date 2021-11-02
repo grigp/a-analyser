@@ -45,6 +45,7 @@ protected:
 private slots:
     void onDeviceControl();
     void onSettings();
+    void onAbout();
 
     void onDataBaseProperty();
     void onDataBaseExport();

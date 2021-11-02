@@ -151,6 +151,14 @@
     <string>Параметры программы...</string>
    </property>
   </action>
+  <action name="acAbout">
+   <property name="text">
+    <string>О программе...</string>
+   </property>
+   <property name="toolTip">
+    <string>Справочная информация о программе</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources/>
@@ -299,6 +307,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>acAbout</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>onAbout()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>581</x>
+     <y>317</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>onDeviceControl()</slot>
@@ -309,5 +333,6 @@
   <slot>onDataBaseClear()</slot>
   <slot>onDataBaseCreate()</slot>
   <slot>onDataBaseDelTests()</slot>
+  <slot>onAbout()</slot>
  </slots>
 </ui>

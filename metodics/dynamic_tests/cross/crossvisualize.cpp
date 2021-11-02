@@ -83,9 +83,6 @@ void CrossVisualize::print(QPrinter *printer, const QString &testUid)
     painter->translate(paper.x() + paper.width()/10,
                        paper.y() + paper.height()/4);
     painter->scale(scale, scale);
-//    painter->translate(100, 1000);
-////    painter->translate(-paper.width()/2, -paper.height()/2);
-//    painter->translate(paper.width()/2, paper.height()/2);
 
     wgtDiag->render(painter);
     painter->end();
