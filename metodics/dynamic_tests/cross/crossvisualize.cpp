@@ -7,6 +7,7 @@
 
 #include "aanalyserapplication.h"
 #include "crosscalculator.h"
+#include "reportelements.h"
 
 namespace
 {
@@ -68,23 +69,25 @@ void CrossVisualize::print(QPrinter *printer, const QString &testUid)
 {
     QPainter *painter = new QPainter(printer);
     QRect paper = printer->pageRect();
-    qDebug() << "print" << paper << printer->pageSize();
 
     painter->begin(printer);
-    painter->setPen(Qt::black);
-    painter->setBrush(QBrush(Qt::red));
-    painter->drawRect(10, 10, 410, 410);
-    painter->setFont(QFont("Sans",64,0,0));
-    painter->drawText(QRect(0,0,3000,800), Qt::AlignLeft | Qt::AlignTop, "page1");
+    QRect rectHeader(paper.x() + paper.width() / 20, paper.y() + paper.height() / 30, paper.width() / 20 * 18, paper.height() / 30 * 3);
+    ReportElements::drawHeader(painter, testUid, rectHeader);
+
+    QRect rectFooter(paper.x() + paper.width() / 20,
+                     paper.y() + paper.height() - static_cast<int>(paper.height() / 30 * 1.5),
+                     paper.width() / 20 * 18,
+                     static_cast<int>(paper.height() / 30 * 1.5));
+    ReportElements::drawFooter(painter, testUid, rectFooter);
 
     double xscale = (paper.width() * 0.8) / static_cast<double>(wgtDiag->width());
     double yscale = (paper.height() * 0.8) / static_cast<double>(wgtDiag->height());
     double scale = qMin(xscale, yscale);
     painter->translate(paper.x() + paper.width()/10,
-                       paper.y() + paper.height()/4);
+                       paper.y() + paper.height()/7);
     painter->scale(scale, scale);
-
     wgtDiag->render(painter);
+
     painter->end();
 
 }
