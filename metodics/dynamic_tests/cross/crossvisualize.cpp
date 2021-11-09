@@ -12,6 +12,7 @@
 namespace
 {
     DiagCross *wgtDiag {nullptr};
+    QStandardItemModel *mdlFactors {nullptr};
 
 }
 
@@ -61,7 +62,9 @@ void CrossVisualize::setTest(const QString &testUid)
         ui->wgtDiag->setValueRight(static_cast<int>(m_calculator->valueRight()));
         ui->wgtDiag->setValueLeft(static_cast<int>(m_calculator->valueLeft()));
 
+        //! Запомнить указатели для печати
         wgtDiag = ui->wgtDiag;
+        mdlFactors = static_cast<QStandardItemModel*>(ui->tvFactors->model());
     }
 }
 
@@ -71,15 +74,11 @@ void CrossVisualize::print(QPrinter *printer, const QString &testUid)
     QRect paper = printer->pageRect();
 
     painter->begin(printer);
+    //! Заголовок
     QRect rectHeader(paper.x() + paper.width() / 20, paper.y() + paper.height() / 30, paper.width() / 20 * 18, paper.height() / 30 * 3);
     ReportElements::drawHeader(painter, testUid, rectHeader);
 
-    QRect rectFooter(paper.x() + paper.width() / 20,
-                     paper.y() + paper.height() - static_cast<int>(paper.height() / 30 * 1.5),
-                     paper.width() / 20 * 18,
-                     static_cast<int>(paper.height() / 30 * 1.5));
-    ReportElements::drawFooter(painter, testUid, rectFooter);
-
+    //! Диаграмма Cross. Копируется из виджете
     double xscale = (paper.width() * 0.8) / static_cast<double>(wgtDiag->width());
     double yscale = (paper.height() * 0.8) / static_cast<double>(wgtDiag->height());
     double scale = qMin(xscale, yscale);
@@ -87,7 +86,23 @@ void CrossVisualize::print(QPrinter *printer, const QString &testUid)
                        paper.y() + paper.height()/7);
     painter->scale(scale, scale);
     wgtDiag->render(painter);
+    painter->scale(1/scale, 1/scale);
+    painter->translate(-(paper.x() + paper.width()/10),
+                       -(paper.y() + paper.height()/7));
+
+    //! Таблица показателей. Берется модель таблицы из визуализатора
+    QRect rectTable(paper.x() + paper.width() / 10,
+                    paper.y() + paper.height() / 3 * 2,
+                    paper.width() / 10 * 8,
+                    paper.height() / 4);
+    ReportElements::drawTable(painter, mdlFactors, rectTable, QList<int>() << 3 << 1, 12, -1, QFont::Bold);
+
+    //! Нижний колонтитул
+    QRect rectFooter(paper.x() + paper.width() / 20,
+                     paper.y() + paper.height() - static_cast<int>(paper.height() / 30 * 1.5),
+                     paper.width() / 20 * 18,
+                     static_cast<int>(paper.height() / 30 * 1.5));
+    ReportElements::drawFooter(painter, testUid, rectFooter);
 
     painter->end();
-
 }

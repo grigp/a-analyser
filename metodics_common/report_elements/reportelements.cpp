@@ -23,7 +23,7 @@ void ReportElements::drawHeader(QPainter *painter, const QString &testUid, QRect
     p.loadFromData(logotip->value().toByteArray(), "PNG");
 
     painter->setPen(Qt::black);
-    painter->setFont(QFont("Sans",12,0,0));
+    painter->setFont(QFont("Sans", 12, 0, false));
     painter->drawText(rect.x() + rect.height() + 70, rect.y(), enterprice->value().toString());
     painter->drawText(rect.x() + rect.height() + 70, rect.y() + rect.height() / 7, sity->value().toString() + "   " + address->value().toString());
     painter->drawText(rect.x() + rect.height() + 70, rect.y() + rect.height() / 7 * 2,
@@ -61,6 +61,7 @@ void ReportElements::drawFooter(QPainter *painter, const QString &testUid, QRect
     auto website = new SettingsValue("UserData", "Website", "");
 
     painter->setPen(Qt::black);
+    painter->setFont(QFont("Sans", 12, 0, false));
     painter->drawLine(rect.x(), rect.y(), rect.x() + rect.width(), rect.y());
 
     painter->drawText(rect.x(), rect.y() + rect.height() / 2,
@@ -68,4 +69,40 @@ void ReportElements::drawFooter(QPainter *painter, const QString &testUid, QRect
                       "a-analyser 1.0   " +
                       email->value().toString() + "    " +
                       website->value().toString());
+}
+
+void ReportElements::drawTable(QPainter *painter, QStandardItemModel *model, QRect rect,
+                               QList<int> columnStretch,
+                               int pointSize, int weight, int titleWeight)
+{
+    //! Заполнение реальными дынными растяжения
+    int sSum = 0;
+    QList<int> cs;
+    for (int j = 0; j < model->columnCount(); ++j)
+    {
+        int sv = 1;
+        if ((j < columnStretch.size()) && (columnStretch.at(j) > 0))
+            sv = columnStretch.at(j);
+        cs << sSum;
+        sSum += sv;
+    }
+
+    double dh = rect.height() / (model->rowCount() + 1);
+    painter->setPen(Qt::black);
+
+    //! Заголовок
+    painter->setFont(QFont("Sans", pointSize, titleWeight, false));
+    for (int j = 0; j < model->columnCount(); ++j)
+    {
+        auto title = model->headerData(j, Qt::Horizontal).toString();
+        painter->drawText(static_cast<int>(rect.x() + rect.width() * cs.at(j) / sSum), rect.y(), title);
+    }
+    //! Таблица
+    painter->setFont(QFont("Sans", pointSize, weight, false));
+    for (int i = 0; i < model->rowCount(); ++i)
+        for (int j = 0; j < model->columnCount(); ++j)
+        {
+            auto label = model->index(i, j).data().toString();
+            painter->drawText(static_cast<int>(rect.x() + rect.width() * cs.at(j) / sSum), static_cast<int>(rect.y() + (i + 1) * dh), label);
+        }
 }
