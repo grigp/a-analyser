@@ -122,6 +122,25 @@ void StabTestVisualize::setTest(const QString &testUid)
 //        }
 
 //        delete probe;
-//    }
+    //    }
+}
+
+void StabTestVisualize::print(QPrinter *printer, const QString &testUid)
+{
+    QPainter *painter = new QPainter(printer);
+    QRect paper = printer->pageRect();
+    qDebug() << "print" << paper << printer->pageSize();
+
+    painter->begin(printer);
+    painter->setPen(Qt::black);
+    painter->setBrush(QBrush(Qt::red));
+    painter->drawRect(10, 10, 410, 410);
+    painter->setFont(QFont("Sans",64,0,0));
+    painter->drawText(QRect(0,0,3000,800), Qt::AlignLeft | Qt::AlignTop, "page1");
+
+    printer->newPage();
+    painter->drawText(QRect(0,0,3000,800), Qt::AlignLeft | Qt::AlignTop, "page2");
+
+    painter->end();
 }
 

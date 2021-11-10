@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <QTextEdit>
+#include <QPrinter>
 
 namespace Ui {
 class StabTestVisualize;
@@ -20,10 +21,17 @@ class StabTestVisualize : public QWidget
     Q_OBJECT
 
 public:
-    explicit StabTestVisualize(TestCalculator* calculator, QWidget *parent = 0);
-    ~StabTestVisualize();
+    explicit StabTestVisualize(TestCalculator* calculator, QWidget *parent = nullptr);
+    ~StabTestVisualize() override;
 
     void setTest(const QString &testUid);
+
+    /*!
+     * \brief Печать отчета о результатах теста
+     * \param printer - принтер
+     * \param testUid - uid теста
+     */
+    static void print(QPrinter *printer, const QString &testUid);
 
 private:
     Ui::StabTestVisualize *ui;

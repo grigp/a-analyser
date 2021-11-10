@@ -4,9 +4,21 @@
 #include "boxerdodgingcalculator.h"
 #include "boxerdodgingmultifactor.h"
 #include "dynamicdiagram.h"
+#include "reportelements.h"
 
 #include <QPainter>
 #include <QDebug>
+
+namespace
+{
+DynamicDiagram *wgtDiagLatent {nullptr};
+DynamicDiagram *wgtDiagTime {nullptr};
+DynamicDiagram *wgtDiagAmpl {nullptr};
+DynamicDiagram *wgtDiagErrors {nullptr};
+
+QStandardItemModel *mdlFactors {nullptr};
+
+}
 
 BoxerDodgingVisualize::BoxerDodgingVisualize(QWidget *parent) :
     QWidget(parent),
@@ -53,6 +65,11 @@ void BoxerDodgingVisualize::setTest(const QString &testUid)
                     BoxerDodgingFactorsDefines::BackErrorsUid);
 
         showTable();
+
+        wgtDiagLatent = ui->wgtDiagLatent;
+        wgtDiagTime = ui->wgtDiagTime;
+        wgtDiagAmpl = ui->wgtDiagAmpl;
+        wgtDiagErrors = ui->wgtDiagErrors;
     }
 }
 
@@ -60,17 +77,69 @@ void BoxerDodgingVisualize::print(QPrinter *printer, const QString &testUid)
 {
     QPainter *painter = new QPainter(printer);
     QRect paper = printer->pageRect();
-    qDebug() << "print" << paper << printer->pageSize();
 
     painter->begin(printer);
-    painter->setPen(Qt::black);
-    painter->setBrush(QBrush(Qt::red));
-    painter->drawRect(10, 10, 410, 410);
-    painter->setFont(QFont("Sans",64,0,0));
-    painter->drawText(QRect(0,0,3000,800), Qt::AlignLeft | Qt::AlignTop, "page1");
+    //! Заголовок
+    QRect rectHeader(paper.x() + paper.width() / 20, paper.y() + paper.height() / 30, paper.width() / 20 * 18, paper.height() / 30 * 3);
+    ReportElements::drawHeader(painter, testUid, rectHeader);
 
-    printer->newPage();
-    painter->drawText(QRect(0,0,3000,800), Qt::AlignLeft | Qt::AlignTop, "page2");
+    //! Рисование диаграммы
+    auto drawDiag = [&](DynamicDiagram *wgtDiag, const double sd, const int x, const int y)
+    {
+        double xscale = (paper.width() * sd) / static_cast<double>(wgtDiag->width());
+        double yscale = (paper.height() * sd) / static_cast<double>(wgtDiag->height());
+        double scale = qMin(xscale, yscale);
+        painter->translate(x, y);
+        painter->scale(scale, scale);
+        wgtDiag->render(painter);
+        painter->scale(1/scale, 1/scale);
+        painter->translate(-x, -y);
+    };
+
+    if (printer->orientation() == QPrinter::Portrait)
+    {
+        drawDiag(wgtDiagLatent, 0.45, paper.x() + paper.width()/10, paper.y() + paper.height()/7);
+        drawDiag(wgtDiagTime, 0.45, paper.x() + paper.width()/11*6, paper.y() + paper.height()/7);
+        drawDiag(wgtDiagAmpl, 0.45, paper.x() + paper.width()/10, paper.y() + paper.height()/9*4);
+        drawDiag(wgtDiagErrors, 0.45, paper.x() + paper.width()/11*6, paper.y() + paper.height()/9*4);
+
+        //! Таблица показателей. Берется модель таблицы из визуализатора
+        QRect rectTable(paper.x() + paper.width() / 10,
+                        paper.y() + paper.height() / 18 * 13,
+                        paper.width() / 10 * 8,
+                        paper.height() / 5);
+        ReportElements::drawTable(painter, mdlFactors, rectTable, QList<int>() << 3 << 1 << 1 << 1 << 1 << 1, 12, -1, QFont::Bold);
+    }
+    else
+    if (printer->orientation() == QPrinter::Landscape)
+    {
+//        //! Диаграмма Cross. Копируется из виджета
+//        double xscale = (paper.width() * 0.6) / static_cast<double>(wgtDiag->width());
+//        double yscale = (paper.height() * 0.6) / static_cast<double>(wgtDiag->height());
+//        double scale = qMin(xscale, yscale);
+//        painter->translate(paper.x() + paper.width()/20,
+//                           paper.y() + paper.height()/4);
+//        painter->scale(scale, scale);
+//        wgtDiag->render(painter);
+//        painter->scale(1/scale, 1/scale);
+//        painter->translate(-(paper.x() + paper.width()/20),
+//                           -(paper.y() + paper.height()/4));
+
+
+//        //! Таблица показателей. Берется модель таблицы из визуализатора
+//        QRect rectTable(paper.x() + paper.width() / 7 * 4,
+//                        static_cast<int>(paper.y() + paper.height() / 3.5),
+//                        paper.width() / 7 * 3,
+//                        paper.height() / 2);
+//        ReportElements::drawTable(painter, mdlFactors, rectTable, QList<int>() << 3 << 1, 12, -1, QFont::Bold);
+    }
+
+    //! Нижний колонтитул
+    QRect rectFooter(paper.x() + paper.width() / 20,
+                     paper.y() + paper.height() - static_cast<int>(paper.height() / 30 * 1.5),
+                     paper.width() / 20 * 18,
+                     static_cast<int>(paper.height() / 30 * 1.5));
+    ReportElements::drawFooter(painter, testUid, rectFooter);
 
     painter->end();
 }
@@ -146,6 +215,7 @@ void BoxerDodgingVisualize::showTable()
     ui->tvTable->header()->resizeSections(QHeaderView::ResizeToContents);
     ui->tvTable->header()->resizeSection(0, 250);
 
+    mdlFactors = static_cast<QStandardItemModel*>(ui->tvTable->model());
 }
 
 
