@@ -23,7 +23,18 @@ void ReportElements::drawHeader(QPainter *painter, const QString &testUid, QRect
     p.loadFromData(logotip->value().toByteArray(), "PNG");
 
     painter->setPen(Qt::black);
-    painter->setFont(QFont("Sans", 12, 0, false));
+    //! Подбор высоты шрифта
+    int n = 14;
+    int h = 0;
+    do
+    {
+        painter->setFont(QFont("Sans", n, 0, false));
+        QFontMetrics fm = painter->fontMetrics();
+        h = fm.height();
+        n--;
+    }
+    while (h * 0.8 > rect.height() / 7);
+
     painter->drawText(rect.x() + rect.height() + 70, rect.y(), enterprice->value().toString());
     painter->drawText(rect.x() + rect.height() + 70, rect.y() + rect.height() / 7, sity->value().toString() + "   " + address->value().toString());
     painter->drawText(rect.x() + rect.height() + 70, rect.y() + rect.height() / 7 * 2,
