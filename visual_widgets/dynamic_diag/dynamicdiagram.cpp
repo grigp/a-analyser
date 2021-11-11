@@ -181,8 +181,11 @@ void DynamicDiagram::paintEvent(QPaintEvent *event)
 
     //! Заголовок
     painter.setPen(QPen(m_titleColor, 1, Qt::SolidLine, Qt::FlatCap));
+    //! Размер шрифта для отметок
+    painter.setFont(QFont("Sans", 10, QFont::Bold, false));
     painter.drawText(QRect(0, 0, geometry().width(), m_titleHeight - 5), m_title, QTextOption(Qt::AlignHCenter | Qt::AlignVCenter));
 
+    painter.setFont(QFont("Sans", 10, 0, false));
     painter.drawText(QRect(0, geometry().height() - m_axisSpaceBottom + m_titleHeight, geometry().width(), m_titleHeight - 5),
                      m_bottomText, QTextOption(Qt::AlignHCenter | Qt::AlignVCenter));
 
@@ -197,9 +200,7 @@ void DynamicDiagram::paintEvent(QPaintEvent *event)
         painter.drawLine(m_axisSpaceLeft, zeroY, geometry().width() - m_axisSpaceLeft, zeroY);
 
     //! Размер шрифта для отметок
-    QFont font = painter.font();
-    font.setPointSize(8);
-    painter.setFont(font);
+    painter.setFont(QFont("Sans", 8, 0, false));
 
     //! Сетка по оси значений
     showValuesGrid(painter, min, max, prop);

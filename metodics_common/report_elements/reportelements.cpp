@@ -82,6 +82,18 @@ void ReportElements::drawFooter(QPainter *painter, const QString &testUid, QRect
                       website->value().toString());
 }
 
+void ReportElements::drawWidget(QPainter *painter, QWidget *widget, const int w, const int h, const int x, const int y)
+{
+    double xscale = static_cast<double>(w) / static_cast<double>(widget->width());
+    double yscale = static_cast<double>(h) / static_cast<double>(widget->height());
+    double scale = qMin(xscale, yscale);
+    painter->translate(x, y);
+    painter->scale(scale, scale);
+    widget->render(painter);
+    painter->scale(1/scale, 1/scale);
+    painter->translate(-x, -y);
+};
+
 void ReportElements::drawTable(QPainter *painter, QStandardItemModel *model, QRect rect,
                                QList<int> columnStretch,
                                int pointSize, int weight, int titleWeight)

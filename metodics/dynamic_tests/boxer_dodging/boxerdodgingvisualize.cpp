@@ -73,6 +73,7 @@ void BoxerDodgingVisualize::setTest(const QString &testUid)
     }
 }
 
+
 void BoxerDodgingVisualize::print(QPrinter *printer, const QString &testUid)
 {
     QPainter *painter = new QPainter(printer);
@@ -83,55 +84,50 @@ void BoxerDodgingVisualize::print(QPrinter *printer, const QString &testUid)
     QRect rectHeader(paper.x() + paper.width() / 20, paper.y() + paper.height() / 30, paper.width() / 20 * 18, paper.height() / 30 * 3);
     ReportElements::drawHeader(painter, testUid, rectHeader);
 
-    //! Рисование диаграммы
-    auto drawDiag = [&](DynamicDiagram *wgtDiag, const double sd, const int x, const int y)
-    {
-        double xscale = (paper.width() * sd) / static_cast<double>(wgtDiag->width());
-        double yscale = (paper.height() * sd) / static_cast<double>(wgtDiag->height());
-        double scale = qMin(xscale, yscale);
-        painter->translate(x, y);
-        painter->scale(scale, scale);
-        wgtDiag->render(painter);
-        painter->scale(1/scale, 1/scale);
-        painter->translate(-x, -y);
-    };
-
     if (printer->orientation() == QPrinter::Portrait)
     {
-        drawDiag(wgtDiagLatent, 0.45, paper.x() + paper.width()/10, paper.y() + paper.height()/7);
-        drawDiag(wgtDiagTime, 0.45, paper.x() + paper.width()/11*6, paper.y() + paper.height()/7);
-        drawDiag(wgtDiagAmpl, 0.45, paper.x() + paper.width()/10, paper.y() + paper.height()/9*4);
-        drawDiag(wgtDiagErrors, 0.45, paper.x() + paper.width()/11*6, paper.y() + paper.height()/9*4);
+        ReportElements::drawWidget(painter, wgtDiagLatent,
+                                   static_cast<int>(paper.width() * 0.45), static_cast<int>(paper.height() * 0.45),
+                                   paper.x() + paper.width()/10, paper.y() + paper.height()/7);
+        ReportElements::drawWidget(painter, wgtDiagTime,
+                                   static_cast<int>(paper.width() * 0.45), static_cast<int>(paper.height() * 0.45),
+                                   paper.x() + paper.width()/11*6, paper.y() + paper.height()/7);
+        ReportElements::drawWidget(painter, wgtDiagAmpl,
+                                   static_cast<int>(paper.width() * 0.45), static_cast<int>(paper.height() * 0.45),
+                                   paper.x() + paper.width()/10, paper.y() + paper.height()/10*4);
+        ReportElements::drawWidget(painter, wgtDiagErrors,
+                                   static_cast<int>(paper.width() * 0.45), static_cast<int>(paper.height() * 0.45),
+                                   paper.x() + paper.width()/11*6, paper.y() + paper.height()/10*4);
 
         //! Таблица показателей. Берется модель таблицы из визуализатора
         QRect rectTable(paper.x() + paper.width() / 10,
                         paper.y() + paper.height() / 18 * 13,
                         paper.width() / 10 * 8,
                         paper.height() / 5);
-        ReportElements::drawTable(painter, mdlFactors, rectTable, QList<int>() << 3 << 1 << 1 << 1 << 1 << 1, 12, -1, QFont::Bold);
+        ReportElements::drawTable(painter, mdlFactors, rectTable, QList<int>() << 3 << 3 << 3 << 3 << 2 << 1, 11, -1, QFont::Bold);
     }
     else
     if (printer->orientation() == QPrinter::Landscape)
     {
-//        //! Диаграмма Cross. Копируется из виджета
-//        double xscale = (paper.width() * 0.6) / static_cast<double>(wgtDiag->width());
-//        double yscale = (paper.height() * 0.6) / static_cast<double>(wgtDiag->height());
-//        double scale = qMin(xscale, yscale);
-//        painter->translate(paper.x() + paper.width()/20,
-//                           paper.y() + paper.height()/4);
-//        painter->scale(scale, scale);
-//        wgtDiag->render(painter);
-//        painter->scale(1/scale, 1/scale);
-//        painter->translate(-(paper.x() + paper.width()/20),
-//                           -(paper.y() + paper.height()/4));
+        ReportElements::drawWidget(painter, wgtDiagLatent,
+                                   static_cast<int>(paper.width() * 0.23), static_cast<int>(paper.height() * 0.5),
+                                   paper.x() + paper.width()/20, paper.y() + paper.height()/5);
+        ReportElements::drawWidget(painter, wgtDiagTime,
+                                   static_cast<int>(paper.width() * 0.23), static_cast<int>(paper.height() * 0.5),
+                                   paper.x() + paper.width()/20*5, paper.y() + paper.height()/5);
+        ReportElements::drawWidget(painter, wgtDiagAmpl,
+                                   static_cast<int>(paper.width() * 0.23), static_cast<int>(paper.height() * 0.5),
+                                   paper.x() + paper.width()/20 * 10, paper.y() + paper.height()/5);
+        ReportElements::drawWidget(painter, wgtDiagErrors,
+                                   static_cast<int>(paper.width() * 0.23), static_cast<int>(paper.height() * 0.5),
+                                   paper.x() + paper.width()/20*15, paper.y() + paper.height()/5);
 
-
-//        //! Таблица показателей. Берется модель таблицы из визуализатора
-//        QRect rectTable(paper.x() + paper.width() / 7 * 4,
-//                        static_cast<int>(paper.y() + paper.height() / 3.5),
-//                        paper.width() / 7 * 3,
-//                        paper.height() / 2);
-//        ReportElements::drawTable(painter, mdlFactors, rectTable, QList<int>() << 3 << 1, 12, -1, QFont::Bold);
+        //! Таблица показателей. Берется модель таблицы из визуализатора
+        QRect rectTable(paper.x() + paper.width() / 10,
+                        paper.y() + paper.height() / 18 * 11,
+                        paper.width() / 10 * 8,
+                        paper.height() / 5);
+        ReportElements::drawTable(painter, mdlFactors, rectTable, QList<int>() << 3 << 3 << 3 << 3 << 2 << 1, 11, -1, QFont::Bold);
     }
 
     //! Нижний колонтитул

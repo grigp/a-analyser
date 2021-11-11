@@ -26,6 +26,14 @@ void drawHeader(QPainter *painter, const QString &testUid, QRect rect);
  */
 void drawFooter(QPainter *painter, const QString &testUid, QRect rect);
 
+/*!
+ * \brief Рисует виджет на отчете по образцу
+ * \param painter - указатель на текущий рисователь
+ * \param widget - рисуемый виджет
+ * \param w, h - ширина и высота виджета
+ * \param x, y - позиция виджета
+ */
+void drawWidget(QPainter *painter, QWidget *widget, const int w, const int h, const int x, const int y);
 
 /*!
  * \brief Рисует таблицу на печатном отчете,
