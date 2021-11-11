@@ -81,16 +81,9 @@ void CrossVisualize::print(QPrinter *printer, const QString &testUid)
     if (printer->orientation() == QPrinter::Portrait)
     {
         //! Диаграмма Cross. Копируется из виджета
-        double xscale = (paper.width() * 0.8) / static_cast<double>(wgtDiag->width());
-        double yscale = (paper.height() * 0.8) / static_cast<double>(wgtDiag->height());
-        double scale = qMin(xscale, yscale);
-        painter->translate(paper.x() + paper.width()/10,
-                           paper.y() + paper.height()/7);
-        painter->scale(scale, scale);
-        wgtDiag->render(painter);
-        painter->scale(1/scale, 1/scale);
-        painter->translate(-(paper.x() + paper.width()/10),
-                           -(paper.y() + paper.height()/7));
+        ReportElements::drawWidget(painter, wgtDiag,
+                                   static_cast<int>(paper.width() * 0.8), static_cast<int>(paper.height() * 0.8),
+                                   paper.x() + paper.width()/10, paper.y() + paper.height()/7);
 
         //! Таблица показателей. Берется модель таблицы из визуализатора
         QRect rectTable(paper.x() + paper.width() / 10,
@@ -103,17 +96,9 @@ void CrossVisualize::print(QPrinter *printer, const QString &testUid)
     if (printer->orientation() == QPrinter::Landscape)
     {
         //! Диаграмма Cross. Копируется из виджета
-        double xscale = (paper.width() * 0.6) / static_cast<double>(wgtDiag->width());
-        double yscale = (paper.height() * 0.6) / static_cast<double>(wgtDiag->height());
-        double scale = qMin(xscale, yscale);
-        painter->translate(paper.x() + paper.width()/20,
-                           paper.y() + paper.height()/4);
-        painter->scale(scale, scale);
-        wgtDiag->render(painter);
-        painter->scale(1/scale, 1/scale);
-        painter->translate(-(paper.x() + paper.width()/20),
-                           -(paper.y() + paper.height()/4));
-
+        ReportElements::drawWidget(painter, wgtDiag,
+                                   static_cast<int>(paper.width() * 0.6), static_cast<int>(paper.height() * 0.6),
+                                   paper.x() + paper.width()/20, paper.y() + paper.height()/4);
 
         //! Таблица показателей. Берется модель таблицы из визуализатора
         QRect rectTable(paper.x() + paper.width() / 7 * 4,
