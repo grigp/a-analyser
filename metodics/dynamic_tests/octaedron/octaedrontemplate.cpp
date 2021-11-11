@@ -41,8 +41,7 @@ QWidget *OctaedronTemplate::visualize(QWidget *parent, const QString &testUid)
 
 void OctaedronTemplate::print(QPrinter *printer, const QString &testUid)
 {
-    Q_UNUSED(printer);
-    Q_UNUSED(testUid);
+    OctaedronVisualize::print(printer, testUid);
 }
 
 bool OctaedronTemplate::editParams(QWidget *parent, QJsonObject &params)
