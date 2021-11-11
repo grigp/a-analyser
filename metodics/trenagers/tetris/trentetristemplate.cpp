@@ -41,8 +41,7 @@ QWidget *TrenTetrisTemplate::visualize(QWidget *parent, const QString &testUid)
 
 void TrenTetrisTemplate::print(QPrinter *printer, const QString &testUid)
 {
-    Q_UNUSED(printer);
-    Q_UNUSED(testUid);
+    TrenVisualize::print(printer, testUid);
 }
 
 bool TrenTetrisTemplate::editParams(QWidget *parent, QJsonObject &params)

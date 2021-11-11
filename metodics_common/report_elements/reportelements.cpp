@@ -96,7 +96,8 @@ void ReportElements::drawWidget(QPainter *painter, QWidget *widget, const int w,
 
 void ReportElements::drawTable(QPainter *painter, QStandardItemModel *model, QRect rect,
                                QList<int> columnStretch,
-                               int pointSize, int weight, int titleWeight)
+                               const Table::VerticalStretch vStretch,
+                               const int pointSize, const int weight, const int titleWeight)
 {
     //! Заполнение реальными дынными растяжения
     int sSum = 0;
@@ -110,7 +111,13 @@ void ReportElements::drawTable(QPainter *painter, QStandardItemModel *model, QRe
         sSum += sv;
     }
 
+    painter->setFont(QFont("Sans", pointSize, weight, false));
     double dh = rect.height() / (model->rowCount() + 1);
+    if (vStretch == Table::tvsCompressed)
+    {
+        QFontMetrics fm = painter->fontMetrics();
+        dh = fm.height();
+    }
     painter->setPen(Qt::black);
 
     //! Заголовок

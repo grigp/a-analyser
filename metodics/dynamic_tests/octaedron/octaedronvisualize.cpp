@@ -61,7 +61,7 @@ void OctaedronVisualize::print(QPrinter *printer, const QString &testUid)
 
     if (printer->orientation() == QPrinter::Portrait)
     {
-        //! Диаграмма Cross. Копируется из виджета
+        //! Диаграмма. Копируется из виджета
         ReportElements::drawWidget(painter, wgtDiag,
                                    static_cast<int>(paper.width() * 0.85), static_cast<int>(paper.height() * 0.85),
                                    paper.x() + paper.width()/10, static_cast<int>(paper.y() + paper.height()/4));
@@ -69,7 +69,7 @@ void OctaedronVisualize::print(QPrinter *printer, const QString &testUid)
     else
     if (printer->orientation() == QPrinter::Landscape)
     {
-        //! Диаграмма Cross. Копируется из виджета
+        //! Диаграмма. Копируется из виджета
         ReportElements::drawWidget(painter, wgtDiag,
                                    static_cast<int>(paper.width() * 0.75), static_cast<int>(paper.height() * 0.75),
                                    static_cast<int>(paper.x() + paper.width()/5.5), paper.y() + paper.height()/6);

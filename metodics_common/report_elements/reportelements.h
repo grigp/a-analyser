@@ -8,6 +8,19 @@
 namespace ReportElements
 {
 
+namespace Table
+{
+/*!
+ * \brief Вертикальное растяжение таблицы VerticalStretch enum
+ */
+enum VerticalStretch
+{
+      tvsStretched = 0  ///< Растянутый режим на всю высоту
+    , tvsCompressed     ///< Строка за строкой с возможным пустым местом
+};
+
+}
+
 /*!
  * \brief Рисует заголовок отчета.
  * Данные берет из настроек пользователя и текущего открытого теста
@@ -47,7 +60,8 @@ void drawWidget(QPainter *painter, QWidget *widget, const int w, const int h, co
  */
 void drawTable(QPainter *painter, QStandardItemModel *model, QRect rect,
                QList<int> columnStretch = QList<int>(),
-               int pointSize = -1, int weight = -1, int titleWeight = -1);
+               const Table::VerticalStretch vStretch = Table::tvsStretched,
+               const int pointSize = -1, const int weight = -1, const int titleWeight = -1);
 
 
 };

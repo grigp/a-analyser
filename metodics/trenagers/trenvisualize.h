@@ -2,6 +2,7 @@
 #define TRENVISUALIZE_H
 
 #include <QWidget>
+#include <QPrinter>
 
 namespace Ui {
 class TrenVisualize;
@@ -22,6 +23,12 @@ public:
 
     void setTest(const QString &testUid);
 
+    /*!
+     * \brief Печать отчета о результатах теста
+     * \param printer - принтер
+     * \param testUid - uid теста
+     */
+    static void print(QPrinter *printer, const QString &testUid);
 
 private:
     Ui::TrenVisualize *ui;

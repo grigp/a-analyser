@@ -41,8 +41,7 @@ QWidget *TrenTakePutTemplate::visualize(QWidget *parent, const QString &testUid)
 
 void TrenTakePutTemplate::print(QPrinter *printer, const QString &testUid)
 {
-    Q_UNUSED(printer);
-    Q_UNUSED(testUid);
+    TrenVisualize::print(printer, testUid);
 }
 
 bool TrenTakePutTemplate::editParams(QWidget *parent, QJsonObject &params)

@@ -104,7 +104,9 @@ void BoxerDodgingVisualize::print(QPrinter *printer, const QString &testUid)
                         paper.y() + paper.height() / 18 * 13,
                         paper.width() / 10 * 8,
                         paper.height() / 5);
-        ReportElements::drawTable(painter, mdlFactors, rectTable, QList<int>() << 3 << 3 << 3 << 3 << 2 << 1, 11, -1, QFont::Bold);
+        ReportElements::drawTable(painter, mdlFactors, rectTable,
+                                  QList<int>() << 3 << 3 << 3 << 3 << 2 << 1, ReportElements::Table::tvsStretched,
+                                  11, -1, QFont::Bold);
     }
     else
     if (printer->orientation() == QPrinter::Landscape)
@@ -127,7 +129,9 @@ void BoxerDodgingVisualize::print(QPrinter *printer, const QString &testUid)
                         paper.y() + paper.height() / 18 * 11,
                         paper.width() / 10 * 8,
                         paper.height() / 5);
-        ReportElements::drawTable(painter, mdlFactors, rectTable, QList<int>() << 3 << 3 << 3 << 3 << 2 << 1, 11, -1, QFont::Bold);
+        ReportElements::drawTable(painter, mdlFactors, rectTable,
+                                  QList<int>() << 3 << 3 << 3 << 3 << 2 << 1, ReportElements::Table::tvsStretched,
+                                  11, -1, QFont::Bold);
     }
 
     //! Нижний колонтитул
