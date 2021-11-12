@@ -2,6 +2,7 @@
 #define EVOLVENTAVISUALIZE_H
 
 #include <QWidget>
+#include <QPrinter>
 
 namespace Ui {
 class EvolventaVisualize;
@@ -21,6 +22,13 @@ public:
     ~EvolventaVisualize() override;
 
     void setTest(const QString &testUid);
+
+    /*!
+     * \brief Печать отчета о результатах теста
+     * \param printer - принтер
+     * \param testUid - uid теста
+     */
+    static void print(QPrinter *printer, const QString &testUid);
 
 private slots:
     /*!

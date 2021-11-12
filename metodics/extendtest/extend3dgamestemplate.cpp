@@ -62,6 +62,7 @@ bool Extend3DGamesTemplate::editParams(QWidget *parent, QJsonObject &params)
 
 TestCalculator *Extend3DGamesTemplate::calculator(const QString &testUid)
 {
+    Q_UNUSED(testUid);
 //    DataDefines::TestInfo ti;
 //    if (DataProvider::getTestInfo(testUid, ti))
 //    {

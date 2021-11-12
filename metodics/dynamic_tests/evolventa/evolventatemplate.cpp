@@ -41,6 +41,7 @@ QWidget *EvolventaTemplate::visualize(QWidget *parent, const QString &testUid)
 
 void EvolventaTemplate::print(QPrinter *printer, const QString &testUid)
 {
+    EvolventaVisualize::print(printer, testUid);
     Q_UNUSED(printer);
     Q_UNUSED(testUid);
 }
