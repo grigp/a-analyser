@@ -41,8 +41,7 @@ QWidget *StepOffsetTemplate::visualize(QWidget *parent, const QString &testUid)
 
 void StepOffsetTemplate::print(QPrinter *printer, const QString &testUid)
 {
-    Q_UNUSED(printer);
-    Q_UNUSED(testUid);
+    StepOffsetVisualize::print(printer, testUid);
 }
 
 bool StepOffsetTemplate::editParams(QWidget *parent, QJsonObject &params)

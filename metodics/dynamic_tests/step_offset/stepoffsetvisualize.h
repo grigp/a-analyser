@@ -2,6 +2,7 @@
 #define STEPOFFSETVISUALIZE_H
 
 #include <QWidget>
+#include <QPrinter>
 
 namespace Ui {
 class StepOffsetVisualize;
@@ -21,6 +22,13 @@ public:
     ~StepOffsetVisualize();
 
     void setTest(const QString &testUid);
+
+    /*!
+     * \brief Печать отчета о результатах теста
+     * \param printer - принтер
+     * \param testUid - uid теста
+     */
+    static void print(QPrinter *printer, const QString &testUid);
 
 private slots:
     void curPageChanged(int pageIdx);

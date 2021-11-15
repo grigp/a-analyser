@@ -9,6 +9,33 @@
 #include "stepoffsetcalculator.h"
 #include "stepoffsetfactors.h"
 #include "settingsprovider.h"
+#include "reportelements.h"
+
+namespace
+{
+Transients *wgtProcess {nullptr};
+QStandardItemModel *mdlFactors {nullptr};
+QString sForce {""};
+QString sDirection {""};
+QString sDeviation {""};
+QString sRepeatCount {""};
+
+QString sReactionTime {""};
+QString sStatism {""};
+QString sLatent {""};
+QString sSpurtSpeed {""};
+QString sSpurtAmpl {""};
+QString sStabilityDeviation {""};
+QString sRetentionDeviation {""};
+QString sPrecisionKogn {""};
+QString sPrecisionMotor {""};
+QString sProcessKind {""};
+QString sCorrectionPredominace {""};
+QString sCorrectionResume {""};
+QColor sCorrectionResumeColor;
+DualStateDiagram *wgtCorrectionDiag {nullptr};
+}
+
 
 StepOffsetVisualize::StepOffsetVisualize(QWidget *parent) :
     QWidget(parent),
@@ -40,6 +67,158 @@ void StepOffsetVisualize::setTest(const QString &testUid)
         showConslution();
         showConslutionStrategy();
     }
+}
+
+void StepOffsetVisualize::print(QPrinter *printer, const QString &testUid)
+{
+    QPainter *painter = new QPainter(printer);
+    QRect paper = printer->pageRect();
+
+    painter->begin(printer);
+    //! Заголовок
+    QRect rectHeader(paper.x() + paper.width() / 20, paper.y() + paper.height() / 30, paper.width() / 20 * 18, paper.height() / 30 * 3);
+    ReportElements::drawHeader(painter, testUid, rectHeader);
+
+    if (printer->orientation() == QPrinter::Portrait)
+    {
+        //! Диаграмма. Копируется из виджета
+        ReportElements::drawWidget(painter, wgtProcess,
+                                   static_cast<int>(paper.width() * 0.8), static_cast<int>(paper.height() * 0.8),
+                                   paper.x() + paper.width()/10, paper.y() + paper.height()/7);
+
+        //! Таблица показателей. Берется модель таблицы из визуализатора
+        QRect rectTable(paper.x() + paper.width() / 10,
+                        paper.y() + paper.height() / 7 * 3,
+                        paper.width() / 10 * 9,
+                        paper.height() / 3);
+        ReportElements::drawTable(painter, mdlFactors, rectTable,
+                                  QList<int>() << 3 << 2 << 2, ReportElements::Table::tvsStretched,
+                                  8, -1, QFont::Bold);
+
+        painter->setFont(QFont("Sans", 10, QFont::Bold, false));
+        painter->drawText(paper.x() + paper.width() / 10, paper.y() + paper.height() / 10 * 8, sForce);
+        painter->drawText(paper.x() + paper.width() / 10, static_cast<int>(paper.y() + paper.height() / 10 * 8.2), sDirection);
+        painter->drawText(paper.x() + paper.width() / 10, static_cast<int>(paper.y() + paper.height() / 10 * 8.4), sDeviation);
+        painter->drawText(paper.x() + paper.width() / 10, static_cast<int>(paper.y() + paper.height() / 10 * 8.6), sRepeatCount);
+
+        //! Нижний колонтитул
+        QRect rectFooter(paper.x() + paper.width() / 20,
+                         paper.y() + paper.height() - static_cast<int>(paper.height() / 30 * 1.5),
+                         paper.width() / 20 * 18,
+                         static_cast<int>(paper.height() / 30 * 1.5));
+        ReportElements::drawFooter(painter, testUid, rectFooter);
+
+        //!------------------- Страница 2
+        printer->newPage();
+
+        painter->setFont(QFont("Sans", 14, QFont::Bold, false));
+        painter->drawText(paper.x() + paper.width() / 10, paper.y() + paper.height() / 90 * 7, tr("Результативность"));
+        painter->setFont(QFont("Sans", 12, QFont::Bold, false));
+        painter->drawText(paper.x() + paper.width() / 10, paper.y() + paper.height() / 90 * 9, sReactionTime);
+        painter->drawText(paper.x() + paper.width() / 10, paper.y() + paper.height() / 90 * 11, sStatism);
+        painter->setFont(QFont("Sans", 14, QFont::Bold, false));
+        painter->drawText(paper.x() + paper.width() / 10, paper.y() + paper.height() / 90 * 14, tr("Эффективность"));
+        painter->setFont(QFont("Sans", 12, QFont::Bold, false));
+        painter->drawText(paper.x() + paper.width() / 10, paper.y() + paper.height() / 90 * 16, sLatent);
+        painter->drawText(paper.x() + paper.width() / 10, paper.y() + paper.height() / 90 * 18, sSpurtSpeed);
+        painter->drawText(paper.x() + paper.width() / 10, paper.y() + paper.height() / 90 * 20, sSpurtAmpl);
+        painter->drawText(paper.x() + paper.width() / 10, paper.y() + paper.height() / 90 * 22, sStabilityDeviation);
+        painter->drawText(paper.x() + paper.width() / 10, paper.y() + paper.height() / 90 * 24, sRetentionDeviation);
+        painter->drawText(paper.x() + paper.width() / 10, paper.y() + paper.height() / 90 * 26, sPrecisionKogn);
+        painter->drawText(paper.x() + paper.width() / 10, paper.y() + paper.height() / 90 * 28, sPrecisionMotor);
+        painter->setFont(QFont("Sans", 14, QFont::Bold, false));
+        painter->drawText(paper.x() + paper.width() / 10, paper.y() + paper.height() / 90 * 31, tr("Стратегия"));
+        painter->setFont(QFont("Sans", 12, QFont::Bold, false));
+        painter->drawText(paper.x() + paper.width() / 10, paper.y() + paper.height() / 90 * 33, sProcessKind);
+
+        painter->drawText(paper.x() + paper.width() / 10, paper.y() + paper.height() / 90 * 35, sCorrectionPredominace);
+        painter->setPen(sCorrectionResumeColor);
+        painter->drawText(paper.x() + paper.width() / 10, paper.y() + paper.height() / 90 * 37, sCorrectionResume);
+
+        //! Диаграмма преобладания коррекций.
+        ReportElements::drawWidget(painter, wgtCorrectionDiag,
+                                   static_cast<int>(paper.width() * 0.8), static_cast<int>(paper.height() * 0.8),
+                                   paper.x() + paper.width()/10, paper.y() + paper.height() / 90 * 39);
+
+
+    }
+    else
+    if (printer->orientation() == QPrinter::Landscape)
+    {
+        //! Диаграмма. Копируется из виджета
+        ReportElements::drawWidget(painter, wgtProcess,
+                                   static_cast<int>(paper.width() * 0.9), static_cast<int>(paper.height() * 0.9),
+                                   paper.x() + paper.width()/20, paper.y() + paper.height()/7);
+
+        painter->setFont(QFont("Sans", 10, QFont::Bold, false));
+        painter->drawText(paper.x() + paper.width() / 10, paper.y() + paper.height() / 10 * 8, sForce);
+        painter->drawText(paper.x() + paper.width() / 10, static_cast<int>(paper.y() + paper.height() / 10 * 8.2), sDirection);
+        painter->drawText(paper.x() + paper.width() / 10, static_cast<int>(paper.y() + paper.height() / 10 * 8.4), sDeviation);
+        painter->drawText(paper.x() + paper.width() / 10, static_cast<int>(paper.y() + paper.height() / 10 * 8.6), sRepeatCount);
+
+        //! Нижний колонтитул
+        QRect rectFooter(paper.x() + paper.width() / 20,
+                         paper.y() + paper.height() - static_cast<int>(paper.height() / 30 * 1.5),
+                         paper.width() / 20 * 18,
+                         static_cast<int>(paper.height() / 30 * 1.5));
+        ReportElements::drawFooter(painter, testUid, rectFooter);
+
+        //!------------------- Страница 2
+        printer->newPage();
+
+        //! Таблица показателей. Берется модель таблицы из визуализатора
+        QRect rectTable(paper.x() + paper.width() / 10,
+                        paper.y() + paper.height() / 7,
+                        paper.width() / 10 * 9,
+                        paper.height() / 3);
+        ReportElements::drawTable(painter, mdlFactors, rectTable,
+                                  QList<int>() << 3 << 2 << 2, ReportElements::Table::tvsStretched,
+                                  8, -1, QFont::Bold);
+
+        //! Нижний колонтитул
+        ReportElements::drawFooter(painter, testUid, rectFooter);
+
+        //!------------------- Страница 3
+        printer->newPage();
+
+        painter->setFont(QFont("Sans", 14, QFont::Bold, false));
+        painter->drawText(paper.x() + paper.width() / 10, paper.y() + paper.height() / 90 * 7, tr("Результативность"));
+        painter->setFont(QFont("Sans", 12, QFont::Bold, false));
+        painter->drawText(paper.x() + paper.width() / 10, paper.y() + paper.height() / 90 * 10, sReactionTime);
+        painter->drawText(paper.x() + paper.width() / 10, paper.y() + paper.height() / 90 * 13, sStatism);
+        painter->setFont(QFont("Sans", 14, QFont::Bold, false));
+        painter->drawText(paper.x() + paper.width() / 10, paper.y() + paper.height() / 90 * 17, tr("Эффективность"));
+        painter->setFont(QFont("Sans", 12, QFont::Bold, false));
+        painter->drawText(paper.x() + paper.width() / 10, paper.y() + paper.height() / 90 * 20, sLatent);
+        painter->drawText(paper.x() + paper.width() / 10, paper.y() + paper.height() / 90 * 23, sSpurtSpeed);
+        painter->drawText(paper.x() + paper.width() / 10, paper.y() + paper.height() / 90 * 26, sSpurtAmpl);
+        painter->drawText(paper.x() + paper.width() / 10, paper.y() + paper.height() / 90 * 29, sStabilityDeviation);
+        painter->drawText(paper.x() + paper.width() / 10, paper.y() + paper.height() / 90 * 32, sRetentionDeviation);
+        painter->drawText(paper.x() + paper.width() / 10, paper.y() + paper.height() / 90 * 35, sPrecisionKogn);
+        painter->drawText(paper.x() + paper.width() / 10, paper.y() + paper.height() / 90 * 38, sPrecisionMotor);
+        painter->setFont(QFont("Sans", 14, QFont::Bold, false));
+        painter->drawText(paper.x() + paper.width() / 10, paper.y() + paper.height() / 90 * 42, tr("Стратегия"));
+        painter->setFont(QFont("Sans", 12, QFont::Bold, false));
+        painter->drawText(paper.x() + paper.width() / 10, paper.y() + paper.height() / 90 * 45, sProcessKind);
+
+        painter->drawText(paper.x() + paper.width() / 10, paper.y() + paper.height() / 90 * 48, sCorrectionPredominace);
+        painter->setPen(sCorrectionResumeColor);
+        painter->drawText(paper.x() + paper.width() / 10, paper.y() + paper.height() / 90 * 51, sCorrectionResume);
+
+        //! Диаграмма преобладания коррекций.
+        ReportElements::drawWidget(painter, wgtCorrectionDiag,
+                                   static_cast<int>(paper.width() * 0.8), static_cast<int>(paper.height() * 0.8),
+                                   paper.x() + paper.width()/10, paper.y() + paper.height() / 90 * 54);
+    }
+
+    //! Нижний колонтитул
+    QRect rectFooter(paper.x() + paper.width() / 20,
+                     paper.y() + paper.height() - static_cast<int>(paper.height() / 30 * 1.5),
+                     paper.width() / 20 * 18,
+                     static_cast<int>(paper.height() / 30 * 1.5));
+    ReportElements::drawFooter(painter, testUid, rectFooter);
+
+    painter->end();
 }
 
 void StepOffsetVisualize::curPageChanged(int pageIdx)
@@ -103,6 +282,8 @@ void StepOffsetVisualize::showTransients()
         ui->wgtProcess->setReturnValue(m_calculator->bufferReturnValue(i));
     }
     ui->wgtProcess->endAddValues();
+
+    wgtProcess = ui->wgtProcess;
 }
 
 void StepOffsetVisualize::showTable()
@@ -139,74 +320,96 @@ void StepOffsetVisualize::showTable()
     ui->tvFactors->setModel(model);
     ui->tvFactors->header()->resizeSections(QHeaderView::ResizeToContents);
     ui->tvFactors->header()->resizeSection(0, 450);
+
+    mdlFactors = static_cast<QStandardItemModel*>(ui->tvFactors->model());
 }
 
 void StepOffsetVisualize::showParams()
 {
-    ui->lblForce->setText(tr("Усилие") + " - " + QString::number(m_calculator->force()) + " " + tr("%"));
-    ui->lblDirection->setText(tr("Направление") + " - " + BaseUtils::DirectionValueName.value(m_calculator->direction()));
-    ui->lblDeviation->setText(tr("Отклонение") + " - " +
-                              QString::number(m_calculator->diap() * m_calculator->force() / 100) +
-                              " " + tr("мм"));
-    ui->lblRepeatCount->setText(tr("Кол-во повторений") + " - " + QString::number(m_calculator->stepsCount()));
+    sForce = tr("Усилие") + " - " + QString::number(m_calculator->force()) + " " + tr("%");
+    sDirection = tr("Направление") + " - " + BaseUtils::DirectionValueName.value(m_calculator->direction());
+    sDeviation = tr("Отклонение") + " - " +
+            QString::number(m_calculator->diap() * m_calculator->force() / 100) +
+            " " + tr("мм");
+    sRepeatCount = tr("Кол-во повторений") + " - " + QString::number(m_calculator->stepsCount());
+
+    ui->lblForce->setText(sForce);
+    ui->lblDirection->setText(sDirection);
+    ui->lblDeviation->setText(sDeviation);
+    ui->lblRepeatCount->setText(sRepeatCount);
 }
 
 void StepOffsetVisualize::showConslution()
 {
     auto fi = static_cast<AAnalyserApplication*>(QApplication::instance())->getFactorInfo(StepOffsetFactorsDefines::Compensation::ReactionTimeUid);
     double v = m_calculator->factorValue(StepOffsetFactorsDefines::Compensation::ReactionTimeUid);
-    ui->lblReactionTime->setText(tr("Время реакции") + " : " + QString::number(v, 'f', fi.format()) + " " + tr("сек"));
+    sReactionTime = tr("Время реакции") + " : " + QString::number(v, 'f', fi.format()) + " " + tr("сек");
+    ui->lblReactionTime->setText(sReactionTime);
 
     fi = static_cast<AAnalyserApplication*>(QApplication::instance())->getFactorInfo(StepOffsetFactorsDefines::Compensation::StatismUid);
     v = m_calculator->factorValue(StepOffsetFactorsDefines::Compensation::StatismUid);
-    ui->lblStatism->setText(tr("Статизм") + " : " + QString::number(v, 'f', fi.format()) + " " + tr("мм"));
+    sStatism = tr("Статизм") + " : " + QString::number(v, 'f', fi.format()) + " " + tr("мм");
+    ui->lblStatism->setText(sStatism);
 
     fi = static_cast<AAnalyserApplication*>(QApplication::instance())->getFactorInfo(StepOffsetFactorsDefines::Compensation::LatentUid);
     v = m_calculator->factorValue(StepOffsetFactorsDefines::Compensation::LatentUid);
-    ui->lblLatent->setText(tr("Латентный период") + " : " + QString::number(v, 'f', fi.format()) + " " + tr("сек"));
+    sLatent = tr("Латентный период") + " : " + QString::number(v, 'f', fi.format()) + " " + tr("сек");
+    ui->lblLatent->setText(sLatent);
 
     fi = static_cast<AAnalyserApplication*>(QApplication::instance())->getFactorInfo(StepOffsetFactorsDefines::Compensation::SpurtSpeedMMUid);
     v = m_calculator->factorValue(StepOffsetFactorsDefines::Compensation::SpurtSpeedMMUid);
-    ui->lblSpurtSpeed->setText(tr("Скорость броска") + " : " + QString::number(v, 'f', fi.format()) + " " + tr("мм/сек"));
+    sSpurtSpeed = tr("Скорость броска") + " : " + QString::number(v, 'f', fi.format()) + " " + tr("мм/сек");
+    ui->lblSpurtSpeed->setText(sSpurtSpeed);
 
     fi = static_cast<AAnalyserApplication*>(QApplication::instance())->getFactorInfo(StepOffsetFactorsDefines::Compensation::SpurtAmplUid);
     v = m_calculator->factorValue(StepOffsetFactorsDefines::Compensation::SpurtAmplUid);
-    ui->lblSpurtAmpl->setText(tr("Амплитуда броска") + " : " + QString::number(v, 'f', fi.format()) + " " + tr("мм"));
+    sSpurtAmpl = tr("Амплитуда броска") + " : " + QString::number(v, 'f', fi.format()) + " " + tr("мм");
+    ui->lblSpurtAmpl->setText(sSpurtAmpl);
 
     fi = static_cast<AAnalyserApplication*>(QApplication::instance())->getFactorInfo(StepOffsetFactorsDefines::Compensation::StabilityDeviationUid);
     v = m_calculator->factorValue(StepOffsetFactorsDefines::Compensation::StabilityDeviationUid);
-    ui->lblStabilityDeviation->setText(tr("Разброс на этапе стабилизации") + " : " + QString::number(v, 'f', fi.format()) + " " + tr("мм"));
+    sStabilityDeviation = tr("Разброс на этапе стабилизации") + " : " + QString::number(v, 'f', fi.format()) + " " + tr("мм");
+    ui->lblStabilityDeviation->setText(sStabilityDeviation);
 
     fi = static_cast<AAnalyserApplication*>(QApplication::instance())->getFactorInfo(StepOffsetFactorsDefines::Compensation::RetentionDeviationUid);
     v = m_calculator->factorValue(StepOffsetFactorsDefines::Compensation::RetentionDeviationUid);
-    ui->lblRetentionDeviation->setText(tr("Разброс на этапе удержания") + " : " + QString::number(v, 'f', fi.format()) + " " + tr("мм"));
+    sRetentionDeviation = tr("Разброс на этапе удержания") + " : " + QString::number(v, 'f', fi.format()) + " " + tr("мм");
+    ui->lblRetentionDeviation->setText(sRetentionDeviation);
 
     fi = static_cast<AAnalyserApplication*>(QApplication::instance())->getFactorInfo(StepOffsetFactorsDefines::Compensation::CorrectKognErrorUid);
     v = m_calculator->factorValue(StepOffsetFactorsDefines::Compensation::CorrectKognErrorUid);
-    ui->lblPrecisionKogn->setText(tr("Точность выполнения когнитивным сигналом") + " : " + QString::number(v, 'f', fi.format()) + " " + tr("мм"));
+    sPrecisionKogn = tr("Точность выполнения когнитивным сигналом") + " : " + QString::number(v, 'f', fi.format()) + " " + tr("мм");
+    ui->lblPrecisionKogn->setText(sPrecisionKogn);
 
     fi = static_cast<AAnalyserApplication*>(QApplication::instance())->getFactorInfo(StepOffsetFactorsDefines::Compensation::CorrectMotorErrorUid);
     v = m_calculator->factorValue(StepOffsetFactorsDefines::Compensation::CorrectMotorErrorUid);
-    ui->lblPrecisionMotor->setText(tr("Точность моторной коррекции") + " : " + QString::number(v, 'f', fi.format()) + " " + tr("мм"));
+    sPrecisionMotor = tr("Точность моторной коррекции") + " : " + QString::number(v, 'f', fi.format()) + " " + tr("мм");
+    ui->lblPrecisionMotor->setText(sPrecisionMotor);
 
     fi = static_cast<AAnalyserApplication*>(QApplication::instance())->getFactorInfo(StepOffsetFactorsDefines::Compensation::ProcessKindUid);
     v = m_calculator->factorValue(StepOffsetFactorsDefines::Compensation::ProcessKindUid);
-    ui->lblProcessKind->setText(tr("Тип переходного процесса") + " : " + QString::number(v, 'f', fi.format()));
+    sProcessKind = tr("Тип переходного процесса") + " : " + QString::number(v, 'f', fi.format());
+    ui->lblProcessKind->setText(sProcessKind);
 }
 
 void StepOffsetVisualize::showConslutionStrategy()
 {
     auto fi = static_cast<AAnalyserApplication*>(QApplication::instance())->getFactorInfo(StepOffsetFactorsDefines::Compensation::CorrectDominanceUid);
     double v = m_calculator->factorValue(StepOffsetFactorsDefines::Compensation::CorrectDominanceUid);
-    ui->lblCorrectionPredominace->setText(tr("Преобладание коррекций") + " : " + QString::number(v, 'f', fi.format()) + " " + tr("%"));
+    sCorrectionPredominace = tr("Преобладание коррекций") + " : " + QString::number(v, 'f', fi.format()) + " " + tr("%");
+    ui->lblCorrectionPredominace->setText(sCorrectionPredominace);
 
     QString resume = "";
     QString colorResume = "";
     BaseUtils::setCorrectionsDominanceResume(v, resume, colorResume);
+    sCorrectionResume = resume;
     ui->lblCorrectionResume->setText(resume);
     ui->lblCorrectionResume->setStyleSheet(colorResume);
+    QPalette pal = ui->lblCorrectionResume->palette();
+    sCorrectionResumeColor = pal.color(QPalette::WindowText);
 
     ui->wgtCorrectionDiag->setValue(v);
     ui->wgtCorrectionDiag->setDescriptionLeft(tr("Быстрые коррекции"));
     ui->wgtCorrectionDiag->setDescriptionRight(tr("Медленные коррекции"));
+    wgtCorrectionDiag = ui->wgtCorrectionDiag;
 }
