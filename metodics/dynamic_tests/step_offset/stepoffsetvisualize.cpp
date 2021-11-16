@@ -79,6 +79,65 @@ void StepOffsetVisualize::print(QPrinter *printer, const QString &testUid)
     QRect rectHeader(paper.x() + paper.width() / 20, paper.y() + paper.height() / 30, paper.width() / 20 * 18, paper.height() / 30 * 3);
     ReportElements::drawHeader(painter, testUid, rectHeader);
 
+    //! Поле для нижнего колонтитула
+    QRect rectFooter(paper.x() + paper.width() / 20,
+                     paper.y() + paper.height() - static_cast<int>(paper.height() / 30 * 1.5),
+                     paper.width() / 20 * 18,
+                     static_cast<int>(paper.height() / 30 * 1.5));
+
+    //! Показатели для заключения
+    auto drawConslutionFactors = [&](const int start, const int offset)
+    {
+        int pos = start;
+        painter->setFont(QFont("Sans", 14, QFont::Bold, false));
+        painter->drawText(paper.x() + paper.width() / 10, paper.y() + paper.height() / 90 * pos, tr("Результативность"));
+        painter->setFont(QFont("Sans", 12, QFont::Bold, false));
+        pos += offset;
+        painter->drawText(paper.x() + paper.width() / 10, paper.y() + paper.height() / 90 * pos, sReactionTime);
+        pos += offset;
+        painter->drawText(paper.x() + paper.width() / 10, paper.y() + paper.height() / 90 * pos, sStatism);
+        painter->setFont(QFont("Sans", 14, QFont::Bold, false));
+        pos += (offset + 1);
+        painter->drawText(paper.x() + paper.width() / 10, paper.y() + paper.height() / 90 * pos, tr("Эффективность"));
+        painter->setFont(QFont("Sans", 12, QFont::Bold, false));
+        pos += offset;
+        painter->drawText(paper.x() + paper.width() / 10, paper.y() + paper.height() / 90 * pos, sLatent);
+        pos += offset;
+        painter->drawText(paper.x() + paper.width() / 10, paper.y() + paper.height() / 90 * pos, sSpurtSpeed);
+        pos += offset;
+        painter->drawText(paper.x() + paper.width() / 10, paper.y() + paper.height() / 90 * pos, sSpurtAmpl);
+        pos += offset;
+        painter->drawText(paper.x() + paper.width() / 10, paper.y() + paper.height() / 90 * pos, sStabilityDeviation);
+        pos += offset;
+        painter->drawText(paper.x() + paper.width() / 10, paper.y() + paper.height() / 90 * pos, sRetentionDeviation);
+        pos += offset;
+        painter->drawText(paper.x() + paper.width() / 10, paper.y() + paper.height() / 90 * pos, sPrecisionKogn);
+        pos += offset;
+        painter->drawText(paper.x() + paper.width() / 10, paper.y() + paper.height() / 90 * pos, sPrecisionMotor);
+        painter->setFont(QFont("Sans", 14, QFont::Bold, false));
+        pos += (offset + 1);
+        painter->drawText(paper.x() + paper.width() / 10, paper.y() + paper.height() / 90 * pos, tr("Стратегия"));
+        painter->setFont(QFont("Sans", 12, QFont::Bold, false));
+        pos += offset;
+        painter->drawText(paper.x() + paper.width() / 10, paper.y() + paper.height() / 90 * pos, sProcessKind);
+
+        pos += offset;
+        painter->drawText(paper.x() + paper.width() / 10, paper.y() + paper.height() / 90 * pos, sCorrectionPredominace);
+        painter->setPen(sCorrectionResumeColor);
+        pos += offset;
+        painter->drawText(paper.x() + paper.width() / 10, paper.y() + paper.height() / 90 * pos, sCorrectionResume);
+    };
+
+    //! Параметры воздействия
+    auto drawParams = [&]()
+    {
+        painter->setFont(QFont("Sans", 10, QFont::Bold, false));
+        painter->drawText(paper.x() + paper.width() / 10, paper.y() + paper.height() / 10 * 8, sForce);
+        painter->drawText(paper.x() + paper.width() / 10, static_cast<int>(paper.y() + paper.height() / 10 * 8.2), sDirection);
+        painter->drawText(paper.x() + paper.width() / 10, static_cast<int>(paper.y() + paper.height() / 10 * 8.4), sDeviation);
+        painter->drawText(paper.x() + paper.width() / 10, static_cast<int>(paper.y() + paper.height() / 10 * 8.6), sRepeatCount);
+    };
+
     if (printer->orientation() == QPrinter::Portrait)
     {
         //! Диаграмма. Копируется из виджета
@@ -95,45 +154,16 @@ void StepOffsetVisualize::print(QPrinter *printer, const QString &testUid)
                                   QList<int>() << 3 << 2 << 2, ReportElements::Table::tvsStretched,
                                   8, -1, QFont::Bold);
 
-        painter->setFont(QFont("Sans", 10, QFont::Bold, false));
-        painter->drawText(paper.x() + paper.width() / 10, paper.y() + paper.height() / 10 * 8, sForce);
-        painter->drawText(paper.x() + paper.width() / 10, static_cast<int>(paper.y() + paper.height() / 10 * 8.2), sDirection);
-        painter->drawText(paper.x() + paper.width() / 10, static_cast<int>(paper.y() + paper.height() / 10 * 8.4), sDeviation);
-        painter->drawText(paper.x() + paper.width() / 10, static_cast<int>(paper.y() + paper.height() / 10 * 8.6), sRepeatCount);
+        //! Параметры воздействия
+        drawParams();
 
         //! Нижний колонтитул
-        QRect rectFooter(paper.x() + paper.width() / 20,
-                         paper.y() + paper.height() - static_cast<int>(paper.height() / 30 * 1.5),
-                         paper.width() / 20 * 18,
-                         static_cast<int>(paper.height() / 30 * 1.5));
         ReportElements::drawFooter(painter, testUid, rectFooter);
 
         //!------------------- Страница 2
         printer->newPage();
 
-        painter->setFont(QFont("Sans", 14, QFont::Bold, false));
-        painter->drawText(paper.x() + paper.width() / 10, paper.y() + paper.height() / 90 * 7, tr("Результативность"));
-        painter->setFont(QFont("Sans", 12, QFont::Bold, false));
-        painter->drawText(paper.x() + paper.width() / 10, paper.y() + paper.height() / 90 * 9, sReactionTime);
-        painter->drawText(paper.x() + paper.width() / 10, paper.y() + paper.height() / 90 * 11, sStatism);
-        painter->setFont(QFont("Sans", 14, QFont::Bold, false));
-        painter->drawText(paper.x() + paper.width() / 10, paper.y() + paper.height() / 90 * 14, tr("Эффективность"));
-        painter->setFont(QFont("Sans", 12, QFont::Bold, false));
-        painter->drawText(paper.x() + paper.width() / 10, paper.y() + paper.height() / 90 * 16, sLatent);
-        painter->drawText(paper.x() + paper.width() / 10, paper.y() + paper.height() / 90 * 18, sSpurtSpeed);
-        painter->drawText(paper.x() + paper.width() / 10, paper.y() + paper.height() / 90 * 20, sSpurtAmpl);
-        painter->drawText(paper.x() + paper.width() / 10, paper.y() + paper.height() / 90 * 22, sStabilityDeviation);
-        painter->drawText(paper.x() + paper.width() / 10, paper.y() + paper.height() / 90 * 24, sRetentionDeviation);
-        painter->drawText(paper.x() + paper.width() / 10, paper.y() + paper.height() / 90 * 26, sPrecisionKogn);
-        painter->drawText(paper.x() + paper.width() / 10, paper.y() + paper.height() / 90 * 28, sPrecisionMotor);
-        painter->setFont(QFont("Sans", 14, QFont::Bold, false));
-        painter->drawText(paper.x() + paper.width() / 10, paper.y() + paper.height() / 90 * 31, tr("Стратегия"));
-        painter->setFont(QFont("Sans", 12, QFont::Bold, false));
-        painter->drawText(paper.x() + paper.width() / 10, paper.y() + paper.height() / 90 * 33, sProcessKind);
-
-        painter->drawText(paper.x() + paper.width() / 10, paper.y() + paper.height() / 90 * 35, sCorrectionPredominace);
-        painter->setPen(sCorrectionResumeColor);
-        painter->drawText(paper.x() + paper.width() / 10, paper.y() + paper.height() / 90 * 37, sCorrectionResume);
+        drawConslutionFactors(7, 2);
 
         //! Диаграмма преобладания коррекций.
         ReportElements::drawWidget(painter, wgtCorrectionDiag,
@@ -150,17 +180,10 @@ void StepOffsetVisualize::print(QPrinter *printer, const QString &testUid)
                                    static_cast<int>(paper.width() * 0.9), static_cast<int>(paper.height() * 0.9),
                                    paper.x() + paper.width()/20, paper.y() + paper.height()/7);
 
-        painter->setFont(QFont("Sans", 10, QFont::Bold, false));
-        painter->drawText(paper.x() + paper.width() / 10, paper.y() + paper.height() / 10 * 8, sForce);
-        painter->drawText(paper.x() + paper.width() / 10, static_cast<int>(paper.y() + paper.height() / 10 * 8.2), sDirection);
-        painter->drawText(paper.x() + paper.width() / 10, static_cast<int>(paper.y() + paper.height() / 10 * 8.4), sDeviation);
-        painter->drawText(paper.x() + paper.width() / 10, static_cast<int>(paper.y() + paper.height() / 10 * 8.6), sRepeatCount);
+        //! Параметры воздействия
+        drawParams();
 
         //! Нижний колонтитул
-        QRect rectFooter(paper.x() + paper.width() / 20,
-                         paper.y() + paper.height() - static_cast<int>(paper.height() / 30 * 1.5),
-                         paper.width() / 20 * 18,
-                         static_cast<int>(paper.height() / 30 * 1.5));
         ReportElements::drawFooter(painter, testUid, rectFooter);
 
         //!------------------- Страница 2
@@ -181,29 +204,7 @@ void StepOffsetVisualize::print(QPrinter *printer, const QString &testUid)
         //!------------------- Страница 3
         printer->newPage();
 
-        painter->setFont(QFont("Sans", 14, QFont::Bold, false));
-        painter->drawText(paper.x() + paper.width() / 10, paper.y() + paper.height() / 90 * 7, tr("Результативность"));
-        painter->setFont(QFont("Sans", 12, QFont::Bold, false));
-        painter->drawText(paper.x() + paper.width() / 10, paper.y() + paper.height() / 90 * 10, sReactionTime);
-        painter->drawText(paper.x() + paper.width() / 10, paper.y() + paper.height() / 90 * 13, sStatism);
-        painter->setFont(QFont("Sans", 14, QFont::Bold, false));
-        painter->drawText(paper.x() + paper.width() / 10, paper.y() + paper.height() / 90 * 17, tr("Эффективность"));
-        painter->setFont(QFont("Sans", 12, QFont::Bold, false));
-        painter->drawText(paper.x() + paper.width() / 10, paper.y() + paper.height() / 90 * 20, sLatent);
-        painter->drawText(paper.x() + paper.width() / 10, paper.y() + paper.height() / 90 * 23, sSpurtSpeed);
-        painter->drawText(paper.x() + paper.width() / 10, paper.y() + paper.height() / 90 * 26, sSpurtAmpl);
-        painter->drawText(paper.x() + paper.width() / 10, paper.y() + paper.height() / 90 * 29, sStabilityDeviation);
-        painter->drawText(paper.x() + paper.width() / 10, paper.y() + paper.height() / 90 * 32, sRetentionDeviation);
-        painter->drawText(paper.x() + paper.width() / 10, paper.y() + paper.height() / 90 * 35, sPrecisionKogn);
-        painter->drawText(paper.x() + paper.width() / 10, paper.y() + paper.height() / 90 * 38, sPrecisionMotor);
-        painter->setFont(QFont("Sans", 14, QFont::Bold, false));
-        painter->drawText(paper.x() + paper.width() / 10, paper.y() + paper.height() / 90 * 42, tr("Стратегия"));
-        painter->setFont(QFont("Sans", 12, QFont::Bold, false));
-        painter->drawText(paper.x() + paper.width() / 10, paper.y() + paper.height() / 90 * 45, sProcessKind);
-
-        painter->drawText(paper.x() + paper.width() / 10, paper.y() + paper.height() / 90 * 48, sCorrectionPredominace);
-        painter->setPen(sCorrectionResumeColor);
-        painter->drawText(paper.x() + paper.width() / 10, paper.y() + paper.height() / 90 * 51, sCorrectionResume);
+        drawConslutionFactors(7, 3);
 
         //! Диаграмма преобладания коррекций.
         ReportElements::drawWidget(painter, wgtCorrectionDiag,
@@ -212,10 +213,6 @@ void StepOffsetVisualize::print(QPrinter *printer, const QString &testUid)
     }
 
     //! Нижний колонтитул
-    QRect rectFooter(paper.x() + paper.width() / 20,
-                     paper.y() + paper.height() - static_cast<int>(paper.height() / 30 * 1.5),
-                     paper.width() / 20 * 18,
-                     static_cast<int>(paper.height() / 30 * 1.5));
     ReportElements::drawFooter(painter, testUid, rectFooter);
 
     painter->end();

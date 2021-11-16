@@ -105,6 +105,11 @@ void EvolventaVisualize::print(QPrinter *printer, const QString &testUid)
     //! Заголовок
     QRect rectHeader(paper.x() + paper.width() / 20, paper.y() + paper.height() / 30, paper.width() / 20 * 18, paper.height() / 30 * 3);
     ReportElements::drawHeader(painter, testUid, rectHeader);
+    //! Зона нижнего колонтитула
+    QRect rectFooter(paper.x() + paper.width() / 20,
+                     paper.y() + paper.height() - static_cast<int>(paper.height() / 30 * 1.5),
+                     paper.width() / 20 * 18,
+                     static_cast<int>(paper.height() / 30 * 1.5));
 
     if (printer->orientation() == QPrinter::Portrait)
     {
@@ -139,10 +144,6 @@ void EvolventaVisualize::print(QPrinter *printer, const QString &testUid)
         painter->drawText(paper.x() + paper.width()/10, static_cast<int>(paper.y() + paper.height() / 10 * 8.3), lblOutrunningResume->text());
 
         //! Нижний колонтитул
-        QRect rectFooter(paper.x() + paper.width() / 20,
-                         paper.y() + paper.height() - static_cast<int>(paper.height() / 30 * 1.5),
-                         paper.width() / 20 * 18,
-                         static_cast<int>(paper.height() / 30 * 1.5));
         ReportElements::drawFooter(painter, testUid, rectFooter);
 
         //!------------------- Страница 2
@@ -199,10 +200,6 @@ void EvolventaVisualize::print(QPrinter *printer, const QString &testUid)
 
 
         //! Нижний колонтитул
-        QRect rectFooter(paper.x() + paper.width() / 20,
-                         paper.y() + paper.height() - static_cast<int>(paper.height() / 30 * 1.5),
-                         paper.width() / 20 * 18,
-                         static_cast<int>(paper.height() / 30 * 1.5));
         ReportElements::drawFooter(painter, testUid, rectFooter);
 
         //!------------------- Страница 2
@@ -245,10 +242,6 @@ void EvolventaVisualize::print(QPrinter *printer, const QString &testUid)
     }
 
     //! Нижний колонтитул
-    QRect rectFooter(paper.x() + paper.width() / 20,
-                     paper.y() + paper.height() - static_cast<int>(paper.height() / 30 * 1.5),
-                     paper.width() / 20 * 18,
-                     static_cast<int>(paper.height() / 30 * 1.5));
     ReportElements::drawFooter(painter, testUid, rectFooter);
 
     painter->end();
