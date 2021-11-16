@@ -9,6 +9,12 @@
 
 #include <QDebug>
 
+namespace
+{
+CircleNormIndicator *wgtOpenEyesNorm {nullptr};
+
+}
+
 DopuskWidget::DopuskWidget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::DopuskWidget)
@@ -70,21 +76,17 @@ void DopuskWidget::print(QPrinter *printer, const QString &testUid)
     QPainter *painter = new QPainter(printer);
     QRect paper = printer->pageRect();
 
-    qDebug() << "1";
     painter->begin(printer);
-    qDebug() << "2";
     //! Заголовок
     QRect rectHeader(paper.x() + paper.width() / 20, paper.y() + paper.height() / 30, paper.width() / 20 * 18, paper.height() / 30 * 3);
     ReportElements::drawHeader(painter, testUid, rectHeader);
 
     if (printer->orientation() == QPrinter::Portrait)
     {
-        //! Диаграмма Cross. Копируется из виджета
-        qDebug() << "3";
-//        ReportElements::drawWidget(painter, ui->wgtOpenEyesNorm,
-//                                   static_cast<int>(paper.width() * 0.8), static_cast<int>(paper.height() * 0.8),
-//                                   paper.x() + paper.width()/10, paper.y() + paper.height()/7);
-        qDebug() << "4";
+        //! Диаграммы.
+        ReportElements::drawWidget(painter, wgtOpenEyesNorm,
+                                   static_cast<int>(paper.width() * 0.8), static_cast<int>(paper.height() * 0.8),
+                                   paper.x() + paper.width()/10, paper.y() + paper.height()/7);
 
 //        //! Таблица показателей. Берется модель таблицы из визуализатора
 //        QRect rectTable(paper.x() + paper.width() / 10,
@@ -99,9 +101,9 @@ void DopuskWidget::print(QPrinter *printer, const QString &testUid)
     if (printer->orientation() == QPrinter::Landscape)
     {
         //! Диаграмма Cross. Копируется из виджета
-//        ReportElements::drawWidget(painter, ui->frOpenEyes,
-//                                   static_cast<int>(paper.width() * 0.6), static_cast<int>(paper.height() * 0.6),
-//                                   paper.x() + paper.width()/20, paper.y() + paper.height()/4);
+        ReportElements::drawWidget(painter, wgtOpenEyesNorm,
+                                   static_cast<int>(paper.width() * 0.6), static_cast<int>(paper.height() * 0.6),
+                                   paper.x() + paper.width()/20, paper.y() + paper.height()/4);
 
 //        //! Таблица показателей. Берется модель таблицы из визуализатора
 //        QRect rectTable(paper.x() + paper.width() / 7 * 4,
@@ -230,6 +232,8 @@ void DopuskWidget::showConslution()
     auto cnt = static_cast<AAnalyserApplication*>(QApplication::instance())->
             getPersonalNormContainedTestCount(m_testUid);
     ui->lblNormContainsCount->setText(QString(tr("Количество нормообразующих обследований") + " - %1").arg(cnt));
+
+    wgtOpenEyesNorm = ui->wgtOpenEyesNorm;
 }
 
 DataDefines::NormValue DopuskWidget::getGroupNormValue(const int numProbe)

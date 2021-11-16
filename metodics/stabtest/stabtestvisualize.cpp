@@ -22,7 +22,6 @@
 #include "idswidget.h"
 #include "targetwidget.h"
 #include "stressstrategywidget.h"
-#include "reportelements.h"
 
 #include <QDebug>
 
@@ -134,91 +133,28 @@ void StabTestVisualize::setTest(const QString &testUid)
 
 void StabTestVisualize::print(QPrinter *printer, const QString &testUid)
 {
-    QPainter *painter = new QPainter(printer);
-    QRect paper = printer->pageRect();
-
-    qDebug() << "1";
-    painter->begin(printer);
-    qDebug() << "2";
-
-    painter->setPen(Qt::black);
-    painter->setBrush(QBrush(Qt::red));
-    painter->drawRect(10, 10, 410, 410);
-    painter->setFont(QFont("Sans",64,0,0));
-    painter->drawText(QRect(0,0,3000,800), Qt::AlignLeft | Qt::AlignTop, "page1");
-    qDebug() << "3";
-
-    //! Заголовок
-//    QRect rectHeader(paper.x() + paper.width() / 20, paper.y() + paper.height() / 30, paper.width() / 20 * 18, paper.height() / 30 * 3);
-//    ReportElements::drawHeader(painter, testUid, rectHeader);
-
-    if (printer->orientation() == QPrinter::Portrait)
+    DataDefines::TestInfo ti;
+    if (DataProvider::getTestInfo(testUid, ti))
     {
-        //! Диаграмма Cross. Копируется из виджета
-        qDebug() << "3";
-//        ReportElements::drawWidget(painter, ui->wgtOpenEyesNorm,
-//                                   static_cast<int>(paper.width() * 0.8), static_cast<int>(paper.height() * 0.8),
-//                                   paper.x() + paper.width()/10, paper.y() + paper.height()/7);
-        qDebug() << "4";
-
-//        //! Таблица показателей. Берется модель таблицы из визуализатора
-//        QRect rectTable(paper.x() + paper.width() / 10,
-//                        paper.y() + paper.height() / 3 * 2,
-//                        paper.width() / 10 * 8,
-//                        paper.height() / 4);
-//        ReportElements::drawTable(painter, mdlFactors, rectTable,
-//                                  QList<int>() << 3 << 1, ReportElements::Table::tvsStretched,
-//                                  12, -1, QFont::Bold);
+        auto params = ti.params;
+        auto cnd = params["condition"].toInt();
+        if (cnd == 0)
+            static_cast<StabSignalsTestWidget*>(widget)->print(printer, testUid);
+        else
+        if (cnd == 1)
+            static_cast<StateChampionsWidget*>(widget)->print(printer, testUid);
+        else
+        if (cnd == 2)
+            static_cast<DopuskWidget*>(widget)->print(printer, testUid);
+        else
+        if (cnd == 3)
+            static_cast<IDSWidget*>(widget)->print(printer, testUid);
+        else
+        if (cnd == 4)
+            static_cast<TargetWidget*>(widget)->print(printer, testUid);
+        else
+        if (cnd == 5)
+            static_cast<StressStrategyWidget*>(widget)->print(printer, testUid);
     }
-    else
-    if (printer->orientation() == QPrinter::Landscape)
-    {
-        //! Диаграмма Cross. Копируется из виджета
-//        ReportElements::drawWidget(painter, ui->frOpenEyes,
-//                                   static_cast<int>(paper.width() * 0.6), static_cast<int>(paper.height() * 0.6),
-//                                   paper.x() + paper.width()/20, paper.y() + paper.height()/4);
-
-//        //! Таблица показателей. Берется модель таблицы из визуализатора
-//        QRect rectTable(paper.x() + paper.width() / 7 * 4,
-//                        static_cast<int>(paper.y() + paper.height() / 3.5),
-//                        paper.width() / 7 * 3,
-//                        paper.height() / 2);
-//        ReportElements::drawTable(painter, mdlFactors, rectTable,
-//                                  QList<int>() << 3 << 1, ReportElements::Table::tvsStretched,
-//                                  12, -1, QFont::Bold);
-    }
-
-    //! Нижний колонтитул
-    QRect rectFooter(paper.x() + paper.width() / 20,
-                     paper.y() + paper.height() - static_cast<int>(paper.height() / 30 * 1.5),
-                     paper.width() / 20 * 18,
-                     static_cast<int>(paper.height() / 30 * 1.5));
-    ReportElements::drawFooter(painter, testUid, rectFooter);
-
-    painter->end();
-
-//    DataDefines::TestInfo ti;
-//    if (DataProvider::getTestInfo(testUid, ti))
-//    {
-//        auto params = ti.params;
-//        auto cnd = params["condition"].toInt();
-//        if (cnd == 0)
-//            static_cast<StabSignalsTestWidget*>(widget)->print(printer, testUid);
-//        else
-//        if (cnd == 1)
-//            static_cast<StateChampionsWidget*>(widget)->print(printer, testUid);
-//        else
-//        if (cnd == 2)
-//            static_cast<DopuskWidget*>(widget)->print(printer, testUid);
-//        else
-//        if (cnd == 3)
-//            static_cast<IDSWidget*>(widget)->print(printer, testUid);
-//        else
-//        if (cnd == 4)
-//            static_cast<TargetWidget*>(widget)->print(printer, testUid);
-//        else
-//        if (cnd == 5)
-//            static_cast<StressStrategyWidget*>(widget)->print(printer, testUid);
-//    }
 }
 
