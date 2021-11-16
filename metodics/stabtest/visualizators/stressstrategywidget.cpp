@@ -45,3 +45,8 @@ void StressStrategyWidget::calculate(StressStrategyCalculator *calculator, const
     ui->wgtDiag->appendItem(itemZones);
 }
 
+void StressStrategyWidget::print(QPrinter *printer, const QString &testUid)
+{
+
+}
+

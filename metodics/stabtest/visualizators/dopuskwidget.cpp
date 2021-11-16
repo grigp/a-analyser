@@ -5,6 +5,7 @@
 #include "vectorfactors.h"
 #include "aanalyserapplication.h"
 #include "dataprovider.h"
+#include "reportelements.h"
 
 #include <QDebug>
 
@@ -62,6 +63,64 @@ void DopuskWidget::calculate(DopuskCalculator *calculator, const QString &testUi
                 &AAnalyserApplication::changeTestCondition,
                 this, &DopuskWidget::on_changeTestCondition);
     }
+}
+
+void DopuskWidget::print(QPrinter *printer, const QString &testUid)
+{
+    QPainter *painter = new QPainter(printer);
+    QRect paper = printer->pageRect();
+
+    qDebug() << "1";
+    painter->begin(printer);
+    qDebug() << "2";
+    //! Заголовок
+    QRect rectHeader(paper.x() + paper.width() / 20, paper.y() + paper.height() / 30, paper.width() / 20 * 18, paper.height() / 30 * 3);
+    ReportElements::drawHeader(painter, testUid, rectHeader);
+
+    if (printer->orientation() == QPrinter::Portrait)
+    {
+        //! Диаграмма Cross. Копируется из виджета
+        qDebug() << "3";
+//        ReportElements::drawWidget(painter, ui->wgtOpenEyesNorm,
+//                                   static_cast<int>(paper.width() * 0.8), static_cast<int>(paper.height() * 0.8),
+//                                   paper.x() + paper.width()/10, paper.y() + paper.height()/7);
+        qDebug() << "4";
+
+//        //! Таблица показателей. Берется модель таблицы из визуализатора
+//        QRect rectTable(paper.x() + paper.width() / 10,
+//                        paper.y() + paper.height() / 3 * 2,
+//                        paper.width() / 10 * 8,
+//                        paper.height() / 4);
+//        ReportElements::drawTable(painter, mdlFactors, rectTable,
+//                                  QList<int>() << 3 << 1, ReportElements::Table::tvsStretched,
+//                                  12, -1, QFont::Bold);
+    }
+    else
+    if (printer->orientation() == QPrinter::Landscape)
+    {
+        //! Диаграмма Cross. Копируется из виджета
+//        ReportElements::drawWidget(painter, ui->frOpenEyes,
+//                                   static_cast<int>(paper.width() * 0.6), static_cast<int>(paper.height() * 0.6),
+//                                   paper.x() + paper.width()/20, paper.y() + paper.height()/4);
+
+//        //! Таблица показателей. Берется модель таблицы из визуализатора
+//        QRect rectTable(paper.x() + paper.width() / 7 * 4,
+//                        static_cast<int>(paper.y() + paper.height() / 3.5),
+//                        paper.width() / 7 * 3,
+//                        paper.height() / 2);
+//        ReportElements::drawTable(painter, mdlFactors, rectTable,
+//                                  QList<int>() << 3 << 1, ReportElements::Table::tvsStretched,
+//                                  12, -1, QFont::Bold);
+    }
+
+    //! Нижний колонтитул
+    QRect rectFooter(paper.x() + paper.width() / 20,
+                     paper.y() + paper.height() - static_cast<int>(paper.height() / 30 * 1.5),
+                     paper.width() / 20 * 18,
+                     static_cast<int>(paper.height() / 30 * 1.5));
+    ReportElements::drawFooter(painter, testUid, rectFooter);
+
+    painter->end();
 }
 
 void DopuskWidget::on_changePersonalNorm(const QString &patientUid,

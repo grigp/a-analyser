@@ -4,6 +4,7 @@
 #include <QWidget>
 #include <QTreeView>
 #include <QStandardItemModel>
+#include <QPrinter>
 
 #include "datadefines.h"
 
@@ -22,14 +23,21 @@ class StabSignalsTestWidget : public QWidget
     Q_OBJECT
 
 public:
-    explicit StabSignalsTestWidget(QWidget *parent = 0);
-    ~StabSignalsTestWidget();
+    explicit StabSignalsTestWidget(QWidget *parent = nullptr);
+    ~StabSignalsTestWidget() override;
 
     /*!
      * \brief Метод расчета и отображения данных
      * \param testUid - uid теста
      */
     void calculate(StabSignalsTestCalculator *calculator, const QString &testUid);
+
+    /*!
+     * \brief Печать отчета о результатах теста
+     * \param printer - принтер
+     * \param testUid - uid теста
+     */
+    void print(QPrinter *printer, const QString &testUid);
 
     /*!
      * \brief Роли для модели таблицы нормативов для теста Ромберга
@@ -42,7 +50,7 @@ public:
     };
 
 protected:
-    void resizeEvent(QResizeEvent *event);
+    void resizeEvent(QResizeEvent *event) override;
 
 
 private slots:

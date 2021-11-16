@@ -33,6 +33,7 @@ public:
      */
     static void print(QPrinter *printer, const QString &testUid);
 
+
 private:
     Ui::StabTestVisualize *ui;
 

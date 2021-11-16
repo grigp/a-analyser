@@ -2,6 +2,7 @@
 #define DOPUSKWIDGET_H
 
 #include <QWidget>
+#include <QPrinter>
 
 #include "datadefines.h"
 #include "circlenormindicator.h"
@@ -39,6 +40,13 @@ public:
      * \param testUid - uid теста
      */
     void calculate(DopuskCalculator *calculator, const QString &testUid);
+
+    /*!
+     * \brief Печать отчета о результатах теста
+     * \param printer - принтер
+     * \param testUid - uid теста
+     */
+    static void print(QPrinter *printer, const QString &testUid);
 
 private slots:
     /*!

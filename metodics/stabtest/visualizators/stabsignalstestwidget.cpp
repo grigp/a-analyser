@@ -90,6 +90,11 @@ void StabSignalsTestWidget::calculate(StabSignalsTestCalculator *calculator, con
     showRombergNorms(calculator, testUid);
 }
 
+void StabSignalsTestWidget::print(QPrinter *printer, const QString &testUid)
+{
+
+}
+
 void StabSignalsTestWidget::resizeEvent(QResizeEvent *event)
 {
     resizeColumnsTable(m_mdlNorms, ui->tvRombergNorms, false);

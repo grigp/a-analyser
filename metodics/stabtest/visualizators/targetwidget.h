@@ -2,6 +2,7 @@
 #define TARGETWIDGET_H
 
 #include <QWidget>
+#include <QPrinter>
 
 namespace Ui {
 class TargetWidget;
@@ -17,14 +18,21 @@ class TargetWidget : public QWidget
     Q_OBJECT
 
 public:
-    explicit TargetWidget(QWidget *parent = 0);
-    ~TargetWidget();
+    explicit TargetWidget(QWidget *parent = nullptr);
+    ~TargetWidget() override;
 
     /*!
      * \brief Метод расчета и отображения данных
      * \param testUid - uid теста
      */
     void calculate(TargetCalculator *calculator, const QString &testUid);
+
+    /*!
+     * \brief Печать отчета о результатах теста
+     * \param printer - принтер
+     * \param testUid - uid теста
+     */
+    void print(QPrinter *printer, const QString &testUid);
 
 private:
     Ui::TargetWidget *ui;

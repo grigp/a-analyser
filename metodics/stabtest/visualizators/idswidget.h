@@ -7,6 +7,7 @@
 #include <QAudioOutput>
 #include <QTimerEvent>
 #include <QItemSelectionModel>
+#include <QPrinter>
 
 namespace Ui {
 class IDSWidget;
@@ -25,8 +26,8 @@ class IDSWidget : public QWidget
     Q_OBJECT
 
 public:
-    explicit IDSWidget(QWidget *parent = 0);
-    ~IDSWidget();
+    explicit IDSWidget(QWidget *parent = nullptr);
+    ~IDSWidget() override;
 
     ///< Дополнительные роли для хранения данных в модели
     enum
@@ -41,9 +42,16 @@ public:
      */
     void calculate(IDSCalculator *calculator, const QString &testUid);
 
+    /*!
+     * \brief Печать отчета о результатах теста
+     * \param printer - принтер
+     * \param testUid - uid теста
+     */
+    void print(QPrinter *printer, const QString &testUid);
+
 protected:
-    void timerEvent(QTimerEvent *event);
-    void resizeEvent(QResizeEvent *event);
+    void timerEvent(QTimerEvent *event) override;
+    void resizeEvent(QResizeEvent *event) override;
 
 private slots:
     void on_selectionChanged(const QItemSelection &selected, const QItemSelection &deselected);

@@ -111,6 +111,11 @@ void IDSWidget::calculate(IDSCalculator *calculator, const QString &testUid)
     });
 }
 
+void IDSWidget::print(QPrinter *printer, const QString &testUid)
+{
+
+}
+
 void IDSWidget::timerEvent(QTimerEvent *event)
 {
     QWidget::timerEvent(event);

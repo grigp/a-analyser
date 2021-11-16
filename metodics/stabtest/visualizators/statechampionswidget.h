@@ -2,6 +2,7 @@
 #define STATECHAMPIONSWIDGET_H
 
 #include <QWidget>
+#include <QPrinter>
 
 namespace Ui {
 class StateChampionsWidget;
@@ -17,14 +18,21 @@ class StateChampionsWidget : public QWidget
     Q_OBJECT
 
 public:
-    explicit StateChampionsWidget(QWidget *parent = 0);
-    ~StateChampionsWidget();
+    explicit StateChampionsWidget(QWidget *parent = nullptr);
+    ~StateChampionsWidget() override;
 
     /*!
      * \brief Метод расчета и отображения данных
      * \param testUid - uid теста
      */
     void calculate(StateChampionsTestCalculator *calculator, const QString &testUid);
+
+    /*!
+     * \brief Печать отчета о результатах теста
+     * \param printer - принтер
+     * \param testUid - uid теста
+     */
+    void print(QPrinter *printer, const QString &testUid);
 
 private:
     Ui::StateChampionsWidget *ui;

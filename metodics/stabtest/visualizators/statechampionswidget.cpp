@@ -44,3 +44,8 @@ void StateChampionsWidget::calculate(StateChampionsTestCalculator *calculator,
     ui->lblKFRProbe3->setText(QString::number(calculator->targetKFR(), 'f', fmtKFR));
     ui->lblRombKoefValue->setText(QString::number(calculator->rombKoef(), 'f', fmtRK));
 }
+
+void StateChampionsWidget::print(QPrinter *printer, const QString &testUid)
+{
+
+}

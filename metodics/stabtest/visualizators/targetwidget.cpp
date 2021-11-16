@@ -8,6 +8,7 @@
 #include "areaskg.h"
 #include "dynamicdiagram.h"
 #include "testresultdata.h"
+#include "reportelements.h"
 
 #include <QTimer>
 #include <QDebug>
@@ -33,6 +34,36 @@ void TargetWidget::calculate(TargetCalculator *calculator, const QString &testUi
 
     showSKG(calculator, testUid);
     showDiagram(calculator, testUid);
+}
+
+void TargetWidget::print(QPrinter *printer, const QString &testUid)
+{
+    QPainter *painter = new QPainter(printer);
+    QRect paper = printer->pageRect();
+
+    qDebug() << "1";
+    painter->begin(printer);
+    qDebug() << "2";
+    //! Заголовок
+    QRect rectHeader(paper.x() + paper.width() / 20, paper.y() + paper.height() / 30, paper.width() / 20 * 18, paper.height() / 30 * 3);
+    ReportElements::drawHeader(painter, testUid, rectHeader);
+
+    if (printer->orientation() == QPrinter::Portrait)
+    {
+    }
+    else
+    if (printer->orientation() == QPrinter::Landscape)
+    {
+    }
+
+    //! Нижний колонтитул
+    QRect rectFooter(paper.x() + paper.width() / 20,
+                     paper.y() + paper.height() - static_cast<int>(paper.height() / 30 * 1.5),
+                     paper.width() / 20 * 18,
+                     static_cast<int>(paper.height() / 30 * 1.5));
+    ReportElements::drawFooter(painter, testUid, rectFooter);
+
+    painter->end();
 }
 
 void TargetWidget::showSKG(TargetCalculator *calculator, const QString &testUid) const
