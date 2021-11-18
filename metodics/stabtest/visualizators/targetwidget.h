@@ -32,7 +32,7 @@ public:
      * \param printer - принтер
      * \param testUid - uid теста
      */
-    void print(QPrinter *printer, const QString &testUid);
+    static void print(QPrinter *printer, const QString &testUid);
 
 private:
     Ui::TargetWidget *ui;
