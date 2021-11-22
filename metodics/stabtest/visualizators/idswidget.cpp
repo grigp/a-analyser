@@ -43,10 +43,6 @@ IDSWidget::IDSWidget(QWidget *parent) :
     restoreSplitterPosition();
     ui->sldVolume->setValue(m_volume);
     actionsEnabledOnPlay(false);
-    QTimer::singleShot(100, [=]
-    {
-        setSKGSize();
-    });
 }
 
 IDSWidget::~IDSWidget()
@@ -126,6 +122,11 @@ void IDSWidget::calculate(IDSCalculator *calculator, const QString &testUid)
     mdlTable = &m_mdlTable;
     wgtSKG = ui->wgtSKG;
     wgtFDS = ui->wgtFDS;
+
+    QTimer::singleShot(100, [=]
+    {
+        setSKGSize();
+    });
 }
 
 void IDSWidget::print(QPrinter *printer, const QString &testUid)
