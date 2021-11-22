@@ -94,6 +94,8 @@ private:
 
     void resizeColumns();
 
+    void setSKGSize();
+
     QStandardItemModel m_mdlTable;
 
     int m_tmStopSound {-1};

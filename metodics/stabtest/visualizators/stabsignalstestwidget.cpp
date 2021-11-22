@@ -16,6 +16,7 @@
 #include "ratioprobesfactors.h"
 #include "stabtesttemplate.h"
 #include "rombergnormvaluedelegate.h"
+#include "reportelements.h"
 
 #include <QTimer>
 #include <QJsonArray>
@@ -92,7 +93,65 @@ void StabSignalsTestWidget::calculate(StabSignalsTestCalculator *calculator, con
 
 void StabSignalsTestWidget::print(QPrinter *printer, const QString &testUid)
 {
+    QPainter *painter = new QPainter(printer);
+    QRect paper = printer->pageRect();
 
+    painter->begin(printer);
+    //! Заголовок
+    QRect rectHeader(paper.x() + paper.width() / 20, paper.y() + paper.height() / 30, paper.width() / 20 * 18, paper.height() / 30 * 3);
+    ReportElements::drawHeader(painter, testUid, rectHeader);
+
+    if (printer->orientation() == QPrinter::Portrait)
+    {
+//        painter->setFont(QFont("Sans", 10, QFont::Bold, false));
+//        painter->drawText(paper.x() + paper.width() / 12,
+//                          static_cast<int>(paper.y() + paper.height() / 10 * 1.6),
+//                          tr("Качество выполнения задания"));
+//        painter->drawText(paper.x() + paper.width() / 12,
+//                          static_cast<int>(paper.y() + paper.height() / 10 * 1.9),
+//                          sTarget);
+//        painter->drawText(paper.x() + paper.width() / 12,
+//                          static_cast<int>(paper.y() + paper.height() / 10 * 2.2),
+//                          sFiveZones);
+//        painter->drawText(paper.x() + paper.width() / 12,
+//                          static_cast<int>(paper.y() + paper.height() / 10 * 2.5),
+//                          sStressStrategyResume);
+
+//        ReportElements::drawWidget(painter, wgtDiag,
+//                                   static_cast<int>(paper.width() * 0.85), static_cast<int>(paper.height() * 0.85),
+//                                   paper.x() + paper.width() / 12, paper.y() + paper.height() / 10 * 3);
+    }
+    else
+    if (printer->orientation() == QPrinter::Landscape)
+    {
+//        painter->setFont(QFont("Sans", 10, QFont::Bold, false));
+//        painter->drawText(paper.x() + paper.width() / 12,
+//                          static_cast<int>(paper.y() + paper.height() / 10 * 1.7),
+//                          tr("Качество выполнения задания"));
+//        painter->drawText(paper.x() + paper.width() / 12,
+//                          static_cast<int>(paper.y() + paper.height() / 10 * 2.0),
+//                          sTarget);
+//        painter->drawText(paper.x() + paper.width() / 12,
+//                          static_cast<int>(paper.y() + paper.height() / 10 * 2.3),
+//                          sFiveZones);
+//        painter->setFont(QFont("Sans", 14, QFont::Bold, false));
+//        painter->drawText(paper.x() + paper.width() / 12,
+//                          static_cast<int>(paper.y() + paper.height() / 10 * 2.8),
+//                          sStressStrategyResume);
+
+//        ReportElements::drawWidget(painter, wgtDiag,
+//                                   static_cast<int>(paper.width() * 0.6), static_cast<int>(paper.height() * 0.6),
+//                                   paper.x() + paper.width() / 10 * 2, static_cast<int>(paper.y() + paper.height() / 10 * 3.2));
+    }
+
+    //! Нижний колонтитул
+    QRect rectFooter(paper.x() + paper.width() / 20,
+                     paper.y() + paper.height() - static_cast<int>(paper.height() / 30 * 1.5),
+                     paper.width() / 20 * 18,
+                     static_cast<int>(paper.height() / 30 * 1.5));
+    ReportElements::drawFooter(painter, testUid, rectFooter);
+
+    painter->end();
 }
 
 void StabSignalsTestWidget::resizeEvent(QResizeEvent *event)

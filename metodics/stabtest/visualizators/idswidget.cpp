@@ -13,6 +13,7 @@
 #include "idscalculator.h"
 #include "idsfactors.h"
 #include "anysignal.h"
+#include "reportelements.h"
 
 #include <QPainter>
 #include <QPushButton>
@@ -25,6 +26,14 @@
 #include <QDebug>
 #include <math.h>
 
+namespace
+{
+QStandardItemModel *mdlTable {nullptr};
+AreaSKG *wgtSKG {nullptr};
+AreaGraph *wgtFDS {nullptr};
+
+}
+
 IDSWidget::IDSWidget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::IDSWidget)
@@ -34,6 +43,10 @@ IDSWidget::IDSWidget(QWidget *parent) :
     restoreSplitterPosition();
     ui->sldVolume->setValue(m_volume);
     actionsEnabledOnPlay(false);
+    QTimer::singleShot(100, [=]
+    {
+        setSKGSize();
+    });
 }
 
 IDSWidget::~IDSWidget()
@@ -109,11 +122,76 @@ void IDSWidget::calculate(IDSCalculator *calculator, const QString &testUid)
     {
         resizeColumns();
     });
+
+    mdlTable = &m_mdlTable;
+    wgtSKG = ui->wgtSKG;
+    wgtFDS = ui->wgtFDS;
 }
 
 void IDSWidget::print(QPrinter *printer, const QString &testUid)
 {
+    QPainter *painter = new QPainter(printer);
+    QRect paper = printer->pageRect();
 
+    painter->begin(printer);
+    //! Заголовок
+    QRect rectHeader(paper.x() + paper.width() / 20, paper.y() + paper.height() / 30, paper.width() / 20 * 18, paper.height() / 30 * 3);
+    ReportElements::drawHeader(painter, testUid, rectHeader);
+
+    QList<int> colW;
+    colW << 2;
+    for (int i = 1; i < mdlTable->columnCount(); ++i)
+        colW << 1;
+
+    if (printer->orientation() == QPrinter::Portrait)
+    {
+
+        //! Таблица показателей. Берется модель таблицы из визуализатора
+        QRect rectTable(paper.x() + paper.width() / 10,
+                        paper.y() + paper.height() / 6,
+                        paper.width() / 10 * 8,
+                        paper.height() / 5);
+        ReportElements::drawTable(painter, mdlTable, rectTable, colW, ReportElements::Table::tvsStretched, 11, -1, QFont::Bold);
+
+        if (mdlTable->columnCount() <= 2)
+        {
+            ReportElements::drawWidget(painter, wgtSKG,
+                                       static_cast<int>(paper.width() * 0.35), static_cast<int>(paper.height() * 0.35),
+                                       paper.x() + paper.width() / 12, paper.y() + paper.height() / 10 * 4);
+            ReportElements::drawWidget(painter, wgtFDS,
+                                       static_cast<int>(paper.width() * 0.55), static_cast<int>(paper.height() * 0.55),
+                                       paper.x() + paper.width() / 12 * 5, paper.y() + paper.height() / 10 * 4);
+        }
+    }
+    else
+    if (printer->orientation() == QPrinter::Landscape)
+    {
+        //! Таблица показателей. Берется модель таблицы из визуализатора
+        QRect rectTable(paper.x() + paper.width() / 10,
+                        paper.y() + paper.height() / 6,
+                        paper.width() / 10 * 8,
+                        paper.height() / 5);
+        ReportElements::drawTable(painter, mdlTable, rectTable, colW, ReportElements::Table::tvsStretched, 11, -1, QFont::Bold);
+
+        if (mdlTable->columnCount() <= 2)
+        {
+            ReportElements::drawWidget(painter, wgtSKG,
+                                       static_cast<int>(paper.width() * 0.55), static_cast<int>(paper.height() * 0.55),
+                                       paper.x() + paper.width() / 12, paper.y() + paper.height() / 10 * 4);
+            ReportElements::drawWidget(painter, wgtFDS,
+                                       static_cast<int>(paper.width() * 0.55), static_cast<int>(paper.height() * 0.55),
+                                       paper.x() + paper.width() / 12 * 5, paper.y() + paper.height() / 10 * 4);
+        }
+    }
+
+    //! Нижний колонтитул
+    QRect rectFooter(paper.x() + paper.width() / 20,
+                     paper.y() + paper.height() - static_cast<int>(paper.height() / 30 * 1.5),
+                     paper.width() / 20 * 18,
+                     static_cast<int>(paper.height() / 30 * 1.5));
+    ReportElements::drawFooter(painter, testUid, rectFooter);
+
+    painter->end();
 }
 
 void IDSWidget::timerEvent(QTimerEvent *event)
@@ -173,6 +251,7 @@ void IDSWidget::splitterMoved(int pos, int index)
     Q_UNUSED(pos);
     Q_UNUSED(index);
     saveSplitterPosition();
+    setSKGSize();
 }
 
 void IDSWidget::tableClicked(const QModelIndex &index)
@@ -438,6 +517,14 @@ void IDSWidget::resizeColumns()
     int w = (ui->tvFactors->geometry().width() - ui->tvFactors->header()->sectionSize(0)) / (m_mdlTable.columnCount() - 1);
     for (int i = 1; i < m_mdlTable.columnCount(); ++i)
         ui->tvFactors->header()->resizeSection(i, w);
+}
+
+void IDSWidget::setSKGSize()
+{
+    auto g = wgtSKG->geometry();
+    g.setHeight(g.width());
+    g.setY(ui->wgtSKGContainer->height() / 2 - g.height() / 2);
+    wgtSKG->setGeometry(g);
 }
 
 
