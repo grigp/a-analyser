@@ -65,7 +65,6 @@ StabSignalsTestWidget::StabSignalsTestWidget(QWidget *parent) :
     auto val = SettingsProvider::valueFromRegAppCopy("StabSignalsTestWidget", "CurrentPage").toInt();
     ui->tabWidget->setCurrentIndex(val);
 
-    restoreSplitterPosition();
     ui->sbSignal->setEnabled(false);
     ui->btnHScalePlus->setEnabled(false);
     ui->btnHScaleMinus->setEnabled(false);
@@ -89,6 +88,7 @@ void StabSignalsTestWidget::calculate(StabSignalsTestCalculator *calculator, con
     showSKG(calculator, testUid);
     showRationalTable(calculator, testUid);
     showRombergNorms(calculator, testUid);
+    restoreSplitterPosition();
 }
 
 void StabSignalsTestWidget::print(QPrinter *printer, const QString &testUid)
@@ -571,8 +571,6 @@ int StabSignalsTestWidget::factorCount(StabSignalsTestCalculator *calculator,
     case fgiVector:
         n = calculator->vectorFactors(0)->size();
         break;
-    default:
-        break;
     }
     return n;
 }
@@ -589,8 +587,6 @@ QString StabSignalsTestWidget::factorUid(StabSignalsTestCalculator *calculator,
     case fgiVector:
         fUid = calculator->vectorFactors(0)->factorUid(factorNum);
         break;
-    default:
-        break;
     }
     return fUid;
 }
@@ -606,8 +602,6 @@ double StabSignalsTestWidget::factorValue(StabSignalsTestCalculator *calculator,
         break;
     case fgiVector:
         val = calculator->vectorFactors(probeNum)->factorValue(factorNum);
-        break;
-    default:
         break;
     }
     return val;
@@ -675,13 +669,15 @@ void StabSignalsTestWidget::showSKG(StabSignalsTestCalculator *calculator, const
 void StabSignalsTestWidget::saveSplitterPosition()
 {
 //    SettingsProvider::setValueToRegAppCopy("StabSignalsTestWidget", "SplitterPosition", ui->splitter->saveState());
-    SettingsProvider::setValueToRegAppCopy("StabSignalsTestWidget", "AreaSKGSplitterPosition", ui->splAreaSKG->saveState());
+    QString sSecName = "StabSignalsTestWidget_" + QString::number(m_mdlTable.columnCount());
+    SettingsProvider::setValueToRegAppCopy(sSecName, "AreaSKGSplitterPosition", ui->splAreaSKG->saveState());
 }
 
 void StabSignalsTestWidget::restoreSplitterPosition()
 {
 //    auto val = SettingsProvider::valueFromRegAppCopy("StabSignalsTestWidget", "SplitterPosition").toByteArray();
-    auto val = SettingsProvider::valueFromRegAppCopy("StabSignalsTestWidget", "AreaSKGSplitterPosition").toByteArray();
+    QString sSecName = "StabSignalsTestWidget_" + QString::number(m_mdlTable.columnCount());
+    auto val = SettingsProvider::valueFromRegAppCopy(sSecName, "AreaSKGSplitterPosition").toByteArray();
     ui->splAreaSKG->restoreState(val);
 }
 
