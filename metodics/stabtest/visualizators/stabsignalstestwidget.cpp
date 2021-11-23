@@ -54,6 +54,9 @@ static QMap<QString, NormRomberg> NormsRombergCloseEyes {
 };
 
 QStandardItemModel *mdlTable {nullptr};
+QStandardItemModel *mdlRF {nullptr};
+QStandardItemModel *mdlNorms {nullptr};
+QTreeView *tvRombergNorms {nullptr};
 QList<AreaSKG*> areasesSKG;
 AreaGraph *wgtGraph;
 }
@@ -108,6 +111,9 @@ void StabSignalsTestWidget::print(QPrinter *printer, const QString &testUid)
     {
         if (mdlTable->columnCount() - 1 == 1)
             printOnePortrait(printer, painter, testUid, paper);
+        else
+        if (mdlTable->columnCount() - 1 == 2)
+            printTwoPortrait(printer, painter, testUid, paper);
 
     }
     else
@@ -115,6 +121,9 @@ void StabSignalsTestWidget::print(QPrinter *printer, const QString &testUid)
     {
         if (mdlTable->columnCount() - 1 == 1)
             printOneLandscape(printer, painter, testUid, paper);
+        else
+        if (mdlTable->columnCount() - 1 == 2)
+            printTwoLandscape(printer, painter, testUid, paper);
     }
 
     //! Нижний колонтитул
@@ -315,6 +324,8 @@ void StabSignalsTestWidget::showRationalTable(StabSignalsTestCalculator *calcula
         {
             resizeColumnsTable(m_mdlRF, ui->tvRationalFactors, true);
         });
+
+        mdlRF = static_cast<QStandardItemModel*>(ui->tvRationalFactors->model());
     }
 }
 
@@ -377,8 +388,11 @@ void StabSignalsTestWidget::showRombergNorms(StabSignalsTestCalculator *calculat
             {
                 resizeColumnsTable(m_mdlNorms, ui->tvRombergNorms, false);
             });
+
+            mdlNorms = static_cast<QStandardItemModel*>(ui->tvRombergNorms->model());
         }
     }
+    tvRombergNorms = ui->tvRombergNorms;
 }
 
 DataDefines::NormValue StabSignalsTestWidget::getRombergNorm(const int probeNum,
@@ -730,5 +744,111 @@ void StabSignalsTestWidget::printOneLandscape(QPrinter *printer, QPainter *paint
                                static_cast<int>(paper.width() * 0.85), static_cast<int>(paper.height() * 0.85),
                                paper.x() + paper.width() / 12,
                                static_cast<int>(paper.y() + paper.height() / 10));
+}
+
+void StabSignalsTestWidget::printTwoPortrait(QPrinter *printer, QPainter *painter, const QString &testUid, const QRect paper)
+{
+    if (areasesSKG.size() == 2)
+    {
+        ReportElements::drawWidget(painter, areasesSKG.at(0),
+                                   static_cast<int>(paper.width() * 0.45), static_cast<int>(paper.height() * 0.45),
+                                   paper.x() + paper.width() / 4 - static_cast<int>(paper.width() * 0.2),
+                                   static_cast<int>(paper.y() + paper.height() / 10 * 1.5));
+        ReportElements::drawWidget(painter, areasesSKG.at(1),
+                                   static_cast<int>(paper.width() * 0.45), static_cast<int>(paper.height() * 0.45),
+                                   paper.x() + paper.width() / 4 * 3 - static_cast<int>(paper.width() * 0.2),
+                                   static_cast<int>(paper.y() + paper.height() / 10 * 1.5));
+
+        QRect rectTableRF(static_cast<int>(paper.x() + paper.width() / 10),
+                        static_cast<int>(paper.y() + paper.height() / 10 * 4.5),
+                        paper.width() / 10 * 8,
+                        static_cast<int>(paper.height() * 0.15));
+        ReportElements::drawTable(painter, mdlRF, rectTableRF, QList<int>() << 5 << 2,
+                                  ReportElements::Table::tvsStretched, 10, -1, QFont::Bold);
+
+        DataDefines::TestInfo ti;
+        if (DataProvider::getTestInfo(testUid, ti))
+        {
+            bool isRomb = isRombergTest(ti);
+            if (isRomb)
+            {
+                ReportElements::drawWidget(painter, tvRombergNorms,
+                                           static_cast<int>(paper.width() * 0.8), static_cast<int>(paper.height() * 0.25),
+                                           paper.x() + paper.width() / 10,
+                                           static_cast<int>(paper.y() + paper.height() / 10 * 6.5));
+            }
+        }
+
+        //! Нижний колонтитул
+        ReportElements::drawFooter(painter, testUid, rectFooter(paper));
+
+        printer->newPage();
+
+        ReportElements::drawWidget(painter, wgtGraph,
+                                   static_cast<int>(paper.width() * 0.85), static_cast<int>(paper.height() * 0.85),
+                                   paper.x() + paper.width() / 12,
+                                   static_cast<int>(paper.y() + paper.height() / 10));
+        QRect rectTable(paper.x() + paper.width() / 10,
+                        static_cast<int>(paper.y() + paper.height() / 10 * 5.5),
+                        paper.width() / 10 * 8,
+                        paper.height() / 2);
+        ReportElements::drawTable(painter, mdlTable, rectTable, QList<int>() << 3 << 1,
+                                  ReportElements::Table::tvsCompressed, 10, -1, QFont::Bold);
+    }
+}
+
+void StabSignalsTestWidget::printTwoLandscape(QPrinter *printer, QPainter *painter, const QString &testUid, const QRect paper)
+{
+    if (areasesSKG.size() == 2)
+    {
+        ReportElements::drawWidget(painter, areasesSKG.at(0),
+                                   static_cast<int>(paper.width() * 0.45), static_cast<int>(paper.height() * 0.45),
+                                   paper.x() + paper.width() / 4 - static_cast<int>(paper.width() * 0.2),
+                                   static_cast<int>(paper.y() + paper.height() / 10 * 1.5));
+        ReportElements::drawWidget(painter, areasesSKG.at(1),
+                                   static_cast<int>(paper.width() * 0.45), static_cast<int>(paper.height() * 0.45),
+                                   paper.x() + paper.width() / 4 * 3 - static_cast<int>(paper.width() * 0.2),
+                                   static_cast<int>(paper.y() + paper.height() / 10 * 1.5));
+
+        QRect rectTableRF(static_cast<int>(paper.x() + paper.width() / 12),
+                        static_cast<int>(paper.y() + paper.height() / 10 * 7),
+                        static_cast<int>(paper.width() / 10 * 4),
+                        static_cast<int>(paper.height() * 0.15));
+        ReportElements::drawTable(painter, mdlRF, rectTableRF, QList<int>() << 5 << 3,
+                                  ReportElements::Table::tvsStretched, 10, -1, QFont::Bold);
+
+        DataDefines::TestInfo ti;
+        if (DataProvider::getTestInfo(testUid, ti))
+        {
+            bool isRomb = isRombergTest(ti);
+            if (isRomb)
+            {
+                ReportElements::drawWidget(painter, tvRombergNorms,
+                                           static_cast<int>(paper.width() * 0.45), static_cast<int>(paper.height() * 0.25),
+                                           static_cast<int>(paper.x() + paper.width() / 10 * 5),
+                                           static_cast<int>(paper.y() + paper.height() / 10 * 7));
+            }
+        }
+
+        //! Нижний колонтитул
+        ReportElements::drawFooter(painter, testUid, rectFooter(paper));
+        printer->newPage();
+
+        ReportElements::drawWidget(painter, wgtGraph,
+                                   static_cast<int>(paper.width() * 0.85), static_cast<int>(paper.height() * 0.85),
+                                   paper.x() + paper.width() / 12,
+                                   static_cast<int>(paper.y() + paper.height() / 10));
+
+        //! Нижний колонтитул
+        ReportElements::drawFooter(painter, testUid, rectFooter(paper));
+        printer->newPage();
+
+        QRect rectTable(paper.x() + paper.width() / 10,
+                        static_cast<int>(paper.y() + paper.height() / 10),
+                        paper.width() / 10 * 8,
+                        paper.height() / 2);
+        ReportElements::drawTable(painter, mdlTable, rectTable, QList<int>() << 3 << 1,
+                                  ReportElements::Table::tvsCompressed, 10, -1, QFont::Bold);
+    }
 }
 

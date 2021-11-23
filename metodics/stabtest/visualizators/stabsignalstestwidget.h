@@ -90,7 +90,7 @@ private:
 
     void appendColumnReadOnly(QStandardItemModel *mdl, QList<QStandardItem*> list);
 
-    bool isRombergTest(DataDefines::TestInfo ti);
+    static bool isRombergTest(DataDefines::TestInfo ti);
 
     QString getKoefRombResume(const double value, const int format) const;
 
@@ -98,7 +98,7 @@ private:
 
     QString getDeviationResume(const double value) const;
 
-    QList<int> getProbesKind(const QJsonObject params);
+    static QList<int> getProbesKind(const QJsonObject params);
 
     void addFactorsFromMultifactor(StabSignalsTestCalculator *calculator, const FactorGroupId fgi);
     int factorCount(StabSignalsTestCalculator *calculator, const FactorGroupId fgi) const;
@@ -130,6 +130,14 @@ private:
      * \brief Печать отчета одна проба, ландшафтная ориентация
      */
     static void printOneLandscape(QPrinter *printer, QPainter *painter, const QString &testUid, const QRect paper);
+    /*!
+     * \brief Печать отчета две пробы, портретная ориентация
+     */
+    static void printTwoPortrait(QPrinter *printer, QPainter *painter, const QString &testUid, const QRect paper);
+    /*!
+     * \brief Печать отчета две пробы, ландшафтная ориентация
+     */
+    static void printTwoLandscape(QPrinter *printer, QPainter *painter, const QString &testUid, const QRect paper);
 
     Ui::StabSignalsTestWidget *ui;
     QStandardItemModel m_mdlTable;
