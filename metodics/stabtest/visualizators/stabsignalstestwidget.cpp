@@ -53,6 +53,9 @@ static QMap<QString, NormRomberg> NormsRombergCloseEyes {
   , std::pair<QString, NormRomberg> (ClassicFactorsDefines::SquareUid, NormRomberg(1119, 166.9, 585, 2314))
 };
 
+QStandardItemModel *mdlTable {nullptr};
+QList<AreaSKG*> areasesSKG;
+AreaGraph *wgtGraph;
 }
 
 StabSignalsTestWidget::StabSignalsTestWidget(QWidget *parent) :
@@ -103,53 +106,19 @@ void StabSignalsTestWidget::print(QPrinter *printer, const QString &testUid)
 
     if (printer->orientation() == QPrinter::Portrait)
     {
-//        painter->setFont(QFont("Sans", 10, QFont::Bold, false));
-//        painter->drawText(paper.x() + paper.width() / 12,
-//                          static_cast<int>(paper.y() + paper.height() / 10 * 1.6),
-//                          tr("Качество выполнения задания"));
-//        painter->drawText(paper.x() + paper.width() / 12,
-//                          static_cast<int>(paper.y() + paper.height() / 10 * 1.9),
-//                          sTarget);
-//        painter->drawText(paper.x() + paper.width() / 12,
-//                          static_cast<int>(paper.y() + paper.height() / 10 * 2.2),
-//                          sFiveZones);
-//        painter->drawText(paper.x() + paper.width() / 12,
-//                          static_cast<int>(paper.y() + paper.height() / 10 * 2.5),
-//                          sStressStrategyResume);
+        if (mdlTable->columnCount() - 1 == 1)
+            printOnePortrait(printer, painter, testUid, paper);
 
-//        ReportElements::drawWidget(painter, wgtDiag,
-//                                   static_cast<int>(paper.width() * 0.85), static_cast<int>(paper.height() * 0.85),
-//                                   paper.x() + paper.width() / 12, paper.y() + paper.height() / 10 * 3);
     }
     else
     if (printer->orientation() == QPrinter::Landscape)
     {
-//        painter->setFont(QFont("Sans", 10, QFont::Bold, false));
-//        painter->drawText(paper.x() + paper.width() / 12,
-//                          static_cast<int>(paper.y() + paper.height() / 10 * 1.7),
-//                          tr("Качество выполнения задания"));
-//        painter->drawText(paper.x() + paper.width() / 12,
-//                          static_cast<int>(paper.y() + paper.height() / 10 * 2.0),
-//                          sTarget);
-//        painter->drawText(paper.x() + paper.width() / 12,
-//                          static_cast<int>(paper.y() + paper.height() / 10 * 2.3),
-//                          sFiveZones);
-//        painter->setFont(QFont("Sans", 14, QFont::Bold, false));
-//        painter->drawText(paper.x() + paper.width() / 12,
-//                          static_cast<int>(paper.y() + paper.height() / 10 * 2.8),
-//                          sStressStrategyResume);
-
-//        ReportElements::drawWidget(painter, wgtDiag,
-//                                   static_cast<int>(paper.width() * 0.6), static_cast<int>(paper.height() * 0.6),
-//                                   paper.x() + paper.width() / 10 * 2, static_cast<int>(paper.y() + paper.height() / 10 * 3.2));
+        if (mdlTable->columnCount() - 1 == 1)
+            printOneLandscape(printer, painter, testUid, paper);
     }
 
     //! Нижний колонтитул
-    QRect rectFooter(paper.x() + paper.width() / 20,
-                     paper.y() + paper.height() - static_cast<int>(paper.height() / 30 * 1.5),
-                     paper.width() / 20 * 18,
-                     static_cast<int>(paper.height() / 30 * 1.5));
-    ReportElements::drawFooter(painter, testUid, rectFooter);
+    ReportElements::drawFooter(painter, testUid, rectFooter(paper));
 
     painter->end();
 }
@@ -268,6 +237,8 @@ void StabSignalsTestWidget::showTable(StabSignalsTestCalculator *calculator, con
     ui->tvFactors->setModel(&m_mdlTable);
     for (int i = 0; i < m_mdlTable.columnCount(); ++i)
         ui->tvFactors->resizeColumnToContents(i);
+
+    mdlTable = &m_mdlTable;
 }
 
 void StabSignalsTestWidget::showRationalTable(StabSignalsTestCalculator *calculator, const QString &testUid)
@@ -610,11 +581,12 @@ double StabSignalsTestWidget::factorValue(StabSignalsTestCalculator *calculator,
 void StabSignalsTestWidget::showSKG(StabSignalsTestCalculator *calculator, const QString &testUid)
 {
     Q_UNUSED(calculator);
+    areasesSKG.clear();
+
     DataDefines::TestInfo ti;
     if (DataProvider::getTestInfo(testUid, ti))
     {
         double absMax = 0;
-        QList<AreaSKG*> skgList;
         m_trd->openTest(testUid);
         Q_ASSERT(ti.probes.size() == m_trd->probesCount());
         for (int i = 0; i < ti.probes.size(); ++i)
@@ -624,7 +596,7 @@ void StabSignalsTestWidget::showSKG(StabSignalsTestCalculator *calculator, const
             {
                 auto* probe = m_trd->probe(i);
                 auto *skg = new AreaSKG(ui->wgtSKGAreases);
-                skgList << skg;
+                areasesSKG << skg;
                 skg->setVisibleMarker(false);
 
                 auto *sig = probe->signal(ChannelsDefines::chanStab);
@@ -658,12 +630,14 @@ void StabSignalsTestWidget::showSKG(StabSignalsTestCalculator *calculator, const
                 diap = diap * 2;
                 ++step;
             }
-            foreach (auto* skg, skgList)
+            foreach (auto* skg, areasesSKG)
                 skg->setDiap(diap);
             ui->wgtGraph->setDiapazone(-diap, diap);
             ui->cbScale->setCurrentIndex(7 - step);
         });
     }
+
+    wgtGraph = ui->wgtGraph;
 }
 
 void StabSignalsTestWidget::saveSplitterPosition()
@@ -692,5 +666,69 @@ void StabSignalsTestWidget::resizeColumnsTable(QStandardItemModel *mdl, QTreeVie
             else
                 tv->header()->resizeSection(i, w);
     }
+}
+
+QRect StabSignalsTestWidget::rectFooter(const QRect &paper)
+{
+    return  QRect(paper.x() + paper.width() / 20,
+                  paper.y() + paper.height() - static_cast<int>(paper.height() / 30 * 1.5),
+                  paper.width() / 20 * 18,
+                  static_cast<int>(paper.height() / 30 * 1.5));
+}
+
+void StabSignalsTestWidget::printOnePortrait(QPrinter *printer, QPainter *painter, const QString &testUid, const QRect paper)
+{
+    Q_UNUSED(testUid);
+
+    if (areasesSKG.size() == 1)
+        ReportElements::drawWidget(painter, areasesSKG.at(0),
+                                   static_cast<int>(paper.width() * 0.6), static_cast<int>(paper.height() * 0.6),
+                                   paper.x() + paper.width() / 2 - static_cast<int>(paper.width() * 0.3),
+                                   static_cast<int>(paper.y() + paper.height() / 10 * 1.5));
+
+    QRect rectTable(paper.x() + paper.width() / 10,
+                    static_cast<int>(paper.y() + paper.height() / 10 * 5.5),
+                    paper.width() / 10 * 8,
+                    paper.height() / 2);
+    ReportElements::drawTable(painter, mdlTable, rectTable, QList<int>() << 3 << 1,
+                              ReportElements::Table::tvsCompressed, 10, -1, QFont::Bold);
+
+    //! Нижний колонтитул
+    ReportElements::drawFooter(painter, testUid, rectFooter(paper));
+
+    printer->newPage();
+
+    ReportElements::drawWidget(painter, wgtGraph,
+                               static_cast<int>(paper.width() * 0.85), static_cast<int>(paper.height() * 0.85),
+                               paper.x() + paper.width() / 12,
+                               static_cast<int>(paper.y() + paper.height() / 10));
+}
+
+void StabSignalsTestWidget::printOneLandscape(QPrinter *printer, QPainter *painter, const QString &testUid, const QRect paper)
+{
+    Q_UNUSED(testUid);
+
+    if (areasesSKG.size() == 1)
+        ReportElements::drawWidget(painter, areasesSKG.at(0),
+                                   static_cast<int>(paper.width() * 0.45), static_cast<int>(paper.height() * 0.45),
+                                   paper.x() + paper.width() / 15,
+                                   static_cast<int>(paper.y() + paper.height() / 10 * 3));
+
+    QRect rectTable(static_cast<int>(paper.x() + paper.width() / 10 * 4.5),
+                    static_cast<int>(paper.y() + paper.height() / 10 * 2),
+                    paper.width() / 10 * 5,
+                    static_cast<int>(paper.height() * 0.7));
+    ReportElements::drawTable(painter, mdlTable, rectTable, QList<int>() << 5 << 2,
+                              ReportElements::Table::tvsStretched, 9, -1, QFont::Bold);
+
+    //! Нижний колонтитул
+    ReportElements::drawFooter(painter, testUid, rectFooter(paper));
+
+    printer->newPage();
+
+    ReportElements::drawWidget(painter, wgtGraph,
+                               static_cast<int>(paper.width() * 0.85), static_cast<int>(paper.height() * 0.85),
+                               paper.x() + paper.width() / 12,
+                               static_cast<int>(paper.y() + paper.height() / 10));
 }
 

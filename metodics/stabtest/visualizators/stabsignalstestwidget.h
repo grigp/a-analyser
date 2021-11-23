@@ -37,7 +37,7 @@ public:
      * \param printer - принтер
      * \param testUid - uid теста
      */
-    void print(QPrinter *printer, const QString &testUid);
+    static void print(QPrinter *printer, const QString &testUid);
 
     /*!
      * \brief Роли для модели таблицы нормативов для теста Ромберга
@@ -112,6 +112,24 @@ private:
     void restoreSplitterPosition();
 
     void resizeColumnsTable(QStandardItemModel *mdl, QTreeView* tv, const bool toContens);
+
+    /*!
+     * \brief Возвращает прямоугольник для футера страницы
+     */
+    static QRect rectFooter(const QRect &paper);
+
+    /*!
+     * \brief Печать отчета одна проба, портретная ориентация
+     * \param printer - принтер
+     * \param painter - указатель на рисователь
+     * \param testUid - uid теста
+     * \param paper - страница
+     */
+    static void printOnePortrait(QPrinter *printer, QPainter *painter, const QString &testUid, const QRect paper);
+    /*!
+     * \brief Печать отчета одна проба, ландшафтная ориентация
+     */
+    static void printOneLandscape(QPrinter *printer, QPainter *painter, const QString &testUid, const QRect paper);
 
     Ui::StabSignalsTestWidget *ui;
     QStandardItemModel m_mdlTable;
