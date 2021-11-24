@@ -138,6 +138,14 @@ private:
      * \brief Печать отчета две пробы, ландшафтная ориентация
      */
     static void printTwoLandscape(QPrinter *printer, QPainter *painter, const QString &testUid, const QRect paper);
+    /*!
+     * \brief Печать отчета три пробы, портретная ориентация
+     */
+    static void printThreePortrait(QPrinter *printer, QPainter *painter, const QString &testUid, const QRect paper);
+    /*!
+     * \brief Печать отчета три пробы, ландшафтная ориентация
+     */
+    static void printThreeLandscape(QPrinter *printer, QPainter *painter, const QString &testUid, const QRect paper);
 
     Ui::StabSignalsTestWidget *ui;
     QStandardItemModel m_mdlTable;
