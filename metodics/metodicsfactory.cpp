@@ -13,6 +13,7 @@
 #include "droptesttemplate.h"
 #include "crosstemplate.h"
 #include "stepoffsettemplate.h"
+#include "stepdeviationtemplate.h"
 #include "evolventatemplate.h"
 #include "octaedrontemplate.h"
 #include "boxerdodgingtemplate.h"
@@ -160,6 +161,7 @@ void MetodicsFactory::assignTemplates()
                 << new TrenTakePutTemplate(this)
                 << new CrossTemplate(this)
                 << new StepOffsetTemplate(this)
+                << new StepDeviationTemplate(this)
                 << new EvolventaTemplate(this)
                 << new OctaedronTemplate(this)
                 << new BoxerDodgingTemplate(this);

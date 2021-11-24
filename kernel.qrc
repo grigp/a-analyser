@@ -180,5 +180,6 @@
         <file>qss/main_yellow.qss</file>
         <file>images/Print.png</file>
         <file>images/Logo.png</file>
+        <file>images/Methodics/StepDeviation.png</file>
     </qresource>
 </RCC>
