@@ -8,6 +8,9 @@ namespace Ui {
 class StepDeviationParamsDialog;
 }
 
+/*!
+ * \brief Класс диалога редактирования параметров теста со ступенчатым отклонением StepDeviationParamsDialog class
+ */
 class StepDeviationParamsDialog : public QDialog
 {
     Q_OBJECT

@@ -30,7 +30,9 @@
     <number>1</number>
    </property>
    <item>
-    <widget class="DynamicTestStimul" name="wgtStimul" native="true"/>
+    <widget class="DynamicTestStimul" name="wgtStimul" native="true">
+     <layout class="QVBoxLayout" name="verticalLayout_2"/>
+    </widget>
    </item>
   </layout>
  </widget>

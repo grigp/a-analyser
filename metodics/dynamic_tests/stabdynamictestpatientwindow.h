@@ -79,6 +79,11 @@ public:
      */
     void setTarget(const double x, const double y, const int idx = 0);
 
+    /*!
+     * \brief Возвращает указатель на макет (layout) виджета
+     */
+    QLayout *getWidgetLayout();
+
 private:
     Ui::StabDynamicTestPatientWindow *ui;
 
