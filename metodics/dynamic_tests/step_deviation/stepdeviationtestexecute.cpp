@@ -5,12 +5,13 @@
 #include "testresultdata.h"
 
 #include <QTimer>
+#include <QDebug>
 
 StepDeviationTestExecute::StepDeviationTestExecute(QWidget *parent)
     : StabDynamicTestExecute (parent)
 {
     auto kard = static_cast<AAnalyserApplication*>(QApplication::instance())->getSelectedPatient();
-    setTitle(tr("Тренажер с уклонением для боксеров") + " - " + kard.fio);
+    setTitle(tr("Тест со ступенчатым отклонением") + " - " + kard.fio);
     isShowValues(false);
     isTraceControl(false);
 
@@ -30,6 +31,7 @@ void StepDeviationTestExecute::setParams(const QJsonObject &params)
 {
     StabDynamicTestExecute::setParams(params);
     m_maxTime = params["max_time"].toInt();
+    setRecordLength(m_maxTime * freqStab());
 
     auto d = params["direction"].toString();
     m_direction = BaseUtils::DirectionValueIndex.value(d);
@@ -67,6 +69,9 @@ void StepDeviationTestExecute::recording()
 void StepDeviationTestExecute::getData(DeviceProtocols::DeviceData *data)
 {
     StabDynamicTestExecute::getData(data);
+
+    if (recCount() >= m_maxTime * freqStab())
+        finishTest();
 }
 
 void StepDeviationTestExecute::on_communicationError(const QString &drvName, const QString &port, const int errorCode)

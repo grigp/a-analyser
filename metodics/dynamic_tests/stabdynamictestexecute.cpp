@@ -307,8 +307,10 @@ void StabDynamicTestExecute::recording()
         if (QApplication::desktop()->screenCount() == 1)
             hidePatientWindow();
 
-        ui->wgtAdvChannels->abortProbe();
-
+        if (isAutoFinishRecord())
+            ui->wgtAdvChannels->abortProbe();
+        else
+            finishTest();
 
         ui->btnRecord->setIcon(QIcon(":/images/Save.png"));
         ui->btnRecord->setText(tr("Запись"));
