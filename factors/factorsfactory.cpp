@@ -16,6 +16,7 @@
 #include "evolventafactors.h"
 #include "octaedronfactors.h"
 #include "boxerdodgingmultifactor.h"
+#include "stepdeviationfactors.h"
 
 #include <QTimer>
 #include <QDebug>
@@ -41,6 +42,7 @@ FactorsFactory::FactorsFactory(QObject *parent) : QObject(parent)
         EvolventaFactors::registerFactors();
         OctaedronFactors::registerFactors();
         BoxerDodgingMultifactor::registerFactors();
+        StepDeviationFactors::registerFactors();
     });
 }
 

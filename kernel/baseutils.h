@@ -101,6 +101,29 @@ static QMap<CirceRoundRuleMode, QString> CirceRoundRuleModeValueName {
   , std::pair<CirceRoundRuleMode, QString> (crmCircle, "circle")
 };
 
+///< Границы участка сигнала
+struct Section
+{
+    int begin;   ///< Начало
+    int end;     ///< Конец
+    Section(int b, int e) : begin(b), end(e) {}
+};
+
+///< Тип экстремума
+enum ExtremumKind
+{
+      Minimum = 0
+    , Maximum
+};
+
+///< Структура описания экстремума
+struct Extremum
+{
+    int pos;             ///< Точка
+    ExtremumKind kind;   ///< Тип
+    Extremum(int p, ExtremumKind k) : pos(p), kind(k) {}
+};
+
 /*!
  * \brief Возвращает время в формате hh:mm:ss по кол-ву секунд
  * \param secCnt - кол-во секунд
@@ -175,6 +198,19 @@ void modelToMSExcel(const QAbstractItemModel* model, const QString &fileName);
  * \param fileName - имя файла csv
  */
 void modelToText(const QAbstractItemModel* model, const QString &fileName);
+
+/*!
+ * \brief Сохраняет данные вектора в текстовый файл
+ * \param vector - данные вектора
+ * \param fileName - имя текстового файла
+ */
+void vectorToText(QVector<double>& vector, const QString &fileName);
+
+/*!
+ * \brief Инвертирует вектор, заменяя хвост на начало
+ * \param vector - вектор
+ */
+void swapVector(QVector<double>& vector);
 
 /*!
  * \brief Типы фильтров ФНЧ FilterKind enum

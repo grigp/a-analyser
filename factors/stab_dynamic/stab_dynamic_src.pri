@@ -5,14 +5,16 @@ HEADERS += \
     $$PWD/stepoffsetfactors.h \
     $$PWD/evolventafactors.h \
     $$PWD/octaedronfactors.h \
-    $$PWD/boxerdodgingmultifactor.h
+    $$PWD/boxerdodgingmultifactor.h \
+    $$PWD/stepdeviationfactors.h
 
 SOURCES += \
     $$PWD/crossfactors.cpp \
     $$PWD/stepoffsetfactors.cpp \
     $$PWD/evolventafactors.cpp \
     $$PWD/octaedronfactors.cpp \
-    $$PWD/boxerdodgingmultifactor.cpp
+    $$PWD/boxerdodgingmultifactor.cpp \
+    $$PWD/stepdeviationfactors.cpp
 
 FORMS += \
 

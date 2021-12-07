@@ -3,6 +3,7 @@
 #include "metodicdefines.h"
 #include "stepdeviationparamsdialog.h"
 #include "stepdeviationtestexecute.h"
+#include "stepdeviationvisualize.h"
 
 #include <QLayout>
 #include <QDebug>
@@ -34,11 +35,10 @@ QWidget *StepDeviationTemplate::execute(QWidget *parent, const QJsonObject &para
 
 QWidget *StepDeviationTemplate::visualize(QWidget *parent, const QString &testUid)
 {
-    return nullptr;
-//    auto *retval = new CrossVisualize(parent);
-//    parent->layout()->addWidget(retval);
-//    retval->setTest(testUid);
-//    return retval;
+    auto *retval = new StepDeviationVisualize(parent);
+    parent->layout()->addWidget(retval);
+    retval->setTest(testUid);
+    return retval;
 }
 
 void StepDeviationTemplate::print(QPrinter *printer, const QString &testUid)

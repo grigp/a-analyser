@@ -194,6 +194,35 @@ void BaseUtils::modelToText(const QAbstractItemModel *model, const QString &file
     }
 }
 
+void BaseUtils::vectorToText(QVector<double> &vector, const QString &fileName)
+{
+    QFile file(fileName);
+    if (file.open(QIODevice::WriteOnly))
+    {
+        QTextStream ts(&file);
+
+        for (int i = 0; i < vector.size(); ++i)
+        {
+            auto s = QString::number(vector[i]);
+            ts << s << "\n";
+        }
+
+
+        file.close();
+    }
+}
+
+void BaseUtils::swapVector(QVector<double> &vector)
+{
+    QVector<double> v;
+    v.clear();
+    for (int i = vector.size() - 1; i >= 0; --i)
+        v << vector.at(i);
+    vector.clear();
+    for (int i = 0; i < v.size(); ++i)
+        vector << v.at(i);
+}
+
 double getCoef1(const BaseUtils::FilterKind tf)
 {
     switch (tf) {
@@ -407,3 +436,5 @@ void BaseUtils::MidAndStandardDeviation::calculate(double &mid, double &stdDev) 
             stdDev = sqrt(stdDev);
     }
 }
+
+

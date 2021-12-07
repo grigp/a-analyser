@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QVector>
 
+#include "baseutils.h"
 #include "multifactor.h"
 #include "boxerdodgingdefines.h"
 
@@ -91,13 +92,6 @@ private:
         int errors;     ///< Кол-во ошибок
     };
 
-    ///< Границы участка сигнала
-    struct Section
-    {
-        int begin;   ///< Начало
-        int end;     ///< Конец
-        Section(int b, int e) : begin(b), end(e) {}
-    };
 
     /*!
      * \brief Читает метки этапов
@@ -137,16 +131,16 @@ private:
      * \param stab - указатель на сигнал
      */
     void calculateFactorsForDirection(const BoxerDodgingDefines::Stages code,
-                                      const QList<Section> sections,
+                                      const QList<BaseUtils::Section> sections,
                                       FactorsDirection& factors,
                                       Stabilogram* stab);
 
     BoxerDodgingResultData* m_resData {nullptr};
 
-    QList<Section> m_secLeft;    ///< Список участков сигнала при движении влево
-    QList<Section> m_secRight;   ///< Список участков сигнала при движении вправо
-    QList<Section> m_secAhead;   ///< Список участков сигнала при движении вперед
-    QList<Section> m_secBack;    ///< Список участков сигнала при движении назад
+    QList<BaseUtils::Section> m_secLeft;    ///< Список участков сигнала при движении влево
+    QList<BaseUtils::Section> m_secRight;   ///< Список участков сигнала при движении вправо
+    QList<BaseUtils::Section> m_secAhead;   ///< Список участков сигнала при движении вперед
+    QList<BaseUtils::Section> m_secBack;    ///< Список участков сигнала при движении назад
 
     FactorsDirection m_fctAverage;   ///< Усредненные показатели
     FactorsDirection m_fctLeft;      ///< Движение влево
