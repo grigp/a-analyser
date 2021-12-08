@@ -1,6 +1,7 @@
 #include "stepdeviationvisualize.h"
 #include "ui_stepdeviationvisualize.h"
 
+#include "aanalyserapplication.h"
 #include "channelsdefines.h"
 #include "stepdeviationcalculator.h"
 #include "reportelements.h"
@@ -28,6 +29,7 @@ void StepDeviationVisualize::setTest(const QString &testUid)
         m_calculator->calculate();
 
         showGraph();
+        showTable();
     }
 }
 
@@ -101,4 +103,28 @@ void StepDeviationVisualize::showGraph()
     ui->wgtGraph->appendSignal(signal, tr("Прирост"));
     ui->wgtGraph->setDiapazone(0, min, max);
 
+}
+
+void StepDeviationVisualize::showTable()
+{
+    auto model = new QStandardItemModel();
+    for (int i = 0; i < m_calculator->primaryFactorsCount(); ++i)
+    {
+        auto factor = m_calculator->primaryFactor(i);
+        auto fi = static_cast<AAnalyserApplication*>(QApplication::instance())->getFactorInfo(factor->uid());
+        QString fn = fi.name();
+        if (fi.measure() != "")
+            fn = fn + ", " + fi.measure();
+        auto *itemName = new QStandardItem(fn);
+        itemName->setEditable(false);
+        auto *itemValue = new QStandardItem(QString::number(factor->value(), 'f', fi.format()));
+        itemValue->setEditable(false);
+        model->appendRow(QList<QStandardItem*>() << itemName << itemValue);
+    }
+
+    model->setHorizontalHeaderLabels(QStringList() << tr("Показатель")
+                                                   << tr("Значение"));
+    ui->tvFactors->setModel(model);
+    ui->tvFactors->header()->resizeSections(QHeaderView::ResizeToContents);
+    ui->tvFactors->header()->resizeSection(0, 450);
 }

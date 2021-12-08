@@ -95,6 +95,37 @@ private:
      */
     void assignSections();
 
+    /*!
+     * \brief Расчет основных показателей
+     */
+    void computeFactorsMain();
+
+    /*!
+     * \brief Расчет показателей экстремумов
+     */
+    void computeFactorsExtremums();
+
+    /*!
+     * \brief Расчет показателей, связанных с пиками для участка сигнала
+     * \param begin - начало участка
+     * \param end - конец участка
+     * \param pickCount - возвращаемое значение кол-ва пиков
+     * \param ampl - возвращаемое значение амплитуды полуволны
+     * \param time - возвращаемое значение длительности полуволны
+     */
+    void computePicks(const int begin, const int end, int &pickCount, double &ampl, double &time);
+
+    /*!
+     * \brief Возвращает матожидание и стандартное отклонение для первой секунды сигнала
+     * \param m, q - матожидание и стандартное отклонение
+     */
+    void computeStartPosition(double &m, double &q);
+
+    /*!
+     * \brief добавление показателей
+     */
+    void addFactors();
+
     QVector<double> m_signal;       ///< Отнормированный сигнал нужного канала исходный
     QVector<double> m_signalFlt;    ///< Отнормированный сигнал нужного канала фильтрованный
     int m_freq {0};
@@ -103,6 +134,26 @@ private:
     QList<BaseUtils::Extremum> m_extrList;  ///< Список экстремумов
     QList<BaseUtils::Section> m_Extr;       ///< Список участков сигнала экстремумов
     QList<BaseUtils::Section> m_Trans;      ///< Список участков сигнала переходов
+
+    double m_time {0};
+    double m_stepCount {0};
+    double m_errorCount {0};
+    double m_growthAvrg {0};
+    double m_timeAvrg {0};
+    double m_sensitivity {0};
+    double m_maxDeviation {0};
+    double m_difference {0};
+    double m_timeIncreaseAwrg {0};
+    double m_timeReturnAwrg {0};
+    double m_minExtrTime {0};
+    double m_maxExtrTime {0};
+    double m_pickCount {0};
+    double m_pickCountAvrg {0};
+    double m_maxPickCount {0};
+    double m_minPickCount {0};
+    double m_extrPickCount {0};
+    double m_amplSemiWave {0};
+    double m_timeSemiWave {0};
 
 };
 
