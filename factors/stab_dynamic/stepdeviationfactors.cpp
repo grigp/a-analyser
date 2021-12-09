@@ -118,7 +118,7 @@ void StepDeviationFactors::registerFactors()
                            tr("Амплитуда полуволны на экстремуме"), tr("ExtWaveAmp"), tr("мм"), 2, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(StepDeviationFactorsDefines::TimeSemiWaveUid, StepDeviationFactorsDefines::GroupUid,
-                           tr("длительность полуволны на экстремуме"), tr("ExtWaveTm"), tr("сек"), 3, 3, FactorsDefines::nsDual, 12);
+                           tr("Длительность полуволны на экстремуме"), tr("ExtWaveTm"), tr("сек"), 3, 3, FactorsDefines::nsDual, 12);
 }
 
 int StepDeviationFactors::signalSize() const
@@ -136,6 +136,28 @@ double StepDeviationFactors::signalFiltred(const int idx) const
 {
     Q_ASSERT(idx >= 0 && idx < m_signalFlt.size());
     return m_signalFlt.at(idx);
+}
+
+int StepDeviationFactors::growthDynCount() const
+{
+    return m_growthDynamic.size();
+}
+
+double StepDeviationFactors::growthDynValue(const int idx) const
+{
+    Q_ASSERT(idx >= 0 && idx < m_growthDynamic.size());
+    return  m_growthDynamic.at(idx);
+}
+
+int StepDeviationFactors::lengthDynCount() const
+{
+    return m_lengthDynamic.size();
+}
+
+double StepDeviationFactors::lengthDynValue(const int idx) const
+{
+    Q_ASSERT(idx >= 0 && idx < m_lengthDynamic.size());
+    return  m_lengthDynamic.at(idx);
 }
 
 void StepDeviationFactors::readSignal()
@@ -226,13 +248,6 @@ void StepDeviationFactors::assignSections()
         int end = static_cast<int>(c + (n - c) * 0.25);
         BaseUtils::Section sec(begin, end);
         m_Extr << sec;
-
-//        //! Максимум всегда должен быть больше 0, а минимум любой
-//        if (((extrList.at(i).kind == BaseUtils::Maximum) && (m_signal.at(extrList.at(i).pos) > 0)) ||
-//                (extrList.at(i).kind == BaseUtils::Minimum))
-//        {
-
-//        }
     }
 
     //! Построение списка участков переходов
@@ -266,6 +281,9 @@ void StepDeviationFactors::computeFactorsMain()
     m_minExtrTime = INT_MAX;
     m_maxExtrTime = -INT_MAX;
 
+    m_growthDynamic.clear();
+    m_lengthDynamic.clear();
+
     for (int i = 0; i < m_extrList.size(); ++i)
     {
         if (m_extrList.at(i).kind == BaseUtils::Maximum)
@@ -279,9 +297,13 @@ void StepDeviationFactors::computeFactorsMain()
             if (m_stepCount > 1)
             {
                 //! Средняя величина прироста
-                m_growthAvrg += (m_signal.value(m_extrList.at(i).pos) - lastV);
+                double gv = m_signal.value(m_extrList.at(i).pos) - lastV;
+                m_growthAvrg += gv;
+                m_growthDynamic << gv;
                 //! Среднее время отклонений
-                m_timeAvrg += (m_extrList.at(i).pos - lastPos);
+                double lv = m_extrList.at(i).pos - lastPos;
+                m_timeAvrg += lv;
+                m_lengthDynamic << lv;
             }
 
             //! Порог чувствительности
@@ -335,12 +357,12 @@ void StepDeviationFactors::computeFactorsExtremums()
 {
 
     m_maxPickCount = -INT_MAX;
-    m_minPickCount = INT_MIN;
+    m_minPickCount = INT_MAX;
     foreach (auto extr, m_Extr)
     {
-        int pickCount;
-        double ampl;
-        double time;
+        int pickCount = 0;
+        double ampl = 0;
+        double time = 0;
         computePicks(extr.begin, extr.end, pickCount, ampl, time);
 
         if (pickCount > 0)
@@ -360,18 +382,39 @@ void StepDeviationFactors::computeFactorsExtremums()
 
 void StepDeviationFactors::computePicks(const int begin, const int end, int &pickCount, double &ampl, double &time)
 {
-//    int dir = 0;
-//    for (int i = begin; i < end; ++i)
-//    {
-//        double v = m_signal.at(i);
+    int dir = 0;
+    int li = begin;
+    double lv = 0;
+    for (int i = begin; i < end; ++i)
+    {
+        double v = m_signal.at(i);
 
-//        if (i > begin)
-//        {
-//            double vp = m_signal.at(i-1);
-//            if(v < vp && dir != 1)
-//        }
+        if (i > begin)
+        {
+            double vp = m_signal.at(i-1);
+            if((v < vp && dir != 1) ||
+               (v > vp && dir != -1))
+            {
+                ++pickCount;
 
-//    }
+                if (pickCount > 1)
+                {
+                    ampl += fabs(v - lv);
+                    time += (i - li);
+                }
+                li = i;
+                lv = v;
+            }
+        }
+    }
+
+    if (pickCount > 1)
+    {
+        ampl /= (pickCount - 1);
+        time /= (pickCount - 1);
+    }
+    if (pickCount > 0)
+        --pickCount;
 }
 
 

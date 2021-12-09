@@ -30,6 +30,7 @@ void StepDeviationVisualize::setTest(const QString &testUid)
 
         showGraph();
         showTable();
+        showDiags();
     }
 }
 
@@ -127,4 +128,32 @@ void StepDeviationVisualize::showTable()
     ui->tvFactors->setModel(model);
     ui->tvFactors->header()->resizeSections(QHeaderView::ResizeToContents);
     ui->tvFactors->header()->resizeSection(0, 450);
+
+}
+
+void StepDeviationVisualize::showDiags()
+{
+
+    ui->wgtGrowth->setKind(DynamicDiagram::KindBar);
+    ui->wgtGrowth->setVolume(DynamicDiagram::Volume3D);
+    ui->wgtGrowth->setTitle(tr("Динамика прироста"));
+    ui->wgtGrowth->setAxisSpaceLeft(30);
+
+    for (int i = 0; i < m_calculator->growthDynCount(); ++i)
+    {
+        auto item = new DiagItem(m_calculator->growthDynValue(i), tr(""));
+        ui->wgtGrowth->appendItem(item);
+    }
+
+
+    ui->wgtLength->setKind(DynamicDiagram::KindBar);
+    ui->wgtLength->setVolume(DynamicDiagram::Volume3D);
+    ui->wgtLength->setTitle(tr("Динамика длительности отклонений"));
+    ui->wgtLength->setAxisSpaceLeft(30);
+
+    for (int i = 0; i < m_calculator->lengthDynCount(); ++i)
+    {
+        auto item = new DiagItem(m_calculator->lengthDynValue(i), tr(""));
+        ui->wgtLength->appendItem(item);
+    }
 }

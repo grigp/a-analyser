@@ -41,6 +41,11 @@ private:
      */
     void showTable();
 
+    /*!
+     * \brief Вывод диаграмм
+     */
+    void showDiags();
+
     StepDeviationCalculator* m_calculator {nullptr};
 };
 

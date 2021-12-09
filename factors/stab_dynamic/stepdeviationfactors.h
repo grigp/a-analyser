@@ -84,6 +84,12 @@ public:
      */
     double signalFiltred(const int idx) const;
 
+    int growthDynCount() const;
+    double growthDynValue(const int idx) const;
+
+    int lengthDynCount() const;
+    double lengthDynValue(const int idx) const;
+
 private:
     /*!
      * \brief Чтение сигналов, выбор нужного канала, фильтрация
@@ -134,6 +140,9 @@ private:
     QList<BaseUtils::Extremum> m_extrList;  ///< Список экстремумов
     QList<BaseUtils::Section> m_Extr;       ///< Список участков сигнала экстремумов
     QList<BaseUtils::Section> m_Trans;      ///< Список участков сигнала переходов
+
+    QList<double> m_growthDynamic;  ///< Динамика прироста
+    QList<double> m_lengthDynamic;  ///< Динамика длительности отклонений
 
     double m_time {0};
     double m_stepCount {0};

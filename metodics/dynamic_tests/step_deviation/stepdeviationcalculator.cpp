@@ -81,3 +81,31 @@ double StepDeviationCalculator::signalFiltred(const int idx) const
         return m_factors->signalFiltred(idx);
     return 0;
 }
+
+int StepDeviationCalculator::growthDynCount() const
+{
+    if (m_factors)
+        return m_factors->growthDynCount();
+    return 0;
+}
+
+double StepDeviationCalculator::growthDynValue(const int idx) const
+{
+    if (m_factors)
+        return m_factors->growthDynValue(idx);
+    return 0;
+}
+
+int StepDeviationCalculator::lengthDynCount() const
+{
+    if (m_factors)
+        return m_factors->lengthDynCount();
+    return 0;
+}
+
+double StepDeviationCalculator::lengthDynValue(const int idx) const
+{
+    if (m_factors)
+        return m_factors->lengthDynValue(idx);
+    return 0;
+}

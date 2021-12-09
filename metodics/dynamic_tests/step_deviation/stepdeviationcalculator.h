@@ -49,6 +49,12 @@ public:
      */
     double signalFiltred(const int idx) const;
 
+    int growthDynCount() const;
+    double growthDynValue(const int idx) const;
+
+    int lengthDynCount() const;
+    double lengthDynValue(const int idx) const;
+
 
 private:
     StepDeviationFactors* m_factors {nullptr};
