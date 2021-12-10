@@ -165,6 +165,7 @@ void StepDeviationFactors::readSignal()
     m_signal.clear();
     m_signalFlt.clear();
 
+    double max = -INT_MAX;
     QByteArray baStab;
     if (DataProvider::getChannel(probeUid(), ChannelsDefines::chanStab, baStab))
     {
@@ -188,7 +189,21 @@ void StepDeviationFactors::readSignal()
 
             m_signal << v;
             m_signalFlt << v;
+            if (v > max)
+                max = v;
         }
+
+        //! Обрезание хвоста, если он есть
+        //! Хвост определяется, как 20% от максимума до конца записи
+        int n = m_signal.size();
+        for (int i = m_signal.size() - 1; i >= 0; --i)
+            if (m_signal.at(i) > max / 5)
+            {
+                n = i;
+                break;
+            }
+        m_signal.resize(n);
+        m_signalFlt.resize(n);
 
         //! Фильтрация
         BaseUtils::filterLowFreq(m_signalFlt, stab.frequency(), 1, BaseUtils::fkChebyshev, 0, m_signalFlt.size() - 1);
@@ -303,7 +318,7 @@ void StepDeviationFactors::computeFactorsMain()
                 //! Среднее время отклонений
                 double lv = m_extrList.at(i).pos - lastPos;
                 m_timeAvrg += lv;
-                m_lengthDynamic << lv;
+                m_lengthDynamic << (lv / m_freq);
             }
 
             //! Порог чувствительности

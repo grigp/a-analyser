@@ -43,7 +43,7 @@ QWidget *StepDeviationTemplate::visualize(QWidget *parent, const QString &testUi
 
 void StepDeviationTemplate::print(QPrinter *printer, const QString &testUid)
 {
-//    CrossVisualize::print(printer, testUid);
+    StepDeviationVisualize::print(printer, testUid);
 }
 
 bool StepDeviationTemplate::editParams(QWidget *parent, QJsonObject &params)

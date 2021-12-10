@@ -67,7 +67,7 @@
      <property name="minimumSize">
       <size>
        <width>0</width>
-       <height>200</height>
+       <height>160</height>
       </size>
      </property>
      <property name="frameShape">
@@ -100,7 +100,7 @@
      <property name="minimumSize">
       <size>
        <width>0</width>
-       <height>200</height>
+       <height>160</height>
       </size>
      </property>
      <property name="frameShape">
