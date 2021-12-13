@@ -181,5 +181,11 @@
         <file>images/Print.png</file>
         <file>images/Logo.png</file>
         <file>images/Methodics/StepDeviation.png</file>
+        <file>images/left.png</file>
+        <file>images/right.png</file>
+        <file>images/down200.png</file>
+        <file>images/left200.png</file>
+        <file>images/right200.png</file>
+        <file>images/up200.png</file>
     </qresource>
 </RCC>

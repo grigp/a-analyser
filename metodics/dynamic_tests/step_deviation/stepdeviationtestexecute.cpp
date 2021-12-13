@@ -39,7 +39,7 @@ void StepDeviationTestExecute::setParams(const QJsonObject &params)
 
 StabDynamicTestPatientWindow *StepDeviationTestExecute::createPatientWindow()
 {
-    return new StepDeviationPatientWindow(this);
+    return new StepDeviationPatientWindow(m_direction, this);
 
 }
 

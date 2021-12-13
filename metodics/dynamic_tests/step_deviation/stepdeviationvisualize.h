@@ -46,6 +46,11 @@ private:
      */
     void showDiags();
 
+    /*!
+     * \brief Вывод напоравления
+     */
+    void showDirection();
+
     StepDeviationCalculator* m_calculator {nullptr};
 };
 

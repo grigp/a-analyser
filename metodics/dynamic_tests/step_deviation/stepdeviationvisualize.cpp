@@ -15,6 +15,7 @@ AreaGraph *wgtGraph {nullptr};
 DynamicDiagram *wgtGrowth {nullptr};
 DynamicDiagram *wgtLength {nullptr};
 QStandardItemModel *mdlFactors {nullptr};
+QString directionText {""};
 }
 
 StepDeviationVisualize::StepDeviationVisualize(QWidget *parent) :
@@ -39,6 +40,7 @@ void StepDeviationVisualize::setTest(const QString &testUid)
         showGraph();
         showTable();
         showDiags();
+        showDirection();
     }
 }
 
@@ -78,6 +80,9 @@ void StepDeviationVisualize::print(QPrinter *printer, const QString &testUid)
         ReportElements::drawTable(painter, mdlFactors, rectTable,
                                   QList<int>() << 3 << 1, ReportElements::Table::tvsStretched,
                                   12, -1, QFont::Bold);
+
+        painter->setFont(QFont("Sans", 12, QFont::Bold, false));
+        painter->drawText(paper.x() + paper.width() / 10, paper.y() + paper.height() / 60 * 55, directionText);
     }
     else
     if (printer->orientation() == QPrinter::Landscape)
@@ -93,6 +98,8 @@ void StepDeviationVisualize::print(QPrinter *printer, const QString &testUid)
                                    static_cast<int>(paper.width() * 0.9), static_cast<int>(paper.height() * 0.9),
                                    paper.x() + paper.width()/20, static_cast<int>(paper.y() + paper.height() / 6 * 4));
 
+        painter->setFont(QFont("Sans", 12, QFont::Bold, false));
+        painter->drawText(paper.x() + paper.width() / 10, paper.y() + paper.height() / 60 * 55, directionText);
 
         //! Нижний колонтитул
         ReportElements::drawFooter(painter, testUid, rectFooter);
@@ -189,4 +196,10 @@ void StepDeviationVisualize::showDiags()
         auto item = new DiagItem(m_calculator->lengthDynValue(i), tr(""));
         ui->wgtLength->appendItem(item);
     }
+}
+
+void StepDeviationVisualize::showDirection()
+{
+    directionText = tr("Направление отклонений") + " - " + BaseUtils::DirectionValueName.value(m_calculator->direction());
+    ui->lblDirection->setText(directionText);
 }

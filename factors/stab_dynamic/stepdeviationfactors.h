@@ -90,6 +90,11 @@ public:
     int lengthDynCount() const;
     double lengthDynValue(const int idx) const;
 
+    /*!
+     * \brief Возвращает направление отклонений
+     */
+    BaseUtils::Directions direction() const {return m_direction;}
+
 private:
     /*!
      * \brief Чтение сигналов, выбор нужного канала, фильтрация
