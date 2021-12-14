@@ -346,6 +346,19 @@
             }
         },
         {
+            "uid": "{74B5B3BD-A29A-4F29-9404-F56568051949}",
+            "name": "Deviation step test",
+            "image": "StepDeviation.png",
+            "template": "met_step_deviatoin_uid",
+            "build_norms": false,
+            "kind": "{03FFE24D-56ED-4138-9FC7-A125A020C190}",
+            "params":
+            {
+                "direction": "up",
+                "max_time": 40
+            }
+        },
+        {
             "uid": "94021282-6B50-432F-A715-D34B3FEC4FD7",
             "name": "Test \"Evolvent\"",
             "image": "Evolventa.png",

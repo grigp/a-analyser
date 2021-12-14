@@ -71,13 +71,13 @@ enum DirectionMode
 };
 
 static QMap<QString, DirectionMode> DirectionModeValueIndex {
-    std::pair<QString, DirectionMode> ("return", dmRandom)
+    std::pair<QString, DirectionMode> ("random", dmRandom)
   , std::pair<QString, DirectionMode> ("clockwise", dmClockwise)
   , std::pair<QString, DirectionMode> ("counter_clockwise", dmCounterClockwise)
 };
 
 static QMap<DirectionMode, QString> DirectionModeValueName {
-    std::pair<DirectionMode, QString> (dmRandom, "return")
+    std::pair<DirectionMode, QString> (dmRandom, "random")
   , std::pair<DirectionMode, QString> (dmClockwise, "clockwise")
   , std::pair<DirectionMode, QString> (dmCounterClockwise, "counter_clockwise")
 };

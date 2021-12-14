@@ -187,5 +187,6 @@
         <file>images/left200.png</file>
         <file>images/right200.png</file>
         <file>images/up200.png</file>
+        <file>images/Methodics/Triangle.png</file>
     </qresource>
 </RCC>

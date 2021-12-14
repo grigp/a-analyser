@@ -17,7 +17,6 @@ StepDeviationTemplate::StepDeviationTemplate(QObject *parent)
 QString StepDeviationTemplate::uid()
 {
     return MetodicDefines::MetUid_StepDeviatoin;
-
 }
 
 QString StepDeviationTemplate::name()

@@ -383,6 +383,22 @@
             }
         },
         {
+            "uid": "{F13585D9-32C3-47CE-9C37-2B8BB7560A7D}",
+            "name": "Тест \"Треугольник\"",
+            "image": "Triangle.png",
+            "template": "met_triangle_uid",
+            "build_norms": false,
+            "kind": "{03FFE24D-56ED-4138-9FC7-A125A020C190}",
+            "params":
+            {
+                "direction_mode": "clockwise",
+                "force": 75,
+                "stage_time": 2,
+                "min_deviation": 50,
+                "show_marker_anal": false
+            }
+        },
+        {
             "uid": "94021282-6B50-432F-A715-D34B3FEC4FD7",
             "name": "Тест \"Эвольвента\"",
             "image": "Evolventa.png",
