@@ -2,6 +2,7 @@ INCLUDEPATH += $$PWD
 
 include(adv_channels/adv_channels_src.pri)
 include(report_elements/report_elements_src.pri)
+include(dialogs/dialogs_src.pri)
 
 HEADERS += \
 

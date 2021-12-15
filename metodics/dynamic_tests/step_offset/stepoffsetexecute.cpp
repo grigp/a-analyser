@@ -76,8 +76,9 @@ void StepOffsetExecute::recording()
     {
         if (!m_mfd)
         {
-            m_mfd = new SetMaxForceDialog();
+            m_mfd = new SetMaxForceDialog(SetMaxForceDialog::CrossOneLine);
             m_mfd->setDirection(m_direction);
+            m_mfd->setMinValueOffset(StepOffsetDefines::MinValueOffset);
             connect(m_mfd, &SetMaxForceDialog::accepted, this, &StepOffsetExecute::setMaxForceDialogAccepted);
         }
         m_mfd->showFullScreen();

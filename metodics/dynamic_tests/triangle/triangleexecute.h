@@ -6,6 +6,8 @@
 #include "stabdynamictestexecute.h"
 #include "baseutils.h"
 
+class SetMaxForceDialog;
+
 /*!
  * \brief Класс проведения теста "Треугольник" TriangleExecute class
  */
@@ -48,12 +50,17 @@ protected slots:
 
     void on_communicationError(const QString &drvName, const QString &port, const int errorCode) override;
 
+private slots:
+    void setMaxForceDialogAccepted();
+
 private:
     BaseUtils::DirectionMode m_directionMode {BaseUtils::dmClockwise};
-    int m_force {75};
+    int m_forcePercent {75};
     int m_stageTime {2};
     int m_minDeviation {50};
     bool m_showMarkerAnal {false};
+
+    SetMaxForceDialog* m_mfd {nullptr};
 
 };
 

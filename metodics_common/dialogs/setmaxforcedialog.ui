@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1087</width>
-    <height>667</height>
+    <width>1198</width>
+    <height>697</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -80,7 +80,17 @@
           </spacer>
          </item>
          <item>
-          <widget class="DiagCross" name="wgtDiag" native="true">
+          <widget class="DiagTriangle" name="wgtDiagTriangle" native="true">
+           <property name="minimumSize">
+            <size>
+             <width>500</width>
+             <height>500</height>
+            </size>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="DiagCross" name="wgtDiagCross" native="true">
            <property name="minimumSize">
             <size>
              <width>500</width>
@@ -240,6 +250,12 @@
    <class>DiagCross</class>
    <extends>QWidget</extends>
    <header location="global">diagcross.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>DiagTriangle</class>
+   <extends>QWidget</extends>
+   <header location="global">diagtriangle.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
