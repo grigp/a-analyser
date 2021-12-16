@@ -124,6 +124,13 @@ void StabDynamicTestExecute::setTarget(const double x, const double y, const int
         m_patientWin->setTarget(x, y, idx);
 }
 
+void StabDynamicTestExecute::clearTargets()
+{
+    ui->wgtSKG->clearTargets();
+    if (m_patientWin)
+        m_patientWin->clearTargets();
+}
+
 StabDynamicTestPatientWindow *StabDynamicTestExecute::createPatientWindow()
 {
     return nullptr;

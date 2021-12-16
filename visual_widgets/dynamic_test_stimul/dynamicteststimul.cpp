@@ -60,6 +60,12 @@ void DynamicTestStimul::setTarget(const double x, const double y, const int idx)
     m_targets.replace(idx, ti);
 }
 
+void DynamicTestStimul::clearTargets()
+{
+    if (m_targets.size() > 0)
+        m_targets.clear();
+}
+
 void DynamicTestStimul::paintEvent(QPaintEvent *event)
 {
     Q_UNUSED(event);

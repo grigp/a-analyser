@@ -36,6 +36,12 @@ QGroupBox
     color: rgb(32,88,103);
 }
 
+QTimeEdit
+{
+    font-size: 11pt;
+    color: rgb(32,88,103);
+}
+
 QLabel
 {
     font-size: 11pt;

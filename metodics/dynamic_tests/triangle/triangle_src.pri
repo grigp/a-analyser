@@ -4,7 +4,8 @@ HEADERS += \
     $$PWD/triangletemplate.h \
     $$PWD/triangleparamsdialog.h \
     $$PWD/triangleexecute.h \
-    $$PWD/trianglepatientwindow.h
+    $$PWD/trianglepatientwindow.h \
+    $$PWD/triangledefines.h
 
 SOURCES += \
     $$PWD/triangletemplate.cpp \

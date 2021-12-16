@@ -58,12 +58,12 @@ public:
      */
     void setMinValueOffset(const int val) {m_minValueOffset = val;}
 
+public slots:
+    void resetValue();
+
 protected:
     void showEvent(QShowEvent *event) override;
     void resizeEvent(QResizeEvent *event) override;
-
-private slots:
-    void resetValue();
 
 private:
     Ui::SetMaxForceDialog *ui;

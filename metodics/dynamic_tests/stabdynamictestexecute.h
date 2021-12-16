@@ -102,6 +102,11 @@ protected:
     void setTarget(const double x, const double y, const int idx = 0);
 
     /*!
+     * \brief Очищает список целей
+     */
+    void clearTargets();
+
+    /*!
      * \brief Виртуальная функция, создающая окно пациента. Должна быть перекрыта в подклассах
      */
     virtual StabDynamicTestPatientWindow* createPatientWindow();

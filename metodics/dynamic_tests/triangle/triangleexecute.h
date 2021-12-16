@@ -5,8 +5,22 @@
 
 #include "stabdynamictestexecute.h"
 #include "baseutils.h"
+#include "triangledefines.h"
 
 class SetMaxForceDialog;
+class TrianglePatientWindow;
+
+/*!
+ * \brief Структура записи о треугольнике Target struct
+ */
+struct Target
+{
+    double x;
+    double y;
+    BaseUtils::TriangleCorner corner;
+    Target(double _x, double _y, BaseUtils::TriangleCorner _corner)
+        :x(_x), y(_y), corner(_corner){}
+};
 
 /*!
  * \brief Класс проведения теста "Треугольник" TriangleExecute class
@@ -54,13 +68,32 @@ private slots:
     void setMaxForceDialogAccepted();
 
 private:
+    /*!
+     * \brief Показывает текущий выбранный угол
+     */
+    void showCurrentCorner();
+
+    /*!
+     * \brief Выьор следующей вершины
+     */
+    void nextCorner();
+
     BaseUtils::DirectionMode m_directionMode {BaseUtils::dmClockwise};
+    int m_treningTime {60};
+    int m_analysisTime {120};
     int m_forcePercent {75};
     int m_stageTime {2};
     int m_minDeviation {50};
     bool m_showMarkerAnal {false};
 
+    TrianglePatientWindow* m_patientWin {nullptr};
     SetMaxForceDialog* m_mfd {nullptr};
+    QList<Target> m_targets;
+
+    TriangleDefines::Stage m_stage {TriangleDefines::stgWaiting};   ///< Этап теста
+    BaseUtils::TriangleCorner m_curCorner {BaseUtils::tcNone};
+
+    int m_stageCounter {0}; ///< Счетчик отсчетов на этапе
 
 };
 

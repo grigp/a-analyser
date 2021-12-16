@@ -171,6 +171,16 @@ void AreaSKG::setTarget(const double x, const double y, const int idx)
                               - y * prop - m_targets.at(idx)->boundingRect().height() / 2);
 }
 
+void AreaSKG::clearTargets()
+{
+    if (m_targets.size() > 0)
+    {
+        foreach (auto target, m_targets)
+            m_sceneSKG->removeItem(target);
+        m_targets.clear();
+    }
+}
+
 void AreaSKG::resizeEvent(QResizeEvent *event)
 {
     ui->panSKG->ensureVisible(QRectF(-m_diap, -m_diap, m_diap * 2, m_diap * 2));

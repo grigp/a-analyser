@@ -80,6 +80,11 @@ public:
     void setTarget(const double x, const double y, const int idx = 0);
 
     /*!
+     * \brief Очищает список целей
+     */
+    void clearTargets();
+
+    /*!
      * \brief Возвращает указатель на макет (layout) виджета
      */
     QLayout *getWidgetLayout();

@@ -75,6 +75,11 @@ void StabDynamicTestPatientWindow::setTarget(const double x, const double y, con
     ui->wgtStimul->setTarget(x, y, idx);
 }
 
+void StabDynamicTestPatientWindow::clearTargets()
+{
+    ui->wgtStimul->clearTargets();
+}
+
 QLayout *StabDynamicTestPatientWindow::getWidgetLayout()
 {
     return ui->wgtStimul->layout();
