@@ -28,8 +28,8 @@ AAnalyserApplication::AAnalyserApplication(int &argc, char **argv)
     , m_factors(new FactorsFactory(this))
     , m_normsManager(new NormsManager(this))
 {
-    setApplicationName("a-analyser");
-//    setApplicationDisplayName(tr("Физиологические исследования a-analyser")); Не переводится
+    setApplicationName("a-analyzer");
+//    setApplicationDisplayName(tr("Физиологические исследования a-analyzer")); Не переводится
     setOrganizationName("A-Med");
 //    setWindowIcon(QIcon(":/images/MainIcon2.ico"));
 

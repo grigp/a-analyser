@@ -10,7 +10,7 @@ QT       += core gui serialport multimedia printsupport
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-TARGET = a-analyser
+TARGET = a-analyzer
 CONFIG += c++11
 TEMPLATE = app
 
