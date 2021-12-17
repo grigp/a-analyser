@@ -79,7 +79,7 @@ private:
     void nextCorner();
 
     BaseUtils::DirectionMode m_directionMode {BaseUtils::dmClockwise};
-    int m_treningTime {60};
+    int m_trainingTime {60};
     int m_analysisTime {120};
     int m_forcePercent {75};
     int m_stageTime {2};
@@ -93,7 +93,8 @@ private:
     TriangleDefines::Stage m_stage {TriangleDefines::stgWaiting};   ///< Этап теста
     BaseUtils::TriangleCorner m_curCorner {BaseUtils::tcNone};
 
-    int m_stageCounter {0}; ///< Счетчик отсчетов на этапе
+    int m_stageCounter {0};   ///< Счетчик отсчетов на этапе
+    int m_startAnalysis {0};  ///< Точка начала этапа анализа (в отсчетах)
 
 };
 

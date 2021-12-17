@@ -10,7 +10,7 @@ namespace TriangleDefines
 enum Stage
 {
       stgWaiting = 0  ///< Ожидание
-    , stgTreaning     ///< Обучение
+    , stgTraining     ///< Обучение
     , stgAnalysis     ///< Тренинг
 };
 

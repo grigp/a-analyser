@@ -29,7 +29,7 @@ TriangleExecute::~TriangleExecute()
 
 void TriangleExecute::setParams(const QJsonObject &params)
 {
-    m_treningTime = params["trening_time"].toInt();
+    m_trainingTime = params["training_time"].toInt();
     m_analysisTime = params["analysis_time"].toInt();
 
     auto dm = params["direction_mode"].toString();
@@ -77,8 +77,9 @@ void TriangleExecute::recording()
     }
     else
     {
-//        m_stage = StepOffsetDefines::stgWaiting;
+        m_stage = TriangleDefines::stgWaiting;
         clearTargets();
+        m_targets.clear();
         StabDynamicTestExecute::recording();
     }
 
@@ -100,6 +101,25 @@ void TriangleExecute::getData(DeviceProtocols::DeviceData *data)
 
             m_stageCounter = 0;
         }
+
+        if ((recCount() >= m_trainingTime * freqStab()) && (m_stage == TriangleDefines::stgTraining))
+        {
+            if (m_stageCounter == BaseUtils::tcUp)
+            {
+                m_stage = TriangleDefines::stgAnalysis;
+                m_startAnalysis = recCount();
+                clearTargets();
+            }
+        }
+        else
+        if ((recCount() >= (m_trainingTime + m_analysisTime) * freqStab()) && (m_stage == TriangleDefines::stgAnalysis))
+        {
+            if (m_stageCounter == BaseUtils::tcUp)
+            {
+                m_targets.clear();
+                finishTest();
+            }
+        }
     }
 }
 
@@ -120,9 +140,9 @@ void TriangleExecute::setMaxForceDialogAccepted()
             clearTargets();
             m_targets.clear();
 
-            int vu = m_mfd->value(BaseUtils::tcUp);
-            int vld = m_mfd->value(BaseUtils::tcLeftDown);
-            int vrd = m_mfd->value(BaseUtils::tcRightDown);
+            int vu = m_mfd->value(BaseUtils::tcUp) * m_forcePercent / 100;
+            int vld = m_mfd->value(BaseUtils::tcLeftDown) * m_forcePercent / 100;
+            int vrd = m_mfd->value(BaseUtils::tcRightDown) * m_forcePercent / 100;
             m_targets << Target(0, vu, BaseUtils::tcUp)
                       << Target(-vld * cos(M_PI/6), -vld * sin(M_PI/6), BaseUtils::tcLeftDown)
                       << Target(vrd * cos(M_PI/6), -vrd * sin(M_PI/6), BaseUtils::tcRightDown);
@@ -139,11 +159,15 @@ void TriangleExecute::setMaxForceDialogAccepted()
             else
             if (m_directionMode == BaseUtils::dmCounterClockwise)
                 m_curCorner = BaseUtils::tcRightDown;
-            addTarget(m_targets.at(m_curCorner).x, m_targets.at(m_curCorner).y, Qt::green, Qt::darkGreen);
-            if (m_patientWin)
-                m_patientWin->addTarget(m_targets.at(m_curCorner).x, m_targets.at(m_curCorner).y, Qt::green, 30);
+            if (m_curCorner < m_targets.size())
+            {
+                addTarget(m_targets.at(m_curCorner).x, m_targets.at(m_curCorner).y, Qt::green, Qt::darkGreen);
+                if (m_patientWin)
+                    m_patientWin->addTarget(m_targets.at(m_curCorner).x, m_targets.at(m_curCorner).y, Qt::green, 30);
+            }
 
             m_stageCounter = 0;
+            m_stage = TriangleDefines::stgTraining;
 
 //            m_res->setFreq(freqStab());
 //            m_res->setDiap(diap());
@@ -156,7 +180,6 @@ void TriangleExecute::setMaxForceDialogAccepted()
         }
         else
         {
-            m_stage = TriangleDefines::stgWaiting;
 //            m_tx = 0;
 //            m_ty = 0;
 //            setTarget(m_tx, m_ty);
@@ -166,7 +189,7 @@ void TriangleExecute::setMaxForceDialogAccepted()
 
 void TriangleExecute::showCurrentCorner()
 {
-    if (m_targets.size() > m_curCorner)
+    if (m_curCorner < m_targets.size())
     {
         setTarget(m_targets.at(m_curCorner).x, m_targets.at(m_curCorner).y, 3);
         if (m_patientWin)

@@ -24,7 +24,7 @@
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_2">
       <item>
-       <widget class="QFrame" name="frTimeTrening">
+       <widget class="QFrame" name="frTimeTraining">
         <property name="frameShape">
          <enum>QFrame::StyledPanel</enum>
         </property>
@@ -33,7 +33,7 @@
         </property>
         <layout class="QHBoxLayout" name="horizontalLayout_9">
          <item>
-          <widget class="QLabel" name="lblTimeTrening">
+          <widget class="QLabel" name="lblTimeTraining">
            <property name="text">
             <string>Длительность этапа обучения, мин:сек</string>
            </property>
@@ -53,7 +53,7 @@
           </spacer>
          </item>
          <item>
-          <widget class="QTimeEdit" name="edTimeTrening">
+          <widget class="QTimeEdit" name="edTimeTraining">
            <property name="minimumSize">
             <size>
              <width>60</width>

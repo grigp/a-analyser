@@ -391,7 +391,7 @@
             "kind": "{03FFE24D-56ED-4138-9FC7-A125A020C190}",
             "params":
             {
-                "trening_time": 60,
+                "training_time": 60,
                 "analysis_time": 120,
                 "direction_mode": "clockwise",
                 "force": 75,

@@ -26,9 +26,9 @@ void TriangleParamsDialog::setParams(const QJsonObject &params)
     auto dm = params["direction_mode"].toString();
     ui->cbDirectionMode->setCurrentIndex(BaseUtils::DirectionModeValueIndex.value(dm) - 1);
 
-    auto tt = params["trening_time"].toInt();
+    auto tt = params["training_time"].toInt();
     auto at = params["analysis_time"].toInt();
-    ui->edTimeTrening->setTime(QTime(0, tt / 60, tt % 60));
+    ui->edTimeTraining->setTime(QTime(0, tt / 60, tt % 60));
     ui->edTimeAnalysis->setTime(QTime(0, at / 60, at % 60));
     ui->edForce->setValue(params["force"].toInt());
     ui->edStageTime->setValue(params["stage_time"].toInt());
@@ -42,9 +42,9 @@ QJsonObject TriangleParamsDialog::getParams()
     auto valDM = static_cast<BaseUtils::DirectionMode>(ui->cbDirectionMode->currentIndex() + 1);
     retval["direction_mode"] = BaseUtils::DirectionModeValueName.value(valDM);
 
-    auto tt = ui->edTimeTrening->time();
+    auto tt = ui->edTimeTraining->time();
     auto at = ui->edTimeAnalysis->time();
-    retval["trening_time"] = tt.minute() * 60 + tt.second();
+    retval["training_time"] = tt.minute() * 60 + tt.second();
     retval["analysis_time"] = at.minute() * 60 + at.second();
     retval["force"] = ui->edForce->value();
     retval["stage_time"] = ui->edStageTime->value();

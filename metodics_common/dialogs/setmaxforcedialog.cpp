@@ -90,10 +90,10 @@ int SetMaxForceDialog::value(const int direction) const
             return ui->wgtDiagTriangle->valueUp();
         else
         if (direction == 1)
-            return ui->wgtDiagTriangle->valueRightDown();
+            return ui->wgtDiagTriangle->valueLeftDown();
         else
         if (direction == 2)
-            return ui->wgtDiagTriangle->valueLeftDown();
+            return ui->wgtDiagTriangle->valueRightDown();
     }
 
     return 0;
