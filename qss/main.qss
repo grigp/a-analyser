@@ -392,6 +392,7 @@ Oscilloscope
     background-color: rgb(250, 250, 255);
     qproperty-line1_color: rgb(0, 0, 255);
     qproperty-line2_color: rgb(0, 150, 0);
+
 }
 
 Transients
