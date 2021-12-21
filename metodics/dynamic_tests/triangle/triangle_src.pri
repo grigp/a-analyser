@@ -5,14 +5,19 @@ HEADERS += \
     $$PWD/triangleparamsdialog.h \
     $$PWD/triangleexecute.h \
     $$PWD/trianglepatientwindow.h \
-    $$PWD/triangledefines.h
+    $$PWD/triangledefines.h \
+    $$PWD/trianglevisualize.h \
+    $$PWD/trianglecalculator.h
 
 SOURCES += \
     $$PWD/triangletemplate.cpp \
     $$PWD/triangleparamsdialog.cpp \
     $$PWD/triangleexecute.cpp \
-    $$PWD/trianglepatientwindow.cpp
+    $$PWD/trianglepatientwindow.cpp \
+    $$PWD/trianglevisualize.cpp \
+    $$PWD/trianglecalculator.cpp
 
 FORMS += \
-    $$PWD/triangleparamsdialog.ui
+    $$PWD/triangleparamsdialog.ui \
+    $$PWD/trianglevisualize.ui
 

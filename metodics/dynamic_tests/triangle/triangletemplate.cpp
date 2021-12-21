@@ -3,6 +3,7 @@
 #include "metodicdefines.h"
 #include "triangleparamsdialog.h"
 #include "triangleexecute.h"
+#include "trianglevisualize.h"
 
 #include <QLayout>
 
@@ -32,16 +33,15 @@ QWidget *TriangleTemplate::execute(QWidget *parent, const QJsonObject &params)
 
 QWidget *TriangleTemplate::visualize(QWidget *parent, const QString &testUid)
 {
-    return  nullptr;
-//    auto *retval = new StepDeviationVisualize(parent);
-//    parent->layout()->addWidget(retval);
-//    retval->setTest(testUid);
-//    return retval;
+    auto *retval = new TriangleVisualize(parent);
+    parent->layout()->addWidget(retval);
+    retval->setTest(testUid);
+    return retval;
 }
 
 void TriangleTemplate::print(QPrinter *printer, const QString &testUid)
 {
-//    StepDeviationVisualize::print(printer, testUid);
+    TriangleVisualize::print(printer, testUid);
 }
 
 bool TriangleTemplate::editParams(QWidget *parent, QJsonObject &params)

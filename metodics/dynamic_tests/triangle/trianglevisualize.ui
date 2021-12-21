@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>TriangleVisualize</class>
+ <widget class="QWidget" name="TriangleVisualize">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>965</width>
+    <height>613</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <property name="leftMargin">
+    <number>1</number>
+   </property>
+   <property name="topMargin">
+    <number>1</number>
+   </property>
+   <property name="rightMargin">
+    <number>1</number>
+   </property>
+   <property name="bottomMargin">
+    <number>1</number>
+   </property>
+   <item>
+    <widget class="QTabWidget" name="twPages">
+     <property name="tabPosition">
+      <enum>QTabWidget::South</enum>
+     </property>
+     <property name="currentIndex">
+      <number>0</number>
+     </property>
+     <widget class="QWidget" name="tabResult">
+      <attribute name="title">
+       <string>Результаты</string>
+      </attribute>
+     </widget>
+     <widget class="QWidget" name="tabDiag">
+      <attribute name="title">
+       <string>Диаграммы</string>
+      </attribute>
+     </widget>
+     <widget class="QWidget" name="tabFactors">
+      <attribute name="title">
+       <string>Показатели</string>
+      </attribute>
+     </widget>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>twPages</sender>
+   <signal>tabBarClicked(int)</signal>
+   <receiver>TriangleVisualize</receiver>
+   <slot>curPageChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>146</x>
+     <y>603</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>967</x>
+     <y>458</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>curPageChanged(int)</slot>
+ </slots>
+</ui>
