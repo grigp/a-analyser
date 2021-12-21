@@ -19,7 +19,8 @@ HEADERS += \
     $$PWD/evolventaresultdata.h \
     $$PWD/decartcoordinatessignal.h \
     $$PWD/octaedronresultdata.h \
-    $$PWD/boxerdodgingresultdata.h
+    $$PWD/boxerdodgingresultdata.h \
+    $$PWD/triangleresultdata.h
 
 SOURCES += \
     $$PWD/signaldata.cpp \
@@ -40,4 +41,5 @@ SOURCES += \
     $$PWD/evolventaresultdata.cpp \
     $$PWD/decartcoordinatessignal.cpp \
     $$PWD/octaedronresultdata.cpp \
-    $$PWD/boxerdodgingresultdata.cpp
+    $$PWD/boxerdodgingresultdata.cpp \
+    $$PWD/triangleresultdata.cpp

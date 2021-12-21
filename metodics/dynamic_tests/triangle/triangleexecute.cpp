@@ -6,9 +6,12 @@
 #include "aanalyserapplication.h"
 #include "trianglepatientwindow.h"
 #include "setmaxforcedialog.h"
+#include "triangleresultdata.h"
+#include "testresultdata.h"
 
 TriangleExecute::TriangleExecute(QWidget *parent)
     : StabDynamicTestExecute (parent)
+    , m_res(new TriangleResultData(ChannelsDefines::chanTriangleResult))
 {
     auto kard = static_cast<AAnalyserApplication*>(QApplication::instance())->getSelectedPatient();
     setTitle(tr("Тест \"Треугольник\"") + " - " + kard.fio);
@@ -49,6 +52,7 @@ StabDynamicTestPatientWindow *TriangleExecute::createPatientWindow()
 
 void TriangleExecute::finishTest()
 {
+    trd()->addChannel(m_res);
     StabDynamicTestExecute::finishTest();
 }
 
@@ -64,6 +68,8 @@ void TriangleExecute::start()
 
 void TriangleExecute::recording()
 {
+    m_res->clear();
+
     if(!isRecording())
     {
         if (!m_mfd)
@@ -113,7 +119,7 @@ void TriangleExecute::getData(DeviceProtocols::DeviceData *data)
 
         if ((recCount() >= m_trainingTime * freqStab()) && (m_stage == TriangleDefines::stgTraining))
         {
-            if (m_stageCounter == BaseUtils::tcUp)
+            if (m_stageCounter == BaseUtils::tcTop)
             {
                 m_stage = TriangleDefines::stgAnalysis;
                 setRecordLengthTitle(tr("Этап анализа"));
@@ -126,8 +132,15 @@ void TriangleExecute::getData(DeviceProtocols::DeviceData *data)
         else
         if ((recCount() >= (m_trainingTime + m_analysisTime) * freqStab()) && (m_stage == TriangleDefines::stgAnalysis))
         {
-            if (m_stageCounter == BaseUtils::tcUp)
+            if (m_stageCounter == BaseUtils::tcTop)
             {
+                m_res->setFreq(freqStab());
+                m_res->setDiap(diap());
+                m_res->setTrainingLength(m_startAnalysis);
+                m_res->setTopCorner(QPointF(m_targets.at(BaseUtils::tcTop).x, m_targets.at(BaseUtils::tcTop).y));
+                m_res->setLeftDownCorner(QPointF(m_targets.at(BaseUtils::tcLeftDown).x, m_targets.at(BaseUtils::tcLeftDown).y));
+                m_res->setRightDownCorner(QPointF(m_targets.at(BaseUtils::tcRightDown).x, m_targets.at(BaseUtils::tcRightDown).y));
+
                 m_targets.clear();
                 finishTest();
             }
@@ -152,10 +165,10 @@ void TriangleExecute::setMaxForceDialogAccepted()
             clearTargets();
             m_targets.clear();
 
-            int vu = m_mfd->value(BaseUtils::tcUp) * m_forcePercent / 100;
+            int vu = m_mfd->value(BaseUtils::tcTop) * m_forcePercent / 100;
             int vld = m_mfd->value(BaseUtils::tcLeftDown) * m_forcePercent / 100;
             int vrd = m_mfd->value(BaseUtils::tcRightDown) * m_forcePercent / 100;
-            m_targets << Target(0, vu, BaseUtils::tcUp)
+            m_targets << Target(0, vu, BaseUtils::tcTop)
                       << Target(-vld * cos(M_PI/6), -vld * sin(M_PI/6), BaseUtils::tcLeftDown)
                       << Target(vrd * cos(M_PI/6), -vrd * sin(M_PI/6), BaseUtils::tcRightDown);
 
@@ -181,12 +194,6 @@ void TriangleExecute::setMaxForceDialogAccepted()
             m_stageCounter = 0;
             m_stage = TriangleDefines::stgTraining;
             setRecordLengthTitle(tr("Этап обучения"));
-
-//            m_res->setFreq(freqStab());
-//            m_res->setDiap(diap());
-//            m_res->setForce(m_forcePercent);
-//            m_res->setStageTime(m_stageTime);
-//            m_res->setDirection(m_direction);
 
 //            if (m_patientWin)
 //                m_patientWin->setDiapSpecific(static_cast<int>(m_forcePercent * 1.2));
@@ -226,7 +233,7 @@ void TriangleExecute::nextCorner()
         if (cur < 2)
             ++cur;
         else
-            cur = BaseUtils::tcUp;
+            cur = BaseUtils::tcTop;
     }
     m_curCorner = static_cast<BaseUtils::TriangleCorner>(cur);
 }

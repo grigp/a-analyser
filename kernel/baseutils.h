@@ -108,25 +108,25 @@ static QMap<CirceRoundRuleMode, QString> CirceRoundRuleModeValueName {
 enum TriangleCorner
 {
       tcNone = -1
-    , tcUp = 0
+    , tcTop = 0
     , tcLeftDown
     , tcRightDown
 };
 
 static QMap<QString, TriangleCorner> TriangleCornerValueIndex {
-    std::pair<QString, TriangleCorner> ("up", tcUp)
+    std::pair<QString, TriangleCorner> ("top", tcTop)
   , std::pair<QString, TriangleCorner> ("left_down", tcLeftDown)
   , std::pair<QString, TriangleCorner> ("right_down", tcRightDown)
 };
 
 static QMap<TriangleCorner, QString> TriangleCornerValueUIDName {
-    std::pair<TriangleCorner, QString> (tcUp, "up")
+    std::pair<TriangleCorner, QString> (tcTop, "top")
   , std::pair<TriangleCorner, QString> (tcLeftDown, "left_down")
   , std::pair<TriangleCorner, QString> (tcRightDown, "right_down")
 };
 
 static QMap<TriangleCorner, QString> TriangleCornerValueName {
-    std::pair<TriangleCorner, QString> (tcUp, QCoreApplication::tr("верхняя"))
+    std::pair<TriangleCorner, QString> (tcTop, QCoreApplication::tr("верхняя"))
   , std::pair<TriangleCorner, QString> (tcLeftDown, QCoreApplication::tr("левая"))
   , std::pair<TriangleCorner, QString> (tcRightDown, QCoreApplication::tr("правая"))
 };

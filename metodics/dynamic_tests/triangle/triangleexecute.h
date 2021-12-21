@@ -9,6 +9,7 @@
 
 class SetMaxForceDialog;
 class TrianglePatientWindow;
+class TriangleResultData;
 
 /*!
  * \brief Структура записи о треугольнике Target struct
@@ -95,6 +96,8 @@ private:
 
     int m_stageCounter {0};   ///< Счетчик отсчетов на этапе
     int m_startAnalysis {0};  ///< Точка начала этапа анализа (в отсчетах)
+
+    TriangleResultData* m_res {nullptr};
 
 };
 
