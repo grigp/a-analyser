@@ -88,6 +88,11 @@ void StabDynamicTestExecute::isTraceControl(const bool isTrace)
     ui->cbShowTrace->setVisible(isTrace);
 }
 
+void StabDynamicTestExecute::setRecordLengthTitle(const QString title)
+{
+    ui->lblRecLenTitle->setText(title);
+}
+
 void StabDynamicTestExecute::setVisibleRecordLength(const bool visible)
 {
     ui->lblRecLenTitle->setVisible(visible);
@@ -102,6 +107,16 @@ void StabDynamicTestExecute::setRecordLength(const int length)
 
 }
 
+void StabDynamicTestExecute::setRecordPosition(const int pos, const int recLen)
+{
+    if (recLen > 0)
+    {
+        ui->lblRecLen->setText(BaseUtils::getTimeBySecCount(pos / m_freqStab) + " / " +
+                               BaseUtils::getTimeBySecCount(recLen / m_freqStab));
+        ui->pbRec->setValue( pos * 100 / recLen);
+    }
+}
+
 QString StabDynamicTestExecute::selectedChannel() const
 {
     return ui->cbSelectChannel->currentData(ChannelsUtils::ChannelUidRole).toString();
@@ -110,6 +125,11 @@ QString StabDynamicTestExecute::selectedChannel() const
 void StabDynamicTestExecute::addMarker()
 {
     ui->wgtSKG->addMarker();
+}
+
+void StabDynamicTestExecute::setVisibleMarker(const bool isVisible)
+{
+    ui->wgtSKG->setVisibleMarker(isVisible);
 }
 
 void StabDynamicTestExecute::addTarget(const double x, const double y, const QColor colorBackground, const QColor colorBorder)

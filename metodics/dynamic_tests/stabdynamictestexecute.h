@@ -62,12 +62,25 @@ protected:
     void isShowValues(const bool isShow);
     void isTraceControl(const bool isTrace);
 
+    /*!
+     * \brief Устанавливает текст метки "Длительность записи"
+     */
+    void setRecordLengthTitle(const QString title);
+
     void setVisibleRecordLength(const bool visible);
+
     /*!
      * \brief Устанавливает длительность записи для отображения
      * \param length - Длительность записи в пакетах
      */
     void setRecordLength(const int length);
+
+    /*!
+     * \brief Принудительная установка индикатора времени записи
+     * \param pos - позиция в пакетах
+     * \param recLen - длительность в пакетах
+     */
+    void setRecordPosition(const int pos, const int recLen);
 
     /*!
      * \brief Возвращает id выбранного канала
@@ -85,6 +98,11 @@ protected:
      * \brief Добавляет маркер
      */
     void addMarker();
+
+    /*!
+     * \brief Управление видимостью маркера
+     */
+    void setVisibleMarker(const bool isVisible);
 
     /*!
      * \brief Добавляет метку цели

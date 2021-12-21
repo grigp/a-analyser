@@ -78,8 +78,11 @@ void TriangleExecute::recording()
     else
     {
         m_stage = TriangleDefines::stgWaiting;
+        setRecordLengthTitle(tr("Длительность записи"));
         clearTargets();
         m_targets.clear();
+        setVisibleMarker(true);
+        m_patientWin->setVisibleMarker(true);
         StabDynamicTestExecute::recording();
     }
 
@@ -102,13 +105,22 @@ void TriangleExecute::getData(DeviceProtocols::DeviceData *data)
             m_stageCounter = 0;
         }
 
+        if (m_stage == TriangleDefines::stgTraining)
+            setRecordPosition(recCount(), m_trainingTime * freqStab());
+        else
+        if (m_stage == TriangleDefines::stgAnalysis)
+            setRecordPosition(recCount() - m_startAnalysis, m_analysisTime * freqStab());
+
         if ((recCount() >= m_trainingTime * freqStab()) && (m_stage == TriangleDefines::stgTraining))
         {
             if (m_stageCounter == BaseUtils::tcUp)
             {
                 m_stage = TriangleDefines::stgAnalysis;
+                setRecordLengthTitle(tr("Этап анализа"));
                 m_startAnalysis = recCount();
                 clearTargets();
+                setVisibleMarker(m_showMarkerAnal);
+                m_patientWin->setVisibleMarker(m_showMarkerAnal);
             }
         }
         else
@@ -168,6 +180,7 @@ void TriangleExecute::setMaxForceDialogAccepted()
 
             m_stageCounter = 0;
             m_stage = TriangleDefines::stgTraining;
+            setRecordLengthTitle(tr("Этап обучения"));
 
 //            m_res->setFreq(freqStab());
 //            m_res->setDiap(diap());
@@ -189,7 +202,7 @@ void TriangleExecute::setMaxForceDialogAccepted()
 
 void TriangleExecute::showCurrentCorner()
 {
-    if (m_curCorner < m_targets.size())
+    if (m_curCorner < m_targets.size() && m_stage != TriangleDefines::stgAnalysis)
     {
         setTarget(m_targets.at(m_curCorner).x, m_targets.at(m_curCorner).y, 3);
         if (m_patientWin)
