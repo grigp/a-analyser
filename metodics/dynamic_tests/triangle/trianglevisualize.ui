@@ -175,9 +175,70 @@
                    </spacer>
                   </item>
                   <item>
-                   <widget class="QToolButton" name="toolButton">
+                   <widget class="QToolButton" name="tbShowAllTraining">
                     <property name="text">
                      <string>...</string>
+                    </property>
+                    <property name="icon">
+                     <iconset resource="../../../kernel.qrc">
+                      <normaloff>:/images/Animate/Volume.png</normaloff>:/images/Animate/Volume.png</iconset>
+                    </property>
+                    <property name="checkable">
+                     <bool>true</bool>
+                    </property>
+                    <property name="checked">
+                     <bool>true</bool>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QLabel" name="lblTrnglNumTraining">
+                    <property name="text">
+                     <string>0</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QToolButton" name="tbPrevTraining">
+                    <property name="text">
+                     <string>...</string>
+                    </property>
+                    <property name="icon">
+                     <iconset resource="../../../kernel.qrc">
+                      <normaloff>:/images/Animate/Prev.png</normaloff>:/images/Animate/Prev.png</iconset>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QToolButton" name="tbNextTraining">
+                    <property name="text">
+                     <string>...</string>
+                    </property>
+                    <property name="icon">
+                     <iconset resource="../../../kernel.qrc">
+                      <normaloff>:/images/Animate/Next.png</normaloff>:/images/Animate/Next.png</iconset>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QToolButton" name="tbPlusTraining">
+                    <property name="text">
+                     <string>...</string>
+                    </property>
+                    <property name="icon">
+                     <iconset resource="../../../kernel.qrc">
+                      <normaloff>:/images/Animate/Plus.png</normaloff>:/images/Animate/Plus.png</iconset>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QToolButton" name="tbMinusTraining">
+                    <property name="text">
+                     <string>...</string>
+                    </property>
+                    <property name="icon">
+                     <iconset resource="../../../kernel.qrc">
+                      <normaloff>:/images/Animate/Minus.png</normaloff>:/images/Animate/Minus.png</iconset>
                     </property>
                    </widget>
                   </item>
@@ -267,9 +328,70 @@
                    </spacer>
                   </item>
                   <item>
-                   <widget class="QToolButton" name="toolButton_2">
+                   <widget class="QToolButton" name="tbShowAllAnalysis">
                     <property name="text">
                      <string>...</string>
+                    </property>
+                    <property name="icon">
+                     <iconset resource="../../../kernel.qrc">
+                      <normaloff>:/images/Animate/Volume.png</normaloff>:/images/Animate/Volume.png</iconset>
+                    </property>
+                    <property name="checkable">
+                     <bool>true</bool>
+                    </property>
+                    <property name="checked">
+                     <bool>true</bool>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QLabel" name="lblTrnglNumAnalysis">
+                    <property name="text">
+                     <string>0</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QToolButton" name="tbPrevAnalysis">
+                    <property name="text">
+                     <string>...</string>
+                    </property>
+                    <property name="icon">
+                     <iconset resource="../../../kernel.qrc">
+                      <normaloff>:/images/Animate/Prev.png</normaloff>:/images/Animate/Prev.png</iconset>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QToolButton" name="tbNextAnalysis">
+                    <property name="text">
+                     <string>...</string>
+                    </property>
+                    <property name="icon">
+                     <iconset resource="../../../kernel.qrc">
+                      <normaloff>:/images/Animate/Next.png</normaloff>:/images/Animate/Next.png</iconset>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QToolButton" name="tbPlusAnalysis">
+                    <property name="text">
+                     <string>...</string>
+                    </property>
+                    <property name="icon">
+                     <iconset resource="../../../kernel.qrc">
+                      <normaloff>:/images/Animate/Plus.png</normaloff>:/images/Animate/Plus.png</iconset>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QToolButton" name="tbMinusAnalysis">
+                    <property name="text">
+                     <string>...</string>
+                    </property>
+                    <property name="icon">
+                     <iconset resource="../../../kernel.qrc">
+                      <normaloff>:/images/Animate/Minus.png</normaloff>:/images/Animate/Minus.png</iconset>
                     </property>
                    </widget>
                   </item>
@@ -321,7 +443,9 @@
    <container>1</container>
   </customwidget>
  </customwidgets>
- <resources/>
+ <resources>
+  <include location="../../../kernel.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>twPages</sender>
