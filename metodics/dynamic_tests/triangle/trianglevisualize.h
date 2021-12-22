@@ -4,11 +4,15 @@
 #include <QWidget>
 #include <QPrinter>
 
+#include "baseutils.h"
+
 namespace Ui {
 class TriangleVisualize;
 }
 
 class TriangleCalculator;
+class AreaSKG;
+class Stabilogram;
 
 /*!
  * \brief Класс виджета показа результатов теста Треугольник TriangleVisualize class
@@ -32,12 +36,26 @@ public:
 
 private slots:
     void curPageChanged(int pageIdx);
-
+    void splitterDiagMoved(int pos,int index);
 
 private:
     Ui::TriangleVisualize *ui;
 
+    void getSignal(const QString &testUid);
+
+    /*!
+     * \brief Прорисовывает статокинезиграмму
+     * \param area - зона построения
+     * \param section - участок сигнала
+     */
+    void showSKG(AreaSKG* area, BaseUtils::Section section);
+
+    void saveSplitterPositionDiag();
+    void restoreSplitterPositionDiag();
+
     TriangleCalculator* m_calculator {nullptr};
+    Stabilogram* m_stab {nullptr};
+
 };
 
 #endif // TRIANGLEVISUALIZE_H

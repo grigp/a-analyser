@@ -26,7 +26,7 @@ public:
      * \brief Задает сигнал для отображения в виджете при использовании в визуале
      * \param signal
      */
-    void setSignal(SignalAccess *signal);
+    void setSignal(SignalAccess *signal, const int begin = -1, const int end = -1);
 
     /*!
      * \brief Устанавливает признак центровки сигнала
@@ -61,6 +61,8 @@ private:
     int m_height {0};
     double m_offsX {0}, m_offsY {0};
     bool m_isZeroing {false};
+    int m_begin = -1;
+    int m_end = -1;
 
     SignalAccess *m_signal {nullptr};
 

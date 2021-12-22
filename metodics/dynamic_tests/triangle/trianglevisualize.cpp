@@ -3,9 +3,13 @@
 
 #include <QPainter>
 
+#include "channelsdefines.h"
+#include "datadefines.h"
+#include "dataprovider.h"
 #include "settingsprovider.h"
 #include "trianglecalculator.h"
 #include "reportelements.h"
+#include "stabilogram.h"
 
 TriangleVisualize::TriangleVisualize(QWidget *parent) :
     QWidget(parent),
@@ -15,6 +19,8 @@ TriangleVisualize::TriangleVisualize(QWidget *parent) :
 
     auto val = SettingsProvider::valueFromRegAppCopy("TriangleResultWidget", "CurrentPage").toInt();
     ui->twPages->setCurrentIndex(val);
+
+    restoreSplitterPositionDiag();
 }
 
 TriangleVisualize::~TriangleVisualize()
@@ -28,6 +34,11 @@ void TriangleVisualize::setTest(const QString &testUid)
     {
         m_calculator = new TriangleCalculator(testUid, this);
         m_calculator->calculate();
+
+        getSignal(testUid);
+
+        showSKG(ui->wgtSKGTraining, BaseUtils::Section(0, m_calculator->trainingLength()));
+        showSKG(ui->wgtSKGAnalysis, BaseUtils::Section(m_calculator->trainingLength(), m_calculator->signalLength()));
     }
 }
 
@@ -70,5 +81,50 @@ void TriangleVisualize::print(QPrinter *printer, const QString &testUid)
 void TriangleVisualize::curPageChanged(int pageIdx)
 {
     SettingsProvider::setValueToRegAppCopy("TriangleResultWidget", "CurrentPage", pageIdx);
+}
+
+void TriangleVisualize::splitterDiagMoved(int pos, int index)
+{
+    Q_UNUSED(pos);
+    Q_UNUSED(index);
+    saveSplitterPositionDiag();
+    //    setSKGSize();
+}
+
+void TriangleVisualize::getSignal(const QString &testUid)
+{
+    DataDefines::TestInfo ti;
+    if (DataProvider::getTestInfo(testUid, ti))
+        for (int i = 0; i < ti.probes.size(); ++i)
+        {
+            DataDefines::ProbeInfo pi;
+            if (DataProvider::getProbeInfo(ti.probes.at(i), pi))
+                if (DataProvider::channelExists(pi.uid, ChannelsDefines::chanStab) &&
+                    DataProvider::channelExists(pi.uid, ChannelsDefines::chanTriangleResult))
+                {
+                    QByteArray baStab;
+                    if (DataProvider::getChannel(pi.uid, ChannelsDefines::chanStab, baStab))
+                        m_stab = new Stabilogram(baStab);
+                }
+        }
+}
+
+void TriangleVisualize::showSKG(AreaSKG *area, BaseUtils::Section section)
+{
+    area->setSignal(m_stab, section.begin, section.end);
+}
+
+void TriangleVisualize::saveSplitterPositionDiag()
+{
+    SettingsProvider::setValueToRegAppCopy("TriangleResultWidget", "SplitterDiagramPosition", ui->splDiag->saveState());
+    SettingsProvider::setValueToRegAppCopy("TriangleResultWidget", "SplitterDiagramAreasesPosition", ui->splDiagAreases->saveState());
+}
+
+void TriangleVisualize::restoreSplitterPositionDiag()
+{
+    auto valDiag = SettingsProvider::valueFromRegAppCopy("TriangleResultWidget", "SplitterDiagramPosition").toByteArray();
+    ui->splDiag->restoreState(valDiag);
+    auto valDiagAreases = SettingsProvider::valueFromRegAppCopy("TriangleResultWidget", "SplitterDiagramAreasesPosition").toByteArray();
+    ui->splDiagAreases->restoreState(valDiagAreases);
 }
 

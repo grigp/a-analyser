@@ -57,7 +57,7 @@ public:
      * \brief Задает сигнал для отображения в виджете при использовании в визуале
      * \param signal
      */
-    void setSignal(SignalAccess *signal);
+    void setSignal(SignalAccess *signal, const int begin = -1, const int end = -1);
 
     /*!
      * \brief Управляет видимостью маркера

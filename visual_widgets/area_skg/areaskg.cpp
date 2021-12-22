@@ -81,9 +81,9 @@ void AreaSKG::showTrace(const bool trace)
         m_traceSKG->clear();
 }
 
-void AreaSKG::setSignal(SignalAccess *signal)
+void AreaSKG::setSignal(SignalAccess *signal, const int begin, const int end)
 {
-    m_lineSKG->setSignal(signal);
+    m_lineSKG->setSignal(signal, begin, end);
 }
 
 void AreaSKG::setVisibleMarker(const bool visibleMarker)

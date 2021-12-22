@@ -13,6 +13,8 @@ static const QString GroupUid = "{262C7BC3-2EFA-40CA-8D08-D770E76F57FC}";
 static const QString LUpUid = "{E16E7852-9E22-4385-8A3A-B949C27505BB}";
 }
 
+class TriangleResultData;
+
 class TriangleFactors : public ProbeMultifactor
 {
 public:
@@ -43,7 +45,68 @@ public:
      */
     static void registerFactors();
 
-    int diap() const ;
+    int freq() const;
+    int diap() const;
+
+    /*!
+     * \brief Длительность этапа обучения в пакетах
+     */
+    int trainingLength() const;
+
+    /*!
+     * \brief Длительность сигнала в пакетах
+     */
+    int signalLength() const;
+
+    /*!
+     * \brief Верхняя вершина треугольника
+     */
+    QPointF topCorner() const;
+
+    /*!
+     * \brief Левая нижняя вершина треугольника
+     */
+    QPointF leftDownCorner() const;
+
+    /*!
+     * \brief Правая нижняя вершина треугольника
+     */
+    QPointF rightDownCorner() const;
+
+    /*!
+     * \brief Возвращает кол-во треугольников
+     */
+    int trianglesCount() const;
+
+    /*!
+     * \brief Возвращает границы треугольника по номеру
+     * \param idx - номер треугольника
+     */
+    BaseUtils::Section triangle(const int idx) const;
+
+private:
+    /*!
+     * \brief Чтение сигналов, фильтрация
+     */
+    void readSignal();
+
+    /*!
+     * \brief Расчет списка границ треугольников
+     */
+    void computeTrianglesBounds();
+
+    /*!
+     * \brief Читает данные пробы
+     */
+    void getTriangleData();
+
+    TriangleResultData* m_resData;
+
+    QList<BaseUtils::Section> m_triangles;   ///< Список треугольников
+
+    QVector<double> m_x, m_y;                ///< Исходная стабилограмма
+    QVector<double> m_xf, m_yf;              ///< Фильтраванная стабилограмма
+    int m_freq {50};
 };
 
 #endif // TRIANGLEFACTORS_H

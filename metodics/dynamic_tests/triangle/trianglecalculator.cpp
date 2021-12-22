@@ -45,3 +45,66 @@ void TriangleCalculator::fastCalculate()
 {
     TestCalculator::fastCalculate();
 }
+
+int TriangleCalculator::freq() const
+{
+    if (m_factors)
+        return m_factors->freq();
+    return 50;
+}
+
+int TriangleCalculator::diap() const
+{
+    if (m_factors)
+        return m_factors->diap();
+    return 128;
+}
+
+int TriangleCalculator::trainingLength() const
+{
+    if (m_factors)
+        return m_factors->trainingLength();
+    return 0;
+}
+
+int TriangleCalculator::signalLength() const
+{
+    if (m_factors)
+        return m_factors->signalLength();
+    return 0;
+}
+
+QPointF TriangleCalculator::topCorner() const
+{
+    if (m_factors)
+        return m_factors->topCorner();
+    return QPointF();
+}
+
+QPointF TriangleCalculator::leftDownCorner() const
+{
+    if (m_factors)
+        return m_factors->leftDownCorner();
+    return QPointF();
+}
+
+QPointF TriangleCalculator::rightDownCorner() const
+{
+    if (m_factors)
+        return m_factors->rightDownCorner();
+    return QPointF();
+}
+
+int TriangleCalculator::trianglesCount() const
+{
+    if (m_factors)
+        return m_factors->trianglesCount();
+    return 0;
+}
+
+BaseUtils::Section TriangleCalculator::triangle(const int idx) const
+{
+    if (m_factors)
+        return m_factors->triangle(idx);
+    return BaseUtils::Section(0, 0);
+}

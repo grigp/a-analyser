@@ -130,8 +130,8 @@ void StepDeviationVisualize::showGraph()
     {
         SignalsDefines::StabRec rec;
         rec.x = m_calculator->signal(i);
-//        rec.y = m_calculator->signal(i);
-        rec.y = m_calculator->signalFiltred(i);
+        rec.y = m_calculator->signal(i);
+//        rec.y = m_calculator->signalFiltred(i);
         signal->addValue(rec);
     }
 

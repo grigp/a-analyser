@@ -43,7 +43,14 @@ void LineSKG::paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWi
     int x2 = 0;
     int y2 = 0;
 
-    for (int i = 0; i < m_signal->size(); ++i)
+    int b = 0;
+    if (m_begin != -1)
+        b = m_begin;
+    int e = m_signal->size();
+    if (m_end != -1)
+        e = m_end;
+
+    for (int i = b; i < e; ++i)
     {
         if (m_isZeroing)
         {
@@ -125,9 +132,11 @@ void LineSKG::setDiap(int diap)
     updateItem();
 }
 
-void LineSKG::setSignal(SignalAccess *signal)
+void LineSKG::setSignal(SignalAccess *signal, const int begin, const int end)
 {
     m_signal = signal;
+    m_begin = begin;
+    m_end = end;
 
     m_offsX = 0;
     m_offsY = 0;
