@@ -67,6 +67,13 @@ int TriangleCalculator::trainingLength() const
     return 0;
 }
 
+int TriangleCalculator::firstAnalysisTriangle() const
+{
+    if (m_factors)
+        return  m_factors->firstAnalysisTriangle();
+    return 0;
+}
+
 int TriangleCalculator::signalLength() const
 {
     if (m_factors)

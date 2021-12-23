@@ -10,10 +10,16 @@
 #include <QTimer>
 #include <QDebug>
 
+namespace
+{
+QRectF SceneRect(-128, -128, 256, 256);
+
+}
+
 AreaSKG::AreaSKG(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::AreaSKG)
-  , m_sceneSKG(new QGraphicsScene(QRectF(-128, -128, 256, 256)))
+  , m_sceneSKG(new QGraphicsScene(SceneRect))
   , m_gridSKG(new GridSKG(128))
   , m_traceSKG(new TraceSKG(128))
   , m_lineSKG(new LineSKG(128))
@@ -84,6 +90,12 @@ void AreaSKG::showTrace(const bool trace)
 void AreaSKG::setSignal(SignalAccess *signal, const int begin, const int end)
 {
     m_lineSKG->setSignal(signal, begin, end);
+}
+
+void AreaSKG::setSection(const int begin, const int end)
+{
+    m_lineSKG->setSection(begin, end);
+    m_sceneSKG->update(SceneRect);
 }
 
 void AreaSKG::setVisibleMarker(const bool visibleMarker)

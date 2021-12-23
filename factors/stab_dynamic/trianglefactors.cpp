@@ -31,9 +31,9 @@ bool TriangleFactors::isValid(const QString &testUid, const QString &probeUid)
 
 void TriangleFactors::calculate()
 {
+    getTriangleData();
     readSignal();
     computeTrianglesBounds();
-    getTriangleData();
 }
 
 void TriangleFactors::registerFactors()
@@ -156,6 +156,11 @@ void TriangleFactors::computeTrianglesBounds()
                 end = i;
                 if (begin > -1 && end > -1)
                     m_triangles << BaseUtils::Section(begin, end);
+                //! Первый треугольник на этапе анализа
+                if (begin < m_resData->trainingLength() && end >= m_resData->trainingLength())
+                    m_firstAnalysisTriangle = m_triangles.size();
+                if (begin == m_resData->trainingLength())
+                    m_firstAnalysisTriangle = m_triangles.size() - 1;
                 begin = i;
             }
 

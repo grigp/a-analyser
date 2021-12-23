@@ -34,6 +34,11 @@ public:
     int trainingLength() const;
 
     /*!
+     * \brief Возвращает индекс первого треугольника на этапе анализа
+     */
+    int firstAnalysisTriangle() const;
+
+    /*!
      * \brief Длительность сигнала в пакетах
      */
     int signalLength() const;

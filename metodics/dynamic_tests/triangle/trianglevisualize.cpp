@@ -2,6 +2,7 @@
 #include "ui_trianglevisualize.h"
 
 #include <QPainter>
+#include <QDebug>
 
 #include "channelsdefines.h"
 #include "datadefines.h"
@@ -39,6 +40,10 @@ void TriangleVisualize::setTest(const QString &testUid)
 
         showSKG(ui->wgtSKGTraining, BaseUtils::Section(0, m_calculator->trainingLength()));
         showSKG(ui->wgtSKGAnalysis, BaseUtils::Section(m_calculator->trainingLength(), m_calculator->signalLength()));
+
+        m_curTriangleAnalysis = m_calculator->firstAnalysisTriangle();
+        setBtnPNTrainingEnabled();
+        setBtnPNAnalysisEnabled();
     }
 }
 
@@ -89,6 +94,88 @@ void TriangleVisualize::splitterDiagMoved(int pos, int index)
     Q_UNUSED(index);
     saveSplitterPositionDiag();
     //    setSKGSize();
+}
+
+void TriangleVisualize::btnAllTrainingClicked(bool pressed)
+{
+    if (pressed)
+        ui->wgtSKGTraining->setSection(0, m_calculator->trainingLength());
+    else
+        ui->wgtSKGTraining->setSection(m_calculator->triangle(m_curTriangleTraining).begin,
+                                       m_calculator->triangle(m_curTriangleTraining).end);
+    setBtnPNTrainingEnabled();
+}
+
+void TriangleVisualize::btnAllAnalysisClicked(bool pressed)
+{
+    if (pressed)
+        ui->wgtSKGAnalysis->setSection(m_calculator->trainingLength(), m_calculator->signalLength());
+    else
+        ui->wgtSKGAnalysis->setSection(m_calculator->triangle(m_curTriangleAnalysis).begin,
+                                       m_calculator->triangle(m_curTriangleAnalysis).end);
+    setBtnPNAnalysisEnabled();
+}
+
+void TriangleVisualize::btnPrevTrainingClicked()
+{
+    if (m_curTriangleTraining > 0)
+    {
+        --m_curTriangleTraining;
+        ui->wgtSKGTraining->setSection(m_calculator->triangle(m_curTriangleTraining).begin,
+                                       m_calculator->triangle(m_curTriangleTraining).end);
+    }
+    setBtnPNTrainingEnabled();
+}
+
+void TriangleVisualize::btnNextTrainingClicked()
+{
+    if (m_curTriangleTraining < m_calculator->firstAnalysisTriangle() - 1)
+    {
+        ++m_curTriangleTraining;
+        ui->wgtSKGTraining->setSection(m_calculator->triangle(m_curTriangleTraining).begin,
+                                       m_calculator->triangle(m_curTriangleTraining).end);
+    }
+    setBtnPNTrainingEnabled();
+}
+
+void TriangleVisualize::setBtnPNTrainingEnabled()
+{
+    ui->tbPrevTraining->setEnabled(!ui->tbShowAllTraining->isChecked() &&
+                                   m_curTriangleTraining > 0);
+    ui->tbNextTraining->setEnabled(!ui->tbShowAllTraining->isChecked() &&
+                                   m_curTriangleTraining < m_calculator->firstAnalysisTriangle() - 1);
+    ui->lblTrnglNumTraining->setText(QString::number(m_curTriangleTraining + 1));
+}
+
+void TriangleVisualize::btnPrevAnalysisClicked()
+{
+    if (m_curTriangleAnalysis > m_calculator->firstAnalysisTriangle())
+    {
+        --m_curTriangleAnalysis;
+        ui->wgtSKGAnalysis->setSection(m_calculator->triangle(m_curTriangleAnalysis).begin,
+                                       m_calculator->triangle(m_curTriangleAnalysis).end);
+    }
+    setBtnPNAnalysisEnabled();
+}
+
+void TriangleVisualize::btnNextAnalysisClicked()
+{
+    if (m_curTriangleAnalysis < m_calculator->trianglesCount() - 1)
+    {
+        ++m_curTriangleAnalysis;
+        ui->wgtSKGAnalysis->setSection(m_calculator->triangle(m_curTriangleAnalysis).begin,
+                                       m_calculator->triangle(m_curTriangleAnalysis).end);
+    }
+    setBtnPNAnalysisEnabled();
+}
+
+void TriangleVisualize::setBtnPNAnalysisEnabled()
+{
+    ui->tbPrevAnalysis->setEnabled(!ui->tbShowAllAnalysis->isChecked() &&
+                                   m_curTriangleAnalysis > m_calculator->firstAnalysisTriangle());
+    ui->tbNextAnalysis->setEnabled(!ui->tbShowAllAnalysis->isChecked() &&
+                                   m_curTriangleAnalysis < m_calculator->trianglesCount() - 1);
+    ui->lblTrnglNumAnalysis->setText(QString::number(m_curTriangleAnalysis - m_calculator->firstAnalysisTriangle() + 1));
 }
 
 void TriangleVisualize::getSignal(const QString &testUid)

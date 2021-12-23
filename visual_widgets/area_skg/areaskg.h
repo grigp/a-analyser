@@ -56,8 +56,15 @@ public:
     /*!
      * \brief Задает сигнал для отображения в виджете при использовании в визуале
      * \param signal
+     * \param begin, end - границы участка
      */
     void setSignal(SignalAccess *signal, const int begin = -1, const int end = -1);
+
+    /*!
+     * \brief Задает границы участка сигнала
+     * \param begin, end - границы участка
+     */
+    void setSection(const int begin, const int end);
 
     /*!
      * \brief Управляет видимостью маркера

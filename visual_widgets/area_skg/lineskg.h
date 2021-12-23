@@ -29,6 +29,12 @@ public:
     void setSignal(SignalAccess *signal, const int begin = -1, const int end = -1);
 
     /*!
+     * \brief Задает границы участка сигнала
+     * \param begin, end - границы участка
+     */
+    void setSection(const int begin, const int end);
+
+    /*!
      * \brief Устанавливает признак центровки сигнала
      */
     void setZeroing(const bool zeroing);

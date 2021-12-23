@@ -38,6 +38,16 @@ private slots:
     void curPageChanged(int pageIdx);
     void splitterDiagMoved(int pos,int index);
 
+    void btnAllTrainingClicked(bool pressed);
+    void btnAllAnalysisClicked(bool pressed);
+
+    void btnPrevTrainingClicked();
+    void btnNextTrainingClicked();
+    void setBtnPNTrainingEnabled();
+    void btnPrevAnalysisClicked();
+    void btnNextAnalysisClicked();
+    void setBtnPNAnalysisEnabled();
+
 private:
     Ui::TriangleVisualize *ui;
 
@@ -55,6 +65,9 @@ private:
 
     TriangleCalculator* m_calculator {nullptr};
     Stabilogram* m_stab {nullptr};
+
+    int m_curTriangleTraining {0};  ///< Отображаемый треугольник на этапе обучения в режиме одного треугольника
+    int m_curTriangleAnalysis {0};  ///< Отображаемый треугольник на этапе анализа в режиме одного треугольника
 
 };
 

@@ -176,12 +176,18 @@
                   </item>
                   <item>
                    <widget class="QToolButton" name="tbShowAllTraining">
+                    <property name="toolTip">
+                     <string>Показывать все треугольники</string>
+                    </property>
+                    <property name="toolTipDuration">
+                     <number>-1</number>
+                    </property>
                     <property name="text">
                      <string>...</string>
                     </property>
                     <property name="icon">
                      <iconset resource="../../../kernel.qrc">
-                      <normaloff>:/images/Animate/Volume.png</normaloff>:/images/Animate/Volume.png</iconset>
+                      <normaloff>:/images/Animate/Triangles.png</normaloff>:/images/Animate/Triangles.png</iconset>
                     </property>
                     <property name="checkable">
                      <bool>true</bool>
@@ -194,12 +200,21 @@
                   <item>
                    <widget class="QLabel" name="lblTrnglNumTraining">
                     <property name="text">
-                     <string>0</string>
+                     <string>1</string>
                     </property>
                    </widget>
                   </item>
                   <item>
                    <widget class="QToolButton" name="tbPrevTraining">
+                    <property name="enabled">
+                     <bool>false</bool>
+                    </property>
+                    <property name="toolTip">
+                     <string>Предыдущий треугольник</string>
+                    </property>
+                    <property name="toolTipDuration">
+                     <number>-1</number>
+                    </property>
                     <property name="text">
                      <string>...</string>
                     </property>
@@ -211,6 +226,12 @@
                   </item>
                   <item>
                    <widget class="QToolButton" name="tbNextTraining">
+                    <property name="toolTip">
+                     <string>Следующий треугольник</string>
+                    </property>
+                    <property name="toolTipDuration">
+                     <number>-1</number>
+                    </property>
                     <property name="text">
                      <string>...</string>
                     </property>
@@ -222,6 +243,12 @@
                   </item>
                   <item>
                    <widget class="QToolButton" name="tbPlusTraining">
+                    <property name="toolTip">
+                     <string>Приблизить</string>
+                    </property>
+                    <property name="toolTipDuration">
+                     <number>-1</number>
+                    </property>
                     <property name="text">
                      <string>...</string>
                     </property>
@@ -233,6 +260,12 @@
                   </item>
                   <item>
                    <widget class="QToolButton" name="tbMinusTraining">
+                    <property name="toolTip">
+                     <string>Отдалить</string>
+                    </property>
+                    <property name="toolTipDuration">
+                     <number>-1</number>
+                    </property>
                     <property name="text">
                      <string>...</string>
                     </property>
@@ -329,12 +362,18 @@
                   </item>
                   <item>
                    <widget class="QToolButton" name="tbShowAllAnalysis">
+                    <property name="toolTip">
+                     <string>Показывать все треугольники</string>
+                    </property>
+                    <property name="toolTipDuration">
+                     <number>-1</number>
+                    </property>
                     <property name="text">
                      <string>...</string>
                     </property>
                     <property name="icon">
                      <iconset resource="../../../kernel.qrc">
-                      <normaloff>:/images/Animate/Volume.png</normaloff>:/images/Animate/Volume.png</iconset>
+                      <normaloff>:/images/Animate/Triangles.png</normaloff>:/images/Animate/Triangles.png</iconset>
                     </property>
                     <property name="checkable">
                      <bool>true</bool>
@@ -347,12 +386,21 @@
                   <item>
                    <widget class="QLabel" name="lblTrnglNumAnalysis">
                     <property name="text">
-                     <string>0</string>
+                     <string>1</string>
                     </property>
                    </widget>
                   </item>
                   <item>
                    <widget class="QToolButton" name="tbPrevAnalysis">
+                    <property name="enabled">
+                     <bool>false</bool>
+                    </property>
+                    <property name="toolTip">
+                     <string>Предыдущий треугольник</string>
+                    </property>
+                    <property name="toolTipDuration">
+                     <number>-1</number>
+                    </property>
                     <property name="text">
                      <string>...</string>
                     </property>
@@ -364,6 +412,12 @@
                   </item>
                   <item>
                    <widget class="QToolButton" name="tbNextAnalysis">
+                    <property name="toolTip">
+                     <string>Следующий треугольник</string>
+                    </property>
+                    <property name="toolTipDuration">
+                     <number>-1</number>
+                    </property>
                     <property name="text">
                      <string>...</string>
                     </property>
@@ -375,6 +429,12 @@
                   </item>
                   <item>
                    <widget class="QToolButton" name="tbPlusAnalysis">
+                    <property name="toolTip">
+                     <string>Приблизить</string>
+                    </property>
+                    <property name="toolTipDuration">
+                     <number>-1</number>
+                    </property>
                     <property name="text">
                      <string>...</string>
                     </property>
@@ -386,6 +446,12 @@
                   </item>
                   <item>
                    <widget class="QToolButton" name="tbMinusAnalysis">
+                    <property name="toolTip">
+                     <string>Отдалить</string>
+                    </property>
+                    <property name="toolTipDuration">
+                     <number>-1</number>
+                    </property>
                     <property name="text">
                      <string>...</string>
                     </property>
@@ -495,10 +561,112 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>tbShowAllTraining</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>TriangleVisualize</receiver>
+   <slot>btnAllTrainingClicked(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>426</x>
+     <y>29</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1143</x>
+     <y>8</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>tbShowAllAnalysis</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>TriangleVisualize</receiver>
+   <slot>btnAllAnalysisClicked(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>988</x>
+     <y>17</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1138</x>
+     <y>38</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>tbPrevTraining</sender>
+   <signal>clicked()</signal>
+   <receiver>TriangleVisualize</receiver>
+   <slot>btnPrevTrainingClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>471</x>
+     <y>24</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1137</x>
+     <y>68</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>tbNextTraining</sender>
+   <signal>clicked()</signal>
+   <receiver>TriangleVisualize</receiver>
+   <slot>btnNextTrainingClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>493</x>
+     <y>17</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1138</x>
+     <y>93</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>tbPrevAnalysis</sender>
+   <signal>clicked()</signal>
+   <receiver>TriangleVisualize</receiver>
+   <slot>btnPrevAnalysisClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1023</x>
+     <y>22</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1139</x>
+     <y>119</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>tbNextAnalysis</sender>
+   <signal>clicked()</signal>
+   <receiver>TriangleVisualize</receiver>
+   <slot>btnNextAnalysisClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1048</x>
+     <y>22</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1137</x>
+     <y>151</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>curPageChanged(int)</slot>
   <slot>splitterMoved(int,int)</slot>
   <slot>splitterDiagMoved(int,int)</slot>
+  <slot>btnAllTrainingClicked(bool)</slot>
+  <slot>btnAllAnalysisClicked(bool)</slot>
+  <slot>btnPrevTrainingClicked()</slot>
+  <slot>btnNextTrainingClicked()</slot>
+  <slot>btnPrevAnalysisClicked()</slot>
+  <slot>btnNextAnalysisClicked()</slot>
  </slots>
 </ui>

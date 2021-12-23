@@ -62,7 +62,7 @@ void LineSKG::paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWi
             x1 = m_signal->value(0, i) * m_prop;
             y1 = - m_signal->value(1, i) * m_prop;
         }
-        if (i > 0)
+        if (i > b)
             painter->drawLine(x1, y1, x2, y2);
         x2 = x1;
         y2 = y1;
@@ -147,6 +147,12 @@ void LineSKG::setSignal(SignalAccess *signal, const int begin, const int end)
     }
     m_offsX = m_offsX / m_signal->size();
     m_offsY = m_offsY / m_signal->size();
+}
+
+void LineSKG::setSection(const int begin, const int end)
+{
+    m_begin = begin;
+    m_end = end;
 }
 
 void LineSKG::setZeroing(const bool zeroing)

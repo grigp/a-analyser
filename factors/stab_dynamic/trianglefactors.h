@@ -54,6 +54,11 @@ public:
     int trainingLength() const;
 
     /*!
+     * \brief Возвращает индекс первого треугольника на этапе анализа
+     */
+    int firstAnalysisTriangle() const {return  m_firstAnalysisTriangle;}
+
+    /*!
      * \brief Длительность сигнала в пакетах
      */
     int signalLength() const;
@@ -107,6 +112,7 @@ private:
     QVector<double> m_x, m_y;                ///< Исходная стабилограмма
     QVector<double> m_xf, m_yf;              ///< Фильтраванная стабилограмма
     int m_freq {50};
+    int m_firstAnalysisTriangle {0};         ///< Первый треугольник на этапе анализа
 };
 
 #endif // TRIANGLEFACTORS_H
