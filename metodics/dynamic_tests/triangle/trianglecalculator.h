@@ -60,6 +60,12 @@ public:
      */
     BaseUtils::Section triangleSection(const int idx) const;
 
+    /*!
+     * \brief Возвращает треугольник по номеру
+     * \param idx - номер треугольника
+     */
+    TriangleDefines::Triangle triangle(const int idx) const;
+
 private:
     TriangleFactors* m_factors {nullptr};
 

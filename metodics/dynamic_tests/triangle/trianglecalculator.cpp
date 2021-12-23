@@ -101,3 +101,10 @@ BaseUtils::Section TriangleCalculator::triangleSection(const int idx) const
         return m_factors->triangleSection(idx);
     return BaseUtils::Section(0, 0);
 }
+
+TriangleDefines::Triangle TriangleCalculator::triangle(const int idx) const
+{
+    if (m_factors)
+        return m_factors->triangle(idx);
+    return TriangleDefines::Triangle(QPointF(), QPointF(), QPointF());
+}

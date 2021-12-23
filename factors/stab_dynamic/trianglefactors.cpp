@@ -7,6 +7,12 @@
 #include "stabilogram.h"
 #include "triangleresultdata.h"
 
+namespace
+{
+static const int PercentPointInCorner = 2;
+
+}
+
 TriangleFactors::TriangleFactors(const QString &testUid,
                                  const QString &probeUid,
                                  QObject *parent)
@@ -75,6 +81,18 @@ TriangleDefines::Triangle TriangleFactors::triangleOriginal()
                                          m_resData->leftDownCorner(),
                                          m_resData->rightDownCorner());
     return TriangleDefines::Triangle(QPointF(), QPointF(), QPointF());
+}
+
+TriangleDefines::Triangle TriangleFactors::triangleTraining()
+{
+    //TriangleDefines::Triangle m_triangleAveragrTraining; ///< Усредненный треугольник на этапе обучения
+
+}
+
+TriangleDefines::Triangle TriangleFactors::triangleAnalysis()
+{
+    //TriangleDefines::Triangle m_triangleAveragrAnalyser; ///< Усредненный треугольник на этапе анализа
+
 }
 
 int TriangleFactors::trianglesCount() const
@@ -171,6 +189,9 @@ void TriangleFactors::computeTrianglesBounds()
 
 void TriangleFactors::computeTriangles()
 {
+    int n = 0;
+    m_triangleAverageTraining = TriangleDefines::Triangle();
+    m_triangleAverageAnalyser = TriangleDefines::Triangle();
     foreach (auto section, m_triangleSections)
     {
         //! Векторы: исходный и повернутые на +120 и -120 градусов
@@ -199,6 +220,13 @@ void TriangleFactors::computeTriangles()
 
         //! Заполнение массива координат вершин
         m_triangles << TriangleDefines::Triangle(t, ld, rd);
+
+        if (n < m_firstAnalysisTriangle)
+        {
+
+        }
+
+        ++n;
     }
 }
 
@@ -212,6 +240,21 @@ QPointF TriangleFactors::computeCorner(QVector<QPointF> &stab)
     //! Сортируем массив
     std::sort(stab.begin(), stab.end(), coordinateTopLessThan);
 
+    //! Кол-во точек
+    int n = stab.size() / (100 / PercentPointInCorner);
+
+    //! Выбор первых N% точек
+    double mx = 0;
+    double my = 0;
+    for (int i = 0; i < n; ++i)
+    {
+        mx = mx + stab.at(i).x();
+        my = my + stab.at(i).y();
+    }
+    mx = mx / n;
+    my = my / n;
+
+    return QPointF(mx, my);
 }
 
 void TriangleFactors::getTriangleData()

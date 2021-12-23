@@ -25,6 +25,8 @@ struct Triangle
     QPointF leftDownCorner;
     QPointF rightDownCorner;
 
+    Triangle()
+    {topCorner = QPointF(0, 0); leftDownCorner = QPointF(0, 0); rightDownCorner = QPointF(0, 0);}
     Triangle(QPointF top, QPointF leftDown, QPointF rightDown)
         : topCorner(top), leftDownCorner(leftDown), rightDownCorner(rightDown) {}
 };
