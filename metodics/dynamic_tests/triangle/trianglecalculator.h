@@ -5,6 +5,7 @@
 
 #include "testcalculator.h"
 #include "baseutils.h"
+#include "triangledefines.h"
 
 class TriangleFactors;
 
@@ -44,19 +45,9 @@ public:
     int signalLength() const;
 
     /*!
-     * \brief Верхняя вершина треугольника
+     * \brief Возвращает оригигальный треугольник
      */
-    QPointF topCorner() const;
-
-    /*!
-     * \brief Левая нижняя вершина треугольника
-     */
-    QPointF leftDownCorner() const;
-
-    /*!
-     * \brief Правая нижняя вершина треугольника
-     */
-    QPointF rightDownCorner() const;
+    TriangleDefines::Triangle triangleOriginal();
 
     /*!
      * \brief Возвращает кол-во треугольников
@@ -67,7 +58,7 @@ public:
      * \brief Возвращает границы треугольника по номеру
      * \param idx - номер треугольника
      */
-    BaseUtils::Section triangle(const int idx) const;
+    BaseUtils::Section triangleSection(const int idx) const;
 
 private:
     TriangleFactors* m_factors {nullptr};

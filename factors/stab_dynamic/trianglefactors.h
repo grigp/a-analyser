@@ -6,6 +6,7 @@
 #include "baseutils.h"
 #include "multifactor.h"
 #include "signalsdefines.h"
+#include "triangledefines.h"
 
 namespace TriangleFactorsDefines
 {
@@ -64,19 +65,9 @@ public:
     int signalLength() const;
 
     /*!
-     * \brief Верхняя вершина треугольника
+     * \brief Возвращает оригигальный треугольник
      */
-    QPointF topCorner() const;
-
-    /*!
-     * \brief Левая нижняя вершина треугольника
-     */
-    QPointF leftDownCorner() const;
-
-    /*!
-     * \brief Правая нижняя вершина треугольника
-     */
-    QPointF rightDownCorner() const;
+    TriangleDefines::Triangle triangleOriginal();
 
     /*!
      * \brief Возвращает кол-во треугольников
@@ -87,7 +78,13 @@ public:
      * \brief Возвращает границы треугольника по номеру
      * \param idx - номер треугольника
      */
-    BaseUtils::Section triangle(const int idx) const;
+    BaseUtils::Section triangleSection(const int idx) const;
+
+    /*!
+     * \brief Возвращает треугольник по номеру
+     * \param idx - номер треугольника
+     */
+    TriangleDefines::Triangle triangle(const int idx) const;
 
 private:
     /*!
@@ -101,13 +98,26 @@ private:
     void computeTrianglesBounds();
 
     /*!
+     * \brief Расчет треугольников
+     */
+    void computeTriangles();
+
+    /*!
+     * \brief Рассчитывает точку вершины треугольника
+     * \param stab - массив точек треугольника (стабилограмма)
+     * \return точку вершины
+     */
+    QPointF computeCorner(QVector<QPointF> &stab);
+
+    /*!
      * \brief Читает данные пробы
      */
     void getTriangleData();
 
     TriangleResultData* m_resData;
 
-    QList<BaseUtils::Section> m_triangles;   ///< Список треугольников
+    QList<BaseUtils::Section> m_triangleSections;   ///< Список участков сигнала треугольников
+    QList<TriangleDefines::Triangle> m_triangles;   ///< Список треугольников
 
     QVector<double> m_x, m_y;                ///< Исходная стабилограмма
     QVector<double> m_xf, m_yf;              ///< Фильтраванная стабилограмма

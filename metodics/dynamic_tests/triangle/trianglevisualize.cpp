@@ -101,8 +101,8 @@ void TriangleVisualize::btnAllTrainingClicked(bool pressed)
     if (pressed)
         ui->wgtSKGTraining->setSection(0, m_calculator->trainingLength());
     else
-        ui->wgtSKGTraining->setSection(m_calculator->triangle(m_curTriangleTraining).begin,
-                                       m_calculator->triangle(m_curTriangleTraining).end);
+        ui->wgtSKGTraining->setSection(m_calculator->triangleSection(m_curTriangleTraining).begin,
+                                       m_calculator->triangleSection(m_curTriangleTraining).end);
     setBtnPNTrainingEnabled();
 }
 
@@ -111,8 +111,8 @@ void TriangleVisualize::btnAllAnalysisClicked(bool pressed)
     if (pressed)
         ui->wgtSKGAnalysis->setSection(m_calculator->trainingLength(), m_calculator->signalLength());
     else
-        ui->wgtSKGAnalysis->setSection(m_calculator->triangle(m_curTriangleAnalysis).begin,
-                                       m_calculator->triangle(m_curTriangleAnalysis).end);
+        ui->wgtSKGAnalysis->setSection(m_calculator->triangleSection(m_curTriangleAnalysis).begin,
+                                       m_calculator->triangleSection(m_curTriangleAnalysis).end);
     setBtnPNAnalysisEnabled();
 }
 
@@ -121,8 +121,8 @@ void TriangleVisualize::btnPrevTrainingClicked()
     if (m_curTriangleTraining > 0)
     {
         --m_curTriangleTraining;
-        ui->wgtSKGTraining->setSection(m_calculator->triangle(m_curTriangleTraining).begin,
-                                       m_calculator->triangle(m_curTriangleTraining).end);
+        ui->wgtSKGTraining->setSection(m_calculator->triangleSection(m_curTriangleTraining).begin,
+                                       m_calculator->triangleSection(m_curTriangleTraining).end);
     }
     setBtnPNTrainingEnabled();
 }
@@ -132,8 +132,8 @@ void TriangleVisualize::btnNextTrainingClicked()
     if (m_curTriangleTraining < m_calculator->firstAnalysisTriangle() - 1)
     {
         ++m_curTriangleTraining;
-        ui->wgtSKGTraining->setSection(m_calculator->triangle(m_curTriangleTraining).begin,
-                                       m_calculator->triangle(m_curTriangleTraining).end);
+        ui->wgtSKGTraining->setSection(m_calculator->triangleSection(m_curTriangleTraining).begin,
+                                       m_calculator->triangleSection(m_curTriangleTraining).end);
     }
     setBtnPNTrainingEnabled();
 }
@@ -152,8 +152,8 @@ void TriangleVisualize::btnPrevAnalysisClicked()
     if (m_curTriangleAnalysis > m_calculator->firstAnalysisTriangle())
     {
         --m_curTriangleAnalysis;
-        ui->wgtSKGAnalysis->setSection(m_calculator->triangle(m_curTriangleAnalysis).begin,
-                                       m_calculator->triangle(m_curTriangleAnalysis).end);
+        ui->wgtSKGAnalysis->setSection(m_calculator->triangleSection(m_curTriangleAnalysis).begin,
+                                       m_calculator->triangleSection(m_curTriangleAnalysis).end);
     }
     setBtnPNAnalysisEnabled();
 }
@@ -163,8 +163,8 @@ void TriangleVisualize::btnNextAnalysisClicked()
     if (m_curTriangleAnalysis < m_calculator->trianglesCount() - 1)
     {
         ++m_curTriangleAnalysis;
-        ui->wgtSKGAnalysis->setSection(m_calculator->triangle(m_curTriangleAnalysis).begin,
-                                       m_calculator->triangle(m_curTriangleAnalysis).end);
+        ui->wgtSKGAnalysis->setSection(m_calculator->triangleSection(m_curTriangleAnalysis).begin,
+                                       m_calculator->triangleSection(m_curTriangleAnalysis).end);
     }
     setBtnPNAnalysisEnabled();
 }

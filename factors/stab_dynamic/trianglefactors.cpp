@@ -34,6 +34,7 @@ void TriangleFactors::calculate()
     getTriangleData();
     readSignal();
     computeTrianglesBounds();
+    computeTriangles();
 }
 
 void TriangleFactors::registerFactors()
@@ -67,33 +68,27 @@ int TriangleFactors::signalLength() const
     return m_x.size();
 }
 
-QPointF TriangleFactors::topCorner() const
+TriangleDefines::Triangle TriangleFactors::triangleOriginal()
 {
     if (m_resData)
-        return m_resData->topCorner();
-    return QPointF();
-}
-
-QPointF TriangleFactors::leftDownCorner() const
-{
-    if (m_resData)
-        return m_resData->leftDownCorner();
-    return QPointF();
-}
-
-QPointF TriangleFactors::rightDownCorner() const
-{
-    if (m_resData)
-        return m_resData->rightDownCorner();
-    return QPointF();
+        return TriangleDefines::Triangle(m_resData->topCorner(),
+                                         m_resData->leftDownCorner(),
+                                         m_resData->rightDownCorner());
+    return TriangleDefines::Triangle(QPointF(), QPointF(), QPointF());
 }
 
 int TriangleFactors::trianglesCount() const
 {
-    return m_triangles.size();
+    return m_triangleSections.size();
 }
 
-BaseUtils::Section TriangleFactors::triangle(const int idx) const
+BaseUtils::Section TriangleFactors::triangleSection(const int idx) const
+{
+    Q_ASSERT(idx >= 0 && idx < m_triangleSections.size());
+    return m_triangleSections.at(idx);
+}
+
+TriangleDefines::Triangle TriangleFactors::triangle(const int idx) const
 {
     Q_ASSERT(idx >= 0 && idx < m_triangles.size());
     return m_triangles.at(idx);
@@ -143,7 +138,7 @@ void TriangleFactors::readSignal()
 
 void TriangleFactors::computeTrianglesBounds()
 {
-    m_triangles.clear();
+    m_triangleSections.clear();
 
     int dir = -2;
     int begin = -1;
@@ -155,12 +150,12 @@ void TriangleFactors::computeTrianglesBounds()
             {
                 end = i;
                 if (begin > -1 && end > -1)
-                    m_triangles << BaseUtils::Section(begin, end);
+                    m_triangleSections << BaseUtils::Section(begin, end);
                 //! Первый треугольник на этапе анализа
                 if (begin < m_resData->trainingLength() && end >= m_resData->trainingLength())
-                    m_firstAnalysisTriangle = m_triangles.size();
+                    m_firstAnalysisTriangle = m_triangleSections.size();
                 if (begin == m_resData->trainingLength())
-                    m_firstAnalysisTriangle = m_triangles.size() - 1;
+                    m_firstAnalysisTriangle = m_triangleSections.size() - 1;
                 begin = i;
             }
 
@@ -172,6 +167,51 @@ void TriangleFactors::computeTrianglesBounds()
             else
                 dir = 0;
         }
+}
+
+void TriangleFactors::computeTriangles()
+{
+    foreach (auto section, m_triangleSections)
+    {
+        //! Векторы: исходный и повернутые на +120 и -120 градусов
+        QVector<QPointF> vn;
+        QVector<QPointF> vrr;
+        QVector<QPointF> vrl;
+        for (int i = section.begin; i < section.end; ++i)
+        {
+            double x = m_x.at(i);
+            double y = m_y.at(i);
+            vn << QPointF(x, y);
+
+            double xr = x * cos(2 * M_PI / 3) + y * sin(2 * M_PI / 3);
+            double yr = - x * sin(2 * M_PI / 3) + y * cos(2 * M_PI / 3);
+            vrr << QPointF(xr, yr);
+
+            xr = x * cos(- 2 * M_PI / 3) + y * sin(- 2 * M_PI / 3);
+            yr = - x * sin(- 2 * M_PI / 3) + y * cos(- 2 * M_PI / 3);
+            vrl << QPointF(xr, yr);
+        }
+
+        //! Расчет координат вершин
+        auto t = computeCorner(vn);
+        auto ld = computeCorner(vrl);
+        auto rd = computeCorner(vrr);
+
+        //! Заполнение массива координат вершин
+        m_triangles << TriangleDefines::Triangle(t, ld, rd);
+    }
+}
+
+bool coordinateTopLessThan(QPointF &p1, QPointF &p2)
+{
+    return p1.y() < p2.y();
+}
+
+QPointF TriangleFactors::computeCorner(QVector<QPointF> &stab)
+{
+    //! Сортируем массив
+    std::sort(stab.begin(), stab.end(), coordinateTopLessThan);
+
 }
 
 void TriangleFactors::getTriangleData()

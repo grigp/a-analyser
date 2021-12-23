@@ -81,25 +81,11 @@ int TriangleCalculator::signalLength() const
     return 0;
 }
 
-QPointF TriangleCalculator::topCorner() const
+TriangleDefines::Triangle TriangleCalculator::triangleOriginal()
 {
     if (m_factors)
-        return m_factors->topCorner();
-    return QPointF();
-}
-
-QPointF TriangleCalculator::leftDownCorner() const
-{
-    if (m_factors)
-        return m_factors->leftDownCorner();
-    return QPointF();
-}
-
-QPointF TriangleCalculator::rightDownCorner() const
-{
-    if (m_factors)
-        return m_factors->rightDownCorner();
-    return QPointF();
+        return m_factors->triangleOriginal();
+    return TriangleDefines::Triangle(QPointF(), QPointF(), QPointF());
 }
 
 int TriangleCalculator::trianglesCount() const
@@ -109,9 +95,9 @@ int TriangleCalculator::trianglesCount() const
     return 0;
 }
 
-BaseUtils::Section TriangleCalculator::triangle(const int idx) const
+BaseUtils::Section TriangleCalculator::triangleSection(const int idx) const
 {
     if (m_factors)
-        return m_factors->triangle(idx);
+        return m_factors->triangleSection(idx);
     return BaseUtils::Section(0, 0);
 }
