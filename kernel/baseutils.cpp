@@ -353,18 +353,18 @@ void BaseUtils::convertPolarToDecart(const double r, const double ph, double &x,
     if (ph > M_PI_2 && ph <= M_PI)
     {
         x = r * cos(ph - M_PI_2);
-        y = r * sin(ph - M_PI_2);
+        y = - r * sin(ph - M_PI_2);
     }
     else
     if (ph > M_PI && ph <= 3 * M_PI_2)
     {
-        x = r * sin(ph - M_PI);
-        y = r * cos(ph - M_PI);
+        x = - r * sin(ph - M_PI);
+        y = - r * cos(ph - M_PI);
     }
     else
     if (ph > 3 * M_PI_2 && ph <= 2 * M_PI)
     {
-        x = r * cos(ph - 3 * M_PI_2);
+        x = - r * cos(ph - 3 * M_PI_2);
         y = r * sin(ph - 3 * M_PI_2);
     }
     else
