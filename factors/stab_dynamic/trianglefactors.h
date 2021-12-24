@@ -129,7 +129,7 @@ private:
     QList<BaseUtils::Section> m_triangleSections;   ///< Список участков сигнала треугольников
     QList<TriangleDefines::Triangle> m_triangles;   ///< Список треугольников
     TriangleDefines::Triangle m_triangleAverageTraining; ///< Усредненный треугольник на этапе обучения
-    TriangleDefines::Triangle m_triangleAverageAnalyser; ///< Усредненный треугольник на этапе анализа
+    TriangleDefines::Triangle m_triangleAverageAnalysis; ///< Усредненный треугольник на этапе анализа
 
     QVector<double> m_x, m_y;                ///< Исходная стабилограмма
     QVector<double> m_xf, m_yf;              ///< Фильтраванная стабилограмма

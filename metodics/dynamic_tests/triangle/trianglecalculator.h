@@ -50,6 +50,16 @@ public:
     TriangleDefines::Triangle triangleOriginal();
 
     /*!
+     * \brief Возвращает усредненный треугольник для этапа обучения
+     */
+    TriangleDefines::Triangle triangleTraining();
+
+    /*!
+     * \brief Возвращает усредненный треугольник для этапа анализа
+     */
+    TriangleDefines::Triangle triangleAnalysis();
+
+    /*!
      * \brief Возвращает кол-во треугольников
      */
     int trianglesCount() const;

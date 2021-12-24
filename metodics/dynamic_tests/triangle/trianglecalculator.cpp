@@ -88,6 +88,20 @@ TriangleDefines::Triangle TriangleCalculator::triangleOriginal()
     return TriangleDefines::Triangle(QPointF(), QPointF(), QPointF());
 }
 
+TriangleDefines::Triangle TriangleCalculator::triangleTraining()
+{
+    if (m_factors)
+        return m_factors->triangleTraining();
+    return TriangleDefines::Triangle(QPointF(), QPointF(), QPointF());
+}
+
+TriangleDefines::Triangle TriangleCalculator::triangleAnalysis()
+{
+    if (m_factors)
+        return m_factors->triangleAnalysis();
+    return TriangleDefines::Triangle(QPointF(), QPointF(), QPointF());
+}
+
 int TriangleCalculator::trianglesCount() const
 {
     if (m_factors)

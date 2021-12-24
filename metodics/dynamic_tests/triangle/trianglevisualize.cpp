@@ -11,6 +11,7 @@
 #include "trianglecalculator.h"
 #include "reportelements.h"
 #include "stabilogram.h"
+#include "areaskgdefines.h"
 
 TriangleVisualize::TriangleVisualize(QWidget *parent) :
     QWidget(parent),
@@ -40,6 +41,14 @@ void TriangleVisualize::setTest(const QString &testUid)
 
         showSKG(ui->wgtSKGTraining, BaseUtils::Section(0, m_calculator->trainingLength()));
         showSKG(ui->wgtSKGAnalysis, BaseUtils::Section(m_calculator->trainingLength(), m_calculator->signalLength()));
+        qDebug() << m_calculator->triangleTraining().topCorner.x()
+                 << m_calculator->triangleTraining().topCorner.y()
+                 << m_calculator->triangleTraining().leftDownCorner.x()
+                 << m_calculator->triangleTraining().leftDownCorner.y()
+                 << m_calculator->triangleTraining().rightDownCorner.x()
+                 << m_calculator->triangleTraining().rightDownCorner.y();
+        addTriangleDiag(ui->wgtSKGTraining, m_calculator->triangleTraining(), Qt::darkCyan);
+        addTriangleDiag(ui->wgtSKGAnalysis, m_calculator->triangleAnalysis(), Qt::darkCyan);
 
         m_curTriangleAnalysis = m_calculator->firstAnalysisTriangle();
         setBtnPNTrainingEnabled();
@@ -199,6 +208,18 @@ void TriangleVisualize::getSignal(const QString &testUid)
 void TriangleVisualize::showSKG(AreaSKG *area, BaseUtils::Section section)
 {
     area->setSignal(m_stab, section.begin, section.end);
+    addTriangleDiag(area, m_calculator->triangleOriginal(), Qt::darkYellow);
+}
+
+int TriangleVisualize::addTriangleDiag(AreaSKG *area, TriangleDefines::Triangle triangle, QColor color)
+{
+    AreaSKGDefines::BrokenLine blTrngl;
+    blTrngl.polygon << QPointF(triangle.topCorner.x(), triangle.topCorner.y())
+                    << QPointF(triangle.leftDownCorner.x(), triangle.leftDownCorner.y())
+                    << QPointF(triangle.rightDownCorner.x(), triangle.rightDownCorner.y());
+    blTrngl.color = color;
+    blTrngl.width = 3;
+    area->addBrokenLine(blTrngl);
 }
 
 void TriangleVisualize::saveSplitterPositionDiag()

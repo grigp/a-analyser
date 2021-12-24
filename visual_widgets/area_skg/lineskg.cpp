@@ -1,12 +1,11 @@
 #include "lineskg.h"
 
 #include "signalaccess.h"
+#include "areaskgdefines.h"
 
 #include <QPainter>
 #include <QWidget>
 #include <QDebug>
-
-static const int I_LABEL_SPACE = 20;
 
 LineSKG::LineSKG(int diap, QGraphicsItem *parent)
     : QGraphicsItem(parent)
@@ -17,8 +16,8 @@ LineSKG::LineSKG(int diap, QGraphicsItem *parent)
 
 QRectF LineSKG::boundingRect() const
 {
-    QPointF pos(-m_diap * m_prop - I_LABEL_SPACE, -m_diap * m_prop - I_LABEL_SPACE);
-    QSizeF size((m_diap * m_prop + I_LABEL_SPACE) * 2, (m_diap * m_prop + I_LABEL_SPACE) * 2);
+    QPointF pos(-m_diap * m_prop - AreaSKGDefines::I_LABEL_SPACE, -m_diap * m_prop - AreaSKGDefines::I_LABEL_SPACE);
+    QSizeF size((m_diap * m_prop + AreaSKGDefines::I_LABEL_SPACE) * 2, (m_diap * m_prop + AreaSKGDefines::I_LABEL_SPACE) * 2);
     return QRectF(pos, size);
 }
 
@@ -32,7 +31,7 @@ void LineSKG::paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWi
     m_width = widget->size().width();
     m_height = widget->size().height();
     int minS = qMin(m_width, m_height);
-    m_prop = static_cast<double>(minS / 2 - I_LABEL_SPACE) / static_cast<double>(m_diap);
+    m_prop = static_cast<double>(minS / 2 - AreaSKGDefines::I_LABEL_SPACE) / static_cast<double>(m_diap);
 
     painter->save();
 
@@ -172,6 +171,6 @@ void LineSKG::setEllipse(const double sizeA, const double sizeB, const double an
 void LineSKG::updateItem()
 {
     int minS = qMin(m_width, m_height);
-    m_prop = static_cast<double>(minS / 2 - I_LABEL_SPACE) / static_cast<double>(m_diap);
+    m_prop = static_cast<double>(minS / 2 - AreaSKGDefines::I_LABEL_SPACE) / static_cast<double>(m_diap);
     update(boundingRect());
 }

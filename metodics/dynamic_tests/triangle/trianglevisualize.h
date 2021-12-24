@@ -5,6 +5,7 @@
 #include <QPrinter>
 
 #include "baseutils.h"
+#include "triangledefines.h"
 
 namespace Ui {
 class TriangleVisualize;
@@ -59,6 +60,15 @@ private:
      * \param section - участок сигнала
      */
     void showSKG(AreaSKG* area, BaseUtils::Section section);
+
+    /*!
+     * \brief Добавляет диаграмму треугольника в зону СКГ
+     * \param area - указатель на зону СКГ
+     * \param triangle - данные треугольника
+     * \param color - цвет диаграммы
+     * \return номер диаграммы треугольника в зоне построения
+     */
+    int addTriangleDiag(AreaSKG* area, TriangleDefines::Triangle triangle, QColor color);
 
     void saveSplitterPositionDiag();
     void restoreSplitterPositionDiag();

@@ -5,6 +5,8 @@
 #include <QGraphicsScene>
 #include <QList>
 
+#include "areaskgdefines.h"
+
 namespace Ui {
 class AreaSKG;
 }
@@ -12,6 +14,7 @@ class AreaSKG;
 class GridSKG;
 class TraceSKG;
 class LineSKG;
+class BrokenLinesSKG;
 class SignalAccess;
 
 class AreaSKG : public QWidget
@@ -119,6 +122,21 @@ public:
      */
     void clearTargets();
 
+    /*!
+     * \brief Добавляет ломанную
+     * \param bl - ломанная
+     * \return индекс в списке ломаных
+     */
+    int addBrokenLine(AreaSKGDefines::BrokenLine &bl);
+
+    /*!
+     * \brief Удаляет ломаную по индексу
+     * \param idx - индекс ломаной
+     * \return true, если удачно
+     */
+    bool deleteBrokenLine(const int idx);
+
+
 protected:
     void resizeEvent(QResizeEvent *event);
 
@@ -133,6 +151,7 @@ private:
     GridSKG* m_gridSKG {nullptr};
     TraceSKG* m_traceSKG {nullptr};
     LineSKG* m_lineSKG {nullptr};
+    BrokenLinesSKG* m_brokenLinesSKG {nullptr};
     QGraphicsRectItem* m_marker {nullptr};
     QList<QGraphicsItem*> m_targets;
 

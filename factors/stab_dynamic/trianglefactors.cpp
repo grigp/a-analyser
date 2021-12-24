@@ -85,14 +85,12 @@ TriangleDefines::Triangle TriangleFactors::triangleOriginal()
 
 TriangleDefines::Triangle TriangleFactors::triangleTraining()
 {
-    //TriangleDefines::Triangle m_triangleAveragrTraining; ///< Усредненный треугольник на этапе обучения
-
+    return m_triangleAverageTraining;
 }
 
 TriangleDefines::Triangle TriangleFactors::triangleAnalysis()
 {
-    //TriangleDefines::Triangle m_triangleAveragrAnalyser; ///< Усредненный треугольник на этапе анализа
-
+    return m_triangleAverageAnalysis;
 }
 
 int TriangleFactors::trianglesCount() const
@@ -191,7 +189,7 @@ void TriangleFactors::computeTriangles()
 {
     int n = 0;
     m_triangleAverageTraining = TriangleDefines::Triangle();
-    m_triangleAverageAnalyser = TriangleDefines::Triangle();
+    m_triangleAverageAnalysis = TriangleDefines::Triangle();
     foreach (auto section, m_triangleSections)
     {
         //! Векторы: исходный и повернутые на +120 и -120 градусов
@@ -204,12 +202,16 @@ void TriangleFactors::computeTriangles()
             double y = m_y.at(i);
             vn << QPointF(x, y);
 
-            double xr = x * cos(2 * M_PI / 3) + y * sin(2 * M_PI / 3);
-            double yr = - x * sin(2 * M_PI / 3) + y * cos(2 * M_PI / 3);
+            double xr = x;
+            double yr = y;
+            BaseUtils::rotatePoint(x, y, 2 * M_PI / 3, xr, yr);
+//            double xr = x * cos(2 * M_PI / 3) + y * sin(2 * M_PI / 3);
+//            double yr = - x * sin(2 * M_PI / 3) + y * cos(2 * M_PI / 3);
             vrr << QPointF(xr, yr);
 
-            xr = x * cos(- 2 * M_PI / 3) + y * sin(- 2 * M_PI / 3);
-            yr = - x * sin(- 2 * M_PI / 3) + y * cos(- 2 * M_PI / 3);
+            BaseUtils::rotatePoint(x, y, - 2 * M_PI / 3, xr, yr);
+//            xr = x * cos(- 2 * M_PI / 3) + y * sin(- 2 * M_PI / 3);
+//            yr = - x * sin(- 2 * M_PI / 3) + y * cos(- 2 * M_PI / 3);
             vrl << QPointF(xr, yr);
         }
 
@@ -218,16 +220,54 @@ void TriangleFactors::computeTriangles()
         auto ld = computeCorner(vrl);
         auto rd = computeCorner(vrr);
 
+        //! Обратное вращение
+        double x = ld.x();
+        double y = ld.y();
+        double xr = x;
+        double yr = y;
+        BaseUtils::rotatePoint(x, y, 2 * M_PI / 3, xr, yr);
+        ld.setX(xr);   //x * cos(2 * M_PI / 3) + y * sin(2 * M_PI / 3));
+        ld.setY(yr);   //- x * sin(2 * M_PI / 3) + y * cos(2 * M_PI / 3));
+        x = rd.x();
+        y = rd.y();
+        BaseUtils::rotatePoint(x, y, - 2 * M_PI / 3, xr, yr);
+        rd.setX(xr);   //x * cos(- 2 * M_PI / 3) + y * sin(- 2 * M_PI / 3));
+        rd.setY(yr);   //- x * sin(- 2 * M_PI / 3) + y * cos(- 2 * M_PI / 3));
+
         //! Заполнение массива координат вершин
         m_triangles << TriangleDefines::Triangle(t, ld, rd);
 
-        if (n < m_firstAnalysisTriangle)
+        //! Расчет координат вершин усредненных треугольников
+        auto averaging = [&](TriangleDefines::Triangle  &triangle)
         {
-
-        }
+            triangle.topCorner.setX(triangle.topCorner.x() + t.x());
+            triangle.topCorner.setY(triangle.topCorner.y() + t.y());
+            triangle.leftDownCorner.setX(triangle.leftDownCorner.x() + ld.x());
+            triangle.leftDownCorner.setY(triangle.leftDownCorner.y() + ld.y());
+            triangle.rightDownCorner.setX(triangle.rightDownCorner.x() + rd.x());
+            triangle.rightDownCorner.setY(triangle.rightDownCorner.y() + rd.y());
+        };
+        if (n < m_firstAnalysisTriangle)
+            averaging(m_triangleAverageTraining);
+        else
+            averaging(m_triangleAverageAnalysis);
 
         ++n;
     }
+
+    //! Расчет координат вершин усредненных треугольников - деление на количество
+    auto averaging = [&](TriangleDefines::Triangle  &triangle, const int count)
+    {
+        triangle.topCorner.setX(triangle.topCorner.x() / count);
+        triangle.topCorner.setY(triangle.topCorner.y() / count);
+        triangle.leftDownCorner.setX(triangle.leftDownCorner.x() / count);
+        triangle.leftDownCorner.setY(triangle.leftDownCorner.y() / count);
+        triangle.rightDownCorner.setX(triangle.rightDownCorner.x() / count);
+        triangle.rightDownCorner.setY(triangle.rightDownCorner.y() / count);
+    };
+    averaging(m_triangleAverageTraining, m_firstAnalysisTriangle - 1);
+    averaging(m_triangleAverageAnalysis, m_triangles.size() - m_firstAnalysisTriangle);
+
 }
 
 bool coordinateTopLessThan(QPointF &p1, QPointF &p2)

@@ -282,7 +282,23 @@ int sign(const double number);
  * \param r - радиус
  * \param ph - угол
  */
-void convertDecartToPolar ( const double x, const double y, double &r, double &ph);
+void convertDecartToPolar(const double x, const double y, double &r, double &ph);
+
+/*!
+ * \brief Преобразует коодинаты из декартовой ситемы в полярную
+ * \param r - радиус
+ * \param ph - угол
+ * \param x, y - координаты в декартовой системе
+ */
+void convertPolarToDecart(const double r, const double ph, double &x, double &y);
+
+/*!
+ * \brief Поворачивает точку в декартовой системе координат вокруг 0 на заданный угол
+ * \param x, y - исходные координаты
+ * \param alfa - угол поворота
+ * \param xr, yr - выходные координаты
+ */
+void rotatePoint(const double x, const double y, const double alfa, double &xr, double &yr);
 
 /*!
  * \brief Возвращает текст резюме к преобладанию коррекций

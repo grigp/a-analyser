@@ -342,6 +342,54 @@ void BaseUtils::convertDecartToPolar(const double x, const double y, double &r, 
         ph = 0;
 }
 
+void BaseUtils::convertPolarToDecart(const double r, const double ph, double &x, double &y)
+{
+    if (ph >= 0 && ph <= M_PI_2)
+    {
+        x = r * sin(ph);
+        y = r * cos(ph);
+    }
+    else
+    if (ph > M_PI_2 && ph <= M_PI)
+    {
+        x = r * cos(ph - M_PI_2);
+        y = r * sin(ph - M_PI_2);
+    }
+    else
+    if (ph > M_PI && ph <= 3 * M_PI_2)
+    {
+        x = r * sin(ph - M_PI);
+        y = r * cos(ph - M_PI);
+    }
+    else
+    if (ph > 3 * M_PI_2 && ph <= 2 * M_PI)
+    {
+        x = r * cos(ph - 3 * M_PI_2);
+        y = r * sin(ph - 3 * M_PI_2);
+    }
+    else
+    {
+        x = 0;
+        y = 0;
+    }
+}
+
+void BaseUtils::rotatePoint(const double x, const double y, const double alfa, double &xr, double &yr)
+{
+    double r = 0;
+    double ph = 0;
+    convertDecartToPolar(x, y, r, ph);
+
+    ph += alfa;
+    if (ph < 0)
+        ph = 2 * M_PI - fabs(ph);
+    else
+    if (ph > 2 * M_PI)
+        ph = ph - 2 * M_PI;
+
+    convertPolarToDecart(r, ph, xr, yr);
+}
+
 void BaseUtils::setCorrectionsDominanceResume(const double cdv, QString &resume, QString &resumeColor)
 {
     QString korr = "";
@@ -436,5 +484,3 @@ void BaseUtils::MidAndStandardDeviation::calculate(double &mid, double &stdDev) 
             stdDev = sqrt(stdDev);
     }
 }
-
-

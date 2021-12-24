@@ -1,5 +1,5 @@
 #include "gridskg.h"
-#include "gridskgdefines.h"
+#include "areaskgdefines.h"
 
 #include <QPainter>
 #include <QDebug>
@@ -14,8 +14,8 @@ GridSKG::GridSKG(int diap, QGraphicsItem *parent)
 
 QRectF GridSKG::boundingRect() const
 {
-    QPointF pos(-m_diap * m_prop - GridSKGDefines::I_LABEL_SPACE, -m_diap * m_prop - GridSKGDefines::I_LABEL_SPACE);
-    QSizeF size((m_diap * m_prop + GridSKGDefines::I_LABEL_SPACE) * 2, (m_diap * m_prop + GridSKGDefines::I_LABEL_SPACE) * 2);
+    QPointF pos(-m_diap * m_prop - AreaSKGDefines::I_LABEL_SPACE, -m_diap * m_prop - AreaSKGDefines::I_LABEL_SPACE);
+    QSizeF size((m_diap * m_prop + AreaSKGDefines::I_LABEL_SPACE) * 2, (m_diap * m_prop + AreaSKGDefines::I_LABEL_SPACE) * 2);
     return QRectF(pos, size);
 }
 
@@ -28,7 +28,7 @@ void GridSKG::paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWi
     m_width = widget->size().width();
     m_height = widget->size().height();
     int minS = qMin(m_width, m_height);
-    m_prop = static_cast<double>(minS / 2 - GridSKGDefines::I_LABEL_SPACE) / static_cast<double>(m_diap);
+    m_prop = static_cast<double>(minS / 2 - AreaSKGDefines::I_LABEL_SPACE) / static_cast<double>(m_diap);
     int left = -static_cast<int>(m_diap * m_prop);
     int top = -static_cast<int>(m_diap * m_prop);
     int right = static_cast<int>(m_diap * m_prop);
@@ -41,11 +41,11 @@ void GridSKG::paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWi
     painter->drawRect(left, top, right - left, bottom - top);
     painter->drawLine(0, top, 0, bottom);
     painter->drawLine(left, 0, right, 0);
-    painter->drawText(QRectF(0-10, top - GridSKGDefines::I_LABEL_SPACE, 20, GridSKGDefines::I_LABEL_SPACE), Qt::AlignCenter, "0");
-    painter->drawText(QRectF(0-10, bottom, 20, GridSKGDefines::I_LABEL_SPACE), Qt::AlignCenter, "0");
+    painter->drawText(QRectF(0-10, top - AreaSKGDefines::I_LABEL_SPACE, 20, AreaSKGDefines::I_LABEL_SPACE), Qt::AlignCenter, "0");
+    painter->drawText(QRectF(0-10, bottom, 20, AreaSKGDefines::I_LABEL_SPACE), Qt::AlignCenter, "0");
     painter->rotate(90);
-    painter->drawText(QRectF(0-10, top - GridSKGDefines::I_LABEL_SPACE, 20, GridSKGDefines::I_LABEL_SPACE), Qt::AlignCenter, "0");
-    painter->drawText(QRectF(0-10, bottom, 20, GridSKGDefines::I_LABEL_SPACE), Qt::AlignCenter, "0");
+    painter->drawText(QRectF(0-10, top - AreaSKGDefines::I_LABEL_SPACE, 20, AreaSKGDefines::I_LABEL_SPACE), Qt::AlignCenter, "0");
+    painter->drawText(QRectF(0-10, bottom, 20, AreaSKGDefines::I_LABEL_SPACE), Qt::AlignCenter, "0");
     painter->rotate(-90);
 
     // Сетка
@@ -91,14 +91,14 @@ void GridSKG::setDiap(int diap)
     {
         m_diap = diap;
         int minS = qMin(m_width, m_height);
-        m_prop = static_cast<double>(minS / 2 - GridSKGDefines::I_LABEL_SPACE) / static_cast<double>(m_diap);
+        m_prop = static_cast<double>(minS / 2 - AreaSKGDefines::I_LABEL_SPACE) / static_cast<double>(m_diap);
         update(boundingRect());
     }
 }
 
 int GridSKG::getLabelSpace()
 {
-    return GridSKGDefines::I_LABEL_SPACE;
+    return AreaSKGDefines::I_LABEL_SPACE;
 }
 
 void GridSKG::drawPositionGrid(QPainter* painter, int left, int top, int, int bottom, int posGrid, bool isLabels)
@@ -114,23 +114,23 @@ void GridSKG::drawPositionGrid(QPainter* painter, int left, int top, int, int bo
     if (isLabels)
     {
         // Текст горизонтальный
-        painter->drawText(QRectF(0 - posGrid * m_prop-10, top - GridSKGDefines::I_LABEL_SPACE, 20, GridSKGDefines::I_LABEL_SPACE),
+        painter->drawText(QRectF(0 - posGrid * m_prop-10, top - AreaSKGDefines::I_LABEL_SPACE, 20, AreaSKGDefines::I_LABEL_SPACE),
                           Qt::AlignCenter, QString::number(-posGrid));
-        painter->drawText(QRectF(0 - posGrid * m_prop-10, bottom, 20, GridSKGDefines::I_LABEL_SPACE), Qt::AlignCenter, QString::number(-posGrid));
-        painter->drawText(QRectF(0 + posGrid * m_prop-10, top - GridSKGDefines::I_LABEL_SPACE, 20, GridSKGDefines::I_LABEL_SPACE),
+        painter->drawText(QRectF(0 - posGrid * m_prop-10, bottom, 20, AreaSKGDefines::I_LABEL_SPACE), Qt::AlignCenter, QString::number(-posGrid));
+        painter->drawText(QRectF(0 + posGrid * m_prop-10, top - AreaSKGDefines::I_LABEL_SPACE, 20, AreaSKGDefines::I_LABEL_SPACE),
                           Qt::AlignCenter, QString::number(posGrid));
-        painter->drawText(QRectF(0 + posGrid * m_prop-10, bottom, 20, GridSKGDefines::I_LABEL_SPACE), Qt::AlignCenter, QString::number(posGrid));
+        painter->drawText(QRectF(0 + posGrid * m_prop-10, bottom, 20, AreaSKGDefines::I_LABEL_SPACE), Qt::AlignCenter, QString::number(posGrid));
 
         // Текст вертикальный
         painter->rotate(-90);
-        painter->drawText(QRectF(0 - posGrid * m_prop-10, top - GridSKGDefines::I_LABEL_SPACE, 20, GridSKGDefines::I_LABEL_SPACE),
+        painter->drawText(QRectF(0 - posGrid * m_prop-10, top - AreaSKGDefines::I_LABEL_SPACE, 20, AreaSKGDefines::I_LABEL_SPACE),
                           Qt::AlignCenter, QString::number(-posGrid));
-        painter->drawText(QRectF(0 + posGrid * m_prop-10, top - GridSKGDefines::I_LABEL_SPACE, 20, GridSKGDefines::I_LABEL_SPACE),
+        painter->drawText(QRectF(0 + posGrid * m_prop-10, top - AreaSKGDefines::I_LABEL_SPACE, 20, AreaSKGDefines::I_LABEL_SPACE),
                           Qt::AlignCenter, QString::number(posGrid));
         painter->rotate(180);
-        painter->drawText(QRectF(0 - posGrid * m_prop-10, top - GridSKGDefines::I_LABEL_SPACE, 20, GridSKGDefines::I_LABEL_SPACE),
+        painter->drawText(QRectF(0 - posGrid * m_prop-10, top - AreaSKGDefines::I_LABEL_SPACE, 20, AreaSKGDefines::I_LABEL_SPACE),
                           Qt::AlignCenter, QString::number(posGrid));
-        painter->drawText(QRectF(0 + posGrid * m_prop-10, top - GridSKGDefines::I_LABEL_SPACE, 20, GridSKGDefines::I_LABEL_SPACE),
+        painter->drawText(QRectF(0 + posGrid * m_prop-10, top - AreaSKGDefines::I_LABEL_SPACE, 20, AreaSKGDefines::I_LABEL_SPACE),
                           Qt::AlignCenter, QString::number(-posGrid));
         painter->rotate(-90);
     }
