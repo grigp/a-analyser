@@ -187,6 +187,7 @@ void TriangleFactors::computeTrianglesBounds()
 
 void TriangleFactors::computeTriangles()
 {
+
     int n = 0;
     m_triangleAverageTraining = TriangleDefines::Triangle();
     m_triangleAverageAnalysis = TriangleDefines::Triangle();
@@ -214,6 +215,10 @@ void TriangleFactors::computeTriangles()
 //            yr = - x * sin(- 2 * M_PI / 3) + y * cos(- 2 * M_PI / 3);
             vrl << QPointF(xr, yr);
         }
+
+        BaseUtils::pointsToTextSeparate(vn, "c:/1/vn", ',');
+        BaseUtils::pointsToTextSeparate(vrr, "c:/1/vrr", ',');
+        BaseUtils::pointsToTextSeparate(vrl, "c:/1/vrl", ',');
 
         //! Расчет координат вершин
         auto t = computeCorner(vn);
@@ -265,7 +270,7 @@ void TriangleFactors::computeTriangles()
         triangle.rightDownCorner.setX(triangle.rightDownCorner.x() / count);
         triangle.rightDownCorner.setY(triangle.rightDownCorner.y() / count);
     };
-    averaging(m_triangleAverageTraining, m_firstAnalysisTriangle - 1);
+    averaging(m_triangleAverageTraining, m_firstAnalysisTriangle);
     averaging(m_triangleAverageAnalysis, m_triangles.size() - m_firstAnalysisTriangle);
 
 }
@@ -286,7 +291,7 @@ QPointF TriangleFactors::computeCorner(QVector<QPointF> &stab)
     //! Выбор первых N% точек
     double mx = 0;
     double my = 0;
-    for (int i = 0; i < n; ++i)
+    for (int i = stab.size() - 1; i > stab.size() - 1 - n; --i)
     {
         mx = mx + stab.at(i).x();
         my = my + stab.at(i).y();

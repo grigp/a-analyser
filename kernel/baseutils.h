@@ -238,6 +238,14 @@ void modelToText(const QAbstractItemModel* model, const QString &fileName);
 void vectorToText(QVector<double>& vector, const QString &fileName);
 
 /*!
+ * \brief Сохраняет вектор точек в текстовые файлы, добавляя расширения ".x" для форнтали и ".y" для сагиттали
+ * \param vector - данные вектора
+ * \param fileName - имя текстового файла без расширения
+ * \param separator - разделитель целой и дробной частей
+ */
+void pointsToTextSeparate(QVector<QPointF>& vector, const QString &fileName, const char separator);
+
+/*!
  * \brief Инвертирует вектор, заменяя хвост на начало
  * \param vector - вектор
  */

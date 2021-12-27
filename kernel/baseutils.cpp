@@ -212,6 +212,32 @@ void BaseUtils::vectorToText(QVector<double> &vector, const QString &fileName)
     }
 }
 
+
+void BaseUtils::pointsToTextSeparate(QVector<QPointF> &vector, const QString &fileName, const char separator)
+{
+    QLocale locale;
+    QFile fX(fileName + ".x");
+    QFile fY(fileName + ".y");
+    if (fX.open(QIODevice::WriteOnly) && fY.open(QIODevice::WriteOnly))
+    {
+        QTextStream tsX(&fX);
+        QTextStream tsY(&fY);
+
+        for (int i = 0; i < vector.size(); ++i)
+        {
+            auto s = QString::number(vector[i].x());
+            s.replace(".", locale.decimalPoint());
+            tsX << s << "\n";
+            s = QString::number(vector[i].y());
+            s.replace(".", locale.decimalPoint());
+            tsY << s << "\n";
+        }
+
+        fX.close();
+        fY.close();
+    }
+}
+
 void BaseUtils::swapVector(QVector<double> &vector)
 {
     QVector<double> v;
@@ -328,16 +354,16 @@ void BaseUtils::convertDecartToPolar(const double x, const double y, double &r, 
     r = sqrt(pow(x, 2) + pow(y, 2));
 
     if (x > 0 && y >= 0)
-        ph = qAtan(y/x);
+        ph = qAtan(x/y);
     else
-    if (x <= 0 && y > 0)
-        ph = M_PI / 2 + qAtan(fabs(x)/y);
+    if (x > 0 && y <= 0)
+        ph = M_PI / 2 + qAtan(fabs(y/x));
     else
-    if (x < 0 && y <= 0)
-        ph = M_PI + qAtan(fabs(y/x));
+    if (x <= 0 && y < 0)
+        ph = M_PI + qAtan(fabs(x/y));
     else
-    if (x >= 0 && y < 0)
-        ph = 3 * M_PI / 2 + qAtan(x/fabs(y));
+    if (x < 0 && y > 0)
+        ph = 3 * M_PI / 2 + qAtan(fabs(y/x));
     else
         ph = 0;
 }
@@ -484,3 +510,4 @@ void BaseUtils::MidAndStandardDeviation::calculate(double &mid, double &stdDev) 
             stdDev = sqrt(stdDev);
     }
 }
+
