@@ -58,6 +58,12 @@ public:
     void setColorEllipse(const QColor &color) {m_colorEllipse = color;}
     QColor colorEllipse() const {return m_colorEllipse;}
 
+    /*!
+     * \brief Устанавливает видимость СКГ
+     * \param isVisible - будет ли видна
+     */
+    void setVisible(const bool isVisible);
+
 private:
     void updateItem();
 
@@ -69,6 +75,7 @@ private:
     bool m_isZeroing {false};
     int m_begin = -1;
     int m_end = -1;
+    bool m_visible {true};
 
     SignalAccess *m_signal {nullptr};
 

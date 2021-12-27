@@ -286,6 +286,9 @@
                  <property name="text">
                   <string>Показывать траекторию центра давления</string>
                  </property>
+                 <property name="checked">
+                  <bool>true</bool>
+                 </property>
                 </widget>
                </item>
               </layout>
@@ -472,6 +475,9 @@
                  <property name="text">
                   <string>Показывать траекторию центра давления</string>
                  </property>
+                 <property name="checked">
+                  <bool>true</bool>
+                 </property>
                 </widget>
                </item>
               </layout>
@@ -657,6 +663,102 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>cbShowTraectoryTraining</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>TriangleVisualize</receiver>
+   <slot>cbShowTraectoryTrainingClicked(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>195</x>
+     <y>293</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1140</x>
+     <y>217</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>cbShowTraectoryAnalysis</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>TriangleVisualize</receiver>
+   <slot>cbShowTraectoryAnalysisClicked(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>610</x>
+     <y>290</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1139</x>
+     <y>262</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>tbPlusTraining</sender>
+   <signal>clicked()</signal>
+   <receiver>TriangleVisualize</receiver>
+   <slot>tbPlusTrainingClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>529</x>
+     <y>18</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>-5</x>
+     <y>17</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>tbMinusTraining</sender>
+   <signal>clicked()</signal>
+   <receiver>TriangleVisualize</receiver>
+   <slot>tbMinusTrainingClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>557</x>
+     <y>30</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>-2</x>
+     <y>45</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>tbPlusAnalysis</sender>
+   <signal>clicked()</signal>
+   <receiver>TriangleVisualize</receiver>
+   <slot>tbPlusAnalysisClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1077</x>
+     <y>15</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>-1</x>
+     <y>86</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>tbMinusAnalysis</sender>
+   <signal>clicked()</signal>
+   <receiver>TriangleVisualize</receiver>
+   <slot>tbMinusAnalysisClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1108</x>
+     <y>21</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>-3</x>
+     <y>128</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>curPageChanged(int)</slot>
@@ -668,5 +770,11 @@
   <slot>btnNextTrainingClicked()</slot>
   <slot>btnPrevAnalysisClicked()</slot>
   <slot>btnNextAnalysisClicked()</slot>
+  <slot>cbShowTraectoryTrainingClicked(bool)</slot>
+  <slot>cbShowTraectoryAnalysisClicked(bool)</slot>
+  <slot>tbPlusTrainingClicked()</slot>
+  <slot>tbMinusTrainingClicked()</slot>
+  <slot>tbPlusAnalysisClicked()</slot>
+  <slot>tbMinusAnalysisClicked()</slot>
  </slots>
 </ui>

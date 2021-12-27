@@ -41,14 +41,8 @@ void TriangleVisualize::setTest(const QString &testUid)
 
         showSKG(ui->wgtSKGTraining, BaseUtils::Section(0, m_calculator->trainingLength()));
         showSKG(ui->wgtSKGAnalysis, BaseUtils::Section(m_calculator->trainingLength(), m_calculator->signalLength()));
-        qDebug() << m_calculator->triangleTraining().topCorner.x()
-                 << m_calculator->triangleTraining().topCorner.y()
-                 << m_calculator->triangleTraining().leftDownCorner.x()
-                 << m_calculator->triangleTraining().leftDownCorner.y()
-                 << m_calculator->triangleTraining().rightDownCorner.x()
-                 << m_calculator->triangleTraining().rightDownCorner.y();
-        addTriangleDiag(ui->wgtSKGTraining, m_calculator->triangleTraining(), Qt::darkCyan);
-        addTriangleDiag(ui->wgtSKGAnalysis, m_calculator->triangleAnalysis(), Qt::darkCyan);
+        m_triangleDiagIdxTraining = addTriangleDiag(ui->wgtSKGTraining, m_calculator->triangleTraining(), Qt::darkCyan);
+        m_triangleDiagIdxAnalysis = addTriangleDiag(ui->wgtSKGAnalysis, m_calculator->triangleAnalysis(), Qt::darkCyan);
 
         m_curTriangleAnalysis = m_calculator->firstAnalysisTriangle();
         setBtnPNTrainingEnabled();
@@ -107,42 +101,68 @@ void TriangleVisualize::splitterDiagMoved(int pos, int index)
 
 void TriangleVisualize::btnAllTrainingClicked(bool pressed)
 {
+    if (m_triangleDiagIdxTraining > -1)
+        ui->wgtSKGTraining->deleteBrokenLine(m_triangleDiagIdxTraining);
+
     if (pressed)
+    {
         ui->wgtSKGTraining->setSection(0, m_calculator->trainingLength());
+        m_triangleDiagIdxTraining = addTriangleDiag(ui->wgtSKGTraining, m_calculator->triangleTraining(), Qt::darkCyan);
+    }
     else
+    {
         ui->wgtSKGTraining->setSection(m_calculator->triangleSection(m_curTriangleTraining).begin,
                                        m_calculator->triangleSection(m_curTriangleTraining).end);
+        m_triangleDiagIdxTraining = addTriangleDiag(ui->wgtSKGTraining, m_calculator->triangle(m_curTriangleTraining), Qt::darkCyan);
+    }
     setBtnPNTrainingEnabled();
 }
 
 void TriangleVisualize::btnAllAnalysisClicked(bool pressed)
 {
+    if (m_triangleDiagIdxAnalysis > -1)
+        ui->wgtSKGAnalysis->deleteBrokenLine(m_triangleDiagIdxAnalysis);
+
     if (pressed)
+    {
         ui->wgtSKGAnalysis->setSection(m_calculator->trainingLength(), m_calculator->signalLength());
+        m_triangleDiagIdxAnalysis = addTriangleDiag(ui->wgtSKGAnalysis, m_calculator->triangleAnalysis(), Qt::darkCyan);
+    }
     else
+    {
         ui->wgtSKGAnalysis->setSection(m_calculator->triangleSection(m_curTriangleAnalysis).begin,
                                        m_calculator->triangleSection(m_curTriangleAnalysis).end);
+        m_triangleDiagIdxAnalysis = addTriangleDiag(ui->wgtSKGAnalysis, m_calculator->triangle(m_curTriangleAnalysis), Qt::darkCyan);
+    }
     setBtnPNAnalysisEnabled();
 }
 
 void TriangleVisualize::btnPrevTrainingClicked()
 {
+    if (m_triangleDiagIdxTraining > -1)
+        ui->wgtSKGTraining->deleteBrokenLine(m_triangleDiagIdxTraining);
+
     if (m_curTriangleTraining > 0)
     {
         --m_curTriangleTraining;
         ui->wgtSKGTraining->setSection(m_calculator->triangleSection(m_curTriangleTraining).begin,
                                        m_calculator->triangleSection(m_curTriangleTraining).end);
+        m_triangleDiagIdxTraining = addTriangleDiag(ui->wgtSKGTraining, m_calculator->triangle(m_curTriangleTraining), Qt::darkCyan);
     }
     setBtnPNTrainingEnabled();
 }
 
 void TriangleVisualize::btnNextTrainingClicked()
 {
+    if (m_triangleDiagIdxTraining > -1)
+        ui->wgtSKGTraining->deleteBrokenLine(m_triangleDiagIdxTraining);
+
     if (m_curTriangleTraining < m_calculator->firstAnalysisTriangle() - 1)
     {
         ++m_curTriangleTraining;
         ui->wgtSKGTraining->setSection(m_calculator->triangleSection(m_curTriangleTraining).begin,
                                        m_calculator->triangleSection(m_curTriangleTraining).end);
+        m_triangleDiagIdxTraining = addTriangleDiag(ui->wgtSKGTraining, m_calculator->triangle(m_curTriangleTraining), Qt::darkCyan);
     }
     setBtnPNTrainingEnabled();
 }
@@ -158,22 +178,30 @@ void TriangleVisualize::setBtnPNTrainingEnabled()
 
 void TriangleVisualize::btnPrevAnalysisClicked()
 {
+    if (m_triangleDiagIdxAnalysis > -1)
+        ui->wgtSKGAnalysis->deleteBrokenLine(m_triangleDiagIdxAnalysis);
+
     if (m_curTriangleAnalysis > m_calculator->firstAnalysisTriangle())
     {
         --m_curTriangleAnalysis;
         ui->wgtSKGAnalysis->setSection(m_calculator->triangleSection(m_curTriangleAnalysis).begin,
                                        m_calculator->triangleSection(m_curTriangleAnalysis).end);
+        m_triangleDiagIdxAnalysis = addTriangleDiag(ui->wgtSKGAnalysis, m_calculator->triangle(m_curTriangleAnalysis), Qt::darkCyan);
     }
     setBtnPNAnalysisEnabled();
 }
 
 void TriangleVisualize::btnNextAnalysisClicked()
 {
+    if (m_triangleDiagIdxAnalysis > -1)
+        ui->wgtSKGAnalysis->deleteBrokenLine(m_triangleDiagIdxAnalysis);
+
     if (m_curTriangleAnalysis < m_calculator->trianglesCount() - 1)
     {
         ++m_curTriangleAnalysis;
         ui->wgtSKGAnalysis->setSection(m_calculator->triangleSection(m_curTriangleAnalysis).begin,
                                        m_calculator->triangleSection(m_curTriangleAnalysis).end);
+        m_triangleDiagIdxAnalysis = addTriangleDiag(ui->wgtSKGAnalysis, m_calculator->triangle(m_curTriangleAnalysis), Qt::darkCyan);
     }
     setBtnPNAnalysisEnabled();
 }
@@ -185,6 +213,44 @@ void TriangleVisualize::setBtnPNAnalysisEnabled()
     ui->tbNextAnalysis->setEnabled(!ui->tbShowAllAnalysis->isChecked() &&
                                    m_curTriangleAnalysis < m_calculator->trianglesCount() - 1);
     ui->lblTrnglNumAnalysis->setText(QString::number(m_curTriangleAnalysis - m_calculator->firstAnalysisTriangle() + 1));
+}
+
+void TriangleVisualize::cbShowTraectoryTrainingClicked(bool isChecked)
+{
+    ui->wgtSKGTraining->setVisibleSKG(isChecked);
+}
+
+void TriangleVisualize::cbShowTraectoryAnalysisClicked(bool isChecked)
+{
+    ui->wgtSKGAnalysis->setVisibleSKG(isChecked);
+}
+
+void TriangleVisualize::tbPlusTrainingClicked()
+{
+    auto diap = ui->wgtSKGTraining->diap();
+    if (diap > 1)
+        ui->wgtSKGTraining->setDiap(diap / 2);
+}
+
+void TriangleVisualize::tbMinusTrainingClicked()
+{
+    auto diap = ui->wgtSKGTraining->diap();
+    if (diap < 128)
+        ui->wgtSKGTraining->setDiap(diap * 2);
+}
+
+void TriangleVisualize::tbPlusAnalysisClicked()
+{
+    auto diap = ui->wgtSKGAnalysis->diap();
+    if (diap > 1)
+        ui->wgtSKGAnalysis->setDiap(diap / 2);
+}
+
+void TriangleVisualize::tbMinusAnalysisClicked()
+{
+    auto diap = ui->wgtSKGAnalysis->diap();
+    if (diap < 128)
+        ui->wgtSKGAnalysis->setDiap(diap * 2);
 }
 
 void TriangleVisualize::getSignal(const QString &testUid)
@@ -219,7 +285,7 @@ int TriangleVisualize::addTriangleDiag(AreaSKG *area, TriangleDefines::Triangle 
                     << QPointF(triangle.rightDownCorner.x(), triangle.rightDownCorner.y());
     blTrngl.color = color;
     blTrngl.width = 3;
-    area->addBrokenLine(blTrngl);
+    return area->addBrokenLine(blTrngl);
 }
 
 void TriangleVisualize::saveSplitterPositionDiag()

@@ -136,6 +136,12 @@ public:
      */
     bool deleteBrokenLine(const int idx);
 
+    /*!
+     * \brief Устанавливает видимость СКГ
+     * \param isVisible - будет ли видна
+     */
+    void setVisibleSKG(const bool isVisible);
+
 
 protected:
     void resizeEvent(QResizeEvent *event);

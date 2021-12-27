@@ -36,35 +36,38 @@ void LineSKG::paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWi
     painter->save();
 
     //! Статокинезиграмма
-    painter->setPen(QPen(m_colorSKG, 1));
-    int x1 = 0;
-    int y1 = 0;
-    int x2 = 0;
-    int y2 = 0;
-
-    int b = 0;
-    if (m_begin != -1)
-        b = m_begin;
-    int e = m_signal->size();
-    if (m_end != -1)
-        e = m_end;
-
-    for (int i = b; i < e; ++i)
+    if (m_visible)
     {
-        if (m_isZeroing)
+        painter->setPen(QPen(m_colorSKG, 1));
+        int x1 = 0;
+        int y1 = 0;
+        int x2 = 0;
+        int y2 = 0;
+
+        int b = 0;
+        if (m_begin != -1)
+            b = m_begin;
+        int e = m_signal->size();
+        if (m_end != -1)
+            e = m_end;
+
+        for (int i = b; i < e; ++i)
         {
-            x1 = (m_signal->value(0, i) - m_offsX) * m_prop;
-            y1 = - (m_signal->value(1, i) - m_offsY) * m_prop;
+            if (m_isZeroing)
+            {
+                x1 = (m_signal->value(0, i) - m_offsX) * m_prop;
+                y1 = - (m_signal->value(1, i) - m_offsY) * m_prop;
+            }
+            else
+            {
+                x1 = m_signal->value(0, i) * m_prop;
+                y1 = - m_signal->value(1, i) * m_prop;
+            }
+            if (i > b)
+                painter->drawLine(x1, y1, x2, y2);
+            x2 = x1;
+            y2 = y1;
         }
-        else
-        {
-            x1 = m_signal->value(0, i) * m_prop;
-            y1 = - m_signal->value(1, i) * m_prop;
-        }
-        if (i > b)
-            painter->drawLine(x1, y1, x2, y2);
-        x2 = x1;
-        y2 = y1;
     }
 
     //! Эллипс
@@ -165,6 +168,12 @@ void LineSKG::setEllipse(const double sizeA, const double sizeB, const double an
     m_sizeA = sizeA;
     m_sizeB = sizeB;
     m_angle = angle;
+    update(boundingRect());
+}
+
+void LineSKG::setVisible(const bool isVisible)
+{
+    m_visible = isVisible;
     update(boundingRect());
 }
 

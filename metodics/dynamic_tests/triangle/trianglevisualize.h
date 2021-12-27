@@ -49,6 +49,14 @@ private slots:
     void btnNextAnalysisClicked();
     void setBtnPNAnalysisEnabled();
 
+    void cbShowTraectoryTrainingClicked(bool isChecked);
+    void cbShowTraectoryAnalysisClicked(bool isChecked);
+
+    void tbPlusTrainingClicked();
+    void tbMinusTrainingClicked();
+    void tbPlusAnalysisClicked();
+    void tbMinusAnalysisClicked();
+
 private:
     Ui::TriangleVisualize *ui;
 
@@ -78,6 +86,9 @@ private:
 
     int m_curTriangleTraining {0};  ///< Отображаемый треугольник на этапе обучения в режиме одного треугольника
     int m_curTriangleAnalysis {0};  ///< Отображаемый треугольник на этапе анализа в режиме одного треугольника
+
+    int m_triangleDiagIdxTraining {-1};   ///< Индекс диаграммы реального треугольника в зоне СКГ этапа обучения
+    int m_triangleDiagIdxAnalysis {-1};   ///< Индекс диаграммы реального треугольника в зоне СКГ этапа анализа
 
 };
 

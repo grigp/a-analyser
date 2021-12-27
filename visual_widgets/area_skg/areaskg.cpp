@@ -99,6 +99,7 @@ void AreaSKG::setSection(const int begin, const int end)
 {
     m_lineSKG->setSection(begin, end);
     m_sceneSKG->update(SceneRect);
+    m_brokenLinesSKG->update();
 }
 
 void AreaSKG::setVisibleMarker(const bool visibleMarker)
@@ -130,6 +131,7 @@ void AreaSKG::setEllipse(const double sizeA, const double sizeB, const double an
 {
     if (m_lineSKG)
         m_lineSKG->setEllipse(sizeA, sizeB, angle);
+
 }
 
 void AreaSKG::setColorSKG(const QColor &color)
@@ -208,6 +210,12 @@ bool AreaSKG::deleteBrokenLine(const int idx)
     if (m_brokenLinesSKG)
         return m_brokenLinesSKG->deleteBrokenLine(idx);
     return false;
+}
+
+void AreaSKG::setVisibleSKG(const bool isVisible)
+{
+    if (m_lineSKG)
+        m_lineSKG->setVisible(isVisible);
 }
 
 void AreaSKG::resizeEvent(QResizeEvent *event)
