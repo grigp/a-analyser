@@ -205,20 +205,12 @@ void TriangleFactors::computeTriangles()
 
             double xr = x;
             double yr = y;
-            BaseUtils::rotatePoint(x, y, 2 * M_PI / 3, xr, yr);
-//            double xr = x * cos(2 * M_PI / 3) + y * sin(2 * M_PI / 3);
-//            double yr = - x * sin(2 * M_PI / 3) + y * cos(2 * M_PI / 3);
+            BaseUtils::rotatePoint(x, y, - 2 * M_PI / 3, xr, yr);
             vrr << QPointF(xr, yr);
 
-            BaseUtils::rotatePoint(x, y, - 2 * M_PI / 3, xr, yr);
-//            xr = x * cos(- 2 * M_PI / 3) + y * sin(- 2 * M_PI / 3);
-//            yr = - x * sin(- 2 * M_PI / 3) + y * cos(- 2 * M_PI / 3);
+            BaseUtils::rotatePoint(x, y, 2 * M_PI / 3, xr, yr);
             vrl << QPointF(xr, yr);
         }
-
-        BaseUtils::pointsToTextSeparate(vn, "c:/1/vn", ',');
-        BaseUtils::pointsToTextSeparate(vrr, "c:/1/vrr", ',');
-        BaseUtils::pointsToTextSeparate(vrl, "c:/1/vrl", ',');
 
         //! Расчет координат вершин
         auto t = computeCorner(vn);
@@ -230,14 +222,14 @@ void TriangleFactors::computeTriangles()
         double y = ld.y();
         double xr = x;
         double yr = y;
-        BaseUtils::rotatePoint(x, y, 2 * M_PI / 3, xr, yr);
-        ld.setX(xr);   //x * cos(2 * M_PI / 3) + y * sin(2 * M_PI / 3));
-        ld.setY(yr);   //- x * sin(2 * M_PI / 3) + y * cos(2 * M_PI / 3));
+        BaseUtils::rotatePoint(x, y, - 2 * M_PI / 3, xr, yr);
+        ld.setX(xr);
+        ld.setY(yr);
         x = rd.x();
         y = rd.y();
-        BaseUtils::rotatePoint(x, y, - 2 * M_PI / 3, xr, yr);
-        rd.setX(xr);   //x * cos(- 2 * M_PI / 3) + y * sin(- 2 * M_PI / 3));
-        rd.setY(yr);   //- x * sin(- 2 * M_PI / 3) + y * cos(- 2 * M_PI / 3));
+        BaseUtils::rotatePoint(x, y, 2 * M_PI / 3, xr, yr);
+        rd.setX(xr);
+        rd.setY(yr);
 
         //! Заполнение массива координат вершин
         m_triangles << TriangleDefines::Triangle(t, ld, rd);
