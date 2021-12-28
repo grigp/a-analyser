@@ -76,6 +76,36 @@ public:
      */
     TriangleDefines::Triangle triangle(const int idx) const;
 
+    /*!
+     * \brief Возвращает кол-во показателей
+     */
+    int factorCount() const;
+
+    /*!
+     * \brief Возвращает uid показателя по номеру в списке
+     * \param id - номер показателя в списке
+     */
+    QString factorUid(const int id) const;
+
+    /*!
+     * \brief Возвращает значение показателя по номеру в списке
+     * \param id - номер показателя в списке
+     */
+    double factorValue(const int id) const;
+
+    /*!
+     * \brief Возвращает значение показателя по uid показателя
+     * \param uid - uid показателя
+     */
+    double factorValue(const QString &uid) const;
+
+    /*!
+     * \brief Возвращает форматированное значение показателя в строковом виде по uid показателя
+     * \param uid - uid показателя
+     */
+    QString factorValueFormatted(const QString &uid) const;
+
+
 private:
     TriangleFactors* m_factors {nullptr};
 

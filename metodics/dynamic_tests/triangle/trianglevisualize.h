@@ -78,6 +78,11 @@ private:
      */
     int addTriangleDiag(AreaSKG* area, TriangleDefines::Triangle triangle, QColor color);
 
+    /*!
+     * \brief Выводит польную таблицу показателей
+     */
+    void showAllFactors();
+
     void saveSplitterPositionDiag();
     void restoreSplitterPositionDiag();
 

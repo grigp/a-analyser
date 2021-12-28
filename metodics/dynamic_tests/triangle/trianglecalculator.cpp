@@ -1,5 +1,7 @@
 #include "trianglecalculator.h"
 
+#include <QUuid>
+
 #include "trianglefactors.h"
 #include "datadefines.h"
 #include "channelsdefines.h"
@@ -121,4 +123,39 @@ TriangleDefines::Triangle TriangleCalculator::triangle(const int idx) const
     if (m_factors)
         return m_factors->triangle(idx);
     return TriangleDefines::Triangle(QPointF(), QPointF(), QPointF());
+}
+
+int TriangleCalculator::factorCount() const
+{
+    if (m_factors)
+        return  m_factors->size();
+    return 0;
+}
+
+QString TriangleCalculator::factorUid(const int id) const
+{
+    if (m_factors)
+        return  m_factors->factorUid(id);
+    return QUuid().toString();
+}
+
+double TriangleCalculator::factorValue(const int id) const
+{
+    if (m_factors)
+        return  m_factors->factorValue(id);
+    return 0;
+}
+
+double TriangleCalculator::factorValue(const QString &uid) const
+{
+    if (m_factors)
+        return  m_factors->factorValue(uid);
+    return 0;
+}
+
+QString TriangleCalculator::factorValueFormatted(const QString &uid) const
+{
+    if (m_factors)
+        return  m_factors->factorValueFormatted(uid);
+    return "0";
 }

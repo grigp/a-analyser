@@ -15,7 +15,8 @@ SOURCES += \
     $$PWD/triangleexecute.cpp \
     $$PWD/trianglepatientwindow.cpp \
     $$PWD/trianglevisualize.cpp \
-    $$PWD/trianglecalculator.cpp
+    $$PWD/trianglecalculator.cpp \
+    $$PWD/triangledefines.cpp
 
 FORMS += \
     $$PWD/triangleparamsdialog.ui \

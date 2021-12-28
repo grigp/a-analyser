@@ -4,6 +4,7 @@
 #include <QPainter>
 #include <QDebug>
 
+#include "aanalyserapplication.h"
 #include "channelsdefines.h"
 #include "datadefines.h"
 #include "dataprovider.h"
@@ -47,6 +48,8 @@ void TriangleVisualize::setTest(const QString &testUid)
         m_curTriangleAnalysis = m_calculator->firstAnalysisTriangle();
         setBtnPNTrainingEnabled();
         setBtnPNAnalysisEnabled();
+
+        showAllFactors();
     }
 }
 
@@ -280,12 +283,42 @@ void TriangleVisualize::showSKG(AreaSKG *area, BaseUtils::Section section)
 int TriangleVisualize::addTriangleDiag(AreaSKG *area, TriangleDefines::Triangle triangle, QColor color)
 {
     AreaSKGDefines::BrokenLine blTrngl;
-    blTrngl.polygon << QPointF(triangle.topCorner.x(), triangle.topCorner.y())
-                    << QPointF(triangle.leftDownCorner.x(), triangle.leftDownCorner.y())
-                    << QPointF(triangle.rightDownCorner.x(), triangle.rightDownCorner.y());
+    blTrngl.polygon << QPointF(triangle.topCorner().x(), triangle.topCorner().y())
+                    << QPointF(triangle.leftDownCorner().x(), triangle.leftDownCorner().y())
+                    << QPointF(triangle.rightDownCorner().x(), triangle.rightDownCorner().y());
     blTrngl.color = color;
     blTrngl.width = 3;
     return area->addBrokenLine(blTrngl);
+}
+
+void TriangleVisualize::showAllFactors()
+{
+    auto *model = new QStandardItemModel(ui->tvFactors);
+
+    for (int i = 0; i < m_calculator->factorCount() / 2; ++i)
+    {
+        auto fUidT = m_calculator->factorUid(i);
+        auto fi = static_cast<AAnalyserApplication*>(QApplication::instance())->getFactorInfo(fUidT);
+        QString fn = fi.name();
+        if (fi.measure() != "")
+            fn = fn + ", " + fi.measure();
+        auto *itemName = new QStandardItem(fn);
+        itemName->setEditable(false);
+
+        auto *itemT = new QStandardItem(m_calculator->factorValueFormatted(fUidT));
+        itemT->setEditable(false);
+
+        auto fUidA = m_calculator->factorUid(m_calculator->factorCount() / 2 + i);
+        auto *itemA = new QStandardItem(m_calculator->factorValueFormatted(fUidA));
+        itemA->setEditable(false);
+
+        model->appendRow(QList<QStandardItem*>() << itemName << itemT << itemA);
+    }
+
+    model->setHorizontalHeaderLabels(QStringList() << tr("Показатель") << tr("Этап обучения") << tr("Этап анализа"));
+    ui->tvFactors->setModel(model);
+    ui->tvFactors->header()->resizeSections(QHeaderView::ResizeToContents);
+    ui->tvFactors->header()->resizeSection(0, 430);
 }
 
 void TriangleVisualize::saveSplitterPositionDiag()

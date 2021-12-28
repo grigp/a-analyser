@@ -2,6 +2,7 @@
 
 #include <QDebug>
 
+#include "aanalyserapplication.h"
 #include "channelsdefines.h"
 #include "dataprovider.h"
 #include "stabilogram.h"
@@ -41,10 +42,66 @@ void TriangleFactors::calculate()
     readSignal();
     computeTrianglesBounds();
     computeTriangles();
+    computeSKOValues();
+
+    addFactors();
 }
 
 void TriangleFactors::registerFactors()
 {
+    static_cast<AAnalyserApplication*>(QApplication::instance())->
+            registerGroup(TriangleFactorsDefines::GroupUid, tr("Показатели теста \"Треугольник\""));
+
+    static_cast<AAnalyserApplication*>(QApplication::instance())->
+            registerFactor(TriangleFactorsDefines::Training::TimeUid, TriangleFactorsDefines::GroupUid,
+                           tr("Средняя длительность прохода (обучение)"), tr("LenTest"), tr("сек"), 1, 3, FactorsDefines::nsDual, 12);
+    static_cast<AAnalyserApplication*>(QApplication::instance())->
+            registerFactor(TriangleFactorsDefines::Training::TimeQUid, TriangleFactorsDefines::GroupUid,
+                           tr("Разброс длительности прохода (обучение)"), tr("LenQTest"), tr("сек"), 2, 3, FactorsDefines::nsDual, 12);
+    static_cast<AAnalyserApplication*>(QApplication::instance())->
+            registerFactor(TriangleFactorsDefines::Training::SquareUid, TriangleFactorsDefines::GroupUid,
+                           tr("Средняя площадь треугольников (обучение)"), tr("SqrTest"), tr("кв.мм"), 0, 3, FactorsDefines::nsDual, 12);
+    static_cast<AAnalyserApplication*>(QApplication::instance())->
+            registerFactor(TriangleFactorsDefines::Training::SquareQUid, TriangleFactorsDefines::GroupUid,
+                           tr("Разброс площади треугольников (обучение)"), tr("SqrQTest"), tr("кв.мм"), 0, 3, FactorsDefines::nsDual, 12);
+    static_cast<AAnalyserApplication*>(QApplication::instance())->
+            registerFactor(TriangleFactorsDefines::Training::SpeedUid, TriangleFactorsDefines::GroupUid,
+                           tr("Средняя скорость прохождения (обучение)"), tr("SpdTest"), tr("мм/сек"), 2, 3, FactorsDefines::nsDual, 12);
+    static_cast<AAnalyserApplication*>(QApplication::instance())->
+            registerFactor(TriangleFactorsDefines::Training::SpeedQUid, TriangleFactorsDefines::GroupUid,
+                           tr("Разброс скорости прохождения (обучение)"), tr("SpdQTest"), tr("мм/сек"), 2, 3, FactorsDefines::nsDual, 12);
+    static_cast<AAnalyserApplication*>(QApplication::instance())->
+            registerFactor(TriangleFactorsDefines::Training::MXUid, TriangleFactorsDefines::GroupUid,
+                           tr("Среднее смещение треуг. по фронтали (обучение)"), tr("TrXTest"), tr("мм"), 1, 3, FactorsDefines::nsDual, 12);
+    static_cast<AAnalyserApplication*>(QApplication::instance())->
+            registerFactor(TriangleFactorsDefines::Training::MYUid, TriangleFactorsDefines::GroupUid,
+                           tr("Среднее смещение треуг. по сагиттали (обучение)"), tr("TrYTest"), tr("мм"), 1, 3, FactorsDefines::nsDual, 12);
+
+
+    static_cast<AAnalyserApplication*>(QApplication::instance())->
+            registerFactor(TriangleFactorsDefines::Analysis::TimeUid, TriangleFactorsDefines::GroupUid,
+                           tr("Средняя длительность прохода (анализ)"), tr("LenAnal"), tr("сек"), 1, 3, FactorsDefines::nsDual, 12);
+    static_cast<AAnalyserApplication*>(QApplication::instance())->
+            registerFactor(TriangleFactorsDefines::Analysis::TimeQUid, TriangleFactorsDefines::GroupUid,
+                           tr("Разброс длительности прохода (анализ)"), tr("LenQAnal"), tr("сек"), 2, 3, FactorsDefines::nsDual, 12);
+    static_cast<AAnalyserApplication*>(QApplication::instance())->
+            registerFactor(TriangleFactorsDefines::Analysis::SquareUid, TriangleFactorsDefines::GroupUid,
+                           tr("Средняя площадь треугольников (анализ)"), tr("SqrAnal"), tr("кв.мм"), 0, 3, FactorsDefines::nsDual, 12);
+    static_cast<AAnalyserApplication*>(QApplication::instance())->
+            registerFactor(TriangleFactorsDefines::Analysis::SquareQUid, TriangleFactorsDefines::GroupUid,
+                           tr("Разброс площади треугольников (анализ)"), tr("SqrQAnal"), tr("кв.мм"), 0, 3, FactorsDefines::nsDual, 12);
+    static_cast<AAnalyserApplication*>(QApplication::instance())->
+            registerFactor(TriangleFactorsDefines::Analysis::SpeedUid, TriangleFactorsDefines::GroupUid,
+                           tr("Средняя скорость прохождения (анализ)"), tr("SpdAnal"), tr("мм/сек"), 2, 3, FactorsDefines::nsDual, 12);
+    static_cast<AAnalyserApplication*>(QApplication::instance())->
+            registerFactor(TriangleFactorsDefines::Analysis::SpeedQUid, TriangleFactorsDefines::GroupUid,
+                           tr("Разброс скорости прохождения (анализ)"), tr("SpdQAnal"), tr("мм/сек"), 2, 3, FactorsDefines::nsDual, 12);
+    static_cast<AAnalyserApplication*>(QApplication::instance())->
+            registerFactor(TriangleFactorsDefines::Analysis::MXUid, TriangleFactorsDefines::GroupUid,
+                           tr("Среднее смещение треуг. по фронтали (анализ)"), tr("TrXAnal"), tr("мм"), 1, 3, FactorsDefines::nsDual, 12);
+    static_cast<AAnalyserApplication*>(QApplication::instance())->
+            registerFactor(TriangleFactorsDefines::Analysis::MYUid, TriangleFactorsDefines::GroupUid,
+                           tr("Среднее смещение треуг. по сагиттали (анализ)"), tr("TrYTest"), tr("мм"), 1, 3, FactorsDefines::nsDual, 12);
 
 }
 
@@ -197,6 +254,9 @@ void TriangleFactors::computeTriangles()
         QVector<QPointF> vn;
         QVector<QPointF> vrr;
         QVector<QPointF> vrl;
+        double l = 0;
+        double xp = 0;
+        double yp = 0;
         for (int i = section.begin; i < section.end; ++i)
         {
             double x = m_x.at(i);
@@ -210,6 +270,11 @@ void TriangleFactors::computeTriangles()
 
             BaseUtils::rotatePoint(x, y, 2 * M_PI / 3, xr, yr);
             vrl << QPointF(xr, yr);
+
+            if (i > section.begin)
+                l = l + sqrt(pow(x - xp, 2) + pow(y - yp, 2));
+            xp = x;
+            yp = y;
         }
 
         //! Расчет координат вершин
@@ -232,17 +297,18 @@ void TriangleFactors::computeTriangles()
         rd.setY(yr);
 
         //! Заполнение массива координат вершин
-        m_triangles << TriangleDefines::Triangle(t, ld, rd);
+        TriangleDefines::Triangle trngl(t, ld, rd);
+        double tm = static_cast<double>(vn.size()) / m_resData->freq();
+        trngl.setTimeFactors(tm, l / tm);
+        m_triangles << trngl;
 
         //! Расчет координат вершин усредненных треугольников
-        auto averaging = [&](TriangleDefines::Triangle  &triangle)
+        auto averaging = [&](TriangleDefines::Triangle &triangle)
         {
-            triangle.topCorner.setX(triangle.topCorner.x() + t.x());
-            triangle.topCorner.setY(triangle.topCorner.y() + t.y());
-            triangle.leftDownCorner.setX(triangle.leftDownCorner.x() + ld.x());
-            triangle.leftDownCorner.setY(triangle.leftDownCorner.y() + ld.y());
-            triangle.rightDownCorner.setX(triangle.rightDownCorner.x() + rd.x());
-            triangle.rightDownCorner.setY(triangle.rightDownCorner.y() + rd.y());
+            triangle.setTopCorner(QPointF(triangle.topCorner().x() + t.x(), triangle.topCorner().y() + t.y()));
+            triangle.setLeftDownCorner(QPointF(triangle.leftDownCorner().x() + ld.x(), triangle.leftDownCorner().y() + ld.y()));
+            triangle.setRightDownCorner(QPointF(triangle.rightDownCorner().x() + rd.x(), triangle.rightDownCorner().y() + rd.y()));
+            triangle.setTimeFactors(triangle.time() + trngl.time(), triangle.speed() + trngl.speed());
         };
         if (n < m_firstAnalysisTriangle)
             averaging(m_triangleAverageTraining);
@@ -255,12 +321,11 @@ void TriangleFactors::computeTriangles()
     //! Расчет координат вершин усредненных треугольников - деление на количество
     auto averaging = [&](TriangleDefines::Triangle  &triangle, const int count)
     {
-        triangle.topCorner.setX(triangle.topCorner.x() / count);
-        triangle.topCorner.setY(triangle.topCorner.y() / count);
-        triangle.leftDownCorner.setX(triangle.leftDownCorner.x() / count);
-        triangle.leftDownCorner.setY(triangle.leftDownCorner.y() / count);
-        triangle.rightDownCorner.setX(triangle.rightDownCorner.x() / count);
-        triangle.rightDownCorner.setY(triangle.rightDownCorner.y() / count);
+        triangle.setTopCorner(QPointF(triangle.topCorner().x() / count, triangle.topCorner().y() / count));
+        triangle.setLeftDownCorner(QPointF(triangle.leftDownCorner().x() / count, triangle.leftDownCorner().y() / count));
+        triangle.setRightDownCorner(QPointF(triangle.rightDownCorner().x() / count, triangle.rightDownCorner().y() / count));
+        triangle.calculate();
+        triangle.setTimeFactors(triangle.time() / count, triangle.speed() / count);
     };
     averaging(m_triangleAverageTraining, m_firstAnalysisTriangle);
     averaging(m_triangleAverageAnalysis, m_triangles.size() - m_firstAnalysisTriangle);
@@ -294,9 +359,51 @@ QPointF TriangleFactors::computeCorner(QVector<QPointF> &stab)
     return QPointF(mx, my);
 }
 
+void TriangleFactors::computeSKOValues()
+{
+//    double timeMo = 0;
+//    double squareMo = 0;
+//    double speedMo = 0;
+//    for (int i = 0; i < m_triangles.size(); ++i)
+//    {
+//        timeMo += m_triangles.at(i).time();
+//        squareMo += m_triangles.at(i).square();
+//        speedMo += m_triangles.at(i).speed();
+
+//        if (i == m_firstAnalysisTriangle)
+//        {
+
+//        }
+
+//    }
+
+//    TriangleFactorsDefines::FactorValues
+}
+
 void TriangleFactors::getTriangleData()
 {
     QByteArray baData;
     if (DataProvider::getChannel(probeUid(), ChannelsDefines::chanTriangleResult, baData))
         m_resData = new TriangleResultData(baData);
+}
+
+void TriangleFactors::addFactors()
+{
+    addFactor(TriangleFactorsDefines::Training::TimeUid, m_triangleAverageTraining.time());
+    addFactor(TriangleFactorsDefines::Training::TimeQUid, 0);
+    addFactor(TriangleFactorsDefines::Training::SquareUid, m_triangleAverageTraining.square());
+    addFactor(TriangleFactorsDefines::Training::SquareQUid, 0);
+    addFactor(TriangleFactorsDefines::Training::SpeedUid, m_triangleAverageTraining.speed());
+    addFactor(TriangleFactorsDefines::Training::SpeedQUid, 0);
+    addFactor(TriangleFactorsDefines::Training::MXUid, m_triangleAverageTraining.mx());
+    addFactor(TriangleFactorsDefines::Training::MYUid, m_triangleAverageTraining.my());
+
+    addFactor(TriangleFactorsDefines::Analysis::TimeUid, m_triangleAverageAnalysis.time());
+    addFactor(TriangleFactorsDefines::Analysis::TimeQUid, 0);
+    addFactor(TriangleFactorsDefines::Analysis::SquareUid, m_triangleAverageAnalysis.square());
+    addFactor(TriangleFactorsDefines::Analysis::SquareQUid, 0);
+    addFactor(TriangleFactorsDefines::Analysis::SpeedUid, m_triangleAverageAnalysis.speed());
+    addFactor(TriangleFactorsDefines::Analysis::SpeedQUid, 0);
+    addFactor(TriangleFactorsDefines::Analysis::MXUid, m_triangleAverageAnalysis.mx());
+    addFactor(TriangleFactorsDefines::Analysis::MYUid, m_triangleAverageAnalysis.my());
 }

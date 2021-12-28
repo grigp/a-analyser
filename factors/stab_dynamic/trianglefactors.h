@@ -11,7 +11,40 @@
 namespace TriangleFactorsDefines
 {
 static const QString GroupUid = "{262C7BC3-2EFA-40CA-8D08-D770E76F57FC}";
-static const QString LUpUid = "{E16E7852-9E22-4385-8A3A-B949C27505BB}";
+
+namespace Training {
+static const QString TimeUid = "{E16E7852-9E22-4385-8A3A-B949C27505BB}";
+static const QString TimeQUid = "{1B36487D-F314-46F3-8199-CE889F388ED5}";
+static const QString SquareUid = "{6006B71E-D7E5-4FDF-8B73-77B8B966F330}";
+static const QString SquareQUid = "{B231419B-E3E2-4049-BFFB-3D8EFB2E379B}";
+static const QString SpeedUid = "{07B9825D-3D8C-4079-B859-1A0fCA288777}";
+static const QString SpeedQUid = "{368CD3FB-7162-43E4-B35B-7737942D40A9}";
+static const QString MXUid = "{8B36C68A-7CF3-4C1D-AC5B-7E86595020F5}";
+static const QString MYUid = "{BE74D224-2C8C-42B2-8AF0-5C0F24D79B8E}";
+}
+
+
+namespace Analysis {
+static const QString TimeUid = "{0EB7D41E-3708-4370-8BFD-B3008DDCD63B}";
+static const QString TimeQUid = "{6FA79832-0FAF-4C1D-AFE6-A0EEBAD54674}";
+static const QString SquareUid = "{2D3F41C5-E32B-493E-847E-41CD5B4340BB}";
+static const QString SquareQUid = "{7E173708-3BC6-4828-9E50-73A68711E13D}";
+static const QString SpeedUid = "{6367BA59-A934-45D3-8342-FFFB3D1445E2}";
+static const QString SpeedQUid = "{5B049643-D08A-4D6E-B0A0-CCCA8E1DABFE}";
+static const QString MXUid = "{A243B86F-9AA9-4FE8-9B23-657AE43BCDCF}";
+static const QString MYUid = "{E0C30597-E75C-4136-A775-504BF02B5B9C}";
+}
+
+/*!
+ * \brief Значения некоторых показателей FactorValues struct
+ */
+struct FactorValues
+{
+    double timeQ {0};    ///< Разброс длительности проходов
+    double squareQ {0};  ///< Разброс площади треугольников
+    double speedQ {0};   ///< Разброс скорости прохождения
+};
+
 }
 
 class TriangleResultData;
@@ -110,7 +143,7 @@ private:
     /*!
      * \brief Расчет треугольников
      */
-    void computeTriangles();
+    void computeTriangles();   
 
     /*!
      * \brief Рассчитывает точку вершины треугольника
@@ -120,9 +153,16 @@ private:
     QPointF computeCorner(QVector<QPointF> &stab);
 
     /*!
+     * \brief Расчет значений СКО
+     */
+    void computeSKOValues();
+
+    /*!
      * \brief Читает данные пробы
      */
     void getTriangleData();
+
+    void addFactors();
 
     TriangleResultData* m_resData;
 
@@ -135,6 +175,9 @@ private:
     QVector<double> m_xf, m_yf;              ///< Фильтраванная стабилограмма
     int m_freq {50};
     int m_firstAnalysisTriangle {0};         ///< Первый треугольник на этапе анализа
+
+    TriangleFactorsDefines::FactorValues m_valuesTraining;
+    TriangleFactorsDefines::FactorValues m_valuesAnalysis;
 };
 
 #endif // TRIANGLEFACTORS_H
