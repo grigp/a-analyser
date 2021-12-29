@@ -361,23 +361,55 @@ QPointF TriangleFactors::computeCorner(QVector<QPointF> &stab)
 
 void TriangleFactors::computeSKOValues()
 {
-//    double timeMo = 0;
-//    double squareMo = 0;
-//    double speedMo = 0;
-//    for (int i = 0; i < m_triangles.size(); ++i)
-//    {
-//        timeMo += m_triangles.at(i).time();
-//        squareMo += m_triangles.at(i).square();
-//        speedMo += m_triangles.at(i).speed();
+    double timeMoT = 0;
+    double squareMoT = 0;
+    double speedMoT = 0;
+    double timeMoA = 0;
+    double squareMoA = 0;
+    double speedMoA = 0;
+    for (int i = 0; i < m_triangles.size(); ++i)
+    {
+        if (i < m_firstAnalysisTriangle)
+        {
+            timeMoT += m_triangles.at(i).time();
+            squareMoT += m_triangles.at(i).square();
+            speedMoT += m_triangles.at(i).speed();
+        }
+        else
+        {
+            timeMoA += m_triangles.at(i).time();
+            squareMoA += m_triangles.at(i).square();
+            speedMoA += m_triangles.at(i).speed();
+        }
+    }
+    timeMoT /= m_firstAnalysisTriangle;
+    squareMoT /= m_firstAnalysisTriangle;
+    speedMoT /= m_firstAnalysisTriangle;
+    timeMoA /= (m_triangles.size() - m_firstAnalysisTriangle);
+    squareMoA /= (m_triangles.size() - m_firstAnalysisTriangle);
+    speedMoA /= (m_triangles.size() - m_firstAnalysisTriangle);
 
-//        if (i == m_firstAnalysisTriangle)
-//        {
-
-//        }
-
-//    }
-
-//    TriangleFactorsDefines::FactorValues
+    for (int i = 0; i < m_triangles.size(); ++i)
+    {
+        if (i < m_firstAnalysisTriangle)
+        {
+            m_valuesTraining.timeQ += pow(m_triangles.at(i).time() - timeMoT, 2) / m_firstAnalysisTriangle;
+            m_valuesTraining.squareQ += pow(m_triangles.at(i).square() - squareMoT, 2) / m_firstAnalysisTriangle;
+            m_valuesTraining.speedQ += pow(m_triangles.at(i).speed() - speedMoT, 2) / m_firstAnalysisTriangle;
+        }
+        else
+        {
+            m_valuesAnalysis.timeQ += pow(m_triangles.at(i).time() - timeMoA, 2) / (m_triangles.size() - m_firstAnalysisTriangle);
+            m_valuesAnalysis.squareQ += pow(m_triangles.at(i).square() - squareMoA, 2) / (m_triangles.size() - m_firstAnalysisTriangle);
+            m_valuesAnalysis.speedQ += pow(m_triangles.at(i).speed() - speedMoA, 2) / (m_triangles.size() - m_firstAnalysisTriangle);
+        }
+    }
+    m_valuesTraining.timeQ = sqrt(m_valuesTraining.timeQ);
+    m_valuesTraining.squareQ = sqrt(m_valuesTraining.squareQ);
+    m_valuesTraining.speedQ = sqrt(m_valuesTraining.speedQ);
+    m_valuesAnalysis.timeQ = sqrt(m_valuesAnalysis.timeQ);
+    m_valuesAnalysis.squareQ = sqrt(m_valuesAnalysis.squareQ);
+    m_valuesAnalysis.speedQ = sqrt(m_valuesAnalysis.speedQ);
 }
 
 void TriangleFactors::getTriangleData()
@@ -390,20 +422,20 @@ void TriangleFactors::getTriangleData()
 void TriangleFactors::addFactors()
 {
     addFactor(TriangleFactorsDefines::Training::TimeUid, m_triangleAverageTraining.time());
-    addFactor(TriangleFactorsDefines::Training::TimeQUid, 0);
+    addFactor(TriangleFactorsDefines::Training::TimeQUid, m_valuesTraining.timeQ);
     addFactor(TriangleFactorsDefines::Training::SquareUid, m_triangleAverageTraining.square());
-    addFactor(TriangleFactorsDefines::Training::SquareQUid, 0);
+    addFactor(TriangleFactorsDefines::Training::SquareQUid, m_valuesTraining.squareQ);
     addFactor(TriangleFactorsDefines::Training::SpeedUid, m_triangleAverageTraining.speed());
-    addFactor(TriangleFactorsDefines::Training::SpeedQUid, 0);
+    addFactor(TriangleFactorsDefines::Training::SpeedQUid, m_valuesTraining.speedQ);
     addFactor(TriangleFactorsDefines::Training::MXUid, m_triangleAverageTraining.mx());
     addFactor(TriangleFactorsDefines::Training::MYUid, m_triangleAverageTraining.my());
 
     addFactor(TriangleFactorsDefines::Analysis::TimeUid, m_triangleAverageAnalysis.time());
-    addFactor(TriangleFactorsDefines::Analysis::TimeQUid, 0);
+    addFactor(TriangleFactorsDefines::Analysis::TimeQUid, m_valuesAnalysis.timeQ);
     addFactor(TriangleFactorsDefines::Analysis::SquareUid, m_triangleAverageAnalysis.square());
-    addFactor(TriangleFactorsDefines::Analysis::SquareQUid, 0);
+    addFactor(TriangleFactorsDefines::Analysis::SquareQUid, m_valuesAnalysis.squareQ);
     addFactor(TriangleFactorsDefines::Analysis::SpeedUid, m_triangleAverageAnalysis.speed());
-    addFactor(TriangleFactorsDefines::Analysis::SpeedQUid, 0);
+    addFactor(TriangleFactorsDefines::Analysis::SpeedQUid, m_valuesAnalysis.speedQ);
     addFactor(TriangleFactorsDefines::Analysis::MXUid, m_triangleAverageAnalysis.mx());
     addFactor(TriangleFactorsDefines::Analysis::MYUid, m_triangleAverageAnalysis.my());
 }
