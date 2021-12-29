@@ -363,6 +363,19 @@ private:
     QVector<double> m_values;
 };
 
+/*!
+ * \brief Структура группировки пары показателей FctTblPair struct
+ */
+struct FctTblPair
+{
+    QString first;
+    QString second;
+    FctTblPair(const QString f, const QString s)
+        : first(f), second(s)
+    {}
+};
+
+
 }
 
 

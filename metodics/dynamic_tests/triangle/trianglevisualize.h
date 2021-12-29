@@ -83,6 +83,16 @@ private:
      */
     void showAllFactors();
 
+    /*!
+     * \brief Показывает основные диаграммы
+     */
+    void showMainDiagrams();
+
+    /*!
+     * \brief Выводит показатели основных диаграмм
+     */
+    void showMainResultFactors();
+
     void saveSplitterPositionDiag();
     void restoreSplitterPositionDiag();
 

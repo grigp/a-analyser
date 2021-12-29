@@ -13,6 +13,22 @@
 #include "reportelements.h"
 #include "stabilogram.h"
 #include "areaskgdefines.h"
+#include "trianglefactors.h"
+
+namespace
+{
+
+///< Список показателей, выводимых в таблицу основных показателей
+///< Соответствие показателя для этапов обучения и анализа
+static QList<BaseUtils::FctTblPair> FactorsMain = {
+      BaseUtils::FctTblPair(TriangleFactorsDefines::Training::TimeUid, TriangleFactorsDefines::Analysis::TimeUid)
+    , BaseUtils::FctTblPair(TriangleFactorsDefines::Training::MXUid, TriangleFactorsDefines::Analysis::MXUid)
+    , BaseUtils::FctTblPair(TriangleFactorsDefines::Training::MYUid, TriangleFactorsDefines::Analysis::MYUid)
+    , BaseUtils::FctTblPair(TriangleFactorsDefines::Training::SquareUid, TriangleFactorsDefines::Analysis::SquareUid)
+};
+
+
+}
 
 TriangleVisualize::TriangleVisualize(QWidget *parent) :
     QWidget(parent),
@@ -50,6 +66,8 @@ void TriangleVisualize::setTest(const QString &testUid)
         setBtnPNAnalysisEnabled();
 
         showAllFactors();
+        showMainDiagrams();
+        showMainResultFactors();
     }
 }
 
@@ -319,6 +337,114 @@ void TriangleVisualize::showAllFactors()
     ui->tvFactors->setModel(model);
     ui->tvFactors->header()->resizeSections(QHeaderView::ResizeToContents);
     ui->tvFactors->header()->resizeSection(0, 430);
+}
+
+void TriangleVisualize::showMainDiagrams()
+{
+    double minTime = INT_MAX;
+    double maxTime = -INT_MAX;
+    double minMX = INT_MAX;
+    double maxMX = -INT_MAX;
+    double minMY = INT_MAX;
+    double maxMY = -INT_MAX;
+    double minSquare = INT_MAX;
+    double maxSquare = -INT_MAX;
+    auto setBounds = [&](const double val, double& min, double& max)
+    {
+        if (val < min)
+            min = val;
+        if (val > max)
+            max = val;
+    };
+
+    for (int i = 0; i < m_calculator->trianglesCount(); ++i)
+    {
+        double time = m_calculator->triangle(i).time();
+        setBounds(time, minTime, maxTime);
+        double mx = m_calculator->triangle(i).mx();
+        setBounds(mx, minMX, maxMX);
+        double my = m_calculator->triangle(i).my();
+        setBounds(my, minMY, maxMY);
+        double square = m_calculator->triangle(i).square();
+        setBounds(square, minSquare, maxSquare);
+
+        if (i < m_calculator->firstAnalysisTriangle())
+        {
+            auto itemT = new DiagItem(time, tr(""));
+            ui->wgtTimeTraining->appendItem(itemT);
+            auto itemMX = new DiagItem(mx, tr(""));
+            ui->wgtMXTraining->appendItem(itemMX);
+            auto itemMY = new DiagItem(my, tr(""));
+            ui->wgtMYTraining->appendItem(itemMY);
+            auto itemS = new DiagItem(square, tr(""));
+            ui->wgtSquareTraining->appendItem(itemS);
+        }
+        else
+        {
+            auto itemT = new DiagItem(time, tr(""));
+            ui->wgtTimeAnalysis->appendItem(itemT);
+            auto itemMX = new DiagItem(mx, tr(""));
+            ui->wgtMXAnalysis->appendItem(itemMX);
+            auto itemMY = new DiagItem(my, tr(""));
+            ui->wgtMYAnalysis->appendItem(itemMY);
+            auto itemS = new DiagItem(square, tr(""));
+            ui->wgtSquareAnalysis->appendItem(itemS);
+        }
+
+    }
+
+    auto setupDiag = [&](DynamicDiagram* diag, const QString title, const double min, const double max)
+    {
+        diag->setKind(DynamicDiagram::KindGraph);
+        diag->setVolume(DynamicDiagram::Volume3D);
+        diag->setTitle(title);
+        diag->setAxisSpaceLeft(30);
+        diag->setAxisSpaceBottom(10);
+        diag->setDiap(min - (max - min) * 0.1, max + (max - min) * 0.1);
+    };
+    setupDiag(ui->wgtTimeTraining, tr("Длительность прохождения"), minTime, maxTime);
+    setupDiag(ui->wgtTimeAnalysis, tr("Длительность прохождения"), minTime, maxTime);
+    setupDiag(ui->wgtMXTraining, tr("Cмещение по фронтали"), minMX, maxMX);
+    setupDiag(ui->wgtMXAnalysis, tr("Cмещение по фронтали"), minMX, maxMX);
+    setupDiag(ui->wgtMYTraining, tr("Cмещение по сагиттали"), minMY, maxMY);
+    setupDiag(ui->wgtMYAnalysis, tr("Cмещение по сагиттали"), minMY, maxMY);
+    setupDiag(ui->wgtSquareTraining, tr("Площадь треугольников"), minSquare, maxSquare);
+    setupDiag(ui->wgtSquareAnalysis, tr("Площадь треугольников"), minSquare, maxSquare);
+
+    auto spTraining = ui->frTraining->sizePolicy();
+    auto spAnalysis = ui->frAnalysis->sizePolicy();
+    spTraining.setHorizontalStretch(m_calculator->firstAnalysisTriangle());
+    spAnalysis.setHorizontalStretch(m_calculator->trianglesCount() - m_calculator->firstAnalysisTriangle());
+    ui->frTraining->setSizePolicy(spTraining);
+    ui->frAnalysis->setSizePolicy(spAnalysis);
+}
+
+void TriangleVisualize::showMainResultFactors()
+{
+    auto *model = new QStandardItemModel(ui->tvMainResFactors);
+
+    foreach (auto uids, FactorsMain)
+    {
+        auto uidFctT = uids.first;
+        auto uidFctA = uids.second;
+
+        auto fi = static_cast<AAnalyserApplication*>(QApplication::instance())->getFactorInfo(uidFctT);
+        QString fn = fi.name();
+        if (fi.measure() != "")
+            fn = fn + ", " + fi.measure();
+        auto *itemName = new QStandardItem(fn);
+        itemName->setEditable(false);
+        auto *itemT = new QStandardItem(m_calculator->factorValueFormatted(uidFctT));
+        itemT->setEditable(false);
+        auto *itemA = new QStandardItem(m_calculator->factorValueFormatted(uidFctA));
+        itemA->setEditable(false);
+        model->appendRow(QList<QStandardItem*>() << itemName << itemT << itemA);
+    }
+
+    model->setHorizontalHeaderLabels(QStringList() << tr("Показатель") << tr("Этап обучения") << tr("Этап анализа"));
+    ui->tvMainResFactors->setModel(model);
+    ui->tvMainResFactors->header()->resizeSections(QHeaderView::ResizeToContents);
+    ui->tvMainResFactors->header()->resizeSection(0, 430);
 }
 
 void TriangleVisualize::saveSplitterPositionDiag()
