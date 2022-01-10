@@ -317,7 +317,8 @@ void TriangleVisualize::showAllFactors()
     {
         auto fUidT = m_calculator->factorUid(i);
         auto fi = static_cast<AAnalyserApplication*>(QApplication::instance())->getFactorInfo(fUidT);
-        QString fn = fi.name();
+        QString n = fi.name();
+        auto fn = n.left(n.lastIndexOf('(') - 1);
         if (fi.measure() != "")
             fn = fn + ", " + fi.measure();
         auto *itemName = new QStandardItem(fn);
@@ -429,7 +430,8 @@ void TriangleVisualize::showMainResultFactors()
         auto uidFctA = uids.second;
 
         auto fi = static_cast<AAnalyserApplication*>(QApplication::instance())->getFactorInfo(uidFctT);
-        QString fn = fi.name();
+        QString n = fi.name();
+        auto fn = n.left(n.lastIndexOf('(') - 1);
         if (fi.measure() != "")
             fn = fn + ", " + fi.measure();
         auto *itemName = new QStandardItem(fn);

@@ -21,6 +21,24 @@ static const QString SpeedUid = "{07B9825D-3D8C-4079-B859-1A0fCA288777}";
 static const QString SpeedQUid = "{368CD3FB-7162-43E4-B35B-7737942D40A9}";
 static const QString MXUid = "{8B36C68A-7CF3-4C1D-AC5B-7E86595020F5}";
 static const QString MYUid = "{BE74D224-2C8C-42B2-8AF0-5C0F24D79B8E}";
+
+static const QString UpErrSysXUid = "{B5BA8F9B-AE33-482C-A10E-DF7C18D3B8F3}";
+static const QString UpErrSysYUid = "{82544872-1E52-4EB0-A426-32C864378173}";
+static const QString RightErrSysXUid = "{F5B31BAC-451E-4DAC-9D16-A34BA1722932}";
+static const QString RightErrSysYUid = "{77EBEE63-5C3D-404C-AF33-683C4D1E0EF6}";
+static const QString LeftErrSysXUid = "{D26744AE-A408-48A4-A536-9F72C1F963EB}";
+static const QString LeftErrSysYUid = "{C27B7BBD-CA91-46E8-9202-592898B02EA0}";
+static const QString MidErrSysXUid = "{D688E596-D983-414C-9B35-01B9369B0B24}";
+static const QString MidErrSysYUid = "{BB898E6D-FA52-4457-8A22-AF1FDCAB5866}";
+
+static const QString UpErrRndXUid = "{5D364B9D-4A06-4DD1-B83A-E6A6ECF8D099}";
+static const QString UpErrRndYUid = "{DF827196-4D5A-4268-9D98-A924CD3740B5}";
+static const QString RightErrRndXUid = "{5BD19A9C-4D16-4B65-97A5-E61AEC2B6936}";
+static const QString RightErrRndYUid = "{3EEAA965-DDB1-4137-9471-4B7F5691FD37}";
+static const QString LeftErrRndXUid = "{67C59527-333A-4210-8130-F0C32853EAD2}";
+static const QString LeftErrRndYUid = "{A59B2584-55F8-4C10-99D8-F339B9DEB0B0}";
+static const QString MidErrRndXUid = "{1160F91F-7EF3-46E8-8016-D56677A2CD6D}";
+static const QString MidErrRndYUid = "{F489741C-0B82-48B0-8203-F8E4A600BEC3}";
 }
 
 
@@ -33,6 +51,25 @@ static const QString SpeedUid = "{6367BA59-A934-45D3-8342-FFFB3D1445E2}";
 static const QString SpeedQUid = "{5B049643-D08A-4D6E-B0A0-CCCA8E1DABFE}";
 static const QString MXUid = "{A243B86F-9AA9-4FE8-9B23-657AE43BCDCF}";
 static const QString MYUid = "{E0C30597-E75C-4136-A775-504BF02B5B9C}";
+
+static const QString UpErrSysXUid = "{17CDCF87-A839-4BDE-9F37-032B4D20600C}";
+static const QString UpErrSysYUid = "{D871C553-2A25-470A-B732-FFC6B90B6E66}";
+static const QString RightErrSysXUid = "{5443F24D-7762-4F37-A1C2-31033E3AF16D}";
+static const QString RightErrSysYUid = "{9BE4E3C4-5549-463C-95F3-D0E507B7F515}";
+static const QString LeftErrSysXUid = "{B70C3C41-12DB-4290-B11D-68D8C3F1EB15}";
+static const QString LeftErrSysYUid = "{6AF26249-F86E-48EF-BCE1-83EC8E490557}";
+static const QString MidErrSysXUid = "{08D3DB85-C776-4FE9-9B1E-70F87D69DBCF}";
+static const QString MidErrSysYUid = "{0F00ED53-BBD6-42C9-99A0-8614B0DEC559}";
+
+static const QString UpErrRndXUid = "{7A99A923-9631-42AF-AB03-404152F7DEAB}";
+static const QString UpErrRndYUid = "{962505B4-7B70-49D6-B602-3A4BBDE6472F}";
+static const QString RightErrRndXUid = "{7F95EEAA-D6DD-4D45-BBF2-8349E70A964E}";
+static const QString RightErrRndYUid = "{CB933D57-3D60-4E2A-906E-6727320C21E0}";
+static const QString LeftErrRndXUid = "{D89E44F8-3680-459D-A6CE-6A8A1A386FDF}";
+static const QString LeftErrRndYUid = "{0B890317-2B07-40D6-BD6A-F136C148B892}";
+static const QString MidErrRndXUid = "{A5EA0128-73FB-4FFC-B098-E7C436C869F4}";
+static const QString MidErrRndYUid = "{E2F87C06-F61B-4AF0-8090-D41F99476741}";
+
 }
 
 /*!
@@ -44,6 +81,18 @@ struct FactorValues
     double squareQ {0};  ///< Разброс площади треугольников
     double speedQ {0};   ///< Разброс скорости прохождения
 };
+
+/*!
+ * \brief Структура параметров отклонения треугольника от шаблона TrangleTopDeviation struct
+ */
+struct TranglePosDeviation
+{
+  double systX {0};
+  double systY {0};
+  double randX {0};
+  double randY {0};
+};
+
 
 }
 
@@ -158,6 +207,20 @@ private:
     void computeSKOValues();
 
     /*!
+     * \brief computePosDeviations
+     * \param begin, end - номера первого и последнего треугольников
+     * \param upDev - параметры верхнего угла
+     * \param rtDev - параметры правого угла
+     * \param lfDev - параметры левого угла
+     * \param midDev - параметры центра треугольника
+     */
+    void computePosDeviations(const int begin, const int end,
+                              TriangleFactorsDefines::TranglePosDeviation &upDev,
+                              TriangleFactorsDefines::TranglePosDeviation &rtDev,
+                              TriangleFactorsDefines::TranglePosDeviation &lfDev,
+                              TriangleFactorsDefines::TranglePosDeviation &midDev);
+
+    /*!
      * \brief Читает данные пробы
      */
     void getTriangleData();
@@ -178,6 +241,11 @@ private:
 
     TriangleFactorsDefines::FactorValues m_valuesTraining;
     TriangleFactorsDefines::FactorValues m_valuesAnalysis;
+
+    ///< Параметры отклонения треугольника от шаблона
+    TriangleFactorsDefines::TranglePosDeviation m_upDevTest, m_rtDevTest, m_lfDevTest, m_midDevTest;
+    TriangleFactorsDefines::TranglePosDeviation m_upDevAnal, m_rtDevAnal, m_lfDevAnal, m_midDevAnal;
+
 };
 
 #endif // TRIANGLEFACTORS_H

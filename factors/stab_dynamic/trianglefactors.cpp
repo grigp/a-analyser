@@ -43,6 +43,8 @@ void TriangleFactors::calculate()
     computeTrianglesBounds();
     computeTriangles();
     computeSKOValues();
+    computePosDeviations(0, m_firstAnalysisTriangle - 1, m_upDevTest, m_rtDevTest, m_lfDevTest, m_midDevTest);
+    computePosDeviations(m_firstAnalysisTriangle, m_triangles.size() - 1, m_upDevAnal, m_rtDevAnal, m_lfDevAnal, m_midDevAnal);
 
     addFactors();
 }
@@ -77,6 +79,57 @@ void TriangleFactors::registerFactors()
             registerFactor(TriangleFactorsDefines::Training::MYUid, TriangleFactorsDefines::GroupUid,
                            tr("Среднее смещение треуг. по сагиттали (обучение)"), tr("TrYTest"), tr("мм"), 1, 3, FactorsDefines::nsDual, 12);
 
+    static_cast<AAnalyserApplication*>(QApplication::instance())->
+            registerFactor(TriangleFactorsDefines::Training::UpErrSysXUid, TriangleFactorsDefines::GroupUid,
+                           tr("Системная ошибка верхней вершины X (обучение)"), tr("UESXTest"), tr("мм"), 2, 3, FactorsDefines::nsDual, 12);
+    static_cast<AAnalyserApplication*>(QApplication::instance())->
+            registerFactor(TriangleFactorsDefines::Training::UpErrSysYUid, TriangleFactorsDefines::GroupUid,
+                           tr("Системная ошибка верхней вершины Y (обучение)"), tr("UESYTest"), tr("мм"), 2, 3, FactorsDefines::nsDual, 12);
+    static_cast<AAnalyserApplication*>(QApplication::instance())->
+            registerFactor(TriangleFactorsDefines::Training::RightErrSysXUid, TriangleFactorsDefines::GroupUid,
+                           tr("Системная ошибка правой вершины X (обучение)"), tr("RESXTest"), tr("мм"), 2, 3, FactorsDefines::nsDual, 12);
+    static_cast<AAnalyserApplication*>(QApplication::instance())->
+            registerFactor(TriangleFactorsDefines::Training::RightErrSysYUid, TriangleFactorsDefines::GroupUid,
+                           tr("Системная ошибка правой вершины Y (обучение)"), tr("RESYTest"), tr("мм"), 2, 3, FactorsDefines::nsDual, 12);
+    static_cast<AAnalyserApplication*>(QApplication::instance())->
+            registerFactor(TriangleFactorsDefines::Training::LeftErrSysXUid, TriangleFactorsDefines::GroupUid,
+                           tr("Системная ошибка левой вершины X (обучение)"), tr("LESXTest"), tr("мм"), 2, 3, FactorsDefines::nsDual, 12);
+    static_cast<AAnalyserApplication*>(QApplication::instance())->
+            registerFactor(TriangleFactorsDefines::Training::LeftErrSysYUid, TriangleFactorsDefines::GroupUid,
+                           tr("Системная ошибка левой вершины Y (обучение)"), tr("LESYTest"), tr("мм"), 2, 3, FactorsDefines::nsDual, 12);
+    static_cast<AAnalyserApplication*>(QApplication::instance())->
+            registerFactor(TriangleFactorsDefines::Training::MidErrSysXUid, TriangleFactorsDefines::GroupUid,
+                           tr("Системная ошибка центра треугольника X (обучение)"), tr("MESXTest"), tr("мм"), 2, 3, FactorsDefines::nsDual, 12);
+    static_cast<AAnalyserApplication*>(QApplication::instance())->
+            registerFactor(TriangleFactorsDefines::Training::MidErrSysYUid, TriangleFactorsDefines::GroupUid,
+                           tr("Системная ошибка центра треугольника Y (обучение)"), tr("MESYTest"), tr("мм"), 2, 3, FactorsDefines::nsDual, 12);
+
+    static_cast<AAnalyserApplication*>(QApplication::instance())->
+            registerFactor(TriangleFactorsDefines::Training::UpErrRndXUid, TriangleFactorsDefines::GroupUid,
+                           tr("Случайная ошибка верхней вершины X (обучение)"), tr("UERXTest"), tr("мм"), 2, 3, FactorsDefines::nsDual, 12);
+    static_cast<AAnalyserApplication*>(QApplication::instance())->
+            registerFactor(TriangleFactorsDefines::Training::UpErrRndYUid, TriangleFactorsDefines::GroupUid,
+                           tr("Случайная ошибка верхней вершины Y (обучение)"), tr("UERYTest"), tr("мм"), 2, 3, FactorsDefines::nsDual, 12);
+    static_cast<AAnalyserApplication*>(QApplication::instance())->
+            registerFactor(TriangleFactorsDefines::Training::RightErrRndXUid, TriangleFactorsDefines::GroupUid,
+                           tr("Случайная ошибка правой вершины X (обучение)"), tr("RERXTest"), tr("мм"), 2, 3, FactorsDefines::nsDual, 12);
+    static_cast<AAnalyserApplication*>(QApplication::instance())->
+            registerFactor(TriangleFactorsDefines::Training::RightErrRndYUid, TriangleFactorsDefines::GroupUid,
+                           tr("Случайная ошибка правой вершины Y (обучение)"), tr("RERYTest"), tr("мм"), 2, 3, FactorsDefines::nsDual, 12);
+    static_cast<AAnalyserApplication*>(QApplication::instance())->
+            registerFactor(TriangleFactorsDefines::Training::LeftErrRndXUid, TriangleFactorsDefines::GroupUid,
+                           tr("Случайная ошибка левой вершины X (обучение)"), tr("LERXTest"), tr("мм"), 2, 3, FactorsDefines::nsDual, 12);
+    static_cast<AAnalyserApplication*>(QApplication::instance())->
+            registerFactor(TriangleFactorsDefines::Training::LeftErrRndYUid, TriangleFactorsDefines::GroupUid,
+                           tr("Случайная ошибка левой вершины Y (обучение)"), tr("LERYTest"), tr("мм"), 2, 3, FactorsDefines::nsDual, 12);
+    static_cast<AAnalyserApplication*>(QApplication::instance())->
+            registerFactor(TriangleFactorsDefines::Training::MidErrRndXUid, TriangleFactorsDefines::GroupUid,
+                           tr("Случайная ошибка центра треугольника X (обучение)"), tr("MERXTest"), tr("мм"), 2, 3, FactorsDefines::nsDual, 12);
+    static_cast<AAnalyserApplication*>(QApplication::instance())->
+            registerFactor(TriangleFactorsDefines::Training::MidErrRndYUid, TriangleFactorsDefines::GroupUid,
+                           tr("Случайная ошибка центра треугольника Y (обучение)"), tr("MERYTest"), tr("мм"), 2, 3, FactorsDefines::nsDual, 12);
+
+
 
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(TriangleFactorsDefines::Analysis::TimeUid, TriangleFactorsDefines::GroupUid,
@@ -103,6 +156,55 @@ void TriangleFactors::registerFactors()
             registerFactor(TriangleFactorsDefines::Analysis::MYUid, TriangleFactorsDefines::GroupUid,
                            tr("Среднее смещение треуг. по сагиттали (анализ)"), tr("TrYTest"), tr("мм"), 1, 3, FactorsDefines::nsDual, 12);
 
+    static_cast<AAnalyserApplication*>(QApplication::instance())->
+            registerFactor(TriangleFactorsDefines::Analysis::UpErrSysXUid, TriangleFactorsDefines::GroupUid,
+                           tr("Системная ошибка верхней вершины X (анализ)"), tr("UESXAnal"), tr("мм"), 2, 3, FactorsDefines::nsDual, 12);
+    static_cast<AAnalyserApplication*>(QApplication::instance())->
+            registerFactor(TriangleFactorsDefines::Analysis::UpErrSysYUid, TriangleFactorsDefines::GroupUid,
+                           tr("Системная ошибка верхней вершины Y (анализ)"), tr("UESYAnal"), tr("мм"), 2, 3, FactorsDefines::nsDual, 12);
+    static_cast<AAnalyserApplication*>(QApplication::instance())->
+            registerFactor(TriangleFactorsDefines::Analysis::RightErrSysXUid, TriangleFactorsDefines::GroupUid,
+                           tr("Системная ошибка правой вершины X (анализ)"), tr("RESXAnal"), tr("мм"), 2, 3, FactorsDefines::nsDual, 12);
+    static_cast<AAnalyserApplication*>(QApplication::instance())->
+            registerFactor(TriangleFactorsDefines::Analysis::RightErrSysYUid, TriangleFactorsDefines::GroupUid,
+                           tr("Системная ошибка правой вершины Y (анализ)"), tr("RESYAnal"), tr("мм"), 2, 3, FactorsDefines::nsDual, 12);
+    static_cast<AAnalyserApplication*>(QApplication::instance())->
+            registerFactor(TriangleFactorsDefines::Analysis::LeftErrSysXUid, TriangleFactorsDefines::GroupUid,
+                           tr("Системная ошибка левой вершины X (анализ)"), tr("LESXAnal"), tr("мм"), 2, 3, FactorsDefines::nsDual, 12);
+    static_cast<AAnalyserApplication*>(QApplication::instance())->
+            registerFactor(TriangleFactorsDefines::Analysis::LeftErrSysYUid, TriangleFactorsDefines::GroupUid,
+                           tr("Системная ошибка левой вершины Y (анализ)"), tr("LESYAnal"), tr("мм"), 2, 3, FactorsDefines::nsDual, 12);
+    static_cast<AAnalyserApplication*>(QApplication::instance())->
+            registerFactor(TriangleFactorsDefines::Analysis::MidErrSysXUid, TriangleFactorsDefines::GroupUid,
+                           tr("Системная ошибка центра треугольника X (анализ)"), tr("MESXAnal"), tr("мм"), 2, 3, FactorsDefines::nsDual, 12);
+    static_cast<AAnalyserApplication*>(QApplication::instance())->
+            registerFactor(TriangleFactorsDefines::Analysis::MidErrSysYUid, TriangleFactorsDefines::GroupUid,
+                           tr("Системная ошибка центра треугольника Y (анализ)"), tr("MESYAnal"), tr("мм"), 2, 3, FactorsDefines::nsDual, 12);
+
+    static_cast<AAnalyserApplication*>(QApplication::instance())->
+            registerFactor(TriangleFactorsDefines::Analysis::UpErrRndXUid, TriangleFactorsDefines::GroupUid,
+                           tr("Случайная ошибка верхней вершины X (анализ)"), tr("UERXAnal"), tr("мм"), 2, 3, FactorsDefines::nsDual, 12);
+    static_cast<AAnalyserApplication*>(QApplication::instance())->
+            registerFactor(TriangleFactorsDefines::Analysis::UpErrRndYUid, TriangleFactorsDefines::GroupUid,
+                           tr("Случайная ошибка верхней вершины Y (анализ)"), tr("UERYAnal"), tr("мм"), 2, 3, FactorsDefines::nsDual, 12);
+    static_cast<AAnalyserApplication*>(QApplication::instance())->
+            registerFactor(TriangleFactorsDefines::Analysis::RightErrRndXUid, TriangleFactorsDefines::GroupUid,
+                           tr("Случайная ошибка правой вершины X (анализ)"), tr("RERXAnal"), tr("мм"), 2, 3, FactorsDefines::nsDual, 12);
+    static_cast<AAnalyserApplication*>(QApplication::instance())->
+            registerFactor(TriangleFactorsDefines::Analysis::RightErrRndYUid, TriangleFactorsDefines::GroupUid,
+                           tr("Случайная ошибка правой вершины Y (анализ)"), tr("RERYAnal"), tr("мм"), 2, 3, FactorsDefines::nsDual, 12);
+    static_cast<AAnalyserApplication*>(QApplication::instance())->
+            registerFactor(TriangleFactorsDefines::Analysis::LeftErrRndXUid, TriangleFactorsDefines::GroupUid,
+                           tr("Случайная ошибка левой вершины X (анализ)"), tr("LERXAnal"), tr("мм"), 2, 3, FactorsDefines::nsDual, 12);
+    static_cast<AAnalyserApplication*>(QApplication::instance())->
+            registerFactor(TriangleFactorsDefines::Analysis::LeftErrRndYUid, TriangleFactorsDefines::GroupUid,
+                           tr("Случайная ошибка левой вершины Y (анализ)"), tr("LERYAnal"), tr("мм"), 2, 3, FactorsDefines::nsDual, 12);
+    static_cast<AAnalyserApplication*>(QApplication::instance())->
+            registerFactor(TriangleFactorsDefines::Analysis::MidErrRndXUid, TriangleFactorsDefines::GroupUid,
+                           tr("Случайная ошибка центра треугольника X (анализ)"), tr("MERXAnal"), tr("мм"), 2, 3, FactorsDefines::nsDual, 12);
+    static_cast<AAnalyserApplication*>(QApplication::instance())->
+            registerFactor(TriangleFactorsDefines::Analysis::MidErrRndYUid, TriangleFactorsDefines::GroupUid,
+                           tr("Случайная ошибка центра треугольника Y (анализ)"), tr("MERYAnal"), tr("мм"), 2, 3, FactorsDefines::nsDual, 12);
 }
 
 int TriangleFactors::freq() const
@@ -412,6 +514,58 @@ void TriangleFactors::computeSKOValues()
     m_valuesAnalysis.speedQ = sqrt(m_valuesAnalysis.speedQ);
 }
 
+void TriangleFactors::computePosDeviations(const int begin, const int end,
+                                           TriangleFactorsDefines::TranglePosDeviation &upDev,
+                                           TriangleFactorsDefines::TranglePosDeviation &rtDev,
+                                           TriangleFactorsDefines::TranglePosDeviation &lfDev,
+                                           TriangleFactorsDefines::TranglePosDeviation &midDev)
+{
+    //! Системная ошибка - МО
+    for (int i = begin; i < end; ++i)
+    {
+        upDev.systX += (m_triangles.at(i).topCorner().x() - m_resData->topCorner().x());
+        upDev.systY += (m_triangles.at(i).topCorner().y() - m_resData->topCorner().y());
+        rtDev.systX += (m_triangles.at(i).rightDownCorner().x() - m_resData->rightDownCorner().x());
+        rtDev.systY += (m_triangles.at(i).rightDownCorner().y() - m_resData->rightDownCorner().y());
+        lfDev.systX += (m_triangles.at(i).leftDownCorner().x() - m_resData->leftDownCorner().x());
+        lfDev.systY += (m_triangles.at(i).leftDownCorner().y() - m_resData->leftDownCorner().y());
+        QPointF center = TriangleDefines::Triangle::center(QPointF(m_resData->topCorner().x(), m_resData->topCorner().y()),
+                                                           QPointF(m_resData->rightDownCorner().x(), m_resData->rightDownCorner().y()),
+                                                           QPointF(m_resData->leftDownCorner().x(), m_resData->leftDownCorner().y()));
+        midDev.systX += (m_triangles.at(i).mx() - center.x());
+        midDev.systY += (m_triangles.at(i).my() - center.y());
+    }
+    upDev.systX /= (end - begin);
+    upDev.systY /= (end - begin);
+    rtDev.systX /= (end - begin);
+    rtDev.systY /= (end - begin);
+    lfDev.systX /= (end - begin);
+    lfDev.systY /= (end - begin);
+    midDev.systX /= (end - begin);
+    midDev.systY /= (end - begin);
+
+    //! Случайная ошибка - СКО
+    for (int i = begin; i < end; ++i)
+    {
+        upDev.randX += pow(m_triangles.at(i).topCorner().x() - upDev.systX, 2);
+        upDev.randY += pow(m_triangles.at(i).topCorner().y() - upDev.systY, 2);
+        rtDev.randX += pow(m_triangles.at(i).rightDownCorner().x() - rtDev.systX, 2);
+        rtDev.randY += pow(m_triangles.at(i).rightDownCorner().y() - rtDev.systY, 2);
+        lfDev.randX += pow(m_triangles.at(i).leftDownCorner().x() - lfDev.systX, 2);
+        lfDev.randY += pow(m_triangles.at(i).leftDownCorner().y() - lfDev.systY, 2);
+        midDev.randX += pow(m_triangles.at(i).mx() - midDev.systX, 2);
+        midDev.randY += pow(m_triangles.at(i).my() - midDev.systY, 2);
+    }
+    upDev.randX /= sqrt(upDev.randX) / (end - begin);
+    upDev.randY /= sqrt(upDev.randY) / (end - begin);
+    rtDev.randX /= sqrt(rtDev.randX) / (end - begin);
+    rtDev.randY /= sqrt(rtDev.randY) / (end - begin);
+    lfDev.randX /= sqrt(lfDev.randX) / (end - begin);
+    lfDev.randY /= sqrt(lfDev.randY) / (end - begin);
+    midDev.randX /= sqrt(midDev.randX) / (end - begin);
+    midDev.randY /= sqrt(midDev.randY) / (end - begin);
+}
+
 void TriangleFactors::getTriangleData()
 {
     QByteArray baData;
@@ -430,6 +584,25 @@ void TriangleFactors::addFactors()
     addFactor(TriangleFactorsDefines::Training::MXUid, m_triangleAverageTraining.mx());
     addFactor(TriangleFactorsDefines::Training::MYUid, m_triangleAverageTraining.my());
 
+    addFactor(TriangleFactorsDefines::Training::UpErrSysXUid, m_upDevTest.systX);
+    addFactor(TriangleFactorsDefines::Training::UpErrSysYUid, m_upDevTest.systY);
+    addFactor(TriangleFactorsDefines::Training::RightErrSysXUid, m_rtDevTest.systX);
+    addFactor(TriangleFactorsDefines::Training::RightErrSysYUid, m_rtDevTest.systY);
+    addFactor(TriangleFactorsDefines::Training::LeftErrSysXUid, m_lfDevTest.systX);
+    addFactor(TriangleFactorsDefines::Training::LeftErrSysYUid, m_lfDevTest.systY);
+    addFactor(TriangleFactorsDefines::Training::MidErrSysXUid, m_midDevTest.systX);
+    addFactor(TriangleFactorsDefines::Training::MidErrSysYUid, m_midDevTest.systY);
+
+    addFactor(TriangleFactorsDefines::Training::UpErrRndXUid, m_upDevTest.randX);
+    addFactor(TriangleFactorsDefines::Training::UpErrRndYUid, m_upDevTest.randY);
+    addFactor(TriangleFactorsDefines::Training::RightErrRndXUid, m_rtDevTest.randX);
+    addFactor(TriangleFactorsDefines::Training::RightErrRndYUid, m_rtDevTest.systY);
+    addFactor(TriangleFactorsDefines::Training::LeftErrRndXUid, m_lfDevTest.randX);
+    addFactor(TriangleFactorsDefines::Training::LeftErrRndYUid, m_lfDevTest.randY);
+    addFactor(TriangleFactorsDefines::Training::MidErrRndXUid, m_midDevTest.randX);
+    addFactor(TriangleFactorsDefines::Training::MidErrRndYUid, m_midDevTest.randY);
+
+
     addFactor(TriangleFactorsDefines::Analysis::TimeUid, m_triangleAverageAnalysis.time());
     addFactor(TriangleFactorsDefines::Analysis::TimeQUid, m_valuesAnalysis.timeQ);
     addFactor(TriangleFactorsDefines::Analysis::SquareUid, m_triangleAverageAnalysis.square());
@@ -438,4 +611,22 @@ void TriangleFactors::addFactors()
     addFactor(TriangleFactorsDefines::Analysis::SpeedQUid, m_valuesAnalysis.speedQ);
     addFactor(TriangleFactorsDefines::Analysis::MXUid, m_triangleAverageAnalysis.mx());
     addFactor(TriangleFactorsDefines::Analysis::MYUid, m_triangleAverageAnalysis.my());
+
+    addFactor(TriangleFactorsDefines::Analysis::UpErrSysXUid, m_upDevAnal.systX);
+    addFactor(TriangleFactorsDefines::Analysis::UpErrSysYUid, m_upDevAnal.systY);
+    addFactor(TriangleFactorsDefines::Analysis::RightErrSysXUid, m_rtDevAnal.systX);
+    addFactor(TriangleFactorsDefines::Analysis::RightErrSysYUid, m_rtDevAnal.systY);
+    addFactor(TriangleFactorsDefines::Analysis::LeftErrSysXUid, m_lfDevAnal.systX);
+    addFactor(TriangleFactorsDefines::Analysis::LeftErrSysYUid, m_lfDevAnal.systY);
+    addFactor(TriangleFactorsDefines::Analysis::MidErrSysXUid, m_midDevAnal.systX);
+    addFactor(TriangleFactorsDefines::Analysis::MidErrSysYUid, m_midDevAnal.systY);
+
+    addFactor(TriangleFactorsDefines::Analysis::UpErrRndXUid, m_upDevAnal.randX);
+    addFactor(TriangleFactorsDefines::Analysis::UpErrRndYUid, m_upDevAnal.randY);
+    addFactor(TriangleFactorsDefines::Analysis::RightErrRndXUid, m_rtDevAnal.randX);
+    addFactor(TriangleFactorsDefines::Analysis::RightErrRndYUid, m_rtDevAnal.systY);
+    addFactor(TriangleFactorsDefines::Analysis::LeftErrRndXUid, m_lfDevAnal.randX);
+    addFactor(TriangleFactorsDefines::Analysis::LeftErrRndYUid, m_lfDevAnal.randY);
+    addFactor(TriangleFactorsDefines::Analysis::MidErrRndXUid, m_midDevAnal.randX);
+    addFactor(TriangleFactorsDefines::Analysis::MidErrRndYUid, m_midDevAnal.randY);
 }

@@ -43,6 +43,8 @@ struct Triangle
 
     void setTimeFactors(const double time, const double speed);
 
+    static QPointF center(QPointF top, QPointF right, QPointF left);
+
 private:
     QPointF m_topCorner;
     QPointF m_leftDownCorner;

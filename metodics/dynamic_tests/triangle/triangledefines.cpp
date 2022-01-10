@@ -12,3 +12,11 @@ void TriangleDefines::Triangle::setTimeFactors(const double time, const double s
 {
     m_time = time; m_speed = speed;
 }
+
+QPointF TriangleDefines::Triangle::center(QPointF top, QPointF right, QPointF left)
+{
+    QPointF retval;
+    retval.setX((top.x() + left.x() + right.x()) / 3);
+    retval.setY((top.y() + left.y() + right.y()) / 3);
+    return retval;
+}
