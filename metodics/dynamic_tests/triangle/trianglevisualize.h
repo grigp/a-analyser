@@ -93,6 +93,11 @@ private:
      */
     void showMainResultFactors();
 
+    /*!
+     * \brief Выводит показатели диаграмм треугольников
+     */
+    void showDiagsResultFactors();
+
     void saveSplitterPositionDiag();
     void restoreSplitterPositionDiag();
 

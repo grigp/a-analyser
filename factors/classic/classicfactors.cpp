@@ -44,11 +44,11 @@ void ClassicFactors::calculate()
         for (int i = 0; i < stab.size(); ++i)
         {
             auto rec = stab.value(i);
-            m_mx = m_mx + rec.x;
-            m_my = m_my + rec.y;
+            m_mx += rec.x;
+            m_my += rec.y;
         }
-        m_mx = m_mx / stab.size();
-        m_my = m_my / stab.size();
+        m_mx /= stab.size();
+        m_my /= stab.size();
 
         //! Разбросы и др.
         double ox = 0;
@@ -56,13 +56,13 @@ void ClassicFactors::calculate()
         for (int i = 0; i < stab.size(); ++i)
         {
             auto rec = stab.value(i);
-            m_qx = m_qx + pow(fabs(rec.x - m_mx), 2) / (stab.size() - 1);
-            m_qy = m_qy + pow(fabs(rec.y - m_my), 2) / (stab.size() - 1);
-            m_r = m_r + sqrt(pow(rec.x - m_mx, 2) + pow(rec.y - m_my, 2)) / stab.size();
+            m_qx += pow(fabs(rec.x - m_mx), 2) / (stab.size() - 1);
+            m_qy += pow(fabs(rec.y - m_my), 2) / (stab.size() - 1);
+            m_r += sqrt(pow(rec.x - m_mx, 2) + pow(rec.y - m_my, 2)) / stab.size();
 
             //! Длина СКГ
             if (i > 0)
-                m_l = m_l + sqrt(pow(rec.x - ox, 2) + pow(rec.y - oy, 2));
+                m_l += sqrt(pow(rec.x - ox, 2) + pow(rec.y - oy, 2));
             ox = rec.x;
             oy = rec.y;
         }

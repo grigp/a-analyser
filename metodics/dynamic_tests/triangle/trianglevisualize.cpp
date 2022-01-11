@@ -27,6 +27,39 @@ static QList<BaseUtils::FctTblPair> FactorsMain = {
     , BaseUtils::FctTblPair(TriangleFactorsDefines::Training::SquareUid, TriangleFactorsDefines::Analysis::SquareUid)
 };
 
+///< Список показателей, выводимых в таблицу показателей диаграмм
+///< Соответствие показателя для этапов обучения и анализа
+static QList<BaseUtils::FctTblPair> FactorsDiags = {
+      BaseUtils::FctTblPair(TriangleFactorsDefines::Training::TimeUid, TriangleFactorsDefines::Analysis::TimeUid)
+    , BaseUtils::FctTblPair(TriangleFactorsDefines::Training::TimeQUid, TriangleFactorsDefines::Analysis::TimeQUid)
+    , BaseUtils::FctTblPair(TriangleFactorsDefines::Training::SquareUid, TriangleFactorsDefines::Analysis::SquareUid)
+    , BaseUtils::FctTblPair(TriangleFactorsDefines::Training::SquareQUid, TriangleFactorsDefines::Analysis::SquareQUid)
+    , BaseUtils::FctTblPair(TriangleFactorsDefines::Training::SpeedUid, TriangleFactorsDefines::Analysis::SpeedUid)
+    , BaseUtils::FctTblPair(TriangleFactorsDefines::Training::SpeedQUid, TriangleFactorsDefines::Analysis::SpeedQUid)
+
+    , BaseUtils::FctTblPair(TriangleFactorsDefines::Training::LatentMovingUid, TriangleFactorsDefines::Analysis::LatentMovingUid)
+
+    , BaseUtils::FctTblPair(TriangleFactorsDefines::Training::UpErrSysXUid, TriangleFactorsDefines::Analysis::UpErrSysXUid)
+    , BaseUtils::FctTblPair(TriangleFactorsDefines::Training::UpErrSysYUid, TriangleFactorsDefines::Analysis::UpErrSysYUid)
+    , BaseUtils::FctTblPair(TriangleFactorsDefines::Training::UpErrRndXUid, TriangleFactorsDefines::Analysis::UpErrRndXUid)
+    , BaseUtils::FctTblPair(TriangleFactorsDefines::Training::UpErrRndYUid, TriangleFactorsDefines::Analysis::UpErrRndYUid)
+    , BaseUtils::FctTblPair(TriangleFactorsDefines::Training::RightErrSysXUid, TriangleFactorsDefines::Analysis::RightErrSysXUid)
+    , BaseUtils::FctTblPair(TriangleFactorsDefines::Training::RightErrSysYUid, TriangleFactorsDefines::Analysis::RightErrSysYUid)
+    , BaseUtils::FctTblPair(TriangleFactorsDefines::Training::RightErrRndXUid, TriangleFactorsDefines::Analysis::RightErrRndXUid)
+    , BaseUtils::FctTblPair(TriangleFactorsDefines::Training::RightErrRndYUid, TriangleFactorsDefines::Analysis::RightErrRndYUid)
+    , BaseUtils::FctTblPair(TriangleFactorsDefines::Training::LeftErrSysXUid, TriangleFactorsDefines::Analysis::LeftErrSysXUid)
+    , BaseUtils::FctTblPair(TriangleFactorsDefines::Training::LeftErrSysYUid, TriangleFactorsDefines::Analysis::LeftErrSysYUid)
+    , BaseUtils::FctTblPair(TriangleFactorsDefines::Training::LeftErrRndXUid, TriangleFactorsDefines::Analysis::LeftErrRndXUid)
+    , BaseUtils::FctTblPair(TriangleFactorsDefines::Training::LeftErrRndYUid, TriangleFactorsDefines::Analysis::LeftErrRndYUid)
+    , BaseUtils::FctTblPair(TriangleFactorsDefines::Training::MidErrSysXUid, TriangleFactorsDefines::Analysis::MidErrSysXUid)
+    , BaseUtils::FctTblPair(TriangleFactorsDefines::Training::MidErrSysYUid, TriangleFactorsDefines::Analysis::MidErrSysYUid)
+    , BaseUtils::FctTblPair(TriangleFactorsDefines::Training::MidErrRndXUid, TriangleFactorsDefines::Analysis::MidErrRndXUid)
+    , BaseUtils::FctTblPair(TriangleFactorsDefines::Training::MidErrRndYUid, TriangleFactorsDefines::Analysis::MidErrRndYUid)
+
+
+
+};
+
 
 }
 
@@ -68,6 +101,7 @@ void TriangleVisualize::setTest(const QString &testUid)
         showAllFactors();
         showMainDiagrams();
         showMainResultFactors();
+        showDiagsResultFactors();
     }
 }
 
@@ -447,6 +481,35 @@ void TriangleVisualize::showMainResultFactors()
     ui->tvMainResFactors->setModel(model);
     ui->tvMainResFactors->header()->resizeSections(QHeaderView::ResizeToContents);
     ui->tvMainResFactors->header()->resizeSection(0, 430);
+}
+
+void TriangleVisualize::showDiagsResultFactors()
+{
+    auto *model = new QStandardItemModel(ui->tvDiagTable);
+
+    foreach (auto uids, FactorsDiags)
+    {
+        auto uidFctT = uids.first;
+        auto uidFctA = uids.second;
+
+        auto fi = static_cast<AAnalyserApplication*>(QApplication::instance())->getFactorInfo(uidFctT);
+        QString n = fi.name();
+        auto fn = n.left(n.lastIndexOf('(') - 1);
+        if (fi.measure() != "")
+            fn = fn + ", " + fi.measure();
+        auto *itemName = new QStandardItem(fn);
+        itemName->setEditable(false);
+        auto *itemT = new QStandardItem(m_calculator->factorValueFormatted(uidFctT));
+        itemT->setEditable(false);
+        auto *itemA = new QStandardItem(m_calculator->factorValueFormatted(uidFctA));
+        itemA->setEditable(false);
+        model->appendRow(QList<QStandardItem*>() << itemName << itemT << itemA);
+    }
+
+    model->setHorizontalHeaderLabels(QStringList() << tr("Показатель") << tr("Этап обучения") << tr("Этап анализа"));
+    ui->tvDiagTable->setModel(model);
+    ui->tvDiagTable->header()->resizeSections(QHeaderView::ResizeToContents);
+    ui->tvDiagTable->header()->resizeSection(0, 430);
 }
 
 void TriangleVisualize::saveSplitterPositionDiag()
