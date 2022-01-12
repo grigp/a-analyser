@@ -105,6 +105,21 @@ public:
      */
     QString factorValueFormatted(const QString &uid) const;
 
+    /*!
+     * \brief Возвращает количество показателей, распределенных по этапам в таблице
+     */
+    int getFactorsOfStagesCount();
+
+    /*!
+     * \brief Возвращает uid показателей, распределенных по этапам в таблице
+     * \param idx - индекс показателя
+     * \param uidT - uid показателя для этапа обучения
+     * \param uidA - uid показателя для этапа анализа
+     * \return true, если удачно
+     */
+    bool getFactorOfStages(const int idx, QString &uidT, QString &uidA);
+
+
 
 private:
     TriangleFactors* m_factors {nullptr};

@@ -5,7 +5,6 @@
 
 #include "baseutils.h"
 #include "multifactor.h"
-#include "signalsdefines.h"
 #include "evolventadefines.h"
 
 namespace EvolventaFactorsDefines

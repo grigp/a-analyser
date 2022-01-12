@@ -924,6 +924,13 @@
          </widget>
         </widget>
        </item>
+       <item>
+        <widget class="QLabel" name="lblLatentMoving">
+         <property name="text">
+          <string>TextLabel</string>
+         </property>
+        </widget>
+       </item>
       </layout>
      </widget>
      <widget class="QWidget" name="tabFactors">

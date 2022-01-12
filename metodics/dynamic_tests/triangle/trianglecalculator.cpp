@@ -159,3 +159,17 @@ QString TriangleCalculator::factorValueFormatted(const QString &uid) const
         return  m_factors->factorValueFormatted(uid);
     return "0";
 }
+
+int TriangleCalculator::getFactorsOfStagesCount()
+{
+    if (m_factors)
+        return m_factors->getFactorsOfStagesCount();
+    return 0;
+}
+
+bool TriangleCalculator::getFactorOfStages(const int idx, QString &uidT, QString &uidA)
+{
+    if (m_factors)
+        return m_factors->getFactorOfStages(idx, uidT, uidA);
+    return false;
+}

@@ -5,7 +5,6 @@
 
 #include "baseutils.h"
 #include "multifactor.h"
-#include "signalsdefines.h"
 #include "triangledefines.h"
 
 namespace TriangleFactorsDefines
@@ -21,8 +20,6 @@ static const QString SpeedUid = "{07B9825D-3D8C-4079-B859-1A0fCA288777}";
 static const QString SpeedQUid = "{368CD3FB-7162-43E4-B35B-7737942D40A9}";
 static const QString MXUid = "{8B36C68A-7CF3-4C1D-AC5B-7E86595020F5}";
 static const QString MYUid = "{BE74D224-2C8C-42B2-8AF0-5C0F24D79B8E}";
-
-static const QString LatentMovingUid = "{1750CF55-457E-4E1C-80C7-4EA5528DCB91}";
 
 static const QString UpErrSysXUid = "{B5BA8F9B-AE33-482C-A10E-DF7C18D3B8F3}";
 static const QString UpErrSysYUid = "{82544872-1E52-4EB0-A426-32C864378173}";
@@ -53,8 +50,6 @@ static const QString SpeedQUid = "{5B049643-D08A-4D6E-B0A0-CCCA8E1DABFE}";
 static const QString MXUid = "{A243B86F-9AA9-4FE8-9B23-657AE43BCDCF}";
 static const QString MYUid = "{E0C30597-E75C-4136-A775-504BF02B5B9C}";
 
-static const QString LatentMovingUid = "{29051F41-D826-4E74-8205-CD5623A0364A}";
-
 static const QString UpErrSysXUid = "{17CDCF87-A839-4BDE-9F37-032B4D20600C}";
 static const QString UpErrSysYUid = "{D871C553-2A25-470A-B732-FFC6B90B6E66}";
 static const QString UpErrRndXUid = "{7A99A923-9631-42AF-AB03-404152F7DEAB}";
@@ -71,8 +66,10 @@ static const QString MidErrSysXUid = "{08D3DB85-C776-4FE9-9B1E-70F87D69DBCF}";
 static const QString MidErrSysYUid = "{0F00ED53-BBD6-42C9-99A0-8614B0DEC559}";
 static const QString MidErrRndXUid = "{A5EA0128-73FB-4FFC-B098-E7C436C869F4}";
 static const QString MidErrRndYUid = "{E2F87C06-F61B-4AF0-8090-D41F99476741}";
-
 }
+
+
+static const QString LatentMovingUid = "{1750CF55-457E-4E1C-80C7-4EA5528DCB91}";
 
 /*!
  * \brief Значения некоторых показателей FactorValues struct
@@ -180,6 +177,20 @@ public:
      */
     TriangleDefines::Triangle triangle(const int idx) const;
 
+    /*!
+     * \brief Возвращает количество показателей, распределенных по этапам в таблице
+     */
+    int getFactorsOfStagesCount();
+
+    /*!
+     * \brief Возвращает uid показателей, распределенных по этапам в таблице
+     * \param idx - индекс показателя
+     * \param uidT - uid показателя для этапа обучения
+     * \param uidA - uid показателя для этапа анализа
+     * \return true, если удачно
+     */
+    bool getFactorOfStages(const int idx, QString &uidT, QString &uidA);
+
 private:
     /*!
      * \brief Чтение сигналов, фильтрация
@@ -224,10 +235,8 @@ private:
 
     /*!
      * \brief Расчет показателя "Время начала движения после появления сигнала"
-     * \param begin, end - границы сигнала
-     * \param factor - значение показателя
      */
-    void computeLatentMoving(const int begin, const int end, double &factor);
+    void computeLatentMoving();
 
     /*!
      * \brief Читает данные пробы
@@ -235,6 +244,15 @@ private:
     void getTriangleData();
 
     void addFactors();
+
+    /*!
+     * \brief Добавляет пару показателей для этапов
+     * \param uidT - uid показателя для этапа тренинга
+     * \param valueT - значение показателя для этапа тренинга
+     * \param uidA - uid показателя для этапа анализа
+     * \param valueA - значение показателя для этапа анализа
+     */
+    void addFactorPair(const QString &uidT, const double valueT, const QString &uidA, const double valueA);
 
     TriangleResultData* m_resData;
 
@@ -255,9 +273,11 @@ private:
     TriangleFactorsDefines::TranglePosDeviation m_upDevTest, m_rtDevTest, m_lfDevTest, m_midDevTest;
     TriangleFactorsDefines::TranglePosDeviation m_upDevAnal, m_rtDevAnal, m_lfDevAnal, m_midDevAnal;
 
+    ///< uid-ы показателей для этапов
+    QList<BaseUtils::FctTblPair> m_factorsOfStages;
+
     ///< Время начала движения после появления сигнала
-    double m_latentMovingTest {0};
-    double m_latentMovingAnal {0};
+    double m_latentMoving {0};
 
 };
 

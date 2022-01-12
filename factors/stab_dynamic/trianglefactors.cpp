@@ -45,8 +45,7 @@ void TriangleFactors::calculate()
     computeSKOValues();
     computePosDeviations(0, m_firstAnalysisTriangle - 1, m_upDevTest, m_rtDevTest, m_lfDevTest, m_midDevTest);
     computePosDeviations(m_firstAnalysisTriangle, m_triangles.size() - 1, m_upDevAnal, m_rtDevAnal, m_lfDevAnal, m_midDevAnal);
-    computeLatentMoving(0, m_resData->trainingLength() - 1, m_latentMovingTest);
-    computeLatentMoving(m_resData->trainingLength(), m_x.size() - 1, m_latentMovingAnal);
+    computeLatentMoving();
 
     addFactors();
 }
@@ -80,10 +79,6 @@ void TriangleFactors::registerFactors()
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(TriangleFactorsDefines::Training::MYUid, TriangleFactorsDefines::GroupUid,
                            tr("Среднее смещение треуг. по сагиттали (обучение)"), tr("TrYTest"), tr("мм"), 1, 3, FactorsDefines::nsDual, 12);
-
-    static_cast<AAnalyserApplication*>(QApplication::instance())->
-            registerFactor(TriangleFactorsDefines::Training::LatentMovingUid, TriangleFactorsDefines::GroupUid,
-                           tr("Время начала движения после появления сигнала (обучение)"), tr("LatMovTest"), tr("сек"), 2, 3, FactorsDefines::nsDual, 12);
 
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(TriangleFactorsDefines::Training::UpErrSysXUid, TriangleFactorsDefines::GroupUid,
@@ -162,10 +157,6 @@ void TriangleFactors::registerFactors()
                            tr("Среднее смещение треуг. по сагиттали (анализ)"), tr("TrYTest"), tr("мм"), 1, 3, FactorsDefines::nsDual, 12);
 
     static_cast<AAnalyserApplication*>(QApplication::instance())->
-            registerFactor(TriangleFactorsDefines::Analysis::LatentMovingUid, TriangleFactorsDefines::GroupUid,
-                           tr("Время начала движения после появления сигнала (анализ)"), tr("LatMovAnal"), tr("сек"), 2, 3, FactorsDefines::nsDual, 12);
-
-    static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(TriangleFactorsDefines::Analysis::UpErrSysXUid, TriangleFactorsDefines::GroupUid,
                            tr("Системная ошибка верхней вершины X (анализ)"), tr("UESXAnal"), tr("мм"), 2, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
@@ -213,6 +204,12 @@ void TriangleFactors::registerFactors()
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(TriangleFactorsDefines::Analysis::MidErrRndYUid, TriangleFactorsDefines::GroupUid,
                            tr("Случайная ошибка центра треугольника Y (анализ)"), tr("MERYAnal"), tr("мм"), 2, 3, FactorsDefines::nsDual, 12);
+
+
+    static_cast<AAnalyserApplication*>(QApplication::instance())->
+            registerFactor(TriangleFactorsDefines::LatentMovingUid, TriangleFactorsDefines::GroupUid,
+                           tr("Время начала движения после появления сигнала"), tr("LatMoving"), tr("сек"), 2, 3, FactorsDefines::nsDual, 12);
+
 }
 
 int TriangleFactors::freq() const
@@ -275,6 +272,22 @@ TriangleDefines::Triangle TriangleFactors::triangle(const int idx) const
 {
     Q_ASSERT(idx >= 0 && idx < m_triangles.size());
     return m_triangles.at(idx);
+}
+
+int TriangleFactors::getFactorsOfStagesCount()
+{
+    return m_factorsOfStages.size();
+}
+
+bool TriangleFactors::getFactorOfStages(const int idx, QString &uidT, QString &uidA)
+{
+    if (idx >= 0 && idx < m_factorsOfStages.size())
+    {
+        uidT = m_factorsOfStages.at(idx).first;
+        uidA = m_factorsOfStages.at(idx).second;
+        return true;
+    }
+    return false;
 }
 
 void TriangleFactors::readSignal()
@@ -578,7 +591,7 @@ void TriangleFactors::computePosDeviations(const int begin, const int end,
     midDev.randY = sqrt(midDev.randY / (end - begin + 1));
 }
 
-void TriangleFactors::computeLatentMoving(const int begin, const int end, double &factor)
+void TriangleFactors::computeLatentMoving()
 {
     /*
      * Нельзя это рассчитывать для этапа анализа - нет маркера - цели
@@ -598,60 +611,63 @@ void TriangleFactors::getTriangleData()
 
 void TriangleFactors::addFactors()
 {
-    addFactor(TriangleFactorsDefines::Training::TimeUid, m_triangleAverageTraining.time());
-    addFactor(TriangleFactorsDefines::Training::TimeQUid, m_valuesTraining.timeQ);
-    addFactor(TriangleFactorsDefines::Training::SquareUid, m_triangleAverageTraining.square());
-    addFactor(TriangleFactorsDefines::Training::SquareQUid, m_valuesTraining.squareQ);
-    addFactor(TriangleFactorsDefines::Training::SpeedUid, m_triangleAverageTraining.speed());
-    addFactor(TriangleFactorsDefines::Training::SpeedQUid, m_valuesTraining.speedQ);
-    addFactor(TriangleFactorsDefines::Training::MXUid, m_triangleAverageTraining.mx());
-    addFactor(TriangleFactorsDefines::Training::MYUid, m_triangleAverageTraining.my());
+    addFactorPair(TriangleFactorsDefines::Training::TimeUid, m_triangleAverageTraining.time(),
+                  TriangleFactorsDefines::Analysis::TimeUid, m_triangleAverageAnalysis.time());
+    addFactorPair(TriangleFactorsDefines::Training::TimeQUid, m_valuesTraining.timeQ,
+                  TriangleFactorsDefines::Analysis::TimeQUid, m_valuesAnalysis.timeQ);
+    addFactorPair(TriangleFactorsDefines::Training::SquareUid, m_triangleAverageTraining.square(),
+                  TriangleFactorsDefines::Analysis::SquareUid, m_triangleAverageAnalysis.square());
+    addFactorPair(TriangleFactorsDefines::Training::SquareQUid, m_valuesTraining.squareQ,
+                  TriangleFactorsDefines::Analysis::SquareQUid, m_valuesAnalysis.squareQ);
+    addFactorPair(TriangleFactorsDefines::Training::SpeedUid, m_triangleAverageTraining.speed(),
+                  TriangleFactorsDefines::Analysis::SpeedUid, m_triangleAverageAnalysis.speed());
+    addFactorPair(TriangleFactorsDefines::Training::SpeedQUid, m_valuesTraining.speedQ,
+                  TriangleFactorsDefines::Analysis::SpeedQUid, m_valuesAnalysis.speedQ);
+    addFactorPair(TriangleFactorsDefines::Training::MXUid, m_triangleAverageTraining.mx(),
+                  TriangleFactorsDefines::Analysis::MXUid, m_triangleAverageAnalysis.mx());
+    addFactorPair(TriangleFactorsDefines::Training::MYUid, m_triangleAverageTraining.my(),
+                  TriangleFactorsDefines::Analysis::MYUid, m_triangleAverageAnalysis.my());
 
-    addFactor(TriangleFactorsDefines::Training::LatentMovingUid, m_latentMovingTest);
+    addFactorPair(TriangleFactorsDefines::Training::UpErrSysXUid, m_upDevTest.systX,
+                  TriangleFactorsDefines::Analysis::UpErrSysXUid, m_upDevAnal.systX);
+    addFactorPair(TriangleFactorsDefines::Training::UpErrSysYUid, m_upDevTest.systY,
+                  TriangleFactorsDefines::Analysis::UpErrSysYUid, m_upDevAnal.systY);
+    addFactorPair(TriangleFactorsDefines::Training::UpErrRndXUid, m_upDevTest.randX,
+                  TriangleFactorsDefines::Analysis::UpErrRndXUid, m_upDevAnal.randX);
+    addFactorPair(TriangleFactorsDefines::Training::UpErrRndYUid, m_upDevTest.randY,
+                  TriangleFactorsDefines::Analysis::UpErrRndYUid, m_upDevAnal.randY);
+    addFactorPair(TriangleFactorsDefines::Training::RightErrSysXUid, m_rtDevTest.systX,
+                  TriangleFactorsDefines::Analysis::RightErrSysXUid, m_rtDevAnal.systX);
+    addFactorPair(TriangleFactorsDefines::Training::RightErrSysYUid, m_rtDevTest.systY,
+                  TriangleFactorsDefines::Analysis::RightErrSysYUid, m_rtDevAnal.systY);
+    addFactorPair(TriangleFactorsDefines::Training::RightErrRndXUid, m_rtDevTest.randX,
+                  TriangleFactorsDefines::Analysis::RightErrRndXUid, m_rtDevAnal.randX);
+    addFactorPair(TriangleFactorsDefines::Training::RightErrRndYUid, m_rtDevTest.randY,
+                  TriangleFactorsDefines::Analysis::RightErrRndYUid, m_rtDevAnal.randY);
+    addFactorPair(TriangleFactorsDefines::Training::LeftErrSysXUid, m_lfDevTest.systX,
+                  TriangleFactorsDefines::Analysis::LeftErrSysXUid, m_lfDevAnal.systX);
+    addFactorPair(TriangleFactorsDefines::Training::LeftErrSysYUid, m_lfDevTest.systY,
+                  TriangleFactorsDefines::Analysis::LeftErrSysYUid, m_lfDevAnal.systY);
+    addFactorPair(TriangleFactorsDefines::Training::LeftErrRndXUid, m_lfDevTest.randX,
+                  TriangleFactorsDefines::Analysis::LeftErrRndXUid, m_lfDevAnal.randX);
+    addFactorPair(TriangleFactorsDefines::Training::LeftErrRndYUid, m_lfDevTest.randY,
+                  TriangleFactorsDefines::Analysis::LeftErrRndYUid, m_lfDevAnal.randY);
+    addFactorPair(TriangleFactorsDefines::Training::MidErrSysXUid, m_midDevTest.systX,
+                  TriangleFactorsDefines::Analysis::MidErrSysXUid, m_midDevAnal.systX);
+    addFactorPair(TriangleFactorsDefines::Training::MidErrSysYUid, m_midDevTest.systY,
+                  TriangleFactorsDefines::Analysis::MidErrSysYUid, m_midDevAnal.systY);
+    addFactorPair(TriangleFactorsDefines::Training::MidErrRndXUid, m_midDevTest.randX,
+                  TriangleFactorsDefines::Analysis::MidErrRndXUid, m_midDevAnal.randX);
+    addFactorPair(TriangleFactorsDefines::Training::MidErrRndYUid, m_midDevTest.randY,
+                  TriangleFactorsDefines::Analysis::MidErrRndYUid, m_midDevAnal.randY);
 
-    addFactor(TriangleFactorsDefines::Training::UpErrSysXUid, m_upDevTest.systX);
-    addFactor(TriangleFactorsDefines::Training::UpErrSysYUid, m_upDevTest.systY);
-    addFactor(TriangleFactorsDefines::Training::UpErrRndXUid, m_upDevTest.randX);
-    addFactor(TriangleFactorsDefines::Training::UpErrRndYUid, m_upDevTest.randY);
-    addFactor(TriangleFactorsDefines::Training::RightErrSysXUid, m_rtDevTest.systX);
-    addFactor(TriangleFactorsDefines::Training::RightErrSysYUid, m_rtDevTest.systY);
-    addFactor(TriangleFactorsDefines::Training::RightErrRndXUid, m_rtDevTest.randX);
-    addFactor(TriangleFactorsDefines::Training::RightErrRndYUid, m_rtDevTest.randY);
-    addFactor(TriangleFactorsDefines::Training::LeftErrSysXUid, m_lfDevTest.systX);
-    addFactor(TriangleFactorsDefines::Training::LeftErrSysYUid, m_lfDevTest.systY);
-    addFactor(TriangleFactorsDefines::Training::LeftErrRndXUid, m_lfDevTest.randX);
-    addFactor(TriangleFactorsDefines::Training::LeftErrRndYUid, m_lfDevTest.randY);
-    addFactor(TriangleFactorsDefines::Training::MidErrSysXUid, m_midDevTest.systX);
-    addFactor(TriangleFactorsDefines::Training::MidErrSysYUid, m_midDevTest.systY);
-    addFactor(TriangleFactorsDefines::Training::MidErrRndXUid, m_midDevTest.randX);
-    addFactor(TriangleFactorsDefines::Training::MidErrRndYUid, m_midDevTest.randY);
 
+    addFactor(TriangleFactorsDefines::LatentMovingUid, m_latentMoving);
+}
 
-    addFactor(TriangleFactorsDefines::Analysis::TimeUid, m_triangleAverageAnalysis.time());
-    addFactor(TriangleFactorsDefines::Analysis::TimeQUid, m_valuesAnalysis.timeQ);
-    addFactor(TriangleFactorsDefines::Analysis::SquareUid, m_triangleAverageAnalysis.square());
-    addFactor(TriangleFactorsDefines::Analysis::SquareQUid, m_valuesAnalysis.squareQ);
-    addFactor(TriangleFactorsDefines::Analysis::SpeedUid, m_triangleAverageAnalysis.speed());
-    addFactor(TriangleFactorsDefines::Analysis::SpeedQUid, m_valuesAnalysis.speedQ);
-    addFactor(TriangleFactorsDefines::Analysis::MXUid, m_triangleAverageAnalysis.mx());
-    addFactor(TriangleFactorsDefines::Analysis::MYUid, m_triangleAverageAnalysis.my());
-
-    addFactor(TriangleFactorsDefines::Analysis::LatentMovingUid, m_latentMovingAnal);
-
-    addFactor(TriangleFactorsDefines::Analysis::UpErrSysXUid, m_upDevAnal.systX);
-    addFactor(TriangleFactorsDefines::Analysis::UpErrSysYUid, m_upDevAnal.systY);
-    addFactor(TriangleFactorsDefines::Analysis::UpErrRndXUid, m_upDevAnal.randX);
-    addFactor(TriangleFactorsDefines::Analysis::UpErrRndYUid, m_upDevAnal.randY);
-    addFactor(TriangleFactorsDefines::Analysis::RightErrSysXUid, m_rtDevAnal.systX);
-    addFactor(TriangleFactorsDefines::Analysis::RightErrSysYUid, m_rtDevAnal.systY);
-    addFactor(TriangleFactorsDefines::Analysis::RightErrRndXUid, m_rtDevAnal.randX);
-    addFactor(TriangleFactorsDefines::Analysis::RightErrRndYUid, m_rtDevAnal.randY);
-    addFactor(TriangleFactorsDefines::Analysis::LeftErrSysXUid, m_lfDevAnal.systX);
-    addFactor(TriangleFactorsDefines::Analysis::LeftErrSysYUid, m_lfDevAnal.systY);
-    addFactor(TriangleFactorsDefines::Analysis::LeftErrRndXUid, m_lfDevAnal.randX);
-    addFactor(TriangleFactorsDefines::Analysis::LeftErrRndYUid, m_lfDevAnal.randY);
-    addFactor(TriangleFactorsDefines::Analysis::MidErrSysXUid, m_midDevAnal.systX);
-    addFactor(TriangleFactorsDefines::Analysis::MidErrSysYUid, m_midDevAnal.systY);
-    addFactor(TriangleFactorsDefines::Analysis::MidErrRndXUid, m_midDevAnal.randX);
-    addFactor(TriangleFactorsDefines::Analysis::MidErrRndYUid, m_midDevAnal.randY);
+void TriangleFactors::addFactorPair(const QString &uidT, const double valueT, const QString &uidA, const double valueA)
+{
+    m_factorsOfStages.append(BaseUtils::FctTblPair(uidT, uidA));
+    addFactor(uidT, valueT);
+    addFactor(uidA, valueA);
 }

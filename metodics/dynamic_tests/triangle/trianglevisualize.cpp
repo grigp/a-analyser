@@ -37,8 +37,6 @@ static QList<BaseUtils::FctTblPair> FactorsDiags = {
     , BaseUtils::FctTblPair(TriangleFactorsDefines::Training::SpeedUid, TriangleFactorsDefines::Analysis::SpeedUid)
     , BaseUtils::FctTblPair(TriangleFactorsDefines::Training::SpeedQUid, TriangleFactorsDefines::Analysis::SpeedQUid)
 
-    , BaseUtils::FctTblPair(TriangleFactorsDefines::Training::LatentMovingUid, TriangleFactorsDefines::Analysis::LatentMovingUid)
-
     , BaseUtils::FctTblPair(TriangleFactorsDefines::Training::UpErrSysXUid, TriangleFactorsDefines::Analysis::UpErrSysXUid)
     , BaseUtils::FctTblPair(TriangleFactorsDefines::Training::UpErrSysYUid, TriangleFactorsDefines::Analysis::UpErrSysYUid)
     , BaseUtils::FctTblPair(TriangleFactorsDefines::Training::UpErrRndXUid, TriangleFactorsDefines::Analysis::UpErrRndXUid)
@@ -347,25 +345,29 @@ void TriangleVisualize::showAllFactors()
 {
     auto *model = new QStandardItemModel(ui->tvFactors);
 
-    for (int i = 0; i < m_calculator->factorCount() / 2; ++i)
+    for (int i = 0; i < m_calculator->getFactorsOfStagesCount(); ++i)
     {
-        auto fUidT = m_calculator->factorUid(i);
-        auto fi = static_cast<AAnalyserApplication*>(QApplication::instance())->getFactorInfo(fUidT);
-        QString n = fi.name();
-        auto fn = n.left(n.lastIndexOf('(') - 1);
-        if (fi.measure() != "")
-            fn = fn + ", " + fi.measure();
-        auto *itemName = new QStandardItem(fn);
-        itemName->setEditable(false);
+        QString fUidT {""};
+        QString fUidA {""};
 
-        auto *itemT = new QStandardItem(m_calculator->factorValueFormatted(fUidT));
-        itemT->setEditable(false);
+        if (m_calculator->getFactorOfStages(i, fUidT, fUidA))
+        {
+            auto fi = static_cast<AAnalyserApplication*>(QApplication::instance())->getFactorInfo(fUidT);
+            QString n = fi.name();
+            auto fn = n.left(n.lastIndexOf('(') - 1);
+            if (fi.measure() != "")
+                fn = fn + ", " + fi.measure();
+            auto *itemName = new QStandardItem(fn);
+            itemName->setEditable(false);
 
-        auto fUidA = m_calculator->factorUid(m_calculator->factorCount() / 2 + i);
-        auto *itemA = new QStandardItem(m_calculator->factorValueFormatted(fUidA));
-        itemA->setEditable(false);
+            auto *itemT = new QStandardItem(m_calculator->factorValueFormatted(fUidT));
+            itemT->setEditable(false);
 
-        model->appendRow(QList<QStandardItem*>() << itemName << itemT << itemA);
+            auto *itemA = new QStandardItem(m_calculator->factorValueFormatted(fUidA));
+            itemA->setEditable(false);
+
+            model->appendRow(QList<QStandardItem*>() << itemName << itemT << itemA);
+        }
     }
 
     model->setHorizontalHeaderLabels(QStringList() << tr("Показатель") << tr("Этап обучения") << tr("Этап анализа"));
