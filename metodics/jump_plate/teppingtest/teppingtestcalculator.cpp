@@ -69,14 +69,14 @@ void TeppingTestCalculator::fastCalculate()
     TestCalculator::fastCalculate();
 }
 
-int TeppingTestCalculator::stepsCount(BaseUtils::Side side) const
+int TeppingTestCalculator::stepsCount(BaseDefines::Side side) const
 {
     if (m_factors)
         return m_factors->stepsCount(side);
     return 0;
 }
 
-SignalsDefines::TeppingStepRec TeppingTestCalculator::step(BaseUtils::Side side, const int idx) const
+SignalsDefines::TeppingStepRec TeppingTestCalculator::step(BaseDefines::Side side, const int idx) const
 {
     if (m_factors)
         return m_factors->step(side, idx);

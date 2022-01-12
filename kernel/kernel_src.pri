@@ -9,7 +9,8 @@ HEADERS += \
     $$PWD/exitcodes.h \
     $$PWD/log.h \
     $$PWD/signalaccess.h \
-    $$PWD/fragment.h
+    $$PWD/fragment.h \
+    $$PWD/basedefines.h
 
 SOURCES += \
     $$PWD/baseutils.cpp \

@@ -8,6 +8,7 @@
 #include "stabilogram.h"
 #include "decartcoordinatessignal.h"
 #include "fragment.h"
+#include "basedefines.h"
 
 namespace
 {
@@ -641,8 +642,8 @@ void EvolventaFactors::calculateWEFactors()
         if (i > 0)
         {
             //! Экстремум по фронтали
-            if (((vx < ovx) && (dirX == BaseUtils::PositiveValue)) ||
-                ((vx > ovx) && (dirX == BaseUtils::NegativeValue)))
+            if (((vx < ovx) && (dirX == BaseDefines::PositiveValue)) ||
+                ((vx > ovx) && (dirX == BaseDefines::NegativeValue)))
             {
                 if ((extrIX > -1) && (static_cast<double>(i - extrIX) / static_cast<double>(m_freq) >= 0.05))
                 {
@@ -657,8 +658,8 @@ void EvolventaFactors::calculateWEFactors()
             }
 
             //! Экстремум по сагиттали
-            if (((vy < ovy) && (dirY == BaseUtils::PositiveValue)) ||
-                ((vy > ovy) && (dirY == BaseUtils::NegativeValue)))
+            if (((vy < ovy) && (dirY == BaseDefines::PositiveValue)) ||
+                ((vy > ovy) && (dirY == BaseDefines::NegativeValue)))
             {
                 if ((extrIY > -1) && (static_cast<double>(i - extrIY) / static_cast<double>(m_freq) >= 0.05))
                 {
@@ -673,8 +674,8 @@ void EvolventaFactors::calculateWEFactors()
             }
 
             //! Экстремум по динамике опережения
-            if (((dAheadCur < ovDAC) && (dirDAC == BaseUtils::PositiveValue)) ||
-                ((dAheadCur > ovDAC) && (dirDAC == BaseUtils::NegativeValue)))
+            if (((dAheadCur < ovDAC) && (dirDAC == BaseDefines::PositiveValue)) ||
+                ((dAheadCur > ovDAC) && (dirDAC == BaseDefines::NegativeValue)))
             {
               if (extrDAC > -1)
               {

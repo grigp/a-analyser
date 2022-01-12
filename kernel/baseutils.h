@@ -9,23 +9,6 @@
 namespace BaseUtils
 {
 
-static const int NegativeValue = -1;
-static const int ZeroValue = 0;
-static const int PositiveValue = 1;
-
-
-/*!
- * \brief Константы сторон Side enum
- */
-enum Side
-{
-      NoSide = 0
-    , Left
-    , Right
-    , Up
-    , Down
-};
-
 /*!
  * \brief Коды направлений Directions enum
  * Нумеруются по часовой стрелке

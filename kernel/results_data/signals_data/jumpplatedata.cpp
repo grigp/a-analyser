@@ -148,20 +148,20 @@ void TeppingTestData::setTime(const double time)
     setData(obj);
 }
 
-int TeppingTestData::stepsCount(const BaseUtils::Side side) const
+int TeppingTestData::stepsCount(const BaseDefines::Side side) const
 {
     QString sPar = "left_leg";
-    if (side == BaseUtils::Right)
+    if (side == BaseDefines::Right)
         sPar = "right_leg";
 
     auto arr = data()[sPar].toArray();
     return arr.size();
 }
 
-SignalsDefines::TeppingStepRec TeppingTestData::step(const BaseUtils::Side side, const int idx) const
+SignalsDefines::TeppingStepRec TeppingTestData::step(const BaseDefines::Side side, const int idx) const
 {
     QString sPar = "left_leg";
-    if (side == BaseUtils::Right)
+    if (side == BaseDefines::Right)
         sPar = "right_leg";
 
     auto arr = data()[sPar].toArray();
@@ -178,12 +178,12 @@ SignalsDefines::TeppingStepRec TeppingTestData::step(const BaseUtils::Side side,
     return SignalsDefines::TeppingStepRec();
 }
 
-void TeppingTestData::addStep(const BaseUtils::Side side,
+void TeppingTestData::addStep(const BaseDefines::Side side,
                               const double timeContact,
                               const double timeNoContact)
 {
     QString sPar = "left_leg";
-    if (side == BaseUtils::Right)
+    if (side == BaseDefines::Right)
         sPar = "right_leg";
 
     QJsonObject obj = data();

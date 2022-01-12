@@ -150,14 +150,14 @@ void TeppingTestExecute::getData(DeviceProtocols::DeviceData *data)
         {
             m_plt1Pressed = jpData->busy();
             m_plt1Time = jpData->time() / 1000.0;
-            iterate(false, BaseUtils::Right);
+            iterate(false, BaseDefines::Right);
         }
         else
         if (jpData->plate() == 2)
         {
             m_plt2Pressed = jpData->busy();
             m_plt2Time = jpData->time() / 1000.0;
-            iterate(false, BaseUtils::Left);
+            iterate(false, BaseDefines::Left);
         }
     }
 }
@@ -244,7 +244,7 @@ void TeppingTestExecute::on_select3D(bool checked)
     }
 }
 
-void TeppingTestExecute::iterate(const bool isStart, BaseUtils::Side side)
+void TeppingTestExecute::iterate(const bool isStart, BaseDefines::Side side)
 {
     if (m_jumpControl->platformsCount() == 2)
     {
@@ -308,7 +308,7 @@ void TeppingTestExecute::iterate(const bool isStart, BaseUtils::Side side)
             }
             else
             {
-                if (side == BaseUtils::Right)
+                if (side == BaseDefines::Right)
                 {
                     if (m_plt1Pressed)
                         m_plt1TimeNoContact = m_plt1Time;
@@ -317,7 +317,7 @@ void TeppingTestExecute::iterate(const bool isStart, BaseUtils::Side side)
                                  m_mdlRight.rowCount(), ui->wgtDiagRightLeg);
                 }
                 else
-                if (side == BaseUtils::Left)
+                if (side == BaseDefines::Left)
                 {
                     if (m_plt2Pressed)
                         m_plt2TimeNoContact = m_plt2Time;
@@ -362,13 +362,13 @@ void TeppingTestExecute::finishTest()
     {
         auto tContact = m_mdlLeft.index(i, 1).data(ValueRole).toDouble();
         auto tNoContact = m_mdlLeft.index(i, 2).data(ValueRole).toDouble();
-        data->addStep(BaseUtils::Left, tContact, tNoContact);
+        data->addStep(BaseDefines::Left, tContact, tNoContact);
     }
     for (int i = 0; i < m_mdlRight.rowCount(); ++i)
     {
         auto tContact = m_mdlRight.index(i, 1).data(ValueRole).toDouble();
         auto tNoContact = m_mdlRight.index(i, 2).data(ValueRole).toDouble();
-        data->addStep(BaseUtils::Right, tContact, tNoContact);
+        data->addStep(BaseDefines::Right, tContact, tNoContact);
     }
 
     m_trd.addChannel(data);

@@ -7,7 +7,7 @@
 
 #include "jumpplatedefines.h"
 #include "deviceprotocols.h"
-#include "baseutils.h"
+#include "basedefines.h"
 
 namespace Ui {
 class TeppingTestExecute;
@@ -58,7 +58,7 @@ private:
      * \brief Итерация выполнения методики
      * \param isStart - признак запуска на старте
      */
-    void iterate(const bool isStart, BaseUtils::Side side = BaseUtils::NoSide);
+    void iterate(const bool isStart, BaseDefines::Side side = BaseDefines::NoSide);
 
     void setModelGeometry();
 
