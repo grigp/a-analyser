@@ -3,6 +3,7 @@
 #include <qmath.h>
 #include <QDebug>
 
+#include "baseutils.h"
 #include "aanalyserapplication.h"
 #include "datadefines.h"
 #include "stepoffsetdefines.h"
@@ -262,11 +263,11 @@ int StepOffsetFactors::diap() const
     return 0;
 }
 
-BaseUtils::Directions StepOffsetFactors::direction() const
+BaseDefines::Directions StepOffsetFactors::direction() const
 {
     if (m_sordata)
-        return static_cast<BaseUtils::Directions>(m_sordata->direction());
-    return BaseUtils::dirUp;
+        return static_cast<BaseDefines::Directions>(m_sordata->direction());
+    return BaseDefines::dirUp;
 }
 
 int StepOffsetFactors::force() const
@@ -372,7 +373,7 @@ void StepOffsetFactors::averaging(QList<QList<SignalsDefines::StabRec>> &buffers
         for (int j = 0; j < buffers.size(); ++j)
         {
             double val = buffers[j][i].x;
-            if (m_sordata->direction() == BaseUtils::dirUp || m_sordata->direction() == BaseUtils::dirDown)
+            if (m_sordata->direction() == BaseDefines::dirUp || m_sordata->direction() == BaseDefines::dirDown)
                 val = buffers[j][i].y;
             val = val * 100.0 / m_sordata->force();
             if (isInverce)

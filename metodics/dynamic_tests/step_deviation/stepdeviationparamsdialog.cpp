@@ -1,7 +1,7 @@
 #include "stepdeviationparamsdialog.h"
 #include "ui_stepdeviationparamsdialog.h"
 
-#include "baseutils.h"
+#include "basedefines.h"
 
 StepDeviationParamsDialog::StepDeviationParamsDialog(QWidget *parent) :
     QDialog(parent),
@@ -26,7 +26,7 @@ void StepDeviationParamsDialog::setParams(const QJsonObject &params)
     ui->edMaxTime->setValue(params["max_time"].toInt());
 
     auto d = params["direction"].toString();
-    ui->cbDirection->setCurrentIndex(BaseUtils::DirectionValueIndex.value(d));
+    ui->cbDirection->setCurrentIndex(BaseDefines::DirectionValueIndex.value(d));
 }
 
 QJsonObject StepDeviationParamsDialog::getParams()
@@ -34,8 +34,8 @@ QJsonObject StepDeviationParamsDialog::getParams()
     QJsonObject retval;
     retval["max_time"] = ui->edMaxTime->value();
 
-    auto valD = static_cast<BaseUtils::Directions>(ui->cbDirection->currentIndex());
-    retval["direction"] = BaseUtils::DirectionValueUIDName.value(valD);
+    auto valD = static_cast<BaseDefines::Directions>(ui->cbDirection->currentIndex());
+    retval["direction"] = BaseDefines::DirectionValueUIDName.value(valD);
 
     return retval;
 }

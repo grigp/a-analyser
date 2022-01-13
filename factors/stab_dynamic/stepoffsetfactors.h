@@ -3,7 +3,7 @@
 
 #include <QObject>
 
-#include "baseutils.h"
+#include "basedefines.h"
 #include "multifactor.h"
 #include "signalsdefines.h"
 #include "crossdefines.h"
@@ -144,7 +144,7 @@ public:
     int stageTime() const;
     int freq() const;
     int diap() const;
-    BaseUtils::Directions direction() const;
+    BaseDefines::Directions direction() const;
     int force() const;
     int stepsCount() const {return m_steps.size();}
 

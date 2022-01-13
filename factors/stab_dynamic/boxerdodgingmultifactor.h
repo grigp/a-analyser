@@ -4,7 +4,7 @@
 #include <QObject>
 #include <QVector>
 
-#include "baseutils.h"
+#include "basedefines.h"
 #include "multifactor.h"
 #include "boxerdodgingdefines.h"
 
@@ -131,16 +131,16 @@ private:
      * \param stab - указатель на сигнал
      */
     void calculateFactorsForDirection(const BoxerDodgingDefines::Stages code,
-                                      const QList<BaseUtils::Section> sections,
+                                      const QList<BaseDefines::Section> sections,
                                       FactorsDirection& factors,
                                       Stabilogram* stab);
 
     BoxerDodgingResultData* m_resData {nullptr};
 
-    QList<BaseUtils::Section> m_secLeft;    ///< Список участков сигнала при движении влево
-    QList<BaseUtils::Section> m_secRight;   ///< Список участков сигнала при движении вправо
-    QList<BaseUtils::Section> m_secAhead;   ///< Список участков сигнала при движении вперед
-    QList<BaseUtils::Section> m_secBack;    ///< Список участков сигнала при движении назад
+    QList<BaseDefines::Section> m_secLeft;    ///< Список участков сигнала при движении влево
+    QList<BaseDefines::Section> m_secRight;   ///< Список участков сигнала при движении вправо
+    QList<BaseDefines::Section> m_secAhead;   ///< Список участков сигнала при движении вперед
+    QList<BaseDefines::Section> m_secBack;    ///< Список участков сигнала при движении назад
 
     FactorsDirection m_fctAverage;   ///< Усредненные показатели
     FactorsDirection m_fctLeft;      ///< Движение влево

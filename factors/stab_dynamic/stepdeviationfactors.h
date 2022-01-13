@@ -1,7 +1,9 @@
 #ifndef STEPDEVIATIONFACTORS_H
 #define STEPDEVIATIONFACTORS_H
 
-#include "baseutils.h"
+#include <QVector>
+
+#include "basedefines.h"
 #include "multifactor.h"
 
 namespace StepDeviationFactorsDefines
@@ -92,7 +94,7 @@ public:
     /*!
      * \brief Возвращает направление отклонений
      */
-    BaseUtils::Directions direction() const {return m_direction;}
+    BaseDefines::Directions direction() const {return m_direction;}
 
 private:
     /*!
@@ -140,10 +142,10 @@ private:
     QVector<double> m_signalFlt;    ///< Отнормированный сигнал нужного канала фильтрованный
     int m_freq {0};
 
-    BaseUtils::Directions m_direction {BaseUtils::dirUp};
-    QList<BaseUtils::Extremum> m_extrList;  ///< Список экстремумов
-    QList<BaseUtils::Section> m_Extr;       ///< Список участков сигнала экстремумов
-    QList<BaseUtils::Section> m_Trans;      ///< Список участков сигнала переходов
+    BaseDefines::Directions m_direction {BaseDefines::dirUp};
+    QList<BaseDefines::Extremum> m_extrList;  ///< Список экстремумов
+    QList<BaseDefines::Section> m_Extr;       ///< Список участков сигнала экстремумов
+    QList<BaseDefines::Section> m_Trans;      ///< Список участков сигнала переходов
 
     QList<double> m_growthDynamic;  ///< Динамика прироста
     QList<double> m_lengthDynamic;  ///< Динамика длительности отклонений

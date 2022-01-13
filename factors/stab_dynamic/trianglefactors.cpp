@@ -2,6 +2,7 @@
 
 #include <QDebug>
 
+#include "baseutils.h"
 #include "aanalyserapplication.h"
 #include "channelsdefines.h"
 #include "dataprovider.h"
@@ -262,7 +263,7 @@ int TriangleFactors::trianglesCount() const
     return m_triangleSections.size();
 }
 
-BaseUtils::Section TriangleFactors::triangleSection(const int idx) const
+BaseDefines::Section TriangleFactors::triangleSection(const int idx) const
 {
     Q_ASSERT(idx >= 0 && idx < m_triangleSections.size());
     return m_triangleSections.at(idx);
@@ -346,7 +347,7 @@ void TriangleFactors::computeTrianglesBounds()
             {
                 end = i;
                 if (begin > -1 && end > -1)
-                    m_triangleSections << BaseUtils::Section(begin, end);
+                    m_triangleSections << BaseDefines::Section(begin, end);
                 //! Первый треугольник на этапе анализа
                 if (begin < m_resData->trainingLength() && end >= m_resData->trainingLength())
                     m_firstAnalysisTriangle = m_triangleSections.size();
@@ -667,7 +668,7 @@ void TriangleFactors::addFactors()
 
 void TriangleFactors::addFactorPair(const QString &uidT, const double valueT, const QString &uidA, const double valueA)
 {
-    m_factorsOfStages.append(BaseUtils::FctTblPair(uidT, uidA));
+    m_factorsOfStages.append(BaseDefines::FctTblPair(uidT, uidA));
     addFactor(uidT, valueT);
     addFactor(uidA, valueA);
 }

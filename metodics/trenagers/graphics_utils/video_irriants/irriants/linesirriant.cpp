@@ -63,7 +63,7 @@ void LinesIrriant::paint(QPainter *painter, const QStyleOptionGraphicsItem *opti
 
 //    qDebug() << msec << speed << "   " << iGradientSize << m_width / 15;
 
-    if (m_direction == BaseUtils::dirRight)
+    if (m_direction == BaseDefines::dirRight)
     {
         auto x = boundingRect.x() - m_width * (m_dutyCycle + 1) + static_cast<int>(m_position) % (m_width * (m_dutyCycle + 1));
         while (x < boundingRect.x() + boundingRect.width())
@@ -77,7 +77,7 @@ void LinesIrriant::paint(QPainter *painter, const QStyleOptionGraphicsItem *opti
         }
     }
     else
-    if (m_direction == BaseUtils::dirLeft)
+    if (m_direction == BaseDefines::dirLeft)
     {
         auto x = boundingRect.x() + boundingRect.width() + m_width * (m_dutyCycle + 1) - static_cast<int>(m_position) % (m_width * (m_dutyCycle + 1));
         while (x > boundingRect.x() - m_width * (m_dutyCycle + 1))
@@ -91,7 +91,7 @@ void LinesIrriant::paint(QPainter *painter, const QStyleOptionGraphicsItem *opti
         }
     }
     else
-    if (m_direction == BaseUtils::dirDown)
+    if (m_direction == BaseDefines::dirDown)
     {
         auto y = boundingRect.y() - m_width * (m_dutyCycle + 1) + static_cast<int>(m_position) % (m_width * (m_dutyCycle + 1));
         while (y < boundingRect.y() + boundingRect.height())
@@ -105,7 +105,7 @@ void LinesIrriant::paint(QPainter *painter, const QStyleOptionGraphicsItem *opti
         }
     }
     else
-    if (m_direction == BaseUtils::dirUp)
+    if (m_direction == BaseDefines::dirUp)
     {
         auto y = boundingRect.y() + boundingRect.height() + m_width * (m_dutyCycle + 1) - static_cast<int>(m_position) % (m_width * (m_dutyCycle + 1));
         while (y > boundingRect.y() - m_width * (m_dutyCycle + 1))

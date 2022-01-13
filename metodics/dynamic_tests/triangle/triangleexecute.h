@@ -4,7 +4,7 @@
 #include <QObject>
 
 #include "stabdynamictestexecute.h"
-#include "baseutils.h"
+#include "basedefines.h"
 #include "triangledefines.h"
 
 class SetMaxForceDialog;
@@ -18,8 +18,8 @@ struct Target
 {
     double x;
     double y;
-    BaseUtils::TriangleCorner corner;
-    Target(double _x, double _y, BaseUtils::TriangleCorner _corner)
+    BaseDefines::TriangleCorner corner;
+    Target(double _x, double _y, BaseDefines::TriangleCorner _corner)
         :x(_x), y(_y), corner(_corner){}
 };
 
@@ -79,7 +79,7 @@ private:
      */
     void nextCorner();
 
-    BaseUtils::DirectionMode m_directionMode {BaseUtils::dmClockwise};
+    BaseDefines::DirectionMode m_directionMode {BaseDefines::dmClockwise};
     int m_trainingTime {60};
     int m_analysisTime {120};
     int m_forcePercent {75};
@@ -92,7 +92,7 @@ private:
     QList<Target> m_targets;
 
     TriangleDefines::Stage m_stage {TriangleDefines::stgWaiting};   ///< Этап теста
-    BaseUtils::TriangleCorner m_curCorner {BaseUtils::tcNone};
+    BaseDefines::TriangleCorner m_curCorner {BaseDefines::tcNone};
 
     int m_stageCounter {0};   ///< Счетчик отсчетов на этапе
     int m_startAnalysis {0};  ///< Точка начала этапа анализа (в отсчетах)

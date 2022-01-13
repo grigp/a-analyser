@@ -5,6 +5,9 @@
 #include <QStandardItemModel>
 #include <QDebug>
 
+
+#include "basedefines.h"
+#include "baseutils.h"
 #include "aanalyserapplication.h"
 #include "stepoffsetcalculator.h"
 #include "stepoffsetfactors.h"
@@ -324,7 +327,7 @@ void StepOffsetVisualize::showTable()
 void StepOffsetVisualize::showParams()
 {
     sForce = tr("Усилие") + " - " + QString::number(m_calculator->force()) + " " + tr("%");
-    sDirection = tr("Направление") + " - " + BaseUtils::DirectionValueName.value(m_calculator->direction());
+    sDirection = tr("Направление") + " - " + BaseDefines::DirectionValueName.value(m_calculator->direction());
     sDeviation = tr("Отклонение") + " - " +
             QString::number(m_calculator->diap() * m_calculator->force() / 100) +
             " " + tr("мм");

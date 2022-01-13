@@ -1,7 +1,7 @@
 #include "triangleparamsdialog.h"
 #include "ui_triangleparamsdialog.h"
 
-#include "baseutils.h"
+#include "basedefines.h"
 
 #include <QDebug>
 
@@ -24,7 +24,7 @@ TriangleParamsDialog::~TriangleParamsDialog()
 void TriangleParamsDialog::setParams(const QJsonObject &params)
 {
     auto dm = params["direction_mode"].toString();
-    ui->cbDirectionMode->setCurrentIndex(BaseUtils::DirectionModeValueIndex.value(dm) - 1);
+    ui->cbDirectionMode->setCurrentIndex(BaseDefines::DirectionModeValueIndex.value(dm) - 1);
 
     auto tt = params["training_time"].toInt();
     auto at = params["analysis_time"].toInt();
@@ -39,8 +39,8 @@ void TriangleParamsDialog::setParams(const QJsonObject &params)
 QJsonObject TriangleParamsDialog::getParams()
 {
     QJsonObject retval;
-    auto valDM = static_cast<BaseUtils::DirectionMode>(ui->cbDirectionMode->currentIndex() + 1);
-    retval["direction_mode"] = BaseUtils::DirectionModeValueName.value(valDM);
+    auto valDM = static_cast<BaseDefines::DirectionMode>(ui->cbDirectionMode->currentIndex() + 1);
+    retval["direction_mode"] = BaseDefines::DirectionModeValueName.value(valDM);
 
     auto tt = ui->edTimeTraining->time();
     auto at = ui->edTimeAnalysis->time();

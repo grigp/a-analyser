@@ -18,19 +18,19 @@ Figures::~Figures()
 void Figures::setSize(const int size)
 {
     m_size = size;
-    repaint();
+    update();
 }
 
 void Figures::setFigureType(const Figures::FigureType ft)
 {
     m_ft = ft;
-    repaint();
+    update();
 }
 
 void Figures::setColor(const QColor color)
 {
     m_color = color;
-    repaint();
+    update();
 }
 
 QColor Figures::color() const

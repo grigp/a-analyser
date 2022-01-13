@@ -72,14 +72,14 @@ QString OctaedronCalculator::circeRoundRuleMode() const
 {
     if (m_factors)
         return m_factors->circeRoundRuleMode();
-    return BaseUtils::CirceRoundRuleModeValueName.value(BaseUtils::crmRadial);
+    return BaseDefines::CirceRoundRuleModeValueName.value(BaseDefines::crmRadial);
 }
 
 QString OctaedronCalculator::directionMode() const
 {
     if (m_factors)
         return m_factors->directionMode();
-    return BaseUtils::DirectionModeValueName.value(BaseUtils::dmCounterClockwise);
+    return BaseDefines::DirectionModeValueName.value(BaseDefines::dmCounterClockwise);
 }
 
 int OctaedronCalculator::radius() const

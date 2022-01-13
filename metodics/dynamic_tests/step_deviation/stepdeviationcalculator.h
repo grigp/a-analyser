@@ -2,7 +2,7 @@
 #define STEPDEVIATIONCALCULATOR_H
 
 #include "testcalculator.h"
-#include "baseutils.h"
+#include "basedefines.h"
 
 #include <QObject>
 
@@ -59,7 +59,7 @@ public:
     /*!
      * \brief Возвращает направление отклонений
      */
-    BaseUtils::Directions direction() const;
+    BaseDefines::Directions direction() const;
 
 private:
     StepDeviationFactors* m_factors {nullptr};

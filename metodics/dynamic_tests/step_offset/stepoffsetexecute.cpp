@@ -41,7 +41,7 @@ void StepOffsetExecute::setParams(const QJsonObject &params)
     m_forcePercent = params["force"].toInt();
 
     auto d = params["direction"].toString();
-    m_direction = BaseUtils::DirectionValueIndex.value(d);
+    m_direction = BaseDefines::DirectionValueIndex.value(d);
 }
 
 StabDynamicTestPatientWindow *StepOffsetExecute::createPatientWindow()
@@ -189,25 +189,25 @@ void StepOffsetExecute::setMaxForceDialogAccepted()
 
 void StepOffsetExecute::setTargetCoordinates()
 {
-    if (m_direction == BaseUtils::dirUp)
+    if (m_direction == BaseDefines::dirUp)
     {
         m_tx = 0;
         m_ty = m_force;
     }
     else
-    if (m_direction == BaseUtils::dirRight)
+    if (m_direction == BaseDefines::dirRight)
     {
         m_tx = m_force;
         m_ty = 0;
     }
     else
-    if (m_direction == BaseUtils::dirDown)
+    if (m_direction == BaseDefines::dirDown)
     {
         m_tx = 0;
         m_ty = -m_force;
     }
     else
-    if (m_direction == BaseUtils::dirLeft)
+    if (m_direction == BaseDefines::dirLeft)
     {
         m_tx = -m_force;
         m_ty = 0;

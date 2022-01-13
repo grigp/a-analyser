@@ -5,7 +5,7 @@
 #include <QLabel>
 
 #include "stabdynamictestexecute.h"
-#include "baseutils.h"
+#include "basedefines.h"
 #include "stepoffsetdefines.h"
 
 namespace Ui {
@@ -66,7 +66,7 @@ private:
     int m_stageTime {8};
     int m_repeatCount {4};
     int m_forcePercent {50};
-    BaseUtils::Directions m_direction {BaseUtils::dirUp};
+    BaseDefines::Directions m_direction {BaseDefines::dirUp};
     int m_force {0};
 
     SetMaxForceDialog* m_mfd {nullptr};

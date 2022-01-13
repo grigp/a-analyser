@@ -7,7 +7,7 @@
 #include "datadefines.h"
 #include "stabdynamictestexecute.h"
 #include "deviceprotocols.h"
-#include "baseutils.h"
+#include "basedefines.h"
 
 namespace Ui {
 class OctaedronExecute;
@@ -91,8 +91,8 @@ private:
 
     void addStageToResult();
 
-    BaseUtils::CirceRoundRuleMode m_circeRoundRuleMode {BaseUtils::crmRadial};
-    BaseUtils::DirectionMode m_directionMode {BaseUtils::dmCounterClockwise};
+    BaseDefines::CirceRoundRuleMode m_circeRoundRuleMode {BaseDefines::crmRadial};
+    BaseDefines::DirectionMode m_directionMode {BaseDefines::dmCounterClockwise};
     int m_stageTime {5};
     int m_radius {50};
 

@@ -2,8 +2,9 @@
 #define TRIANGLEFACTORS_H
 
 #include <QObject>
+#include <QVector>
 
-#include "baseutils.h"
+#include "basedefines.h"
 #include "multifactor.h"
 #include "triangledefines.h"
 
@@ -169,7 +170,7 @@ public:
      * \brief Возвращает границы треугольника по номеру
      * \param idx - номер треугольника
      */
-    BaseUtils::Section triangleSection(const int idx) const;
+    BaseDefines::Section triangleSection(const int idx) const;
 
     /*!
      * \brief Возвращает треугольник по номеру
@@ -256,7 +257,7 @@ private:
 
     TriangleResultData* m_resData;
 
-    QList<BaseUtils::Section> m_triangleSections;   ///< Список участков сигнала треугольников
+    QList<BaseDefines::Section> m_triangleSections;   ///< Список участков сигнала треугольников
     QList<TriangleDefines::Triangle> m_triangles;   ///< Список треугольников
     TriangleDefines::Triangle m_triangleAverageTraining; ///< Усредненный треугольник на этапе обучения
     TriangleDefines::Triangle m_triangleAverageAnalysis; ///< Усредненный треугольник на этапе анализа
@@ -274,7 +275,7 @@ private:
     TriangleFactorsDefines::TranglePosDeviation m_upDevAnal, m_rtDevAnal, m_lfDevAnal, m_midDevAnal;
 
     ///< uid-ы показателей для этапов
-    QList<BaseUtils::FctTblPair> m_factorsOfStages;
+    QList<BaseDefines::FctTblPair> m_factorsOfStages;
 
     ///< Время начала движения после появления сигнала
     double m_latentMoving {0};

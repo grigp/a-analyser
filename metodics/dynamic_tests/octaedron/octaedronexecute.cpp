@@ -43,10 +43,10 @@ OctaedronExecute::~OctaedronExecute()
 void OctaedronExecute::setParams(const QJsonObject &params)
 {
     auto crm = params["circe_round_rule_mode"].toString();
-    m_circeRoundRuleMode = BaseUtils::CirceRoundRuleModeValueIndex.value(crm);
+    m_circeRoundRuleMode = BaseDefines::CirceRoundRuleModeValueIndex.value(crm);
 
     auto dm = params["direction_mode"].toString();
-    m_directionMode = BaseUtils::DirectionModeValueIndex.value(dm);
+    m_directionMode = BaseDefines::DirectionModeValueIndex.value(dm);
 
     m_stageTime = params["stage_time"].toInt();
     m_radius = params["radius"].toInt();
@@ -95,8 +95,8 @@ void OctaedronExecute::recording()
         m_res->setDiap(diap());
         m_res->setRadius(m_radius);
         m_res->setStageTime(m_stageTime);
-        m_res->setCirceRoundRuleMode(BaseUtils::CirceRoundRuleModeValueName.value(m_circeRoundRuleMode));
-        m_res->setDirectionMode(BaseUtils::DirectionModeValueName.value(m_directionMode));
+        m_res->setCirceRoundRuleMode(BaseDefines::CirceRoundRuleModeValueName.value(m_circeRoundRuleMode));
+        m_res->setDirectionMode(BaseDefines::DirectionModeValueName.value(m_directionMode));
         addStageToResult();
     }
 
@@ -163,24 +163,24 @@ void OctaedronExecute::createMarkerAndTargets()
 void OctaedronExecute::getFirstStage()
 {
     m_stage = 0;
-    if (m_circeRoundRuleMode == BaseUtils::crmRadial)
+    if (m_circeRoundRuleMode == BaseDefines::crmRadial)
     {
-        if (m_directionMode == BaseUtils::dmCounterClockwise)
+        if (m_directionMode == BaseDefines::dmCounterClockwise)
             m_stage = 0;
         else
-        if (m_directionMode == BaseUtils::dmClockwise)
+        if (m_directionMode == BaseDefines::dmClockwise)
             m_stage = SequenceRadial.size() - 1;
         else
-        if (m_directionMode == BaseUtils::dmRandom)
+        if (m_directionMode == BaseDefines::dmRandom)
             m_stage = 0;
     }
     else
-    if (m_circeRoundRuleMode == BaseUtils::crmCircle)
+    if (m_circeRoundRuleMode == BaseDefines::crmCircle)
     {
-        if (m_directionMode == BaseUtils::dmCounterClockwise)
+        if (m_directionMode == BaseDefines::dmCounterClockwise)
             m_stage = 0;
         else
-        if (m_directionMode == BaseUtils::dmClockwise)
+        if (m_directionMode == BaseDefines::dmClockwise)
             m_stage = SequenceCircle.size() - 1;
     }
 }
@@ -189,18 +189,18 @@ bool OctaedronExecute::getNextStage()
 {
     auto nextStage = [&]()
     {
-        if (m_directionMode == BaseUtils::dmCounterClockwise)
+        if (m_directionMode == BaseDefines::dmCounterClockwise)
             ++m_stage;
         else
-        if (m_directionMode == BaseUtils::dmClockwise)
+        if (m_directionMode == BaseDefines::dmClockwise)
             --m_stage;
     };
     ///--------------
 
-    if (m_circeRoundRuleMode == BaseUtils::crmRadial)
+    if (m_circeRoundRuleMode == BaseDefines::crmRadial)
     {
         nextStage();
-        if (m_directionMode == BaseUtils::dmRandom)
+        if (m_directionMode == BaseDefines::dmRandom)
         {
             if (m_stage == 0)
                 m_stage = getRandomStage();
@@ -216,7 +216,7 @@ bool OctaedronExecute::getNextStage()
         }
     }
     else
-    if (m_circeRoundRuleMode == BaseUtils::crmCircle)
+    if (m_circeRoundRuleMode == BaseDefines::crmCircle)
     {
         nextStage();
         if (m_stage < 0 || m_stage >= SequenceCircle.size())
@@ -253,10 +253,10 @@ int OctaedronExecute::getRandomStage()
 
 int OctaedronExecute::getCurrentTargetPosition()
 {
-    if (m_circeRoundRuleMode == BaseUtils::crmRadial)
+    if (m_circeRoundRuleMode == BaseDefines::crmRadial)
         return SequenceRadial.at(m_stage);
     else
-    if (m_circeRoundRuleMode == BaseUtils::crmCircle)
+    if (m_circeRoundRuleMode == BaseDefines::crmCircle)
         return SequenceCircle.at(m_stage);
     return -1;
 }
@@ -273,10 +273,10 @@ void OctaedronExecute::setCurrentTarget()
 void OctaedronExecute::addStageToResult()
 {
     int trgtPos = -1;
-    if (m_circeRoundRuleMode == BaseUtils::crmRadial)
+    if (m_circeRoundRuleMode == BaseDefines::crmRadial)
         trgtPos = SequenceRadial.at(m_stage);
     else
-    if (m_circeRoundRuleMode == BaseUtils::crmCircle)
+    if (m_circeRoundRuleMode == BaseDefines::crmCircle)
         trgtPos = SequenceCircle.at(m_stage);
 
     if (trgtPos > -1)

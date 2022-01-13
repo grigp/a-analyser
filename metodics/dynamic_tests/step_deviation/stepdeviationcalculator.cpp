@@ -110,9 +110,9 @@ double StepDeviationCalculator::lengthDynValue(const int idx) const
     return 0;
 }
 
-BaseUtils::Directions StepDeviationCalculator::direction() const
+BaseDefines::Directions StepDeviationCalculator::direction() const
 {
     if (m_factors)
         return m_factors->direction();
-    return BaseUtils::dirUp;
+    return BaseDefines::dirUp;
 }

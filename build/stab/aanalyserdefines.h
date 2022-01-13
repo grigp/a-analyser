@@ -28,6 +28,12 @@ static const QString PresetsMetodicsFileName = "metodics_stab";
 //! Будет ли проходить автоимпорт БД
 static const bool isAutoImportDatabases = true;
 
+//! Название основного файла цветового оформления
+static const QString MainStyleSheetFile = ":/qss/main.qss";
+//static const QString MainStyleSheetFile = ":/qss/main_yellow.qss";
+//static const QString MainStyleSheetFile = ":/qss/main_red.qss";
+//static const QString MainStyleSheetFile = ":/qss/main_green.qss";
+
 }
 
 #endif // AANALYSERDEFINES_H

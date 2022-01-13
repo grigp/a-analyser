@@ -97,14 +97,14 @@ QString OctaedronFactors::circeRoundRuleMode() const
 {
     if (m_resData)
         return m_resData->circeRoundRuleMode();
-    return BaseUtils::CirceRoundRuleModeValueName.value(BaseUtils::crmRadial);
+    return BaseDefines::CirceRoundRuleModeValueName.value(BaseDefines::crmRadial);
 }
 
 QString OctaedronFactors::directionMode() const
 {
     if (m_resData)
         return m_resData->directionMode();
-    return BaseUtils::DirectionModeValueName.value(BaseUtils::dmCounterClockwise);
+    return BaseDefines::DirectionModeValueName.value(BaseDefines::dmCounterClockwise);
 }
 
 int OctaedronFactors::radius() const
@@ -153,7 +153,7 @@ void OctaedronFactors::calculateBaseFactors()
 
             //! Код -1 - это всегда возврат при радиальном движении,
             //! а  при кольцевом всегда только первый этап подготовительный
-            if (code > -1 || (getCRRM() == BaseUtils::crmCircle && i > 0))
+            if (code > -1 || (getCRRM() == BaseDefines::crmCircle && i > 0))
             {
                 //! Конечная точка этапа
                 int end = begin + m_resData->stageTime() * m_resData->freq();
@@ -186,9 +186,9 @@ void OctaedronFactors::calculateBaseFactors()
     }
 }
 
-BaseUtils::CirceRoundRuleMode OctaedronFactors::getCRRM()
+BaseDefines::CirceRoundRuleMode OctaedronFactors::getCRRM()
 {
     if (m_resData)
-        return BaseUtils::CirceRoundRuleModeValueIndex.value(m_resData->circeRoundRuleMode());
-    return BaseUtils::crmRadial;
+        return BaseDefines::CirceRoundRuleModeValueIndex.value(m_resData->circeRoundRuleMode());
+    return BaseDefines::crmRadial;
 }

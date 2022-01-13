@@ -2,7 +2,7 @@
 #define STEPDEVIATIONPATIENTWINDOW_H
 
 #include "stabdynamictestpatientwindow.h"
-#include "baseutils.h"
+#include "basedefines.h"
 
 #include <QObject>
 #include <QWidget>
@@ -12,7 +12,7 @@ class StepDeviationPatientWindow : public StabDynamicTestPatientWindow
 {
     Q_OBJECT
 public:
-    explicit StepDeviationPatientWindow(BaseUtils::Directions direction, QWidget *parent = nullptr);
+    explicit StepDeviationPatientWindow(BaseDefines::Directions direction, QWidget *parent = nullptr);
     ~StepDeviationPatientWindow() override;
 
 
@@ -31,7 +31,7 @@ private:
 
     QLabel* m_info {nullptr};
     QLabel* m_infoDir {nullptr};
-    BaseUtils::Directions m_direction {BaseUtils::dirUp};
+    BaseDefines::Directions m_direction {BaseDefines::dirUp};
 };
 
 #endif // STEPDEVIATIONPATIENTWINDOW_H

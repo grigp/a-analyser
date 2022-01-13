@@ -5,7 +5,7 @@
 #include <QTime>
 
 #include "videoirritant.h"
-#include "baseutils.h"
+#include "basedefines.h"
 
 class LinesIrriant : public Irriant
 {
@@ -39,8 +39,8 @@ public:
     /*!
      * \brief Доступ к m_direction
      */
-    BaseUtils::Directions direction() const {return m_direction;}
-    void setDirection(const BaseUtils::Directions direction) {m_direction = direction;}
+    BaseDefines::Directions direction() const {return m_direction;}
+    void setDirection(const BaseDefines::Directions direction) {m_direction = direction;}
 
     /*!
      * \brief Доступ к m_width
@@ -67,7 +67,7 @@ public:
     void setColor(const QColor color) {m_color = color;}
 
 private:
-    BaseUtils::Directions m_direction {BaseUtils::dirRight};
+    BaseDefines::Directions m_direction {BaseDefines::dirRight};
     int m_width {120};
     int m_speed {200};
     int m_dutyCycle {1};

@@ -36,7 +36,7 @@ void TriangleExecute::setParams(const QJsonObject &params)
     m_analysisTime = params["analysis_time"].toInt();
 
     auto dm = params["direction_mode"].toString();
-    m_directionMode = BaseUtils::DirectionModeValueIndex.value(dm);
+    m_directionMode = BaseDefines::DirectionModeValueIndex.value(dm);
 
     m_forcePercent = params["force"].toInt();
     m_stageTime = params["stage_time"].toInt();
@@ -119,7 +119,7 @@ void TriangleExecute::getData(DeviceProtocols::DeviceData *data)
 
         if ((recCount() >= m_trainingTime * freqStab()) && (m_stage == TriangleDefines::stgTraining))
         {
-            if (m_stageCounter == BaseUtils::tcTop)
+            if (m_stageCounter == BaseDefines::tcTop)
             {
                 m_stage = TriangleDefines::stgAnalysis;
                 setRecordLengthTitle(tr("Этап анализа"));
@@ -132,14 +132,14 @@ void TriangleExecute::getData(DeviceProtocols::DeviceData *data)
         else
         if ((recCount() >= (m_trainingTime + m_analysisTime) * freqStab()) && (m_stage == TriangleDefines::stgAnalysis))
         {
-            if (m_stageCounter == BaseUtils::tcTop)
+            if (m_stageCounter == BaseDefines::tcTop)
             {
                 m_res->setFreq(freqStab());
                 m_res->setDiap(diap());
                 m_res->setTrainingLength(m_startAnalysis);
-                m_res->setTopCorner(QPointF(m_targets.at(BaseUtils::tcTop).x, m_targets.at(BaseUtils::tcTop).y));
-                m_res->setLeftDownCorner(QPointF(m_targets.at(BaseUtils::tcLeftDown).x, m_targets.at(BaseUtils::tcLeftDown).y));
-                m_res->setRightDownCorner(QPointF(m_targets.at(BaseUtils::tcRightDown).x, m_targets.at(BaseUtils::tcRightDown).y));
+                m_res->setTopCorner(QPointF(m_targets.at(BaseDefines::tcTop).x, m_targets.at(BaseDefines::tcTop).y));
+                m_res->setLeftDownCorner(QPointF(m_targets.at(BaseDefines::tcLeftDown).x, m_targets.at(BaseDefines::tcLeftDown).y));
+                m_res->setRightDownCorner(QPointF(m_targets.at(BaseDefines::tcRightDown).x, m_targets.at(BaseDefines::tcRightDown).y));
 
                 m_targets.clear();
                 finishTest();
@@ -165,12 +165,12 @@ void TriangleExecute::setMaxForceDialogAccepted()
             clearTargets();
             m_targets.clear();
 
-            int vu = m_mfd->value(BaseUtils::tcTop) * m_forcePercent / 100;
-            int vld = m_mfd->value(BaseUtils::tcLeftDown) * m_forcePercent / 100;
-            int vrd = m_mfd->value(BaseUtils::tcRightDown) * m_forcePercent / 100;
-            m_targets << Target(0, vu, BaseUtils::tcTop)
-                      << Target(-vld * cos(M_PI/6), -vld * sin(M_PI/6), BaseUtils::tcLeftDown)
-                      << Target(vrd * cos(M_PI/6), -vrd * sin(M_PI/6), BaseUtils::tcRightDown);
+            int vu = m_mfd->value(BaseDefines::tcTop) * m_forcePercent / 100;
+            int vld = m_mfd->value(BaseDefines::tcLeftDown) * m_forcePercent / 100;
+            int vrd = m_mfd->value(BaseDefines::tcRightDown) * m_forcePercent / 100;
+            m_targets << Target(0, vu, BaseDefines::tcTop)
+                      << Target(-vld * cos(M_PI/6), -vld * sin(M_PI/6), BaseDefines::tcLeftDown)
+                      << Target(vrd * cos(M_PI/6), -vrd * sin(M_PI/6), BaseDefines::tcRightDown);
 
             foreach (auto corner, m_targets)
             {
@@ -179,11 +179,11 @@ void TriangleExecute::setMaxForceDialogAccepted()
                     m_patientWin->addTarget(corner.x, corner.y, Qt::gray, 30);
             }
 
-            if (m_directionMode == BaseUtils::dmClockwise)
-                m_curCorner = BaseUtils::tcLeftDown;
+            if (m_directionMode == BaseDefines::dmClockwise)
+                m_curCorner = BaseDefines::tcLeftDown;
             else
-            if (m_directionMode == BaseUtils::dmCounterClockwise)
-                m_curCorner = BaseUtils::tcRightDown;
+            if (m_directionMode == BaseDefines::dmCounterClockwise)
+                m_curCorner = BaseDefines::tcRightDown;
             if (m_curCorner < m_targets.size())
             {
                 addTarget(m_targets.at(m_curCorner).x, m_targets.at(m_curCorner).y, Qt::green, Qt::darkGreen);
@@ -220,20 +220,20 @@ void TriangleExecute::showCurrentCorner()
 void TriangleExecute::nextCorner()
 {
     auto cur = static_cast<int>(m_curCorner);
-    if (m_directionMode == BaseUtils::dmClockwise)
+    if (m_directionMode == BaseDefines::dmClockwise)
     {
         if (cur > 0)
             --cur;
         else
-            cur = BaseUtils::tcRightDown;
+            cur = BaseDefines::tcRightDown;
     }
     else
-    if (m_directionMode == BaseUtils::dmCounterClockwise)
+    if (m_directionMode == BaseDefines::dmCounterClockwise)
     {
         if (cur < 2)
             ++cur;
         else
-            cur = BaseUtils::tcTop;
+            cur = BaseDefines::tcTop;
     }
-    m_curCorner = static_cast<BaseUtils::TriangleCorner>(cur);
+    m_curCorner = static_cast<BaseDefines::TriangleCorner>(cur);
 }

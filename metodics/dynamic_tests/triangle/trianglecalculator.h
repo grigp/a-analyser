@@ -4,7 +4,7 @@
 #include <QObject>
 
 #include "testcalculator.h"
-#include "baseutils.h"
+#include "basedefines.h"
 #include "triangledefines.h"
 
 class TriangleFactors;
@@ -68,7 +68,7 @@ public:
      * \brief Возвращает границы треугольника по номеру
      * \param idx - номер треугольника
      */
-    BaseUtils::Section triangleSection(const int idx) const;
+    BaseDefines::Section triangleSection(const int idx) const;
 
     /*!
      * \brief Возвращает треугольник по номеру

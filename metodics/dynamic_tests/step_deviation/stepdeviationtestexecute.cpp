@@ -34,7 +34,7 @@ void StepDeviationTestExecute::setParams(const QJsonObject &params)
     setRecordLength(m_maxTime * freqStab());
 
     auto d = params["direction"].toString();
-    m_direction = BaseUtils::DirectionValueIndex.value(d);
+    m_direction = BaseDefines::DirectionValueIndex.value(d);
 }
 
 StabDynamicTestPatientWindow *StepDeviationTestExecute::createPatientWindow()

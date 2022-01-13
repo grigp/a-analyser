@@ -36,7 +36,7 @@ void FiveZoneArea::setMarker(const double x, const double y)
 {
     m_x = x;
     m_y = y;
-    repaint();
+    update();
 }
 
 void FiveZoneArea::setBackgroundColor(const QColor color)

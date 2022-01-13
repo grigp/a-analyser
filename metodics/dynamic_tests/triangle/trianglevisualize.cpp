@@ -20,39 +20,39 @@ namespace
 
 ///< Список показателей, выводимых в таблицу основных показателей
 ///< Соответствие показателя для этапов обучения и анализа
-static QList<BaseUtils::FctTblPair> FactorsMain = {
-      BaseUtils::FctTblPair(TriangleFactorsDefines::Training::TimeUid, TriangleFactorsDefines::Analysis::TimeUid)
-    , BaseUtils::FctTblPair(TriangleFactorsDefines::Training::MXUid, TriangleFactorsDefines::Analysis::MXUid)
-    , BaseUtils::FctTblPair(TriangleFactorsDefines::Training::MYUid, TriangleFactorsDefines::Analysis::MYUid)
-    , BaseUtils::FctTblPair(TriangleFactorsDefines::Training::SquareUid, TriangleFactorsDefines::Analysis::SquareUid)
+static QList<BaseDefines::FctTblPair> FactorsMain = {
+      BaseDefines::FctTblPair(TriangleFactorsDefines::Training::TimeUid, TriangleFactorsDefines::Analysis::TimeUid)
+    , BaseDefines::FctTblPair(TriangleFactorsDefines::Training::MXUid, TriangleFactorsDefines::Analysis::MXUid)
+    , BaseDefines::FctTblPair(TriangleFactorsDefines::Training::MYUid, TriangleFactorsDefines::Analysis::MYUid)
+    , BaseDefines::FctTblPair(TriangleFactorsDefines::Training::SquareUid, TriangleFactorsDefines::Analysis::SquareUid)
 };
 
 ///< Список показателей, выводимых в таблицу показателей диаграмм
 ///< Соответствие показателя для этапов обучения и анализа
-static QList<BaseUtils::FctTblPair> FactorsDiags = {
-      BaseUtils::FctTblPair(TriangleFactorsDefines::Training::TimeUid, TriangleFactorsDefines::Analysis::TimeUid)
-    , BaseUtils::FctTblPair(TriangleFactorsDefines::Training::TimeQUid, TriangleFactorsDefines::Analysis::TimeQUid)
-    , BaseUtils::FctTblPair(TriangleFactorsDefines::Training::SquareUid, TriangleFactorsDefines::Analysis::SquareUid)
-    , BaseUtils::FctTblPair(TriangleFactorsDefines::Training::SquareQUid, TriangleFactorsDefines::Analysis::SquareQUid)
-    , BaseUtils::FctTblPair(TriangleFactorsDefines::Training::SpeedUid, TriangleFactorsDefines::Analysis::SpeedUid)
-    , BaseUtils::FctTblPair(TriangleFactorsDefines::Training::SpeedQUid, TriangleFactorsDefines::Analysis::SpeedQUid)
+static QList<BaseDefines::FctTblPair> FactorsDiags = {
+      BaseDefines::FctTblPair(TriangleFactorsDefines::Training::TimeUid, TriangleFactorsDefines::Analysis::TimeUid)
+    , BaseDefines::FctTblPair(TriangleFactorsDefines::Training::TimeQUid, TriangleFactorsDefines::Analysis::TimeQUid)
+    , BaseDefines::FctTblPair(TriangleFactorsDefines::Training::SquareUid, TriangleFactorsDefines::Analysis::SquareUid)
+    , BaseDefines::FctTblPair(TriangleFactorsDefines::Training::SquareQUid, TriangleFactorsDefines::Analysis::SquareQUid)
+    , BaseDefines::FctTblPair(TriangleFactorsDefines::Training::SpeedUid, TriangleFactorsDefines::Analysis::SpeedUid)
+    , BaseDefines::FctTblPair(TriangleFactorsDefines::Training::SpeedQUid, TriangleFactorsDefines::Analysis::SpeedQUid)
 
-    , BaseUtils::FctTblPair(TriangleFactorsDefines::Training::UpErrSysXUid, TriangleFactorsDefines::Analysis::UpErrSysXUid)
-    , BaseUtils::FctTblPair(TriangleFactorsDefines::Training::UpErrSysYUid, TriangleFactorsDefines::Analysis::UpErrSysYUid)
-    , BaseUtils::FctTblPair(TriangleFactorsDefines::Training::UpErrRndXUid, TriangleFactorsDefines::Analysis::UpErrRndXUid)
-    , BaseUtils::FctTblPair(TriangleFactorsDefines::Training::UpErrRndYUid, TriangleFactorsDefines::Analysis::UpErrRndYUid)
-    , BaseUtils::FctTblPair(TriangleFactorsDefines::Training::RightErrSysXUid, TriangleFactorsDefines::Analysis::RightErrSysXUid)
-    , BaseUtils::FctTblPair(TriangleFactorsDefines::Training::RightErrSysYUid, TriangleFactorsDefines::Analysis::RightErrSysYUid)
-    , BaseUtils::FctTblPair(TriangleFactorsDefines::Training::RightErrRndXUid, TriangleFactorsDefines::Analysis::RightErrRndXUid)
-    , BaseUtils::FctTblPair(TriangleFactorsDefines::Training::RightErrRndYUid, TriangleFactorsDefines::Analysis::RightErrRndYUid)
-    , BaseUtils::FctTblPair(TriangleFactorsDefines::Training::LeftErrSysXUid, TriangleFactorsDefines::Analysis::LeftErrSysXUid)
-    , BaseUtils::FctTblPair(TriangleFactorsDefines::Training::LeftErrSysYUid, TriangleFactorsDefines::Analysis::LeftErrSysYUid)
-    , BaseUtils::FctTblPair(TriangleFactorsDefines::Training::LeftErrRndXUid, TriangleFactorsDefines::Analysis::LeftErrRndXUid)
-    , BaseUtils::FctTblPair(TriangleFactorsDefines::Training::LeftErrRndYUid, TriangleFactorsDefines::Analysis::LeftErrRndYUid)
-    , BaseUtils::FctTblPair(TriangleFactorsDefines::Training::MidErrSysXUid, TriangleFactorsDefines::Analysis::MidErrSysXUid)
-    , BaseUtils::FctTblPair(TriangleFactorsDefines::Training::MidErrSysYUid, TriangleFactorsDefines::Analysis::MidErrSysYUid)
-    , BaseUtils::FctTblPair(TriangleFactorsDefines::Training::MidErrRndXUid, TriangleFactorsDefines::Analysis::MidErrRndXUid)
-    , BaseUtils::FctTblPair(TriangleFactorsDefines::Training::MidErrRndYUid, TriangleFactorsDefines::Analysis::MidErrRndYUid)
+    , BaseDefines::FctTblPair(TriangleFactorsDefines::Training::UpErrSysXUid, TriangleFactorsDefines::Analysis::UpErrSysXUid)
+    , BaseDefines::FctTblPair(TriangleFactorsDefines::Training::UpErrSysYUid, TriangleFactorsDefines::Analysis::UpErrSysYUid)
+    , BaseDefines::FctTblPair(TriangleFactorsDefines::Training::UpErrRndXUid, TriangleFactorsDefines::Analysis::UpErrRndXUid)
+    , BaseDefines::FctTblPair(TriangleFactorsDefines::Training::UpErrRndYUid, TriangleFactorsDefines::Analysis::UpErrRndYUid)
+    , BaseDefines::FctTblPair(TriangleFactorsDefines::Training::RightErrSysXUid, TriangleFactorsDefines::Analysis::RightErrSysXUid)
+    , BaseDefines::FctTblPair(TriangleFactorsDefines::Training::RightErrSysYUid, TriangleFactorsDefines::Analysis::RightErrSysYUid)
+    , BaseDefines::FctTblPair(TriangleFactorsDefines::Training::RightErrRndXUid, TriangleFactorsDefines::Analysis::RightErrRndXUid)
+    , BaseDefines::FctTblPair(TriangleFactorsDefines::Training::RightErrRndYUid, TriangleFactorsDefines::Analysis::RightErrRndYUid)
+    , BaseDefines::FctTblPair(TriangleFactorsDefines::Training::LeftErrSysXUid, TriangleFactorsDefines::Analysis::LeftErrSysXUid)
+    , BaseDefines::FctTblPair(TriangleFactorsDefines::Training::LeftErrSysYUid, TriangleFactorsDefines::Analysis::LeftErrSysYUid)
+    , BaseDefines::FctTblPair(TriangleFactorsDefines::Training::LeftErrRndXUid, TriangleFactorsDefines::Analysis::LeftErrRndXUid)
+    , BaseDefines::FctTblPair(TriangleFactorsDefines::Training::LeftErrRndYUid, TriangleFactorsDefines::Analysis::LeftErrRndYUid)
+    , BaseDefines::FctTblPair(TriangleFactorsDefines::Training::MidErrSysXUid, TriangleFactorsDefines::Analysis::MidErrSysXUid)
+    , BaseDefines::FctTblPair(TriangleFactorsDefines::Training::MidErrSysYUid, TriangleFactorsDefines::Analysis::MidErrSysYUid)
+    , BaseDefines::FctTblPair(TriangleFactorsDefines::Training::MidErrRndXUid, TriangleFactorsDefines::Analysis::MidErrRndXUid)
+    , BaseDefines::FctTblPair(TriangleFactorsDefines::Training::MidErrRndYUid, TriangleFactorsDefines::Analysis::MidErrRndYUid)
 
 
 
@@ -87,8 +87,8 @@ void TriangleVisualize::setTest(const QString &testUid)
 
         getSignal(testUid);
 
-        showSKG(ui->wgtSKGTraining, BaseUtils::Section(0, m_calculator->trainingLength()));
-        showSKG(ui->wgtSKGAnalysis, BaseUtils::Section(m_calculator->trainingLength(), m_calculator->signalLength()));
+        showSKG(ui->wgtSKGTraining, BaseDefines::Section(0, m_calculator->trainingLength()));
+        showSKG(ui->wgtSKGAnalysis, BaseDefines::Section(m_calculator->trainingLength(), m_calculator->signalLength()));
         m_triangleDiagIdxTraining = addTriangleDiag(ui->wgtSKGTraining, m_calculator->triangleTraining(), Qt::darkCyan);
         m_triangleDiagIdxAnalysis = addTriangleDiag(ui->wgtSKGAnalysis, m_calculator->triangleAnalysis(), Qt::darkCyan);
 
@@ -324,7 +324,7 @@ void TriangleVisualize::getSignal(const QString &testUid)
         }
 }
 
-void TriangleVisualize::showSKG(AreaSKG *area, BaseUtils::Section section)
+void TriangleVisualize::showSKG(AreaSKG *area, BaseDefines::Section section)
 {
     area->setSignal(m_stab, section.begin, section.end);
     addTriangleDiag(area, m_calculator->triangleOriginal(), Qt::darkYellow);

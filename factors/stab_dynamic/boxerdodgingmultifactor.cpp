@@ -180,16 +180,16 @@ void BoxerDodgingMultifactor::assignSections(Stabilogram* stab)
     auto addSection = [&]()
     {
         if (dirCode == BoxerDodgingDefines::bdsLeftDodging)
-            m_secLeft << BaseUtils::Section(begin, end);
+            m_secLeft << BaseDefines::Section(begin, end);
         else
         if (dirCode == BoxerDodgingDefines::bdsRightDodging)
-            m_secRight << BaseUtils::Section(begin, end);
+            m_secRight << BaseDefines::Section(begin, end);
         else
         if (dirCode == BoxerDodgingDefines::bdsAheadBend)
-            m_secAhead << BaseUtils::Section(begin, end);
+            m_secAhead << BaseDefines::Section(begin, end);
         else
         if (dirCode == BoxerDodgingDefines::bdsBackBend)
-            m_secBack << BaseUtils::Section(begin, end);
+            m_secBack << BaseDefines::Section(begin, end);
     };
 
 
@@ -303,7 +303,7 @@ void BoxerDodgingMultifactor::getDataBuffer(Stabilogram *stab, QVector<double> *
 }
 
 void BoxerDodgingMultifactor::calculateFactorsForDirection(const BoxerDodgingDefines::Stages code,
-                                                           const QList<BaseUtils::Section> sections,
+                                                           const QList<BaseDefines::Section> sections,
                                                            BoxerDodgingMultifactor::FactorsDirection &factors,
                                                            Stabilogram* stab)
 {

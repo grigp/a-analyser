@@ -1,7 +1,7 @@
 #include "stepoffsetparamsdialog.h"
 #include "ui_stepoffsetparamsdialog.h"
 
-#include "baseutils.h"
+#include "basedefines.h"
 
 StepOffsetParamsDialog::StepOffsetParamsDialog(QWidget *parent) :
     QDialog(parent),
@@ -28,7 +28,7 @@ void StepOffsetParamsDialog::setParams(const QJsonObject &params)
     ui->edForce->setValue(params["force"].toInt());
 
     auto d = params["direction"].toString();
-    ui->cbDirection->setCurrentIndex(BaseUtils::DirectionValueIndex.value(d));
+    ui->cbDirection->setCurrentIndex(BaseDefines::DirectionValueIndex.value(d));
 }
 
 QJsonObject StepOffsetParamsDialog::getParams()
@@ -38,8 +38,8 @@ QJsonObject StepOffsetParamsDialog::getParams()
     retval["repeat_count"] = ui->edRepeatCount->value();
     retval["force"] = ui->edForce->value();
 
-    auto valD = static_cast<BaseUtils::Directions>(ui->cbDirection->currentIndex());
-    retval["direction"] = BaseUtils::DirectionValueUIDName.value(valD);
+    auto valD = static_cast<BaseDefines::Directions>(ui->cbDirection->currentIndex());
+    retval["direction"] = BaseDefines::DirectionValueUIDName.value(valD);
 
     return retval;
 }

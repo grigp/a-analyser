@@ -4,7 +4,7 @@
 #include <QWidget>
 #include <QPrinter>
 
-#include "baseutils.h"
+#include "basedefines.h"
 #include "triangledefines.h"
 
 namespace Ui {
@@ -67,7 +67,7 @@ private:
      * \param area - зона построения
      * \param section - участок сигнала
      */
-    void showSKG(AreaSKG* area, BaseUtils::Section section);
+    void showSKG(AreaSKG* area, BaseDefines::Section section);
 
     /*!
      * \brief Добавляет диаграмму треугольника в зону СКГ

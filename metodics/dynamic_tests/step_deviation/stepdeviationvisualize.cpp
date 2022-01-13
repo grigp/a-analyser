@@ -1,6 +1,7 @@
 #include "stepdeviationvisualize.h"
 #include "ui_stepdeviationvisualize.h"
 
+#include "basedefines.h"
 #include "aanalyserapplication.h"
 #include "channelsdefines.h"
 #include "stepdeviationcalculator.h"
@@ -201,6 +202,6 @@ void StepDeviationVisualize::showDiags()
 
 void StepDeviationVisualize::showDirection()
 {
-    directionText = tr("Направление отклонений") + " - " + BaseUtils::DirectionValueName.value(m_calculator->direction());
+    directionText = tr("Направление отклонений") + " - " + BaseDefines::DirectionValueName.value(m_calculator->direction());
     ui->lblDirection->setText(directionText);
 }

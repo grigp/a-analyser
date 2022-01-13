@@ -9,6 +9,7 @@
 #include "decartcoordinatessignal.h"
 #include "fragment.h"
 #include "basedefines.h"
+#include "baseutils.h"
 
 namespace
 {

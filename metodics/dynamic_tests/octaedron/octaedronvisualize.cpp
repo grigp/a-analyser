@@ -3,7 +3,7 @@
 
 #include <QDebug>
 
-#include "baseutils.h"
+#include "basedefines.h"
 #include "octaedroncalculator.h"
 #include "reportelements.h"
 
@@ -31,9 +31,9 @@ void OctaedronVisualize::setTest(const QString &testUid)
         m_calculator = new OctaedronCalculator(testUid, this);
         m_calculator->calculate();
 
-        auto crm = BaseUtils::CirceRoundRuleModeValueIndex.value(m_calculator->circeRoundRuleMode());
+        auto crm = BaseDefines::CirceRoundRuleModeValueIndex.value(m_calculator->circeRoundRuleMode());
         ui->wgtDiag->setCirceRoundRuleMode(crm);
-        auto dm = BaseUtils::DirectionModeValueIndex.value(m_calculator->directionMode());
+        auto dm = BaseDefines::DirectionModeValueIndex.value(m_calculator->directionMode());
         ui->wgtDiag->setDirection(dm);
 
         for (int i = 0; i < 8; ++i)

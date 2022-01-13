@@ -48,10 +48,10 @@ void CrossFactors::calculate()
     getEventLablels();
     fillBuffers();
 
-    m_LUp = computeDistance(m_bufferUp, BaseUtils::dirUp);
-    m_LDn = computeDistance(m_bufferDn, BaseUtils::dirDown);
-    m_LRt = computeDistance(m_bufferRt, BaseUtils::dirRight);
-    m_LLf = computeDistance(m_bufferLf, BaseUtils::dirLeft);
+    m_LUp = computeDistance(m_bufferUp, BaseDefines::dirUp);
+    m_LDn = computeDistance(m_bufferDn, BaseDefines::dirDown);
+    m_LRt = computeDistance(m_bufferRt, BaseDefines::dirRight);
+    m_LLf = computeDistance(m_bufferLf, BaseDefines::dirLeft);
     m_SZone = (m_LUp * m_LRt + m_LRt * m_LDn + m_LDn * m_LLf + m_LLf * m_LUp) / 2;
     m_UD = m_LUp / m_LDn;
     m_RL = m_LRt / m_LLf;
@@ -136,25 +136,25 @@ void CrossFactors::fillBuffers()
         ///< Создание буфера для записи сигнала
         auto addBuffer = [&](const int direction)
         {
-            if (direction == BaseUtils::dirUp)
+            if (direction == BaseDefines::dirUp)
             {
                 bufferUp.append(QList<SignalsDefines::StabRec>());
                 ++bufCountUp;
             }
             else
-            if (direction == BaseUtils::dirDown)
+            if (direction == BaseDefines::dirDown)
             {
                 bufferDn.append(QList<SignalsDefines::StabRec>());
                 ++bufCountDn;
             }
             else
-            if (direction == BaseUtils::dirRight)
+            if (direction == BaseDefines::dirRight)
             {
                 bufferRt.append(QList<SignalsDefines::StabRec>());
                 ++bufCountRt;
             }
             else
-            if (direction == BaseUtils::dirLeft)
+            if (direction == BaseDefines::dirLeft)
             {
                 bufferLf.append(QList<SignalsDefines::StabRec>());
                 ++bufCountLf;
@@ -164,16 +164,16 @@ void CrossFactors::fillBuffers()
         ///< Добавление значения в буфер
         auto addValueToBuffer = [&](const SignalsDefines::StabRec &val, const int direction)
         {
-            if (direction == BaseUtils::dirUp)
+            if (direction == BaseDefines::dirUp)
                 bufferUp[bufCountUp].append(val);
             else
-            if (direction == BaseUtils::dirDown)
+            if (direction == BaseDefines::dirDown)
                 bufferDn[bufCountDn].append(val);
             else
-            if (direction == BaseUtils::dirRight)
+            if (direction == BaseDefines::dirRight)
                 bufferRt[bufCountRt].append(val);
             else
-            if (direction == BaseUtils::dirLeft)
+            if (direction == BaseDefines::dirLeft)
                 bufferLf[bufCountLf].append(val);
         };
 
@@ -244,7 +244,7 @@ void CrossFactors::fillBuffers()
     }
 }
 
-int CrossFactors::computeDistance(QList<SignalsDefines::StabRec> &buffer, const BaseUtils::Directions direction)
+int CrossFactors::computeDistance(QList<SignalsDefines::StabRec> &buffer, const BaseDefines::Directions direction)
 {
     //! Кол-во шагов смещения цели
     int trgtLen = m_crdata->stageTime() * m_crdata->freq();
@@ -260,16 +260,16 @@ int CrossFactors::computeDistance(QList<SignalsDefines::StabRec> &buffer, const 
 
         //! Отклонение маркера от цели
         double devMrkTrgt = 0;
-        if (direction == BaseUtils::dirUp)
+        if (direction == BaseDefines::dirUp)
             devMrkTrgt = fabs(buffer[i].y - trgtPos);
         else
-        if (direction == BaseUtils::dirDown)
+        if (direction == BaseDefines::dirDown)
             devMrkTrgt = fabs(buffer[i].y + trgtPos);
         else
-        if (direction == BaseUtils::dirRight)
+        if (direction == BaseDefines::dirRight)
             devMrkTrgt = fabs(buffer[i].x - trgtPos);
         else
-        if (direction == BaseUtils::dirLeft)
+        if (direction == BaseDefines::dirLeft)
             devMrkTrgt = fabs(buffer[i].x + trgtPos);
 
         //! Превысили пороговое отклонение
