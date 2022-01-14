@@ -138,6 +138,7 @@ void TriangleExecute::getData(DeviceProtocols::DeviceData *data)
                 m_res->setDiap(diap());
                 m_res->setTrainingLength(m_startAnalysis);
                 m_res->setTimeOffsetMarker(m_stageTime);
+                m_res->setDirection(m_directionMode);
                 m_res->setTopCorner(QPointF(m_targets.at(BaseDefines::tcTop).x, m_targets.at(BaseDefines::tcTop).y));
                 m_res->setLeftDownCorner(QPointF(m_targets.at(BaseDefines::tcLeftDown).x, m_targets.at(BaseDefines::tcLeftDown).y));
                 m_res->setRightDownCorner(QPointF(m_targets.at(BaseDefines::tcRightDown).x, m_targets.at(BaseDefines::tcRightDown).y));

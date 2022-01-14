@@ -343,7 +343,8 @@ void TriangleFactors::computeTrianglesBounds()
     for (int i = 0; i < m_yf.size(); ++i)
         if (i > 0)
         {
-            if ((m_yf.at(i) < m_yf.at(i - 1)) && (dir == 0 || dir == 1))
+            if ((m_yf.at(i) < m_yf.at(i - 1)) && (dir == 0 || dir == 1) &&
+                    (m_yf.at(i) > 0) && (m_yf.at(i - 1) > 0))  //! Исключаем дребезг при начале
             {
                 end = i;
                 if (begin > -1 && end > -1)
@@ -592,15 +593,111 @@ void TriangleFactors::computePosDeviations(const int begin, const int end,
     midDev.randY = sqrt(midDev.randY / (end - begin + 1));
 }
 
+QPointF TriangleFactors::getCornerTargetCoord(BaseDefines::TriangleCorner code)
+{
+    if (code == BaseDefines::tcTop)
+        return m_resData->topCorner();
+    else
+    if (code == BaseDefines::tcLeftDown)
+        return m_resData->leftDownCorner();
+    else
+    if (code == BaseDefines::tcRightDown)
+        return m_resData->rightDownCorner();
+    return QPointF(0, 0);
+}
+
+QList<QVector<double>> TriangleFactors::fillTransitionsBuffers()
+{
+    //! Первая точка цели
+    BaseDefines::TriangleCorner n (BaseDefines::tcNone);
+    if (m_resData->direction() == BaseDefines::dmClockwise)
+        n = BaseDefines::tcRightDown;
+    else
+    if (m_resData->direction() == BaseDefines::dmCounterClockwise)
+        n = BaseDefines::tcLeftDown;
+
+    //! Создание буферов
+    QVector<double> bufR;
+    QList<QVector<double>> retval;
+    //! По сигналу от начала первого треугольника до окончания этапа тренинга
+    for (int i = m_triangleSections.at(0).begin; i < m_resData->trainingLength(); ++i)
+    {
+        //! Между точками смены этапа
+        if (bufR.size() < m_resData->timeOffsetMarker() * m_resData->freq())
+            bufR << sqrt(pow(m_x.at(i) - getCornerTargetCoord(n).x(), 2) +
+                         pow(m_y.at(i) - getCornerTargetCoord(n).y(), 2));
+        else
+        {
+            //! Точка смены этапа
+            retval << bufR;  //! Буфер - в список
+            bufR.clear();    //! Очистить буфер
+
+            //! Следующая точка
+            if (m_resData->direction() == BaseDefines::dmClockwise)
+            {
+                if (n > BaseDefines::tcTop)
+                    n = static_cast<BaseDefines::TriangleCorner>(static_cast<int>(n) - 1);
+                else
+                    n = BaseDefines::tcRightDown;
+            }
+            else
+            if (m_resData->direction() == BaseDefines::dmCounterClockwise)
+            {
+                if (n < BaseDefines::tcRightDown)
+                    n = static_cast<BaseDefines::TriangleCorner>(static_cast<int>(n) + 1);
+                else
+                    n = BaseDefines::tcTop;
+            }
+        }
+    }
+    return retval;
+}
+
 void TriangleFactors::computeLatentMoving()
 {
-    /*
-     * Нельзя это рассчитывать для этапа анализа - нет маркера - цели
-     * 1) Создание буферов, содержащих расстояния от маркера до цели.
-     * 2) Для каждого буфера ищется минимум и максимум расстояния и их индексы
-     * 3) От индекса максимума до конца буфера рассчитывается момент, когда превышается порог - MaxV - (MaxV - MinV) * 0.2
-     * 4) Усредняются моменты
-     */
+    //! Создание буферов, содержащих расстояния от маркера до цели
+    auto buffers = fillTransitionsBuffers();
+
+    double time = 0;
+    int n = 0;
+    foreach (auto buf, buffers)
+    {
+        double min = INT_MAX;
+        double max = -INT_MAX;
+        int iMin = -1;
+        int iMax = -1;
+        for (int i = 0; i < buf.size(); ++i)
+        {
+            if (buf[i] < min)
+            {
+                min = buf[i];
+                iMin = i;
+            }
+            if (buf[i] > max)
+            {
+                max = buf[i];
+                iMax = i;
+            }
+        }
+
+        if (iMax > -1)
+        {
+            for (int i = iMax; i < buf.size(); ++i)
+            {
+                if (buf[i] < max - (max - min) * 0.2)
+                {
+                    time += static_cast<double>(i) / static_cast<double>(m_resData->freq());
+                    ++n;
+                    break;
+                }
+            }
+        }
+    }
+
+    if (n > 0)
+        time /= n;
+
+    m_latentMoving = time;
 }
 
 void TriangleFactors::getTriangleData()

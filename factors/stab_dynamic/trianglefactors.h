@@ -234,6 +234,12 @@ private:
                               TriangleFactorsDefines::TranglePosDeviation &lfDev,
                               TriangleFactorsDefines::TranglePosDeviation &midDev);
 
+    QPointF getCornerTargetCoord(BaseDefines::TriangleCorner code);
+
+    //! Создание буферов, содержащих расстояния от маркера до цели
+    //! Используется при расчете показателя "Время начала движения после появления сигнала"
+    QList<QVector<double>> fillTransitionsBuffers();
+
     /*!
      * \brief Расчет показателя "Время начала движения после появления сигнала"
      */

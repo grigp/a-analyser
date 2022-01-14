@@ -59,6 +59,18 @@ void TriangleResultData::setTimeOffsetMarker(const int time)
     setData(obj);
 }
 
+BaseDefines::DirectionMode TriangleResultData::direction() const
+{
+    return static_cast<BaseDefines::DirectionMode>(data()["direction"].toInt());
+}
+
+void TriangleResultData::setDirection(const BaseDefines::DirectionMode dm)
+{
+    QJsonObject obj = data();
+    obj["direction"] = dm;
+    setData(obj);
+}
+
 QPointF TriangleResultData::topCorner() const
 {
     auto corner = data()["top_corner"].toObject();

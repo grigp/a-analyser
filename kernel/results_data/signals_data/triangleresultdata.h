@@ -6,6 +6,7 @@
 
 #include "channeljsondata.h"
 #include "factorsdefines.h"
+#include "basedefines.h"
 
 /*!
  * \brief Класс для записи в БД данных о результатах теста Треугольник TriangleResultData class
@@ -38,6 +39,12 @@ public:
      */
     int timeOffsetMarker() const;
     void setTimeOffsetMarker(const int time);
+
+    /*!
+     * \brief Направление движения
+     */
+    BaseDefines::DirectionMode direction() const;
+    void setDirection(const BaseDefines::DirectionMode dm);
 
     /*!
      * \brief Верхняя вершина треугольника
