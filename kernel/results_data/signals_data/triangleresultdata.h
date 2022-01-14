@@ -34,6 +34,12 @@ public:
     void setTrainingLength(const int length);
 
     /*!
+     * \brief Время смещения маркера в секундах
+     */
+    int timeOffsetMarker() const;
+    void setTimeOffsetMarker(const int time);
+
+    /*!
      * \brief Верхняя вершина треугольника
      */
     QPointF topCorner() const;

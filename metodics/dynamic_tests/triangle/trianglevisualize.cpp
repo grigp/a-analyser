@@ -512,6 +512,10 @@ void TriangleVisualize::showDiagsResultFactors()
     ui->tvDiagTable->setModel(model);
     ui->tvDiagTable->header()->resizeSections(QHeaderView::ResizeToContents);
     ui->tvDiagTable->header()->resizeSection(0, 430);
+
+    auto fi = static_cast<AAnalyserApplication*>(QApplication::instance())->getFactorInfo(TriangleFactorsDefines::LatentMovingUid);
+    QString s = fi.name() + ", " + fi.measure() + "    " + m_calculator->factorValueFormatted(TriangleFactorsDefines::LatentMovingUid);
+    ui->lblLatentMoving->setText(s);
 }
 
 void TriangleVisualize::saveSplitterPositionDiag()

@@ -47,6 +47,18 @@ void TriangleResultData::setTrainingLength(const int length)
     setData(obj);
 }
 
+int TriangleResultData::timeOffsetMarker() const
+{
+    return data()["time_offset_marker"].toInt();
+}
+
+void TriangleResultData::setTimeOffsetMarker(const int time)
+{
+    QJsonObject obj = data();
+    obj["time_offset_marker"] = time;
+    setData(obj);
+}
+
 QPointF TriangleResultData::topCorner() const
 {
     auto corner = data()["top_corner"].toObject();
