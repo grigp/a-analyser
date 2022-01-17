@@ -328,8 +328,8 @@ void TriangleFactors::readSignal()
 
 //        BaseUtils::vectorToText(m_x, "c:/1/x.txt");
 //        BaseUtils::vectorToText(m_xf, "c:/1/x_f.txt");
-//        BaseUtils::vectorToText(m_y, "c:/1/y.txt");
-//        BaseUtils::vectorToText(m_yf, "c:/1/y_f.txt");
+        BaseUtils::vectorToText(m_y, "c:/1/y.txt");
+        BaseUtils::vectorToText(m_yf, "c:/1/y_f.txt");
     }
 }
 
@@ -343,8 +343,9 @@ void TriangleFactors::computeTrianglesBounds()
     for (int i = 0; i < m_yf.size(); ++i)
         if (i > 0)
         {
-            if ((m_yf.at(i) < m_yf.at(i - 1)) && (dir == 0 || dir == 1) &&
-                    (m_yf.at(i) > 0) && (m_yf.at(i - 1) > 0))  //! Исключаем дребезг при начале
+            bool isUpZero = ((i <= m_resData->trainingLength()) && (m_y.at(i) > 0) && (m_y.at(i - 1) > 0)) ||  //! Исключаем дребезг при начале
+                            (i > m_resData->trainingLength());
+            if ((m_yf.at(i) < m_yf.at(i - 1)) && (dir == 0 || dir == 1) && isUpZero)
             {
                 end = i;
                 if (begin > -1 && end > -1)
@@ -664,15 +665,11 @@ void TriangleFactors::computeLatentMoving()
     {
         double min = INT_MAX;
         double max = -INT_MAX;
-        int iMin = -1;
         int iMax = -1;
         for (int i = 0; i < buf.size(); ++i)
         {
             if (buf[i] < min)
-            {
                 min = buf[i];
-                iMin = i;
-            }
             if (buf[i] > max)
             {
                 max = buf[i];
