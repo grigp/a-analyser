@@ -164,10 +164,6 @@ struct CorrectionsFactorValues
     double power;     ///< Мощность коррекций
 };
 
-static const double ZoneMotorLo = 0.1;   ///< dZone100160Min
-static const double ZoneMotorHi = 0.16;  ///< dZone100160Max
-static const double ZoneKognLo = 0.2;    ///< dZone200280Min
-static const double ZoneKognHi = 0.28;   ///< dZone200280Max
 
 
 }

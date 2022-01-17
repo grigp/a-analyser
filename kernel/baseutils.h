@@ -186,6 +186,12 @@ void setOutrunningResume(const double orv, QString &resume, QString &resumeColor
  */
 int scaleMultiplier(const int idx);
 
+/*!
+ * \brief Возвращает знак числа
+ * \param value - число
+ * \return BaseDefines::NegativeValue, если value < 0, BaseDefines::ZeroValue, если value == 0, BaseDefines::PositiveValue, если value > 0;
+ */
+int sign(const int value);
 
 /*!
  * \brief Класс, рассчитывающий математическое ожидание и стандартное отклонение с итеративным добавлением MidAndStandardDeviation class

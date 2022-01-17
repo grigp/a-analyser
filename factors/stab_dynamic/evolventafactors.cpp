@@ -689,7 +689,7 @@ void EvolventaFactors::calculateWEFactors()
                 errExtr = sqrt(pow(vx, 2) + pow(vy, 2));
 
                 //! Расчет кол-ва экстремумов по зонам
-                if ((timeI >= EvolventaFactorsDefines::ZoneMotorLo) && (timeI <= EvolventaFactorsDefines::ZoneMotorHi))
+                if ((timeI >= BaseDefines::ZoneMotorLo) && (timeI <= BaseDefines::ZoneMotorHi))
                 {
                   ++zoneMotor;
                   m_motorCorrValues.error = m_motorCorrValues.error + errExtr;
@@ -697,7 +697,7 @@ void EvolventaFactors::calculateWEFactors()
                   m_motorCorrValues.timeSumm = m_motorCorrValues.timeSumm + timeI;
                 }
                 else
-                if ((timeI >= EvolventaFactorsDefines::ZoneKognLo) && (timeI <= EvolventaFactorsDefines::ZoneKognHi))
+                if ((timeI >= BaseDefines::ZoneKognLo) && (timeI <= BaseDefines::ZoneKognHi))
                 {
                   ++zoneKogn;
                   m_kognCorrValues.error = m_kognCorrValues.error + errExtr;
@@ -763,8 +763,8 @@ void EvolventaFactors::calculateWEFactors()
         m_kognCorrValues.amplitude = m_kognCorrValues.amplitude / static_cast<double>(zoneKogn);
         m_kognCorrValues.timeMid = m_kognCorrValues.timeSumm / static_cast<double>(zoneKogn);
     }
-    m_motorCorrValues.power = (m_motorCorrValues.timeMid - EvolventaFactorsDefines::ZoneMotorLo) * m_motorCorrValues.amplitude * zoneMotor;
-    m_kognCorrValues.power = (m_kognCorrValues.timeMid - EvolventaFactorsDefines::ZoneKognLo) * m_kognCorrValues.amplitude * zoneKogn;
+    m_motorCorrValues.power = (m_motorCorrValues.timeMid - BaseDefines::ZoneMotorLo) * m_motorCorrValues.amplitude * zoneMotor;
+    m_kognCorrValues.power = (m_kognCorrValues.timeMid - BaseDefines::ZoneKognLo) * m_kognCorrValues.amplitude * zoneKogn;
     if (m_kognCorrValues.power + m_motorCorrValues.power > 0)
         m_commonValues.korrDominance = (m_kognCorrValues.power - m_motorCorrValues.power) /
                                        (m_kognCorrValues.power + m_motorCorrValues.power) * 100;

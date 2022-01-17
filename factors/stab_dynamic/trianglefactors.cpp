@@ -47,6 +47,7 @@ void TriangleFactors::calculate()
     computePosDeviations(0, m_firstAnalysisTriangle - 1, m_upDevTest, m_rtDevTest, m_lfDevTest, m_midDevTest);
     computePosDeviations(m_firstAnalysisTriangle, m_triangles.size() - 1, m_upDevAnal, m_rtDevAnal, m_lfDevAnal, m_midDevAnal);
     computeLatentMoving();
+    computeCorrectionsFactors();
 
     addFactors();
 }
@@ -703,6 +704,256 @@ void TriangleFactors::computeLatentMoving()
     m_latentMoving = time;
 }
 
+bool TriangleFactors::getDistPointToLine(const int idx, int &iTrngl, double &dist)
+{
+    double x1 {0};
+    double y1 {0};
+    double x2 {0};
+    double y2 {0};
+    dist = 0;
+    bool retval = false;
+
+    if (iTrngl < m_triangleSections.size())
+    {
+        if ((idx >= m_triangleSections.at(iTrngl).begin) && (idx <= m_triangleSections.at(iTrngl).end))
+        {
+            //! Сторона треугольника
+            double tm = static_cast<double>(idx - m_triangleSections.at(iTrngl).begin) /
+                        static_cast<double>(m_triangleSections.at(iTrngl).end - m_triangleSections.at(iTrngl).begin);
+            //! Точки для прямой
+            if ((tm >= 0) and (tm < 0.333333))
+            {
+                x1 = m_triangles.at(iTrngl).topCorner().x();
+                y1 = m_triangles.at(iTrngl).topCorner().y();
+                if (m_resData->direction() == BaseDefines::dmClockwise)
+                {
+                    x2 = m_triangles.at(iTrngl).rightDownCorner().x();
+                    y2 = m_triangles.at(iTrngl).rightDownCorner().y();
+                }
+                else
+                {
+                    x2 = m_triangles.at(iTrngl).leftDownCorner().x();
+                    y2 = m_triangles.at(iTrngl).leftDownCorner().y();
+                }
+            }
+            else
+            if ((tm >= 0.333333) && (tm < 0.666666))
+            {
+                if (m_resData->direction() == BaseDefines::dmClockwise)
+                {
+                    x1 = m_triangles.at(iTrngl).rightDownCorner().x();
+                    y1 = m_triangles.at(iTrngl).rightDownCorner().y();
+                    x2 = m_triangles.at(iTrngl).leftDownCorner().x();
+                    y2 = m_triangles.at(iTrngl).leftDownCorner().y();
+                }
+                else
+                {
+                    x1 = m_triangles.at(iTrngl).leftDownCorner().x();
+                    y1 = m_triangles.at(iTrngl).leftDownCorner().y();
+                    x2 = m_triangles.at(iTrngl).rightDownCorner().x();
+                    y2 = m_triangles.at(iTrngl).rightDownCorner().y();
+                }
+            }
+            else
+            {
+                if (m_resData->direction() == BaseDefines::dmClockwise)
+                {
+                    x1 = m_triangles.at(iTrngl).leftDownCorner().x();
+                    y1 = m_triangles.at(iTrngl).leftDownCorner().y();
+                }
+                else
+                {
+                    x1 = m_triangles.at(iTrngl).rightDownCorner().x();
+                    y1 = m_triangles.at(iTrngl).rightDownCorner().y();
+                }
+                x2 = m_triangles.at(iTrngl).topCorner().x();
+                y2 = m_triangles.at(iTrngl).topCorner().y();
+            }
+
+            //! Расчет расстояния
+            double a = y1 - y2;
+            double b = x2 - x1;
+            double c = x1 * y2 - x2 * y1;
+            dist = pow(a, 2) + pow(b, 2);
+            if (dist > 0)
+              dist = fabs(a * m_x[idx] + b * m_y[idx] + c ) / sqrt(dist);
+            retval = true;
+        }
+        else
+        {
+            if (idx >m_triangleSections.at(iTrngl).end)
+                ++iTrngl;
+        }
+    }
+    return retval;
+}
+
+void TriangleFactors::computeCorrectionsFactors()
+{
+    double timeDACTst {0}, amplDACTst {0};
+    double timeDACAnl {0}, amplDACAnl {0};
+    int extrCntDACTst {0}, extrCntDACAnl {0};
+    int dirDAC {0};
+    double extrDAC = {-1};
+    int extrIDAC {0};
+    int zoneLoTst {0}, zoneHiTst {0};
+    int zoneLoAnl {0}, zoneHiAnl {0};
+    double aOld {0}, da {0}, oDAC {0};
+    double dist {0};            ///< Расстояние от точки до линии
+
+    int iTst {0}, iAnl {0};
+
+    for (int i = 0; i < qMin(m_x.size(), m_y.size()); ++i)
+    {
+
+        //! Перевод координат в полярную систему
+        double x = m_x[i];
+        double y = m_y[i];
+        double r {0};
+        double a {0};
+        BaseUtils::convertDecartToPolar(x, y, r, a);
+
+        if (i > 0)
+        {
+            if (aOld > 3 * M_PI_2 && a < M_PI_2)
+              da = (2 * M_PI - aOld ) + a;
+            else
+            if (aOld < M_PI_2 && a > 3 * M_PI_2)
+              da = (2 * M_PI - a) + aOld;
+            else
+              da = a - aOld;
+
+            //! Экстремум по динамике опережения
+            if (((da < oDAC) && (dirDAC = BaseDefines::PositiveValue)) ||
+                ((da > oDAC) && (dirDAC = BaseDefines::NegativeValue)))
+            {
+                if ( extrDAC > -1 )
+                {
+                    double timeI = static_cast<double>(i - extrIDAC) / static_cast<double>(m_resData->freq());
+                    double amplI = fabs(da - extrDAC);
+
+                    //! Этап обучения
+                    if (i <= m_resData->trainingLength() * m_resData->freq())
+                    {
+                        timeDACTst += timeI;
+                        amplDACTst += amplI;
+
+                        //! Определение линии, по которой мы должны двигаться
+                        getDistPointToLine(i, iTst, dist);
+
+                        //! Расчет кол-ва экстремумов по зонам
+                        if (timeI >= BaseDefines::ZoneMotorLo && timeI <= BaseDefines::ZoneMotorHi)
+                        {
+                            ++zoneLoTst;
+                            m_zoneLoMidATst += amplI;
+                            m_zoneLoSumTTst += timeI;
+                            m_zoneLoErrTst += dist;
+                        }
+                        else
+                        if (timeI >= BaseDefines::ZoneKognLo && timeI <= BaseDefines::ZoneKognHi)
+                        {
+                            ++zoneHiTst;
+                            m_zoneHiMidATst += amplI;
+                            m_zoneHiSumTTst += timeI;
+                            m_zoneHiErrTst += dist;
+                        }
+
+                        ++extrCntDACTst;
+                    }
+                    //! Этап анализа
+                    else
+                    {
+                        //! Определение линии, по которой мы должны двигаться
+                        getDistPointToLine(i, iAnl, dist);
+
+                        timeDACAnl += timeI;
+                        amplDACAnl += amplI;
+                        //! Расчет кол-ва экстремумов по зонам
+                        if (timeI >= BaseDefines::ZoneMotorLo && timeI <= BaseDefines::ZoneMotorHi)
+                        {
+                            ++zoneLoAnl;
+                            m_zoneLoMidAAnl += amplI;
+                            m_zoneLoSumTAnl += timeI;
+                            m_zoneLoErrAnl += dist;
+                        }
+                        else
+                        if (timeI >= BaseDefines::ZoneKognLo && timeI <= BaseDefines::ZoneKognHi)
+                        {
+                          ++zoneHiAnl;
+                          m_zoneHiMidAAnl += amplI;
+                          m_zoneHiSumTAnl += timeI;
+                          m_zoneHiErrAnl += dist;
+                        }
+
+                        ++extrCntDACAnl;
+                    }
+                }
+
+                extrIDAC = i;
+                extrDAC = da;
+            }
+        }
+        dirDAC = BaseUtils::sign(da - oDAC);
+        oDAC = da;
+        aOld = a;
+    }
+
+    m_korrCntKognTst  = zoneHiTst;
+    m_korrCntMotorTst = zoneLoTst;
+    m_korrCntKognAnl  = zoneHiAnl;
+    m_korrCntMotorAnl = zoneLoAnl;
+
+    if (extrCntDACTst > 0)
+    {
+        m_semiWavLenDACTst = timeDACTst / extrCntDACTst;
+        m_semiWavAmplDACTst = amplDACTst / extrCntDACTst;
+
+        m_zoneLoPercTst = static_cast<double>(zoneLoTst) / static_cast<double>(extrCntDACTst) * 100;
+        m_zoneHiPercTst = static_cast<double>(zoneHiTst) / static_cast<double>(extrCntDACTst) * 100;
+    }
+
+    if (extrCntDACAnl > 0)
+    {
+        m_semiWavLenDACAnl = timeDACAnl / extrCntDACAnl;
+        m_semiWavAmplDACAnl = amplDACAnl / extrCntDACAnl;
+
+        m_zoneLoPercAnl = static_cast<double>(zoneLoAnl) / static_cast<double>(extrCntDACAnl) * 100;
+        m_zoneHiPercAnl = static_cast<double>(zoneHiAnl) / static_cast<double>(extrCntDACAnl) * 100;
+    }
+
+    if (zoneLoTst > 0)
+    {
+        m_zoneLoMidATst /= zoneLoTst;
+        m_zoneLoMidTTst /= zoneLoTst;
+        m_zoneLoErrTst /= zoneLoTst;
+    }
+    if (zoneHiTst > 0)
+    {
+        m_zoneHiMidATst /= zoneHiTst;
+        m_zoneHiMidTTst = m_zoneHiSumTTst / zoneHiTst;
+        m_zoneHiErrTst /= zoneHiTst;
+    }
+
+    if (zoneLoAnl > 0)
+    {
+        m_zoneLoMidAAnl /= zoneLoAnl;
+        m_zoneLoMidTAnl = m_zoneLoSumTAnl / zoneLoAnl;
+        m_zoneLoErrAnl /= zoneLoAnl;
+    }
+    if (zoneHiAnl > 0)
+    {
+        m_zoneHiMidAAnl /= zoneHiAnl;
+        m_zoneHiMidTAnl = m_zoneHiSumTAnl / zoneHiAnl;
+        m_zoneHiErrAnl /= zoneHiAnl;
+    }
+
+    m_zoneLoPwrTst = (m_zoneLoMidTTst - BaseDefines::ZoneMotorLo) * m_zoneLoMidATst * zoneLoTst;
+    m_zoneHiPwrTst = (m_zoneHiMidTTst - BaseDefines::ZoneKognLo) * m_zoneHiMidATst  * zoneHiTst;
+
+    m_zoneLoPwrAnl = (m_zoneLoMidTAnl - BaseDefines::ZoneMotorLo) * m_zoneLoMidAAnl * zoneLoAnl;
+    m_zoneHiPwrAnl = (m_zoneHiMidTAnl - BaseDefines::ZoneKognLo) * m_zoneHiMidAAnl  * zoneHiAnl;
+}
+
 void TriangleFactors::getTriangleData()
 {
     QByteArray baData;
@@ -774,3 +1025,4 @@ void TriangleFactors::addFactorPair(const QString &uidT, const double valueT, co
     addFactor(uidT, valueT);
     addFactor(uidA, valueA);
 }
+

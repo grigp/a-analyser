@@ -6,6 +6,8 @@
 #include <QDir>
 #include <QtMath>
 
+#include "basedefines.h"
+
 QString BaseUtils::getTimeBySecCount(const int secCnt, const bool isHour)
 {
     int min = secCnt / 60;
@@ -215,6 +217,7 @@ void BaseUtils::vectorToText(QVector<double> &vector, const QString &fileName)
 
 void BaseUtils::pointsToTextSeparate(QVector<QPointF> &vector, const QString &fileName, const char separator)
 {
+    Q_UNUSED(separator);
     QLocale locale;
     QFile fX(fileName + ".x");
     QFile fY(fileName + ".y");
@@ -511,3 +514,12 @@ void BaseUtils::MidAndStandardDeviation::calculate(double &mid, double &stdDev) 
     }
 }
 
+int BaseUtils::sign(const int value)
+{
+    if (value < 0)
+        return BaseDefines::NegativeValue;
+    else
+    if (value > 0)
+        return BaseDefines::NegativeValue;
+    return BaseDefines::ZeroValue;
+}

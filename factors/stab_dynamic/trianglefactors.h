@@ -40,6 +40,8 @@ static const QString MidErrRndXUid = "{1160F91F-7EF3-46E8-8016-D56677A2CD6D}";
 static const QString MidErrRndYUid = "{F489741C-0B82-48B0-8203-F8E4A600BEC3}";
 
 static const QString AngleUid = "{05ABA283-C887-4882-A6CB-CDFA9501C2C5}";
+
+static const QString Uid = "{}";
 }
 
 
@@ -250,6 +252,20 @@ private:
     void computeLatentMoving();
 
     /*!
+     * \brief Определение линии, по которой мы должны двигаться
+     * \param idx - индекс отсчета
+     * \param iTrngl - номер треугольника
+     * \param dist - рассчитанное расстояние
+     * \return true при удаче
+     */
+    bool getDistPointToLine ( const int idx, int &iTrngl, double &dist);
+
+    /*!
+     * \brief Расчет показателей коррекций
+     */
+    void computeCorrectionsFactors();
+
+    /*!
      * \brief Читает данные пробы
      */
     void getTriangleData();
@@ -289,6 +305,25 @@ private:
 
     ///< Время начала движения после появления сигнала
     double m_latentMoving {0};
+
+    ///< Средние длительность и амплитуда между локальными экстремумами
+    double m_semiWavLenDACTst {0}, m_semiWavAmplDACTst {0};
+    double m_semiWavLenDACAnl {0}, m_semiWavAmplDACAnl {0};
+    double m_korrCntKognTst {0}, m_korrCntMotorTst {0};
+    double m_korrCntKognAnl {0}, m_korrCntMotorAnl {0};
+    ///< Распределение локальных экстремумов по зонам
+    double m_zoneLoPercTst {0}, m_zoneHiPercTst {0};
+    double m_zoneLoErrTst, m_zoneHiErrTst {0};
+    double m_zoneLoMidATst {0}, m_zoneHiMidATst {0};
+    double m_zoneLoSumTTst {0}, m_zoneHiSumTTst {0};
+    double m_zoneLoMidTTst {0}, m_zoneHiMidTTst {0};
+    double m_zoneLoPwrTst {0}, m_zoneHiPwrTst {0};
+    double m_zoneLoPercAnl {0}, m_zoneHiPercAnl {0};
+    double m_zoneLoErrAnl {0}, m_zoneHiErrAnl {0};
+    double m_zoneLoMidAAnl {0}, m_zoneHiMidAAnl {0};
+    double m_zoneLoSumTAnl {0}, m_zoneHiSumTAnl {0};
+    double m_zoneLoMidTAnl {0}, m_zoneHiMidTAnl {0};
+    double m_zoneLoPwrAnl {0}, m_zoneHiPwrAnl {0};
 
 };
 
