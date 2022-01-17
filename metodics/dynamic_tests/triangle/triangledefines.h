@@ -38,6 +38,7 @@ struct Triangle
     double speed() const {return m_speed;}
     double mx() const {return m_mx;}
     double my() const {return m_my;}
+    double angle() const {return m_angle;}
 
     void calculate();
 
@@ -55,6 +56,7 @@ private:
     double m_speed {0};
     double m_mx {0};
     double m_my {0};
+    double m_angle {0};
 
 };
 

@@ -36,6 +36,7 @@ static QList<BaseDefines::FctTblPair> FactorsDiags = {
     , BaseDefines::FctTblPair(TriangleFactorsDefines::Training::SquareQUid, TriangleFactorsDefines::Analysis::SquareQUid)
     , BaseDefines::FctTblPair(TriangleFactorsDefines::Training::SpeedUid, TriangleFactorsDefines::Analysis::SpeedUid)
     , BaseDefines::FctTblPair(TriangleFactorsDefines::Training::SpeedQUid, TriangleFactorsDefines::Analysis::SpeedQUid)
+    , BaseDefines::FctTblPair(TriangleFactorsDefines::Training::AngleUid, TriangleFactorsDefines::Analysis::AngleUid)
 
     , BaseDefines::FctTblPair(TriangleFactorsDefines::Training::UpErrSysXUid, TriangleFactorsDefines::Analysis::UpErrSysXUid)
     , BaseDefines::FctTblPair(TriangleFactorsDefines::Training::UpErrSysYUid, TriangleFactorsDefines::Analysis::UpErrSysYUid)

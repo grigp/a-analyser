@@ -80,6 +80,9 @@ void TriangleFactors::registerFactors()
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(TriangleFactorsDefines::Training::MYUid, TriangleFactorsDefines::GroupUid,
                            tr("Среднее смещение треуг. по сагиттали (обучение)"), tr("TrYTest"), tr("мм"), 1, 3, FactorsDefines::nsDual, 12);
+    static_cast<AAnalyserApplication*>(QApplication::instance())->
+            registerFactor(TriangleFactorsDefines::Training::AngleUid, TriangleFactorsDefines::GroupUid,
+                           tr("Угол наклона треугольника (обучение)"), tr("AngleTest"), tr("град"), 2, 3, FactorsDefines::nsDual, 12);
 
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(TriangleFactorsDefines::Training::UpErrSysXUid, TriangleFactorsDefines::GroupUid,
@@ -156,6 +159,9 @@ void TriangleFactors::registerFactors()
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(TriangleFactorsDefines::Analysis::MYUid, TriangleFactorsDefines::GroupUid,
                            tr("Среднее смещение треуг. по сагиттали (анализ)"), tr("TrYTest"), tr("мм"), 1, 3, FactorsDefines::nsDual, 12);
+    static_cast<AAnalyserApplication*>(QApplication::instance())->
+            registerFactor(TriangleFactorsDefines::Analysis::AngleUid, TriangleFactorsDefines::GroupUid,
+                           tr("Угол наклона треугольника (анализ)"), tr("AngleAnal"), tr("град"), 2, 3, FactorsDefines::nsDual, 12);
 
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(TriangleFactorsDefines::Analysis::UpErrSysXUid, TriangleFactorsDefines::GroupUid,
@@ -328,8 +334,8 @@ void TriangleFactors::readSignal()
 
 //        BaseUtils::vectorToText(m_x, "c:/1/x.txt");
 //        BaseUtils::vectorToText(m_xf, "c:/1/x_f.txt");
-        BaseUtils::vectorToText(m_y, "c:/1/y.txt");
-        BaseUtils::vectorToText(m_yf, "c:/1/y_f.txt");
+//        BaseUtils::vectorToText(m_y, "c:/1/y.txt");
+//        BaseUtils::vectorToText(m_yf, "c:/1/y_f.txt");
     }
 }
 
@@ -722,6 +728,8 @@ void TriangleFactors::addFactors()
                   TriangleFactorsDefines::Analysis::MXUid, m_triangleAverageAnalysis.mx());
     addFactorPair(TriangleFactorsDefines::Training::MYUid, m_triangleAverageTraining.my(),
                   TriangleFactorsDefines::Analysis::MYUid, m_triangleAverageAnalysis.my());
+    addFactorPair(TriangleFactorsDefines::Training::AngleUid, m_triangleAverageTraining.angle(),
+                  TriangleFactorsDefines::Analysis::AngleUid, m_triangleAverageAnalysis.angle());
 
     addFactorPair(TriangleFactorsDefines::Training::UpErrSysXUid, m_upDevTest.systX,
                   TriangleFactorsDefines::Analysis::UpErrSysXUid, m_upDevAnal.systX);

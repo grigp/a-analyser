@@ -38,6 +38,8 @@ static const QString MidErrSysXUid = "{D688E596-D983-414C-9B35-01B9369B0B24}";
 static const QString MidErrSysYUid = "{BB898E6D-FA52-4457-8A22-AF1FDCAB5866}";
 static const QString MidErrRndXUid = "{1160F91F-7EF3-46E8-8016-D56677A2CD6D}";
 static const QString MidErrRndYUid = "{F489741C-0B82-48B0-8203-F8E4A600BEC3}";
+
+static const QString AngleUid = "{05ABA283-C887-4882-A6CB-CDFA9501C2C5}";
 }
 
 
@@ -67,6 +69,8 @@ static const QString MidErrSysXUid = "{08D3DB85-C776-4FE9-9B1E-70F87D69DBCF}";
 static const QString MidErrSysYUid = "{0F00ED53-BBD6-42C9-99A0-8614B0DEC559}";
 static const QString MidErrRndXUid = "{A5EA0128-73FB-4FFC-B098-E7C436C869F4}";
 static const QString MidErrRndYUid = "{E2F87C06-F61B-4AF0-8090-D41F99476741}";
+
+static const QString AngleUid = "{06C30D29-D4CA-4EEA-938B-E40E9461A428}";
 }
 
 
