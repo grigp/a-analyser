@@ -41,7 +41,24 @@ static const QString MidErrRndYUid = "{F489741C-0B82-48B0-8203-F8E4A600BEC3}";
 
 static const QString AngleUid = "{05ABA283-C887-4882-A6CB-CDFA9501C2C5}";
 
-static const QString Uid = "{}";
+static const QString SemiWavLenDACUid = "{86086F6F-0F9B-4331-9BE0-EA59FDDFEE6D}";  // Средняя длительность коррекций (обучение)
+static const QString SemiWavAmplDACUid = "{E8317E29-EE1A-4E49-BB72-309E2C98EE53}"; // Средняя амплитуда коррекций (обучение)
+static const QString KorrCntKognUid = "{A467AB9B-EE8A-4FD4-8820-5D1D3432DC0F}";    // Кол-во когнитивных коррекций (обучение)
+static const QString KorrCntMotorUid = "{9217F70A-AB7E-4009-9917-AB8B6C139247}";   // Кол-во моторных коррекций (обучение)
+
+static const QString MotorPercUid = "{CF64A08F-50AB-4B72-BEF6-2BA4D25B8FA9}";    // Процент моторных коррекций (обучение)
+static const QString KognPercUid = "{FFFD77D2-B48C-4FE4-BE8A-805037C7A14E}";    // Процент когнитивных коррекций (обучение)
+static const QString MotorErrUid = "{4045F765-820E-495D-9A3F-A8F94B6457AD}";     // Средняя ошибка моторных коррекций (обучение)
+static const QString KognErrUid = "{C303AEDE-4308-4210-B136-C5E10493B42E}";     // Средняя ошибка когнитивных коррекций (обучение)
+static const QString MotorMidAUid = "{019ACED9-4E76-4FE6-BBC5-EE97AC11EE1C}";    // Средняя амплитуда моторных коорекций (обучение)
+static const QString KognMidAUid = "{7016ACEB-1136-4D22-978C-AE7A1CD8C32B}";    // Средняя амплитуда когнитивных коорекций (обучение)
+static const QString MotorSumTUid = "{352B9EF5-A080-4DDF-A3B1-88524B024592}";    // Суммарная длительность моторных коррекций (обучение)
+static const QString KognSumTUid = "{6A818A23-7C04-4249-9FF0-8801CA79FCAB}";    // Суммарная длительность когнитивных коррекций (обучение)
+static const QString MotorMidTUid = "{DF955DEA-8F15-4747-816F-679FADBDDE6D}";    // Средняя длительность моторных коррекций (обучение)
+static const QString KognMidTUid = "{DD3EBFDD-61D5-4239-8419-9367B5D0503B}";    // Средняя длительность когнитивных коррекций (обучение)
+static const QString MotorPwrUid = "{EAAB7A8E-9186-47D9-B8AA-395ABDA08784}";     // Мощность моторных коррекций (обучение)
+static const QString KognPwrUid = "{489354B5-2362-4841-8DF1-B7B558D8AB35}";     // Мощность когнитивных коррекций (обучение)
+
 }
 
 
@@ -73,6 +90,24 @@ static const QString MidErrRndXUid = "{A5EA0128-73FB-4FFC-B098-E7C436C869F4}";
 static const QString MidErrRndYUid = "{E2F87C06-F61B-4AF0-8090-D41F99476741}";
 
 static const QString AngleUid = "{06C30D29-D4CA-4EEA-938B-E40E9461A428}";
+
+static const QString SemiWavLenDACUid = "{2944DDF6-8295-4479-9C36-2F190F9B2717}";  // Средняя длительность коррекций (анализ)
+static const QString SemiWavAmplDACUid = "{82EEE61E-BFE7-4AA4-B322-44C4D6748D68}"; // Средняя амплитуда коррекций (анализ)
+static const QString KorrCntKognUid = "{EA891CBD-4201-4592-AF57-B5012CEF53CB}";    // Кол-во когнитивных коррекций (анализ)
+static const QString KorrCntMotorUid = "{7781018F-50AF-482E-A6CD-2BCD3191FE9B}";   // Кол-во моторных коррекций (анализ)
+
+static const QString MotorPercUid = "{5A9432E6-AD53-4E23-9438-94D599DD904D}";    // Процент моторных коррекций (анализ)
+static const QString KognPercUid = "{1D5EE90E-399E-45F6-AAA9-6E33D0E909D1}";    // Процент когнитивных коррекций (анализ)
+static const QString MotorErrUid = "{AE63E6F5-A692-41E6-90E9-376FEAECAF88}";     // Средняя ошибка моторных коррекций (анализ)
+static const QString KognErrUid = "{1C38E0E0-3B56-490F-B0A1-B386A35171BC}";     // Средняя ошибка когнитивных коррекций (анализ)
+static const QString MotorMidAUid = "{3FF6B9CF-6C73-4D58-82FC-DF7ED0839AD1}";    // Средняя амплитуда моторных коорекций (анализ)
+static const QString KognMidAUid = "{6CAD1A2A-27DC-46DF-9A55-61B526A75391}";    // Средняя амплитуда когнитивных коорекций (анализ)
+static const QString MotorSumTUid = "{E466FA2B-37C0-45F8-AB56-273F87479135}";    // Суммарная длительность моторных коррекций (анализ)
+static const QString KognSumTUid = "{DD123FE2-F8CC-40BE-9306-C9903785B2B9}";    // Суммарная длительность когнитивных коррекций (анализ)
+static const QString MotorMidTUid = "{FBA86CFA-C57B-40B8-BF0F-59836A95EC03}";    // Средняя длительность моторных коррекций (анализ)
+static const QString KognMidTUid = "{5AF4603E-A2E9-4B34-A02A-8467C412A5F6}";    // Средняя длительность когнитивных коррекций (анализ)
+static const QString MotorPwrUid = "{A8F2C3EC-D932-4B72-8635-6B6356E845F7}";     // Мощность моторных коррекций (анализ)
+static const QString KognPwrUid = "{0C47DDF0-5B9B-4000-834C-93FAA3D5BFAE}";     // Мощность когнитивных коррекций (анализ)
 }
 
 
@@ -312,18 +347,18 @@ private:
     double m_korrCntKognTst {0}, m_korrCntMotorTst {0};
     double m_korrCntKognAnl {0}, m_korrCntMotorAnl {0};
     ///< Распределение локальных экстремумов по зонам
-    double m_zoneLoPercTst {0}, m_zoneHiPercTst {0};
-    double m_zoneLoErrTst, m_zoneHiErrTst {0};
-    double m_zoneLoMidATst {0}, m_zoneHiMidATst {0};
-    double m_zoneLoSumTTst {0}, m_zoneHiSumTTst {0};
-    double m_zoneLoMidTTst {0}, m_zoneHiMidTTst {0};
-    double m_zoneLoPwrTst {0}, m_zoneHiPwrTst {0};
-    double m_zoneLoPercAnl {0}, m_zoneHiPercAnl {0};
-    double m_zoneLoErrAnl {0}, m_zoneHiErrAnl {0};
-    double m_zoneLoMidAAnl {0}, m_zoneHiMidAAnl {0};
-    double m_zoneLoSumTAnl {0}, m_zoneHiSumTAnl {0};
-    double m_zoneLoMidTAnl {0}, m_zoneHiMidTAnl {0};
-    double m_zoneLoPwrAnl {0}, m_zoneHiPwrAnl {0};
+    double m_motorPercTst {0}, m_kognPercTst {0};
+    double m_motorErrTst, m_kognErrTst {0};
+    double m_motorMidATst {0}, m_kognMidATst {0};
+    double m_motorSumTTst {0}, m_kognSumTTst {0};
+    double m_motorMidTTst {0}, m_kognMidTTst {0};
+    double m_motorPwrTst {0}, m_kognPwrTst {0};
+    double m_motorPercAnl {0}, m_kognPercAnl {0};
+    double m_motorErrAnl {0}, m_kognErrAnl {0};
+    double m_motorMidAAnl {0}, m_kognMidAAnl {0};
+    double m_motorSumTAnl {0}, m_kognSumTAnl {0};
+    double m_motorMidTAnl {0}, m_kognMidTAnl {0};
+    double m_motorPwrAnl {0}, m_kognPwrAnl {0};
 
 };
 

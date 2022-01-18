@@ -134,6 +134,55 @@ void TriangleFactors::registerFactors()
             registerFactor(TriangleFactorsDefines::Training::MidErrRndYUid, TriangleFactorsDefines::GroupUid,
                            tr("Случайная ошибка центра треугольника Y (обучение)"), tr("MERYTest"), tr("мм"), 2, 3, FactorsDefines::nsDual, 12);
 
+    static_cast<AAnalyserApplication*>(QApplication::instance())->
+            registerFactor(TriangleFactorsDefines::Training::SemiWavLenDACUid, TriangleFactorsDefines::GroupUid,
+                           tr("Средняя длительность коррекций (обучение)"), tr("SWLDACTest"), tr("сек"), 2, 3, FactorsDefines::nsDual, 12);
+    static_cast<AAnalyserApplication*>(QApplication::instance())->
+            registerFactor(TriangleFactorsDefines::Training::SemiWavAmplDACUid, TriangleFactorsDefines::GroupUid,
+                           tr("Средняя амплитуда коррекций (обучение)"), tr("SWADACTest"), tr("мм"), 2, 3, FactorsDefines::nsDual, 12);
+    static_cast<AAnalyserApplication*>(QApplication::instance())->
+            registerFactor(TriangleFactorsDefines::Training::KorrCntKognUid, TriangleFactorsDefines::GroupUid,
+                           tr("Кол-во когнитивных коррекций (обучение)"), tr("KKCntTest"), tr(""), 0, 3, FactorsDefines::nsDual, 12);
+    static_cast<AAnalyserApplication*>(QApplication::instance())->
+            registerFactor(TriangleFactorsDefines::Training::KorrCntMotorUid, TriangleFactorsDefines::GroupUid,
+                           tr("Кол-во моторных коррекций (обучение)"), tr("KMCntTest"), tr(""), 0, 3, FactorsDefines::nsDual, 12);
+
+    static_cast<AAnalyserApplication*>(QApplication::instance())->
+            registerFactor(TriangleFactorsDefines::Training::MotorPercUid, TriangleFactorsDefines::GroupUid,
+                           tr("Процент моторных коррекций (обучение)"), tr("MPercTest"), tr("%"), 0, 3, FactorsDefines::nsDual, 12);
+    static_cast<AAnalyserApplication*>(QApplication::instance())->
+            registerFactor(TriangleFactorsDefines::Training::KognPercUid, TriangleFactorsDefines::GroupUid,
+                           tr("Процент когнитивных коррекций (обучение)"), tr("KPercTest"), tr("%"), 2, 3, FactorsDefines::nsDual, 12);
+    static_cast<AAnalyserApplication*>(QApplication::instance())->
+            registerFactor(TriangleFactorsDefines::Training::MotorErrUid, TriangleFactorsDefines::GroupUid,
+                           tr("Средняя ошибка моторных коррекций (обучение)"), tr("MErrTest"), tr("мм"), 3, 3, FactorsDefines::nsDual, 12);
+    static_cast<AAnalyserApplication*>(QApplication::instance())->
+            registerFactor(TriangleFactorsDefines::Training::KognErrUid, TriangleFactorsDefines::GroupUid,
+                           tr("Средняя ошибка когнитивных коррекций (обучение)"), tr("KErrTest"), tr("мм"), 3, 3, FactorsDefines::nsDual, 12);
+    static_cast<AAnalyserApplication*>(QApplication::instance())->
+            registerFactor(TriangleFactorsDefines::Training::MotorMidAUid, TriangleFactorsDefines::GroupUid,
+                           tr("Средняя амплитуда моторных коорекций (обучение)"), tr("MMidTest"), tr("мм"), 4, 3, FactorsDefines::nsDual, 12);
+    static_cast<AAnalyserApplication*>(QApplication::instance())->
+            registerFactor(TriangleFactorsDefines::Training::KognMidAUid, TriangleFactorsDefines::GroupUid,
+                           tr("Средняя амплитуда когнитивных коорекций (обучение)"), tr("KMidTest"), tr("мм"), 4, 3, FactorsDefines::nsDual, 12);
+    static_cast<AAnalyserApplication*>(QApplication::instance())->
+            registerFactor(TriangleFactorsDefines::Training::MotorSumTUid, TriangleFactorsDefines::GroupUid,
+                           tr("Суммарная длительность моторных коррекций (обучение)"), tr("MSumTest"), tr("сек"), 2, 3, FactorsDefines::nsDual, 12);
+    static_cast<AAnalyserApplication*>(QApplication::instance())->
+            registerFactor(TriangleFactorsDefines::Training::KognSumTUid, TriangleFactorsDefines::GroupUid,
+                           tr("Суммарная длительность когнитивных коррекций (обучение)"), tr("KSumTest"), tr("сек"), 2, 3, FactorsDefines::nsDual, 12);
+    static_cast<AAnalyserApplication*>(QApplication::instance())->
+            registerFactor(TriangleFactorsDefines::Training::MotorMidTUid, TriangleFactorsDefines::GroupUid,
+                           tr("Средняя длительность моторных коррекций (обучение)"), tr("MMidTest"), tr("сек"), 4, 3, FactorsDefines::nsDual, 12);
+    static_cast<AAnalyserApplication*>(QApplication::instance())->
+            registerFactor(TriangleFactorsDefines::Training::KognMidTUid, TriangleFactorsDefines::GroupUid,
+                           tr("Средняя длительность когнитивных коррекций (обучение)"), tr("KMidTest"), tr("сек"), 4, 3, FactorsDefines::nsDual, 12);
+    static_cast<AAnalyserApplication*>(QApplication::instance())->
+            registerFactor(TriangleFactorsDefines::Training::MotorPwrUid, TriangleFactorsDefines::GroupUid,
+                           tr("Мощность моторных коррекций (обучение)"), tr("MPowTest"), tr("мм/сек"), 4, 3, FactorsDefines::nsDual, 12);
+    static_cast<AAnalyserApplication*>(QApplication::instance())->
+          registerFactor(TriangleFactorsDefines::Training::KognPwrUid, TriangleFactorsDefines::GroupUid,
+                         tr("Мощность когнитивных коррекций (обучение)"), tr("KPowTest"), tr("мм/сек"), 4, 3, FactorsDefines::nsDual, 12);
 
 
     static_cast<AAnalyserApplication*>(QApplication::instance())->
@@ -212,6 +261,56 @@ void TriangleFactors::registerFactors()
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(TriangleFactorsDefines::Analysis::MidErrRndYUid, TriangleFactorsDefines::GroupUid,
                            tr("Случайная ошибка центра треугольника Y (анализ)"), tr("MERYAnal"), tr("мм"), 2, 3, FactorsDefines::nsDual, 12);
+
+    static_cast<AAnalyserApplication*>(QApplication::instance())->
+            registerFactor(TriangleFactorsDefines::Analysis::SemiWavLenDACUid, TriangleFactorsDefines::GroupUid,
+                           tr("Средняя длительность коррекций (анализ)"), tr("SWLDACAnal"), tr("сек"), 2, 3, FactorsDefines::nsDual, 12);
+    static_cast<AAnalyserApplication*>(QApplication::instance())->
+            registerFactor(TriangleFactorsDefines::Analysis::SemiWavAmplDACUid, TriangleFactorsDefines::GroupUid,
+                           tr("Средняя амплитуда коррекций (анализ)"), tr("SWADACAnal"), tr("мм"), 2, 3, FactorsDefines::nsDual, 12);
+    static_cast<AAnalyserApplication*>(QApplication::instance())->
+            registerFactor(TriangleFactorsDefines::Analysis::KorrCntKognUid, TriangleFactorsDefines::GroupUid,
+                           tr("Кол-во когнитивных коррекций (анализ)"), tr("KKCntAnal"), tr(""), 0, 3, FactorsDefines::nsDual, 12);
+    static_cast<AAnalyserApplication*>(QApplication::instance())->
+            registerFactor(TriangleFactorsDefines::Analysis::KorrCntMotorUid, TriangleFactorsDefines::GroupUid,
+                           tr("Кол-во моторных коррекций (анализ)"), tr("KMCntAnal"), tr(""), 0, 3, FactorsDefines::nsDual, 12);
+
+    static_cast<AAnalyserApplication*>(QApplication::instance())->
+            registerFactor(TriangleFactorsDefines::Analysis::MotorPercUid, TriangleFactorsDefines::GroupUid,
+                           tr("Процент моторных коррекций (анализ)"), tr("MPercAnal"), tr("%"), 0, 3, FactorsDefines::nsDual, 12);
+    static_cast<AAnalyserApplication*>(QApplication::instance())->
+            registerFactor(TriangleFactorsDefines::Analysis::KognPercUid, TriangleFactorsDefines::GroupUid,
+                           tr("Процент когнитивных коррекций (анализ)"), tr("KPercAnal"), tr("%"), 2, 3, FactorsDefines::nsDual, 12);
+    static_cast<AAnalyserApplication*>(QApplication::instance())->
+            registerFactor(TriangleFactorsDefines::Analysis::MotorErrUid, TriangleFactorsDefines::GroupUid,
+                           tr("Средняя ошибка моторных коррекций (анализ)"), tr("MErrAnal"), tr("мм"), 3, 3, FactorsDefines::nsDual, 12);
+    static_cast<AAnalyserApplication*>(QApplication::instance())->
+            registerFactor(TriangleFactorsDefines::Analysis::KognErrUid, TriangleFactorsDefines::GroupUid,
+                           tr("Средняя ошибка когнитивных коррекций (анализ)"), tr("KErrAnal"), tr("мм"), 3, 3, FactorsDefines::nsDual, 12);
+    static_cast<AAnalyserApplication*>(QApplication::instance())->
+            registerFactor(TriangleFactorsDefines::Analysis::MotorMidAUid, TriangleFactorsDefines::GroupUid,
+                           tr("Средняя амплитуда моторных коорекций (анализ)"), tr("MMidAnal"), tr("мм"), 4, 3, FactorsDefines::nsDual, 12);
+    static_cast<AAnalyserApplication*>(QApplication::instance())->
+            registerFactor(TriangleFactorsDefines::Analysis::KognMidAUid, TriangleFactorsDefines::GroupUid,
+                           tr("Средняя амплитуда когнитивных коорекций (анализ)"), tr("KMidAnal"), tr("мм"), 4, 3, FactorsDefines::nsDual, 12);
+    static_cast<AAnalyserApplication*>(QApplication::instance())->
+            registerFactor(TriangleFactorsDefines::Analysis::MotorSumTUid, TriangleFactorsDefines::GroupUid,
+                           tr("Суммарная длительность моторных коррекций (анализ)"), tr("MSumAnal"), tr("сек"), 2, 3, FactorsDefines::nsDual, 12);
+    static_cast<AAnalyserApplication*>(QApplication::instance())->
+            registerFactor(TriangleFactorsDefines::Analysis::KognSumTUid, TriangleFactorsDefines::GroupUid,
+                           tr("Суммарная длительность когнитивных коррекций (анализ)"), tr("KSumAnal"), tr("сек"), 2, 3, FactorsDefines::nsDual, 12);
+    static_cast<AAnalyserApplication*>(QApplication::instance())->
+            registerFactor(TriangleFactorsDefines::Analysis::MotorMidTUid, TriangleFactorsDefines::GroupUid,
+                           tr("Средняя длительность моторных коррекций (анализ)"), tr("MMidAnal"), tr("сек"), 4, 3, FactorsDefines::nsDual, 12);
+    static_cast<AAnalyserApplication*>(QApplication::instance())->
+            registerFactor(TriangleFactorsDefines::Analysis::KognMidTUid, TriangleFactorsDefines::GroupUid,
+                           tr("Средняя длительность когнитивных коррекций (анализ)"), tr("KMidAnal"), tr("сек"), 4, 3, FactorsDefines::nsDual, 12);
+    static_cast<AAnalyserApplication*>(QApplication::instance())->
+            registerFactor(TriangleFactorsDefines::Analysis::MotorPwrUid, TriangleFactorsDefines::GroupUid,
+                           tr("Мощность моторных коррекций (анализ)"), tr("MPowAnal"), tr("мм/сек"), 4, 3, FactorsDefines::nsDual, 12);
+    static_cast<AAnalyserApplication*>(QApplication::instance())->
+          registerFactor(TriangleFactorsDefines::Analysis::KognPwrUid, TriangleFactorsDefines::GroupUid,
+                         tr("Мощность когнитивных коррекций (анализ)"), tr("KPowAnal"), tr("мм/сек"), 4, 3, FactorsDefines::nsDual, 12);
 
 
     static_cast<AAnalyserApplication*>(QApplication::instance())->
@@ -824,8 +923,8 @@ void TriangleFactors::computeCorrectionsFactors()
               da = a - aOld;
 
             //! Экстремум по динамике опережения
-            if (((da < oDAC) && (dirDAC = BaseDefines::PositiveValue)) ||
-                ((da > oDAC) && (dirDAC = BaseDefines::NegativeValue)))
+            if (((da < oDAC) && (dirDAC == BaseDefines::PositiveValue)) ||
+                ((da > oDAC) && (dirDAC == BaseDefines::NegativeValue)))
             {
                 if ( extrDAC > -1 )
                 {
@@ -833,7 +932,7 @@ void TriangleFactors::computeCorrectionsFactors()
                     double amplI = fabs(da - extrDAC);
 
                     //! Этап обучения
-                    if (i <= m_resData->trainingLength() * m_resData->freq())
+                    if (i <= m_resData->trainingLength())
                     {
                         timeDACTst += timeI;
                         amplDACTst += amplI;
@@ -845,17 +944,17 @@ void TriangleFactors::computeCorrectionsFactors()
                         if (timeI >= BaseDefines::ZoneMotorLo && timeI <= BaseDefines::ZoneMotorHi)
                         {
                             ++zoneLoTst;
-                            m_zoneLoMidATst += amplI;
-                            m_zoneLoSumTTst += timeI;
-                            m_zoneLoErrTst += dist;
+                            m_motorMidATst += amplI;
+                            m_motorSumTTst += timeI;
+                            m_motorErrTst += dist;
                         }
                         else
                         if (timeI >= BaseDefines::ZoneKognLo && timeI <= BaseDefines::ZoneKognHi)
                         {
                             ++zoneHiTst;
-                            m_zoneHiMidATst += amplI;
-                            m_zoneHiSumTTst += timeI;
-                            m_zoneHiErrTst += dist;
+                            m_kognMidATst += amplI;
+                            m_kognSumTTst += timeI;
+                            m_kognErrTst += dist;
                         }
 
                         ++extrCntDACTst;
@@ -872,17 +971,17 @@ void TriangleFactors::computeCorrectionsFactors()
                         if (timeI >= BaseDefines::ZoneMotorLo && timeI <= BaseDefines::ZoneMotorHi)
                         {
                             ++zoneLoAnl;
-                            m_zoneLoMidAAnl += amplI;
-                            m_zoneLoSumTAnl += timeI;
-                            m_zoneLoErrAnl += dist;
+                            m_motorMidAAnl += amplI;
+                            m_motorSumTAnl += timeI;
+                            m_motorErrAnl += dist;
                         }
                         else
                         if (timeI >= BaseDefines::ZoneKognLo && timeI <= BaseDefines::ZoneKognHi)
                         {
                           ++zoneHiAnl;
-                          m_zoneHiMidAAnl += amplI;
-                          m_zoneHiSumTAnl += timeI;
-                          m_zoneHiErrAnl += dist;
+                          m_kognMidAAnl += amplI;
+                          m_kognSumTAnl += timeI;
+                          m_kognErrAnl += dist;
                         }
 
                         ++extrCntDACAnl;
@@ -908,8 +1007,8 @@ void TriangleFactors::computeCorrectionsFactors()
         m_semiWavLenDACTst = timeDACTst / extrCntDACTst;
         m_semiWavAmplDACTst = amplDACTst / extrCntDACTst;
 
-        m_zoneLoPercTst = static_cast<double>(zoneLoTst) / static_cast<double>(extrCntDACTst) * 100;
-        m_zoneHiPercTst = static_cast<double>(zoneHiTst) / static_cast<double>(extrCntDACTst) * 100;
+        m_motorPercTst = static_cast<double>(zoneLoTst) / static_cast<double>(extrCntDACTst) * 100;
+        m_kognPercTst = static_cast<double>(zoneHiTst) / static_cast<double>(extrCntDACTst) * 100;
     }
 
     if (extrCntDACAnl > 0)
@@ -917,41 +1016,41 @@ void TriangleFactors::computeCorrectionsFactors()
         m_semiWavLenDACAnl = timeDACAnl / extrCntDACAnl;
         m_semiWavAmplDACAnl = amplDACAnl / extrCntDACAnl;
 
-        m_zoneLoPercAnl = static_cast<double>(zoneLoAnl) / static_cast<double>(extrCntDACAnl) * 100;
-        m_zoneHiPercAnl = static_cast<double>(zoneHiAnl) / static_cast<double>(extrCntDACAnl) * 100;
+        m_motorPercAnl = static_cast<double>(zoneLoAnl) / static_cast<double>(extrCntDACAnl) * 100;
+        m_kognPercAnl = static_cast<double>(zoneHiAnl) / static_cast<double>(extrCntDACAnl) * 100;
     }
 
     if (zoneLoTst > 0)
     {
-        m_zoneLoMidATst /= zoneLoTst;
-        m_zoneLoMidTTst /= zoneLoTst;
-        m_zoneLoErrTst /= zoneLoTst;
+        m_motorMidATst /= zoneLoTst;
+        m_motorMidTTst = m_motorSumTTst / zoneLoTst;
+        m_motorErrTst /= zoneLoTst;
     }
     if (zoneHiTst > 0)
     {
-        m_zoneHiMidATst /= zoneHiTst;
-        m_zoneHiMidTTst = m_zoneHiSumTTst / zoneHiTst;
-        m_zoneHiErrTst /= zoneHiTst;
+        m_kognMidATst /= zoneHiTst;
+        m_kognMidTTst = m_kognSumTTst / zoneHiTst;
+        m_kognErrTst /= zoneHiTst;
     }
 
     if (zoneLoAnl > 0)
     {
-        m_zoneLoMidAAnl /= zoneLoAnl;
-        m_zoneLoMidTAnl = m_zoneLoSumTAnl / zoneLoAnl;
-        m_zoneLoErrAnl /= zoneLoAnl;
+        m_motorMidAAnl /= zoneLoAnl;
+        m_motorMidTAnl = m_motorSumTAnl / zoneLoAnl;
+        m_motorErrAnl /= zoneLoAnl;
     }
     if (zoneHiAnl > 0)
     {
-        m_zoneHiMidAAnl /= zoneHiAnl;
-        m_zoneHiMidTAnl = m_zoneHiSumTAnl / zoneHiAnl;
-        m_zoneHiErrAnl /= zoneHiAnl;
+        m_kognMidAAnl /= zoneHiAnl;
+        m_kognMidTAnl = m_kognSumTAnl / zoneHiAnl;
+        m_kognErrAnl /= zoneHiAnl;
     }
 
-    m_zoneLoPwrTst = (m_zoneLoMidTTst - BaseDefines::ZoneMotorLo) * m_zoneLoMidATst * zoneLoTst;
-    m_zoneHiPwrTst = (m_zoneHiMidTTst - BaseDefines::ZoneKognLo) * m_zoneHiMidATst  * zoneHiTst;
+    m_motorPwrTst = (m_motorMidTTst - BaseDefines::ZoneMotorLo) * m_motorMidATst * zoneLoTst;
+    m_kognPwrTst = (m_kognMidTTst - BaseDefines::ZoneKognLo) * m_kognMidATst  * zoneHiTst;
 
-    m_zoneLoPwrAnl = (m_zoneLoMidTAnl - BaseDefines::ZoneMotorLo) * m_zoneLoMidAAnl * zoneLoAnl;
-    m_zoneHiPwrAnl = (m_zoneHiMidTAnl - BaseDefines::ZoneKognLo) * m_zoneHiMidAAnl  * zoneHiAnl;
+    m_motorPwrAnl = (m_motorMidTAnl - BaseDefines::ZoneMotorLo) * m_motorMidAAnl * zoneLoAnl;
+    m_kognPwrAnl = (m_kognMidTAnl - BaseDefines::ZoneKognLo) * m_kognMidAAnl  * zoneHiAnl;
 }
 
 void TriangleFactors::getTriangleData()
@@ -1015,6 +1114,39 @@ void TriangleFactors::addFactors()
     addFactorPair(TriangleFactorsDefines::Training::MidErrRndYUid, m_midDevTest.randY,
                   TriangleFactorsDefines::Analysis::MidErrRndYUid, m_midDevAnal.randY);
 
+    addFactorPair(TriangleFactorsDefines::Training::SemiWavLenDACUid, m_semiWavLenDACTst,
+                  TriangleFactorsDefines::Analysis::SemiWavLenDACUid, m_semiWavLenDACAnl);
+    addFactorPair(TriangleFactorsDefines::Training::SemiWavAmplDACUid, m_semiWavAmplDACTst,
+                  TriangleFactorsDefines::Analysis::SemiWavAmplDACUid, m_semiWavAmplDACAnl);
+    addFactorPair(TriangleFactorsDefines::Training::KorrCntKognUid, m_korrCntKognTst,
+                  TriangleFactorsDefines::Analysis::KorrCntKognUid, m_korrCntKognAnl);
+    addFactorPair(TriangleFactorsDefines::Training::KorrCntMotorUid, m_korrCntMotorTst,
+                  TriangleFactorsDefines::Analysis::KorrCntMotorUid, m_korrCntMotorAnl);
+
+    addFactorPair(TriangleFactorsDefines::Training::MotorPercUid, m_motorPercTst,
+                  TriangleFactorsDefines::Analysis::MotorPercUid, m_motorPercAnl);
+    addFactorPair(TriangleFactorsDefines::Training::KognPercUid, m_kognPercTst,
+                  TriangleFactorsDefines::Analysis::KognPercUid, m_kognPercAnl);
+    addFactorPair(TriangleFactorsDefines::Training::MotorErrUid, m_motorErrTst,
+                  TriangleFactorsDefines::Analysis::MotorErrUid, m_motorErrAnl);
+    addFactorPair(TriangleFactorsDefines::Training::KognErrUid, m_kognErrTst,
+                  TriangleFactorsDefines::Analysis::KognErrUid, m_kognErrAnl);
+    addFactorPair(TriangleFactorsDefines::Training::MotorMidAUid, m_motorMidATst,
+                  TriangleFactorsDefines::Analysis::MotorMidAUid, m_motorMidAAnl);
+    addFactorPair(TriangleFactorsDefines::Training::KognMidAUid, m_kognMidATst,
+                  TriangleFactorsDefines::Analysis::KognMidAUid, m_kognMidAAnl);
+    addFactorPair(TriangleFactorsDefines::Training::MotorSumTUid, m_motorSumTTst,
+                  TriangleFactorsDefines::Analysis::MotorSumTUid, m_motorSumTAnl);
+    addFactorPair(TriangleFactorsDefines::Training::KognSumTUid, m_kognSumTTst,
+                  TriangleFactorsDefines::Analysis::KognSumTUid, m_kognSumTAnl);
+    addFactorPair(TriangleFactorsDefines::Training::MotorMidTUid, m_motorMidTTst,
+                  TriangleFactorsDefines::Analysis::MotorMidTUid, m_motorMidTAnl);
+    addFactorPair(TriangleFactorsDefines::Training::KognMidTUid, m_kognMidTTst,
+                  TriangleFactorsDefines::Analysis::KognMidTUid, m_kognMidTAnl);
+    addFactorPair(TriangleFactorsDefines::Training::MotorPwrUid, m_motorPwrTst,
+                  TriangleFactorsDefines::Analysis::MotorPwrUid, m_motorPwrAnl);
+    addFactorPair(TriangleFactorsDefines::Training::KognPwrUid, m_kognPwrTst,
+                  TriangleFactorsDefines::Analysis::KognPwrUid, m_kognPwrAnl);
 
     addFactor(TriangleFactorsDefines::LatentMovingUid, m_latentMoving);
 }
