@@ -40,6 +40,10 @@ struct Triangle
     double my() const {return m_my;}
     double angle() const {return m_angle;}
 
+    double sideTL() const {return m_sideTL;}
+    double sideTR() const {return m_sideTR;}
+    double sideLR() const {return m_sideLR;}
+
     void calculate();
 
     void setTimeFactors(const double time, const double speed);
@@ -58,6 +62,9 @@ private:
     double m_my {0};
     double m_angle {0};
 
+    double m_sideTL {0};
+    double m_sideTR {0};
+    double m_sideLR {0};
 };
 
 }

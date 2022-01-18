@@ -12,6 +12,10 @@ void TriangleDefines::Triangle::calculate()
     double medY = (m_leftDownCorner.y() + m_rightDownCorner.y()) / 2;
     double r = sqrt(pow(medX - m_topCorner.x(), 2) + pow(medY - m_topCorner.y(), 2));
     m_angle = asin((m_topCorner.x() - medX) / r) / M_PI * 180;
+
+    m_sideTL = sqrt(pow(m_topCorner.x() - m_leftDownCorner.x(), 2) + pow(m_topCorner.y() - m_leftDownCorner.y(), 2));
+    m_sideTR = sqrt(pow(m_topCorner.x() - m_rightDownCorner.x(), 2) + pow(m_topCorner.y() - m_rightDownCorner.y(), 2));
+    m_sideLR = sqrt(pow(m_leftDownCorner.x() - m_rightDownCorner.x(), 2) + pow(m_leftDownCorner.y() - m_rightDownCorner.y(), 2));
 }
 
 void TriangleDefines::Triangle::setTimeFactors(const double time, const double speed)

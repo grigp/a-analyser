@@ -7,7 +7,8 @@ HEADERS += \
     $$PWD/octaedronfactors.h \
     $$PWD/boxerdodgingmultifactor.h \
     $$PWD/stepdeviationfactors.h \
-    $$PWD/trianglefactors.h
+    $$PWD/trianglefactors.h \
+    $$PWD/triangleconslutionfactors.h
 
 SOURCES += \
     $$PWD/crossfactors.cpp \
@@ -16,7 +17,8 @@ SOURCES += \
     $$PWD/octaedronfactors.cpp \
     $$PWD/boxerdodgingmultifactor.cpp \
     $$PWD/stepdeviationfactors.cpp \
-    $$PWD/trianglefactors.cpp
+    $$PWD/trianglefactors.cpp \
+    $$PWD/triangleconslutionfactors.cpp
 
 FORMS += \
 
