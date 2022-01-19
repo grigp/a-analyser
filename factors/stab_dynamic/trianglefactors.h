@@ -348,7 +348,7 @@ private:
     double m_korrCntKognAnl {0}, m_korrCntMotorAnl {0};
     ///< Распределение локальных экстремумов по зонам
     double m_motorPercTst {0}, m_kognPercTst {0};
-    double m_motorErrTst, m_kognErrTst {0};
+    double m_motorErrTst {0}, m_kognErrTst {0};
     double m_motorMidATst {0}, m_kognMidATst {0};
     double m_motorSumTTst {0}, m_kognSumTTst {0};
     double m_motorMidTTst {0}, m_kognMidTTst {0};

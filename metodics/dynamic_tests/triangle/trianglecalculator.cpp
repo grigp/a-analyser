@@ -3,6 +3,7 @@
 #include <QUuid>
 
 #include "trianglefactors.h"
+#include "triangleconslutionfactors.h"
 #include "datadefines.h"
 #include "channelsdefines.h"
 #include "dataprovider.h"
@@ -30,6 +31,7 @@ void TriangleCalculator::calculate()
                     DataProvider::channelExists(pi.uid, ChannelsDefines::chanTriangleResult))
                 {
                     m_factors = new TriangleFactors(testUid(), pi.uid);
+                    m_factorsConsl = new TriangleConslutionFactors(testUid(), pi.uid, m_factors);
 
 //                    for (int i = 0; i < m_factors->size(); ++i)
 //                    {
@@ -172,4 +174,18 @@ bool TriangleCalculator::getFactorOfStages(const int idx, QString &uidT, QString
     if (m_factors)
         return m_factors->getFactorOfStages(idx, uidT, uidA);
     return false;
+}
+
+double TriangleCalculator::factorConslutionValue(const QString &uid) const
+{
+    if (m_factorsConsl)
+        return m_factorsConsl->factorValue(uid);
+    return 0;
+}
+
+QString TriangleCalculator::factorConslutionValueFormatted(const QString &uid) const
+{
+    if (m_factorsConsl)
+        return m_factorsConsl->factorValueFormatted(uid);
+    return "";
 }

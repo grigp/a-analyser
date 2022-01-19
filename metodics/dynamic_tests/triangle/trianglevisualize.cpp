@@ -14,6 +14,8 @@
 #include "stabilogram.h"
 #include "areaskgdefines.h"
 #include "trianglefactors.h"
+#include "triangleconslutionfactors.h"
+#include "baseutils.h"
 
 namespace
 {
@@ -54,11 +56,36 @@ static QList<BaseDefines::FctTblPair> FactorsDiags = {
     , BaseDefines::FctTblPair(TriangleFactorsDefines::Training::MidErrSysYUid, TriangleFactorsDefines::Analysis::MidErrSysYUid)
     , BaseDefines::FctTblPair(TriangleFactorsDefines::Training::MidErrRndXUid, TriangleFactorsDefines::Analysis::MidErrRndXUid)
     , BaseDefines::FctTblPair(TriangleFactorsDefines::Training::MidErrRndYUid, TriangleFactorsDefines::Analysis::MidErrRndYUid)
-
-
-
 };
 
+
+///< Список показателей, выводимых в таблицу эффективности
+///< Соответствие показателя для этапов обучения и анализа
+static QList<BaseDefines::FctTblPair> FactorsEffectiveness = {
+      BaseDefines::FctTblPair(TriangleConslutionFactorsDefines::KorrKognTstCntUid, TriangleConslutionFactorsDefines::KorrKognAnlCntUid)
+    , BaseDefines::FctTblPair(TriangleConslutionFactorsDefines::KorrMotorTstCntUid, TriangleConslutionFactorsDefines::KorrMotorAnlCntUid)
+    , BaseDefines::FctTblPair(TriangleConslutionFactorsDefines::ErrCntKognTstUid, TriangleConslutionFactorsDefines::ErrCntKognAnlUid)
+    , BaseDefines::FctTblPair(TriangleConslutionFactorsDefines::ErrCntMotorTstUid, TriangleConslutionFactorsDefines::ErrCntMotorAnlUid)
+};
+
+QString sAccRepeat {""};
+QString sAccForm {""};
+QString sAccMidX {""};
+QString sAccMidY {""};
+QString sMidSquareErrTst {""};
+QString sMidTimeErrAnl {""};
+QString sMidSquareErrAnl {""};
+QString sMidPosErrAnl {""};
+QString sMidAmplErrAnl {""};
+
+QString sCorrectionPredominaceTrain {""};
+QString sCorrectionResumeTrain {""};
+QColor sCorrectionResumeColorTrain {Qt::black};
+DualStateDiagram * wgtCorrectionDiagTrain {nullptr};
+QString sCorrectionPredominaceAnal {""};
+QString sCorrectionResumeAnal {""};
+QColor sCorrectionResumeColorAnal {Qt::black};
+DualStateDiagram * wgtCorrectionDiagAnal {nullptr};
 
 }
 
@@ -101,6 +128,7 @@ void TriangleVisualize::setTest(const QString &testUid)
         showMainDiagrams();
         showMainResultFactors();
         showDiagsResultFactors();
+        showConslution();
     }
 }
 
@@ -517,6 +545,98 @@ void TriangleVisualize::showDiagsResultFactors()
     auto fi = static_cast<AAnalyserApplication*>(QApplication::instance())->getFactorInfo(TriangleFactorsDefines::LatentMovingUid);
     QString s = fi.name() + ", " + fi.measure() + "    " + m_calculator->factorValueFormatted(TriangleFactorsDefines::LatentMovingUid);
     ui->lblLatentMoving->setText(s);
+}
+
+void TriangleVisualize::showConslution()
+{
+    auto writeFactor = [&](QLabel* label, const QString uid, QString& value)
+    {
+        auto fi = static_cast<AAnalyserApplication*>(QApplication::instance())->getFactorInfo(uid);
+        auto sv = m_calculator->factorConslutionValueFormatted(uid);
+        value = fi.name() + " : " + sv + " " + fi.measure();
+        label->setText(value);
+    };
+
+    writeFactor(ui->lblAccRepeat, TriangleConslutionFactorsDefines::AccRepeatUid, sAccRepeat);
+    writeFactor(ui->lblAccForm, TriangleConslutionFactorsDefines::AccFormUid, sAccForm);
+    writeFactor(ui->lblAccMidX, TriangleConslutionFactorsDefines::AccMidXUid, sAccMidX);
+    writeFactor(ui->lblAccMidY, TriangleConslutionFactorsDefines::AccMidYUid, sAccMidY);
+    writeFactor(ui->lblMidSquareErrTst, TriangleConslutionFactorsDefines::MidSquareErrTstUid, sMidSquareErrTst);
+    writeFactor(ui->lblMidTimeErrAnl, TriangleConslutionFactorsDefines::MidTimeErrAnlUid, sMidTimeErrAnl);
+    writeFactor(ui->lblMidSquareErrAnl, TriangleConslutionFactorsDefines::MidSquareErrAnlUid, sMidSquareErrAnl);
+    writeFactor(ui->lblMidPosErrAnl, TriangleConslutionFactorsDefines::MidPosErrAnlUid, sMidPosErrAnl);
+    writeFactor(ui->lblMidAmplErrAnl, TriangleConslutionFactorsDefines::MidAmplErrAnlUid, sMidAmplErrAnl);
+
+    showFactorsEffectiveness();
+    showConslutionStrategy();
+}
+
+void TriangleVisualize::showFactorsEffectiveness()
+{
+    auto *model = new QStandardItemModel(ui->tvDiagTable);
+
+    foreach (auto uids, FactorsEffectiveness)
+    {
+        auto uidFctT = uids.first;
+        auto uidFctA = uids.second;
+
+        auto fi = static_cast<AAnalyserApplication*>(QApplication::instance())->getFactorInfo(uidFctT);
+        QString n = fi.name();
+        auto fn = n.left(n.lastIndexOf('(') - 1);
+        if (fi.measure() != "")
+            fn = fn + ", " + fi.measure();
+        auto *itemName = new QStandardItem(fn);
+        itemName->setEditable(false);
+        auto *itemT = new QStandardItem(m_calculator->factorConslutionValueFormatted(uidFctT));
+        itemT->setEditable(false);
+        auto *itemA = new QStandardItem(m_calculator->factorConslutionValueFormatted(uidFctA));
+        itemA->setEditable(false);
+        model->appendRow(QList<QStandardItem*>() << itemName << itemT << itemA);
+    }
+
+    model->setHorizontalHeaderLabels(QStringList() << tr("Показатель") << tr("Этап обучения") << tr("Этап анализа"));
+    ui->tvEffectiveness->setModel(model);
+    ui->tvEffectiveness->header()->resizeSections(QHeaderView::ResizeToContents);
+    ui->tvEffectiveness->header()->resizeSection(0, 430);
+}
+
+void TriangleVisualize::showConslutionStrategy()
+{
+    auto showStrategy = [&](const QString uid,
+                            QString& value, QString& resumeTxt, QColor& resumeColor,
+                            DualStateDiagram* diag,
+                            QLabel* lblValue,
+                            QLabel* lblResume)
+    {
+        auto fi = static_cast<AAnalyserApplication*>(QApplication::instance())->getFactorInfo(uid);
+        double v = m_calculator->factorConslutionValue(uid);
+        value = fi.name() + " : " + QString::number(v, 'f', fi.format()) + " " + tr("%");
+        lblValue->setText(value);
+
+        QString resume = "";
+        QString colorResume = "";
+        BaseUtils::setCorrectionsDominanceResume(v, resume, colorResume);
+        resumeTxt = resume;
+        lblResume->setText(resume);
+        lblResume->setStyleSheet(colorResume);
+        QPalette pal = ui->lblCorrectionResumeTrain->palette();
+        resumeColor = pal.color(QPalette::WindowText);
+
+        diag->setValue(v);
+        diag->setDescriptionLeft(tr("Быстрые коррекции"));
+        diag->setDescriptionRight(tr("Медленные коррекции"));
+        wgtCorrectionDiagTrain = ui->wgtCorrectionDiagTrain;
+    };
+
+    showStrategy(TriangleConslutionFactorsDefines::KorrDominTstUid,
+                 sCorrectionPredominaceTrain, sCorrectionResumeTrain, sCorrectionResumeColorTrain,
+                 ui->wgtCorrectionDiagTrain, ui->lblCorrectionPredominaceTrain, ui->lblCorrectionResumeTrain);
+    wgtCorrectionDiagTrain = ui->wgtCorrectionDiagTrain;
+
+    showStrategy(TriangleConslutionFactorsDefines::KorrDominAnlUid,
+                 sCorrectionPredominaceAnal, sCorrectionResumeAnal, sCorrectionResumeColorAnal,
+                 ui->wgtCorrectionDiagAnal, ui->lblCorrectionPredominaceAnal, ui->lblCorrectionResumeAnal);
+    wgtCorrectionDiagAnal = ui->wgtCorrectionDiagAnal;
 }
 
 void TriangleVisualize::saveSplitterPositionDiag()

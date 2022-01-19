@@ -98,6 +98,21 @@ private:
      */
     void showDiagsResultFactors();
 
+    /*!
+     * \brief Прорисовывает закладку "Заключение"
+     */
+    void showConslution();
+
+    /*!
+     * \brief Вывод таблицы эффективности
+     */
+    void showFactorsEffectiveness();
+
+    /*!
+     * \brief Показывает заключение по стратегии
+     */
+    void showConslutionStrategy();
+
     void saveSplitterPositionDiag();
     void restoreSplitterPositionDiag();
 

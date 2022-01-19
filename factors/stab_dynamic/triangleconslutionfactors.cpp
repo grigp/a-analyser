@@ -1,5 +1,7 @@
 #include "triangleconslutionfactors.h"
 
+#include <QDebug>
+
 #include "aanalyserapplication.h"
 #include "channelsdefines.h"
 #include "dataprovider.h"
@@ -215,12 +217,12 @@ void TriangleConslutionFactors::compFctCorrections()
     auto powerKogn = m_factors->factorValue(TriangleFactorsDefines::Training::KognPwrUid);
     auto powerMotor = m_factors->factorValue(TriangleFactorsDefines::Training::MotorPwrUid);
     if (powerKogn + powerMotor > 0)
-        m_korrDominTst = static_cast<int>((powerKogn - powerMotor) / (powerKogn + powerMotor) * 100);
+        m_korrDominTst = static_cast<double>(powerKogn - powerMotor) / static_cast<double>(powerKogn + powerMotor) * 100;
 
     powerKogn = m_factors->factorValue(TriangleFactorsDefines::Analysis::KognPwrUid);
     powerMotor = m_factors->factorValue(TriangleFactorsDefines::Analysis::MotorPwrUid);
     if (powerKogn + powerMotor > 0)
-        m_korrDominAnl = static_cast<int>((powerKogn - powerMotor) / (powerKogn + powerMotor) * 100);
+        m_korrDominAnl = static_cast<double>(powerKogn - powerMotor) / static_cast<double>(powerKogn + powerMotor) * 100;
 }
 
 void TriangleConslutionFactors::compFctMidErrors()

@@ -120,10 +120,22 @@ public:
      */
     bool getFactorOfStages(const int idx, QString &uidT, QString &uidA);
 
+    /*!
+     * \brief Возвращает значение показателя заключения по uid показателя
+     * \param uid - uid показателя
+     */
+    double factorConslutionValue(const QString &uid) const;
+
+    /*!
+     * \brief Возвращает форматированное значение показателя заключения в строковом виде по uid показателя
+     * \param uid - uid показателя
+     */
+    QString factorConslutionValueFormatted(const QString &uid) const;
 
 
 private:
     TriangleFactors* m_factors {nullptr};
+    TriangleConslutionFactors* m_factorsConsl {nullptr};
 
 };
 
