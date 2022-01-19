@@ -8,6 +8,7 @@
 #include "triangledefines.h"
 
 class TriangleFactors;
+class TriangleConslutionFactors;
 
 class TriangleCalculator : public TestCalculator
 {

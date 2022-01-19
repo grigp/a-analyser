@@ -102,6 +102,11 @@ private:
      */
     void compFctChangeFactors();
 
+    /*!
+     * \brief Расчет различных показателей
+     */
+    void compFctOther();
+
     void addFactors();
 
     double m_accRepeat {0};

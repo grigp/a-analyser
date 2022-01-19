@@ -38,6 +38,7 @@ void TriangleConslutionFactors::calculate()
     compFctCorrections();
     compFctMidErrors();
     compFctChangeFactors();
+    compFctOther();
 
     addFactors();
 }
@@ -258,7 +259,43 @@ void TriangleConslutionFactors::compFctMidErrors()
 
 void TriangleConslutionFactors::compFctChangeFactors()
 {
+    //! Изменение времени прохождения треугольника на этапе анализа
+    auto aTest = m_factors->factorValue(TriangleFactorsDefines::Training::TimeUid);
+    auto aAnal = m_factors->factorValue(TriangleFactorsDefines::Analysis::TimeUid);
+    if (aTest > 0)
+        m_midTimeErrAnl = aAnal / aTest;
 
+    //! Изменение площади треугольника на этапе анализа
+    aTest = m_factors->factorValue(TriangleFactorsDefines::Training::SquareUid);
+    aAnal = m_factors->factorValue(TriangleFactorsDefines::Analysis::SquareUid);
+    if (aTest > 0)
+        m_midSquareErrAnl = (aAnal - aTest) / aTest * 100;
+
+    //! Изменение позиции треугольника
+    m_midPosErrAnl = ((fabs(m_factors->triangleAnalysis().topCorner().x() - m_factors->triangleTraining().topCorner().x()) +
+                        fabs(m_factors->triangleAnalysis().topCorner().y() - m_factors->triangleTraining().topCorner().y()) / 2 +
+                       (fabs(m_factors->triangleAnalysis().leftDownCorner().x() - m_factors->triangleTraining().leftDownCorner().x())) +
+                        fabs(m_factors->triangleAnalysis().leftDownCorner().y() - m_factors->triangleTraining().leftDownCorner().y())) / 2 +
+                       (fabs(m_factors->triangleAnalysis().rightDownCorner().x() - m_factors->triangleTraining().rightDownCorner().x()) +
+                        fabs(m_factors->triangleAnalysis().rightDownCorner().y() - m_factors->triangleTraining().rightDownCorner().y())) / 2) / 3;
+
+    //! Изменение амплитуды треугольников на этапе анализа
+    m_midAmplErrAnl = (fabs(m_factors->triangleAnalysis().sideTL() - m_factors->triangleTraining().sideTL()) +
+                       fabs(m_factors->triangleAnalysis().sideTR() - m_factors->triangleTraining().sideTR()) +
+                       fabs(m_factors->triangleAnalysis().sideLR() - m_factors->triangleTraining().sideLR())) / 3;
+
+}
+
+void TriangleConslutionFactors::compFctOther()
+{
+    //! Время начала движения после появления сигнала
+    m_latentMovingTst = m_factors->factorValue(TriangleFactorsDefines::LatentMovingUid);
+
+    //! Ошибки
+    m_errCntMotorTst = m_factors->factorValue(TriangleFactorsDefines::Training::MotorErrUid);
+    m_errCntKognTst = m_factors->factorValue(TriangleFactorsDefines::Training::KognErrUid);
+    m_errCntMotorAnl = m_factors->factorValue(TriangleFactorsDefines::Analysis::MotorErrUid);
+    m_errCntKognAnl = m_factors->factorValue(TriangleFactorsDefines::Analysis::KognErrUid);
 }
 
 void TriangleConslutionFactors::addFactors()
