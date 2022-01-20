@@ -68,6 +68,14 @@ static QList<BaseDefines::FctTblPair> FactorsEffectiveness = {
     , BaseDefines::FctTblPair(TriangleConslutionFactorsDefines::ErrCntMotorTstUid, TriangleConslutionFactorsDefines::ErrCntMotorAnlUid)
 };
 
+AreaSKG *wgtSKGTraining {nullptr};
+AreaSKG *wgtSKGAnalysis {nullptr};
+
+QStandardItemModel *mdlDiagTable {nullptr};
+QStandardItemModel *mdlEffectiveness {nullptr};
+QStandardItemModel *mdlMainTable {nullptr};
+
+QString sLatentMoving {""};
 QString sAccRepeat {""};
 QString sAccForm {""};
 QString sAccMidX {""};
@@ -129,6 +137,9 @@ void TriangleVisualize::setTest(const QString &testUid)
         showMainResultFactors();
         showDiagsResultFactors();
         showConslution();
+
+        wgtSKGTraining = ui->wgtSKGTraining;
+        wgtSKGAnalysis = ui->wgtSKGAnalysis;
     }
 }
 
@@ -141,28 +152,178 @@ void TriangleVisualize::print(QPrinter *printer, const QString &testUid)
     //! Заголовок
     QRect rectHeader(paper.x() + paper.width() / 20, paper.y() + paper.height() / 30, paper.width() / 20 * 18, paper.height() / 30 * 3);
     ReportElements::drawHeader(painter, testUid, rectHeader);
-
-    if (printer->orientation() == QPrinter::Portrait)
-    {
-//        //! Диаграмма. Копируется из виджета
-//        ReportElements::drawWidget(painter, wgtDiag,
-//                                   static_cast<int>(paper.width() * 0.85), static_cast<int>(paper.height() * 0.85),
-//                                   paper.x() + paper.width()/10, static_cast<int>(paper.y() + paper.height()/4));
-    }
-    else
-    if (printer->orientation() == QPrinter::Landscape)
-    {
-//        //! Диаграмма. Копируется из виджета
-//        ReportElements::drawWidget(painter, wgtDiag,
-//                                   static_cast<int>(paper.width() * 0.75), static_cast<int>(paper.height() * 0.75),
-//                                   static_cast<int>(paper.x() + paper.width()/5.5), paper.y() + paper.height()/6);
-    }
-
     //! Нижний колонтитул
     QRect rectFooter(paper.x() + paper.width() / 20,
                      paper.y() + paper.height() - static_cast<int>(paper.height() / 30 * 1.5),
                      paper.width() / 20 * 18,
                      static_cast<int>(paper.height() / 30 * 1.5));
+
+    //! Показатели для заключения
+    auto drawConslutionFactors = [&](const int start, const int offset)
+    {
+        int pos = start;
+        painter->setFont(QFont("Sans", 14, QFont::Bold, false));
+        painter->drawText(paper.x() + paper.width() / 10, paper.y() + paper.height() / 90 * pos, tr("Результативность"));
+        painter->setFont(QFont("Sans", 12, QFont::Bold, false));
+        pos += offset;
+
+
+        painter->drawText(paper.x() + paper.width() / 10, paper.y() + paper.height() / 90 * pos, sAccRepeat);
+        pos += offset;
+        painter->drawText(paper.x() + paper.width() / 10, paper.y() + paper.height() / 90 * pos, sAccForm);
+        pos += offset;
+        painter->drawText(paper.x() + paper.width() / 10, paper.y() + paper.height() / 90 * pos, sAccMidX);
+        pos += offset;
+        painter->drawText(paper.x() + paper.width() / 10, paper.y() + paper.height() / 90 * pos, sAccMidY);
+        pos += offset;
+        painter->drawText(paper.x() + paper.width() / 10, paper.y() + paper.height() / 90 * pos, sMidSquareErrTst);
+        pos += offset;
+        painter->drawText(paper.x() + paper.width() / 10, paper.y() + paper.height() / 90 * pos, sMidTimeErrAnl);
+        pos += offset;
+        painter->drawText(paper.x() + paper.width() / 10, paper.y() + paper.height() / 90 * pos, sMidSquareErrAnl);
+        pos += offset;
+        painter->drawText(paper.x() + paper.width() / 10, paper.y() + paper.height() / 90 * pos, sMidPosErrAnl);
+        pos += offset;
+        painter->drawText(paper.x() + paper.width() / 10, paper.y() + paper.height() / 90 * pos, sMidAmplErrAnl);
+        pos += offset;
+
+        painter->setFont(QFont("Sans", 14, QFont::Bold, false));
+        pos += (offset + 1);
+        painter->drawText(paper.x() + paper.width() / 10, paper.y() + paper.height() / 90 * pos, tr("Эффективность"));
+        painter->setFont(QFont("Sans", 12, QFont::Bold, false));
+        pos += offset;
+        QRect rectDT(paper.x() + paper.width() / 10,
+                     paper.y() + paper.height() / 90 * pos,
+                     paper.width() / 10 * 9,
+                     paper.height() / 90 * (offset + 5));
+        ReportElements::drawTable(painter, mdlEffectiveness, rectDT,
+                                  QList<int>() << 3 << 2 << 2, ReportElements::Table::tvsStretched,
+                                  8, -1, QFont::Bold);
+        pos += offset + 5;
+
+        painter->setFont(QFont("Sans", 14, QFont::Bold, false));
+        pos += (offset + 1);
+        painter->drawText(paper.x() + paper.width() / 10, paper.y() + paper.height() / 90 * pos, tr("Стратегия"));
+        painter->setFont(QFont("Sans", 12, QFont::Bold, false));
+        pos += offset;
+        painter->drawText(paper.x() + paper.width() / 10, paper.y() + paper.height() / 90 * pos, tr("Этап обучения"));
+        pos += offset;
+        painter->drawText(paper.x() + paper.width() / 10, paper.y() + paper.height() / 90 * pos, sCorrectionPredominaceTrain);
+        painter->setPen(sCorrectionResumeColorTrain);
+        pos += offset;
+        painter->drawText(paper.x() + paper.width() / 10, paper.y() + paper.height() / 90 * pos, sCorrectionResumeTrain);
+        pos += offset;
+        //! Диаграмма преобладания коррекций.
+        ReportElements::drawWidget(painter, wgtCorrectionDiagTrain,
+                                   static_cast<int>(paper.width() * 0.8), static_cast<int>(paper.height() * 0.8),
+                                   paper.x() + paper.width()/10, paper.y() + paper.height() / 90 * pos);
+        pos += offset + 4;
+
+        pos += offset;
+        painter->drawText(paper.x() + paper.width() / 10, paper.y() + paper.height() / 90 * pos, tr("Этап анализа"));
+        pos += offset;
+        painter->drawText(paper.x() + paper.width() / 10, paper.y() + paper.height() / 90 * pos, sCorrectionPredominaceAnal);
+        painter->setPen(sCorrectionResumeColorAnal);
+        pos += offset;
+        painter->drawText(paper.x() + paper.width() / 10, paper.y() + paper.height() / 90 * pos, sCorrectionResumeAnal);
+        pos += offset;
+        //! Диаграмма преобладания коррекций.
+        ReportElements::drawWidget(painter, wgtCorrectionDiagAnal,
+                                   static_cast<int>(paper.width() * 0.8), static_cast<int>(paper.height() * 0.8),
+                                   paper.x() + paper.width()/10, paper.y() + paper.height() / 90 * pos);
+    };
+
+    if (printer->orientation() == QPrinter::Portrait)
+    {
+        //! Диаграмма. Копируется из виджета
+        ReportElements::drawWidget(painter, wgtSKGTraining,
+                                   static_cast<int>(paper.width() * 0.45), static_cast<int>(paper.height() * 0.45),
+                                   paper.x() + paper.width()/20, static_cast<int>(paper.y() + paper.height()/6));
+        ReportElements::drawWidget(painter, wgtSKGAnalysis,
+                                   static_cast<int>(paper.width() * 0.45), static_cast<int>(paper.height() * 0.45),
+                                   paper.x() + paper.width()/20 * 10, static_cast<int>(paper.y() + paper.height()/6));
+        //! Таблица показателей. Берется модель таблицы из визуализатора
+        QRect rectDT(paper.x() + paper.width() / 10,
+                        paper.y() + paper.height() / 14 * 7,
+                        paper.width() / 10 * 9,
+                        paper.height() / 3);
+        ReportElements::drawTable(painter, mdlDiagTable, rectDT,
+                                  QList<int>() << 3 << 2 << 2, ReportElements::Table::tvsStretched,
+                                  8, -1, QFont::Bold);
+
+        painter->setFont(QFont("Sans", 10, 0, false));
+        painter->drawText(paper.x() + paper.width() / 10, paper.y() + paper.height() / 14 * 12, sLatentMoving);
+
+        //! Нижний колонтитул
+        ReportElements::drawFooter(painter, testUid, rectFooter);
+
+        //!------------------- Страница 2
+        printer->newPage();
+
+        drawConslutionFactors(7, 2);
+
+        //! Нижний колонтитул
+        ReportElements::drawFooter(painter, testUid, rectFooter);
+
+        //!------------------- Страница 3
+        printer->newPage();
+
+        //! Таблица показателей. Берется модель таблицы из визуализатора
+        QRect rectMT(paper.x() + paper.width() / 10,
+                        paper.y() + paper.height() / 10,
+                        paper.width() / 10 * 9,
+                        paper.height() / 10 * 8);
+        ReportElements::drawTable(painter, mdlMainTable, rectMT,
+                                  QList<int>() << 3 << 2 << 2, ReportElements::Table::tvsStretched,
+                                  8, -1, QFont::Bold);
+    }
+    else
+    if (printer->orientation() == QPrinter::Landscape)
+    {
+        //! Диаграмма. Копируется из виджета
+        ReportElements::drawWidget(painter, wgtSKGTraining,
+                                   static_cast<int>(paper.width() * 0.4), static_cast<int>(paper.height() * 0.4),
+                                   static_cast<int>(paper.x() + paper.width()/10 * 1.5), paper.y() + paper.height()/6);
+        ReportElements::drawWidget(painter, wgtSKGAnalysis,
+                                   static_cast<int>(paper.width() * 0.4), static_cast<int>(paper.height() * 0.4),
+                                   static_cast<int>(paper.x() + paper.width()/10 * 6), paper.y() + paper.height()/6);
+        //! Таблица показателей. Берется модель таблицы из визуализатора
+        QRect rectDT(paper.x() + paper.width() / 10,
+                        paper.y() + paper.height() / 40 * 24,
+                        paper.width() / 10 * 9,
+                        paper.height() / 3);
+        ReportElements::drawTable(painter, mdlDiagTable, rectDT,
+                                  QList<int>() << 3 << 2 << 2, ReportElements::Table::tvsStretched,
+                                  8, -1, QFont::Bold);
+
+        painter->setFont(QFont("Sans", 10, 0, false));
+        painter->drawText(paper.x() + paper.width() / 10, paper.y() + paper.height() / 56 * 53, sLatentMoving);
+
+        //! Нижний колонтитул
+        ReportElements::drawFooter(painter, testUid, rectFooter);
+
+        //!------------------- Страница 2
+        printer->newPage();
+
+        drawConslutionFactors(4, 2);
+
+        //! Нижний колонтитул
+        ReportElements::drawFooter(painter, testUid, rectFooter);
+
+        //!------------------- Страница 3
+        printer->newPage();
+
+        //! Таблица показателей. Берется модель таблицы из визуализатора
+        QRect rectMT(paper.x() + paper.width() / 10,
+                        paper.y() + paper.height() / 10,
+                        paper.width() / 10 * 9,
+                        paper.height() / 10 * 8);
+        ReportElements::drawTable(painter, mdlMainTable, rectMT,
+                                  QList<int>() << 3 << 2 << 2, ReportElements::Table::tvsStretched,
+                                  8, -1, QFont::Bold);
+    }
+
+    //! Нижний колонтитул
     ReportElements::drawFooter(painter, testUid, rectFooter);
 
     painter->end();
@@ -403,6 +564,8 @@ void TriangleVisualize::showAllFactors()
     ui->tvFactors->setModel(model);
     ui->tvFactors->header()->resizeSections(QHeaderView::ResizeToContents);
     ui->tvFactors->header()->resizeSection(0, 430);
+
+    mdlMainTable = static_cast<QStandardItemModel*>(ui->tvFactors->model());
 }
 
 void TriangleVisualize::showMainDiagrams()
@@ -543,8 +706,10 @@ void TriangleVisualize::showDiagsResultFactors()
     ui->tvDiagTable->header()->resizeSection(0, 430);
 
     auto fi = static_cast<AAnalyserApplication*>(QApplication::instance())->getFactorInfo(TriangleFactorsDefines::LatentMovingUid);
-    QString s = fi.name() + ", " + fi.measure() + "    " + m_calculator->factorValueFormatted(TriangleFactorsDefines::LatentMovingUid);
-    ui->lblLatentMoving->setText(s);
+    sLatentMoving = fi.name() + ", " + fi.measure() + "    " + m_calculator->factorValueFormatted(TriangleFactorsDefines::LatentMovingUid);
+    ui->lblLatentMoving->setText(sLatentMoving);
+
+    mdlDiagTable = static_cast<QStandardItemModel*>(ui->tvDiagTable->model());
 }
 
 void TriangleVisualize::showConslution()
@@ -573,7 +738,7 @@ void TriangleVisualize::showConslution()
 
 void TriangleVisualize::showFactorsEffectiveness()
 {
-    auto *model = new QStandardItemModel(ui->tvDiagTable);
+    auto *model = new QStandardItemModel(ui->tvEffectiveness);
 
     foreach (auto uids, FactorsEffectiveness)
     {
@@ -598,6 +763,8 @@ void TriangleVisualize::showFactorsEffectiveness()
     ui->tvEffectiveness->setModel(model);
     ui->tvEffectiveness->header()->resizeSections(QHeaderView::ResizeToContents);
     ui->tvEffectiveness->header()->resizeSection(0, 430);
+
+    mdlEffectiveness = static_cast<QStandardItemModel*>(ui->tvEffectiveness->model());
 }
 
 void TriangleVisualize::showConslutionStrategy()
