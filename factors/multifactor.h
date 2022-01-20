@@ -55,6 +55,13 @@ public:
      */
     QString factorValueFormatted(const QString &uid) const;
 
+    /*!
+     * \brief Проверяет наличие показателя в списке
+     * \param uid - uid показателя
+     * \return true, если показатель с таким uid имеется
+     */
+    bool factorExists(const QString &uid) const;
+
 signals:
 
 public slots:

@@ -8,6 +8,32 @@
 #include "channelsdefines.h"
 #include "dataprovider.h"
 
+namespace
+{
+  QList<QString> PrimaryFactors =
+  {
+        QString(TriangleFactorsDefines::Training::MXUid)
+      , QString(TriangleFactorsDefines::Training::MYUid)
+      , QString(TriangleFactorsDefines::Training::TimeUid)
+      , QString(TriangleFactorsDefines::Training::SquareUid)
+      , QString(TriangleFactorsDefines::Training::SpeedUid)
+      , QString(TriangleFactorsDefines::Training::MotorPwrUid)
+      , QString(TriangleFactorsDefines::Training::KognPwrUid)
+      , QString(TriangleFactorsDefines::Analysis::MXUid)
+      , QString(TriangleFactorsDefines::Analysis::MYUid)
+      , QString(TriangleFactorsDefines::Analysis::TimeUid)
+      , QString(TriangleFactorsDefines::Analysis::SquareUid)
+      , QString(TriangleFactorsDefines::Analysis::SpeedUid)
+      , QString(TriangleFactorsDefines::Analysis::MotorPwrUid)
+      , QString(TriangleFactorsDefines::Analysis::KognPwrUid)
+      , QString(TriangleConslutionFactorsDefines::KorrDominTstUid)
+      , QString(TriangleConslutionFactorsDefines::KorrDominAnlUid)
+      , QString(TriangleFactorsDefines::LatentMovingUid)
+  };
+
+}
+
+
 TriangleCalculator::TriangleCalculator(const QString &testUid, QObject *parent)
     : TestCalculator (testUid, parent)
 {
@@ -33,12 +59,14 @@ void TriangleCalculator::calculate()
                     m_factors = new TriangleFactors(testUid(), pi.uid);
                     m_factorsConsl = new TriangleConslutionFactors(testUid(), pi.uid, m_factors);
 
-//                    for (int i = 0; i < m_factors->size(); ++i)
-//                    {
-//                        addPrimaryFactor(testUid(), m_factors->factorUid(i),
-//                                         m_factors->factorValue(m_factors->factorUid(i)),
-//                                         0, ChannelsDefines::chanStab, pi.name);
-//                    }
+                    foreach (auto uid, PrimaryFactors)
+                    {
+                        if (m_factors->factorExists(uid))
+                            addPrimaryFactor(testUid(), uid, m_factors->factorValue(uid), 0, ChannelsDefines::chanStab, pi.name);
+                        else
+                        if (m_factorsConsl->factorExists(uid))
+                            addPrimaryFactor(testUid(), uid, m_factorsConsl->factorValue(uid), 0, ChannelsDefines::chanStab, pi.name);
+                    }
                 }
             }
         }
