@@ -118,6 +118,10 @@ void StabTestExecute::start()
         if (QApplication::desktop()->screenCount() > 1)
             showPatientWindow(m_params.at(m_probe).stimulCode);
         ui->cbScale->setCurrentIndex(m_params.at(m_probe).scale);
+        QTimer::singleShot(100, [&]  //! Пока процесс создания не завершен, масштаб отображается некорректно, если просто вызывать
+        {
+            scaleChange(ui->cbScale->currentIndex());
+        });
 
         ui->wgtAdvChannels->assignDriver(m_driver, m_trd);
         //! Стабилограмма будет записана всегда
@@ -264,7 +268,8 @@ void StabTestExecute::recording()
         if (QApplication::desktop()->screenCount() == 1)
         {
             showPatientWindow(m_params.at(m_probe).stimulCode);
-            scaleChange(m_params.at(m_probe).scale);
+            ui->cbScale->setCurrentIndex(m_params.at(m_probe).scale);
+            scaleChange(ui->cbScale->currentIndex());
         }
         if (m_patientWin)
             m_patientWin->run();
