@@ -1,5 +1,6 @@
 #include "stepdeviationfactors.h"
 
+#include "baseutils.h"
 #include "dataprovider.h"
 #include "channelsdefines.h"
 #include "metodicsfactory.h"
@@ -47,7 +48,7 @@ void StepDeviationFactors::calculate()
     {
         //! Направление
         auto d = ti.params["direction"].toString();
-        m_direction = BaseUtils::DirectionValueIndex.value(d);
+        m_direction = BaseDefines::DirectionValueIndex.value(d);
 
         readSignal();
         assignSections();
@@ -175,16 +176,16 @@ void StepDeviationFactors::readSignal()
         for (int i = 0; i < stab.size(); ++i)
         {
             double v = 0;
-            if (m_direction == BaseUtils::dirUp)
+            if (m_direction == BaseDefines::dirUp)
                 v = stab.value(1, i);
             else
-            if (m_direction == BaseUtils::dirDown)
+            if (m_direction == BaseDefines::dirDown)
                 v = -stab.value(1, i);
             else
-            if (m_direction == BaseUtils::dirRight)
+            if (m_direction == BaseDefines::dirRight)
                 v = stab.value(0, i);
             else
-            if (m_direction == BaseUtils::dirLeft)
+            if (m_direction == BaseDefines::dirLeft)
                 v = -stab.value(0, i);
 
             m_signal << v;
@@ -236,12 +237,12 @@ void StepDeviationFactors::assignSections()
     {
         if ((m_signalFlt[i] - m_signalFlt[i-1] > 0) && (dir == -1))
         {
-            BaseUtils::Extremum extr(i, BaseUtils::Minimum);
+            BaseDefines::Extremum extr(i, BaseDefines::Minimum);
             m_extrList << extr;
         }
         if ((m_signalFlt[i] - m_signalFlt[i-1] < 0) && (dir == 1))
         {
-            BaseUtils::Extremum extr(i, BaseUtils::Maximum);
+            BaseDefines::Extremum extr(i, BaseDefines::Maximum);
             m_extrList << extr;
         }
 
@@ -261,7 +262,7 @@ void StepDeviationFactors::assignSections()
             n = m_extrList.at(i+1).pos;
         int begin = static_cast<int>(c - (c - p) * 0.25);
         int end = static_cast<int>(c + (n - c) * 0.25);
-        BaseUtils::Section sec(begin, end);
+        BaseDefines::Section sec(begin, end);
         m_Extr << sec;
     }
 
@@ -271,7 +272,7 @@ void StepDeviationFactors::assignSections()
     {
         int begin = m_Extr.at(i).end;
         int end = m_Extr.at(i+1).begin;
-        BaseUtils::Section sec(begin, end);
+        BaseDefines::Section sec(begin, end);
         m_Trans << sec;
     }
 }
@@ -301,7 +302,7 @@ void StepDeviationFactors::computeFactorsMain()
 
     for (int i = 0; i < m_extrList.size(); ++i)
     {
-        if (m_extrList.at(i).kind == BaseUtils::Maximum)
+        if (m_extrList.at(i).kind == BaseDefines::Maximum)
         {
             //! Кол-во шагов
             ++m_stepCount;
@@ -334,7 +335,7 @@ void StepDeviationFactors::computeFactorsMain()
 
             m_timeIncreaseAwrg += (m_extrList.at(i).pos - lastExtrPos);
         }
-        if (m_extrList.at(i).kind == BaseUtils::Minimum)
+        if (m_extrList.at(i).kind == BaseDefines::Minimum)
         {
             m_timeReturnAwrg += (m_extrList.at(i).pos - lastExtrPos);
             ++retCnt;

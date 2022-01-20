@@ -140,6 +140,13 @@ QString DynamicDiagram::itemName(const int idx) const
     return m_items.at(idx)->name();
 }
 
+void DynamicDiagram::setDiap(const double min, const double max)
+{
+    m_minimum = min;
+    m_maximum = max;
+    update();
+}
+
 void DynamicDiagram::clear()
 {
     m_items.clear();
@@ -166,7 +173,13 @@ void DynamicDiagram::paintEvent(QPaintEvent *event)
 
     double min = 0;
     double max = 0;
-    computeDiap(min, max);
+    if (fabs(m_minimum) < INT_MAX / 2 && fabs(m_maximum) < INT_MAX / 2)
+    {
+        min = m_minimum;
+        max = m_maximum;
+    }
+    else
+        computeDiap(min, max);
     m_sizeH = (geometry().width() - 3 - 2 * m_axisSpaceLeft) / (m_items.size() + 1);
     double prop = 0;
     if (max > min)

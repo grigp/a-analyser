@@ -26,7 +26,13 @@ public:
      * \brief Задает сигнал для отображения в виджете при использовании в визуале
      * \param signal
      */
-    void setSignal(SignalAccess *signal);
+    void setSignal(SignalAccess *signal, const int begin = -1, const int end = -1);
+
+    /*!
+     * \brief Задает границы участка сигнала
+     * \param begin, end - границы участка
+     */
+    void setSection(const int begin, const int end);
 
     /*!
      * \brief Устанавливает признак центровки сигнала
@@ -52,6 +58,12 @@ public:
     void setColorEllipse(const QColor &color) {m_colorEllipse = color;}
     QColor colorEllipse() const {return m_colorEllipse;}
 
+    /*!
+     * \brief Устанавливает видимость СКГ
+     * \param isVisible - будет ли видна
+     */
+    void setVisible(const bool isVisible);
+
 private:
     void updateItem();
 
@@ -61,6 +73,9 @@ private:
     int m_height {0};
     double m_offsX {0}, m_offsY {0};
     bool m_isZeroing {false};
+    int m_begin = -1;
+    int m_end = -1;
+    bool m_visible {true};
 
     SignalAccess *m_signal {nullptr};
 

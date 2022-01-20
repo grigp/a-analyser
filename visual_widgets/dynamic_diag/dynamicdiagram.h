@@ -96,6 +96,13 @@ public:
     double value(const int idx) const;
     QString itemName(const int idx) const;
 
+    /*!
+     * \brief Устанавливает границы диапазона отображения
+     * \param min - минимум
+     * \param max - максимум
+     */
+    void setDiap(const double min, const double max);
+
     void clear();
 
     /*!
@@ -157,6 +164,9 @@ private:
 
     double m_sizeH {0};
     int m_selectItem {-1};   ///< Выбранный элемент
+
+    double m_minimum {INT_MAX};
+    double m_maximum {INT_MAX};
 
     QList<DiagItem*> m_items;
 };

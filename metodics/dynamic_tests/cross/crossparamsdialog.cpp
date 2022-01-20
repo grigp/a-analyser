@@ -2,7 +2,7 @@
 #include "ui_crossparamsdialog.h"
 
 #include "crossdefines.h"
-#include "baseutils.h"
+#include "basedefines.h"
 
 #include <QDebug>
 
@@ -36,7 +36,7 @@ void CrossParamsDialog::setParams(const QJsonObject &params)
     auto csm = params["change_stage_mode"].toString();
     ui->cbChangeStateMode->setCurrentIndex(CrossDefines::ChangeStateModeValueIndex.value(csm));
     auto dm = params["direction_mode"].toString();
-    ui->cbDirectionMode->setCurrentIndex(BaseUtils::DirectionModeValueIndex.value(dm));
+    ui->cbDirectionMode->setCurrentIndex(BaseDefines::DirectionModeValueIndex.value(dm));
 }
 
 QJsonObject CrossParamsDialog::getParams()
@@ -49,8 +49,8 @@ QJsonObject CrossParamsDialog::getParams()
 
     auto valCSM = static_cast<CrossDefines::ChangeStateMode>(ui->cbChangeStateMode->currentIndex());
     retval["change_stage_mode"] = CrossDefines::ChangeStateModeValueName.value(valCSM);
-    auto valDM = static_cast<BaseUtils::DirectionMode>(ui->cbDirectionMode->currentIndex());
-    retval["direction_mode"] = BaseUtils::DirectionModeValueName.value(valDM);
+    auto valDM = static_cast<BaseDefines::DirectionMode>(ui->cbDirectionMode->currentIndex());
+    retval["direction_mode"] = BaseDefines::DirectionModeValueName.value(valDM);
 
     return retval;
 }

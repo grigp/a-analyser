@@ -5,6 +5,9 @@
 #include <QStandardItemModel>
 #include <QDebug>
 
+
+#include "basedefines.h"
+#include "baseutils.h"
 #include "aanalyserapplication.h"
 #include "stepoffsetcalculator.h"
 #include "stepoffsetfactors.h"
@@ -32,8 +35,8 @@ QString sPrecisionMotor {""};
 QString sProcessKind {""};
 QString sCorrectionPredominace {""};
 QString sCorrectionResume {""};
-QColor sCorrectionResumeColor;
-DualStateDiagram *wgtCorrectionDiag {nullptr};
+QColor sCorrectionResumeColorTrain;
+DualStateDiagram *wgtCorrectionDiagTrain {nullptr};
 }
 
 
@@ -123,7 +126,7 @@ void StepOffsetVisualize::print(QPrinter *printer, const QString &testUid)
 
         pos += offset;
         painter->drawText(paper.x() + paper.width() / 10, paper.y() + paper.height() / 90 * pos, sCorrectionPredominace);
-        painter->setPen(sCorrectionResumeColor);
+        painter->setPen(sCorrectionResumeColorTrain);
         pos += offset;
         painter->drawText(paper.x() + paper.width() / 10, paper.y() + paper.height() / 90 * pos, sCorrectionResume);
     };
@@ -166,7 +169,7 @@ void StepOffsetVisualize::print(QPrinter *printer, const QString &testUid)
         drawConslutionFactors(7, 2);
 
         //! Диаграмма преобладания коррекций.
-        ReportElements::drawWidget(painter, wgtCorrectionDiag,
+        ReportElements::drawWidget(painter, wgtCorrectionDiagTrain,
                                    static_cast<int>(paper.width() * 0.8), static_cast<int>(paper.height() * 0.8),
                                    paper.x() + paper.width()/10, paper.y() + paper.height() / 90 * 39);
 
@@ -207,7 +210,7 @@ void StepOffsetVisualize::print(QPrinter *printer, const QString &testUid)
         drawConslutionFactors(7, 3);
 
         //! Диаграмма преобладания коррекций.
-        ReportElements::drawWidget(painter, wgtCorrectionDiag,
+        ReportElements::drawWidget(painter, wgtCorrectionDiagTrain,
                                    static_cast<int>(paper.width() * 0.8), static_cast<int>(paper.height() * 0.8),
                                    paper.x() + paper.width()/10, paper.y() + paper.height() / 90 * 54);
     }
@@ -324,7 +327,7 @@ void StepOffsetVisualize::showTable()
 void StepOffsetVisualize::showParams()
 {
     sForce = tr("Усилие") + " - " + QString::number(m_calculator->force()) + " " + tr("%");
-    sDirection = tr("Направление") + " - " + BaseUtils::DirectionValueName.value(m_calculator->direction());
+    sDirection = tr("Направление") + " - " + BaseDefines::DirectionValueName.value(m_calculator->direction());
     sDeviation = tr("Отклонение") + " - " +
             QString::number(m_calculator->diap() * m_calculator->force() / 100) +
             " " + tr("мм");
@@ -403,10 +406,10 @@ void StepOffsetVisualize::showConslutionStrategy()
     ui->lblCorrectionResume->setText(resume);
     ui->lblCorrectionResume->setStyleSheet(colorResume);
     QPalette pal = ui->lblCorrectionResume->palette();
-    sCorrectionResumeColor = pal.color(QPalette::WindowText);
+    sCorrectionResumeColorTrain = pal.color(QPalette::WindowText);
 
     ui->wgtCorrectionDiag->setValue(v);
     ui->wgtCorrectionDiag->setDescriptionLeft(tr("Быстрые коррекции"));
     ui->wgtCorrectionDiag->setDescriptionRight(tr("Медленные коррекции"));
-    wgtCorrectionDiag = ui->wgtCorrectionDiag;
+    wgtCorrectionDiagTrain = ui->wgtCorrectionDiag;
 }

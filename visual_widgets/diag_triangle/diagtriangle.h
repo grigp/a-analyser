@@ -25,13 +25,13 @@ public:
 
     void setDiagColor(const QColor color) {m_diagColor = color;}
 
-    void setValueUp(const int value) {m_valueUp = value; repaint();}
+    void setValueUp(const int value) {m_valueUp = value; update();}
     int valueUp() const {return m_valueUp;}
 
-    void setValueRightDown(const int value) {m_valueRightDown = value; repaint();}
+    void setValueRightDown(const int value) {m_valueRightDown = value; update();}
     int valueRightDown() const {return m_valueRightDown;}
 
-    void setValueLeftDown(const int value) {m_valueLeftDown = value; repaint();}
+    void setValueLeftDown(const int value) {m_valueLeftDown = value; update();}
     int valueLeftDown() const {return m_valueLeftDown;}
 
     void setDiap(const int value) {m_diap = value;}

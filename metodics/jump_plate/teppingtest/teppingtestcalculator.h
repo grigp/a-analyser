@@ -5,7 +5,7 @@
 
 #include "testcalculator.h"
 #include "signalsdefines.h"
-#include "baseutils.h"
+#include "basedefines.h"
 
 class TeppingTestFactors;
 
@@ -35,13 +35,13 @@ public:
     /*!
      * \brief Возвращает кол-во прыжков
      */
-    int stepsCount(BaseUtils::Side side) const;
+    int stepsCount(BaseDefines::Side side) const;
 
     /*!
      * \brief Возвращает данные о прыжке по его номеру
      * \param idx
      */
-    SignalsDefines::TeppingStepRec step(BaseUtils::Side side, const int idx) const;
+    SignalsDefines::TeppingStepRec step(BaseDefines::Side side, const int idx) const;
 
 private:
     TeppingTestFactors* m_factors {nullptr};

@@ -47,21 +47,21 @@ void TeppingTestFactors::calculate()
     {
         TeppingTestData data(baData);
 
-        for (int i = 0; i < data.stepsCount(BaseUtils::Left); ++i)
+        for (int i = 0; i < data.stepsCount(BaseDefines::Left); ++i)
         {
-            m_stepsLeftLeg.append(data.step(BaseUtils::Left, i));
-            avgContactLeft = avgContactLeft + data.step(BaseUtils::Left, i).timeContact;
-            avgNoContactLeft = avgNoContactLeft + data.step(BaseUtils::Left, i).timeNoContact;
+            m_stepsLeftLeg.append(data.step(BaseDefines::Left, i));
+            avgContactLeft = avgContactLeft + data.step(BaseDefines::Left, i).timeContact;
+            avgNoContactLeft = avgNoContactLeft + data.step(BaseDefines::Left, i).timeNoContact;
         }
-        sLeftCount = data.stepsCount(BaseUtils::Left);
+        sLeftCount = data.stepsCount(BaseDefines::Left);
 
-        for (int i = 0; i < data.stepsCount(BaseUtils::Right); ++i)
+        for (int i = 0; i < data.stepsCount(BaseDefines::Right); ++i)
         {
-            m_stepsRightLeg.append(data.step(BaseUtils::Right, i));
-            avgContactRight = avgContactRight + data.step(BaseUtils::Right, i).timeContact;
-            avgNoContactRight = avgNoContactRight + data.step(BaseUtils::Right, i).timeNoContact;
+            m_stepsRightLeg.append(data.step(BaseDefines::Right, i));
+            avgContactRight = avgContactRight + data.step(BaseDefines::Right, i).timeContact;
+            avgNoContactRight = avgNoContactRight + data.step(BaseDefines::Right, i).timeNoContact;
         }
-        sRightCount = data.stepsCount(BaseUtils::Right);
+        sRightCount = data.stepsCount(BaseDefines::Right);
         m_time = data.time();
 
         if (sLeftCount > 0)
@@ -75,7 +75,7 @@ void TeppingTestFactors::calculate()
             avgNoContactRight = avgNoContactRight / sRightCount;
         }
 
-        avgTemp = (data.stepsCount(BaseUtils::Left) + data.stepsCount(BaseUtils::Right)) / m_time * 60;
+        avgTemp = (data.stepsCount(BaseDefines::Left) + data.stepsCount(BaseDefines::Right)) / m_time * 60;
     }
 
     addFactor(TeppingTestFactorsDefines::FullTimeUid, m_time);
@@ -115,25 +115,25 @@ void TeppingTestFactors::registerFactors()
                            tr("Темп шагов"), tr("темп"), tr("шагов/мин"), 2, 2, FactorsDefines::nsAbove, 12);
 }
 
-int TeppingTestFactors::stepsCount(BaseUtils::Side side) const
+int TeppingTestFactors::stepsCount(BaseDefines::Side side) const
 {
-    if (side == BaseUtils::Left)
+    if (side == BaseDefines::Left)
         return m_stepsLeftLeg.size();
     else
-    if (side == BaseUtils::Right)
+    if (side == BaseDefines::Right)
         return m_stepsRightLeg.size();
     return 0;
 }
 
-SignalsDefines::TeppingStepRec TeppingTestFactors::step(BaseUtils::Side side, const int idx) const
+SignalsDefines::TeppingStepRec TeppingTestFactors::step(BaseDefines::Side side, const int idx) const
 {
-    if (side == BaseUtils::Left)
+    if (side == BaseDefines::Left)
     {
         Q_ASSERT(idx >= 0 && idx < m_stepsLeftLeg.size());
         return m_stepsLeftLeg.at(idx);
     }
     else
-    if (side == BaseUtils::Right)
+    if (side == BaseDefines::Right)
     {
         Q_ASSERT(idx >= 0 && idx < m_stepsRightLeg.size());
         return m_stepsRightLeg.at(idx);

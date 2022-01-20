@@ -2,7 +2,7 @@
 #define STEPDEVIATIONTESTEXECUTE_H
 
 #include "stabdynamictestexecute.h"
-#include "baseutils.h"
+#include "basedefines.h"
 
 #include <QObject>
 #include <QWidget>
@@ -57,7 +57,7 @@ protected slots:
 
 private:
     int m_maxTime {40};
-    BaseUtils::Directions m_direction {BaseUtils::dirUp};
+    BaseDefines::Directions m_direction {BaseDefines::dirUp};
 
 };
 

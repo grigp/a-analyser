@@ -6,6 +6,8 @@
 #include <QDir>
 #include <QtMath>
 
+#include "basedefines.h"
+
 QString BaseUtils::getTimeBySecCount(const int secCnt, const bool isHour)
 {
     int min = secCnt / 60;
@@ -212,6 +214,33 @@ void BaseUtils::vectorToText(QVector<double> &vector, const QString &fileName)
     }
 }
 
+
+void BaseUtils::pointsToTextSeparate(QVector<QPointF> &vector, const QString &fileName, const char separator)
+{
+    Q_UNUSED(separator);
+    QLocale locale;
+    QFile fX(fileName + ".x");
+    QFile fY(fileName + ".y");
+    if (fX.open(QIODevice::WriteOnly) && fY.open(QIODevice::WriteOnly))
+    {
+        QTextStream tsX(&fX);
+        QTextStream tsY(&fY);
+
+        for (int i = 0; i < vector.size(); ++i)
+        {
+            auto s = QString::number(vector[i].x());
+            s.replace(".", locale.decimalPoint());
+            tsX << s << "\n";
+            s = QString::number(vector[i].y());
+            s.replace(".", locale.decimalPoint());
+            tsY << s << "\n";
+        }
+
+        fX.close();
+        fY.close();
+    }
+}
+
 void BaseUtils::swapVector(QVector<double> &vector)
 {
     QVector<double> v;
@@ -328,18 +357,66 @@ void BaseUtils::convertDecartToPolar(const double x, const double y, double &r, 
     r = sqrt(pow(x, 2) + pow(y, 2));
 
     if (x > 0 && y >= 0)
-        ph = qAtan(y/x);
+        ph = qAtan(x/y);
     else
-    if (x <= 0 && y > 0)
-        ph = M_PI / 2 + qAtan(fabs(x)/y);
+    if (x > 0 && y <= 0)
+        ph = M_PI / 2 + qAtan(fabs(y/x));
     else
-    if (x < 0 && y <= 0)
-        ph = M_PI + qAtan(fabs(y/x));
+    if (x <= 0 && y < 0)
+        ph = M_PI + qAtan(fabs(x/y));
     else
-    if (x >= 0 && y < 0)
-        ph = 3 * M_PI / 2 + qAtan(x/fabs(y));
+    if (x < 0 && y > 0)
+        ph = 3 * M_PI / 2 + qAtan(fabs(y/x));
     else
         ph = 0;
+}
+
+void BaseUtils::convertPolarToDecart(const double r, const double ph, double &x, double &y)
+{
+    if (ph >= 0 && ph <= M_PI_2)
+    {
+        x = r * sin(ph);
+        y = r * cos(ph);
+    }
+    else
+    if (ph > M_PI_2 && ph <= M_PI)
+    {
+        x = r * cos(ph - M_PI_2);
+        y = - r * sin(ph - M_PI_2);
+    }
+    else
+    if (ph > M_PI && ph <= 3 * M_PI_2)
+    {
+        x = - r * sin(ph - M_PI);
+        y = - r * cos(ph - M_PI);
+    }
+    else
+    if (ph > 3 * M_PI_2 && ph <= 2 * M_PI)
+    {
+        x = - r * cos(ph - 3 * M_PI_2);
+        y = r * sin(ph - 3 * M_PI_2);
+    }
+    else
+    {
+        x = 0;
+        y = 0;
+    }
+}
+
+void BaseUtils::rotatePoint(const double x, const double y, const double alfa, double &xr, double &yr)
+{
+    double r = 0;
+    double ph = 0;
+    convertDecartToPolar(x, y, r, ph);
+
+    ph += alfa;
+    if (ph < 0)
+        ph = 2 * M_PI - fabs(ph);
+    else
+    if (ph > 2 * M_PI)
+        ph = ph - 2 * M_PI;
+
+    convertPolarToDecart(r, ph, xr, yr);
 }
 
 void BaseUtils::setCorrectionsDominanceResume(const double cdv, QString &resume, QString &resumeColor)
@@ -437,4 +514,12 @@ void BaseUtils::MidAndStandardDeviation::calculate(double &mid, double &stdDev) 
     }
 }
 
-
+int BaseUtils::sign(const int value)
+{
+    if (value < 0)
+        return BaseDefines::NegativeValue;
+    else
+    if (value > 0)
+        return BaseDefines::NegativeValue;
+    return BaseDefines::ZeroValue;
+}

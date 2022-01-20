@@ -29,16 +29,16 @@ public:
     void setFrontalColor(const QColor color) {m_frontalColor = color;}
     void setSagittalColor(const QColor color) {m_sagittalColor = color;}
 
-    void setValueUp(const int value) {m_valueUp = value; repaint();}
+    void setValueUp(const int value) {m_valueUp = value; update();}
     int valueUp() const {return m_valueUp;}
 
-    void setValueDown(const int value) {m_valueDown = value; repaint();}
+    void setValueDown(const int value) {m_valueDown = value; update();}
     int valueDown() const {return m_valueDown;}
 
-    void setValueRight(const int value) {m_valueRight = value; repaint();}
+    void setValueRight(const int value) {m_valueRight = value; update();}
     int valueRight() const {return m_valueRight;}
 
-    void setValueLeft(const int value) {m_valueLeft = value; repaint();}
+    void setValueLeft(const int value) {m_valueLeft = value; update();}
     int valueLeft() const {return m_valueLeft;}
 
     void setDiap(const int value) {m_diap = value;}

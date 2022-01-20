@@ -81,6 +81,7 @@ static QString cfNoSignal = "{90e313c6-8805-4235-8981-1fb85d7aea5f}";          /
  static QString chanEvolventaResult = "{C3513F54-08B4-4E30-A2E0-D07987FAB84A}";
  static QString chanOctaedronResult = "{2B1AF94A-C4B7-4FA9-A173-1667413C2B99}";
  static QString chanBoxerDodgingResult = "{0B1C5B04-3F5F-4A49-86DC-AC12047AD5CF}";
+ static QString chanTriangleResult = "{AF373B61-07FE-47D3-BF88-3D76E817C67A}";
 
 /*!
  * \brief Структура информации о канале ChannelInfo struct

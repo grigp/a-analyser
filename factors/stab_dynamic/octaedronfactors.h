@@ -3,9 +3,8 @@
 
 #include <QObject>
 
-#include "baseutils.h"
+#include "basedefines.h"
 #include "multifactor.h"
-#include "signalsdefines.h"
 
 namespace OctaedronFactorsDefines
 {
@@ -65,7 +64,7 @@ private:
 
     void calculateBaseFactors();
 
-    BaseUtils::CirceRoundRuleMode getCRRM();
+    BaseDefines::CirceRoundRuleMode getCRRM();
 
     OctaedronResultData* m_resData {nullptr};
     double m_values[8] {0, 0, 0, 0, 0, 0, 0, 0};

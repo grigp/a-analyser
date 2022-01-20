@@ -3,7 +3,7 @@
 
 #include <QDialog>
 
-#include "baseutils.h"
+#include "basedefines.h"
 
 namespace Ui {
 class SetMaxForceDialog;
@@ -33,7 +33,7 @@ public:
      * \brief Устанавливает направление, в котором будут проводиться измерения
      * \param direction - код направления
      */
-    void setDirection(const BaseUtils::Directions direction);
+    void setDirection(const BaseDefines::Directions direction);
 
     /*!
      * \brief получение и отображение данных
@@ -72,7 +72,7 @@ private:
 
     void getDataTriangle(const int x, const int y);
 
-    BaseUtils::Directions m_direction;
+    BaseDefines::Directions m_direction;
     int m_minValueOffset {50};
 
     Mode m_mode {CrossOneLine};

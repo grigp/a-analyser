@@ -22,15 +22,15 @@ SetMaxForceDialog::~SetMaxForceDialog()
     delete ui;
 }
 
-void SetMaxForceDialog::setDirection(const BaseUtils::Directions direction)
+void SetMaxForceDialog::setDirection(const BaseDefines::Directions direction)
 {
     m_direction = direction;
     if (m_mode == SetMaxForceDialog::CrossOneLine)
     {
-        ui->wgtDiagCross->setIsShowValueUp(direction == BaseUtils::dirUp);
-        ui->wgtDiagCross->setIsShowValueDown(direction == BaseUtils::dirDown);
-        ui->wgtDiagCross->setIsShowValueRight(direction == BaseUtils::dirRight);
-        ui->wgtDiagCross->setIsShowValueLeft(direction == BaseUtils::dirLeft);
+        ui->wgtDiagCross->setIsShowValueUp(direction == BaseDefines::dirUp);
+        ui->wgtDiagCross->setIsShowValueDown(direction == BaseDefines::dirDown);
+        ui->wgtDiagCross->setIsShowValueRight(direction == BaseDefines::dirRight);
+        ui->wgtDiagCross->setIsShowValueLeft(direction == BaseDefines::dirLeft);
     }
 }
 
@@ -51,16 +51,16 @@ int SetMaxForceDialog::value() const
 {
     if (m_mode == SetMaxForceDialog::CrossOneLine)
     {
-        if (m_direction == BaseUtils::dirUp)
+        if (m_direction == BaseDefines::dirUp)
             return ui->wgtDiagCross->valueUp();
         else
-        if (m_direction == BaseUtils::dirDown)
+        if (m_direction == BaseDefines::dirDown)
             return ui->wgtDiagCross->valueDown();
         else
-        if (m_direction == BaseUtils::dirRight)
+        if (m_direction == BaseDefines::dirRight)
             return ui->wgtDiagCross->valueRight();
         else
-        if (m_direction == BaseUtils::dirLeft)
+        if (m_direction == BaseDefines::dirLeft)
             return ui->wgtDiagCross->valueLeft();
     }
 
@@ -139,7 +139,7 @@ void SetMaxForceDialog::resetValue()
 
 void SetMaxForceDialog::getDataCrossOneLine(const int x, const int y)
 {
-    if (m_direction == BaseUtils::dirUp)
+    if (m_direction == BaseDefines::dirUp)
     {
         if (y > ui->wgtDiagCross->valueUp())
         {
@@ -149,7 +149,7 @@ void SetMaxForceDialog::getDataCrossOneLine(const int x, const int y)
         }
     }
     else
-    if (m_direction == BaseUtils::dirDown)
+    if (m_direction == BaseDefines::dirDown)
     {
         if (abs(y) > ui->wgtDiagCross->valueDown())
         {
@@ -159,7 +159,7 @@ void SetMaxForceDialog::getDataCrossOneLine(const int x, const int y)
         }
     }
     else
-    if (m_direction == BaseUtils::dirRight)
+    if (m_direction == BaseDefines::dirRight)
     {
         if (x > ui->wgtDiagCross->valueRight())
         {
@@ -169,7 +169,7 @@ void SetMaxForceDialog::getDataCrossOneLine(const int x, const int y)
         }
     }
     else
-    if (m_direction == BaseUtils::dirLeft)
+    if (m_direction == BaseDefines::dirLeft)
     {
         if (abs(x) > ui->wgtDiagCross->valueLeft())
         {

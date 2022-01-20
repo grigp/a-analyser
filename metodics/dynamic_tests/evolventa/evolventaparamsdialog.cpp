@@ -1,7 +1,7 @@
 #include "evolventaparamsdialog.h"
 #include "ui_evolventaparamsdialog.h"
 
-#include "baseutils.h"
+#include "basedefines.h"
 
 EvolventaParamsDialog::EvolventaParamsDialog(QWidget *parent) :
     QDialog(parent),
@@ -26,7 +26,7 @@ void EvolventaParamsDialog::setParams(const QJsonObject &params)
     ui->edCircleCount->setValue(params["circles"].toInt());
 
     auto dm = params["direction_mode"].toString();
-    ui->cbDirectionMode->setCurrentIndex(BaseUtils::DirectionModeValueIndex.value(dm) - 1);
+    ui->cbDirectionMode->setCurrentIndex(BaseDefines::DirectionModeValueIndex.value(dm) - 1);
 }
 
 QJsonObject EvolventaParamsDialog::getParams()
@@ -36,8 +36,8 @@ QJsonObject EvolventaParamsDialog::getParams()
     retval["max_radius"] = ui->edRadiusMax->value();
     retval["circles"] = ui->edCircleCount->value();
 
-    auto valDM = static_cast<BaseUtils::DirectionMode>(ui->cbDirectionMode->currentIndex() + 1);
-    retval["direction_mode"] = BaseUtils::DirectionModeValueName.value(valDM);
+    auto valDM = static_cast<BaseDefines::DirectionMode>(ui->cbDirectionMode->currentIndex() + 1);
+    retval["direction_mode"] = BaseDefines::DirectionModeValueName.value(valDM);
 
     return retval;
 }

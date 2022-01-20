@@ -5,6 +5,7 @@
 #include "teppingtestcalculator.h"
 #include "settingsprovider.h"
 #include "dynamicdiagram.h"
+#include "baseutils.h"
 
 #include <QFileDialog>
 #include <QDebug>
@@ -103,8 +104,8 @@ void TeppingTestVisualize::on_exportToMSExcel()
 
 void TeppingTestVisualize::on_selectDiagItemLeft(const int idx)
 {
-    if (idx >= 0 && idx < m_calculator->stepsCount(BaseUtils::Right)
-             && idx < m_calculator->stepsCount(BaseUtils::Left))
+    if (idx >= 0 && idx < m_calculator->stepsCount(BaseDefines::Right)
+             && idx < m_calculator->stepsCount(BaseDefines::Left))
     {
         showCurrentValues(idx);
         ui->wgtDiagRight->doSelectItem(idx);
@@ -113,8 +114,8 @@ void TeppingTestVisualize::on_selectDiagItemLeft(const int idx)
 
 void TeppingTestVisualize::on_selectDiagItemRight(const int idx)
 {
-    if (idx >= 0 && idx < m_calculator->stepsCount(BaseUtils::Right)
-             && idx < m_calculator->stepsCount(BaseUtils::Left))
+    if (idx >= 0 && idx < m_calculator->stepsCount(BaseDefines::Right)
+             && idx < m_calculator->stepsCount(BaseDefines::Left))
     {
         showCurrentValues(idx);
         ui->wgtDiagLeft->doSelectItem(idx);
@@ -125,16 +126,16 @@ void TeppingTestVisualize::setTable()
 {
     auto* model = new QStandardItemModel(ui->tvSteps);
 
-    int steps = m_calculator->stepsCount(BaseUtils::Left) > m_calculator->stepsCount(BaseUtils::Right) ?
-                m_calculator->stepsCount(BaseUtils::Left) : m_calculator->stepsCount(BaseUtils::Right);
+    int steps = m_calculator->stepsCount(BaseDefines::Left) > m_calculator->stepsCount(BaseDefines::Right) ?
+                m_calculator->stepsCount(BaseDefines::Left) : m_calculator->stepsCount(BaseDefines::Right);
     for (int i = 0; i < steps; ++i)
     {
         SignalsDefines::TeppingStepRec stepLeft(0, 0);
         SignalsDefines::TeppingStepRec stepRight(0, 0);
-        if (i < m_calculator->stepsCount(BaseUtils::Left))
-            stepLeft = m_calculator->step(BaseUtils::Left, i);
-        if (i < m_calculator->stepsCount(BaseUtils::Right))
-            stepRight = m_calculator->step(BaseUtils::Right, i);
+        if (i < m_calculator->stepsCount(BaseDefines::Left))
+            stepLeft = m_calculator->step(BaseDefines::Left, i);
+        if (i < m_calculator->stepsCount(BaseDefines::Right))
+            stepRight = m_calculator->step(BaseDefines::Right, i);
 
         QString sTNoContactLeft = "-";
         if (stepLeft.timeNoContact > 0)
@@ -187,16 +188,16 @@ void TeppingTestVisualize::setDiags()
     ui->wgtDiagRight->setAxisSpaceBottom(15);
     ui->wgtDiagRight->setTitleHeight(20);
 
-    int steps = m_calculator->stepsCount(BaseUtils::Left) > m_calculator->stepsCount(BaseUtils::Right) ?
-                m_calculator->stepsCount(BaseUtils::Left) : m_calculator->stepsCount(BaseUtils::Right);
+    int steps = m_calculator->stepsCount(BaseDefines::Left) > m_calculator->stepsCount(BaseDefines::Right) ?
+                m_calculator->stepsCount(BaseDefines::Left) : m_calculator->stepsCount(BaseDefines::Right);
     for (int i = 0; i < steps; ++i)
     {
         SignalsDefines::TeppingStepRec stepLeft(0, 0);
         SignalsDefines::TeppingStepRec stepRight(0, 0);
-        if (i < m_calculator->stepsCount(BaseUtils::Left))
-            stepLeft = m_calculator->step(BaseUtils::Left, i);
-        if (i < m_calculator->stepsCount(BaseUtils::Right))
-            stepRight = m_calculator->step(BaseUtils::Right, i);
+        if (i < m_calculator->stepsCount(BaseDefines::Left))
+            stepLeft = m_calculator->step(BaseDefines::Left, i);
+        if (i < m_calculator->stepsCount(BaseDefines::Right))
+            stepRight = m_calculator->step(BaseDefines::Right, i);
 
         auto itemL = new DiagItem(stepLeft.timeNoContact, QString::number(i + 1));
         ui->wgtDiagLeft->appendItem(itemL);
@@ -228,7 +229,7 @@ void TeppingTestVisualize::restoreGraphParams()
 void TeppingTestVisualize::showCurrentValues(const int idx)
 {
     ui->wgtDiagLeft->setTitle(tr("Быстрота одиночного движения левой ноги, сек") +
-                              QString(" (%1)").arg(m_calculator->step(BaseUtils::Left, idx).timeNoContact));
+                              QString(" (%1)").arg(m_calculator->step(BaseDefines::Left, idx).timeNoContact));
     ui->wgtDiagRight->setTitle(tr("Быстрота одиночного движения правой ноги, сек") +
-                              QString(" (%1)").arg(m_calculator->step(BaseUtils::Right, idx).timeNoContact));
+                              QString(" (%1)").arg(m_calculator->step(BaseDefines::Right, idx).timeNoContact));
 }

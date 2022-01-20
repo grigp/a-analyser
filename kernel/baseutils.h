@@ -9,151 +9,6 @@
 namespace BaseUtils
 {
 
-static const int NegativeValue = -1;
-static const int ZeroValue = 0;
-static const int PositiveValue = 1;
-
-
-/*!
- * \brief Константы сторон Side enum
- */
-enum Side
-{
-      NoSide = 0
-    , Left
-    , Right
-    , Up
-    , Down
-};
-
-/*!
- * \brief Коды направлений Directions enum
- * Нумеруются по часовой стрелке
- */
-enum Directions
-{
-      dirNone = -1
-    , dirUp = 0
-    , dirRight
-    , dirDown
-    , dirLeft
-};
-
-static QMap<QString, Directions> DirectionValueIndex {
-    std::pair<QString, Directions> ("up", dirUp)
-  , std::pair<QString, Directions> ("right", dirRight)
-  , std::pair<QString, Directions> ("down", dirDown)
-  , std::pair<QString, Directions> ("left", dirLeft)
-};
-
-static QMap<Directions, QString> DirectionValueUIDName {
-    std::pair<Directions, QString> (dirUp, "up")
-  , std::pair<Directions, QString> (dirRight, "right")
-  , std::pair<Directions, QString> (dirDown, "down")
-  , std::pair<Directions, QString> (dirLeft, "left")
-};
-
-static QMap<Directions, QString> DirectionValueName {
-    std::pair<Directions, QString> (dirUp, QCoreApplication::tr("вперед"))
-  , std::pair<Directions, QString> (dirRight, QCoreApplication::tr("вправо"))
-  , std::pair<Directions, QString> (dirDown, QCoreApplication::tr("назад"))
-  , std::pair<Directions, QString> (dirLeft, QCoreApplication::tr("влево"))
-};
-
-/*!
- * \brief Выбрать режима смены направления DirectionMode enum
- */
-enum DirectionMode
-{
-      dmRandom = 0         ///< По случайному закону
-    , dmClockwise          ///< По часовой стрелке
-    , dmCounterClockwise   ///< Против часовой стрелке
-};
-
-static QMap<QString, DirectionMode> DirectionModeValueIndex {
-    std::pair<QString, DirectionMode> ("random", dmRandom)
-  , std::pair<QString, DirectionMode> ("clockwise", dmClockwise)
-  , std::pair<QString, DirectionMode> ("counter_clockwise", dmCounterClockwise)
-};
-
-static QMap<DirectionMode, QString> DirectionModeValueName {
-    std::pair<DirectionMode, QString> (dmRandom, "random")
-  , std::pair<DirectionMode, QString> (dmClockwise, "clockwise")
-  , std::pair<DirectionMode, QString> (dmCounterClockwise, "counter_clockwise")
-};
-
-/*!
- * \brief Выбрать кольцевое правило обхода CirceRoundRuleMode enum
- */
-enum CirceRoundRuleMode
-{
-      crmRadial = 0         ///< Радиальное
-    , crmCircle             ///< Кольцевое
-};
-
-static QMap<QString, CirceRoundRuleMode> CirceRoundRuleModeValueIndex {
-    std::pair<QString, CirceRoundRuleMode> ("radial", crmRadial)
-  , std::pair<QString, CirceRoundRuleMode> ("circle", crmCircle)
-};
-
-static QMap<CirceRoundRuleMode, QString> CirceRoundRuleModeValueName {
-    std::pair<CirceRoundRuleMode, QString> (crmRadial, "radial")
-  , std::pair<CirceRoundRuleMode, QString> (crmCircle, "circle")
-};
-
-/*!
- * \brief Коды направлений Directions enum
- * Нумеруются по часовой стрелке
- */
-enum TriangleCorner
-{
-      tcNone = -1
-    , tcUp = 0
-    , tcLeftDown
-    , tcRightDown
-};
-
-static QMap<QString, TriangleCorner> TriangleCornerValueIndex {
-    std::pair<QString, TriangleCorner> ("up", tcUp)
-  , std::pair<QString, TriangleCorner> ("left_down", tcLeftDown)
-  , std::pair<QString, TriangleCorner> ("right_down", tcRightDown)
-};
-
-static QMap<TriangleCorner, QString> TriangleCornerValueUIDName {
-    std::pair<TriangleCorner, QString> (tcUp, "up")
-  , std::pair<TriangleCorner, QString> (tcLeftDown, "left_down")
-  , std::pair<TriangleCorner, QString> (tcRightDown, "right_down")
-};
-
-static QMap<TriangleCorner, QString> TriangleCornerValueName {
-    std::pair<TriangleCorner, QString> (tcUp, QCoreApplication::tr("верхняя"))
-  , std::pair<TriangleCorner, QString> (tcLeftDown, QCoreApplication::tr("левая"))
-  , std::pair<TriangleCorner, QString> (tcRightDown, QCoreApplication::tr("правая"))
-};
-
-
-///< Границы участка сигнала
-struct Section
-{
-    int begin;   ///< Начало
-    int end;     ///< Конец
-    Section(int b, int e) : begin(b), end(e) {}
-};
-
-///< Тип экстремума
-enum ExtremumKind
-{
-      Minimum = 0
-    , Maximum
-};
-
-///< Структура описания экстремума
-struct Extremum
-{
-    int pos;             ///< Точка
-    ExtremumKind kind;   ///< Тип
-    Extremum(int p, ExtremumKind k) : pos(p), kind(k) {}
-};
 
 /*!
  * \brief Возвращает время в формате hh:mm:ss по кол-ву секунд
@@ -238,6 +93,14 @@ void modelToText(const QAbstractItemModel* model, const QString &fileName);
 void vectorToText(QVector<double>& vector, const QString &fileName);
 
 /*!
+ * \brief Сохраняет вектор точек в текстовые файлы, добавляя расширения ".x" для форнтали и ".y" для сагиттали
+ * \param vector - данные вектора
+ * \param fileName - имя текстового файла без расширения
+ * \param separator - разделитель целой и дробной частей
+ */
+void pointsToTextSeparate(QVector<QPointF>& vector, const QString &fileName, const char separator);
+
+/*!
  * \brief Инвертирует вектор, заменяя хвост на начало
  * \param vector - вектор
  */
@@ -282,7 +145,23 @@ int sign(const double number);
  * \param r - радиус
  * \param ph - угол
  */
-void convertDecartToPolar ( const double x, const double y, double &r, double &ph);
+void convertDecartToPolar(const double x, const double y, double &r, double &ph);
+
+/*!
+ * \brief Преобразует коодинаты из декартовой ситемы в полярную
+ * \param r - радиус
+ * \param ph - угол
+ * \param x, y - координаты в декартовой системе
+ */
+void convertPolarToDecart(const double r, const double ph, double &x, double &y);
+
+/*!
+ * \brief Поворачивает точку в декартовой системе координат вокруг 0 на заданный угол
+ * \param x, y - исходные координаты
+ * \param alfa - угол поворота
+ * \param xr, yr - выходные координаты
+ */
+void rotatePoint(const double x, const double y, const double alfa, double &xr, double &yr);
 
 /*!
  * \brief Возвращает текст резюме к преобладанию коррекций
@@ -307,6 +186,12 @@ void setOutrunningResume(const double orv, QString &resume, QString &resumeColor
  */
 int scaleMultiplier(const int idx);
 
+/*!
+ * \brief Возвращает знак числа
+ * \param value - число
+ * \return BaseDefines::NegativeValue, если value < 0, BaseDefines::ZeroValue, если value == 0, BaseDefines::PositiveValue, если value > 0;
+ */
+int sign(const int value);
 
 /*!
  * \brief Класс, рассчитывающий математическое ожидание и стандартное отклонение с итеративным добавлением MidAndStandardDeviation class
@@ -338,6 +223,8 @@ public:
 private:
     QVector<double> m_values;
 };
+
+
 
 }
 

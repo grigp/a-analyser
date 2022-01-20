@@ -3,7 +3,7 @@
 #include <QLayout>
 #include <QSpacerItem>
 
-StepDeviationPatientWindow::StepDeviationPatientWindow(BaseUtils::Directions direction, QWidget *parent)
+StepDeviationPatientWindow::StepDeviationPatientWindow(BaseDefines::Directions direction, QWidget *parent)
     : StabDynamicTestPatientWindow (parent)
     , m_direction(direction)
 {
@@ -42,16 +42,16 @@ void StepDeviationPatientWindow::setInfoLabel()
     m_infoDir->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
     m_infoDir->setSizePolicy(QSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed)); //setMaximumSize(0, 200);
     m_infoDir->setVisible(false);
-    if (m_direction == BaseUtils::dirUp)
+    if (m_direction == BaseDefines::dirUp)
         m_infoDir->setPixmap(QPixmap(":/images/up200.png"));
     else
-    if (m_direction == BaseUtils::dirRight)
+    if (m_direction == BaseDefines::dirRight)
         m_infoDir->setPixmap(QPixmap(":/images/right200.png"));
     else
-    if (m_direction == BaseUtils::dirDown)
+    if (m_direction == BaseDefines::dirDown)
         m_infoDir->setPixmap(QPixmap(":/images/down200.png"));
     else
-    if (m_direction == BaseUtils::dirLeft)
+    if (m_direction == BaseDefines::dirLeft)
         m_infoDir->setPixmap(QPixmap(":/images/left200.png"));
 
 

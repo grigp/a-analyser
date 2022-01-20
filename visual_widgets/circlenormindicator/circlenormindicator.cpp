@@ -36,7 +36,7 @@ CircleNormIndicator::~CircleNormIndicator()
 void CircleNormIndicator::setValue(int value)
 {
     m_value = value;
-    repaint();
+    update();
 }
 
 int CircleNormIndicator::value()

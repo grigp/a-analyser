@@ -7,7 +7,7 @@
 #include "datadefines.h"
 #include "stabdynamictestexecute.h"
 #include "deviceprotocols.h"
-#include "baseutils.h"
+#include "basedefines.h"
 #include "evolventadefines.h"
 
 namespace Ui {
@@ -71,7 +71,7 @@ private:
     int m_speedMax {20};
     int m_radiusMax {40};
     int m_circleCount {4};
-    BaseUtils::DirectionMode m_directionMode {BaseUtils::dmClockwise};
+    BaseDefines::DirectionMode m_directionMode {BaseDefines::dmClockwise};
 
     EvolventaDefines::Stage m_stage {EvolventaDefines::stgUpwinding};
 

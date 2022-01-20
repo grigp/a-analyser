@@ -10,49 +10,42 @@
 #include "decartcoordinatessignal.h"
 #include "evolventafactors.h"
 #include "reportelements.h"
+#include "basedefines.h"
+#include "baseutils.h"
 
 namespace
 {
 
-struct FctTblPair
-{
-    QString first;
-    QString second;
-    FctTblPair(const QString f, const QString s)
-        : first(f), second(s)
-    {}
-};
-
 ///< Список показателей, выводимых в таблицу основных показателей
 ///< Соответствие показателя для фронтали показателю для сагиттали
-static QList<FctTblPair> FactorsMain = {
-      FctTblPair(EvolventaFactorsDefines::CommonErrorsFrontal::SummErr, EvolventaFactorsDefines::CommonErrorsSagittal::SummErr)
-    , FctTblPair(EvolventaFactorsDefines::CommonErrorsFrontal::MidErr, EvolventaFactorsDefines::CommonErrorsSagittal::MidErr)
-    , FctTblPair(EvolventaFactorsDefines::FragmentExtremumFrontal::MidErr, EvolventaFactorsDefines::FragmentExtremumSagittal::MidErr)
-    , FctTblPair(EvolventaFactorsDefines::FragmentBranchFrontal::MidErr, EvolventaFactorsDefines::FragmentBranchSagittal::MidErr)
-    , FctTblPair(EvolventaFactorsDefines::FragmentExtremumFrontal::CrsCnt, EvolventaFactorsDefines::FragmentExtremumSagittal::CrsCnt)
-    , FctTblPair(EvolventaFactorsDefines::FragmentBranchFrontal::CrsCnt, EvolventaFactorsDefines::FragmentBranchSagittal::CrsCnt)
-    , FctTblPair(EvolventaFactorsDefines::FragmentExtremumFrontal::ExtrCnt, EvolventaFactorsDefines::FragmentExtremumSagittal::ExtrCnt)
-    , FctTblPair(EvolventaFactorsDefines::FragmentBranchFrontal::ExtrCnt, EvolventaFactorsDefines::FragmentBranchSagittal::ExtrCnt)
-    , FctTblPair(EvolventaFactorsDefines::FragmentExtremumFrontal::MidAmpl, EvolventaFactorsDefines::FragmentExtremumSagittal::MidAmpl)
-    , FctTblPair(EvolventaFactorsDefines::FragmentBranchFrontal::MidAmpl, EvolventaFactorsDefines::FragmentBranchSagittal::MidAmpl)
-    , FctTblPair(EvolventaFactorsDefines::FragmentExtremumFrontal::CMidErr, EvolventaFactorsDefines::FragmentExtremumSagittal::CMidErr)
-    , FctTblPair(EvolventaFactorsDefines::FragmentBranchFrontal::CMidErr, EvolventaFactorsDefines::FragmentBranchSagittal::CMidErr)
-    , FctTblPair(EvolventaFactorsDefines::FragmentExtremumFrontal::CMidAmp, EvolventaFactorsDefines::FragmentExtremumSagittal::CMidAmp)
-    , FctTblPair(EvolventaFactorsDefines::FragmentBranchFrontal::CMidAmp, EvolventaFactorsDefines::FragmentBranchSagittal::CMidAmp)
-    , FctTblPair(EvolventaFactorsDefines::Frontal::InterCntR, EvolventaFactorsDefines::Sagittal::InterCntR)
-    , FctTblPair(EvolventaFactorsDefines::Frontal::InterLenR, EvolventaFactorsDefines::Sagittal::InterLenR)
-    , FctTblPair(EvolventaFactorsDefines::Frontal::SemiWavLen, EvolventaFactorsDefines::Sagittal::SemiWavLen)
-    , FctTblPair(EvolventaFactorsDefines::Frontal::SemiWavAmpl, EvolventaFactorsDefines::Sagittal::SemiWavAmpl)
+static QList<BaseDefines::FctTblPair> FactorsMain = {
+      BaseDefines::FctTblPair(EvolventaFactorsDefines::CommonErrorsFrontal::SummErr, EvolventaFactorsDefines::CommonErrorsSagittal::SummErr)
+    , BaseDefines::FctTblPair(EvolventaFactorsDefines::CommonErrorsFrontal::MidErr, EvolventaFactorsDefines::CommonErrorsSagittal::MidErr)
+    , BaseDefines::FctTblPair(EvolventaFactorsDefines::FragmentExtremumFrontal::MidErr, EvolventaFactorsDefines::FragmentExtremumSagittal::MidErr)
+    , BaseDefines::FctTblPair(EvolventaFactorsDefines::FragmentBranchFrontal::MidErr, EvolventaFactorsDefines::FragmentBranchSagittal::MidErr)
+    , BaseDefines::FctTblPair(EvolventaFactorsDefines::FragmentExtremumFrontal::CrsCnt, EvolventaFactorsDefines::FragmentExtremumSagittal::CrsCnt)
+    , BaseDefines::FctTblPair(EvolventaFactorsDefines::FragmentBranchFrontal::CrsCnt, EvolventaFactorsDefines::FragmentBranchSagittal::CrsCnt)
+    , BaseDefines::FctTblPair(EvolventaFactorsDefines::FragmentExtremumFrontal::ExtrCnt, EvolventaFactorsDefines::FragmentExtremumSagittal::ExtrCnt)
+    , BaseDefines::FctTblPair(EvolventaFactorsDefines::FragmentBranchFrontal::ExtrCnt, EvolventaFactorsDefines::FragmentBranchSagittal::ExtrCnt)
+    , BaseDefines::FctTblPair(EvolventaFactorsDefines::FragmentExtremumFrontal::MidAmpl, EvolventaFactorsDefines::FragmentExtremumSagittal::MidAmpl)
+    , BaseDefines::FctTblPair(EvolventaFactorsDefines::FragmentBranchFrontal::MidAmpl, EvolventaFactorsDefines::FragmentBranchSagittal::MidAmpl)
+    , BaseDefines::FctTblPair(EvolventaFactorsDefines::FragmentExtremumFrontal::CMidErr, EvolventaFactorsDefines::FragmentExtremumSagittal::CMidErr)
+    , BaseDefines::FctTblPair(EvolventaFactorsDefines::FragmentBranchFrontal::CMidErr, EvolventaFactorsDefines::FragmentBranchSagittal::CMidErr)
+    , BaseDefines::FctTblPair(EvolventaFactorsDefines::FragmentExtremumFrontal::CMidAmp, EvolventaFactorsDefines::FragmentExtremumSagittal::CMidAmp)
+    , BaseDefines::FctTblPair(EvolventaFactorsDefines::FragmentBranchFrontal::CMidAmp, EvolventaFactorsDefines::FragmentBranchSagittal::CMidAmp)
+    , BaseDefines::FctTblPair(EvolventaFactorsDefines::Frontal::InterCntR, EvolventaFactorsDefines::Sagittal::InterCntR)
+    , BaseDefines::FctTblPair(EvolventaFactorsDefines::Frontal::InterLenR, EvolventaFactorsDefines::Sagittal::InterLenR)
+    , BaseDefines::FctTblPair(EvolventaFactorsDefines::Frontal::SemiWavLen, EvolventaFactorsDefines::Sagittal::SemiWavLen)
+    , BaseDefines::FctTblPair(EvolventaFactorsDefines::Frontal::SemiWavAmpl, EvolventaFactorsDefines::Sagittal::SemiWavAmpl)
 };
 
-static QList<FctTblPair> FactorsKorrect = {
-      FctTblPair(EvolventaFactorsDefines::CorrectionsMotor::Percent, EvolventaFactorsDefines::CorrectionsKognitive::Percent)
-    , FctTblPair(EvolventaFactorsDefines::CorrectionsMotor::Error, EvolventaFactorsDefines::CorrectionsKognitive::Error)
-    , FctTblPair(EvolventaFactorsDefines::CorrectionsMotor::Amplitude, EvolventaFactorsDefines::CorrectionsKognitive::Amplitude)
-    , FctTblPair(EvolventaFactorsDefines::CorrectionsMotor::TimeSumm, EvolventaFactorsDefines::CorrectionsKognitive::TimeSumm)
-    , FctTblPair(EvolventaFactorsDefines::CorrectionsMotor::TimeMid, EvolventaFactorsDefines::CorrectionsKognitive::TimeMid)
-    , FctTblPair(EvolventaFactorsDefines::CorrectionsMotor::Power, EvolventaFactorsDefines::CorrectionsKognitive::Power)
+static QList<BaseDefines::FctTblPair> FactorsKorrect = {
+      BaseDefines::FctTblPair(EvolventaFactorsDefines::CorrectionsMotor::Percent, EvolventaFactorsDefines::CorrectionsKognitive::Percent)
+    , BaseDefines::FctTblPair(EvolventaFactorsDefines::CorrectionsMotor::Error, EvolventaFactorsDefines::CorrectionsKognitive::Error)
+    , BaseDefines::FctTblPair(EvolventaFactorsDefines::CorrectionsMotor::Amplitude, EvolventaFactorsDefines::CorrectionsKognitive::Amplitude)
+    , BaseDefines::FctTblPair(EvolventaFactorsDefines::CorrectionsMotor::TimeSumm, EvolventaFactorsDefines::CorrectionsKognitive::TimeSumm)
+    , BaseDefines::FctTblPair(EvolventaFactorsDefines::CorrectionsMotor::TimeMid, EvolventaFactorsDefines::CorrectionsKognitive::TimeMid)
+    , BaseDefines::FctTblPair(EvolventaFactorsDefines::CorrectionsMotor::Power, EvolventaFactorsDefines::CorrectionsKognitive::Power)
 };
 
 AreaGraph *wgtGraphX {nullptr};

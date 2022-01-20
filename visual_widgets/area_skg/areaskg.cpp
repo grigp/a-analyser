@@ -4,19 +4,27 @@
 #include "gridskg.h"
 #include "traceskg.h"
 #include "lineskg.h"
+#include "brokenlinesskg.h"
 #include "signalaccess.h"
-#include "gridskgdefines.h"
+#include "areaskgdefines.h"
 
 #include <QTimer>
 #include <QDebug>
 
+namespace
+{
+QRectF SceneRect(-128, -128, 256, 256);
+
+}
+
 AreaSKG::AreaSKG(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::AreaSKG)
-  , m_sceneSKG(new QGraphicsScene(QRectF(-128, -128, 256, 256)))
+  , m_sceneSKG(new QGraphicsScene(SceneRect))
   , m_gridSKG(new GridSKG(128))
   , m_traceSKG(new TraceSKG(128))
   , m_lineSKG(new LineSKG(128))
+  , m_brokenLinesSKG(new BrokenLinesSKG(128))
 {
     ui->setupUi(this);
     m_targets.clear();
@@ -41,6 +49,7 @@ void AreaSKG::setDiap(const int diap)
     m_gridSKG->setDiap(diap);
     m_traceSKG->setDiap(diap);
     m_lineSKG->setDiap(diap);
+    m_brokenLinesSKG->setDiap(diap);
     m_diap = diap;
     ui->panSKG->ensureVisible(QRectF(-m_diap, -m_diap, m_diap * 2, m_diap * 2));
 }
@@ -55,7 +64,7 @@ void AreaSKG::setMarker(const double x, const double y)
     if (m_marker)
     {
         int minS = qMin(ui->panSKG->width(), ui->panSKG->height());
-        double prop = static_cast<double>(minS / 2 - GridSKGDefines::I_LABEL_SPACE) / static_cast<double>(m_diap);
+        double prop = static_cast<double>(minS / 2 - AreaSKGDefines::I_LABEL_SPACE) / static_cast<double>(m_diap);
 
         m_marker->setPos(x * prop - m_marker->boundingRect().width() / 2,
                          - y * prop - m_marker->boundingRect().height() / 2);
@@ -81,9 +90,16 @@ void AreaSKG::showTrace(const bool trace)
         m_traceSKG->clear();
 }
 
-void AreaSKG::setSignal(SignalAccess *signal)
+void AreaSKG::setSignal(SignalAccess *signal, const int begin, const int end)
 {
-    m_lineSKG->setSignal(signal);
+    m_lineSKG->setSignal(signal, begin, end);
+}
+
+void AreaSKG::setSection(const int begin, const int end)
+{
+    m_lineSKG->setSection(begin, end);
+    m_sceneSKG->update(SceneRect);
+    m_brokenLinesSKG->update();
 }
 
 void AreaSKG::setVisibleMarker(const bool visibleMarker)
@@ -115,6 +131,7 @@ void AreaSKG::setEllipse(const double sizeA, const double sizeB, const double an
 {
     if (m_lineSKG)
         m_lineSKG->setEllipse(sizeA, sizeB, angle);
+
 }
 
 void AreaSKG::setColorSKG(const QColor &color)
@@ -166,7 +183,7 @@ void AreaSKG::addTarget(const double x, const double y, const QColor colorBackgr
 void AreaSKG::setTarget(const double x, const double y, const int idx)
 {
     int minS = qMin(ui->panSKG->width(), ui->panSKG->height());
-    double prop = static_cast<double>(minS / 2 - GridSKGDefines::I_LABEL_SPACE) / static_cast<double>(m_diap);
+    double prop = static_cast<double>(minS / 2 - AreaSKGDefines::I_LABEL_SPACE) / static_cast<double>(m_diap);
     m_targets.at(idx)->setPos(x * prop - m_targets.at(idx)->boundingRect().width() / 2,
                               - y * prop - m_targets.at(idx)->boundingRect().height() / 2);
 }
@@ -179,6 +196,26 @@ void AreaSKG::clearTargets()
             m_sceneSKG->removeItem(target);
         m_targets.clear();
     }
+}
+
+int AreaSKG::addBrokenLine(AreaSKGDefines::BrokenLine &bl)
+{
+    if (m_brokenLinesSKG)
+        return m_brokenLinesSKG->addBrokenLine(bl);
+    return -1;
+}
+
+bool AreaSKG::deleteBrokenLine(const int idx)
+{
+    if (m_brokenLinesSKG)
+        return m_brokenLinesSKG->deleteBrokenLine(idx);
+    return false;
+}
+
+void AreaSKG::setVisibleSKG(const bool isVisible)
+{
+    if (m_lineSKG)
+        m_lineSKG->setVisible(isVisible);
 }
 
 void AreaSKG::resizeEvent(QResizeEvent *event)
@@ -196,6 +233,7 @@ void AreaSKG::setAreaSKG()
     m_sceneSKG->addItem(m_gridSKG);
     m_sceneSKG->addItem(m_traceSKG);
     m_sceneSKG->addItem(m_lineSKG);
+    m_sceneSKG->addItem(m_brokenLinesSKG);
 }
 
 QColor AreaSKG::getFrameColor(const QColor color) const

@@ -44,7 +44,7 @@ void EvolventaExecute::setParams(const QJsonObject &params)
     m_circleCount = params["circles"].toInt();
 
     auto dm = params["direction_mode"].toString();
-    m_directionMode = BaseUtils::DirectionModeValueIndex.value(dm);
+    m_directionMode = BaseDefines::DirectionModeValueIndex.value(dm);
 
     StabDynamicTestExecute::setParams(params);
 }
@@ -171,7 +171,7 @@ void EvolventaExecute::setTargetPolar(const double angle, const double ampl)
     double mx = 0;
     double my = 0;
     //! По часовой стрелке
-    if (m_directionMode == BaseUtils::dmClockwise)
+    if (m_directionMode == BaseDefines::dmClockwise)
     {
         mx = ampl * sin(angle);
         my = ampl * cos(angle);
@@ -182,7 +182,7 @@ void EvolventaExecute::setTargetPolar(const double angle, const double ampl)
     }
     else
     //! Против часовой стрелки
-    if (m_directionMode == BaseUtils::dmCounterClockwise)
+    if (m_directionMode == BaseDefines::dmCounterClockwise)
     {
         mx = ampl * cos(angle);
         my = ampl * sin(angle);

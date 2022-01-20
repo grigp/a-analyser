@@ -7,7 +7,7 @@
 
 #include "channeljsondata.h"
 #include "signalsdefines.h"
-#include "baseutils.h"
+#include "basedefines.h"
 
 /*!
  * \brief Класс для записи в БД данных о высоте одиночного прыжка JumpHeightSingleData class
@@ -104,10 +104,10 @@ public:
     double time() const;
     void setTime(const double time);
 
-    int stepsCount(const BaseUtils::Side side) const;
-    SignalsDefines::TeppingStepRec step(const BaseUtils::Side side, const int idx) const;
+    int stepsCount(const BaseDefines::Side side) const;
+    SignalsDefines::TeppingStepRec step(const BaseDefines::Side side, const int idx) const;
 
-    void addStep(const BaseUtils::Side side, const double timeContact, const double timeNoContact);
+    void addStep(const BaseDefines::Side side, const double timeContact, const double timeNoContact);
 
 /*
     Формат канала в json:

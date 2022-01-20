@@ -41,7 +41,7 @@ void CrossExecute::setParams(const QJsonObject &params)
     auto csm = params["change_stage_mode"].toString();
     m_changeStateMode = CrossDefines::ChangeStateModeValueIndex.value(csm);
     auto dm = params["direction_mode"].toString();
-    m_directionMode = BaseUtils::DirectionModeValueIndex.value(dm);
+    m_directionMode = BaseDefines::DirectionModeValueIndex.value(dm);
 
     StabDynamicTestExecute::setParams(params);
 }
@@ -66,16 +66,16 @@ void CrossExecute::fillSpecific(QFrame *frSpecific)
     lblTitle->setText(tr("Осталось проходов"));
     frSpecific->layout()->addWidget(lblTitle);
     m_lblUp = new QLabel(frSpecific);
-    m_lblUp->setText(tr("Вперед") + " - " + stagesRemained(BaseUtils::dirUp));
+    m_lblUp->setText(tr("Вперед") + " - " + stagesRemained(BaseDefines::dirUp));
     frSpecific->layout()->addWidget(m_lblUp);
     m_lblDn = new QLabel(frSpecific);
-    m_lblDn->setText(tr("Назад") +" - " + stagesRemained(BaseUtils::dirDown));
+    m_lblDn->setText(tr("Назад") +" - " + stagesRemained(BaseDefines::dirDown));
     frSpecific->layout()->addWidget(m_lblDn);
     m_lblRt = new QLabel(frSpecific);
-    m_lblRt->setText(tr("Вправо") + " - " + stagesRemained(BaseUtils::dirRight));
+    m_lblRt->setText(tr("Вправо") + " - " + stagesRemained(BaseDefines::dirRight));
     frSpecific->layout()->addWidget(m_lblRt);
     m_lblLf = new QLabel(frSpecific);
-    m_lblLf->setText(tr("Влево") + " - " + stagesRemained(BaseUtils::dirLeft));
+    m_lblLf->setText(tr("Влево") + " - " + stagesRemained(BaseDefines::dirLeft));
     frSpecific->layout()->addWidget(m_lblLf);
 }
 
@@ -137,51 +137,51 @@ void CrossExecute::on_communicationError(const QString &drvName, const QString &
 
 bool CrossExecute::newDirection()
 {
-    if (m_curDirection != BaseUtils::dirNone)
+    if (m_curDirection != BaseDefines::dirNone)
         m_stagesProcess[m_curDirection]++;
-    if (m_curDirection == BaseUtils::dirUp)
+    if (m_curDirection == BaseDefines::dirUp)
         m_lblUp->setText(tr("Вперед") + " - " + stagesRemained(m_curDirection));
     else
-    if (m_curDirection == BaseUtils::dirDown)
+    if (m_curDirection == BaseDefines::dirDown)
         m_lblDn->setText(tr("Назад") + " - " + stagesRemained(m_curDirection));
     else
-    if (m_curDirection == BaseUtils::dirRight)
+    if (m_curDirection == BaseDefines::dirRight)
         m_lblRt->setText(tr("Вправо") + " - " + stagesRemained(m_curDirection));
     else
-    if (m_curDirection == BaseUtils::dirLeft)
+    if (m_curDirection == BaseDefines::dirLeft)
         m_lblLf->setText(tr("Влево") + " - " + stagesRemained(m_curDirection));
 
     if (isTestFinished())
     {
-        m_curDirection = BaseUtils::dirNone;
+        m_curDirection = BaseDefines::dirNone;
         return false;
     }
 
-    if (m_directionMode == BaseUtils::dmClockwise)  //! По часовой
+    if (m_directionMode == BaseDefines::dmClockwise)  //! По часовой
     {
-        if (m_curDirection < BaseUtils::dirLeft)
+        if (m_curDirection < BaseDefines::dirLeft)
         {
             int d = static_cast<int>(m_curDirection);
             d++;
-            m_curDirection = static_cast<BaseUtils::Directions>(d);
+            m_curDirection = static_cast<BaseDefines::Directions>(d);
         }
         else
-            m_curDirection = BaseUtils::dirUp;
+            m_curDirection = BaseDefines::dirUp;
     }
     else
-    if (m_directionMode == BaseUtils::dmCounterClockwise)  //! Против часовой
+    if (m_directionMode == BaseDefines::dmCounterClockwise)  //! Против часовой
     {
-        if (m_curDirection > BaseUtils::dirUp)
+        if (m_curDirection > BaseDefines::dirUp)
         {
             int d = static_cast<int>(m_curDirection);
             d--;
-            m_curDirection = static_cast<BaseUtils::Directions>(d);
+            m_curDirection = static_cast<BaseDefines::Directions>(d);
         }
         else
-            m_curDirection = BaseUtils::dirLeft;
+            m_curDirection = BaseDefines::dirLeft;
     }
     else
-    if (m_directionMode == BaseUtils::dmRandom)
+    if (m_directionMode == BaseDefines::dmRandom)
     {
         int d = -1;
         do
@@ -189,7 +189,7 @@ bool CrossExecute::newDirection()
             d = qrand() % 4;
         }
         while (m_stagesProcess[d] >= m_repeatCount);
-        m_curDirection = static_cast<BaseUtils::Directions>(d);
+        m_curDirection = static_cast<BaseDefines::Directions>(d);
     }
     return true;
 }
@@ -207,22 +207,22 @@ bool CrossExecute::newCoordinatesTarget(double &tx, double &ty)
     double stepCount = m_stageTime * freqStab();
     switch (m_curDirection)
     {
-    case BaseUtils::dirUp:
+    case BaseDefines::dirUp:
     {
         ty = ty + (diap() / (stepCount));
         return ty < diap();
     };
-    case BaseUtils::dirRight:
+    case BaseDefines::dirRight:
     {
         tx = tx + (diap() / (stepCount));
         return tx < diap();
     };
-    case BaseUtils::dirDown:
+    case BaseDefines::dirDown:
     {
         ty = ty - (diap() / (stepCount));
         return ty > -diap();
     };
-    case BaseUtils::dirLeft:
+    case BaseDefines::dirLeft:
     {
         tx = tx - (diap() / (stepCount));
         return tx > -diap();
@@ -251,7 +251,7 @@ bool CrossExecute::waitingSuccessful()
     return false;
 }
 
-QString CrossExecute::stagesRemained(const BaseUtils::Directions dir) const
+QString CrossExecute::stagesRemained(const BaseDefines::Directions dir) const
 {
     int n = m_repeatCount - m_stagesProcess[dir];
     return QString::number(n);
@@ -265,10 +265,10 @@ void CrossExecute::recording()
 
     for (int i = 0; i < 4; ++i)
         m_stagesProcess[i] = 0;
-    m_lblUp->setText(tr("Вперед") + " - " + stagesRemained(BaseUtils::dirUp));
-    m_lblDn->setText(tr("Назад") + " - " + stagesRemained(BaseUtils::dirDown));
-    m_lblRt->setText(tr("Вправо") + " - " + stagesRemained(BaseUtils::dirRight));
-    m_lblLf->setText(tr("Влево") + " - " + stagesRemained(BaseUtils::dirLeft));
+    m_lblUp->setText(tr("Вперед") + " - " + stagesRemained(BaseDefines::dirUp));
+    m_lblDn->setText(tr("Назад") + " - " + stagesRemained(BaseDefines::dirDown));
+    m_lblRt->setText(tr("Вправо") + " - " + stagesRemained(BaseDefines::dirRight));
+    m_lblLf->setText(tr("Влево") + " - " + stagesRemained(BaseDefines::dirLeft));
 
     if (isRecording())
     {
@@ -282,7 +282,7 @@ void CrossExecute::recording()
     else
     {
         m_stage = CrossDefines::stgNo;
-        m_curDirection = BaseUtils::dirNone;
+        m_curDirection = BaseDefines::dirNone;
         m_tx = 0;
         m_ty = 0;
         setTarget(m_tx, m_ty);

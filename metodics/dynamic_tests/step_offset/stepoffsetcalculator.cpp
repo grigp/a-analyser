@@ -96,11 +96,11 @@ int StepOffsetCalculator::force() const
     return 0;
 }
 
-BaseUtils::Directions StepOffsetCalculator::direction() const
+BaseDefines::Directions StepOffsetCalculator::direction() const
 {
     if (m_factors)
         return m_factors->direction();
-    return BaseUtils::dirNone;
+    return BaseDefines::dirNone;
 }
 
 int StepOffsetCalculator::stepsCount() const

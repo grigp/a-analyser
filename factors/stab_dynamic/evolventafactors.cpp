@@ -8,6 +8,8 @@
 #include "stabilogram.h"
 #include "decartcoordinatessignal.h"
 #include "fragment.h"
+#include "basedefines.h"
+#include "baseutils.h"
 
 namespace
 {
@@ -641,8 +643,8 @@ void EvolventaFactors::calculateWEFactors()
         if (i > 0)
         {
             //! Экстремум по фронтали
-            if (((vx < ovx) && (dirX == BaseUtils::PositiveValue)) ||
-                ((vx > ovx) && (dirX == BaseUtils::NegativeValue)))
+            if (((vx < ovx) && (dirX == BaseDefines::PositiveValue)) ||
+                ((vx > ovx) && (dirX == BaseDefines::NegativeValue)))
             {
                 if ((extrIX > -1) && (static_cast<double>(i - extrIX) / static_cast<double>(m_freq) >= 0.05))
                 {
@@ -657,8 +659,8 @@ void EvolventaFactors::calculateWEFactors()
             }
 
             //! Экстремум по сагиттали
-            if (((vy < ovy) && (dirY == BaseUtils::PositiveValue)) ||
-                ((vy > ovy) && (dirY == BaseUtils::NegativeValue)))
+            if (((vy < ovy) && (dirY == BaseDefines::PositiveValue)) ||
+                ((vy > ovy) && (dirY == BaseDefines::NegativeValue)))
             {
                 if ((extrIY > -1) && (static_cast<double>(i - extrIY) / static_cast<double>(m_freq) >= 0.05))
                 {
@@ -673,8 +675,8 @@ void EvolventaFactors::calculateWEFactors()
             }
 
             //! Экстремум по динамике опережения
-            if (((dAheadCur < ovDAC) && (dirDAC == BaseUtils::PositiveValue)) ||
-                ((dAheadCur > ovDAC) && (dirDAC == BaseUtils::NegativeValue)))
+            if (((dAheadCur < ovDAC) && (dirDAC == BaseDefines::PositiveValue)) ||
+                ((dAheadCur > ovDAC) && (dirDAC == BaseDefines::NegativeValue)))
             {
               if (extrDAC > -1)
               {
@@ -687,7 +689,7 @@ void EvolventaFactors::calculateWEFactors()
                 errExtr = sqrt(pow(vx, 2) + pow(vy, 2));
 
                 //! Расчет кол-ва экстремумов по зонам
-                if ((timeI >= EvolventaFactorsDefines::ZoneMotorLo) && (timeI <= EvolventaFactorsDefines::ZoneMotorHi))
+                if ((timeI >= BaseDefines::ZoneMotorLo) && (timeI <= BaseDefines::ZoneMotorHi))
                 {
                   ++zoneMotor;
                   m_motorCorrValues.error = m_motorCorrValues.error + errExtr;
@@ -695,7 +697,7 @@ void EvolventaFactors::calculateWEFactors()
                   m_motorCorrValues.timeSumm = m_motorCorrValues.timeSumm + timeI;
                 }
                 else
-                if ((timeI >= EvolventaFactorsDefines::ZoneKognLo) && (timeI <= EvolventaFactorsDefines::ZoneKognHi))
+                if ((timeI >= BaseDefines::ZoneKognLo) && (timeI <= BaseDefines::ZoneKognHi))
                 {
                   ++zoneKogn;
                   m_kognCorrValues.error = m_kognCorrValues.error + errExtr;
@@ -761,8 +763,8 @@ void EvolventaFactors::calculateWEFactors()
         m_kognCorrValues.amplitude = m_kognCorrValues.amplitude / static_cast<double>(zoneKogn);
         m_kognCorrValues.timeMid = m_kognCorrValues.timeSumm / static_cast<double>(zoneKogn);
     }
-    m_motorCorrValues.power = (m_motorCorrValues.timeMid - EvolventaFactorsDefines::ZoneMotorLo) * m_motorCorrValues.amplitude * zoneMotor;
-    m_kognCorrValues.power = (m_kognCorrValues.timeMid - EvolventaFactorsDefines::ZoneKognLo) * m_kognCorrValues.amplitude * zoneKogn;
+    m_motorCorrValues.power = (m_motorCorrValues.timeMid - BaseDefines::ZoneMotorLo) * m_motorCorrValues.amplitude * zoneMotor;
+    m_kognCorrValues.power = (m_kognCorrValues.timeMid - BaseDefines::ZoneKognLo) * m_kognCorrValues.amplitude * zoneKogn;
     if (m_kognCorrValues.power + m_motorCorrValues.power > 0)
         m_commonValues.korrDominance = (m_kognCorrValues.power - m_motorCorrValues.power) /
                                        (m_kognCorrValues.power + m_motorCorrValues.power) * 100;

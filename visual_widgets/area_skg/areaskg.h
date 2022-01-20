@@ -5,6 +5,8 @@
 #include <QGraphicsScene>
 #include <QList>
 
+#include "areaskgdefines.h"
+
 namespace Ui {
 class AreaSKG;
 }
@@ -12,6 +14,7 @@ class AreaSKG;
 class GridSKG;
 class TraceSKG;
 class LineSKG;
+class BrokenLinesSKG;
 class SignalAccess;
 
 class AreaSKG : public QWidget
@@ -56,8 +59,15 @@ public:
     /*!
      * \brief Задает сигнал для отображения в виджете при использовании в визуале
      * \param signal
+     * \param begin, end - границы участка
      */
-    void setSignal(SignalAccess *signal);
+    void setSignal(SignalAccess *signal, const int begin = -1, const int end = -1);
+
+    /*!
+     * \brief Задает границы участка сигнала
+     * \param begin, end - границы участка
+     */
+    void setSection(const int begin, const int end);
 
     /*!
      * \brief Управляет видимостью маркера
@@ -112,6 +122,27 @@ public:
      */
     void clearTargets();
 
+    /*!
+     * \brief Добавляет ломанную
+     * \param bl - ломанная
+     * \return индекс в списке ломаных
+     */
+    int addBrokenLine(AreaSKGDefines::BrokenLine &bl);
+
+    /*!
+     * \brief Удаляет ломаную по индексу
+     * \param idx - индекс ломаной
+     * \return true, если удачно
+     */
+    bool deleteBrokenLine(const int idx);
+
+    /*!
+     * \brief Устанавливает видимость СКГ
+     * \param isVisible - будет ли видна
+     */
+    void setVisibleSKG(const bool isVisible);
+
+
 protected:
     void resizeEvent(QResizeEvent *event);
 
@@ -126,6 +157,7 @@ private:
     GridSKG* m_gridSKG {nullptr};
     TraceSKG* m_traceSKG {nullptr};
     LineSKG* m_lineSKG {nullptr};
+    BrokenLinesSKG* m_brokenLinesSKG {nullptr};
     QGraphicsRectItem* m_marker {nullptr};
     QList<QGraphicsItem*> m_targets;
 

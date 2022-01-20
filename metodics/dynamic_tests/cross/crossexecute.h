@@ -9,7 +9,7 @@
 #include "crossdefines.h"
 #include "stabdynamictestexecute.h"
 #include "deviceprotocols.h"
-#include "baseutils.h"
+#include "basedefines.h"
 
 namespace Ui {
 class CrossExecute;
@@ -89,7 +89,7 @@ private:
      */
     bool waitingSuccessful();
 
-    QString stagesRemained(const BaseUtils::Directions dir) const;
+    QString stagesRemained(const BaseDefines::Directions dir) const;
 
     ///< Координаты цели
     double m_tx {0};
@@ -100,7 +100,7 @@ private:
     int m_centerSize {15};
     int m_delayTime {5};
     CrossDefines::ChangeStateMode m_changeStateMode{CrossDefines::csmReturn};
-    BaseUtils::DirectionMode m_directionMode{BaseUtils::dmRandom};
+    BaseDefines::DirectionMode m_directionMode{BaseDefines::dmRandom};
 
     //! Прохождение этапов теста. Значение - кол-во повторений на каждом этапе. 0 -> m_repeatCount.
     //! Индексы CrossDefines::dirUp .. CrossDefines::dirLeft
@@ -114,7 +114,7 @@ private:
     QLabel* m_lblLf;
 
     //! Текущее направление перемещения
-    BaseUtils::Directions m_curDirection {BaseUtils::dirNone};
+    BaseDefines::Directions m_curDirection {BaseDefines::dirNone};
 
     //! Текущий этап (переход / ожидание)
     CrossDefines::Stage m_stage {CrossDefines::stgNo};

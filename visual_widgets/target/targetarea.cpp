@@ -30,7 +30,7 @@ void TargetArea::setMarker(const double x, const double y)
 {
     m_x = x;
     m_y = y;
-    repaint();
+    update();
 }
 
 void TargetArea::setBackgroundColor(const QColor color)

@@ -96,6 +96,8 @@ void Extend3DGamesExecute::saveDriverParams() const
     }
 
     QDir dir = QStandardPaths::writableLocation(QStandardPaths::TempLocation) + "/A-Med/Shared/";
+    if (!dir.exists())
+        dir.mkpath(".");
     QFile file(dir.absoluteFilePath("connection.json"));
     if (file.open(QIODevice::WriteOnly | QIODevice::Text))
     {

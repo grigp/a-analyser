@@ -21,7 +21,7 @@ void DynamicTestStimul::setMarker(const double x, const double y)
 {
     m_x = x;
     m_y = y;
-    repaint();
+    update();
 }
 
 void DynamicTestStimul::initTargets(const int count, const QColor color, const int size)

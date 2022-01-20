@@ -1,12 +1,11 @@
 #include "lineskg.h"
 
 #include "signalaccess.h"
+#include "areaskgdefines.h"
 
 #include <QPainter>
 #include <QWidget>
 #include <QDebug>
-
-static const int I_LABEL_SPACE = 20;
 
 LineSKG::LineSKG(int diap, QGraphicsItem *parent)
     : QGraphicsItem(parent)
@@ -17,8 +16,8 @@ LineSKG::LineSKG(int diap, QGraphicsItem *parent)
 
 QRectF LineSKG::boundingRect() const
 {
-    QPointF pos(-m_diap * m_prop - I_LABEL_SPACE, -m_diap * m_prop - I_LABEL_SPACE);
-    QSizeF size((m_diap * m_prop + I_LABEL_SPACE) * 2, (m_diap * m_prop + I_LABEL_SPACE) * 2);
+    QPointF pos(-m_diap * m_prop - AreaSKGDefines::I_LABEL_SPACE, -m_diap * m_prop - AreaSKGDefines::I_LABEL_SPACE);
+    QSizeF size((m_diap * m_prop + AreaSKGDefines::I_LABEL_SPACE) * 2, (m_diap * m_prop + AreaSKGDefines::I_LABEL_SPACE) * 2);
     return QRectF(pos, size);
 }
 
@@ -32,33 +31,43 @@ void LineSKG::paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWi
     m_width = widget->size().width();
     m_height = widget->size().height();
     int minS = qMin(m_width, m_height);
-    m_prop = static_cast<double>(minS / 2 - I_LABEL_SPACE) / static_cast<double>(m_diap);
+    m_prop = static_cast<double>(minS / 2 - AreaSKGDefines::I_LABEL_SPACE) / static_cast<double>(m_diap);
 
     painter->save();
 
     //! Статокинезиграмма
-    painter->setPen(QPen(m_colorSKG, 1));
-    int x1 = 0;
-    int y1 = 0;
-    int x2 = 0;
-    int y2 = 0;
-
-    for (int i = 0; i < m_signal->size(); ++i)
+    if (m_visible)
     {
-        if (m_isZeroing)
+        painter->setPen(QPen(m_colorSKG, 1));
+        int x1 = 0;
+        int y1 = 0;
+        int x2 = 0;
+        int y2 = 0;
+
+        int b = 0;
+        if (m_begin != -1)
+            b = m_begin;
+        int e = m_signal->size();
+        if (m_end != -1)
+            e = m_end;
+
+        for (int i = b; i < e; ++i)
         {
-            x1 = (m_signal->value(0, i) - m_offsX) * m_prop;
-            y1 = - (m_signal->value(1, i) - m_offsY) * m_prop;
+            if (m_isZeroing)
+            {
+                x1 = (m_signal->value(0, i) - m_offsX) * m_prop;
+                y1 = - (m_signal->value(1, i) - m_offsY) * m_prop;
+            }
+            else
+            {
+                x1 = m_signal->value(0, i) * m_prop;
+                y1 = - m_signal->value(1, i) * m_prop;
+            }
+            if (i > b)
+                painter->drawLine(x1, y1, x2, y2);
+            x2 = x1;
+            y2 = y1;
         }
-        else
-        {
-            x1 = m_signal->value(0, i) * m_prop;
-            y1 = - m_signal->value(1, i) * m_prop;
-        }
-        if (i > 0)
-            painter->drawLine(x1, y1, x2, y2);
-        x2 = x1;
-        y2 = y1;
     }
 
     //! Эллипс
@@ -125,9 +134,11 @@ void LineSKG::setDiap(int diap)
     updateItem();
 }
 
-void LineSKG::setSignal(SignalAccess *signal)
+void LineSKG::setSignal(SignalAccess *signal, const int begin, const int end)
 {
     m_signal = signal;
+    m_begin = begin;
+    m_end = end;
 
     m_offsX = 0;
     m_offsY = 0;
@@ -138,6 +149,12 @@ void LineSKG::setSignal(SignalAccess *signal)
     }
     m_offsX = m_offsX / m_signal->size();
     m_offsY = m_offsY / m_signal->size();
+}
+
+void LineSKG::setSection(const int begin, const int end)
+{
+    m_begin = begin;
+    m_end = end;
 }
 
 void LineSKG::setZeroing(const bool zeroing)
@@ -154,9 +171,15 @@ void LineSKG::setEllipse(const double sizeA, const double sizeB, const double an
     update(boundingRect());
 }
 
+void LineSKG::setVisible(const bool isVisible)
+{
+    m_visible = isVisible;
+    update(boundingRect());
+}
+
 void LineSKG::updateItem()
 {
     int minS = qMin(m_width, m_height);
-    m_prop = static_cast<double>(minS / 2 - I_LABEL_SPACE) / static_cast<double>(m_diap);
+    m_prop = static_cast<double>(minS / 2 - AreaSKGDefines::I_LABEL_SPACE) / static_cast<double>(m_diap);
     update(boundingRect());
 }
