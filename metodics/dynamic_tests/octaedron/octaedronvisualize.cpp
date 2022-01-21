@@ -10,6 +10,7 @@
 namespace
 {
 DiagOctaedron *wgtDiag {nullptr};
+QString sAverageQuality {""};
 }
 
 OctaedronVisualize::OctaedronVisualize(QWidget *parent) :
@@ -41,8 +42,9 @@ void OctaedronVisualize::setTest(const QString &testUid)
 
         ui->wgtDiag->endUpdate();
 
-        ui->lblAverageQuality->setText(tr("Среднее качество выполнения задания") + " " +
-                                       QString::number(m_calculator->getAverageValue(), 'f', 0) + " " + tr("%"));
+        sAverageQuality = tr("Среднее качество выполнения задания") + " " +
+                QString::number(m_calculator->getAverageValue(), 'f', 0) + " " + tr("%");
+        ui->lblAverageQuality->setText(sAverageQuality);
         ui->lblAverageQuality->setStyleSheet("font-size: 18pt;");
 
         wgtDiag = ui->wgtDiag;
@@ -63,16 +65,26 @@ void OctaedronVisualize::print(QPrinter *printer, const QString &testUid)
     {
         //! Диаграмма. Копируется из виджета
         ReportElements::drawWidget(painter, wgtDiag,
-                                   static_cast<int>(paper.width() * 0.85), static_cast<int>(paper.height() * 0.85),
-                                   paper.x() + paper.width()/10, static_cast<int>(paper.y() + paper.height()/4));
+                                   static_cast<int>(paper.width() * 0.85),
+                                   static_cast<int>(paper.height() * 0.85),
+                                   paper.x() + paper.width()/10,
+                                   static_cast<int>(paper.y() + paper.height()/4));
+
+        painter->setFont(QFont("Sans", 14, QFont::Bold, false));
+        painter->setPen(Qt::darkCyan);
+        painter->drawText(paper.x() + paper.width() / 10, static_cast<int>(paper.y() + paper.height() / 16 * 13), sAverageQuality);
     }
     else
     if (printer->orientation() == QPrinter::Landscape)
     {
         //! Диаграмма. Копируется из виджета
         ReportElements::drawWidget(painter, wgtDiag,
-                                   static_cast<int>(paper.width() * 0.75), static_cast<int>(paper.height() * 0.75),
-                                   static_cast<int>(paper.x() + paper.width()/5.5), paper.y() + paper.height()/6);
+                                   static_cast<int>(paper.width() * 0.7), static_cast<int>(paper.height() * 0.7),
+                                   static_cast<int>(paper.x() + paper.width()/5.5), paper.y() + paper.height()/7);
+
+        painter->setFont(QFont("Sans", 14, QFont::Bold, false));
+        painter->setPen(Qt::darkCyan);
+        painter->drawText(paper.x() + paper.width() / 5, static_cast<int>(paper.y() + paper.height() / 16 * 14), sAverageQuality);
     }
 
     //! Нижний колонтитул
