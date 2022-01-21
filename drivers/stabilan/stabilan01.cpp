@@ -97,6 +97,12 @@ Stabilan01::Stabilan01(QObject *parent)
 {
     m_offsetX = SettingsProvider::valueFromRegAppCopy("StabilanDriver", "zeroing_x").toDouble();
     m_offsetY = SettingsProvider::valueFromRegAppCopy("StabilanDriver", "zeroing_y").toDouble();
+
+}
+
+Stabilan01::~Stabilan01()
+{
+
 }
 
 void Stabilan01::setParams(const DeviceProtocols::Ports port, const QJsonObject &params)

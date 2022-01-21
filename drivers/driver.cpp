@@ -6,7 +6,10 @@
 
 Driver::Driver(QObject *parent) : QObject(parent)
 {
+}
 
+Driver::~Driver()
+{
 }
 
 void Driver::start()

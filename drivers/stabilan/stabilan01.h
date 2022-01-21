@@ -32,6 +32,7 @@ class Stabilan01 :
     Q_OBJECT
 public:
     explicit Stabilan01(QObject *parent = nullptr);
+    ~Stabilan01() override;
 
     enum ErrorCodes
     {

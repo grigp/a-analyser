@@ -19,6 +19,7 @@ class Driver : public QObject
     Q_OBJECT
 public:
     explicit Driver(QObject *parent = nullptr);
+    ~Driver() override;
 
     enum ErrorCodes
     {

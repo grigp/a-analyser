@@ -77,6 +77,7 @@ void TrenTetrisExecute::setParams(const QJsonObject &params)
     m_movingMode = TrenTetrisDefines::MovingModeValueIndex.value(params["moving_mode"].toString());
     m_complexityMode = TrenTetrisDefines::ComplexityModeValueIndex.value(params["complexity"].toString());
     m_deletingMode = TrenTetrisDefines::DeletingModeValueIndex.value(params["deleting"].toString());
+    m_isShowGrid = params["is_show_grid"].toBool(false);
 
     m_glassHCount = params["width"].toInt();
     m_glassVCount = params["height"].toInt();
@@ -449,7 +450,7 @@ void TrenTetrisExecute::setGlass(const QJsonObject &objGlass)
     static_cast<TetrisFigure*>(m_wgtNextFigure)->setCubeFileName(":/images/Games/" + m_cubeImageFileName);
     static_cast<TetrisFigure*>(m_wgtNextFigurePW)->setCubeFileName(":/images/Games/" + m_cubeImageFileName);
 
-    m_glass->setIsShowGrid(true);
+    m_glass->setIsShowGrid(m_isShowGrid);
 //    m_glass->setIsShowFigurePos(true);
 }
 

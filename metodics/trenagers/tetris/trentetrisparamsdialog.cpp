@@ -36,6 +36,7 @@ void TrenTetrisParamsDialog::setParams(const QJsonObject &params)
     ui->cbComplexityMode->setCurrentIndex(cm);
     auto dm = TrenTetrisDefines::DeletingModeValueIndex.value(params["deleting"].toString());
     ui->cbDeleteMode->setCurrentIndex(dm);
+    ui->cbIsShowGrid->setChecked(params["is_show_grid"].toBool(false));
 
     auto objPhisioChan = params["phisio_chan"].toObject();
     ui->cbUseAdvancedChannel->setChecked(objPhisioChan["enabled"].toBool());
@@ -55,7 +56,7 @@ QJsonObject TrenTetrisParamsDialog::getParams()
     m_params["complexity"] = cm;
     auto dm = TrenTetrisDefines::DeletingValueName.value(static_cast<TrenTetrisDefines::DeletingMode>(ui->cbDeleteMode->currentIndex()));
     m_params["deleting"] = dm;
-
+    m_params["is_show_grid"] = ui->cbIsShowGrid->isChecked();
 
     QJsonObject objPhisioChan;
     objPhisioChan["enabled"] = ui->cbUseAdvancedChannel->isChecked();

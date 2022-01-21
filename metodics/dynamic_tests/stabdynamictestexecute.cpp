@@ -40,7 +40,6 @@ StabDynamicTestExecute::StabDynamicTestExecute(QWidget *parent) :
 
     ui->wgtAdvChannels->setVisible(false);
     ui->btnCalibrate->setVisible(false);
-
 }
 
 StabDynamicTestExecute::~StabDynamicTestExecute()
@@ -195,6 +194,10 @@ void StabDynamicTestExecute::start()
         if (QApplication::desktop()->screenCount() > 1)
             createAndShowPatientWindow();
         ui->cbScale->setCurrentIndex(0);
+        QTimer::singleShot(100, [&]  //! Пока процесс создания не завершен, масштаб отображается некорректно, если просто вызывать
+        {
+            scaleChange(ui->cbScale->currentIndex());
+        });
 
         ui->wgtAdvChannels->assignDriver(m_driver, m_trd);
         //! Стабилограмма будет записана всегда
