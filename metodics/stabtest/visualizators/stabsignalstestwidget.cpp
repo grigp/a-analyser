@@ -775,7 +775,7 @@ void StabSignalsTestWidget::printTwoPortrait(QPrinter *printer, QPainter *painte
                         static_cast<int>(paper.y() + paper.height() / 10 * 4.5),
                         paper.width() / 10 * 8,
                         static_cast<int>(paper.height() * 0.15));
-        ReportElements::drawTable(painter, mdlRF, rectTableRF, QList<int>() << 5 << 2,
+        ReportElements::drawTable(painter, mdlRF, rectTableRF, QList<int>() << 5 << 3,
                                   ReportElements::Table::tvsStretched, 10, -1, QFont::Bold);
 
         DataDefines::TestInfo ti;
@@ -823,10 +823,10 @@ void StabSignalsTestWidget::printTwoLandscape(QPrinter *printer, QPainter *paint
                                    static_cast<int>(paper.y() + paper.height() / 10 * 1.5));
 
         QRect rectTableRF(static_cast<int>(paper.x() + paper.width() / 12),
-                        static_cast<int>(paper.y() + paper.height() / 10 * 7),
+                        static_cast<int>(paper.y() + paper.height() / 10 * 6.5),
                         static_cast<int>(paper.width() / 10 * 4),
                         static_cast<int>(paper.height() * 0.15));
-        ReportElements::drawTable(painter, mdlRF, rectTableRF, QList<int>() << 5 << 3,
+        ReportElements::drawTable(painter, mdlRF, rectTableRF, QList<int>() << 5 << 2,
                                   ReportElements::Table::tvsStretched, 10, -1, QFont::Bold);
 
         DataDefines::TestInfo ti;
@@ -838,7 +838,7 @@ void StabSignalsTestWidget::printTwoLandscape(QPrinter *printer, QPainter *paint
                 ReportElements::drawWidget(painter, tvRombergNorms,
                                            static_cast<int>(paper.width() * 0.45), static_cast<int>(paper.height() * 0.25),
                                            static_cast<int>(paper.x() + paper.width() / 10 * 5),
-                                           static_cast<int>(paper.y() + paper.height() / 10 * 7));
+                                           static_cast<int>(paper.y() + paper.height() / 10 * 8));
             }
         }
 
