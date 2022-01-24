@@ -146,7 +146,7 @@ void ResultsWidget::onRemoveTests(const QModelIndex &parent, int first, int last
     Q_UNUSED(first);
     Q_UNUSED(last);
 //    m_selectedRow = -1;
-//    closeTest();
+    closeTest();
 //    ui->tvTests->selectionModel()->clearCurrentIndex();
 }
 
@@ -217,8 +217,9 @@ void ResultsWidget::openTest(const QString testUid)
 
 void ResultsWidget::closeTestIfNotSelection()
 {
-    if (ui->tvTests->selectionModel()->selectedIndexes().size() == 0)
-        closeTest();
+    closeTest();
+//    if (ui->tvTests->selectionModel()->selectedIndexes().size() == 0) Непонятно, для чего это вводилось, но при этом результаты не очищались
+//        closeTest();
 }
 
 void ResultsWidget::saveSplitterPosition()
