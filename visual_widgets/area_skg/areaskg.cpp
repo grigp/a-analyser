@@ -28,6 +28,7 @@ AreaSKG::AreaSKG(QWidget *parent) :
 {
     ui->setupUi(this);
     m_targets.clear();
+    m_trgtXY.clear();
     QTimer::singleShot(20, [=]()
     {
         setAreaSKG();
@@ -176,6 +177,7 @@ void AreaSKG::addTarget(const double x, const double y, const QColor colorBackgr
 {
     QGraphicsRectItem* target = m_sceneSKG->addRect(QRectF(0, 0, 10, 10), colorBorder, colorBackground);
     m_targets.append(target);
+    m_trgtXY.append(QPointF(x, y));
 
     setTarget(x, y, m_targets.size() - 1);
 }
@@ -186,6 +188,7 @@ void AreaSKG::setTarget(const double x, const double y, const int idx)
     double prop = static_cast<double>(minS / 2 - AreaSKGDefines::I_LABEL_SPACE) / static_cast<double>(m_diap);
     m_targets.at(idx)->setPos(x * prop - m_targets.at(idx)->boundingRect().width() / 2,
                               - y * prop - m_targets.at(idx)->boundingRect().height() / 2);
+    m_trgtXY.replace(idx, QPointF(x, y));
 }
 
 void AreaSKG::clearTargets()
@@ -195,6 +198,7 @@ void AreaSKG::clearTargets()
         foreach (auto target, m_targets)
             m_sceneSKG->removeItem(target);
         m_targets.clear();
+        m_trgtXY.clear();
     }
 }
 
@@ -221,6 +225,13 @@ void AreaSKG::setVisibleSKG(const bool isVisible)
 void AreaSKG::resizeEvent(QResizeEvent *event)
 {
     ui->panSKG->ensureVisible(QRectF(-m_diap, -m_diap, m_diap * 2, m_diap * 2));
+
+    if (m_targets.size() > 0)
+    {
+        for (int i = 0; i < m_targets.size(); ++i)
+            setTarget(m_trgtXY.at(i).x(), m_trgtXY.at(i).y(), i);
+    }
+
     QWidget::resizeEvent(event);
 }
 

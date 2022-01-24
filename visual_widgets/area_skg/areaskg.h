@@ -160,6 +160,7 @@ private:
     BrokenLinesSKG* m_brokenLinesSKG {nullptr};
     QGraphicsRectItem* m_marker {nullptr};
     QList<QGraphicsItem*> m_targets;
+    QList<QPointF> m_trgtXY;
 
     QColor m_markerColor {Qt::red};
 
