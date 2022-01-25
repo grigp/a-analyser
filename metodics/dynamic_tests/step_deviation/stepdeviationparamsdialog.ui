@@ -77,7 +77,7 @@
          <item>
           <widget class="QLabel" name="lblMaxTime">
            <property name="text">
-            <string>Длительность этапа пробы, сек</string>
+            <string>Максимальная длительность записи, сек</string>
            </property>
           </widget>
          </item>

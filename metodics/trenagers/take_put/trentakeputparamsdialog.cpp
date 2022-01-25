@@ -1,6 +1,7 @@
 #include "trentakeputparamsdialog.h"
 #include "ui_trentakeputparamsdialog.h"
 
+#include <QTime>
 #include <QFile>
 
 TrenTakePutParamsDialog::TrenTakePutParamsDialog(QWidget *parent) :
@@ -23,7 +24,8 @@ void TrenTakePutParamsDialog::setParams(const QJsonObject &params)
 {
     m_params = params;
 
-    ui->edGameTime->setValue(params["time"].toInt());
+    auto tm = params["time"].toInt();
+    ui->edGameTime->setTime(QTime(0, tm / 60, tm % 60));
     ui->cbScale->setCurrentIndex(params["scale"].toInt());
 
     auto objPhisioChan = params["phisio_chan"].toObject();
@@ -35,7 +37,8 @@ void TrenTakePutParamsDialog::setParams(const QJsonObject &params)
 
 QJsonObject TrenTakePutParamsDialog::getParams()
 {
-    m_params["time"] = ui->edGameTime->value();
+    auto tm = ui->edGameTime->time();
+    m_params["time"] = tm.minute() * 60 + tm.second();
     m_params["scale"] = ui->cbScale->currentIndex();
 
     QJsonObject objPhisioChan;

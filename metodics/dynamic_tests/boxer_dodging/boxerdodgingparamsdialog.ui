@@ -53,24 +53,15 @@
           </spacer>
          </item>
          <item>
-          <widget class="QSpinBox" name="edTime">
+          <widget class="QTimeEdit" name="edTime">
            <property name="minimumSize">
             <size>
              <width>70</width>
              <height>0</height>
             </size>
            </property>
-           <property name="minimum">
-            <number>120</number>
-           </property>
-           <property name="maximum">
-            <number>300</number>
-           </property>
-           <property name="singleStep">
-            <number>10</number>
-           </property>
-           <property name="value">
-            <number>180</number>
+           <property name="displayFormat">
+            <string>mm:ss</string>
            </property>
           </widget>
          </item>
