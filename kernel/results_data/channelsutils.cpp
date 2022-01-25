@@ -156,7 +156,7 @@ ChannelsUtils::ChannelsUtils()
                                                                                     QString("EvolventaRes"),
                                                                                     ChannelsDefines::ctEvolventaResult))
                  , std::pair<QString, ChannelsDefines::ChannelInfo>(ChannelsDefines::chanOctaedronResult,
-                                                                    std::make_tuple(QString("Результаты тренажера \"Октаедр\""),
+                                                                    std::make_tuple(QString("Результаты тренажера \"Октаэдр\""),
                                                                                     QString("OctaedronRes"),
                                                                                     ChannelsDefines::ctOctaedronResult))
                  , std::pair<QString, ChannelsDefines::ChannelInfo>(ChannelsDefines::chanBoxerDodgingResult,

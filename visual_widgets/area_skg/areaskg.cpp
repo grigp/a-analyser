@@ -28,7 +28,6 @@ AreaSKG::AreaSKG(QWidget *parent) :
 {
     ui->setupUi(this);
     m_targets.clear();
-    m_trgtXY.clear();
     QTimer::singleShot(20, [=]()
     {
         setAreaSKG();
@@ -176,9 +175,7 @@ void AreaSKG::setColorMarker(const QColor &color)
 void AreaSKG::addTarget(const double x, const double y, const QColor colorBackground, const QColor colorBorder)
 {
     QGraphicsRectItem* target = m_sceneSKG->addRect(QRectF(0, 0, 10, 10), colorBorder, colorBackground);
-    m_targets.append(target);
-    m_trgtXY.append(QPointF(x, y));
-
+    m_targets.append(TargetInfo(target, QPointF(x, y)));
     setTarget(x, y, m_targets.size() - 1);
 }
 
@@ -186,9 +183,12 @@ void AreaSKG::setTarget(const double x, const double y, const int idx)
 {
     int minS = qMin(ui->panSKG->width(), ui->panSKG->height());
     double prop = static_cast<double>(minS / 2 - AreaSKGDefines::I_LABEL_SPACE) / static_cast<double>(m_diap);
-    m_targets.at(idx)->setPos(x * prop - m_targets.at(idx)->boundingRect().width() / 2,
-                              - y * prop - m_targets.at(idx)->boundingRect().height() / 2);
-    m_trgtXY.replace(idx, QPointF(x, y));
+    auto target = m_targets.at(idx);
+    target.item->setPos(x * prop - m_targets.at(idx).item->boundingRect().width() / 2,
+                        - y * prop - m_targets.at(idx).item->boundingRect().height() / 2);
+    target.pos.setX(x);
+    target.pos.setY(y);
+    m_targets.replace(idx, target);
 }
 
 void AreaSKG::clearTargets()
@@ -196,9 +196,8 @@ void AreaSKG::clearTargets()
     if (m_targets.size() > 0)
     {
         foreach (auto target, m_targets)
-            m_sceneSKG->removeItem(target);
+            m_sceneSKG->removeItem(target.item);
         m_targets.clear();
-        m_trgtXY.clear();
     }
 }
 
@@ -229,7 +228,7 @@ void AreaSKG::resizeEvent(QResizeEvent *event)
     if (m_targets.size() > 0)
     {
         for (int i = 0; i < m_targets.size(); ++i)
-            setTarget(m_trgtXY.at(i).x(), m_trgtXY.at(i).y(), i);
+            setTarget(m_targets.at(i).pos.x(), m_targets.at(i).pos.y(), i);
     }
 
     QWidget::resizeEvent(event);

@@ -153,14 +153,21 @@ private:
 
     QColor getFrameColor(const QColor color) const;
 
+    struct TargetInfo
+    {
+        QGraphicsItem* item;
+        QPointF pos;
+        TargetInfo(QGraphicsItem* itm, QPointF pt)
+            : item(itm), pos(pt) {}
+    };
+
     QGraphicsScene* m_sceneSKG {nullptr};
     GridSKG* m_gridSKG {nullptr};
     TraceSKG* m_traceSKG {nullptr};
     LineSKG* m_lineSKG {nullptr};
     BrokenLinesSKG* m_brokenLinesSKG {nullptr};
     QGraphicsRectItem* m_marker {nullptr};
-    QList<QGraphicsItem*> m_targets;
-    QList<QPointF> m_trgtXY;
+    QList<TargetInfo> m_targets;
 
     QColor m_markerColor {Qt::red};
 
