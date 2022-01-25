@@ -340,6 +340,8 @@ void TrenTakePutExecute::on_recording()
 {
     TrenStabExecute::on_recording();
 
+    setTemporaryElements();
+    m_gameStage = TrenTakePutDefines::gsTake;
     m_errorsCount = 0;
     changeErrors(0);
 }

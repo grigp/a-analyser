@@ -118,6 +118,8 @@ void TrenTetrisExecute::on_recording()
 {
     TrenStabExecute::on_recording();
 
+    m_glass->clear();
+    m_tmStage = TrenTetrisDefines::tmsTake;
     m_rowsDeleted = 0;
     changeRowsDeleted(0);
 }
