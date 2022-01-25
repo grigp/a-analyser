@@ -88,6 +88,7 @@ void TrenExecute::start()
         m_kard = static_cast<AAnalyserApplication*>(QApplication::instance())->getSelectedPatient();
         MetodicDefines::MetodicInfo mi = static_cast<AAnalyserApplication*>(QApplication::instance())->getSelectedMetodic();
         m_trd->newTest(m_kard.uid, mi.uid);
+        m_trd->newProbe(mi.name);
 
         //! По формату получаем список каналов этого формата, которые передает драйвер, заносим их в список для выбора
         setMainChannels();
@@ -99,6 +100,7 @@ void TrenExecute::start()
         ui->wgtAdvChannels->assignDriver(m_driver, m_trd);
         //! Стабилограмма будет записана всегда
         ui->wgtAdvChannels->setAllwaysRecordingChannel(ui->cbSelectChannel->currentData(ChannelsUtils::ChannelUidRole).toString());
+        ui->wgtAdvChannels->newProbe();
         auto val = SettingsProvider::valueFromRegAppCopy("AdvancedChannelsWidget", "SplitterProbePosition").toByteArray();
         ui->splitter->restoreState(val);
 
@@ -198,15 +200,16 @@ void TrenExecute::on_recording()
         ui->btnRecord->setIcon(QIcon(":/images/SaveNO.png"));
         ui->btnRecord->setText(tr("Прервать"));
 
-        MetodicDefines::MetodicInfo mi = static_cast<AAnalyserApplication*>(QApplication::instance())->getSelectedMetodic();
-        m_trd->newProbe(mi.name);
-        ui->wgtAdvChannels->newProbe();
+//        MetodicDefines::MetodicInfo mi = static_cast<AAnalyserApplication*>(QApplication::instance())->getSelectedMetodic();
+//        m_trd->newProbe(mi.name);
+//        ui->wgtAdvChannels->newProbe();  Не сбрасывает запись каналов
     }
     else
     {
         ui->btnRecord->setIcon(QIcon(":/images/Save.png"));
         ui->btnRecord->setText(tr("Запись"));
 
+        //! Проба была прервана - очистить сигналы
         ui->wgtAdvChannels->abortProbe();
     }
 
