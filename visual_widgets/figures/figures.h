@@ -38,7 +38,7 @@ protected:
 private:
     Ui::Figures *ui;
 
-    int m_size {100};
+    int m_size {200};
     FigureType m_ft {ftEllipse};
     QColor m_color {Qt::white};
     QColor m_backgroundColor {Qt::darkGray};
