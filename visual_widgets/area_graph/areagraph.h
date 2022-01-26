@@ -71,6 +71,10 @@ public:
     bool isFillBetweenSubchans() const {return m_isFillBetweenSubchans;}
     void setIsFillBetweenSubchans(const bool isFill) {m_isFillBetweenSubchans = isFill;}
 
+    void setLegend(const QStringList &legend);
+    QString legend(const int idx);
+    int legendSize() const {return m_legend.size();}
+
 private:
     /*!
      * \brief Расчет среднего значения по каждому отведению сигнала
@@ -90,6 +94,7 @@ private:
     int m_cursorPos {-1};   ///< Номер отсчета, на котором стоит курсор
     QList<MarkerInfo> m_markers;
     bool m_isFillBetweenSubchans {false};
+    QStringList m_legend;   ///< Описание подканалов
 };
 
 /*!
@@ -114,6 +119,7 @@ public:
     /*!
      * \brief Добавляет зону построения графика с (блэкджеком и шлюхами) сигналом и номером отведения
      * \param signal - сигнал
+     * \param name - название зоны
      * \param numSubChan - номер отведения
      */
     void appendSignal(SignalAccess* signal, const QString &name, const int numSubChan = -1);
@@ -128,6 +134,13 @@ public:
      * \param areaNum - номер зоны построения
      */
     GraphArea* area(const int areaNum) const;
+
+    /*!
+     * \brief Устанавливает описание сигналов для зоны
+     * \param areaNum - номер зоны
+     * \param legend - список строк с описанием сигналов по каждому подканалу
+     */
+    void setLegend(const int areaNum, const QStringList &legend);
 
     /*!
      * \brief Очищает все зоны построения и удаляет их

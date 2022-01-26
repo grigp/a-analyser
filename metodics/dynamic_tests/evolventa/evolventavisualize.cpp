@@ -297,6 +297,7 @@ void EvolventaVisualize::showEvolventa()
     auto *sigX = m_calculator->frontal();
     double max = sigX->absMaxValue();
     ui->wgtGraphX->appendSignal(sigX, tr("Фронталь"));
+    ui->wgtGraphX->setLegend(0, QStringList() << "Траектория" << "Цель");
     ui->wgtGraphX->setDiapazone(0, -max, max);
     ui->wgtGraphX->addMarker(0, m_calculator->timeUpwinding(), EvolventaDefines::StageValueName.value(EvolventaDefines::stgUpwinding));
     ui->wgtGraphX->addMarker(0, m_calculator->timeHold(), EvolventaDefines::StageValueName.value(EvolventaDefines::stgHold));
@@ -307,6 +308,7 @@ void EvolventaVisualize::showEvolventa()
     auto *sigY = m_calculator->sagittal();
     max = sigY->absMaxValue();
     ui->wgtGraphY->appendSignal(sigY, tr("Сагитталь"));
+    ui->wgtGraphY->setLegend(0, QStringList() << "Траектория" << "Цель");
     ui->wgtGraphY->setDiapazone(0, -max, max);
     ui->wgtGraphY->addMarker(0, m_calculator->timeUpwinding(), EvolventaDefines::StageValueName.value(EvolventaDefines::stgUpwinding));
     ui->wgtGraphY->addMarker(0, m_calculator->timeHold(), EvolventaDefines::StageValueName.value(EvolventaDefines::stgHold));

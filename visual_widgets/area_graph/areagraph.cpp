@@ -61,6 +61,12 @@ GraphArea *AreaGraph::area(const int areaNum) const
     return m_areases.at(areaNum);
 }
 
+void AreaGraph::setLegend(const int areaNum, const QStringList &legend)
+{
+    Q_ASSERT(areaNum >= 0 && areaNum < m_areases.size());
+    m_areases.at(areaNum)->setLegend(legend);
+}
+
 void AreaGraph::clear()
 {
     foreach (auto* area, m_areases)
@@ -344,6 +350,30 @@ void AreaGraph::paintEvent(QPaintEvent *event)
                 painter.drawLine(x, axisY, x, axisY - zoneH);
                 painter.drawText(x + 5, axisY - 5, m_areases.at(iz)->marker(i).comment);
             }
+
+            //! Описание подканалов (легенда)
+            if (m_areases.at(iz)->numSubChan() == -1 &&
+                    m_areases.at(iz)->legendSize() == m_areases.at(iz)->signal()->subChansCount())
+            {
+                int max = 0;
+                for (int i = 0; i < m_areases.at(iz)->legendSize(); ++i)
+                {
+                    auto size = BaseUtils::getTextSize(&painter, m_areases.at(iz)->legend(i));
+                    if (size.width() > max)
+                        max = size.width();
+                }
+                for (int i = 0; i < m_areases.at(iz)->legendSize(); ++i)
+                {
+                    painter.setPen(QPen(m_areases.at(iz)->color(i), 1, Qt::SolidLine, Qt::FlatCap));
+                    auto size = BaseUtils::getTextSize(&painter, m_areases.at(iz)->legend(i));
+                    painter.drawLine(width() - RightSpace - max - 30, axisY - size.height() * 2 + i * size.height(),
+                                     width() - RightSpace - max - 10, axisY - size.height() * 2 + i * size.height());
+                    painter.setPen(QPen(m_envColors.colorAxis, 1, Qt::SolidLine, Qt::FlatCap));
+                    painter.drawText(width() - RightSpace - max,
+                                     axisY - size.height() * 2 + i * size.height() + size.height() / 4,
+                                     m_areases.at(iz)->legend(i));
+                }
+            }
         }
     }
 
@@ -425,6 +455,17 @@ void GraphArea::addMarker(const int pos, const QString comment)
     mi.position = pos;
     mi.comment = comment;
     m_markers.append(mi);
+}
+
+void GraphArea::setLegend(const QStringList &legend)
+{
+    m_legend = legend;
+}
+
+QString GraphArea::legend(const int idx)
+{
+    Q_ASSERT(idx >= 0 && idx < m_legend.size());
+    return m_legend.at(idx);
 }
 
 void GraphArea::computeAverageValue()
