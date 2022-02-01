@@ -19,6 +19,13 @@ namespace AAnalyserDefines
 //! uid сборки
 static const QString BuildUid = "{CA26008C-79DE-4DD7-A1A9-4FACAF79A283}";
 
+//! Главная иконка приложения
+static const QString MainIcon = ":/images/MainIcon2.ico";
+
+//! Текст главного окна приложения
+static const QString MainWindowTitle = "Физиологические исследования a-analyzer";
+
+
 //! Имя файла предустановленных методик. Это заголовок имени.
 //! Полное имя формируется так:
 //! PresetsMetodicsFileName + '.json' - русская версия

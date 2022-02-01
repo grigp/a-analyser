@@ -19,6 +19,13 @@ namespace AAnalyserDefines
 //! uid сборки
 static const QString BuildUid = "{FF360170-015F-4825-9CD1-BCDC5A16B9C5}";
 
+//! Главная иконка приложения
+static const QString MainIcon = ":/images/MainIcon_Dopusk.ico";
+
+//! Текст главного окна приложения
+static const QString MainWindowTitle = "Допусковый контроль А-Мед";
+
+
 //! Имя файла предустановленных методик. Это заголовок имени.
 //! Полное имя формируется так:
 //! PresetsMetodicsFileName + '.json' - русская версия

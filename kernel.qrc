@@ -189,5 +189,10 @@
         <file>images/up200.png</file>
         <file>images/Methodics/Triangle.png</file>
         <file>images/Animate/Triangles.png</file>
+        <file>images/MainIcon_Dopusk.ico</file>
+        <file>images/MainIcon_stab.ico</file>
+        <file>images/MainIcon_DCI.ico</file>
+        <file>images/MainIcon_sch.ico</file>
+        <file>images/MainIcon_Tester.ico</file>
     </qresource>
 </RCC>

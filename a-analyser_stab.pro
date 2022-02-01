@@ -10,7 +10,7 @@ QT       += core gui serialport multimedia printsupport
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-TARGET = a-analyzer
+TARGET = a-med_stab
 CONFIG += c++11
 TEMPLATE = app
 
@@ -70,3 +70,5 @@ FORMS += \
 
 RESOURCES += \
     kernel.qrc
+
+win32:RC_FILE = a-analyzer_stab.rc
