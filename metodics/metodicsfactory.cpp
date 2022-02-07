@@ -3,21 +3,7 @@
 #include "aanalyserapplication.h"
 #include "aanalyserdefines.h"
 #include "metodictemplate.h"
-#include "stabtesttemplate.h"
-#include "extend3dgamestemplate.h"
-#include "jumptesttemplate.h"
-#include "jumpheighttesttemplate.h"
-#include "teppingtesttemplate.h"
-#include "trentakeputtemplate.h"
-#include "trentetristemplate.h"
-#include "droptesttemplate.h"
-#include "crosstemplate.h"
-#include "stepoffsettemplate.h"
-#include "stepdeviationtemplate.h"
-#include "triangletemplate.h"
-#include "evolventatemplate.h"
-#include "octaedrontemplate.h"
-#include "boxerdodgingtemplate.h"
+#include "aanalyserbuild.h"
 #include "datadefines.h"
 #include "dataprovider.h"
 
@@ -151,23 +137,7 @@ void MetodicsFactory::print(QPrinter *printer, const QString &testUid) const
 
 void MetodicsFactory::assignTemplates()
 {
-
-    m_templates << new StabTestTemplate(this)
-                << new Extend3DGamesTemplate(this)
-                << new JumpTestTemplate(this)
-                << new JumpHeightTestTemplate(this)
-                << new TeppingTestTemplate(this)
-                << new DropTestTemplate(this)
-                << new TrenTetrisTemplate(this)
-                << new TrenTakePutTemplate(this)
-                << new CrossTemplate(this)
-                << new StepOffsetTemplate(this)
-                << new StepDeviationTemplate(this)
-                << new TriangleTemplate(this)
-                << new EvolventaTemplate(this)
-                << new OctaedronTemplate(this)
-                << new BoxerDodgingTemplate(this);
-
+    m_templates << AAnalyserBuild::getBuildTemplates(this);
 }
 
 void MetodicsFactory::assignMetodics()

@@ -1,24 +1,8 @@
 #include "factorsfactory.h"
 
+#include "aanalyserbuild.h"
+
 #include "classicfactors.h"
-#include "vectorfactors.h"
-#include "ratioprobesfactors.h"
-#include "jumpheightsinglefactors.h"
-#include "jumpheightfactors.h"
-#include "teppingtestfactors.h"
-#include "droptestfactors.h"
-#include "hoppingfactors.h"
-#include "idsfactors.h"
-#include "targetfactors.h"
-#include "trenresultfactors.h"
-#include "crossfactors.h"
-#include "stepoffsetfactors.h"
-#include "evolventafactors.h"
-#include "octaedronfactors.h"
-#include "boxerdodgingmultifactor.h"
-#include "stepdeviationfactors.h"
-#include "trianglefactors.h"
-#include "triangleconslutionfactors.h"
 
 #include <QTimer>
 #include <QDebug>
@@ -28,25 +12,7 @@ FactorsFactory::FactorsFactory(QObject *parent) : QObject(parent)
     //! Регистрация показателей из факторсгрупп
     QTimer::singleShot(0, [=]()
     {
-        ClassicFactors::registerFactors();
-        VectorFactors::registerFactors();
-        RatioProbesFactors::registerFactors();
-        JumpHeightSingleFactors::registerFactors();
-        JumpHeightFactors::registerFactors();
-        TeppingTestFactors::registerFactors();
-        DropTestFactors::registerFactors();
-        HoppingFactors::registerFactors();
-        IDSFactors::registerFactors();
-        TargetFactors::registerFactors();
-        TrenResultFactors::registerFactors();
-        CrossFactors::registerFactors();
-        StepOffsetFactors::registerFactors();
-        EvolventaFactors::registerFactors();
-        OctaedronFactors::registerFactors();
-        BoxerDodgingMultifactor::registerFactors();
-        StepDeviationFactors::registerFactors();
-        TriangleFactors::registerFactors();
-        TriangleConslutionFactors::registerFactors();
+        AAnalyserBuild::registerFactors();
     });
 }
 
