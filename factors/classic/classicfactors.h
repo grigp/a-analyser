@@ -106,24 +106,24 @@ private:
     ClassicFactorsDefines::Ellipse m_ellipse;
 };
 
-///<------------------------------------------------------------------------------------
-class ClassicFactorsCreator: public ChannelFactorsCreator
-{
-public:
-    ClassicFactorsCreator() {}
-    ChannelMultifactor* createFactors(const QString &testUid,
-                                      const QString &probeUid,
-                                      const QString &channelId,
-                                      QObject *parent = nullptr) override
-    {return new ClassicFactors(testUid, probeUid, channelId, parent);}
+/////<------------------------------------------------------------------------------------
+//class ClassicFactorsCreator: public ChannelFactorsCreator
+//{
+//public:
+//    ClassicFactorsCreator() {}
+//    ChannelMultifactor* createFactors(const QString &testUid,
+//                                      const QString &probeUid,
+//                                      const QString &channelId,
+//                                      QObject *parent = nullptr) override
+//    {return new ClassicFactors(testUid, probeUid, channelId, parent);}
 
-    bool isValid(const QString &testUid,
-                 const QString &probeUid,
-                 const QString &channelId) const override
-    {
-        return ClassicFactors::isValid(testUid, probeUid, channelId);
-    }
+//    bool isValid(const QString &testUid,
+//                 const QString &probeUid,
+//                 const QString &channelId) const override
+//    {
+//        return ClassicFactors::isValid(testUid, probeUid, channelId);
+//    }
 
-};
+//};
 
 #endif // CLASSICFACTORS_H

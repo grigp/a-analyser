@@ -2,7 +2,7 @@
 
 #include "aanalyserbuild.h"
 
-#include "classicfactors.h"
+//#include "classicfactors.h"
 
 #include <QTimer>
 #include <QDebug>
@@ -42,7 +42,7 @@ void FactorsFactory::registerFactor(const QString &uid, const QString &groupUid,
 void FactorsFactory::registerGroup(const QString &uid, const QString &name)
 {
     m_groups.insert(uid, name);
-    if (uid == ClassicFactorsDefines::GroupUid)
-        m_creatorsChannel.insert(uid, new ClassicFactorsCreator());
+//    if (uid == ClassicFactorsDefines::GroupUid)
+//        m_creatorsChannel.insert(uid, new ClassicFactorsCreator());
 }
 

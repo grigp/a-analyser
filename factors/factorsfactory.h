@@ -57,7 +57,7 @@ private:
 
     QMap<QString, TestFactorsCreator*> m_creatorsTest;
     QMap<QString, ProbeFactorsCreator*> m_creatorsProbe;
-    QMap<QString, ChannelFactorsCreator*> m_creatorsChannel;
+//    QMap<QString, ChannelFactorsCreator*> m_creatorsChannel;
 };
 
 #endif // FACTORSFACTORY_H
