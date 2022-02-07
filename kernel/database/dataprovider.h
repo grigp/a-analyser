@@ -33,8 +33,9 @@ bool getPatient(const QString &uid, DataDefines::PatientKard &patient);
  * Если карточка имеется, то обновляет в ней данные,
  * если нет, то добавляет пациента
  * \param patient - карточка пациента
+ * \return uid пациента
  */
-void updatePatient(const DataDefines::PatientKard &patient);
+QString updatePatient(const DataDefines::PatientKard &patient);
 
 /*!
  * \brief Удаляет запись о пациенте

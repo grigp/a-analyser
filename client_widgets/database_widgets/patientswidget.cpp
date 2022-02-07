@@ -100,8 +100,26 @@ void PatientsWidget::addPatient()
         patient.sex = dialog->sex();
         patient.massa = dialog->massa();
         patient.height = dialog->height();
-        m_mdlPatients->addPatient(patient);
+        auto uidNew = m_mdlPatients->addPatient(patient);
         ui->tvPatients->header()->resizeSections(QHeaderView::ResizeToContents);
+
+        //! Выделение добавленной записи
+        for (int i = 0; i < m_mdlPatients->rowCount(); ++i)
+        {
+            auto index = m_mdlPatients->index(i, 0);
+            auto idx = m_pmdlPatients->mapFromSource(index);
+            if (idx.isValid())
+            {
+                QString uid = idx.data(PatientsModel::PatientsModelRoles::PatientUidRole).toString();
+                if (uid == uidNew)
+                {
+                    ui->tvPatients->selectionModel()->select(idx, QItemSelectionModel::Select);
+                    ui->tvPatients->scrollTo(idx);
+                    static_cast<AAnalyserApplication*>(QApplication::instance())->doSelectPatient(uid);
+                    break;
+                }
+            }
+        }
     });
     dialog->show();
 }

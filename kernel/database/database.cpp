@@ -54,12 +54,15 @@ bool DataBase::getPatient(const QString &uid, DataDefines::PatientKard &patient)
     return false;
 }
 
-void DataBase::updatePatient(const DataDefines::PatientKard &patient)
+QString DataBase::updatePatient(const DataDefines::PatientKard &patient)
 {
     if (patient.uid == "" || !patientExists(patient.uid))
-        createPatientRec(patient);
+        return createPatientRec(patient);
     else
+    {
         updatePatientRec(patient);
+        return patient.uid;
+    }
 }
 
 void DataBase::removePatient(const QString &uid)
@@ -793,7 +796,7 @@ QString DataBase::personalNormFileName(const QString &patientUid, const QString 
 }
 
 
-void DataBase::createPatientRec(const DataDefines::PatientKard patient)
+QString DataBase::createPatientRec(const DataDefines::PatientKard patient)
 {
     QString uid = patient.uid;
     if (uid == "")
@@ -815,6 +818,7 @@ void DataBase::createPatientRec(const DataDefines::PatientKard patient)
 
         fPatientRec.close();
     }
+    return uid;
 }
 
 bool DataBase::readTableRec(const QString &fullFileName, QJsonObject &rec) const

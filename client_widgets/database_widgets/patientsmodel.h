@@ -36,13 +36,16 @@ public:
      * \brief Добавляет запись о пациенте
      * \param patient - запись о пациенте
      */
-    void addPatient(DataDefines::PatientKard &patient);
+    QString addPatient(DataDefines::PatientKard &patient);
 
     /*!
      * \brief Удаляет запись о пациенте
      * \param uid - uid пациента
      */
     void removePatient(const QString &uid);
+
+private:
+    void addPatientInModel(DataDefines::PatientKard &patient);
 };
 
 #endif // PATIENTSMODEL_H

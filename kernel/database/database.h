@@ -38,8 +38,9 @@ public:
      * Если карточка имеется, то обновляет в ней данные,
      * если нет, то добавляет пациента
      * \param patient - карточка пациента
+     * \return uid пациента
      */
-    void updatePatient(const DataDefines::PatientKard &patient);
+    QString updatePatient(const DataDefines::PatientKard &patient);
 
     /*!
      * \brief Удаляет запись о пациенте
@@ -315,7 +316,7 @@ private:
 
     QString personalNormFileName(const QString &patientUid, const QString &methodicUid, const QString &conditionUid) const;
 
-    void createPatientRec(const DataDefines::PatientKard patient);
+    QString createPatientRec(const DataDefines::PatientKard patient);
 
     /*!
      * \brief Читает запись из файла, как запись в таблице в виде QJsonObject
