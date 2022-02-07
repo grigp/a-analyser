@@ -38,12 +38,12 @@ DEFINES += QT_DEPRECATED_WARNINGS
 include(build/dopusk/dopusk_src.pri)
 include(client_widgets/client_widgets_src.pri)
 include(kernel/kernel_src.pri)
-include(metodics/metodics_src.pri)
+include(metodics/metodics_dopusk_src.pri)
 include(metodics_common/metodics_common_src.pri)
 include(drivers/drivers_src.pri)
 include(service/service_src.pri)
-include(visual_widgets/visual_widgets_src.pri)
-include(factors/factors_src.pri)
+include(visual_widgets/visual_widgets_dopusk_src.pri)
+include(factors/factors_dopusk_src.pri)
 
 SOURCES += \
         main.cpp \

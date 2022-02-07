@@ -39,11 +39,11 @@ include(build/stab/stab_src.pri)
 include(client_widgets/client_widgets_src.pri)
 include(kernel/kernel_src.pri)
 include(metodics_common/metodics_common_src.pri)
-include(metodics/metodics_src.pri)
+include(metodics/metodics_stab_src.pri)
 include(drivers/drivers_src.pri)
 include(service/service_src.pri)
 include(visual_widgets/visual_widgets_src.pri)
-include(factors/factors_src.pri)
+include(factors/factors_stab_src.pri)
 
 SOURCES += \
         main.cpp \
