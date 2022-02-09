@@ -35,10 +35,11 @@ private slots:
     void editTestProperty();
     void printReport();
 
+    void signalsAnalysis();
+
     void selectResult();
     void selectDynamic();
 
-private slots:
     void print(QPrinter* printer);
 
 

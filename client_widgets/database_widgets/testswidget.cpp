@@ -105,6 +105,16 @@ void TestsWidget::printReport()
         QMessageBox::information(nullptr, tr("Предупрежение"), tr("Не выбран тест"));
 }
 
+void TestsWidget::signalsAnalysis()
+{
+    if (m_selectedTestUid != "")
+    {
+        static_cast<AAnalyserApplication*>(QApplication::instance())->signalsAnalysis();
+    }
+    else
+        QMessageBox::information(nullptr, tr("Предупрежение"), tr("Не выбран тест"));
+}
+
 void TestsWidget::print(QPrinter* printer)
 {
     MetodicsFactory *metFactory = static_cast<AAnalyserApplication*>(QApplication::instance())->getMetodics();

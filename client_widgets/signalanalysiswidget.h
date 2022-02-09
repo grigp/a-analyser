@@ -1,25 +1,26 @@
-#ifndef EXECUTEWIDGET_H
-#define EXECUTEWIDGET_H
+#ifndef SIGNALANALYSISWIDGET_H
+#define SIGNALANALYSISWIDGET_H
 
 #include <QWidget>
 #include "clientwidget.h"
 
 namespace Ui {
-class ExecuteWidget;
+class SignalAnalysisWidget;
 }
 
 namespace ClientWidgets
 {
-    static const QString uidExecuteWidgetUid = "CW_Execute";
+    static const QString uidSignalAnalysisWidgetUid = "CW_SignalAnalysis";
 }
 
-class ExecuteWidget : public ClientWidget
+
+class SignalAnalysisWidget : public ClientWidget
 {
     Q_OBJECT
 
 public:
-    explicit ExecuteWidget(QWidget *parent = nullptr);
-    ~ExecuteWidget() override;
+    explicit SignalAnalysisWidget(QWidget *parent = nullptr);
+    ~SignalAnalysisWidget() override;
 
     /*!
      * \brief Виртуальный метод, возвращающий уникальный идентификатор виджета
@@ -32,25 +33,20 @@ public:
     QString name() override;
 
     /*!
-     * \brief Вызывается после показа виджета
-     */
-    void onShow() override;
-    /*!
-     * \brief Вызывается перед прятанием виджета
-     */
-    void onHide() override;
-
-    /*!
      * \brief Виртуальный метод, возвращающий true, если допустимы внешние элементы управления (глобальное меню и т.д.)
      */
     bool isExternalControl() override {return false;}
 
-public slots:
-    void showDB();
+private slots:
+    void splitterMoved(int pos,int index);
+
+private:
+    void saveSplitterPosition();
+    void restoreSplitterPosition();
 
 
 private:
-    Ui::ExecuteWidget *ui;
+    Ui::SignalAnalysisWidget *ui;
 };
 
-#endif // EXECUTEWIDGET_H
+#endif // SIGNALANALYSISWIDGET_H

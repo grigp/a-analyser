@@ -18,8 +18,8 @@ class DataBaseResultWidget : public ClientWidget
     Q_OBJECT
 
 public:
-    explicit DataBaseResultWidget(QWidget *parent = 0);
-    ~DataBaseResultWidget();
+    explicit DataBaseResultWidget(QWidget *parent = nullptr);
+    ~DataBaseResultWidget() override;
 
     /*!
      * \brief Виртуальный метод, возвращающий уникальный идентификатор виджета

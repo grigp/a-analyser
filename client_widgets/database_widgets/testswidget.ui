@@ -140,12 +140,35 @@
       </item>
       <item>
        <widget class="QPushButton" name="btnTestPrint">
+        <property name="toolTip">
+         <string>Печать результатов теста...</string>
+        </property>
         <property name="text">
          <string/>
         </property>
         <property name="icon">
          <iconset resource="../../kernel.qrc">
           <normaloff>:/images/Print.png</normaloff>:/images/Print.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>32</width>
+          <height>32</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btnSignalsAnalysis">
+        <property name="toolTip">
+         <string>Анализ сигналов...</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset resource="../../kernel.qrc">
+          <normaloff>:/images/SignalAnalysis.png</normaloff>:/images/SignalAnalysis.png</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -366,6 +389,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>btnSignalsAnalysis</sender>
+   <signal>clicked()</signal>
+   <receiver>TestsWidget</receiver>
+   <slot>signalsAnalysis()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>299</x>
+     <y>32</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>720</x>
+     <y>23</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>runTest()</slot>
@@ -374,5 +413,6 @@
   <slot>deleteTest()</slot>
   <slot>editTestProperty()</slot>
   <slot>printReport()</slot>
+  <slot>signalsAnalysis()</slot>
  </slots>
 </ui>

@@ -128,6 +128,11 @@ public:
     void showDataBase();
 
     /*!
+     * \brief Переход к окну анализа сигналов
+     */
+    void signalsAnalysis();
+
+    /*!
      * \brief Возвращает список uid подключенных драйверов
      */
     QStringList getDrivers() const;

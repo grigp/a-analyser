@@ -251,7 +251,8 @@ QPushButton#btnAdd,
 QPushButton#btnCard,
 QPushButton#btnDelete,
 QPushButton#btnTestProperty,
-QPushButton#btnTestPrint
+QPushButton#btnTestPrint,
+QPushButton#btnSignalsAnalysis
 {
     border: 2px solid #8f8f91;
     border-radius: 6px;
@@ -266,7 +267,8 @@ QPushButton#btnAdd:hover,
 QPushButton#btnCard:hover,
 QPushButton#btnDelete:hover,
 QPushButton#btnTestProperty:hover,
-QPushButton#btnTestPrint:hover
+QPushButton#btnTestPrint:hover,
+QPushButton#btnSignalsAnalysis:hover
 {
     background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 rgb(170, 30, 30), stop: 0.5 rgb(250, 30, 30), stop: 1 rgb(170, 30, 30));
 }
@@ -278,7 +280,8 @@ QPushButton#btnAdd:pressed,
 QPushButton#btnCard:pressed,
 QPushButton#btnDelete:pressed,
 QPushButton#btnTestProperty:pressed,
-QPushButton#btnTestPrint:pressed
+QPushButton#btnTestPrint:pressed,
+QPushButton#btnSignalsAnalysis:pressed
 {
     background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 rgb(100, 0, 0), stop: 0.5 rgb(130, 0, 0), stop: 1 rgb(100, 0, 0));
 }

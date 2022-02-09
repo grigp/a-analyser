@@ -15,6 +15,7 @@
 #include "normsmanager.h"
 #include "executewidget.h"
 #include "databaseresultwidget.h"
+#include "signalanalysiswidget.h"
 #include "database.h"
 #include "datadefines.h"
 #include "exitcodes.h"
@@ -250,6 +251,11 @@ void AAnalyserApplication::deleteTest(const QString &testUid)
 void AAnalyserApplication::showDataBase()
 {
     showClientPage(ClientWidgets::uidDatabaseResultWidgetUid);
+}
+
+void AAnalyserApplication::signalsAnalysis()
+{
+    showClientPage(ClientWidgets::uidSignalAnalysisWidgetUid);
 }
 
 QStringList AAnalyserApplication::getDrivers() const

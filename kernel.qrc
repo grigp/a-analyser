@@ -194,5 +194,6 @@
         <file>images/MainIcon_DCI.ico</file>
         <file>images/MainIcon_sch.ico</file>
         <file>images/MainIcon_Tester.ico</file>
+        <file>images/SignalAnalysis.png</file>
     </qresource>
 </RCC>
