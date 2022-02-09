@@ -20,6 +20,8 @@
 #include "datadefines.h"
 #include "exitcodes.h"
 #include "settingsprovider.h"
+#include "visualsfactory.h"
+#include "visuals.h"
 #include "log.h"
 
 AAnalyserApplication::AAnalyserApplication(int &argc, char **argv)
@@ -28,6 +30,7 @@ AAnalyserApplication::AAnalyserApplication(int &argc, char **argv)
     , m_drivers(new DriversFactory(this))
     , m_factors(new FactorsFactory(this))
     , m_normsManager(new NormsManager(this))
+    , m_visualsFactory(new VisualsFactory(this))
 {
     setApplicationName("a-analyzer");
 //    setApplicationDisplayName(tr("Физиологические исследования a-analyzer")); Не переводится
@@ -349,6 +352,54 @@ QList<DeviceProtocols::Ports> AAnalyserApplication::getDriverPorts(const QString
     if (m_drivers)
         return m_drivers->getDriverPorts(drvUid);
     return QList<DeviceProtocols::Ports>();
+}
+
+void AAnalyserApplication::registerVisual(BaseVisual *visual)
+{
+    if (m_visualsFactory)
+        m_visualsFactory->registerVisual(visual);
+}
+
+int AAnalyserApplication::testVisualsCount()
+{
+    if (m_visualsFactory)
+        return m_visualsFactory->testVisualsCount();
+    return 0;
+}
+
+TestVisual *AAnalyserApplication::getTestVisual(const int idx)
+{
+    if (m_visualsFactory)
+        return m_visualsFactory->getTestVisual(idx);
+    return nullptr;
+}
+
+int AAnalyserApplication::probeVisualsCount()
+{
+    if (m_visualsFactory)
+        return m_visualsFactory->probeVisualsCount();
+    return 0;
+}
+
+TestVisual *AAnalyserApplication::getProbeVisual(const int idx)
+{
+    if (m_visualsFactory)
+        return m_visualsFactory->getProbeVisual(idx);
+    return nullptr;
+}
+
+int AAnalyserApplication::channelVisualsCount()
+{
+    if (m_visualsFactory)
+        return m_visualsFactory->channelVisualsCount();
+    return 0;
+}
+
+TestVisual *AAnalyserApplication::getChannelVisual(const int idx)
+{
+    if (m_visualsFactory)
+        return m_visualsFactory->getChannelVisual(idx);
+    return nullptr;
 }
 
 FactorsDefines::FactorInfo AAnalyserApplication::getFactorInfo(const QString &uid) const

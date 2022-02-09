@@ -17,6 +17,11 @@ class DriversFactory;
 class FactorsFactory;
 class Driver;
 class NormsManager;
+class VisualsFactory;
+class BaseVisual;
+class TestVisual;
+class ProbeVisual;
+class ChannelVisual;
 
 class AAnalyserApplication : public QApplication
 {
@@ -217,6 +222,18 @@ public:
     QList<DeviceProtocols::Ports> getDriverPorts(const QString &drvUid) const;
 
 
+    void registerVisual(BaseVisual* visual);
+
+    int testVisualsCount();
+    TestVisual* getTestVisual(const int idx);
+
+    int probeVisualsCount();
+    TestVisual* getProbeVisual(const int idx);
+
+    int channelVisualsCount();
+    TestVisual* getChannelVisual(const int idx);
+
+
     ///<-----------------------------------------------------------------------------
     ///< Показатели
 
@@ -399,6 +416,7 @@ private:
     DriversFactory *m_drivers {nullptr};
     FactorsFactory *m_factors {nullptr};
     NormsManager *m_normsManager {nullptr};
+    VisualsFactory *m_visualsFactory {nullptr};
 
     QString m_patientUid = "";  ///< uid выбранного пациента
     QString m_metodicUid = "";  ///< uid выбранной методики
