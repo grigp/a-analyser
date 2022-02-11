@@ -121,6 +121,7 @@ void ResultsWidget::closeTest()
     m_wgtResult = nullptr;
     m_selectedRow = -1;
     ui->wgtNoTest->setVisible(!m_wgtResult);
+    static_cast<AAnalyserApplication*>(QApplication::instance())->doSelectTest("");
 }
 
 void ResultsWidget::splitterMoved(int pos, int index)

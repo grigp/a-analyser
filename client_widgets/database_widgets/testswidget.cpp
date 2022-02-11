@@ -107,12 +107,13 @@ void TestsWidget::printReport()
 
 void TestsWidget::signalsAnalysis()
 {
-    if (m_selectedTestUid != "")
-    {
-        static_cast<AAnalyserApplication*>(QApplication::instance())->signalsAnalysis();
-    }
-    else
-        QMessageBox::information(nullptr, tr("Предупрежение"), tr("Не выбран тест"));
+    static_cast<AAnalyserApplication*>(QApplication::instance())->signalsAnalysis();
+//    if (m_selectedTestUid != "")
+//    {
+//        static_cast<AAnalyserApplication*>(QApplication::instance())->signalsAnalysis();
+//    }
+//    else
+//        QMessageBox::information(nullptr, tr("Предупрежение"), tr("Не выбран тест"));
 }
 
 void TestsWidget::print(QPrinter* printer)

@@ -37,6 +37,14 @@ public:
      */
     bool isExternalControl() override {return false;}
 
+    /*!
+     * \brief Вызывается после показа виджета
+     */
+    void onShow() override;
+    /*!
+     * \brief Вызывается перед прятанием виджета
+     */
+    void onHide() override;
 
 private slots:
     void splitterMoved(int pos,int index);
@@ -45,6 +53,17 @@ private:
     void saveSplitterPosition();
     void restoreSplitterPosition();
 
+    /*!
+     * \brief Открывает тест с заданным uid
+     * \param uid - uid теста
+     */
+    void openTest(const QString uid);
+
+    /*!
+     * \brief Закрывает тест с заданным uid
+     * \param uid - uid теста
+     */
+    void closeTest(const QString uid);
 
 private:
     Ui::SignalAnalysisWidget *ui;

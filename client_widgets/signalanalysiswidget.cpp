@@ -3,6 +3,7 @@
 
 #include <QDebug>
 
+#include "aanalyserapplication.h"
 #include "settingsprovider.h"
 
 SignalAnalysisWidget::SignalAnalysisWidget(QWidget *parent) :
@@ -29,6 +30,17 @@ QString SignalAnalysisWidget::name()
     return tr("Анализ сигналов");
 }
 
+void SignalAnalysisWidget::onShow()
+{
+    auto ti = static_cast<AAnalyserApplication*>(QApplication::instance())->getSelectedTest();
+    if (ti.uid != "")
+        openTest(ti.uid);
+}
+
+void SignalAnalysisWidget::onHide()
+{
+}
+
 void SignalAnalysisWidget::splitterMoved(int pos, int index)
 {
     Q_UNUSED(pos);
@@ -47,4 +59,14 @@ void SignalAnalysisWidget::restoreSplitterPosition()
     if (val == "")
         val = QByteArray::fromRawData("\x00\x00\x00\xFF\x00\x00\x00\x01\x00\x00\x00\x02\x00\x00\x01\x1B\x00\x00\x03""b\x01\xFF\xFF\xFF\xFF\x01\x00\x00\x00\x01\x00", 31);
     ui->splitter->restoreState(val);
+}
+
+void SignalAnalysisWidget::openTest(const QString uid)
+{
+
+}
+
+void SignalAnalysisWidget::closeTest(const QString uid)
+{
+
 }

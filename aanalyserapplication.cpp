@@ -148,6 +148,14 @@ MetodicDefines::MetodicInfo AAnalyserApplication::getSelectedMetodic() const
     return MetodicDefines::MetodicInfo();
 }
 
+DataDefines::TestInfo AAnalyserApplication::getSelectedTest() const
+{
+    DataDefines::TestInfo ti;
+    if (m_testUid != "" && m_database)
+        m_database->getTestInfo(m_testUid, ti);
+    return ti;
+}
+
 MetodicsFactory *AAnalyserApplication::getMetodics()
 {
     return m_metodics;

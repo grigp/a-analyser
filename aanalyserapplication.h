@@ -73,6 +73,11 @@ public:
     MetodicDefines::MetodicInfo getSelectedMetodic() const;
 
     /*!
+     * \brief Возвращает информацию о выбранном тесте
+     */
+    DataDefines::TestInfo getSelectedTest() const;
+
+    /*!
      * \brief Возвращает указатель на список методик
      * В клиентских модулях не пользоваться!
      * Вызывать продедуры из namespace DataProvider!

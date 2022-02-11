@@ -15,8 +15,8 @@ class ClientWidget : public QWidget
     Q_OBJECT
 
 public:
-    explicit ClientWidget(QWidget *parent = 0);
-    ~ClientWidget();
+    explicit ClientWidget(QWidget *parent = nullptr);
+    ~ClientWidget() override;
 
     /*!
      * \brief Виртуальный метод, возвращающий уникальный идентификатор виджета
