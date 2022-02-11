@@ -54,21 +54,12 @@
        </size>
       </property>
      </widget>
-     <widget class="QTabWidget" name="tabWidget">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-        <horstretch>3</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
+     <widget class="QFrame" name="frame">
+      <property name="frameShape">
+       <enum>QFrame::StyledPanel</enum>
       </property>
-      <property name="minimumSize">
-       <size>
-        <width>0</width>
-        <height>0</height>
-       </size>
-      </property>
-      <property name="currentIndex">
-       <number>-1</number>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
       </property>
      </widget>
     </widget>
@@ -84,12 +75,28 @@
    <slot>splitterMoved(int,int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>504</x>
-     <y>59</y>
+     <x>621</x>
+     <y>289</y>
     </hint>
     <hint type="destinationlabel">
      <x>868</x>
      <y>55</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>splitter</sender>
+   <signal>splitterMoved(int,int)</signal>
+   <receiver>SignalAnalysisWidget</receiver>
+   <slot>splitterMoved(int,int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>742</x>
+     <y>17</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>868</x>
+     <y>7</y>
     </hint>
    </hints>
   </connection>

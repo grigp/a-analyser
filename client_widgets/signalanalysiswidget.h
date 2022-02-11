@@ -37,6 +37,7 @@ public:
      */
     bool isExternalControl() override {return false;}
 
+
 private slots:
     void splitterMoved(int pos,int index);
 

@@ -1,33 +1,36 @@
 #ifndef VISUALS_H
 #define VISUALS_H
 
-#include <QObject>
+#include <QWidget>
 
-class Visual;
+class VisualDescriptor;
 
 /*!
- * \brief Класс описателя базового класса визуализаторов The BaseVisual class
+ * \brief Базовый класс виджета визуализатора The Visual class
  */
-class BaseVisual
+class Visual : public QWidget
 {
-public:
-    BaseVisual();
-    virtual ~BaseVisual();
+    Q_OBJECT
 
-    virtual QString uid() = 0;
-    virtual QString name() = 0;
+public:
+    explicit Visual(VisualDescriptor* visual, QWidget *parent = nullptr);
+    ~Visual() override;
 
     virtual bool isValid() = 0;
-    virtual Visual* getVisualWidget() = 0;
+    virtual void calculate() = 0;
+
+private:
+
+    VisualDescriptor* m_visual {nullptr};
 };
 
 /*!
  * \brief Класс описателя базового класса визуализаторов уровня теста The TestVisual class
  */
-class TestVisual : public BaseVisual
+class TestVisual : public Visual
 {
 public:
-    TestVisual(const QString& testUid);
+    TestVisual(VisualDescriptor* visual, const QString& testUid, QWidget *parent = nullptr);
 
     QString testUid() {return m_testUid;}
 
@@ -42,7 +45,7 @@ private:
 class ProbeVisual : public TestVisual
 {
 public:
-    ProbeVisual(const QString& testUid, const QString& probeUid);
+    ProbeVisual(VisualDescriptor* visual, const QString& testUid, const QString& probeUid, QWidget *parent = nullptr);
 
     QString probeUid() {return m_probeUid;}
 
@@ -56,12 +59,13 @@ private:
 class ChannelVisual : public ProbeVisual
 {
 public:
-    ChannelVisual(const QString& testUid, const QString& probeUid, const QString& channelUid);
+    ChannelVisual(VisualDescriptor* visual, const QString& testUid, const QString& probeUid, const QString& channelUid, QWidget *parent = nullptr);
 
     QString channelUid() {return m_channelUid;}
 
 private:
     QString m_channelUid {""};
 };
+
 
 #endif // VISUALS_H

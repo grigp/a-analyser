@@ -2,29 +2,24 @@
 
 #include "stabilogramvisualwidget.h"
 
-StabilogramVisual::StabilogramVisual(const QString& testUid, const QString& probeUid, const QString& channelUid)
-    : ChannelVisual (testUid, probeUid, channelUid)
+StabilogramVisual::StabilogramVisual(VisualDescriptor::Level level)
+    : VisualDescriptor (level)
 {
 
 }
 
 QString StabilogramVisual::uid()
 {
-
+    return VisualNames::UID_Stabilogram;
 }
 
 QString StabilogramVisual::name()
 {
-
+    return VisualNames::Name_Stabilogram;
 }
 
-bool StabilogramVisual::isValid()
+Visual *StabilogramVisual::getVisualWidget(QWidget *parent, const QString &testUid, const QString &probeUid, const QString &channelUid)
 {
-
+    return new StabilogramVisualWidget(this, testUid, probeUid, channelUid, parent);
 }
 
-Visual *StabilogramVisual::getVisualWidget()
-{
-    return new StabilogramVisualWidget(this);
-
-}

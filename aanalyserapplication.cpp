@@ -21,7 +21,7 @@
 #include "exitcodes.h"
 #include "settingsprovider.h"
 #include "visualsfactory.h"
-#include "visuals.h"
+#include "visualdescriptor.h"
 #include "log.h"
 
 AAnalyserApplication::AAnalyserApplication(int &argc, char **argv)
@@ -354,7 +354,7 @@ QList<DeviceProtocols::Ports> AAnalyserApplication::getDriverPorts(const QString
     return QList<DeviceProtocols::Ports>();
 }
 
-void AAnalyserApplication::registerVisual(BaseVisual *visual)
+void AAnalyserApplication::registerVisual(VisualDescriptor *visual)
 {
     if (m_visualsFactory)
         m_visualsFactory->registerVisual(visual);
@@ -367,7 +367,7 @@ int AAnalyserApplication::testVisualsCount()
     return 0;
 }
 
-TestVisual *AAnalyserApplication::getTestVisual(const int idx)
+VisualDescriptor *AAnalyserApplication::getTestVisual(const int idx)
 {
     if (m_visualsFactory)
         return m_visualsFactory->getTestVisual(idx);
@@ -381,7 +381,7 @@ int AAnalyserApplication::probeVisualsCount()
     return 0;
 }
 
-TestVisual *AAnalyserApplication::getProbeVisual(const int idx)
+VisualDescriptor *AAnalyserApplication::getProbeVisual(const int idx)
 {
     if (m_visualsFactory)
         return m_visualsFactory->getProbeVisual(idx);
@@ -395,7 +395,7 @@ int AAnalyserApplication::channelVisualsCount()
     return 0;
 }
 
-TestVisual *AAnalyserApplication::getChannelVisual(const int idx)
+VisualDescriptor *AAnalyserApplication::getChannelVisual(const int idx)
 {
     if (m_visualsFactory)
         return m_visualsFactory->getChannelVisual(idx);

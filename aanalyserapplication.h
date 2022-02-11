@@ -18,7 +18,7 @@ class FactorsFactory;
 class Driver;
 class NormsManager;
 class VisualsFactory;
-class BaseVisual;
+class VisualDescriptor;
 class TestVisual;
 class ProbeVisual;
 class ChannelVisual;
@@ -222,16 +222,16 @@ public:
     QList<DeviceProtocols::Ports> getDriverPorts(const QString &drvUid) const;
 
 
-    void registerVisual(BaseVisual* visual);
+    void registerVisual(VisualDescriptor* visual);
 
     int testVisualsCount();
-    TestVisual* getTestVisual(const int idx);
+    VisualDescriptor* getTestVisual(const int idx);
 
     int probeVisualsCount();
-    TestVisual* getProbeVisual(const int idx);
+    VisualDescriptor* getProbeVisual(const int idx);
 
     int channelVisualsCount();
-    TestVisual* getChannelVisual(const int idx);
+    VisualDescriptor* getChannelVisual(const int idx);
 
 
     ///<-----------------------------------------------------------------------------

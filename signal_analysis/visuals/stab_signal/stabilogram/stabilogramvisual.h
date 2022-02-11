@@ -3,21 +3,30 @@
 
 #include <QObject>
 
-#include "visuals.h"
+#include "visualdescriptor.h"
+
+namespace VisualNames
+{
+static const QString UID_Stabilogram = "vStabilogram";
+
+static const QString Name_Stabilogram = "Стабилограмма";
+
+
+}
 
 /*!
  * \brief Класс визуализатора стабилограммы The StabilogramVisual class
  */
-class StabilogramVisual : public ChannelVisual
+class StabilogramVisual : public VisualDescriptor
 {
 public:
-    StabilogramVisual(const QString& testUid, const QString& probeUid, const QString& channelUid);
+    StabilogramVisual(VisualDescriptor::Level level);
 
     QString uid() override;
     QString name() override;
 
-    bool isValid() override;
-    Visual* getVisualWidget() override;
+    Visual* getVisualWidget(QWidget *parent = nullptr,
+                            const QString& testUid = "", const QString& probeUid = "", const QString& channelUid = "") override;
 };
 
 #endif // STABILOGRAMVISUAL_H

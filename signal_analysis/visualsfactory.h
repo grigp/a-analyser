@@ -3,10 +3,8 @@
 
 #include <QObject>
 
-class BaseVisual;
-class TestVisual;
-class ProbeVisual;
-class ChannelVisual;
+class VisualDescriptor;
+
 
 /*!
  * \brief Класс фабрики классов визуализаторов The VisualsFactory class
@@ -17,21 +15,21 @@ class VisualsFactory : public QObject
 public:
     explicit VisualsFactory(QObject *parent = nullptr);
 
-    void registerVisual(BaseVisual* visual);
+    void registerVisual(VisualDescriptor* visual);
 
     int testVisualsCount();
-    TestVisual* getTestVisual(const int idx);
+    VisualDescriptor* getTestVisual(const int idx);
 
     int probeVisualsCount();
-    TestVisual* getProbeVisual(const int idx);
+    VisualDescriptor* getProbeVisual(const int idx);
 
     int channelVisualsCount();
-    TestVisual* getChannelVisual(const int idx);
+    VisualDescriptor* getChannelVisual(const int idx);
 
 private:
-    QList<TestVisual*> m_visTest;
-    QList<ProbeVisual*> m_visProbe;
-    QList<ChannelVisual*> m_visChannel;
+    QList<VisualDescriptor*> m_visTest;
+    QList<VisualDescriptor*> m_visProbe;
+    QList<VisualDescriptor*> m_visChannel;
 
 };
 

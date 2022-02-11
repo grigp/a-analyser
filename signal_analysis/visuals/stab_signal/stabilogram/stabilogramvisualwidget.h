@@ -3,7 +3,7 @@
 
 #include <QWidget>
 
-#include "visual.h"
+#include "visuals.h"
 
 namespace Ui {
 class StabilogramVisualWidget;
@@ -12,14 +12,17 @@ class StabilogramVisualWidget;
 /*!
  * \brief Класс виджета визуализатора стабилограммы The StabilogramVisualWidget class
  */
-class StabilogramVisualWidget : public Visual
+class StabilogramVisualWidget : public ChannelVisual
 {
     Q_OBJECT
 
 public:
-    explicit StabilogramVisualWidget(BaseVisual* visual, QWidget *parent = nullptr);
-    ~StabilogramVisualWidget();
+    explicit StabilogramVisualWidget(VisualDescriptor* visual,
+                                     const QString& testUid, const QString& probeUid, const QString& channelUid,
+                                     QWidget *parent = nullptr);
+    ~StabilogramVisualWidget() override;
 
+    bool isValid() override;
     void calculate() override;
 
 
