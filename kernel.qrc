@@ -195,5 +195,7 @@
         <file>images/MainIcon_sch.ico</file>
         <file>images/MainIcon_Tester.ico</file>
         <file>images/SignalAnalysis.png</file>
+        <file>images/tree/probe.png</file>
+        <file>images/tree/test.png</file>
     </qresource>
 </RCC>

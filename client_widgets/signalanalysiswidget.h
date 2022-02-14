@@ -14,6 +14,8 @@ namespace ClientWidgets
 }
 
 
+class TestsTreeModel;
+
 class SignalAnalysisWidget : public ClientWidget
 {
     Q_OBJECT
@@ -64,6 +66,8 @@ private:
      * \param uid - uid теста
      */
     void closeTest(const QString uid);
+
+    TestsTreeModel* m_mdlTests {nullptr};
 
 private:
     Ui::SignalAnalysisWidget *ui;
