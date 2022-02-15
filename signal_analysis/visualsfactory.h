@@ -3,6 +3,8 @@
 
 #include <QObject>
 
+#include "visualdefines.h"
+
 class VisualDescriptor;
 
 
@@ -17,14 +19,8 @@ public:
 
     void registerVisual(VisualDescriptor* visual);
 
-    int testVisualsCount();
-    VisualDescriptor* getTestVisual(const int idx);
-
-    int probeVisualsCount();
-    VisualDescriptor* getProbeVisual(const int idx);
-
-    int channelVisualsCount();
-    VisualDescriptor* getChannelVisual(const int idx);
+    int visualCount(const VisualDefines::Level level);
+    VisualDescriptor* getVisual(const VisualDefines::Level level, const int idx);
 
 private:
     QList<VisualDescriptor*> m_visTest;

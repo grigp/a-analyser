@@ -3,6 +3,8 @@
 
 #include <QStandardItemModel>
 
+///! TODO: УДАЛИТЬ, КАК НЕИСПОЛЬЗУЕМЫЙ
+
 /*!
  * \brief Класс модели данных дерева открытых тестов The TestsTreeModel class
  */

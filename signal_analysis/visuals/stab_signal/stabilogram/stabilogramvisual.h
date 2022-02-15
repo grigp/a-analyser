@@ -20,7 +20,7 @@ static const QString Name_Stabilogram = "Стабилограмма";
 class StabilogramVisual : public VisualDescriptor
 {
 public:
-    StabilogramVisual(VisualDescriptor::Level level);
+    StabilogramVisual(VisualDefines::Level level);
 
     QString uid() override;
     QString name() override;

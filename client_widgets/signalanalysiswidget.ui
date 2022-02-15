@@ -53,14 +53,44 @@
         <height>16777215</height>
        </size>
       </property>
+      <property name="autoExpandDelay">
+       <number>-1</number>
+      </property>
      </widget>
-     <widget class="QFrame" name="frame">
+     <widget class="QFrame" name="frVisualContainer">
       <property name="frameShape">
        <enum>QFrame::StyledPanel</enum>
       </property>
       <property name="frameShadow">
        <enum>QFrame::Raised</enum>
       </property>
+      <layout class="QVBoxLayout" name="verticalLayout">
+       <property name="spacing">
+        <number>3</number>
+       </property>
+       <property name="leftMargin">
+        <number>1</number>
+       </property>
+       <property name="topMargin">
+        <number>1</number>
+       </property>
+       <property name="rightMargin">
+        <number>1</number>
+       </property>
+       <property name="bottomMargin">
+        <number>1</number>
+       </property>
+       <item>
+        <widget class="QLabel" name="lblNoVisuals">
+         <property name="text">
+          <string>В данном представлении нет визуализаторов</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+      </layout>
      </widget>
     </widget>
    </item>
@@ -100,8 +130,25 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>tvTests</sender>
+   <signal>clicked(QModelIndex)</signal>
+   <receiver>SignalAnalysisWidget</receiver>
+   <slot>selectElement(QModelIndex)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>181</x>
+     <y>71</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>864</x>
+     <y>121</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>splitterMoved(int,int)</slot>
+  <slot>selectElement(QModelIndex)</slot>
  </slots>
 </ui>

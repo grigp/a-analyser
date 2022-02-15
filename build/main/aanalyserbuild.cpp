@@ -86,5 +86,5 @@ void AAnalyserBuild::registerFactors()
 
 void AAnalyserBuild::registerVisuals()
 {
-    static_cast<AAnalyserApplication*>(QApplication::instance())->registerVisual(new StabilogramVisual(VisualDescriptor::vlChannel));
+    static_cast<AAnalyserApplication*>(QApplication::instance())->registerVisual(new StabilogramVisual(VisualDefines::vlChannel));
 }

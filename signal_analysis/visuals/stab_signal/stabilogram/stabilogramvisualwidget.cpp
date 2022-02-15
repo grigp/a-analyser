@@ -2,6 +2,8 @@
 #include "ui_stabilogramvisualwidget.h"
 
 #include "visualdescriptor.h"
+#include "channelsutils.h"
+#include "channelsdefines.h"
 
 StabilogramVisualWidget::StabilogramVisualWidget(VisualDescriptor* visual,
                                                  const QString& testUid, const QString& probeUid, const QString& channelUid,
@@ -19,7 +21,7 @@ StabilogramVisualWidget::~StabilogramVisualWidget()
 
 bool StabilogramVisualWidget::isValid()
 {
-    return false;
+    return ChannelsUtils::instance().channelType(channelUid()) == ChannelsDefines::ctStabilogram;
 }
 
 void StabilogramVisualWidget::calculate()

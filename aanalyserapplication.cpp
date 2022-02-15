@@ -368,45 +368,17 @@ void AAnalyserApplication::registerVisual(VisualDescriptor *visual)
         m_visualsFactory->registerVisual(visual);
 }
 
-int AAnalyserApplication::testVisualsCount()
+int AAnalyserApplication::visualCount(const VisualDefines::Level level)
 {
     if (m_visualsFactory)
-        return m_visualsFactory->testVisualsCount();
+        return m_visualsFactory->visualCount(level);
     return 0;
 }
 
-VisualDescriptor *AAnalyserApplication::getTestVisual(const int idx)
+VisualDescriptor *AAnalyserApplication::getVisual(const VisualDefines::Level level, const int idx)
 {
     if (m_visualsFactory)
-        return m_visualsFactory->getTestVisual(idx);
-    return nullptr;
-}
-
-int AAnalyserApplication::probeVisualsCount()
-{
-    if (m_visualsFactory)
-        return m_visualsFactory->probeVisualsCount();
-    return 0;
-}
-
-VisualDescriptor *AAnalyserApplication::getProbeVisual(const int idx)
-{
-    if (m_visualsFactory)
-        return m_visualsFactory->getProbeVisual(idx);
-    return nullptr;
-}
-
-int AAnalyserApplication::channelVisualsCount()
-{
-    if (m_visualsFactory)
-        return m_visualsFactory->channelVisualsCount();
-    return 0;
-}
-
-VisualDescriptor *AAnalyserApplication::getChannelVisual(const int idx)
-{
-    if (m_visualsFactory)
-        return m_visualsFactory->getChannelVisual(idx);
+        return m_visualsFactory->getVisual(level, idx);
     return nullptr;
 }
 

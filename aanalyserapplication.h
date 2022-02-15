@@ -4,6 +4,7 @@
 #include "datadefines.h"
 #include "metodicdefines.h"
 #include "factorsdefines.h"
+#include "visualdefines.h"
 #include "connection.h"
 
 #include <QMainWindow>
@@ -229,14 +230,8 @@ public:
 
     void registerVisual(VisualDescriptor* visual);
 
-    int testVisualsCount();
-    VisualDescriptor* getTestVisual(const int idx);
-
-    int probeVisualsCount();
-    VisualDescriptor* getProbeVisual(const int idx);
-
-    int channelVisualsCount();
-    VisualDescriptor* getChannelVisual(const int idx);
+    int visualCount(const VisualDefines::Level level);
+    VisualDescriptor* getVisual(const VisualDefines::Level level, const int idx);
 
 
     ///<-----------------------------------------------------------------------------

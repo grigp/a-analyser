@@ -6,7 +6,8 @@ HEADERS += \
     $$PWD/visualsfactory.h \
     $$PWD/visualdescriptor.h \
     $$PWD/visuals.h \
-    $$PWD/teststreemodel.h
+    $$PWD/teststreemodel.h \
+    $$PWD/visualdefines.h
 
 SOURCES += \
     $$PWD/visualsfactory.cpp \

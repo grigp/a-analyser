@@ -3,6 +3,8 @@
 
 #include <QObject>
 
+#include "visualdefines.h"
+
 class Visual;
 
 /*!
@@ -11,18 +13,8 @@ class Visual;
 class VisualDescriptor
 {
 public:
-    /*!
-     * \brief Уровень визуализатора The Level enum
-     */
-    enum Level
-    {
-          vlNone = 0    ///< Не задан
-        , vlTest        ///< Теста
-        , vlProbe       ///< Пробы
-        , vlChannel     ///< Канала
-    };
 
-    VisualDescriptor(Level level);
+    VisualDescriptor(VisualDefines::Level level);
     virtual ~VisualDescriptor();
 
     virtual QString uid() = 0;
@@ -31,10 +23,10 @@ public:
     virtual Visual* getVisualWidget(QWidget *parent = nullptr,
                                     const QString& testUid = "", const QString& probeUid = "", const QString& channelUid = "") = 0;
 
-    Level level() {return m_level;}
+    VisualDefines::Level level() {return m_level;}
 
 private:
-    Level m_level {vlNone};
+    VisualDefines::Level m_level {VisualDefines::vlNone};
 };
 
 #endif // VISUALDESCRIPTOR_H
