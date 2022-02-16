@@ -16,6 +16,7 @@ class VisualsFactory : public QObject
     Q_OBJECT
 public:
     explicit VisualsFactory(QObject *parent = nullptr);
+    ~VisualsFactory() override;
 
     void registerVisual(VisualDescriptor* visual);
 

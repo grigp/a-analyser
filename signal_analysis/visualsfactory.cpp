@@ -13,6 +13,19 @@ VisualsFactory::VisualsFactory(QObject *parent) : QObject(parent)
     });
 }
 
+VisualsFactory::~VisualsFactory()
+{
+    foreach (auto vis, m_visTest)
+        delete vis;
+    m_visTest.clear();
+    foreach (auto vis, m_visProbe)
+        delete vis;
+    m_visProbe.clear();
+    foreach (auto vis, m_visChannel)
+        delete vis;
+    m_visChannel.clear();
+}
+
 void VisualsFactory::registerVisual(VisualDescriptor *visual)
 {
     if (visual->level() == VisualDefines::vlTest)

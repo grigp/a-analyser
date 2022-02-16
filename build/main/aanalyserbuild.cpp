@@ -40,6 +40,8 @@
 #include "triangleconslutionfactors.h"
 
 #include "stabilogramvisual.h"
+#include "balistogramvisual.h"
+#include "vectoranalysisvisual.h"
 
 QList<MetodicTemplate *> AAnalyserBuild::getBuildTemplates(QObject *parent)
 {
@@ -86,5 +88,8 @@ void AAnalyserBuild::registerFactors()
 
 void AAnalyserBuild::registerVisuals()
 {
-    static_cast<AAnalyserApplication*>(QApplication::instance())->registerVisual(new StabilogramVisual(VisualDefines::vlChannel));
+    auto* app = static_cast<AAnalyserApplication*>(QApplication::instance());
+    app->registerVisual(new StabilogramVisual(VisualDefines::vlChannel));
+    app->registerVisual(new BalistogramVisual(VisualDefines::vlChannel));
+    app->registerVisual(new VectorAnalysisVisual(VisualDefines::vlChannel));
 }

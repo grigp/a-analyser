@@ -66,6 +66,9 @@ public:
      */
     void onHide() override;
 
+protected:
+    bool eventFilter(QObject *obj, QEvent *event) override;
+
 private slots:
     void splitterMoved(int pos,int index);
 
@@ -85,7 +88,9 @@ private:
      * \brief Закрывает тест с заданным uid
      * \param uid - uid теста
      */
-    void closeTest(const QString uid);
+    void closeTest(QModelIndex& index);
+
+    void closeVisuals(QModelIndex& index);
 
     QString getMethodName(const QString& metUid);
 
@@ -102,12 +107,15 @@ private:
 
     /*!
      * \brief Рассчитывает линейку визуализаторов для элемента на дереве теста
+     * \param count - кол-во визуализаторов
      * \param testUid - uid теста
      * \param probeUid - uid пробы
      * \param channelId - идентификатор канала
      * \return указатель на виджет табуляции, связанный с элементом на дереве теста и nulptr, если нет визуализаторов
      */
-    QTabWidget* calculateVisualsLine(const QString &testUid, const QString &probeUid = "", const QString &channelId = "");
+    QTabWidget* calculateVisualsLine(int &count,
+                                     const QString &testUid, const QString &probeUid = "", const QString &channelId = "");
+
 
     QStandardItemModel* m_mdlTests {nullptr};
     QList<MetodicDefines::MetodicInfo> m_metList;

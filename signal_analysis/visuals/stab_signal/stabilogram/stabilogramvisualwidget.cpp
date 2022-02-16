@@ -1,6 +1,8 @@
 #include "stabilogramvisualwidget.h"
 #include "ui_stabilogramvisualwidget.h"
 
+#include <QDebug>
+
 #include "visualdescriptor.h"
 #include "channelsutils.h"
 #include "channelsdefines.h"

@@ -8,10 +8,7 @@
 namespace VisualNames
 {
 static const QString UID_Stabilogram = "vStabilogram";
-
 static const QString Name_Stabilogram = "Стабилограмма";
-
-
 }
 
 /*!
@@ -21,6 +18,7 @@ class StabilogramVisual : public VisualDescriptor
 {
 public:
     StabilogramVisual(VisualDefines::Level level);
+    ~StabilogramVisual() override;
 
     QString uid() override;
     QString name() override;

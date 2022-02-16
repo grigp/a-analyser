@@ -2,6 +2,7 @@
 #include "ui_signalanalysiswidget.h"
 
 #include <QApplication>
+#include <QMessageBox>
 #include <QDebug>
 
 #include "aanalyserapplication.h"
@@ -12,6 +13,7 @@
 #include "visualsfactory.h"
 #include "visualdescriptor.h"
 #include "visuals.h"
+#include "databaseresultwidget.h"
 
 SignalAnalysisWidget::SignalAnalysisWidget(QWidget *parent) :
     ClientWidget(parent)
@@ -24,6 +26,7 @@ SignalAnalysisWidget::SignalAnalysisWidget(QWidget *parent) :
     ui->tvTests->setModel(m_mdlTests);
     ui->tvTests->setItemDelegateForColumn(ColCloseBtn,
                                           new EditCommandDelegate(EditCommandDelegate::CmdDelete, ColCloseBtn, ui->tvTests));
+    ui->tvTests->viewport()->installEventFilter(this);
     m_mdlTests->setHorizontalHeaderLabels(QStringList() << tr("Элементы") << "");
 }
 
@@ -53,6 +56,25 @@ void SignalAnalysisWidget::onHide()
 {
 }
 
+bool SignalAnalysisWidget::eventFilter(QObject *obj, QEvent *event)
+{
+    if (obj == ui->tvTests->viewport())
+    {
+        if (event->type() == QEvent::MouseButtonRelease)
+        {
+            QMouseEvent * me = static_cast<QMouseEvent*>(event);
+            if (me->button() == Qt::LeftButton && me->modifiers() == Qt::NoModifier)
+            {
+                QModelIndex index = ui->tvTests->indexAt(me->pos());
+                if (index.column() == ColCloseBtn)
+                    closeTest(index);
+            }
+        }
+    }
+
+    return false;
+}
+
 void SignalAnalysisWidget::splitterMoved(int pos, int index)
 {
     Q_UNUSED(pos);
@@ -68,7 +90,7 @@ void SignalAnalysisWidget::selectElement(QModelIndex index)
             static_cast<QWidget*>(child)->setVisible(false);
 
     bool tabPresent = false;
-    QVariant var = m_mdlTests->index(index.row(), 0, index.parent()).data(TabWidgetRole);
+    QVariant var = m_mdlTests->index(index.row(), ColElement, index.parent()).data(TabWidgetRole);
     if (var.isValid())
     {
         QTabWidget* wgt = var.value<QTabWidget*>();
@@ -97,10 +119,16 @@ void SignalAnalysisWidget::restoreSplitterPosition()
 
 void SignalAnalysisWidget::openTest(const QString testUid)
 {
+    QStandardItem* itemWithVisuals = nullptr;  //! Первый итем с визуалами
+
     auto calcVisLine = [&](QStandardItem* item,
+                           int& count,
                            const QString &testUid, const QString &probeUid = "", const QString &channelId = "")
     {
-        auto* wgt = calculateVisualsLine(testUid, probeUid, channelId);
+        auto* wgt = calculateVisualsLine(count, testUid, probeUid, channelId);
+        //! Если итем с визуалами еще не найден и этот итем с визуалами, то запомним на него указатель
+        if (!itemWithVisuals  && wgt)
+            itemWithVisuals = item;
         QVariant var;
         var.setValue(wgt);
         item->setData(var, TabWidgetRole);
@@ -112,12 +140,13 @@ void SignalAnalysisWidget::openTest(const QString testUid)
         DataDefines::PatientKard kard;
         DataProvider::getPatient(ti.patientUid, kard);
 
-        auto *itemTest = new QStandardItem(kard.fio + " " +
+        auto *itemTest = new QStandardItem(kard.fio + " - " +
                                            getMethodName(ti.metodUid) +
                                            " (" + ti.dateTime.toString("dd.MM.yyyy hh:mm") + ")");
         itemTest->setEditable(false);
         itemTest->setData(ti.uid, UidRole);
-        calcVisLine(itemTest, ti.uid);
+        int n = 0;
+        calcVisLine(itemTest, n, ti.uid);
         itemTest->setIcon(QIcon(":/images/tree/test.png"));
         auto *itemTestClose = new QStandardItem("");
         itemTestClose->setEditable(false);
@@ -132,7 +161,7 @@ void SignalAnalysisWidget::openTest(const QString testUid)
                 auto *itemProbe = new QStandardItem(pi.name);
                 itemProbe->setEditable(false);
                 itemProbe->setData(pi.uid, UidRole);
-                calcVisLine(itemProbe, ti.uid, pi.uid);
+                calcVisLine(itemProbe, n, ti.uid, pi.uid);
                 itemProbe->setIcon(QIcon(":/images/tree/probe.png"));
                 itemTest->appendRow(itemProbe);
 
@@ -143,9 +172,12 @@ void SignalAnalysisWidget::openTest(const QString testUid)
                     itemChan->setEditable(false);
                     itemChan->setData(chi.channelId, UidRole);
                     itemChan->setData(chi.uid, ChannelUidRole);
-                    calcVisLine(itemChan, ti.uid, pi.uid, chi.channelId);
+                    calcVisLine(itemChan, n, ti.uid, pi.uid, chi.channelId);
                     itemChan->setIcon(QIcon(":/images/tree/signal.png"));
-                    itemProbe->appendRow(itemChan);
+                    if (n > 0)
+                        itemProbe->appendRow(itemChan);
+                    else
+                        delete itemChan;
                 }
                 ui->tvTests->expand(itemProbe->index());
             }
@@ -154,14 +186,48 @@ void SignalAnalysisWidget::openTest(const QString testUid)
         ui->tvTests->expand(itemTest->index());
     }
 
-//    ui->tvTests->expandAll();
+    if (itemWithVisuals)
+    {
+        ui->tvTests->selectionModel()->clear();
+        ui->tvTests->selectionModel()->select(itemWithVisuals->index(), QItemSelectionModel::Select);
+        selectElement(itemWithVisuals->index());
+    }
+
     ui->tvTests->header()->resizeSection(ColElement, 320);
     ui->tvTests->header()->resizeSection(ColCloseBtn, 50);
 }
 
-void SignalAnalysisWidget::closeTest(const QString uid)
+void SignalAnalysisWidget::closeTest(QModelIndex& index)
 {
+    auto idxRoot = m_mdlTests->index(index.row(), ColElement, index.parent());
+    auto res = QMessageBox::question(nullptr, tr("Запрос"), tr("Закрыть тест ") + idxRoot.data().toString() + " ?");
+    if (res == QMessageBox::Yes)
+    {
+        closeVisuals(idxRoot);
+        m_mdlTests->removeRow(idxRoot.row(), idxRoot.parent());
+        if (m_mdlTests->rowCount() == 0)
+            static_cast<AAnalyserApplication*>(QApplication::instance())->showClientPage(ClientWidgets::uidDatabaseResultWidgetUid);
+    }
+}
 
+void SignalAnalysisWidget::closeVisuals(QModelIndex &index)
+{
+    //! Удалить линейку визуалов, если она есть
+    QVariant var = index.data(TabWidgetRole);
+    if (var.isValid())
+    {
+        QTabWidget* wgt = var.value<QTabWidget*>();
+        if (wgt)
+            delete wgt;
+    }
+
+    //! Пройтись по детям и вызвать рекурсивно удаление линеек визуалов у них
+    int childCount = index.model()->rowCount(index);
+    for (int i = 0; i < childCount; ++i)
+    {
+        auto idx = index.model()->index(i, ColElement, index);
+        closeVisuals(idx);
+    }
 }
 
 QString SignalAnalysisWidget::getMethodName(const QString &metUid)
@@ -190,9 +256,11 @@ bool SignalAnalysisWidget::isTestOpened(const QString &testUid)
     return false;
 }
 
-QTabWidget *SignalAnalysisWidget::calculateVisualsLine(const QString &testUid, const QString &probeUid, const QString &channelId)
+QTabWidget *SignalAnalysisWidget::calculateVisualsLine(int &count,
+                                                       const QString &testUid, const QString &probeUid, const QString &channelId)
 {
     QTabWidget *tw = nullptr;
+    count = 0;
     VisualDefines::Level level = VisualDefines::vlNone;
     if (probeUid == "" && channelId == "")
         level = VisualDefines::vlTest;
@@ -202,7 +270,6 @@ QTabWidget *SignalAnalysisWidget::calculateVisualsLine(const QString &testUid, c
     else
         level = VisualDefines::vlChannel;
 
-    int n = 0;
     auto *app = static_cast<AAnalyserApplication*>(QApplication::instance());
     for (int i = 0; i < app->visualCount(level); ++i)
     {
@@ -212,14 +279,14 @@ QTabWidget *SignalAnalysisWidget::calculateVisualsLine(const QString &testUid, c
         {
             wgt->calculate();
 
-            if (n == 0)
+            if (count == 0)
             {
                 tw = new QTabWidget(ui->frVisualContainer);
                 tw->clear();
             }
             tw->addTab(wgt, visual->name());
 
-            ++n;
+            ++count;
         }
         else
             delete wgt;
@@ -234,3 +301,5 @@ QTabWidget *SignalAnalysisWidget::calculateVisualsLine(const QString &testUid, c
 
     return tw;
 }
+
+

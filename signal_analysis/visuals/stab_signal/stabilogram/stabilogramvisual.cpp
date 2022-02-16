@@ -1,11 +1,16 @@
 #include "stabilogramvisual.h"
 
+#include <QDebug>
+
 #include "stabilogramvisualwidget.h"
 
 StabilogramVisual::StabilogramVisual(VisualDefines::Level level)
     : VisualDescriptor (level)
 {
+}
 
+StabilogramVisual::~StabilogramVisual()
+{
 }
 
 QString StabilogramVisual::uid()
