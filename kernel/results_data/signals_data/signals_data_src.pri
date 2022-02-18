@@ -3,7 +3,6 @@ INCLUDEPATH += $$PWD
 HEADERS += \
     $$PWD/signaldata.h \
     $$PWD/stabilogram.h \
-    $$PWD/ballistogram.h \
     $$PWD/jumpplatedata.h \
     $$PWD/channeljsondata.h \
     $$PWD/channeldata.h \
@@ -20,12 +19,12 @@ HEADERS += \
     $$PWD/decartcoordinatessignal.h \
     $$PWD/octaedronresultdata.h \
     $$PWD/boxerdodgingresultdata.h \
-    $$PWD/triangleresultdata.h
+    $$PWD/triangleresultdata.h \
+    $$PWD/balistogram.h
 
 SOURCES += \
     $$PWD/signaldata.cpp \
     $$PWD/stabilogram.cpp \
-    $$PWD/ballistogram.cpp \
     $$PWD/jumpplatedata.cpp \
     $$PWD/channeljsondata.cpp \
     $$PWD/channeldata.cpp \
@@ -42,4 +41,5 @@ SOURCES += \
     $$PWD/decartcoordinatessignal.cpp \
     $$PWD/octaedronresultdata.cpp \
     $$PWD/boxerdodgingresultdata.cpp \
-    $$PWD/triangleresultdata.cpp
+    $$PWD/triangleresultdata.cpp \
+    $$PWD/balistogram.cpp

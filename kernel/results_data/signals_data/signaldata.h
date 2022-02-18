@@ -15,12 +15,12 @@ class SignalData : public ChannelData, public SignalAccess
 {
 public:
     explicit SignalData();
-    virtual ~SignalData();
+    ~SignalData() override;
 
     /*!
      * \brief Виртуальная функция, возвращающая идентификатор канала
      */
-    virtual QString channelId() const = 0;
+    QString channelId() const override = 0;
 
     /*!
      * \brief Виртуальная функция, возвращающая частоту дискретизации канала

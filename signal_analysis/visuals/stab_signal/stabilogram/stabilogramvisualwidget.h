@@ -5,6 +5,8 @@
 
 #include "visuals.h"
 
+class Stabilogram;
+
 namespace Ui {
 class StabilogramVisualWidget;
 }
@@ -28,6 +30,10 @@ public:
 
 private:
     Ui::StabilogramVisualWidget *ui;
+
+    void showGraph();
+
+    Stabilogram* m_stab {nullptr};
 };
 
 #endif // STABILOGRAMVISUALWIDGET_H

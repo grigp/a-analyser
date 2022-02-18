@@ -11,6 +11,8 @@ class SignalAccess
 public:
     SignalAccess();
 
+    virtual ~SignalAccess();
+
     /*!
      * \brief Виртуальная функция, возвращающая частоту дискретизации канала
      */

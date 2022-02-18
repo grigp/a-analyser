@@ -5,7 +5,7 @@
 #include "dataprovider.h"
 #include "channelsdefines.h"
 #include "stabilogram.h"
-#include "ballistogram.h"
+#include "balistogram.h"
 
 #include <QUuid>
 #include <QDebug>
@@ -85,7 +85,7 @@ void TestResultData::openTest(const QString &uid)
                         signal = new Stabilogram(chan);
                     else
                     if (ci.channelId == ChannelsDefines::chanZ)
-                        signal = new Ballistogram(chan);
+                        signal = new Balistogram(chan);
                     else
                     if (ci.channelId == ChannelsDefines::chanTargetTraectory)
                         signal = new DecartCoordinatesSignal(chan);

@@ -5,6 +5,8 @@
 
 #include "visuals.h"
 
+class Balistogram;
+
 namespace Ui {
 class BalistogramVisualWidget;
 }
@@ -28,6 +30,10 @@ public:
 
 private:
     Ui::BalistogramVisualWidget *ui;
+
+    void showGraph();
+
+    Balistogram* m_z {nullptr};
 };
 
 #endif // BALISTOGRAMVISUALWIDGET_H

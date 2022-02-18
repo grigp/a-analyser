@@ -16,6 +16,8 @@ public:
      * \param data - сигнал в виде массива байт
      */
     explicit Stabilogram(const QByteArray &data);
+
+    ~Stabilogram() override;
 };
 
 

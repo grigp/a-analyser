@@ -11,7 +11,7 @@ class StabilogramWidget;
 }
 
 class Stabilogram;
-class Ballistogram;
+class Balistogram;
 
 
 /*!
@@ -85,7 +85,7 @@ private:
 //    bool m_isRecZ {false};
 
     Stabilogram *m_stb;     ///< Записываемая стабилограмма
-    Ballistogram *m_z;      ///< Записываемая баллистограмма
+    Balistogram *m_z;      ///< Записываемая баллистограмма
 };
 
 #endif // STABILOGRAMWIDGET_H

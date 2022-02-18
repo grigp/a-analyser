@@ -44,6 +44,8 @@ public:
                        const int numSubChan,
                        const QString &name);
 
+    ~GraphArea();
+
     SignalAccess* signal() const {return m_signal;}
 
     int numSubChan() {return m_numSubChan;}

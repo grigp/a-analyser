@@ -6,7 +6,7 @@
 
 #include "channelsdefines.h"
 #include "stabilogram.h"
-#include "ballistogram.h"
+#include "balistogram.h"
 #include "testresultdata.h"
 #include "resultinfo.h"
 #include "stabsignalstestcalculator.h"

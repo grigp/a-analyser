@@ -4,7 +4,7 @@
 #include "executewidget.h"
 
 #include "stabilogram.h"
-#include "ballistogram.h"
+#include "balistogram.h"
 #include "channelsdefines.h"
 #include "channelsutils.h"
 #include "testresultdata.h"

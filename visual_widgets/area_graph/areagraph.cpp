@@ -407,6 +407,10 @@ GraphArea::GraphArea(QWidget* parent,
     computeAverageValue();
 }
 
+GraphArea::~GraphArea()
+{
+}
+
 QColor GraphArea::color(const int colorNum) const
 {
     int idx = colorNum % m_palette.size();

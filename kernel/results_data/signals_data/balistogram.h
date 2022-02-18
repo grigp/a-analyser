@@ -1,24 +1,24 @@
-#ifndef BALLISTOGRAM_H
-#define BALLISTOGRAM_H
+#ifndef BALISTOGRAM_H
+#define BALISTOGRAM_H
 
 #include "singlesignal.h"
 
 /*!
  * \brief Класс сигнала баллистограммы Ballistogram class
  */
-class Ballistogram : public SingleSignal
+class Balistogram : public SingleSignal
 {
 public:
-    explicit Ballistogram(const QString &chanId, const int freq);
+    explicit Balistogram(const QString &chanId, const int freq);
 
     /*!
      * \brief Создает на основе массива байт
      * \param data - сигнал в виде массива байт
      */
-    explicit Ballistogram(const QByteArray &data);
+    explicit Balistogram(const QByteArray &data);
 
 };
 
-#endif // BALLISTOGRAM_H
+#endif // BALISTOGRAM_H
 
 

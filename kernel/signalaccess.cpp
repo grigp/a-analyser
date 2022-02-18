@@ -4,3 +4,8 @@ SignalAccess::SignalAccess()
 {
 
 }
+
+SignalAccess::~SignalAccess()
+{
+
+}

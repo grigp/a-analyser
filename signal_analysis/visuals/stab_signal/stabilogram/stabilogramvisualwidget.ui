@@ -98,10 +98,16 @@
          <enum>QFrame::Raised</enum>
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_2">
+         <property name="topMargin">
+          <number>1</number>
+         </property>
+         <property name="bottomMargin">
+          <number>1</number>
+         </property>
          <item>
           <widget class="QLabel" name="lblScale">
            <property name="text">
-            <string>TextLabel</string>
+            <string>Масштаб</string>
            </property>
           </widget>
          </item>

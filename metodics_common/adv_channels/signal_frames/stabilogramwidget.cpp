@@ -3,7 +3,7 @@
 
 #include "driver.h"
 #include "stabilogram.h"
-#include "ballistogram.h"
+#include "balistogram.h"
 #include "testresultdata.h"
 #include "channelsutils.h"
 
@@ -44,7 +44,7 @@ void StabilogramWidget::newProbe()
     }
     if (ui->btnZRecord->isChecked())
     {
-        m_z = new Ballistogram(ChannelsDefines::chanZ, ui->wgtZOscill->frequency());
+        m_z = new Balistogram(ChannelsDefines::chanZ, ui->wgtZOscill->frequency());
         objTestResultData()->addChannel(m_z);
     }
 }

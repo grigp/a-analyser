@@ -16,7 +16,7 @@ class StabDynamicTestExecute;
 
 class TestResultData;
 class Stabilogram;
-class Ballistogram;
+class Balistogram;
 class Driver;
 class StabDynamicTestPatientWindow;
 
