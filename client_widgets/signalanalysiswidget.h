@@ -85,6 +85,19 @@ private:
     void openTest(const QString testUid);
 
     /*!
+     * \brief Устанавливает курсор на первую линейку визуализаторов открытого теста
+     * \param testUid - uid теста
+     */
+    void selectTest(const QString testUid);
+
+    /*!
+     * \brief Поиск итема на дереве теста с линейкой визуализаторов
+     * \param index  начиная с какого индекса искать
+     * \return индекс итема с линейкой визуализаторов или QModelIndex(), если не найдено
+     */
+    QModelIndex getFirstVisualLineIndex(QModelIndex &index);
+
+    /*!
      * \brief Закрывает тест с заданным uid
      * \param uid - uid теста
      */

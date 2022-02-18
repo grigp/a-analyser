@@ -49,7 +49,12 @@ void SignalAnalysisWidget::onShow()
 {
     auto ti = static_cast<AAnalyserApplication*>(QApplication::instance())->getSelectedTest();
     if (ti.uid != "")
-        openTest(ti.uid);
+    {
+        if (!isTestOpened(ti.uid))
+            openTest(ti.uid);
+        else
+            selectTest(ti.uid);
+    }
 }
 
 void SignalAnalysisWidget::onHide()
@@ -195,6 +200,45 @@ void SignalAnalysisWidget::openTest(const QString testUid)
 
     ui->tvTests->header()->resizeSection(ColElement, 320);
     ui->tvTests->header()->resizeSection(ColCloseBtn, 50);
+}
+
+void SignalAnalysisWidget::selectTest(const QString testUid)
+{
+    for (int i = 0; i < m_mdlTests->rowCount(); ++i)
+    {
+        auto idx = m_mdlTests->index(i, ColElement);
+        if (idx.data(UidRole).toString() == testUid)
+        {
+            auto idxWithLine = getFirstVisualLineIndex(idx);
+            if (idxWithLine.isValid() && idxWithLine != QModelIndex())
+            {
+                ui->tvTests->selectionModel()->clear();
+                ui->tvTests->selectionModel()->select(idxWithLine, QItemSelectionModel::Select);
+                selectElement(idxWithLine);
+            }
+        }
+    }
+}
+
+QModelIndex SignalAnalysisWidget::getFirstVisualLineIndex(QModelIndex &index)
+{
+    QVariant var = m_mdlTests->index(index.row(), ColElement, index.parent()).data(TabWidgetRole);
+    if (var.isValid())
+    {
+        QTabWidget* wgt = var.value<QTabWidget*>();
+        if (wgt)
+            return index;
+    }
+
+    for (int i = 0; i < index.model()->rowCount(index); ++i)
+    {
+        auto idx = index.model()->index(i, ColElement, index);
+        auto idxR = getFirstVisualLineIndex(idx);
+        if (idxR.isValid() && idxR != QModelIndex())
+            return idxR;
+    }
+
+    return QModelIndex();
 }
 
 void SignalAnalysisWidget::closeTest(QModelIndex& index)
