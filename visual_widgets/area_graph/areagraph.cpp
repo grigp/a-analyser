@@ -328,7 +328,11 @@ void AreaGraph::paintEvent(QPaintEvent *event)
                             {
                                 painter.setPen(QPen(m_envColors.colorGrid, 1, Qt::DotLine, Qt::FlatCap));
                                 painter.drawLine(x1, TopSpace, x1, height() - BottomSpace);
-                                QString s = QString::number(i / m_areases.at(iz)->signal()->frequency());
+                                QString s = "";
+                                if (m_areases.at(iz)->signal()->size() < 60)
+                                    s = QString::number(i / m_areases.at(iz)->signal()->frequency());
+                                else
+                                    s = BaseUtils::getTimeBySecCount(i / m_areases.at(iz)->signal()->frequency());
                                 auto size = BaseUtils::getTextSize(&painter, s);
                                 painter.setPen(QPen(m_envColors.colorAxis, 1, Qt::SolidLine, Qt::FlatCap));
                                 painter.drawText(x1 - size.width() / 2, height() - BottomSpace + size.height() + 1, s);
