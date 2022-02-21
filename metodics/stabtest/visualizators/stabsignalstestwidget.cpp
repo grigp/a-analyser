@@ -648,7 +648,7 @@ void StabSignalsTestWidget::showSKG(StabSignalsTestCalculator *calculator, const
         }
 
         //! Установка диапазонов для всех СКГ
-        QTimer::singleShot(0, [=]()
+        QTimer::singleShot(50, [=]()
         {
             int diap = 1;
             int step = 0;

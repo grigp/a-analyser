@@ -224,7 +224,31 @@ private:
     QVector<double> m_values;
 };
 
+static QMap<QString, double> ScaleKoefitients =
+{
+      std::pair<QString, double> ("1/16", 0.0625)
+    , std::pair<QString, double> ("1/8", 0.125)
+    , std::pair<QString, double> ("1/4", 0.25)
+    , std::pair<QString, double> ("1/2", 0.5)
+    , std::pair<QString, double> ("1", 1)
+    , std::pair<QString, double> ("2", 2)
+    , std::pair<QString, double> ("4", 4)
+    , std::pair<QString, double> ("8", 8)
+    , std::pair<QString, double> ("16", 16)
+    , std::pair<QString, double> ("32", 32)
+    , std::pair<QString, double> ("64", 64)
+    , std::pair<QString, double> ("128", 128)
+    , std::pair<QString, double> ("256", 256)
+    , std::pair<QString, double> ("512", 512)
+};
 
+
+static QList<QString> Scales =
+{
+    "1/16", "1/8", "1/4", "1/2", "1", "2", "4", "8", "16", "32", "64", "128", "256", "512"
+};
+
+static const double StabDefaultDiap = 128.0;
 
 }
 

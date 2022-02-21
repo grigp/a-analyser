@@ -28,6 +28,19 @@ public:
     void calculate() override;
 
 
+private slots:
+    void scaleChange(int idx);
+
+    void btnFulSignalClicked(bool isFullSignal);
+
+    void btnZeriongClicked(bool isZeroing);
+
+    void btnPlusClicked();
+    void btnMinusClicked();
+
+    void signalScroll(int pos);
+
+
 private:
     Ui::StabilogramVisualWidget *ui;
 

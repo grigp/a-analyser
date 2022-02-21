@@ -238,11 +238,15 @@ void AreaGraph::paintEvent(QPaintEvent *event)
 
             //! Минимальное значение
             QString sMin = QString::number(trunc(m_areases.at(iz)->minValue()));
+            if (m_areases.at(iz)->minValue() < 1)
+                sMin = QString::number(m_areases.at(iz)->minValue());
             auto size = BaseUtils::getTextSize(&painter, sMin);
             painter.drawText(LeftSpace - size.width() - 5, axisY - 3, sMin);
 
             //! Максимальное значение
             QString sMax = QString::number(trunc(m_areases.at(iz)->maxValue()));
+            if (m_areases.at(iz)->maxValue() < 1)
+                sMax = QString::number(m_areases.at(iz)->maxValue());
             size = BaseUtils::getTextSize(&painter, sMax);
             painter.drawText(LeftSpace - size.width() - 5, axisY - zoneH + size.height(), sMax);
 

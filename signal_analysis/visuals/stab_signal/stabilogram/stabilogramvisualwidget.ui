@@ -56,6 +56,13 @@
       <item>
        <widget class="AreaGraph" name="wgtGraph" native="true"/>
       </item>
+      <item>
+       <widget class="QScrollBar" name="sbSignal">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+       </widget>
+      </item>
      </layout>
     </widget>
    </item>
@@ -98,6 +105,9 @@
          <enum>QFrame::Raised</enum>
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_2">
+         <property name="spacing">
+          <number>2</number>
+         </property>
          <property name="topMargin">
           <number>1</number>
          </property>
@@ -112,7 +122,104 @@
           </widget>
          </item>
          <item>
-          <widget class="QComboBox" name="cbScale"/>
+          <widget class="QComboBox" name="cbScale">
+           <property name="maxVisibleItems">
+            <number>14</number>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btnFullSignal">
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset resource="../../../../kernel.qrc">
+          <normaloff>:/images/Tools/FullSignal.png</normaloff>:/images/Tools/FullSignal.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>22</width>
+          <height>22</height>
+         </size>
+        </property>
+        <property name="checkable">
+         <bool>true</bool>
+        </property>
+        <property name="checked">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QFrame" name="frFullSignal">
+        <property name="frameShape">
+         <enum>QFrame::StyledPanel</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Raised</enum>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout_5">
+         <property name="spacing">
+          <number>0</number>
+         </property>
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
+         <item>
+          <widget class="QPushButton" name="btnHScalePlus">
+           <property name="maximumSize">
+            <size>
+             <width>13</width>
+             <height>13</height>
+            </size>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset resource="../../../../kernel.qrc">
+             <normaloff>:/images/Tools/Plus_10.png</normaloff>:/images/Tools/Plus_10.png</iconset>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>9</width>
+             <height>9</height>
+            </size>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="btnHScaleMinus">
+           <property name="maximumSize">
+            <size>
+             <width>13</width>
+             <height>13</height>
+            </size>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset resource="../../../../kernel.qrc">
+             <normaloff>:/images/Tools/Minus_10.png</normaloff>:/images/Tools/Minus_10.png</iconset>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>10</width>
+             <height>10</height>
+            </size>
+           </property>
+          </widget>
          </item>
         </layout>
        </widget>
@@ -128,6 +235,9 @@
         <property name="icon">
          <iconset resource="../../../../kernel.qrc">
           <normaloff>:/images/Animate/Zeroing.png</normaloff>:/images/Animate/Zeroing.png</iconset>
+        </property>
+        <property name="checkable">
+         <bool>true</bool>
         </property>
        </widget>
       </item>
@@ -160,5 +270,110 @@
  <resources>
   <include location="../../../../kernel.qrc"/>
  </resources>
- <connections/>
+ <connections>
+  <connection>
+   <sender>cbScale</sender>
+   <signal>currentIndexChanged(int)</signal>
+   <receiver>StabilogramVisualWidget</receiver>
+   <slot>scaleChange(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>44</x>
+     <y>677</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>956</x>
+     <y>518</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btnFullSignal</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>StabilogramVisualWidget</receiver>
+   <slot>btnFulSignalClicked(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>111</x>
+     <y>660</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>956</x>
+     <y>546</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btnZeroing</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>StabilogramVisualWidget</receiver>
+   <slot>btnZeriongClicked(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>177</x>
+     <y>666</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>958</x>
+     <y>572</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btnHScalePlus</sender>
+   <signal>clicked()</signal>
+   <receiver>StabilogramVisualWidget</receiver>
+   <slot>btnPlusClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>138</x>
+     <y>657</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>957</x>
+     <y>505</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btnHScaleMinus</sender>
+   <signal>clicked()</signal>
+   <receiver>StabilogramVisualWidget</receiver>
+   <slot>btnMinusClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>145</x>
+     <y>673</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>962</x>
+     <y>603</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>sbSignal</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>StabilogramVisualWidget</receiver>
+   <slot>signalScroll(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>324</x>
+     <y>634</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>960</x>
+     <y>375</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>scaleChange(int)</slot>
+  <slot>btnFulSignalClicked(bool)</slot>
+  <slot>btnZeriongClicked(bool)</slot>
+  <slot>btnPlusClicked()</slot>
+  <slot>btnMinusClicked()</slot>
+  <slot>signalScroll(int)</slot>
+ </slots>
 </ui>

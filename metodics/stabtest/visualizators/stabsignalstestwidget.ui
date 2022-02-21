@@ -35,7 +35,7 @@
       <enum>QTabWidget::South</enum>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>2</number>
      </property>
      <widget class="QWidget" name="tabSKG">
       <attribute name="title">
@@ -566,8 +566,8 @@
    <slot>zoomIn()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>42</x>
-     <y>137</y>
+     <x>43</x>
+     <y>306</y>
     </hint>
     <hint type="destinationlabel">
      <x>1016</x>
@@ -582,8 +582,8 @@
    <slot>zoomOut()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>82</x>
-     <y>137</y>
+     <x>85</x>
+     <y>306</y>
     </hint>
     <hint type="destinationlabel">
      <x>1017</x>
@@ -598,8 +598,8 @@
    <slot>zeroing(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>122</x>
-     <y>137</y>
+     <x>127</x>
+     <y>306</y>
     </hint>
     <hint type="destinationlabel">
      <x>1014</x>
@@ -673,7 +673,7 @@
   </connection>
   <connection>
    <sender>sbSignal</sender>
-   <signal>sliderMoved(int)</signal>
+   <signal>valueChanged(int)</signal>
    <receiver>StabSignalsTestWidget</receiver>
    <slot>signalScroll(int)</slot>
    <hints>
