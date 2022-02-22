@@ -20,11 +20,21 @@ static const QVector<QColor> PaletteDefault = {Qt::darkGreen, Qt::blue, Qt::dark
 ///< Шаг секундных меток
 enum LabelStep
 {
-      lsOne = 1     ///< Каждую секунду
-    , lsFive = 5    ///< Каждые пять секунд
-    , lsTen = 10    ///< Каждые десять секунд
-    , lsSixty = 60  ///< Каждую минуту
+      lsOne = 1            ///< Каждую секунду
+    , lsFive = 5           ///< Каждые пять секунд
+    , lsTen = 10           ///< Каждые десять секунд
+    , lsSixty = 60         ///< Каждую минуту
+    , lsMinutesFive = 300  ///< Каждые пять минут
+    , lsMinutesTen = 600   ///< Каждые десять минут
 };
+
+struct MinMax
+{
+    int min {INT_MAX};
+    int max {-INT_MAX};
+    bool isRepeatX {false};
+};
+QList<MinMax> chansMinMax;
 
 }
 
@@ -227,14 +237,21 @@ void AreaGraph::paintEvent(QPaintEvent *event)
             QString s = QString::number(secCount);
             auto sizeOne = BaseUtils::getTextSize(&painter, s);
             LabelStep ls = lsOne;
-            if ((stepMark < (sizeOne.width() + 7)) && (stepMark * 5 >= (sizeOne.width() + 7)))
+            //qDebug() << stepMark << (sizeOne.width() + 7) <<  "    " << stepMark * 5 << (sizeOne.width() + 7);
+            if ((stepMark < (sizeOne.width() * 2 + 7)) && (stepMark * 5 >= (sizeOne.width() * 2 + 7)))
                 ls = lsFive;
             else
-            if ((stepMark * 5 < (sizeOne.width() + 7)) && (stepMark * 10 >= (sizeOne.width() + 7)))
+            if ((stepMark * 5 < (sizeOne.width() * 2 + 7)) && (stepMark * 10 >= (sizeOne.width() * 2 + 7)))
                 ls = lsTen;
             else
-            if ((stepMark * 10 < (sizeOne.width() + 7)) && (stepMark * 60 >= (sizeOne.width() + 7)))
+            if ((stepMark * 10 < (sizeOne.width() * 2 + 7)) && (stepMark * 60 >= (sizeOne.width() * 2 + 7)))
                 ls = lsSixty;
+            else
+            if ((stepMark * 60 < (sizeOne.width() * 2 + 7)) && (stepMark * 300 >= (sizeOne.width() * 2 + 7)))
+                ls = lsMinutesFive;
+            else
+            if ((stepMark * 300 < (sizeOne.width() * 2 + 7)) && (stepMark * 600 >= (sizeOne.width() * 2 + 7)))
+                ls = lsMinutesTen;
 
             //! Минимальное значение
             QString sMin = QString::number(trunc(m_areases.at(iz)->minValue()));
@@ -271,11 +288,19 @@ void AreaGraph::paintEvent(QPaintEvent *event)
                 hScale = m_hScale;
                 startPoint = m_startPoint;
             }
+            //! Для усреднения сигнала на одной координате x
+            chansMinMax.clear();
+            for (int i = 0; i < m_areases.at(iz)->signal()->subChansCount(); ++i)
+                chansMinMax << MinMax();
+
             //! По сигналу
             for (int i = 0; i < m_areases.at(iz)->signal()->size() - 1; ++i)
             {
                 int x1 = LeftSpace + static_cast<int>((i - startPoint) * step * hScale);
                 int x2 = LeftSpace + static_cast<int>((i - startPoint + 1) * step * hScale);
+
+                if (x1 > width() - RightSpace)
+                    break;
 
                 if (i > startPoint)
                 {
@@ -295,8 +320,35 @@ void AreaGraph::paintEvent(QPaintEvent *event)
                         }
                         int y1 = axisY - static_cast<int>((v1 - m_areases.at(iz)->minValue()) * prop);
                         int y2 = axisY - static_cast<int>((v2 - m_areases.at(iz)->minValue()) * prop);
-                        painter.setPen(QPen(color, 1, Qt::SolidLine, Qt::FlatCap));
-                        painter.drawLine(x1, y1, x2, y2);
+                        if (x1 == x2)
+                        {
+                            auto mm = chansMinMax.at(chan1);
+                            if (y1 < mm.min) mm.min = y1;
+                            if (y2 < mm.min) mm.min = y2;
+                            if (y1 > mm.max) mm.max = y1;
+                            if (y2 > mm.max) mm.max = y2;
+                            chansMinMax.replace(chan1, mm);
+                        }
+                        else
+                        {
+                            painter.setPen(QPen(color, 1, Qt::SolidLine, Qt::FlatCap));
+                            if (chansMinMax.at(chan1).isRepeatX)
+                            {
+                                painter.drawLine(x1, chansMinMax.at(chan1).min, x1, chansMinMax.at(chan1).max);
+                                MinMax mm;
+                                mm.min = INT_MAX;
+                                mm.max = -INT_MIN;
+                                chansMinMax.replace(chan1, mm);
+                            }
+                            else
+                                painter.drawLine(x1, y1, x2, y2);
+
+                        }
+                        auto mm = chansMinMax.at(chan1);
+                        mm.isRepeatX = x1 == x2;
+                        chansMinMax.replace(chan1, mm);
+//                        painter.setPen(QPen(color, 1, Qt::SolidLine, Qt::FlatCap));
+//                        painter.drawLine(x1, y1, x2, y2);
                     };
 
                     //! Межканальная заливка. Только для первых двух каналов
@@ -324,12 +376,14 @@ void AreaGraph::paintEvent(QPaintEvent *event)
                             if ((ls == lsOne && i % m_areases.at(iz)->signal()->frequency() == 0) ||
                                 (ls == lsFive && i % (m_areases.at(iz)->signal()->frequency() * 5) == 0) ||
                                 (ls == lsTen && i % (m_areases.at(iz)->signal()->frequency() * 10) == 0) ||
-                                (ls == lsSixty && i % (m_areases.at(iz)->signal()->frequency() * 60) == 0))
+                                (ls == lsSixty && i % (m_areases.at(iz)->signal()->frequency() * 60) == 0) ||
+                                (ls == lsMinutesFive && i % (m_areases.at(iz)->signal()->frequency() * 300) == 0) ||
+                                (ls == lsMinutesTen && i % (m_areases.at(iz)->signal()->frequency() * 600) == 0))
                             {
                                 painter.setPen(QPen(m_envColors.colorGrid, 1, Qt::DotLine, Qt::FlatCap));
                                 painter.drawLine(x1, TopSpace, x1, height() - BottomSpace);
                                 QString s = "";
-                                if (m_areases.at(iz)->signal()->size() < 60)
+                                if (m_areases.at(iz)->signal()->size() <= 60 * m_areases.at(iz)->signal()->frequency())
                                     s = QString::number(i / m_areases.at(iz)->signal()->frequency());
                                 else
                                     s = BaseUtils::getTimeBySecCount(i / m_areases.at(iz)->signal()->frequency());
