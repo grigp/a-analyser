@@ -1,5 +1,7 @@
 #include "aanalyserbuild.h"
 
+#include "aanalyserapplication.h"
+
 #include "metodictemplate.h"
 #include "stabtesttemplate.h"
 #include "extend3dgamestemplate.h"
@@ -27,6 +29,10 @@
 #include "stepdeviationfactors.h"
 #include "trianglefactors.h"
 #include "triangleconslutionfactors.h"
+
+#include "stabilogramvisual.h"
+#include "balistogramvisual.h"
+#include "vectoranalysisvisual.h"
 
 QList<MetodicTemplate *> AAnalyserBuild::getBuildTemplates(QObject *parent)
 {
@@ -60,4 +66,12 @@ void AAnalyserBuild::registerFactors()
     StepDeviationFactors::registerFactors();
     TriangleFactors::registerFactors();
     TriangleConslutionFactors::registerFactors();
+}
+
+void AAnalyserBuild::registerVisuals()
+{
+    auto* app = static_cast<AAnalyserApplication*>(QApplication::instance());
+    app->registerVisual(new StabilogramVisual(VisualDefines::vlChannel));
+    app->registerVisual(new BalistogramVisual(VisualDefines::vlChannel));
+    app->registerVisual(new VectorAnalysisVisual(VisualDefines::vlChannel));
 }

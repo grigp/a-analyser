@@ -19,6 +19,12 @@ QList<MetodicTemplate*> getBuildTemplates(QObject *parent = nullptr);
 void registerFactors();
 
 
+/*!
+ * \brief Регистрирует визуализаторы, вызывая метод VisualsFactory::registerVisual для каждого визуализатора
+ */
+void registerVisuals();
+
+
 }
 
 

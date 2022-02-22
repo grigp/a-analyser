@@ -30,6 +30,8 @@ enum LabelStep
 
 struct MinMax
 {
+    int minPrev {INT_MAX};
+    int maxPrev {INT_MAX};
     int min {INT_MAX};
     int max {-INT_MAX};
     bool isRepeatX {false};
@@ -334,8 +336,18 @@ void AreaGraph::paintEvent(QPaintEvent *event)
                             painter.setPen(QPen(color, 1, Qt::SolidLine, Qt::FlatCap));
                             if (chansMinMax.at(chan1).isRepeatX)
                             {
-                                painter.drawLine(x1, chansMinMax.at(chan1).min, x1, chansMinMax.at(chan1).max);
-                                MinMax mm;
+                                auto mm = chansMinMax.at(chan1);
+                                painter.drawLine(x1, mm.min, x1, mm.max);
+                                if (mm.minPrev != INT_MAX)
+                                {
+                                    if (mm.max < mm.minPrev)
+                                        painter.drawLine(x1 - 1, mm.minPrev, x1, mm.max);
+                                    else
+                                    if (mm.min > mm.maxPrev)
+                                        painter.drawLine(x1 - 1, mm.maxPrev, x1, mm.min);
+                                }
+                                mm.minPrev = mm.min;
+                                mm.maxPrev = mm.max;
                                 mm.min = INT_MAX;
                                 mm.max = -INT_MIN;
                                 chansMinMax.replace(chan1, mm);
