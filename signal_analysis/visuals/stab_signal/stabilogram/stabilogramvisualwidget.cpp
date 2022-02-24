@@ -18,7 +18,7 @@ StabilogramVisualWidget::StabilogramVisualWidget(VisualDescriptor* visual,
 {
     ui->setupUi(this);
 
-    foreach (auto scaleName, BaseUtils::Scales)
+    foreach (auto scaleName, BaseUtils::ScalesStab)
         ui->cbScale->addItem(scaleName, BaseUtils::ScaleKoefitients.value(scaleName));
     ui->sbSignal->setEnabled(false);
 }
@@ -45,7 +45,6 @@ void StabilogramVisualWidget::scaleChange(int idx)
     Q_UNUSED(idx);
     ui->wgtGraph->setDiapazone(-BaseUtils::StabDefaultDiap / ui->cbScale->currentData().toDouble(),
                                BaseUtils::StabDefaultDiap / ui->cbScale->currentData().toDouble());
-
 }
 
 void StabilogramVisualWidget::btnFulSignalClicked(bool isFullSignal)

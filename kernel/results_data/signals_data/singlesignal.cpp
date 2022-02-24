@@ -1,6 +1,7 @@
 #include "singlesignal.h"
 
 #include <QDataStream>
+#include <QDebug>
 
 
 SingleSignal::SingleSignal(const QString &chanId, const int freq)
@@ -72,6 +73,7 @@ void SingleSignal::fromByteArray(const QByteArray &data)
 
     m_maxValue = -INT_MAX;
     m_minValue = INT_MAX;
+    m_midValue = 0;
 
     for (int i = 0; i < count; ++i)
     {
@@ -83,9 +85,13 @@ void SingleSignal::fromByteArray(const QByteArray &data)
             m_maxValue = val;
         if (val < m_minValue)
             m_minValue = val;
+        m_midValue += val;
 
         m_data.replace(i, val);
     }
+
+    if (count > 0)
+        m_midValue /= count;
 }
 
 void SingleSignal::toByteArray(QByteArray &data) const

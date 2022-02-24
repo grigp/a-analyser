@@ -379,7 +379,11 @@
         <number>1</number>
        </property>
        <item>
-        <widget class="AreaGraph" name="wgtGraph" native="true"/>
+        <widget class="AreaGraph" name="wgtGraph" native="true">
+         <property name="mouseTracking">
+          <bool>true</bool>
+         </property>
+        </widget>
        </item>
        <item>
         <widget class="QScrollBar" name="sbSignal">

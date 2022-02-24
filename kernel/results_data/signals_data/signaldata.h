@@ -58,7 +58,12 @@ public:
     /*!
      * \brief Возвращает максимальное значение сигнала по модулю
      */
-    virtual double absMaxValue();
+    virtual double absMaxValue() const;
+
+    /*!
+     * \brief Возвращает среднее значение сигнала
+     */
+    virtual double midValue() const;
 
     /*!
      * \brief Виртуальная функция, читает данные из массива байт
@@ -80,6 +85,7 @@ public:
 protected:
     double m_minValue {INT_MAX};
     double m_maxValue {-INT_MAX};
+    double m_midValue {0};
 
 };
 

@@ -243,12 +243,18 @@ static QMap<QString, double> ScaleKoefitients =
 };
 
 
-static QList<QString> Scales =
+static QList<QString> ScalesStab =
 {
     "1/16", "1/8", "1/4", "1/2", "1", "2", "4", "8", "16", "32", "64", "128", "256", "512"
 };
 
+static QList<QString> ScalesZ =
+{
+    "1/8", "1/4", "1/2", "1", "2", "4", "8", "16", "32", "64", "128", "256", "512"
+};
+
 static const double StabDefaultDiap = 128.0;
+static const double ZDefaultDiap = 150.0;
 
 }
 

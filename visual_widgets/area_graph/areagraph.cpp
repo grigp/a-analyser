@@ -5,6 +5,7 @@
 #include "baseutils.h"
 
 #include <QPainter>
+#include <QMouseEvent>
 #include <QDebug>
 
 
@@ -35,6 +36,9 @@ struct MinMax
     int min {INT_MAX};
     int max {-INT_MAX};
     bool isRepeatX {false};
+    bool reserv1 {false};    ///! Заглушки, чтоб не появлялось сообщение компилятора
+    bool reserv2 {false};
+    bool reserv3 {false};
 };
 QList<MinMax> chansMinMax;
 
@@ -458,6 +462,13 @@ void AreaGraph::mousePressEvent(QMouseEvent *event)
 {
     QWidget::mousePressEvent(event);
 }
+
+void AreaGraph::mouseMoveEvent(QMouseEvent *event)
+{
+    QWidget::mouseMoveEvent(event);
+    qDebug() << event->x() - LeftSpace;
+}
+
 
 
 //! --------------------------------------------------------------------------------------

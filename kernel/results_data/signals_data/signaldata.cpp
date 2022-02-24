@@ -21,9 +21,14 @@ double SignalData::minValue() const
     return m_minValue;
 }
 
-double SignalData::absMaxValue()
+double SignalData::absMaxValue() const
 {
     if (fabs(m_maxValue) > fabs(m_minValue))
         return fabs(m_maxValue);
     return fabs(m_minValue);
+}
+
+double SignalData::midValue() const
+{
+    return m_midValue;
 }

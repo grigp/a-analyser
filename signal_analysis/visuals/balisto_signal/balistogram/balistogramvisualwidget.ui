@@ -54,9 +54,20 @@
        <number>1</number>
       </property>
       <item>
-       <widget class="AreaGraph" name="wgtGraph" native="true"/>
+       <widget class="AreaGraph" name="wgtGraph" native="true">
+        <property name="mouseTracking">
+         <bool>true</bool>
+        </property>
+       </widget>
       </item>
      </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QScrollBar" name="sbSignal">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
     </widget>
    </item>
    <item>
@@ -118,17 +129,96 @@
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="btnZeroing">
-        <property name="toolTip">
-         <string>Центровка</string>
-        </property>
+       <widget class="QPushButton" name="btnFullSignal">
         <property name="text">
          <string/>
         </property>
         <property name="icon">
          <iconset resource="../../../../kernel.qrc">
-          <normaloff>:/images/Animate/Zeroing.png</normaloff>:/images/Animate/Zeroing.png</iconset>
+          <normaloff>:/images/Tools/FullSignal.png</normaloff>:/images/Tools/FullSignal.png</iconset>
         </property>
+        <property name="iconSize">
+         <size>
+          <width>22</width>
+          <height>22</height>
+         </size>
+        </property>
+        <property name="checkable">
+         <bool>true</bool>
+        </property>
+        <property name="checked">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QFrame" name="frFullSignal">
+        <property name="frameShape">
+         <enum>QFrame::StyledPanel</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Raised</enum>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout_5">
+         <property name="spacing">
+          <number>0</number>
+         </property>
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
+         <item>
+          <widget class="QPushButton" name="btnHScalePlus">
+           <property name="maximumSize">
+            <size>
+             <width>13</width>
+             <height>13</height>
+            </size>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset resource="../../../../kernel.qrc">
+             <normaloff>:/images/Tools/Plus_10.png</normaloff>:/images/Tools/Plus_10.png</iconset>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>9</width>
+             <height>9</height>
+            </size>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="btnHScaleMinus">
+           <property name="maximumSize">
+            <size>
+             <width>13</width>
+             <height>13</height>
+            </size>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset resource="../../../../kernel.qrc">
+             <normaloff>:/images/Tools/Minus_10.png</normaloff>:/images/Tools/Minus_10.png</iconset>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>10</width>
+             <height>10</height>
+            </size>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </widget>
       </item>
       <item>
@@ -160,5 +250,94 @@
  <resources>
   <include location="../../../../kernel.qrc"/>
  </resources>
- <connections/>
+ <connections>
+  <connection>
+   <sender>cbScale</sender>
+   <signal>currentIndexChanged(int)</signal>
+   <receiver>BalistogramVisualWidget</receiver>
+   <slot>scaleChange(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>64</x>
+     <y>592</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1020</x>
+     <y>308</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btnFullSignal</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>BalistogramVisualWidget</receiver>
+   <slot>btnFulSignalClicked(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>121</x>
+     <y>586</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1020</x>
+     <y>338</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>sbSignal</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>BalistogramVisualWidget</receiver>
+   <slot>signalScroll(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>195</x>
+     <y>551</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1021</x>
+     <y>260</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btnHScaleMinus</sender>
+   <signal>clicked()</signal>
+   <receiver>BalistogramVisualWidget</receiver>
+   <slot>btnMinusClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>139</x>
+     <y>594</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1025</x>
+     <y>438</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btnHScalePlus</sender>
+   <signal>clicked()</signal>
+   <receiver>BalistogramVisualWidget</receiver>
+   <slot>btnPlusClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>143</x>
+     <y>579</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1024</x>
+     <y>382</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>scaleChange(int)</slot>
+  <slot>btnFulSignalClicked(bool)</slot>
+  <slot>btnZeroingClicked(bool)</slot>
+  <slot>signalScroll(int)</slot>
+  <slot>btnMinusClicked()</slot>
+  <slot>btnPlusClicked()</slot>
+ </slots>
 </ui>

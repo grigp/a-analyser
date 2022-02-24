@@ -27,6 +27,16 @@ public:
     bool isValid() override;
     void calculate() override;
 
+private slots:
+    void scaleChange(int idx);
+
+    void btnFulSignalClicked(bool isFullSignal);
+
+    void btnPlusClicked();
+    void btnMinusClicked();
+
+    void signalScroll(int pos);
+
 
 private:
     Ui::BalistogramVisualWidget *ui;
