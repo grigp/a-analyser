@@ -197,5 +197,6 @@
         <file>images/SignalAnalysis.png</file>
         <file>images/tree/probe.png</file>
         <file>images/tree/test.png</file>
+        <file>images/SignalCursor.png</file>
     </qresource>
 </RCC>

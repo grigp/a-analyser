@@ -21,6 +21,13 @@ StabilogramVisualWidget::StabilogramVisualWidget(VisualDescriptor* visual,
     foreach (auto scaleName, BaseUtils::ScalesStab)
         ui->cbScale->addItem(scaleName, BaseUtils::ScaleKoefitients.value(scaleName));
     ui->sbSignal->setEnabled(false);
+    ui->wgtGraph->setIsShowCursor(true);
+
+    QCursor cursorGraph = QCursor(QPixmap(":/images/SignalCursor.png"));
+    ui->wgtGraph->setCursor(cursorGraph);
+
+
+    connect(ui->wgtGraph, &AreaGraph::moveCursor, this, &StabilogramVisualWidget::on_moveCursor);
 }
 
 StabilogramVisualWidget::~StabilogramVisualWidget()
@@ -80,6 +87,17 @@ void StabilogramVisualWidget::btnMinusClicked()
 void StabilogramVisualWidget::signalScroll(int pos)
 {
     ui->wgtGraph->setStartPoint(ui->wgtGraph->area(0)->signal()->size() * pos / 100);
+}
+
+void StabilogramVisualWidget::on_moveCursor()
+{
+    ui->edCursor->setText(QString::number(static_cast<double>(ui->wgtGraph->cursorPos()) / static_cast<double>(m_stab->frequency())));
+    auto vals = ui->wgtGraph->cursorValues();
+    if (vals.size() == 2)
+    {
+        ui->edX->setText(QString::number(vals.at(0)));
+        ui->edY->setText(QString::number(vals.at(1)));
+    }
 }
 
 void StabilogramVisualWidget::showGraph()

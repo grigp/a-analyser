@@ -183,7 +183,7 @@ void AreaGraph::addMarker(const int numArea, const int pos, const QString commen
     m_areases.at(numArea)->addMarker(pos, comment);
 }
 
-void AreaGraph::setCursor(const int numArea, const int pos)
+void AreaGraph::setCursorOnPosition(const int numArea, const int pos)
 {
     Q_ASSERT(numArea >= 0 && numArea < m_areases.size());
     m_areases.at(numArea)->setCursor(pos);
@@ -200,6 +200,40 @@ void AreaGraph::setIsFillBetweenSubchans(const int numArea, const bool isFill)
 {
     Q_ASSERT(numArea >= 0 && numArea < m_areases.size());
     m_areases.at(numArea)->setIsFillBetweenSubchans(isFill);
+}
+
+int AreaGraph::cursorPos() const
+{
+    if (m_areases.size() > 0)
+    {
+        int hScale = 1;
+        int startPoint = 0;
+        if (m_xcsm == xsm_scrolling)
+        {
+            hScale = m_hScale;
+            startPoint = m_startPoint;
+        }
+
+        return static_cast<int>((m_cursorX - LeftSpace) / (m_areases.at(0)->step() * hScale) + startPoint);
+    }
+    return 0;
+}
+
+QList<double> AreaGraph::cursorValues() const
+{
+    auto pos = cursorPos();
+
+    QList<double> retval;
+    for (int i = 0; i < m_areases.size(); ++i)
+    {
+        for (int j = 0; j < m_areases.at(i)->signal()->subChansCount(); ++j)
+        {
+            if (pos >= 0 && pos < m_areases.at(i)->signal()->size())
+                retval << m_areases.at(i)->signal()->value(j, pos);
+        }
+    }
+
+    return  retval;
 }
 
 void AreaGraph::paintEvent(QPaintEvent *event)
@@ -237,6 +271,7 @@ void AreaGraph::paintEvent(QPaintEvent *event)
             if (m_xcsm == xsm_fullSignal)
                 step = static_cast<double>(width() - LeftSpace - RightSpace) /
                        static_cast<double>(m_areases.at(iz)->signal()->size());
+            m_areases.at(iz)->setStep(step);
             //! Определение шага секундных меток
             double stepMark = step * m_areases.at(iz)->signal()->frequency();
             int secCount = m_areases.at(iz)->signal()->size() / m_areases.at(iz)->signal()->frequency();
@@ -453,6 +488,13 @@ void AreaGraph::paintEvent(QPaintEvent *event)
                 }
             }
         }
+
+        //! Курсор общий
+        if (m_isShowCursor)
+        {
+            painter.setPen(QPen(m_envColors.colorCursor, 1, Qt::SolidLine, Qt::FlatCap));
+            painter.drawLine(m_cursorX, TopSpace, m_cursorX, height() - BottomSpace);
+        }
     }
 
     painter.restore();
@@ -466,7 +508,12 @@ void AreaGraph::mousePressEvent(QMouseEvent *event)
 void AreaGraph::mouseMoveEvent(QMouseEvent *event)
 {
     QWidget::mouseMoveEvent(event);
-    qDebug() << event->x() - LeftSpace;
+    if (event->x() != m_cursorX)
+        emit moveCursor();
+    if (event->x() >= LeftSpace)
+        m_cursorX = event->x();
+    m_cursorY = event->y();
+    update();
 }
 
 

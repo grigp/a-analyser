@@ -208,7 +208,7 @@ void IDSWidget::timerEvent(QTimerEvent *event)
         ++m_animCurPos;
         if (m_animCurPos < m_fds->size())
         {
-            ui->wgtFDS->setCursor(0, m_animCurPos);
+            ui->wgtFDS->setCursorOnPosition(0, m_animCurPos);
             double freq = m_fds->value(0, m_animCurPos) / m_fds->absMaxValue() * 5000;
             m_soundGenerator->reset(m_audioFormat, m_fds->size() / m_fds->frequency() * 1000000, freq);
         }
@@ -218,7 +218,7 @@ void IDSWidget::timerEvent(QTimerEvent *event)
             killTimer(m_tmAnimate);
             m_tmAnimate = -1;
             m_animCurPos = 0;
-            ui->wgtFDS->setCursor(0, m_animCurPos);
+            ui->wgtFDS->setCursorOnPosition(0, m_animCurPos);
             doneAudio();
         }
     }
@@ -318,7 +318,7 @@ void IDSWidget::onFDSZoomOut()
 void IDSWidget::animToBegin()
 {
     m_animCurPos = 0;
-    ui->wgtFDS->setCursor(0, m_animCurPos);
+    ui->wgtFDS->setCursorOnPosition(0, m_animCurPos);
 }
 
 void IDSWidget::animBack()
@@ -326,7 +326,7 @@ void IDSWidget::animBack()
     m_animCurPos = m_animCurPos - m_fds->frequency();
     if (m_animCurPos < 0)
         m_animCurPos = 0;
-    ui->wgtFDS->setCursor(0, m_animCurPos);
+    ui->wgtFDS->setCursorOnPosition(0, m_animCurPos);
 }
 
 void IDSWidget::animPlay()
@@ -350,7 +350,7 @@ void IDSWidget::animForward()
     m_animCurPos = m_animCurPos + m_fds->frequency();
     if (m_animCurPos > m_fds->size() - 1)
         m_animCurPos = m_fds->size() - 1;
-    ui->wgtFDS->setCursor(0, m_animCurPos);
+    ui->wgtFDS->setCursorOnPosition(0, m_animCurPos);
 }
 
 void IDSWidget::addFactorsFromMultifactor(IDSCalculator *calculator)

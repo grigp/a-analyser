@@ -77,6 +77,9 @@ public:
     QString legend(const int idx);
     int legendSize() const {return m_legend.size();}
 
+    double step() const {return  m_step;}
+    void setStep(const double step) {m_step = step;}
+
 private:
     /*!
      * \brief Расчет среднего значения по каждому отведению сигнала
@@ -97,6 +100,8 @@ private:
     QList<MarkerInfo> m_markers;
     bool m_isFillBetweenSubchans {false};
     QStringList m_legend;   ///< Описание подканалов
+
+    double m_step {1};   ///< Шаг по графику в зоне
 };
 
 /*!
@@ -220,13 +225,26 @@ public:
      * \param zoneNum - номер зоны
      * \param pos - позиция (номер отсчета)
      */
-    void setCursor(const int numArea, const int pos);
+    void setCursorOnPosition(const int numArea, const int pos);
 
     /*!
      * \brief Доступ к свойству isFillBetweenSubchans
      */
     bool isFillBetweenSubchans(const int numArea) const;
     void setIsFillBetweenSubchans(const int numArea, const bool isFill);
+
+    bool isShowCursor() const {return m_isShowCursor;}
+    void setIsShowCursor(const bool isShow) {m_isShowCursor = isShow;}
+
+    /*!
+     * \brief Возвращает координату курсора по зоне 0
+     */
+    int cursorPos() const;
+
+    QList<double> cursorValues() const;
+
+signals:
+    void moveCursor();
 
 protected:
     void paintEvent(QPaintEvent *event) override;
@@ -250,6 +268,10 @@ private:
     int m_startPoint {0};                     ///< Начальная точка прорисовки в режиме скроллинга
     int m_hScale {1};                         ///< Множитель горизонтального масштабирования (увеличения)
     bool m_isZeroing {false};                 ///< Центровка
+
+    bool m_isShowCursor {false};
+    int m_cursorX {0};
+    int m_cursorY {0};
 };
 
 #endif // AREAGRAPH_H

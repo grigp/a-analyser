@@ -40,6 +40,7 @@ private slots:
 
     void signalScroll(int pos);
 
+    void on_moveCursor();
 
 private:
     Ui::StabilogramVisualWidget *ui;
