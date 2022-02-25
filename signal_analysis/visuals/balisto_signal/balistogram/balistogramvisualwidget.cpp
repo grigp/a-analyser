@@ -20,6 +20,12 @@ BalistogramVisualWidget::BalistogramVisualWidget(VisualDescriptor *visual,
     foreach (auto scaleName, BaseUtils::ScalesZ)
         ui->cbScale->addItem(scaleName, BaseUtils::ScaleKoefitients.value(scaleName));
     ui->sbSignal->setEnabled(false);
+    ui->wgtGraph->setIsShowCursor(true);
+
+    QCursor cursorGraph = QCursor(QPixmap(":/images/SignalCursor.png"));
+    ui->wgtGraph->setCursor(cursorGraph);
+
+    connect(ui->wgtGraph, &AreaGraph::moveCursor, this, &BalistogramVisualWidget::on_moveCursor);
 }
 
 BalistogramVisualWidget::~BalistogramVisualWidget()
@@ -79,6 +85,16 @@ void BalistogramVisualWidget::btnMinusClicked()
 void BalistogramVisualWidget::signalScroll(int pos)
 {
     ui->wgtGraph->setStartPoint(ui->wgtGraph->area(0)->signal()->size() * pos / 100);
+}
+
+void BalistogramVisualWidget::on_moveCursor()
+{
+    ui->edCursor->setText(QString::number(static_cast<double>(ui->wgtGraph->cursorPos()) / static_cast<double>(m_z->frequency())));
+    auto vals = ui->wgtGraph->cursorValues();
+    if (vals.size() == 1)
+    {
+        ui->edZ->setText(QString::number(vals.at(0)));
+    }
 }
 
 void BalistogramVisualWidget::showGraph()

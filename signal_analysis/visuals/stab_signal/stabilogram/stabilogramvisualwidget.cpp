@@ -26,7 +26,6 @@ StabilogramVisualWidget::StabilogramVisualWidget(VisualDescriptor* visual,
     QCursor cursorGraph = QCursor(QPixmap(":/images/SignalCursor.png"));
     ui->wgtGraph->setCursor(cursorGraph);
 
-
     connect(ui->wgtGraph, &AreaGraph::moveCursor, this, &StabilogramVisualWidget::on_moveCursor);
 }
 
