@@ -9,6 +9,8 @@ namespace Ui {
 class VectorAnalysisVisualWidget;
 }
 
+class VectorFactors;
+
 class VectorAnalysisVisualWidget : public ChannelVisual
 {
     Q_OBJECT
@@ -17,7 +19,7 @@ public:
     explicit VectorAnalysisVisualWidget(VisualDescriptor* visual,
                                         const QString& testUid, const QString& probeUid, const QString& channelUid,
                                         QWidget *parent = nullptr);
-    ~VectorAnalysisVisualWidget();
+    ~VectorAnalysisVisualWidget() override;
 
     bool isValid() override;
     void calculate() override;
@@ -25,6 +27,12 @@ public:
 
 private:
     Ui::VectorAnalysisVisualWidget *ui;
+
+    void showFactors();
+    void showAccumulationFunction();
+    void showVectorCloud();
+
+    VectorFactors *m_factors {nullptr};
 };
 
 #endif // VECTORANALYSISVISUALWIDGET_H

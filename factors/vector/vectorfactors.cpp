@@ -46,6 +46,9 @@ bool VectorFactors::isValid(const QString &testUid, const QString &probeUid, con
 
 void VectorFactors::calculate()
 {
+    m_spdX.clear();
+    m_spdY.clear();
+
     QByteArray baStab;
     if (DataProvider::getChannel(probeUid(), channelId(), baStab))
     {
@@ -56,21 +59,20 @@ void VectorFactors::calculate()
         if (r >= 0.5)
         {
             //! Расчет скоростей и ускорений по фронтали и сагиттали
-            QVector<double> spdX, spdY;
             QVector<double> accelX, accelY;
-            computeSpeed(&stab, spdX, spdY, accelX, accelY);
+            computeSpeed(&stab, m_spdX, m_spdY, accelX, accelY);
 
             //! Расчет векторов скорости и угловых скоростей
             QVector<double> spd;
             QVector<double> angles;
             QVector<double> wSpeed;
-            vectorSpeed(spdX, spdY, spd, angles, wSpeed);
+            vectorSpeed(m_spdX, m_spdY, spd, angles, wSpeed);
 
             //! Расчет КФР
             computeKFR(spd);
 
             //! Расчет НПВ
-            computeNPV(spdX, spdY, stab.frequency());
+            computeNPV(m_spdX, m_spdY, stab.frequency());
 
             //! Расчет НУС
             computeNUS(wSpeed);
@@ -79,8 +81,8 @@ void VectorFactors::calculate()
             computeVariationFactors(wSpeed, stab.frequency(), m_amplW, m_tW);
 
             //! Коэффициенты асимметрии
-            m_kals_f = computeAsymmetry(spdX);
-            m_kals_s = computeAsymmetry(spdY);
+            m_kals_f = computeAsymmetry(m_spdX);
+            m_kals_s = computeAsymmetry(m_spdY);
 
             //! Мощность векторограммы
             computePowerVector(&stab);
@@ -172,6 +174,26 @@ void VectorFactors::registerFactors()
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(VectorFactorsDefines::VWUid, VectorFactorsDefines::GroupUid,
                            tr("Соотношение линейной и угловой скоростей"), tr("ЛСС/УС"), tr("мм/град"), 2, 2, FactorsDefines::nsDual, 12);
+}
+
+double VectorFactors::accumulationFuncValue(const int idx) const
+{
+    Q_ASSERT(idx >= 0 && idx < VectorFactorsDefines::DiapsCount);
+    return m_diapazones[idx].freqAcc;
+}
+
+int VectorFactors::vectorCount() const
+{
+    return qMin(m_spdX.size(), m_spdY.size());
+}
+
+QPointF VectorFactors::vector(const int idx) const
+{
+    Q_ASSERT(idx >= 0 && idx < vectorCount());
+    QPointF retval;
+    retval.setX(m_spdX.at(idx));
+    retval.setY(m_spdY.at(idx));
+    return retval;
 }
 
 double VectorFactors::deviation(Stabilogram *stab)
@@ -350,7 +372,7 @@ int VectorFactors::getDiapasoneIndex(const double value) const
         if ((value >= m_diapazones[i].limitLow) &&
             (value < m_diapazones[i].limitHigh))
             return i;
-    return VectorFactorsDefines::DiapsCount - 1;
+    return - 1;
 }
 
 void VectorFactors::computeNPV(const QVector<double> &spdX,

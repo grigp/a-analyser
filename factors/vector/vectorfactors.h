@@ -2,6 +2,7 @@
 #define VECTORFACTORS_H
 
 #include <QObject>
+#include <QVector>
 #include "multifactor.h"
 
 namespace VectorFactorsDefines
@@ -87,6 +88,25 @@ public:
      * \brief Регистрирует факторсгруппу и показатели
      */
     static void registerFactors();
+
+    /*!
+     * \brief Доступ к данным функции накопления значений
+     * \param idx - номер диапазона
+     * \return Значение функции накопления в данном номере
+     */
+    double accumulationFuncValue(const int idx) const;
+
+    /*!
+     * \brief Возвращает кол-во векторов
+     */
+    int vectorCount() const;
+
+    /*!
+     * \brief Доступ к векторам скоростей
+     * \param idx - номер вектора
+     * \return составляющие скорости по фронтали и сагиттали
+     */
+    QPointF vector(const int idx) const;
 
 private:
     /*!
@@ -189,6 +209,8 @@ private:
 
     double m_rotLf {0};
     double m_rotRt {0};
+
+    QVector<double> m_spdX, m_spdY;
 
     ///< Массив диапазонов
     VectorFactorsDefines::Diapazone m_diapazones[VectorFactorsDefines::DiapsCount];

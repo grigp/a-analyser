@@ -123,7 +123,11 @@
           </widget>
          </item>
          <item>
-          <widget class="QComboBox" name="cbScale"/>
+          <widget class="QComboBox" name="cbScale">
+           <property name="maxVisibleItems">
+            <number>15</number>
+           </property>
+          </widget>
          </item>
         </layout>
        </widget>
