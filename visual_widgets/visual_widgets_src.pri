@@ -19,6 +19,7 @@ include(diag_octaedron/diag_octaedron_src.pri)
 include(tetris_figure/tetris_figure.pri)
 include(paint_mix/paint_mix_src.pri)
 include(accumulation_function/accumulation_function_src.pri)
+include(vector_cloud/vector_cloud_src.pri)
 
 HEADERS += \
 

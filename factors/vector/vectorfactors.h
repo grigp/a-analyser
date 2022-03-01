@@ -97,6 +97,13 @@ public:
     double accumulationFuncValue(const int idx) const;
 
     /*!
+     * \brief Доступ к данным границ диапазонов
+     * \param idx - номер диапазона
+     * \return Значение границы
+     */
+    double diapRangeLimit(const int idx) const;
+
+    /*!
      * \brief Возвращает кол-во векторов
      */
     int vectorCount() const;

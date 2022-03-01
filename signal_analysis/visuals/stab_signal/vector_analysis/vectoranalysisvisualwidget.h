@@ -26,6 +26,8 @@ public:
 
 private slots:
     void splitterMoved(int pos,int index);
+    void on_plusButtonClicked();
+    void on_minusButtonClicked();
 
 private:
     Ui::VectorAnalysisVisualWidget *ui;

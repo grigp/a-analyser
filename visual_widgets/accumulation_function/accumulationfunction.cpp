@@ -133,5 +133,11 @@ void AccumulationFunction::paintEvent(QPaintEvent *event)
         }
     }
 
+    //! Значение показателя
+    painter.setPen(QPen(m_valueColor, 1, Qt::DotLine, Qt::FlatCap));
+    painter.setFont(QFont("Sans", 20, QFont::Bold, false));
+    size = BaseUtils::getTextSize(&painter, m_value);
+    painter.drawText(width() - RightSpace - size.width() - 20, height() - size.height() - 20, m_value);
+
     painter.restore();
 }

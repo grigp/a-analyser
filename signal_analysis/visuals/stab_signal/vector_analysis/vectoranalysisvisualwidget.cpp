@@ -48,6 +48,16 @@ void VectorAnalysisVisualWidget::splitterMoved(int pos, int index)
     saveSplitterPosition();
 }
 
+void VectorAnalysisVisualWidget::on_plusButtonClicked()
+{
+    ui->wgtVectorCloud->setDiapazone(ui->wgtVectorCloud->diap() / 2);
+}
+
+void VectorAnalysisVisualWidget::on_minusButtonClicked()
+{
+    ui->wgtVectorCloud->setDiapazone(ui->wgtVectorCloud->diap() * 2);
+}
+
 void VectorAnalysisVisualWidget::showFactors()
 {
     auto *model = new QStandardItemModel();
@@ -82,16 +92,23 @@ void VectorAnalysisVisualWidget::showAccumulationFunction()
     ui->wgtAccumulationFunc->setXAxizName(tr("Зоны"));
     ui->wgtAccumulationFunc->setYAxizName(tr("Вероятность, %"));
     ui->wgtAccumulationFunc->setDiap(0, 100);
+
+    auto fi = static_cast<AAnalyserApplication*>(QApplication::instance())->getFactorInfo(VectorFactorsDefines::KFRUid);
+    ui->wgtAccumulationFunc->setValue(m_factors->factorValueFormatted(VectorFactorsDefines::KFRUid) + " " + fi.measure());
+
     for (int i = 0; i < VectorFactorsDefines::DiapsCount; ++i)
         ui->wgtAccumulationFunc->add(m_factors->accumulationFuncValue(i) * 100);
-
 
 }
 
 void VectorAnalysisVisualWidget::showVectorCloud()
 {
-//    for (int i = 0; i < m_factors->vectorCount(); ++i)
-//        qDebug() << m_factors->vector(i);
+    ui->wgtVectorCloud->setTitle(tr("Облако векторов"));
+    ui->wgtVectorCloud->setDiapazone(m_factors->diapRangeLimit(VectorFactorsDefines::DiapsCount - 1));
+    for (int i = 0; i < VectorFactorsDefines::DiapsCount; ++i)
+        ui->wgtVectorCloud->addDiapLimit(m_factors->diapRangeLimit(i));
+    for (int i = 0; i < m_factors->vectorCount(); ++i)
+        ui->wgtVectorCloud->add(m_factors->vector(i));
 
 }
 

@@ -182,6 +182,12 @@ double VectorFactors::accumulationFuncValue(const int idx) const
     return m_diapazones[idx].freqAcc;
 }
 
+double VectorFactors::diapRangeLimit(const int idx) const
+{
+    Q_ASSERT(idx >= 0 && idx < VectorFactorsDefines::DiapsCount);
+    return m_diapazones[idx].limitHigh;
+}
+
 int VectorFactors::vectorCount() const
 {
     return qMin(m_spdX.size(), m_spdY.size());

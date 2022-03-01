@@ -63,7 +63,7 @@
           <enum>Qt::Vertical</enum>
          </property>
          <widget class="AccumulationFunction" name="wgtAccumulationFunc" native="true"/>
-         <widget class="QWidget" name="wgtVectorCloud" native="true"/>
+         <widget class="VectorCloud" name="wgtVectorCloud" native="true"/>
         </widget>
        </item>
        <item>
@@ -139,6 +139,12 @@
    <header location="global">accumulationfunction.h</header>
    <container>1</container>
   </customwidget>
+  <customwidget>
+   <class>VectorCloud</class>
+   <extends>QWidget</extends>
+   <header location="global">vectorcloud.h</header>
+   <container>1</container>
+  </customwidget>
  </customwidgets>
  <resources>
   <include location="../../../../kernel.qrc"/>
@@ -176,8 +182,42 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>btnPlus</sender>
+   <signal>clicked()</signal>
+   <receiver>VectorAnalysisVisualWidget</receiver>
+   <slot>on_plusButtonClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>36</x>
+     <y>495</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>729</x>
+     <y>230</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btnMinus</sender>
+   <signal>clicked()</signal>
+   <receiver>VectorAnalysisVisualWidget</receiver>
+   <slot>on_minusButtonClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>88</x>
+     <y>486</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>728</x>
+     <y>274</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>splitterMoved(int,int)</slot>
+  <slot>on_plusButtonClicked()</slot>
+  <slot>on_minusButtonClicked()</slot>
  </slots>
 </ui>
