@@ -8,6 +8,7 @@
 #include "channelsdefines.h"
 #include "channelsutils.h"
 #include "vectorfactors.h"
+#include "settingsprovider.h"
 
 VectorAnalysisVisualWidget::VectorAnalysisVisualWidget(VisualDescriptor* visual,
                                                        const QString& testUid, const QString& probeUid, const QString& channelUid,
@@ -36,6 +37,15 @@ void VectorAnalysisVisualWidget::calculate()
     showFactors();
     showAccumulationFunction();
     showVectorCloud();
+
+    restoreSplitterPosition();
+}
+
+void VectorAnalysisVisualWidget::splitterMoved(int pos, int index)
+{
+    Q_UNUSED(pos);
+    Q_UNUSED(index);
+    saveSplitterPosition();
 }
 
 void VectorAnalysisVisualWidget::showFactors()
@@ -83,4 +93,18 @@ void VectorAnalysisVisualWidget::showVectorCloud()
 //    for (int i = 0; i < m_factors->vectorCount(); ++i)
 //        qDebug() << m_factors->vector(i);
 
+}
+
+void VectorAnalysisVisualWidget::saveSplitterPosition()
+{
+    SettingsProvider::setValueToRegAppCopy("VectorAnalysisVisualWidget", "HSplitterPosition", ui->splHorizontal->saveState());
+    SettingsProvider::setValueToRegAppCopy("VectorAnalysisVisualWidget", "VSplitterPosition", ui->splVertical->saveState());
+}
+
+void VectorAnalysisVisualWidget::restoreSplitterPosition()
+{
+    auto val = SettingsProvider::valueFromRegAppCopy("VectorAnalysisVisualWidget", "HSplitterPosition").toByteArray();
+    ui->splHorizontal->restoreState(val);
+    val = SettingsProvider::valueFromRegAppCopy("VectorAnalysisVisualWidget", "VSplitterPosition").toByteArray();
+    ui->splVertical->restoreState(val);
 }

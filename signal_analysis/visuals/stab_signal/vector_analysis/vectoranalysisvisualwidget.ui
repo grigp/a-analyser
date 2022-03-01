@@ -143,5 +143,41 @@
  <resources>
   <include location="../../../../kernel.qrc"/>
  </resources>
- <connections/>
+ <connections>
+  <connection>
+   <sender>splVertical</sender>
+   <signal>splitterMoved(int,int)</signal>
+   <receiver>VectorAnalysisVisualWidget</receiver>
+   <slot>splitterMoved(int,int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>271</x>
+     <y>98</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>724</x>
+     <y>56</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>splHorizontal</sender>
+   <signal>splitterMoved(int,int)</signal>
+   <receiver>VectorAnalysisVisualWidget</receiver>
+   <slot>splitterMoved(int,int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>165</x>
+     <y>228</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>725</x>
+     <y>173</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>splitterMoved(int,int)</slot>
+ </slots>
 </ui>

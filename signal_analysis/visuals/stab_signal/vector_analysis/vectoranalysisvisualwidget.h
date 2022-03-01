@@ -24,6 +24,8 @@ public:
     bool isValid() override;
     void calculate() override;
 
+private slots:
+    void splitterMoved(int pos,int index);
 
 private:
     Ui::VectorAnalysisVisualWidget *ui;
@@ -31,6 +33,9 @@ private:
     void showFactors();
     void showAccumulationFunction();
     void showVectorCloud();
+
+    void saveSplitterPosition();
+    void restoreSplitterPosition();
 
     VectorFactors *m_factors {nullptr};
 };
