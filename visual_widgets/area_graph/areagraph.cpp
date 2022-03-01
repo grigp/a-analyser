@@ -389,6 +389,7 @@ void AreaGraph::paintEvent(QPaintEvent *event)
                                 mm.maxPrev = mm.max;
                                 mm.min = INT_MAX;
                                 mm.max = -INT_MIN;
+                                mm.isRepeatX = false;
                                 chansMinMax.replace(chan1, mm);
                             }
                             else
