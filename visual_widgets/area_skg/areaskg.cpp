@@ -28,10 +28,7 @@ AreaSKG::AreaSKG(QWidget *parent) :
 {
     ui->setupUi(this);
     m_targets.clear();
-    QTimer::singleShot(20, [=]()
-    {
-        setAreaSKG();
-    });
+    setAreaSKG();
 }
 
 AreaSKG::~AreaSKG()

@@ -102,7 +102,7 @@ void VectorFactors::calculate()
     addFactor(VectorFactorsDefines::TVUid, m_tV);
     addFactor(VectorFactorsDefines::WMidUid, m_wMid);
     addFactor(VectorFactorsDefines::AmplWUid, m_amplW);
-    addFactor(VectorFactorsDefines::TVUid, m_tW);
+    addFactor(VectorFactorsDefines::TWUid, m_tW);
     addFactor(VectorFactorsDefines::KAUSUid, m_kaus);
     addFactor(VectorFactorsDefines::NUSUid, m_nus);
     addFactor(VectorFactorsDefines::LSSFUid, m_lss_f);
