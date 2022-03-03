@@ -30,6 +30,7 @@
 #include "trianglefactors.h"
 #include "triangleconslutionfactors.h"
 
+#include "skgvisual.h"
 #include "stabilogramvisual.h"
 #include "balistogramvisual.h"
 #include "vectoranalysisvisual.h"
@@ -71,6 +72,7 @@ void AAnalyserBuild::registerFactors()
 void AAnalyserBuild::registerVisuals()
 {
     auto* app = static_cast<AAnalyserApplication*>(QApplication::instance());
+    app->registerVisual(new SKGVisual(VisualDefines::vlChannel));
     app->registerVisual(new StabilogramVisual(VisualDefines::vlChannel));
     app->registerVisual(new BalistogramVisual(VisualDefines::vlChannel));
     app->registerVisual(new VectorAnalysisVisual(VisualDefines::vlChannel));
