@@ -48,6 +48,25 @@ void SKGVisualWidget::splitterMoved(int pos, int index)
     setSizeSKG();
 }
 
+void SKGVisualWidget::on_btnPlusClicked()
+{
+    auto diap = ui->wgtSKG->diap();
+    if (diap > 1)
+        ui->wgtSKG->setDiap(diap / 2);
+}
+
+void SKGVisualWidget::on_btnMinusClicked()
+{
+    auto diap = ui->wgtSKG->diap();
+    if (diap < 512)
+        ui->wgtSKG->setDiap(diap * 2);
+}
+
+void SKGVisualWidget::on_btnZeroingClicked(bool isZeroing)
+{
+    ui->wgtSKG->setZeroing(isZeroing);
+}
+
 void SKGVisualWidget::showSKG()
 {
     QByteArray data;
@@ -62,6 +81,17 @@ void SKGVisualWidget::showSKG()
     }
 
     ui->wgtSKG->setVisibleMarker(false);
+    if (m_stab)
+    {
+        auto absMax = m_stab->absMaxValue();
+        int v = 1;
+        while (v < absMax)
+            v *= 2;
+        QTimer::singleShot(50, [=]()
+        {
+            ui->wgtSKG->setDiap(v);
+        });
+    }
 }
 
 void SKGVisualWidget::showFactors()

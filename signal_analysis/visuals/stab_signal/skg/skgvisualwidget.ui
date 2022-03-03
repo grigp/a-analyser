@@ -61,19 +61,6 @@
         <widget class="QFrame" name="frSKG">
          <layout class="QVBoxLayout" name="verticalLayout_2">
           <item>
-           <spacer name="verticalSpacer">
-            <property name="orientation">
-             <enum>Qt::Vertical</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>20</width>
-              <height>169</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-          <item>
            <widget class="AreaSKG" name="wgtSKG" native="true">
             <property name="minimumSize">
              <size>
@@ -134,21 +121,54 @@
       <item>
        <widget class="QPushButton" name="btnPlus">
         <property name="text">
-         <string>PushButton</string>
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset resource="../../../../kernel.qrc">
+          <normaloff>:/images/Plus.png</normaloff>:/images/Plus.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>22</width>
+          <height>22</height>
+         </size>
         </property>
        </widget>
       </item>
       <item>
        <widget class="QPushButton" name="btnMinus">
         <property name="text">
-         <string>PushButton</string>
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset resource="../../../../kernel.qrc">
+          <normaloff>:/images/Minus.png</normaloff>:/images/Minus.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>22</width>
+          <height>22</height>
+         </size>
         </property>
        </widget>
       </item>
       <item>
        <widget class="QPushButton" name="btnZeroing">
         <property name="text">
-         <string>PushButton</string>
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset resource="../../../../kernel.qrc">
+          <normaloff>:/images/Zeroing.png</normaloff>:/images/Zeroing.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>22</width>
+          <height>22</height>
+         </size>
+        </property>
+        <property name="checkable">
+         <bool>true</bool>
         </property>
        </widget>
       </item>
@@ -178,7 +198,9 @@
    <container>1</container>
   </customwidget>
  </customwidgets>
- <resources/>
+ <resources>
+  <include location="../../../../kernel.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>splitter</sender>
@@ -196,8 +218,59 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>btnPlus</sender>
+   <signal>clicked()</signal>
+   <receiver>SKGVisualWidget</receiver>
+   <slot>on_btnPlusClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>13</x>
+     <y>558</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>820</x>
+     <y>158</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btnMinus</sender>
+   <signal>clicked()</signal>
+   <receiver>SKGVisualWidget</receiver>
+   <slot>on_btnMinusClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>59</x>
+     <y>551</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>822</x>
+     <y>188</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btnZeroing</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>SKGVisualWidget</receiver>
+   <slot>on_btnZeroingClicked(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>101</x>
+     <y>553</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>822</x>
+     <y>247</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>splitterMoved(int,int)</slot>
+  <slot>on_btnPlusClicked()</slot>
+  <slot>on_btnMinusClicked()</slot>
+  <slot>on_btnZeroingClicked(bool)</slot>
  </slots>
 </ui>

@@ -28,6 +28,10 @@ public:
 private slots:
     void splitterMoved(int pos,int index);
 
+    void on_btnPlusClicked();
+    void on_btnMinusClicked();
+    void on_btnZeroingClicked(bool isZeroing);
+
 private:
     Ui::SKGVisualWidget *ui;
 
