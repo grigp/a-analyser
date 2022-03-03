@@ -18,6 +18,7 @@ public:
         , CmdUp
         , CmdDown
         , CmdDelete
+        , CmdClose
     };
 
 

@@ -51,6 +51,9 @@ void EditCommandDelegate::paint(QPainter *painter,
         case CmdDown:
             icon = QIcon(":/images/down.png");
             break;
+        case CmdClose:
+            icon = QIcon(":/images/Close.png");
+            break;
         }
         icon.paint(painter, iconRect, Qt::AlignRight | Qt::AlignVCenter);
     }

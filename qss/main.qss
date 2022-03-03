@@ -407,3 +407,15 @@ DualStateDiagram
 {
     background-color: rgb(250, 250, 255);
 }
+
+VectorCloud
+{
+    qproperty-vector_color: rgb(0, 120, 160);
+    qproperty-zones_color: rgb(150, 150, 150);
+}
+
+AccumulationFunction
+{
+    qproperty-line_color: rgb(0, 120, 160);
+    qproperty-value_color: rgb(0, 120, 160);
+}

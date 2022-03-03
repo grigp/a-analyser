@@ -25,7 +25,7 @@ SignalAnalysisWidget::SignalAnalysisWidget(QWidget *parent) :
     restoreSplitterPosition();
     ui->tvTests->setModel(m_mdlTests);
     ui->tvTests->setItemDelegateForColumn(ColCloseBtn,
-                                          new EditCommandDelegate(EditCommandDelegate::CmdDelete, ColCloseBtn, ui->tvTests));
+                                          new EditCommandDelegate(EditCommandDelegate::CmdClose, ColCloseBtn, ui->tvTests));
     ui->tvTests->viewport()->installEventFilter(this);
     m_mdlTests->setHorizontalHeaderLabels(QStringList() << tr("Элементы") << "");
 }

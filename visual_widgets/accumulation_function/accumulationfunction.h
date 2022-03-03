@@ -14,6 +14,9 @@ class AccumulationFunction : public QWidget
 {
     Q_OBJECT
 
+    Q_PROPERTY(QColor line_color MEMBER m_lineColor DESIGNABLE true)
+    Q_PROPERTY(QColor value_color MEMBER m_valueColor DESIGNABLE true)
+
 public:
     explicit AccumulationFunction(QWidget *parent = nullptr);
     ~AccumulationFunction() override;

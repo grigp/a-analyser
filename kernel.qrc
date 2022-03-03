@@ -198,5 +198,6 @@
         <file>images/tree/probe.png</file>
         <file>images/tree/test.png</file>
         <file>images/SignalCursor.png</file>
+        <file>images/Close.png</file>
     </qresource>
 </RCC>

@@ -14,6 +14,9 @@ class VectorCloud : public QWidget
 {
     Q_OBJECT
 
+    Q_PROPERTY(QColor vector_color MEMBER m_vectorColor DESIGNABLE true)
+    Q_PROPERTY(QColor zones_color MEMBER m_zonesColor DESIGNABLE true)
+
 public:
     explicit VectorCloud(QWidget *parent = nullptr);
     ~VectorCloud() override;
