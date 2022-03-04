@@ -199,5 +199,11 @@
         <file>images/tree/test.png</file>
         <file>images/SignalCursor.png</file>
         <file>images/Close.png</file>
+        <file>images/MainIcon_bss.png</file>
+        <file>images/MainIcon_bss.ico</file>
+        <file>images/Methodics/Scales.png</file>
+        <file>images/Methodics/Scales_tester.png</file>
+        <file>pre_settings/metodics_bss.json</file>
+        <file>pre_settings/metodics_bss_en_US.json</file>
     </qresource>
 </RCC>

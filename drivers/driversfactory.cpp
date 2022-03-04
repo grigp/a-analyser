@@ -1,6 +1,7 @@
 #include "driversfactory.h"
 
 #include "aanalyserapplication.h"
+#include "aanalyserbuild.h"
 #include "stabilan01.h"
 #include "jumpplate.h"
 #include "datadefines.h"
@@ -34,14 +35,7 @@ QString DriversFactory::getDriverName(const QString &drvUid) const
 
 QList<DeviceProtocols::Ports> DriversFactory::getDriverPorts(const QString &drvUid) const
 {
-    //! Надо хардкодить все драйвера
-    if (drvUid == Stabilan01::uid())
-        return Stabilan01::getPorts();
-    else
-    if (drvUid == JumpPlate::uid())
-        return JumpPlate::getPorts();
-
-    return QList<DeviceProtocols::Ports>();
+    return AAnalyserBuild::getDriverPorts(drvUid);
 }
 
 QList<Connection> DriversFactory::getConnections() const

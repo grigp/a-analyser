@@ -1,0 +1,111 @@
+#ifndef BEDSIDESCALES01_H
+#define BEDSIDESCALES01_H
+
+#include <QObject>
+#include <QCoreApplication>
+#include <QThread>
+#include <QByteArray>
+
+#include "driver.h"
+#include "deviceprotocols.h"
+
+namespace  {
+    static const QString uid_bedsidescales01 = "{53243842-E302-4F2F-ABE6-D628AACE833E}";
+    static const QString name_bedsidescales01 = QCoreApplication::tr("Прикроватные весы");
+}
+
+
+/*!
+ * \brief Класс драйвера прикроватных весов The BedsideScales01 class
+ */
+class BedsideScales01 : public Driver
+{
+    Q_OBJECT
+public:
+    explicit BedsideScales01(QObject *parent = nullptr);
+
+    static QString uid() {return uid_bedsidescales01;}
+    static QString name() {return tr("Прикроватные весы");} //name_bedsidescales01);} Не локализуется через константу
+
+    /*!
+     * \brief Перекрытые методы, возвращающие uid и name драйверов
+     * uid и name можно использовать, как методы класса, а эти - только с экземпляром
+     */
+    QString driverUid() const override {return uid();}
+    QString driverName() const override {return name();}
+
+    /*!
+     * \brief Устанавливает параметры драйвера
+     * для использования при работе
+     * \param params - параметры
+     * \param port - порт
+     */
+    void setParams(const DeviceProtocols::Ports port, const QJsonObject &params) override;
+
+    /*!
+     * \brief Вызывает диалог редактирования параметров
+     * \param params - редактируемые параметры
+     * \return true, если диалог закончился командой сохранить параметры
+     */
+    static bool editParams(QJsonObject &params);
+
+    /*!
+     * \brief Запуск передачи данных
+     */
+    void start() override;
+    /*!
+     * \brief Останов передачи данных
+     */
+    void stop() override;
+
+    /*!
+     * \brief Возвращает частоту дискретизации для канала по его id
+     * \param channelId - идентификатор канала
+     */
+    int frequency(const QString &channelId) const override;
+
+    /*!
+     * \brief Возвращает список uid-ов каналов, передаваемых драйвером по uid протокола
+     * \param protocolUid - uid протокола
+     */
+    QList<QString> getChannelsByProtocol(const QString &protocolUid) const override;
+
+    /*!
+     * \brief Возвращает список uid-ов каналов, передаваемых драйвером по uid формата данных
+     * \param protocolUid - uid формата данных
+     */
+    QList<QString> getChannelsByFormat(const QString &formatUid) const override;
+
+    /*!
+     * \brief Возвращает список всех каналов, передаваемых драйвером
+     */
+    QList<QString> getChannels() const override;
+
+    /*!
+     * \brief Возвращает кол-во подканалов для канала с заданным uid
+     * \param channelUid - uid канала
+     */
+    int getSubChannelsCount(const QString &channelUid) const override;
+
+    /*!
+     * \brief Возвращает true, если канал записывается по умолчанию (установлено в драйвере)
+     * \param channelUid - uid канала
+     */
+    bool isChannelRecordingDefault(const QString &channelUid) const override;
+
+    /*!
+     * \brief Возвращает список протоколов
+     */
+    static QStringList getProtocols();
+
+    /*!
+     * \brief Возвращает список допустимых портов для драйвера
+     */
+    static QList<DeviceProtocols::Ports> getPorts();
+
+signals:
+
+public slots:
+};
+
+#endif // BEDSIDESCALES01_H

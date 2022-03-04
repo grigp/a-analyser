@@ -1,0 +1,22 @@
+{
+    "tests": [
+        {
+            "uid": "{B45716B8-BE39-44A5-A270-69F6DE8B4835}",
+            "name": "Прикроватные весы. Испытания",
+            "image": "Scales_tester.png",        
+            "template": "met_bedside_scales_tester_uid",
+            "build_norms": false,
+            "kind": "{5814B451-3171-468B-9E79-B5826521F527}",
+            "params":
+            {
+            }
+        }
+    ],
+    "tests_kinds": [
+        {
+            "uid": "{5814B451-3171-468B-9E79-B5826521F527}",
+            "image": "Scales.png",
+            "name": "Прикроватные весы"
+        }
+    ]
+}
