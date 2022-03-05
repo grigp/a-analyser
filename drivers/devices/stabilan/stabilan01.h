@@ -9,11 +9,8 @@
 #include "driver.h"
 #include "deviceprotocols.h"
 #include "stabilan01defines.h"
+#include "devicesdefines.h"
 
-namespace  {
-    static const QString uid_stabilan01 = "{CEAD1669-1531-4B8E-9220-590C49BB310D}";
-    static const QString name_stabilan01 = QCoreApplication::tr("Стабилан - 01");
-}
 
 
 class SerialPort;
@@ -40,8 +37,8 @@ public:
 
     };
 
-    static QString uid() {return uid_stabilan01;}
-    static QString name() {return tr("Стабилан - 01");} //name_stabilan01);} Не локализуется через константу
+    static QString uid() {return DevicesDefines::uid_stabilan01;}
+    static QString name() {return tr("Стабилан - 01");} //DevicesDefines::name_stabilan01);} Не локализуется через константу
 
     /*!
      * \brief Перекрытые методы, возвращающие uid и name драйверов

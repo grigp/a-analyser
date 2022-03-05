@@ -5,11 +5,7 @@
 #include <QCoreApplication>
 #include "driver.h"
 #include "deviceprotocols.h"
-
-namespace  {
-    static const QString uid_jumpPlate = "{ACC7467D-6600-4808-B372-EDC2069EBF5E}";
-    static const QString name_jumpPlate = QCoreApplication::tr("Прыжковая платформа");
-}
+#include "devicesdefines.h"
 
 /*!
  * \brief Класс драйвера прыжковой платформы JumpPlate class
@@ -26,8 +22,8 @@ public:
 
     };
 
-    static QString uid() {return uid_jumpPlate;}
-    static QString name() {return tr("Прыжковая платформа");} //name_jumpPlate;}  Не локализуется через константу
+    static QString uid() {return DevicesDefines::uid_jumpPlate;}
+    static QString name() {return tr("Прыжковая платформа");} //DevicesDefines::name_jumpPlate;}  Не локализуется через константу
 
     /*!
      * \brief Перекрытые методы, возвращающие uid и name драйверов

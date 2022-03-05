@@ -5,9 +5,9 @@
 #include "metodictemplate.h"
 #include "bedsidescalestestertemplate.h"
 
+#include "devicesdefines.h"
 #include "driver.h"
-#include "stabilan01.h"
-#include "jumpplate.h"
+#include "bedsidescales01.h"
 
 QList<MetodicTemplate *> AAnalyserBuild::getBuildTemplates(QObject *parent)
 {
@@ -27,45 +27,32 @@ void AAnalyserBuild::registerVisuals()
 QList<DeviceProtocols::Ports> AAnalyserBuild::getDriverPorts(const QString &drvUid)
 {
     //! Надо хардкодить все драйвера
-    if (drvUid == Stabilan01::uid())
-        return Stabilan01::getPorts();
-    else
-    if (drvUid == JumpPlate::uid())
-        return JumpPlate::getPorts();
-
+    if (drvUid == DevicesDefines::uid_bedsidescales01)
+        return BedsideScales01::getPorts();
     return QList<DeviceProtocols::Ports>();
 }
 
 QStringList AAnalyserBuild::getDriverProtocols(const QString &drvUid)
 {
     //! Надо хардкодить все драйвера
-    if (drvUid == Stabilan01::uid())
-        return Stabilan01::getProtocols();
-    else
-    if (drvUid == JumpPlate::uid())
-        return JumpPlate::getProtocols();
+    if (drvUid == DevicesDefines::uid_bedsidescales01)
+        return BedsideScales01::getProtocols();
     return QStringList();
 }
 
 bool AAnalyserBuild::editDriverParams(const QString &drvUid, QJsonObject &params)
 {
     //! Надо хардкодить все драйвера
-    if (drvUid == Stabilan01::uid())
-        return Stabilan01::editParams(params);
-    else
-    if (drvUid == JumpPlate::uid())
-        return JumpPlate::editParams(params);
+    if (drvUid == DevicesDefines::uid_bedsidescales01)
+        return BedsideScales01::editParams(params);
     return false;
 }
 
 Driver *AAnalyserBuild::createDriver(const QString &drvUid)
 {
     //! Надо хардкодить все драйвера
-    if (drvUid == Stabilan01::uid())
-        return new Stabilan01();
-    else
-    if (drvUid == JumpPlate::uid())
-        return new JumpPlate();
+    if (drvUid == DevicesDefines::uid_bedsidescales01)
+        return new BedsideScales01();
     return nullptr;
 }
 
@@ -73,8 +60,7 @@ Driver *AAnalyserBuild::createDriver(const QString &drvUid)
 void AAnalyserBuild::assignDrivers(QMap<QString, QString> &drivers)
 {
     //! Надо хардкодить все драйвера
-    drivers.insert(Stabilan01::uid(), Stabilan01::name());
-    drivers.insert(JumpPlate::uid(), JumpPlate::name());
+    drivers.insert(DevicesDefines::uid_bedsidescales01, BedsideScales01::name());
 }
 
 

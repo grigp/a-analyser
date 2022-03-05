@@ -82,6 +82,7 @@ static const QString uid_PulseDvcData = "{7311EDCB-9E7D-4D87-9A5C-F382C85C4F1B}"
 static const QString uid_MyoDvcData = "{4F170074-1F17-4214-9BA9-BA53C732BF5F}";
 static const QString uid_JumpPlateDvcData = "{F7EF6F97-3502-4EC0-A798-68DDF40DFB7F}";
 static const QString uid_JumpPlateBlockData = "{A3CE22EA-1D4D-4C3F-8E61-7FED58C7044B}";
+static const QString uid_WeightPlateDvcData = "{CB8129C1-D44A-4116-8FA3-824AC8C11E67}";
 
 static const QString name_StabDvcData = "Данные стабилографии";
 static const QString name_DynDvcData = "Данные динамометрии";
@@ -90,6 +91,7 @@ static const QString name_PulseDvcData = "Данные вариационной 
 static const QString name_MyoDvcData = "Данные миографии";
 static const QString name_JumpPlateDvcData = "Данные прыжковой платформы";
 static const QString name_JumpPlateBlockData = "Отсчеты прыжковой платформы";
+static const QString name_WeightPlateDvcData = "Данные весовой платформы";
 
 
 /*!
@@ -213,6 +215,24 @@ public:
 
 private:
     double m_value;
+};
+
+/*!
+ * \brief Класс данных весовой платформы, получаемых от устройств TensoMultiDvcData class
+ */
+class WeightPlateDvcData : public MultiData
+{
+public:
+    WeightPlateDvcData(Driver *sender, const QString &channelId, const QVector<double> &value)
+        : MultiData(sender, channelId), m_value(value) {}
+
+    int subChanCount() const override {return m_value.size();}
+    QVariant value(const int idx) const override {return m_value.at(idx);}
+
+    QString uid() const override {return uid_WeightPlateDvcData;}
+
+private:
+    QVector<double> m_value;
 };
 
 /*!
@@ -351,6 +371,9 @@ static const QString uid_TensoControl = "{2D6BC458-8C8D-4125-AF3C-9F7352AED8F5}"
 static const QString uid_PulseControl = "{8A6607B9-42FB-4832-AAE8-B83506A08B18}";
 static const QString uid_MyoControl = "{5C26B27F-0FA6-478B-9384-E8B6FA403F84}";
 static const QString uid_JumpPlateControl = "{F7EF6F97-3502-4EC0-A798-68DDF40DFB7F}";
+static const QString uid_WeightPlateControl = "{7B49EF56-B831-401D-AB89-73337FF0EC4B}";
+
+
 
 static const QString name_CommonControl = "Управление устройством общий";
 static const QString name_StabControl = "Управление стабилоплатформой";
@@ -359,6 +382,7 @@ static const QString name_TensoControl = "Управление тензокан�
 static const QString name_PulseControl = "Управление пульсометрией";
 static const QString name_MyoControl = "Управление миограммой";
 static const QString name_JumpPlateControl = "Управление прыжковой платформой";
+static const QString name_WeightPlateControl = "Управление весовой платформой";
 
 /*!
  * \brief Базовый класс интерфейсов управления устройствами DeviceControl class
@@ -543,6 +567,7 @@ static const QString uid_PulseProtocol = "{B15928FE-E0F9-491C-9B82-1F73B8A7493D}
 //static const QString uid_BreathProtocol = "{B2C83763-15ED-426E-B6AF-1ADD79AC28FF}";
 static const QString uid_MyoProtocol = "{DE208F93-8515-49BA-83F1-916EC215E99C}";
 static const QString uid_JumpPlateProtocol = "{7E31AE8E-96AB-4E34-96DA-54E19B312377}";
+static const QString uid_WeightPlateProtocol = "{8D6F194F-2E21-4ADF-9989-AEFF69374D4B}";
 
 static const QString name_StabProtocol = "Протокол стабилографии";
 static const QString name_DynProtocol = "Протокол динамометрии";
@@ -550,6 +575,7 @@ static const QString name_PulseProtocol = "Протокол пульсометр
 static const QString name_BreathProtocol = "Протокол периметрического дыхания";
 static const QString name_MyoProtocol = "Протокол миографии";
 static const QString name_JumpPlateProtocol = "Протокол прыжковой платформы";
+static const QString name_WeightPlateProtocol = "Протокол весовой платформы";
 
 static QList<DeviceProtocol> protocols = QList<DeviceProtocol>()
         << DeviceProtocol(std::make_tuple(uid_StabProtocol, name_StabProtocol, uid_StabControl, uid_StabDvcData))
@@ -557,7 +583,8 @@ static QList<DeviceProtocol> protocols = QList<DeviceProtocol>()
 //        << DeviceProtocol(std::make_tuple(uid_BreathProtocol, name_BreathProtocol, uid_BreathControl, uid_BreathDvcData))
         << DeviceProtocol(std::make_tuple(uid_PulseProtocol, name_PulseProtocol, uid_PulseControl, uid_PulseDvcData))
         << DeviceProtocol(std::make_tuple(uid_MyoProtocol, name_MyoProtocol, uid_MyoControl, uid_MyoDvcData))
-        << DeviceProtocol(std::make_tuple(uid_JumpPlateProtocol, name_JumpPlateProtocol, uid_JumpPlateControl, uid_JumpPlateDvcData));
+        << DeviceProtocol(std::make_tuple(uid_JumpPlateProtocol, name_JumpPlateProtocol, uid_JumpPlateControl, uid_JumpPlateDvcData))
+        << DeviceProtocol(std::make_tuple(uid_WeightPlateProtocol, name_WeightPlateProtocol, uid_WeightPlateControl, uid_WeightPlateDvcData));
 
 
 ///<------------------------------------------------------------------------------------------
@@ -571,6 +598,7 @@ static QMap<QString, QString> protocolName {
   , std::pair<QString, QString> (uid_PulseProtocol, name_PulseProtocol)
   , std::pair<QString, QString> (uid_MyoProtocol, name_MyoProtocol)
   , std::pair<QString, QString> (uid_JumpPlateProtocol, name_JumpPlateProtocol)
+  , std::pair<QString, QString> (uid_WeightPlateProtocol, name_WeightPlateProtocol)
 };
 
 ///< Получение названия интерфейса управления по uid
@@ -582,6 +610,7 @@ static QMap<QString, QString> controlName {
   , std::pair<QString, QString> (uid_PulseProtocol, name_PulseControl)
   , std::pair<QString, QString> (uid_MyoControl, name_MyoControl)
   , std::pair<QString, QString> (uid_JumpPlateControl, name_JumpPlateControl)
+  , std::pair<QString, QString> (uid_WeightPlateControl, name_WeightPlateControl)
 };
 
 ///< Получение названия данных от устройства по uid
@@ -593,6 +622,7 @@ static QMap<QString, QString> deviceDataName {
   , std::pair<QString, QString> (uid_MyoDvcData, name_MyoDvcData)
   , std::pair<QString, QString> (uid_JumpPlateDvcData, name_JumpPlateDvcData)
   , std::pair<QString, QString> (uid_JumpPlateBlockData, name_JumpPlateBlockData)
+  , std::pair<QString, QString> (uid_WeightPlateDvcData, name_WeightPlateDvcData)
 };
 
 ///< Соответствие протокола и формата канала по uid
@@ -603,6 +633,7 @@ static QMap<QString, QString> protocolFormat {
   , std::pair<QString, QString> (uid_PulseProtocol, ChannelsDefines::cfSinglePositive)
   , std::pair<QString, QString> (uid_MyoProtocol, ChannelsDefines::cfSinglePositive)
   , std::pair<QString, QString> (uid_JumpPlateProtocol, ChannelsDefines::cfNoSignal)
+  , std::pair<QString, QString> (uid_WeightPlateProtocol, ChannelsDefines::cfSinglePositive)
 };
 
 ///< Устройства тензометрические

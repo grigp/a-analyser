@@ -8,24 +8,24 @@
 
 #include "driver.h"
 #include "deviceprotocols.h"
+#include "devicesdefines.h"
 
-namespace  {
-    static const QString uid_bedsidescales01 = "{53243842-E302-4F2F-ABE6-D628AACE833E}";
-    static const QString name_bedsidescales01 = QCoreApplication::tr("Прикроватные весы");
-}
 
 
 /*!
  * \brief Класс драйвера прикроватных весов The BedsideScales01 class
  */
-class BedsideScales01 : public Driver
+class BedsideScales01 :
+          public Driver
+        , public DeviceProtocols::TensoControl
+
 {
     Q_OBJECT
 public:
     explicit BedsideScales01(QObject *parent = nullptr);
 
-    static QString uid() {return uid_bedsidescales01;}
-    static QString name() {return tr("Прикроватные весы");} //name_bedsidescales01);} Не локализуется через константу
+    static QString uid() {return DevicesDefines::uid_bedsidescales01;}
+    static QString name() {return tr("Прикроватные весы");} //DevicesDefines::name_bedsidescales01);} Не локализуется через константу
 
     /*!
      * \brief Перекрытые методы, возвращающие uid и name драйверов
@@ -102,6 +102,18 @@ public:
      * \brief Возвращает список допустимых портов для драйвера
      */
     static QList<DeviceProtocols::Ports> getPorts();
+
+    void calibrateTenso(const QString &channelUid) override;
+
+    /*!
+     * \brief запрос / установка диапазонов значений для каналов
+     * \param chanNumber - номер канала 0 - ...
+     * \param min - минимальное значение
+     * \param max - максимальное значение
+     */
+    void getTensoValueDiapasone(const int chanNumber, double &min, double &max) override;
+    void getTensoValueDiapasone(const QString channelId, double &min, double &max) override;
+    void setTensoValueDiapasone(const int chanNumber, const double min, const double max) override;
 
 signals:
 

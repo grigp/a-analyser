@@ -15,8 +15,8 @@ class Stabilan01ParamsDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit Stabilan01ParamsDialog(QWidget *parent = 0);
-    ~Stabilan01ParamsDialog();
+    explicit Stabilan01ParamsDialog(QWidget *parent = nullptr);
+    ~Stabilan01ParamsDialog() override;
 
     Stabilan01Defines::Model model() const;
     void setModel(const Stabilan01Defines::Model mdl);
