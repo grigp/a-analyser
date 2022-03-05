@@ -155,7 +155,7 @@ void NormsManager::loadConditions()
 {
     m_tcList.clear();
 
-    QString resName = ":/pre_settings/connections.json";
+    QString resName = ":/pre_settings/conditions.json";
     if (static_cast<AAnalyserApplication*>(QApplication::instance())->languargeCode() == DataDefines::LANG_CODE_RUS)
         resName = ":/pre_settings/conditions.json";
     else

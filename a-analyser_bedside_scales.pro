@@ -44,7 +44,7 @@ include(drivers/drivers_src.pri)
 include(service/service_src.pri)
 include(visual_widgets/visual_widgets_tester_src.pri)
 include(factors/factors_bss_src.pri)
-include(signal_analysis/signal_analysis_src.pri)
+include(signal_analysis/signal_analysis_bss_src.pri)
 
 SOURCES += \
         main.cpp \

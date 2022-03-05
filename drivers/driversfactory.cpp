@@ -1,5 +1,6 @@
 #include "driversfactory.h"
 
+#include "aanalyserdefines.h"
 #include "aanalyserapplication.h"
 #include "aanalyserbuild.h"
 #include "stabilan01.h"
@@ -112,13 +113,13 @@ void DriversFactory::dataChangedConnection(const int connectIdx, const int param
 
 bool DriversFactory::editParamsConnecton(const int connectIdx, const QString &drvUid, QJsonObject &params)
 {
-    bool resval = false;
-    //! Надо хардкодить все драйвера
-    if (drvUid == Stabilan01::uid())
-        resval = Stabilan01::editParams(params);
-    else
-    if (drvUid == JumpPlate::uid())
-        resval = JumpPlate::editParams(params);
+    bool resval = AAnalyserBuild::editDriverParams(drvUid, params);
+//    bool resval = false;
+//    if (drvUid == Stabilan01::uid())
+//        resval = Stabilan01::editParams(params);
+//    else
+//    if (drvUid == JumpPlate::uid())
+//        resval = JumpPlate::editParams(params);
 
     if (resval && connectIdx > -1)
     {
@@ -140,15 +141,16 @@ Driver *DriversFactory::getDriverByProtocols(const QStringList &protocols, const
                 if (num == index)
                 {
                     //! Создаем и возвращаем экземпляры драйверов
-                    //! Надо хардкодить все драйвера
-                    Driver *drv{nullptr} ;
-                    if (connection.driverUid() == Stabilan01::uid())
-                        drv = new Stabilan01();
-                    else
-                    if (connection.driverUid() == JumpPlate::uid())
-                        drv = new JumpPlate();
+                    Driver *drv = AAnalyserBuild::createDriver(connection.driverUid());
+//                    Driver *drv{nullptr} ;
+//                    if (connection.driverUid() == Stabilan01::uid())
+//                        drv = new Stabilan01();
+//                    else
+//                    if (connection.driverUid() == JumpPlate::uid())
+//                        drv = new JumpPlate();
                     //! Параметры драйверу!
-                    drv->setParams(connection.port(), connection.params());
+                    if (drv)
+                        drv->setParams(connection.port(), connection.params());
                     return drv;
                 }
                 ++num;
@@ -167,15 +169,16 @@ Driver *DriversFactory::getDriverByFormats(const QStringList &formats, const int
                 if (num == index)
                 {
                     //! Создаем и возвращаем экземпляры драйверов
-                    //! Надо хардкодить все драйвера
-                    Driver *drv{nullptr} ;
-                    if (connection.driverUid() == Stabilan01::uid())
-                        drv = new Stabilan01();
-                    else
-                    if (connection.driverUid() == JumpPlate::uid())
-                        drv = new JumpPlate();
+                    Driver *drv = AAnalyserBuild::createDriver(connection.driverUid());
+//                    Driver *drv{nullptr} ;
+//                    if (connection.driverUid() == Stabilan01::uid())
+//                        drv = new Stabilan01();
+//                    else
+//                    if (connection.driverUid() == JumpPlate::uid())
+//                        drv = new JumpPlate();
                     //! Параметры драйверу!
-                    drv->setParams(connection.port(), connection.params());
+                    if (drv)
+                        drv->setParams(connection.port(), connection.params());
                     return drv;
                 }
                 ++num;
@@ -186,9 +189,7 @@ Driver *DriversFactory::getDriverByFormats(const QStringList &formats, const int
 
 void DriversFactory::assignDrivers()
 {
-    //! Надо хардкодить все драйвера
-    m_drivers.insert(Stabilan01::uid(), Stabilan01::name());
-    m_drivers.insert(JumpPlate::uid(), JumpPlate::name());
+    AAnalyserBuild::assignDrivers(m_drivers);
 }
 
 void DriversFactory::assignConnections()
@@ -203,11 +204,11 @@ void DriversFactory::assignConnections()
         if (!dir.exists())
             dir.mkpath(DataDefines::appCopyPath());
         if (static_cast<AAnalyserApplication*>(QApplication::instance())->languargeCode() == DataDefines::LANG_CODE_RUS)
-            QFile::copy(":/pre_settings/connections.json",
+            QFile::copy(":/pre_settings/" + AAnalyserDefines::PresetsConnectionFileName + ".json",
                         DataDefines::appCopyPath() + "connections.json");
         else
             if (static_cast<AAnalyserApplication*>(QApplication::instance())->languargeCode() == DataDefines::LANG_CODE_ENGUSA)
-                QFile::copy(":/pre_settings/connections_en_US.json",
+                QFile::copy(":/pre_settings/" + AAnalyserDefines::PresetsConnectionFileName + "_en_US.json",
                             DataDefines::appCopyPath() + "connections.json");
     }
 
@@ -265,15 +266,8 @@ void DriversFactory::saveConnections()
 
 bool DriversFactory::isDriverSupportedProtocols(const QString &driverUid, const QStringList &protocols) const
 {
-    QStringList protocolsDrv = QStringList();
-
     //! Получаем протоколы от драйвера
-    //! Надо хардкодить все драйвера
-    if (driverUid == Stabilan01::uid())
-        protocolsDrv = Stabilan01::getProtocols();
-    else
-    if (driverUid == JumpPlate::uid())
-        protocolsDrv = JumpPlate::getProtocols();
+    QStringList protocolsDrv = AAnalyserBuild::getDriverProtocols(driverUid);
 
     //! Ищем все переданные протоколы в полученном списке
     if (protocolsDrv != QStringList())
@@ -288,15 +282,8 @@ bool DriversFactory::isDriverSupportedProtocols(const QString &driverUid, const 
 
 bool DriversFactory::isDriverSupportedFormats(const QString &driverUid, const QStringList &formats) const
 {
-    QStringList protocolsDrv = QStringList();
-
     //! Получаем протоколы от драйвера
-    //! Надо хардкодить все драйвера
-    if (driverUid == Stabilan01::uid())
-        protocolsDrv = Stabilan01::getProtocols();
-    else
-    if (driverUid == JumpPlate::uid())
-        protocolsDrv = JumpPlate::getProtocols();
+    QStringList protocolsDrv = AAnalyserBuild::getDriverProtocols(driverUid);
 
     //! Переводим протоколы в форматы. В протоколе всегда данные одного формата.
     //! Но драйвер может реализовывать данные разных протоколов и поставлять данные разных форматов

@@ -32,6 +32,12 @@ static const QString MainWindowTitle = "Анализ здровья по ИДС 
 //! PresetsMetodicsFileName + '_en_US.json - английская версия
 static const QString PresetsMetodicsFileName = "metodics_ids";
 
+//! Имя файла предустановленных подключений. Это заголовок имени.
+//! Полное имя формируется так:
+//! PresetsConnectionFileName + '.json' - русская версия
+//! PresetsConnectionFileName + '_en_US.json - английская версия
+static const QString PresetsConnectionFileName = "connections_stab";
+
 //! Будет ли проходить автоимпорт БД
 static const bool isAutoImportDatabases = false;
 

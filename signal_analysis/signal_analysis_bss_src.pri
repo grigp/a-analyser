@@ -1,6 +1,6 @@
 INCLUDEPATH += $$PWD
 
-include(visuals/visuals_src.pri)
+include(visuals/visuals_bss_src.pri)
 
 HEADERS += \
     $$PWD/visualsfactory.h \

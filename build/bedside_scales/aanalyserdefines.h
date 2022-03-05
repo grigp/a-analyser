@@ -31,6 +31,12 @@ static const QString MainWindowTitle = "А-Мед. Прикроватные ве
 //! PresetsMetodicsFileName + '_en_US.json - английская версия
 static const QString PresetsMetodicsFileName = "metodics_bss";
 
+//! Имя файла предустановленных подключений. Это заголовок имени.
+//! Полное имя формируется так:
+//! PresetsConnectionFileName + '.json' - русская версия
+//! PresetsConnectionFileName + '_en_US.json - английская версия
+static const QString PresetsConnectionFileName = "connections_bss";
+
 //! Будет ли проходить автоимпорт БД
 static const bool isAutoImportDatabases = false;
 

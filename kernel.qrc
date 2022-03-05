@@ -205,5 +205,9 @@
         <file>images/Methodics/Scales_tester.png</file>
         <file>pre_settings/metodics_bss.json</file>
         <file>pre_settings/metodics_bss_en_US.json</file>
+        <file>pre_settings/connections_stab.json</file>
+        <file>pre_settings/connections_stab_en_US.json</file>
+        <file>pre_settings/connections_bss.json</file>
+        <file>pre_settings/connections_bss_en_US.json</file>
     </qresource>
 </RCC>

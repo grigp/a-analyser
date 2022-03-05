@@ -6,6 +6,7 @@
 #include "deviceprotocols.h"
 
 class MetodicTemplate;
+class Driver;
 
 namespace AAnalyserBuild
 {
@@ -31,6 +32,34 @@ void registerVisuals();
  * \param drvUid - uid драйвера
  */
 QList<DeviceProtocols::Ports> getDriverPorts(const QString &drvUid);
+
+/*!
+ * \brief Создает список uid протоколов драйвера
+ * \param drvUid - uid драйвера
+ * \return список
+ */
+QStringList getDriverProtocols(const QString &drvUid);
+
+/*!
+ * \brief Редактирует параметры драйвера
+ * \param drvUid - uid драйвера
+ * \param params - параметры
+ * \return true, если редактируемые параметры надо принять
+ */
+bool editDriverParams(const QString &drvUid, QJsonObject &params);
+
+/*!
+ * \brief Создает драйвер с заданным uid
+ * \param drvUid - uid драйвера
+ * \return  указатель на созданный драйвер
+ */
+Driver* createDriver(const QString &drvUid);
+
+/*!
+ * \brief Создает список драйверов
+ * \param drivers - сам список
+ */
+void assignDrivers(QMap<QString, QString> &drivers);
 
 }
 

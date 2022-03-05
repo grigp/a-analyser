@@ -16,6 +16,7 @@
 #include "balistogramvisual.h"
 #include "vectoranalysisvisual.h"
 
+#include "stabilan01.h"
 
 QList<MetodicTemplate *> AAnalyserBuild::getBuildTemplates(QObject *parent)
 {
@@ -39,4 +40,43 @@ void AAnalyserBuild::registerVisuals()
     app->registerVisual(new StabilogramVisual(VisualDefines::vlChannel));
     app->registerVisual(new BalistogramVisual(VisualDefines::vlChannel));
     app->registerVisual(new VectorAnalysisVisual(VisualDefines::vlChannel));
+}
+
+QList<DeviceProtocols::Ports> AAnalyserBuild::getDriverPorts(const QString &drvUid)
+{
+    //! Надо хардкодить все драйвера
+    if (drvUid == Stabilan01::uid())
+        return Stabilan01::getPorts();
+    return QList<DeviceProtocols::Ports>();
+}
+
+QStringList AAnalyserBuild::getDriverProtocols(const QString &drvUid)
+{
+    //! Надо хардкодить все драйвера
+    if (drvUid == Stabilan01::uid())
+        return Stabilan01::getProtocols();
+    return QStringList();
+}
+
+bool AAnalyserBuild::editDriverParams(const QString &drvUid, QJsonObject &params)
+{
+    //! Надо хардкодить все драйвера
+    if (drvUid == Stabilan01::uid())
+        return Stabilan01::editParams(params);
+    return false;
+}
+
+Driver *AAnalyserBuild::createDriver(const QString &drvUid)
+{
+    //! Надо хардкодить все драйвера
+    if (drvUid == Stabilan01::uid())
+        return new Stabilan01();
+    return nullptr;
+}
+
+
+void AAnalyserBuild::assignDrivers(QMap<QString, QString> &drivers)
+{
+    //! Надо хардкодить все драйвера
+    drivers.insert(Stabilan01::uid(), Stabilan01::name());
 }
