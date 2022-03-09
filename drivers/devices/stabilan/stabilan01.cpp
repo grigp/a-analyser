@@ -488,7 +488,7 @@ void Stabilan01::on_readData(const QByteArray data)
     Driver::on_readData(data);
     for (int i = 0; i < data.count(); i++)
     {
-        quint8 B = data[i];
+        quint8 B = static_cast<quint8>(data[i]);
         assignByteFromDevice(B);
     }
 }

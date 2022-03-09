@@ -105,6 +105,10 @@ ChannelsUtils::ChannelsUtils()
                                                                           std::make_tuple(QString("Миограмма"),
                                                                                           QString("Myo"),
                                                                                           ChannelsDefines::ctMyogram))
+                 , std::pair<QString, ChannelsDefines::ChannelInfo>(ChannelsDefines::chanWeightPlate,
+                                                                          std::make_tuple(QString("Данные весовой платформы"),
+                                                                                          QString("WP"),
+                                                                                          ChannelsDefines::ctWeightPlate))
 
                  , std::pair<QString, ChannelsDefines::ChannelInfo>(ChannelsDefines::chanTenso1,
                                                                           std::make_tuple(QString("Тензоканал 1"),

@@ -8,6 +8,7 @@
 #include "testresultdata.h"
 #include "trenresultdata.h"
 #include "trenresultfactors.h"
+#include "devicesdefines.h"
 
 #include <QTimer>
 #include <QJsonArray>
@@ -73,7 +74,7 @@ void Extend3DGamesExecute::saveDriverParams() const
             getDriverByFormats(QStringList() << ChannelsDefines::cfDecartCoordinates);
     int p = driver->portName();
     params["port"] = p;
-    if (driver->driverUid() == uid_stabilan01)
+    if (driver->driverUid() == DevicesDefines::uid_stabilan01)
     {
         Stabilan01* stbDriver = static_cast<Stabilan01*>(driver);
         QJsonArray td;

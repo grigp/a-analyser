@@ -26,6 +26,8 @@ static QString cfNoSignal = "{90e313c6-8805-4235-8981-1fb85d7aea5f}";          /
  static QString ctDynamo = "{6534BEE8-F805-4E9D-B972-1279E0A3FA3A}";
  static QString ctBreath = "{B3366A97-6EBC-4E6C-B004-AE04A96C3260}";
  static QString ctMyogram = "{0DA6EBB3-15BC-41D6-90F2-59D847A42863}";
+ static QString ctWeightPlate = "{50DFB124-CF42-4E14-9A02-82DFBFAAB159}";
+
 
  static QString ctTenso = "{A7D6E553-3BE1-4FDF-A29D-A4DB98F88AFC}";  ///< Виртуальный тензоканал
 
@@ -61,6 +63,7 @@ static QString cfNoSignal = "{90e313c6-8805-4235-8981-1fb85d7aea5f}";          /
  static QString chanBreath3 = "{35EC81F9-F56A-409F-B1EB-E84B001E9FBD}";
  static QString chanDynPush3 = "{31C2F1CD-0AEC-4424-9B27-C8C93EBE75D6}";
  static QString chanMyogram = "{DD5FE1AC-9423-46AD-9EB0-50D52EA6D022}";
+ static QString chanWeightPlate = "{D252EC6B-56E6-4E03-B532-88B013F89E88}";
 
  static QString chanTargetTraectory = "{28983087-1ED3-422C-9AC3-9805002FA6F2}";
  static QString chanAnySignalDual = "{848E3446-5573-4C5B-8268-0D0A5AADD41E}";

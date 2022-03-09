@@ -11,6 +11,15 @@
 #include "devicesdefines.h"
 
 
+/*!  Протокол передачи данных
+ * [ 01 | 02 | 03 | 04 | 05 | 06 | 07 | 08 | 09 | 10 | 11 | 12 | 13 | 14 ]
+ * [ ff | 03 | cc | Lo1| Hi1| Lo2| Hi2| Lo3| Hi3| Lo4| Hi4| CRC| ff | ff ]
+ * ff - байт разделитель
+ * 03 - сетевой адрес устройства
+ * cc - код операции
+ * CRC - контрольная сумма
+ */
+
 
 /*!
  * \brief Класс драйвера прикроватных весов The BedsideScales01 class
@@ -115,9 +124,35 @@ public:
     void getTensoValueDiapasone(const QString channelId, double &min, double &max) override;
     void setTensoValueDiapasone(const int chanNumber, const double min, const double max) override;
 
-signals:
+protected:
+    /*!
+     * \brief Возвращает настройки порта
+     */
+    SerialPortDefines::Settings getSerialPortSettings() override;
 
-public slots:
+
+protected slots:
+    void on_readData(const QByteArray data) override;
+    void on_error(const QString &err) override;
+
+private:
+
+    /*!
+     * \brief Обрабатывает принятый байт из пакета данных байт
+     * \param b - текущий байт
+     */
+    void assignByteFromDevice(quint8 b);
+
+    /*!
+     * \brief Передача данных пакета
+     */
+    void sendDataBlock();
+
+    int m_synchro {5};        ///< Счетчик байтов синхронизации 5 -> 0 0xff 0xff 0xff 0x03 0xcc
+    int m_dataByteCount {0};  ///< Счетчик байтов пакета. Должно быть 8
+    quint8 m_lo {0};          ///< Младший байт
+    double m_values[4];       ///< Принятый пакет данных
+    quint8 m_crc {0};         ///< Контрольная сумма
 };
 
 #endif // BEDSIDESCALES01_H
