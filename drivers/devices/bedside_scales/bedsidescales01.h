@@ -148,11 +148,14 @@ private:
      */
     void sendDataBlock();
 
-    int m_synchro {5};        ///< Счетчик байтов синхронизации 5 -> 0 0xff 0xff 0xff 0x03 0xcc
-    int m_dataByteCount {0};  ///< Счетчик байтов пакета. Должно быть 8
-    quint8 m_lo {0};          ///< Младший байт
-    double m_values[4];       ///< Принятый пакет данных
-    quint8 m_crc {0};         ///< Контрольная сумма
+    int m_synchro {5};           ///< Счетчик байтов синхронизации 5 -> 0 0xff 0xff 0xff 0x03 0xcc
+    int m_dataByteCount {0};     ///< Счетчик байтов пакета. Должно быть 8
+    quint8 m_lo {0};             ///< Младший байт
+    double m_values[4];          ///< Принятый пакет данных
+    quint8 m_bPrev {0};          ///< Предыдущий байт
+    quint8 m_circleCnt {0xFF};   ///< Кольцевой счетчик пакетов
+    quint8 m_crc {0};            ///< Контрольная сумма
+    int m_errorCount {0};        ///< Количество ошибок по результатам анализа колцевого счетчика
 };
 
 #endif // BEDSIDESCALES01_H

@@ -9,6 +9,7 @@
 namespace
 {
 static const quint8 Divider = 0xFF;
+static const quint8 Addition = 0xFE;
 static const quint8 NetAddr = 0x03;
 static const quint8 CodeOp = 0xCC;
 
@@ -142,14 +143,11 @@ SerialPortDefines::Settings BedsideScales01::getSerialPortSettings()
 void BedsideScales01::on_readData(const QByteArray data)
 {
     Driver::on_readData(data);
-//    QString s = "";
     for (int i = 0; i < data.count(); i++)
     {
         quint8 b = static_cast<quint8>(data[i]);
-//        s += (QString::number(b, 16) + " ");
         assignByteFromDevice(b);
     }
-//    qDebug() << s;
 }
 
 void BedsideScales01::on_error(const QString &err)
@@ -157,6 +155,9 @@ void BedsideScales01::on_error(const QString &err)
     Driver::on_error(err);
     qDebug() << err;
 }
+
+//QVector<quint8> buf;
+
 
 void BedsideScales01::assignByteFromDevice(quint8 b)
 {
@@ -172,11 +173,31 @@ void BedsideScales01::assignByteFromDevice(quint8 b)
             m_synchro = 5;
     };
 
+    if (b == Addition && m_bPrev == Divider)
+        return;
+
+//    buf << b;
     if (m_synchro == 5 || m_synchro == 4 || m_synchro == 3)
         nextMark(Divider);
     else
     if (m_synchro == 2)
+    {
+        if (m_circleCnt == 0xFF)
+            m_circleCnt = b;
+        else
+        {
+            if (m_circleCnt < 0x7F)
+                ++m_circleCnt;
+            else
+                m_circleCnt = 0;
+        }
+        if (b != m_circleCnt)
+        {
+            ++m_errorCount;
+            m_circleCnt = b;
+        }
         --m_synchro;
+    }
     else
     if (m_synchro == 1)
         nextMark(CodeOp);
@@ -188,21 +209,32 @@ void BedsideScales01::assignByteFromDevice(quint8 b)
             if (m_dataByteCount % 2 == 0)
                 m_lo = b;
             else
-                m_values[m_dataByteCount / 2] = b * 256 + m_lo;
+            {
+                int v = b * 256 + m_lo;
+                m_values[m_dataByteCount / 2] = (50 * 1000 * v) / (65535 * 128 * 1.999);
+            }
             ++m_dataByteCount;
         }
         else
         {
+//            QString s = "";
+//            foreach (auto v, buf)
+//                s += (QString::number(v, 16) + " ");
+//            qDebug() << s;
+//            buf.clear();
             m_crc = b;
             sendDataBlock();
             m_dataByteCount = 0;
             m_synchro = 5;
         }
     }
+
+    m_bPrev = b;
 }
 
 void BedsideScales01::sendDataBlock()
 {
+    incBlockCount();
     QVector<double> value;
     for (int i = 0; i < 4; ++i)
         value << m_values[i] ;

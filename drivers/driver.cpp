@@ -77,6 +77,7 @@ void Driver::timerEvent(QTimerEvent *event)
             if (!m_isCommunicationError)
             {
                 m_isCommunicationError = true;
+                qDebug() << "error";
                 emit communicationError(driverName(), DeviceProtocols::portName(m_portName), EC_NoData);
             }
         }

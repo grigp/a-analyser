@@ -3,7 +3,6 @@
 
 #include "aanalyserapplication.h"
 #include "testresultdata.h"
-#include "deviceprotocols.h"
 #include "driver.h"
 #include "executewidget.h"
 
@@ -19,7 +18,10 @@ BedsideScalesTesterExecute::BedsideScalesTesterExecute(QWidget *parent) :
     ui->setupUi(this);
 
     QTimer::singleShot(0, this, &BedsideScalesTesterExecute::start);
+    ui->lblCommunicationError->setVisible(false);
 
+    for (int i = 0; i < 4; ++i)
+        ui->wgtAreaGraph->appendArea(tr("Канал") + " " + QString::number(i + 1), 1);
 }
 
 BedsideScalesTesterExecute::~BedsideScalesTesterExecute()
@@ -71,6 +73,16 @@ void BedsideScalesTesterExecute::start()
 //            scaleChange(ui->cbScale->currentIndex());
 //        });
 
+        ui->wgtAreaGraph->setFrequency(m_driver->frequency(ChannelsDefines::chanWeightPlate));
+        for (int i = 0; i < ui->wgtAreaGraph->areasesCount(); ++i)
+        {
+            double min = 0;
+            double max = 10;
+            if (m_tenzoControl)
+                m_tenzoControl->getTensoValueDiapasone(i, min, max);
+            ui->wgtAreaGraph->setDiapazone(i, min, max);
+        }
+
         m_driver->start();
     }
     else
@@ -90,16 +102,21 @@ void BedsideScalesTesterExecute::getData(DeviceProtocols::DeviceData *data)
     if (data->channelId() == ChannelsDefines::chanWeightPlate)
     {
         DeviceProtocols::WeightPlateDvcData *wData = static_cast<DeviceProtocols::WeightPlateDvcData*>(data);
-        QString s = "";
+        QVector<double> rec;
         for (int i = 0; i < wData->subChanCount(); ++i)
-            s += QString::number(wData->value(i).toDouble()) + " ";
-        qDebug() << s;
+        {
+//            s += QString::number(wData->value(i).toDouble()) + " ";
+            rec << wData->value(i).toDouble();
+        }
+        ui->wgtAreaGraph->addValue(rec);
     }
 }
 
 void BedsideScalesTesterExecute::on_communicationError(const QString &drvName, const QString &port, const int errorCode)
 {
-
+    ui->lblCommunicationError->setText(tr("Ошибка связи с устройством:") + " " + drvName + ". " +
+                                       tr("Порт:") + " " + port + ". ");
+    ui->lblCommunicationError->setVisible(true);
 }
 
 void BedsideScalesTesterExecute::calibrate()
