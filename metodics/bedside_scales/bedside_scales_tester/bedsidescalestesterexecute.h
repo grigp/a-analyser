@@ -6,6 +6,7 @@
 
 #include "datadefines.h"
 #include "deviceprotocols.h"
+#include "bedsidescalesdefines.h"
 
 namespace Ui {
 class BedsideScalesTesterExecute;
@@ -58,6 +59,7 @@ private:
     TestResultData *m_trd;  ///< Объект, записывающий данные в базу
 
     int m_freq {150};
+    BedsideScalesDefines::Mode m_mode {BedsideScalesDefines::bsmTester};
 };
 
 #endif // BEDSIDESCALESTESTEREXECUTE_H

@@ -9,6 +9,31 @@
             "kind": "{5814B451-3171-468B-9E79-B5826521F527}",
             "params":
             {
+                "mode": "tester"
+            }
+        },
+        {
+            "uid": "{FEC3653B-E5FF-41A1-A639-2CABDD10EAC2}",
+            "name": "Weighing",
+            "image": "Scales_Weighting.png",
+            "template": "met_bedside_scales_tester_uid",
+            "build_norms": false,
+            "kind": "{5814B451-3171-468B-9E79-B5826521F527}",
+            "params":
+            {
+                "mode": "scales"
+            }
+        },
+        {
+            "uid": "{80B46285-25FC-4B13-BC41-C7F3449FBB71}",
+            "name": "Sleep research",
+            "image": "Scales_Sleep.png",
+            "template": "met_bedside_scales_tester_uid",
+            "build_norms": false,
+            "kind": "{5814B451-3171-468B-9E79-B5826521F527}",
+            "params":
+            {
+                "mode": "sleep_research"
             }
         }
     ],

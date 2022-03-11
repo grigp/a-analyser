@@ -211,7 +211,8 @@ void BedsideScales01::assignByteFromDevice(quint8 b)
             else
             {
                 int v = b * 256 + m_lo;
-                m_values[m_dataByteCount / 2] = (50 * 1000 * v) / (65535 * 128 * 1.999);
+//                m_values[m_dataByteCount / 2] = v * (50.0 / 65535.0);
+                m_values[m_dataByteCount / 2] = (50 * static_cast<double>(v)) / (static_cast<double>(65535) * 2 / 2);
             }
             ++m_dataByteCount;
         }

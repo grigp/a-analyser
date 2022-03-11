@@ -3,7 +3,8 @@ INCLUDEPATH += $$PWD
 HEADERS += \
     $$PWD/bedsidescalestestertemplate.h \
     $$PWD/bedsidescalestesterparamsdialog.h \
-    $$PWD/bedsidescalestesterexecute.h
+    $$PWD/bedsidescalestesterexecute.h \
+    $$PWD/bedsidescalesdefines.h
 
 SOURCES += \
     $$PWD/bedsidescalestestertemplate.cpp \

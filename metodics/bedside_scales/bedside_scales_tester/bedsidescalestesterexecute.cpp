@@ -10,6 +10,13 @@
 #include <QMessageBox>
 #include <QDebug>
 
+namespace
+{
+QList<Oscilloscope*> TesterOscillAreases;
+QList<QLabel*> TesterValues;
+
+}
+
 BedsideScalesTesterExecute::BedsideScalesTesterExecute(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::BedsideScalesTesterExecute)
@@ -17,11 +24,24 @@ BedsideScalesTesterExecute::BedsideScalesTesterExecute(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    for (int i = 0; i < 4; ++i)
+        ui->wgtOscillApnoe->appendArea(tr("Канал") + " " + QString::number(i + 1), 1);
+    ui->wgtOscillTester0->appendArea(tr("Канал") + " 1", 1);
+    ui->wgtOscillTester1->appendArea(tr("Канал") + " 2", 1);
+    ui->wgtOscillTester2->appendArea(tr("Канал") + " 3", 1);
+    ui->wgtOscillTester3->appendArea(tr("Канал") + " 4", 1);
+    ui->wgtWeighting->appendArea(tr("Масса"), 1);
+    TesterOscillAreases.clear();
+    TesterOscillAreases << ui->wgtOscillTester0 << ui->wgtOscillTester1 << ui->wgtOscillTester2 << ui->wgtOscillTester3;
+    TesterValues.clear();
+    TesterValues << ui->lblValTester0 << ui->lblValTester1 << ui->lblValTester2 << ui->lblValTester3;
+
     QTimer::singleShot(0, this, &BedsideScalesTesterExecute::start);
     ui->lblCommunicationError->setVisible(false);
 
-    for (int i = 0; i < 4; ++i)
-        ui->wgtAreaGraph->appendArea(tr("Канал") + " " + QString::number(i + 1), 1);
+    foreach (auto val, TesterValues)
+        val->setStyleSheet("font-size: 24pt;");
+    ui->lblMassa->setStyleSheet("font-size: 24pt;");
 }
 
 BedsideScalesTesterExecute::~BedsideScalesTesterExecute()
@@ -31,7 +51,12 @@ BedsideScalesTesterExecute::~BedsideScalesTesterExecute()
 
 void BedsideScalesTesterExecute::setParams(const QJsonObject &probeParams)
 {
+    auto sMode = probeParams["mode"].toString();
+    m_mode = BedsideScalesDefines::modeCode.value(sMode);
 
+    ui->frTester->setVisible(m_mode == BedsideScalesDefines::bsmTester);
+    ui->frWeighting->setVisible(m_mode == BedsideScalesDefines::bsmScales);
+    ui->frApnoe->setVisible(m_mode == BedsideScalesDefines::bsmSleepResearch);
 }
 
 void BedsideScalesTesterExecute::closeEvent(QCloseEvent *event)
@@ -73,14 +98,31 @@ void BedsideScalesTesterExecute::start()
 //            scaleChange(ui->cbScale->currentIndex());
 //        });
 
-        ui->wgtAreaGraph->setFrequency(m_driver->frequency(ChannelsDefines::chanWeightPlate));
-        for (int i = 0; i < ui->wgtAreaGraph->areasesCount(); ++i)
+
+        if (m_mode == BedsideScalesDefines::bsmSleepResearch)
+            ui->wgtOscillApnoe->setFrequency(m_driver->frequency(ChannelsDefines::chanWeightPlate));
+        double mmin = 0;
+        double mmax = 0;
+        for (int i = 0; i < ui->wgtOscillApnoe->areasesCount(); ++i)
         {
             double min = 0;
             double max = 10;
             if (m_tenzoControl)
                 m_tenzoControl->getTensoValueDiapasone(i, min, max);
-            ui->wgtAreaGraph->setDiapazone(i, min, max);
+            mmin += min;
+            mmax += max;
+            if (m_mode == BedsideScalesDefines::bsmSleepResearch)
+                ui->wgtOscillApnoe->setDiapazone(i, min, max);
+            if (m_mode == BedsideScalesDefines::bsmTester)
+            {
+                TesterOscillAreases.at(i)->setDiapazone(0, min, max);
+                TesterOscillAreases.at(i)->setFrequency(m_driver->frequency(ChannelsDefines::chanWeightPlate));
+            }
+        }
+        if (m_mode == BedsideScalesDefines::bsmScales)
+        {
+            ui->wgtWeighting->setDiapazone(0, mmin, mmax);
+            ui->wgtWeighting->setFrequency(m_driver->frequency(ChannelsDefines::chanWeightPlate));
         }
 
         m_driver->start();
@@ -102,18 +144,46 @@ void BedsideScalesTesterExecute::getData(DeviceProtocols::DeviceData *data)
     if (data->channelId() == ChannelsDefines::chanWeightPlate)
     {
         DeviceProtocols::WeightPlateDvcData *wData = static_cast<DeviceProtocols::WeightPlateDvcData*>(data);
-        QVector<double> rec;
+
+        double massa = 0;
         for (int i = 0; i < wData->subChanCount(); ++i)
+            massa += wData->value(i).toDouble();
+
+        if (m_mode == BedsideScalesDefines::bsmSleepResearch)
         {
-//            s += QString::number(wData->value(i).toDouble()) + " ";
-            rec << wData->value(i).toDouble();
+            QVector<double> rec;
+            for (int i = 0; i < wData->subChanCount(); ++i)
+            {
+                rec << wData->value(i).toDouble();
+            }
+            ui->wgtOscillApnoe->addValue(rec);
         }
-        ui->wgtAreaGraph->addValue(rec);
+        else
+        if (m_mode == BedsideScalesDefines::bsmTester)
+        {
+            for (int i = 0; i < wData->subChanCount(); ++i)
+            {
+                QVector<double> rec;
+                rec << wData->value(i).toDouble();
+                TesterOscillAreases.at(i)->addValue(rec);
+                TesterValues.at(i)->setText(QString::number(wData->value(i).toDouble()));
+            }
+        }
+        else
+        if (m_mode == BedsideScalesDefines::bsmScales)
+        {
+            QVector<double> rec;
+            rec << massa;
+            ui->wgtWeighting->addValue(rec);
+        }
+
+        ui->lblMassa->setText(QString::number(massa) + tr("кг"));
     }
 }
 
 void BedsideScalesTesterExecute::on_communicationError(const QString &drvName, const QString &port, const int errorCode)
 {
+    Q_UNUSED(errorCode);
     ui->lblCommunicationError->setText(tr("Ошибка связи с устройством:") + " " + drvName + ". " +
                                        tr("Порт:") + " " + port + ". ");
     ui->lblCommunicationError->setVisible(true);

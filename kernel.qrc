@@ -209,5 +209,7 @@
         <file>pre_settings/connections_stab_en_US.json</file>
         <file>pre_settings/connections_bss.json</file>
         <file>pre_settings/connections_bss_en_US.json</file>
+        <file>images/Methodics/Scales_Sleep.png</file>
+        <file>images/Methodics/Scales_Weighting.png</file>
     </qresource>
 </RCC>
