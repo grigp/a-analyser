@@ -62,6 +62,9 @@ QList<QString> BedsideScales01::getChannelsByProtocol(const QString &protocolUid
     QList<QString> retval;
     if (protocolUid == DeviceProtocols::uid_WeightPlateProtocol)
         retval << ChannelsDefines::chanWeightPlate;
+    else
+    if (protocolUid == DeviceProtocols::uid_ADCValuesProtocol)
+        retval << ChannelsDefines::chanADCValues;
     return retval;
 }
 
@@ -77,7 +80,7 @@ QList<QString> BedsideScales01::getChannelsByFormat(const QString &formatUid) co
 QList<QString> BedsideScales01::getChannels() const
 {
     QList<QString> retval;
-    retval << ChannelsDefines::chanWeightPlate;
+    retval << ChannelsDefines::chanWeightPlate << ChannelsDefines::chanADCValues;
     return retval;
 }
 
@@ -210,9 +213,10 @@ void BedsideScales01::assignByteFromDevice(quint8 b)
                 m_lo = b;
             else
             {
-                int v = b * 256 + m_lo;
-//                m_values[m_dataByteCount / 2] = v * (50.0 / 65535.0);
-                m_values[m_dataByteCount / 2] = (50 * static_cast<double>(v)) / (static_cast<double>(65535) * 2 / 2);
+                m_adcValues[m_dataByteCount / 2] = b * 256 + m_lo;
+//                m_values[m_dataByteCount / 2] = m_adcValues[m_dataByteCount / 2] * (50.0 / 65535.0);
+                m_values[m_dataByteCount / 2] = (50 * static_cast<double>(m_adcValues[m_dataByteCount / 2])) /
+                                                (static_cast<double>(65535) * 2 / 2);
             }
             ++m_dataByteCount;
         }
@@ -236,10 +240,18 @@ void BedsideScales01::assignByteFromDevice(quint8 b)
 void BedsideScales01::sendDataBlock()
 {
     incBlockCount();
-    QVector<double> value;
+
+    QVector<double> valDbl;
     for (int i = 0; i < 4; ++i)
-        value << m_values[i] ;
-    auto data = new DeviceProtocols::WeightPlateDvcData(this, ChannelsDefines::chanWeightPlate, value);
-    emit sendData(data);
-    delete data;
+        valDbl << m_values[i] ;
+    auto dataDbl = new DeviceProtocols::WeightPlateDvcData(this, ChannelsDefines::chanWeightPlate, valDbl);
+    emit sendData(dataDbl);
+    delete dataDbl;
+
+    QVector<quint16> valInt;
+    for (int i = 0; i < 4; ++i)
+        valInt << m_adcValues[i] ;
+    auto dataInt = new DeviceProtocols::ADCValuesDvcData(this, ChannelsDefines::chanADCValues, valInt);
+    emit sendData(dataInt);
+    delete dataInt;
 }

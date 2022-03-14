@@ -34,7 +34,7 @@ protected:
 private slots:
     void start();
 
-    void scaleChange(int scaleId);
+    void on_scaleChange(int scaleId);
 
     void getData(DeviceProtocols::DeviceData *data);
     void on_communicationError(const QString &drvName, const QString &port, const int errorCode);
@@ -51,6 +51,11 @@ private slots:
 
 private:
     Ui::BedsideScalesTesterExecute *ui;
+
+    void setupUI();
+
+    void getDataWeight(DeviceProtocols::DeviceData *data);
+    void getDataADC(DeviceProtocols::DeviceData *data);
 
     DataDefines::PatientKard m_kard;
     Driver* m_driver {nullptr};     ///< Драйвер передающий данные

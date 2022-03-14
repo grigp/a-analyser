@@ -83,6 +83,7 @@ static const QString uid_MyoDvcData = "{4F170074-1F17-4214-9BA9-BA53C732BF5F}";
 static const QString uid_JumpPlateDvcData = "{F7EF6F97-3502-4EC0-A798-68DDF40DFB7F}";
 static const QString uid_JumpPlateBlockData = "{A3CE22EA-1D4D-4C3F-8E61-7FED58C7044B}";
 static const QString uid_WeightPlateDvcData = "{CB8129C1-D44A-4116-8FA3-824AC8C11E67}";
+static const QString uid_ADCValuesDvcData = "{FFBBD740-245C-4FE4-B9B1-D3E63DE4F3DB}";
 
 static const QString name_StabDvcData = "Данные стабилографии";
 static const QString name_DynDvcData = "Данные динамометрии";
@@ -92,6 +93,7 @@ static const QString name_MyoDvcData = "Данные миографии";
 static const QString name_JumpPlateDvcData = "Данные прыжковой платформы";
 static const QString name_JumpPlateBlockData = "Отсчеты прыжковой платформы";
 static const QString name_WeightPlateDvcData = "Данные весовой платформы";
+static const QString name_ADCValuesDvcData = "Данные АЦП";
 
 
 /*!
@@ -235,6 +237,23 @@ private:
     QVector<double> m_value;
 };
 
+/*!
+ * \brief Класс данных отсчетов АЦП, получаемых от устройств ADCValuesDvcData class
+ */
+class ADCValuesDvcData : public MultiData
+{
+public:
+    ADCValuesDvcData(Driver *sender, const QString &channelId, const QVector<quint16> &value)
+        : MultiData(sender, channelId), m_value(value) {}
+
+    int subChanCount() const override {return m_value.size();}
+    QVariant value(const int idx) const override {return m_value.at(idx);}
+
+    QString uid() const override {return uid_ADCValuesDvcData;}
+
+private:
+    QVector<quint16> m_value;
+};
 /*!
  * \brief Класс данных динамометрии по нескольким каналам, получаемых от устройств DynamoComboDvcData class
  */
@@ -568,6 +587,7 @@ static const QString uid_PulseProtocol = "{B15928FE-E0F9-491C-9B82-1F73B8A7493D}
 static const QString uid_MyoProtocol = "{DE208F93-8515-49BA-83F1-916EC215E99C}";
 static const QString uid_JumpPlateProtocol = "{7E31AE8E-96AB-4E34-96DA-54E19B312377}";
 static const QString uid_WeightPlateProtocol = "{8D6F194F-2E21-4ADF-9989-AEFF69374D4B}";
+static const QString uid_ADCValuesProtocol = "{ED55ED10-BD5E-4BB6-9CA8-59A04FAE8167}";
 
 static const QString name_StabProtocol = "Протокол стабилографии";
 static const QString name_DynProtocol = "Протокол динамометрии";
@@ -576,6 +596,7 @@ static const QString name_BreathProtocol = "Протокол периметри�
 static const QString name_MyoProtocol = "Протокол миографии";
 static const QString name_JumpPlateProtocol = "Протокол прыжковой платформы";
 static const QString name_WeightPlateProtocol = "Протокол весовой платформы";
+static const QString name_ADCValuesProtocol = "Протокол дискрет АЦП";
 
 static QList<DeviceProtocol> protocols = QList<DeviceProtocol>()
         << DeviceProtocol(std::make_tuple(uid_StabProtocol, name_StabProtocol, uid_StabControl, uid_StabDvcData))
@@ -584,7 +605,8 @@ static QList<DeviceProtocol> protocols = QList<DeviceProtocol>()
         << DeviceProtocol(std::make_tuple(uid_PulseProtocol, name_PulseProtocol, uid_PulseControl, uid_PulseDvcData))
         << DeviceProtocol(std::make_tuple(uid_MyoProtocol, name_MyoProtocol, uid_MyoControl, uid_MyoDvcData))
         << DeviceProtocol(std::make_tuple(uid_JumpPlateProtocol, name_JumpPlateProtocol, uid_JumpPlateControl, uid_JumpPlateDvcData))
-        << DeviceProtocol(std::make_tuple(uid_WeightPlateProtocol, name_WeightPlateProtocol, uid_WeightPlateControl, uid_WeightPlateDvcData));
+        << DeviceProtocol(std::make_tuple(uid_WeightPlateProtocol, name_WeightPlateProtocol, uid_WeightPlateControl, uid_WeightPlateDvcData))
+        << DeviceProtocol(std::make_tuple(uid_ADCValuesProtocol, name_ADCValuesProtocol, uid_WeightPlateControl, uid_ADCValuesDvcData));
 
 
 ///<------------------------------------------------------------------------------------------
@@ -623,6 +645,7 @@ static QMap<QString, QString> deviceDataName {
   , std::pair<QString, QString> (uid_JumpPlateDvcData, name_JumpPlateDvcData)
   , std::pair<QString, QString> (uid_JumpPlateBlockData, name_JumpPlateBlockData)
   , std::pair<QString, QString> (uid_WeightPlateDvcData, name_WeightPlateDvcData)
+  , std::pair<QString, QString> (uid_ADCValuesDvcData, name_ADCValuesDvcData)
 };
 
 ///< Соответствие протокола и формата канала по uid

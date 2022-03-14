@@ -109,6 +109,12 @@ ChannelsUtils::ChannelsUtils()
                                                                           std::make_tuple(QString("Данные весовой платформы"),
                                                                                           QString("WP"),
                                                                                           ChannelsDefines::ctWeightPlate))
+                 , std::pair<QString, ChannelsDefines::ChannelInfo>(ChannelsDefines::chanADCValues,
+                                                                          std::make_tuple(QString("Данные АЦП"),
+                                                                                          QString("ADC"),
+                                                                                          ChannelsDefines::ctADCValues))
+
+
 
                  , std::pair<QString, ChannelsDefines::ChannelInfo>(ChannelsDefines::chanTenso1,
                                                                           std::make_tuple(QString("Тензоканал 1"),

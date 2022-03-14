@@ -146,6 +146,13 @@
              </widget>
             </item>
             <item>
+             <widget class="QLabel" name="lblValADCTester0">
+              <property name="text">
+               <string>0000000000000000</string>
+              </property>
+             </widget>
+            </item>
+            <item>
              <spacer name="verticalSpacer">
               <property name="orientation">
                <enum>Qt::Vertical</enum>
@@ -216,6 +223,13 @@
              <widget class="QLabel" name="lblValTester1">
               <property name="text">
                <string>F = 0 кг</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="lblValADCTester1">
+              <property name="text">
+               <string>0000000000000000</string>
               </property>
              </widget>
             </item>
@@ -294,6 +308,13 @@
              </widget>
             </item>
             <item>
+             <widget class="QLabel" name="lblValADCTester2">
+              <property name="text">
+               <string>0000000000000000</string>
+              </property>
+             </widget>
+            </item>
+            <item>
              <spacer name="verticalSpacer_3">
               <property name="orientation">
                <enum>Qt::Vertical</enum>
@@ -364,6 +385,13 @@
              <widget class="QLabel" name="lblValTester3">
               <property name="text">
                <string>F = 0 кг</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="lblValADCTester3">
+              <property name="text">
+               <string>0000000000000000</string>
               </property>
              </widget>
             </item>
@@ -552,16 +580,55 @@
       <enum>QFrame::Raised</enum>
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout">
+      <property name="spacing">
+       <number>6</number>
+      </property>
       <property name="topMargin">
-       <number>5</number>
+       <number>1</number>
       </property>
       <property name="bottomMargin">
-       <number>5</number>
+       <number>1</number>
       </property>
       <item>
-       <widget class="QPushButton" name="pushButton">
+       <widget class="QLabel" name="lblScale">
         <property name="text">
-         <string>PushButton</string>
+         <string>Масштаб</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QComboBox" name="cbScale"/>
+      </item>
+      <item>
+       <spacer name="horizontalSpacer_6">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeType">
+         <enum>QSizePolicy::Fixed</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>20</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btnRecord">
+        <property name="text">
+         <string>Запись</string>
+        </property>
+        <property name="icon">
+         <iconset resource="../../../kernel.qrc">
+          <normaloff>:/images/Save.png</normaloff>:/images/Save.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>22</width>
+          <height>22</height>
+         </size>
         </property>
        </widget>
       </item>
@@ -580,6 +647,18 @@
       </item>
       <item>
        <widget class="QFrame" name="frame">
+        <property name="minimumSize">
+         <size>
+          <width>200</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>200</width>
+          <height>16777215</height>
+         </size>
+        </property>
         <property name="frameShape">
          <enum>QFrame::StyledPanel</enum>
         </property>
@@ -587,6 +666,15 @@
          <enum>QFrame::Raised</enum>
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_9">
+         <property name="spacing">
+          <number>4</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
          <item>
           <widget class="QLabel" name="lblMassaTxt">
            <property name="text">
@@ -617,6 +705,28 @@
    <container>1</container>
   </customwidget>
  </customwidgets>
- <resources/>
- <connections/>
+ <resources>
+  <include location="../../../kernel.qrc"/>
+ </resources>
+ <connections>
+  <connection>
+   <sender>cbScale</sender>
+   <signal>activated(int)</signal>
+   <receiver>BedsideScalesTesterExecute</receiver>
+   <slot>on_scaleChange(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>114</x>
+     <y>712</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1057</x>
+     <y>562</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>on_scaleChange(int)</slot>
+ </slots>
 </ui>
