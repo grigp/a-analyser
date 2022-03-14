@@ -2,9 +2,12 @@
 #include "ui_bedsidescalestesterexecute.h"
 
 #include "aanalyserapplication.h"
+#include "channelsdefines.h"
 #include "testresultdata.h"
 #include "driver.h"
 #include "executewidget.h"
+#include "weightplatesignal.h"
+#include "balistogram.h"
 
 #include <QTimer>
 #include <QMessageBox>
@@ -75,6 +78,7 @@ void BedsideScalesTesterExecute::start()
         MetodicDefines::MetodicInfo mi = static_cast<AAnalyserApplication*>(QApplication::instance())->getSelectedMetodic();
 //        ui->lblProbeTitle->setText(probeParams().name + " - " + m_kard.fio);
         m_trd->newTest(m_kard.uid, mi.uid);
+        m_trd->newProbe(mi.name);
 
 //        ui->cbScale->setCurrentIndex(m_params.at(m_probe).scale);
 //        QTimer::singleShot(100, [&]  //! Пока процесс создания не завершен, масштаб отображается некорректно, если просто вызывать
@@ -110,6 +114,18 @@ void BedsideScalesTesterExecute::start()
         }
 
         m_driver->start();
+
+        if (m_mode == BedsideScalesDefines::bsmSleepResearch || m_mode == BedsideScalesDefines::bsmTester)
+        {
+            m_wps = new WeightPlateSignal(ChannelsDefines::chanWeightPlate, m_driver->frequency(ChannelsDefines::chanWeightPlate), 4);
+            m_trd->addChannel(m_wps);
+        }
+        else
+        if (m_mode == BedsideScalesDefines::bsmScales)
+        {
+            m_z = new Balistogram(ChannelsDefines::chanZ, m_driver->frequency(ChannelsDefines::chanWeightPlate));
+            m_trd->addChannel(m_z);
+        }
     }
     else
     {
@@ -182,7 +198,22 @@ void BedsideScalesTesterExecute::calibrate()
 
 void BedsideScalesTesterExecute::recording()
 {
+    m_isRecording = ! m_isRecording;
 
+    if (m_isRecording)
+    {
+        ui->btnRecord->setIcon(QIcon(":/images/SaveOK.png"));
+        ui->btnRecord->setText(tr("Завершить запись"));
+
+    }
+    else
+    {
+        ui->btnRecord->setIcon(QIcon(":/images/Save.png"));
+        ui->btnRecord->setText(tr("Запись"));
+
+        m_trd->saveTest();
+        static_cast<ExecuteWidget*>(parent())->showDB();
+    }
 }
 
 void BedsideScalesTesterExecute::setupUI()
@@ -227,17 +258,25 @@ void BedsideScalesTesterExecute::getDataWeight(DeviceProtocols::DeviceData *data
             rec << wData->value(i).toDouble();
         }
         ui->wgtOscillApnoe->addValue(rec);
+
+        if (m_isRecording)
+            m_wps->addValue(rec);
     }
     else
     if (m_mode == BedsideScalesDefines::bsmTester)
     {
+        QVector<double> recW;
         for (int i = 0; i < wData->subChanCount(); ++i)
         {
             QVector<double> rec;
             rec << wData->value(i).toDouble();
+            recW << wData->value(i).toDouble();
             TesterOscillAreases.at(i)->addValue(rec);
-            TesterValues.at(i)->setText(QString::number(wData->value(i).toDouble()));
+            TesterValues.at(i)->setText(QString::number(wData->value(i).toDouble(), 'f', 3));
         }
+
+        if (m_isRecording)
+            m_wps->addValue(recW);
     }
     else
     if (m_mode == BedsideScalesDefines::bsmScales)
@@ -245,9 +284,11 @@ void BedsideScalesTesterExecute::getDataWeight(DeviceProtocols::DeviceData *data
         QVector<double> rec;
         rec << massa;
         ui->wgtWeighting->addValue(rec);
+        if (m_isRecording)
+            m_z->addValue(massa);
     }
 
-    ui->lblMassa->setText(QString::number(massa) + tr("кг"));
+    ui->lblMassa->setText(QString::number(massa, 'f', 3) + tr("кг"));
 }
 
 void BedsideScalesTesterExecute::getDataADC(DeviceProtocols::DeviceData *data)

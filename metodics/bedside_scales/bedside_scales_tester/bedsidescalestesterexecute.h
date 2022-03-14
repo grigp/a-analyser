@@ -14,6 +14,8 @@ class BedsideScalesTesterExecute;
 
 class TestResultData;
 class Driver;
+class WeightPlateSignal;
+class Balistogram;
 
 /*!
  * \brief Виджет выполнения методики тестирования прикроватных весов The BedsideScalesTesterExecute class
@@ -65,6 +67,11 @@ private:
 
     int m_freq {150};
     BedsideScalesDefines::Mode m_mode {BedsideScalesDefines::bsmTester};
+
+    bool m_isRecording {false};
+    WeightPlateSignal *m_wps {nullptr};     ///< Записываемый сигнал
+    Balistogram *m_z {nullptr};
+
 };
 
 #endif // BEDSIDESCALESTESTEREXECUTE_H

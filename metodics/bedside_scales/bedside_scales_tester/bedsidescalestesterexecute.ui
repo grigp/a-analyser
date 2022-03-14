@@ -725,8 +725,25 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>btnRecord</sender>
+   <signal>clicked()</signal>
+   <receiver>BedsideScalesTesterExecute</receiver>
+   <slot>recording()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>191</x>
+     <y>711</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1057</x>
+     <y>589</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>on_scaleChange(int)</slot>
+  <slot>recording()</slot>
  </slots>
 </ui>

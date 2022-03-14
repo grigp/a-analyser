@@ -9,6 +9,8 @@
 #include "driver.h"
 #include "bedsidescales01.h"
 
+#include "balistogramvisual.h"
+
 QList<MetodicTemplate *> AAnalyserBuild::getBuildTemplates(QObject *parent)
 {
     return QList<MetodicTemplate *>()
@@ -21,7 +23,8 @@ void AAnalyserBuild::registerFactors()
 
 void AAnalyserBuild::registerVisuals()
 {
-//    auto* app = static_cast<AAnalyserApplication*>(QApplication::instance());
+    auto* app = static_cast<AAnalyserApplication*>(QApplication::instance());
+    app->registerVisual(new BalistogramVisual(VisualDefines::vlChannel));
 }
 
 QList<DeviceProtocols::Ports> AAnalyserBuild::getDriverPorts(const QString &drvUid)
