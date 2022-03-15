@@ -3,6 +3,7 @@
 
 #include "signaldata.h"
 #include "signalsdefines.h"
+#include "basedefines.h"
 
 #include <QVector>
 
@@ -71,12 +72,25 @@ public:
      */
     void clear() override;
 
+    /*!
+     * \brief Возвращает максимальное значение сигнала в подканале
+     */
+    double maxValueChan(const int subChan) const;
+
+    /*!
+     * \brief Возвращает минимальное значение сигнала в подканале
+     */
+    double minValueChan(const int subChan) const;
+
+
 private:
     QString m_channelId {""};
     int m_frequency {50};
     int m_subChansCount {1};
 
     QVector<QVector<double>> m_data;
+
+    QList<BaseDefines::MinMaxValue> m_minMax;
 };
 
 #endif // WEIGHTPLATESIGNAL_H

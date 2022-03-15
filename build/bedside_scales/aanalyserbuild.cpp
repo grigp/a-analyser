@@ -10,6 +10,7 @@
 #include "bedsidescales01.h"
 
 #include "balistogramvisual.h"
+#include "weightplategraphvisual.h"
 
 QList<MetodicTemplate *> AAnalyserBuild::getBuildTemplates(QObject *parent)
 {
@@ -25,6 +26,7 @@ void AAnalyserBuild::registerVisuals()
 {
     auto* app = static_cast<AAnalyserApplication*>(QApplication::instance());
     app->registerVisual(new BalistogramVisual(VisualDefines::vlChannel));
+    app->registerVisual(new WeightPlateGraphVisual(VisualDefines::vlChannel));
 }
 
 QList<DeviceProtocols::Ports> AAnalyserBuild::getDriverPorts(const QString &drvUid)

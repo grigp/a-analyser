@@ -166,6 +166,18 @@ struct FctTblPair
     {}
 };
 
+/*!
+ * \brief Структура группировки минимального и максимального значений The MinMaxValue struct
+ */
+struct MinMaxValue
+{
+    double min;
+    double max;
+    MinMaxValue(const double mn, const double mx)
+        : min(mn), max(mx)
+    {}
+};
+
 ///< Константы границ зон коррекций
 static const double ZoneMotorLo = 0.1;   ///< dZone100160Min
 static const double ZoneMotorHi = 0.16;  ///< dZone100160Max

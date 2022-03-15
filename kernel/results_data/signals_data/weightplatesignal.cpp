@@ -64,6 +64,8 @@ void WeightPlateSignal::fromByteArray(const QByteArray &data)
 
     m_maxValue = -INT_MAX;
     m_minValue = INT_MAX;
+    for (int i = 0; i < m_subChansCount; ++i)
+        m_minMax << BaseDefines::MinMaxValue(INT_MAX, -INT_MAX);
 
     int count = 0;
     stream >> count;
@@ -80,8 +82,12 @@ void WeightPlateSignal::fromByteArray(const QByteArray &data)
             //! Минимум и максимум
             if (v > m_maxValue)
                 m_maxValue = v;
-            if (v > m_maxValue)
-                m_maxValue = v;
+            if (v < m_minValue)
+                m_minValue = v;
+            if (v > m_minMax[j].max)
+                m_minMax[j].max = v;
+            if (v < m_minMax[j].min)
+                m_minMax[j].min = v;
         }
 
         m_data.replace(i, rec);
@@ -109,3 +115,16 @@ void WeightPlateSignal::clear()
         rec.clear();
     m_data.clear();
 }
+
+double WeightPlateSignal::maxValueChan(const int subChan) const
+{
+    Q_ASSERT(subChan >= 0 && subChan < m_minMax.size());
+    return m_minMax.at(subChan).max;
+}
+
+double WeightPlateSignal::minValueChan(const int subChan) const
+{
+    Q_ASSERT(subChan >= 0 && subChan < m_minMax.size());
+    return m_minMax.at(subChan).min;
+}
+

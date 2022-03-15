@@ -1,0 +1,410 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>WeightPlateGraphVisualWidget</class>
+ <widget class="QWidget" name="WeightPlateGraphVisualWidget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1092</width>
+    <height>636</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <property name="spacing">
+    <number>2</number>
+   </property>
+   <property name="leftMargin">
+    <number>1</number>
+   </property>
+   <property name="topMargin">
+    <number>1</number>
+   </property>
+   <property name="rightMargin">
+    <number>1</number>
+   </property>
+   <property name="bottomMargin">
+    <number>1</number>
+   </property>
+   <item>
+    <widget class="QFrame" name="frGraph">
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_3">
+      <property name="spacing">
+       <number>2</number>
+      </property>
+      <property name="leftMargin">
+       <number>1</number>
+      </property>
+      <property name="topMargin">
+       <number>1</number>
+      </property>
+      <property name="rightMargin">
+       <number>1</number>
+      </property>
+      <property name="bottomMargin">
+       <number>1</number>
+      </property>
+      <item>
+       <widget class="AreaGraph" name="wgtGraph" native="true">
+        <property name="mouseTracking">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QScrollBar" name="sbSignal">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QFrame" name="frToolbar">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <property name="spacing">
+       <number>2</number>
+      </property>
+      <property name="leftMargin">
+       <number>1</number>
+      </property>
+      <property name="topMargin">
+       <number>1</number>
+      </property>
+      <property name="rightMargin">
+       <number>1</number>
+      </property>
+      <property name="bottomMargin">
+       <number>1</number>
+      </property>
+      <item>
+       <widget class="QFrame" name="frScale">
+        <property name="frameShape">
+         <enum>QFrame::StyledPanel</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Raised</enum>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout_2">
+         <property name="topMargin">
+          <number>1</number>
+         </property>
+         <property name="bottomMargin">
+          <number>1</number>
+         </property>
+         <item>
+          <widget class="QLabel" name="lblScale">
+           <property name="text">
+            <string>Масштаб</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QComboBox" name="cbScale">
+           <property name="maxVisibleItems">
+            <number>15</number>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btnFullSignal">
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset resource="../../../../kernel.qrc">
+          <normaloff>:/images/Tools/FullSignal.png</normaloff>:/images/Tools/FullSignal.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>22</width>
+          <height>22</height>
+         </size>
+        </property>
+        <property name="checkable">
+         <bool>true</bool>
+        </property>
+        <property name="checked">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QFrame" name="frFullSignal">
+        <property name="frameShape">
+         <enum>QFrame::StyledPanel</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Raised</enum>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout_5">
+         <property name="spacing">
+          <number>0</number>
+         </property>
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
+         <item>
+          <widget class="QPushButton" name="btnHScalePlus">
+           <property name="maximumSize">
+            <size>
+             <width>13</width>
+             <height>13</height>
+            </size>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset resource="../../../../kernel.qrc">
+             <normaloff>:/images/Tools/Plus_10.png</normaloff>:/images/Tools/Plus_10.png</iconset>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>9</width>
+             <height>9</height>
+            </size>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="btnHScaleMinus">
+           <property name="maximumSize">
+            <size>
+             <width>13</width>
+             <height>13</height>
+            </size>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset resource="../../../../kernel.qrc">
+             <normaloff>:/images/Tools/Minus_10.png</normaloff>:/images/Tools/Minus_10.png</iconset>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>10</width>
+             <height>10</height>
+            </size>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item>
+       <spacer name="horizontalSpacer_2">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeType">
+         <enum>QSizePolicy::Fixed</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
+       <widget class="QFrame" name="frChannel">
+        <property name="frameShape">
+         <enum>QFrame::StyledPanel</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Raised</enum>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout_4">
+         <property name="spacing">
+          <number>3</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
+         <item>
+          <widget class="QLabel" name="lblChannel">
+           <property name="text">
+            <string>Каналы</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QComboBox" name="cbChannels"/>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item>
+       <spacer name="horizontalSpacer">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+     </layout>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>AreaGraph</class>
+   <extends>QWidget</extends>
+   <header location="global">areagraph.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <resources>
+  <include location="../../../../kernel.qrc"/>
+ </resources>
+ <connections>
+  <connection>
+   <sender>cbScale</sender>
+   <signal>currentIndexChanged(int)</signal>
+   <receiver>WeightPlateGraphVisualWidget</receiver>
+   <slot>scaleChange(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>50</x>
+     <y>612</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1093</x>
+     <y>177</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btnFullSignal</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>WeightPlateGraphVisualWidget</receiver>
+   <slot>btnFulSignalClicked(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>110</x>
+     <y>608</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1094</x>
+     <y>223</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btnHScaleMinus</sender>
+   <signal>clicked()</signal>
+   <receiver>WeightPlateGraphVisualWidget</receiver>
+   <slot>btnMinusClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>139</x>
+     <y>619</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1092</x>
+     <y>286</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btnHScalePlus</sender>
+   <signal>clicked()</signal>
+   <receiver>WeightPlateGraphVisualWidget</receiver>
+   <slot>btnPlusClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>141</x>
+     <y>597</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1093</x>
+     <y>322</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>sbSignal</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>WeightPlateGraphVisualWidget</receiver>
+   <slot>signalScroll(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>249</x>
+     <y>572</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1091</x>
+     <y>358</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>cbChannels</sender>
+   <signal>currentIndexChanged(int)</signal>
+   <receiver>WeightPlateGraphVisualWidget</receiver>
+   <slot>on_selectChannel(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>266</x>
+     <y>615</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1092</x>
+     <y>400</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>scaleChange(int)</slot>
+  <slot>btnFulSignalClicked(bool)</slot>
+  <slot>btnMinusClicked()</slot>
+  <slot>btnPlusClicked()</slot>
+  <slot>signalScroll(int)</slot>
+  <slot>on_selectChannel(int)</slot>
+ </slots>
+</ui>

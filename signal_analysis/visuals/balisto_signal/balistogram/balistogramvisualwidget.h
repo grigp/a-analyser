@@ -12,7 +12,7 @@ class BalistogramVisualWidget;
 }
 
 /*!
- * \brief Класс виджета визуализатора ,балистограммы The BalistogramVisualWidget class
+ * \brief Класс виджета визуализатора балистограммы The BalistogramVisualWidget class
  */
 class BalistogramVisualWidget : public ChannelVisual
 {
