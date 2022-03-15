@@ -8,6 +8,7 @@
 #include "executewidget.h"
 #include "weightplatesignal.h"
 #include "balistogram.h"
+#include "baseutils.h"
 
 #include <QTimer>
 #include <QMessageBox>
@@ -123,8 +124,8 @@ void BedsideScalesTesterExecute::start()
         else
         if (m_mode == BedsideScalesDefines::bsmScales)
         {
-            m_z = new Balistogram(ChannelsDefines::chanZ, m_driver->frequency(ChannelsDefines::chanWeightPlate));
-            m_trd->addChannel(m_z);
+            m_weight = new Balistogram(ChannelsDefines::chanWeight, m_driver->frequency(ChannelsDefines::chanWeightPlate));
+            m_trd->addChannel(m_weight);
         }
     }
     else
@@ -199,12 +200,12 @@ void BedsideScalesTesterExecute::calibrate()
 void BedsideScalesTesterExecute::recording()
 {
     m_isRecording = ! m_isRecording;
+    m_recCounter = 0;
 
     if (m_isRecording)
     {
         ui->btnRecord->setIcon(QIcon(":/images/SaveOK.png"));
         ui->btnRecord->setText(tr("Завершить запись"));
-
     }
     else
     {
@@ -285,10 +286,14 @@ void BedsideScalesTesterExecute::getDataWeight(DeviceProtocols::DeviceData *data
         rec << massa;
         ui->wgtWeighting->addValue(rec);
         if (m_isRecording)
-            m_z->addValue(massa);
+            m_weight->addValue(massa);
     }
 
     ui->lblMassa->setText(QString::number(massa, 'f', 3) + tr("кг"));
+    if (m_isRecording)
+        ++m_recCounter;
+    ui->lblLenTime->setText(BaseUtils::getTimeBySecCount(m_recCounter / m_driver->frequency(ChannelsDefines::chanWeightPlate)));
+
 }
 
 void BedsideScalesTesterExecute::getDataADC(DeviceProtocols::DeviceData *data)

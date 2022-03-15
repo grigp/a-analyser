@@ -49,6 +49,7 @@ static QString cfNoSignal = "{90e313c6-8805-4235-8981-1fb85d7aea5f}";          /
  */
  static QString chanStab = "{61E814F9-CE64-46F6-B158-46961964BEE9}";
  static QString chanZ = "{41280317-450F-4CF7-B3D9-15E2D0B87469}";
+ static QString chanWeight = "{13E17652-5130-4ECD-B049-68C0517872F2}";
  static QString chanRitmogram = "{C9E0639D-D077-4D7D-ABE6-28FC2DE2FA90}";
  static QString chanDynHand1 = "{A8A04F44-C766-495B-8662-BA4A2B0C2D6C}";
  static QString chanDynStand1 = "{AE1F3EB7-684D-41ED-8BA9-44CB608E2043}";

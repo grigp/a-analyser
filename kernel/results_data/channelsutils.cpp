@@ -49,6 +49,10 @@ ChannelsUtils::ChannelsUtils()
                                                                   std::make_tuple(QString("Баллистограмма"),
                                                                                   QString("Z"),
                                                                                   ChannelsDefines::ctBallistogram))
+               , std::pair<QString, ChannelsDefines::ChannelInfo>(ChannelsDefines::chanWeight,
+                                                                  std::make_tuple(QString("Динамика веса"),
+                                                                                  QString("Weight"),
+                                                                                  ChannelsDefines::ctBallistogram))
                , std::pair<QString, ChannelsDefines::ChannelInfo>(ChannelsDefines::chanRitmogram,
                                                                     std::make_tuple(QString("Ритмограмма"),
                                                                                     QString("RR"),

@@ -66,11 +66,12 @@ private:
     TestResultData *m_trd;  ///< Объект, записывающий данные в базу
 
     int m_freq {150};
+    int m_recCounter {0};
     BedsideScalesDefines::Mode m_mode {BedsideScalesDefines::bsmTester};
 
     bool m_isRecording {false};
     WeightPlateSignal *m_wps {nullptr};     ///< Записываемый сигнал
-    Balistogram *m_z {nullptr};
+    Balistogram *m_weight {nullptr};
 
 };
 
