@@ -18,7 +18,9 @@ WeightPlateGraphVisualWidget::WeightPlateGraphVisualWidget(VisualDescriptor* vis
     ui->setupUi(this);
 
     ui->cbScale->addItems(QStringList() << "1" << "2" << "4" << "8" << "16" << "32" << "64");
-    ui->sbSignal->setEnabled(false);
+
+    ui->sbSignal->setEnabled(true);
+    ui->wgtGraph->setXCoordSignalMode(AreaGraph::xsm_scrolling);
 
 //    ui->wgtGraph->setIsShowCursor(true);
 

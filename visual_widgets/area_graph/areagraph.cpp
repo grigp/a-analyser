@@ -6,6 +6,7 @@
 
 #include <QPainter>
 #include <QMouseEvent>
+#include <QTime>
 #include <QDebug>
 
 
@@ -35,12 +36,14 @@ struct MinMax
     int maxPrev {INT_MAX};
     int min {INT_MAX};
     int max {-INT_MAX};
+    int n {0};
     bool isRepeatX {false};
     bool reserv1 {false};    ///! Заглушки, чтоб не появлялось сообщение компилятора
     bool reserv2 {false};
     bool reserv3 {false};
 };
-QList<MinMax> chansMinMax;
+//QList<MinMax> chansMinMax;
+MinMax* chansMinMax {nullptr};
 
 }
 
@@ -253,6 +256,8 @@ void AreaGraph::paintEvent(QPaintEvent *event)
     painter.drawLine(LeftSpace, TopSpace, LeftSpace, height() - BottomSpace);
     painter.drawLine(LeftSpace, height() - BottomSpace, width() - RightSpace, height() - BottomSpace);
 
+    //QTime t1 = QTime::currentTime(); // Вывод времени прорисовки
+
     if (m_areases.size() > 0)
     {
         int zoneH = (height() - TopSpace - BottomSpace) / m_areases.size();
@@ -330,9 +335,7 @@ void AreaGraph::paintEvent(QPaintEvent *event)
                 startPoint = m_startPoint;
             }
             //! Для усреднения сигнала на одной координате x
-            chansMinMax.clear();
-            for (int i = 0; i < m_areases.at(iz)->signal()->subChansCount(); ++i)
-                chansMinMax << MinMax();
+            chansMinMax = new MinMax[m_areases.at(iz)->signal()->subChansCount()];
 
             //! По сигналу
             for (int i = 0; i < m_areases.at(iz)->signal()->size() - 1; ++i)
@@ -352,53 +355,51 @@ void AreaGraph::paintEvent(QPaintEvent *event)
                     //! Необходима, чтобы не передавать кучу параметров в приватный метод
                     auto drawLine = [&](const int chan1, const int chan2, const QColor color)
                     {
-                        double v1 = m_areases.at(iz)->signal()->value(chan1, i);
-                        double v2 = m_areases.at(iz)->signal()->value(chan2, i + 1);
+                        double v1 = m_areases[iz]->signal()->value(chan1, i);
+                        double v2 = m_areases[iz]->signal()->value(chan2, i + 1);
                         if (m_isZeroing)
                         {
                             v1 = v1 - m_areases.at(iz)->average(chan1);
                             v2 = v2 - m_areases.at(iz)->average(chan2);
                         }
-                        int y1 = axisY - static_cast<int>((v1 - m_areases.at(iz)->minValue()) * prop);
-                        int y2 = axisY - static_cast<int>((v2 - m_areases.at(iz)->minValue()) * prop);
+                        int y1 = axisY - static_cast<int>((v1 - m_areases[iz]->minValue()) * prop);
+                        int y2 = axisY - static_cast<int>((v2 - m_areases[iz]->minValue()) * prop);
+
                         if (x1 == x2)
                         {
-                            auto mm = chansMinMax.at(chan1);
-                            if (y1 < mm.min) mm.min = y1;
-                            if (y2 < mm.min) mm.min = y2;
-                            if (y1 > mm.max) mm.max = y1;
-                            if (y2 > mm.max) mm.max = y2;
-                            chansMinMax.replace(chan1, mm);
+                            if (y1 < chansMinMax[chan1].min) chansMinMax[chan1].min = y1;
+                            if (y2 < chansMinMax[chan1].min) chansMinMax[chan1].min = y2;
+                            if (y1 > chansMinMax[chan1].max) chansMinMax[chan1].max = y1;
+                            if (y2 > chansMinMax[chan1].max) chansMinMax[chan1].max = y2;
+                            ++chansMinMax[chan1].n;
                         }
                         else
                         {
                             painter.setPen(QPen(color, 1, Qt::SolidLine, Qt::FlatCap));
-                            if (chansMinMax.at(chan1).isRepeatX)
+                            if (chansMinMax[chan1].isRepeatX)
                             {
-                                auto mm = chansMinMax.at(chan1);
-                                painter.drawLine(x1, mm.min, x1, mm.max);
-                                if (mm.minPrev != INT_MAX)
+                                painter.drawLine(x1, chansMinMax[chan1].min, x1, chansMinMax[chan1].max);
+                                if (chansMinMax[chan1].minPrev != INT_MAX)
                                 {
-                                    if (mm.max < mm.minPrev)
-                                        painter.drawLine(x1 - 1, mm.minPrev, x1, mm.max);
+                                    if (chansMinMax[chan1].max < chansMinMax[chan1].minPrev)
+                                        painter.drawLine(x1 - 1, chansMinMax[chan1].minPrev, x1, chansMinMax[chan1].max);
                                     else
-                                    if (mm.min > mm.maxPrev)
-                                        painter.drawLine(x1 - 1, mm.maxPrev, x1, mm.min);
+                                    if (chansMinMax[chan1].min > chansMinMax[chan1].maxPrev)
+                                        painter.drawLine(x1 - 1, chansMinMax[chan1].maxPrev, x1, chansMinMax[chan1].min);
                                 }
-                                mm.minPrev = mm.min;
-                                mm.maxPrev = mm.max;
-                                mm.min = INT_MAX;
-                                mm.max = -INT_MIN;
-                                mm.isRepeatX = false;
-                                chansMinMax.replace(chan1, mm);
+                                chansMinMax[chan1].minPrev = chansMinMax[chan1].min;
+                                chansMinMax[chan1].maxPrev = chansMinMax[chan1].max;
+                                chansMinMax[chan1].min = INT_MAX;
+                                chansMinMax[chan1].max = -INT_MIN;
+                                chansMinMax[chan1].isRepeatX = false;
+                                chansMinMax[chan1].n = 0;
                             }
                             else
                                 painter.drawLine(x1, y1, x2, y2);
 
                         }
-                        auto mm = chansMinMax.at(chan1);
-                        mm.isRepeatX = x1 == x2;
-                        chansMinMax.replace(chan1, mm);
+                        chansMinMax[chan1].isRepeatX = x1 == x2;
+
 //                        painter.setPen(QPen(color, 1, Qt::SolidLine, Qt::FlatCap));
 //                        painter.drawLine(x1, y1, x2, y2);
                     };
@@ -447,6 +448,8 @@ void AreaGraph::paintEvent(QPaintEvent *event)
                     }
                 }
             }
+
+            delete [] chansMinMax;
 
             //! Курсор в зоне
             if (m_areases.at(iz)->cursorPos() > -1)
@@ -497,6 +500,8 @@ void AreaGraph::paintEvent(QPaintEvent *event)
             painter.drawLine(m_cursorX, TopSpace, m_cursorX, height() - BottomSpace);
         }
     }
+
+//    qDebug() << t1.msecsTo(QTime::currentTime()); // Вывод времени прорисовки
 
     painter.restore();
 }
