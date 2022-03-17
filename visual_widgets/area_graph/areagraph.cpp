@@ -347,16 +347,17 @@ void AreaGraph::paintEvent(QPaintEvent *event)
             double dPos = 0;
             int x1 = 0;
             int x2 = 0;
+            int iPos1 = -1;
             for (int i = 0; i < m_areases.at(iz)->signal()->size() - 1; ++i)
             {
                 if (i >= dPos)
                 {
-                    int iPos = static_cast<int>(dPos);
+                    int iPos2 = static_cast<int>(dPos);
                     dPos += offset;
 
-                    if (iPos >= m_areases.at(iz)->signal()->size() - 1)
+                    if (iPos2 >= m_areases.at(iz)->signal()->size() - 1)
                         break;
-                    x2 = LeftSpace + static_cast<int>((iPos - startPoint) * step * hScale);
+                    x2 = LeftSpace + static_cast<int>((iPos2 - startPoint) * step * hScale);
 
                     if (x1 > width() - RightSpace)
                         break;
@@ -370,8 +371,11 @@ void AreaGraph::paintEvent(QPaintEvent *event)
                         //! Необходима, чтобы не передавать кучу параметров в приватный метод
                         auto drawLine = [&](const int chan1, const int chan2, const QColor color)
                         {
-                            double v1 = m_areases[iz]->signal()->value(chan1, iPos);
-                            double v2 = m_areases[iz]->signal()->value(chan2, iPos + 1);
+                            if (iPos1 == -1)
+                                return;
+
+                            double v1 = m_areases[iz]->signal()->value(chan1, iPos1);
+                            double v2 = m_areases[iz]->signal()->value(chan2, iPos2);
                             if (m_isZeroing)
                             {
                                 v1 = v1 - m_areases.at(iz)->average(chan1);
@@ -379,6 +383,7 @@ void AreaGraph::paintEvent(QPaintEvent *event)
                             }
                             int y1 = axisY - static_cast<int>((v1 - m_areases[iz]->minValue()) * prop);
                             int y2 = axisY - static_cast<int>((v2 - m_areases[iz]->minValue()) * prop);
+              //              qDebug() << iPos1 << iPos2 << "   " << x1 << x2 << "   " << y1 << y2;
 
                             if (x1 == x2)
                             {
@@ -439,6 +444,7 @@ void AreaGraph::paintEvent(QPaintEvent *event)
                     }
 
                     x1 = x2;
+                    iPos1 = iPos2;
                 }
 
                 //! Секундные метки
