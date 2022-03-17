@@ -273,9 +273,16 @@ void AreaGraph::paintEvent(QPaintEvent *event)
             //! Пропорции по значениям и шаг
             double prop = zoneH / (m_areases.at(iz)->maxValue() - m_areases.at(iz)->minValue());
             double step = 1;
+            double offset = 1;  //! Смещение по графику. Шаг выбора точек
             if (m_xcsm == xsm_fullSignal)
+            {
                 step = static_cast<double>(width() - LeftSpace - RightSpace) /
                        static_cast<double>(m_areases.at(iz)->signal()->size());
+                offset = static_cast<double>(m_areases.at(iz)->signal()->size()) / 10000;
+                if (offset < 1)
+                    offset = 1;
+            }
+
             m_areases.at(iz)->setStep(step);
             //! Определение шага секундных меток
             double stepMark = step * m_areases.at(iz)->signal()->frequency();
@@ -283,7 +290,6 @@ void AreaGraph::paintEvent(QPaintEvent *event)
             QString s = QString::number(secCount);
             auto sizeOne = BaseUtils::getTextSize(&painter, s);
             LabelStep ls = lsOne;
-            //qDebug() << stepMark << (sizeOne.width() + 7) <<  "    " << stepMark * 5 << (sizeOne.width() + 7);
             if ((stepMark < (sizeOne.width() * 2 + 7)) && (stepMark * 5 >= (sizeOne.width() * 2 + 7)))
                 ls = lsFive;
             else
@@ -338,112 +344,125 @@ void AreaGraph::paintEvent(QPaintEvent *event)
             chansMinMax = new MinMax[m_areases.at(iz)->signal()->subChansCount()];
 
             //! По сигналу
+            double dPos = 0;
+            int x1 = 0;
+            int x2 = 0;
             for (int i = 0; i < m_areases.at(iz)->signal()->size() - 1; ++i)
             {
-                int x1 = LeftSpace + static_cast<int>((i - startPoint) * step * hScale);
-                int x2 = LeftSpace + static_cast<int>((i - startPoint + 1) * step * hScale);
-
-                if (x1 > width() - RightSpace)
-                    break;
-
-                if (i > startPoint)
+                if (i >= dPos)
                 {
-                    if (x1 < LeftSpace)
-                        x1 = LeftSpace;
+                    int iPos = static_cast<int>(dPos);
+                    dPos += offset;
 
-                    //! Лямбда функция вывода линии.
-                    //! Необходима, чтобы не передавать кучу параметров в приватный метод
-                    auto drawLine = [&](const int chan1, const int chan2, const QColor color)
+                    if (iPos >= m_areases.at(iz)->signal()->size() - 1)
+                        break;
+                    x2 = LeftSpace + static_cast<int>((iPos - startPoint) * step * hScale);
+
+                    if (x1 > width() - RightSpace)
+                        break;
+
+                    if (i > startPoint)
                     {
-                        double v1 = m_areases[iz]->signal()->value(chan1, i);
-                        double v2 = m_areases[iz]->signal()->value(chan2, i + 1);
-                        if (m_isZeroing)
-                        {
-                            v1 = v1 - m_areases.at(iz)->average(chan1);
-                            v2 = v2 - m_areases.at(iz)->average(chan2);
-                        }
-                        int y1 = axisY - static_cast<int>((v1 - m_areases[iz]->minValue()) * prop);
-                        int y2 = axisY - static_cast<int>((v2 - m_areases[iz]->minValue()) * prop);
+                        if (x1 < LeftSpace)
+                            x1 = LeftSpace;
 
-                        if (x1 == x2)
+                        //! Лямбда функция вывода линии.
+                        //! Необходима, чтобы не передавать кучу параметров в приватный метод
+                        auto drawLine = [&](const int chan1, const int chan2, const QColor color)
                         {
-                            if (y1 < chansMinMax[chan1].min) chansMinMax[chan1].min = y1;
-                            if (y2 < chansMinMax[chan1].min) chansMinMax[chan1].min = y2;
-                            if (y1 > chansMinMax[chan1].max) chansMinMax[chan1].max = y1;
-                            if (y2 > chansMinMax[chan1].max) chansMinMax[chan1].max = y2;
-                            ++chansMinMax[chan1].n;
-                        }
-                        else
-                        {
-                            painter.setPen(QPen(color, 1, Qt::SolidLine, Qt::FlatCap));
-                            if (chansMinMax[chan1].isRepeatX)
+                            double v1 = m_areases[iz]->signal()->value(chan1, iPos);
+                            double v2 = m_areases[iz]->signal()->value(chan2, iPos + 1);
+                            if (m_isZeroing)
                             {
-                                painter.drawLine(x1, chansMinMax[chan1].min, x1, chansMinMax[chan1].max);
-                                if (chansMinMax[chan1].minPrev != INT_MAX)
-                                {
-                                    if (chansMinMax[chan1].max < chansMinMax[chan1].minPrev)
-                                        painter.drawLine(x1 - 1, chansMinMax[chan1].minPrev, x1, chansMinMax[chan1].max);
-                                    else
-                                    if (chansMinMax[chan1].min > chansMinMax[chan1].maxPrev)
-                                        painter.drawLine(x1 - 1, chansMinMax[chan1].maxPrev, x1, chansMinMax[chan1].min);
-                                }
-                                chansMinMax[chan1].minPrev = chansMinMax[chan1].min;
-                                chansMinMax[chan1].maxPrev = chansMinMax[chan1].max;
-                                chansMinMax[chan1].min = INT_MAX;
-                                chansMinMax[chan1].max = -INT_MIN;
-                                chansMinMax[chan1].isRepeatX = false;
-                                chansMinMax[chan1].n = 0;
+                                v1 = v1 - m_areases.at(iz)->average(chan1);
+                                v2 = v2 - m_areases.at(iz)->average(chan2);
+                            }
+                            int y1 = axisY - static_cast<int>((v1 - m_areases[iz]->minValue()) * prop);
+                            int y2 = axisY - static_cast<int>((v2 - m_areases[iz]->minValue()) * prop);
+
+                            if (x1 == x2)
+                            {
+                                if (y1 < chansMinMax[chan1].min) chansMinMax[chan1].min = y1;
+                                if (y2 < chansMinMax[chan1].min) chansMinMax[chan1].min = y2;
+                                if (y1 > chansMinMax[chan1].max) chansMinMax[chan1].max = y1;
+                                if (y2 > chansMinMax[chan1].max) chansMinMax[chan1].max = y2;
+                                ++chansMinMax[chan1].n;
                             }
                             else
-                                painter.drawLine(x1, y1, x2, y2);
-
-                        }
-                        chansMinMax[chan1].isRepeatX = x1 == x2;
-
-//                        painter.setPen(QPen(color, 1, Qt::SolidLine, Qt::FlatCap));
-//                        painter.drawLine(x1, y1, x2, y2);
-                    };
-
-                    //! Межканальная заливка. Только для первых двух каналов
-                    if (m_areases.at(iz)->isFillBetweenSubchans())
-                        drawLine(0, 1, m_envColors.colorFillBetweenSubchans);
-
-                    //! Все подканалы
-                    if (m_areases.at(iz)->numSubChan() == -1)
-                        //! По подканалам
-                        for (int j = 0; j < m_areases.at(iz)->signal()->subChansCount(); ++j)
-                            drawLine(j, j, m_areases.at(iz)->color(j));
-                    else
-                    //! Только выбранный подканал
-                    if (m_areases.at(iz)->numSubChan() >= 0 &&
-                        m_areases.at(iz)->numSubChan() < m_areases.at(iz)->signal()->subChansCount())
-                        drawLine(m_areases.at(iz)->numSubChan(),
-                                 m_areases.at(iz)->numSubChan(),
-                                 m_areases.at(iz)->color(m_areases.at(iz)->numSubChan()));
-
-                    //! Секундные метки
-                    if (iz == 0)
-                    {
-                        if (i != 0)
-                        {
-                            if ((ls == lsOne && i % m_areases.at(iz)->signal()->frequency() == 0) ||
-                                (ls == lsFive && i % (m_areases.at(iz)->signal()->frequency() * 5) == 0) ||
-                                (ls == lsTen && i % (m_areases.at(iz)->signal()->frequency() * 10) == 0) ||
-                                (ls == lsSixty && i % (m_areases.at(iz)->signal()->frequency() * 60) == 0) ||
-                                (ls == lsMinutesFive && i % (m_areases.at(iz)->signal()->frequency() * 300) == 0) ||
-                                (ls == lsMinutesTen && i % (m_areases.at(iz)->signal()->frequency() * 600) == 0))
                             {
-                                painter.setPen(QPen(m_envColors.colorGrid, 1, Qt::DotLine, Qt::FlatCap));
-                                painter.drawLine(x1, TopSpace, x1, height() - BottomSpace);
-                                QString s = "";
-                                if (m_areases.at(iz)->signal()->size() <= 60 * m_areases.at(iz)->signal()->frequency())
-                                    s = QString::number(i / m_areases.at(iz)->signal()->frequency());
+                                painter.setPen(QPen(color, 1, Qt::SolidLine, Qt::FlatCap));
+                                if (chansMinMax[chan1].isRepeatX)
+                                {
+                                    painter.drawLine(x1, chansMinMax[chan1].min, x1, chansMinMax[chan1].max);
+                                    if (chansMinMax[chan1].minPrev != INT_MAX)
+                                    {
+                                        if (chansMinMax[chan1].max < chansMinMax[chan1].minPrev)
+                                            painter.drawLine(x1 - 1, chansMinMax[chan1].minPrev, x1, chansMinMax[chan1].max);
+                                        else
+                                        if (chansMinMax[chan1].min > chansMinMax[chan1].maxPrev)
+                                            painter.drawLine(x1 - 1, chansMinMax[chan1].maxPrev, x1, chansMinMax[chan1].min);
+                                    }
+                                    chansMinMax[chan1].minPrev = chansMinMax[chan1].min;
+                                    chansMinMax[chan1].maxPrev = chansMinMax[chan1].max;
+                                    chansMinMax[chan1].min = INT_MAX;
+                                    chansMinMax[chan1].max = -INT_MIN;
+                                    chansMinMax[chan1].isRepeatX = false;
+                                    chansMinMax[chan1].n = 0;
+                                }
                                 else
-                                    s = BaseUtils::getTimeBySecCount(i / m_areases.at(iz)->signal()->frequency());
-                                auto size = BaseUtils::getTextSize(&painter, s);
-                                painter.setPen(QPen(m_envColors.colorAxis, 1, Qt::SolidLine, Qt::FlatCap));
-                                painter.drawText(x1 - size.width() / 2, height() - BottomSpace + size.height() + 1, s);
+                                    painter.drawLine(x1, y1, x2, y2);
+
                             }
+                            chansMinMax[chan1].isRepeatX = x1 == x2;
+
+    //                        painter.setPen(QPen(color, 1, Qt::SolidLine, Qt::FlatCap));
+    //                        painter.drawLine(x1, y1, x2, y2);
+                        };
+
+                        //! Межканальная заливка. Только для первых двух каналов
+                        if (m_areases.at(iz)->isFillBetweenSubchans())
+                            drawLine(0, 1, m_envColors.colorFillBetweenSubchans);
+
+                        //! Все подканалы
+                        if (m_areases.at(iz)->numSubChan() == -1)
+                            //! По подканалам
+                            for (int j = 0; j < m_areases.at(iz)->signal()->subChansCount(); ++j)
+                                drawLine(j, j, m_areases.at(iz)->color(j));
+                        else
+                        //! Только выбранный подканал
+                        if (m_areases.at(iz)->numSubChan() >= 0 &&
+                            m_areases.at(iz)->numSubChan() < m_areases.at(iz)->signal()->subChansCount())
+                            drawLine(m_areases.at(iz)->numSubChan(),
+                                     m_areases.at(iz)->numSubChan(),
+                                     m_areases.at(iz)->color(m_areases.at(iz)->numSubChan()));
+
+                    }
+
+                    x1 = x2;
+                }
+
+                //! Секундные метки
+                if (iz == 0)
+                {
+                    if (i != 0)
+                    {
+                        if ((ls == lsOne && i % m_areases.at(iz)->signal()->frequency() == 0) ||
+                            (ls == lsFive && i % (m_areases.at(iz)->signal()->frequency() * 5) == 0) ||
+                            (ls == lsTen && i % (m_areases.at(iz)->signal()->frequency() * 10) == 0) ||
+                            (ls == lsSixty && i % (m_areases.at(iz)->signal()->frequency() * 60) == 0) ||
+                            (ls == lsMinutesFive && i % (m_areases.at(iz)->signal()->frequency() * 300) == 0) ||
+                            (ls == lsMinutesTen && i % (m_areases.at(iz)->signal()->frequency() * 600) == 0))
+                        {
+                            painter.setPen(QPen(m_envColors.colorGrid, 1, Qt::DotLine, Qt::FlatCap));
+                            painter.drawLine(x1, TopSpace, x1, height() - BottomSpace);
+                            QString s = "";
+                            if (m_areases.at(iz)->signal()->size() <= 60 * m_areases.at(iz)->signal()->frequency())
+                                s = QString::number(i / m_areases.at(iz)->signal()->frequency());
+                            else
+                                s = BaseUtils::getTimeBySecCount(i / m_areases.at(iz)->signal()->frequency());
+                            auto size = BaseUtils::getTextSize(&painter, s);
+                            painter.setPen(QPen(m_envColors.colorAxis, 1, Qt::SolidLine, Qt::FlatCap));
+                            painter.drawText(x1 - size.width() / 2, height() - BottomSpace + size.height() + 1, s);
                         }
                     }
                 }
