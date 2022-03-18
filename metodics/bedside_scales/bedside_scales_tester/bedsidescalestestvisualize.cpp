@@ -3,6 +3,7 @@
 
 #include <QFileDialog>
 #include <QTextStream>
+#include <QDebug>
 
 #include "bedsidescalestestcalculator.h"
 #include "baseutils.h"
