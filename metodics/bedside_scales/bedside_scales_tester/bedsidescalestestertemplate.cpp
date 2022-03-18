@@ -7,6 +7,7 @@
 
 #include "bedsidescalestesterparamsdialog.h"
 #include "bedsidescalestesterexecute.h"
+#include "bedsidescalestestvisualize.h"
 
 BedsideScalesTesterTemplate::BedsideScalesTesterTemplate(QObject *parent)
     : MetodicTemplate(parent)
@@ -34,12 +35,15 @@ QWidget *BedsideScalesTesterTemplate::execute(QWidget *parent, const QJsonObject
 
 QWidget *BedsideScalesTesterTemplate::visualize(QWidget *parent, const QString &testUid)
 {
-    return nullptr;
+    auto *retval = new BedsideScalesTestVisualize(parent);
+    parent->layout()->addWidget(retval);
+    retval->setTest(testUid);
+    return retval;
 }
 
 void BedsideScalesTesterTemplate::print(QPrinter *printer, const QString &testUid)
 {
-
+    BedsideScalesTestVisualize::print(printer, testUid);
 }
 
 bool BedsideScalesTesterTemplate::editParams(QWidget *parent, QJsonObject &params)

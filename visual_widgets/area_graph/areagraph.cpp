@@ -283,6 +283,8 @@ void AreaGraph::paintEvent(QPaintEvent *event)
                     offset = 1;
             }
 
+            bool isHour = m_areases.at(iz)->signal()->size() / m_areases.at(iz)->signal()->frequency() > 6000;
+
             m_areases.at(iz)->setStep(step);
             //! Определение шага секундных меток
             double stepMark = step * m_areases.at(iz)->signal()->frequency();
@@ -465,7 +467,7 @@ void AreaGraph::paintEvent(QPaintEvent *event)
                             if (m_areases.at(iz)->signal()->size() <= 60 * m_areases.at(iz)->signal()->frequency())
                                 s = QString::number(i / m_areases.at(iz)->signal()->frequency());
                             else
-                                s = BaseUtils::getTimeBySecCount(i / m_areases.at(iz)->signal()->frequency());
+                                s = BaseUtils::getTimeBySecCount(i / m_areases.at(iz)->signal()->frequency(), isHour);
                             auto size = BaseUtils::getTextSize(&painter, s);
                             painter.setPen(QPen(m_envColors.colorAxis, 1, Qt::SolidLine, Qt::FlatCap));
                             painter.drawText(x1 - size.width() / 2, height() - BottomSpace + size.height() + 1, s);
