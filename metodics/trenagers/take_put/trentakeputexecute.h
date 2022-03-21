@@ -42,6 +42,8 @@ struct SoundSheme
     QString onTarget;
 };
 
+class TakePutResultData;
+
 /*!
  * \brief Класс виджета проведения сеанса тренинга TrenagerExecute class
  */
@@ -247,6 +249,8 @@ private:
     QSet<int> m_filesUsed;   ///< Номера файлов, которые уже использовались
 
     QList<QGraphicsItem*> m_tempElements;
+
+    TakePutResultData* m_takePutResData {nullptr};
 };
 
 

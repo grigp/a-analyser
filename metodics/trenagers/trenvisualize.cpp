@@ -40,14 +40,18 @@ void TrenVisualize::setTest(const QString &testUid)
     {
         auto factorUid = m_calculator->factor(i).uid();
         auto fi = static_cast<AAnalyserApplication*>(QApplication::instance())->getFactorInfo(factorUid);
-        auto itemName = new QStandardItem(fi.name());
+        QString s = "";
+        if (fi.measure() != "")
+            s = ", " + fi.measure();
+        auto itemName = new QStandardItem(fi.name() + s);
         itemName->setEditable(false);
         QString sval = "";
         //! Время обрабатываем отдельно
         if (m_calculator->factor(i).uid() == TrenResultFactorsDefines::TimeUid)
             sval = BaseUtils::getTimeBySecCount(static_cast<int>(m_calculator->factor(i).value()));
         else
-            sval = QString::number(m_calculator->factor(i).value());
+            sval =  QString::number(m_calculator->factor(i).value(), 'f', fi.format());
+
         auto itemValue = new QStandardItem(sval);
         itemValue->setEditable(false);
 

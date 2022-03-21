@@ -157,6 +157,10 @@ ChannelsUtils::ChannelsUtils()
                                                                     std::make_tuple(QString("Результаты сеанса тренинга"),
                                                                                     QString("TrenRes"),
                                                                                     ChannelsDefines::ctTrenResult))
+                 , std::pair<QString, ChannelsDefines::ChannelInfo>(ChannelsDefines::chanTakePutResult,
+                                                                    std::make_tuple(QString("Результаты захвата - укладки"),
+                                                                                    QString("TakePutRes"),
+                                                                                    ChannelsDefines::ctTakePutResult))
                  , std::pair<QString, ChannelsDefines::ChannelInfo>(ChannelsDefines::chanCrossResult,
                                                                     std::make_tuple(QString("Результаты теста на устойчивость"),
                                                                                     QString("CrossRes"),

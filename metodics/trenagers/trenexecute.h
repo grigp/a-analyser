@@ -19,6 +19,7 @@ class TestResultData;
 class TrenagerPatientWindow;
 class SettingsValue;
 class VideoIrritant;
+class ChannelData;
 
 /*!
  * \brief Базовый класс тренажеров с получением данных от устройства TrenExecute class
@@ -263,6 +264,8 @@ protected:
     bool isAdvancedChannelAboveBoundNow(const int chan, const bool isCommonAllowing = true);
 
     virtual QString getAutoSaveParamsSectionName() const {return "Trenager";}
+
+    void addChannel(ChannelData *channel);
 
 private slots:
     void getData(DeviceProtocols::DeviceData *data);

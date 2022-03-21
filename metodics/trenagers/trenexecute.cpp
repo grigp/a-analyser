@@ -633,3 +633,9 @@ bool TrenExecute::isAdvancedChannelAboveBoundNow(const int chan, const bool isCo
         return false;
 
 }
+
+void TrenExecute::addChannel(ChannelData *channel)
+{
+    if (m_trd)
+        m_trd->addChannel(channel);
+}

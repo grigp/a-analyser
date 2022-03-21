@@ -10,6 +10,7 @@
 #include "settingsprovider.h"
 #include "testresultdata.h"
 #include "trenresultdata.h"
+#include "takeputresultdata.h"
 #include "trenresultfactors.h"
 
 #include <QTimer>
@@ -29,6 +30,7 @@
 TrenTakePutExecute::TrenTakePutExecute(QWidget *parent) :
     TrenStabExecute(parent),
     ui(new Ui::TrenTakePutExecute)
+  , m_takePutResData(new TakePutResultData(ChannelsDefines::chanTakePutResult))
 {
     ui->setupUi(this);
 
@@ -340,6 +342,7 @@ void TrenTakePutExecute::on_recording()
 {
     TrenStabExecute::on_recording();
 
+    m_takePutResData->clear();
     setTemporaryElements();
     m_gameStage = TrenTakePutDefines::gsTake;
     m_errorsCount = 0;
@@ -655,6 +658,7 @@ void TrenTakePutExecute::fixingTake()
 {
     m_elementTake->setZValue(zlvlTakeElements);
     m_gameStage = TrenTakePutDefines::gsPut;
+    m_takePutResData->addEvent(recCount(), TakePutResultData::tpkTake);
     if (m_soundSheme.ok != "")
     {
         m_player.setMedia(QUrl("qrc:/sound/" + m_soundSheme.ok));
@@ -673,6 +677,7 @@ void TrenTakePutExecute::fixingStage()
     }
 
     m_gameStage = TrenTakePutDefines::gsTake;
+    m_takePutResData->addEvent(recCount(), TakePutResultData::tpkPut);
     m_elementTake->setProcessed(true);
     if (m_elementTake->elementInfo()->style != GraphicCommon::esPictureSplit)
     {
@@ -721,6 +726,7 @@ void TrenTakePutExecute::fixingError()
         changeErrors(1);
         changeGameScore(-1);
         m_isError = true;
+        m_takePutResData->addEvent(recCount(), TakePutResultData::tpkError);
         if (m_soundSheme.error != "")
         {
             m_player.setMedia(QUrl("qrc:/sound/" + m_soundSheme.error));
@@ -993,6 +999,8 @@ GraphicCommon::GameElement *TrenTakePutExecute::markerOnGameElement()
 
 void TrenTakePutExecute::finishTest()
 {
+    addChannel(m_takePutResData);
+
     //! Добавляем значение специфического показателя для подкласса TrenTakePutExecute: количество ошибок
     addFactorValue(TrenResultFactorsDefines::FaultsUid, m_errorsCount);
 

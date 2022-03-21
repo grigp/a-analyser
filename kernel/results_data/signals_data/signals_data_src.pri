@@ -21,7 +21,8 @@ HEADERS += \
     $$PWD/boxerdodgingresultdata.h \
     $$PWD/triangleresultdata.h \
     $$PWD/balistogram.h \
-    $$PWD/weightplatesignal.h
+    $$PWD/weightplatesignal.h \
+    $$PWD/takeputresultdata.h
 
 SOURCES += \
     $$PWD/signaldata.cpp \
@@ -44,4 +45,5 @@ SOURCES += \
     $$PWD/boxerdodgingresultdata.cpp \
     $$PWD/triangleresultdata.cpp \
     $$PWD/balistogram.cpp \
-    $$PWD/weightplatesignal.cpp
+    $$PWD/weightplatesignal.cpp \
+    $$PWD/takeputresultdata.cpp
