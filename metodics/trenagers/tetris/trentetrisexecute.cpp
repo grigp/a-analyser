@@ -11,6 +11,7 @@
 #include "channelsutils.h"
 #include "settingsprovider.h"
 #include "trenresultdata.h"
+#include "takeputresultdata.h"
 #include "trenresultfactors.h"
 #include "tetrisglass.h"
 #include "tetrisfigure.h"
@@ -61,8 +62,10 @@ QList<QVector<QVector<QColor>>> OneCube = {{{Qt::white}}};
 TrenTetrisExecute::TrenTetrisExecute(QWidget *parent) :
     TrenStabExecute (parent),
     ui(new Ui::TrenTetrisExecute)
+  , m_takePutResData(new TakePutResultData(ChannelsDefines::chanTakePutResult))
 {
     ui->setupUi(this);
+
 }
 
 TrenTetrisExecute::~TrenTetrisExecute()
@@ -118,6 +121,7 @@ void TrenTetrisExecute::on_recording()
 {
     TrenStabExecute::on_recording();
 
+    m_takePutResData->clear();
     m_glass->clear();
     m_tmStage = TrenTetrisDefines::tmsTake;
     m_rowsDeleted = 0;
@@ -217,6 +221,7 @@ void TrenTetrisExecute::takeModeInteraction(double &mx, double &my)
             m_offsY = mys - fig.center().y();
             m_tmStage = TrenTetrisDefines::tmsPut;
             m_marker->setVisible(false);
+            m_takePutResData->addEvent(recCount(), TakePutResultData::tpkTake);
 
             if (m_soundSheme.take != "")
             {
@@ -245,6 +250,7 @@ void TrenTetrisExecute::takeModeInteraction(double &mx, double &my)
             m_nextFigure = newFigure();
             m_marker->setVisible(true);
 
+            m_takePutResData->addEvent(recCount(), TakePutResultData::tpkPut);
             if (m_soundSheme.put != "")
             {
                 m_player.setMedia(QUrl("qrc:/sound/" + m_soundSheme.put));
@@ -397,6 +403,11 @@ void TrenTetrisExecute::fillGameHints(QFrame *frame)
 
 void TrenTetrisExecute::finishTest()
 {
+    m_takePutResData->setIsEnabledErrors(false);
+    m_takePutResData->setIsEnabledTake(m_movingMode == TrenTetrisDefines::mmTake);
+    m_takePutResData->setIsEnabledPut(m_movingMode == TrenTetrisDefines::mmTake);
+    addChannel(m_takePutResData);
+
     //! Добавляем значение специфического показателя для подкласса TrenTakePutExecute: время игры и количество удаленных строк
     addFactorValue(TrenResultFactorsDefines::TimeUid, recCount() / frequency());
     addFactorValue(TrenResultFactorsDefines::RowsDeletedUid, m_rowsDeleted);

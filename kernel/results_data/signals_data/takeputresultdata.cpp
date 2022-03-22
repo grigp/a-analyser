@@ -14,7 +14,7 @@ TakePutResultData::TakePutResultData(const QByteArray &data)
     fromByteArray(data);
 }
 
-int TakePutResultData::size() const
+int TakePutResultData::eventCount() const
 {
     auto arr = data()["events"].toArray();
     return arr.size();
@@ -45,5 +45,50 @@ void TakePutResultData::addEvent(const int counter, const TakePutResultData::Kin
     arr.append(objEvent);
 
     obj["events"] = arr;
+    setData(obj);
+}
+
+bool TakePutResultData::isEnabledTake() const
+{
+    auto permis = data()["permissions"].toObject();
+    return permis["take"].toBool(true);
+}
+
+void TakePutResultData::setIsEnabledTake(const bool isEnabled)
+{
+    QJsonObject obj = data();
+    auto permis = obj["permissions"].toObject();
+    permis["take"] = isEnabled;
+    obj["permissions"] = permis;
+    setData(obj);
+}
+
+bool TakePutResultData::isEnabledPut() const
+{
+    auto permis = data()["permissions"].toObject();
+    return permis["put"].toBool(true);
+}
+
+void TakePutResultData::setIsEnabledPut(const bool isEnabled)
+{
+    QJsonObject obj = data();
+    auto permis = obj["permissions"].toObject();
+    permis["put"] = isEnabled;
+    obj["permissions"] = permis;
+    setData(obj);
+}
+
+bool TakePutResultData::isEnabledErrors() const
+{
+    auto permis = data()["permissions"].toObject();
+    return permis["errors"].toBool(true);
+}
+
+void TakePutResultData::setIsEnabledErrors(const bool isEnabled)
+{
+    QJsonObject obj = data();
+    auto permis = obj["permissions"].toObject();
+    permis["errors"] = isEnabled;
+    obj["permissions"] = permis;
     setData(obj);
 }

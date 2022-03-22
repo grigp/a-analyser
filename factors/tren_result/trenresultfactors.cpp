@@ -64,7 +64,7 @@ void TrenResultFactors::calculate()
             cntEvents[i] = 0;
         }
         TakePutResultData data(baData);
-        for (int i = 0; i < data.size(); ++i)
+        for (int i = 0; i < data.eventCount(); ++i)
         {
             auto event = data.event(i);
             double len = 0;
@@ -103,12 +103,18 @@ void TrenResultFactors::calculate()
             valLE = midLen[TakePutResultData::tpkError] / cntEvents[TakePutResultData::tpkError];
             valSE = midSpeed[TakePutResultData::tpkError] / cntEvents[TakePutResultData::tpkError];
         }
-        addFactor(TrenResultFactorsDefines::TakeStageTime, valLT);
-        addFactor(TrenResultFactorsDefines::PutStageTime, valLP);
-        addFactor(TrenResultFactorsDefines::ErrorStageTime, valLE);
-        addFactor(TrenResultFactorsDefines::TakeStageSpeed, valST);
-        addFactor(TrenResultFactorsDefines::PutStageSpeed, valSP);
-        addFactor(TrenResultFactorsDefines::ErrorStageSpeed, valSE);
+        if (data.isEnabledTake())
+            addFactor(TrenResultFactorsDefines::TakeStageTime, valLT);
+        if (data.isEnabledPut())
+            addFactor(TrenResultFactorsDefines::PutStageTime, valLP);
+        if (data.isEnabledErrors())
+            addFactor(TrenResultFactorsDefines::ErrorStageTime, valLE);
+        if (data.isEnabledTake())
+            addFactor(TrenResultFactorsDefines::TakeStageSpeed, valST);
+        if (data.isEnabledPut())
+            addFactor(TrenResultFactorsDefines::PutStageSpeed, valSP);
+        if (data.isEnabledErrors())
+            addFactor(TrenResultFactorsDefines::ErrorStageSpeed, valSE);
 
         m_isTakePutExists = true;
     }

@@ -43,7 +43,7 @@ public:
     /*!
      * \brief Возвращает кол-во событий в канале
      */
-    int size() const;
+    int eventCount() const;
 
     /*!
      * \brief Возвращает данные о событии из канала по номеру события
@@ -56,6 +56,15 @@ public:
      * \param kind - тип события
      */
     void addEvent(const int counter, const Kind kind);
+
+    bool isEnabledTake() const;
+    void setIsEnabledTake(const bool isEnabled);
+
+    bool isEnabledPut() const;
+    void setIsEnabledPut(const bool isEnabled);
+
+    bool isEnabledErrors() const;
+    void setIsEnabledErrors(const bool isEnabled);
 };
 
 /*
@@ -66,10 +75,18 @@ public:
       "events": [
           {
               "counter": 201,
-              "kind": "take"    // "take", "put", "error"
+              "kind": 0    // 0 - take, 1 - put, 2 - error
           },
           ....
-      ]
+      ],
+      "permissions":
+      {
+          "take": true,
+          "put": true,
+          "errors": true
+      }
+
+
   }
 
 

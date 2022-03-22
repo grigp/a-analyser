@@ -28,6 +28,7 @@ struct SoundSheme
 
 
 class TetrisGlass;
+class TakePutResultData;
 
 namespace Ui {
 class TrenTetrisExecute;
@@ -229,6 +230,7 @@ private:
 
     QMediaPlayer m_player;
     SoundSheme m_soundSheme;
+    TakePutResultData* m_takePutResData {nullptr};
 };
 
 #endif // TRENTETRISEXECUTE_H

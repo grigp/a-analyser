@@ -999,6 +999,7 @@ GraphicCommon::GameElement *TrenTakePutExecute::markerOnGameElement()
 
 void TrenTakePutExecute::finishTest()
 {
+    m_takePutResData->setIsEnabledPut(!(m_zonesPut.size() == 0 && m_elementsPut.size() == 0));
     addChannel(m_takePutResData);
 
     //! Добавляем значение специфического показателя для подкласса TrenTakePutExecute: количество ошибок
