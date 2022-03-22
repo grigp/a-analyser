@@ -34,6 +34,7 @@ bool TrenResultFactors::isValid(const QString &testUid, const QString &probeUid,
 
 void TrenResultFactors::calculate()
 {
+    //! Основные показатели тренажеров
     QByteArray baData;
     if (DataProvider::getChannel(probeUid(), channelId(), baData))
     {
@@ -45,11 +46,13 @@ void TrenResultFactors::calculate()
         }
     }
 
+    //! Показатели захвата - укладки
     baData.clear();
     if (DataProvider::getChannel(probeUid(), ChannelsDefines::chanTakePutResult, baData))
     {
         getSignal();
 
+        //! Расчет средних длительности и скорости
         int prevCnt = 0;
         double midLen[3];
         double midSpeed[3];
@@ -64,8 +67,9 @@ void TrenResultFactors::calculate()
         for (int i = 0; i < data.size(); ++i)
         {
             auto event = data.event(i);
-            qDebug() << event.counter << event.kind;
-            double len = (event.counter - prevCnt) / m_freqency;
+            double len = 0;
+            if (event.counter - prevCnt >= 10)
+                len = static_cast<double>(event.counter - prevCnt) / m_freqency;
             auto speed = getSpeed(prevCnt, event.counter);
 
             midLen[event.kind] += len;
@@ -75,6 +79,7 @@ void TrenResultFactors::calculate()
             prevCnt = event.counter;
         }
 
+        //! Запись показателей
         double valLT = 0;
         double valST = 0;
         if (cntEvents[TakePutResultData::tpkTake] > 0)
