@@ -8,13 +8,12 @@
 DynamicDataModel::DynamicDataModel(QObject *parent)
     : QStandardItemModel(parent)
 {
-
 }
 
 void DynamicDataModel::addTestData(const QList<FactorsDefines::FactorValueAdvanced> &factors,
                                    const QString &testUid, const QDateTime &dt)
 {
-    //! Для нулквой колонки - названия показателей
+    //! Для нулевой колонки - названия показателей
     if (columnCount() == 0)
     {
         QList<QStandardItem*> column;
@@ -48,7 +47,7 @@ void DynamicDataModel::addTestData(const QList<FactorsDefines::FactorValueAdvanc
         column << item;
     }
 
-    auto *headerItem = new QStandardItem(dt.toString("dd.MM.yyyy hh:mm"));
+    auto *headerItem = new QStandardItem("\n" + dt.toString("dd.MM.yyyy hh:mm"));
     headerItem->setEditable(false);
     headerItem->setData(dt, DateTimeRole);
     headerItem->setData(testUid, TestUidRole);
@@ -64,6 +63,19 @@ void DynamicDataModel::addTestData(const QList<FactorsDefines::FactorValueAdvanc
         insertColumn(colNum, column);
         setHorizontalHeaderItem(colNum, headerItem);
     }
+}
+
+void DynamicDataModel::clear()
+{
+    QStandardItemModel::clear();
+    m_testCounter = 0;
+}
+
+QVariant DynamicDataModel::headerData(int section, Qt::Orientation orientation, int role) const
+{
+    if (role == Qt::DisplayRole && section > 0)
+        return tr("Тест") + " " + QString::number(section) + " " + QStandardItemModel::headerData(section, orientation, role).toString();
+    return QStandardItemModel::headerData(section, orientation, role);
 }
 
 int DynamicDataModel::getColumnNumberByDateTimeTest(const QDateTime &dt) const

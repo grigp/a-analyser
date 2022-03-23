@@ -129,14 +129,14 @@ void DynamicAutoWidget::on_selectItem(const int idx)
     {
         auto testUid = m_mdlDynamic->headerData(idx + 1, Qt::Horizontal, DynamicDataModel::TestUidRole).toString();
         static_cast<AAnalyserApplication*>(QApplication::instance())->doSelectTest(testUid);
-
         auto dt = m_mdlDynamic->horizontalHeaderItem(idx + 1)->data(DynamicDataModel::DateTimeRole).toDateTime();
+        auto value = m_mdlDynamic->item(m_selectRow, idx + 1)->data(DynamicDataModel::ValueRole).toDouble();
         QString sdt = dt.toString("dd.MM.yyyy hh:mm");
         if (sdt != "")
             sdt = QString("(%1)").arg(sdt);
         else
             sdt = "";
-        ui->wgtDynamic->setBottomText(QString(tr("Обследования") + " " + sdt));
+        ui->wgtDynamic->setBottomText(QString(tr("Тест") + " " + sdt + " - " + QString::number(value)));
     }
 }
 
@@ -172,7 +172,7 @@ void DynamicAutoWidget::fillTable()
                 if (factors.size() > 0)
                 {
                     m_mdlDynamic->addTestData(factors, ti.uid, ti.dateTime);
-                    m_tests.insert(ti.uid);
+                    m_tests.append(ti.uid);
                 }
             }
         }
@@ -212,13 +212,20 @@ void DynamicAutoWidget::showGraph(const int row)
     for (int i = 1; i < m_mdlDynamic->columnCount(); ++i)
     {
         auto value = m_mdlDynamic->item(row, i)->data(DynamicDataModel::ValueRole).toDouble();
-//        auto dt = m_mdlDynamic->horizontalHeaderItem(i)->data(DynamicDataModel::DateTimeRole).toDateTime();
-//        auto di = new DiagItem(value, dt.toString("dd.MM.yyyy hh:mm"));
-        auto di = new DiagItem(value, QString::number(i));
-        ui->wgtDynamic->appendItem(di);
+        if (m_mdlDynamic->columnCount() <= 10)
+        {
+            auto dt = m_mdlDynamic->horizontalHeaderItem(i)->data(DynamicDataModel::DateTimeRole).toDateTime();
+            auto di = new DiagItem(value, dt.toString("dd.MM.yyyy hh:mm"));
+            ui->wgtDynamic->appendItem(di);
+        }
+        else
+        {
+            auto di = new DiagItem(value, QString::number(i));
+            ui->wgtDynamic->appendItem(di);
+        }
     }
 
-    ui->wgtDynamic->setBottomText(QString(tr("Обследования")));
+    ui->wgtDynamic->setBottomText(QString(tr("Тесты")));
 }
 
 void DynamicAutoWidget::saveDynamicKind(const int kindCode) const

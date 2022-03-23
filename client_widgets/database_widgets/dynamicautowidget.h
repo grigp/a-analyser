@@ -70,7 +70,7 @@ private:
     QString m_selectedPatientUid {""};
     QString m_selectedMetodicUid {""};
     int m_selectRow {-1};
-    QSet<QString> m_tests; ///< uid-ы тестов, участвующих в построении динамики
+    QList<QString> m_tests; ///< uid-ы тестов, участвующих в построении динамики
 };
 
 #endif // DYNAMICAUTOWIDGET_H

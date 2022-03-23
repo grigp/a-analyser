@@ -324,9 +324,16 @@ void DynamicDiagram::paintEvent(QPaintEvent *event)
             oy = yv;
         }
 
+        auto so = BaseUtils::getTextSize(&painter, "9999");
         auto size = BaseUtils::getTextSize(&painter, m_items.at(i)->name());
         painter.setPen(QPen(m_titleColor, 1, Qt::SolidLine, Qt::FlatCap));
-        painter.drawText(xv - size.width() / 2, geometry().height() - m_axisSpaceBottom + size.height(), m_items.at(i)->name());
+        if (so.width() < m_sizeH)
+            painter.drawText(xv - size.width() / 2, geometry().height() - m_axisSpaceBottom + size.height(), m_items.at(i)->name());
+        else
+        {
+            if ((i+1) % 5 == 0)
+                painter.drawText(xv - size.width() / 2, geometry().height() - m_axisSpaceBottom + size.height(), m_items.at(i)->name());
+        }
     }
 
     painter.restore();

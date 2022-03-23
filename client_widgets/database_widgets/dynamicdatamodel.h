@@ -45,8 +45,15 @@ public:
     void addTestData(const QList<FactorsDefines::FactorValueAdvanced> &factors,
                      const QString &testUid, const QDateTime &dt);
 
+    void clear();
+
+    QVariant headerData(int section, Qt::Orientation orientation,
+                        int role = Qt::DisplayRole) const override;
+
 private:
     int getColumnNumberByDateTimeTest(const QDateTime &dt) const;
+
+    int m_testCounter {0};
 };
 
 #endif // DYNAMICDATAMODEL_H
