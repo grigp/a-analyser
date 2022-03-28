@@ -2,6 +2,7 @@
 #include "ui_mainwindow.h"
 
 #include <QMessageBox>
+#include <QDateTime>
 #include <QDebug>
 
 #include "kerdoapplication.h"
@@ -9,6 +10,7 @@
 #include "patientsmodel.h"
 #include "patientsproxymodel.h"
 #include "dataprovider.h"
+#include "dynamicdiagram.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -21,6 +23,10 @@ MainWindow::MainWindow(QWidget *parent) :
     m_pmdlPatients->setSourceModel(m_mdlPatients);
     ui->tvMans->setModel(m_pmdlPatients);
     ui->tvMans->sortByColumn(PatientsModel::ColFio, Qt::AscendingOrder);
+
+    connect(ui->wgtKerdo, &DynamicDiagram::selectItem, this, &MainWindow::selectItem);
+    connect(ui->wgtPulse, &DynamicDiagram::selectItem, this, &MainWindow::selectItem);
+    connect(ui->wgtDAD, &DynamicDiagram::selectItem, this, &MainWindow::selectItem);
 }
 
 MainWindow::~MainWindow()
@@ -140,7 +146,83 @@ void MainWindow::editMan()
 
 void MainWindow::selectPatient(QModelIndex index)
 {
-    auto uid = index.model()->index(index.row(), 0, index.parent()).data(PatientsModel::PatientUidRole).toString();
-    auto tests = DataProvider::getTests(uid);
-    qDebug() << tests;
+    m_uidCurPatient = index.model()->index(index.row(), 0, index.parent()).data(PatientsModel::PatientUidRole).toString();
+    redrawDiag();
+}
+
+void MainWindow::selectItem(const int idx)
+{
+    auto tests = DataProvider::getTests(m_uidCurPatient);
+    if (idx >= 0 && idx < tests.size())
+        m_uidCurTest = tests.at(idx);
+
+    ui->wgtKerdo->doSelectItem(idx);
+    ui->wgtPulse->doSelectItem(idx);
+    ui->wgtDAD->doSelectItem(idx);
+
+    ui->edBeforePulse->setValue(static_cast<int>(ui->wgtPulse->value(idx, 0)));
+    ui->edAfterPulse->setValue(static_cast<int>(ui->wgtPulse->value(idx, 1)));
+    ui->edBeforeDAD->setValue(static_cast<int>(ui->wgtDAD->value(idx, 0)));
+    ui->edAfterDAD->setValue(static_cast<int>(ui->wgtDAD->value(idx, 1)));
+}
+
+void MainWindow::btnNewClick()
+{
+    if (m_uidCurPatient != "")
+    {
+        m_uidCurTest = DataProvider::addTest(m_uidCurPatient);
+        redrawDiag();
+        auto tests = DataProvider::getTests(m_uidCurPatient);
+        selectItem(tests.size() - 1);
+    }
+}
+
+void MainWindow::btnUpdateClick()
+{
+    if (m_uidCurPatient != "" && m_uidCurTest != "")
+    {
+        DataDefines::Result result;
+        result.beforePulse = ui->edBeforePulse->value();
+        result.beforeDAD = ui->edBeforeDAD->value();
+        if (result.beforePulse > 0)
+            result.beforeKerdo = 100 * (1 - static_cast<double>(result.beforeDAD) / static_cast<double>(result.beforePulse));
+        result.afterPulse = ui->edAfterPulse->value();
+        result.afterDAD = ui->edAfterDAD->value();
+        if (result.afterPulse > 0)
+            result.afterKerdo = 100 * (1 - static_cast<double>(result.afterDAD) / static_cast<double>(result.afterPulse));
+
+        DataProvider::setTestResult(m_uidCurPatient, m_uidCurTest, result);
+        redrawDiag();
+    }
+}
+
+void MainWindow::redrawDiag()
+{
+    auto tests = DataProvider::getTests(m_uidCurPatient);
+
+    ui->wgtKerdo->clear();
+    ui->wgtPulse->clear();
+    ui->wgtDAD->clear();
+
+    ui->wgtKerdo->setTitle(tr("Индекс Кердо"));
+    ui->wgtPulse->setTitle(tr("Пульс"));
+    ui->wgtDAD->setTitle(tr("Диастолическое артериальное давление"));
+    ui->wgtKerdo->setDiap(-60, 60);
+
+    foreach (auto uidTest, tests)
+    {
+        DataDefines::Result test;
+        if (DataProvider::getTest(m_uidCurPatient, uidTest, test))
+        {
+            ui->wgtKerdo->appendItem(new DiagItem(QList<double>() << test.beforeKerdo << test.afterKerdo, test.dateTime.toString("dd.MM.yyyy hh:mm")));
+            ui->wgtPulse->appendItem(new DiagItem(QList<double>() << test.beforePulse << test.afterPulse, test.dateTime.toString("dd.MM.yyyy hh:mm")));
+            ui->wgtDAD->appendItem(new DiagItem(QList<double>() << test.beforeDAD << test.afterDAD, test.dateTime.toString("dd.MM.yyyy hh:mm")));
+        }
+    }
+
+    ui->wgtKerdo->addValuesZone(30, 60, QColor(255, 150, 150));
+    ui->wgtKerdo->addValuesZone(15, 30, QColor(255, 200, 200));
+    ui->wgtKerdo->addValuesZone(-15, 15, QColor(255, 255, 100));
+    ui->wgtKerdo->addValuesZone(-30, -15, QColor(200, 255, 200));
+    ui->wgtKerdo->addValuesZone(-60, -30, QColor(150, 255, 150));
 }

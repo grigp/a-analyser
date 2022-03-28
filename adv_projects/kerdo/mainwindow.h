@@ -29,6 +29,10 @@ private slots:
     void editMan();
 
     void selectPatient(QModelIndex index);
+    void selectItem(const int idx);
+
+    void btnNewClick();
+    void btnUpdateClick();
 
 signals:
     void dataBaseChange(const QString &dataBaseFolder);
@@ -39,8 +43,13 @@ signals:
 private:
     Ui::MainWindow *ui;
 
+    void redrawDiag();
+
     PatientsModel *m_mdlPatients;
     PatientsProxyModel *m_pmdlPatients;
+
+    QString m_uidCurPatient {""};
+    QString m_uidCurTest {""};
 };
 
 #endif // MAINWINDOW_H

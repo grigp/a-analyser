@@ -35,7 +35,9 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 CONFIG += c++11
 
+include(kernel/kernel_src.pri)
 include(database/database_src.pri)
+include(visual_widgets/visual_widgets_src.pri)
 
 SOURCES += \
         main.cpp \

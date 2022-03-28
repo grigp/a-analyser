@@ -147,7 +147,14 @@
          </widget>
         </item>
         <item>
-         <widget class="QTreeView" name="tvMans"/>
+         <widget class="QTreeView" name="tvMans">
+          <property name="minimumSize">
+           <size>
+            <width>300</width>
+            <height>0</height>
+           </size>
+          </property>
+         </widget>
         </item>
        </layout>
       </widget>
@@ -437,7 +444,10 @@
           <property name="frameShadow">
            <enum>QFrame::Sunken</enum>
           </property>
-          <layout class="QVBoxLayout" name="verticalLayout_2">
+          <layout class="QVBoxLayout" name="verticalLayout_8">
+           <property name="spacing">
+            <number>3</number>
+           </property>
            <property name="leftMargin">
             <number>1</number>
            </property>
@@ -451,7 +461,89 @@
             <number>1</number>
            </property>
            <item>
-            <widget class="QWidget" name="wgtGraph" native="true"/>
+            <widget class="QSplitter" name="splitter_2">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+             <widget class="QFrame" name="frKerdo">
+              <property name="layoutDirection">
+               <enum>Qt::LeftToRight</enum>
+              </property>
+              <property name="frameShape">
+               <enum>QFrame::Panel</enum>
+              </property>
+              <property name="frameShadow">
+               <enum>QFrame::Sunken</enum>
+              </property>
+              <layout class="QVBoxLayout" name="verticalLayout_2">
+               <property name="leftMargin">
+                <number>0</number>
+               </property>
+               <property name="topMargin">
+                <number>0</number>
+               </property>
+               <property name="rightMargin">
+                <number>0</number>
+               </property>
+               <property name="bottomMargin">
+                <number>0</number>
+               </property>
+               <item>
+                <widget class="DynamicDiagram" name="wgtKerdo" native="true"/>
+               </item>
+              </layout>
+             </widget>
+             <widget class="QFrame" name="frPulse">
+              <property name="frameShape">
+               <enum>QFrame::Panel</enum>
+              </property>
+              <property name="frameShadow">
+               <enum>QFrame::Sunken</enum>
+              </property>
+              <layout class="QVBoxLayout" name="verticalLayout_9">
+               <property name="leftMargin">
+                <number>0</number>
+               </property>
+               <property name="topMargin">
+                <number>0</number>
+               </property>
+               <property name="rightMargin">
+                <number>0</number>
+               </property>
+               <property name="bottomMargin">
+                <number>0</number>
+               </property>
+               <item>
+                <widget class="DynamicDiagram" name="wgtPulse" native="true"/>
+               </item>
+              </layout>
+             </widget>
+             <widget class="QFrame" name="frDAD">
+              <property name="frameShape">
+               <enum>QFrame::Panel</enum>
+              </property>
+              <property name="frameShadow">
+               <enum>QFrame::Sunken</enum>
+              </property>
+              <layout class="QVBoxLayout" name="verticalLayout_10">
+               <property name="leftMargin">
+                <number>0</number>
+               </property>
+               <property name="topMargin">
+                <number>0</number>
+               </property>
+               <property name="rightMargin">
+                <number>0</number>
+               </property>
+               <property name="bottomMargin">
+                <number>0</number>
+               </property>
+               <item>
+                <widget class="DynamicDiagram" name="wgtDAD" native="true"/>
+               </item>
+              </layout>
+             </widget>
+            </widget>
            </item>
           </layout>
          </widget>
@@ -483,6 +575,14 @@
   <widget class="QStatusBar" name="statusBar"/>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>DynamicDiagram</class>
+   <extends>QWidget</extends>
+   <header location="global">dynamicdiagram.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources>
   <include location="kerdo.qrc"/>
  </resources>
@@ -567,11 +667,45 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>btnUpdate</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>btnUpdateClick()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>874</x>
+     <y>63</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1254</x>
+     <y>26</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btnNewTest</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>btnNewClick()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>239</x>
+     <y>60</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1253</x>
+     <y>124</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>addMan()</slot>
   <slot>delMan()</slot>
   <slot>editMan()</slot>
   <slot>selectPatient(QModelIndex)</slot>
+  <slot>btnUpdateClick()</slot>
+  <slot>btnNewClick()</slot>
  </slots>
 </ui>
