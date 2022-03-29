@@ -42,7 +42,7 @@
           <item>
            <widget class="QLabel" name="lblGameTime">
             <property name="text">
-             <string>Длительность записи, сек</string>
+             <string>Длительность записи, мм:сс</string>
             </property>
            </widget>
           </item>
