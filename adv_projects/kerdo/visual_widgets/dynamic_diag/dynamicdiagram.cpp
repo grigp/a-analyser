@@ -9,7 +9,7 @@
 
 namespace  {
 
-QList<QColor> graphPalette = QList<QColor>() << Qt::darkCyan << Qt::darkGreen << Qt::darkYellow << Qt::darkMagenta;
+QList<QColor> graphPalette = QList<QColor>() << Qt::blue << Qt::red << Qt::darkGreen << Qt::darkMagenta;
 
 }
 

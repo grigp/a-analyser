@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1253</width>
-    <height>678</height>
+    <width>1285</width>
+    <height>690</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -31,7 +31,7 @@
      <number>1</number>
     </property>
     <item>
-     <widget class="QSplitter" name="splitter">
+     <widget class="QSplitter" name="splMain">
       <property name="orientation">
        <enum>Qt::Horizontal</enum>
       </property>
@@ -81,6 +81,9 @@
            </property>
            <item>
             <widget class="QPushButton" name="btnNewMan">
+             <property name="toolTip">
+              <string>Новый...</string>
+             </property>
              <property name="text">
               <string/>
              </property>
@@ -98,6 +101,9 @@
            </item>
            <item>
             <widget class="QPushButton" name="btnDelMan">
+             <property name="toolTip">
+              <string>Удалить...</string>
+             </property>
              <property name="text">
               <string/>
              </property>
@@ -115,6 +121,9 @@
            </item>
            <item>
             <widget class="QPushButton" name="btnEditMan">
+             <property name="toolTip">
+              <string>Карточка...</string>
+             </property>
              <property name="text">
               <string/>
              </property>
@@ -219,6 +228,9 @@
            </property>
            <item>
             <widget class="QPushButton" name="btnNewTest">
+             <property name="toolTip">
+              <string>Новый замер</string>
+             </property>
              <property name="text">
               <string/>
              </property>
@@ -233,6 +245,22 @@
               </size>
              </property>
             </widget>
+           </item>
+           <item>
+            <spacer name="horizontalSpacer_4">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeType">
+              <enum>QSizePolicy::Fixed</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>40</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
            </item>
            <item>
             <widget class="QFrame" name="frame">
@@ -287,7 +315,20 @@
                   </widget>
                  </item>
                  <item>
-                  <widget class="QSpinBox" name="edBeforePulse"/>
+                  <widget class="QSpinBox" name="edBeforePulse">
+                   <property name="minimum">
+                    <number>0</number>
+                   </property>
+                   <property name="maximum">
+                    <number>200</number>
+                   </property>
+                   <property name="singleStep">
+                    <number>10</number>
+                   </property>
+                   <property name="value">
+                    <number>0</number>
+                   </property>
+                  </widget>
                  </item>
                 </layout>
                </widget>
@@ -324,7 +365,20 @@
                </widget>
               </item>
               <item>
-               <widget class="QSpinBox" name="edBeforeDAD"/>
+               <widget class="QSpinBox" name="edBeforeDAD">
+                <property name="minimum">
+                 <number>0</number>
+                </property>
+                <property name="maximum">
+                 <number>200</number>
+                </property>
+                <property name="singleStep">
+                 <number>10</number>
+                </property>
+                <property name="value">
+                 <number>0</number>
+                </property>
+               </widget>
               </item>
              </layout>
             </widget>
@@ -374,7 +428,20 @@
                </widget>
               </item>
               <item>
-               <widget class="QSpinBox" name="edAfterPulse"/>
+               <widget class="QSpinBox" name="edAfterPulse">
+                <property name="minimum">
+                 <number>0</number>
+                </property>
+                <property name="maximum">
+                 <number>200</number>
+                </property>
+                <property name="singleStep">
+                 <number>10</number>
+                </property>
+                <property name="value">
+                 <number>0</number>
+                </property>
+               </widget>
               </item>
              </layout>
             </widget>
@@ -408,13 +475,29 @@
                </widget>
               </item>
               <item>
-               <widget class="QSpinBox" name="edAfterDAD"/>
+               <widget class="QSpinBox" name="edAfterDAD">
+                <property name="minimum">
+                 <number>0</number>
+                </property>
+                <property name="maximum">
+                 <number>200</number>
+                </property>
+                <property name="singleStep">
+                 <number>10</number>
+                </property>
+                <property name="value">
+                 <number>0</number>
+                </property>
+               </widget>
               </item>
              </layout>
             </widget>
            </item>
            <item>
             <widget class="QPushButton" name="btnUpdate">
+             <property name="toolTip">
+              <string>Обновить данные замера</string>
+             </property>
              <property name="text">
               <string>Обновить</string>
              </property>
@@ -432,6 +515,39 @@
               </size>
              </property>
             </spacer>
+           </item>
+           <item>
+            <widget class="QLabel" name="lblInfoSelectDate">
+             <property name="text">
+              <string>Дата</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QFrame" name="frInfo">
+             <property name="frameShape">
+              <enum>QFrame::StyledPanel</enum>
+             </property>
+             <property name="frameShadow">
+              <enum>QFrame::Raised</enum>
+             </property>
+             <layout class="QVBoxLayout" name="verticalLayout_11">
+              <item>
+               <widget class="QLabel" name="lblInfoBefore">
+                <property name="text">
+                 <string>До воздействия</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="lblInfoAfter">
+                <property name="text">
+                 <string>После воздействия</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
            </item>
           </layout>
          </widget>
@@ -461,7 +577,7 @@
             <number>1</number>
            </property>
            <item>
-            <widget class="QSplitter" name="splitter_2">
+            <widget class="QSplitter" name="splGraph">
              <property name="orientation">
               <enum>Qt::Vertical</enum>
              </property>
@@ -559,7 +675,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1253</width>
+     <width>1285</width>
      <height>21</height>
     </rect>
    </property>
@@ -674,8 +790,8 @@
    <slot>btnUpdateClick()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>874</x>
-     <y>63</y>
+     <x>1096</x>
+     <y>75</y>
     </hint>
     <hint type="destinationlabel">
      <x>1254</x>
@@ -690,12 +806,44 @@
    <slot>btnNewClick()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>239</x>
-     <y>60</y>
+     <x>372</x>
+     <y>83</y>
     </hint>
     <hint type="destinationlabel">
      <x>1253</x>
      <y>124</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>splMain</sender>
+   <signal>splitterMoved(int,int)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>splitterMoved(int,int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>307</x>
+     <y>200</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1254</x>
+     <y>511</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>splGraph</sender>
+   <signal>splitterMoved(int,int)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>splitterMoved(int,int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>713</x>
+     <y>275</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1256</x>
+     <y>267</y>
     </hint>
    </hints>
   </connection>
@@ -707,5 +855,6 @@
   <slot>selectPatient(QModelIndex)</slot>
   <slot>btnUpdateClick()</slot>
   <slot>btnNewClick()</slot>
+  <slot>splitterMoved(int,int)</slot>
  </slots>
 </ui>

@@ -34,6 +34,8 @@ private slots:
     void btnNewClick();
     void btnUpdateClick();
 
+    void splitterMoved(int pos,int index);
+
 signals:
     void dataBaseChange(const QString &dataBaseFolder);
     void dataBaseClear();
@@ -44,6 +46,9 @@ private:
     Ui::MainWindow *ui;
 
     void redrawDiag();
+
+    void saveSplitterPosition();
+    void restoreSplitterPosition();
 
     PatientsModel *m_mdlPatients;
     PatientsProxyModel *m_pmdlPatients;

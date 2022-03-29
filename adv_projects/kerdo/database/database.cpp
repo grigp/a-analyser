@@ -53,7 +53,7 @@ bool DataBase::getPatient(const QString &uid, DataDefines::PatientKard &patient)
 
             DataDefines::Result result;
             result.uid = test["uid"].toString();
-            result.dateTime = QDateTime::fromString(test["datetime"].toString(), "dd.MM.yyyy hh:mm");
+            result.dateTime = QDateTime::fromString(test["datetime"].toString(), "dd.MM.yyyy");
             result.beforePulse = test["pulse_before"].toInt(0);
             result.beforeDAD = test["dad_before"].toInt(0);
             result.beforeKerdo = test["kerdo_before"].toDouble(0);
@@ -107,7 +107,7 @@ QString DataBase::addTest(const QString &uidPatient)
         QJsonObject newTest;
         auto uid = QUuid::createUuid().toString();
         newTest["uid"] = uid;
-        newTest["datetime"] = QDateTime::currentDateTime().toString("dd.MM.yyyy hh:mm");
+        newTest["datetime"] = QDateTime::currentDateTime().toString("dd.MM.yyyy");
         newTest["pulse_before"] = 0;
         newTest["dad_before"] = 0;
         newTest["kerdo_before"] = 0;
@@ -155,7 +155,7 @@ bool DataBase::getTest(const QString &uidPatient, const QString &uidTest, DataDe
             if (tst["uid"].toString() == uidTest)
             {
                 test.uid = tst["uid"].toString();
-                test.dateTime = QDateTime::fromString(tst["datetime"].toString(), "dd.MM.yyyy hh:mm");
+                test.dateTime = QDateTime::fromString(tst["datetime"].toString(), "dd.MM.yyyy");
                 test.beforePulse = tst["pulse_before"].toInt();
                 test.beforeDAD = tst["dad_before"].toInt();
                 test.beforeKerdo = tst["kerdo_before"].toDouble();

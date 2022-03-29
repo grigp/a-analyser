@@ -11,6 +11,7 @@
 #include "patientsproxymodel.h"
 #include "dataprovider.h"
 #include "dynamicdiagram.h"
+#include "settingsprovider.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -20,6 +21,8 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    setWindowIcon(QIcon(":/images/MainIcon2.ico"));
+
     m_pmdlPatients->setSourceModel(m_mdlPatients);
     ui->tvMans->setModel(m_pmdlPatients);
     ui->tvMans->sortByColumn(PatientsModel::ColFio, Qt::AscendingOrder);
@@ -27,6 +30,12 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->wgtKerdo, &DynamicDiagram::selectItem, this, &MainWindow::selectItem);
     connect(ui->wgtPulse, &DynamicDiagram::selectItem, this, &MainWindow::selectItem);
     connect(ui->wgtDAD, &DynamicDiagram::selectItem, this, &MainWindow::selectItem);
+
+    ui->lblInfoBefore->setStyleSheet("font-size: 12pt; color: rgb(0, 0, 255);");
+    ui->lblInfoAfter->setStyleSheet("font-size: 12pt; color: rgb(255, 0, 0);");
+    ui->lblInfoSelectDate->setStyleSheet("font-size: 14pt;");
+
+    restoreSplitterPosition();
 }
 
 MainWindow::~MainWindow()
@@ -160,6 +169,8 @@ void MainWindow::selectItem(const int idx)
     ui->wgtPulse->doSelectItem(idx);
     ui->wgtDAD->doSelectItem(idx);
 
+    ui->lblInfoSelectDate->setText(tr("Дата") + " : " + ui->wgtKerdo->itemName(idx));
+
     ui->edBeforePulse->setValue(static_cast<int>(ui->wgtPulse->value(idx, 0)));
     ui->edAfterPulse->setValue(static_cast<int>(ui->wgtPulse->value(idx, 1)));
     ui->edBeforeDAD->setValue(static_cast<int>(ui->wgtDAD->value(idx, 0)));
@@ -196,6 +207,13 @@ void MainWindow::btnUpdateClick()
     }
 }
 
+void MainWindow::splitterMoved(int pos, int index)
+{
+    Q_UNUSED(pos);
+    Q_UNUSED(index);
+    saveSplitterPosition();
+}
+
 void MainWindow::redrawDiag()
 {
     auto tests = DataProvider::getTests(m_uidCurPatient);
@@ -214,9 +232,9 @@ void MainWindow::redrawDiag()
         DataDefines::Result test;
         if (DataProvider::getTest(m_uidCurPatient, uidTest, test))
         {
-            ui->wgtKerdo->appendItem(new DiagItem(QList<double>() << test.beforeKerdo << test.afterKerdo, test.dateTime.toString("dd.MM.yyyy hh:mm")));
-            ui->wgtPulse->appendItem(new DiagItem(QList<double>() << test.beforePulse << test.afterPulse, test.dateTime.toString("dd.MM.yyyy hh:mm")));
-            ui->wgtDAD->appendItem(new DiagItem(QList<double>() << test.beforeDAD << test.afterDAD, test.dateTime.toString("dd.MM.yyyy hh:mm")));
+            ui->wgtKerdo->appendItem(new DiagItem(QList<double>() << test.beforeKerdo << test.afterKerdo, test.dateTime.toString("dd.MM.yyyy")));
+            ui->wgtPulse->appendItem(new DiagItem(QList<double>() << test.beforePulse << test.afterPulse, test.dateTime.toString("dd.MM.yyyy")));
+            ui->wgtDAD->appendItem(new DiagItem(QList<double>() << test.beforeDAD << test.afterDAD, test.dateTime.toString("dd.MM.yyyy")));
         }
     }
 
@@ -225,4 +243,23 @@ void MainWindow::redrawDiag()
     ui->wgtKerdo->addValuesZone(-15, 15, QColor(255, 255, 100));
     ui->wgtKerdo->addValuesZone(-30, -15, QColor(200, 255, 200));
     ui->wgtKerdo->addValuesZone(-60, -30, QColor(150, 255, 150));
+}
+
+void MainWindow::saveSplitterPosition()
+{
+    SettingsProvider::setValueToRegAppCopy("MainWindow", "SplPosMain", ui->splMain->saveState());
+    SettingsProvider::setValueToRegAppCopy("MainWindow", "SplPosGraph", ui->splGraph->saveState());
+}
+
+void MainWindow::restoreSplitterPosition()
+{
+    auto valMain = SettingsProvider::valueFromRegAppCopy("MainWindow", "SplPosMain").toByteArray();
+//    if (val == "")
+//        val = QByteArray::fromRawData("\x00\x00\x00\xFF\x00\x00\x00\x01\x00\x00\x00\x02\x00\x00\x01\x17\x00\x00\x01\xEB\x01\xFF\xFF\xFF\xFF\x01\x00\x00\x00\x01\x00", 31);
+    ui->splMain->restoreState(valMain);
+
+    auto valGraph = SettingsProvider::valueFromRegAppCopy("MainWindow", "SplPosGraph").toByteArray();
+//    if (val == "")
+//        val = QByteArray::fromRawData("\x00\x00\x00\xFF\x00\x00\x00\x01\x00\x00\x00\x02\x00\x00\x01\x17\x00\x00\x01\xEB\x01\xFF\xFF\xFF\xFF\x01\x00\x00\x00\x01\x00", 31);
+    ui->splGraph->restoreState(valGraph);
 }
