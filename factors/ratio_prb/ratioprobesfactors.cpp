@@ -1,5 +1,7 @@
 #include "ratioprobesfactors.h"
 
+#include <QDebug>
+
 #include "datadefines.h"
 #include "dataprovider.h"
 #include "channelsutils.h"
@@ -86,8 +88,14 @@ void RatioProbesFactors::calculate()
                 auto KFR = fctVector->factorValue(VectorFactorsDefines::KFRUid);
                 delete fctVector;
 
-                addFactor(RFUid[i - 1].SUid, S / S0 * 100);
-                addFactor(RFUid[i - 1].KFRUid, KFR0 / KFR * 100);
+                if (S0 > 0)
+                    addFactor(RFUid[i - 1].SUid, S / S0 * 100);
+                else
+                    addFactor(RFUid[i - 1].SUid, 0);
+                if (KFR0 > 0)
+                    addFactor(RFUid[i - 1].KFRUid, KFR / KFR0 * 100);
+                else
+                    addFactor(RFUid[i - 1].KFRUid, 0);
             }
         }
     }
