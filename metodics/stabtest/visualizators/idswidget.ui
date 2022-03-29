@@ -170,8 +170,14 @@
       </property>
       <item>
        <widget class="QPushButton" name="btnSKGPlus">
+        <property name="toolTip">
+         <string>Приблизить</string>
+        </property>
         <property name="toolTipDuration">
          <number>-1</number>
+        </property>
+        <property name="statusTip">
+         <string/>
         </property>
         <property name="text">
          <string/>
@@ -190,6 +196,12 @@
       </item>
       <item>
        <widget class="QPushButton" name="btnSKGMinus">
+        <property name="toolTip">
+         <string>Отдалить</string>
+        </property>
+        <property name="statusTip">
+         <string/>
+        </property>
         <property name="text">
          <string/>
         </property>
@@ -207,6 +219,12 @@
       </item>
       <item>
        <widget class="QPushButton" name="btnSKGZeroing">
+        <property name="toolTip">
+         <string>Центровка</string>
+        </property>
+        <property name="statusTip">
+         <string/>
+        </property>
         <property name="text">
          <string/>
         </property>
@@ -243,6 +261,12 @@
       </item>
       <item>
        <widget class="QPushButton" name="btnToBegin">
+        <property name="toolTip">
+         <string>В начало</string>
+        </property>
+        <property name="statusTip">
+         <string/>
+        </property>
         <property name="text">
          <string/>
         </property>
@@ -260,6 +284,12 @@
       </item>
       <item>
        <widget class="QPushButton" name="btnPrev">
+        <property name="toolTip">
+         <string>Назад на 1 секунду</string>
+        </property>
+        <property name="statusTip">
+         <string/>
+        </property>
         <property name="text">
          <string/>
         </property>
@@ -277,6 +307,12 @@
       </item>
       <item>
        <widget class="QPushButton" name="btnPlay">
+        <property name="toolTip">
+         <string>Пуск</string>
+        </property>
+        <property name="statusTip">
+         <string/>
+        </property>
         <property name="text">
          <string/>
         </property>
@@ -294,6 +330,12 @@
       </item>
       <item>
        <widget class="QPushButton" name="btnStop">
+        <property name="toolTip">
+         <string>Стоп</string>
+        </property>
+        <property name="statusTip">
+         <string/>
+        </property>
         <property name="text">
          <string/>
         </property>
@@ -311,6 +353,12 @@
       </item>
       <item>
        <widget class="QPushButton" name="btnNext">
+        <property name="toolTip">
+         <string>Вперед на 1 секунду</string>
+        </property>
+        <property name="statusTip">
+         <string/>
+        </property>
         <property name="text">
          <string/>
         </property>
@@ -377,6 +425,12 @@
       </item>
       <item>
        <widget class="QPushButton" name="btnFDSPlus">
+        <property name="toolTip">
+         <string>Приблизить ФДС</string>
+        </property>
+        <property name="statusTip">
+         <string/>
+        </property>
         <property name="text">
          <string/>
         </property>
@@ -394,6 +448,12 @@
       </item>
       <item>
        <widget class="QPushButton" name="btnFDSMinius">
+        <property name="toolTip">
+         <string>Отдалить ФДС</string>
+        </property>
+        <property name="statusTip">
+         <string/>
+        </property>
         <property name="text">
          <string/>
         </property>
