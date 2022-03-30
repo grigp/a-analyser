@@ -239,6 +239,27 @@ QList<double> AreaGraph::cursorValues() const
     return  retval;
 }
 
+int AreaGraph::leftSpace() const
+{
+    return LeftSpace;
+}
+
+int AreaGraph::rightSpace() const
+{
+    return RightSpace;
+}
+
+int AreaGraph::topSpace() const
+{
+    return TopSpace;
+
+}
+
+int AreaGraph::bottomSpace() const
+{
+    return BottomSpace;
+}
+
 void AreaGraph::paintEvent(QPaintEvent *event)
 {
     QWidget::paintEvent(event);

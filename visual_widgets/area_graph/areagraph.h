@@ -243,6 +243,12 @@ public:
 
     QList<double> cursorValues() const;
 
+    int leftSpace() const;
+    int rightSpace() const;
+    int topSpace() const;
+    int bottomSpace() const;
+
+
 signals:
     void moveCursor();
 

@@ -85,7 +85,13 @@ void StabilogramVisualWidget::btnMinusClicked()
 
 void StabilogramVisualWidget::signalScroll(int pos)
 {
-    ui->wgtGraph->setStartPoint(ui->wgtGraph->area(0)->signal()->size() * pos / 100);
+    int w = ui->wgtGraph->width() - ui->wgtGraph->leftSpace() - ui->wgtGraph->rightSpace();
+    if (ui->wgtGraph->area(0)->signal()->size() * ui->wgtGraph->hScale() > w)
+    {
+        int p = static_cast<int>((ui->wgtGraph->area(0)->signal()->size() * ui->wgtGraph->hScale() - w)
+                                 * pos / 100.0 / ui->wgtGraph->hScale());
+        ui->wgtGraph->setStartPoint(p);
+    }
 }
 
 void StabilogramVisualWidget::on_moveCursor()
