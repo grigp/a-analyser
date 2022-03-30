@@ -1,6 +1,7 @@
 #include "stabsignalstestwidget.h"
 #include "ui_stabsignalstestwidget.h"
 
+#include "baseutils.h"
 #include "datadefines.h"
 #include "channelsdefines.h"
 #include "dataprovider.h"
@@ -74,7 +75,8 @@ StabSignalsTestWidget::StabSignalsTestWidget(QWidget *parent) :
     ui->sbSignal->setEnabled(false);
     ui->btnHScalePlus->setEnabled(false);
     ui->btnHScaleMinus->setEnabled(false);
-    ui->cbScale->addItems(QStringList() << "1" << "2" << "4" << "8" << "16" << "32" << "64" << "128");
+    foreach (auto scaleName, BaseUtils::ScalesStab)
+        ui->cbScale->addItem(scaleName, BaseUtils::ScaleKoefitients.value(scaleName));
 }
 
 StabSignalsTestWidget::~StabSignalsTestWidget()
@@ -196,10 +198,13 @@ void StabSignalsTestWidget::curPageChanged(int pageIdx)
 
 void StabSignalsTestWidget::scaleChange(int scaleIdx)
 {
-    int diap = 128;
-    for (int i = 0; i < scaleIdx; ++i)
-        diap = diap / 2;
-    ui->wgtGraph->setDiapazone(-diap, diap);
+//    int diap = 128;
+//    for (int i = 0; i < scaleIdx; ++i)
+//        diap = diap / 2;
+//    ui->wgtGraph->setDiapazone(-diap, diap);
+
+    ui->wgtGraph->setDiapazone(-BaseUtils::StabDefaultDiap / ui->cbScale->currentData().toDouble(),
+                               BaseUtils::StabDefaultDiap / ui->cbScale->currentData().toDouble());
 }
 
 void StabSignalsTestWidget::fullSignalChanged(bool isFullSignal)
@@ -666,7 +671,14 @@ void StabSignalsTestWidget::showSKG(StabSignalsTestCalculator *calculator, const
             foreach (auto* skg, areasesSKG)
                 skg->setDiap(diap);
             ui->wgtGraph->setDiapazone(-diap, diap);
-            ui->cbScale->setCurrentIndex(7 - step);
+            //! Позиция в переключателе масштаба
+            double scM = BaseUtils::StabDefaultDiap / static_cast<double>(diap);
+            for (int i = 0; i < ui->cbScale->count(); ++i)
+                if (static_cast<int>(ui->cbScale->itemData(i).toDouble() * 10000) == static_cast<int>(scM * 10000)) // * 10000 - уход от double
+                {
+                    ui->cbScale->setCurrentIndex(i);
+                    break;
+                }
         });
     }
 
