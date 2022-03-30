@@ -52,6 +52,7 @@ StabDynamicTestPatientWindow *BoxerDodgingExecute::createPatientWindow()
 void BoxerDodgingExecute::finishTest()
 {
     trd()->addChannel(m_res);
+    hidePatientWindow();
     StabDynamicTestExecute::finishTest();
 }
 
@@ -73,9 +74,6 @@ void BoxerDodgingExecute::recording()
     StabDynamicTestExecute::recording();
 
     m_stageCounter = 0;
-    nextStage(true);
-
-    m_res->clear();
 
     if (isRecording())
     {
@@ -84,12 +82,16 @@ void BoxerDodgingExecute::recording()
         m_res->setFreq(freqStab());
         m_res->setDiap(diap());
         m_res->setDeviationThreshold(m_deviationThreshold);
+
+        nextStage(true);
+        m_res->clear();
     }
     else
     {
         if (QApplication::desktop()->screenCount() == 1)
             hidePatientWindow();
     }
+
 }
 
 void BoxerDodgingExecute::getData(DeviceProtocols::DeviceData *data)
@@ -152,7 +154,8 @@ void BoxerDodgingExecute::nextStage(const bool isStart)
     m_nextStageCount = m_stimulTimeMin * freqStab() + qrand() % (freqStab() * (m_stimulTimeMax - m_stimulTimeMin));
 
     //! Выбор следующего этапа
-    m_patientWin->setVisibleStage(m_stage, false);
+    if (m_patientWin)
+        m_patientWin->setVisibleStage(m_stage, false);
     if (isStart)  //! Для старта - всегда базовый
         m_stage = BoxerDodgingDefines::bdsBase;
     else          //! Для послеующих по очереди
@@ -162,7 +165,8 @@ void BoxerDodgingExecute::nextStage(const bool isStart)
         else                                          //! Базовый
             m_stage = BoxerDodgingDefines::bdsBase;
     }
-    m_patientWin->setVisibleStage(m_stage, true);
+    if (m_patientWin)
+        m_patientWin->setVisibleStage(m_stage, true);
 
     m_res->addStage(m_stage, recCount());
 }
