@@ -6,7 +6,6 @@
 #include "executewidget.h"
 #include "baseutils.h"
 #include "channelsutils.h"
-#include "trenagerpatientwindow.h"
 #include "settingsprovider.h"
 #include "testresultdata.h"
 #include "trenresultdata.h"
@@ -331,11 +330,14 @@ void TrenTakePutExecute::fillGameHints(QFrame *frame)
                              (m_elementsTake.at(0).style == GraphicCommon::esPictureSplit));
     frame->layout()->addWidget(m_lblPicture);
 
-    m_lblPicturePW = new QLabel();
-    m_lblPicturePW->setText("pic");
-    m_lblPicturePW->setVisible((m_elementsTake.size() == 1) &&
-                               (m_elementsTake.at(0).style == GraphicCommon::esPictureSplit));
-    pwAddHintWidget(m_lblPicturePW);
+    if (QApplication::desktop()->screenCount() > 1)
+    {
+        m_lblPicturePW = new QLabel();
+        m_lblPicturePW->setText("pic");
+        m_lblPicturePW->setVisible((m_elementsTake.size() == 1) &&
+                                   (m_elementsTake.at(0).style == GraphicCommon::esPictureSplit));
+        pwAddHintWidget(m_lblPicturePW);
+    }
 }
 
 void TrenTakePutExecute::on_recording()
@@ -778,8 +780,11 @@ void TrenTakePutExecute::allocSplitPictures()
     QPixmap pixAll(m_elementsTake.at(0).images + m_filesSingle.at(picNum));
     m_lblPicture->setPixmap(pixAll.scaled(getFrameControlWidth(), getFrameControlWidth()));
     m_lblPicture->setVisible(true);
-    m_lblPicturePW->setPixmap(pixAll.scaled(pwGetFrameParamsWidth(), pwGetFrameParamsWidth()));
-    m_lblPicturePW->setVisible(true);
+    if (m_lblPicturePW)
+    {
+        m_lblPicturePW->setPixmap(pixAll.scaled(pwGetFrameParamsWidth(), pwGetFrameParamsWidth()));
+        m_lblPicturePW->setVisible(true);
+    }
 
     //! Масштабирование
     pixAll = pixAll.scaled(static_cast<int>(m_zonesTake.at(0).width * 2 * prop()),
