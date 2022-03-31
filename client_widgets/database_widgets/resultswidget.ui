@@ -41,6 +41,12 @@
         <verstretch>0</verstretch>
        </sizepolicy>
       </property>
+      <property name="mouseTracking">
+       <bool>true</bool>
+      </property>
+      <property name="editTriggers">
+       <set>QAbstractItemView::DoubleClicked|QAbstractItemView::EditKeyPressed</set>
+      </property>
       <property name="alternatingRowColors">
        <bool>true</bool>
       </property>
@@ -213,8 +219,8 @@
    <slot>onPressButtonOpenTestAgain()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>405</x>
-     <y>173</y>
+     <x>642</x>
+     <y>419</y>
     </hint>
     <hint type="destinationlabel">
      <x>579</x>
@@ -229,12 +235,28 @@
    <slot>onPressButtonRemoveBadTest()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>498</x>
-     <y>191</y>
+     <x>735</x>
+     <y>454</y>
     </hint>
     <hint type="destinationlabel">
      <x>573</x>
      <y>135</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>tvTests</sender>
+   <signal>entered(QModelIndex)</signal>
+   <receiver>ResultsWidget</receiver>
+   <slot>onEntered(QModelIndex)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>125</x>
+     <y>93</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>805</x>
+     <y>27</y>
     </hint>
    </hints>
   </connection>
@@ -243,5 +265,6 @@
   <slot>splitterMoved(int,int)</slot>
   <slot>onPressButtonOpenTestAgain()</slot>
   <slot>onPressButtonRemoveBadTest()</slot>
+  <slot>onEntered(QModelIndex)</slot>
  </slots>
 </ui>

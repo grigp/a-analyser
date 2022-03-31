@@ -66,6 +66,8 @@ private slots:
     void on_selectPatient(const QString &patientUid);
     void on_selectMetodic(const QString &metodicUid);
 
+    void onEntered(QModelIndex index);
+
     /*!
      * \brief Нажали кнопку повторного открытия сбойного теста
      */

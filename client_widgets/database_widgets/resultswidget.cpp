@@ -175,6 +175,19 @@ void ResultsWidget::on_selectMetodic(const QString &metodicUid)
     });
 }
 
+void ResultsWidget::onEntered(QModelIndex index)
+{
+    auto idx = m_pmdlTest->mapToSource(ui->tvTests->model()->index(index.row(), TestsModel::ColPatient, index.parent()));
+    auto uid = idx.data(TestsModel::TestUidRole).toString();
+
+    DataDefines::TestInfo ti;
+    if (DataProvider::getTestInfo(uid, ti))
+    {
+        qDebug() << ti.comment;
+
+    }
+}
+
 void ResultsWidget::onPressButtonOpenTestAgain()
 {
     DataProvider::setTestIsOpening(m_uidOpenedTest, false);  //! Помечаем тест, что тест открыт успешно
