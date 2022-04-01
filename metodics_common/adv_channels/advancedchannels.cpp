@@ -220,8 +220,7 @@ SignalWidget *AdvancedChannels::createWidget(Driver* driver, const QString chann
         retval = new BreathWidget(driver, channelId, ui->frWidgets);
     else
     if (channelType == ChannelsDefines::ctRitmogram)
-        retval = nullptr;
-//        retval = new PulseWidget(driver, channelId, ui->frWidgets);  /// TODO: включить и тестить
+        retval = new PulseWidget(driver, channelId, ui->frWidgets);  /// TODO: включить и тестить
 
     if (retval)
         ui->frWidgets->layout()->addWidget(retval);

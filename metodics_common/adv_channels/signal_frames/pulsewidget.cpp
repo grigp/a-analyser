@@ -60,25 +60,17 @@ void PulseWidget::getData(DeviceProtocols::DeviceData *data)
         ui->lblPulseMid->setText(QString("Средний пульс - %1 уд/мин").arg(m_pulseMiddle/m_pulseCount));
 
         //! Погасим индикатор через 100 мс
-        QTimer::singleShot(100, [=]
-        {
-            if (!m_isFinish)
-            {
-                ui->pbPulse->setValue(0);
-            }
-        });
+//        QTimer::singleShot(100, [=]
+//        {
+//            if (!m_isFinish)
+//            {
+//                ui->pbPulse->setValue(0);
+//            }
+//        });
 
         QVector<double> recPulse;
         recPulse << value;
         ui->wgtRitmogram->addValue(recPulse);
-//        ui->pbDiag->setValue(value);
-//        ui->lblDiagValue->setText(QString("%1 " + tr("кг")).arg(round(value)));
-
-//        if (value > m_valueMax)
-//        {
-//            m_valueMax = value;
-//            ui->lblMaxVal->setText(QString(tr("Макс") + " %1 " + tr("кг")).arg(round(m_valueMax)));
-//        }
     }
 }
 
