@@ -27,15 +27,26 @@ QStringList NormsManager::getTestConditions()  const
 
 bool NormsManager::getTestConditionInfo(const QString &uid, DataDefines::TestConditionInfo &ci)  const
 {
-    foreach (auto cond, m_tcList)
-        if (cond.uid == uid)
-        {
-            ci.uid = cond.uid;
-            ci.name = cond.name;
-            ci.description = cond.description;
-            ci.norms_enabled = cond.norms_enabled;
-            return true;
-        }
+    if (uid == "")
+    {
+        ci.uid = m_tcList.at(0).uid;
+        ci.name = m_tcList.at(0).name;
+        ci.description = m_tcList.at(0).description;
+        ci.norms_enabled = m_tcList.at(0).norms_enabled;
+        return true;
+    }
+    else
+    {
+        foreach (auto cond, m_tcList)
+            if (cond.uid == uid)
+            {
+                ci.uid = cond.uid;
+                ci.name = cond.name;
+                ci.description = cond.description;
+                ci.norms_enabled = cond.norms_enabled;
+                return true;
+            }
+    }
     return false;
 }
 

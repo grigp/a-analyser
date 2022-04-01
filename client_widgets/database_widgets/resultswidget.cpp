@@ -177,14 +177,21 @@ void ResultsWidget::on_selectMetodic(const QString &metodicUid)
 
 void ResultsWidget::onEntered(QModelIndex index)
 {
-    auto idx = m_pmdlTest->mapToSource(ui->tvTests->model()->index(index.row(), TestsModel::ColPatient, index.parent()));
-    auto uid = idx.data(TestsModel::TestUidRole).toString();
-
-    DataDefines::TestInfo ti;
-    if (DataProvider::getTestInfo(uid, ti))
+    if (index.isValid())
     {
-        qDebug() << ti.comment;
+        auto idx = m_pmdlTest->mapToSource(ui->tvTests->model()->index(index.row(), TestsModel::ColPatient, index.parent()));
+        auto uid = m_mdlTest->index(idx.row(), TestsModel::ColPatient, idx.parent()).data(TestsModel::TestUidRole).toString();
 
+        DataDefines::TestInfo ti;
+        if (DataProvider::getTestInfo(uid, ti))
+        {
+            QString condition = "";
+            DataDefines::TestConditionInfo ci;
+            if (static_cast<AAnalyserApplication*>(QApplication::instance())->getTestConditionInfo(ti.condition, ci))
+                condition = ci.name;
+
+            ui->tvTests->setToolTip(tr("Комментраий") + ":\n" + ti.comment + "\n\n" + tr("Условия проведения") + ": " + condition);
+        }
     }
 }
 
