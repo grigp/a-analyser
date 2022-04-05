@@ -4,6 +4,7 @@
 #include "aanalyserapplication.h"
 
 #include <QApplication>
+#include <QDebug>
 
 AddConnectionDialog::AddConnectionDialog(QWidget *parent) :
     QDialog(parent),
@@ -30,7 +31,10 @@ QString AddConnectionDialog::driverName() const
 
 DeviceProtocols::Ports AddConnectionDialog::port() const
 {
-    return static_cast<DeviceProtocols::Ports>(ui->cbPort->currentData().toInt());
+    if (ui->cbPort->count() > 0)
+        return static_cast<DeviceProtocols::Ports>(ui->cbPort->currentData().toInt());
+    else
+        return DeviceProtocols::pcNone;
 }
 
 QString AddConnectionDialog::comment() const

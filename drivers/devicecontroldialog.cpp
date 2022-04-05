@@ -231,5 +231,8 @@ void ComPortDeledate::setModelData(QWidget *editor,
 {
     ComboBoxDelegate::setModelData(editor, model, index);
     QComboBox *edit = static_cast<QComboBox*>(editor);
-    model->setData(index, edit->currentData(ValueIdRole), DeviceControlModel::PortCodeRole);
+    QVariant value = DeviceProtocols::pcNone;
+    if (edit->count() > 0)
+        value = edit->currentData(ValueIdRole);
+    model->setData(index, value, DeviceControlModel::PortCodeRole);
 }

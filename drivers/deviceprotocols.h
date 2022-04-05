@@ -16,7 +16,7 @@ namespace DeviceProtocols {
 ///< Порты
 
 enum Ports {
-      pcEmulation = -1
+      pcNone = -1
     , pcUsb = 0
     , pcCom1, pcCom2, pcCom3, pcCom4, pcCom5, pcCom6, pcCom7, pcCom8, pcCom9, pcCom10
     , pcCom11, pcCom12, pcCom13, pcCom14, pcCom15, pcCom16, pcCom17, pcCom18, pcCom19, pcCom20
@@ -440,6 +440,11 @@ class DecartCoordControl : public DeviceControl
 {
 public:
     virtual void zeroing(const QString &channelUid) = 0;
+
+    /*!
+     * \brief Возвращает размеры стабилоплатформы
+     */
+    virtual QSize stabSize() = 0;
 
     ~DecartCoordControl() {}
 };

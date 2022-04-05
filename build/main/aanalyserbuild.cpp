@@ -45,6 +45,7 @@
 #include "vectoranalysisvisual.h"
 
 #include "stabilan01.h"
+#include "bilateral.h"
 #include "jumpplate.h"
 
 QList<MetodicTemplate *> AAnalyserBuild::getBuildTemplates(QObject *parent)
@@ -108,6 +109,9 @@ QList<DeviceProtocols::Ports> AAnalyserBuild::getDriverPorts(const QString &drvU
     else
     if (drvUid == JumpPlate::uid())
         return JumpPlate::getPorts();
+    else
+    if (drvUid == Bilateral::uid())
+        return Bilateral::getPorts();
 
     return QList<DeviceProtocols::Ports>();
 }
@@ -120,6 +124,9 @@ QStringList AAnalyserBuild::getDriverProtocols(const QString &drvUid)
     else
     if (drvUid == JumpPlate::uid())
         return JumpPlate::getProtocols();
+    else
+    if (drvUid == Bilateral::uid())
+        return Bilateral::getProtocols();
     return QStringList();
 }
 
@@ -131,6 +138,9 @@ bool AAnalyserBuild::editDriverParams(const QString &drvUid, QJsonObject &params
     else
     if (drvUid == JumpPlate::uid())
         return JumpPlate::editParams(params);
+    else
+    if (drvUid == Bilateral::uid())
+        return Bilateral::editParams(params);
     return false;
 }
 
@@ -142,6 +152,9 @@ Driver *AAnalyserBuild::createDriver(const QString &drvUid)
     else
     if (drvUid == JumpPlate::uid())
         return new JumpPlate();
+    else
+    if (drvUid == Bilateral::uid())
+        return new Bilateral();
     return nullptr;
 }
 
@@ -151,5 +164,6 @@ void AAnalyserBuild::assignDrivers(QMap<QString, QString> &drivers)
     //! Надо хардкодить все драйвера
     drivers.insert(Stabilan01::uid(), Stabilan01::name());
     drivers.insert(JumpPlate::uid(), JumpPlate::name());
+    drivers.insert(Bilateral::uid(), Bilateral::name());
 }
 

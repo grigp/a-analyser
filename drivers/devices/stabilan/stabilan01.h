@@ -119,6 +119,11 @@ public:
     void calibrate(const QString &channelUid) override;
     void zeroing(const QString &channelUid) override;
 
+    /*!
+     * \brief Возвращает размеры стабилоплатформы
+     */
+    QSize stabSize() override;
+
     void calibrateTenso(const QString &channelUid) override;
     /*!
      * \brief запрос / установка диапазонов значений для каналов

@@ -18,8 +18,8 @@ QList<DeviceProtocols::Ports> portsEnum(const DeviceProtocols::Ports start,
 
 QString DeviceProtocols::portName(const DeviceProtocols::Ports port)
 {
-    if (port == pcEmulation)
-        return QCoreApplication::tr("Эмуляция");
+    if (port == pcNone)
+        return QCoreApplication::tr("");
     else
     if (port == pcUsb)
         return "USB";
@@ -46,6 +46,6 @@ QList<DeviceProtocols::Ports> DeviceProtocols::comUsbPorts()
 
 QList<DeviceProtocols::Ports> DeviceProtocols::allPorts()
 {
-    return portsEnum(pcEmulation, pcCom127);
+    return portsEnum(pcNone, pcCom127);
 }
 

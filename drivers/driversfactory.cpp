@@ -5,6 +5,7 @@
 #include "aanalyserbuild.h"
 #include "stabilan01.h"
 #include "jumpplate.h"
+#include "bilateral.h"
 #include "datadefines.h"
 
 #include <QFile>

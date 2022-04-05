@@ -20,6 +20,7 @@ include(tetris_figure/tetris_figure.pri)
 include(paint_mix/paint_mix_src.pri)
 include(accumulation_function/accumulation_function_src.pri)
 include(vector_cloud/vector_cloud_src.pri)
+include(plates_positioning/plates_positioning_src.pri)
 
 HEADERS += \
 

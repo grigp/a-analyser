@@ -327,6 +327,36 @@ void Stabilan01::zeroing(const QString &channelUid)
     SettingsProvider::setValueToRegAppCopy("StabilanDriver", "zeroing_y", m_offsetY);
 }
 
+QSize Stabilan01::stabSize()
+{
+    if (m_model == Stabilan01Defines::smcSt01 ||
+        m_model == Stabilan01Defines::smcSt02 ||
+        m_model == Stabilan01Defines::smcKSK123_20 ||
+        m_model == Stabilan01Defines::smcKSK123_21 ||
+        m_model == Stabilan01Defines::smcKSK123_22 ||
+        m_model == Stabilan01Defines::smcKSK123_23)
+        return QSize(250, 250);
+    else
+    if (m_model == Stabilan01Defines::smcKSK123_30 ||
+        m_model == Stabilan01Defines::smcKSK123_31 ||
+        m_model == Stabilan01Defines::smcKSK123_32 ||
+        m_model == Stabilan01Defines::smcKSK123_33)
+        return QSize(300, 300);
+    else
+    if (m_model == Stabilan01Defines::smcStabilan01_01 ||
+        m_model == Stabilan01Defines::smcStabilan01_02 ||
+        m_model == Stabilan01Defines::smcStabilan01_03 ||
+        m_model == Stabilan01Defines::smcStabilan01_05 ||
+        m_model == Stabilan01Defines::smcStabilan01_12 ||
+        m_model == Stabilan01Defines::smcStabilan01_13 ||
+        m_model == Stabilan01Defines::smcStabilan01_15 ||
+        m_model == Stabilan01Defines::smcStabilan01_16 ||
+        m_model == Stabilan01Defines::smcStabilan01_05NG ||
+        m_model == Stabilan01Defines::smcStabilan01_12NG)
+        return QSize(500, 500);
+    return QSize(500, 500);
+}
+
 void Stabilan01::calibrateTenso(const QString &channelUid)
 {
     quint8 chan = 0;
