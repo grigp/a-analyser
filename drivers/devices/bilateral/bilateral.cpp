@@ -1,5 +1,6 @@
 #include "bilateral.h"
 
+#include <QDebug>
 
 #include "aanalyserapplication.h"
 #include "deviceprotocols.h"
@@ -25,16 +26,17 @@ void Bilateral::setParams(const DeviceProtocols::Ports port, const QJsonObject &
     auto y = obj["y"].toInt(500);
     auto w = obj["width"].toInt(500);
     auto h = obj["height"].toInt(500);
-    m_plate1Pos = QPoint(x, y);
-    m_plate1Size = QSize(w, h);
+    m_plate1 = QRect(x, y, w, h);
 
     obj = params["plate2"].toObject();
     x = obj["x"].toInt(500);
     y = obj["y"].toInt(500);
     w = obj["width"].toInt(500);
     h = obj["height"].toInt(500);
-    m_plate2Pos = QPoint(x, y);
-    m_plate2Size = QSize(w, h);
+    m_plate2 = QRect(x, y, w, h);
+
+    m_center = QPoint((m_plate1.center().x() + m_plate2.center().x()) / 2,
+                      (m_plate1.center().y() + m_plate2.center().y()) / 2);
 }
 
 bool Bilateral::editParams(QJsonObject &params)
@@ -84,7 +86,44 @@ bool Bilateral::editParams(QJsonObject &params)
 
 void Bilateral::start()
 {
+    for (int i = 0; i < 2; ++i)
+    {
+        m_drivers[i] = nullptr;
+        m_chanUid[i] = "";
+    }
+    //! Запрашиваем два верхних драйвера в списке подключений
+    Driver* drv = nullptr;
+    int n = 0;
+    int i = 0;
+    do
+    {
+        drv = static_cast<AAnalyserApplication*>(QApplication::instance())->
+                getDriverByFormats(QStringList() << ChannelsDefines::cfDecartCoordinates, i);
+        //! Любой, но не билатеральный
+        if (drv && (drv->driverUid() != DevicesDefines::uid_bilateral))
+        {
+            m_drivers[n] = drv;
+            ++n;
+        }
+        ++i;
+    }
+    while (n < 2 && drv);
 
+    if (m_drivers[0] && m_drivers[1])
+    {
+
+        for (int i = 0; i < 2; ++i)
+        {
+            connect(m_drivers[i], &Driver::sendData, this, &Bilateral::getData);
+            connect(m_drivers[i], &Driver::communicationError, this, &Bilateral::communicationError);
+
+            auto listChanUid = m_drivers[i]->getChannelsByFormat(ChannelsDefines::cfDecartCoordinates);
+            if (listChanUid.size() > 0)
+                m_chanUid[i] = listChanUid.at(0);
+
+            m_drivers[i]->start();
+        }
+    }
 }
 
 void Bilateral::stop()
@@ -124,13 +163,94 @@ bool Bilateral::isChannelRecordingDefault(const QString &channelUid) const
 
 QStringList Bilateral::getProtocols()
 {
-    return QStringList();
+    return QStringList() << DeviceProtocols::uid_StabProtocol;
 }
 
 QList<DeviceProtocols::Ports> Bilateral::getPorts()
 {
     return QList<DeviceProtocols::Ports>();
 }
+
+void Bilateral::getData(DeviceProtocols::DeviceData *data)
+{
+    if (data->sender() == m_drivers[0] && data->channelId() == m_chanUid[0])
+    {
+        DeviceProtocols::StabDvcData *stabData = static_cast<DeviceProtocols::StabDvcData*>(data);
+        m_x1 = stabData->x();
+        m_y1 = stabData->y();
+        m_a1 = stabData->a();
+        m_b1 = stabData->b();
+        m_c1 = stabData->c();
+        m_d1 = stabData->d();
+        m_isData1 = true;
+        assignStabData();
+    }
+    else
+    if (data->sender() == m_drivers[1] && data->channelId() == m_chanUid[1])
+    {
+        DeviceProtocols::StabDvcData *stabData = static_cast<DeviceProtocols::StabDvcData*>(data);
+        m_x2 = stabData->x();
+        m_y2 = stabData->y();
+        m_a2 = stabData->a();
+        m_b2 = stabData->b();
+        m_c2 = stabData->c();
+        m_d2 = stabData->d();
+        m_isData2 = true;
+        assignStabData();
+    }
+    else
+        emit sendData(data);
+}
+
+void Bilateral::assignStabData()
+{
+    if (m_isData1 && m_isData2)
+    {
+        //! Левая
+        auto sdLeft = new DeviceProtocols::StabDvcData(this, ChannelsDefines::chanStabLeft,
+                                                         m_x1 - m_offsetX, m_y1 - m_offsetY,
+                                                         m_a1, m_b1, m_c1, m_d1);
+        emit sendData(sdLeft);
+        delete sdLeft;
+
+        //! Правая
+        auto sdRight = new DeviceProtocols::StabDvcData(this, ChannelsDefines::chanStabRight,
+                                                         m_x2 - m_offsetX, m_y2 - m_offsetY,
+                                                         m_a2, m_b2, m_c2, m_d2);
+        emit sendData(sdRight);
+        delete sdRight;
+
+        //! Общая. Расчет
+        double z1 = m_a1 + m_b1 + m_c1 + m_d1;
+        double z2 = m_a2 + m_b2 + m_c2 + m_d2;
+
+        m_x = (z1 * ((m_plate1.center().x() - m_center.x()) + m_x1) +
+               z2 * ((m_plate2.center().x() - m_center.x()) + m_x2));
+        m_y = (z1 * ((m_plate1.center().y() - m_center.y()) + m_y1) +
+               z2 * ((m_plate2.center().y() - m_center.y()) + m_y2));
+        if (z1 + z2 > 0.5)
+        {
+            m_x = m_x / (z1 + z2);
+            m_y = m_y / (z1 + z2);
+        }
+        else
+        {
+            m_x = m_x / 0.5;
+            m_y = m_y / 0.5;
+        }
+
+        //! Общая. Передача
+        auto sd = new DeviceProtocols::StabDvcData(this, ChannelsDefines::chanStab,
+                                                   m_x - m_offsetX, m_y - m_offsetY,
+                                                   z1 + z2);
+        emit sendData(sd);
+        delete sd;
+
+        m_isData1 = false;
+        m_isData2 = false;
+    }
+}
+
 
 //void Bilateral::calibrate(const QString &channelUid)
 //{

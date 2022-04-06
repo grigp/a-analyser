@@ -36,6 +36,12 @@ QString ChannelsUtils::zChanForStabChan(const QString &channelIdStab) const
 {
     if (channelIdStab == ChannelsDefines::chanStab)
         return ChannelsDefines::chanZ;
+    else
+    if (channelIdStab == ChannelsDefines::chanStabLeft)
+        return ChannelsDefines::chanZLeft;
+    else
+    if (channelIdStab == ChannelsDefines::chanStabRight)
+        return ChannelsDefines::chanZRight;
     return "";
 }
 
@@ -45,9 +51,25 @@ ChannelsUtils::ChannelsUtils()
                                                                   std::make_tuple(QString("Стабилографический сигнал"),
                                                                                   QString("Stab"),
                                                                                   ChannelsDefines::ctStabilogram))
+               , std::pair<QString, ChannelsDefines::ChannelInfo>(ChannelsDefines::chanStabLeft,
+                                                                  std::make_tuple(QString("Стабилографический сигнал (слева)"),
+                                                                                  QString("StabLeft"),
+                                                                                  ChannelsDefines::ctStabilogram))
+               , std::pair<QString, ChannelsDefines::ChannelInfo>(ChannelsDefines::chanStabRight,
+                                                                  std::make_tuple(QString("Стабилографический сигнал (справа)"),
+                                                                                  QString("StabRight"),
+                                                                                  ChannelsDefines::ctStabilogram))
                , std::pair<QString, ChannelsDefines::ChannelInfo>(ChannelsDefines::chanZ,
                                                                   std::make_tuple(QString("Баллистограмма"),
                                                                                   QString("Z"),
+                                                                                  ChannelsDefines::ctBallistogram))
+               , std::pair<QString, ChannelsDefines::ChannelInfo>(ChannelsDefines::chanZLeft,
+                                                                  std::make_tuple(QString("Баллистограмма (слева)"),
+                                                                                  QString("ZLeft"),
+                                                                                  ChannelsDefines::ctBallistogram))
+               , std::pair<QString, ChannelsDefines::ChannelInfo>(ChannelsDefines::chanZRight,
+                                                                  std::make_tuple(QString("Баллистограмма (справа)"),
+                                                                                  QString("ZRight"),
                                                                                   ChannelsDefines::ctBallistogram))
                , std::pair<QString, ChannelsDefines::ChannelInfo>(ChannelsDefines::chanWeight,
                                                                   std::make_tuple(QString("Динамика веса"),

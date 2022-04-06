@@ -49,7 +49,11 @@ static QString cfNoSignal = "{90e313c6-8805-4235-8981-1fb85d7aea5f}";          /
  * \brief идентификаторы каналов
  */
  static QString chanStab = "{61E814F9-CE64-46F6-B158-46961964BEE9}";
+ static QString chanStabLeft = "{5583F847-AA5B-45DE-A35A-2403DCB56ACF}";
+ static QString chanStabRight = "{756AEB70-F814-4B7D-B412-F3B5DD776472}";
  static QString chanZ = "{41280317-450F-4CF7-B3D9-15E2D0B87469}";
+ static QString chanZLeft = "{C6189CC8-23CF-4697-BB38-4875CDA8C04E}";
+ static QString chanZRight = "{504F3104-5028-4AA8-AE81-F60491612DEF}";
  static QString chanWeight = "{13E17652-5130-4ECD-B049-68C0517872F2}";
  static QString chanRitmogram = "{C9E0639D-D077-4D7D-ABE6-28FC2DE2FA90}";
  static QString chanDynHand1 = "{A8A04F44-C766-495B-8662-BA4A2B0C2D6C}";

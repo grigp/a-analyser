@@ -117,12 +117,31 @@ public:
 //    void zeroingMyo(const int channel) override;
 //    double amplitudeMyo() override;
 
-private:
-    QPoint m_plate1Pos {QPoint(0, 500)};
-    QSize m_plate1Size {QSize(500, 500)};
-    QPoint m_plate2Pos {QPoint(500, 500)};
-    QSize m_plate2Size {QSize(500, 500)};
+private slots:
+    void getData(DeviceProtocols::DeviceData *data);
 
+
+private:
+
+    /*!
+     * \brief Обработка данных стабилограмм
+     */
+    void assignStabData();
+
+    QRect m_plate1 {QRect(0, 500, 500, 500)};
+    QRect m_plate2 {QRect(500, 500, 500, 500)};
+    QPoint m_center {QPoint(500, 250)};
+
+    Driver* m_drivers[2];       ///< Драйверы передающие данные
+    QString m_chanUid[2];       ///< UID каналов, по которым будет рассчитываться общая СКГ
+
+    ///< Координаты и масса по каналам
+    double m_x {0}, m_y{0}, m_a {0}, m_b {0}, m_c {0}, m_d {0};
+    double m_x1 {0}, m_y1{0}, m_a1 {0}, m_b1 {0}, m_c1 {0}, m_d1 {0};
+    double m_x2 {0}, m_y2{0}, m_a2 {0}, m_b2 {0}, m_c2 {0}, m_d2 {0};
+    bool m_isData1 {false}, m_isData2 {false};
+
+    double m_offsetX {0}, m_offsetY {0};
 };
 
 #endif // BILATERAL_H
