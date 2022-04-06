@@ -128,17 +128,14 @@ void PlatesPositioning::mousePressEvent(QMouseEvent *event)
 
     if (m_rectPlate1.contains(event->x(), event->y()))
     {
-        m_dx = event->x() - m_x0 + static_cast<int>(m_plate1.x() * m_prop);
+        m_dx = event->x() - (m_x0 + static_cast<int>(m_plate1.x() * m_prop));
         m_dy = event->y() - (m_y0 - static_cast<int>(m_plate1.y() * m_prop));
-        qDebug() << event->x() << m_x0 + static_cast<int>(m_plate1.x() * m_prop) << "|"
-                 << event->y() << m_y0 - static_cast<int>(m_plate1.y() * m_prop) << " "
-                 << m_prop << "  :  " << m_dx << m_dy;
         m_selectedPlate = 0;
     }
     else
     if (m_rectPlate2.contains(event->x(), event->y()))
     {
-        m_dx = event->x() - m_x0 + static_cast<int>(m_plate2.x() * m_prop);
+        m_dx = event->x() - (m_x0 + static_cast<int>(m_plate2.x() * m_prop));
         m_dy = event->y() - (m_y0 - static_cast<int>(m_plate2.y() * m_prop));
         m_selectedPlate = 1;
     }
@@ -160,14 +157,19 @@ void PlatesPositioning::mouseMoveEvent(QMouseEvent *event)
     {
         setCursor(QCursor(Qt::SizeVerCursor));
         if (m_selectedPlate == 0)
-            emit movePlate(0, static_cast<int>((event->x() - m_dx - m_x0) / m_prop), static_cast<int>((m_y0 + m_dy - event->y()) / m_prop));
+            emit movePlate(0, m_plate1.x(), static_cast<int>((m_y0 + m_dy - event->y()) / m_prop));
     }
     else
     if (m_rectPlate2.contains(event->x(), event->y()))
     {
         setCursor(QCursor(Qt::SizeAllCursor));
         if (m_selectedPlate == 1)
-            emit movePlate(1, static_cast<int>((event->x() - m_dx - m_x0) / m_prop), static_cast<int>((m_y0 + m_dy - event->y()) / m_prop));
+        {
+            int x = static_cast<int>((event->x() - m_dx - m_x0) / m_prop);
+            if (x < 0)
+                x = 0;
+            emit movePlate(1, x, static_cast<int>((m_y0 + m_dy - event->y()) / m_prop));
+        }
     }
     else
     {

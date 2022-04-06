@@ -19,6 +19,7 @@ int BilateralParamsDialog::exec()
     ui->frInfo->setStyleSheet("background-color: rgb(205, 220, 230);");
 
     connect(ui->wgtDiag, &PlatesPositioning::movePlate, this, &BilateralParamsDialog::on_movePlate);
+    setPlatformsClicked();
 
     return QDialog::exec();
 }
@@ -82,4 +83,10 @@ void BilateralParamsDialog::on_movePlate(const int plate, const int x, const int
         ui->edStab2KoordY->setValue(y);
         ui->wgtDiag->setPlate2(x, y);
     }
+}
+
+void BilateralParamsDialog::setPlatformsClicked()
+{
+    ui->wgtDiag->setPlate1(ui->edStab1KoordX->value(), ui->edStab1KoordY->value());
+    ui->wgtDiag->setPlate2(ui->edStab2KoordX->value(), ui->edStab2KoordY->value());
 }

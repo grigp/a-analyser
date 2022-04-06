@@ -38,6 +38,8 @@ private slots:
      */
     void on_movePlate(const int plate, const int x, const int y);
 
+    void setPlatformsClicked();
+
 private:
     Ui::BilateralParamsDialog *ui;
 };
