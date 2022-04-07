@@ -567,6 +567,28 @@ public:
     ~JumpPlateControl() {}
 };
 
+/*!
+ * \brief Класс управления драйвером из нескольких платформ MultiPlatformControl class
+ */
+class MultiPlatformControl : public DeviceControl
+{
+public:
+
+    /*!
+     * \brief Возвращает кол-во платформ
+     */
+    virtual int platformCount() = 0;
+
+    /*!
+     * \brief Возвращает размеры стабилоплатформы num
+     */
+    virtual QRect platform(const int num) = 0;
+
+    ~MultiPlatformControl() {}
+};
+
+
+
 ///<------------------------------------------------------------------------------------------
 ///< Протоколы
 

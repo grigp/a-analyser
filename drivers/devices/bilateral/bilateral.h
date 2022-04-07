@@ -9,6 +9,7 @@
 
 class Bilateral : public Driver
         , public DeviceProtocols::StabControl
+        , public DeviceProtocols::MultiPlatformControl
 {
     Q_OBJECT
 public:
@@ -98,6 +99,16 @@ public:
     void zeroing(const QString &channelUid) override;
     QSize stabSize() override;
 
+
+    /*!
+     * \brief Возвращает кол-во платформ
+     */
+    int platformCount() override {return 2;}
+
+    /*!
+     * \brief Возвращает положение и размеры стабилоплатформы num
+     */
+    QRect platform(const int num) override;
 
 private slots:
     void getData(DeviceProtocols::DeviceData *data);

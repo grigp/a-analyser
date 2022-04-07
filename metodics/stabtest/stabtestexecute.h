@@ -110,7 +110,8 @@ private:
     int m_recCount = 0;             ///< Счетчик пакетов данных в пробе
 
     Driver* m_driver {nullptr};     ///< Драйвер передающий данные
-    DeviceProtocols::StabControl* m_stabControl;  ///< Управление стабилографией в драйвере
+    DeviceProtocols::StabControl* m_stabControl {nullptr};             ///< Управление стабилографией в драйвере
+    DeviceProtocols::MultiPlatformControl* m_bilatControl {nullptr};   ///< Управление билатаральным режимом в драйвере
 
     TestResultData *m_trd;  ///< Объект, записывающий данные в базу
 

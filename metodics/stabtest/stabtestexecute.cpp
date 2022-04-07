@@ -105,7 +105,11 @@ void StabTestExecute::start()
         m_freqStab = m_driver->frequency(ChannelsDefines::chanStab);
         m_freqZ = m_driver->frequency(ChannelsDefines::chanZ);
 
-        qDebug() << m_stabControl->stabSize();
+        m_bilatControl = dynamic_cast<DeviceProtocols::MultiPlatformControl*>(m_driver);
+        if (m_bilatControl)
+        {
+            qDebug() << m_bilatControl->platform(0) << m_bilatControl->platform(1);
+        }
 
         connect(m_driver, &Driver::sendData, this, &StabTestExecute::getData);
         connect(m_driver, &Driver::communicationError, this, &StabTestExecute::on_communicationError);

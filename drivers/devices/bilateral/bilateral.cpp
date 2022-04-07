@@ -326,3 +326,13 @@ QSize Bilateral::stabSize()
     return QSize(xMax - xMin, yMax - yMin);
 }
 
+QRect Bilateral::platform(const int num)
+{
+    Q_ASSERT(num >= 0 && num < 2);
+    if (num == 0)
+        return m_plate1;
+    if (num == 1)
+        return m_plate2;
+    return QRect(0, 0, 0, 0);
+}
+
