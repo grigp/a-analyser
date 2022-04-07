@@ -5,6 +5,8 @@
 #include "aanalyserapplication.h"
 #include "deviceprotocols.h"
 #include "bilateralparamsdialog.h"
+#include "channelsutils.h"
+#include "settingsprovider.h"
 
 Bilateral::Bilateral(QObject *parent)
     : Driver (parent)
@@ -117,6 +119,7 @@ void Bilateral::start()
             connect(m_drivers[i], &Driver::sendData, this, &Bilateral::getData);
             connect(m_drivers[i], &Driver::communicationError, this, &Bilateral::communicationError);
 
+            m_stabControl[i] = dynamic_cast<DeviceProtocols::StabControl*>(m_drivers[i]);
             auto listChanUid = m_drivers[i]->getChannelsByFormat(ChannelsDefines::cfDecartCoordinates);
             if (listChanUid.size() > 0)
                 m_chanUid[i] = listChanUid.at(0);
@@ -143,16 +146,44 @@ QList<QString> Bilateral::getChannelsByProtocol(const QString &protocolUid) cons
 
 QList<QString> Bilateral::getChannelsByFormat(const QString &formatUid) const
 {
-    return QList<QString>();
+    QList<QString> retval;
+    if (formatUid == ChannelsDefines::cfDecartCoordinates)
+        retval << ChannelsDefines::chanStab << ChannelsDefines::chanStabLeft << ChannelsDefines::chanStabRight;
+    //!TODO дописать для других каналов
+    return retval;
 }
 
 QList<QString> Bilateral::getChannels() const
 {
-    return QList<QString>();
+    QList<QString> retval;
+
+    retval.clear();
+    retval << ChannelsDefines::chanStab << ChannelsDefines::chanStabLeft << ChannelsDefines::chanStabRight;
+
+    //!TODO дописать для других каналов
+//    for (int i = 0; i < 2; ++i)
+//    {
+//        if (m_drivers[i])
+//        {
+//            auto channels = m_drivers[i]->getChannels();
+//            foreach (auto chan, channels)
+//                if (ChannelsUtils::instance().channelType(chan) != ChannelsDefines::ctStabilogram)
+//                    retval << chan;
+//        }
+//    }
+    return retval;
 }
 
 int Bilateral::getSubChannelsCount(const QString &channelUid) const
 {
+    if (ChannelsUtils::instance().channelType(channelUid) == ChannelsDefines::ctStabilogram ||
+        ChannelsUtils::instance().channelType(channelUid) == ChannelsDefines::ctBallistogram ||
+        ChannelsUtils::instance().channelType(channelUid) == ChannelsDefines::ctDynamo ||
+        ChannelsUtils::instance().channelType(channelUid) == ChannelsDefines::ctBreath)
+        return 1;
+    else
+    if (ChannelsUtils::instance().channelType(channelUid) == ChannelsDefines::ctMyogram)
+        return 4;
     return 0;
 }
 
@@ -252,52 +283,46 @@ void Bilateral::assignStabData()
 }
 
 
-//void Bilateral::calibrate(const QString &channelUid)
-//{
+void Bilateral::calibrate(const QString &channelUid)
+{
+    if (channelUid == ChannelsDefines::chanStabLeft)
+        m_stabControl[0]->calibrate(ChannelsDefines::chanStab);
+    else
+    if (channelUid == ChannelsDefines::chanStabRight)
+        m_stabControl[1]->calibrate(ChannelsDefines::chanStab);
+    else
+    if (channelUid == ChannelsDefines::chanStab)
+    {
+        m_stabControl[0]->calibrate(ChannelsDefines::chanStab);
+        m_stabControl[1]->calibrate(ChannelsDefines::chanStab);
+    }
+}
 
-//}
+void Bilateral::zeroing(const QString &channelUid)
+{
+    Q_UNUSED(channelUid);
+    m_offsetX = m_x;
+    m_offsetY = m_y;
+    SettingsProvider::setValueToRegAppCopy("StabilanDriver", "zeroing_x", m_offsetX);
+    SettingsProvider::setValueToRegAppCopy("StabilanDriver", "zeroing_y", m_offsetY);
+}
 
-//void Bilateral::zeroing(const QString &channelUid)
-//{
+QSize Bilateral::stabSize()
+{
+    int xMin = m_plate1.x();
+    if (m_plate2.x() < xMin)
+        xMin = m_plate2.x();
+    int xMax = m_plate1.x() + m_plate1.width();
+    if (m_plate2.x() + m_plate2.width() > xMax)
+        xMax = m_plate2.x() + m_plate2.width();
 
-//}
+    int yMin = m_plate1.y();
+    if (m_plate2.y() < yMin)
+        yMin = m_plate2.y();
+    int yMax = m_plate1.y() + m_plate1.height();
+    if (m_plate2.y() + m_plate2.height() > yMax)
+        yMax = m_plate2.y() + m_plate2.height();
 
-//void Bilateral::calibrateTenso(const QString &channelUid)
-//{
+    return QSize(xMax - xMin, yMax - yMin);
+}
 
-//}
-
-//void Bilateral::getTensoValueDiapasone(const int chanNumber, double &min, double &max)
-//{
-
-//}
-
-//void Bilateral::getTensoValueDiapasone(const QString channelId, double &min, double &max)
-//{
-
-//}
-
-//void Bilateral::setTensoValueDiapasone(const int chanNumber, const double min, const double max)
-//{
-
-//}
-
-//void Bilateral::setBoundsDelArtifacts(const int low, const int high)
-//{
-
-//}
-
-//void Bilateral::zeroingMyo()
-//{
-
-//}
-
-//void Bilateral::zeroingMyo(const int channel)
-//{
-
-//}
-
-//double Bilateral::amplitudeMyo()
-//{
-
-//}

@@ -105,6 +105,8 @@ void StabTestExecute::start()
         m_freqStab = m_driver->frequency(ChannelsDefines::chanStab);
         m_freqZ = m_driver->frequency(ChannelsDefines::chanZ);
 
+        qDebug() << m_stabControl->stabSize();
+
         connect(m_driver, &Driver::sendData, this, &StabTestExecute::getData);
         connect(m_driver, &Driver::communicationError, this, &StabTestExecute::on_communicationError);
 

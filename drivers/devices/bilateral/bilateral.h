@@ -8,10 +8,7 @@
 #include "devicesdefines.h"
 
 class Bilateral : public Driver
-//        , public DeviceProtocols::StabControl
-//        , public DeviceProtocols::TensoControl
-//        , public DeviceProtocols::PulseControl
-//        , public DeviceProtocols::MyoControl
+        , public DeviceProtocols::StabControl
 {
     Q_OBJECT
 public:
@@ -97,25 +94,10 @@ public:
      */
     static QList<DeviceProtocols::Ports> getPorts();
 
-//    void calibrate(const QString &channelUid) override;
-//    void zeroing(const QString &channelUid) override;
+    void calibrate(const QString &channelUid) override;
+    void zeroing(const QString &channelUid) override;
+    QSize stabSize() override;
 
-//    void calibrateTenso(const QString &channelUid) override;
-//    /*!
-//     * \brief запрос / установка диапазонов значений для каналов
-//     * \param chanNumber - номер канала 0 - ...
-//     * \param min - минимальное значение
-//     * \param max - максимальное значение
-//     */
-//    void getTensoValueDiapasone(const int chanNumber, double &min, double &max);
-//    void getTensoValueDiapasone(const QString channelId, double &min, double &max);
-//    void setTensoValueDiapasone(const int chanNumber, const double min, const double max);
-
-//    void setBoundsDelArtifacts(const int low, const int high) override;
-
-//    void zeroingMyo() override;
-//    void zeroingMyo(const int channel) override;
-//    double amplitudeMyo() override;
 
 private slots:
     void getData(DeviceProtocols::DeviceData *data);
@@ -134,6 +116,7 @@ private:
 
     Driver* m_drivers[2];       ///< Драйверы передающие данные
     QString m_chanUid[2];       ///< UID каналов, по которым будет рассчитываться общая СКГ
+    DeviceProtocols::StabControl* m_stabControl[2];   ///< Протоколы управления стабилоанализаторами
 
     ///< Координаты и масса по каналам
     double m_x {0}, m_y{0}, m_a {0}, m_b {0}, m_c {0}, m_d {0};
