@@ -108,7 +108,8 @@ void StabTestExecute::start()
         m_bilatControl = dynamic_cast<DeviceProtocols::MultiPlatformControl*>(m_driver);
         if (m_bilatControl)
         {
-            qDebug() << m_bilatControl->platform(0) << m_bilatControl->platform(1);
+            m_maxDiap = computePlatforms();
+            ui->wgtSKG->setDiap(m_maxDiap);
         }
 
         connect(m_driver, &Driver::sendData, this, &StabTestExecute::getData);
@@ -149,9 +150,9 @@ void StabTestExecute::scaleChange(int scaleId)
     int v = 1;
     for (int i = 0; i < scaleId; ++i)
         v = v * 2;
-    ui->wgtSKG->setDiap(128 / v);
+    ui->wgtSKG->setDiap(m_maxDiap / v);
     if (m_patientWin)
-        m_patientWin->setDiap(128 / v);
+        m_patientWin->setDiap(m_maxDiap / v);
 }
 
 void StabTestExecute::getData(DeviceProtocols::DeviceData *data)
@@ -429,4 +430,53 @@ void StabTestExecute::hidePatientWindow()
         delete m_patientWin;
         m_patientWin = nullptr;
     }
+}
+
+int StabTestExecute::computePlatforms()
+{
+    auto calcRectMinMax = [&](QRect plate1,
+                              QRect plate2,
+                              int &xMin, int &xMax, int &yMin, int &yMax)
+    {
+        xMin = plate1.x();
+        if (plate2.x() < plate1.x())
+            xMin = plate2.x();
+        xMax = plate1.x() + plate1.width();
+        if (plate2.x() + plate2.width() > plate1.x() + plate1.width())
+            xMax = plate2.x() + plate2.width();
+
+        yMin = plate1.y();
+        if (plate2.y() < plate1.y())
+            yMin = plate2.y();
+        yMax = plate1.y() + plate1.height();
+        if (plate2.y() + plate2.height() > plate1.y() + plate1.height())
+            yMax = plate2.y() + plate2.height();
+    };
+
+
+    int xMin = 0;
+    int xMax = 0;
+    int yMin = 0;
+    int yMax = 0;
+    calcRectMinMax(m_bilatControl->platform(0), m_bilatControl->platform(1), xMin, xMax, yMin, yMax);
+
+    int xMid = (xMax + xMin) / 2;
+    int yMid = (yMax + yMin) / 2;
+    qDebug() << yMin << yMax << yMid;
+
+    m_platform1 = QRect(m_bilatControl->platform(0).x() - xMid, yMid - m_bilatControl->platform(0).y(),
+                        m_bilatControl->platform(0).width(), m_bilatControl->platform(0).height());
+    m_platform2 = QRect(m_bilatControl->platform(1).x() - xMid, yMid - m_bilatControl->platform(1).y(),
+                        m_bilatControl->platform(1).width(), m_bilatControl->platform(1).height());
+
+    calcRectMinMax(m_platform1, m_platform2, xMin, xMax, yMin, yMax);
+
+    int diap = qMax(abs(xMin), abs(xMax));
+    diap = qMax(diap, abs(yMin));
+    diap = qMax(diap, abs(yMax));
+
+    qDebug() << m_bilatControl->platform(0) << m_bilatControl->platform(1);
+    qDebug() << m_platform1 << m_platform2 << diap;
+
+    return diap;
 }

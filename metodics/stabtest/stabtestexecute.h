@@ -99,8 +99,15 @@ private:
      */
     void hidePatientWindow();
 
-    int m_freqStab = 50;        ///< Частота дискретизации стабилограммы
-    int m_freqZ = 50;           ///< Частота дискретизации баллистограммы
+    /*!
+     * \brief Рассчитывает положение платформ в билатеральном режиме
+     * \return максимальный диапазон
+     */
+    int computePlatforms();
+
+    int m_freqStab {50};        ///< Частота дискретизации стабилограммы
+    int m_freqZ {50};           ///< Частота дискретизации баллистограммы
+    int m_maxDiap {128};        ///< Максимальный диапазон
 
     DataDefines::PatientKard m_kard;
     QList<StabTestParams::ProbeParams> m_params; ///< Параметры методики
@@ -117,6 +124,9 @@ private:
 
 //    bool m_patientWinPresent {false};
     PatientWindow* m_patientWin {nullptr};  ///< Окно пациента
+
+    QRect m_platform1 {QRect(0, 0, 0, 0)};   ///< Платформы в билатеральном режиме
+    QRect m_platform2 {QRect(0, 0, 0, 0)};
 };
 
 #endif // STABTESTEXECUTE_H

@@ -131,7 +131,17 @@ void Bilateral::start()
 
 void Bilateral::stop()
 {
+    if (m_drivers[0])
+    {
+        m_drivers[0]->stop();
+        m_drivers[0]->deleteLater();
+    }
 
+    if (m_drivers[1])
+    {
+        m_drivers[1]->stop();
+        m_drivers[1]->deleteLater();
+    }
 }
 
 int Bilateral::frequency(const QString &channelId) const
