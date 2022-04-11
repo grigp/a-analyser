@@ -110,6 +110,9 @@ void StabTestExecute::start()
         {
             m_maxDiap = computePlatforms();
             ui->wgtSKG->setDiap(m_maxDiap);
+            ui->wgtSKG->addPlatform(m_platform1);
+            ui->wgtSKG->addPlatform(m_platform2);
+            qDebug() << m_platform1 << m_platform2;
         }
 
         connect(m_driver, &Driver::sendData, this, &StabTestExecute::getData);
@@ -445,12 +448,12 @@ int StabTestExecute::computePlatforms()
         if (plate2.x() + plate2.width() > plate1.x() + plate1.width())
             xMax = plate2.x() + plate2.width();
 
-        yMin = plate1.y();
-        if (plate2.y() < plate1.y())
-            yMin = plate2.y();
-        yMax = plate1.y() + plate1.height();
-        if (plate2.y() + plate2.height() > plate1.y() + plate1.height())
-            yMax = plate2.y() + plate2.height();
+        yMax = plate1.y();
+        if (plate2.y() > plate1.y())
+            yMax = plate2.y();
+        yMin = plate1.y() - plate1.height();
+        if (plate2.y() - plate2.height() < plate1.y() - plate1.height())
+            yMin = plate2.y() - plate2.height();
     };
 
 
@@ -462,21 +465,22 @@ int StabTestExecute::computePlatforms()
 
     int xMid = (xMax + xMin) / 2;
     int yMid = (yMax + yMin) / 2;
-    qDebug() << yMin << yMax << yMid;
+//    qDebug() << "x:" << xMin << xMid << xMax << "   y:" << yMin << yMid << yMax;
 
-    m_platform1 = QRect(m_bilatControl->platform(0).x() - xMid, yMid - m_bilatControl->platform(0).y(),
+    m_platform1 = QRect(m_bilatControl->platform(0).x() - xMid, m_bilatControl->platform(0).y() - yMid,
                         m_bilatControl->platform(0).width(), m_bilatControl->platform(0).height());
-    m_platform2 = QRect(m_bilatControl->platform(1).x() - xMid, yMid - m_bilatControl->platform(1).y(),
+    m_platform2 = QRect(m_bilatControl->platform(1).x() - xMid, m_bilatControl->platform(1).y() - yMid,
                         m_bilatControl->platform(1).width(), m_bilatControl->platform(1).height());
 
     calcRectMinMax(m_platform1, m_platform2, xMin, xMax, yMin, yMax);
+//    qDebug() << xMin << xMax << yMin << yMax;
 
     int diap = qMax(abs(xMin), abs(xMax));
     diap = qMax(diap, abs(yMin));
     diap = qMax(diap, abs(yMax));
 
-    qDebug() << m_bilatControl->platform(0) << m_bilatControl->platform(1);
-    qDebug() << m_platform1 << m_platform2 << diap;
+//    qDebug() << m_bilatControl->platform(0) << m_bilatControl->platform(1);
+//    qDebug() << m_platform1 << m_platform2 << diap;
 
     return diap;
 }

@@ -14,6 +14,7 @@ class AreaSKG;
 class GridSKG;
 class TraceSKG;
 class LineSKG;
+class Platforms;
 class BrokenLinesSKG;
 class SignalAccess;
 
@@ -142,6 +143,12 @@ public:
      */
     void setVisibleSKG(const bool isVisible);
 
+    /*!
+     * \brief Добавляет отображаемую платформу
+     * \param platform - положение и размер платформу
+     */
+    void addPlatform(QRect platform);
+
 
 protected:
     void resizeEvent(QResizeEvent *event);
@@ -165,6 +172,7 @@ private:
     GridSKG* m_gridSKG {nullptr};
     TraceSKG* m_traceSKG {nullptr};
     LineSKG* m_lineSKG {nullptr};
+    Platforms* m_platforms {nullptr};
     BrokenLinesSKG* m_brokenLinesSKG {nullptr};
     QGraphicsRectItem* m_marker {nullptr};
     QList<TargetInfo> m_targets;

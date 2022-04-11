@@ -4,6 +4,7 @@
 #include "gridskg.h"
 #include "traceskg.h"
 #include "lineskg.h"
+#include "platforms.h"
 #include "brokenlinesskg.h"
 #include "signalaccess.h"
 #include "areaskgdefines.h"
@@ -24,6 +25,7 @@ AreaSKG::AreaSKG(QWidget *parent) :
   , m_gridSKG(new GridSKG(128))
   , m_traceSKG(new TraceSKG(128))
   , m_lineSKG(new LineSKG(128))
+  , m_platforms(new Platforms(128))
   , m_brokenLinesSKG(new BrokenLinesSKG(128))
 {
     ui->setupUi(this);
@@ -46,6 +48,7 @@ void AreaSKG::setDiap(const int diap)
     m_gridSKG->setDiap(diap);
     m_traceSKG->setDiap(diap);
     m_lineSKG->setDiap(diap);
+    m_platforms->setDiap(diap);
     m_brokenLinesSKG->setDiap(diap);
     m_diap = diap;
     ui->panSKG->ensureVisible(QRectF(-m_diap, -m_diap, m_diap * 2, m_diap * 2));
@@ -218,6 +221,12 @@ void AreaSKG::setVisibleSKG(const bool isVisible)
         m_lineSKG->setVisible(isVisible);
 }
 
+void AreaSKG::addPlatform(QRect platform)
+{
+    if (m_platforms)
+        m_platforms->addPlatform(platform);
+}
+
 void AreaSKG::resizeEvent(QResizeEvent *event)
 {
     ui->panSKG->ensureVisible(QRectF(-m_diap, -m_diap, m_diap * 2, m_diap * 2));
@@ -237,6 +246,7 @@ void AreaSKG::setAreaSKG()
     m_sceneSKG->setBackgroundBrush(QBrush(backColor));
 
     ui->panSKG->setScene(m_sceneSKG);
+    m_sceneSKG->addItem(m_platforms);
     m_sceneSKG->addItem(m_gridSKG);
     m_sceneSKG->addItem(m_traceSKG);
     m_sceneSKG->addItem(m_lineSKG);
