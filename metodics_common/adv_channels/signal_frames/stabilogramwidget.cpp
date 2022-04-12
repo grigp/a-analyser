@@ -39,12 +39,12 @@ void StabilogramWidget::newProbe()
 {
     if (ui->btnStabRecord->isChecked())
     {
-        m_stb = new Stabilogram(ChannelsDefines::chanStab, ui->wgtStabOscill->frequency());
+        m_stb = new Stabilogram(channelId(), ui->wgtStabOscill->frequency());
         objTestResultData()->addChannel(m_stb);
     }
     if (ui->btnZRecord->isChecked())
     {
-        m_z = new Balistogram(ChannelsDefines::chanZ, ui->wgtZOscill->frequency());
+        m_z = new Balistogram(ChannelsUtils::instance().zChanForStabChan(channelId()), ui->wgtZOscill->frequency());
         objTestResultData()->addChannel(m_z);
     }
 }
@@ -166,7 +166,7 @@ void StabilogramWidget::on_calibrate()
 {
     DeviceProtocols::StabControl* stabControl = dynamic_cast<DeviceProtocols::StabControl*>(driver());
     if (stabControl)
-        stabControl->calibrate(ChannelsDefines::chanStab);
+        stabControl->calibrate(channelId());
 }
 
 void StabilogramWidget::on_recStabClick(bool checked)
@@ -189,10 +189,10 @@ void StabilogramWidget::showAdvancedInfo(DeviceProtocols::StabDvcData *stabData)
     auto summ = stabData->a() + stabData->b() + stabData->c() + stabData->d();
     ui->lblSumm->setText(QString(tr("Сумма") + " = %1").arg(QString::number(summ, 'f', 2)));
 
-    ui->pbValueA->setValue(stabData->a() / 40.0 * ui->pbValueA->maximum());
-    ui->pbValueB->setValue(stabData->b() / 40.0 * ui->pbValueB->maximum());
-    ui->pbValueC->setValue(stabData->c() / 40.0 * ui->pbValueC->maximum());
-    ui->pbValueD->setValue(stabData->d() / 40.0 * ui->pbValueD->maximum());
+    ui->pbValueA->setValue(static_cast<int>(stabData->a() / 40.0 * ui->pbValueA->maximum()));
+    ui->pbValueB->setValue(static_cast<int>(stabData->b() / 40.0 * ui->pbValueB->maximum()));
+    ui->pbValueC->setValue(static_cast<int>(stabData->c() / 40.0 * ui->pbValueC->maximum()));
+    ui->pbValueD->setValue(static_cast<int>(stabData->d() / 40.0 * ui->pbValueD->maximum()));
 }
 
 void StabilogramWidget::setRecordedChannels()

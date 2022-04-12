@@ -28,6 +28,7 @@ static QString cfNoSignal = "{90e313c6-8805-4235-8981-1fb85d7aea5f}";          /
  static QString ctMyogram = "{0DA6EBB3-15BC-41D6-90F2-59D847A42863}";
  static QString ctWeightPlate = "{50DFB124-CF42-4E14-9A02-82DFBFAAB159}";
  static QString ctADCValues = "{4E00D963-0247-4F30-BB94-1AA72A6938EC}";
+ static QString ctBilat = "{3C37787A-C74f-43C8-B0FE-F60D7D4D7504}";
 
  static QString ctTenso = "{A7D6E553-3BE1-4FDF-A29D-A4DB98F88AFC}";  ///< Виртуальный тензоканал
 
@@ -93,6 +94,8 @@ static QString cfNoSignal = "{90e313c6-8805-4235-8981-1fb85d7aea5f}";          /
  static QString chanOctaedronResult = "{2B1AF94A-C4B7-4FA9-A173-1667413C2B99}";
  static QString chanBoxerDodgingResult = "{0B1C5B04-3F5F-4A49-86DC-AC12047AD5CF}";
  static QString chanTriangleResult = "{AF373B61-07FE-47D3-BF88-3D76E817C67A}";
+
+ static QString chanBilat = "{6A5985B5-0954-4877-9309-EB3F6A2AFC91}";
 
 /*!
  * \brief Структура информации о канале ChannelInfo struct

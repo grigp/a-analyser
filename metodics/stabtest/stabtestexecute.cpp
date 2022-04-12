@@ -13,6 +13,7 @@
 #include "deviceprotocols.h"
 #include "driver.h"
 #include "settingsprovider.h"
+#include "bilateralresultdata.h"
 
 #include "coloredcirclewindow.h"
 #include "soundpickwindow.h"
@@ -31,6 +32,7 @@ StabTestExecute::StabTestExecute(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::StabTestExecute)
   , m_trd(new TestResultData())
+  , m_rdBilat(new BilateralResultData(ChannelsDefines::chanBilat))
 {
     ui->setupUi(this);
 
@@ -112,6 +114,8 @@ void StabTestExecute::start()
             ui->wgtSKG->setDiap(m_maxDiap);
             ui->wgtSKG->addPlatform(m_platform1);
             ui->wgtSKG->addPlatform(m_platform2);
+            ui->wgtSKG->addTarget(-100, 0, Qt::red, Qt::darkRed);
+            ui->wgtSKG->addTarget(100, 0, Qt::red, Qt::darkRed);
         }
 
         connect(m_driver, &Driver::sendData, this, &StabTestExecute::getData);
@@ -135,6 +139,11 @@ void StabTestExecute::start()
         ui->wgtAdvChannels->assignDriver(m_driver, m_trd);
         //! Стабилограмма будет записана всегда
         ui->wgtAdvChannels->setAllwaysRecordingChannel(ui->cbSelectChannel->currentData(ChannelsUtils::ChannelUidRole).toString());
+        if (m_bilatControl)
+        {
+            ui->wgtAdvChannels->setAllwaysRecordingChannel(ChannelsDefines::chanStabLeft);
+            ui->wgtAdvChannels->setAllwaysRecordingChannel(ChannelsDefines::chanStabRight);
+        }
         auto val = SettingsProvider::valueFromRegAppCopy("AdvancedChannelsWidget", "SplitterProbePosition").toByteArray();
         ui->splitter->restoreState(val);
 
@@ -221,6 +230,26 @@ void StabTestExecute::getData(DeviceProtocols::DeviceData *data)
                 if (m_probe >= m_params.size())
                     finishTest();
             }
+        }
+    }
+    else
+    if (data->channelId() == ChannelsDefines::chanStabLeft)
+    {
+        if (m_bilatControl)
+        {
+            DeviceProtocols::StabDvcData *stabData = static_cast<DeviceProtocols::StabDvcData*>(data);
+            ui->wgtSKG->setTarget(m_platform1.center().x() + stabData->x(),
+                                  m_platform1.y() - m_platform1.height() / 2 + stabData->y(), 0);
+        }
+    }
+    else
+    if (data->channelId() == ChannelsDefines::chanStabRight)
+    {
+        if (m_bilatControl)
+        {
+            DeviceProtocols::StabDvcData *stabData = static_cast<DeviceProtocols::StabDvcData*>(data);
+            ui->wgtSKG->setTarget(m_platform2.center().x() + stabData->x(),
+                                  m_platform2.y() - m_platform2.height() / 2 + stabData->y(), 1);
         }
     }
 }
@@ -391,6 +420,12 @@ void StabTestExecute::finishTest()
 {
     hidePatientWindow();
     m_isRecording = false;
+    if (m_bilatControl)
+    {
+        m_rdBilat->addPlatform(m_platform1);
+        m_rdBilat->addPlatform(m_platform2);
+        m_trd->addChannel(m_rdBilat);
+    }
     m_trd->saveTest();
     static_cast<ExecuteWidget*>(parent())->showDB();
 }

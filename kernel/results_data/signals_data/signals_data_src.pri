@@ -22,7 +22,8 @@ HEADERS += \
     $$PWD/triangleresultdata.h \
     $$PWD/balistogram.h \
     $$PWD/weightplatesignal.h \
-    $$PWD/takeputresultdata.h
+    $$PWD/takeputresultdata.h \
+    $$PWD/bilateralresultdata.h
 
 SOURCES += \
     $$PWD/signaldata.cpp \
@@ -46,4 +47,5 @@ SOURCES += \
     $$PWD/triangleresultdata.cpp \
     $$PWD/balistogram.cpp \
     $$PWD/weightplatesignal.cpp \
-    $$PWD/takeputresultdata.cpp
+    $$PWD/takeputresultdata.cpp \
+    $$PWD/bilateralresultdata.cpp

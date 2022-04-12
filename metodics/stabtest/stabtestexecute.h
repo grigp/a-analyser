@@ -16,6 +16,7 @@ class Stabilogram;
 class Balistogram;
 class Driver;
 class PatientWindow;
+class BilateralResultData;
 
 /*!
  * \brief Виджет выполнения стабилометрического тестирования StabTestExecute class
@@ -127,6 +128,7 @@ private:
 
     QRect m_platform1 {QRect(0, 0, 0, 0)};   ///< Платформы в билатеральном режиме
     QRect m_platform2 {QRect(0, 0, 0, 0)};
+    BilateralResultData* m_rdBilat {nullptr};
 };
 
 #endif // STABTESTEXECUTE_H

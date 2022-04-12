@@ -211,6 +211,10 @@ ChannelsUtils::ChannelsUtils()
                                                                     std::make_tuple(QString("Сигнал двухканальный"),
                                                                                     QString("AnySignalDual"),
                                                                                     ChannelsDefines::ctDecartTraectory))
+                 , std::pair<QString, ChannelsDefines::ChannelInfo>(ChannelsDefines::chanBilat,
+                                                                    std::make_tuple(QString("Билатеральный режим"),
+                                                                                    QString("Bilat"),
+                                                                                    ChannelsDefines::ctBilat))
                  })
     , m_formats({
                   std::pair<QString, QString>(ChannelsDefines::ctDecartTraectory, ChannelsDefines::cfDecartCoordinates)
