@@ -372,6 +372,7 @@ AreaSKG
     qproperty-skg_color: rgb(0, 0, 255);
     qproperty-ellipse_color: rgb(0, 120, 110);
     qproperty-marker_color: rgb(200, 0, 0);
+    qproperty-platforms_color:  rgb(235, 255, 255);
 }
 
 DynamicDiagram

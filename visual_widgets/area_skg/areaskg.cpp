@@ -172,6 +172,18 @@ void AreaSKG::setColorMarker(const QColor &color)
     m_markerColor = color;
 }
 
+QColor AreaSKG::colorPlatforms() const
+{
+    return  m_platformsColor;
+}
+
+void AreaSKG::setColorPlatforms(const QColor &color)
+{
+    m_platformsColor = color;
+    if (m_platforms)
+        m_platforms->setColorPlatform(color);
+}
+
 void AreaSKG::addTarget(const double x, const double y, const QColor colorBackground, const QColor colorBorder)
 {
     QGraphicsRectItem* target = m_sceneSKG->addRect(QRectF(0, 0, 10, 10), colorBorder, colorBackground);

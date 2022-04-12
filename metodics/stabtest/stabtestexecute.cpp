@@ -112,7 +112,6 @@ void StabTestExecute::start()
             ui->wgtSKG->setDiap(m_maxDiap);
             ui->wgtSKG->addPlatform(m_platform1);
             ui->wgtSKG->addPlatform(m_platform2);
-            qDebug() << m_platform1 << m_platform2;
         }
 
         connect(m_driver, &Driver::sendData, this, &StabTestExecute::getData);

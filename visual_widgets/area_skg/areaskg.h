@@ -25,6 +25,7 @@ class AreaSKG : public QWidget
     Q_PROPERTY(QColor skg_color READ colorSKG WRITE setColorSKG DESIGNABLE true)
     Q_PROPERTY(QColor ellipse_color READ colorEllipse WRITE setColorEllipse DESIGNABLE true)
     Q_PROPERTY(QColor marker_color READ colorMarker WRITE setColorMarker DESIGNABLE true)
+    Q_PROPERTY(QColor platforms_color READ colorPlatforms WRITE setColorPlatforms DESIGNABLE true)
 
 public:
     explicit AreaSKG(QWidget *parent = nullptr);
@@ -103,6 +104,8 @@ public:
     QColor colorMarker() const;
     void setColorMarker(const QColor &color);
 
+    QColor colorPlatforms() const;
+    void setColorPlatforms(const QColor &color);
     /*!
      * \brief Добавляет метку цели
      * \param x, y - координаты цели
@@ -178,6 +181,7 @@ private:
     QList<TargetInfo> m_targets;
 
     QColor m_markerColor {Qt::red};
+    QColor m_platformsColor {Qt::gray};
 
     int m_diap {128};
     bool m_isShowTrace {false};

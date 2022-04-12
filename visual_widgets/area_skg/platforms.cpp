@@ -61,9 +61,11 @@ void Platforms::addPlatform(QRect platform)
 void Platforms::setColorPlatform(QColor color)
 {
     m_color = color;
+    m_colorFrame =  QColor(m_color.red() / 8, m_color.green() / 8, m_color.blue() / 8);
 }
 
 void Platforms::setColorFrame(QColor color)
 {
     m_colorFrame = color;
+    qDebug() << Q_FUNC_INFO << m_colorFrame;
 }
