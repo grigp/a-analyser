@@ -9,7 +9,6 @@ GridSKG::GridSKG(int diap, QGraphicsItem *parent)
     : QGraphicsItem(parent)
     , m_diap(diap)
 {
-
 }
 
 QRectF GridSKG::boundingRect() const
@@ -24,7 +23,7 @@ QRectF GridSKG::boundingRect() const
 void GridSKG::paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWidget *widget)
 {
     Q_UNUSED(item);
-    // Параметры построения
+    //! Параметры построения
     m_width = widget->size().width();
     m_height = widget->size().height();
     int minS = qMin(m_width, m_height);
@@ -36,7 +35,7 @@ void GridSKG::paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWi
 
     painter->save();
 
-    // Оси и метки 0
+    //! Оси и метки 0
     painter->setPen(QPen(Qt::black, 1));
     painter->drawRect(left, top, right - left, bottom - top);
     painter->drawLine(0, top, 0, bottom);
@@ -48,7 +47,7 @@ void GridSKG::paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWi
     painter->drawText(QRectF(0-10, bottom, 20, AreaSKGDefines::I_LABEL_SPACE), Qt::AlignCenter, "0");
     painter->rotate(-90);
 
-    // Сетка
+    //! Сетка
     //qDebug() << ++n << m_diap << m_prop;
     for (int i = 1; i <= m_diap; ++i)
     {
@@ -87,9 +86,9 @@ void GridSKG::paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWi
 void GridSKG::setDiap(int diap)
 {
     //! Если до первой прорисовки сделать изменение масштаба, появятся коллизии
+    m_diap = diap;
     if (m_width > 0 && m_height > 0)
     {
-        m_diap = diap;
         int minS = qMin(m_width, m_height);
         m_prop = static_cast<double>(minS / 2 - AreaSKGDefines::I_LABEL_SPACE) / static_cast<double>(m_diap);
         update(boundingRect());

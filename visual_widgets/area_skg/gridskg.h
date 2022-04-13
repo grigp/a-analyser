@@ -24,9 +24,9 @@ private:
     void drawPositionGrid(QPainter* painter, int left, int top, int right, int bottom, int posGrid, bool isLabels);
 
     int m_diap;
-    double m_prop = 1;
-    int m_width = 0;
-    int m_height = 0;
+    double m_prop {1};
+    int m_width {0};
+    int m_height {0};
 };
 
 #endif // GRIDSKG_H

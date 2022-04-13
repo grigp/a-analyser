@@ -499,7 +499,6 @@ int StabTestExecute::computePlatforms()
 
     int xMid = (xMax + xMin) / 2;
     int yMid = (yMax + yMin) / 2;
-//    qDebug() << "x:" << xMin << xMid << xMax << "   y:" << yMin << yMid << yMax;
 
     m_platform1 = QRect(m_bilatControl->platform(0).x() - xMid, m_bilatControl->platform(0).y() - yMid,
                         m_bilatControl->platform(0).width(), m_bilatControl->platform(0).height());
@@ -507,14 +506,10 @@ int StabTestExecute::computePlatforms()
                         m_bilatControl->platform(1).width(), m_bilatControl->platform(1).height());
 
     calcRectMinMax(m_platform1, m_platform2, xMin, xMax, yMin, yMax);
-//    qDebug() << xMin << xMax << yMin << yMax;
 
     int diap = qMax(abs(xMin), abs(xMax));
     diap = qMax(diap, abs(yMin));
     diap = qMax(diap, abs(yMax));
-
-//    qDebug() << m_bilatControl->platform(0) << m_bilatControl->platform(1);
-//    qDebug() << m_platform1 << m_platform2 << diap;
 
     return diap;
 }
