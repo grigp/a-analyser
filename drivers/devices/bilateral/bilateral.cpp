@@ -199,6 +199,9 @@ int Bilateral::getSubChannelsCount(const QString &channelUid) const
 
 bool Bilateral::isChannelRecordingDefault(const QString &channelUid) const
 {
+    if (ChannelsUtils::instance().channelType(channelUid) == ChannelsDefines::ctStabilogram ||
+            ChannelsUtils::instance().channelType(channelUid) == ChannelsDefines::ctBallistogram)
+        return true;
     return false;
 }
 

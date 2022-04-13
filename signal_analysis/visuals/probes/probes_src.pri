@@ -1,6 +1,5 @@
 INCLUDEPATH += $$PWD
 
-include(channel/channel_bss_src.pri)
 
 HEADERS += \
 
