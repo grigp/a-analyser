@@ -24,11 +24,12 @@ AreaSKG::AreaSKG(QWidget *parent) :
   , m_sceneSKG(new QGraphicsScene(SceneRect))
   , m_gridSKG(new GridSKG(128))
   , m_traceSKG(new TraceSKG(128))
-  , m_lineSKG(new LineSKG(128))
+//  , m_lineSKG(new LineSKG(128))
   , m_platforms(new Platforms(128))
   , m_brokenLinesSKG(new BrokenLinesSKG(128))
 {
     ui->setupUi(this);
+    m_lineSKG.clear();
     m_targets.clear();
     setAreaSKG();
 }
@@ -47,7 +48,9 @@ void AreaSKG::setDiap(const int diap)
 {
     m_gridSKG->setDiap(diap);
     m_traceSKG->setDiap(diap);
-    m_lineSKG->setDiap(diap);
+    foreach (auto lineSKG, m_lineSKG)
+        lineSKG->setDiap(diap);
+//    m_lineSKG->setDiap(diap);
     m_platforms->setDiap(diap);
     m_brokenLinesSKG->setDiap(diap);
     m_diap = diap;
@@ -90,14 +93,21 @@ void AreaSKG::showTrace(const bool trace)
         m_traceSKG->clear();
 }
 
-void AreaSKG::setSignal(SignalAccess *signal, const int begin, const int end)
+void AreaSKG::setSignal(SignalAccess *signal, const int num, const int begin, const int end)
 {
-    m_lineSKG->setSignal(signal, begin, end);
+    if (num == m_lineSKG.size())
+    {
+        auto lineSKG = new LineSKG(m_diap);
+        m_lineSKG << lineSKG;
+        m_sceneSKG->addItem(lineSKG);
+    }
+    if (num >= 0 && num < m_lineSKG.size())
+        m_lineSKG.at(num)->setSignal(signal, begin, end);
 }
 
-void AreaSKG::setSection(const int begin, const int end)
+void AreaSKG::setSection(const int begin, const int end, const int num)
 {
-    m_lineSKG->setSection(begin, end);
+    m_lineSKG.at(num)->setSection(begin, end);
     m_sceneSKG->update(SceneRect);
     m_brokenLinesSKG->update();
 }
@@ -123,42 +133,52 @@ void AreaSKG::setVisibleMarker(const bool visibleMarker)
 
 void AreaSKG::setZeroing(const bool zeroing)
 {
-    if (m_lineSKG)
-        m_lineSKG->setZeroing(zeroing);
+    foreach (auto lineSKG, m_lineSKG)
+        lineSKG->setZeroing(zeroing);
+//    if (m_lineSKG)
+    //        m_lineSKG->setZeroing(zeroing);
+}
+
+void AreaSKG::setOffset(const double offsetX, const double offsetY, const int num)
+{
+    if (num >= 0 && num < m_lineSKG.size())
+        m_lineSKG.at(num)->setOffset(offsetX, offsetY);
 }
 
 void AreaSKG::setEllipse(const double sizeA, const double sizeB, const double angle)
 {
-    if (m_lineSKG)
-        m_lineSKG->setEllipse(sizeA, sizeB, angle);
+    if (m_lineSKG.size() > 0)
+        m_lineSKG.at(0)->setEllipse(sizeA, sizeB, angle);
 
+//    if (m_lineSKG)
+//        m_lineSKG->setEllipse(sizeA, sizeB, angle);
 }
 
-void AreaSKG::setColorSKG(const QColor &color)
+void AreaSKG::setColorSKG(const QColor &color, const int num)
 {
-    if (m_lineSKG)
-        m_lineSKG->setColorSKG(color);
+    if (num >= 0 && num < m_lineSKG.size())
+        m_lineSKG.at(num)->setColorSKG(color);
     if (m_traceSKG)
         m_traceSKG->setColorSKG(color);
 }
 
-QColor AreaSKG::colorSKG() const
+QColor AreaSKG::colorSKG(const int num) const
 {
-    if (m_lineSKG)
-        return m_lineSKG->colorSKG();
+    if (num >= 0 && num < m_lineSKG.size())
+        return m_lineSKG.at(num)->colorSKG();
     return Qt::darkCyan;
 }
 
 void AreaSKG::setColorEllipse(const QColor &color)
 {
-    if (m_lineSKG)
-        m_lineSKG->setColorEllipse(color);
+    if (m_lineSKG.size() > 0)
+        m_lineSKG.at(0)->setColorEllipse(color);
 }
 
 QColor AreaSKG::colorEllipse() const
 {
-    if (m_lineSKG)
-        return m_lineSKG->colorEllipse();
+    if (m_lineSKG.size() > 0)
+        return m_lineSKG.at(0)->colorEllipse();
     return Qt::darkBlue;
 }
 
@@ -227,10 +247,10 @@ bool AreaSKG::deleteBrokenLine(const int idx)
     return false;
 }
 
-void AreaSKG::setVisibleSKG(const bool isVisible)
+void AreaSKG::setVisibleSKG(const bool isVisible, const int num)
 {
-    if (m_lineSKG)
-        m_lineSKG->setVisible(isVisible);
+    if (num >= 0 && num < m_lineSKG.size())
+        m_lineSKG.at(num)->setVisible(isVisible);
 }
 
 void AreaSKG::addPlatform(QRect platform)
@@ -261,7 +281,7 @@ void AreaSKG::setAreaSKG()
     m_sceneSKG->addItem(m_platforms);
     m_sceneSKG->addItem(m_gridSKG);
     m_sceneSKG->addItem(m_traceSKG);
-    m_sceneSKG->addItem(m_lineSKG);
+//    m_sceneSKG->addItem(m_lineSKG);
     m_sceneSKG->addItem(m_brokenLinesSKG);
 }
 

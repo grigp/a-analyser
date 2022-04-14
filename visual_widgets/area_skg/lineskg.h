@@ -40,6 +40,12 @@ public:
     void setZeroing(const bool zeroing);
 
     /*!
+     * \brief Установка смещения снаружи
+     * \param offsetX, offsetY - смещения
+     */
+    void setOffset(const double offsetX, const double offsetY);
+
+    /*!
      * \brief Устанавливает параметры эллипса
      * \param sizeA, sizeB - длины осей
      * \param angle - угол наклона

@@ -61,15 +61,17 @@ public:
     /*!
      * \brief Задает сигнал для отображения в виджете при использовании в визуале
      * \param signal
+     * \param num - номер СКГ
      * \param begin, end - границы участка
      */
-    void setSignal(SignalAccess *signal, const int begin = -1, const int end = -1);
+    void setSignal(SignalAccess *signal, const int num = 0, const int begin = -1, const int end = -1);
 
     /*!
      * \brief Задает границы участка сигнала
      * \param begin, end - границы участка
+     * \param num - номер СКГ
      */
-    void setSection(const int begin, const int end);
+    void setSection(const int begin, const int end, const int num = 0);
 
     /*!
      * \brief Управляет видимостью маркера
@@ -83,6 +85,13 @@ public:
     void setZeroing(const bool zeroing);
 
     /*!
+     * \brief Установка смещения снаружи
+     * \param offsetX, offsetY - смещения
+     * \param num - номер СКГ
+     */
+    void setOffset(const double offsetX, const double offsetY, const int num = 0);
+
+    /*!
      * \brief Устанавливает параметры эллипса
      * \param sizeA, sizeB - длины осей
      * \param angle - угол наклона
@@ -92,8 +101,8 @@ public:
     /*!
      * \brief Устанавливает цвет СКГ
      */
-    void setColorSKG(const QColor &color);
-    QColor colorSKG() const;
+    void setColorSKG(const QColor &color, const int num = 0);
+    QColor colorSKG(const int num = 0) const;
 
     /*!
      * \brief Устанавливает цвет эллипса
@@ -143,8 +152,9 @@ public:
     /*!
      * \brief Устанавливает видимость СКГ
      * \param isVisible - будет ли видна
+     * \param num - номер СКГ
      */
-    void setVisibleSKG(const bool isVisible);
+    void setVisibleSKG(const bool isVisible, const int num = 0);
 
     /*!
      * \brief Добавляет отображаемую платформу
@@ -174,7 +184,8 @@ private:
     QGraphicsScene* m_sceneSKG {nullptr};
     GridSKG* m_gridSKG {nullptr};
     TraceSKG* m_traceSKG {nullptr};
-    LineSKG* m_lineSKG {nullptr};
+//    LineSKG* m_lineSKG {nullptr};
+    QList<LineSKG*> m_lineSKG;
     Platforms* m_platforms {nullptr};
     BrokenLinesSKG* m_brokenLinesSKG {nullptr};
     QGraphicsRectItem* m_marker {nullptr};

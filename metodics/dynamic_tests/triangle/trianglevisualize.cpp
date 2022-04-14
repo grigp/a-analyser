@@ -516,7 +516,7 @@ void TriangleVisualize::getSignal(const QString &testUid)
 
 void TriangleVisualize::showSKG(AreaSKG *area, BaseDefines::Section section)
 {
-    area->setSignal(m_stab, section.begin, section.end);
+    area->setSignal(m_stab, 0, section.begin, section.end);
     addTriangleDiag(area, m_calculator->triangleOriginal(), Qt::darkYellow);
 }
 

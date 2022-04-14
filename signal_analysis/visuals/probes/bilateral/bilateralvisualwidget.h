@@ -6,6 +6,7 @@
 #include "visuals.h"
 
 class BilateralResultData;
+class Stabilogram;
 
 namespace Ui {
 class BilateralVisualWidget;
@@ -24,14 +25,28 @@ public:
     bool isValid() override;
     void calculate() override;
 
+private slots:
+    void on_btnPlusClick();
+    void on_btnMinusClick();
+
+    void on_cbSKGCommonChecked(bool checked);
+    void on_cbSKGLeftChecked(bool checked);
+    void on_cbSKGRightChecked(bool checked);
+
 private:
     Ui::BilateralVisualWidget *ui;
 
-    void showPlatforms();
-
     int computeDiap();
 
+    void showPlatforms();
+    void showSKG();
+    void showDiagram();
+
+    int m_diap {128};
     BilateralResultData* m_bData {nullptr};
+    Stabilogram* m_stab {nullptr};
+    Stabilogram* m_stabLeft {nullptr};
+    Stabilogram* m_stabRight {nullptr};
 };
 
 #endif // BILATERALVISUALWIDGET_H

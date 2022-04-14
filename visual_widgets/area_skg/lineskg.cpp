@@ -163,6 +163,13 @@ void LineSKG::setZeroing(const bool zeroing)
     updateItem();
 }
 
+void LineSKG::setOffset(const double offsetX, const double offsetY)
+{
+    m_offsX = offsetX;
+    m_offsY = offsetY;
+    updateItem();
+}
+
 void LineSKG::setEllipse(const double sizeA, const double sizeB, const double angle)
 {
     m_sizeA = sizeA;
