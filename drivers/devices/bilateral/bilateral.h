@@ -121,6 +121,8 @@ private:
      */
     void assignStabData();
 
+    void init();
+
     QRect m_plate1 {QRect(0, 500, 500, 500)};
     QRect m_plate2 {QRect(500, 500, 500, 500)};
     QPoint m_center {QPoint(500, 250)};

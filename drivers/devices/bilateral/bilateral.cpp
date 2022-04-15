@@ -11,7 +11,7 @@
 Bilateral::Bilateral(QObject *parent)
     : Driver (parent)
 {
-
+    clearDrivers();
 }
 
 Bilateral::~Bilateral()
@@ -88,28 +88,7 @@ bool Bilateral::editParams(QJsonObject &params)
 
 void Bilateral::start()
 {
-    for (int i = 0; i < 2; ++i)
-    {
-        m_drivers[i] = nullptr;
-        m_chanUid[i] = "";
-    }
-    //! Запрашиваем два верхних драйвера в списке подключений
-    Driver* drv = nullptr;
-    int n = 0;
-    int i = 0;
-    do
-    {
-        drv = static_cast<AAnalyserApplication*>(QApplication::instance())->
-                getDriverByFormats(QStringList() << ChannelsDefines::cfDecartCoordinates, i);
-        //! Любой, но не билатеральный
-        if (drv && (drv->driverUid() != DevicesDefines::uid_bilateral))
-        {
-            m_drivers[n] = drv;
-            ++n;
-        }
-        ++i;
-    }
-    while (n < 2 && drv);
+    init();
 
     if (m_drivers[0] && m_drivers[1])
     {
@@ -165,22 +144,28 @@ QList<QString> Bilateral::getChannelsByFormat(const QString &formatUid) const
 
 QList<QString> Bilateral::getChannels() const
 {
+    init();
+
     QList<QString> retval;
 
     retval.clear();
     retval << ChannelsDefines::chanStab << ChannelsDefines::chanStabLeft << ChannelsDefines::chanStabRight;
 
     //!TODO дописать для других каналов
-//    for (int i = 0; i < 2; ++i)
-//    {
-//        if (m_drivers[i])
-//        {
-//            auto channels = m_drivers[i]->getChannels();
-//            foreach (auto chan, channels)
-//                if (ChannelsUtils::instance().channelType(chan) != ChannelsDefines::ctStabilogram)
+    for (int i = 0; i < 2; ++i)
+    {
+        if (m_drivers[i])
+        {
+            auto channels = m_drivers[i]->getChannels();
+            qDebug() << i << channels.size();
+            foreach (auto chan, channels)
+                if (ChannelsUtils::instance().channelType(chan) != ChannelsDefines::ctStabilogram)
+                {
+                    qDebug() << i << chan;
+                }
 //                    retval << chan;
-//        }
-//    }
+        }
+    }
     return retval;
 }
 
@@ -292,6 +277,42 @@ void Bilateral::assignStabData()
 
         m_isData1 = false;
         m_isData2 = false;
+    }
+}
+
+void Bilateral::clearDrivers()
+{
+    for (int i = 0; i < 2; ++i)
+    {
+        m_drivers[i] = nullptr;
+        m_chanUid[i] = "";
+    }
+}
+
+void Bilateral::init()
+{
+    if (!(m_drivers[0] || m_drivers[1]))
+    {
+        //! Запрашиваем два верхних драйвера в списке подключений
+        Driver* drv = nullptr;
+        int n = 0;
+        int i = 0;
+        do
+        {
+            drv = static_cast<AAnalyserApplication*>(QApplication::instance())->
+                    getDriverByFormats(QStringList() << ChannelsDefines::cfDecartCoordinates, i);
+            //! Любой, но не билатеральный
+            if (drv && (drv->driverUid() != DevicesDefines::uid_bilateral))
+            {
+                m_drivers[n] = drv;
+                ++n;
+            }
+            else
+                delete drv;
+
+            ++i;
+        }
+        while (n < 2 && drv);
     }
 }
 

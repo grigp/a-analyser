@@ -140,7 +140,119 @@ ChannelsUtils::ChannelsUtils()
                                                                                           QString("ADC"),
                                                                                           ChannelsDefines::ctADCValues))
 
+                 , std::pair<QString, ChannelsDefines::ChannelInfo>(ChannelsDefines::FirstPlatform::chanRitmogram,
+                                                                    std::make_tuple(QString("Ритмограмма 1"),
+                                                                                    QString("RR1"),
+                                                                                    ChannelsDefines::ctRitmogram))
+                 , std::pair<QString, ChannelsDefines::ChannelInfo>(ChannelsDefines::FirstPlatform::chanDynHand1,
+                                                                    std::make_tuple(QString("Кистевой силомер первой платформы 1"),
+                                                                                    QString("DH11"),
+                                                                                    ChannelsDefines::ctDynamo))
+                 , std::pair<QString, ChannelsDefines::ChannelInfo>(ChannelsDefines::FirstPlatform::chanDynStand1,
+                                                                    std::make_tuple(QString("Становой силомер первой платформы 1"),
+                                                                                    QString("DS11"),
+                                                                                    ChannelsDefines::ctDynamo))
+                 , std::pair<QString, ChannelsDefines::ChannelInfo>(ChannelsDefines::FirstPlatform::chanBreath1,
+                                                                    std::make_tuple(QString("Дыхание первой платформы 1"),
+                                                                                    QString("Br11"),
+                                                                                    ChannelsDefines::ctBreath))
+                 , std::pair<QString, ChannelsDefines::ChannelInfo>(ChannelsDefines::FirstPlatform::chanDynPush1,
+                                                                    std::make_tuple(QString("Толкатель первой платформы 1"),
+                                                                                    QString("Push11"),
+                                                                                    ChannelsDefines::ctDynamo))
+                 , std::pair<QString, ChannelsDefines::ChannelInfo>(ChannelsDefines::FirstPlatform::chanDynHand2,
+                                                                    std::make_tuple(QString("Кистевой силомер первой платформы 2"),
+                                                                                    QString("DH12"),
+                                                                                    ChannelsDefines::ctDynamo))
+                 , std::pair<QString, ChannelsDefines::ChannelInfo>(ChannelsDefines::FirstPlatform::chanDynStand2,
+                                                                    std::make_tuple(QString("Становой силомер первой платформы 2"),
+                                                                                    QString("DS12"),
+                                                                                    ChannelsDefines::ctDynamo))
+                 , std::pair<QString, ChannelsDefines::ChannelInfo>(ChannelsDefines::FirstPlatform::chanBreath2,
+                                                                    std::make_tuple(QString("Дыхание первой платформы 2"),
+                                                                                    QString("Br12"),
+                                                                                    ChannelsDefines::ctBreath))
+                 , std::pair<QString, ChannelsDefines::ChannelInfo>(ChannelsDefines::FirstPlatform::chanDynPush2,
+                                                                    std::make_tuple(QString("Толкатель первой платформы 2"),
+                                                                                    QString("Push12"),
+                                                                                    ChannelsDefines::ctDynamo))
+                 , std::pair<QString, ChannelsDefines::ChannelInfo>(ChannelsDefines::FirstPlatform::chanDynHand3,
+                                                                    std::make_tuple(QString("Кистевой силомер первой платформы 3"),
+                                                                                    QString("DH13"),
+                                                                                    ChannelsDefines::ctDynamo))
+                 , std::pair<QString, ChannelsDefines::ChannelInfo>(ChannelsDefines::FirstPlatform::chanDynStand3,
+                                                                    std::make_tuple(QString("Становой силомер первой платформы 3"),
+                                                                                    QString("DS13"),
+                                                                                    ChannelsDefines::ctDynamo))
+                 , std::pair<QString, ChannelsDefines::ChannelInfo>(ChannelsDefines::FirstPlatform::chanBreath3,
+                                                                    std::make_tuple(QString("Дыхание первой платформы 3"),
+                                                                                    QString("Br13"),
+                                                                                    ChannelsDefines::ctBreath))
+                 , std::pair<QString, ChannelsDefines::ChannelInfo>(ChannelsDefines::FirstPlatform::chanDynPush3,
+                                                                    std::make_tuple(QString("Толкатель первой платформы 3"),
+                                                                                    QString("Push13"),
+                                                                                    ChannelsDefines::ctDynamo))
+                 , std::pair<QString, ChannelsDefines::ChannelInfo>(ChannelsDefines::FirstPlatform::chanMyogram,
+                                                                    std::make_tuple(QString("Миограмма первой платформы"),
+                                                                                    QString("Myo1"),
+                                                                                    ChannelsDefines::ctMyogram))
 
+                 , std::pair<QString, ChannelsDefines::ChannelInfo>(ChannelsDefines::SecondPlatform::chanRitmogram,
+                                                                    std::make_tuple(QString("Ритмограмма 2"),
+                                                                                    QString("RR2"),
+                                                                                    ChannelsDefines::ctRitmogram))
+                 , std::pair<QString, ChannelsDefines::ChannelInfo>(ChannelsDefines::SecondPlatform::chanDynHand1,
+                                                                    std::make_tuple(QString("Кистевой силомер второй платформы 1"),
+                                                                                    QString("DH21"),
+                                                                                    ChannelsDefines::ctDynamo))
+                 , std::pair<QString, ChannelsDefines::ChannelInfo>(ChannelsDefines::SecondPlatform::chanDynStand1,
+                                                                    std::make_tuple(QString("Становой силомер второй платформы 1"),
+                                                                                    QString("DS21"),
+                                                                                    ChannelsDefines::ctDynamo))
+                 , std::pair<QString, ChannelsDefines::ChannelInfo>(ChannelsDefines::SecondPlatform::chanBreath1,
+                                                                    std::make_tuple(QString("Дыхание второй платформы 1"),
+                                                                                    QString("Br21"),
+                                                                                    ChannelsDefines::ctBreath))
+                 , std::pair<QString, ChannelsDefines::ChannelInfo>(ChannelsDefines::SecondPlatform::chanDynPush1,
+                                                                    std::make_tuple(QString("Толкатель второй платформы 1"),
+                                                                                    QString("Push21"),
+                                                                                    ChannelsDefines::ctDynamo))
+                 , std::pair<QString, ChannelsDefines::ChannelInfo>(ChannelsDefines::SecondPlatform::chanDynHand2,
+                                                                    std::make_tuple(QString("Кистевой силомер второй платформы 2"),
+                                                                                    QString("DH22"),
+                                                                                    ChannelsDefines::ctDynamo))
+                 , std::pair<QString, ChannelsDefines::ChannelInfo>(ChannelsDefines::SecondPlatform::chanDynStand2,
+                                                                    std::make_tuple(QString("Становой силомер второй платформы 2"),
+                                                                                    QString("DS22"),
+                                                                                    ChannelsDefines::ctDynamo))
+                 , std::pair<QString, ChannelsDefines::ChannelInfo>(ChannelsDefines::SecondPlatform::chanBreath2,
+                                                                    std::make_tuple(QString("Дыхание второй платформы 2"),
+                                                                                    QString("Br22"),
+                                                                                    ChannelsDefines::ctBreath))
+                 , std::pair<QString, ChannelsDefines::ChannelInfo>(ChannelsDefines::SecondPlatform::chanDynPush2,
+                                                                    std::make_tuple(QString("Толкатель второй платформы 2"),
+                                                                                    QString("Push22"),
+                                                                                    ChannelsDefines::ctDynamo))
+                 , std::pair<QString, ChannelsDefines::ChannelInfo>(ChannelsDefines::SecondPlatform::chanDynHand3,
+                                                                    std::make_tuple(QString("Кистевой силомер второй платформы 3"),
+                                                                                    QString("DH23"),
+                                                                                    ChannelsDefines::ctDynamo))
+                 , std::pair<QString, ChannelsDefines::ChannelInfo>(ChannelsDefines::SecondPlatform::chanDynStand3,
+                                                                    std::make_tuple(QString("Становой силомер второй платформы 3"),
+                                                                                    QString("DS23"),
+                                                                                    ChannelsDefines::ctDynamo))
+                 , std::pair<QString, ChannelsDefines::ChannelInfo>(ChannelsDefines::SecondPlatform::chanBreath3,
+                                                                    std::make_tuple(QString("Дыхание второй платформы 3"),
+                                                                                    QString("Br23"),
+                                                                                    ChannelsDefines::ctBreath))
+                 , std::pair<QString, ChannelsDefines::ChannelInfo>(ChannelsDefines::SecondPlatform::chanDynPush3,
+                                                                    std::make_tuple(QString("Толкатель второй платформы 3"),
+                                                                                    QString("Push23"),
+                                                                                    ChannelsDefines::ctDynamo))
+                 , std::pair<QString, ChannelsDefines::ChannelInfo>(ChannelsDefines::SecondPlatform::chanMyogram,
+                                                                    std::make_tuple(QString("Миограмма второй платформы"),
+                                                                                    QString("Myo2"),
+                                                                                    ChannelsDefines::ctMyogram))
 
                  , std::pair<QString, ChannelsDefines::ChannelInfo>(ChannelsDefines::chanTenso1,
                                                                           std::make_tuple(QString("Тензоканал 1"),
