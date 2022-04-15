@@ -163,6 +163,78 @@
            </property>
           </spacer>
          </item>
+         <item>
+          <widget class="QPushButton" name="btnZeroingNo">
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset resource="../../../../kernel.qrc">
+             <normaloff>:/images/ZeroingNo.png</normaloff>:/images/ZeroingNo.png</iconset>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>22</width>
+             <height>22</height>
+            </size>
+           </property>
+           <property name="checkable">
+            <bool>true</bool>
+           </property>
+           <property name="checked">
+            <bool>true</bool>
+           </property>
+           <property name="autoExclusive">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="btnZeroingDif">
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset resource="../../../../kernel.qrc">
+             <normaloff>:/images/Zeroing.png</normaloff>:/images/Zeroing.png</iconset>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>22</width>
+             <height>22</height>
+            </size>
+           </property>
+           <property name="checkable">
+            <bool>true</bool>
+           </property>
+           <property name="autoExclusive">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="btnZeroingCommon">
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset resource="../../../../kernel.qrc">
+             <normaloff>:/images/ZeroingOriginal.png</normaloff>:/images/ZeroingOriginal.png</iconset>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>22</width>
+             <height>22</height>
+            </size>
+           </property>
+           <property name="checkable">
+            <bool>true</bool>
+           </property>
+           <property name="autoExclusive">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
         </layout>
        </widget>
       </item>
@@ -506,6 +578,54 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>btnZeroingNo</sender>
+   <signal>clicked()</signal>
+   <receiver>BilateralVisualWidget</receiver>
+   <slot>on_btnZeroingNoClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>809</x>
+     <y>30</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>916</x>
+     <y>4</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btnZeroingDif</sender>
+   <signal>clicked()</signal>
+   <receiver>BilateralVisualWidget</receiver>
+   <slot>on_btnZeroingDifClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>857</x>
+     <y>29</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>916</x>
+     <y>172</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btnZeroingCommon</sender>
+   <signal>clicked()</signal>
+   <receiver>BilateralVisualWidget</receiver>
+   <slot>on_btnZeroingCommonClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>888</x>
+     <y>32</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>916</x>
+     <y>202</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>on_btnPlusClick()</slot>
@@ -513,5 +633,8 @@
   <slot>on_cbSKGCommonChecked(bool)</slot>
   <slot>on_cbSKGLeftChecked(bool)</slot>
   <slot>on_cbSKGRightChecked(bool)</slot>
+  <slot>on_btnZeroingNoClicked()</slot>
+  <slot>on_btnZeroingDifClicked()</slot>
+  <slot>on_btnZeroingCommonClicked()</slot>
  </slots>
 </ui>

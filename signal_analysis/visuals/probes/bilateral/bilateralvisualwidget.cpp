@@ -22,6 +22,9 @@ BilateralVisualWidget::BilateralVisualWidget(VisualDescriptor* visual,
     ui->setupUi(this);
 
     ui->lblMassa->setStyleSheet("font-size: 14pt;");
+    ui->btnZeroingNo->setVisible(false);
+    ui->btnZeroingDif->setVisible(false);
+    ui->btnZeroingCommon->setVisible(false);
 }
 
 BilateralVisualWidget::~BilateralVisualWidget()
@@ -72,6 +75,21 @@ void BilateralVisualWidget::on_cbSKGLeftChecked(bool checked)
 void BilateralVisualWidget::on_cbSKGRightChecked(bool checked)
 {
     ui->wgtSKG->setVisibleSKG(checked, 2);
+}
+
+void BilateralVisualWidget::on_btnZeroingNoClicked()
+{
+    ui->wgtSKG->setZeroing(false);
+}
+
+void BilateralVisualWidget::on_btnZeroingDifClicked()
+{
+
+}
+
+void BilateralVisualWidget::on_btnZeroingCommonClicked()
+{
+    ui->wgtSKG->setZeroing(true);
 }
 
 int BilateralVisualWidget::computeDiap()

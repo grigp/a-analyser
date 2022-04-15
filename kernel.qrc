@@ -211,5 +211,7 @@
         <file>pre_settings/connections_bss_en_US.json</file>
         <file>images/Methodics/Scales_Sleep.png</file>
         <file>images/Methodics/Scales_Weighting.png</file>
+        <file>images/ZeroingNo.png</file>
+        <file>images/ZeroingOriginal.png</file>
     </qresource>
 </RCC>

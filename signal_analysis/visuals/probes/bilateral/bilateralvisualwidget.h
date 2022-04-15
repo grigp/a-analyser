@@ -33,6 +33,10 @@ private slots:
     void on_cbSKGLeftChecked(bool checked);
     void on_cbSKGRightChecked(bool checked);
 
+    void on_btnZeroingNoClicked();
+    void on_btnZeroingDifClicked();
+    void on_btnZeroingCommonClicked();
+
 private:
     Ui::BilateralVisualWidget *ui;
 
