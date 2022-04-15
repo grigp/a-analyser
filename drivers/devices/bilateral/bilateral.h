@@ -121,6 +121,8 @@ private:
      */
     void assignStabData();
 
+    void clearDrivers();
+
     void init();
 
     QRect m_plate1 {QRect(0, 500, 500, 500)};

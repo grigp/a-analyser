@@ -144,8 +144,6 @@ QList<QString> Bilateral::getChannelsByFormat(const QString &formatUid) const
 
 QList<QString> Bilateral::getChannels() const
 {
-    init();
-
     QList<QString> retval;
 
     retval.clear();
