@@ -2,6 +2,7 @@
 #define BILATERAL_H
 
 #include <QObject>
+#include <QMap>
 
 #include "driver.h"
 #include "deviceprotocols.h"
@@ -121,9 +122,13 @@ private:
      */
     void assignStabData();
 
+    void sendAdvancedChannels(DeviceProtocols::DeviceData *data);
+
     void clearDrivers();
 
     void init();
+
+    QList<Driver*> getDrivers() const;
 
     QRect m_plate1 {QRect(0, 500, 500, 500)};
     QRect m_plate2 {QRect(500, 500, 500, 500)};
@@ -140,6 +145,8 @@ private:
     bool m_isData1 {false}, m_isData2 {false};
 
     double m_offsetX {0}, m_offsetY {0};
+
+    QMap<QString, int> m_frequency;
 };
 
 #endif // BILATERAL_H

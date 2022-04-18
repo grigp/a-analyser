@@ -8,6 +8,82 @@
 #include "channelsutils.h"
 #include "settingsprovider.h"
 
+namespace  {
+
+static QMap<QString, QString> ChannelFirstConvert =
+{
+      std::pair<QString, QString> (ChannelsDefines::chanMyogram, ChannelsDefines::FirstPlatform::chanMyogram)
+    , std::pair<QString, QString> (ChannelsDefines::chanMyogram, ChannelsDefines::FirstPlatform::chanMyogram)
+    , std::pair<QString, QString> (ChannelsDefines::chanRitmogram, ChannelsDefines::FirstPlatform::chanRitmogram)
+    , std::pair<QString, QString> (ChannelsDefines::chanDynHand1, ChannelsDefines::FirstPlatform::chanDynHand1)
+    , std::pair<QString, QString> (ChannelsDefines::chanDynStand1, ChannelsDefines::FirstPlatform::chanDynStand1)
+    , std::pair<QString, QString> (ChannelsDefines::chanBreath1, ChannelsDefines::FirstPlatform::chanBreath1)
+    , std::pair<QString, QString> (ChannelsDefines::chanDynPush1, ChannelsDefines::FirstPlatform::chanDynPush1)
+    , std::pair<QString, QString> (ChannelsDefines::chanDynHand2, ChannelsDefines::FirstPlatform::chanDynHand2)
+    , std::pair<QString, QString> (ChannelsDefines::chanDynStand2, ChannelsDefines::FirstPlatform::chanDynStand2)
+    , std::pair<QString, QString> (ChannelsDefines::chanBreath2, ChannelsDefines::FirstPlatform::chanBreath2)
+    , std::pair<QString, QString> (ChannelsDefines::chanDynPush2, ChannelsDefines::FirstPlatform::chanDynPush2)
+    , std::pair<QString, QString> (ChannelsDefines::chanDynHand3, ChannelsDefines::FirstPlatform::chanDynHand3)
+    , std::pair<QString, QString> (ChannelsDefines::chanDynStand3, ChannelsDefines::FirstPlatform::chanDynStand3)
+    , std::pair<QString, QString> (ChannelsDefines::chanBreath3, ChannelsDefines::FirstPlatform::chanBreath3)
+    , std::pair<QString, QString> (ChannelsDefines::chanDynPush3, ChannelsDefines::FirstPlatform::chanDynPush3)
+};
+
+//static QList<QString> ChannelFirst = {
+//    ChannelsDefines::FirstPlatform::chanMyogram
+//  , ChannelsDefines::FirstPlatform::chanRitmogram
+//  , ChannelsDefines::FirstPlatform::chanDynHand1
+//  , ChannelsDefines::FirstPlatform::chanDynStand1
+//  , ChannelsDefines::FirstPlatform::chanBreath1
+//  , ChannelsDefines::FirstPlatform::chanDynPush1
+//  , ChannelsDefines::FirstPlatform::chanDynHand2
+//  , ChannelsDefines::FirstPlatform::chanDynStand2
+//  , ChannelsDefines::FirstPlatform::chanBreath2
+//  , ChannelsDefines::FirstPlatform::chanDynPush2
+//  , ChannelsDefines::FirstPlatform::chanDynHand3
+//  , ChannelsDefines::FirstPlatform::chanDynStand3
+//  , ChannelsDefines::FirstPlatform::chanBreath3
+//  , ChannelsDefines::FirstPlatform::chanDynPush3
+//};
+
+static QMap<QString, QString> ChannelSecondConvert =
+{
+      std::pair<QString, QString> (ChannelsDefines::chanMyogram, ChannelsDefines::SecondPlatform::chanMyogram)
+    , std::pair<QString, QString> (ChannelsDefines::chanMyogram, ChannelsDefines::SecondPlatform::chanMyogram)
+    , std::pair<QString, QString> (ChannelsDefines::chanRitmogram, ChannelsDefines::SecondPlatform::chanRitmogram)
+    , std::pair<QString, QString> (ChannelsDefines::chanDynHand1, ChannelsDefines::SecondPlatform::chanDynHand1)
+    , std::pair<QString, QString> (ChannelsDefines::chanDynStand1, ChannelsDefines::SecondPlatform::chanDynStand1)
+    , std::pair<QString, QString> (ChannelsDefines::chanBreath1, ChannelsDefines::SecondPlatform::chanBreath1)
+    , std::pair<QString, QString> (ChannelsDefines::chanDynPush1, ChannelsDefines::SecondPlatform::chanDynPush1)
+    , std::pair<QString, QString> (ChannelsDefines::chanDynHand2, ChannelsDefines::SecondPlatform::chanDynHand2)
+    , std::pair<QString, QString> (ChannelsDefines::chanDynStand2, ChannelsDefines::SecondPlatform::chanDynStand2)
+    , std::pair<QString, QString> (ChannelsDefines::chanBreath2, ChannelsDefines::SecondPlatform::chanBreath2)
+    , std::pair<QString, QString> (ChannelsDefines::chanDynPush2, ChannelsDefines::SecondPlatform::chanDynPush2)
+    , std::pair<QString, QString> (ChannelsDefines::chanDynHand3, ChannelsDefines::SecondPlatform::chanDynHand3)
+    , std::pair<QString, QString> (ChannelsDefines::chanDynStand3, ChannelsDefines::SecondPlatform::chanDynStand3)
+    , std::pair<QString, QString> (ChannelsDefines::chanBreath3, ChannelsDefines::SecondPlatform::chanBreath3)
+    , std::pair<QString, QString> (ChannelsDefines::chanDynPush3, ChannelsDefines::SecondPlatform::chanDynPush3)
+};
+
+//static QList<QString> ChannelSecond = {
+//    ChannelsDefines::SecondPlatform::chanMyogram
+//  , ChannelsDefines::SecondPlatform::chanRitmogram
+//  , ChannelsDefines::SecondPlatform::chanDynHand1
+//  , ChannelsDefines::SecondPlatform::chanDynStand1
+//  , ChannelsDefines::SecondPlatform::chanBreath1
+//  , ChannelsDefines::SecondPlatform::chanDynPush1
+//  , ChannelsDefines::SecondPlatform::chanDynHand2
+//  , ChannelsDefines::SecondPlatform::chanDynStand2
+//  , ChannelsDefines::SecondPlatform::chanBreath2
+//  , ChannelsDefines::SecondPlatform::chanDynPush2
+//  , ChannelsDefines::SecondPlatform::chanDynHand3
+//  , ChannelsDefines::SecondPlatform::chanDynStand3
+//  , ChannelsDefines::SecondPlatform::chanBreath3
+//  , ChannelsDefines::SecondPlatform::chanDynPush3
+//};
+
+}
+
 Bilateral::Bilateral(QObject *parent)
     : Driver (parent)
 {
@@ -125,11 +201,24 @@ void Bilateral::stop()
 
 int Bilateral::frequency(const QString &channelId) const
 {
+    //! TODO: Так быть не должно. Надо запрашивать у драйверов
+    static QMap<QString, int> ChannelsFreq =
+    {
+        std::pair<QString, int> (ChannelsDefines::ctStabilogram, 50)
+      , std::pair<QString, int> (ChannelsDefines::ctBallistogram, 50)
+      , std::pair<QString, int> (ChannelsDefines::ctDynamo, 50)
+      , std::pair<QString, int> (ChannelsDefines::ctBreath, 50)
+      , std::pair<QString, int> (ChannelsDefines::ctMyogram, 200)
+    };
+
+    if (ChannelsFreq.contains(ChannelsUtils::instance().channelType(channelId)))
+        return ChannelsFreq.value(ChannelsUtils::instance().channelType(channelId));
     return 50;
 }
 
 QList<QString> Bilateral::getChannelsByProtocol(const QString &protocolUid) const
 {
+    Q_UNUSED(protocolUid);
     return QList<QString>();
 }
 
@@ -149,21 +238,27 @@ QList<QString> Bilateral::getChannels() const
     retval.clear();
     retval << ChannelsDefines::chanStab << ChannelsDefines::chanStabLeft << ChannelsDefines::chanStabRight;
 
-    //!TODO дописать для других каналов
-    for (int i = 0; i < 2; ++i)
-    {
-        if (m_drivers[i])
-        {
-            auto channels = m_drivers[i]->getChannels();
-            qDebug() << i << channels.size();
-            foreach (auto chan, channels)
-                if (ChannelsUtils::instance().channelType(chan) != ChannelsDefines::ctStabilogram)
-                {
-                    qDebug() << i << chan;
-                }
-//                    retval << chan;
-        }
-    }
+    auto drivers = getDrivers();
+    if (drivers.size() == 2)
+        for (int i = 0; i < 2; ++i)
+            if (drivers[i])
+            {
+                auto channels = drivers[i]->getChannels();
+                foreach (auto chan, channels)
+                    if (ChannelsUtils::instance().channelType(chan) != ChannelsDefines::ctStabilogram)
+                    {
+                        QString bChan = chan;
+                        if (i == 0)
+                            bChan = ChannelFirstConvert.value(chan);
+                        else
+                        if (i == 1)
+                            bChan = ChannelSecondConvert.value(chan);
+                        retval << bChan;
+                    }
+            }
+
+    for (int i = 0; i < drivers.size(); ++i)
+        delete drivers[i];
     return retval;
 }
 
@@ -226,7 +321,7 @@ void Bilateral::getData(DeviceProtocols::DeviceData *data)
         assignStabData();
     }
     else
-        emit sendData(data);
+        sendAdvancedChannels(data);
 }
 
 void Bilateral::assignStabData()
@@ -278,6 +373,25 @@ void Bilateral::assignStabData()
     }
 }
 
+void Bilateral::sendAdvancedChannels(DeviceProtocols::DeviceData *data)
+{
+    auto sendWithChangedId = [&](QMap<QString, QString>& convertMap)
+    {
+        auto bChan = convertMap.value(data->channelId());
+        if (bChan != "")
+        {
+            data->changeCahnnelId(bChan);
+            emit sendData(data);
+        }
+    };
+
+    if (data->sender() == m_drivers[0])
+        sendWithChangedId(ChannelFirstConvert);
+    else
+    if (data->sender() == m_drivers[1])
+        sendWithChangedId(ChannelSecondConvert);
+}
+
 void Bilateral::clearDrivers()
 {
     for (int i = 0; i < 2; ++i)
@@ -291,27 +405,64 @@ void Bilateral::init()
 {
     if (!(m_drivers[0] || m_drivers[1]))
     {
-        //! Запрашиваем два верхних драйвера в списке подключений
-        Driver* drv = nullptr;
-        int n = 0;
-        int i = 0;
-        do
-        {
-            drv = static_cast<AAnalyserApplication*>(QApplication::instance())->
-                    getDriverByFormats(QStringList() << ChannelsDefines::cfDecartCoordinates, i);
-            //! Любой, но не билатеральный
-            if (drv && (drv->driverUid() != DevicesDefines::uid_bilateral))
-            {
-                m_drivers[n] = drv;
-                ++n;
-            }
-            else
-                delete drv;
+        auto drivers = getDrivers();
+        if (drivers.size() == 2)
+            for (int i = 0; i < 2; ++i)
+                m_drivers[i] = drivers[i];
+        else
+            for (int i = 0; i < drivers.size(); ++i)
+                delete drivers[i];
 
-            ++i;
-        }
-        while (n < 2 && drv);
+
+//        //! Запрашиваем два верхних драйвера в списке подключений
+//        Driver* drv = nullptr;
+//        int n = 0;
+//        int i = 0;
+//        do
+//        {
+//            drv = static_cast<AAnalyserApplication*>(QApplication::instance())->
+//                    getDriverByFormats(QStringList() << ChannelsDefines::cfDecartCoordinates, i);
+//            //! Любой, но не билатеральный
+//            if (drv && (drv->driverUid() != DevicesDefines::uid_bilateral))
+//            {
+//                m_drivers[n] = drv;
+//                ++n;
+//            }
+//            else
+//                delete drv;
+
+//            ++i;
+//        }
+//        while (n < 2 && drv);
     }
+}
+
+QList<Driver *> Bilateral::getDrivers() const
+{
+    QList<Driver*> retval;
+    retval.clear();
+    //! Запрашиваем два верхних драйвера в списке подключений
+    Driver* drv = nullptr;
+    int n = 0;
+    int i = 0;
+    do
+    {
+        drv = static_cast<AAnalyserApplication*>(QApplication::instance())->
+                getDriverByFormats(QStringList() << ChannelsDefines::cfDecartCoordinates, i);
+        //! Любой, но не билатеральный
+        if (drv && (drv->driverUid() != DevicesDefines::uid_bilateral))
+        {
+            retval << drv;
+            ++n;
+        }
+        else
+            delete drv;
+
+        ++i;
+    }
+    while (n < 2 && drv);
+
+    return retval;
 }
 
 

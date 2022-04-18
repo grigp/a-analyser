@@ -66,13 +66,11 @@ void StabilogramWidget::getData(DeviceProtocols::DeviceData *data)
         QVector<double> recStab;
         recStab << stabData->x() << stabData->y();
         ui->wgtStabOscill->addValue(recStab);
-        ui->wgtStabOscill->setFrequency(driver()->frequency(channelId()));
         m_recStab = recStab;
 
         QVector<double> recZ;
         recZ << stabData->z();
         ui->wgtZOscill->addValue(recZ);
-        ui->wgtZOscill->setFrequency(driver()->frequency(channelId()));
         m_recZ = recZ;
 
         showAdvancedInfo(stabData);

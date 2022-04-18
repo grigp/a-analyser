@@ -191,7 +191,7 @@ int Stabilan01::frequency(const QString &channelId) const
 
     if (ChannelsFreq.contains(ChannelsUtils::instance().channelType(channelId)))
         return ChannelsFreq.value(ChannelsUtils::instance().channelType(channelId));
-    return 1;
+    return 50;
 }
 
 QList<QString> Stabilan01::getChannelsByProtocol(const QString &protocolUid) const

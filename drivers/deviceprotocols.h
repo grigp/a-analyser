@@ -113,6 +113,13 @@ public:
     Driver* sender() {return m_sender;}
     QString channelId() {return m_channelId;}
 
+    //!
+    //! \brief Изменение идентификатора канала.
+    //! Использовать в билатеральном режиме для изменения id каналов латеральных платформ
+    //! \param channelID - новый id канала
+    //!
+    void changeCahnnelId(const QString channelID) {m_channelId = channelID;}
+
 private:
     Driver* m_sender;
     QString m_channelId;
