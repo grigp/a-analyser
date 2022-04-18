@@ -29,22 +29,22 @@ static QMap<QString, QString> ChannelFirstConvert =
     , std::pair<QString, QString> (ChannelsDefines::chanDynPush3, ChannelsDefines::FirstPlatform::chanDynPush3)
 };
 
-//static QList<QString> ChannelFirst = {
-//    ChannelsDefines::FirstPlatform::chanMyogram
-//  , ChannelsDefines::FirstPlatform::chanRitmogram
-//  , ChannelsDefines::FirstPlatform::chanDynHand1
-//  , ChannelsDefines::FirstPlatform::chanDynStand1
-//  , ChannelsDefines::FirstPlatform::chanBreath1
-//  , ChannelsDefines::FirstPlatform::chanDynPush1
-//  , ChannelsDefines::FirstPlatform::chanDynHand2
-//  , ChannelsDefines::FirstPlatform::chanDynStand2
-//  , ChannelsDefines::FirstPlatform::chanBreath2
-//  , ChannelsDefines::FirstPlatform::chanDynPush2
-//  , ChannelsDefines::FirstPlatform::chanDynHand3
-//  , ChannelsDefines::FirstPlatform::chanDynStand3
-//  , ChannelsDefines::FirstPlatform::chanBreath3
-//  , ChannelsDefines::FirstPlatform::chanDynPush3
-//};
+static QList<QString> ChannelFirst = {
+    ChannelsDefines::FirstPlatform::chanMyogram
+  , ChannelsDefines::FirstPlatform::chanRitmogram
+  , ChannelsDefines::FirstPlatform::chanDynHand1
+  , ChannelsDefines::FirstPlatform::chanDynStand1
+  , ChannelsDefines::FirstPlatform::chanBreath1
+  , ChannelsDefines::FirstPlatform::chanDynPush1
+  , ChannelsDefines::FirstPlatform::chanDynHand2
+  , ChannelsDefines::FirstPlatform::chanDynStand2
+  , ChannelsDefines::FirstPlatform::chanBreath2
+  , ChannelsDefines::FirstPlatform::chanDynPush2
+  , ChannelsDefines::FirstPlatform::chanDynHand3
+  , ChannelsDefines::FirstPlatform::chanDynStand3
+  , ChannelsDefines::FirstPlatform::chanBreath3
+  , ChannelsDefines::FirstPlatform::chanDynPush3
+};
 
 static QMap<QString, QString> ChannelSecondConvert =
 {
@@ -65,22 +65,22 @@ static QMap<QString, QString> ChannelSecondConvert =
     , std::pair<QString, QString> (ChannelsDefines::chanDynPush3, ChannelsDefines::SecondPlatform::chanDynPush3)
 };
 
-//static QList<QString> ChannelSecond = {
-//    ChannelsDefines::SecondPlatform::chanMyogram
-//  , ChannelsDefines::SecondPlatform::chanRitmogram
-//  , ChannelsDefines::SecondPlatform::chanDynHand1
-//  , ChannelsDefines::SecondPlatform::chanDynStand1
-//  , ChannelsDefines::SecondPlatform::chanBreath1
-//  , ChannelsDefines::SecondPlatform::chanDynPush1
-//  , ChannelsDefines::SecondPlatform::chanDynHand2
-//  , ChannelsDefines::SecondPlatform::chanDynStand2
-//  , ChannelsDefines::SecondPlatform::chanBreath2
-//  , ChannelsDefines::SecondPlatform::chanDynPush2
-//  , ChannelsDefines::SecondPlatform::chanDynHand3
-//  , ChannelsDefines::SecondPlatform::chanDynStand3
-//  , ChannelsDefines::SecondPlatform::chanBreath3
-//  , ChannelsDefines::SecondPlatform::chanDynPush3
-//};
+static QList<QString> ChannelSecond = {
+    ChannelsDefines::SecondPlatform::chanMyogram
+  , ChannelsDefines::SecondPlatform::chanRitmogram
+  , ChannelsDefines::SecondPlatform::chanDynHand1
+  , ChannelsDefines::SecondPlatform::chanDynStand1
+  , ChannelsDefines::SecondPlatform::chanBreath1
+  , ChannelsDefines::SecondPlatform::chanDynPush1
+  , ChannelsDefines::SecondPlatform::chanDynHand2
+  , ChannelsDefines::SecondPlatform::chanDynStand2
+  , ChannelsDefines::SecondPlatform::chanBreath2
+  , ChannelsDefines::SecondPlatform::chanDynPush2
+  , ChannelsDefines::SecondPlatform::chanDynHand3
+  , ChannelsDefines::SecondPlatform::chanDynStand3
+  , ChannelsDefines::SecondPlatform::chanBreath3
+  , ChannelsDefines::SecondPlatform::chanDynPush3
+};
 
 }
 
@@ -201,19 +201,20 @@ void Bilateral::stop()
 
 int Bilateral::frequency(const QString &channelId) const
 {
-    //! TODO: Так быть не должно. Надо запрашивать у драйверов
-    static QMap<QString, int> ChannelsFreq =
+    auto drivers = getDrivers();
+    int retval = 50;
+    if (drivers.size() == 2)
     {
-        std::pair<QString, int> (ChannelsDefines::ctStabilogram, 50)
-      , std::pair<QString, int> (ChannelsDefines::ctBallistogram, 50)
-      , std::pair<QString, int> (ChannelsDefines::ctDynamo, 50)
-      , std::pair<QString, int> (ChannelsDefines::ctBreath, 50)
-      , std::pair<QString, int> (ChannelsDefines::ctMyogram, 200)
-    };
+        if (ChannelFirst.contains(channelId) && drivers[0])
+            retval = drivers[0]->frequency(channelId);
+        else
+        if (ChannelSecond.contains(channelId) && drivers[1])
+            retval = drivers[1]->frequency(channelId);
+    }
+    for (int i = 0; i < drivers.size(); ++i)
+        delete drivers[i];
 
-    if (ChannelsFreq.contains(ChannelsUtils::instance().channelType(channelId)))
-        return ChannelsFreq.value(ChannelsUtils::instance().channelType(channelId));
-    return 50;
+    return retval;
 }
 
 QList<QString> Bilateral::getChannelsByProtocol(const QString &protocolUid) const
