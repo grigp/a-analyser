@@ -162,7 +162,10 @@ void StabilogramWidget::on_zeroingStab()
 
 void StabilogramWidget::on_calibrate()
 {
-    DeviceProtocols::StabControl* stabControl = dynamic_cast<DeviceProtocols::StabControl*>(driver());
+    //DeviceProtocols::StabControl* stabControl = dynamic_cast<DeviceProtocols::StabControl*>(driver());
+    DeviceProtocols::StabControl* stabControl = static_cast<DeviceProtocols::StabControl*>(driver()->
+                                                                                           getDeviceControl(DeviceProtocols::uid_StabControl,
+                                                                                                            channelId()));
     if (stabControl)
         stabControl->calibrate(channelId());
 }

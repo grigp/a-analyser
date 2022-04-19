@@ -87,6 +87,13 @@ public:
     bool isChannelRecordingDefault(const QString &channelUid) const override;
 
     /*!
+     * \brief Возвращает интерфейс управления устройством для заданного канала
+     * \param controlId - uid интерфейса управления устройством
+     * \param channelId - идентификатор канала
+     */
+    DeviceProtocols::DeviceControl* getDeviceControl(const QString &controlId, const QString &channelId = "") override;
+
+    /*!
      * \brief Возвращает список протоколов
      */
     static QStringList getProtocols();

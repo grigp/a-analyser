@@ -398,7 +398,7 @@ static const QString uid_PulseControl = "{8A6607B9-42FB-4832-AAE8-B83506A08B18}"
 static const QString uid_MyoControl = "{5C26B27F-0FA6-478B-9384-E8B6FA403F84}";
 static const QString uid_JumpPlateControl = "{F7EF6F97-3502-4EC0-A798-68DDF40DFB7F}";
 static const QString uid_WeightPlateControl = "{7B49EF56-B831-401D-AB89-73337FF0EC4B}";
-
+static const QString uid_MultiPlatformControl = "{15A2CE55-F43D-43FA-8116-35A1A988E21F}";
 
 
 static const QString name_CommonControl = "Управление устройством общий";
@@ -409,6 +409,7 @@ static const QString name_PulseControl = "Управление пульсоме�
 static const QString name_MyoControl = "Управление миограммой";
 static const QString name_JumpPlateControl = "Управление прыжковой платформой";
 static const QString name_WeightPlateControl = "Управление весовой платформой";
+static const QString name_MultiPlatformControl = "Управление несколькими платформами";
 
 /*!
  * \brief Базовый класс интерфейсов управления устройствами DeviceControl class

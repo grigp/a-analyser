@@ -87,6 +87,13 @@ public:
      */
     virtual bool isChannelRecordingDefault(const QString &channelUid) const = 0;
 
+    /*!
+     * \brief Возвращает интерфейс управления устройством для заданного канала
+     * \param controlId - uid интерфейса управления устройством
+     * \param channelId - идентификатор канала
+     */
+    virtual DeviceProtocols::DeviceControl* getDeviceControl(const QString &controlId, const QString &channelId = "") = 0;
+
     DeviceProtocols::Ports portName() const {return m_portName;}
 
 

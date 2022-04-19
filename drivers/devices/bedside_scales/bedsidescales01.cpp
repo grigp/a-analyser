@@ -97,6 +97,17 @@ bool BedsideScales01::isChannelRecordingDefault(const QString &channelUid) const
     return true;
 }
 
+DeviceProtocols::DeviceControl *BedsideScales01::getDeviceControl(const QString &controlId, const QString &channelId)
+{
+    Q_UNUSED(channelId);
+    if (controlId == DeviceProtocols::uid_CommonControl)
+        return dynamic_cast<DeviceProtocols::CommonControl*>(this);
+    else
+    if (controlId == DeviceProtocols::uid_WeightPlateControl)
+        return dynamic_cast<DeviceProtocols::MultiPlatformControl*>(this);
+    return nullptr;
+}
+
 QStringList BedsideScales01::getProtocols()
 {
     return QStringList() << DeviceProtocols::uid_WeightPlateProtocol;

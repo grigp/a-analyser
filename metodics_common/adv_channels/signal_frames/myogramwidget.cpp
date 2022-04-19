@@ -13,7 +13,8 @@ MyogramWidget::MyogramWidget(Driver *drv, const QString channelId, QWidget *pare
 {
     ui->setupUi(this);
 
-    m_myoControl = dynamic_cast<DeviceProtocols::MyoControl*>(driver());
+//    m_myoControl = dynamic_cast<DeviceProtocols::MyoControl*>(driver());
+    m_myoControl = static_cast<DeviceProtocols::MyoControl*>(driver()->getDeviceControl(DeviceProtocols::uid_MyoControl, channelId));
     if (m_myoControl)
         m_amplMyo = m_myoControl->amplitudeMyo();
 

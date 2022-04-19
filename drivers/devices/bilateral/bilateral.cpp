@@ -284,6 +284,34 @@ bool Bilateral::isChannelRecordingDefault(const QString &channelUid) const
     return false;
 }
 
+DeviceProtocols::DeviceControl *Bilateral::getDeviceControl(const QString &controlId, const QString &channelId)
+{
+    qDebug() << controlId << channelId << ChannelsUtils::instance().channelName(channelId);
+    if (controlId == DeviceProtocols::uid_CommonControl)
+        return dynamic_cast<DeviceProtocols::CommonControl*>(this);
+    else
+    if (controlId == DeviceProtocols::uid_StabControl)
+        return dynamic_cast<DeviceProtocols::StabControl*>(this);
+    else
+    if (controlId == DeviceProtocols::uid_MultiPlatformControl)
+            return dynamic_cast<DeviceProtocols::MultiPlatformControl*>(this);
+    else
+    if (ChannelFirst.contains(channelId))
+    {
+        qDebug() << m_drivers[0];
+        if (m_drivers[0])
+            return  m_drivers[0]->getDeviceControl(controlId);
+    }
+    else
+    if (ChannelSecond.contains(channelId))
+    {
+        qDebug() << m_drivers[1];
+        if (m_drivers[1])
+            return  m_drivers[1]->getDeviceControl(controlId);
+    }
+    return nullptr;
+}
+
 QStringList Bilateral::getProtocols()
 {
     return QStringList() << DeviceProtocols::uid_StabProtocol;

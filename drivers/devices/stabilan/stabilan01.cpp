@@ -89,6 +89,17 @@ namespace  {
   };
 
   const quint8 MarkerValue = 0x80;
+
+  ///< Поддерживаемые протоколы управления устройствами
+  QSet<QString> Controls =
+  {
+      DeviceProtocols::uid_CommonControl,
+      DeviceProtocols::uid_StabControl,
+      DeviceProtocols::uid_TensoControl,
+      DeviceProtocols::uid_PulseControl,
+      DeviceProtocols::uid_MyoControl
+  };
+
 }
 
 
@@ -298,6 +309,27 @@ bool Stabilan01::isChannelRecordingDefault(const QString &channelUid) const
     return false;
 }
 
+DeviceProtocols::DeviceControl *Stabilan01::getDeviceControl(const QString &controlId, const QString &channelId)
+{
+    Q_UNUSED(channelId);
+    if (controlId == DeviceProtocols::uid_CommonControl)
+        return dynamic_cast<DeviceProtocols::CommonControl*>(this);
+    else
+    if (controlId == DeviceProtocols::uid_StabControl)
+        return dynamic_cast<DeviceProtocols::StabControl*>(this);
+    else
+    if (controlId == DeviceProtocols::uid_TensoControl)
+        return dynamic_cast<DeviceProtocols::TensoControl*>(this);
+    else
+    if (controlId == DeviceProtocols::uid_PulseControl)
+        return dynamic_cast<DeviceProtocols::PulseControl*>(this);
+    else
+    if (controlId == DeviceProtocols::uid_MyoControl)
+        return dynamic_cast<DeviceProtocols::MyoControl*>(this);
+
+    return nullptr;
+}
+
 QStringList Stabilan01::getProtocols()
 {
     return QStringList() << DeviceProtocols::uid_StabProtocol;
@@ -383,7 +415,7 @@ void Stabilan01::calibrateTenso(const QString &channelUid)
 void Stabilan01::getTensoValueDiapasone(const int chanNumber, double &min, double &max)
 {
     Q_ASSERT(chanNumber >= 0 && chanNumber < 3);
-    auto getMinMax = [&](DeviceProtocols::TensoChannel tenso)
+    auto getMinMax = [&](DeviceProtocols::TensoChannel &tenso)
     {
         if (tenso.device != DeviceProtocols::tdBreath)
         {

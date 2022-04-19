@@ -14,16 +14,16 @@ DynamoWidget::DynamoWidget(Driver *drv, const QString channelId, QWidget *parent
 {
     ui->setupUi(this);
 
-    m_dynControl = dynamic_cast<DeviceProtocols::TensoControl*>(driver());
-    if (m_dynControl)
-        m_dynControl->getTensoValueDiapasone(channelId, m_min, m_max);
+//    m_dynControl = static_cast<DeviceProtocols::TensoControl*>(driver()->getDeviceControl(DeviceProtocols::uid_TensoControl, channelId));
+//    if (m_dynControl)
+//        m_dynControl->getTensoValueDiapasone(channelId, m_min, m_max);
 
     ui->wgtDynamoOscill->appendArea("", 1);
-    ui->wgtDynamoOscill->setDiapazone(0, m_min, m_max);
-    ui->lblDiagMin->setText(QString::number(m_min));
-    ui->lblDiagMax->setText(QString::number(m_max));
-    ui->pbDiag->setMinimum(m_min);
-    ui->pbDiag->setMaximum(m_max);
+//    ui->wgtDynamoOscill->setDiapazone(0, m_min, m_max);
+//    ui->lblDiagMin->setText(QString::number(m_min));
+//    ui->lblDiagMax->setText(QString::number(m_max));
+//    ui->pbDiag->setMinimum(static_cast<int>(m_min));
+//    ui->pbDiag->setMaximum(static_cast<int>(m_max));
 
     ui->cbScale->addItems(QStringList() <<  "1" << "2" << "4" << "8" << "16" << "32" << "64" << "128");
     setRecordedChannels();
@@ -56,13 +56,25 @@ void DynamoWidget::getData(DeviceProtocols::DeviceData *data)
 {
     if (data->channelId() == channelId())
     {
+        if (!m_dynControl)
+        {
+            m_dynControl = static_cast<DeviceProtocols::TensoControl*>(driver()->getDeviceControl(DeviceProtocols::uid_TensoControl, channelId()));
+            m_dynControl->getTensoValueDiapasone(channelId(), m_min, m_max);
+            qDebug() << ChannelsUtils::instance().channelName(channelId()) << m_min << m_max;
+            ui->wgtDynamoOscill->setDiapazone(0, m_min, m_max);
+            ui->lblDiagMin->setText(QString::number(m_min));
+            ui->lblDiagMax->setText(QString::number(m_max));
+            ui->pbDiag->setMinimum(static_cast<int>(m_min));
+            ui->pbDiag->setMaximum(static_cast<int>(m_max));
+        }
+
         DeviceProtocols::TensoDvcData *dynData = static_cast<DeviceProtocols::TensoDvcData*>(data);
 
         QVector<double> recDyn;
         double value = dynData->value(0).toDouble();
         recDyn << value;
         ui->wgtDynamoOscill->addValue(recDyn);
-        ui->pbDiag->setValue(value);
+        ui->pbDiag->setValue(static_cast<int>(value));
         ui->lblDiagValue->setText(QString("%1 " + tr("кг")).arg(round(value)));
 
         if (value > m_valueMax)

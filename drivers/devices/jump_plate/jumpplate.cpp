@@ -96,6 +96,17 @@ bool JumpPlate::isChannelRecordingDefault(const QString &channelUid) const
     return false;
 }
 
+DeviceProtocols::DeviceControl *JumpPlate::getDeviceControl(const QString &controlId, const QString &channelId)
+{
+    Q_UNUSED(channelId);
+    if (controlId == DeviceProtocols::uid_CommonControl)
+        return dynamic_cast<DeviceProtocols::CommonControl*>(this);
+    else
+    if (controlId == DeviceProtocols::uid_JumpPlateControl)
+        return dynamic_cast<DeviceProtocols::JumpPlateControl*>(this);
+    return nullptr;
+}
+
 QStringList JumpPlate::getProtocols()
 {
     return QStringList() << DeviceProtocols::uid_JumpPlateProtocol;

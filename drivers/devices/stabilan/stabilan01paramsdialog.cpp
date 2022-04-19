@@ -154,7 +154,7 @@ double Stabilan01ParamsDialog::pnTenso1() const
 
 void Stabilan01ParamsDialog::setPnTenso1(const double pn)
 {
-    ui->edPn1->setValue(pn);
+    ui->edPn1->setValue(static_cast<int>(pn));
 }
 
 double Stabilan01ParamsDialog::pnTenso2() const
@@ -164,7 +164,7 @@ double Stabilan01ParamsDialog::pnTenso2() const
 
 void Stabilan01ParamsDialog::setPnTenso2(const double pn)
 {
-    ui->edPn2->setValue(pn);
+    ui->edPn2->setValue(static_cast<int>(pn));
 }
 
 double Stabilan01ParamsDialog::pnTenso3() const
@@ -174,7 +174,7 @@ double Stabilan01ParamsDialog::pnTenso3() const
 
 void Stabilan01ParamsDialog::setPnTenso3(const double pn)
 {
-    ui->edPn3->setValue(pn);
+    ui->edPn3->setValue(static_cast<int>(pn));
 }
 
 void Stabilan01ParamsDialog::on_selectModel(int modelIdx)

@@ -13,7 +13,8 @@ BreathWidget::BreathWidget(Driver *drv, const QString channelId, QWidget *parent
 {
     ui->setupUi(this);
 
-    m_breathControl = dynamic_cast<DeviceProtocols::TensoControl*>(driver());
+//    m_breathControl = dynamic_cast<DeviceProtocols::TensoControl*>(driver());
+    m_breathControl = static_cast<DeviceProtocols::TensoControl*>(driver()->getDeviceControl(DeviceProtocols::uid_TensoControl, channelId));
     if (m_breathControl)
         m_breathControl->getTensoValueDiapasone(channelId, m_min, m_max);
 
