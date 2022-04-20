@@ -60,7 +60,6 @@ void DynamoWidget::getData(DeviceProtocols::DeviceData *data)
         {
             m_dynControl = static_cast<DeviceProtocols::TensoControl*>(driver()->getDeviceControl(DeviceProtocols::uid_TensoControl, channelId()));
             m_dynControl->getTensoValueDiapasone(channelId(), m_min, m_max);
-            qDebug() << ChannelsUtils::instance().channelName(channelId()) << m_min << m_max;
             ui->wgtDynamoOscill->setDiapazone(0, m_min, m_max);
             ui->lblDiagMin->setText(QString::number(m_min));
             ui->lblDiagMax->setText(QString::number(m_max));
