@@ -178,7 +178,8 @@ void StabDynamicTestExecute::start()
             getDriverByFormats(QStringList() << ChannelsDefines::cfDecartCoordinates);
     if (m_driver)
     {
-        m_stabControl = dynamic_cast<DeviceProtocols::StabControl*>(m_driver);
+//        m_stabControl = dynamic_cast<DeviceProtocols::StabControl*>(m_driver);
+        m_stabControl = static_cast<DeviceProtocols::StabControl*>(m_driver->getDeviceControl(DeviceProtocols::uid_StabControl));
         m_freqStab = m_driver->frequency(ChannelsDefines::chanStab);
         m_freqZ = m_driver->frequency(ChannelsDefines::chanZ);
 

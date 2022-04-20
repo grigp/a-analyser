@@ -31,6 +31,7 @@ void TrenStabExecute::start()
     TrenExecute::start();
     if (driver())
         m_dcControl = dynamic_cast<DeviceProtocols::DecartCoordControl*>(driver());
+//        m_dcControl = static_cast<DeviceProtocols::DecartCoordControl*>(driver()->getDeviceControl(DeviceProtocols::uid_StabControl));
 }
 
 void TrenStabExecute::fillGameControl(QFrame *frame)

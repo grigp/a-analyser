@@ -96,7 +96,8 @@ void TeppingTestExecute::start()
             getDriverByProtocols(QStringList() << DeviceProtocols::uid_JumpPlateProtocol);
     if (m_driver)
     {
-        m_jumpControl = dynamic_cast<DeviceProtocols::JumpPlateControl*>(m_driver);
+//        m_jumpControl = dynamic_cast<DeviceProtocols::JumpPlateControl*>(m_driver);
+        m_jumpControl = static_cast<DeviceProtocols::JumpPlateControl*>(m_driver->getDeviceControl(DeviceProtocols::uid_JumpPlateControl));
 
         connect(m_driver, &Driver::sendData, this, &TeppingTestExecute::getData);
         connect(m_driver, &Driver::communicationError, this, &TeppingTestExecute::on_communicationError);
