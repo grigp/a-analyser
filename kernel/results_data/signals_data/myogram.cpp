@@ -2,6 +2,7 @@
 
 #include <QIODevice>
 #include <QDataStream>
+#include <QDebug>
 
 Myogram::Myogram(const QString &chanId, const int subChansCount, const int freq)
     : SignalData()
@@ -41,7 +42,7 @@ int Myogram::subChansCount() const
 double Myogram::value(const int subChan, const int rec) const
 {
     Q_ASSERT(subChan >= 0 && subChan < m_subChansCount);
-    Q_ASSERT(rec > 0 && rec < m_data.size());
+    Q_ASSERT(rec >= 0 && rec < m_data.size());
     return m_data.at(rec).data.at(subChan);
 }
 

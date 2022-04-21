@@ -1,7 +1,5 @@
 INCLUDEPATH += $$PWD
 
-include(balistogram/balistogram_src.pri)
-
 HEADERS += \
     $$PWD/dynamosignalvisual.h \
     $$PWD/dynamosignalvisualwidget.h

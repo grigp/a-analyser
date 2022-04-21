@@ -45,6 +45,7 @@
 #include "vectoranalysisvisual.h"
 #include "bilateralvisual.h"
 #include "dynamosignalvisual.h"
+#include "myogramsignalvisual.h"
 
 #include "stabilan01.h"
 #include "bilateral.h"
@@ -99,6 +100,7 @@ void AAnalyserBuild::registerVisuals()
     app->registerVisual(new SKGVisual(VisualDefines::vlChannel));
     app->registerVisual(new StabilogramVisual(VisualDefines::vlChannel));
     app->registerVisual(new BalistogramVisual(VisualDefines::vlChannel));
+    app->registerVisual(new MyogramSignalVisual(VisualDefines::vlChannel));
     app->registerVisual(new DynamoSignalVisual(VisualDefines::vlChannel));
     app->registerVisual(new VectorAnalysisVisual(VisualDefines::vlChannel));
     app->registerVisual(new BilateralVisual(VisualDefines::vlProbe));
