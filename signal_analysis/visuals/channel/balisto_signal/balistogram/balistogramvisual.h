@@ -11,7 +11,9 @@ static const QString UID_Balistogram = "vBalistogram";
 static const QString Name_Balistogram = "Балистограмма";
 }
 
-
+/*!
+ * \brief Класс визуализатора балистограммы The BalistogramVisual class
+ */
 class BalistogramVisual : public VisualDescriptor
 {
 public:
