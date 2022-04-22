@@ -91,8 +91,14 @@ void MyogramSignalVisualWidget::on_moveCursor()
 {
     ui->edCursor->setText(QString::number(static_cast<double>(ui->wgtGraph->cursorPos()) / static_cast<double>(m_signal->frequency())));
     auto vals = ui->wgtGraph->cursorValues();
-    if (vals.size() == 1)
-        ui->edValue->setText(QString::number(vals.at(0)));
+
+    if (vals.size() >= m_signal->subChansCount())
+    {
+        QString s = "";
+        for (int i = 0; i < m_signal->subChansCount(); ++i)
+            s += (QString::number(i + 1) + ": " + QString::number(vals.at(i), 'f', 2) + "  ");
+        ui->edValue->setText(s);
+    }
 }
 
 void MyogramSignalVisualWidget::showGraph()

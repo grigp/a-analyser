@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>789</width>
-    <height>609</height>
+    <width>1128</width>
+    <height>671</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -315,7 +315,7 @@
          <item>
           <widget class="QLabel" name="lblvalues">
            <property name="text">
-            <string>Значение, мм</string>
+            <string>Значения по отведениям, мВ</string>
            </property>
           </widget>
          </item>
@@ -345,6 +345,12 @@
             </property>
             <item>
              <widget class="QLineEdit" name="edValue">
+              <property name="minimumSize">
+               <size>
+                <width>500</width>
+                <height>0</height>
+               </size>
+              </property>
               <property name="maximumSize">
                <size>
                 <width>100</width>
