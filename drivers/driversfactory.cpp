@@ -3,10 +3,8 @@
 #include "aanalyserdefines.h"
 #include "aanalyserapplication.h"
 #include "aanalyserbuild.h"
-#include "stabilan01.h"
-#include "jumpplate.h"
-#include "bilateral.h"
 #include "datadefines.h"
+#include "driver.h"
 
 #include <QFile>
 #include <QDir>

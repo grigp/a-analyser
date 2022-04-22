@@ -40,6 +40,7 @@ bool MyogramSignalVisualWidget::isValid()
 
 void MyogramSignalVisualWidget::calculate()
 {
+    getSignal();
     showGraph();
 }
 
@@ -101,8 +102,16 @@ void MyogramSignalVisualWidget::on_moveCursor()
     }
 }
 
-void MyogramSignalVisualWidget::showGraph()
+void MyogramSignalVisualWidget::on_cbChannelsChanged(int idx)
 {
+    showGraph(idx - 1);
+}
+
+void MyogramSignalVisualWidget::getSignal()
+{
+    ui->cbChannels->clear();
+    ui->cbChannels->addItem(tr("Все"));
+
     QByteArray data;
     if (DataProvider::getChannel(probeUid(), channelUid(), data))
     {
@@ -110,10 +119,35 @@ void MyogramSignalVisualWidget::showGraph()
         {
             m_signal = new Myogram(data);
             for (int i = 0; i < m_signal->subChansCount(); ++i)
-                ui->wgtGraph->appendSignal(m_signal, tr("Отведение") + " " + QString::number(i+1), i);
-            for (int i = 0; i < m_signal->subChansCount(); ++i)
-                ui->wgtGraph->setDiapazone(i, 0, 2);
-            ui->cbScale->setCurrentIndex(1);
+                ui->cbChannels->addItem(tr("Отведение") + " " + QString::number(i+1));
         }
+    }
+}
+
+void MyogramSignalVisualWidget::showGraph(const int chanIdx)
+{
+    auto show = [&](const int chan, const int chanDiap)
+    {
+        ui->wgtGraph->appendSignal(m_signal, tr("Отведение") + " " + QString::number(chan + 1) + ", " + tr("мВ"), chan);
+        ui->wgtGraph->setDiapazone(chanDiap, 0, 2);
+    };
+
+    if (m_signal)
+    {
+        ui->wgtGraph->clear();
+//        ui->wgtGraph->setLine1Color(QColor(0, 0, 255));
+//        ui->wgtGraph->setLine2Color(QColor(0, 0, 255));
+//        ui->wgtGraph->setLine3Color(QColor(0, 0, 255));
+//        ui->wgtGraph->setLine4Color(QColor(0, 0, 255));
+//        ui->wgtGraph->setLine5Color(QColor(0, 0, 255));
+//        ui->wgtGraph->setLine6Color(QColor(0, 0, 255));
+
+        if (chanIdx == -1)
+            for (int i = 0; i < m_signal->subChansCount(); ++i)
+                show(i, i);
+        else
+            show(chanIdx, 0);
+
+        ui->cbScale->setCurrentIndex(1);
     }
 }

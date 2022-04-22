@@ -173,11 +173,17 @@ public:
     void setColorFillBetweenSubchans(const QColor &color);
 
     QColor line1Color() const {return m_line1Color;}
+    void setLine1Color(const QColor color) {m_line1Color = color;}
     QColor line2Color() const {return m_line2Color;}
+    void setLine2Color(const QColor color) {m_line2Color = color;}
     QColor line3Color() const {return m_line3Color;}
+    void setLine3Color(const QColor color) {m_line3Color = color;}
     QColor line4Color() const {return m_line4Color;}
+    void setLine4Color(const QColor color) {m_line4Color = color;}
     QColor line5Color() const {return m_line5Color;}
+    void setLine5Color(const QColor color) {m_line5Color = color;}
     QColor line6Color() const {return m_line6Color;}
+    void setLine6Color(const QColor color) {m_line6Color = color;}
 
 
     /*!

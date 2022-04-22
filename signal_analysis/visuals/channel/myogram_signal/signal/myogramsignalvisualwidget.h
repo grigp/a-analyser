@@ -39,10 +39,17 @@ private slots:
 
     void on_moveCursor();
 
+    /*!
+     * \brief Выбор канала
+     * \param chanIdx - номер канала (0 - все, 1, n - номера каналов)
+     */
+    void on_cbChannelsChanged(int idx);
+
 private:
     Ui::MyogramSignalVisualWidget *ui;
 
-    void showGraph();
+    void getSignal();
+    void showGraph(const int chanIdx = -1);
 
     Myogram* m_signal {nullptr};
 };

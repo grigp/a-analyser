@@ -226,6 +226,60 @@
        </widget>
       </item>
       <item>
+       <spacer name="horizontalSpacer_2">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeType">
+         <enum>QSizePolicy::Fixed</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>10</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
+       <widget class="QFrame" name="frChannel">
+        <property name="frameShape">
+         <enum>QFrame::StyledPanel</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Raised</enum>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout_7">
+         <property name="spacing">
+          <number>3</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
+         <item>
+          <widget class="QLabel" name="lblChannel">
+           <property name="text">
+            <string>Показывать</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QComboBox" name="cbChannels">
+           <property name="minimumSize">
+            <size>
+             <width>150</width>
+             <height>0</height>
+            </size>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item>
        <spacer name="horizontalSpacer">
         <property name="orientation">
          <enum>Qt::Horizontal</enum>
@@ -389,8 +443,8 @@
    <slot>scaleChange(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>62</x>
-     <y>587</y>
+     <x>76</x>
+     <y>666</y>
     </hint>
     <hint type="destinationlabel">
      <x>790</x>
@@ -405,8 +459,8 @@
    <slot>btnFulSignalClicked(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>109</x>
-     <y>583</y>
+     <x>128</x>
+     <y>662</y>
     </hint>
     <hint type="destinationlabel">
      <x>792</x>
@@ -421,8 +475,8 @@
    <slot>btnMinusClicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>138</x>
-     <y>591</y>
+     <x>144</x>
+     <y>662</y>
     </hint>
     <hint type="destinationlabel">
      <x>791</x>
@@ -437,8 +491,8 @@
    <slot>btnPlusClicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>141</x>
-     <y>575</y>
+     <x>144</x>
+     <y>644</y>
     </hint>
     <hint type="destinationlabel">
      <x>794</x>
@@ -454,11 +508,27 @@
    <hints>
     <hint type="sourcelabel">
      <x>434</x>
-     <y>549</y>
+     <y>623</y>
     </hint>
     <hint type="destinationlabel">
      <x>792</x>
      <y>174</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>cbChannels</sender>
+   <signal>currentIndexChanged(int)</signal>
+   <receiver>MyogramSignalVisualWidget</receiver>
+   <slot>on_cbChannelsChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>265</x>
+     <y>656</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1132</x>
+     <y>124</y>
     </hint>
    </hints>
   </connection>
@@ -469,5 +539,6 @@
   <slot>btnMinusClicked()</slot>
   <slot>btnPlusClicked()</slot>
   <slot>signalScroll(int)</slot>
+  <slot>on_cbChannelsChanged(int)</slot>
  </slots>
 </ui>
