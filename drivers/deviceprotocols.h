@@ -592,6 +592,11 @@ public:
      */
     virtual QRect platform(const int num) = 0;
 
+    /*!
+     * \brief Возвращает общий размер системы платформ
+     */
+    virtual int size() const = 0;
+
     ~MultiPlatformControl() {}
 };
 

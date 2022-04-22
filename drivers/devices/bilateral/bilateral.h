@@ -118,11 +118,18 @@ public:
      */
     QRect platform(const int num) override;
 
+    /*!
+     * \brief Возвращает общий размер системы платформ
+     */
+    int size() const override;
+
 private slots:
     void getData(DeviceProtocols::DeviceData *data);
 
 
 private:
+
+    void centeringPlatforms();
 
     /*!
      * \brief Обработка данных стабилограмм
@@ -152,6 +159,8 @@ private:
     bool m_isData1 {false}, m_isData2 {false};
 
     double m_offsetX {0}, m_offsetY {0};
+
+    int m_diap {128};     ///< Общий диапазон координат
 
     QMap<QString, int> m_frequency;
 };

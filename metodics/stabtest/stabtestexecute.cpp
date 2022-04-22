@@ -110,7 +110,9 @@ void StabTestExecute::start()
         m_bilatControl = static_cast<DeviceProtocols::MultiPlatformControl*>(m_driver->getDeviceControl(DeviceProtocols::uid_MultiPlatformControl));
         if (m_bilatControl)
         {
-            m_maxDiap = computePlatforms();
+            m_platform1 = m_bilatControl->platform(0);
+            m_platform2 = m_bilatControl->platform(1);
+            m_maxDiap = m_bilatControl->size();
             ui->wgtSKG->setDiap(m_maxDiap);
             ui->wgtSKG->addPlatform(m_platform1);
             ui->wgtSKG->addPlatform(m_platform2);
@@ -469,47 +471,3 @@ void StabTestExecute::hidePatientWindow()
     }
 }
 
-int StabTestExecute::computePlatforms()
-{
-    auto calcRectMinMax = [&](QRect plate1,
-                              QRect plate2,
-                              int &xMin, int &xMax, int &yMin, int &yMax)
-    {
-        xMin = plate1.x();
-        if (plate2.x() < plate1.x())
-            xMin = plate2.x();
-        xMax = plate1.x() + plate1.width();
-        if (plate2.x() + plate2.width() > plate1.x() + plate1.width())
-            xMax = plate2.x() + plate2.width();
-
-        yMax = plate1.y();
-        if (plate2.y() > plate1.y())
-            yMax = plate2.y();
-        yMin = plate1.y() - plate1.height();
-        if (plate2.y() - plate2.height() < plate1.y() - plate1.height())
-            yMin = plate2.y() - plate2.height();
-    };
-
-
-    int xMin = 0;
-    int xMax = 0;
-    int yMin = 0;
-    int yMax = 0;
-    calcRectMinMax(m_bilatControl->platform(0), m_bilatControl->platform(1), xMin, xMax, yMin, yMax);
-
-    int xMid = (xMax + xMin) / 2;
-    int yMid = (yMax + yMin) / 2;
-
-    m_platform1 = QRect(m_bilatControl->platform(0).x() - xMid, m_bilatControl->platform(0).y() - yMid,
-                        m_bilatControl->platform(0).width(), m_bilatControl->platform(0).height());
-    m_platform2 = QRect(m_bilatControl->platform(1).x() - xMid, m_bilatControl->platform(1).y() - yMid,
-                        m_bilatControl->platform(1).width(), m_bilatControl->platform(1).height());
-
-    calcRectMinMax(m_platform1, m_platform2, xMin, xMax, yMin, yMax);
-
-    int diap = qMax(abs(xMin), abs(xMax));
-    diap = qMax(diap, abs(yMin));
-    diap = qMax(diap, abs(yMax));
-
-    return diap;
-}

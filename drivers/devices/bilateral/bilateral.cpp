@@ -113,6 +113,8 @@ void Bilateral::setParams(const DeviceProtocols::Ports port, const QJsonObject &
     h = obj["height"].toInt(500);
     m_plate2 = QRect(x, y, w, h);
 
+    centeringPlatforms();
+
     m_center = QPoint((m_plate1.center().x() + m_plate2.center().x()) / 2,
                       (m_plate1.center().y() + m_plate2.center().y()) / 2);
 }
@@ -350,6 +352,49 @@ void Bilateral::getData(DeviceProtocols::DeviceData *data)
         sendAdvancedChannels(data);
 }
 
+void Bilateral::centeringPlatforms()
+{
+    auto calcRectMinMax = [&](QRect plate1,
+                              QRect plate2,
+                              int &xMin, int &xMax, int &yMin, int &yMax)
+    {
+        xMin = plate1.x();
+        if (plate2.x() < plate1.x())
+            xMin = plate2.x();
+        xMax = plate1.x() + plate1.width();
+        if (plate2.x() + plate2.width() > plate1.x() + plate1.width())
+            xMax = plate2.x() + plate2.width();
+
+        yMax = plate1.y();
+        if (plate2.y() > plate1.y())
+            yMax = plate2.y();
+        yMin = plate1.y() - plate1.height();
+        if (plate2.y() - plate2.height() < plate1.y() - plate1.height())
+            yMin = plate2.y() - plate2.height();
+    };
+
+    QRect plate1 = m_plate1;
+    QRect plate2 = m_plate2;
+
+    int xMin = 0;
+    int xMax = 0;
+    int yMin = 0;
+    int yMax = 0;
+    calcRectMinMax(plate1, plate2, xMin, xMax, yMin, yMax);
+
+    int xMid = (xMax + xMin) / 2;
+    int yMid = (yMax + yMin) / 2;
+
+    m_plate1 = QRect(plate1.x() - xMid, plate1.y() - yMid, plate1.width(), plate1.height());
+    m_plate2 = QRect(plate2.x() - xMid, plate2.y() - yMid, plate2.width(), plate2.height());
+
+    calcRectMinMax(m_plate1, m_plate2, xMin, xMax, yMin, yMax);
+
+    m_diap = qMax(abs(xMin), abs(xMax));
+    m_diap = qMax(m_diap, abs(yMin));
+    m_diap = qMax(m_diap, abs(yMax));
+}
+
 void Bilateral::assignStabData()
 {
     if (m_isData1 && m_isData2)
@@ -543,5 +588,10 @@ QRect Bilateral::platform(const int num)
     if (num == 1)
         return m_plate2;
     return QRect(0, 0, 0, 0);
+}
+
+int Bilateral::size() const
+{
+    return m_diap;
 }
 
