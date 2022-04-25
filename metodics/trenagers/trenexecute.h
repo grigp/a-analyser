@@ -20,6 +20,7 @@ class TrenagerPatientWindow;
 class SettingsValue;
 class VideoIrritant;
 class ChannelData;
+class BilateralResultData;
 
 /*!
  * \brief Базовый класс тренажеров с получением данных от устройства TrenExecute class
@@ -320,6 +321,11 @@ private:
     SettingsValue* m_AdvChannel1Select  {nullptr};  ///< Выбранный канал 1 - параметр из хранилища
     SettingsValue* m_AdvChannel0Enabled {nullptr};  ///< Будет ли управление по дополнительному каналу 0 - параметр из хранилища
     SettingsValue* m_AdvChannel1Enabled {nullptr};  ///< Будет ли управление по дополнительному каналу 1 - параметр из хранилища
+
+    DeviceProtocols::MultiPlatformControl* m_bilatControl {nullptr};   ///< Управление билатаральным режимом в драйвере
+    QRect m_platform1 {QRect(0, 0, 0, 0)};   ///< Платформы в билатеральном режиме
+    QRect m_platform2 {QRect(0, 0, 0, 0)};
+    BilateralResultData* m_rdBilat {nullptr};
 };
 
 #endif // TRENEXECUTE_H

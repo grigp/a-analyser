@@ -19,12 +19,14 @@
 #include "trenagerpatientwindow.h"
 #include "settingsprovider.h"
 #include "videoirritant.h"
+#include "bilateralresultdata.h"
 
 TrenExecute::TrenExecute(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::TrenExecute)
   , m_scene(new QGraphicsScene(-1000, -1000, 2000, 2000))
   , m_trd(new TestResultData())
+  , m_rdBilat(new BilateralResultData(ChannelsDefines::chanBilat))
 {
     ui->setupUi(this);
 
@@ -82,6 +84,13 @@ void TrenExecute::start()
             getDriverByFormats(QStringList() << ChannelsDefines::cfDecartCoordinates);
     if (m_driver)
     {
+        m_bilatControl = static_cast<DeviceProtocols::MultiPlatformControl*>(m_driver->getDeviceControl(DeviceProtocols::uid_MultiPlatformControl));
+        if (m_bilatControl)
+        {
+            m_platform1 = m_bilatControl->platform(0);
+            m_platform2 = m_bilatControl->platform(1);
+        }
+
         connect(m_driver, &Driver::sendData, this, &TrenExecute::getData);
         connect(m_driver, &Driver::communicationError, this, &TrenExecute::on_communicationError);
 
@@ -100,6 +109,11 @@ void TrenExecute::start()
         ui->wgtAdvChannels->assignDriver(m_driver, m_trd);
         //! Стабилограмма будет записана всегда
         ui->wgtAdvChannels->setAllwaysRecordingChannel(ui->cbSelectChannel->currentData(ChannelsUtils::ChannelUidRole).toString());
+        if (m_bilatControl)
+        {
+            ui->wgtAdvChannels->setAllwaysRecordingChannel(ChannelsDefines::chanStabLeft);
+            ui->wgtAdvChannels->setAllwaysRecordingChannel(ChannelsDefines::chanStabRight);
+        }
         ui->wgtAdvChannels->newProbe();
         auto val = SettingsProvider::valueFromRegAppCopy("AdvancedChannelsWidget", "SplitterProbePosition").toByteArray();
         ui->splitter->restoreState(val);
@@ -473,6 +487,13 @@ void TrenExecute::finishTest()
     foreach (auto fct, m_gameFactors)
         trenRes->addFactor(fct.uid, fct.value);
     m_trd->addChannel(trenRes);
+
+    if (m_bilatControl)
+    {
+        m_rdBilat->addPlatform(m_platform1);
+        m_rdBilat->addPlatform(m_platform2);
+        m_trd->addChannel(m_rdBilat);
+    }
 
     m_isRecording = false;
     m_trd->saveTest();
