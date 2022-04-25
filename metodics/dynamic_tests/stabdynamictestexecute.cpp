@@ -9,6 +9,7 @@
 #include "executewidget.h"
 #include "stabdynamictestpatientwindow.h"
 #include "baseutils.h"
+#include "bilateralresultdata.h"
 
 #include <QTimer>
 #include <QMessageBox>
@@ -19,6 +20,7 @@ StabDynamicTestExecute::StabDynamicTestExecute(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::StabDynamicTestExecute)
   , m_trd(new TestResultData())
+  , m_rdBilat(new BilateralResultData(ChannelsDefines::chanBilat))
 {
     ui->setupUi(this);
 
@@ -40,6 +42,7 @@ StabDynamicTestExecute::StabDynamicTestExecute(QWidget *parent) :
 
     ui->wgtAdvChannels->setVisible(false);
     ui->btnCalibrate->setVisible(false);
+    ui->btnRecord->setEnabled(false);
 }
 
 StabDynamicTestExecute::~StabDynamicTestExecute()
@@ -159,6 +162,13 @@ void StabDynamicTestExecute::finishTest()
 {
     hidePatientWindow();
     m_isRecording = false;
+    if (m_bilatControl)
+    {
+        m_rdBilat->addPlatform(m_platform1);
+        m_rdBilat->addPlatform(m_platform2);
+        m_trd->addChannel(m_rdBilat);
+    }
+    m_isRecording = false;
     m_trd->saveTest();
     static_cast<ExecuteWidget*>(parent())->showDB();
 }
@@ -178,10 +188,16 @@ void StabDynamicTestExecute::start()
             getDriverByFormats(QStringList() << ChannelsDefines::cfDecartCoordinates);
     if (m_driver)
     {
-//        m_stabControl = dynamic_cast<DeviceProtocols::StabControl*>(m_driver);
         m_stabControl = static_cast<DeviceProtocols::StabControl*>(m_driver->getDeviceControl(DeviceProtocols::uid_StabControl));
         m_freqStab = m_driver->frequency(ChannelsDefines::chanStab);
         m_freqZ = m_driver->frequency(ChannelsDefines::chanZ);
+
+        m_bilatControl = static_cast<DeviceProtocols::MultiPlatformControl*>(m_driver->getDeviceControl(DeviceProtocols::uid_MultiPlatformControl));
+        if (m_bilatControl)
+        {
+            m_platform1 = m_bilatControl->platform(0);
+            m_platform2 = m_bilatControl->platform(1);
+        }
 
         connect(m_driver, &Driver::sendData, this, &StabDynamicTestExecute::getData);
         connect(m_driver, &Driver::communicationError, this, &StabDynamicTestExecute::on_communicationError);
@@ -201,8 +217,16 @@ void StabDynamicTestExecute::start()
         });
 
         ui->wgtAdvChannels->assignDriver(m_driver, m_trd);
+        m_trd->newProbe(m_metInfo.name);
+        ui->wgtAdvChannels->newProbe();
+
         //! Стабилограмма будет записана всегда
         ui->wgtAdvChannels->setAllwaysRecordingChannel(ui->cbSelectChannel->currentData(ChannelsUtils::ChannelUidRole).toString());
+        if (m_bilatControl)
+        {
+            ui->wgtAdvChannels->setAllwaysRecordingChannel(ChannelsDefines::chanStabLeft);
+            ui->wgtAdvChannels->setAllwaysRecordingChannel(ChannelsDefines::chanStabRight);
+        }
         auto val = SettingsProvider::valueFromRegAppCopy("AdvancedChannelsWidget", "SplitterProbePosition").toByteArray();
         ui->splitter->restoreState(val);
 
@@ -307,6 +331,8 @@ void StabDynamicTestExecute::recording()
     ui->frScale->setEnabled(!m_isRecording);
     ui->wgtAdvChannels->enabledControls(!m_isRecording);
 
+    m_recCount = 0;
+
     if (m_isRecording)
     {
         if (isAutoFinishRecord())
@@ -319,9 +345,6 @@ void StabDynamicTestExecute::recording()
             ui->btnRecord->setIcon(QIcon(":/images/SaveOK.png"));
             ui->btnRecord->setText(tr("Завершить"));
         }
-
-        m_trd->newProbe(m_metInfo.name);
-        ui->wgtAdvChannels->newProbe();
 
         if (QApplication::desktop()->screenCount() == 1)
         {
@@ -338,15 +361,14 @@ void StabDynamicTestExecute::recording()
         if (QApplication::desktop()->screenCount() == 1)
             hidePatientWindow();
 
+        ui->btnRecord->setIcon(QIcon(":/images/Save.png"));
+        ui->btnRecord->setText(tr("Запись"));
+
         if (isAutoFinishRecord())
             ui->wgtAdvChannels->abortProbe();
         else
             finishTest();
-
-        ui->btnRecord->setIcon(QIcon(":/images/Save.png"));
-        ui->btnRecord->setText(tr("Запись"));
     }
-    m_recCount = 0;
 }
 
 void StabDynamicTestExecute::setPatientWinDiap(const int diap)
@@ -366,6 +388,7 @@ void StabDynamicTestExecute::scaleChange(int scaleId)
 
 void StabDynamicTestExecute::zeroing()
 {
+    ui->btnRecord->setEnabled(true);
     if (m_stabControl)
         m_stabControl->zeroing(ChannelsDefines::chanStab);
 }

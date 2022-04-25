@@ -113,13 +113,13 @@ private:
 
     Driver* m_driver {nullptr};     ///< Драйвер передающий данные
     DeviceProtocols::StabControl* m_stabControl {nullptr};             ///< Управление стабилографией в драйвере
-    DeviceProtocols::MultiPlatformControl* m_bilatControl {nullptr};   ///< Управление билатаральным режимом в драйвере
 
     TestResultData *m_trd;  ///< Объект, записывающий данные в базу
 
 //    bool m_patientWinPresent {false};
     PatientWindow* m_patientWin {nullptr};  ///< Окно пациента
 
+    DeviceProtocols::MultiPlatformControl* m_bilatControl {nullptr};   ///< Управление билатаральным режимом в драйвере
     QRect m_platform1 {QRect(0, 0, 0, 0)};   ///< Платформы в билатеральном режиме
     QRect m_platform2 {QRect(0, 0, 0, 0)};
     BilateralResultData* m_rdBilat {nullptr};

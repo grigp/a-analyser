@@ -10,6 +10,8 @@
 #include "deviceprotocols.h"
 #include "metodicdefines.h"
 
+class BilateralResultData;
+
 namespace Ui {
 class StabDynamicTestExecute;
 }
@@ -219,6 +221,11 @@ private:
     TestResultData *m_trd;  ///< Объект, записывающий данные в базу
 
     StabDynamicTestPatientWindow *m_patientWin {nullptr};
+
+    DeviceProtocols::MultiPlatformControl* m_bilatControl {nullptr};   ///< Управление билатаральным режимом в драйвере
+    QRect m_platform1 {QRect(0, 0, 0, 0)};   ///< Платформы в билатеральном режиме
+    QRect m_platform2 {QRect(0, 0, 0, 0)};
+    BilateralResultData* m_rdBilat {nullptr};
 };
 
 #endif // STABDYNAMICTESTEXECUTE_H

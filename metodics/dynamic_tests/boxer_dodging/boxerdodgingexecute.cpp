@@ -52,7 +52,6 @@ StabDynamicTestPatientWindow *BoxerDodgingExecute::createPatientWindow()
 void BoxerDodgingExecute::finishTest()
 {
     trd()->addChannel(m_res);
-    hidePatientWindow();
     StabDynamicTestExecute::finishTest();
 }
 
