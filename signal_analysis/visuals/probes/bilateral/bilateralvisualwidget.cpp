@@ -154,7 +154,7 @@ void BilateralVisualWidget::showSKG()
             m_stabLeft = new Stabilogram(data);
             ui->wgtSKG->setSignal(m_stabLeft, 1);
             ui->wgtSKG->setOffset(-m_bData->platform(0).center().x(),
-                                  m_bData->platform(0).y() - m_bData->platform(0).height() / 2, 1);
+                                  -m_bData->platform(0).y() + m_bData->platform(0).height() / 2, 1);
             ui->wgtSKG->setZeroing(true);
         }
     }
@@ -168,7 +168,7 @@ void BilateralVisualWidget::showSKG()
             m_stabRight = new Stabilogram(data);
             ui->wgtSKG->setSignal(m_stabRight, 2);
             ui->wgtSKG->setOffset(-m_bData->platform(1).center().x(),
-                                  m_bData->platform(1).y() - m_bData->platform(1).height() / 2, 2);
+                                  -m_bData->platform(1).y() + m_bData->platform(1).height() / 2, 2);
             ui->wgtSKG->setZeroing(true);
         }
     }
