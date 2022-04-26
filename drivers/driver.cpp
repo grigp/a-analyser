@@ -40,10 +40,13 @@ void Driver::start()
 
         m_trdInput->start();
     }
+
+    emit started();
 }
 
 void Driver::stop()
 {
+    emit stopped();
     disconnect(m_port, &SerialPort::outPortD, this, &Driver::on_readData);
     emit disconnectPort();
 

@@ -98,6 +98,9 @@ public:
 
 
 signals:
+    void started();
+    void stopped();
+
     void sendData(DeviceProtocols::DeviceData *data);
     void communicationError(const QString &drvName, const QString &port, const int errorCode);
 

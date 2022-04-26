@@ -55,6 +55,8 @@ public:
     void setAllwaysRecordingChannel(const QString &channelId) override;
 
 private slots:
+    void on_started();
+
     /*!
      * \brief Изменение режима записи всех отведений миограмм
      */

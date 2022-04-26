@@ -13,13 +13,12 @@ BreathWidget::BreathWidget(Driver *drv, const QString channelId, QWidget *parent
 {
     ui->setupUi(this);
 
-//    m_breathControl = dynamic_cast<DeviceProtocols::TensoControl*>(driver());
-    m_breathControl = static_cast<DeviceProtocols::TensoControl*>(driver()->getDeviceControl(DeviceProtocols::uid_TensoControl, channelId));
-    if (m_breathControl)
-        m_breathControl->getTensoValueDiapasone(channelId, m_min, m_max);
+//    m_breathControl = static_cast<DeviceProtocols::TensoControl*>(driver()->getDeviceControl(DeviceProtocols::uid_TensoControl, channelId));
+//    if (m_breathControl)
+//        m_breathControl->getTensoValueDiapasone(channelId, m_min, m_max);
 
     ui->wgtBreathOscill->appendArea("", 1);
-    ui->wgtBreathOscill->setDiapazone(0, m_min, m_max);
+//    ui->wgtBreathOscill->setDiapazone(0, m_min, m_max);
 
     ui->cbScale->addItems(QStringList() <<  "1" << "2" << "4" << "8" << "16" << "32" << "64" << "128");
     setRecordedChannels();
@@ -52,6 +51,14 @@ void BreathWidget::getData(DeviceProtocols::DeviceData *data)
 {
     if (data->channelId() == channelId())
     {
+        if (!m_breathControl)
+        {
+            m_breathControl = static_cast<DeviceProtocols::TensoControl*>(driver()->getDeviceControl(DeviceProtocols::uid_TensoControl, channelId()));
+            if (m_breathControl)
+                m_breathControl->getTensoValueDiapasone(channelId(), m_min, m_max);
+            ui->wgtBreathOscill->setDiapazone(0, m_min, m_max);
+        }
+
         DeviceProtocols::TensoDvcData *dynData = static_cast<DeviceProtocols::TensoDvcData*>(data);
 
         QVector<double> recBreath;
@@ -110,6 +117,17 @@ void BreathWidget::on_scaleChange(int scaleIdx)
 void BreathWidget::on_recChange(bool checked)
 {
     setRecButton(ui->btnRecord, checked);
+
+    if (checked)
+    {
+        m_signal = new BreathSignal(channelId(), ui->wgtBreathOscill->frequency());
+        objTestResultData()->addChannel(m_signal);
+    }
+    else
+    {
+        m_signal->clear();
+        delete m_signal;
+    }
 }
 
 void BreathWidget::setRecordedChannels()

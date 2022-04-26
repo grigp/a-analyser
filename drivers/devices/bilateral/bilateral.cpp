@@ -184,10 +184,14 @@ void Bilateral::start()
             m_drivers[i]->start();
         }
     }
+
+    emit started();
 }
 
 void Bilateral::stop()
 {
+    emit stopped();
+
     if (m_drivers[0])
     {
         m_drivers[0]->stop();
@@ -228,9 +232,35 @@ QList<QString> Bilateral::getChannelsByProtocol(const QString &protocolUid) cons
 QList<QString> Bilateral::getChannelsByFormat(const QString &formatUid) const
 {
     QList<QString> retval;
+    retval.clear();
+
     if (formatUid == ChannelsDefines::cfDecartCoordinates)
         retval << ChannelsDefines::chanStab << ChannelsDefines::chanStabLeft << ChannelsDefines::chanStabRight;
-    //!TODO дописать для других каналов
+    else
+    {
+        auto drivers = getDrivers();
+        if (drivers.size() == 2)
+            for (int i = 0; i < 2; ++i)
+                if (drivers[i])
+                {
+                    auto channels = drivers[i]->getChannelsByFormat(formatUid);
+                    foreach (auto chan, channels)
+                        if (ChannelsUtils::instance().channelType(chan) != ChannelsDefines::ctStabilogram)
+                        {
+                            QString bChan = chan;
+                            if (i == 0)
+                                bChan = ChannelFirstConvert.value(chan);
+                            else
+                            if (i == 1)
+                                bChan = ChannelSecondConvert.value(chan);
+                            retval << bChan;
+                        }
+                }
+
+        for (int i = 0; i < drivers.size(); ++i)
+            delete drivers[i];
+    }
+
     return retval;
 }
 
@@ -283,7 +313,15 @@ bool Bilateral::isChannelRecordingDefault(const QString &channelUid) const
     if (ChannelsUtils::instance().channelType(channelUid) == ChannelsDefines::ctStabilogram ||
             ChannelsUtils::instance().channelType(channelUid) == ChannelsDefines::ctBallistogram)
         return true;
-    return false;
+    else
+    {
+        bool retval = false;
+        if (m_drivers[0])
+            retval = m_drivers[0]->isChannelRecordingDefault(channelUid);
+        if (!retval && m_drivers[1])
+            retval = m_drivers[1]->isChannelRecordingDefault(channelUid);
+        return retval;
+    }
 }
 
 DeviceProtocols::DeviceControl *Bilateral::getDeviceControl(const QString &controlId, const QString &channelId)

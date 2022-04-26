@@ -26,7 +26,7 @@ MyogramWidget::MyogramWidget(Driver *drv, const QString channelId, QWidget *pare
 
     ui->cbScale->addItems(QStringList() <<  "1" << "2" << "4" << "8" << "16" << "32" << "64" << "128" << "256" << "512");
 
-    setRecordedChannels();
+    connect(drv, &Driver::started, this, &MyogramWidget::on_started);
 }
 
 MyogramWidget::~MyogramWidget()
@@ -101,9 +101,25 @@ void MyogramWidget::setAllwaysRecordingChannel(const QString &channelId)
     Q_UNUSED(channelId);
 }
 
+void MyogramWidget::on_started()
+{
+    setRecordedChannels();
+}
+
 void MyogramWidget::on_recMyoClick(bool checked)
 {
     setRecButton(ui->btnMyoRecord, checked);
+
+    if (checked)
+    {
+        m_myo = new Myogram(ChannelsDefines::chanMyogram, driver()->getSubChannelsCount(channelId()), ui->wgtMyoOscill->frequency());
+        objTestResultData()->addChannel(m_myo);
+    }
+    else
+    {
+        m_myo->clear();
+        delete m_myo;
+    }
 }
 
 void MyogramWidget::on_recMyoChanClick(bool checked)

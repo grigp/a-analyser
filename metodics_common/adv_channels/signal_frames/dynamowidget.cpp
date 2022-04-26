@@ -135,6 +135,17 @@ void DynamoWidget::on_scaleChange(int scaleIdx)
 void DynamoWidget::on_dynRecChange(bool checked)
 {
     setRecButton(ui->btnDynRecord, checked);
+
+    if (checked)
+    {
+        m_dynamo = new DynamoSignal(channelId(), ui->wgtDynamoOscill->frequency());
+        objTestResultData()->addChannel(m_dynamo);
+    }
+    else
+    {
+        m_dynamo->clear();
+        delete m_dynamo;
+    }
 }
 
 void DynamoWidget::setRecordedChannels()

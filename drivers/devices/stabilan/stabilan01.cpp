@@ -272,23 +272,30 @@ QList<QString> Stabilan01::getChannelsByFormat(const QString &formatUid) const
     else
     if (formatUid == ChannelsDefines::cfSinglePositive)
     {
-        if ((m_tenso1.device != DeviceProtocols::tdBreath) && td1ChannelsByDevice.contains(m_tenso1.device))
-            retval << td1ChannelsByDevice.value(m_tenso1.device).at(0);
-        if ((m_tenso2.device != DeviceProtocols::tdBreath) && td2ChannelsByDevice.contains(m_tenso2.device))
-            retval << td2ChannelsByDevice.value(m_tenso2.device).at(0);
-        if ((m_tenso3.device != DeviceProtocols::tdBreath) && td3ChannelsByDevice.contains(m_tenso3.device))
-            retval << td3ChannelsByDevice.value(m_tenso3.device).at(0);
-        retval << ChannelsDefines::chanMyogram;
+        if (Stabilan01Defines::ModelsWithTenso.contains(m_model))
+        {
+            if ((m_tenso1.device != DeviceProtocols::tdBreath) && td1ChannelsByDevice.contains(m_tenso1.device))
+                retval << td1ChannelsByDevice.value(m_tenso1.device).at(0);
+            if ((m_tenso2.device != DeviceProtocols::tdBreath) && td2ChannelsByDevice.contains(m_tenso2.device))
+                retval << td2ChannelsByDevice.value(m_tenso2.device).at(0);
+            if ((m_tenso3.device != DeviceProtocols::tdBreath) && td3ChannelsByDevice.contains(m_tenso3.device))
+                retval << td3ChannelsByDevice.value(m_tenso3.device).at(0);
+        }
+        if (Stabilan01Defines::ModelsWithMyo.contains(m_model))
+            retval << ChannelsDefines::chanMyogram;
     }
     else
     if (formatUid == ChannelsDefines::cfSingleDual)
     {
-        if (m_tenso1.device == DeviceProtocols::tdBreath)
-            retval << ChannelsDefines::chanBreath1;
-        if (m_tenso2.device == DeviceProtocols::tdBreath)
-            retval << ChannelsDefines::chanBreath2;
-        if (m_tenso3.device == DeviceProtocols::tdBreath)
-            retval << ChannelsDefines::chanBreath3;
+        if (Stabilan01Defines::ModelsWithTenso.contains(m_model))
+        {
+            if (m_tenso1.device == DeviceProtocols::tdBreath)
+                retval << ChannelsDefines::chanBreath1;
+            if (m_tenso2.device == DeviceProtocols::tdBreath)
+                retval << ChannelsDefines::chanBreath2;
+            if (m_tenso3.device == DeviceProtocols::tdBreath)
+                retval << ChannelsDefines::chanBreath3;
+        }
     }
     return retval;
 }

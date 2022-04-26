@@ -112,6 +112,16 @@ void PulseWidget::on_resetPulse()
 void PulseWidget::on_pulseRecChange(bool checked)
 {
     setRecButton(ui->btnRecord, checked);
+    if (checked)
+    {
+        m_ritmogram = new Ritmogram(channelId(), 10);
+        objTestResultData()->addChannel(m_ritmogram);
+    }
+    else
+    {
+        m_ritmogram->clear();
+        delete m_ritmogram;
+    }
 }
 
 void PulseWidget::setRecordedChannels()
