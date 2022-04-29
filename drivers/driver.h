@@ -84,8 +84,9 @@ public:
     /*!
      * \brief Возвращает true, если канал записывается по умолчанию (установлено в драйвере)
      * \param channelUid - uid канала
+     * \param subChan - номер подканала
      */
-    virtual bool isChannelRecordingDefault(const QString &channelUid) const = 0;
+    virtual bool isChannelRecordingDefault(const QString &channelUid, const int subChan = -1) const = 0;
 
     /*!
      * \brief Возвращает интерфейс управления устройством для заданного канала

@@ -91,9 +91,10 @@ int BedsideScales01::getSubChannelsCount(const QString &channelUid) const
     return 0;
 }
 
-bool BedsideScales01::isChannelRecordingDefault(const QString &channelUid) const
+bool BedsideScales01::isChannelRecordingDefault(const QString &channelUid, const int subChan) const
 {
     Q_UNUSED(channelUid);
+    Q_UNUSED(subChan);
     return true;
 }
 

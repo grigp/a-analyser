@@ -13,7 +13,6 @@ namespace  {
 static QMap<QString, QString> ChannelFirstConvert =
 {
       std::pair<QString, QString> (ChannelsDefines::chanMyogram, ChannelsDefines::FirstPlatform::chanMyogram)
-    , std::pair<QString, QString> (ChannelsDefines::chanMyogram, ChannelsDefines::FirstPlatform::chanMyogram)
     , std::pair<QString, QString> (ChannelsDefines::chanRitmogram, ChannelsDefines::FirstPlatform::chanRitmogram)
     , std::pair<QString, QString> (ChannelsDefines::chanDynHand1, ChannelsDefines::FirstPlatform::chanDynHand1)
     , std::pair<QString, QString> (ChannelsDefines::chanDynStand1, ChannelsDefines::FirstPlatform::chanDynStand1)
@@ -49,7 +48,6 @@ static QList<QString> ChannelFirst = {
 static QMap<QString, QString> ChannelSecondConvert =
 {
       std::pair<QString, QString> (ChannelsDefines::chanMyogram, ChannelsDefines::SecondPlatform::chanMyogram)
-    , std::pair<QString, QString> (ChannelsDefines::chanMyogram, ChannelsDefines::SecondPlatform::chanMyogram)
     , std::pair<QString, QString> (ChannelsDefines::chanRitmogram, ChannelsDefines::SecondPlatform::chanRitmogram)
     , std::pair<QString, QString> (ChannelsDefines::chanDynHand1, ChannelsDefines::SecondPlatform::chanDynHand1)
     , std::pair<QString, QString> (ChannelsDefines::chanDynStand1, ChannelsDefines::SecondPlatform::chanDynStand1)
@@ -87,6 +85,8 @@ static QList<QString> ChannelSecond = {
 Bilateral::Bilateral(QObject *parent)
     : Driver (parent)
 {
+    setConversMaps(ChannelFirstConvert, m_cfc, m_cfcB);
+    setConversMaps(ChannelSecondConvert, m_csc, m_cscB);
     clearDrivers();
 }
 
@@ -249,10 +249,10 @@ QList<QString> Bilateral::getChannelsByFormat(const QString &formatUid) const
                         {
                             QString bChan = chan;
                             if (i == 0)
-                                bChan = ChannelFirstConvert.value(chan);
+                                bChan = m_cfc.value(chan);
                             else
                             if (i == 1)
-                                bChan = ChannelSecondConvert.value(chan);
+                                bChan = m_csc.value(chan);
                             retval << bChan;
                         }
                 }
@@ -269,7 +269,6 @@ QList<QString> Bilateral::getChannels() const
     QList<QString> retval;
 
     retval.clear();
-    retval << ChannelsDefines::chanStab << ChannelsDefines::chanStabLeft << ChannelsDefines::chanStabRight;
 
     auto drivers = getDrivers();
     if (drivers.size() == 2)
@@ -282,10 +281,10 @@ QList<QString> Bilateral::getChannels() const
                     {
                         QString bChan = chan;
                         if (i == 0)
-                            bChan = ChannelFirstConvert.value(chan);
+                            bChan = m_cfc.value(chan);
                         else
                         if (i == 1)
-                            bChan = ChannelSecondConvert.value(chan);
+                            bChan = m_csc.value(chan);
                         retval << bChan;
                     }
             }
@@ -308,7 +307,7 @@ int Bilateral::getSubChannelsCount(const QString &channelUid) const
     return 0;
 }
 
-bool Bilateral::isChannelRecordingDefault(const QString &channelUid) const
+bool Bilateral::isChannelRecordingDefault(const QString &channelUid, const int subChan) const
 {
     if (ChannelsUtils::instance().channelType(channelUid) == ChannelsDefines::ctStabilogram ||
             ChannelsUtils::instance().channelType(channelUid) == ChannelsDefines::ctBallistogram)
@@ -316,10 +315,10 @@ bool Bilateral::isChannelRecordingDefault(const QString &channelUid) const
     else
     {
         bool retval = false;
-        if (m_drivers[0])
-            retval = m_drivers[0]->isChannelRecordingDefault(channelUid);
-        if (!retval && m_drivers[1])
-            retval = m_drivers[1]->isChannelRecordingDefault(channelUid);
+        if (m_drivers[0] && m_cfcB.contains(channelUid))
+            retval = m_drivers[0]->isChannelRecordingDefault(m_cfcB.value(channelUid), subChan);
+        if (!retval && m_drivers[1] && m_cscB.contains(channelUid))
+            retval = m_drivers[1]->isChannelRecordingDefault(m_cscB.value(channelUid), subChan);
         return retval;
     }
 }
@@ -495,10 +494,10 @@ void Bilateral::sendAdvancedChannels(DeviceProtocols::DeviceData *data)
     };
 
     if (data->sender() == m_drivers[0])
-        sendWithChangedId(ChannelFirstConvert);
+        sendWithChangedId(m_cfc);
     else
     if (data->sender() == m_drivers[1])
-        sendWithChangedId(ChannelSecondConvert);
+        sendWithChangedId(m_csc);
 }
 
 void Bilateral::clearDrivers()
@@ -572,6 +571,16 @@ QList<Driver *> Bilateral::getDrivers() const
     while (n < 2 && drv);
 
     return retval;
+}
+
+void Bilateral::setConversMaps(const QMap<QString, QString> original,
+                               QMap<QString, QString> &forvard,
+                               QMap<QString, QString> &backward)
+{
+    forvard = original;
+    backward.clear();
+    foreach (auto key, original.keys())
+        backward.insert(original.value(key), key);
 }
 
 

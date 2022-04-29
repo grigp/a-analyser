@@ -90,9 +90,10 @@ int JumpPlate::getSubChannelsCount(const QString &channelUid) const
     return 0;
 }
 
-bool JumpPlate::isChannelRecordingDefault(const QString &channelUid) const
+bool JumpPlate::isChannelRecordingDefault(const QString &channelUid, const int subChan) const
 {
     Q_UNUSED(channelUid);
+    Q_UNUSED(subChan);
     return false;
 }
 

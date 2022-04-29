@@ -334,8 +334,11 @@ int Stabilan01::getSubChannelsCount(const QString &channelUid) const
     return 0;
 }
 
-bool Stabilan01::isChannelRecordingDefault(const QString &channelUid) const
+bool Stabilan01::isChannelRecordingDefault(const QString &channelUid, const int subChan) const
 {
+    if (ChannelsUtils::instance().channelType(channelUid) == ChannelsDefines::ctMyogram && subChan > -1)
+        return m_chanRecordingDefault.value("MyoChan" + QString::number(subChan));
+    else
     if (m_chanRecordingDefault.contains(channelUid))
         return m_chanRecordingDefault.value(channelUid);
     else

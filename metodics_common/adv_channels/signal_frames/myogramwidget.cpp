@@ -146,8 +146,9 @@ void MyogramWidget::setSubChannelsRecButtons()
         auto* btn = new QPushButton(ui->gbSubChannels);
         btn->setText("");
         btn->setCheckable(true);
-        btn->setChecked(driver()->isChannelRecordingDefault("MyoChan" + QString::number(i)));
-        setRecButton(btn, driver()->isChannelRecordingDefault("MyoChan" + QString::number(i)));
+        auto isDefault = driver()->isChannelRecordingDefault(channelId(), i);   //"MyoChan" + QString::number(i));
+        btn->setChecked(isDefault);
+        setRecButton(btn, isDefault);
         ui->gbSubChannels->layout()->addWidget(btn);
         m_btnSubChans.append(btn);
         connect(btn, &QPushButton::clicked, this, &MyogramWidget::on_recMyoChanClick);

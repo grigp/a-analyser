@@ -83,8 +83,9 @@ public:
     /*!
      * \brief Возвращает true, если канал записывается по умолчанию (установлено в драйвере)
      * \param channelUid - uid канала
+     * \param subChan - номер подканала
      */
-    bool isChannelRecordingDefault(const QString &channelUid) const override;
+    bool isChannelRecordingDefault(const QString &channelUid, const int subChan = -1) const override;
 
     /*!
      * \brief Возвращает интерфейс управления устройством для заданного канала
@@ -144,6 +145,14 @@ private:
 
     QList<Driver*> getDrivers() const;
 
+    /*!
+     * \brief Создание словарей для преобразования каналов от исходных платформ к билатеральной
+     * \param original - оригинальный константный словарь
+     * \param forvard - прямое преобразование (от исходных платформ к билатеральной)
+     * \param backward - обратное преобразование (от билатеральной платформы к исходным)
+     */
+    void setConversMaps(const QMap<QString, QString> original, QMap<QString, QString> &forvard, QMap<QString, QString> &backward);
+
     QRect m_plate1 {QRect(0, 500, 500, 500)};
     QRect m_plate2 {QRect(500, 500, 500, 500)};
     QPoint m_center {QPoint(500, 250)};
@@ -163,6 +172,8 @@ private:
     int m_diap {128};     ///< Общий диапазон координат
 
     QMap<QString, int> m_frequency;
+
+    QMap<QString, QString> m_cfc, m_csc, m_cfcB, m_cscB;
 };
 
 #endif // BILATERAL_H
