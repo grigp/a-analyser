@@ -161,6 +161,7 @@ protected slots:
     virtual void setPatientWinDiap(const int diap);
 
 private slots:
+    void on_started();
 
     void scaleChange(int scaleId);
 

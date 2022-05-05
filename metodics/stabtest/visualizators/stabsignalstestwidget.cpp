@@ -356,11 +356,6 @@ void StabSignalsTestWidget::showRationalTable(StabSignalsTestCalculator *calcula
         ui->tvRationalFactors->setModel(m_mdlRF);
         ui->tvRationalFactors->resizeColumnToContents(0);
 
-//        QTimer::singleShot(0, [=]()
-//        {
-//            resizeColumnsTable(m_mdlRF, ui->tvRationalFactors, true);
-//        });
-
         mdlRF = static_cast<QStandardItemModel*>(ui->tvRationalFactors->model());
     }
 }
@@ -419,11 +414,6 @@ void StabSignalsTestWidget::showRombergNorms(StabSignalsTestCalculator *calculat
             ui->tvRombergNorms->setItemDelegateForColumn(1, new RombergNormValueDelegate(ui->tvRombergNorms));
             ui->tvRombergNorms->setItemDelegateForColumn(2, new RombergNormValueDelegate(ui->tvRombergNorms));
             ui->tvRombergNorms->resizeColumnToContents(0);
-
-//            QTimer::singleShot(0, [=]()
-//            {
-//                resizeColumnsTable(m_mdlNorms, ui->tvRombergNorms, false);
-//            });
 
             mdlNorms = static_cast<QStandardItemModel*>(ui->tvRombergNorms->model());
         }
@@ -671,29 +661,6 @@ void StabSignalsTestWidget::showSKG(StabSignalsTestCalculator *calculator, const
                 }
             }
         }
-
-        //! Установка диапазонов для всех СКГ
-//        QTimer::singleShot(50, [=]()
-//        {
-//            int diap = 1;
-//            int step = 0;
-//            while (diap < m_absMax)
-//            {
-//                diap = diap * 2;
-//                ++step;
-//            }
-//            foreach (auto* skg, areasesSKG)
-//                skg->setDiap(diap);
-//            ui->wgtGraph->setDiapazone(-diap, diap);
-//            //! Позиция в переключателе масштаба
-//            double scM = BaseUtils::StabDefaultDiap / static_cast<double>(diap);
-//            for (int i = 0; i < ui->cbScale->count(); ++i)
-//                if (static_cast<int>(ui->cbScale->itemData(i).toDouble() * 10000) == static_cast<int>(scM * 10000)) // * 10000 - уход от double
-//                {
-//                    ui->cbScale->setCurrentIndex(i);
-//                    break;
-//                }
-//        });
     }
 
     wgtGraph = ui->wgtGraph;

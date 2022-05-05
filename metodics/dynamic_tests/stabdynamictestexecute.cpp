@@ -160,6 +160,8 @@ StabDynamicTestPatientWindow *StabDynamicTestExecute::createPatientWindow()
 
 void StabDynamicTestExecute::finishTest()
 {
+    ui->wgtAdvChannels->saveProbe();
+
     hidePatientWindow();
     m_isRecording = false;
     if (m_bilatControl)
@@ -201,6 +203,7 @@ void StabDynamicTestExecute::start()
 
         connect(m_driver, &Driver::sendData, this, &StabDynamicTestExecute::getData);
         connect(m_driver, &Driver::communicationError, this, &StabDynamicTestExecute::on_communicationError);
+        connect(m_driver, &Driver::started, this, &StabDynamicTestExecute::on_started);
 
         setChannels();
 
@@ -218,7 +221,6 @@ void StabDynamicTestExecute::start()
 
         ui->wgtAdvChannels->assignDriver(m_driver, m_trd);
         m_trd->newProbe(m_metInfo.name);
-        ui->wgtAdvChannels->newProbe();
 
         //! Стабилограмма будет записана всегда
         ui->wgtAdvChannels->setAllwaysRecordingChannel(ui->cbSelectChannel->currentData(ChannelsUtils::ChannelUidRole).toString());
@@ -227,6 +229,7 @@ void StabDynamicTestExecute::start()
             ui->wgtAdvChannels->setAllwaysRecordingChannel(ChannelsDefines::chanStabLeft);
             ui->wgtAdvChannels->setAllwaysRecordingChannel(ChannelsDefines::chanStabRight);
         }
+
         auto val = SettingsProvider::valueFromRegAppCopy("AdvancedChannelsWidget", "SplitterProbePosition").toByteArray();
         ui->splitter->restoreState(val);
 
@@ -367,7 +370,9 @@ void StabDynamicTestExecute::recording()
         if (isAutoFinishRecord())
             ui->wgtAdvChannels->abortProbe();
         else
+        {
             finishTest();
+        }
     }
 }
 
@@ -375,6 +380,11 @@ void StabDynamicTestExecute::setPatientWinDiap(const int diap)
 {
     if (m_patientWin)
         m_patientWin->setDiap(diap);
+}
+
+void StabDynamicTestExecute::on_started()
+{
+    ui->wgtAdvChannels->newProbe();
 }
 
 void StabDynamicTestExecute::scaleChange(int scaleId)

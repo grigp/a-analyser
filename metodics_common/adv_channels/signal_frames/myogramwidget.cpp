@@ -30,19 +30,17 @@ MyogramWidget::MyogramWidget(Driver *drv, const QString channelId, QWidget *pare
 
 MyogramWidget::~MyogramWidget()
 {
-//    if (m_myo)
-//        delete m_myo;
     delete ui;
 }
 
 void MyogramWidget::newProbe()
 {
+    setRecordedChannels();
     if (ui->btnMyoRecord->isChecked())
     {
         if (!m_myo)
         {
             m_myo = new Myogram(ChannelsDefines::chanMyogram, driver()->getSubChannelsCount(channelId()), ui->wgtMyoOscill->frequency());
-//            objTestResultData()->addChannel(m_myo);
         }
     }
 }
@@ -121,7 +119,6 @@ void MyogramWidget::on_recMyoClick(bool checked)
     {
         if (!m_myo)
             m_myo = new Myogram(ChannelsDefines::chanMyogram, driver()->getSubChannelsCount(channelId()), ui->wgtMyoOscill->frequency());
-//        objTestResultData()->addChannel(m_myo);
     }
     else
     {
