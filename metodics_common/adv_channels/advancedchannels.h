@@ -59,6 +59,11 @@ public:
      */
     void abortProbe();
 
+    /*!
+     * \brief Сохранение пробы
+     */
+    void saveProbe();
+
     void record(DeviceProtocols::DeviceData *data);
 
     /*!

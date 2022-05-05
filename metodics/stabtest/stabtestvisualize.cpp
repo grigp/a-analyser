@@ -59,14 +59,14 @@ void StabTestVisualize::setTest(const QString &testUid)
             widget = ui->wgtMain->layout()->itemAt(i)->widget();
             if (widget)
             {
-                widget->setVisible(
-                            (cnd == 0 && widget->objectName() == "wgtSignals")
-                         || (cnd == 1 && widget->objectName() == "wgtStateChampions")
-                         || (cnd == 2 && widget->objectName() == "wgtDopusk")
-                         || (cnd == 3 && widget->objectName() == "wgtIDSAnalysis")
-                         || (cnd == 4 && widget->objectName() == "wgtTarget")
-                         || (cnd == 5 && widget->objectName() == "wgtStressStrategy")
-                                );
+//                widget->setVisible(
+//                            (cnd == 0 && widget->objectName() == "wgtSignals")
+//                         || (cnd == 1 && widget->objectName() == "wgtStateChampions")
+//                         || (cnd == 2 && widget->objectName() == "wgtDopusk")
+//                         || (cnd == 3 && widget->objectName() == "wgtIDSAnalysis")
+//                         || (cnd == 4 && widget->objectName() == "wgtTarget")
+//                         || (cnd == 5 && widget->objectName() == "wgtStressStrategy")
+//                                );
                 if (cnd == 0 && widget->objectName() == "wgtSignals")
                     static_cast<StabSignalsTestWidget*>(widget)->
                         calculate(static_cast<StabSignalsTestCalculator*>(m_calculator), testUid);
@@ -90,6 +90,15 @@ void StabTestVisualize::setTest(const QString &testUid)
                 if (cnd == 5 && widget->objectName() == "wgtStressStrategy")
                     static_cast<StressStrategyWidget*>(widget)->
                         calculate(static_cast<StressStrategyCalculator*>(m_calculator), testUid);
+
+                widget->setVisible(
+                            (cnd == 0 && widget->objectName() == "wgtSignals")
+                         || (cnd == 1 && widget->objectName() == "wgtStateChampions")
+                         || (cnd == 2 && widget->objectName() == "wgtDopusk")
+                         || (cnd == 3 && widget->objectName() == "wgtIDSAnalysis")
+                         || (cnd == 4 && widget->objectName() == "wgtTarget")
+                         || (cnd == 5 && widget->objectName() == "wgtStressStrategy")
+                                );
             }
         }
     }

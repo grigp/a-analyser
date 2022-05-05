@@ -324,7 +324,10 @@ void StabTestExecute::recording()
         ui->btnRecord->setIcon(QIcon(":/images/Save.png"));
         ui->btnRecord->setText(tr("Запись"));
         if (! probeParams().autoEnd)
+        {
+            ui->wgtAdvChannels->saveProbe();
             finishTest();
+        }
     }
     m_recCount = 0;
 }
@@ -392,6 +395,8 @@ void StabTestExecute::initRecSignals()
 void StabTestExecute::nextProbe()
 {
     hidePatientWindow();
+
+    ui->wgtAdvChannels->saveProbe();
 
     ++m_probe;
     if (m_probe < m_params.size())

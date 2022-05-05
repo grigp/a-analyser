@@ -47,6 +47,11 @@ void BreathWidget::abortProbe()
     }
 }
 
+void BreathWidget::saveProbe()
+{
+
+}
+
 void BreathWidget::getData(DeviceProtocols::DeviceData *data)
 {
     if (data->channelId() == channelId())

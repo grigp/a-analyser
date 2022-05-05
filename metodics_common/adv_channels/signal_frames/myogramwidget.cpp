@@ -13,7 +13,6 @@ MyogramWidget::MyogramWidget(Driver *drv, const QString channelId, QWidget *pare
 {
     ui->setupUi(this);
 
-//    m_myoControl = dynamic_cast<DeviceProtocols::MyoControl*>(driver());
     m_myoControl = static_cast<DeviceProtocols::MyoControl*>(driver()->getDeviceControl(DeviceProtocols::uid_MyoControl, channelId));
     if (m_myoControl)
         m_amplMyo = m_myoControl->amplitudeMyo();
@@ -31,6 +30,8 @@ MyogramWidget::MyogramWidget(Driver *drv, const QString channelId, QWidget *pare
 
 MyogramWidget::~MyogramWidget()
 {
+//    if (m_myo)
+//        delete m_myo;
     delete ui;
 }
 
@@ -38,18 +39,24 @@ void MyogramWidget::newProbe()
 {
     if (ui->btnMyoRecord->isChecked())
     {
-        m_myo = new Myogram(ChannelsDefines::chanMyogram, driver()->getSubChannelsCount(channelId()), ui->wgtMyoOscill->frequency());
-        objTestResultData()->addChannel(m_myo);
+        if (!m_myo)
+        {
+            m_myo = new Myogram(ChannelsDefines::chanMyogram, driver()->getSubChannelsCount(channelId()), ui->wgtMyoOscill->frequency());
+//            objTestResultData()->addChannel(m_myo);
+        }
     }
 }
 
 void MyogramWidget::abortProbe()
 {
     if (ui->btnMyoRecord->isChecked())
-    {
         m_myo->clear();
-        delete m_myo;
-    }
+}
+
+void MyogramWidget::saveProbe()
+{
+    if (m_myo)
+        objTestResultData()->addChannel(m_myo);
 }
 
 void MyogramWidget::getData(DeviceProtocols::DeviceData *data)
@@ -112,13 +119,17 @@ void MyogramWidget::on_recMyoClick(bool checked)
 
     if (checked)
     {
-        m_myo = new Myogram(ChannelsDefines::chanMyogram, driver()->getSubChannelsCount(channelId()), ui->wgtMyoOscill->frequency());
-        objTestResultData()->addChannel(m_myo);
+        if (!m_myo)
+            m_myo = new Myogram(ChannelsDefines::chanMyogram, driver()->getSubChannelsCount(channelId()), ui->wgtMyoOscill->frequency());
+//        objTestResultData()->addChannel(m_myo);
     }
     else
     {
-        m_myo->clear();
-        delete m_myo;
+        if (m_myo)
+        {
+            m_myo->clear();
+            delete m_myo;
+        }
     }
 }
 

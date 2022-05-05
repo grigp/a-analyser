@@ -9,6 +9,7 @@
 #include "datadefines.h"
 
 class TestResultData;
+class AreaSKG;
 
 namespace Ui {
 class StabSignalsTestWidget;
@@ -48,6 +49,9 @@ public:
         , ValueRole                     ///< Значение показателя. double. В колонках значений
         , FormatRole                    ///< Формат значения, кол-во знаков после запятой. int. В колонках значений
     };
+
+public slots:
+    void setVisible(bool visible) override;
 
 protected:
     void resizeEvent(QResizeEvent *event) override;
@@ -108,6 +112,11 @@ private:
 
     void showSKG(StabSignalsTestCalculator *calculator, const QString &testUid);
 
+    /*!
+     * \brief Установка диапазонов для всех СКГ
+     */
+    void setDiapazones();
+
     void saveSplitterPosition();
     void restoreSplitterPosition();
 
@@ -160,6 +169,7 @@ private:
     TestResultData* m_trd {nullptr};
     QStandardItemModel* m_mdlRF {nullptr};
     QStandardItemModel* m_mdlNorms {nullptr};
+    double m_absMax {0};
 };
 
 #endif // STABSIGNALSTESTWIDGET_H

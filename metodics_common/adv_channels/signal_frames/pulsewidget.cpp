@@ -44,6 +44,11 @@ void PulseWidget::abortProbe()
     }
 }
 
+void PulseWidget::saveProbe()
+{
+
+}
+
 void PulseWidget::getData(DeviceProtocols::DeviceData *data)
 {
     if (data->channelId() == channelId())

@@ -34,6 +34,11 @@ public:
     void abortProbe() override;
 
     /*!
+     * \brief Сохранение пробы
+     */
+    void saveProbe() override;
+
+    /*!
      * \brief Получение данных от устройства
      * \param data - данные
      */
@@ -83,7 +88,7 @@ private:
 
     QList<QPushButton*> m_btnSubChans;  ///< Указатели на кнопки записи подканалов
 
-    Myogram *m_myo;
+    Myogram *m_myo {nullptr};
     double m_amplMyo {2};
 };
 

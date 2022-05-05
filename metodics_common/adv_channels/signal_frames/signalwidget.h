@@ -37,6 +37,11 @@ public:
     virtual void abortProbe() = 0;
 
     /*!
+     * \brief Сохранение пробы
+     */
+    virtual void saveProbe() = 0;
+
+    /*!
      * \brief Получение данных от устройства
      * \param data - данные
      */

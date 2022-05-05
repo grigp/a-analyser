@@ -123,6 +123,22 @@ void AdvancedChannels::abortProbe()
     }
 }
 
+void AdvancedChannels::saveProbe()
+{
+    for (int id = 0; id < m_mdlDrvChan.rowCount(); ++id)
+    {
+        QModelIndex idxDrv = m_mdlDrvChan.index(id, 0);
+        for (int i = 0; i < m_mdlDrvChan.rowCount(idxDrv); ++i)
+        {
+            QModelIndex index = m_mdlDrvChan.index(i, 0, idxDrv);
+            QVariant var = index.data(WidgetRole);
+            SignalWidget* wgt = var.value<SignalWidget*>();
+            if (wgt)
+                wgt->saveProbe();
+        }
+    }
+}
+
 void AdvancedChannels::record(DeviceProtocols::DeviceData *data)
 {
     for (int id = 0; id < m_mdlDrvChan.rowCount(); ++id)

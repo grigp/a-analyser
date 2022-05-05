@@ -55,6 +55,7 @@ void AreaSKG::setDiap(const int diap)
     m_brokenLinesSKG->setDiap(diap);
     m_diap = diap;
     ui->panSKG->ensureVisible(QRectF(-m_diap, -m_diap, m_diap * 2, m_diap * 2));
+    update();
 }
 
 void AreaSKG::addMarker()

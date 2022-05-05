@@ -34,6 +34,11 @@ public:
     void abortProbe() override;
 
     /*!
+     * \brief Сохранение пробы
+     */
+    void saveProbe() override;
+
+    /*!
      * \brief Получение данных от устройства
      * \param data - данные
      */

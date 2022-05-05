@@ -146,6 +146,18 @@ void StabSignalsTestWidget::print(QPrinter *printer, const QString &testUid)
     painter->end();
 }
 
+void StabSignalsTestWidget::setVisible(bool visible)
+{
+    QWidget::setVisible(visible);
+
+    if (visible)
+    {
+        resizeColumnsTable(m_mdlRF, ui->tvRationalFactors, true);
+        resizeColumnsTable(m_mdlNorms, ui->tvRombergNorms, false);
+        setDiapazones();
+    }
+}
+
 void StabSignalsTestWidget::resizeEvent(QResizeEvent *event)
 {
     resizeColumnsTable(m_mdlNorms, ui->tvRombergNorms, false);
@@ -198,6 +210,7 @@ void StabSignalsTestWidget::curPageChanged(int pageIdx)
 
 void StabSignalsTestWidget::scaleChange(int scaleIdx)
 {
+    Q_UNUSED(scaleIdx);
 //    int diap = 128;
 //    for (int i = 0; i < scaleIdx; ++i)
 //        diap = diap / 2;
@@ -343,10 +356,10 @@ void StabSignalsTestWidget::showRationalTable(StabSignalsTestCalculator *calcula
         ui->tvRationalFactors->setModel(m_mdlRF);
         ui->tvRationalFactors->resizeColumnToContents(0);
 
-        QTimer::singleShot(0, [=]()
-        {
-            resizeColumnsTable(m_mdlRF, ui->tvRationalFactors, true);
-        });
+//        QTimer::singleShot(0, [=]()
+//        {
+//            resizeColumnsTable(m_mdlRF, ui->tvRationalFactors, true);
+//        });
 
         mdlRF = static_cast<QStandardItemModel*>(ui->tvRationalFactors->model());
     }
@@ -407,10 +420,10 @@ void StabSignalsTestWidget::showRombergNorms(StabSignalsTestCalculator *calculat
             ui->tvRombergNorms->setItemDelegateForColumn(2, new RombergNormValueDelegate(ui->tvRombergNorms));
             ui->tvRombergNorms->resizeColumnToContents(0);
 
-            QTimer::singleShot(0, [=]()
-            {
-                resizeColumnsTable(m_mdlNorms, ui->tvRombergNorms, false);
-            });
+//            QTimer::singleShot(0, [=]()
+//            {
+//                resizeColumnsTable(m_mdlNorms, ui->tvRombergNorms, false);
+//            });
 
             mdlNorms = static_cast<QStandardItemModel*>(ui->tvRombergNorms->model());
         }
@@ -620,10 +633,11 @@ void StabSignalsTestWidget::showSKG(StabSignalsTestCalculator *calculator, const
     Q_UNUSED(calculator);
     areasesSKG.clear();
 
+
     DataDefines::TestInfo ti;
     if (DataProvider::getTestInfo(testUid, ti))
     {
-        double absMax = 0;
+        m_absMax = 0;
         m_trd->openTest(testUid);
         Q_ASSERT(ti.probes.size() == m_trd->probesCount());
         for (int i = 0; i < ti.probes.size(); ++i)
@@ -641,8 +655,8 @@ void StabSignalsTestWidget::showSKG(StabSignalsTestCalculator *calculator, const
                 {
                     skg->setSignal(sig);
                     auto max = sig->absMaxValue();
-                    if (max > absMax)
-                        absMax = max;
+                    if (max > m_absMax)
+                        m_absMax = max;
 
                     auto angle = calculator->classicFactors(i)->ellipse().angle;
                     auto sizeA = calculator->classicFactors(i)->ellipse().sizeA;
@@ -659,30 +673,52 @@ void StabSignalsTestWidget::showSKG(StabSignalsTestCalculator *calculator, const
         }
 
         //! Установка диапазонов для всех СКГ
-        QTimer::singleShot(50, [=]()
-        {
-            int diap = 1;
-            int step = 0;
-            while (diap < absMax)
-            {
-                diap = diap * 2;
-                ++step;
-            }
-            foreach (auto* skg, areasesSKG)
-                skg->setDiap(diap);
-            ui->wgtGraph->setDiapazone(-diap, diap);
-            //! Позиция в переключателе масштаба
-            double scM = BaseUtils::StabDefaultDiap / static_cast<double>(diap);
-            for (int i = 0; i < ui->cbScale->count(); ++i)
-                if (static_cast<int>(ui->cbScale->itemData(i).toDouble() * 10000) == static_cast<int>(scM * 10000)) // * 10000 - уход от double
-                {
-                    ui->cbScale->setCurrentIndex(i);
-                    break;
-                }
-        });
+//        QTimer::singleShot(50, [=]()
+//        {
+//            int diap = 1;
+//            int step = 0;
+//            while (diap < m_absMax)
+//            {
+//                diap = diap * 2;
+//                ++step;
+//            }
+//            foreach (auto* skg, areasesSKG)
+//                skg->setDiap(diap);
+//            ui->wgtGraph->setDiapazone(-diap, diap);
+//            //! Позиция в переключателе масштаба
+//            double scM = BaseUtils::StabDefaultDiap / static_cast<double>(diap);
+//            for (int i = 0; i < ui->cbScale->count(); ++i)
+//                if (static_cast<int>(ui->cbScale->itemData(i).toDouble() * 10000) == static_cast<int>(scM * 10000)) // * 10000 - уход от double
+//                {
+//                    ui->cbScale->setCurrentIndex(i);
+//                    break;
+//                }
+//        });
     }
 
     wgtGraph = ui->wgtGraph;
+}
+
+void StabSignalsTestWidget::setDiapazones()
+{
+    int diap = 1;
+    int step = 0;
+    while (diap < m_absMax)
+    {
+        diap = diap * 2;
+        ++step;
+    }
+    foreach (auto* skg, areasesSKG)
+        skg->setDiap(diap);
+    ui->wgtGraph->setDiapazone(-diap, diap);
+    //! Позиция в переключателе масштаба
+    double scM = BaseUtils::StabDefaultDiap / static_cast<double>(diap);
+    for (int i = 0; i < ui->cbScale->count(); ++i)
+        if (static_cast<int>(ui->cbScale->itemData(i).toDouble() * 10000) == static_cast<int>(scM * 10000)) // * 10000 - уход от double
+        {
+            ui->cbScale->setCurrentIndex(i);
+            break;
+        }
 }
 
 void StabSignalsTestWidget::saveSplitterPosition()

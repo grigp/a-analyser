@@ -57,6 +57,11 @@ void StabilogramWidget::abortProbe()
         m_z->clear();
 }
 
+void StabilogramWidget::saveProbe()
+{
+
+}
+
 void StabilogramWidget::getData(DeviceProtocols::DeviceData *data)
 {
     if (data->channelId() == channelId())

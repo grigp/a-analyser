@@ -52,6 +52,11 @@ void DynamoWidget::abortProbe()
     }
 }
 
+void DynamoWidget::saveProbe()
+{
+
+}
+
 void DynamoWidget::getData(DeviceProtocols::DeviceData *data)
 {
     if (data->channelId() == channelId())

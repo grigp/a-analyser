@@ -17,15 +17,6 @@ MyogramSignalVisualWidget::MyogramSignalVisualWidget(VisualDescriptor* visual,
 {
     ui->setupUi(this);
 
-    foreach (auto scaleName, BaseUtils::ScalesMyo)
-        ui->cbScale->addItem(scaleName, BaseUtils::ScaleKoefitients.value(scaleName));
-    ui->sbSignal->setEnabled(false);
-    ui->wgtGraph->setIsShowCursor(true);
-
-    QCursor cursorGraph = QCursor(QPixmap(":/images/SignalCursor.png"));
-    ui->wgtGraph->setCursor(cursorGraph);
-
-    connect(ui->wgtGraph, &AreaGraph::moveCursor, this, &MyogramSignalVisualWidget::on_moveCursor);
 }
 
 MyogramSignalVisualWidget::~MyogramSignalVisualWidget()
@@ -40,6 +31,16 @@ bool MyogramSignalVisualWidget::isValid()
 
 void MyogramSignalVisualWidget::calculate()
 {
+    foreach (auto scaleName, BaseUtils::ScalesMyo)
+        ui->cbScale->addItem(scaleName, BaseUtils::ScaleKoefitients.value(scaleName));
+    ui->sbSignal->setEnabled(false);
+    ui->wgtGraph->setIsShowCursor(true);
+
+    QCursor cursorGraph = QCursor(QPixmap(":/images/SignalCursor.png"));
+    ui->wgtGraph->setCursor(cursorGraph);
+
+    connect(ui->wgtGraph, &AreaGraph::moveCursor, this, &MyogramSignalVisualWidget::on_moveCursor);
+
     getSignal();
     showGraph();
 }
