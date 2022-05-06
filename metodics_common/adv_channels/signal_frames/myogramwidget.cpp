@@ -89,7 +89,8 @@ void MyogramWidget::record(DeviceProtocols::DeviceData *data)
 
 void MyogramWidget::setFrequency(const int frequency)
 {
-    m_myo->setSubChansCount(cnt);
+    auto sc = subChannels();
+    m_myo->setSubChansCount(sc.size());
     ui->wgtMyoOscill->setFrequency(frequency);
 }
 
@@ -184,4 +185,9 @@ void MyogramWidget::setRecButton(QPushButton *btn, const bool checked)
         btn->setIcon(QIcon(":/images/SaveOK.png"));
     else
         btn->setIcon(QIcon(":/images/SaveNO.png"));
+}
+
+QSet<int> MyogramWidget::subChannels()
+{
+
 }
