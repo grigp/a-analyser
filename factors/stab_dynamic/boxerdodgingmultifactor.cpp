@@ -313,6 +313,8 @@ void BoxerDodgingMultifactor::calculateFactorsForDirection(const BoxerDodgingDef
     factors.ampl = 0;
     factors.errors = 0;
 
+    qDebug() << m_resData->freq();
+
     int ln = 0;  //! Счетчик попыток для латентного периода
     //! По участкам направления
     for (int i = 0; i < sections.size(); ++i)

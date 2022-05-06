@@ -73,6 +73,7 @@ void BoxerDodgingExecute::recording()
     StabDynamicTestExecute::recording();
 
     m_stageCounter = 0;
+    m_res->clear();
 
     if (isRecording())
     {
@@ -83,7 +84,6 @@ void BoxerDodgingExecute::recording()
         m_res->setDeviationThreshold(m_deviationThreshold);
 
         nextStage(true);
-        m_res->clear();
     }
     else
     {
