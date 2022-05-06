@@ -53,7 +53,7 @@ void MyogramWidget::abortProbe()
 
 void MyogramWidget::saveProbe()
 {
-    if (m_myo)
+    if (ui->btnMyoRecord->isChecked() && m_myo)
         objTestResultData()->addChannel(m_myo);
 }
 
@@ -125,7 +125,7 @@ void MyogramWidget::on_recMyoClick(bool checked)
         if (m_myo)
         {
             m_myo->clear();
-            delete m_myo;
+//            delete m_myo;
         }
     }
 }
@@ -149,17 +149,21 @@ void MyogramWidget::on_myoScaleChange(int scaleIdx)
 
 void MyogramWidget::setSubChannelsRecButtons()
 {
-    for (int i = 0; i < driver()->getSubChannelsCount(channelId()); ++i)
+    auto items = ui->gbSubChannels->children();
+    if (items.size() <= 1)
     {
-        auto* btn = new QPushButton(ui->gbSubChannels);
-        btn->setText("");
-        btn->setCheckable(true);
-        auto isDefault = driver()->isChannelRecordingDefault(channelId(), i);   //"MyoChan" + QString::number(i));
-        btn->setChecked(isDefault);
-        setRecButton(btn, isDefault);
-        ui->gbSubChannels->layout()->addWidget(btn);
-        m_btnSubChans.append(btn);
-        connect(btn, &QPushButton::clicked, this, &MyogramWidget::on_recMyoChanClick);
+        for (int i = 0; i < driver()->getSubChannelsCount(channelId()); ++i)
+        {
+            auto* btn = new QPushButton(ui->gbSubChannels);
+            btn->setText("");
+            btn->setCheckable(true);
+            auto isDefault = driver()->isChannelRecordingDefault(channelId(), i);   //"MyoChan" + QString::number(i));
+            btn->setChecked(isDefault);
+            setRecButton(btn, isDefault);
+            ui->gbSubChannels->layout()->addWidget(btn);
+            m_btnSubChans.append(btn);
+            connect(btn, &QPushButton::clicked, this, &MyogramWidget::on_recMyoChanClick);
+        }
     }
 }
 
