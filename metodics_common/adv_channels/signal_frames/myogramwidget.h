@@ -84,6 +84,11 @@ private:
 
     void setRecButton(QPushButton *btn, const bool checked);
 
+    /*!
+     * \brief Возвращает список подканалов 0, 1, ... помеченных для записи
+     */
+    QSet<int> subChannels();
+
     DeviceProtocols::MyoControl* m_myoControl {nullptr};
 
     QList<QPushButton*> m_btnSubChans;  ///< Указатели на кнопки записи подканалов

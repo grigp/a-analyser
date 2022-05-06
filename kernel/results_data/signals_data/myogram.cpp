@@ -39,6 +39,12 @@ int Myogram::subChansCount() const
     return m_subChansCount;
 }
 
+void Myogram::setSubChansCount(const int scc)
+{
+    Q_ASSERT(!m_isDataAdded);
+    m_subChansCount = scc;
+}
+
 double Myogram::value(const int subChan, const int rec) const
 {
     Q_ASSERT(subChan >= 0 && subChan < m_subChansCount);
@@ -57,10 +63,13 @@ void Myogram::addValue(const QVector<double> rec)
     Q_ASSERT(rec.size() == m_subChansCount);
     SignalsDefines::MyoRec myoRec(rec);
     m_data.append(myoRec);
+    m_isDataAdded = true;
 }
 
 void Myogram::fromByteArray(const QByteArray &data)
 {
+    m_isDataAdded = true;
+
     //! Формат массива байт с данными о канале
     //! [channelId(38)|freq(4)|cnt(4)|sub_chan_cnt(4)|MYO00(double)|...|MYO0N(double)|MYO10(double)|...|MYO1N(double)| ... |MYOCnt-1 0(double)|...|MYOCnt-1 N(double)]
     //!  0          37|38   41|42  45|46           49|50  ...

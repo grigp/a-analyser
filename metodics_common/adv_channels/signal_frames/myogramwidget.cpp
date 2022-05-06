@@ -89,6 +89,7 @@ void MyogramWidget::record(DeviceProtocols::DeviceData *data)
 
 void MyogramWidget::setFrequency(const int frequency)
 {
+    m_myo->setSubChansCount(cnt);
     ui->wgtMyoOscill->setFrequency(frequency);
 }
 

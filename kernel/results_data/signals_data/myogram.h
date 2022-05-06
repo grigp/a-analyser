@@ -37,6 +37,12 @@ public:
      * \brief Перекрытая функция, возвращающая кол-во подканалов
      */
     int subChansCount() const override;
+    /*!
+     * \brief Установлние кол-ва подканалов
+     * Возможно, если только не было добавлений новых записей addValue или прочитано канал fromByteArray
+     * \param scc - новое кол-во
+     */
+    void setSubChansCount (const int scc);
 
     /*!
      * \brief Перекрытая функция, возвращающая данные канала
@@ -79,6 +85,8 @@ private:
     QString m_channelId {""};
     int m_subChansCount {0};
     int m_frequency {0};
+
+    bool m_isDataAdded {false};
 
     QVector<SignalsDefines::MyoRec> m_data;
 };
