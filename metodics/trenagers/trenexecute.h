@@ -271,6 +271,8 @@ protected:
 private slots:
     void getData(DeviceProtocols::DeviceData *data);
 
+    void on_started();
+
 private:
     Ui::TrenExecute *ui;
 

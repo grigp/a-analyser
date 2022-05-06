@@ -93,6 +93,7 @@ void TrenExecute::start()
 
         connect(m_driver, &Driver::sendData, this, &TrenExecute::getData);
         connect(m_driver, &Driver::communicationError, this, &TrenExecute::on_communicationError);
+        connect(m_driver, &Driver::started, this, &TrenExecute::on_started);
 
         m_kard = static_cast<AAnalyserApplication*>(QApplication::instance())->getSelectedPatient();
         MetodicDefines::MetodicInfo mi = static_cast<AAnalyserApplication*>(QApplication::instance())->getSelectedMetodic();
@@ -114,7 +115,6 @@ void TrenExecute::start()
             ui->wgtAdvChannels->setAllwaysRecordingChannel(ChannelsDefines::chanStabLeft);
             ui->wgtAdvChannels->setAllwaysRecordingChannel(ChannelsDefines::chanStabRight);
         }
-        ui->wgtAdvChannels->newProbe();
         auto val = SettingsProvider::valueFromRegAppCopy("AdvancedChannelsWidget", "SplitterProbePosition").toByteArray();
         ui->splitter->restoreState(val);
 
@@ -185,6 +185,11 @@ void TrenExecute::getData(DeviceProtocols::DeviceData *data)
         if (multiData->subChanCount() > 0)
             m_adv1Value = qvariant_cast<double>(multiData->value(0));
     }
+}
+
+void TrenExecute::on_started()
+{
+    ui->wgtAdvChannels->newProbe();
 }
 
 void TrenExecute::on_communicationError(const QString &drvName, const QString &port, const int errorCode)
@@ -480,6 +485,8 @@ void TrenExecute::setVideoIrritant()
 
 void TrenExecute::finishTest()
 {
+    ui->wgtAdvChannels->saveProbe();
+
     m_isClosed = true;
     doneDriver();
     auto trenRes = new TrenResultData(ChannelsDefines::chanTrenResult);
