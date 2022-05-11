@@ -122,5 +122,6 @@ void Myogram::toByteArray(QByteArray &data) const
 void Myogram::clear()
 {
     m_data.clear();
+    m_isDataAdded = false;
 }
 

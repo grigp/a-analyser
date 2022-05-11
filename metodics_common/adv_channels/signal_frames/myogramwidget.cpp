@@ -35,12 +35,12 @@ MyogramWidget::~MyogramWidget()
 
 void MyogramWidget::newProbe()
 {
-    setRecordedChannels();
+//    setRecordedChannels();   Непонятно, для чего была сдесь...
     if (ui->btnMyoRecord->isChecked())
     {
         if (!m_myo)
         {
-            m_myo = new Myogram(ChannelsDefines::chanMyogram, driver()->getSubChannelsCount(channelId()), ui->wgtMyoOscill->frequency());
+            m_myo = new Myogram(ChannelsDefines::chanMyogram, subChanCount(), ui->wgtMyoOscill->frequency());
         }
     }
 }
@@ -79,9 +79,11 @@ void MyogramWidget::record(DeviceProtocols::DeviceData *data)
         if (ui->btnMyoRecord->isChecked())
         {
             QVector<double> myoRec;
-            myoRec.resize(myoData->subChanCount());
+//            myoRec.resize(myoData->subChanCount());
             for (int i = 0; i < myoData->subChanCount(); ++i)
-                myoRec[i] = myoData->value(i).toDouble();
+                if (isSubChanRecord(i))
+                    myoRec << myoData->value(i).toDouble();
+//                myoRec[i] = myoData->value(i).toDouble();
             m_myo->addValue(myoRec);
         }
     }
@@ -89,8 +91,6 @@ void MyogramWidget::record(DeviceProtocols::DeviceData *data)
 
 void MyogramWidget::setFrequency(const int frequency)
 {
-    auto sc = subChannels();
-    m_myo->setSubChansCount(sc.size());
     ui->wgtMyoOscill->setFrequency(frequency);
 }
 
@@ -99,6 +99,7 @@ void MyogramWidget::enabledControls(const bool enabled)
     ui->lblScale->setEnabled(enabled);
     ui->cbScale->setEnabled(enabled);
     ui->btnMyoRecord->setEnabled(enabled);
+
     foreach (auto* btn, m_btnSubChans)
         btn->setEnabled(enabled);
 }
@@ -120,7 +121,7 @@ void MyogramWidget::on_recMyoClick(bool checked)
     if (checked)
     {
         if (!m_myo)
-            m_myo = new Myogram(ChannelsDefines::chanMyogram, driver()->getSubChannelsCount(channelId()), ui->wgtMyoOscill->frequency());
+            m_myo = new Myogram(ChannelsDefines::chanMyogram, subChanCount(), ui->wgtMyoOscill->frequency());
     }
     else
     {
@@ -135,6 +136,9 @@ void MyogramWidget::on_recMyoClick(bool checked)
 void MyogramWidget::on_recMyoChanClick(bool checked)
 {
     setRecButton(static_cast<QPushButton*>(sender()), checked);
+    int n = subChanCount();
+    if (m_myo)
+        m_myo->setSubChansCount(n);
 }
 
 void MyogramWidget::on_myoScaleChange(int scaleIdx)
@@ -152,6 +156,7 @@ void MyogramWidget::on_myoScaleChange(int scaleIdx)
 void MyogramWidget::setSubChannelsRecButtons()
 {
     auto items = ui->gbSubChannels->children();
+    m_subChanels.clear();
     if (items.size() <= 1)
     {
         for (int i = 0; i < driver()->getSubChannelsCount(channelId()); ++i)
@@ -165,6 +170,7 @@ void MyogramWidget::setSubChannelsRecButtons()
             ui->gbSubChannels->layout()->addWidget(btn);
             m_btnSubChans.append(btn);
             connect(btn, &QPushButton::clicked, this, &MyogramWidget::on_recMyoChanClick);
+            m_subChanels << btn;
         }
     }
 }
@@ -187,7 +193,18 @@ void MyogramWidget::setRecButton(QPushButton *btn, const bool checked)
         btn->setIcon(QIcon(":/images/SaveNO.png"));
 }
 
-QSet<int> MyogramWidget::subChannels()
+bool MyogramWidget::isSubChanRecord(const int scn) const
 {
-
+    Q_ASSERT(scn >= 0 && scn < m_subChanels.size());
+    return m_subChanels.at(scn)->isChecked();
 }
+
+int MyogramWidget::subChanCount() const
+{
+    int retval = 0;
+    for (int i = 0; i < m_subChanels.size(); ++i)
+        if (isSubChanRecord(i))
+            ++retval;
+    return retval;
+}
+

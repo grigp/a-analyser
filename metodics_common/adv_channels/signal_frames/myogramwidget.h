@@ -85,9 +85,11 @@ private:
     void setRecButton(QPushButton *btn, const bool checked);
 
     /*!
-     * \brief Возвращает список подканалов 0, 1, ... помеченных для записи
+     * \brief Возвращает true, если подканал с номерм scn будет записываться
      */
-    QSet<int> subChannels();
+    bool isSubChanRecord(const int scn) const;
+
+    int subChanCount() const;
 
     DeviceProtocols::MyoControl* m_myoControl {nullptr};
 
@@ -95,6 +97,7 @@ private:
 
     Myogram *m_myo {nullptr};
     double m_amplMyo {2};
+    QList<QPushButton*> m_subChanels;  ///< Список кнопок, управления записью подканалов 0, 1, ...
 };
 
 #endif // MYOGRAMWIDGET_H
