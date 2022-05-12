@@ -40,7 +40,7 @@ void MyogramWidget::newProbe()
     {
         if (!m_myo)
         {
-            m_myo = new Myogram(ChannelsDefines::chanMyogram, subChanCount(), ui->wgtMyoOscill->frequency());
+            m_myo = new Myogram(channelId(), subChanCount(), ui->wgtMyoOscill->frequency());
         }
     }
 }
@@ -121,7 +121,7 @@ void MyogramWidget::on_recMyoClick(bool checked)
     if (checked)
     {
         if (!m_myo)
-            m_myo = new Myogram(ChannelsDefines::chanMyogram, subChanCount(), ui->wgtMyoOscill->frequency());
+            m_myo = new Myogram(channelId(), subChanCount(), ui->wgtMyoOscill->frequency());
     }
     else
     {

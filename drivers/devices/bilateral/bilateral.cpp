@@ -270,6 +270,8 @@ QList<QString> Bilateral::getChannels() const
 
     retval.clear();
 
+    retval << ChannelsDefines::chanStab << ChannelsDefines::chanStabLeft << ChannelsDefines::chanStabRight;
+
     auto drivers = getDrivers();
     if (drivers.size() == 2)
         for (int i = 0; i < 2; ++i)
