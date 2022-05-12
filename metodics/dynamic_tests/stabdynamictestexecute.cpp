@@ -203,7 +203,6 @@ void StabDynamicTestExecute::start()
 
         connect(m_driver, &Driver::sendData, this, &StabDynamicTestExecute::getData);
         connect(m_driver, &Driver::communicationError, this, &StabDynamicTestExecute::on_communicationError);
-        connect(m_driver, &Driver::started, this, &StabDynamicTestExecute::on_started);
 
         setChannels();
 
@@ -221,6 +220,7 @@ void StabDynamicTestExecute::start()
 
         ui->wgtAdvChannels->assignDriver(m_driver, m_trd);
         m_trd->newProbe(m_metInfo.name);
+        connect(m_driver, &Driver::started, this, &StabDynamicTestExecute::on_started);
 
         //! Стабилограмма будет записана всегда
         ui->wgtAdvChannels->setAllwaysRecordingChannel(ui->cbSelectChannel->currentData(ChannelsUtils::ChannelUidRole).toString());

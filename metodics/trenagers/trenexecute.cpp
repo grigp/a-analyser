@@ -93,7 +93,6 @@ void TrenExecute::start()
 
         connect(m_driver, &Driver::sendData, this, &TrenExecute::getData);
         connect(m_driver, &Driver::communicationError, this, &TrenExecute::on_communicationError);
-        connect(m_driver, &Driver::started, this, &TrenExecute::on_started);
 
         m_kard = static_cast<AAnalyserApplication*>(QApplication::instance())->getSelectedPatient();
         MetodicDefines::MetodicInfo mi = static_cast<AAnalyserApplication*>(QApplication::instance())->getSelectedMetodic();
@@ -108,6 +107,7 @@ void TrenExecute::start()
         m_frequency = m_driver->frequency(chanUid);
 
         ui->wgtAdvChannels->assignDriver(m_driver, m_trd);
+        connect(m_driver, &Driver::started, this, &TrenExecute::on_started);
         //! Стабилограмма будет записана всегда
         ui->wgtAdvChannels->setAllwaysRecordingChannel(ui->cbSelectChannel->currentData(ChannelsUtils::ChannelUidRole).toString());
         if (m_bilatControl)

@@ -26,7 +26,8 @@ DynamoWidget::DynamoWidget(Driver *drv, const QString channelId, QWidget *parent
 //    ui->pbDiag->setMaximum(static_cast<int>(m_max));
 
     ui->cbScale->addItems(QStringList() <<  "1" << "2" << "4" << "8" << "16" << "32" << "64" << "128");
-    setRecordedChannels();
+
+    connect(drv, &Driver::started, this, &DynamoWidget::on_started);
 }
 
 DynamoWidget::~DynamoWidget()
@@ -36,25 +37,26 @@ DynamoWidget::~DynamoWidget()
 
 void DynamoWidget::newProbe()
 {
+//    auto isRec = driver()->isChannelRecordingDefault(channelId());
+//    ui->btnDynRecord->setChecked(isRec);
+
     if (ui->btnDynRecord->isChecked())
     {
-        m_dynamo = new DynamoSignal(channelId(), ui->wgtDynamoOscill->frequency());
-        objTestResultData()->addChannel(m_dynamo);
+        if (!m_dynamo)
+            m_dynamo = new DynamoSignal(channelId(), ui->wgtDynamoOscill->frequency());
     }
 }
 
 void DynamoWidget::abortProbe()
 {
     if (ui->btnDynRecord->isChecked())
-    {
         m_dynamo->clear();
-        delete m_dynamo;
-    }
 }
 
 void DynamoWidget::saveProbe()
 {
-
+    if (ui->btnDynRecord->isChecked() && m_dynamo)
+        objTestResultData()->addChannel(m_dynamo);
 }
 
 void DynamoWidget::getData(DeviceProtocols::DeviceData *data)
@@ -116,6 +118,11 @@ void DynamoWidget::setAllwaysRecordingChannel(const QString &channelId)
     Q_UNUSED(channelId);
 }
 
+void DynamoWidget::on_started()
+{
+    setRecordedChannels();
+}
+
 void DynamoWidget::on_resetValueMax()
 {
     m_valueMax = 0;
@@ -143,13 +150,14 @@ void DynamoWidget::on_dynRecChange(bool checked)
 
     if (checked)
     {
-        m_dynamo = new DynamoSignal(channelId(), ui->wgtDynamoOscill->frequency());
-        objTestResultData()->addChannel(m_dynamo);
+        if (!m_dynamo)
+            m_dynamo = new DynamoSignal(channelId(), ui->wgtDynamoOscill->frequency());
     }
     else
     {
-        m_dynamo->clear();
-        delete m_dynamo;
+        if (m_dynamo)
+            m_dynamo->clear();
+//        delete m_dynamo;
     }
 }
 

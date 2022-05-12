@@ -35,7 +35,9 @@ MyogramWidget::~MyogramWidget()
 
 void MyogramWidget::newProbe()
 {
-//    setRecordedChannels();   Непонятно, для чего была сдесь...
+//    auto isRec = driver()->isChannelRecordingDefault(channelId());
+//    ui->btnMyoRecord->setChecked(isRec);
+
     if (ui->btnMyoRecord->isChecked())
     {
         if (!m_myo)
