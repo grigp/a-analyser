@@ -21,7 +21,7 @@ BreathWidget::BreathWidget(Driver *drv, const QString channelId, QWidget *parent
 //    ui->wgtBreathOscill->setDiapazone(0, m_min, m_max);
 
     ui->cbScale->addItems(QStringList() <<  "1" << "2" << "4" << "8" << "16" << "32" << "64" << "128");
-    setRecordedChannels();
+    connect(drv, &Driver::started, this, &BreathWidget::on_started);
 }
 
 BreathWidget::~BreathWidget()
@@ -33,23 +33,21 @@ void BreathWidget::newProbe()
 {
     if (ui->btnRecord->isChecked())
     {
-        m_signal = new BreathSignal(channelId(), ui->wgtBreathOscill->frequency());
-        objTestResultData()->addChannel(m_signal);
+        if (!m_signal)
+            m_signal = new BreathSignal(channelId(), ui->wgtBreathOscill->frequency());
     }
 }
 
 void BreathWidget::abortProbe()
 {
     if (ui->btnRecord->isChecked())
-    {
         m_signal->clear();
-        delete m_signal;
-    }
 }
 
 void BreathWidget::saveProbe()
 {
-
+    if (ui->btnRecord->isChecked() && m_signal)
+        objTestResultData()->addChannel(m_signal);
 }
 
 void BreathWidget::getData(DeviceProtocols::DeviceData *data)
@@ -79,7 +77,10 @@ void BreathWidget::record(DeviceProtocols::DeviceData *data)
     {
         DeviceProtocols::TensoDvcData *dynData = static_cast<DeviceProtocols::TensoDvcData*>(data);
         if (ui->btnRecord->isChecked())
+        {
+            Q_ASSERT(m_signal);
             m_signal->addValue(dynData->value(0).toDouble());
+        }
     }
 }
 
@@ -99,6 +100,11 @@ void BreathWidget::enabledControls(const bool enabled)
 void BreathWidget::setAllwaysRecordingChannel(const QString &channelId)
 {
     Q_UNUSED(channelId);
+}
+
+void BreathWidget::on_started()
+{
+    setRecordedChannels();
 }
 
 void BreathWidget::on_calibrate()
@@ -125,13 +131,13 @@ void BreathWidget::on_recChange(bool checked)
 
     if (checked)
     {
-        m_signal = new BreathSignal(channelId(), ui->wgtBreathOscill->frequency());
-        objTestResultData()->addChannel(m_signal);
+        if (!m_signal)
+            m_signal = new BreathSignal(channelId(), ui->wgtBreathOscill->frequency());
     }
     else
     {
-        m_signal->clear();
-        delete m_signal;
+        if (m_signal)
+            m_signal->clear();
     }
 }
 

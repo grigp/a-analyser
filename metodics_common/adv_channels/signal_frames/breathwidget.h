@@ -60,6 +60,8 @@ public:
     void setAllwaysRecordingChannel(const QString &channelId) override;
 
 private slots:
+    void on_started();
+
     void on_calibrate();
 
     void on_scaleChange(int scaleIdx);
