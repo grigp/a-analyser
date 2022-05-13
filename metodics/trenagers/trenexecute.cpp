@@ -97,7 +97,6 @@ void TrenExecute::start()
         m_kard = static_cast<AAnalyserApplication*>(QApplication::instance())->getSelectedPatient();
         MetodicDefines::MetodicInfo mi = static_cast<AAnalyserApplication*>(QApplication::instance())->getSelectedMetodic();
         m_trd->newTest(m_kard.uid, mi.uid);
-        m_trd->newProbe(mi.name);
 
         //! По формату получаем список каналов этого формата, которые передает драйвер, заносим их в список для выбора
         setMainChannels();
@@ -107,6 +106,7 @@ void TrenExecute::start()
         m_frequency = m_driver->frequency(chanUid);
 
         ui->wgtAdvChannels->assignDriver(m_driver, m_trd);
+        m_trd->newProbe(mi.name);
         connect(m_driver, &Driver::started, this, &TrenExecute::on_started);
         //! Стабилограмма будет записана всегда
         ui->wgtAdvChannels->setAllwaysRecordingChannel(ui->cbSelectChannel->currentData(ChannelsUtils::ChannelUidRole).toString());

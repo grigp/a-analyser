@@ -37,9 +37,6 @@ DynamoWidget::~DynamoWidget()
 
 void DynamoWidget::newProbe()
 {
-//    auto isRec = driver()->isChannelRecordingDefault(channelId());
-//    ui->btnDynRecord->setChecked(isRec);
-
     if (ui->btnDynRecord->isChecked())
     {
         if (!m_dynamo)
@@ -97,7 +94,10 @@ void DynamoWidget::record(DeviceProtocols::DeviceData *data)
     {
         DeviceProtocols::TensoDvcData *dynData = static_cast<DeviceProtocols::TensoDvcData*>(data);
         if (ui->btnDynRecord->isChecked())
+        {
+            Q_ASSERT(m_dynamo);
             m_dynamo->addValue(dynData->value(0).toDouble());
+        }
     }
 }
 

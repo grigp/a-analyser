@@ -35,15 +35,10 @@ MyogramWidget::~MyogramWidget()
 
 void MyogramWidget::newProbe()
 {
-//    auto isRec = driver()->isChannelRecordingDefault(channelId());
-//    ui->btnMyoRecord->setChecked(isRec);
-
     if (ui->btnMyoRecord->isChecked())
     {
         if (!m_myo)
-        {
             m_myo = new Myogram(channelId(), subChanCount(), ui->wgtMyoOscill->frequency());
-        }
     }
 }
 
@@ -69,7 +64,6 @@ void MyogramWidget::getData(DeviceProtocols::DeviceData *data)
         for (int i = 0; i < myoData->subChanCount(); ++i)
             recMyo << myoData->value(i).toDouble();
         ui->wgtMyoOscill->addValue(recMyo);
-//        m_recStab = recMyo;
     }
 }
 
@@ -80,12 +74,11 @@ void MyogramWidget::record(DeviceProtocols::DeviceData *data)
         DeviceProtocols::MyogramDvcData *myoData = static_cast<DeviceProtocols::MyogramDvcData*>(data);
         if (ui->btnMyoRecord->isChecked())
         {
+            Q_ASSERT(m_myo);
             QVector<double> myoRec;
-//            myoRec.resize(myoData->subChanCount());
             for (int i = 0; i < myoData->subChanCount(); ++i)
                 if (isSubChanRecord(i))
                     myoRec << myoData->value(i).toDouble();
-//                myoRec[i] = myoData->value(i).toDouble();
             m_myo->addValue(myoRec);
         }
     }
