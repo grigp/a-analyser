@@ -3,7 +3,7 @@
 
 #include "balistogramvisualwidget.h"
 
-BalistogramVisual::BalistogramVisual(VisualDefines::Level level)
+BalistogramVisual::BalistogramVisual(BaseDefines::TestLevel level)
     : VisualDescriptor (level)
 {
 

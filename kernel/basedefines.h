@@ -184,6 +184,18 @@ static const double ZoneMotorHi = 0.16;  ///< dZone100160Max
 static const double ZoneKognLo = 0.2;    ///< dZone200280Min
 static const double ZoneKognHi = 0.28;   ///< dZone200280Max
 
+/*!
+ * \brief Уровень объекта в тесте: визуализатора, мультифактора The Level enum
+ */
+enum TestLevel
+{
+      tlNone = 0    ///< Не задан
+    , tlTest        ///< Теста
+    , tlProbe       ///< Пробы
+    , tlChannel     ///< Канала
+};
+
+
 }
 
 #endif // BASEDEFINES_H

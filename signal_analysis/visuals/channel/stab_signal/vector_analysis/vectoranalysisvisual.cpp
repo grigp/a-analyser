@@ -2,7 +2,7 @@
 
 #include "vectoranalysisvisualwidget.h"
 
-VectorAnalysisVisual::VectorAnalysisVisual(VisualDefines::Level level)
+VectorAnalysisVisual::VectorAnalysisVisual(BaseDefines::TestLevel level)
     : VisualDescriptor (level)
 {
 

@@ -3,6 +3,7 @@
 
 #include <QObject>
 
+#include "basedefines.h"
 #include "visualdescriptor.h"
 
 namespace VisualNames
@@ -17,7 +18,7 @@ static const QString Name_Stabilogram = "Стабилограмма";
 class StabilogramVisual : public VisualDescriptor
 {
 public:
-    StabilogramVisual(VisualDefines::Level level);
+    StabilogramVisual(BaseDefines::TestLevel level);
     ~StabilogramVisual() override;
 
     QString uid() override;

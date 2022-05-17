@@ -368,14 +368,14 @@ void AAnalyserApplication::registerVisual(VisualDescriptor *visual)
         m_visualsFactory->registerVisual(visual);
 }
 
-int AAnalyserApplication::visualCount(const VisualDefines::Level level)
+int AAnalyserApplication::visualCount(const BaseDefines::TestLevel level)
 {
     if (m_visualsFactory)
         return m_visualsFactory->visualCount(level);
     return 0;
 }
 
-VisualDescriptor *AAnalyserApplication::getVisual(const VisualDefines::Level level, const int idx)
+VisualDescriptor *AAnalyserApplication::getVisual(const BaseDefines::TestLevel level, const int idx)
 {
     if (m_visualsFactory)
         return m_visualsFactory->getVisual(level, idx);

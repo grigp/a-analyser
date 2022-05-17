@@ -2,7 +2,7 @@
 
 #include "visuals.h"
 
-VisualDescriptor::VisualDescriptor(VisualDefines::Level level)
+VisualDescriptor::VisualDescriptor(BaseDefines::TestLevel level)
     : m_level(level)
 {
 

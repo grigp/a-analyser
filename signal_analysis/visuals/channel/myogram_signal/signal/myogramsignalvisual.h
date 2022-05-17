@@ -19,7 +19,7 @@ static const QString Name_MyogramSignal = "Сигнал";
 class MyogramSignalVisual : public VisualDescriptor
 {
 public:
-    MyogramSignalVisual(VisualDefines::Level level);
+    MyogramSignalVisual(BaseDefines::TestLevel level);
     ~MyogramSignalVisual() override;
 
     QString uid() override;

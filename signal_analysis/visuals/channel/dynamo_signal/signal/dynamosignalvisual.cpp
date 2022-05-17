@@ -2,7 +2,7 @@
 
 #include "dynamosignalvisualwidget.h"
 
-DynamoSignalVisual::DynamoSignalVisual(VisualDefines::Level level)
+DynamoSignalVisual::DynamoSignalVisual(BaseDefines::TestLevel level)
     : VisualDescriptor (level)
 {
 

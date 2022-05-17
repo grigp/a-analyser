@@ -3,6 +3,7 @@
 
 #include <QObject>
 
+#include "basedefines.h"
 #include "visualdescriptor.h"
 
 namespace VisualNames
@@ -17,7 +18,7 @@ static const QString Name_SKG = "Статокинезиграмма";
 class SKGVisual : public VisualDescriptor
 {
 public:
-    SKGVisual(VisualDefines::Level level);
+    SKGVisual(BaseDefines::TestLevel level);
 
     QString uid() override;
     QString name() override;

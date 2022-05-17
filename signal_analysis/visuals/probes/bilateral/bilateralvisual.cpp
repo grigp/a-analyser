@@ -2,7 +2,7 @@
 #include "bilateralvisualwidget.h"
 
 
-BilateralVisual::BilateralVisual(VisualDefines::Level level)
+BilateralVisual::BilateralVisual(BaseDefines::TestLevel level)
     : VisualDescriptor (level)
 {
 

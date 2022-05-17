@@ -28,46 +28,46 @@ VisualsFactory::~VisualsFactory()
 
 void VisualsFactory::registerVisual(VisualDescriptor *visual)
 {
-    if (visual->level() == VisualDefines::vlTest)
+    if (visual->level() == BaseDefines::tlTest)
         m_visTest << visual;
     else
-    if (visual->level() == VisualDefines::vlProbe)
+    if (visual->level() == BaseDefines::tlProbe)
         m_visProbe << visual;
     else
-    if (visual->level() == VisualDefines::vlChannel)
+    if (visual->level() == BaseDefines::tlChannel)
         m_visChannel << visual;
 }
 
-int VisualsFactory::visualCount(const VisualDefines::Level level)
+int VisualsFactory::visualCount(const BaseDefines::TestLevel level)
 {
     switch (level) {
-    case VisualDefines::vlTest: return m_visTest.size();
-    case VisualDefines::vlProbe: return m_visProbe.size();
-    case VisualDefines::vlChannel: return m_visChannel.size();
-    case VisualDefines::vlNone: return 0;
+    case BaseDefines::tlTest: return m_visTest.size();
+    case BaseDefines::tlProbe: return m_visProbe.size();
+    case BaseDefines::tlChannel: return m_visChannel.size();
+    case BaseDefines::tlNone: return 0;
     }
     return 0;
 }
 
-VisualDescriptor *VisualsFactory::getVisual(const VisualDefines::Level level, const int idx)
+VisualDescriptor *VisualsFactory::getVisual(const BaseDefines::TestLevel level, const int idx)
 {
     switch (level) {
-    case VisualDefines::vlTest:
+    case BaseDefines::tlTest:
     {
         Q_ASSERT(idx >= 0 && idx < m_visTest.size());
         return m_visTest.at(idx);
     }
-    case VisualDefines::vlProbe:
+    case BaseDefines::tlProbe:
     {
         Q_ASSERT(idx >= 0 && idx < m_visProbe.size());
         return m_visProbe.at(idx);
     }
-    case VisualDefines::vlChannel:
+    case BaseDefines::tlChannel:
     {
         Q_ASSERT(idx >= 0 && idx < m_visChannel.size());
         return m_visChannel.at(idx);
     }
-    case VisualDefines::vlNone: return nullptr;
+    case BaseDefines::tlNone: return nullptr;
     }
     return nullptr;
 }

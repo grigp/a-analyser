@@ -1,6 +1,7 @@
 #ifndef AANALYSERAPPLICATION_H
 #define AANALYSERAPPLICATION_H
 
+#include "basedefines.h"
 #include "datadefines.h"
 #include "metodicdefines.h"
 #include "factorsdefines.h"
@@ -230,8 +231,8 @@ public:
 
     void registerVisual(VisualDescriptor* visual);
 
-    int visualCount(const VisualDefines::Level level);
-    VisualDescriptor* getVisual(const VisualDefines::Level level, const int idx);
+    int visualCount(const BaseDefines::TestLevel level);
+    VisualDescriptor* getVisual(const BaseDefines::TestLevel level, const int idx);
 
 
     ///<-----------------------------------------------------------------------------

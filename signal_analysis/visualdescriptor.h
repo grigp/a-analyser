@@ -3,7 +3,7 @@
 
 #include <QObject>
 
-#include "visualdefines.h"
+#include "basedefines.h"
 
 class Visual;
 
@@ -14,7 +14,7 @@ class VisualDescriptor
 {
 public:
 
-    VisualDescriptor(VisualDefines::Level level);
+    VisualDescriptor(BaseDefines::TestLevel level);
     virtual ~VisualDescriptor();
 
     virtual QString uid() = 0;
@@ -23,10 +23,10 @@ public:
     virtual Visual* getVisualWidget(QWidget *parent = nullptr,
                                     const QString& testUid = "", const QString& probeUid = "", const QString& channelUid = "") = 0;
 
-    VisualDefines::Level level() {return m_level;}
+    BaseDefines::TestLevel level() {return m_level;}
 
 private:
-    VisualDefines::Level m_level {VisualDefines::vlNone};
+    BaseDefines::TestLevel m_level {BaseDefines::tlNone};
 };
 
 #endif // VISUALDESCRIPTOR_H

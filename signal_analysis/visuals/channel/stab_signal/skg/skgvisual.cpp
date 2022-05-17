@@ -2,7 +2,7 @@
 
 #include "skgvisualwidget.h"
 
-SKGVisual::SKGVisual(VisualDefines::Level level)
+SKGVisual::SKGVisual(BaseDefines::TestLevel level)
     : VisualDescriptor (level)
 {
 

@@ -3,6 +3,7 @@
 
 #include <QObject>
 
+#include "basedefines.h"
 #include "visualdescriptor.h"
 
 namespace VisualNames
@@ -15,7 +16,7 @@ static const QString Name_Bilateral = "Билатеральный режим";
 class BilateralVisual : public VisualDescriptor
 {
 public:
-    BilateralVisual(VisualDefines::Level level);
+    BilateralVisual(BaseDefines::TestLevel level);
 
     QString uid() override;
     QString name() override;

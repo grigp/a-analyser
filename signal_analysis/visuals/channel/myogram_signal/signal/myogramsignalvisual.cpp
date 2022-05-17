@@ -2,7 +2,7 @@
 
 #include "myogramsignalvisualwidget.h"
 
-MyogramSignalVisual::MyogramSignalVisual(VisualDefines::Level level)
+MyogramSignalVisual::MyogramSignalVisual(BaseDefines::TestLevel level)
     : VisualDescriptor (level)
 {
 

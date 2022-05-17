@@ -3,7 +3,7 @@
 
 #include <QObject>
 
-#include "visualdefines.h"
+#include "basedefines.h"
 
 class VisualDescriptor;
 
@@ -20,8 +20,8 @@ public:
 
     void registerVisual(VisualDescriptor* visual);
 
-    int visualCount(const VisualDefines::Level level);
-    VisualDescriptor* getVisual(const VisualDefines::Level level, const int idx);
+    int visualCount(const BaseDefines::TestLevel level);
+    VisualDescriptor* getVisual(const BaseDefines::TestLevel level, const int idx);
 
 private:
     QList<VisualDescriptor*> m_visTest;

@@ -3,6 +3,7 @@
 
 #include <QObject>
 
+#include "basedefines.h"
 #include "visualdescriptor.h"
 
 namespace VisualNames
@@ -17,7 +18,7 @@ static const QString Name_Balistogram = "Балистограмма";
 class BalistogramVisual : public VisualDescriptor
 {
 public:
-    BalistogramVisual(VisualDefines::Level level);
+    BalistogramVisual(BaseDefines::TestLevel level);
     ~BalistogramVisual() override;
 
     QString uid() override;

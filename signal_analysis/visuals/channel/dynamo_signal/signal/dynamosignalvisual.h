@@ -3,6 +3,7 @@
 
 #include <QObject>
 
+#include "basedefines.h"
 #include "visualdescriptor.h"
 
 namespace VisualNames
@@ -18,7 +19,7 @@ static const QString Name_DynamoSignal = "Сигнал";
 class DynamoSignalVisual : public VisualDescriptor
 {
 public:
-    DynamoSignalVisual(VisualDefines::Level level);
+    DynamoSignalVisual(BaseDefines::TestLevel level);
     ~DynamoSignalVisual() override;
 
     QString uid() override;

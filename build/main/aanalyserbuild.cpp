@@ -97,13 +97,13 @@ void AAnalyserBuild::registerFactors()
 void AAnalyserBuild::registerVisuals()
 {
     auto* app = static_cast<AAnalyserApplication*>(QApplication::instance());
-    app->registerVisual(new SKGVisual(VisualDefines::vlChannel));
-    app->registerVisual(new StabilogramVisual(VisualDefines::vlChannel));
-    app->registerVisual(new BalistogramVisual(VisualDefines::vlChannel));
-    app->registerVisual(new MyogramSignalVisual(VisualDefines::vlChannel));
-    app->registerVisual(new DynamoSignalVisual(VisualDefines::vlChannel));
-    app->registerVisual(new VectorAnalysisVisual(VisualDefines::vlChannel));
-    app->registerVisual(new BilateralVisual(VisualDefines::vlProbe));
+    app->registerVisual(new SKGVisual(BaseDefines::tlChannel));
+    app->registerVisual(new StabilogramVisual(BaseDefines::tlChannel));
+    app->registerVisual(new BalistogramVisual(BaseDefines::tlChannel));
+    app->registerVisual(new MyogramSignalVisual(BaseDefines::tlChannel));
+    app->registerVisual(new DynamoSignalVisual(BaseDefines::tlChannel));
+    app->registerVisual(new VectorAnalysisVisual(BaseDefines::tlChannel));
+    app->registerVisual(new BilateralVisual(BaseDefines::tlProbe));
 }
 
 

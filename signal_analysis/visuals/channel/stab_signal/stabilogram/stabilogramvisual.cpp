@@ -4,7 +4,7 @@
 
 #include "stabilogramvisualwidget.h"
 
-StabilogramVisual::StabilogramVisual(VisualDefines::Level level)
+StabilogramVisual::StabilogramVisual(BaseDefines::TestLevel level)
     : VisualDescriptor (level)
 {
 }

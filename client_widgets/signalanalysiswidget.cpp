@@ -305,14 +305,14 @@ QTabWidget *SignalAnalysisWidget::calculateVisualsLine(int &count,
 {
     QTabWidget *tw = nullptr;
     count = 0;
-    VisualDefines::Level level = VisualDefines::vlNone;
+    BaseDefines::TestLevel level = BaseDefines::tlNone;
     if (probeUid == "" && channelId == "")
-        level = VisualDefines::vlTest;
+        level = BaseDefines::tlTest;
     else
     if (channelId == "")
-        level = VisualDefines::vlProbe;
+        level = BaseDefines::tlProbe;
     else
-        level = VisualDefines::vlChannel;
+        level = BaseDefines::tlChannel;
 
     auto *app = static_cast<AAnalyserApplication*>(QApplication::instance());
     for (int i = 0; i < app->visualCount(level); ++i)

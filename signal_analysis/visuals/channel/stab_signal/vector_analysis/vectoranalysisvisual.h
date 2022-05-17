@@ -3,6 +3,7 @@
 
 #include <QObject>
 
+#include "basedefines.h"
 #include "visualdescriptor.h"
 
 namespace VisualNames
@@ -17,7 +18,7 @@ static const QString Name_VectorAnalysis = "Анализ векторов";
 class VectorAnalysisVisual : public VisualDescriptor
 {
 public:
-    VectorAnalysisVisual(VisualDefines::Level level);
+    VectorAnalysisVisual(BaseDefines::TestLevel level);
     ~VectorAnalysisVisual() override;
 
     QString uid() override;
