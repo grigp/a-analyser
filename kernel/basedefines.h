@@ -185,7 +185,7 @@ static const double ZoneKognLo = 0.2;    ///< dZone200280Min
 static const double ZoneKognHi = 0.28;   ///< dZone200280Max
 
 /*!
- * \brief Уровень объекта в тесте: визуализатора, мультифактора The Level enum
+ * \brief Уровень объекта в тесте: визуализатора, мультифактора The TestLevel enum
  */
 enum TestLevel
 {

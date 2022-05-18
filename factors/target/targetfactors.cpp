@@ -84,7 +84,7 @@ void TargetFactors::calculate()
 void TargetFactors::registerFactors()
 {
     static_cast<AAnalyserApplication*>(QApplication::instance())->
-            registerGroup(TargetFactorsDefines::GroupUid, tr("Показатели мишени"));
+            registerGroup(TargetFactorsDefines::GroupUid, TargetFactorsDefines::GroupName);
 
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(TargetFactorsDefines::TargetScoreUid, TargetFactorsDefines::GroupUid,

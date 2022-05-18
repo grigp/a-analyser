@@ -87,7 +87,7 @@ void ClassicFactors::calculate()
 void ClassicFactors::registerFactors()
 {
     static_cast<AAnalyserApplication*>(QApplication::instance())->
-            registerGroup(ClassicFactorsDefines::GroupUid, tr("Классические показатели"));
+            registerGroup(ClassicFactorsDefines::GroupUid, ClassicFactorsDefines::GroupName);
 
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(ClassicFactorsDefines::MoXUid, ClassicFactorsDefines::GroupUid,

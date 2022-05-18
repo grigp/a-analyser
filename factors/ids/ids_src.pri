@@ -1,10 +1,12 @@
 INCLUDEPATH += $$PWD
 
 HEADERS += \
-    $$PWD/idsfactors.h
+    $$PWD/idsfactors.h \
+    $$PWD/idsfactorsdescriptor.h
 
 SOURCES += \
-    $$PWD/idsfactors.cpp
+    $$PWD/idsfactors.cpp \
+    $$PWD/idsfactorsdescriptor.cpp
 
 FORMS += \
 

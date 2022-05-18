@@ -1,8 +1,7 @@
 #include "factorsfactory.h"
 
 #include "aanalyserbuild.h"
-
-//#include "classicfactors.h"
+#include "multifactordescriptor.h"
 
 #include <QTimer>
 #include <QDebug>
@@ -42,7 +41,17 @@ void FactorsFactory::registerFactor(const QString &uid, const QString &groupUid,
 void FactorsFactory::registerGroup(const QString &uid, const QString &name)
 {
     m_groups.insert(uid, name);
-//    if (uid == ClassicFactorsDefines::GroupUid)
-//        m_creatorsChannel.insert(uid, new ClassicFactorsCreator());
+}
+
+void FactorsFactory::registerGroup(MultiFactorDescriptor *group)
+{
+    if (group->level() == BaseDefines::tlTest)
+        m_groupsTest << group;
+    else
+    if (group->level() == BaseDefines::tlProbe)
+        m_groupsProbe << group;
+    else
+    if (group->level() == BaseDefines::tlChannel)
+        m_groupsChannel << group;
 }
 

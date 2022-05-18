@@ -2,12 +2,15 @@
 #define RATIOPROBESFACTORS_H
 
 #include <QObject>
+#include <QCoreApplication>
 
 #include "multifactor.h"
 
 namespace RatioProbesFactorsDefines
 {
 static const QString GroupUid = "{2A169548-A021-4040-8E86-5808D27A2012}";
+static const QString GroupName = QCoreApplication::tr("Показатели отношений");
+
 static const QString Probe2SUid = "{BA799ED3-D98D-475E-ADE1-8B39E5EC3915}";
 static const QString Probe2KFRUid = "{0D7A35F4-F8CC-47E2-850D-C9ABC89300FD}";
 static const QString Probe3SUid = "{9ED8A747-233D-43C1-84D9-ACCB0EAAFE64}";

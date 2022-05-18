@@ -2,12 +2,15 @@
 #define VECTORFACTORS_H
 
 #include <QObject>
+#include <QCoreApplication>
 #include <QVector>
 #include "multifactor.h"
 
 namespace VectorFactorsDefines
 {
 static const QString GroupUid = "{EE47A8A0-2C55-4B8B-AF44-B642932ACC90}";
+static const QString GroupName = QCoreApplication::tr("Векторные показатели");
+
 static const QString KFRUid = "{1A32C0D6-7A87-4E92-B1EE-ED0BB506EABA}";
 static const QString NPVUid = "{A3EE312D-630B-423C-B21B-811FE8E6AD04}";
 static const QString KRINDUid = "{92790B4F-DAAA-4666-8ECC-61017B6E0095}";

@@ -104,7 +104,7 @@ void RatioProbesFactors::calculate()
 void RatioProbesFactors::registerFactors()
 {
     static_cast<AAnalyserApplication*>(QApplication::instance())->
-            registerGroup(RatioProbesFactorsDefines::GroupUid, tr("Показатели отношений"));
+            registerGroup(RatioProbesFactorsDefines::GroupUid, RatioProbesFactorsDefines::GroupName);
 
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(RatioProbesFactorsDefines::Probe2SUid, RatioProbesFactorsDefines::GroupUid,

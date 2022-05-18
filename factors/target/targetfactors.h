@@ -2,12 +2,15 @@
 #define TARGETFACTORS_H
 
 #include <QObject>
+#include <QCoreApplication>
 
 #include "multifactor.h"
 
 namespace TargetFactorsDefines
 {
 static const QString GroupUid = "{F9EE075C-716E-43F6-91EA-72FD1E921193}";
+static const QString GroupName = QCoreApplication::tr("Показатели мишени");
+
 static const QString TargetScoreUid = "{552B2B27-4F58-436A-BE1E-03978E7EE604}";
 static const QString TargetTotalScoreUid = "{89B72141-4978-499B-924B-DB2DAE01E337}";
 }

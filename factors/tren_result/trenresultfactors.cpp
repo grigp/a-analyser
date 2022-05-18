@@ -123,7 +123,7 @@ void TrenResultFactors::calculate()
 void TrenResultFactors::registerFactors()
 {
     static_cast<AAnalyserApplication*>(QApplication::instance())->
-            registerGroup(TrenResultFactorsDefines::GroupUid, tr("Показатели тренажеров"));
+            registerGroup(TrenResultFactorsDefines::GroupUid, TrenResultFactorsDefines::GroupName);
 
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(TrenResultFactorsDefines::ScoreUid, TrenResultFactorsDefines::GroupUid,

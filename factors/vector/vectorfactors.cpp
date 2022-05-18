@@ -116,7 +116,7 @@ void VectorFactors::calculate()
 void VectorFactors::registerFactors()
 {
     static_cast<AAnalyserApplication*>(QApplication::instance())->
-            registerGroup(VectorFactorsDefines::GroupUid, tr("Векторные показатели"));
+            registerGroup(VectorFactorsDefines::GroupUid, VectorFactorsDefines::GroupName);
 
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(VectorFactorsDefines::KFRUid, VectorFactorsDefines::GroupUid,

@@ -2,12 +2,15 @@
 #define TRENRESULTFACTORS_H
 
 #include <QObject>
+#include <QCoreApplication>
 
 #include "multifactor.h"
 
 namespace TrenResultFactorsDefines
 {
 static const QString GroupUid = "{CAEBCA5C-7F3F-403C-91BB-F7D7016C5E5F}";
+static const QString GroupName = QCoreApplication::tr("Показатели тренажеров");
+
 static const QString ScoreUid = "{ED2E454B-DF22-462C-BE44-B9DCFD1A284B}";
 static const QString FaultsUid = "{B492963B-F280-4E23-A97A-88E1172B53A0}";
 static const QString TimeUid = "{B24D1602-8905-4616-B121-DBB9661D5E40}";

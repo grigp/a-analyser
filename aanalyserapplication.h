@@ -24,6 +24,7 @@ class VisualDescriptor;
 class TestVisual;
 class ProbeVisual;
 class ChannelVisual;
+class MultiFactorDescriptor;
 
 class AAnalyserApplication : public QApplication
 {
@@ -265,6 +266,12 @@ public:
      * \param name - название группы
      */
     void registerGroup(const QString &uid, const QString &name);
+
+    /*!
+     * \brief Регистрирует группу показателей
+     * \param group - указатель на группу показателей
+     */
+    void registerGroup(MultiFactorDescriptor* group);
 
     ///<-----------------------------------------------------------------------------
 

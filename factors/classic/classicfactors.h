@@ -2,12 +2,15 @@
 #define CLASSICFACTORS_H
 
 #include <QObject>
+#include <QCoreApplication>
 #include "multifactor.h"
 
 
 namespace ClassicFactorsDefines
 {
 static const QString GroupUid = "{CE4B0A70-953E-486E-B065-54BB2854BB5D}";
+static const QString GroupName = QCoreApplication::tr("Классические показатели");
+
 static const QString MoXUid = "{D2E9D021-07F5-49D4-967F-4AB7E05558D0}";
 static const QString MoYUid = "{ADEA0860-76A3-4491-A3FB-BE130E1C64DA}";
 static const QString QXUid = "{48DB78C0-EDBD-4065-9CC1-F767499B8C90}";

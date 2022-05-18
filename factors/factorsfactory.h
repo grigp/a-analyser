@@ -5,10 +5,12 @@
 #include <QMap>
 
 #include "factorsdefines.h"
+#include "basedefines.h"
 
 class TestFactorsCreator;
 class ProbeFactorsCreator;
 class ChannelFactorsCreator;
+class MultiFactorDescriptor;
 
 /*!
  * \brief Класс фабрики классов показателей FactorsFactory class
@@ -41,11 +43,16 @@ public:
                         const double multiplier, const FactorsDefines::NormSide side, const int agingPeriod);
 
     /*!
-     * \brief Регистрирует группу показателей
+     * \brief Регистрирует группу показателей. Устаревшее. TODO: убрать
      * \param uid - uid группы
      * \param name - название группы
      */
     void registerGroup(const QString &uid, const QString &name);
+    /*!
+     * \brief Регистрирует группу показателей
+     * \param group - указатель на группу показателей
+     */
+    void registerGroup(MultiFactorDescriptor* group);
 
 signals:
 
@@ -53,10 +60,14 @@ public slots:
 
 private:
     QMap<QString, FactorsDefines::FactorInfo> m_factors;
-    QMap<QString, QString> m_groups;
 
-    QMap<QString, TestFactorsCreator*> m_creatorsTest;
-    QMap<QString, ProbeFactorsCreator*> m_creatorsProbe;
+    QMap<QString, QString> m_groups;
+    QList<MultiFactorDescriptor*> m_groupsTest;
+    QList<MultiFactorDescriptor*> m_groupsProbe;
+    QList<MultiFactorDescriptor*> m_groupsChannel;
+
+//    QMap<QString, TestFactorsCreator*> m_creatorsTest;
+//    QMap<QString, ProbeFactorsCreator*> m_creatorsProbe;
 //    QMap<QString, ChannelFactorsCreator*> m_creatorsChannel;
 };
 

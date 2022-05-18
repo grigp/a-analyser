@@ -3,12 +3,15 @@
 
 #include <QObject>
 #include <QVector>
+#include <QCoreApplication>
 
 #include "multifactor.h"
 
 namespace IDSFactorsDefines
 {
 static const QString GroupUid = "{603029E3-72A2-4050-A7F2-B65DFC0E63EB}";
+static const QString GroupName = QCoreApplication::tr("Показатели динамической стабилизации");
+
 static const QString IDSUid = "{E7C3FC19-2342-4969-8E29-C9BE88646816}";
 static const QString FDSDispUid = "{57E26D17-C246-4AB9-8A89-27F60E8DE624}";
 static const QString FreqUid = "{AF9F0787-F741-4FDD-A245-362DB4B729F4}";

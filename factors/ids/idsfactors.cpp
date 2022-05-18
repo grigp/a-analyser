@@ -83,7 +83,7 @@ void IDSFactors::calculate()
 void IDSFactors::registerFactors()
 {
     static_cast<AAnalyserApplication*>(QApplication::instance())->
-            registerGroup(IDSFactorsDefines::GroupUid, tr("Показатели динамической стабилизации"));
+            registerGroup(IDSFactorsDefines::GroupUid, IDSFactorsDefines::GroupName);
 
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(IDSFactorsDefines::IDSUid, IDSFactorsDefines::GroupUid,

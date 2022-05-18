@@ -19,17 +19,23 @@
 #include "octaedrontemplate.h"
 #include "boxerdodgingtemplate.h"
 
-#include "classicfactors.h"
-#include "vectorfactors.h"
-#include "ratioprobesfactors.h"
+//#include "classicfactors.h"
+#include "classicfactorsdescriptor.h"
+//#include "vectorfactors.h"
+#include "vectorfactorsdescriptor.h"
+//#include "ratioprobesfactors.h"
+#include "ratioprobesfactorsdescriptor.h"
 #include "jumpheightsinglefactors.h"
 #include "jumpheightfactors.h"
 #include "teppingtestfactors.h"
 #include "droptestfactors.h"
 #include "hoppingfactors.h"
-#include "idsfactors.h"
-#include "targetfactors.h"
-#include "trenresultfactors.h"
+//#include "idsfactors.h"
+#include "idsfactorsdescriptor.h"
+//#include "targetfactors.h"
+#include "targetfactorsdescriptor.h"
+//#include "trenresultfactors.h"
+#include "trenresultfactorsdescriptor.h"
 #include "crossfactors.h"
 #include "stepoffsetfactors.h"
 #include "evolventafactors.h"
@@ -73,17 +79,17 @@ QList<MetodicTemplate *> AAnalyserBuild::getBuildTemplates(QObject *parent)
 
 void AAnalyserBuild::registerFactors()
 {
-    ClassicFactors::registerFactors();
-    VectorFactors::registerFactors();
-    RatioProbesFactors::registerFactors();
+//    ClassicFactors::registerFactors();
+//    VectorFactors::registerFactors();
+//    RatioProbesFactors::registerFactors();
     JumpHeightSingleFactors::registerFactors();
     JumpHeightFactors::registerFactors();
     TeppingTestFactors::registerFactors();
     DropTestFactors::registerFactors();
     HoppingFactors::registerFactors();
-    IDSFactors::registerFactors();
-    TargetFactors::registerFactors();
-    TrenResultFactors::registerFactors();
+//    IDSFactors::registerFactors();
+//    TargetFactors::registerFactors();
+//    TrenResultFactors::registerFactors();
     CrossFactors::registerFactors();
     StepOffsetFactors::registerFactors();
     EvolventaFactors::registerFactors();
@@ -92,6 +98,14 @@ void AAnalyserBuild::registerFactors()
     StepDeviationFactors::registerFactors();
     TriangleFactors::registerFactors();
     TriangleConslutionFactors::registerFactors();
+
+    auto* app = static_cast<AAnalyserApplication*>(QApplication::instance());
+    app->registerGroup(new ClassicFactorsDescriptor(BaseDefines::tlChannel));
+    app->registerGroup(new VectorFactorsDescriptor(BaseDefines::tlChannel));
+    app->registerGroup(new IDSFactorsDescriptor(BaseDefines::tlChannel));
+    app->registerGroup(new RatioProbesFactorsDescriptor(BaseDefines::tlTest));
+    app->registerGroup(new TargetFactorsDescriptor(BaseDefines::tlChannel));
+    app->registerGroup(new TrenResultFactorsDescriptor(BaseDefines::tlChannel));
 }
 
 void AAnalyserBuild::registerVisuals()

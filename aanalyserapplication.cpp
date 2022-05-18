@@ -411,6 +411,12 @@ void AAnalyserApplication::registerGroup(const QString &uid, const QString &name
         m_factors->registerGroup(uid, name);
 }
 
+void AAnalyserApplication::registerGroup(MultiFactorDescriptor *group)
+{
+    if (m_factors)
+        m_factors->registerGroup(group);
+}
+
 QStringList AAnalyserApplication::getTestConditions()
 {
     if (m_normsManager)
