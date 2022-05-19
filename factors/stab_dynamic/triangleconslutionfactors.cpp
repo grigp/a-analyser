@@ -14,9 +14,20 @@ TriangleConslutionFactors::TriangleConslutionFactors(const QString &testUid,
     : ProbeMultifactor (testUid, probeUid, parent)
     , m_factors(factors)
 {
-    Q_ASSERT(m_factors != nullptr);
+    if (m_factors == nullptr)
+    {
+        m_factors = new TriangleFactors(testUid, probeUid, parent);
+        m_isAutoCalcTF = true;
+    }
+
     if (isValid())
         calculate();
+}
+
+TriangleConslutionFactors::~TriangleConslutionFactors()
+{
+    if (m_isAutoCalcTF)
+        delete m_factors;
 }
 
 bool TriangleConslutionFactors::isValid() const
@@ -48,7 +59,7 @@ void TriangleConslutionFactors::calculate()
 void TriangleConslutionFactors::registerFactors()
 {
     static_cast<AAnalyserApplication*>(QApplication::instance())->
-            registerGroup(TriangleConslutionFactorsDefines::GroupUid, tr("Показатели теста \"Треугольник\". Заключение"));
+            registerGroup(TriangleConslutionFactorsDefines::GroupUid, TriangleConslutionFactorsDefines::GroupName);
 
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(TriangleConslutionFactorsDefines::AccRepeatUid, TriangleConslutionFactorsDefines::GroupUid,

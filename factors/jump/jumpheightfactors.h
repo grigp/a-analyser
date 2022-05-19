@@ -2,6 +2,7 @@
 #define JUMPHEIGHTFACTORS_H
 
 #include <QObject>
+#include <QCoreApplication>
 
 #include "multifactor.h"
 #include "signalsdefines.h"
@@ -9,6 +10,8 @@
 namespace JumpHeightFactorsDefines
 {
 static const QString GroupUid = "{5EF6AB00-42FA-458A-8CBE-82AE09A08160}";
+static const QString GroupName = QCoreApplication::tr("Показатели высоты прыжков");
+
 static const QString JumpsCountUid = "{E5E2FA90-BA27-4027-9CA6-40A5372982FF}";
 static const QString FullTimeUid = "{E9133633-9E88-49A3-89C7-E8E7E13FB9D7}";
 static const QString JumpsHeightAvrUid = "{9EB8FBE9-EC3A-44A4-85EB-57B93E6D39BF}";

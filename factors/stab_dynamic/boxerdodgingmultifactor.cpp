@@ -74,7 +74,7 @@ void BoxerDodgingMultifactor::calculate()
 void BoxerDodgingMultifactor::registerFactors()
 {
     static_cast<AAnalyserApplication*>(QApplication::instance())->
-            registerGroup(BoxerDodgingFactorsDefines::GroupUid, tr("Показатели тренажера с уклонением"));
+            registerGroup(BoxerDodgingFactorsDefines::GroupUid, BoxerDodgingFactorsDefines::GroupName);
 
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(BoxerDodgingFactorsDefines::AverageLatUid, BoxerDodgingFactorsDefines::GroupUid,
@@ -313,8 +313,6 @@ void BoxerDodgingMultifactor::calculateFactorsForDirection(const BoxerDodgingDef
     factors.ampl = 0;
     factors.errors = 0;
 
-    qDebug() << m_resData->freq();
-
     int ln = 0;  //! Счетчик попыток для латентного периода
     //! По участкам направления
     for (int i = 0; i < sections.size(); ++i)
@@ -375,7 +373,5 @@ void BoxerDodgingMultifactor::calculateFactorsForDirection(const BoxerDodgingDef
         factors.time /= static_cast<double>(sections.size());
         factors.ampl /= static_cast<double>(sections.size());
     }
-
-//    qDebug() << code << factors.latent << factors.time << factors.ampl << factors.errors;
 }
 

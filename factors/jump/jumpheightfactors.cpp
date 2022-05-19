@@ -69,7 +69,7 @@ void JumpHeightFactors::calculate()
 void JumpHeightFactors::registerFactors()
 {
     static_cast<AAnalyserApplication*>(QApplication::instance())->
-            registerGroup(JumpHeightFactorsDefines::GroupUid, tr("Показатели высоты прыжков"));
+            registerGroup(JumpHeightFactorsDefines::GroupUid, JumpHeightFactorsDefines::GroupName);
 
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(JumpHeightFactorsDefines::JumpsCountUid, JumpHeightFactorsDefines::GroupUid,

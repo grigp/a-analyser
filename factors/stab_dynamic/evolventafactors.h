@@ -10,6 +10,7 @@ namespace EvolventaFactorsDefines
 {
 
 static const QString GroupUid = "{8A2DA8DD-7560-498A-9AB7-7B2DC4614343}";
+static const QString GroupName = QCoreApplication::tr("Показатели теста \"Эвольвента\"");
 
 namespace CommonErrorsFrontal {
 static const QString SummErr = "{8DE01E39-D491-4113-A01D-9A5367C6EC2C}";   ///< Суммарная ошибка

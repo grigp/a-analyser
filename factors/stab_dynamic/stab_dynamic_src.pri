@@ -8,7 +8,15 @@ HEADERS += \
     $$PWD/boxerdodgingmultifactor.h \
     $$PWD/stepdeviationfactors.h \
     $$PWD/trianglefactors.h \
-    $$PWD/triangleconslutionfactors.h
+    $$PWD/triangleconslutionfactors.h \
+    $$PWD/boxerdodgingmultifactordescriptor.h \
+    $$PWD/crossfactorsdescriptor.h \
+    $$PWD/evolventafactorsdescriptor.h \
+    $$PWD/octaedronfactorsdescritor.h \
+    $$PWD/stepdeviationfactorsdescriptor.h \
+    $$PWD/stepoffsetfactorsdescriptor.h \
+    $$PWD/triangleconslutionfactorsdescriptor.h \
+    $$PWD/trianglefactorsdescriptor.h
 
 SOURCES += \
     $$PWD/crossfactors.cpp \
@@ -18,7 +26,15 @@ SOURCES += \
     $$PWD/boxerdodgingmultifactor.cpp \
     $$PWD/stepdeviationfactors.cpp \
     $$PWD/trianglefactors.cpp \
-    $$PWD/triangleconslutionfactors.cpp
+    $$PWD/triangleconslutionfactors.cpp \
+    $$PWD/boxerdodgingmultifactordescriptor.cpp \
+    $$PWD/crossfactorsdescriptor.cpp \
+    $$PWD/evolventafactorsdescriptor.cpp \
+    $$PWD/octaedronfactorsdescritor.cpp \
+    $$PWD/stepdeviationfactorsdescriptor.cpp \
+    $$PWD/stepoffsetfactorsdescriptor.cpp \
+    $$PWD/triangleconslutionfactorsdescriptor.cpp \
+    $$PWD/trianglefactorsdescriptor.cpp
 
 FORMS += \
 

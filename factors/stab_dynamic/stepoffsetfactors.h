@@ -11,6 +11,7 @@
 namespace StepOffsetFactorsDefines
 {
 static const QString GroupUid = "{917371CA-75C2-4534-8A61-9E2BCA750D17}";
+static const QString GroupName = QCoreApplication::tr("Показатели теста \"Ступени\"");
 
 namespace Compensation {
 static const QString LatentUid = "{8B7BBD20-95B7-4B77-BDA1-C0D36F076433}";

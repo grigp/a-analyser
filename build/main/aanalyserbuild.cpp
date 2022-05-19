@@ -19,31 +19,25 @@
 #include "octaedrontemplate.h"
 #include "boxerdodgingtemplate.h"
 
-//#include "classicfactors.h"
 #include "classicfactorsdescriptor.h"
-//#include "vectorfactors.h"
 #include "vectorfactorsdescriptor.h"
-//#include "ratioprobesfactors.h"
 #include "ratioprobesfactorsdescriptor.h"
-#include "jumpheightsinglefactors.h"
-#include "jumpheightfactors.h"
-#include "teppingtestfactors.h"
-#include "droptestfactors.h"
-#include "hoppingfactors.h"
-//#include "idsfactors.h"
+#include "jumpheightsinglefactorsdescriptor.h"
+#include "jumpheightfactorsdescriptor.h"
+#include "teppingtestfactorsdescriptor.h"
+#include "droptestfactorsdescriptor.h"
+#include "hoppingfactorsdescriptor.h"
 #include "idsfactorsdescriptor.h"
-//#include "targetfactors.h"
 #include "targetfactorsdescriptor.h"
-//#include "trenresultfactors.h"
 #include "trenresultfactorsdescriptor.h"
-#include "crossfactors.h"
-#include "stepoffsetfactors.h"
-#include "evolventafactors.h"
-#include "octaedronfactors.h"
-#include "boxerdodgingmultifactor.h"
-#include "stepdeviationfactors.h"
-#include "trianglefactors.h"
-#include "triangleconslutionfactors.h"
+#include "crossfactorsdescriptor.h"
+#include "stepoffsetfactorsdescriptor.h"
+#include "evolventafactorsdescriptor.h"
+#include "octaedronfactorsdescritor.h"
+#include "boxerdodgingmultifactordescriptor.h"
+#include "stepdeviationfactorsdescriptor.h"
+#include "trianglefactorsdescriptor.h"
+#include "triangleconslutionfactorsdescriptor.h"
 
 #include "skgvisual.h"
 #include "stabilogramvisual.h"
@@ -79,26 +73,6 @@ QList<MetodicTemplate *> AAnalyserBuild::getBuildTemplates(QObject *parent)
 
 void AAnalyserBuild::registerFactors()
 {
-//    ClassicFactors::registerFactors();
-//    VectorFactors::registerFactors();
-//    RatioProbesFactors::registerFactors();
-    JumpHeightSingleFactors::registerFactors();
-    JumpHeightFactors::registerFactors();
-    TeppingTestFactors::registerFactors();
-    DropTestFactors::registerFactors();
-    HoppingFactors::registerFactors();
-//    IDSFactors::registerFactors();
-//    TargetFactors::registerFactors();
-//    TrenResultFactors::registerFactors();
-    CrossFactors::registerFactors();
-    StepOffsetFactors::registerFactors();
-    EvolventaFactors::registerFactors();
-    OctaedronFactors::registerFactors();
-    BoxerDodgingMultifactor::registerFactors();
-    StepDeviationFactors::registerFactors();
-    TriangleFactors::registerFactors();
-    TriangleConslutionFactors::registerFactors();
-
     auto* app = static_cast<AAnalyserApplication*>(QApplication::instance());
     app->registerGroup(new ClassicFactorsDescriptor(BaseDefines::tlChannel));
     app->registerGroup(new VectorFactorsDescriptor(BaseDefines::tlChannel));
@@ -106,6 +80,20 @@ void AAnalyserBuild::registerFactors()
     app->registerGroup(new RatioProbesFactorsDescriptor(BaseDefines::tlTest));
     app->registerGroup(new TargetFactorsDescriptor(BaseDefines::tlChannel));
     app->registerGroup(new TrenResultFactorsDescriptor(BaseDefines::tlChannel));
+    app->registerGroup(new BoxerDodgingMultifactorDescriptor(BaseDefines::tlProbe));
+    app->registerGroup(new CrossFactorsDescriptor(BaseDefines::tlProbe));
+    app->registerGroup(new EvolventaFactorsDescriptor(BaseDefines::tlProbe));
+    app->registerGroup(new OctaedronFactorsDescritior(BaseDefines::tlProbe));
+    app->registerGroup(new StepDeviationFactorsDescriptor(BaseDefines::tlProbe));
+    app->registerGroup(new StepOffsetFactorsDescriptor(BaseDefines::tlProbe));
+    app->registerGroup(new TriangleFactorsDescriptor(BaseDefines::tlProbe));
+    app->registerGroup(new TriangleConslutionFactorsDescriptor(BaseDefines::tlProbe));
+
+    app->registerGroup(new DropTestFactorsDescriptor(BaseDefines::tlChannel));
+    app->registerGroup(new HoppingFactorsDescriptor(BaseDefines::tlChannel));
+    app->registerGroup(new JumpHeightFactorsDescriptor(BaseDefines::tlChannel));
+    app->registerGroup(new JumpHeightSingleFactorsDescriptor(BaseDefines::tlChannel));
+    app->registerGroup(new TeppingTestFactorsDescriptor(BaseDefines::tlChannel));
 }
 
 void AAnalyserBuild::registerVisuals()

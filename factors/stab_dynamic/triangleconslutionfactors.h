@@ -9,6 +9,7 @@
 namespace TriangleConslutionFactorsDefines
 {
 static const QString GroupUid = "{5B3AEA92-818A-4537-B6A0-2E9AAF5E04FB}";
+static const QString GroupName = QCoreApplication::tr("Показатели теста \"Треугольник\". Заключение");
 
 static const QString AccRepeatUid = "{AD73562B-2E3C-4207-91D6-4F456BD4173A}";   ///< Точность повторения
 static const QString AccMidXUid = "{4703A173-A3F9-4888-BE7C-14A6141F1517}";     ///< Точность позиции (фронталь)
@@ -45,8 +46,9 @@ class TriangleConslutionFactors : public ProbeMultifactor
 public:
     explicit TriangleConslutionFactors(const QString &testUid,
                                        const QString &probeUid,
-                                       TriangleFactors* factors,
+                                       TriangleFactors* factors = nullptr,
                                        QObject *parent = nullptr);
+    ~TriangleConslutionFactors() override;
 
     /*!
      * \brief Возвращает true, если показатели можно рассчитать для теста с заданным uid
@@ -135,6 +137,7 @@ private:
     double m_errCntKognAnl {0};
     double m_errCntMotorAnl {0};
 
+    bool m_isAutoCalcTF {false};
 
     TriangleFactors* m_factors {nullptr};   ///< Исходные показатели треугольников
 };

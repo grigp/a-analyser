@@ -11,6 +11,8 @@
 namespace CrossFactorsDefines
 {
 static const QString GroupUid = "{6072DE41-F36D-4E87-9C34-10CD3F896E1B}";
+static const QString GroupName = QCoreApplication::tr("Показатели теста на устойчивость");
+
 static const QString LUpUid = "{7817AA0C-D311-422E-AFC6-89B01B39D24F}";
 static const QString LDnUid = "{F85C7159-FD3B-4DE7-8FF9-2698B8F367E9}";
 static const QString LRtUid = "{EE01B0CE-DFB5-4DC1-A899-221D3895E4D4}";

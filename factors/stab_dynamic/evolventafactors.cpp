@@ -141,7 +141,7 @@ void EvolventaFactors::calculate()
 void EvolventaFactors::registerFactors()
 {
     static_cast<AAnalyserApplication*>(QApplication::instance())->
-            registerGroup(EvolventaFactorsDefines::GroupUid, tr("Показатели теста \"Эвольвента\""));
+            registerGroup(EvolventaFactorsDefines::GroupUid, EvolventaFactorsDefines::GroupName);
 
     ///<---------------------------------------------------------------------------
     ///< Фронтальная составляющая

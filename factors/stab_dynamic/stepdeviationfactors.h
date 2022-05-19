@@ -9,6 +9,8 @@
 namespace StepDeviationFactorsDefines
 {
 static const QString GroupUid = "{9055B2C8-931C-464C-A8A1-175FF03CE61D}";
+static const QString GroupName = QCoreApplication::tr("Показатели теста прироста");
+
 static const QString TimeUid = "{73BA4F98-7DCF-450F-BED2-B87905CEFC24}";
 static const QString StepCountUid = "{73D64914-414D-4A41-832F-2348976006B5}";
 static const QString ErrorCountUid = "{3ABD6C33-3BEF-4ED1-881E-E79A697E9D43}";

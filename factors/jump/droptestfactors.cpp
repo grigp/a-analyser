@@ -88,7 +88,7 @@ void DropTestFactors::calculate()
 void DropTestFactors::registerFactors()
 {
     static_cast<AAnalyserApplication*>(QApplication::instance())->
-            registerGroup(DropTestFactorsDefines::GroupUid, tr("Показатели дроп теста"));
+            registerGroup(DropTestFactorsDefines::GroupUid, DropTestFactorsDefines::GroupName);
 
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(DropTestFactorsDefines::JumpsCountUid, DropTestFactorsDefines::GroupUid,

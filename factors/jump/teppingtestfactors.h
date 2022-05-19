@@ -10,6 +10,8 @@
 namespace TeppingTestFactorsDefines
 {
 static const QString GroupUid = "{992249B4-C024-4FD6-A2CD-EF65764A927F}";
+static const QString GroupName = QCoreApplication::tr("Показатели теппинг теста");
+
 static const QString StepsCountUid = "{590755BB-001A-4566-B780-48657CEBDC5F}";
 static const QString FullTimeUid = "{C6B9224A-2458-4D2E-8058-C0DC2E718736}";
 static const QString LeftLegNoContactTimeAvrUid = "{59141956-4753-4ED0-BF5B-567634E07D30}";

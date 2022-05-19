@@ -11,6 +11,8 @@
 namespace BoxerDodgingFactorsDefines
 {
 static const QString GroupUid = "{6FA3650A-8E4E-436F-8EED-F99EF62B15E8}";
+static const QString GroupName = QCoreApplication::tr("Показатели тренажера с уклонением");
+
 static const QString AverageLatUid = "{5E562BAD-2C79-4F90-8CBA-63708E8C98A8}";
 static const QString AverageTimeUid = "{A70152D5-FEC1-4891-9C3A-15507C24D321}";
 static const QString AverageAmplUid = "{1E363F1F-2EF3-4B13-87C3-CB92BD91E227}";

@@ -90,7 +90,7 @@ void TeppingTestFactors::calculate()
 void TeppingTestFactors::registerFactors()
 {
     static_cast<AAnalyserApplication*>(QApplication::instance())->
-            registerGroup(TeppingTestFactorsDefines::GroupUid, tr("Показатели теппинг теста"));
+            registerGroup(TeppingTestFactorsDefines::GroupUid, TeppingTestFactorsDefines::GroupName);
 
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(TeppingTestFactorsDefines::StepsCountUid, TeppingTestFactorsDefines::GroupUid,

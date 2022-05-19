@@ -70,7 +70,7 @@ void CrossFactors::calculate()
 void CrossFactors::registerFactors()
 {
     static_cast<AAnalyserApplication*>(QApplication::instance())->
-            registerGroup(CrossFactorsDefines::GroupUid, tr("Показатели теста на устойчивость"));
+            registerGroup(CrossFactorsDefines::GroupUid, CrossFactorsDefines::GroupName);
 
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(CrossFactorsDefines::LUpUid, CrossFactorsDefines::GroupUid,

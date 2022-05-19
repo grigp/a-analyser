@@ -44,7 +44,7 @@ void HoppingFactors::calculate()
 void HoppingFactors::registerFactors()
 {
     static_cast<AAnalyserApplication*>(QApplication::instance())->
-            registerGroup(HoppingFactorsDefines::GroupUid, tr("Показатели соскакивания на платформу"));
+            registerGroup(HoppingFactorsDefines::GroupUid, HoppingFactorsDefines::GroupName);
 
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(HoppingFactorsDefines::JumpHeightUid, HoppingFactorsDefines::GroupUid,

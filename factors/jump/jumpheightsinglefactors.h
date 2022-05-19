@@ -2,12 +2,14 @@
 #define JUMPHEIGHTSINGLEFACTORS_H
 
 #include <QObject>
+#include <QCoreApplication>
 
 #include "multifactor.h"
 
 namespace JumpHeightSingleFactorsDefines
 {
 static const QString GroupUid = "{0F0CAD79-7A47-469D-819F-34A48FCBCD82}";
+static const QString GroupName = QCoreApplication::tr("Показатели высоты одиночного прыжка");
 static const QString JumpHeightUid = "{6A7E2237-49BE-4DF3-AE32-8E32E82208D3}";
 }
 

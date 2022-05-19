@@ -99,7 +99,7 @@ void StepOffsetFactors::calculate()
 void StepOffsetFactors::registerFactors()
 {
     static_cast<AAnalyserApplication*>(QApplication::instance())->
-            registerGroup(StepOffsetFactorsDefines::GroupUid, tr("Показатели теста \"Ступени\""));
+            registerGroup(StepOffsetFactorsDefines::GroupUid, StepOffsetFactorsDefines::GroupName);
 
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(StepOffsetFactorsDefines::Compensation::LatentUid, StepOffsetFactorsDefines::GroupUid,

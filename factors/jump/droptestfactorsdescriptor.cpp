@@ -1,0 +1,24 @@
+#include "droptestfactorsdescriptor.h"
+
+#include "droptestfactors.h"
+
+DropTestFactorsDescriptor::DropTestFactorsDescriptor(BaseDefines::TestLevel level)
+    : MultiFactorDescriptor (level)
+{
+    DropTestFactors::registerFactors();
+}
+
+QString DropTestFactorsDescriptor::uid()
+{
+    return DropTestFactorsDefines::GroupUid;
+}
+
+QString DropTestFactorsDescriptor::name()
+{
+    return DropTestFactorsDefines::GroupName;
+}
+
+MultiFactor *DropTestFactorsDescriptor::caclulate(const QString &testUid, const QString &probeUid, const QString &channelUid)
+{
+    return new DropTestFactors(testUid, probeUid, channelUid);
+}

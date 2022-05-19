@@ -54,7 +54,7 @@ void OctaedronFactors::calculate()
 void OctaedronFactors::registerFactors()
 {
     static_cast<AAnalyserApplication*>(QApplication::instance())->
-            registerGroup(OctaedronFactorsDefines::GroupUid, tr("Показатели тренажера \"Октаэдр\""));
+            registerGroup(OctaedronFactorsDefines::GroupUid, OctaedronFactorsDefines::GroupName);
 
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(OctaedronFactorsDefines::QualityAverageUid, OctaedronFactorsDefines::GroupUid,

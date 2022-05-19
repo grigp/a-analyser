@@ -55,7 +55,7 @@ void TriangleFactors::calculate()
 void TriangleFactors::registerFactors()
 {
     static_cast<AAnalyserApplication*>(QApplication::instance())->
-            registerGroup(TriangleFactorsDefines::GroupUid, tr("Показатели теста \"Треугольник\""));
+            registerGroup(TriangleFactorsDefines::GroupUid, TriangleFactorsDefines::GroupName);
 
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(TriangleFactorsDefines::Training::TimeUid, TriangleFactorsDefines::GroupUid,

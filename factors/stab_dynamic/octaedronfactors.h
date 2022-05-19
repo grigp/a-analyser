@@ -9,6 +9,8 @@
 namespace OctaedronFactorsDefines
 {
 static const QString GroupUid = "{E5409C1B-045B-4278-96A7-B872A42E3453}";
+static const QString GroupName = QCoreApplication::tr("Показатели тренажера \"Октаэдр\"");
+
 static const QString QualityAverageUid = "{76C530D6-7CB7-4BDC-982D-23D7B223251C}";
 static const QString QualityUUid = "{850740BA-701F-4B06-BDBF-57B607D95150}";
 static const QString QualityULUid = "{86840ECF-E8DB-421C-AA71-5AE014B9530C}";

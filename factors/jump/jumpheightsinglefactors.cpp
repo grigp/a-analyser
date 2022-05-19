@@ -44,7 +44,7 @@ void JumpHeightSingleFactors::calculate()
 void JumpHeightSingleFactors::registerFactors()
 {
     static_cast<AAnalyserApplication*>(QApplication::instance())->
-            registerGroup(JumpHeightSingleFactorsDefines::GroupUid, tr("Показатели высоты одиночного прыжка"));
+            registerGroup(JumpHeightSingleFactorsDefines::GroupUid, JumpHeightSingleFactorsDefines::GroupName);
 
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(JumpHeightSingleFactorsDefines::JumpHeightUid, JumpHeightSingleFactorsDefines::GroupUid,
