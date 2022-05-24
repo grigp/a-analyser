@@ -113,7 +113,12 @@ void TestsWidget::signalsAnalysis()
 //        static_cast<AAnalyserApplication*>(QApplication::instance())->signalsAnalysis();
 //    }
 //    else
-//        QMessageBox::information(nullptr, tr("Предупрежение"), tr("Не выбран тест"));
+    //        QMessageBox::information(nullptr, tr("Предупрежение"), tr("Не выбран тест"));
+}
+
+void TestsWidget::summaries()
+{
+    static_cast<AAnalyserApplication*>(QApplication::instance())->summaries();
 }
 
 void TestsWidget::print(QPrinter* printer)

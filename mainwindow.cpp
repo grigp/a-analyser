@@ -4,6 +4,7 @@
 #include "databaseresultwidget.h"
 #include "executewidget.h"
 #include "signalanalysiswidget.h"
+#include "summarieswidget.h"
 #include "clientwidget.h"
 #include "devicecontroldialog.h"
 #include "datadefines.h"
@@ -137,6 +138,12 @@ void MainWindow::closeEvent(QCloseEvent *event)
     }
     else
     if (m_currentClientPage == ClientWidgets::uidSignalAnalysisWidgetUid)
+    {
+        showClientPage(ClientWidgets::uidDatabaseResultWidgetUid);
+        event->ignore();
+    }
+    else
+    if (m_currentClientPage == ClientWidgets::uidSummariesWidgetUid)
     {
         showClientPage(ClientWidgets::uidDatabaseResultWidgetUid);
         event->ignore();
@@ -337,7 +344,8 @@ void MainWindow::createClientWidgets()
     m_clientWidgets.clear();
     m_clientWidgets << new DataBaseResultWidget(this)
                     << new ExecuteWidget(this)
-                    << new SignalAnalysisWidget(this);
+                    << new SignalAnalysisWidget(this)
+                    << new SummariesWidget(this);
 
     foreach (auto* wgt, m_clientWidgets)
         ui->wgtClient->layout()->addWidget(wgt);

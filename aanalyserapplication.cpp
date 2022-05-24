@@ -16,6 +16,7 @@
 #include "executewidget.h"
 #include "databaseresultwidget.h"
 #include "signalanalysiswidget.h"
+#include "summarieswidget.h"
 #include "database.h"
 #include "datadefines.h"
 #include "exitcodes.h"
@@ -267,6 +268,11 @@ void AAnalyserApplication::showDataBase()
 void AAnalyserApplication::signalsAnalysis()
 {
     showClientPage(ClientWidgets::uidSignalAnalysisWidgetUid);
+}
+
+void AAnalyserApplication::summaries()
+{
+    showClientPage(ClientWidgets::uidSummariesWidgetUid);
 }
 
 QStringList AAnalyserApplication::getDrivers() const

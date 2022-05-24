@@ -36,6 +36,7 @@ private slots:
     void printReport();
 
     void signalsAnalysis();
+    void summaries();
 
     void selectResult();
     void selectDynamic();

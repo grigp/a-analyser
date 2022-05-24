@@ -146,6 +146,11 @@ public:
     void signalsAnalysis();
 
     /*!
+     * \brief Переход к окну сводок
+     */
+    void summaries();
+
+    /*!
      * \brief Возвращает список uid подключенных драйверов
      */
     QStringList getDrivers() const;
