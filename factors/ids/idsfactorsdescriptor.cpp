@@ -18,6 +18,11 @@ QString IDSFactorsDescriptor::name()
     return IDSFactorsDefines::GroupName;
 }
 
+bool IDSFactorsDescriptor::isValid(const QString &testUid, const QString &probeUid, const QString &channelId)
+{
+    return IDSFactors::isValid(testUid, probeUid, channelId);
+}
+
 MultiFactor *IDSFactorsDescriptor::caclulate(const QString &testUid, const QString &probeUid, const QString &channelUid)
 {
     return new IDSFactors(testUid, probeUid, channelUid);

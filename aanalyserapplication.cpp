@@ -423,6 +423,20 @@ void AAnalyserApplication::registerGroup(MultiFactorDescriptor *group)
         m_factors->registerGroup(group);
 }
 
+int AAnalyserApplication::multiFactorCount(const BaseDefines::TestLevel level)
+{
+    if (m_factors)
+        return m_factors->multiFactorCount(level);
+    return 0;
+}
+
+MultiFactorDescriptor *AAnalyserApplication::getMultiFactor(const BaseDefines::TestLevel level, const int idx)
+{
+    if (m_factors)
+        return m_factors->getMultiFactor(level, idx);
+    return nullptr;
+}
+
 QStringList AAnalyserApplication::getTestConditions()
 {
     if (m_normsManager)

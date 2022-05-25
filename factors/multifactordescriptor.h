@@ -19,6 +19,11 @@ public:
     virtual QString uid() = 0;
     virtual QString name() = 0;
 
+    /*!
+     * \brief Возвращает true, если показатели можно рассчитать для теста с заданным uid
+     */
+    virtual bool isValid(const QString &testUid, const QString &probeUid = "", const QString &channelId = "") = 0;
+
     virtual MultiFactor* caclulate(const QString& testUid = "", const QString& probeUid = "", const QString& channelUid = "") = 0;
 
     BaseDefines::TestLevel level() {return m_level;}

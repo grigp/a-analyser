@@ -18,6 +18,12 @@ QString StepOffsetFactorsDescriptor::name()
     return StepOffsetFactorsDefines::GroupName;
 }
 
+bool StepOffsetFactorsDescriptor::isValid(const QString &testUid, const QString &probeUid, const QString &channelId)
+{
+    Q_UNUSED(channelId);
+    return StepOffsetFactors::isValid(testUid, probeUid);
+}
+
 MultiFactor *StepOffsetFactorsDescriptor::caclulate(const QString &testUid, const QString &probeUid, const QString &channelUid)
 {
     Q_UNUSED(channelUid);

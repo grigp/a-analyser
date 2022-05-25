@@ -18,6 +18,11 @@ QString TeppingTestFactorsDescriptor::name()
     return TeppingTestFactorsDefines::GroupName;
 }
 
+bool TeppingTestFactorsDescriptor::isValid(const QString &testUid, const QString &probeUid, const QString &channelId)
+{
+    return TeppingTestFactors::isValid(testUid, probeUid, channelId);
+}
+
 MultiFactor *TeppingTestFactorsDescriptor::caclulate(const QString &testUid, const QString &probeUid, const QString &channelUid)
 {
     return new TeppingTestFactors(testUid, probeUid, channelUid);

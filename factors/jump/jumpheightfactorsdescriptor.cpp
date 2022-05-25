@@ -18,6 +18,11 @@ QString JumpHeightFactorsDescriptor::name()
     return JumpHeightFactorsDefines::GroupName;
 }
 
+bool JumpHeightFactorsDescriptor::isValid(const QString &testUid, const QString &probeUid, const QString &channelId)
+{
+    return JumpHeightFactors::isValid(testUid, probeUid, channelId);
+}
+
 MultiFactor *JumpHeightFactorsDescriptor::caclulate(const QString &testUid, const QString &probeUid, const QString &channelUid)
 {
     return new JumpHeightFactors(testUid, probeUid, channelUid);

@@ -18,6 +18,12 @@ QString OctaedronFactorsDescritior::name()
     return OctaedronFactorsDefines::GroupName;
 }
 
+bool OctaedronFactorsDescritior::isValid(const QString &testUid, const QString &probeUid, const QString &channelId)
+{
+    Q_UNUSED(channelId);
+    return OctaedronFactors::isValid(testUid, probeUid);
+}
+
 MultiFactor *OctaedronFactorsDescritior::caclulate(const QString &testUid, const QString &probeUid, const QString &channelUid)
 {
     Q_UNUSED(channelUid);

@@ -18,6 +18,12 @@ QString CrossFactorsDescriptor::name()
     return CrossFactorsDefines::GroupName;
 }
 
+bool CrossFactorsDescriptor::isValid(const QString &testUid, const QString &probeUid, const QString &channelId)
+{
+    Q_UNUSED(channelId);
+    return CrossFactors::isValid(testUid, probeUid);
+}
+
 MultiFactor *CrossFactorsDescriptor::caclulate(const QString &testUid, const QString &probeUid, const QString &channelUid)
 {
     Q_UNUSED(channelUid);

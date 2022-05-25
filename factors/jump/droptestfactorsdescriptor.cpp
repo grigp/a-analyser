@@ -18,6 +18,11 @@ QString DropTestFactorsDescriptor::name()
     return DropTestFactorsDefines::GroupName;
 }
 
+bool DropTestFactorsDescriptor::isValid(const QString &testUid, const QString &probeUid, const QString &channelId)
+{
+    return DropTestFactors::isValid(testUid, probeUid, channelId);
+}
+
 MultiFactor *DropTestFactorsDescriptor::caclulate(const QString &testUid, const QString &probeUid, const QString &channelUid)
 {
     return new DropTestFactors(testUid, probeUid, channelUid);

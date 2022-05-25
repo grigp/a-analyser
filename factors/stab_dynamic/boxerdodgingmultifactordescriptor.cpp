@@ -18,6 +18,12 @@ QString BoxerDodgingMultifactorDescriptor::name()
     return BoxerDodgingFactorsDefines::GroupName;
 }
 
+bool BoxerDodgingMultifactorDescriptor::isValid(const QString &testUid, const QString &probeUid, const QString &channelId)
+{
+    Q_UNUSED(channelId);
+    return BoxerDodgingMultifactor::isValid(testUid, probeUid);
+}
+
 MultiFactor *BoxerDodgingMultifactorDescriptor::caclulate(const QString &testUid, const QString &probeUid, const QString &channelUid)
 {
     Q_UNUSED(channelUid);

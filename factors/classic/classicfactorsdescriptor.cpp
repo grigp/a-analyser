@@ -18,6 +18,11 @@ QString ClassicFactorsDescriptor::name()
     return ClassicFactorsDefines::GroupName;
 }
 
+bool ClassicFactorsDescriptor::isValid(const QString &testUid, const QString &probeUid, const QString &channelId)
+{
+    return ClassicFactors::isValid(testUid, probeUid, channelId);
+}
+
 MultiFactor *ClassicFactorsDescriptor::caclulate(const QString &testUid, const QString &probeUid, const QString &channelUid)
 {
     return new ClassicFactors(testUid, probeUid, channelUid);

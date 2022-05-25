@@ -278,6 +278,20 @@ public:
      */
     void registerGroup(MultiFactorDescriptor* group);
 
+    /*!
+     * \brief Возвращает кол-во групп показателей для заданного уровня теста
+     * \param level - уровень теста
+     */
+    int multiFactorCount(const BaseDefines::TestLevel level);
+
+    /*!
+     * \brief Возвращает указатель на описатель групп показателей
+     * \param level - уровень теста
+     * \param idx - номер в списке
+     */
+    MultiFactorDescriptor* getMultiFactor(const BaseDefines::TestLevel level, const int idx);
+
+
     ///<-----------------------------------------------------------------------------
 
 

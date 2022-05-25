@@ -32,7 +32,7 @@ void TestsTreeModel::openTest(const QString &testUid)
 
 void TestsTreeModel::closeTest(const QString &testUid)
 {
-
+    Q_UNUSED(testUid);
 }
 
 QList<QString> TestsTreeModel::getTests()

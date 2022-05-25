@@ -55,3 +55,39 @@ void FactorsFactory::registerGroup(MultiFactorDescriptor *group)
         m_groupsChannel << group;
 }
 
+int FactorsFactory::multiFactorCount(const BaseDefines::TestLevel level)
+{
+    switch (level)
+    {
+    case BaseDefines::tlTest: return m_groupsTest.size();
+    case BaseDefines::tlProbe: return m_groupsProbe.size();
+    case BaseDefines::tlChannel: return m_groupsChannel.size();
+    case BaseDefines::tlNone: return 0;
+    }
+    return 0;
+}
+
+MultiFactorDescriptor *FactorsFactory::getMultiFactor(const BaseDefines::TestLevel level, const int idx)
+{
+    switch (level)
+    {
+    case BaseDefines::tlTest:
+    {
+        Q_ASSERT(idx >= 0 && idx < m_groupsTest.size());
+        return m_groupsTest.at(idx);
+    }
+    case BaseDefines::tlProbe:
+    {
+        Q_ASSERT(idx >= 0 && idx < m_groupsProbe.size());
+        return m_groupsProbe.at(idx);
+    }
+    case BaseDefines::tlChannel:
+    {
+        Q_ASSERT(idx >= 0 && idx < m_groupsChannel.size());
+        return m_groupsChannel.at(idx);
+    }
+    case BaseDefines::tlNone: return nullptr;
+    }
+    return nullptr;
+}
+

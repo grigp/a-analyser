@@ -18,6 +18,12 @@ QString TriangleFactorsDescriptor::name()
     return TriangleFactorsDefines::GroupName;
 }
 
+bool TriangleFactorsDescriptor::isValid(const QString &testUid, const QString &probeUid, const QString &channelId)
+{
+    Q_UNUSED(channelId);
+    return TriangleFactors::isValid(testUid, probeUid);
+}
+
 MultiFactor *TriangleFactorsDescriptor::caclulate(const QString &testUid, const QString &probeUid, const QString &channelUid)
 {
     Q_UNUSED(channelUid);

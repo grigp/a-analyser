@@ -18,6 +18,11 @@ QString TargetFactorsDescriptor::name()
     return TargetFactorsDefines::GroupName;
 }
 
+bool TargetFactorsDescriptor::isValid(const QString &testUid, const QString &probeUid, const QString &channelId)
+{
+    return TargetFactors::isValid(testUid, probeUid, channelId);
+}
+
 MultiFactor *TargetFactorsDescriptor::caclulate(const QString &testUid, const QString &probeUid, const QString &channelUid)
 {
     return new TargetFactors(testUid, probeUid, channelUid);
