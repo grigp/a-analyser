@@ -213,5 +213,8 @@
         <file>images/Methodics/Scales_Weighting.png</file>
         <file>images/ZeroingNo.png</file>
         <file>images/ZeroingOriginal.png</file>
+        <file>images/Summaries.png</file>
+        <file>images/SummaryAddTest.png</file>
+        <file>images/SummaryBuild.png</file>
     </qresource>
 </RCC>

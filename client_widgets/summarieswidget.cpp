@@ -4,12 +4,17 @@
 #include <QStandardItemModel>
 #include <QDebug>
 
+#include "aanalyserapplication.h"
+
 
 SummariesWidget::SummariesWidget(QWidget *parent) :
     ClientWidget(parent),
     ui(new Ui::SummariesWidget)
 {
     ui->setupUi(this);
+
+    connect(static_cast<AAnalyserApplication*>(QApplication::instance()), &AAnalyserApplication::addTestToSummary,
+            this, &SummariesWidget::addTestToSummary);
 }
 
 SummariesWidget::~SummariesWidget()
@@ -35,6 +40,14 @@ void SummariesWidget::onShow()
 void SummariesWidget::onHide()
 {
 
+}
+
+void SummariesWidget::addTestToSummary(const QString &testUid,
+                                       const SummaryDefines::AddTestMode mode,
+                                       const QString &summary,
+                                       const SummaryDefines::Kind kind)
+{
+    qDebug() << testUid << mode << summary << kind;
 }
 
 void SummariesWidget::testTable()

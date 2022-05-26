@@ -24,6 +24,7 @@
 #include "visualsfactory.h"
 #include "visualdescriptor.h"
 #include "log.h"
+#include "addtesttosummarydialog.h"
 
 AAnalyserApplication::AAnalyserApplication(int &argc, char **argv)
     : QApplication(argc, argv)
@@ -73,6 +74,8 @@ AAnalyserApplication::~AAnalyserApplication()
         delete m_drivers;
     if (m_factors)
         delete(m_factors);
+    if (m_addTSDlg)
+        delete m_addTSDlg;
 }
 
 QMainWindow *AAnalyserApplication::mainWindow() const
@@ -273,6 +276,21 @@ void AAnalyserApplication::signalsAnalysis()
 void AAnalyserApplication::summaries()
 {
     showClientPage(ClientWidgets::uidSummariesWidgetUid);
+}
+
+void AAnalyserApplication::summaryAddTest()
+{
+    if (!m_addTSDlg)
+    {
+        m_addTSDlg = new AddTestToSummaryDialog();
+        connect(m_addTSDlg, &AddTestToSummaryDialog::accepted, this, &AAnalyserApplication::on_AddTestToSummaryAccepted);
+    }
+    m_addTSDlg->show();
+}
+
+void AAnalyserApplication::summaryBuild()
+{
+
 }
 
 QStringList AAnalyserApplication::getDrivers() const
@@ -533,5 +551,17 @@ bool AAnalyserApplication::notify(QObject *re, QEvent *ev)
         });
     }
     return false;
+}
+
+void AAnalyserApplication::on_AddTestToSummaryAccepted()
+{
+    QString summary = "";
+    if (m_addTSDlg->mode() == SummaryDefines::atmExists)
+        summary = m_addTSDlg->summary();
+    else
+    if (m_addTSDlg->mode() == SummaryDefines::atmNew)
+        summary = m_addTSDlg->summaryName();
+
+    emit addTestToSummary(m_testUid, m_addTSDlg->mode(), summary, m_addTSDlg->kind());
 }
 

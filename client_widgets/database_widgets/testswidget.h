@@ -37,12 +37,13 @@ private slots:
 
     void signalsAnalysis();
     void summaries();
+    void summaryAddTest();
+    void summaryBuild();
 
     void selectResult();
     void selectDynamic();
 
     void print(QPrinter* printer);
-
 
 private:
     Ui::TestsWidget *ui;

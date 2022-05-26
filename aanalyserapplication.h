@@ -7,6 +7,7 @@
 #include "factorsdefines.h"
 #include "visualdefines.h"
 #include "connection.h"
+#include "summarydefines.h"
 
 #include <QMainWindow>
 #include <QObject>
@@ -25,6 +26,7 @@ class TestVisual;
 class ProbeVisual;
 class ChannelVisual;
 class MultiFactorDescriptor;
+class AddTestToSummaryDialog;
 
 class AAnalyserApplication : public QApplication
 {
@@ -149,6 +151,16 @@ public:
      * \brief Переход к окну сводок
      */
     void summaries();
+
+    /*!
+     * \brief Добавление показателей теста в сводку
+     */
+    void summaryAddTest();
+
+    /*!
+     * \brief Построение сводки
+     */
+    void summaryBuild();
 
     /*!
      * \brief Возвращает список uid подключенных драйверов
@@ -430,11 +442,25 @@ signals:
      */
     void applicationParamChanged(const QString &group, const QString &param, const QVariant &value);
 
+    /*!
+     * \brief Сигнал добавления теста в сводку
+     * \param testUid - uid теста
+     * \param mode - режим: в существующую, в новую, в активную
+     * \param summary - имя сводки для новой или имя файла для существующей
+     * \param kind - тип сводки: первичные / все показатели
+     */
+    void addTestToSummary(const QString& testUid,
+                          const SummaryDefines::AddTestMode mode,
+                          const QString& summary,
+                          const SummaryDefines::Kind kind);
+
 protected:
     //! Обработка исключений основного цикла программы
     bool notify(QObject *, QEvent *) override;
 
 private:
+    void on_AddTestToSummaryAccepted();
+
     QMainWindow *m_mw;
     QString m_languargeCode = DataDefines::LANG_CODE_RUS;
 
@@ -449,6 +475,7 @@ private:
     QString m_metodicUid = "";  ///< uid выбранной методики
     QString m_testUid = "";     ///< uid выбранного теста
 
+    AddTestToSummaryDialog* m_addTSDlg {nullptr};
 };
 
 #endif // AANALYSERAPPLICATION_H
