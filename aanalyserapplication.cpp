@@ -282,7 +282,7 @@ void AAnalyserApplication::summaryAddTest()
 {
     if (!m_addTSDlg)
     {
-        m_addTSDlg = new AddTestToSummaryDialog();
+        m_addTSDlg = new AddTestToSummaryDialog(this->mainWindow());
         connect(m_addTSDlg, &AddTestToSummaryDialog::accepted, this, &AAnalyserApplication::on_AddTestToSummaryAccepted);
     }
     m_addTSDlg->show();
@@ -561,7 +561,6 @@ void AAnalyserApplication::on_AddTestToSummaryAccepted()
     else
     if (m_addTSDlg->mode() == SummaryDefines::atmNew)
         summary = m_addTSDlg->summaryName();
-
     emit addTestToSummary(m_testUid, m_addTSDlg->mode(), summary, m_addTSDlg->kind());
 }
 

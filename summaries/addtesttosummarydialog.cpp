@@ -40,7 +40,7 @@ void AddTestToSummaryDialog::setMode(const SummaryDefines::AddTestMode mode)
 
 QString AddTestToSummaryDialog::summary() const
 {
-
+    return "";
 }
 
 void AddTestToSummaryDialog::setSummary(const QString &fn)
