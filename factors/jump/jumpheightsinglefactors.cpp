@@ -17,6 +17,16 @@ JumpHeightSingleFactors::JumpHeightSingleFactors(const QString &testUid,
         calculate();
 }
 
+QString JumpHeightSingleFactors::uid() const
+{
+    return JumpHeightSingleFactorsDefines::GroupUid;
+}
+
+QString JumpHeightSingleFactors::name() const
+{
+    return JumpHeightSingleFactorsDefines::GroupName;
+}
+
 bool JumpHeightSingleFactors::isValid() const
 {
     return isValid(testUid(), probeUid(), channelId());

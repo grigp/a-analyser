@@ -21,6 +21,16 @@ ClassicFactors::ClassicFactors(const QString &testUid,
         calculate();
 }
 
+QString ClassicFactors::uid() const
+{
+    return ClassicFactorsDefines::GroupUid;
+}
+
+QString ClassicFactors::name() const
+{
+    return ClassicFactorsDefines::GroupName;
+}
+
 bool ClassicFactors::isValid(const QString &testUid, const QString &probeUid, const QString &channelId)
 {
     Q_UNUSED(testUid);

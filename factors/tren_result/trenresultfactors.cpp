@@ -20,6 +20,16 @@ TrenResultFactors::TrenResultFactors(const QString &testUid,
         calculate();
 }
 
+QString TrenResultFactors::uid() const
+{
+    return TrenResultFactorsDefines::GroupUid;
+}
+
+QString TrenResultFactors::name() const
+{
+    return TrenResultFactorsDefines::GroupName;
+}
+
 bool TrenResultFactors::isValid() const
 {
     return isValid(testUid(), probeUid(), channelId());

@@ -33,6 +33,16 @@ RatioProbesFactors::RatioProbesFactors(const QString &testUid, QObject *parent)
         calculate();
 }
 
+QString RatioProbesFactors::uid() const
+{
+    return RatioProbesFactorsDefines::GroupUid;
+}
+
+QString RatioProbesFactors::name() const
+{
+    return RatioProbesFactorsDefines::GroupName;
+}
+
 bool RatioProbesFactors::isValid() const
 {
     return isValid(testUid());

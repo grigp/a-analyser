@@ -19,6 +19,16 @@ DropTestFactors::DropTestFactors(const QString &testUid,
         calculate();
 }
 
+QString DropTestFactors::uid() const
+{
+    return DropTestFactorsDefines::GroupUid;
+}
+
+QString DropTestFactors::name() const
+{
+    return DropTestFactorsDefines::GroupName;
+}
+
 bool DropTestFactors::isValid() const
 {
     return isValid(testUid(), probeUid(), channelId());

@@ -18,6 +18,16 @@ TargetFactors::TargetFactors(const QString &testUid,
         calculate();
 }
 
+QString TargetFactors::uid() const
+{
+    return TargetFactorsDefines::GroupUid;
+}
+
+QString TargetFactors::name() const
+{
+    return TargetFactorsDefines::GroupName;
+}
+
 bool TargetFactors::isValid() const
 {
     return isValid(testUid(), probeUid(), channelId());

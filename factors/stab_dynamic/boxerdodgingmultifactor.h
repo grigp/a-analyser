@@ -49,6 +49,17 @@ public:
     BoxerDodgingMultifactor(const QString &testUid,
                             const QString &probeUid,
                             QObject *parent = nullptr);
+
+    /*!
+     * \brief Возвращает uid группы показателей
+     */
+    QString uid() const override;
+
+    /*!
+     * \brief Возвращает название группы показателей
+     */
+    QString name() const override;
+
     /*!
      * \brief Возвращает true, если показатели можно рассчитать для теста с заданным uid
      * uid теста задается в конструкторе

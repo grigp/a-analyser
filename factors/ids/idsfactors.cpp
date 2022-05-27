@@ -20,6 +20,16 @@ IDSFactors::IDSFactors(const QString &testUid,
         calculate();
 }
 
+QString IDSFactors::uid() const
+{
+    return IDSFactorsDefines::GroupUid;
+}
+
+QString IDSFactors::name() const
+{
+    return IDSFactorsDefines::GroupName;
+}
+
 bool IDSFactors::isValid() const
 {
     return isValid(testUid(), probeUid(), channelId());

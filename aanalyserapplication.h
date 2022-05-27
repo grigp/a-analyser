@@ -449,9 +449,9 @@ signals:
      * \param summary - имя сводки для новой или имя файла для существующей
      * \param kind - тип сводки: первичные / все показатели
      */
-    void addTestToSummary(const QString& testUid,
+    void addTestToSummary(const QString testUid,
                           const SummaryDefines::AddTestMode mode,
-                          const QString& summary,
+                          const QString summary,
                           const SummaryDefines::Kind kind);
 
 protected:

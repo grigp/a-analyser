@@ -15,6 +15,16 @@ public:
     explicit MultiFactor(QObject *parent = nullptr);
 
     /*!
+     * \brief Возвращает uid группы показателей
+     */
+    virtual QString uid() const = 0;
+
+    /*!
+     * \brief Возвращает название группы показателей
+     */
+    virtual QString name() const = 0;
+
+    /*!
      * \brief Возвращает true, если показатели можно рассчитать для теста с заданным uid
      * uid теста задается в конструкторе
      */

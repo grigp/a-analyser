@@ -18,6 +18,16 @@ BoxerDodgingMultifactor::BoxerDodgingMultifactor(const QString &testUid,
         calculate();
 }
 
+QString BoxerDodgingMultifactor::uid() const
+{
+    return BoxerDodgingFactorsDefines::GroupUid;
+}
+
+QString BoxerDodgingMultifactor::name() const
+{
+    return BoxerDodgingFactorsDefines::GroupName;
+}
+
 bool BoxerDodgingMultifactor::isValid() const
 {
     return isValid(testUid(), probeUid());

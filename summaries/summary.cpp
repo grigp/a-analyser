@@ -7,6 +7,8 @@
 #include "multifactordescriptor.h"
 #include "multifactor.h"
 
+#include <QDebug>
+
 namespace  {
 
 QList<MetodicDefines::MetodicInfo> m_metList;
@@ -84,6 +86,16 @@ void Summary::save() const
     }
 }
 
+QString Summary::name() const
+{
+    return m_name;
+}
+
+void Summary::setName(const QString &name)
+{
+    m_name = name;
+}
+
 QString Summary::getMethodName(const QString &metUid)
 {
     if (m_metList.size() == 0)
@@ -121,10 +133,13 @@ QList<MultiFactor *> Summary::calculateFactors(const QString &testUid, const QSt
 
 void Summary::addCalculatedFactors(QList<MultiFactor *> fgs, BaseDefines::TestLevel level)
 {
+    qDebug() << "---------" << level;
     foreach (auto fg, fgs)
     {
+        qDebug() << "----" << fg->uid() << fg->name();
         for (int i = 0; i < fg->size(); ++i)
         {
+            qDebug() << fg->factorUid(i) << fg->factorValueFormatted(fg->factorUid(i));
             auto fv = fg->factorValueFormatted(fg->factorUid(i));
 
         }

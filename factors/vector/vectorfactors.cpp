@@ -32,6 +32,16 @@ VectorFactors::VectorFactors(const QString &testUid,
         calculate();
 }
 
+QString VectorFactors::uid() const
+{
+    return VectorFactorsDefines::GroupUid;
+}
+
+QString VectorFactors::name() const
+{
+    return VectorFactorsDefines::GroupName;
+}
+
 bool VectorFactors::isValid() const
 {
     return isValid(testUid(), probeUid(), channelId());

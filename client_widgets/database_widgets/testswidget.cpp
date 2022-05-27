@@ -117,7 +117,12 @@ void TestsWidget::summaries()
 
 void TestsWidget::summaryAddTest()
 {
-    static_cast<AAnalyserApplication*>(QApplication::instance())->summaryAddTest();
+    if (m_selectedTestUid != "")
+    {
+        static_cast<AAnalyserApplication*>(QApplication::instance())->summaryAddTest();
+    }
+    else
+        QMessageBox::information(nullptr, tr("Предупрежение"), tr("Не выбран тест"));
 }
 
 void TestsWidget::summaryBuild()

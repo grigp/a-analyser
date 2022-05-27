@@ -74,8 +74,8 @@ AAnalyserApplication::~AAnalyserApplication()
         delete m_drivers;
     if (m_factors)
         delete(m_factors);
-    if (m_addTSDlg)
-        delete m_addTSDlg;
+//    if (m_addTSDlg)       TODO: Не пойму, почему вызывает сбой !!!
+//        delete m_addTSDlg;
 }
 
 QMainWindow *AAnalyserApplication::mainWindow() const

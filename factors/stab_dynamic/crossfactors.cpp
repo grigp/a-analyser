@@ -18,6 +18,16 @@ CrossFactors::CrossFactors(const QString &testUid,
         calculate();
 }
 
+QString CrossFactors::uid() const
+{
+    return CrossFactorsDefines::GroupUid;
+}
+
+QString CrossFactors::name() const
+{
+    return CrossFactorsDefines::GroupName;
+}
+
 bool CrossFactors::isValid() const
 {
     return isValid(testUid(), probeUid());

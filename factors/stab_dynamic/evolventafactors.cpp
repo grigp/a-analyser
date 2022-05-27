@@ -43,6 +43,16 @@ EvolventaFactors::~EvolventaFactors()
         delete m_target;
 }
 
+QString EvolventaFactors::uid() const
+{
+    return EvolventaFactorsDefines::GroupUid;
+}
+
+QString EvolventaFactors::name() const
+{
+    return EvolventaFactorsDefines::GroupName;
+}
+
 bool EvolventaFactors::isValid() const
 {
     return isValid(testUid(), probeUid());

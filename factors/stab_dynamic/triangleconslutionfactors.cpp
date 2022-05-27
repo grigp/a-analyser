@@ -30,6 +30,16 @@ TriangleConslutionFactors::~TriangleConslutionFactors()
         delete m_factors;
 }
 
+QString TriangleConslutionFactors::uid() const
+{
+    return TriangleConslutionFactorsDefines::GroupUid;
+}
+
+QString TriangleConslutionFactors::name() const
+{
+    return TriangleConslutionFactorsDefines::GroupName;
+}
+
 bool TriangleConslutionFactors::isValid() const
 {
     return isValid(testUid(), probeUid());

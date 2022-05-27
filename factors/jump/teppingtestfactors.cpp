@@ -18,6 +18,16 @@ TeppingTestFactors::TeppingTestFactors(const QString &testUid,
         calculate();
 }
 
+QString TeppingTestFactors::uid() const
+{
+    return TeppingTestFactorsDefines::GroupUid;
+}
+
+QString TeppingTestFactors::name() const
+{
+    return TeppingTestFactorsDefines::GroupName;
+}
+
 bool TeppingTestFactors::isValid() const
 {
     return isValid(testUid(), probeUid(), channelId());

@@ -4,6 +4,7 @@
 #include <QStandardItemModel>
 
 #include "basedefines.h"
+#include "summarydefines.h"
 
 class MultiFactor;
 
@@ -42,9 +43,22 @@ public:
     QString fileName() const {return m_fileName;}
     void setFileName(const QString &fileName) {m_fileName = fileName;}
 
+    /*!
+     * \brief Доступ к m_name
+     */
+    QString name() const;
+    void setName(const QString &name);
+
+    /*!
+     * \brief Доступ к m_kind
+     */
+    SummaryDefines::Kind kind() const {return m_kind;}
+    void setKind(const SummaryDefines::Kind kind) {m_kind = kind;}
 
 private:
     QString m_fileName {""};
+    QString m_name {""};
+    SummaryDefines::Kind m_kind {SummaryDefines::skNone};
 
     QString getMethodName(const QString& metUid);
 

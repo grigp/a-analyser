@@ -53,12 +53,12 @@ private slots:
      * \brief Сигнал добавления теста в сводку
      * \param testUid - uid теста
      * \param mode - режим: в существующую, в новую, в активную
-     * \param summary - имя сводки для новой или имя файла для существующей
+     * \param summaryName - имя сводки для новой или имя файла для существующей
      * \param kind - тип сводки: первичные / все показатели
      */
-    void addTestToSummary(const QString& testUid,
+    void addTestToSummary(const QString testUid,
                           const SummaryDefines::AddTestMode mode,
-                          const QString& summary,
+                          const QString summaryName,
                           const SummaryDefines::Kind kind);
 
 

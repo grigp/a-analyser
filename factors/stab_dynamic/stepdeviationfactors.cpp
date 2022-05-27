@@ -18,6 +18,16 @@ StepDeviationFactors::StepDeviationFactors(const QString &testUid,
         calculate();
 }
 
+QString StepDeviationFactors::uid() const
+{
+    return StepDeviationFactorsDefines::GroupUid;
+}
+
+QString StepDeviationFactors::name() const
+{
+    return StepDeviationFactorsDefines::GroupName;
+}
+
 bool StepDeviationFactors::isValid() const
 {
     return isValid(testUid(), probeUid());

@@ -24,6 +24,16 @@ TriangleFactors::TriangleFactors(const QString &testUid,
         calculate();
 }
 
+QString TriangleFactors::uid() const
+{
+    return TriangleFactorsDefines::GroupUid;
+}
+
+QString TriangleFactors::name() const
+{
+    return TriangleFactorsDefines::GroupName;
+}
+
 bool TriangleFactors::isValid() const
 {
     return isValid(testUid(), probeUid());

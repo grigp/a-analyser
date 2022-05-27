@@ -17,6 +17,16 @@ OctaedronFactors::OctaedronFactors(const QString &testUid,
         calculate();
 }
 
+QString OctaedronFactors::uid() const
+{
+    return OctaedronFactorsDefines::GroupUid;
+}
+
+QString OctaedronFactors::name() const
+{
+    return OctaedronFactorsDefines::GroupName;
+}
+
 bool OctaedronFactors::isValid() const
 {
     return isValid(testUid(), probeUid());

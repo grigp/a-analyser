@@ -15,6 +15,16 @@ HoppingFactors::HoppingFactors(const QString &testUid,
         calculate();
 }
 
+QString HoppingFactors::uid() const
+{
+    return HoppingFactorsDefines::GroupUid;
+}
+
+QString HoppingFactors::name() const
+{
+    return HoppingFactorsDefines::GroupName;
+}
+
 bool HoppingFactors::isValid() const
 {
     return isValid(testUid(), probeUid(), channelId());

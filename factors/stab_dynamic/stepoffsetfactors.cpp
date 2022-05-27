@@ -21,6 +21,16 @@ StepOffsetFactors::StepOffsetFactors(const QString &testUid,
         calculate();
 }
 
+QString StepOffsetFactors::uid() const
+{
+    return StepOffsetFactorsDefines::GroupUid;
+}
+
+QString StepOffsetFactors::name() const
+{
+    return StepOffsetFactorsDefines::GroupName;
+}
+
 bool StepOffsetFactors::isValid() const
 {
     return isValid(testUid(), probeUid());
