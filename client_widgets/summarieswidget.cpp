@@ -58,6 +58,15 @@ void SummariesWidget::addTestToSummary(const QString testUid,
         auto tv = new QTableView(ui->frSummaries);
         tv->setModel(summary);
         ui->frSummaries->layout()->addWidget(tv);
+
+        for (int i = 0; i < summary->spanCellsCount(); ++i)
+        {
+            auto sc = summary->spanCells(i);
+            tv->setSpan(sc.row, sc.col, 1, sc.width);
+
+        }
+
+        static_cast<AAnalyserApplication*>(QApplication::instance())->summaries();
     }
 }
 
