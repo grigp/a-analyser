@@ -11,7 +11,16 @@ void SummatyHeaderDelegate::paint(QPainter *painter, const QStyleOptionViewItem 
 {
     painter->save();
 
-    painter->setBrush(QBrush(Qt::darkGray));
+//    painter->setBrush(QBrush(Qt::darkGray));
+//    painter->setPen(Qt::darkGray);
+//    painter->drawRect(option.rect);
+
+    QLinearGradient linearGrad(option.rect.topLeft(), option.rect.bottomLeft());
+    linearGrad.setColorAt(0, QColor(80, 80, 80));
+    linearGrad.setColorAt(0.6, QColor(60, 60, 60));
+    linearGrad.setColorAt(1, QColor(80, 80, 80));
+    QBrush gradBrush(linearGrad);
+    painter->setBrush(gradBrush);
     painter->setPen(Qt::darkGray);
     painter->drawRect(option.rect);
 
