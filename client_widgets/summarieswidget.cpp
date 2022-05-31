@@ -62,7 +62,8 @@ void SummariesWidget::addTestToSummary(const QString testUid,
         for (int i = 0; i < summary->spanCellsCount(); ++i)
         {
             auto sc = summary->spanCells(i);
-            tv->setSpan(sc.row, sc.col, 1, sc.width);
+            if (sc.width > 0)
+                tv->setSpan(sc.row, sc.col, 1, sc.width);
 
         }
 
