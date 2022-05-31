@@ -7,6 +7,7 @@
 
 #include "aanalyserapplication.h"
 #include "summary.h"
+#include "summatyheaderdelegate.h"
 
 
 SummariesWidget::SummariesWidget(QWidget *parent) :
@@ -66,6 +67,18 @@ void SummariesWidget::addTestToSummary(const QString testUid,
                 tv->setSpan(sc.row, sc.col, 1, sc.width);
 
         }
+//        tv->horizontalHeader()->setVisible(false);
+//        tv->verticalHeader()->setVisible(false);
+        tv->setItemDelegateForColumn(0, new SummatyHeaderDelegate(tv));
+        tv->setItemDelegateForRow(0, new SummatyHeaderDelegate(tv));
+        tv->setItemDelegateForRow(1, new SummatyHeaderDelegate(tv));
+        tv->setItemDelegateForRow(2, new SummatyHeaderDelegate(tv));
+        tv->setItemDelegateForRow(3, new SummatyHeaderDelegate(tv));
+
+        for (int i = 1; i < summary->columnCount(); ++i)
+            tv->horizontalHeader()->resizeSection(i, 60);
+        tv->horizontalHeader()->resizeSection(0, 250);
+        tv->verticalHeader()->resizeSections(QHeaderView::ResizeToContents);
 
         static_cast<AAnalyserApplication*>(QApplication::instance())->summaries();
     }
