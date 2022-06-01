@@ -1,0 +1,36 @@
+#ifndef SUMMARYWIDGET_H
+#define SUMMARYWIDGET_H
+
+#include <QWidget>
+#include <QModelIndex>
+
+namespace Ui {
+class SummaryWidget;
+}
+
+class Summary;
+
+/*!
+ * \brief Класс виджета отображения сводки The SummaryWidget class
+ */
+class SummaryWidget : public QWidget
+{
+    Q_OBJECT
+
+public:
+    explicit SummaryWidget(QWidget *parent = nullptr);
+    ~SummaryWidget();
+
+    void setModel(Summary *model);
+    Summary* model() const;
+
+    void setSpan(const int row, const int col, const int columnSpan);
+
+private slots:
+    void on_ItemSelected(QModelIndex index);
+
+private:
+    Ui::SummaryWidget *ui;
+};
+
+#endif // SUMMARYWIDGET_H

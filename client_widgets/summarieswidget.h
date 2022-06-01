@@ -64,8 +64,6 @@ private slots:
 
 private:
     Ui::SummariesWidget *ui;
-
-    void testTable();
 };
 
 #endif // SUMMARIESWIDGET_H

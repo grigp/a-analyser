@@ -31,6 +31,43 @@ public:
     };
 
     /*!
+     * \brief Строки заголовка сводки The SummaryRows enum
+     */
+    enum SummaryRows
+    {
+          srProbes = 0
+        , srChannels
+        , srMultifactors
+        , srFactors
+    };
+
+    /*!
+     * \brief Роли для доступа к элементам в модели сводок The SummaryRoles enum
+     */
+    enum SummaryRoles
+    {
+          SummaryUidRole = Qt::UserRole + 1   ///< uid сводки. Располагается в итеме [0, 0]. QString
+        , SummaryKindRole                     ///< тип сводки. Располагается в итеме [0, 0]. int
+        , MethodicUIdRole                     ///< uid методики. Располагается в итеме [0, 0]. QString
+        , MethodicNameRole                    ///< название методики. Располагается в итеме [0, 0]. QString
+        , VersionRole                         ///< номер версии сводки. Располагается в итеме [0, 0]. int
+        , ProbeNumberRole                     ///< номер пробы. Располагается в итемах с названием проб на строке 0. QString
+        , ProbeNameRole                       ///< название пробы. Располагается в итемах с названием проб на строке 0. QString
+        , ChannelIdRole                       ///< идентификатор канала. Располагается в итемах с названием каналов на строке 1. QString
+        , ChannelNameRole                     ///< название канала. Располагается в итемах с названием каналов на строке 1. QString
+        , MultiFactorUidRole    ///< идентификатор группы показателей. Располагается в итемах с названием групп показателей на строке 2. QString
+        , MultiFactorNameRole   ///< название группы показателей. Располагается в итемах с названием групп показателей на строке 2. QString
+        , FactorUidRole         ///< идентификатор показателя. Располагается в итемах с названием показателя на строке 3. QString
+        , FactorNameRole        ///< название показателя. Располагается в итемах с названием показателя на строке 3. QString
+        , FactorShortNameRole   ///< короткое название показателя. Располагается в итемах с названием показателя на строке 3. QString
+        , FactorMeasureRole     ///< единица измерения показателя. Располагается в итемах с названием показателя на строке 3. QString
+        , FactorFormatRole      ///< формат показателя. Располагается в итемах с названием показателя на строке 3. int
+        , FactorValueRole    ///< значение показателя. Располагается в итемах со значениями показателей по всей сводке на строках, начиная с 4. double
+        , PatientFioRole        ///< ФИО пациента. Располагается в итемах первого столбца для тестов, занесенных в сводку. QString
+        , TestDateTimeRole      ///< Дата и время теста. Располагается в итемах первого столбца для тестов, занесенных в сводку. QString
+    };
+
+    /*!
      * \brief Добавляет запись о тесте как строку в сводку
      * Если кол-во строк = 0, то добавляется и заголовок в виде трех строк
      * \param testUid - uid теста
@@ -73,6 +110,11 @@ public:
     int spanCellsCount() const;
     SpanCellsInfo spanCells(const int idx) const;
 
+    /*!
+     * \brief Возвращает номер версии сводки
+     */
+    int version() const {return 1;}
+
 private:
     QString getMethodName(const QString& metUid);
 
@@ -98,6 +140,14 @@ private:
                               QList<QStandardItem*> &lineHdrChannels,
                               QList<QStandardItem*> &lineHdrMultiFactors,
                               QList<QStandardItem*> &lineHdrFactors);
+
+    /*!
+     * \brief Создает итем и добавляет его в строку - список итемов для последующего занесения в модель
+     * \param line - строка итемов
+     * \param text - отображаемый текст итема
+     * \return указатель на созданый итем. Потом в него можно записать всякие данные через роли
+     */
+    QStandardItem* createItem(QList<QStandardItem*>& line, const QString text);
 
     QString m_fileName {""};
     QString m_name {""};

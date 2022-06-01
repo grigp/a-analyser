@@ -9,6 +9,7 @@
 #include "multifactor.h"
 #include "metodicsfactory.h"
 
+#include <QUuid>
 #include <QDebug>
 
 namespace  {
@@ -26,6 +27,14 @@ Summary::Summary(QObject *parent)
 
 void Summary::addTest(const QString &testUid)
 {
+//    auto createItem = [&](QList<QStandardItem*>& line, const QString text)
+//    {
+//        auto item = new QStandardItem(text);
+//        item->setEditable(false);
+//        line << item;
+//        return item;
+//    };
+
     DataDefines::TestInfo ti;
     if (DataProvider::getTestInfo(testUid, ti))
     {
@@ -44,9 +53,17 @@ void Summary::addTest(const QString &testUid)
         QList<QStandardItem*> lineHdrFactors;       //! Строка заголовка - названия показателей
 
         //! Добавление первого столбца - пациент + методика + дата и время проведения
-        lineFactors << new QStandardItem(kard.fio + " \n" + mi.name + " \n" + ti.dateTime.toString("dd.MM.yyyy hh:mm"));
+        auto itemTH = createItem(lineFactors, kard.fio + " \n" + mi.name + " \n" + ti.dateTime.toString("dd.MM.yyyy hh:mm"));
+        itemTH->setData(kard.fio, PatientFioRole);
+        itemTH->setData(ti.dateTime, TestDateTimeRole);
         //! Добавление пустых итемов в заголовок
-        lineHdrProbes << new QStandardItem();
+
+        auto itemRoot = createItem(lineHdrProbes, "");
+        itemRoot->setData(QUuid::createUuid().toString(), SummaryUidRole);
+        itemRoot->setData(m_kind, SummaryKindRole);
+        itemRoot->setData(mi.uid, MethodicUIdRole);
+        itemRoot->setData(mi.name, MethodicNameRole);
+        itemRoot->setData(version(), VersionRole);
         lineHdrChannels << new QStandardItem();
         lineHdrMultiFactors << new QStandardItem();
         lineHdrFactors << new QStandardItem();
@@ -55,20 +72,10 @@ void Summary::addTest(const QString &testUid)
 
         //! Расчет показателей уровня теста
         auto fgTest = calculateFactors(fCount, testUid);
-        m_spanCells << SpanCellsInfo(0, lineHdrProbes.size(), fCount);   //! Соединяем на линии проб
-        m_spanCells << SpanCellsInfo(1, lineHdrChannels.size(), fCount); //! Соединяем на линии каналов
+        m_spanCells << SpanCellsInfo(srProbes, lineHdrProbes.size(), fCount);   //! Соединяем на линии проб
+        m_spanCells << SpanCellsInfo(srChannels, lineHdrChannels.size(), fCount); //! Соединяем на линии каналов
         //! Добавляем итемы с показателями уровня теста
         addCalculatedFactors(fgTest, BaseDefines::tlTest, lineFactors, lineHdrProbes, lineHdrChannels, lineHdrMultiFactors, lineHdrFactors);
-//        auto *itemTest = new QStandardItem(kard.fio + " " +
-//                                           getMethodName(ti.metodUid) +
-//                                           " (" + ti.dateTime.toString("dd.MM.yyyy hh:mm") + ")");
-//        itemTest->setEditable(false);
-//        itemTest->setData(ti.uid, UidRole);
-//        itemTest->setIcon(QIcon(":/images/tree/test.png"));
-//        auto *itemTestClose = new QStandardItem("");
-//        itemTestClose->setEditable(false);
-//        itemTestClose->setData(ti.uid, UidRole);
-//        appendRow(QList<QStandardItem*>() << itemTest << itemTestClose);
 
         //! Цикл по пробам
         for (int i = 0; i < ti.probes.size(); ++i)
@@ -78,20 +85,16 @@ void Summary::addTest(const QString &testUid)
             if (DataProvider::getProbeInfo(ti.probes.at(i), pi))
             {
                 //! Итем названия пробы
-                auto itemProbe = new QStandardItem(pi.name);
-                lineHdrProbes << itemProbe;
+                auto itemProbe = createItem(lineHdrProbes, pi.name);
+                itemProbe->setData(i, ProbeNumberRole);
+                itemProbe->setData(pi.name, ProbeNameRole);
                 int spp = lineHdrProbes.size() - 1;  //! StartPosProbe
 
                 //! Показатели уровня пробы
                 auto fgProbe = calculateFactors(fCount, testUid, pi.uid);
-                m_spanCells << SpanCellsInfo(1, lineHdrChannels.size(), fCount);
+                m_spanCells << SpanCellsInfo(srChannels, lineHdrChannels.size(), fCount);
                 //! Добавляем итемы с показателями уровня пробы
                 addCalculatedFactors(fgProbe, BaseDefines::tlProbe, lineFactors, lineHdrProbes, lineHdrChannels, lineHdrMultiFactors, lineHdrFactors);
-//                auto *itemProbe = new QStandardItem(pi.name);
-//                itemProbe->setEditable(false);
-//                itemProbe->setData(pi.uid, UidRole);
-//                itemProbe->setIcon(QIcon(":/images/tree/probe.png"));
-//                itemTest->appendRow(itemProbe);
 
                 //! Цикл по каналам
                 int ci = 0;
@@ -101,28 +104,23 @@ void Summary::addTest(const QString &testUid)
                     auto fgChannel = calculateFactors(fCount, testUid, pi.uid, chi.channelId);
                     if (fgChannel.size() > 0)
                     {
-                        m_spanCells << SpanCellsInfo(1, lineHdrChannels.size(), fCount);
+                        m_spanCells << SpanCellsInfo(srChannels, lineHdrChannels.size(), fCount);
 
                         //! Итем названия канала
-                        auto itemChan = new QStandardItem();
+                        QString cn = "";
                         if (ci == 0)
-                            itemChan->setText(ChannelsUtils::instance().channelName(chi.channelId));
-                         lineHdrChannels << itemChan;
+                            cn = ChannelsUtils::instance().channelName(chi.channelId);
+                        auto itemChan = createItem(lineHdrChannels, cn);
+                        itemChan->setData(chi.channelId);
+                        itemChan->setData(cn, ChannelNameRole);
                         ++ci;
 
                         //! Добавляем итемы с показателями уровня канала
                         addCalculatedFactors(fgChannel, BaseDefines::tlChannel, lineFactors, lineHdrProbes, lineHdrChannels, lineHdrMultiFactors, lineHdrFactors);
                     }
-//                    QString chanName = ChannelsUtils::instance().channelName(chi.channelId);
-//                    auto *itemChan = new QStandardItem(chanName);
-//                    itemChan->setEditable(false);
-//                    itemChan->setData(chi.channelId, UidRole);
-//                    itemChan->setData(chi.uid, ChannelUidRole);
-//                    itemChan->setIcon(QIcon(":/images/tree/signal.png"));
-//                    itemProbe->appendRow(itemChan);
                 }
 
-                m_spanCells << SpanCellsInfo(0, spp, lineHdrProbes.size() - spp);
+                m_spanCells << SpanCellsInfo(srProbes, spp, lineHdrProbes.size() - spp);
             }
         }
 
@@ -227,11 +225,17 @@ void Summary::addCalculatedFactors(QList<MultiFactor *> &fgs, BaseDefines::TestL
             //! Значение
             auto fv = fg->factorValueFormatted(fg->factorUid(i));
             auto *itemValue = new QStandardItem(fv);
+            itemValue->setData(fg->factorValue(i), FactorValueRole);
             line << itemValue;
 
             //! Название показателя
             auto fi = static_cast<AAnalyserApplication*>(QApplication::instance())->getFactorInfo(fg->factorUid(i));
             auto itemFactor = new QStandardItem(fi.shortName());
+            itemFactor->setData(fg->factorUid(i), FactorUidRole);
+            itemFactor->setData(fi.name(), FactorNameRole);
+            itemFactor->setData(fi.shortName(), FactorShortNameRole);
+            itemFactor->setData(fi.measure(), FactorMeasureRole);
+            itemFactor->setData(fi.format(), FactorFormatRole);
             lineHdrFactors << itemFactor;
 
             //! Группа показателей
@@ -239,8 +243,9 @@ void Summary::addCalculatedFactors(QList<MultiFactor *> &fgs, BaseDefines::TestL
             if (i == 0)
             {
                 itemMF->setText(fg->name());
-                m_spanCells << SpanCellsInfo(2, lineHdrMultiFactors.size(), fg->size());
-                m_spanCells << SpanCellsInfo(2, lineHdrMultiFactors.size(), fg->size());
+                itemMF->setData(fg->uid(), MultiFactorUidRole);
+                itemMF->setData(fg->name(), MultiFactorNameRole);
+                m_spanCells << SpanCellsInfo(srMultifactors, lineHdrMultiFactors.size(), fg->size());
             }
             lineHdrMultiFactors << itemMF;
 
@@ -256,5 +261,13 @@ void Summary::addCalculatedFactors(QList<MultiFactor *> &fgs, BaseDefines::TestL
         }
 
     }
+}
+
+QStandardItem *Summary::createItem(QList<QStandardItem *> &line, const QString text)
+{
+    auto item = new QStandardItem(text);
+    item->setEditable(false);
+    line << item;
+    return item;
 }
 
