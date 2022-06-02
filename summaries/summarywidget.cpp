@@ -48,7 +48,38 @@ void SummaryWidget::setSpan(const int row, const int col, const int columnSpan)
 
 void SummaryWidget::on_ItemSelected(QModelIndex index)
 {
-    auto fn = model()->index(Summary::srFactors, index.column(), index.parent()).data(Summary::FactorNameRole).toString();
-    ui->lblFactorName->setText(tr("Показатель") + " - " + fn);
+    auto showValue = [&](const int row, const int role, QLabel* label, const QString staticText)
+    {
+        QString mfn = "";
+        int i = index.column();
+        do
+        {
+            mfn = model()->index(row, i, index.parent()).data(role).toString();
+            --i;
+        }
+        while (i >= 0 && mfn == "");
+        if (mfn != "")
+            label->setText(staticText + " - " + mfn);
+        else
+            label->setText("");
+    };
 
+    //! Вывод названия показателя
+    auto fn = model()->index(Summary::srFactors, index.column(), index.parent()).data(Summary::FactorNameRole).toString();
+    if (fn != "")
+        ui->lblFactorName->setText(tr("Показатель") + " - " + fn);
+    else
+        ui->lblFactorName->setText("");
+
+    //! Вывод названия группы показателей
+    showValue(Summary::srMultifactors, Summary::MultiFactorNameRole, ui->lblMultiFactorName, tr("Группа показателей"));
+
+    //! Вывод названия канала
+    showValue(Summary::srChannels, Summary::ChannelNameRole, ui->lblChannelName, tr("Канал"));
+
+    //! Вывод названия пробы
+    showValue(Summary::srProbes, Summary::ProbeNameRole, ui->lblProbeName, tr("Проба"));
+
+    //! Вывод названия методики
+    showValue(Summary::srProbes, Summary::MethodicNameRole, ui->lblMethodName, tr("Методика"));
 }
