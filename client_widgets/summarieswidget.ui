@@ -153,5 +153,41 @@
   </layout>
  </widget>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>tvSummaries</sender>
+   <signal>clicked(QModelIndex)</signal>
+   <receiver>SummariesWidget</receiver>
+   <slot>on_selectIndex(QModelIndex)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>199</x>
+     <y>167</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>844</x>
+     <y>116</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>tvSummaries</sender>
+   <signal>activated(QModelIndex)</signal>
+   <receiver>SummariesWidget</receiver>
+   <slot>on_selectIndex(QModelIndex)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>740</x>
+     <y>162</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>843</x>
+     <y>163</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>on_selectIndex(QModelIndex)</slot>
+ </slots>
 </ui>

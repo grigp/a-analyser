@@ -34,6 +34,13 @@ void SummaryWidget::setModel(Summary *model)
         ui->tvSummary->horizontalHeader()->resizeSection(i, 60);
     ui->tvSummary->horizontalHeader()->resizeSection(0, 250);
     ui->tvSummary->verticalHeader()->resizeSections(QHeaderView::ResizeToContents);
+
+    for (int i = 0; i < model->spanCellsCount(); ++i)
+    {
+        auto sc = model->spanCells(i);
+        if (sc.width > 0)
+            ui->tvSummary->setSpan(sc.row, sc.col, 1, sc.width);
+    }
 }
 
 Summary *SummaryWidget::model() const

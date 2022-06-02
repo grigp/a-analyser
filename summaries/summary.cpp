@@ -45,7 +45,7 @@ void Summary::addTest(const QString &testUid)
         //! Получить данные о методике
         auto mi = static_cast<AAnalyserApplication*>(QApplication::instance())->getMetodics()->metodic(ti.metodUid);
 
-        //! Строци итемов, показателей и заголовка, которые могут быть добавлены
+        //! Строки итемов, показателей и заголовка, которые могут быть добавлены
         QList<QStandardItem*> lineFactors;          //! Значения показателей для теста
         QList<QStandardItem*> lineHdrProbes;        //! Строка заголовка - названия проб
         QList<QStandardItem*> lineHdrChannels;      //! Строка заголовка - названия каналов
@@ -59,7 +59,9 @@ void Summary::addTest(const QString &testUid)
         //! Добавление пустых итемов в заголовок
 
         auto itemRoot = createItem(lineHdrProbes, "");
-        itemRoot->setData(QUuid::createUuid().toString(), SummaryUidRole);
+        m_uid = QUuid::createUuid().toString();
+        m_uidMethodic = mi.uid;
+        itemRoot->setData(m_uid, SummaryUidRole);
         itemRoot->setData(m_kind, SummaryKindRole);
         itemRoot->setData(mi.uid, MethodicUIdRole);
         itemRoot->setData(mi.name, MethodicNameRole);

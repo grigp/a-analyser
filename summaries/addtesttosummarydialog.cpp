@@ -76,3 +76,9 @@ void AddTestToSummaryDialog::setSummaryName(const QString &name)
 {
     ui->edSummaryName->setText(name);
 }
+
+void AddTestToSummaryDialog::showEvent(QShowEvent *event)
+{
+    QDialog::showEvent(event);
+    ui->edSummaryName->setText("");
+}

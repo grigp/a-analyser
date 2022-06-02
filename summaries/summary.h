@@ -2,6 +2,7 @@
 #define SUMMARY_H
 
 #include <QStandardItemModel>
+#include <QUuid>
 
 #include "basedefines.h"
 #include "summarydefines.h"
@@ -87,6 +88,12 @@ public:
     void save() const;
 
     /*!
+     * \brief Доступ к m_uid
+     */
+    QString uid() const {return m_uid;}
+    void setUid(const QString uid) {m_uid = uid;}
+
+    /*!
      * \brief Доступ к m_fileName
      */
     QString fileName() const {return m_fileName;}
@@ -97,6 +104,12 @@ public:
      */
     QString name() const;
     void setName(const QString &name);
+
+    /*!
+     * \brief Доступ к m_uidMethodic
+     */
+    QString uidMethodic() const {return m_uidMethodic;}
+    void setUidMethodic(const QString uid) {m_uidMethodic = uid;}
 
     /*!
      * \brief Доступ к m_kind
@@ -149,8 +162,10 @@ private:
      */
     QStandardItem* createItem(QList<QStandardItem*>& line, const QString text);
 
+    QString m_uid {QUuid().toString()};
     QString m_fileName {""};
     QString m_name {""};
+    QString m_uidMethodic {QUuid().toString()};
     SummaryDefines::Kind m_kind {SummaryDefines::skNone};
     QList<SpanCellsInfo> m_spanCells;
 

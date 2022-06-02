@@ -555,12 +555,22 @@ bool AAnalyserApplication::notify(QObject *re, QEvent *ev)
 
 void AAnalyserApplication::on_AddTestToSummaryAccepted()
 {
-    QString summary = "";
     if (m_addTSDlg->mode() == SummaryDefines::atmExists)
-        summary = m_addTSDlg->summary();
+    {
+        if (m_addTSDlg->summary() == "")
+            QMessageBox::warning(nullptr, tr("Предупреждение"), tr("Сводка не выбрана"));
+        else
+            emit addTestToSummary(m_testUid, m_addTSDlg->mode(), m_addTSDlg->summary(), m_addTSDlg->kind());
+    }
     else
     if (m_addTSDlg->mode() == SummaryDefines::atmNew)
-        summary = m_addTSDlg->summaryName();
-    emit addTestToSummary(m_testUid, m_addTSDlg->mode(), summary, m_addTSDlg->kind());
+    {
+        if (m_addTSDlg->summaryName() == "")
+            QMessageBox::warning(nullptr, tr("Предупреждение"), tr("Не задано название сводки"));
+        else
+            emit addTestToSummary(m_testUid, m_addTSDlg->mode(), m_addTSDlg->summaryName(), m_addTSDlg->kind());
+    }
+    if (m_addTSDlg->mode() == SummaryDefines::atmActive)
+        emit addTestToSummary(m_testUid, m_addTSDlg->mode(), "", m_addTSDlg->kind());
 }
 

@@ -32,6 +32,10 @@ public:
     QString summaryName() const;
     void setSummaryName(const QString& name);
 
+protected:
+    void showEvent(QShowEvent *event) override;
+
+
 private:
     Ui::AddTestToSummaryDialog *ui;
 };
