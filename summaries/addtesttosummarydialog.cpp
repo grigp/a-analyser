@@ -1,11 +1,15 @@
 #include "addtesttosummarydialog.h"
 #include "ui_addtesttosummarydialog.h"
 
+#include <QDebug>
+
 AddTestToSummaryDialog::AddTestToSummaryDialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::AddTestToSummaryDialog)
 {
     ui->setupUi(this);
+    setActivities();
+
 }
 
 AddTestToSummaryDialog::~AddTestToSummaryDialog()
@@ -36,6 +40,7 @@ void AddTestToSummaryDialog::setMode(const SummaryDefines::AddTestMode mode)
     else
     if (mode == SummaryDefines::atmActive)
         ui->rbAddToActiveSummary->setChecked(true);
+    setActivities();
 }
 
 QString AddTestToSummaryDialog::summary() const
@@ -81,4 +86,19 @@ void AddTestToSummaryDialog::showEvent(QShowEvent *event)
 {
     QDialog::showEvent(event);
     ui->edSummaryName->setText("");
+}
+
+void AddTestToSummaryDialog::on_selectMode(bool select)
+{
+    Q_UNUSED(select);
+    setActivities();
+}
+
+void AddTestToSummaryDialog::setActivities()
+{
+    ui->tvSummaries->setEnabled(ui->rbAddToExsistsSummary->isChecked());
+    ui->btnAllFactors->setEnabled(ui->rbAddToNewSummary->isChecked());
+    ui->btnPrimaryFactors->setEnabled(ui->rbAddToNewSummary->isChecked());
+    ui->lblSummaryName->setEnabled(ui->rbAddToNewSummary->isChecked());
+    ui->edSummaryName->setEnabled(ui->rbAddToNewSummary->isChecked());
 }

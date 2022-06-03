@@ -25,10 +25,18 @@ void SummaryWidget::setModel(Summary *model)
     //        tv->horizontalHeader()->setVisible(false);
     //        tv->verticalHeader()->setVisible(false);
     ui->tvSummary->setItemDelegateForColumn(0, new SummaryHeaderDelegate(ui->tvSummary));
-    ui->tvSummary->setItemDelegateForRow(0, new SummaryHeaderDelegate(ui->tvSummary));
-    ui->tvSummary->setItemDelegateForRow(1, new SummaryHeaderDelegate(ui->tvSummary));
-    ui->tvSummary->setItemDelegateForRow(2, new SummaryHeaderDelegate(ui->tvSummary));
-    ui->tvSummary->setItemDelegateForRow(3, new SummaryHeaderDelegate(ui->tvSummary));
+    if (model->kind() == SummaryDefines::skAll)
+    {
+        ui->tvSummary->setItemDelegateForRow(Summary::RowProbes, new SummaryHeaderDelegate(ui->tvSummary));
+        ui->tvSummary->setItemDelegateForRow(Summary::RowChannels, new SummaryHeaderDelegate(ui->tvSummary));
+        ui->tvSummary->setItemDelegateForRow(Summary::RowMultifactors, new SummaryHeaderDelegate(ui->tvSummary));
+        ui->tvSummary->setItemDelegateForRow(Summary::RowFactors, new SummaryHeaderDelegate(ui->tvSummary));
+    }
+    else
+    if (model->kind() == SummaryDefines::skPrimary)
+    {
+        ui->tvSummary->setItemDelegateForRow(Summary::RowPrimaryFactors, new SummaryHeaderDelegate(ui->tvSummary));
+    }
 
     for (int i = 1; i < model->columnCount(); ++i)
         ui->tvSummary->horizontalHeader()->resizeSection(i, 60);
@@ -72,21 +80,21 @@ void SummaryWidget::on_ItemSelected(QModelIndex index)
     };
 
     //! Вывод названия показателя
-    auto fn = model()->index(Summary::srFactors, index.column(), index.parent()).data(Summary::FactorNameRole).toString();
+    auto fn = model()->index(Summary::RowFactors, index.column(), index.parent()).data(Summary::FactorNameRole).toString();
     if (fn != "")
         ui->lblFactorName->setText(tr("Показатель") + " - " + fn);
     else
         ui->lblFactorName->setText("");
 
     //! Вывод названия группы показателей
-    showValue(Summary::srMultifactors, Summary::MultiFactorNameRole, ui->lblMultiFactorName, tr("Группа показателей"));
+    showValue(Summary::RowMultifactors, Summary::MultiFactorNameRole, ui->lblMultiFactorName, tr("Группа показателей"));
 
     //! Вывод названия канала
-    showValue(Summary::srChannels, Summary::ChannelNameRole, ui->lblChannelName, tr("Канал"));
+    showValue(Summary::RowChannels, Summary::ChannelNameRole, ui->lblChannelName, tr("Канал"));
 
     //! Вывод названия пробы
-    showValue(Summary::srProbes, Summary::ProbeNameRole, ui->lblProbeName, tr("Проба"));
+    showValue(Summary::RowProbes, Summary::ProbeNameRole, ui->lblProbeName, tr("Проба"));
 
     //! Вывод названия методики
-    showValue(Summary::srProbes, Summary::MethodicNameRole, ui->lblMethodName, tr("Методика"));
+    showValue(Summary::RowProbes, Summary::MethodicNameRole, ui->lblMethodName, tr("Методика"));
 }

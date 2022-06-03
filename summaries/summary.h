@@ -6,6 +6,7 @@
 
 #include "basedefines.h"
 #include "summarydefines.h"
+#include "metodicdefines.h"
 
 class MultiFactor;
 
@@ -36,10 +37,11 @@ public:
      */
     enum SummaryRows
     {
-          srProbes = 0
-        , srChannels
-        , srMultifactors
-        , srFactors
+          RowProbes = 0
+        , RowChannels
+        , RowMultifactors
+        , RowFactors
+        , RowPrimaryFactors = 0
     };
 
     /*!
@@ -129,6 +131,20 @@ public:
     int version() const {return 1;}
 
 private:
+    /*!
+     * \brief Добавляет запись о тесте как строку в сводку всех показателей
+     * Если кол-во строк = 0, то добавляется и заголовок в виде трех строк
+     * \param testUid - uid теста
+     */
+    void addTestAll(const QString &testUid);
+
+    /*!
+     * \brief Добавляет запись о тесте как строку в сводку первичных показателей
+     * Если кол-во строк = 0, то добавляется и заголовок в виде трех строк
+     * \param testUid - uid теста
+     */
+    void addTestPrimary(const QString &testUid);
+
     QString getMethodName(const QString& metUid);
 
     /*!
@@ -161,6 +177,8 @@ private:
      * \return указатель на созданый итем. Потом в него можно записать всякие данные через роли
      */
     QStandardItem* createItem(QList<QStandardItem*>& line, const QString text);
+
+    void addRootItem(QList<QStandardItem *> &line, MetodicDefines::MetodicInfo &mi);
 
     QString m_uid {QUuid().toString()};
     QString m_fileName {""};

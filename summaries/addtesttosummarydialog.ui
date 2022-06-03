@@ -199,8 +199,8 @@
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>229</x>
-     <y>379</y>
+     <x>240</x>
+     <y>502</y>
     </hint>
     <hint type="destinationlabel">
      <x>157</x>
@@ -215,8 +215,8 @@
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>297</x>
-     <y>385</y>
+     <x>308</x>
+     <y>502</y>
     </hint>
     <hint type="destinationlabel">
      <x>286</x>
@@ -224,5 +224,56 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>rbAddToNewSummary</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>AddTestToSummaryDialog</receiver>
+   <slot>on_selectMode(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>74</x>
+     <y>393</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>392</x>
+     <y>291</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>rbAddToExsistsSummary</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>AddTestToSummaryDialog</receiver>
+   <slot>on_selectMode(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>33</x>
+     <y>62</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>392</x>
+     <y>77</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>rbAddToActiveSummary</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>AddTestToSummaryDialog</receiver>
+   <slot>on_selectMode(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>75</x>
+     <y>33</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>389</x>
+     <y>49</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
+ <slots>
+  <slot>on_selectMode(bool)</slot>
+ </slots>
 </ui>

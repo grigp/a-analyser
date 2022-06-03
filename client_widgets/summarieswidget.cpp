@@ -114,6 +114,7 @@ bool SummariesWidget::addTestToNewSummary(const QString testUid, const QString s
 
 bool SummariesWidget::addTestToActiveSummary(const QString testUid, const SummaryDefines::Kind kind)
 {
+    Q_UNUSED(kind);
     auto selIdx = ui->tvSummaries->selectionModel()->currentIndex();
     if (selIdx != QModelIndex())
     {
@@ -127,18 +128,13 @@ bool SummariesWidget::addTestToActiveSummary(const QString testUid, const Summar
                 if (DataProvider::getTestInfo(testUid, ti))
                 {
                     auto mi = static_cast<AAnalyserApplication*>(QApplication::instance())->getMetodics()->metodic(ti.metodUid);
-                    if (kind == wgt->model()->kind())
+                    if (mi.uid == wgt->model()->uidMethodic())
                     {
-                        if (mi.uid == wgt->model()->uidMethodic())
-                        {
-                            wgt->model()->addTest(testUid);
-                            return true;
-                        }
-                        else
-                            QMessageBox::information(nullptr, tr("Предупреждение"), tr("Активная сводка создана для другой методики"));
+                        wgt->model()->addTest(testUid);
+                        return true;
                     }
                     else
-                        QMessageBox::information(nullptr, tr("Предупреждение"), tr("Активная сводка имеет другой тип"));
+                        QMessageBox::information(nullptr, tr("Предупреждение"), tr("Активная сводка создана для другой методики"));
                 }
             }
         }

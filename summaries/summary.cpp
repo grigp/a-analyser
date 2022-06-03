@@ -27,111 +27,11 @@ Summary::Summary(QObject *parent)
 
 void Summary::addTest(const QString &testUid)
 {
-    DataDefines::TestInfo ti;
-    if (DataProvider::getTestInfo(testUid, ti))
-    {
-        //! Получить карточку пациента
-        DataDefines::PatientKard kard;
-        DataProvider::getPatient(ti.patientUid, kard);
-
-        //! Получить данные о методике
-        auto mi = static_cast<AAnalyserApplication*>(QApplication::instance())->getMetodics()->metodic(ti.metodUid);
-
-        //! Строки итемов, показателей и заголовка, которые могут быть добавлены
-        QList<QStandardItem*> lineFactors;          //! Значения показателей для теста
-        lineFactors.clear();
-        QList<QStandardItem*> lineHdrProbes;        //! Строка заголовка - названия проб
-        lineHdrProbes.clear();
-        QList<QStandardItem*> lineHdrChannels;      //! Строка заголовка - названия каналов
-        lineHdrChannels.clear();
-        QList<QStandardItem*> lineHdrMultiFactors;  //! Строка заголовка - названия групп показателей
-        lineHdrMultiFactors.clear();
-        QList<QStandardItem*> lineHdrFactors;       //! Строка заголовка - названия показателей
-        lineHdrFactors.clear();
-
-        //! Добавление первого столбца - пациент + методика + дата и время проведения
-        auto itemTH = createItem(lineFactors, kard.fio + " \n" + mi.name + " \n" + ti.dateTime.toString("dd.MM.yyyy hh:mm"));
-        itemTH->setData(kard.fio, PatientFioRole);
-        itemTH->setData(ti.dateTime, TestDateTimeRole);
-        //! Добавление пустых итемов в заголовок
-
-        auto itemRoot = createItem(lineHdrProbes, "");
-        m_uid = QUuid::createUuid().toString();
-        m_uidMethodic = mi.uid;
-        itemRoot->setData(m_uid, SummaryUidRole);
-        itemRoot->setData(m_kind, SummaryKindRole);
-        itemRoot->setData(mi.uid, MethodicUIdRole);
-        itemRoot->setData(mi.name, MethodicNameRole);
-        itemRoot->setData(version(), VersionRole);
-        lineHdrChannels << new QStandardItem();
-        lineHdrMultiFactors << new QStandardItem();
-        lineHdrFactors << new QStandardItem();
-
-        int fCount = 0;
-
-        //! Расчет показателей уровня теста
-        auto fgTest = calculateFactors(fCount, testUid);
-        m_spanCells << SpanCellsInfo(srProbes, lineHdrProbes.size(), fCount);   //! Соединяем на линии проб
-        m_spanCells << SpanCellsInfo(srChannels, lineHdrChannels.size(), fCount); //! Соединяем на линии каналов
-        //! Добавляем итемы с показателями уровня теста
-        addCalculatedFactors(fgTest, BaseDefines::tlTest, lineFactors, lineHdrProbes, lineHdrChannels, lineHdrMultiFactors, lineHdrFactors);
-
-        //! Цикл по пробам
-        for (int i = 0; i < ti.probes.size(); ++i)
-        {
-            //! Данные пробы
-            DataDefines::ProbeInfo pi;
-            if (DataProvider::getProbeInfo(ti.probes.at(i), pi))
-            {
-                //! Итем названия пробы
-                auto itemProbe = createItem(lineHdrProbes, pi.name);
-                itemProbe->setData(i, ProbeNumberRole);
-                itemProbe->setData(pi.name, ProbeNameRole);
-                int spp = lineHdrProbes.size() - 1;  //! StartPosProbe
-
-                //! Показатели уровня пробы
-                auto fgProbe = calculateFactors(fCount, testUid, pi.uid);
-                m_spanCells << SpanCellsInfo(srChannels, lineHdrChannels.size(), fCount);
-                //! Добавляем итемы с показателями уровня пробы
-                addCalculatedFactors(fgProbe, BaseDefines::tlProbe, lineFactors, lineHdrProbes, lineHdrChannels, lineHdrMultiFactors, lineHdrFactors);
-
-                //! Цикл по каналам
-                int ci = 0;
-                foreach (auto chi, pi.channels)
-                {
-                    //! Расчет показателей уровня канала
-                    auto fgChannel = calculateFactors(fCount, testUid, pi.uid, chi.channelId);
-                    if (fgChannel.size() > 0)
-                    {
-                        m_spanCells << SpanCellsInfo(srChannels, lineHdrChannels.size(), fCount);
-
-                        //! Итем названия канала
-                        QString cn = "";
-                        if (ci == 0)
-                            cn = ChannelsUtils::instance().channelName(chi.channelId);
-                        auto itemChan = createItem(lineHdrChannels, cn);
-                        itemChan->setData(chi.channelId);
-                        itemChan->setData(cn, ChannelNameRole);
-                        ++ci;
-
-                        //! Добавляем итемы с показателями уровня канала
-                        addCalculatedFactors(fgChannel, BaseDefines::tlChannel, lineFactors, lineHdrProbes, lineHdrChannels, lineHdrMultiFactors, lineHdrFactors);
-                    }
-                }
-
-                m_spanCells << SpanCellsInfo(srProbes, spp, lineHdrProbes.size() - spp);
-            }
-        }
-
-        if (rowCount() == 0)
-        {
-            appendRow(lineHdrProbes);
-            appendRow(lineHdrChannels);
-            appendRow(lineHdrMultiFactors);
-            appendRow(lineHdrFactors);
-        }
-        appendRow(lineFactors);
-    }
+    if (m_kind == SummaryDefines::skAll)
+        addTestAll(testUid);
+    else
+    if (m_kind == SummaryDefines::skPrimary)
+        addTestPrimary(testUid);
 }
 
 void Summary::open(const QString &fileName)
@@ -166,6 +66,165 @@ Summary::SpanCellsInfo Summary::spanCells(const int idx) const
 {
     Q_ASSERT(idx >= 0 && idx < m_spanCells.size());
     return m_spanCells.at(idx);
+}
+
+void Summary::addTestAll(const QString &testUid)
+{
+    DataDefines::TestInfo ti;
+    if (DataProvider::getTestInfo(testUid, ti))
+    {
+        //! Получить карточку пациента
+        DataDefines::PatientKard kard;
+        DataProvider::getPatient(ti.patientUid, kard);
+//        DataProvider::getPrimaryFactors(testUid);
+
+        //! Получить данные о методике
+        auto mi = static_cast<AAnalyserApplication*>(QApplication::instance())->getMetodics()->metodic(ti.metodUid);
+
+        //! Строки итемов, показателей и заголовка, которые могут быть добавлены
+        QList<QStandardItem*> lineFactors;          //! Значения показателей для теста
+        lineFactors.clear();
+        QList<QStandardItem*> lineHdrProbes;        //! Строка заголовка - названия проб
+        lineHdrProbes.clear();
+        QList<QStandardItem*> lineHdrChannels;      //! Строка заголовка - названия каналов
+        lineHdrChannels.clear();
+        QList<QStandardItem*> lineHdrMultiFactors;  //! Строка заголовка - названия групп показателей
+        lineHdrMultiFactors.clear();
+        QList<QStandardItem*> lineHdrFactors;       //! Строка заголовка - названия показателей
+        lineHdrFactors.clear();
+
+        //! Добавление первого столбца - пациент + методика + дата и время проведения
+        auto itemTH = createItem(lineFactors, kard.fio + " \n" + mi.name + " \n" + ti.dateTime.toString("dd.MM.yyyy hh:mm"));
+        itemTH->setData(kard.fio, PatientFioRole);
+        itemTH->setData(ti.dateTime, TestDateTimeRole);
+
+        //! Добавление пустых итемов в заголовок
+        m_uidMethodic = mi.uid;
+        addRootItem(lineHdrProbes, mi);
+        lineHdrChannels << new QStandardItem();
+        lineHdrMultiFactors << new QStandardItem();
+        lineHdrFactors << new QStandardItem();
+
+        int fCount = 0;
+
+        //! Расчет показателей уровня теста
+        auto fgTest = calculateFactors(fCount, testUid);
+        m_spanCells << SpanCellsInfo(RowProbes, lineHdrProbes.size(), fCount);   //! Соединяем на линии проб
+        m_spanCells << SpanCellsInfo(RowChannels, lineHdrChannels.size(), fCount); //! Соединяем на линии каналов
+        //! Добавляем итемы с показателями уровня теста
+        addCalculatedFactors(fgTest, BaseDefines::tlTest, lineFactors, lineHdrProbes, lineHdrChannels, lineHdrMultiFactors, lineHdrFactors);
+
+        //! Цикл по пробам
+        for (int i = 0; i < ti.probes.size(); ++i)
+        {
+            //! Данные пробы
+            DataDefines::ProbeInfo pi;
+            if (DataProvider::getProbeInfo(ti.probes.at(i), pi))
+            {
+                //! Итем названия пробы
+                auto itemProbe = createItem(lineHdrProbes, pi.name);
+                itemProbe->setData(i, ProbeNumberRole);
+                itemProbe->setData(pi.name, ProbeNameRole);
+                int spp = lineHdrProbes.size() - 1;  //! StartPosProbe
+
+                //! Показатели уровня пробы
+                auto fgProbe = calculateFactors(fCount, testUid, pi.uid);
+                m_spanCells << SpanCellsInfo(RowChannels, lineHdrChannels.size(), fCount);
+                //! Добавляем итемы с показателями уровня пробы
+                addCalculatedFactors(fgProbe, BaseDefines::tlProbe, lineFactors, lineHdrProbes, lineHdrChannels, lineHdrMultiFactors, lineHdrFactors);
+
+                //! Цикл по каналам
+                int ci = 0;
+                foreach (auto chi, pi.channels)
+                {
+                    //! Расчет показателей уровня канала
+                    auto fgChannel = calculateFactors(fCount, testUid, pi.uid, chi.channelId);
+                    if (fgChannel.size() > 0)
+                    {
+                        m_spanCells << SpanCellsInfo(RowChannels, lineHdrChannels.size(), fCount);
+
+                        //! Итем названия канала
+                        QString cn = "";
+                        if (ci == 0)
+                            cn = ChannelsUtils::instance().channelName(chi.channelId);
+                        auto itemChan = createItem(lineHdrChannels, cn);
+                        itemChan->setData(chi.channelId);
+                        itemChan->setData(cn, ChannelNameRole);
+                        ++ci;
+
+                        //! Добавляем итемы с показателями уровня канала
+                        addCalculatedFactors(fgChannel, BaseDefines::tlChannel, lineFactors, lineHdrProbes, lineHdrChannels, lineHdrMultiFactors, lineHdrFactors);
+                    }
+                }
+
+                m_spanCells << SpanCellsInfo(RowProbes, spp, lineHdrProbes.size() - spp);
+            }
+        }
+
+        if (rowCount() == 0)
+        {
+            appendRow(lineHdrProbes);
+            appendRow(lineHdrChannels);
+            appendRow(lineHdrMultiFactors);
+            appendRow(lineHdrFactors);
+        }
+        appendRow(lineFactors);
+    }
+}
+
+void Summary::addTestPrimary(const QString &testUid)
+{
+    DataDefines::TestInfo ti;
+    if (DataProvider::getTestInfo(testUid, ti))
+    {
+        //! Получить карточку пациента
+        DataDefines::PatientKard kard;
+        DataProvider::getPatient(ti.patientUid, kard);
+
+        //! Получить данные о методике
+        auto mi = static_cast<AAnalyserApplication*>(QApplication::instance())->getMetodics()->metodic(ti.metodUid);
+
+        //! Получить первичные показатели
+        auto factors = DataProvider::getPrimaryFactors(testUid);
+
+        //! Строки итемов, показателей и заголовка, которые могут быть добавлены
+        QList<QStandardItem*> lineFactors;          //! Значения показателей для теста
+        lineFactors.clear();
+        QList<QStandardItem*> lineHeader;           //! Строка заголовка
+        lineHeader.clear();
+
+        //! Добавление первого столбца - пациент + методика + дата и время проведения
+        auto itemTH = createItem(lineFactors, kard.fio + " \n" + mi.name + " \n" + ti.dateTime.toString("dd.MM.yyyy hh:mm"));
+        itemTH->setData(kard.fio, PatientFioRole);
+        itemTH->setData(ti.dateTime, TestDateTimeRole);
+
+        //! Добавление пустых итемов в заголовок
+        m_uidMethodic = mi.uid;
+        addRootItem(lineHeader, mi);
+
+        foreach (auto factor, factors)
+        {
+            auto fi = static_cast<AAnalyserApplication*>(QApplication::instance())->getFactorInfo(factor.uid());
+
+            //! Значение
+            auto *itemValue = new QStandardItem(QString::number(factor.value(), 'f', fi.format()));
+            itemValue->setData(factor.value(), FactorValueRole);
+            lineFactors << itemValue;
+
+            //! Название показателя
+            auto itemFactor = new QStandardItem(fi.shortName());
+            itemFactor->setData(factor.uid(), FactorUidRole);
+            itemFactor->setData(fi.name(), FactorNameRole);
+            itemFactor->setData(fi.shortName(), FactorShortNameRole);
+            itemFactor->setData(fi.measure(), FactorMeasureRole);
+            itemFactor->setData(fi.format(), FactorFormatRole);
+            lineHeader << itemFactor;
+        }
+
+        if (rowCount() == 0)
+            appendRow(lineHeader);
+        appendRow(lineFactors);
+    }
 }
 
 QString Summary::getMethodName(const QString &metUid)
@@ -244,7 +303,7 @@ void Summary::addCalculatedFactors(QList<MultiFactor *> &fgs, BaseDefines::TestL
                 itemMF->setText(fg->name());
                 itemMF->setData(fg->uid(), MultiFactorUidRole);
                 itemMF->setData(fg->name(), MultiFactorNameRole);
-                m_spanCells << SpanCellsInfo(srMultifactors, lineHdrMultiFactors.size(), fg->size());
+                m_spanCells << SpanCellsInfo(RowMultifactors, lineHdrMultiFactors.size(), fg->size());
             }
             lineHdrMultiFactors << itemMF;
 
@@ -268,5 +327,16 @@ QStandardItem *Summary::createItem(QList<QStandardItem *> &line, const QString t
     item->setEditable(false);
     line << item;
     return item;
+}
+
+void Summary::addRootItem(QList<QStandardItem *> &line, MetodicDefines::MetodicInfo &mi)
+{
+    auto itemRoot = createItem(line, "");
+    m_uid = QUuid::createUuid().toString();
+    itemRoot->setData(m_uid, SummaryUidRole);
+    itemRoot->setData(m_kind, SummaryKindRole);
+    itemRoot->setData(mi.uid, MethodicUIdRole);
+    itemRoot->setData(mi.name, MethodicNameRole);
+    itemRoot->setData(version(), VersionRole);
 }
 

@@ -35,9 +35,13 @@ public:
 protected:
     void showEvent(QShowEvent *event) override;
 
+private slots:
+    void on_selectMode(bool select);
 
 private:
     Ui::AddTestToSummaryDialog *ui;
+
+    void setActivities();
 };
 
 #endif // ADDTESTTOSUMMARYDIALOG_H
