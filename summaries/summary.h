@@ -180,6 +180,13 @@ private:
 
     void addRootItem(QList<QStandardItem *> &line, MetodicDefines::MetodicInfo &mi);
 
+    /*!
+     * \brief Сортирует элементы таблицы - значения показателей в соотвествии с имеющимися показателями в модели
+     * \param line - список несортированных показателей
+     * \return список сортированных показателей
+     */
+    QList<QStandardItem*> sortItems(QList<QStandardItem*> &line);
+
     QString m_uid {QUuid().toString()};
     QString m_fileName {""};
     QString m_name {""};

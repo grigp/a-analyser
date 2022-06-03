@@ -167,8 +167,10 @@ void Summary::addTestAll(const QString &testUid)
             appendRow(lineHdrChannels);
             appendRow(lineHdrMultiFactors);
             appendRow(lineHdrFactors);
+            appendRow(lineFactors);
         }
-        appendRow(lineFactors);
+        else
+            appendRow(sortItems(lineFactors));
     }
 }
 
@@ -222,8 +224,12 @@ void Summary::addTestPrimary(const QString &testUid)
         }
 
         if (rowCount() == 0)
+        {
             appendRow(lineHeader);
-        appendRow(lineFactors);
+            appendRow(lineFactors);
+        }
+        else
+            appendRow(sortItems(lineFactors));
     }
 }
 
@@ -284,6 +290,7 @@ void Summary::addCalculatedFactors(QList<MultiFactor *> &fgs, BaseDefines::TestL
             auto fv = fg->factorValueFormatted(fg->factorUid(i));
             auto *itemValue = new QStandardItem(fv);
             itemValue->setData(fg->factorValue(i), FactorValueRole);
+            itemValue->setData(fg->factorUid(i), FactorUidRole);
             line << itemValue;
 
             //! Название показателя
@@ -338,5 +345,35 @@ void Summary::addRootItem(QList<QStandardItem *> &line, MetodicDefines::MetodicI
     itemRoot->setData(mi.uid, MethodicUIdRole);
     itemRoot->setData(mi.name, MethodicNameRole);
     itemRoot->setData(version(), VersionRole);
+}
+
+QList<QStandardItem *> Summary::sortItems(QList<QStandardItem *> &line)
+{
+    //! Строка с показателями
+    int rowFN = RowFactors;
+    if (m_kind == SummaryDefines::skPrimary)
+        rowFN = RowPrimaryFactors;
+
+    //! Возвращаемый список
+    QList<QStandardItem*> retval;
+    retval.clear();
+
+    //! Передаем данные по тесту
+    retval << line.at(0);
+    line.removeFirst();
+
+    for (int i = 1; i < columnCount(); ++i)
+    {
+        auto factorUid = index(rowFN, i).data(FactorUidRole).toString();
+        for (int j = 0; j < line.size(); ++j)
+            if (line.at(j)->data(FactorUidRole).toString() == factorUid)
+            {
+                retval << line.at(j);
+                line.removeAt(j);
+                break;
+            }
+    }
+
+    return retval;
 }
 
