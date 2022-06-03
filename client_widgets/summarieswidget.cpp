@@ -59,15 +59,17 @@ void SummariesWidget::addTestToSummary(const QString testUid,
                                        const SummaryDefines::Kind kind)
 {
     //! В новую сводку
+    bool isAdded = false;
     if (mode == SummaryDefines::atmNew)
-        addTestToNewSummary(testUid, summaryName, kind);
+        isAdded = addTestToNewSummary(testUid, summaryName, kind);
     else
     //! В активную сводку
     if (mode == SummaryDefines::atmActive)
-        addTestToActiveSummary(testUid, kind);
+        isAdded = addTestToActiveSummary(testUid, kind);
 
     //! Показываем виджет сводок
-    static_cast<AAnalyserApplication*>(QApplication::instance())->summaries();
+    if (isAdded)
+        static_cast<AAnalyserApplication*>(QApplication::instance())->summaries();
 }
 
 void SummariesWidget::on_selectIndex(QModelIndex index)
@@ -82,7 +84,7 @@ void SummariesWidget::on_selectIndex(QModelIndex index)
     }
 }
 
-void SummariesWidget::addTestToNewSummary(const QString testUid, const QString summaryName, const SummaryDefines::Kind kind)
+bool SummariesWidget::addTestToNewSummary(const QString testUid, const QString summaryName, const SummaryDefines::Kind kind)
 {
     //! Прячем все сводки и снимаем выделение
     hideAllWidgets();
@@ -107,35 +109,43 @@ void SummariesWidget::addTestToNewSummary(const QString testUid, const QString s
     //! Выделяем в нем запись
     ui->tvSummaries->selectionModel()->setCurrentIndex(item->index(), QItemSelectionModel::Select);
     ui->tvSummaries->scrollTo(item->index());
+    return true;
 }
 
-void SummariesWidget::addTestToActiveSummary(const QString testUid, const SummaryDefines::Kind kind)
+bool SummariesWidget::addTestToActiveSummary(const QString testUid, const SummaryDefines::Kind kind)
 {
-    auto selIdx =  ui->tvSummaries->selectionModel()->currentIndex();
-    QVariant var = selIdx.data(lsWidgetRole);
-    if (var.isValid())
+    auto selIdx = ui->tvSummaries->selectionModel()->currentIndex();
+    if (selIdx != QModelIndex())
     {
-        SummaryWidget* wgt = var.value<SummaryWidget*>();
-        if (wgt)
+        QVariant var = selIdx.data(lsWidgetRole);
+        if (var.isValid())
         {
-            DataDefines::TestInfo ti;
-            if (DataProvider::getTestInfo(testUid, ti))
+            SummaryWidget* wgt = var.value<SummaryWidget*>();
+            if (wgt)
             {
-                auto mi = static_cast<AAnalyserApplication*>(QApplication::instance())->getMetodics()->metodic(ti.metodUid);
-                if (kind == wgt->model()->kind())
+                DataDefines::TestInfo ti;
+                if (DataProvider::getTestInfo(testUid, ti))
                 {
-                    if (mi.uid == wgt->model()->uidMethodic())
+                    auto mi = static_cast<AAnalyserApplication*>(QApplication::instance())->getMetodics()->metodic(ti.metodUid);
+                    if (kind == wgt->model()->kind())
                     {
-                        wgt->model()->addTest(testUid);
+                        if (mi.uid == wgt->model()->uidMethodic())
+                        {
+                            wgt->model()->addTest(testUid);
+                            return true;
+                        }
+                        else
+                            QMessageBox::information(nullptr, tr("Предупреждение"), tr("Активная сводка создана для другой методики"));
                     }
                     else
-                        QMessageBox::information(nullptr, tr("Предупреждение"), tr("Активная сводка создана для другой методики"));
+                        QMessageBox::information(nullptr, tr("Предупреждение"), tr("Активная сводка имеет другой тип"));
                 }
-                else
-                    QMessageBox::information(nullptr, tr("Предупреждение"), tr("Активная сводка имеет другой тип"));
             }
         }
     }
+    else
+        QMessageBox::information(nullptr, tr("Предупреждение"), tr("Отсутствует активная сводка"));
+    return false;
 }
 
 void SummariesWidget::hideAllWidgets()

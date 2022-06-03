@@ -47,10 +47,15 @@ void Summary::addTest(const QString &testUid)
 
         //! Строки итемов, показателей и заголовка, которые могут быть добавлены
         QList<QStandardItem*> lineFactors;          //! Значения показателей для теста
+        lineFactors.clear();
         QList<QStandardItem*> lineHdrProbes;        //! Строка заголовка - названия проб
+        lineHdrProbes.clear();
         QList<QStandardItem*> lineHdrChannels;      //! Строка заголовка - названия каналов
+        lineHdrChannels.clear();
         QList<QStandardItem*> lineHdrMultiFactors;  //! Строка заголовка - названия групп показателей
+        lineHdrMultiFactors.clear();
         QList<QStandardItem*> lineHdrFactors;       //! Строка заголовка - названия показателей
+        lineHdrFactors.clear();
 
         //! Добавление первого столбца - пациент + методика + дата и время проведения
         auto itemTH = createItem(lineFactors, kard.fio + " \n" + mi.name + " \n" + ti.dateTime.toString("dd.MM.yyyy hh:mm"));

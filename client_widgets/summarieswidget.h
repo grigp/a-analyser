@@ -82,8 +82,9 @@ private:
      * \param testUid - uid теста
      * \param summaryName - имя сводки для новой или имя файла для существующей
      * \param kind - тип сводки: первичные / все показатели
+     * \return true, если строку удалось добавить успешно
      */
-    void addTestToNewSummary(const QString testUid,
+    bool addTestToNewSummary(const QString testUid,
                              const QString summaryName,
                              const SummaryDefines::Kind kind);
 
@@ -91,8 +92,9 @@ private:
      * \brief Добавление теста в активную сводку
      * \param testUid - uid теста
      * \param kind - тип сводки: первичные / все показатели
+     * \return true, если строку удалось добавить успешно
      */
-    void addTestToActiveSummary(const QString testUid,
+    bool addTestToActiveSummary(const QString testUid,
                                 const SummaryDefines::Kind kind);
 
     void hideAllWidgets();
