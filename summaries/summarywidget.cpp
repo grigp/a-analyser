@@ -2,7 +2,7 @@
 #include "ui_summarywidget.h"
 
 #include "summary.h"
-#include "summatyheaderdelegate.h"
+#include "summaryheaderdelegate.h"
 
 #include <QDebug>
 
@@ -24,11 +24,11 @@ void SummaryWidget::setModel(Summary *model)
 
     //        tv->horizontalHeader()->setVisible(false);
     //        tv->verticalHeader()->setVisible(false);
-    ui->tvSummary->setItemDelegateForColumn(0, new SummatyHeaderDelegate(ui->tvSummary));
-    ui->tvSummary->setItemDelegateForRow(0, new SummatyHeaderDelegate(ui->tvSummary));
-    ui->tvSummary->setItemDelegateForRow(1, new SummatyHeaderDelegate(ui->tvSummary));
-    ui->tvSummary->setItemDelegateForRow(2, new SummatyHeaderDelegate(ui->tvSummary));
-    ui->tvSummary->setItemDelegateForRow(3, new SummatyHeaderDelegate(ui->tvSummary));
+    ui->tvSummary->setItemDelegateForColumn(0, new SummaryHeaderDelegate(ui->tvSummary));
+    ui->tvSummary->setItemDelegateForRow(0, new SummaryHeaderDelegate(ui->tvSummary));
+    ui->tvSummary->setItemDelegateForRow(1, new SummaryHeaderDelegate(ui->tvSummary));
+    ui->tvSummary->setItemDelegateForRow(2, new SummaryHeaderDelegate(ui->tvSummary));
+    ui->tvSummary->setItemDelegateForRow(3, new SummaryHeaderDelegate(ui->tvSummary));
 
     for (int i = 1; i < model->columnCount(); ++i)
         ui->tvSummary->horizontalHeader()->resizeSection(i, 60);

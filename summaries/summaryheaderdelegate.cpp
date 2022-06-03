@@ -1,13 +1,13 @@
-#include "summatyheaderdelegate.h"
+#include "summaryheaderdelegate.h"
 
-SummatyHeaderDelegate::SummatyHeaderDelegate(QObject *parent)
+SummaryHeaderDelegate::SummaryHeaderDelegate(QObject *parent)
     : QStyledItemDelegate (parent)
 
 {
 
 }
 
-void SummatyHeaderDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
+void SummaryHeaderDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
     painter->save();
 

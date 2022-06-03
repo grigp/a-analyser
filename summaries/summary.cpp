@@ -27,14 +27,6 @@ Summary::Summary(QObject *parent)
 
 void Summary::addTest(const QString &testUid)
 {
-//    auto createItem = [&](QList<QStandardItem*>& line, const QString text)
-//    {
-//        auto item = new QStandardItem(text);
-//        item->setEditable(false);
-//        line << item;
-//        return item;
-//    };
-
     DataDefines::TestInfo ti;
     if (DataProvider::getTestInfo(testUid, ti))
     {

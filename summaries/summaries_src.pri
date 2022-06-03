@@ -5,14 +5,14 @@ HEADERS += \
     $$PWD/summary.h \
     $$PWD/addtesttosummarydialog.h \
     $$PWD/summarydefines.h \
-    $$PWD/summatyheaderdelegate.h \
-    $$PWD/summarywidget.h
+    $$PWD/summarywidget.h \
+    $$PWD/summaryheaderdelegate.h
 
 SOURCES += \
     $$PWD/summary.cpp \
     $$PWD/addtesttosummarydialog.cpp \
-    $$PWD/summatyheaderdelegate.cpp \
-    $$PWD/summarywidget.cpp
+    $$PWD/summarywidget.cpp \
+    $$PWD/summaryheaderdelegate.cpp
 
 FORMS += \
     $$PWD/addtesttosummarydialog.ui \
