@@ -10,6 +10,7 @@
 #include "metodicsfactory.h"
 
 #include <QUuid>
+#include <QJsonDocument>
 #include <QDebug>
 
 namespace  {
@@ -43,7 +44,40 @@ void Summary::save() const
 {
     if (m_fileName != "")
     {
+        QFile file(m_fileName);
+        file.remove();
+        if (file.open(QIODevice::WriteOnly | QIODevice::Text))
+        {
+            //! Заголовок
+            QJsonObject root;
+            root["uid"] = m_uid;
+            root["name"] = m_name;
+            if (m_kind == SummaryDefines::skAll)
+                root["kind"] = "all";
+            else
+            if (m_kind == SummaryDefines::skPrimary)
+                root["kind"] = "primary";
+            root["methodic_uid"] = m_uidMethodic;
+            auto mi = static_cast<AAnalyserApplication*>(QApplication::instance())->getMetodics()->metodic(m_uidMethodic);
+            root["methodic_name"] = mi.name;
+            root["version"] = version();
 
+
+            QJsonDocument doc(root);
+            QByteArray ba = doc.toJson();
+            file.write(ba);
+
+            file.close();
+        }
+
+//        QFile file(m_fileName);
+//        if (file.open(QIODevice::WriteOnly))
+//        {
+//            QDataStream stream(&file);
+////                stream << count;
+
+//            file.close();
+//        }
     }
 }
 

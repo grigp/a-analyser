@@ -4,6 +4,7 @@
 #include <QStandardItemModel>
 #include <QTableView>
 #include <QMessageBox>
+#include <QDir>
 #include <QDebug>
 
 #include "aanalyserapplication.h"
@@ -12,6 +13,7 @@
 #include "datadefines.h"
 #include "metodicsfactory.h"
 #include "dataprovider.h"
+#include "stringinputdialog.h"
 
 
 SummariesWidget::SummariesWidget(QWidget *parent) :
@@ -82,6 +84,32 @@ void SummariesWidget::on_selectIndex(QModelIndex index)
         if (wgt)
             wgt->setVisible(true);
     }
+}
+
+void SummariesWidget::on_saveSummary()
+{
+    auto selIdx = ui->tvSummaries->selectionModel()->currentIndex();
+    if (selIdx != QModelIndex())
+    {
+        QVariant var = selIdx.data(lsWidgetRole);
+        if (var.isValid())
+        {
+            SummaryWidget* wgt = var.value<SummaryWidget*>();
+            if (wgt)
+            {
+                if (wgt->model()->fileName() == "")
+                {
+                    QDir dir(DataDefines::aanalyserDocumentsPath() + "summaries/");
+                    if (!dir.exists())
+                        dir.mkpath(DataDefines::aanalyserDocumentsPath() + "summaries/");
+                    wgt->model()->setFileName(DataDefines::aanalyserDocumentsPath() + "summaries/" + wgt->model()->uid() + ".json");
+                }
+                wgt->model()->save();
+            }
+        }
+    }
+    else
+        QMessageBox::information(nullptr, tr("Предупреждение"), tr("Нет выбранной сводки"));
 }
 
 bool SummariesWidget::addTestToNewSummary(const QString testUid, const QString summaryName, const SummaryDefines::Kind kind)

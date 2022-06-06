@@ -73,6 +73,8 @@ private slots:
 
     void on_selectIndex(QModelIndex index);
 
+    void on_saveSummary();
+
 
 private:
     Ui::SummariesWidget *ui;
