@@ -25,5 +25,6 @@ bool TrenResultFactorsDescriptor::isValid(const QString &testUid, const QString 
 
 MultiFactor *TrenResultFactorsDescriptor::caclulate(const QString &testUid, const QString &probeUid, const QString &channelUid)
 {
-    return new TrenResultFactors(testUid, probeUid, channelUid);
+    Q_UNUSED(channelUid);
+    return new TrenResultFactors(testUid, probeUid);
 }

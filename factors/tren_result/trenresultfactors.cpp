@@ -12,9 +12,8 @@
 
 TrenResultFactors::TrenResultFactors(const QString &testUid,
                                      const QString &probeUid,
-                                     const QString &channelId,
                                      QObject *parent)
-    : ChannelMultifactor(testUid, probeUid, channelId, parent)
+    : ProbeMultifactor(testUid, probeUid, parent)
 {
     if (isValid())
         calculate();
@@ -32,7 +31,7 @@ QString TrenResultFactors::name() const
 
 bool TrenResultFactors::isValid() const
 {
-    return isValid(testUid(), probeUid(), channelId());
+    return isValid(testUid(), probeUid(), ChannelsDefines::chanTrenResult);
 }
 
 bool TrenResultFactors::isValid(const QString &testUid, const QString &probeUid, const QString &channelId)
@@ -46,7 +45,7 @@ void TrenResultFactors::calculate()
 {
     //! Основные показатели тренажеров
     QByteArray baData;
-    if (DataProvider::getChannel(probeUid(), channelId(), baData))
+    if (DataProvider::getChannel(probeUid(), ChannelsDefines::chanTrenResult, baData))
     {
         TrenResultData data(baData);
         for (int i = 0; i < data.size(); ++i)

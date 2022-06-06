@@ -78,8 +78,8 @@ void AAnalyserBuild::registerFactors()
     app->registerGroup(new VectorFactorsDescriptor(BaseDefines::tlChannel));
     app->registerGroup(new IDSFactorsDescriptor(BaseDefines::tlChannel));
     app->registerGroup(new RatioProbesFactorsDescriptor(BaseDefines::tlTest));
-    app->registerGroup(new TargetFactorsDescriptor(BaseDefines::tlChannel));
-    app->registerGroup(new TrenResultFactorsDescriptor(BaseDefines::tlChannel));
+    app->registerGroup(new TargetFactorsDescriptor(BaseDefines::tlProbe));
+    app->registerGroup(new TrenResultFactorsDescriptor(BaseDefines::tlProbe));
     app->registerGroup(new BoxerDodgingMultifactorDescriptor(BaseDefines::tlProbe));
     app->registerGroup(new CrossFactorsDescriptor(BaseDefines::tlProbe));
     app->registerGroup(new EvolventaFactorsDescriptor(BaseDefines::tlProbe));

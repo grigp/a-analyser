@@ -26,7 +26,7 @@ void TrenTestCalculator::calculate()
             DataDefines::ProbeInfo pi;
             if (DataProvider::getProbeInfo(ti.probes.at(i), pi))
             {
-                auto factors = new TrenResultFactors(testUid(), pi.uid, ChannelsDefines::chanTrenResult);
+                auto factors = new TrenResultFactors(testUid(), pi.uid);
 
                 for (int j = 0; j < factors->size(); ++j)
                 {

@@ -29,12 +29,11 @@ class Stabilogram;
 /*!
  * \brief Класс модуля расчета показателей результатов сеанса тренинга TrenResultFactors class
  */
-class TrenResultFactors : public ChannelMultifactor
+class TrenResultFactors : public ProbeMultifactor
 {
 public:
     explicit TrenResultFactors(const QString &testUid,
                                const QString &probeUid,
-                               const QString &channelId,
                                QObject *parent = nullptr);
 
     /*!

@@ -23,7 +23,7 @@ void TargetCalculator::calculate()
             DataDefines::ProbeInfo pi;
             if (DataProvider::getProbeInfo(ti.probes.at(0), pi))
             {
-                m_factors = new TargetFactors(testUid(), pi.uid, ChannelsDefines::chanStab);
+                m_factors = new TargetFactors(testUid(), pi.uid);
                 addPrimaryFactor(testUid(), TargetFactorsDefines::TargetScoreUid,
                                  m_factors->factorValue(TargetFactorsDefines::TargetScoreUid),
                                  0, ChannelsDefines::chanStab, pi.name);

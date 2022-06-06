@@ -20,12 +20,11 @@ class Stabilogram;
 /*!
  * \brief Класс модуля расчета показателей мишени TargetFactors class
  */
-class TargetFactors : public ChannelMultifactor
+class TargetFactors : public ProbeMultifactor
 {
 public:
     explicit TargetFactors(const QString &testUid,
                            const QString &probeUid,
-                           const QString &channelId,
                            QObject *parent = nullptr);
 
     /*!

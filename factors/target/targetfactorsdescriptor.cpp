@@ -25,5 +25,6 @@ bool TargetFactorsDescriptor::isValid(const QString &testUid, const QString &pro
 
 MultiFactor *TargetFactorsDescriptor::caclulate(const QString &testUid, const QString &probeUid, const QString &channelUid)
 {
-    return new TargetFactors(testUid, probeUid, channelUid);
+    Q_UNUSED(channelUid);
+    return new TargetFactors(testUid, probeUid);
 }

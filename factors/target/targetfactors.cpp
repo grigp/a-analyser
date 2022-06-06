@@ -10,9 +10,8 @@
 
 TargetFactors::TargetFactors(const QString &testUid,
                              const QString &probeUid,
-                             const QString &channelId,
                              QObject *parent)
-    : ChannelMultifactor(testUid, probeUid, channelId, parent)
+    : ProbeMultifactor(testUid, probeUid, parent)
 {
     if (isValid())
         calculate();
@@ -30,7 +29,7 @@ QString TargetFactors::name() const
 
 bool TargetFactors::isValid() const
 {
-    return isValid(testUid(), probeUid(), channelId());
+    return isValid(testUid(), probeUid(), ChannelsDefines::chanStab);
 }
 
 bool TargetFactors::isValid(const QString &testUid, const QString &probeUid, const QString &channelId)
@@ -46,7 +45,7 @@ void TargetFactors::calculate()
         m_hist[i] = 0;
 
     QByteArray baStab;
-    if (DataProvider::getChannel(probeUid(), channelId(), baStab))
+    if (DataProvider::getChannel(probeUid(), ChannelsDefines::chanStab, baStab))
     {
         Stabilogram stab(baStab);
 
@@ -59,6 +58,7 @@ void TargetFactors::calculate()
             auto rec = stab.value(i);
             double val = sqrt(pow(rec.x/* - offsetX*/, 2) + pow(rec.y/* - offsetY*/, 2));
             int idx = 9 - trunc(val / step);
+            qDebug() << "1)" << i << idx;
             if (idx < 0)
                 idx = 0;
             if (idx > 9)
@@ -73,6 +73,7 @@ void TargetFactors::calculate()
         for (int i = 0; i < 10; ++i)
         {
             m_totalScore = m_totalScore + m_hist[i] * 0.1 * (i + 1);
+            qDebug() << "2)" << i << m_score << m_hist[i] << m_hist[i] / m_score * 100;
             if (m_score != 0)
                 m_hist[i] = m_hist[i] / m_score * 100;
             else

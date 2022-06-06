@@ -70,14 +70,6 @@ void Summary::save() const
             file.close();
         }
 
-//        QFile file(m_fileName);
-//        if (file.open(QIODevice::WriteOnly))
-//        {
-//            QDataStream stream(&file);
-////                stream << count;
-
-//            file.close();
-//        }
     }
 }
 
