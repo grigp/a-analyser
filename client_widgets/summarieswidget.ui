@@ -53,7 +53,17 @@
       <item>
        <widget class="QPushButton" name="btnOpenSummary">
         <property name="text">
-         <string>PushButton</string>
+         <string>Открыть сводку</string>
+        </property>
+        <property name="icon">
+         <iconset resource="../kernel.qrc">
+          <normaloff>:/images/OpenDoc.png</normaloff>:/images/OpenDoc.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>22</width>
+          <height>22</height>
+         </size>
         </property>
        </widget>
       </item>
@@ -77,7 +87,17 @@
       <item>
        <widget class="QPushButton" name="btnCloseSummary">
         <property name="text">
-         <string>PushButton</string>
+         <string>Закрыть сводку</string>
+        </property>
+        <property name="icon">
+         <iconset resource="../kernel.qrc">
+          <normaloff>:/images/Close.png</normaloff>:/images/Close.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>22</width>
+          <height>22</height>
+         </size>
         </property>
        </widget>
       </item>
@@ -221,9 +241,43 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>btnOpenSummary</sender>
+   <signal>clicked()</signal>
+   <receiver>SummariesWidget</receiver>
+   <slot>on_openSummary()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>69</x>
+     <y>14</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>840</x>
+     <y>40</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btnCloseSummary</sender>
+   <signal>clicked()</signal>
+   <receiver>SummariesWidget</receiver>
+   <slot>on_closeSummary()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>306</x>
+     <y>7</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>843</x>
+     <y>18</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>on_selectIndex(QModelIndex)</slot>
   <slot>on_saveSummary()</slot>
+  <slot>on_openSummary()</slot>
+  <slot>on_closeSummary()</slot>
  </slots>
 </ui>

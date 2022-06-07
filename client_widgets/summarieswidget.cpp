@@ -86,6 +86,11 @@ void SummariesWidget::on_selectIndex(QModelIndex index)
     }
 }
 
+void SummariesWidget::on_openSummary()
+{
+
+}
+
 void SummariesWidget::on_saveSummary()
 {
     auto selIdx = ui->tvSummaries->selectionModel()->currentIndex();
@@ -111,6 +116,11 @@ void SummariesWidget::on_saveSummary()
     }
     else
         QMessageBox::information(nullptr, tr("Предупреждение"), tr("Нет выбранной сводки"));
+}
+
+void SummariesWidget::on_closeSummary()
+{
+
 }
 
 bool SummariesWidget::addTestToNewSummary(const QString testUid, const QString summaryName, const SummaryDefines::Kind kind)

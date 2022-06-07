@@ -216,5 +216,7 @@
         <file>images/Summaries.png</file>
         <file>images/SummaryAddTest.png</file>
         <file>images/SummaryBuild.png</file>
+        <file>images/CloseDoc.png</file>
+        <file>images/OpenDoc.png</file>
     </qresource>
 </RCC>

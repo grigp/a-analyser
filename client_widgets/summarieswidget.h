@@ -73,7 +73,9 @@ private slots:
 
     void on_selectIndex(QModelIndex index);
 
+    void on_openSummary();
     void on_saveSummary();
+    void on_closeSummary();
 
 
 private:
