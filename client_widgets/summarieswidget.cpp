@@ -105,6 +105,7 @@ void SummariesWidget::on_saveSummary()
                     wgt->model()->setFileName(DataDefines::aanalyserDocumentsPath() + "summaries/" + wgt->model()->uid() + ".json");
                 }
                 wgt->model()->save();
+                QMessageBox::information(nullptr, tr("Информация"), tr("Сводка сохранена") + " : \"" + wgt->model()->name() + "\"");
             }
         }
     }
