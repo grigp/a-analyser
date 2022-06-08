@@ -2,7 +2,7 @@
 
 #include "weightplategraphvisualwidget.h"
 
-WeightPlateGraphVisual::WeightPlateGraphVisual(VisualDefines::Level level)
+WeightPlateGraphVisual::WeightPlateGraphVisual(BaseDefines::TestLevel level)
     : VisualDescriptor (level)
 {
 

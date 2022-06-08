@@ -3,6 +3,7 @@
 
 #include <QObject>
 
+#include "basedefines.h"
 #include "visualdescriptor.h"
 
 namespace VisualNames
@@ -17,7 +18,7 @@ static const QString Name_WeightPlateGraph = "Анализ динамики ве
 class WeightPlateGraphVisual : public VisualDescriptor
 {
 public:
-    WeightPlateGraphVisual(VisualDefines::Level level);
+    WeightPlateGraphVisual(BaseDefines::TestLevel level);
     ~WeightPlateGraphVisual() override;
 
     QString uid() override;

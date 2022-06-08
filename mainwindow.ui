@@ -159,6 +159,17 @@
     <string>Справочная информация о программе</string>
    </property>
   </action>
+  <action name="acSummariesShow">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Показать сводки</string>
+   </property>
+   <property name="toolTip">
+    <string>Показать открытые сводки</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources/>

@@ -17,8 +17,8 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit MainWindow(QWidget *parent = 0);
-    ~MainWindow();
+    explicit MainWindow(QWidget *parent = nullptr);
+    ~MainWindow() override;
 
     /*!
      * \brief Показывает страницу с заданным uid
@@ -57,6 +57,11 @@ private slots:
 
     void on_selectDatabase();
     void on_selectColorSheme();
+
+    void onSummariesShow();
+    void onAddTestToSymmary();
+    void onSummaryBuild();
+    void onSummariesBrowse();
 
 private:
     Ui::MainWindow *ui;

@@ -255,6 +255,26 @@ void MainWindow::on_selectColorSheme()
     }
 }
 
+void MainWindow::onSummariesShow()
+{
+    qDebug() << "summaries";
+}
+
+void MainWindow::onAddTestToSymmary()
+{
+
+}
+
+void MainWindow::onSummaryBuild()
+{
+
+}
+
+void MainWindow::onSummariesBrowse()
+{
+
+}
+
 void MainWindow::initUi(const QString& colorSheme)
 {
     QFile style(colorSheme);
@@ -282,6 +302,10 @@ void MainWindow::initMenu()
     menuDatabase->addSeparator();
 
     menuDatabase->addAction(ui->acExit);
+
+    QMenu *menuSummaries = menuBar()->addMenu(tr("Сводки"));
+    menuSummaries->addAction(ui->acDeviceControl);
+    menuSummaries->addAction(ui->acSettings);
 
     QMenu *menuSettings = menuBar()->addMenu(tr("Настройки"));
     menuSettings->addAction(ui->acDeviceControl);

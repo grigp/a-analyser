@@ -5,6 +5,7 @@
 #include "metodictemplate.h"
 #include "bedsidescalestestertemplate.h"
 
+#include "basedefines.h"
 #include "devicesdefines.h"
 #include "driver.h"
 #include "bedsidescales01.h"
@@ -25,8 +26,8 @@ void AAnalyserBuild::registerFactors()
 void AAnalyserBuild::registerVisuals()
 {
     auto* app = static_cast<AAnalyserApplication*>(QApplication::instance());
-    app->registerVisual(new BalistogramVisual(VisualDefines::vlChannel));
-    app->registerVisual(new WeightPlateGraphVisual(VisualDefines::vlChannel));
+    app->registerVisual(new BalistogramVisual(BaseDefines::tlChannel));
+    app->registerVisual(new WeightPlateGraphVisual(BaseDefines::tlChannel));
 }
 
 QList<DeviceProtocols::Ports> AAnalyserBuild::getDriverPorts(const QString &drvUid)
