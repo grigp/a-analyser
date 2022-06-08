@@ -43,108 +43,11 @@ void Summary::open(const QString &fileName)
 
 void Summary::save() const
 {
-    if (m_fileName != "")
-    {
-        QFile file(m_fileName);
-        file.remove();
-        if (file.open(QIODevice::WriteOnly | QIODevice::Text))
-        {
-            //! Заголовок
-            QJsonObject root;
-            root["uid"] = m_uid;
-            root["name"] = m_name;
-            if (m_kind == SummaryDefines::skAll)
-                root["kind"] = "all";
-            else
-            if (m_kind == SummaryDefines::skPrimary)
-                root["kind"] = "primary";
-            root["methodic_uid"] = m_uidMethodic;
-            auto mi = static_cast<AAnalyserApplication*>(QApplication::instance())->getMetodics()->metodic(m_uidMethodic);
-            root["methodic_name"] = mi.name;
-            root["version"] = version();
-
-            //! Таблица показателей с отдльно обрабатываемым заголовком
-            QJsonArray rows;
-            for (int i = 0; i < rowCount(); ++i)
-            {
-                //! По столбцам для строки
-                QJsonArray columns;
-                for (int j = 0; j < columnCount(); ++j)
-                {
-                    //! Всегда выводим текст итема
-                    QJsonObject item;
-                    item["text"] = index(i, j).data().toString();
-
-                    //! В зависимости от номера строки
-                    if (i == 0 && index(i, j).data(ProbeNameRole).toString() != "")
-                    {
-                        item["probe_number"] = index(i, j).data(ProbeNumberRole).toInt();
-                        item["probe_name"] = index(i, j).data(ProbeNameRole).toString();
-                    }
-                    else
-                    if (i == 1 && index(i, j).data(ChannelIdRole).toString() != "")
-                    {
-                        item["channel_id"] = index(i, j).data(ChannelIdRole).toString();
-                        item["channel_name"] = index(i, j).data(ChannelNameRole).toString();
-                    }
-                    else
-                    if (i == 2 && index(i, j).data(MultiFactorUidRole).toString() != "")
-                    {
-                        item["multifactor_uid"] = index(i, j).data(MultiFactorUidRole).toString();
-                        item["multifactor_name"] = index(i, j).data(MultiFactorNameRole).toString();
-                    }
-                    else
-                    if (i == 3 && index(i, j).data(FactorUidRole).toString() != "")
-                    {
-                        item["uid"] = index(i, j).data(FactorUidRole).toString();
-                        item["name"] = index(i, j).data(FactorNameRole).toString();
-                        item["short_name"] = index(i, j).data(FactorShortNameRole).toString();
-                        item["measure"] = index(i, j).data(FactorMeasureRole).toString();
-                        item["format"] = index(i, j).data(FactorFormatRole).toInt();
-                    }
-                    if (i >= 4)   //! Строки значений показателей для тестов
-                    {
-                        if (j == 0)  //! Заголовок. ФИО и дата+время проведения
-                        {
-                            item["patient_fio"] = index(i, j).data(PatientFioRole).toString();
-                            item["datetime"] = index(i, j).data(TestDateTimeRole).toDateTime().toString("dd.MM.yyyy hh:mm");
-                        }
-                        else
-                        if (j > 0)   //! Показатели
-                        {
-                            item["uid"] = index(i, j).data(FactorUidRole).toString();
-                            item["value"] = index(i, j).data(FactorValueRole).toDouble();
-                        }
-                    }
-
-                    columns << item;
-                }
-                rows << columns;
-            }
-
-            root["table"] = rows;
-
-            //! "Объединенные итемы"
-            QJsonArray spans;
-            foreach (auto span, m_spanCells)
-            {
-                QJsonObject so;
-                so["row"] = span.row;
-                so["col"] = span.col;
-                so["width"] = span.width;
-                spans << so;
-            }
-            root["span_cells"] = spans;
-
-            //! Оформление документа
-            QJsonDocument doc(root);
-            QByteArray ba = doc.toJson();
-            file.write(ba);
-
-            file.close();
-        }
-
-    }
+    if (m_kind == SummaryDefines::skAll)
+        saveAll();
+    else
+    if (m_kind == SummaryDefines::skPrimary)
+        savePrimary();
 }
 
 QString Summary::name() const
@@ -296,7 +199,7 @@ void Summary::addTestPrimary(const QString &testUid)
         lineHeader.clear();
 
         //! Добавление первого столбца - пациент + методика + дата и время проведения
-        auto itemTH = createItem(lineFactors, kard.fio + " \n" + mi.name + " \n" + ti.dateTime.toString("dd.MM.yyyy hh:mm"));
+        auto itemTH = createItem(lineFactors, kard.fio + " \n" + ti.dateTime.toString("dd.MM.yyyy hh:mm"));
         itemTH->setData(kard.fio, PatientFioRole);
         itemTH->setData(ti.dateTime, TestDateTimeRole);
 
@@ -311,6 +214,7 @@ void Summary::addTestPrimary(const QString &testUid)
             //! Значение
             auto *itemValue = new QStandardItem(QString::number(factor.value(), 'f', fi.format()));
             itemValue->setData(factor.value(), FactorValueRole);
+            itemValue->setData(factor.uid(), FactorUidRole);
             lineFactors << itemValue;
 
             //! Название показателя
@@ -475,5 +379,198 @@ QList<QStandardItem *> Summary::sortItems(QList<QStandardItem *> &line)
     }
 
     return retval;
+}
+
+void Summary::saveAll() const
+{
+    if (m_fileName != "")
+    {
+        QFile file(m_fileName);
+        file.remove();
+        if (file.open(QIODevice::WriteOnly | QIODevice::Text))
+        {
+            //! Заголовок
+            QJsonObject root;
+            root["uid"] = m_uid;
+            root["name"] = m_name;
+            if (m_kind == SummaryDefines::skAll)
+                root["kind"] = "all";
+            else
+            if (m_kind == SummaryDefines::skPrimary)
+                root["kind"] = "primary";
+            root["methodic_uid"] = m_uidMethodic;
+            auto mi = static_cast<AAnalyserApplication*>(QApplication::instance())->getMetodics()->metodic(m_uidMethodic);
+            root["methodic_name"] = mi.name;
+            root["version"] = version();
+
+            //! Таблица показателей с отдльно обрабатываемым заголовком
+            QJsonArray rows;
+            for (int i = 0; i < rowCount(); ++i)
+            {
+                //! По столбцам для строки
+                QJsonArray columns;
+                for (int j = 0; j < columnCount(); ++j)
+                {
+                    //! Всегда выводим текст итема
+                    QJsonObject item;
+                    item["text"] = index(i, j).data().toString();
+
+                    //! В зависимости от номера строки
+                    if (i == 0 && index(i, j).data(ProbeNameRole).toString() != "")
+                    {
+                        item["probe_number"] = index(i, j).data(ProbeNumberRole).toInt();
+                        item["probe_name"] = index(i, j).data(ProbeNameRole).toString();
+                    }
+                    else
+                    if (i == 1 && index(i, j).data(ChannelIdRole).toString() != "")
+                    {
+                        item["channel_id"] = index(i, j).data(ChannelIdRole).toString();
+                        item["channel_name"] = index(i, j).data(ChannelNameRole).toString();
+                    }
+                    else
+                    if (i == 2 && index(i, j).data(MultiFactorUidRole).toString() != "")
+                    {
+                        item["multifactor_uid"] = index(i, j).data(MultiFactorUidRole).toString();
+                        item["multifactor_name"] = index(i, j).data(MultiFactorNameRole).toString();
+                    }
+                    else
+                    if (i == 3 && index(i, j).data(FactorUidRole).toString() != "")
+                    {
+                        item["uid"] = index(i, j).data(FactorUidRole).toString();
+                        item["name"] = index(i, j).data(FactorNameRole).toString();
+                        item["short_name"] = index(i, j).data(FactorShortNameRole).toString();
+                        item["measure"] = index(i, j).data(FactorMeasureRole).toString();
+                        item["format"] = index(i, j).data(FactorFormatRole).toInt();
+                    }
+                    if (i >= 4)   //! Строки значений показателей для тестов
+                    {
+                        if (j == 0)  //! Заголовок. ФИО и дата+время проведения
+                        {
+                            item["patient_fio"] = index(i, j).data(PatientFioRole).toString();
+                            item["datetime"] = index(i, j).data(TestDateTimeRole).toDateTime().toString("dd.MM.yyyy hh:mm");
+                        }
+                        else
+                        if (j > 0)   //! Показатели
+                        {
+                            item["uid"] = index(i, j).data(FactorUidRole).toString();
+                            item["value"] = index(i, j).data(FactorValueRole).toDouble();
+                        }
+                    }
+
+                    columns << item;
+                }
+                rows << columns;
+            }
+
+            root["table"] = rows;
+
+            //! "Объединенные итемы"
+            QJsonArray spans;
+            foreach (auto span, m_spanCells)
+            {
+                QJsonObject so;
+                so["row"] = span.row;
+                so["col"] = span.col;
+                so["width"] = span.width;
+                spans << so;
+            }
+            root["span_cells"] = spans;
+
+            //! Оформление документа
+            QJsonDocument doc(root);
+            QByteArray ba = doc.toJson();
+            file.write(ba);
+
+            file.close();
+        }
+    }
+}
+
+void Summary::savePrimary() const
+{
+    if (m_fileName != "")
+    {
+        QFile file(m_fileName);
+        file.remove();
+        if (file.open(QIODevice::WriteOnly | QIODevice::Text))
+        {
+            //! Заголовок
+            QJsonObject root;
+            root["uid"] = m_uid;
+            root["name"] = m_name;
+            if (m_kind == SummaryDefines::skAll)
+                root["kind"] = "all";
+            else
+            if (m_kind == SummaryDefines::skPrimary)
+                root["kind"] = "primary";
+            root["methodic_uid"] = m_uidMethodic;
+            auto mi = static_cast<AAnalyserApplication*>(QApplication::instance())->getMetodics()->metodic(m_uidMethodic);
+            root["methodic_name"] = mi.name;
+            root["version"] = version();
+
+            //! Таблица показателей с отдльно обрабатываемым заголовком
+            QJsonArray rows;
+            for (int i = 0; i < rowCount(); ++i)
+            {
+                //! По столбцам для строки
+                QJsonArray columns;
+                for (int j = 0; j < columnCount(); ++j)
+                {
+                    //! Всегда выводим текст итема
+                    QJsonObject item;
+                    item["text"] = index(i, j).data().toString();
+
+                    //! В зависимости от номера строки
+                    if (i == 0 && index(i, j).data(FactorUidRole).toString() != "")
+                    {
+                        item["uid"] = index(i, j).data(FactorUidRole).toString();
+                        item["name"] = index(i, j).data(FactorNameRole).toString();
+                        item["short_name"] = index(i, j).data(FactorShortNameRole).toString();
+                        item["measure"] = index(i, j).data(FactorMeasureRole).toString();
+                        item["format"] = index(i, j).data(FactorFormatRole).toInt();
+                    }
+                    if (i >= 1)   //! Строки значений показателей для тестов
+                    {
+                        if (j == 0)  //! Заголовок. ФИО и дата+время проведения
+                        {
+                            item["patient_fio"] = index(i, j).data(PatientFioRole).toString();
+                            item["datetime"] = index(i, j).data(TestDateTimeRole).toDateTime().toString("dd.MM.yyyy hh:mm");
+                        }
+                        else
+                        if (j > 0)   //! Показатели
+                        {
+                            item["uid"] = index(i, j).data(FactorUidRole).toString();
+                            item["value"] = index(i, j).data(FactorValueRole).toDouble();
+                        }
+                    }
+
+                    columns << item;
+                }
+                rows << columns;
+            }
+
+            root["table"] = rows;
+
+            //! "Объединенные итемы"
+            QJsonArray spans;
+            foreach (auto span, m_spanCells)
+            {
+                QJsonObject so;
+                so["row"] = span.row;
+                so["col"] = span.col;
+                so["width"] = span.width;
+                spans << so;
+            }
+            root["span_cells"] = spans;
+
+            //! Оформление документа
+            QJsonDocument doc(root);
+            QByteArray ba = doc.toJson();
+            file.write(ba);
+
+            file.close();
+        }
+
+    }
 }
 

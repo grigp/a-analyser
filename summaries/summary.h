@@ -187,6 +187,15 @@ private:
      */
     QList<QStandardItem*> sortItems(QList<QStandardItem*> &line);
 
+    /*!
+     * \brief Сохраняет сводку со всеми показателями
+     */
+    void saveAll() const;
+    /*!
+     * \brief Сохраняет сводку с первичными показателями
+     */
+    void savePrimary() const;
+
     QString m_uid {QUuid().toString()};
     QString m_fileName {""};
     QString m_name {""};

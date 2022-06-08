@@ -79,22 +79,42 @@ void SummaryWidget::on_ItemSelected(QModelIndex index)
             label->setText("");
     };
 
-    //! Вывод названия показателя
-    auto fn = model()->index(Summary::RowFactors, index.column(), index.parent()).data(Summary::FactorNameRole).toString();
-    if (fn != "")
-        ui->lblFactorName->setText(tr("Показатель") + " - " + fn);
+    if (model()->kind() == SummaryDefines::skAll)
+    {
+        //! Вывод названия показателя
+        auto fn = model()->index(Summary::RowFactors, index.column(), index.parent()).data(Summary::FactorNameRole).toString();
+        if (fn != "")
+            ui->lblFactorName->setText(tr("Показатель") + " - " + fn);
+        else
+            ui->lblFactorName->setText("");
+
+        //! Вывод названия группы показателей
+        showValue(Summary::RowMultifactors, Summary::MultiFactorNameRole, ui->lblMultiFactorName, tr("Группа показателей"));
+
+        //! Вывод названия канала
+        showValue(Summary::RowChannels, Summary::ChannelNameRole, ui->lblChannelName, tr("Канал"));
+
+        //! Вывод названия пробы
+        showValue(Summary::RowProbes, Summary::ProbeNameRole, ui->lblProbeName, tr("Проба"));
+
+        //! Вывод названия методики
+        showValue(Summary::RowProbes, Summary::MethodicNameRole, ui->lblMethodName, tr("Методика"));
+    }
     else
-        ui->lblFactorName->setText("");
+    if (model()->kind() == SummaryDefines::skPrimary)
+    {
+        //! Вывод названия показателя
+        auto fn = model()->index(Summary::RowPrimaryFactors, index.column(), index.parent()).data(Summary::FactorNameRole).toString();
+        if (fn != "")
+            ui->lblFactorName->setText(tr("Показатель") + " - " + fn);
+        else
+            ui->lblFactorName->setText("");
 
-    //! Вывод названия группы показателей
-    showValue(Summary::RowMultifactors, Summary::MultiFactorNameRole, ui->lblMultiFactorName, tr("Группа показателей"));
+        ui->lblMultiFactorName->setText("");
+        ui->lblChannelName->setText("");
+        ui->lblProbeName->setText("");
 
-    //! Вывод названия канала
-    showValue(Summary::RowChannels, Summary::ChannelNameRole, ui->lblChannelName, tr("Канал"));
-
-    //! Вывод названия пробы
-    showValue(Summary::RowProbes, Summary::ProbeNameRole, ui->lblProbeName, tr("Проба"));
-
-    //! Вывод названия методики
-    showValue(Summary::RowProbes, Summary::MethodicNameRole, ui->lblMethodName, tr("Методика"));
+        //! Вывод названия методики
+        showValue(Summary::RowProbes, Summary::MethodicNameRole, ui->lblMethodName, tr("Методика"));
+    }
 }
