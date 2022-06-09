@@ -7,16 +7,16 @@ HEADERS += \
     $$PWD/summarydefines.h \
     $$PWD/summarywidget.h \
     $$PWD/summaryheaderdelegate.h \
-    $$PWD/opensummaydialog.h
+    $$PWD/opensummarydialog.h
 
 SOURCES += \
     $$PWD/summary.cpp \
     $$PWD/addtesttosummarydialog.cpp \
     $$PWD/summarywidget.cpp \
     $$PWD/summaryheaderdelegate.cpp \
-    $$PWD/opensummaydialog.cpp
+    $$PWD/opensummarydialog.cpp
 
 FORMS += \
     $$PWD/addtesttosummarydialog.ui \
     $$PWD/summarywidget.ui \
-    $$PWD/opensummaydialog.ui
+    $$PWD/opensummarydialog.ui

@@ -1,5 +1,5 @@
-#include "opensummaydialog.h"
-#include "ui_opensummaydialog.h"
+#include "opensummarydialog.h"
+#include "ui_opensummarydialog.h"
 
 #include <QDir>
 #include <QDebug>
@@ -9,20 +9,20 @@
 #include "summary.h"
 #include "metodicsfactory.h"
 
-OpenSummayDialog::OpenSummayDialog(QWidget *parent) :
+OpenSummaryDialog::OpenSummaryDialog(QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::OpenSummayDialog)
+    ui(new Ui::OpenSummaryDialog)
 {
     ui->setupUi(this);
     load();
 }
 
-OpenSummayDialog::~OpenSummayDialog()
+OpenSummaryDialog::~OpenSummaryDialog()
 {
     delete ui;
 }
 
-void OpenSummayDialog::load()
+void OpenSummaryDialog::load()
 {
     QString path = DataDefines::aanalyserDocumentsPath() + "summaries/";
     QDir dir(path);
