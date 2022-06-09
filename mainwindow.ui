@@ -160,14 +160,35 @@
    </property>
   </action>
   <action name="acSummariesShow">
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
    <property name="text">
     <string>Показать сводки</string>
    </property>
    <property name="toolTip">
     <string>Показать открытые сводки</string>
+   </property>
+  </action>
+  <action name="acAddTestToSummary">
+   <property name="text">
+    <string>Добавить показатели теста в сводку...</string>
+   </property>
+   <property name="toolTip">
+    <string>Добавляет показатели теста в сводку</string>
+   </property>
+  </action>
+  <action name="acSummaryBuild">
+   <property name="text">
+    <string>Построение сводки</string>
+   </property>
+   <property name="toolTip">
+    <string>Построение сводки</string>
+   </property>
+  </action>
+  <action name="acSummariesBrowse">
+   <property name="text">
+    <string>Обзор сводок</string>
+   </property>
+   <property name="toolTip">
+    <string>Просмотр всех созданных сводок</string>
    </property>
   </action>
  </widget>
@@ -334,6 +355,70 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>acSummariesShow</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>onSummariesShow()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>581</x>
+     <y>317</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>acAddTestToSummary</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>onAddTestToSymmary()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>581</x>
+     <y>317</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>acSummaryBuild</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>onSummaryBuild()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>581</x>
+     <y>317</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>acSummariesBrowse</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>onSummariesBrowse()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>581</x>
+     <y>317</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>onDeviceControl()</slot>
@@ -345,5 +430,9 @@
   <slot>onDataBaseCreate()</slot>
   <slot>onDataBaseDelTests()</slot>
   <slot>onAbout()</slot>
+  <slot>onSummariesShow()</slot>
+  <slot>onAddTestToSymmary()</slot>
+  <slot>onSummaryBuild()</slot>
+  <slot>onSummariesBrowse()</slot>
  </slots>
 </ui>

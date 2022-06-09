@@ -280,12 +280,17 @@ void AAnalyserApplication::summaries()
 
 void AAnalyserApplication::summaryAddTest()
 {
-    if (!m_addTSDlg)
+    if (m_testUid != "")
     {
-        m_addTSDlg = new AddTestToSummaryDialog(this->mainWindow());
-        connect(m_addTSDlg, &AddTestToSummaryDialog::accepted, this, &AAnalyserApplication::on_AddTestToSummaryAccepted);
+        if (!m_addTSDlg)
+        {
+            m_addTSDlg = new AddTestToSummaryDialog(this->mainWindow());
+            connect(m_addTSDlg, &AddTestToSummaryDialog::accepted, this, &AAnalyserApplication::on_AddTestToSummaryAccepted);
+        }
+        m_addTSDlg->show();
     }
-    m_addTSDlg->show();
+    else
+        QMessageBox::information(nullptr, tr("Предупреждение"), tr("Не выбран тест"));
 }
 
 void AAnalyserApplication::summaryBuild()

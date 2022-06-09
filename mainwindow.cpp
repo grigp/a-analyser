@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+#include "aanalyserapplication.h"
 #include "databaseresultwidget.h"
 #include "executewidget.h"
 #include "signalanalysiswidget.h"
@@ -257,22 +258,22 @@ void MainWindow::on_selectColorSheme()
 
 void MainWindow::onSummariesShow()
 {
-    qDebug() << "summaries";
+    static_cast<AAnalyserApplication*>(QApplication::instance())->summaries();
 }
 
 void MainWindow::onAddTestToSymmary()
 {
-
+    static_cast<AAnalyserApplication*>(QApplication::instance())->summaryAddTest();
 }
 
 void MainWindow::onSummaryBuild()
 {
-
+    qDebug() << "построение сводки";
 }
 
 void MainWindow::onSummariesBrowse()
 {
-
+    qDebug() << "обзор сводок";
 }
 
 void MainWindow::initUi(const QString& colorSheme)
@@ -304,8 +305,14 @@ void MainWindow::initMenu()
     menuDatabase->addAction(ui->acExit);
 
     QMenu *menuSummaries = menuBar()->addMenu(tr("Сводки"));
-    menuSummaries->addAction(ui->acDeviceControl);
-    menuSummaries->addAction(ui->acSettings);
+    ui->acSummariesShow->setIcon(QIcon(":/images/Summaries.png"));
+    menuSummaries->addAction(ui->acSummariesShow);
+    ui->acAddTestToSummary->setIcon(QIcon(":/images/SummaryAddTest.png"));
+    menuSummaries->addAction(ui->acAddTestToSummary);
+    ui->acSummaryBuild->setIcon(QIcon(":/images/SummaryBuild.png"));
+    menuSummaries->addAction(ui->acSummaryBuild);
+    menuSummaries->addSeparator();
+    menuSummaries->addAction(ui->acSummariesBrowse);
 
     QMenu *menuSettings = menuBar()->addMenu(tr("Настройки"));
     menuSettings->addAction(ui->acDeviceControl);
