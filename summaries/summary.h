@@ -78,6 +78,16 @@ public:
     void addTest(const QString &testUid);
 
     /*!
+     * \brief Возвращает заголовок сводки с ее параметрами, читая их из файла
+     * \param fileName - имя файла сводки
+     * \param name - имя сводки
+     * \param uidMethodic - uid методики
+     * \param kind - тип сводки
+     */
+    static void getHeader(const QString &fileName,
+                          QString &name, QString &uidMethodic, QString &nameMethodic, SummaryDefines::Kind &kind);
+
+    /*!
      * \brief Открывает сводку из файла
      * \param fileName - имя файла
      */

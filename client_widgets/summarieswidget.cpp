@@ -14,6 +14,7 @@
 #include "metodicsfactory.h"
 #include "dataprovider.h"
 #include "stringinputdialog.h"
+#include "opensummaydialog.h"
 
 
 SummariesWidget::SummariesWidget(QWidget *parent) :
@@ -88,7 +89,12 @@ void SummariesWidget::on_selectIndex(QModelIndex index)
 
 void SummariesWidget::on_openSummary()
 {
+    auto dlg = new OpenSummayDialog(nullptr);
+    if (dlg->exec() == QDialog::Accepted)
+    {
 
+    }
+    delete dlg;
 }
 
 void SummariesWidget::on_saveSummary()

@@ -36,6 +36,29 @@ void Summary::addTest(const QString &testUid)
         addTestPrimary(testUid);
 }
 
+void Summary::getHeader(const QString &fileName,
+                        QString &name, QString &uidMethodic, QString &nameMethodic, SummaryDefines::Kind &kind)
+{
+    QFile fileRec(fileName);
+    if (fileRec.open(QIODevice::ReadOnly | QIODevice::Text))
+    {
+        QByteArray ba = fileRec.readAll();
+        QJsonDocument loadDoc(QJsonDocument::fromJson(ba));
+        QJsonObject summObj = loadDoc.object();
+        fileRec.close();
+
+        name = summObj["name"].toString();
+        uidMethodic = summObj["methodic_uid"].toString();
+        nameMethodic = summObj["methodic_name"].toString();
+        QString sKind = summObj["kind"].toString();
+        if (sKind == "all")
+            kind = SummaryDefines::skAll;
+        else
+        if (sKind == "primary")
+            kind = SummaryDefines::skPrimary;
+    }
+}
+
 void Summary::open(const QString &fileName)
 {
     m_fileName = fileName;

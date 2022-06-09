@@ -63,7 +63,9 @@ MetodicDefines::MetodicInfo MetodicsFactory::metodic(const int i) const
 MetodicDefines::MetodicInfo MetodicsFactory::metodic(const QString &metUid) const
 {
     auto mi = getMetodicIndexByUid(metUid);
-    return metodic(mi);
+    if (mi >= 0)
+        return metodic(mi);
+    return MetodicDefines::MetodicInfo();
 }
 
 bool MetodicsFactory::editMetodicParams(QWidget *parent, const QString &metUid)
