@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>300</height>
+    <width>939</width>
+    <height>484</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -22,7 +22,10 @@
      <property name="frameShadow">
       <enum>QFrame::Raised</enum>
      </property>
-     <layout class="QVBoxLayout" name="verticalLayout_2">
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <property name="spacing">
+       <number>5</number>
+      </property>
       <property name="leftMargin">
        <number>0</number>
       </property>
@@ -36,7 +39,89 @@
        <number>1</number>
       </property>
       <item>
-       <widget class="QTreeView" name="tvSummaries"/>
+       <widget class="QSplitter" name="splitter">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <widget class="QFrame" name="frFilter">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+           <horstretch>1</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="frameShape">
+          <enum>QFrame::StyledPanel</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Raised</enum>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_2">
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
+           <number>0</number>
+          </property>
+          <item>
+           <widget class="QTreeView" name="tvMethodics"/>
+          </item>
+          <item>
+           <widget class="QFrame" name="frTools">
+            <property name="frameShape">
+             <enum>QFrame::StyledPanel</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Raised</enum>
+            </property>
+            <layout class="QVBoxLayout" name="verticalLayout_3">
+             <item>
+              <widget class="QRadioButton" name="rbAll">
+               <property name="text">
+                <string>Все сводки</string>
+               </property>
+               <property name="checked">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QRadioButton" name="rbAllFactors">
+               <property name="text">
+                <string>Все показатели</string>
+               </property>
+               <property name="checked">
+                <bool>false</bool>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QRadioButton" name="rbPrimaryFactors">
+               <property name="text">
+                <string>Первичные показатели</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+        <widget class="QTreeView" name="tvSummaries">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+           <horstretch>3</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+        </widget>
+       </widget>
       </item>
      </layout>
     </widget>
@@ -62,8 +147,8 @@
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>248</x>
-     <y>254</y>
+     <x>259</x>
+     <y>472</y>
     </hint>
     <hint type="destinationlabel">
      <x>157</x>
@@ -78,8 +163,8 @@
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>316</x>
-     <y>260</y>
+     <x>327</x>
+     <y>472</y>
     </hint>
     <hint type="destinationlabel">
      <x>286</x>
@@ -87,5 +172,89 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>tvMethodics</sender>
+   <signal>activated(QModelIndex)</signal>
+   <receiver>OpenSummaryDialog</receiver>
+   <slot>on_selectMethodic(QModelIndex)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>324</x>
+     <y>168</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>940</x>
+     <y>111</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>tvMethodics</sender>
+   <signal>clicked(QModelIndex)</signal>
+   <receiver>OpenSummaryDialog</receiver>
+   <slot>on_selectMethodic(QModelIndex)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>464</x>
+     <y>84</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>942</x>
+     <y>77</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>rbAll</sender>
+   <signal>clicked()</signal>
+   <receiver>OpenSummaryDialog</receiver>
+   <slot>on_kindChanged()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>75</x>
+     <y>361</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>940</x>
+     <y>169</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>rbAllFactors</sender>
+   <signal>clicked()</signal>
+   <receiver>OpenSummaryDialog</receiver>
+   <slot>on_kindChanged()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>106</x>
+     <y>392</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>939</x>
+     <y>203</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>rbPrimaryFactors</sender>
+   <signal>clicked()</signal>
+   <receiver>OpenSummaryDialog</receiver>
+   <slot>on_kindChanged()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>123</x>
+     <y>419</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>938</x>
+     <y>247</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
+ <slots>
+  <slot>on_selectMethodic(QModelIndex)</slot>
+  <slot>on_kindChanged()</slot>
+ </slots>
 </ui>

@@ -30,6 +30,12 @@ QCheckBox
     color: rgb(30, 100, 60);
 }
 
+QRadioButton
+{
+    font-size: 11pt;
+    color: rgb(30, 100, 60);
+}
+
 QGroupBox
 {
     font-size: 11pt;

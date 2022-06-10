@@ -92,7 +92,11 @@ void SummariesWidget::on_openSummary()
     auto dlg = new OpenSummaryDialog(nullptr);
     if (dlg->exec() == QDialog::Accepted)
     {
-
+        auto fn = dlg->summaryFileName();
+        if (fn != "")
+            qDebug() << fn;
+        else
+            QMessageBox::information(nullptr, tr("Предупреждение"), tr("Сводка не выбрана"));
     }
     delete dlg;
 }

@@ -2,10 +2,15 @@
 #define OPENSUMMARYDIALOG_H
 
 #include <QDialog>
+#include <QModelIndex>
+
 
 namespace Ui {
 class OpenSummaryDialog;
 }
+
+class ListSummariesModel;
+class ListSummariesProxyModel;
 
 /*!
  * \brief Класс диалога открытия сводки The OpenSummaryDialog class
@@ -19,18 +24,21 @@ public:
     ~OpenSummaryDialog();
 
     /*!
-     * \brief Роли в модели списка сводок The OpenSummaryRoles enum
+     * \brief Возвращает выбранное имя файла сводки (с путем)
      */
-    enum OpenSummaryRoles
-    {
-          MethodicRole = Qt::UserRole + 1
-        , KindRole
-    };
+    QString summaryFileName() const;
+
+private slots:
+    void on_selectMethodic(QModelIndex index);
+    void on_kindChanged();
 
 private:
     Ui::OpenSummaryDialog *ui;
 
     void load();
+
+    ListSummariesModel* m_mdlSummaries {nullptr};
+    ListSummariesProxyModel* m_pmdlSummaries {nullptr};
 };
 
 #endif // OPENSUMMARYDIALOG_H
