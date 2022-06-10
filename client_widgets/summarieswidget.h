@@ -17,6 +17,7 @@ namespace ClientWidgets
     static const QString uidSummariesWidgetUid = "CW_Summaries";
 }
 
+class Summary;
 
 class SummariesWidget : public ClientWidget
 {
@@ -80,6 +81,18 @@ private slots:
 
 private:
     Ui::SummariesWidget *ui;
+
+    /*!
+     * \brief Открытие сводки. Первый этап - создание
+     * \return Указатель на созданную сводку
+     */
+    Summary* openSummaryFirst();
+
+    /*!
+     * \brief Открытие сводки. Второй этап - расположение на виджете и т.д.
+     * \param summary - указатель на созданную сводку в методе openSummaryFirst
+     */
+    void openSummarySecond(Summary* summary);
 
     /*!
      * \brief Добавление теста в новую сводку

@@ -94,7 +94,16 @@ void SummariesWidget::on_openSummary()
     {
         auto fn = dlg->summaryFileName();
         if (fn != "")
-            qDebug() << fn;
+        {
+            //! Создаем новую сводку
+            auto summary = openSummaryFirst();
+
+            //! Открываем ее
+            summary->open(fn);
+
+            //! Создаем виджет и т.д.
+            openSummarySecond(summary);
+        }
         else
             QMessageBox::information(nullptr, tr("Предупреждение"), tr("Сводка не выбрана"));
     }
@@ -133,23 +142,25 @@ void SummariesWidget::on_closeSummary()
 
 }
 
-bool SummariesWidget::addTestToNewSummary(const QString testUid, const QString summaryName, const SummaryDefines::Kind kind)
+Summary *SummariesWidget::openSummaryFirst()
 {
     //! Прячем все сводки и снимаем выделение
     hideAllWidgets();
     ui->tvSummaries->selectionModel()->clear();
 
-    //! Создаем новую сводку и виджет для ее показа
-    auto summary = new Summary();
-    summary->setName(summaryName);
-    summary->setKind(kind);
-    summary->addTest(testUid);
+    //! Создаем новую сводку
+    return new Summary();
+}
+
+void SummariesWidget::openSummarySecond(Summary *summary)
+{
+    //! Создаем виджет для показа сводки
     auto wgt = new SummaryWidget(ui->frSummaries);
     wgt->setModel(summary);
     ui->frSummaries->layout()->addWidget(wgt);
 
     //! Добавляем запись в окно открытых сводок
-    auto item = new QStandardItem(summaryName);
+    auto item = new QStandardItem(summary->name());
     QVariant var;
     var.setValue(wgt);
     item->setData(var, lsWidgetRole);
@@ -158,6 +169,21 @@ bool SummariesWidget::addTestToNewSummary(const QString testUid, const QString s
     //! Выделяем в нем запись
     ui->tvSummaries->selectionModel()->setCurrentIndex(item->index(), QItemSelectionModel::Select);
     ui->tvSummaries->scrollTo(item->index());
+}
+
+bool SummariesWidget::addTestToNewSummary(const QString testUid, const QString summaryName, const SummaryDefines::Kind kind)
+{
+    //! Создаем новую сводку
+    auto summary = openSummaryFirst();
+
+    //! Дополняем ее параметрами и тестом
+    summary->setName(summaryName);
+    summary->setKind(kind);
+    summary->addTest(testUid);
+
+    //! Создаем виджет и т.д.
+    openSummarySecond(summary);
+
     return true;
 }
 
