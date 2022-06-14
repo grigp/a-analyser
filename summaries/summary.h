@@ -218,6 +218,9 @@ private:
      */
     void readPrimary(QJsonObject& objSumm);
 
+    void fillItemFactor(QJsonObject& cell, QStandardItem* item);
+    void fillItemValue(const int col, QJsonObject& cell, QStandardItem* item);
+
     /*!
      * \brief Читает список соединяемых ячеек
      * \param objSumm - объект, содержащий записи сводки

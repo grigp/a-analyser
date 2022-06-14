@@ -648,7 +648,7 @@ void Summary::readAll(QJsonObject &objSumm)
             auto item = new QStandardItem(cell["text"].toString());
             item->setEditable(false);
 
-            //! Даннве по ролям в зависимости от строк
+            //! Данные по ролям в зависимости от строк
             if (i == RowProbes)
             {
                 auto pName = cell["probe_name"].toString();
@@ -693,39 +693,12 @@ void Summary::readAll(QJsonObject &objSumm)
             else
             if (i == RowFactors)
             {
-                auto fUid = cell["uid"].toString();
-                if (fUid != "")
-                {
-                    auto fName = cell["name"].toString();
-                    auto fSName = cell["short_name"].toString();
-                    auto fMeas = cell["measure"].toString();
-                    auto fFrm = cell["format"].toInt();
-                    item->setData(fUid, FactorUidRole);
-                    item->setData(fName, FactorNameRole);
-                    item->setData(fSName, FactorShortNameRole);
-                    item->setData(fMeas, FactorMeasureRole);
-                    item->setData(fFrm, FactorFormatRole);
-                }
+                fillItemFactor(cell, item);
             }
             else
             if (i > RowFactors)
             {
-                if (j == 0)
-                {
-                    auto sDT = cell["datetime"].toString();
-                    auto dt = QDateTime::fromString(sDT, "dd.MM.yyyy hh:mm");
-                    auto fio = cell["patient_fio"].toString();
-                    item->setData(dt, TestDateTimeRole);
-                    item->setData(fio, PatientFioRole);
-                }
-                else
-                {
-                    auto uid = cell["uid"].toString();
-                    auto value = cell["value"].toDouble();
-                    item->setData(uid, FactorUidRole);
-                    item->setData(value, FactorValueRole);
-                }
-
+                fillItemValue(j, cell, item);
             }
 
             line << item;
@@ -737,7 +710,72 @@ void Summary::readAll(QJsonObject &objSumm)
 
 void Summary::readPrimary(QJsonObject &objSumm)
 {
+    auto table = objSumm["table"].toArray();
 
+    //! По строкам
+    for (int i = 0; i < table.size(); ++i)
+    {
+        //! Объект строки
+        auto row = table.at(i).toArray();
+        QList<QStandardItem*> line;
+        line.clear();
+
+        //! По столбцам
+        for (int j = 0; j < row.size(); ++j)
+        {
+            //! Объект столбца
+            auto cell = row.at(j).toObject();
+            auto item = new QStandardItem(cell["text"].toString());
+            item->setEditable(false);
+
+            //! Данные по ролям в зависимости от строк
+            if (i == RowPrimaryFactors)
+                fillItemFactor(cell, item);
+            else
+            if (i > RowPrimaryFactors)
+                fillItemValue(j, cell, item);
+
+            line << item;
+        }
+
+        appendRow(line);
+    }
+}
+
+void Summary::fillItemFactor(QJsonObject& cell, QStandardItem *item)
+{
+    auto fUid = cell["uid"].toString();
+    if (fUid != "")
+    {
+        auto fName = cell["name"].toString();
+        auto fSName = cell["short_name"].toString();
+        auto fMeas = cell["measure"].toString();
+        auto fFrm = cell["format"].toInt();
+        item->setData(fUid, FactorUidRole);
+        item->setData(fName, FactorNameRole);
+        item->setData(fSName, FactorShortNameRole);
+        item->setData(fMeas, FactorMeasureRole);
+        item->setData(fFrm, FactorFormatRole);
+    }
+}
+
+void Summary::fillItemValue(const int col, QJsonObject &cell, QStandardItem *item)
+{
+    if (col == 0)
+    {
+        auto sDT = cell["datetime"].toString();
+        auto dt = QDateTime::fromString(sDT, "dd.MM.yyyy hh:mm");
+        auto fio = cell["patient_fio"].toString();
+        item->setData(dt, TestDateTimeRole);
+        item->setData(fio, PatientFioRole);
+    }
+    else
+    {
+        auto uid = cell["uid"].toString();
+        auto value = cell["value"].toDouble();
+        item->setData(uid, FactorUidRole);
+        item->setData(value, FactorValueRole);
+    }
 }
 
 void Summary::readSpanCells(QJsonObject &objSumm)
