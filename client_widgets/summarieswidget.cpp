@@ -15,6 +15,7 @@
 #include "dataprovider.h"
 #include "stringinputdialog.h"
 #include "opensummarydialog.h"
+#include "settingsprovider.h"
 
 
 SummariesWidget::SummariesWidget(QWidget *parent) :
@@ -26,6 +27,7 @@ SummariesWidget::SummariesWidget(QWidget *parent) :
     connect(static_cast<AAnalyserApplication*>(QApplication::instance()), &AAnalyserApplication::addTestToSummary,
             this, &SummariesWidget::addTestToSummary);
 
+    restoreSplitterPosition();
     m_mdlLS = new QStandardItemModel(ui->tvSummaries);
     m_mdlLS->setHorizontalHeaderLabels(QStringList() << tr("Сводки"));
     ui->tvSummaries->setModel(m_mdlLS);
@@ -142,6 +144,13 @@ void SummariesWidget::on_closeSummary()
 
 }
 
+void SummariesWidget::splitterMoved(int pos, int index)
+{
+    Q_UNUSED(pos);
+    Q_UNUSED(index);
+    saveSplitterPosition();
+}
+
 Summary *SummariesWidget::openSummaryFirst()
 {
     //! Прячем все сводки и снимаем выделение
@@ -225,5 +234,18 @@ void SummariesWidget::hideAllWidgets()
     foreach(QObject * child, children)
         if (child->isWidgetType())
             static_cast<QWidget*>(child)->setVisible(false);
+}
+
+void SummariesWidget::saveSplitterPosition()
+{
+    SettingsProvider::setValueToRegAppCopy("SummariesWidget", "SplitterPosition", ui->splitter->saveState());
+}
+
+void SummariesWidget::restoreSplitterPosition()
+{
+    auto val = SettingsProvider::valueFromRegAppCopy("SummariesWidget", "SplitterPosition").toByteArray();
+    if (val == "")
+        val = QByteArray::fromRawData("\x00\x00\x00\xFF\x00\x00\x00\x01\x00\x00\x00\x02\x00\x00\x01\x1B\x00\x00\x03""b\x01\xFF\xFF\xFF\xFF\x01\x00\x00\x00\x01\x00", 31);
+    ui->splitter->restoreState(val);
 }
 

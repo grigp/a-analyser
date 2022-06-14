@@ -78,6 +78,7 @@ private slots:
     void on_saveSummary();
     void on_closeSummary();
 
+    void splitterMoved(int pos,int index);
 
 private:
     Ui::SummariesWidget *ui;
@@ -115,6 +116,9 @@ private:
                                 const SummaryDefines::Kind kind);
 
     void hideAllWidgets();
+
+    void saveSplitterPosition();
+    void restoreSplitterPosition();
 
     QStandardItemModel* m_mdlLS {nullptr};
 };

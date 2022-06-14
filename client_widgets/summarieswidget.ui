@@ -180,6 +180,22 @@
           <property name="bottomMargin">
            <number>0</number>
           </property>
+          <item>
+           <widget class="QLabel" name="lblPicture">
+            <property name="text">
+             <string/>
+            </property>
+            <property name="pixmap">
+             <pixmap resource="../kernel.qrc">:/images/Configurator.png</pixmap>
+            </property>
+            <property name="scaledContents">
+             <bool>true</bool>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
          </layout>
         </widget>
        </widget>
@@ -200,8 +216,8 @@
    <slot>on_selectIndex(QModelIndex)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>199</x>
-     <y>167</y>
+     <x>89</x>
+     <y>206</y>
     </hint>
     <hint type="destinationlabel">
      <x>844</x>
@@ -216,8 +232,8 @@
    <slot>on_selectIndex(QModelIndex)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>740</x>
-     <y>162</y>
+     <x>89</x>
+     <y>201</y>
     </hint>
     <hint type="destinationlabel">
      <x>843</x>
@@ -273,11 +289,28 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>splitter</sender>
+   <signal>splitterMoved(int,int)</signal>
+   <receiver>SummariesWidget</receiver>
+   <slot>splitterMoved(int,int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>94</x>
+     <y>87</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>840</x>
+     <y>98</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>on_selectIndex(QModelIndex)</slot>
   <slot>on_saveSummary()</slot>
   <slot>on_openSummary()</slot>
   <slot>on_closeSummary()</slot>
+  <slot>splitterMoved(int,int)</slot>
  </slots>
 </ui>
