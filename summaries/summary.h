@@ -206,6 +206,24 @@ private:
      */
     void savePrimary() const;
 
+    /*!
+     * \brief Читает сводку со всеми показателями
+     * \param objSumm - объект, содержащий записи сводки
+     */
+    void readAll(QJsonObject& objSumm);
+
+    /*!
+     * \brief Читает сводку с первичными показателями
+     * \param objSumm - объект, содержащий записи сводки
+     */
+    void readPrimary(QJsonObject& objSumm);
+
+    /*!
+     * \brief Читает список соединяемых ячеек
+     * \param objSumm - объект, содержащий записи сводки
+     */
+    void readSpanCells(QJsonObject& objSumm);
+
     QString m_uid {QUuid().toString()};
     QString m_fileName {""};
     QString m_name {""};

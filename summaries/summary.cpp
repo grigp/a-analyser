@@ -62,6 +62,37 @@ void Summary::getHeader(const QString &fileName,
 void Summary::open(const QString &fileName)
 {
     m_fileName = fileName;
+
+    QFile fileRec(m_fileName);
+    if (fileRec.open(QIODevice::ReadOnly | QIODevice::Text))
+    {
+        //! Чтение файла сводки
+        QByteArray ba = fileRec.readAll();
+        QJsonDocument loadDoc(QJsonDocument::fromJson(ba));
+        QJsonObject objSumm = loadDoc.object();
+        fileRec.close();
+
+        //! Заголовок сводки
+        m_uid = objSumm["uid"].toString();
+        m_name = objSumm["name"].toString();
+        m_uidMethodic = objSumm["methodic_uid"].toString();
+        auto sKind = objSumm["kind"].toString();
+
+        //! Чтение сводки в зависимости от типа
+        if (sKind == "all")
+        {
+            m_kind = SummaryDefines::skAll;
+            readAll(objSumm);
+        }
+        else
+        if (sKind == "primary")
+        {
+            m_kind = SummaryDefines::skPrimary;
+            readPrimary(objSumm);
+        }
+
+        readSpanCells(objSumm);
+    }
 }
 
 void Summary::save() const
@@ -594,6 +625,129 @@ void Summary::savePrimary() const
             file.close();
         }
 
+    }
+}
+
+void Summary::readAll(QJsonObject &objSumm)
+{
+    auto table = objSumm["table"].toArray();
+
+    //! По строкам
+    for (int i = 0; i < table.size(); ++i)
+    {
+        //! Объект строки
+        auto row = table.at(i).toArray();
+        QList<QStandardItem*> line;
+        line.clear();
+
+        //! По столбцам
+        for (int j = 0; j < row.size(); ++j)
+        {
+            //! Объект столбца
+            auto cell = row.at(j).toObject();
+            auto item = new QStandardItem(cell["text"].toString());
+            item->setEditable(false);
+
+            //! Даннве по ролям в зависимости от строк
+            if (i == RowProbes)
+            {
+                auto pName = cell["probe_name"].toString();
+                if (j == 0)  //! Корневой итем - там много чего
+                {
+                    item->setData(m_uid, SummaryUidRole);
+                    item->setData(m_kind, SummaryKindRole);
+                    auto mi = static_cast<AAnalyserApplication*>(QApplication::instance())->getMetodics()->metodic(m_uidMethodic);
+                    item->setData(m_uidMethodic, MethodicUIdRole);
+                    item->setData(mi.name, MethodicNameRole);
+                    item->setData(version(), VersionRole);
+                }
+                if (pName != "")
+                {
+                    auto pNum = cell["probe_number"].toInt();
+                    item->setData(pName, ProbeNameRole);
+                    item->setData(pNum, ProbeNumberRole);
+                }
+            }
+            else
+            if (i == RowChannels)
+            {
+                auto chId = cell["channel_id"].toString();
+                if (chId != "")
+                {
+                    auto chName = cell["channel_name"].toString();
+                    item->setData(chId, ChannelIdRole);
+                    item->setData(chName, ChannelNameRole);
+                }
+            }
+            else
+            if (i == RowMultifactors)
+            {
+                auto mfUid = cell["multifactor_uid"].toString();
+                if (mfUid != "")
+                {
+                    auto mfName = cell["multifactor_name"].toString();
+                    item->setData(mfUid, MultiFactorUidRole);
+                    item->setData(mfName, MultiFactorNameRole);
+                }
+            }
+            else
+            if (i == RowFactors)
+            {
+                auto fUid = cell["uid"].toString();
+                if (fUid != "")
+                {
+                    auto fName = cell["name"].toString();
+                    auto fSName = cell["short_name"].toString();
+                    auto fMeas = cell["measure"].toString();
+                    auto fFrm = cell["format"].toInt();
+                    item->setData(fUid, FactorUidRole);
+                    item->setData(fName, FactorNameRole);
+                    item->setData(fSName, FactorShortNameRole);
+                    item->setData(fMeas, FactorMeasureRole);
+                    item->setData(fFrm, FactorFormatRole);
+                }
+            }
+            else
+            if (i > RowFactors)
+            {
+                if (j == 0)
+                {
+                    auto sDT = cell["datetime"].toString();
+                    auto dt = QDateTime::fromString(sDT, "dd.MM.yyyy hh:mm");
+                    auto fio = cell["patient_fio"].toString();
+                    item->setData(dt, TestDateTimeRole);
+                    item->setData(fio, PatientFioRole);
+                }
+                else
+                {
+                    auto uid = cell["uid"].toString();
+                    auto value = cell["value"].toDouble();
+                    item->setData(uid, FactorUidRole);
+                    item->setData(value, FactorValueRole);
+                }
+
+            }
+
+            line << item;
+        }
+
+        appendRow(line);
+    }
+}
+
+void Summary::readPrimary(QJsonObject &objSumm)
+{
+
+}
+
+void Summary::readSpanCells(QJsonObject &objSumm)
+{
+    auto scList = objSumm["span_cells"].toArray();
+    for (int i = 0; i < scList.size(); ++i)
+    {
+        auto obj = scList.at(i).toObject();
+        SpanCellsInfo sci(obj["row"].toInt(), obj["col"].toInt(), obj["width"].toInt());
+        m_spanCells << sci;
     }
 }
 
