@@ -97,19 +97,19 @@ public:
      * \brief Сохраняет сводку в файл
      * имя файла m_fileName
      */
-    void save() const;
+    void save();
 
     /*!
      * \brief Доступ к m_uid
      */
     QString uid() const {return m_uid;}
-    void setUid(const QString uid) {m_uid = uid;}
+    void setUid(const QString uid);
 
     /*!
      * \brief Доступ к m_fileName
      */
     QString fileName() const {return m_fileName;}
-    void setFileName(const QString &fileName) {m_fileName = fileName;}
+    void setFileName(const QString &fileName);
 
     /*!
      * \brief Доступ к m_name
@@ -121,16 +121,16 @@ public:
      * \brief Доступ к m_uidMethodic
      */
     QString uidMethodic() const {return m_uidMethodic;}
-    void setUidMethodic(const QString uid) {m_uidMethodic = uid;}
+    void setUidMethodic(const QString uid);
 
     /*!
      * \brief Доступ к m_kind
      */
     SummaryDefines::Kind kind() const {return m_kind;}
-    void setKind(const SummaryDefines::Kind kind) {m_kind = kind;}
+    void setKind(const SummaryDefines::Kind kind);
 
     /*!
-     * \brief Соступ к списку ячеек, которые надо соединить
+     * \brief Доступ к списку ячеек, которые надо соединить
      */
     int spanCellsCount() const;
     SpanCellsInfo spanCells(const int idx) const;
@@ -139,6 +139,8 @@ public:
      * \brief Возвращает номер версии сводки
      */
     int version() const {return 1;}
+
+    bool isModify() {return m_isModify;}
 
 private:
     /*!
@@ -234,6 +236,7 @@ private:
     SummaryDefines::Kind m_kind {SummaryDefines::skNone};
     QList<SpanCellsInfo> m_spanCells;
 
+    bool m_isModify {false};   ///< Признак того, что сводка была изменена
 };
 
 #endif // SUMMARY_H

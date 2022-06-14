@@ -34,6 +34,7 @@ void Summary::addTest(const QString &testUid)
     else
     if (m_kind == SummaryDefines::skPrimary)
         addTestPrimary(testUid);
+    m_isModify = true;
 }
 
 void Summary::getHeader(const QString &fileName,
@@ -93,15 +94,31 @@ void Summary::open(const QString &fileName)
 
         readSpanCells(objSumm);
     }
+
+    m_isModify = false;
 }
 
-void Summary::save() const
+void Summary::save()
 {
     if (m_kind == SummaryDefines::skAll)
         saveAll();
     else
     if (m_kind == SummaryDefines::skPrimary)
         savePrimary();
+
+    m_isModify = false;
+}
+
+void Summary::setUid(const QString uid)
+{
+    m_uid = uid;
+    m_isModify = true;
+}
+
+void Summary::setFileName(const QString &fileName)
+{
+    m_fileName = fileName;
+    m_isModify = true;
 }
 
 QString Summary::name() const
@@ -112,6 +129,19 @@ QString Summary::name() const
 void Summary::setName(const QString &name)
 {
     m_name = name;
+    m_isModify = true;
+}
+
+void Summary::setUidMethodic(const QString uid)
+{
+    m_uidMethodic = uid;
+    m_isModify = true;
+}
+
+void Summary::setKind(const SummaryDefines::Kind kind)
+{
+    m_kind = kind;
+    m_isModify = true;
 }
 
 int Summary::spanCellsCount() const
