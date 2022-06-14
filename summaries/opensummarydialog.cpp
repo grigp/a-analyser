@@ -54,6 +54,12 @@ void OpenSummaryDialog::on_kindChanged()
         m_pmdlSummaries->selectKind(SummaryDefines::skNone);
 }
 
+void OpenSummaryDialog::on_selectSummaryWithAccept(QModelIndex index)
+{
+    if (index.isValid())
+        accept();
+}
+
 void OpenSummaryDialog::load()
 {
     //! Получение списка файлов

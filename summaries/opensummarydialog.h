@@ -31,6 +31,7 @@ public:
 private slots:
     void on_selectMethodic(QModelIndex index);
     void on_kindChanged();
+    void on_selectSummaryWithAccept(QModelIndex index);
 
 private:
     Ui::OpenSummaryDialog *ui;

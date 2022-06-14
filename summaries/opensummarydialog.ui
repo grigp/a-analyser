@@ -179,8 +179,8 @@
    <slot>on_selectMethodic(QModelIndex)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>324</x>
-     <y>168</y>
+     <x>239</x>
+     <y>182</y>
     </hint>
     <hint type="destinationlabel">
      <x>940</x>
@@ -195,8 +195,8 @@
    <slot>on_selectMethodic(QModelIndex)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>464</x>
-     <y>84</y>
+     <x>239</x>
+     <y>98</y>
     </hint>
     <hint type="destinationlabel">
      <x>942</x>
@@ -252,9 +252,26 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>tvSummaries</sender>
+   <signal>doubleClicked(QModelIndex)</signal>
+   <receiver>OpenSummaryDialog</receiver>
+   <slot>on_selectSummaryWithAccept(QModelIndex)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>311</x>
+     <y>28</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>942</x>
+     <y>36</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>on_selectMethodic(QModelIndex)</slot>
   <slot>on_kindChanged()</slot>
+  <slot>on_selectSummaryWithAccept(QModelIndex)</slot>
  </slots>
 </ui>
