@@ -28,6 +28,7 @@ public:
 
 private slots:
     void on_ItemSelected(QModelIndex index);
+    void on_modify(const bool isModify);
 
 private:
     Ui::SummaryWidget *ui;

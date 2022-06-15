@@ -34,7 +34,7 @@ void Summary::addTest(const QString &testUid)
     else
     if (m_kind == SummaryDefines::skPrimary)
         addTestPrimary(testUid);
-    m_isModify = true;
+    changeModyfy(true);
 }
 
 void Summary::getHeader(const QString &fileName,
@@ -95,7 +95,7 @@ void Summary::open(const QString &fileName)
         readSpanCells(objSumm);
     }
 
-    m_isModify = false;
+    changeModyfy(false);
 }
 
 void Summary::save()
@@ -106,19 +106,19 @@ void Summary::save()
     if (m_kind == SummaryDefines::skPrimary)
         savePrimary();
 
-    m_isModify = false;
+    changeModyfy(false);
 }
 
 void Summary::setUid(const QString uid)
 {
     m_uid = uid;
-    m_isModify = true;
+    changeModyfy(true);
 }
 
 void Summary::setFileName(const QString &fileName)
 {
     m_fileName = fileName;
-    m_isModify = true;
+    changeModyfy(true);
 }
 
 QString Summary::name() const
@@ -129,19 +129,19 @@ QString Summary::name() const
 void Summary::setName(const QString &name)
 {
     m_name = name;
-    m_isModify = true;
+    changeModyfy(true);
 }
 
 void Summary::setUidMethodic(const QString uid)
 {
     m_uidMethodic = uid;
-    m_isModify = true;
+    changeModyfy(true);
 }
 
 void Summary::setKind(const SummaryDefines::Kind kind)
 {
     m_kind = kind;
-    m_isModify = true;
+    changeModyfy(true);
 }
 
 int Summary::spanCellsCount() const
@@ -817,5 +817,11 @@ void Summary::readSpanCells(QJsonObject &objSumm)
         SpanCellsInfo sci(obj["row"].toInt(), obj["col"].toInt(), obj["width"].toInt());
         m_spanCells << sci;
     }
+}
+
+void Summary::changeModyfy(const bool isModify)
+{
+    m_isModify = isModify;
+    emit modify(m_isModify);
 }
 

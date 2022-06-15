@@ -49,6 +49,9 @@ void SummaryWidget::setModel(Summary *model)
         if (sc.width > 0)
             ui->tvSummary->setSpan(sc.row, sc.col, 1, sc.width);
     }
+
+    on_modify(model->isModify());
+    connect(model, &Summary::modify, this, &SummaryWidget::on_modify);
 }
 
 Summary *SummaryWidget::model() const
@@ -117,4 +120,12 @@ void SummaryWidget::on_ItemSelected(QModelIndex index)
         //! Вывод названия методики
         showValue(Summary::RowProbes, Summary::MethodicNameRole, ui->lblMethodName, tr("Методика"));
     }
+}
+
+void SummaryWidget::on_modify(const bool isModify)
+{
+    if (isModify)
+        ui->lblIsModify->setText("*");
+    else
+        ui->lblIsModify->setText("");
 }

@@ -142,6 +142,9 @@ public:
 
     bool isModify() {return m_isModify;}
 
+signals:
+    void modify(const bool isModify);
+
 private:
     /*!
      * \brief Добавляет запись о тесте как строку в сводку всех показателей
@@ -228,6 +231,8 @@ private:
      * \param objSumm - объект, содержащий записи сводки
      */
     void readSpanCells(QJsonObject& objSumm);
+
+    void changeModyfy(const bool isModify);
 
     QString m_uid {QUuid().toString()};
     QString m_fileName {""};
