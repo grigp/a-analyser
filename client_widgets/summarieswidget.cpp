@@ -286,5 +286,14 @@ void SummariesWidget::closeSummary(SummaryWidget *wgt)
         m_mdlLS->removeRow(selIdx.row());
     }
     wgt->deleteLater();
+
+    if (m_mdlLS->rowCount() == 0)
+        ui->lblPicture->setVisible(true);
+    else
+    {
+        auto selIdx = ui->tvSummaries->selectionModel()->currentIndex();
+        if (selIdx != QModelIndex())
+            on_selectIndex(selIdx);
+    }
 }
 
