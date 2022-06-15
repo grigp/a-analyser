@@ -18,6 +18,7 @@ namespace ClientWidgets
 }
 
 class Summary;
+class SummaryWidget;
 
 class SummariesWidget : public ClientWidget
 {
@@ -119,6 +120,9 @@ private:
 
     void saveSplitterPosition();
     void restoreSplitterPosition();
+
+    void saveSummary(SummaryWidget* wgt);
+    void closeSummary(SummaryWidget* wgt);
 
     QStandardItemModel* m_mdlLS {nullptr};
 };

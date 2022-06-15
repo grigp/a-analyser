@@ -123,14 +123,7 @@ void SummariesWidget::on_saveSummary()
             SummaryWidget* wgt = var.value<SummaryWidget*>();
             if (wgt)
             {
-                if (wgt->model()->fileName() == "")
-                {
-                    QDir dir(DataDefines::aanalyserDocumentsPath() + "summaries/");
-                    if (!dir.exists())
-                        dir.mkpath(DataDefines::aanalyserDocumentsPath() + "summaries/");
-                    wgt->model()->setFileName(DataDefines::aanalyserDocumentsPath() + "summaries/" + wgt->model()->uid() + ".json");
-                }
-                wgt->model()->save();
+                saveSummary(wgt);
                 QMessageBox::information(nullptr, tr("Информация"), tr("Сводка сохранена") + " : \"" + wgt->model()->name() + "\"");
             }
         }
@@ -141,7 +134,31 @@ void SummariesWidget::on_saveSummary()
 
 void SummariesWidget::on_closeSummary()
 {
-
+    auto selIdx = ui->tvSummaries->selectionModel()->currentIndex();
+    if (selIdx != QModelIndex())
+    {
+        QVariant var = selIdx.data(lsWidgetRole);
+        if (var.isValid())
+        {
+            SummaryWidget* wgt = var.value<SummaryWidget*>();
+            if (wgt)
+            {
+                if (wgt->model()->isModify())
+                {
+                    auto mr = QMessageBox::question(nullptr, tr("Запрос"), tr("Сохранить сводку"),
+                                                    QMessageBox::StandardButtons(QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel));
+                    if (mr == QMessageBox::Yes)
+                        saveSummary(wgt);
+                    if (mr != QMessageBox::Cancel)
+                        closeSummary(wgt);
+                }
+                else
+                    closeSummary(wgt);
+            }
+        }
+    }
+    else
+        QMessageBox::information(nullptr, tr("Предупреждение"), tr("Сводка не выбрана"));
 }
 
 void SummariesWidget::splitterMoved(int pos, int index)
@@ -247,5 +264,27 @@ void SummariesWidget::restoreSplitterPosition()
     if (val == "")
         val = QByteArray::fromRawData("\x00\x00\x00\xFF\x00\x00\x00\x01\x00\x00\x00\x02\x00\x00\x01\x1B\x00\x00\x03""b\x01\xFF\xFF\xFF\xFF\x01\x00\x00\x00\x01\x00", 31);
     ui->splitter->restoreState(val);
+}
+
+void SummariesWidget::saveSummary(SummaryWidget *wgt)
+{
+    if (wgt->model()->fileName() == "")
+    {
+        QDir dir(DataDefines::aanalyserDocumentsPath() + "summaries/");
+        if (!dir.exists())
+            dir.mkpath(DataDefines::aanalyserDocumentsPath() + "summaries/");
+        wgt->model()->setFileName(DataDefines::aanalyserDocumentsPath() + "summaries/" + wgt->model()->uid() + ".json");
+    }
+    wgt->model()->save();
+}
+
+void SummariesWidget::closeSummary(SummaryWidget *wgt)
+{
+    auto selIdx = ui->tvSummaries->selectionModel()->currentIndex();
+    if (selIdx != QModelIndex())
+    {
+        m_mdlLS->removeRow(selIdx.row());
+    }
+    wgt->deleteLater();
 }
 
