@@ -46,6 +46,12 @@ public:
      */
     virtual bool isExternalControl() = 0;
 
+    /*!
+     * \brief Виртуальный метод, возвращающий true, если виджет разрешает закрыться приложению
+     * Чтобы запретить закрытие, нужно вернуть false
+     */
+    virtual bool isCloseProgramQuery() = 0;
+
 private:
     Ui::ClientWidget *ui;
 };

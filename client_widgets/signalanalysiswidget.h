@@ -58,6 +58,12 @@ public:
     bool isExternalControl() override {return false;}
 
     /*!
+     * \brief Виртуальный метод, возвращающий true, если виджет разрешает закрыться приложению
+     * Чтобы запретить закрытие, нужно вернуть false
+     */
+    bool isCloseProgramQuery() override {return true;}
+
+    /*!
      * \brief Вызывается после показа виджета
      */
     void onShow() override;

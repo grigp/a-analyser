@@ -40,6 +40,12 @@ public:
      */
     bool isExternalControl() override {return true;}
 
+    /*!
+     * \brief Виртуальный метод, возвращающий true, если виджет разрешает закрыться приложению
+     * Чтобы запретить закрытие, нужно вернуть false
+     */
+    bool isCloseProgramQuery() override {return true;}
+
 private slots:
     void onSelectTest(const QString &testUid);
 

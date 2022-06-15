@@ -151,6 +151,16 @@ void MainWindow::closeEvent(QCloseEvent *event)
     }
     else
     {
+        foreach (auto *wgt, m_clientWidgets)
+        {
+            auto ce = static_cast<ClientWidget*>(wgt)->isCloseProgramQuery();
+            if (!ce)
+            {
+                event->ignore();
+                return;
+            }
+        }
+
         SettingsProvider::setValueToRegAppCopy("MainWindow", "Geometry", saveGeometry());
         event->accept();
     }

@@ -49,6 +49,32 @@ QString SummariesWidget::name()
     return tr("Сводки показателей");
 }
 
+bool SummariesWidget::isCloseProgramQuery()
+{
+    QObjectList children = ui->frSummaries->children();
+    foreach(QObject * child, children)
+        if (child->isWidgetType())
+        {
+            auto wgt = dynamic_cast<SummaryWidget*>(child);
+            if (wgt)
+            {
+                if (wgt->model()->isModify())
+                {
+                    auto mr = QMessageBox::question(nullptr,
+                                                    tr("Предупреждение"),
+                                                    tr("Сводка") + " \"" + wgt->model()->name() + "\" " + tr("изменена") + ". " +
+                                                    tr("Сохранить изменения?"),
+                                                    QMessageBox::StandardButtons(QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel));
+                    if (mr == QMessageBox::Yes)
+                        saveSummary(wgt);
+                    return mr != QMessageBox::Cancel;
+                }
+            }
+        }
+
+    return true;
+}
+
 void SummariesWidget::onShow()
 {
 }
