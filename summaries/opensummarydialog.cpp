@@ -10,14 +10,20 @@
 #include "metodicsfactory.h"
 #include "listsummariesmodel.h"
 #include "listsummariesproxymodel.h"
+#include "settingsprovider.h"
 
 OpenSummaryDialog::OpenSummaryDialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::OpenSummaryDialog)
 {
     ui->setupUi(this);
+    ui->buttonBox->setVisible(false);
     load();
     setStyleSheet(static_cast<AAnalyserApplication*>(QApplication::instance())->mainWindow()->styleSheet());
+
+    auto val = SettingsProvider::valueFromRegAppCopy("OpenSummaryDialog", "Geometry").toByteArray();
+    restoreGeometry(val);
+    restoreSplitterPosition();
 }
 
 OpenSummaryDialog::~OpenSummaryDialog()
@@ -35,6 +41,11 @@ QString OpenSummaryDialog::summaryFileName() const
         return idx.data(ListSummariesModel::FileNameRole).toString();
     }
     return "";
+}
+
+void OpenSummaryDialog::resizeEvent(QResizeEvent *)
+{
+    SettingsProvider::setValueToRegAppCopy("OpenSummaryDialog", "Geometry", saveGeometry());
 }
 
 void OpenSummaryDialog::on_selectMethodic(QModelIndex index)
@@ -58,6 +69,23 @@ void OpenSummaryDialog::on_selectSummaryWithAccept(QModelIndex index)
 {
     if (index.isValid())
         accept();
+}
+
+void OpenSummaryDialog::on_openSummary()
+{
+    accept();
+}
+
+void OpenSummaryDialog::on_deleteSummary()
+{
+
+}
+
+void OpenSummaryDialog::on_splitterMoved(int pos,int index)
+{
+    Q_UNUSED(pos);
+    Q_UNUSED(index);
+    saveSplitterPosition();
 }
 
 void OpenSummaryDialog::load()
@@ -154,4 +182,17 @@ void OpenSummaryDialog::load()
     ui->tvMethodics->header()->resizeSections(QHeaderView::ResizeToContents);
     ui->tvMethodics->selectionModel()->setCurrentIndex(mdlMethodics->index(0, 0), QItemSelectionModel::Select);
     ui->tvMethodics->scrollTo(mdlMethodics->index(0, 0));
+}
+
+void OpenSummaryDialog::saveSplitterPosition()
+{
+    SettingsProvider::setValueToRegAppCopy("OpenSummaryDialog", "SplitterPosition", ui->splitter->saveState());
+}
+
+void OpenSummaryDialog::restoreSplitterPosition()
+{
+    auto val = SettingsProvider::valueFromRegAppCopy("OpenSummaryDialog", "SplitterPosition").toByteArray();
+    if (val == "")
+        val = QByteArray::fromRawData("\x00\x00\x00\xFF\x00\x00\x00\x01\x00\x00\x00\x02\x00\x00\x01\x1B\x00\x00\x03""b\x01\xFF\xFF\xFF\xFF\x01\x00\x00\x00\x01\x00", 31);
+    ui->splitter->restoreState(val);
 }

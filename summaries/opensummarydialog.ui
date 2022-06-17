@@ -6,14 +6,85 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>939</width>
-    <height>484</height>
+    <width>1267</width>
+    <height>629</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Открыть сводку</string>
+   <string>Доступные сводки</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QFrame" name="frame">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout_2">
+      <property name="topMargin">
+       <number>1</number>
+      </property>
+      <property name="bottomMargin">
+       <number>1</number>
+      </property>
+      <item>
+       <widget class="QPushButton" name="btnOpenSummary">
+        <property name="text">
+         <string>Открыть сводку</string>
+        </property>
+        <property name="icon">
+         <iconset resource="../kernel.qrc">
+          <normaloff>:/images/OpenDoc.png</normaloff>:/images/OpenDoc.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>22</width>
+          <height>22</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btnDeleteSummary">
+        <property name="text">
+         <string>Удалить сводку</string>
+        </property>
+        <property name="icon">
+         <iconset resource="../kernel.qrc">
+          <normaloff>:/images/delete.png</normaloff>:/images/delete.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>22</width>
+          <height>22</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <spacer name="horizontalSpacer">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>976</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+     </layout>
+    </widget>
+   </item>
    <item>
     <widget class="QFrame" name="frClient">
      <property name="frameShape">
@@ -138,7 +209,9 @@
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="../kernel.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>buttonBox</sender>
@@ -148,7 +221,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>259</x>
-     <y>472</y>
+     <y>617</y>
     </hint>
     <hint type="destinationlabel">
      <x>157</x>
@@ -164,7 +237,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>327</x>
-     <y>472</y>
+     <y>617</y>
     </hint>
     <hint type="destinationlabel">
      <x>286</x>
@@ -212,7 +285,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>75</x>
-     <y>361</y>
+     <y>506</y>
     </hint>
     <hint type="destinationlabel">
      <x>940</x>
@@ -228,7 +301,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>106</x>
-     <y>392</y>
+     <y>537</y>
     </hint>
     <hint type="destinationlabel">
      <x>939</x>
@@ -244,7 +317,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>123</x>
-     <y>419</y>
+     <y>564</y>
     </hint>
     <hint type="destinationlabel">
      <x>938</x>
@@ -259,12 +332,60 @@
    <slot>on_selectSummaryWithAccept(QModelIndex)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>311</x>
-     <y>28</y>
+     <x>558</x>
+     <y>83</y>
     </hint>
     <hint type="destinationlabel">
      <x>942</x>
      <y>36</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btnOpenSummary</sender>
+   <signal>clicked()</signal>
+   <receiver>OpenSummaryDialog</receiver>
+   <slot>on_openSummary()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>101</x>
+     <y>25</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>940</x>
+     <y>8</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btnDeleteSummary</sender>
+   <signal>clicked()</signal>
+   <receiver>OpenSummaryDialog</receiver>
+   <slot>on_deleteSummary()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>243</x>
+     <y>23</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>940</x>
+     <y>0</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>splitter</sender>
+   <signal>splitterMoved(int,int)</signal>
+   <receiver>OpenSummaryDialog</receiver>
+   <slot>on_splitterMoved(int,int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>327</x>
+     <y>187</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1267</x>
+     <y>132</y>
     </hint>
    </hints>
   </connection>
@@ -273,5 +394,8 @@
   <slot>on_selectMethodic(QModelIndex)</slot>
   <slot>on_kindChanged()</slot>
   <slot>on_selectSummaryWithAccept(QModelIndex)</slot>
+  <slot>on_openSummary()</slot>
+  <slot>on_deleteSummary()</slot>
+  <slot>on_splitterMoved(int,int)</slot>
  </slots>
 </ui>
