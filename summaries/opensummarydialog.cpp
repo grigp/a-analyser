@@ -2,6 +2,7 @@
 #include "ui_opensummarydialog.h"
 
 #include <QDir>
+#include <QMessageBox>
 #include <QDebug>
 
 #include "aanalyserapplication.h"
@@ -78,7 +79,21 @@ void OpenSummaryDialog::on_openSummary()
 
 void OpenSummaryDialog::on_deleteSummary()
 {
+    auto index = ui->tvSummaries->selectionModel()->currentIndex();
 
+    if (index.isValid())
+    {
+        auto idx = index.model()->index(index.row(), 0);
+        auto fn = idx.data(ListSummariesModel::FileNameRole).toString();
+
+        if (QMessageBox::question(nullptr, tr("Запрос"), tr("Удалить сводку") + " \"" + idx.data().toString() + "\"?") == QMessageBox::Yes)
+        {
+            if (QFile::exists(fn))
+                QFile::remove(fn);
+
+            m_mdlSummaries->removeRow(index.row());
+        }
+    }
 }
 
 void OpenSummaryDialog::on_splitterMoved(int pos,int index)

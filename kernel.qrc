@@ -219,5 +219,6 @@
         <file>images/CloseDoc.png</file>
         <file>images/OpenDoc.png</file>
         <file>images/Configurator.png</file>
+        <file>images/SummariesBrowse.png</file>
     </qresource>
 </RCC>
