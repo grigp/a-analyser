@@ -53,7 +53,7 @@
       <item>
        <widget class="QPushButton" name="btnOpenSummary">
         <property name="text">
-         <string>Открыть сводку</string>
+         <string>Доступные сводки</string>
         </property>
         <property name="icon">
          <iconset resource="../kernel.qrc">

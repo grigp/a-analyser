@@ -32,6 +32,8 @@ SummariesWidget::SummariesWidget(QWidget *parent) :
     m_mdlLS->setHorizontalHeaderLabels(QStringList() << tr("Сводки"));
     ui->tvSummaries->setModel(m_mdlLS);
     ui->tvSummaries->header()->resizeSections(QHeaderView::ResizeToContents);
+
+    connect(m_mdlLS, &QStandardItemModel::itemChanged, this, &SummariesWidget::on_itemChanged);
 }
 
 SummariesWidget::~SummariesWidget()
@@ -123,14 +125,33 @@ void SummariesWidget::on_openSummary()
         auto fn = dlg->summaryFileName();
         if (fn != "")
         {
-            //! Создаем новую сводку
-            auto summary = openSummaryFirst();
+            QModelIndex index = QModelIndex();
+            auto wgt = isSummaryOpen(fn, index);
+            if (!wgt)
+            {
+                //! Создаем новую сводку
+                auto summary = openSummaryFirst();
 
-            //! Открываем ее
-            summary->open(fn);
+                //! Открываем ее
+                summary->open(fn);
 
-            //! Создаем виджет и т.д.
-            openSummarySecond(summary);
+                //! Создаем виджет и т.д.
+                openSummarySecond(summary);
+            }
+            else
+            {
+                //! Прячем все сводки и снимаем выделение
+                hideAllWidgets();
+                //! Показываем эту
+                wgt->setVisible(true);
+                ui->tvSummaries->selectionModel()->clear();
+                if (index != QModelIndex())
+                {
+                    ui->tvSummaries->selectionModel()->setCurrentIndex(index, QItemSelectionModel::Select);
+                    ui->tvSummaries->scrollTo(index);
+                }
+            }
+
         }
         else
             QMessageBox::information(nullptr, tr("Предупреждение"), tr("Сводка не выбрана"));
@@ -192,6 +213,19 @@ void SummariesWidget::splitterMoved(int pos, int index)
     Q_UNUSED(pos);
     Q_UNUSED(index);
     saveSplitterPosition();
+}
+
+void SummariesWidget::on_itemChanged(QStandardItem *item)
+{
+    QVariant var = item->data(lsWidgetRole);
+    if (var.isValid())
+    {
+        SummaryWidget* wgt = var.value<SummaryWidget*>();
+        if (wgt)
+        {
+            wgt->model()->setName(item->data(Qt::DisplayRole).toString());
+        }
+    }
 }
 
 Summary *SummariesWidget::openSummaryFirst()
@@ -321,5 +355,25 @@ void SummariesWidget::closeSummary(SummaryWidget *wgt)
         if (selIdx != QModelIndex())
             on_selectIndex(selIdx);
     }
+}
+
+SummaryWidget* SummariesWidget::isSummaryOpen(const QString &fn, QModelIndex& index)
+{
+    index = QModelIndex();
+    for (int i = 0; i < m_mdlLS->rowCount(); ++i)
+    {
+        QVariant var = m_mdlLS->item(i)->data(lsWidgetRole);
+        if (var.isValid())
+        {
+            SummaryWidget* wgt = var.value<SummaryWidget*>();
+            if (wgt)
+                if (wgt->model()->fileName() == fn)
+                {
+                    index = m_mdlLS->item(i)->index();
+                    return wgt;
+                }
+        }
+    }
+    return nullptr;
 }
 

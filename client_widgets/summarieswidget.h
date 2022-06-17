@@ -87,6 +87,8 @@ private slots:
 
     void splitterMoved(int pos,int index);
 
+    void on_itemChanged(QStandardItem* item);
+
 private:
     Ui::SummariesWidget *ui;
 
@@ -129,6 +131,14 @@ private:
 
     void saveSummary(SummaryWidget* wgt);
     void closeSummary(SummaryWidget* wgt);
+
+    /*!
+     * \brief Проверяет, открыта ли сводка с именем fn
+     * \param fn - имя сводки
+     * \param item - возвращаемый указатель на итем модели списка сводок
+     * \return указатель на виджет сводки или nullptr
+     */
+    SummaryWidget* isSummaryOpen(const QString& fn, QModelIndex& index);
 
     QStandardItemModel* m_mdlLS {nullptr};
 };
