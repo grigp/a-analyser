@@ -85,9 +85,12 @@ private slots:
     void on_saveSummary();
     void on_closeSummary();
 
+    void on_deleteTest();
+
     void splitterMoved(int pos,int index);
 
     void on_itemChanged(QStandardItem* item);
+
 
 private:
     Ui::SummariesWidget *ui;

@@ -95,8 +95,41 @@
         </property>
         <property name="iconSize">
          <size>
-          <width>22</width>
+          <width>32</width>
           <height>32</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <spacer name="horizontalSpacer_2">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeType">
+         <enum>QSizePolicy::Fixed</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btnDelTestFromSummary">
+        <property name="text">
+         <string>Уалить тест из сводки</string>
+        </property>
+        <property name="icon">
+         <iconset resource="../kernel.qrc">
+          <normaloff>:/images/delete22.png</normaloff>:/images/delete22.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>22</width>
+          <height>22</height>
          </size>
         </property>
        </widget>
@@ -305,6 +338,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>btnDelTestFromSummary</sender>
+   <signal>clicked()</signal>
+   <receiver>SummariesWidget</receiver>
+   <slot>on_deleteTest()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>636</x>
+     <y>14</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>841</x>
+     <y>9</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>on_selectIndex(QModelIndex)</slot>
@@ -312,5 +361,6 @@
   <slot>on_openSummary()</slot>
   <slot>on_closeSummary()</slot>
   <slot>splitterMoved(int,int)</slot>
+  <slot>on_deleteTest()</slot>
  </slots>
 </ui>

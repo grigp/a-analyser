@@ -208,6 +208,42 @@ void SummariesWidget::on_closeSummary()
         QMessageBox::information(nullptr, tr("Предупреждение"), tr("Сводка не выбрана"));
 }
 
+void SummariesWidget::on_deleteTest()
+{
+    auto selIdx = ui->tvSummaries->selectionModel()->currentIndex();
+    if (selIdx != QModelIndex())
+    {
+        QVariant var = selIdx.data(lsWidgetRole);
+        if (var.isValid())
+        {
+            SummaryWidget* wgt = var.value<SummaryWidget*>();
+            if (wgt)
+            {
+                auto selIdx = wgt->selectedIndex();
+                if (selIdx != QModelIndex())
+                {
+                    if ((wgt->model()->kind() == SummaryDefines::skAll && selIdx.row() > Summary::RowFactors) ||
+                        (wgt->model()->kind() == SummaryDefines::skPrimary && selIdx.row() > Summary::RowPrimaryFactors))
+                    {
+                        auto fio = wgt->model()->index(selIdx.row(), 0).data(Summary::PatientFioRole).toString();
+                        auto dt =  wgt->model()->index(selIdx.row(), 0).data(Summary::TestDateTimeRole).toDateTime();
+
+                        auto mr = QMessageBox::question(nullptr,
+                                                        tr("Предупреждение"),
+                                                        tr("Удалить тест из сводки") + " (" + fio + " - " + dt.toString("dd.MM.yyyy hh:mm") + ")?");
+                        if (mr == QMessageBox::Yes)
+                            wgt->model()->removeTest(selIdx.row());
+                    }
+                }
+                else
+                    QMessageBox::information(nullptr, tr("Предупреждение"), tr("Тест не выбран"));
+            }
+        }
+    }
+    else
+        QMessageBox::information(nullptr, tr("Предупреждение"), tr("Нет выбранной сводки"));
+}
+
 void SummariesWidget::splitterMoved(int pos, int index)
 {
     Q_UNUSED(pos);

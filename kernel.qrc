@@ -220,5 +220,6 @@
         <file>images/OpenDoc.png</file>
         <file>images/Configurator.png</file>
         <file>images/SummariesBrowse.png</file>
+        <file>images/delete22.png</file>
     </qresource>
 </RCC>

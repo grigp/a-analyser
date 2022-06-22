@@ -64,6 +64,18 @@ void SummaryWidget::setSpan(const int row, const int col, const int columnSpan)
     ui->tvSummary->setSpan(row, col, 1, columnSpan);
 }
 
+QModelIndex SummaryWidget::selectedIndex()
+{
+    return ui->tvSummary->selectionModel()->currentIndex();
+//    auto selIdx = ui->tvSummary->selectionModel()->currentIndex();
+//    if (selIdx != QModelIndex())
+//    {
+//        return
+
+//    }
+
+}
+
 void SummaryWidget::on_ItemSelected(QModelIndex index)
 {
     auto showValue = [&](const int row, const int role, QLabel* label, const QString staticText)
@@ -129,3 +141,4 @@ void SummaryWidget::on_modify(const bool isModify)
     else
         ui->lblIsModify->setText("");
 }
+

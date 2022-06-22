@@ -37,6 +37,27 @@ void Summary::addTest(const QString &testUid)
     changeModyfy(true);
 }
 
+void Summary::removeTest(const int row)
+{
+    if (m_kind == SummaryDefines::skAll)
+    {
+        if (row > RowFactors)
+        {
+            removeRow(row);
+            m_isModify = true;
+        }
+    }
+    else
+    if (m_kind == SummaryDefines::skPrimary)
+    {
+        if (row > RowPrimaryFactors)
+        {
+            removeRow(row);
+            m_isModify = true;
+        }
+    }
+}
+
 void Summary::getHeader(const QString &fileName,
                         QString &name, QString &uidMethodic, QString &nameMethodic, SummaryDefines::Kind &kind)
 {

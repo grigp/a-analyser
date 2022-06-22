@@ -26,6 +26,11 @@ public:
 
     void setSpan(const int row, const int col, const int columnSpan);
 
+    /*!
+     * \brief Возвращает индекс в модели, выбранный пользователем
+     */
+    QModelIndex selectedIndex();
+
 private slots:
     void on_ItemSelected(QModelIndex index);
     void on_modify(const bool isModify);

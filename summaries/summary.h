@@ -78,6 +78,12 @@ public:
     void addTest(const QString &testUid);
 
     /*!
+     * \brief Удаляет строку с тестом из сводки
+     * \param row - строка теста в модели
+     */
+    void removeTest(const int row);
+
+    /*!
      * \brief Возвращает заголовок сводки с ее параметрами, читая их из файла
      * \param fileName - имя файла сводки
      * \param name - имя сводки
