@@ -1,6 +1,8 @@
 #ifndef SUMMARYDEFINES_H
 #define SUMMARYDEFINES_H
 
+#include <QString>
+
 namespace SummaryDefines
 {
 
@@ -10,9 +12,8 @@ namespace SummaryDefines
 enum AddTestMode
 {
       atmNone = -1
-    , atmExists       ///< В существующую
-    , atmNew          ///< В новую
     , atmActive       ///< В активную
+    , atmNew          ///< В новую
 };
 
 /*!
@@ -23,6 +24,19 @@ enum Kind
       skNone = 0
     , skPrimary       ///< Первичные показатели
     , skAll           ///< Все показатели
+};
+
+/*!
+ * \brief Структура данных об активной сводке The ActiveSummaryInfo struct
+ */
+struct ActiveSummaryInfo
+{
+    QString uidMethodic;
+    Kind kind;
+
+    ActiveSummaryInfo(const QString um, const Kind k)
+        : uidMethodic(um), kind(k) {}
+    ActiveSummaryInfo() {}
 };
 
 }

@@ -1,6 +1,8 @@
 #include "addtesttosummarydialog.h"
 #include "ui_addtesttosummarydialog.h"
 
+#include "aanalyserapplication.h"
+
 #include <QDebug>
 
 AddTestToSummaryDialog::AddTestToSummaryDialog(QWidget *parent) :
@@ -9,7 +11,6 @@ AddTestToSummaryDialog::AddTestToSummaryDialog(QWidget *parent) :
 {
     ui->setupUi(this);
     setActivities();
-
 }
 
 AddTestToSummaryDialog::~AddTestToSummaryDialog()
@@ -19,9 +20,6 @@ AddTestToSummaryDialog::~AddTestToSummaryDialog()
 
 SummaryDefines::AddTestMode AddTestToSummaryDialog::mode() const
 {
-    if (ui->rbAddToExsistsSummary->isChecked())
-        return SummaryDefines::atmExists;
-    else
     if (ui->rbAddToNewSummary->isChecked())
         return SummaryDefines::atmNew;
     else
@@ -32,9 +30,6 @@ SummaryDefines::AddTestMode AddTestToSummaryDialog::mode() const
 
 void AddTestToSummaryDialog::setMode(const SummaryDefines::AddTestMode mode)
 {
-    if (mode == SummaryDefines::atmExists)
-        ui->rbAddToExsistsSummary->setChecked(true);
-    else
     if (mode == SummaryDefines::atmNew)
         ui->rbAddToNewSummary->setChecked(true);
     else
@@ -50,6 +45,7 @@ QString AddTestToSummaryDialog::summary() const
 
 void AddTestToSummaryDialog::setSummary(const QString &fn)
 {
+    Q_UNUSED(fn);
 
 }
 
@@ -86,6 +82,16 @@ void AddTestToSummaryDialog::showEvent(QShowEvent *event)
 {
     QDialog::showEvent(event);
     ui->edSummaryName->setText("");
+
+    auto ti = static_cast<AAnalyserApplication*>(QApplication::instance())->getSelectedTest();
+    SummaryDefines::ActiveSummaryInfo asi;
+    static_cast<AAnalyserApplication*>(QApplication::instance())->getActiveSummary(asi);
+    qDebug() << asi.uidMethodic << ti.metodUid;
+    if (asi.uidMethodic != "" && asi.uidMethodic == ti.metodUid)
+        ui->rbAddToActiveSummary->setChecked(true);
+    else
+//    if (asi.uidMethodic == "" && asi.uidMethodic != ti.uid)
+        ui->rbAddToNewSummary->setChecked(true);
 }
 
 void AddTestToSummaryDialog::on_selectMode(bool select)
@@ -96,7 +102,6 @@ void AddTestToSummaryDialog::on_selectMode(bool select)
 
 void AddTestToSummaryDialog::setActivities()
 {
-    ui->tvSummaries->setEnabled(ui->rbAddToExsistsSummary->isChecked());
     ui->btnAllFactors->setEnabled(ui->rbAddToNewSummary->isChecked());
     ui->btnPrimaryFactors->setEnabled(ui->rbAddToNewSummary->isChecked());
     ui->lblSummaryName->setEnabled(ui->rbAddToNewSummary->isChecked());

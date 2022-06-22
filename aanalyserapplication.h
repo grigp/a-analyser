@@ -388,6 +388,19 @@ public:
      */
     void changeApplicationParam(const QString &group, const QString &param, const QVariant &value);
 
+    /*!
+     * \brief Устанавливает активную сводку
+     * \param uidMethodic - uid методики
+     * \param kind - тип сводки
+     */
+    void setActiveSummary(const QString &uidMethodic, const SummaryDefines::Kind &kind);
+
+    /*!
+     * \brief Возвращает данные об активной сводке
+     * \param asi - данные
+     */
+    void getActiveSummary(SummaryDefines::ActiveSummaryInfo &asi);
+
 signals:
     void dbConnected();
 
@@ -476,6 +489,7 @@ private:
     QString m_testUid = "";     ///< uid выбранного теста
 
     AddTestToSummaryDialog* m_addTSDlg {nullptr};
+    SummaryDefines::ActiveSummaryInfo m_asi;
 };
 
 #endif // AANALYSERAPPLICATION_H

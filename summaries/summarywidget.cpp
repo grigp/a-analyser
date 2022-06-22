@@ -67,13 +67,6 @@ void SummaryWidget::setSpan(const int row, const int col, const int columnSpan)
 QModelIndex SummaryWidget::selectedIndex()
 {
     return ui->tvSummary->selectionModel()->currentIndex();
-//    auto selIdx = ui->tvSummary->selectionModel()->currentIndex();
-//    if (selIdx != QModelIndex())
-//    {
-//        return
-
-//    }
-
 }
 
 void SummaryWidget::on_ItemSelected(QModelIndex index)

@@ -62,6 +62,9 @@ AAnalyserApplication::AAnalyserApplication(int &argc, char **argv)
         connect(m_database, &DataBase::changeTestCondition,
                 this, &AAnalyserApplication::changeTestCondition);
     });
+
+    m_asi.uidMethodic = "";
+    m_asi.kind = SummaryDefines::skNone;
 }
 
 AAnalyserApplication::~AAnalyserApplication()
@@ -529,6 +532,18 @@ void AAnalyserApplication::changeApplicationParam(const QString &group, const QS
     emit applicationParamChanged(group, param, value);
 }
 
+void AAnalyserApplication::setActiveSummary(const QString &uidMethodic, const SummaryDefines::Kind &kind)
+{
+    m_asi.uidMethodic = uidMethodic;
+    m_asi.kind = kind;
+}
+
+void AAnalyserApplication::getActiveSummary(SummaryDefines::ActiveSummaryInfo &asi)
+{
+    asi.uidMethodic = m_asi.uidMethodic;
+    asi.kind = m_asi.kind;
+}
+
 bool AAnalyserApplication::notify(QObject *re, QEvent *ev)
 {
     try
@@ -560,14 +575,6 @@ bool AAnalyserApplication::notify(QObject *re, QEvent *ev)
 
 void AAnalyserApplication::on_AddTestToSummaryAccepted()
 {
-    if (m_addTSDlg->mode() == SummaryDefines::atmExists)
-    {
-        if (m_addTSDlg->summary() == "")
-            QMessageBox::warning(nullptr, tr("Предупреждение"), tr("Сводка не выбрана"));
-        else
-            emit addTestToSummary(m_testUid, m_addTSDlg->mode(), m_addTSDlg->summary(), m_addTSDlg->kind());
-    }
-    else
     if (m_addTSDlg->mode() == SummaryDefines::atmNew)
     {
         if (m_addTSDlg->summaryName() == "")

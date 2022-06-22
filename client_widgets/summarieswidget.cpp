@@ -108,12 +108,17 @@ void SummariesWidget::addTestToSummary(const QString testUid,
 void SummariesWidget::on_selectIndex(QModelIndex index)
 {
     hideAllWidgets();
+    static_cast<AAnalyserApplication*>(QApplication::instance())->setActiveSummary("", SummaryDefines::skNone);
     QVariant var = index.data(lsWidgetRole);
     if (var.isValid())
     {
         SummaryWidget* wgt = var.value<SummaryWidget*>();
         if (wgt)
+        {
             wgt->setVisible(true);
+            static_cast<AAnalyserApplication*>(QApplication::instance())->setActiveSummary(wgt->model()->uidMethodic(),
+                                                                                           wgt->model()->kind());
+        }
     }
 }
 
@@ -142,6 +147,8 @@ void SummariesWidget::on_openSummary()
             {
                 //! Прячем все сводки и снимаем выделение
                 hideAllWidgets();
+                static_cast<AAnalyserApplication*>(QApplication::instance())->setActiveSummary("", SummaryDefines::skNone);
+
                 //! Показываем эту
                 wgt->setVisible(true);
                 ui->tvSummaries->selectionModel()->clear();
@@ -149,6 +156,9 @@ void SummariesWidget::on_openSummary()
                 {
                     ui->tvSummaries->selectionModel()->setCurrentIndex(index, QItemSelectionModel::Select);
                     ui->tvSummaries->scrollTo(index);
+
+                    static_cast<AAnalyserApplication*>(QApplication::instance())->setActiveSummary(wgt->model()->uidMethodic(),
+                                                                                                   wgt->model()->kind());
                 }
             }
 
@@ -230,7 +240,8 @@ void SummariesWidget::on_deleteTest()
 
                         auto mr = QMessageBox::question(nullptr,
                                                         tr("Предупреждение"),
-                                                        tr("Удалить тест из сводки") + " (" + fio + " - " + dt.toString("dd.MM.yyyy hh:mm") + ")?");
+                                                        tr("Удалить тест из сводки") + " (" + fio + " - " +
+                                                        dt.toString("dd.MM.yyyy hh:mm") + ")?");
                         if (mr == QMessageBox::Yes)
                             wgt->model()->removeTest(selIdx.row());
                     }
@@ -287,6 +298,8 @@ void SummariesWidget::openSummarySecond(Summary *summary)
     var.setValue(wgt);
     item->setData(var, lsWidgetRole);
     m_mdlLS->appendRow(item);
+    static_cast<AAnalyserApplication*>(QApplication::instance())->setActiveSummary(wgt->model()->uidMethodic(),
+                                                                                   wgt->model()->kind());
 
     //! Выделяем в нем запись
     ui->tvSummaries->selectionModel()->setCurrentIndex(item->index(), QItemSelectionModel::Select);

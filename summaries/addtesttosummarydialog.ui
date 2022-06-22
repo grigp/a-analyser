@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>390</width>
-    <height>514</height>
+    <width>388</width>
+    <height>190</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -34,6 +34,9 @@
         <property name="text">
          <string>В активную сводку</string>
         </property>
+        <property name="checked">
+         <bool>true</bool>
+        </property>
         <property name="autoExclusive">
          <bool>true</bool>
         </property>
@@ -45,39 +48,7 @@
          <enum>Qt::Vertical</enum>
         </property>
         <property name="sizeType">
-         <enum>QSizePolicy::Fixed</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>10</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item>
-       <widget class="QRadioButton" name="rbAddToExsistsSummary">
-        <property name="text">
-         <string>В существующую сводку</string>
-        </property>
-        <property name="checked">
-         <bool>true</bool>
-        </property>
-        <property name="autoExclusive">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QTreeView" name="tvSummaries"/>
-      </item>
-      <item>
-       <spacer name="verticalSpacer_2">
-        <property name="orientation">
-         <enum>Qt::Vertical</enum>
-        </property>
-        <property name="sizeType">
-         <enum>QSizePolicy::Fixed</enum>
+         <enum>QSizePolicy::Expanding</enum>
         </property>
         <property name="sizeHint" stdset="0">
          <size>
@@ -237,22 +208,6 @@
     <hint type="destinationlabel">
      <x>392</x>
      <y>291</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>rbAddToExsistsSummary</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>AddTestToSummaryDialog</receiver>
-   <slot>on_selectMode(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>33</x>
-     <y>62</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>392</x>
-     <y>77</y>
     </hint>
    </hints>
   </connection>
