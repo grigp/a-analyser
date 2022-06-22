@@ -333,7 +333,7 @@ void SummariesWidget::saveSummary(SummaryWidget *wgt)
         QDir dir(DataDefines::aanalyserDocumentsPath() + "summaries/");
         if (!dir.exists())
             dir.mkpath(DataDefines::aanalyserDocumentsPath() + "summaries/");
-        wgt->model()->setFileName(DataDefines::aanalyserDocumentsPath() + "summaries/" + wgt->model()->uid() + ".json");
+        wgt->model()->setFileName(DataDefines::aanalyserDocumentsPath() + "summaries/" + wgt->model()->uid() + ".asmry");
     }
     wgt->model()->save();
 }

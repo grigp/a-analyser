@@ -129,7 +129,7 @@ void OpenSummaryDialog::load()
     foreach (auto fileInfo, list)
         if (fileInfo.fileName() != "." && fileInfo.fileName() != "..")
         {
-            if (fileInfo.completeSuffix() == "json")
+            if (fileInfo.completeSuffix() == "asmry")
             {
                 //! Чтение заголовка сводки и названия методики
                 QString name;
