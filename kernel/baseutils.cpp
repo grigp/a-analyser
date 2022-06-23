@@ -169,7 +169,7 @@ void BaseUtils::modelToMSExcel(const QAbstractItemModel *model, const QString &f
     }
 }
 
-void BaseUtils::modelToText(const QAbstractItemModel *model, const QString &fileName)
+void BaseUtils::modelToText(const QAbstractItemModel *model, const QString &fileName, const QString& divider)
 {
     QFile file(fileName);
     if (file.open(QIODevice::WriteOnly))
@@ -179,7 +179,7 @@ void BaseUtils::modelToText(const QAbstractItemModel *model, const QString &file
 
         sl.clear();
         for (int j = 0; j < model->columnCount(); ++j)
-            sl << enterToSpace(model->headerData(j, Qt::Horizontal).toString());
+            sl << enterToSpace(model->headerData(j, Qt::Horizontal).toString()) << divider;
         ts << sl.join("         ") + "\n";
 
         for (int i = 0; i < model->rowCount(); ++i)
@@ -187,7 +187,7 @@ void BaseUtils::modelToText(const QAbstractItemModel *model, const QString &file
             sl.clear();
 
             for (int j = 0; j < model->columnCount(); ++j)
-                sl << model->index(i, j).data(Qt::DisplayRole).toString();
+                sl << enterToSpace(model->index(i, j).data(Qt::DisplayRole).toString()) << divider;
 
             ts << sl.join("        ") + "\n";
         }

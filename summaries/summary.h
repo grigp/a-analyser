@@ -232,17 +232,6 @@ private:
     void savePrimary(const QString &fName) const;
 
     /*!
-     * \brief Сохраняет сводку со всеми показателями как текст
-     * \param fName - имя файла
-     */
-    void saveAllAsText(const QString &fName) const;
-    /*!
-     * \brief Сохраняет сводку с первичными показателями как текст
-     * \param fName - имя файла
-     */
-    void savePrimaryAsText(const QString &fName) const;
-
-    /*!
      * \brief Читает сводку со всеми показателями
      * \param objSumm - объект, содержащий записи сводки
      */

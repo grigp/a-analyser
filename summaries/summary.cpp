@@ -3,6 +3,7 @@
 #include "aanalyserapplication.h"
 #include "datadefines.h"
 #include "dataprovider.h"
+#include "baseutils.h"
 #include "factorsdefines.h"
 #include "channelsutils.h"
 #include "multifactordescriptor.h"
@@ -137,11 +138,7 @@ void Summary::save(const QString &fName)
 
 void Summary::saveAsText(const QString &fName)
 {
-    if (m_kind == SummaryDefines::skAll)
-        saveAllAsText(fName);
-    else
-    if (m_kind == SummaryDefines::skPrimary)
-        savePrimaryAsText(fName);
+    BaseUtils::modelToText(this, fName, "\t");
 }
 
 void Summary::setUid(const QString uid)
@@ -691,16 +688,6 @@ void Summary::savePrimary(const QString &fName) const
         }
 
     }
-}
-
-void Summary::saveAllAsText(const QString &fName) const
-{
-
-}
-
-void Summary::savePrimaryAsText(const QString &fName) const
-{
-
 }
 
 void Summary::readAll(QJsonObject &objSumm)

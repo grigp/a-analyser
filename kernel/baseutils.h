@@ -83,7 +83,7 @@ void modelToMSExcel(const QAbstractItemModel* model, const QString &fileName);
  * \param model - указатель на модель
  * \param fileName - имя файла csv
  */
-void modelToText(const QAbstractItemModel* model, const QString &fileName);
+void modelToText(const QAbstractItemModel* model, const QString &fileName, const QString& divider = "");
 
 /*!
  * \brief Сохраняет данные вектора в текстовый файл
