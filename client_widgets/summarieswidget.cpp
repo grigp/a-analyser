@@ -5,6 +5,7 @@
 #include <QTableView>
 #include <QMessageBox>
 #include <QDir>
+#include <QFileDialog>
 #include <QDebug>
 
 #include "aanalyserapplication.h"
@@ -255,6 +256,57 @@ void SummariesWidget::on_deleteTest()
         QMessageBox::information(nullptr, tr("Предупреждение"), tr("Нет выбранной сводки"));
 }
 
+void SummariesWidget::on_exportSummary()
+{
+    auto selIdx = ui->tvSummaries->selectionModel()->currentIndex();
+    if (selIdx != QModelIndex())
+    {
+        QVariant var = selIdx.data(lsWidgetRole);
+        if (var.isValid())
+        {
+            SummaryWidget* wgt = var.value<SummaryWidget*>();
+            if (wgt)
+            {
+                QString path = DataDefines::aanalyserDocumentsPath();
+                QString selFltr = "";
+                auto fileName = QFileDialog::getSaveFileName(this,
+                                                             tr("Файл для экспорта сводки"),
+                                                             path,
+                                                             SummaryDefines::emfnSummary + ";;" + SummaryDefines::emfnText,
+                                                             &selFltr);
+
+                if (selFltr == SummaryDefines::emfnSummary)
+                    wgt->model()->save(fileName);
+                else
+                if (selFltr == SummaryDefines::emfnText)
+                    wgt->model()->saveAsText(fileName);
+            }
+        }
+    }
+    else
+        QMessageBox::information(nullptr, tr("Предупреждение"), tr("Нет выбранной сводки"));
+}
+
+void SummariesWidget::on_importSummary()
+{
+    QString path = DataDefines::aanalyserDocumentsPath();
+    auto fn = QFileDialog::getOpenFileName(this, tr("Файл сводки"), path, SummaryDefines::emfnSummary);
+    if (fn != "")
+    {
+        QString fnNew = DataDefines::aanalyserSummariesPath() + QUuid::createUuid().toString() + "." + SummaryDefines::SummarySuffix;
+        QFile::copy(fn, fnNew);
+
+        //! Создаем новую сводку
+        auto summary = openSummaryFirst();
+
+        //! Открываем ее
+        summary->open(fnNew);
+
+        //! Создаем виджет и т.д.
+        openSummarySecond(summary);
+    }
+}
+
 void SummariesWidget::splitterMoved(int pos, int index)
 {
     Q_UNUSED(pos);
@@ -379,10 +431,10 @@ void SummariesWidget::saveSummary(SummaryWidget *wgt)
 {
     if (wgt->model()->fileName() == "")
     {
-        QDir dir(DataDefines::aanalyserDocumentsPath() + "summaries/");
+        QDir dir(DataDefines::aanalyserSummariesPath());
         if (!dir.exists())
-            dir.mkpath(DataDefines::aanalyserDocumentsPath() + "summaries/");
-        wgt->model()->setFileName(DataDefines::aanalyserDocumentsPath() + "summaries/" + wgt->model()->uid() + ".asmry");
+            dir.mkpath(DataDefines::aanalyserSummariesPath());
+        wgt->model()->setFileName(DataDefines::aanalyserSummariesPath() + wgt->model()->uid() + "." + SummaryDefines::SummarySuffix);
     }
     wgt->model()->save();
 }

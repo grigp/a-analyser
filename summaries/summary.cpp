@@ -121,13 +121,27 @@ void Summary::open(const QString &fileName)
 
 void Summary::save()
 {
-    if (m_kind == SummaryDefines::skAll)
-        saveAll();
-    else
-    if (m_kind == SummaryDefines::skPrimary)
-        savePrimary();
+    save(m_fileName);
 
     changeModyfy(false);
+}
+
+void Summary::save(const QString &fName)
+{
+    if (m_kind == SummaryDefines::skAll)
+        saveAll(fName);
+    else
+    if (m_kind == SummaryDefines::skPrimary)
+        savePrimary(fName);
+}
+
+void Summary::saveAsText(const QString &fName)
+{
+    if (m_kind == SummaryDefines::skAll)
+        saveAllAsText(fName);
+    else
+    if (m_kind == SummaryDefines::skPrimary)
+        savePrimaryAsText(fName);
 }
 
 void Summary::setUid(const QString uid)
@@ -486,11 +500,11 @@ QList<QStandardItem *> Summary::sortItems(QList<QStandardItem *> &line)
     return retval;
 }
 
-void Summary::saveAll() const
+void Summary::saveAll(const QString &fName) const
 {
-    if (m_fileName != "")
+    if (fName != "")
     {
-        QFile file(m_fileName);
+        QFile file(fName);
         file.remove();
         if (file.open(QIODevice::WriteOnly | QIODevice::Text))
         {
@@ -591,11 +605,11 @@ void Summary::saveAll() const
     }
 }
 
-void Summary::savePrimary() const
+void Summary::savePrimary(const QString &fName) const
 {
-    if (m_fileName != "")
+    if (fName != "")
     {
-        QFile file(m_fileName);
+        QFile file(fName);
         file.remove();
         if (file.open(QIODevice::WriteOnly | QIODevice::Text))
         {
@@ -677,6 +691,16 @@ void Summary::savePrimary() const
         }
 
     }
+}
+
+void Summary::saveAllAsText(const QString &fName) const
+{
+
+}
+
+void Summary::savePrimaryAsText(const QString &fName) const
+{
+
 }
 
 void Summary::readAll(QJsonObject &objSumm)

@@ -106,6 +106,18 @@ public:
     void save();
 
     /*!
+     * \brief Сохраняет сводку в файл
+     * \param fName - имя файла
+     */
+    void save(const QString& fName);
+
+    /*!
+     * \brief Сохраняет сводку в текстовый файл
+     * \param fName - имя файла
+     */
+    void saveAsText(const QString& fName);
+
+    /*!
      * \brief Доступ к m_uid
      */
     QString uid() const {return m_uid;}
@@ -210,12 +222,25 @@ private:
 
     /*!
      * \brief Сохраняет сводку со всеми показателями
+     * \param fName - имя файла
      */
-    void saveAll() const;
+    void saveAll(const QString &fName) const;
     /*!
      * \brief Сохраняет сводку с первичными показателями
+     * \param fName - имя файла
      */
-    void savePrimary() const;
+    void savePrimary(const QString &fName) const;
+
+    /*!
+     * \brief Сохраняет сводку со всеми показателями как текст
+     * \param fName - имя файла
+     */
+    void saveAllAsText(const QString &fName) const;
+    /*!
+     * \brief Сохраняет сводку с первичными показателями как текст
+     * \param fName - имя файла
+     */
+    void savePrimaryAsText(const QString &fName) const;
 
     /*!
      * \brief Читает сводку со всеми показателями

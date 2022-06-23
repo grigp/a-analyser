@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>841</width>
-    <height>474</height>
+    <width>1101</width>
+    <height>531</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -125,6 +125,56 @@
         <property name="icon">
          <iconset resource="../kernel.qrc">
           <normaloff>:/images/delete22.png</normaloff>:/images/delete22.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>22</width>
+          <height>22</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <spacer name="horizontalSpacer_3">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeType">
+         <enum>QSizePolicy::Fixed</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btnExport">
+        <property name="text">
+         <string>Экспорт сводки...</string>
+        </property>
+        <property name="icon">
+         <iconset resource="../kernel.qrc">
+          <normaloff>:/images/SummaryExport.png</normaloff>:/images/SummaryExport.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>22</width>
+          <height>22</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btnImport">
+        <property name="text">
+         <string>Импорт сводки...</string>
+        </property>
+        <property name="icon">
+         <iconset resource="../kernel.qrc">
+          <normaloff>:/images/SummaryImport.png</normaloff>:/images/SummaryImport.png</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -345,12 +395,44 @@
    <slot>on_deleteTest()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>636</x>
-     <y>14</y>
+     <x>607</x>
+     <y>22</y>
     </hint>
     <hint type="destinationlabel">
      <x>841</x>
      <y>9</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btnExport</sender>
+   <signal>clicked()</signal>
+   <receiver>SummariesWidget</receiver>
+   <slot>on_exportSummary()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>689</x>
+     <y>25</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1100</x>
+     <y>99</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btnImport</sender>
+   <signal>clicked()</signal>
+   <receiver>SummariesWidget</receiver>
+   <slot>on_importSummary()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>825</x>
+     <y>24</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1101</x>
+     <y>70</y>
     </hint>
    </hints>
   </connection>
@@ -362,5 +444,7 @@
   <slot>on_closeSummary()</slot>
   <slot>splitterMoved(int,int)</slot>
   <slot>on_deleteTest()</slot>
+  <slot>on_exportSummary()</slot>
+  <slot>on_importSummary()</slot>
  </slots>
 </ui>

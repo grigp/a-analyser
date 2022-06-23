@@ -221,5 +221,7 @@
         <file>images/Configurator.png</file>
         <file>images/SummariesBrowse.png</file>
         <file>images/delete22.png</file>
+        <file>images/SummaryExport.png</file>
+        <file>images/SummaryImport.png</file>
     </qresource>
 </RCC>

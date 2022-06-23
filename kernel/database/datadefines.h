@@ -180,6 +180,11 @@ QString appCopyPath();
 QString dataBasesPath();
 
 /*!
+ * \brief возвращает путь к папке сводок для всех приложений a-analyser
+ */
+QString aanalyserSummariesPath();
+
+/*!
  * \brief Возвращает uid копии приложения
  */
 QString appCopyUid();

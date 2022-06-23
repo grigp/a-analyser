@@ -86,6 +86,8 @@ private slots:
     void on_closeSummary();
 
     void on_deleteTest();
+    void on_exportSummary();
+    void on_importSummary();
 
     void splitterMoved(int pos,int index);
 

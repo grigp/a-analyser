@@ -1,7 +1,9 @@
 #ifndef SUMMARYDEFINES_H
 #define SUMMARYDEFINES_H
 
+#include <QCoreApplication>
 #include <QString>
+#include <QMap>
 
 namespace SummaryDefines
 {
@@ -38,6 +40,25 @@ struct ActiveSummaryInfo
         : uidMethodic(um), kind(k) {}
     ActiveSummaryInfo() {}
 };
+
+/*!
+ * \brief Типы фильтров экспорта сводок The ExportModeFilters enum
+ */
+enum ExportModeFilters
+{
+      emfSummary = 0
+    , emfText
+};
+
+static const QString SummarySuffix = "asmry";
+static const QString emfnSummary = QCoreApplication::tr("Файлы сводок") + " *." + SummarySuffix + " (*." + SummarySuffix + ")";
+static const QString emfnText = QCoreApplication::tr("Текстовые файлы") + " *.txt (*.txt)";
+
+static QMap<ExportModeFilters, QString> exportModeFiltersNames{
+    std::pair<ExportModeFilters, QString> (emfSummary, emfnSummary)
+  , std::pair<ExportModeFilters, QString> (emfText, emfnText)
+};
+
 
 }
 

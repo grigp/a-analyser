@@ -106,7 +106,7 @@ void OpenSummaryDialog::on_splitterMoved(int pos,int index)
 void OpenSummaryDialog::load()
 {
     //! Получение списка файлов
-    QString path = DataDefines::aanalyserDocumentsPath() + "summaries/";
+    QString path = DataDefines::aanalyserSummariesPath();
     QDir dir(path);
     QFileInfoList list = dir.entryInfoList(); //QDir::NoDotAndDotDot);
 

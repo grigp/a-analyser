@@ -113,7 +113,6 @@ QString DataDefines::appCopyPath()
             return aanalyserDataPath() + m_appCopyUid + "/";
         }
     }
-    return "";
 }
 
 QString DataDefines::dataBasesPath()
@@ -121,6 +120,10 @@ QString DataDefines::dataBasesPath()
     return aanalyserDataPath() + "databases/";
 }
 
+QString DataDefines::aanalyserSummariesPath()
+{
+    return DataDefines::aanalyserDocumentsPath() + "summaries/";
+}
 
 QString DataDefines::appCopyUid()
 {
@@ -222,4 +225,5 @@ QColor DataDefines::normValueToColorDark(const DataDefines::NormValue val)
     };
     return normColors.value(val);
 }
+
 
