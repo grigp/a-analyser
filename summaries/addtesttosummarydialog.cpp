@@ -86,7 +86,6 @@ void AddTestToSummaryDialog::showEvent(QShowEvent *event)
     auto ti = static_cast<AAnalyserApplication*>(QApplication::instance())->getSelectedTest();
     SummaryDefines::ActiveSummaryInfo asi;
     static_cast<AAnalyserApplication*>(QApplication::instance())->getActiveSummary(asi);
-    qDebug() << asi.uidMethodic << ti.metodUid;
     if (asi.uidMethodic != "" && asi.uidMethodic == ti.metodUid)
         ui->rbAddToActiveSummary->setChecked(true);
     else

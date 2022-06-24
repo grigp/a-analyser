@@ -340,6 +340,11 @@ void Summary::addTestPrimary(const QString &testUid)
             itemFactor->setData(fi.shortName(), FactorShortNameRole);
             itemFactor->setData(fi.measure(), FactorMeasureRole);
             itemFactor->setData(fi.format(), FactorFormatRole);
+
+            DataDefines::ProbeInfo pi;
+            if (DataProvider::getProbeInfo(ti.probes.at(factor.probeNum()), pi))
+                itemFactor->setData(pi.name, ProbeNameRole);
+
             lineHeader << itemFactor;
         }
 
@@ -644,6 +649,10 @@ void Summary::savePrimary(const QString &fName) const
                         item["short_name"] = index(i, j).data(FactorShortNameRole).toString();
                         item["measure"] = index(i, j).data(FactorMeasureRole).toString();
                         item["format"] = index(i, j).data(FactorFormatRole).toInt();
+
+                        auto pName = index(i, j).data(ProbeNameRole).toString();
+                        if (pName != "")
+                            item["probe_name"] = pName;
                     }
                     if (i >= 1)   //! Строки значений показателей для тестов
                     {
@@ -813,11 +822,15 @@ void Summary::fillItemFactor(QJsonObject& cell, QStandardItem *item)
         auto fSName = cell["short_name"].toString();
         auto fMeas = cell["measure"].toString();
         auto fFrm = cell["format"].toInt();
+        auto pName = cell["probe_name"].toString();
+
         item->setData(fUid, FactorUidRole);
         item->setData(fName, FactorNameRole);
         item->setData(fSName, FactorShortNameRole);
         item->setData(fMeas, FactorMeasureRole);
         item->setData(fFrm, FactorFormatRole);
+        if (pName != "")
+            item->setData(pName, ProbeNameRole);
     }
 }
 

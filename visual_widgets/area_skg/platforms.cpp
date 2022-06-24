@@ -67,5 +67,4 @@ void Platforms::setColorPlatform(QColor color)
 void Platforms::setColorFrame(QColor color)
 {
     m_colorFrame = color;
-    qDebug() << Q_FUNC_INFO << m_colorFrame;
 }

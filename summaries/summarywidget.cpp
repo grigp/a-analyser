@@ -118,9 +118,14 @@ void SummaryWidget::on_ItemSelected(QModelIndex index)
         else
             ui->lblFactorName->setText("");
 
+        auto pn = model()->index(Summary::RowPrimaryFactors, index.column(), index.parent()).data(Summary::ProbeNameRole).toString();
+        if (pn != "")
+            ui->lblProbeName->setText(tr("Проба") + " - " + pn);
+        else
+            ui->lblProbeName->setText("");
+
         ui->lblMultiFactorName->setText("");
         ui->lblChannelName->setText("");
-        ui->lblProbeName->setText("");
 
         //! Вывод названия методики
         showValue(Summary::RowProbes, Summary::MethodicNameRole, ui->lblMethodName, tr("Методика"));
