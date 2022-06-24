@@ -22,7 +22,7 @@ EvolventaExecute::EvolventaExecute(QWidget *parent) :
     addTarget(0, 0, Qt::green, Qt::darkGreen);
     addMarker();
 
-    auto kard = static_cast<AAnalyserApplication*>(QApplication::instance())->getSelectedPatient();
+    auto kard = static_cast<AAnalyserApplication*>(QApplication::instance())->getCurrentPatient();
     setTitle(tr("Тест \"Эвольвента\"") + " - " + kard.fio);
     isShowValues(false);
     isTraceControl(false);

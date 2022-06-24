@@ -13,7 +13,7 @@ TriangleExecute::TriangleExecute(QWidget *parent)
     : StabDynamicTestExecute (parent)
     , m_res(new TriangleResultData(ChannelsDefines::chanTriangleResult))
 {
-    auto kard = static_cast<AAnalyserApplication*>(QApplication::instance())->getSelectedPatient();
+    auto kard = static_cast<AAnalyserApplication*>(QApplication::instance())->getCurrentPatient();
     setTitle(tr("Тест \"Треугольник\"") + " - " + kard.fio);
     isShowValues(false);
     isTraceControl(false);

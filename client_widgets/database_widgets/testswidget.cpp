@@ -125,11 +125,6 @@ void TestsWidget::summaryAddTest()
         QMessageBox::information(nullptr, tr("Предупрежение"), tr("Не выбран тест"));
 }
 
-void TestsWidget::summaryBuild()
-{
-    static_cast<AAnalyserApplication*>(QApplication::instance())->summaryBuild();
-}
-
 void TestsWidget::print(QPrinter* printer)
 {
     MetodicsFactory *metFactory = static_cast<AAnalyserApplication*>(QApplication::instance())->getMetodics();

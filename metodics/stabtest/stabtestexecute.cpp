@@ -125,8 +125,8 @@ void StabTestExecute::start()
 
         setChannels();
 
-        m_kard = static_cast<AAnalyserApplication*>(QApplication::instance())->getSelectedPatient();
-        MetodicDefines::MetodicInfo mi = static_cast<AAnalyserApplication*>(QApplication::instance())->getSelectedMetodic();
+        m_kard = static_cast<AAnalyserApplication*>(QApplication::instance())->getCurrentPatient();
+        MetodicDefines::MetodicInfo mi = static_cast<AAnalyserApplication*>(QApplication::instance())->getCurrentMetodic();
         ui->lblProbeTitle->setText(probeParams().name + " - " + m_kard.fio);
         m_trd->newTest(m_kard.uid, mi.uid);
 

@@ -140,7 +140,7 @@ void AAnalyserApplication::changeDatabase(const QString &dataBaseFolder)
     m_database->changeDatabase(dataBaseFolder);
 }
 
-DataDefines::PatientKard AAnalyserApplication::getSelectedPatient() const
+DataDefines::PatientKard AAnalyserApplication::getCurrentPatient() const
 {
     DataDefines::PatientKard kard;
     if (m_patientUid != "" && m_database)
@@ -148,19 +148,30 @@ DataDefines::PatientKard AAnalyserApplication::getSelectedPatient() const
     return kard;
 }
 
-MetodicDefines::MetodicInfo AAnalyserApplication::getSelectedMetodic() const
+MetodicDefines::MetodicInfo AAnalyserApplication::getCurrentMetodic() const
 {
     if (m_metodics && m_metodicUid != "")
         return m_metodics->metodic(m_metodicUid);
     return MetodicDefines::MetodicInfo();
 }
 
-DataDefines::TestInfo AAnalyserApplication::getSelectedTest() const
+DataDefines::TestInfo AAnalyserApplication::getCurrentTest() const
 {
     DataDefines::TestInfo ti;
     if (m_testUid != "" && m_database)
         m_database->getTestInfo(m_testUid, ti);
     return ti;
+}
+
+int AAnalyserApplication::selectedTestsCount() const
+{
+    return m_selectedTests.size();
+}
+
+QString AAnalyserApplication::selectedTest(const int idx) const
+{
+    Q_ASSERT(idx >= 0 && idx < m_selectedTests.size());
+    return m_selectedTests.at(idx);
 }
 
 MetodicsFactory *AAnalyserApplication::getMetodics()
@@ -200,6 +211,12 @@ void AAnalyserApplication::doSelectTest(const QString &uid)
         m_testUid = uid;
         emit selectTest(m_testUid);
     }
+}
+
+void AAnalyserApplication::setSelectedTests(QStringList &tests)
+{
+    m_selectedTests.clear();
+    m_selectedTests << tests;
 }
 
 void AAnalyserApplication::executeMetodic()
@@ -283,7 +300,8 @@ void AAnalyserApplication::summaries()
 
 void AAnalyserApplication::summaryAddTest()
 {
-    if (m_testUid != "")
+//    if (m_testUid != "")
+    if (static_cast<AAnalyserApplication*>(QApplication::instance())->selectedTestsCount() > 0)
     {
         if (!m_addTSDlg)
         {
@@ -293,12 +311,7 @@ void AAnalyserApplication::summaryAddTest()
         m_addTSDlg->show();
     }
     else
-        QMessageBox::information(nullptr, tr("Предупреждение"), tr("Не выбран тест"));
-}
-
-void AAnalyserApplication::summaryBuild()
-{
-
+        QMessageBox::information(nullptr, tr("Предупреждение"), tr("Не выбран ни один тест"));
 }
 
 QStringList AAnalyserApplication::getDrivers() const
@@ -580,9 +593,37 @@ void AAnalyserApplication::on_AddTestToSummaryAccepted()
         if (m_addTSDlg->summaryName() == "")
             QMessageBox::warning(nullptr, tr("Предупреждение"), tr("Не задано название сводки"));
         else
-            emit addTestToSummary(m_testUid, m_addTSDlg->mode(), m_addTSDlg->summaryName(), m_addTSDlg->kind());
+        {
+            for (int i = 0; i < selectedTestsCount(); ++i)
+            {
+                auto testUid = selectedTest(i);
+                if (i == 0)
+                    emit addTestToSummary(testUid, SummaryDefines::atmNew, m_addTSDlg->summaryName(), m_addTSDlg->kind());
+                else
+                    emit addTestToSummary(testUid, SummaryDefines::atmActive, "", m_addTSDlg->kind());
+            }
+        }
     }
     if (m_addTSDlg->mode() == SummaryDefines::atmActive)
-        emit addTestToSummary(m_testUid, m_addTSDlg->mode(), "", m_addTSDlg->kind());
+    {
+        for (int i = 0; i < selectedTestsCount(); ++i)
+        {
+            auto testUid = selectedTest(i);
+            emit addTestToSummary(testUid, m_addTSDlg->mode(), "", m_addTSDlg->kind());
+        }
+    }
 }
+
+//void AAnalyserApplication::on_AddTestToSummaryAccepted()
+//{
+//    if (m_addTSDlg->mode() == SummaryDefines::atmNew)
+//    {
+//        if (m_addTSDlg->summaryName() == "")
+//            QMessageBox::warning(nullptr, tr("Предупреждение"), tr("Не задано название сводки"));
+//        else
+//            emit addTestToSummary(m_testUid, m_addTSDlg->mode(), m_addTSDlg->summaryName(), m_addTSDlg->kind());
+//    }
+//    if (m_addTSDlg->mode() == SummaryDefines::atmActive)
+//        emit addTestToSummary(m_testUid, m_addTSDlg->mode(), "", m_addTSDlg->kind());
+//}
 

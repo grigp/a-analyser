@@ -37,8 +37,8 @@ class ResultsWidget : public QWidget
     Q_OBJECT
 
 public:
-    explicit ResultsWidget(QWidget *parent = 0);
-    ~ResultsWidget();
+    explicit ResultsWidget(QWidget *parent = nullptr);
+    ~ResultsWidget() override;
 
     void onDbConnect();
     void onDbDisconnect();
@@ -90,6 +90,8 @@ private:
 
     void saveSplitterPosition();
     void restoreSplitterPosition();
+
+    void calculateSelected();
 
     TestsModel *m_mdlTest;
     TestProxyModel *m_pmdlTest;

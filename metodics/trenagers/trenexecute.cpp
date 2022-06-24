@@ -33,8 +33,8 @@ TrenExecute::TrenExecute(QWidget *parent) :
     ui->lblCommunicationError->setVisible(false);
     ui->wgtAdvChannels->setVisible(false);
 
-    m_kard = static_cast<AAnalyserApplication*>(QApplication::instance())->getSelectedPatient();
-    MetodicDefines::MetodicInfo mi = static_cast<AAnalyserApplication*>(QApplication::instance())->getSelectedMetodic();
+    m_kard = static_cast<AAnalyserApplication*>(QApplication::instance())->getCurrentPatient();
+    MetodicDefines::MetodicInfo mi = static_cast<AAnalyserApplication*>(QApplication::instance())->getCurrentMetodic();
     ui->lblTrenTitle->setText(mi.name + " - " + m_kard.fio);
 }
 
@@ -94,8 +94,8 @@ void TrenExecute::start()
         connect(m_driver, &Driver::sendData, this, &TrenExecute::getData);
         connect(m_driver, &Driver::communicationError, this, &TrenExecute::on_communicationError);
 
-        m_kard = static_cast<AAnalyserApplication*>(QApplication::instance())->getSelectedPatient();
-        MetodicDefines::MetodicInfo mi = static_cast<AAnalyserApplication*>(QApplication::instance())->getSelectedMetodic();
+        m_kard = static_cast<AAnalyserApplication*>(QApplication::instance())->getCurrentPatient();
+        MetodicDefines::MetodicInfo mi = static_cast<AAnalyserApplication*>(QApplication::instance())->getCurrentMetodic();
         m_trd->newTest(m_kard.uid, mi.uid);
 
         //! По формату получаем список каналов этого формата, которые передает драйвер, заносим их в список для выбора

@@ -196,8 +196,8 @@ void JumpTestExecute::showTools(bool isShow)
 
 void JumpTestExecute::saveResult()
 {
-    auto kard = static_cast<AAnalyserApplication*>(QApplication::instance())->getSelectedPatient();
-    MetodicDefines::MetodicInfo mi = static_cast<AAnalyserApplication*>(QApplication::instance())->getSelectedMetodic();
+    auto kard = static_cast<AAnalyserApplication*>(QApplication::instance())->getCurrentPatient();
+    MetodicDefines::MetodicInfo mi = static_cast<AAnalyserApplication*>(QApplication::instance())->getCurrentMetodic();
 
     TestResultData m_trd;  ///< Объект, записывающий данные в базу
     m_trd.newTest(kard.uid, mi.uid);

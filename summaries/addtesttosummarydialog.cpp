@@ -83,7 +83,7 @@ void AddTestToSummaryDialog::showEvent(QShowEvent *event)
     QDialog::showEvent(event);
     ui->edSummaryName->setText("");
 
-    auto ti = static_cast<AAnalyserApplication*>(QApplication::instance())->getSelectedTest();
+    auto ti = static_cast<AAnalyserApplication*>(QApplication::instance())->getCurrentTest();
     SummaryDefines::ActiveSummaryInfo asi;
     static_cast<AAnalyserApplication*>(QApplication::instance())->getActiveSummary(asi);
     if (asi.uidMethodic != "" && asi.uidMethodic == ti.metodUid)

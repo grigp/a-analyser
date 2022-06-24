@@ -94,7 +94,7 @@ void DropTestExecute::start()
 
         m_driver->start();
 
-        m_kard = static_cast<AAnalyserApplication*>(QApplication::instance())->getSelectedPatient();
+        m_kard = static_cast<AAnalyserApplication*>(QApplication::instance())->getCurrentPatient();
         if (m_kard.massa == 0)
         {
             ui->lblCommentFinishTest->setText(tr("Для пациента не указана масса. Проведение теста невозможно."));
@@ -427,7 +427,7 @@ void DropTestExecute::finishTest()
 {
     m_isRecording = false;
 
-    MetodicDefines::MetodicInfo mi = static_cast<AAnalyserApplication*>(QApplication::instance())->getSelectedMetodic();
+    MetodicDefines::MetodicInfo mi = static_cast<AAnalyserApplication*>(QApplication::instance())->getCurrentMetodic();
 
     TestResultData m_trd;  ///< Объект, записывающий данные в базу
     m_trd.newTest(m_kard.uid, mi.uid);

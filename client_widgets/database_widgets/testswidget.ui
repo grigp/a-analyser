@@ -235,26 +235,6 @@
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="btnSummaryBuild">
-        <property name="toolTip">
-         <string>Построить сводку...</string>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-        <property name="icon">
-         <iconset resource="../../kernel.qrc">
-          <normaloff>:/images/SummaryBuild.png</normaloff>:/images/SummaryBuild.png</iconset>
-        </property>
-        <property name="iconSize">
-         <size>
-          <width>32</width>
-          <height>32</height>
-         </size>
-        </property>
-       </widget>
-      </item>
-      <item>
        <spacer name="horizontalSpacer_2">
         <property name="orientation">
          <enum>Qt::Horizontal</enum>
@@ -510,22 +490,6 @@
     <hint type="destinationlabel">
      <x>1076</x>
      <y>74</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>btnSummaryBuild</sender>
-   <signal>clicked()</signal>
-   <receiver>TestsWidget</receiver>
-   <slot>summaryBuild()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>463</x>
-     <y>32</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>1078</x>
-     <y>49</y>
     </hint>
    </hints>
   </connection>

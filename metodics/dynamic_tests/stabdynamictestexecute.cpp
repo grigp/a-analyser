@@ -206,8 +206,8 @@ void StabDynamicTestExecute::start()
 
         setChannels();
 
-        m_kard = static_cast<AAnalyserApplication*>(QApplication::instance())->getSelectedPatient();
-        m_metInfo = static_cast<AAnalyserApplication*>(QApplication::instance())->getSelectedMetodic();
+        m_kard = static_cast<AAnalyserApplication*>(QApplication::instance())->getCurrentPatient();
+        m_metInfo = static_cast<AAnalyserApplication*>(QApplication::instance())->getCurrentMetodic();
         m_trd->newTest(m_kard.uid, m_metInfo.uid);
 
         if (QApplication::desktop()->screenCount() > 1)

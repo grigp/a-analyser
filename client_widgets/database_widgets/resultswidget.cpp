@@ -96,6 +96,8 @@ void ResultsWidget::selectTest(const QModelIndex &index)
 {
     try
     {
+        calculateSelected();
+
 //        qDebug() << "1";
 //        int v = 0;
 //        v = 23 / v;
@@ -254,6 +256,25 @@ void ResultsWidget::restoreSplitterPosition()
     if (val == "")
         val = QByteArray::fromRawData("\x00\x00\x00\xFF\x00\x00\x00\x01\x00\x00\x00\x02\x00\x00\x01\x17\x00\x00\x01\xEB\x01\xFF\xFF\xFF\xFF\x01\x00\x00\x00\x01\x00", 31);
     ui->splitter->restoreState(val);
+}
+
+void ResultsWidget::calculateSelected()
+{
+    auto indexes = ui->tvTests->selectionModel()->selectedIndexes();
+    QStringList tests;
+    foreach (auto index, indexes)
+    {
+        auto idx = m_pmdlTest->mapToSource(index);
+        if (idx.column() == 0)
+        {
+            auto uid = m_mdlTest->index(idx.row(), TestsModel::ColPatient, idx.parent()).
+                    data(TestsModel::TestUidRole).toString();
+            tests << uid;
+            DataDefines::TestInfo ti;
+            DataProvider::getTestInfo(uid, ti);
+        }
+    }
+    static_cast<AAnalyserApplication*>(QApplication::instance())->setSelectedTests(tests);
 }
 
 ScaledPixmap::ScaledPixmap(QWidget *parent)

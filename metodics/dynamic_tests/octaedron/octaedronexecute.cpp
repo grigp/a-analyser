@@ -23,7 +23,7 @@ OctaedronExecute::OctaedronExecute(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    auto kard = static_cast<AAnalyserApplication*>(QApplication::instance())->getSelectedPatient();
+    auto kard = static_cast<AAnalyserApplication*>(QApplication::instance())->getCurrentPatient();
     setTitle(tr("Тренажер \"Остаедр\"") + " - " + kard.fio);
     isShowValues(false);
     isTraceControl(false);

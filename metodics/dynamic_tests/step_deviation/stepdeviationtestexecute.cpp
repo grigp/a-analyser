@@ -10,7 +10,7 @@
 StepDeviationTestExecute::StepDeviationTestExecute(QWidget *parent)
     : StabDynamicTestExecute (parent)
 {
-    auto kard = static_cast<AAnalyserApplication*>(QApplication::instance())->getSelectedPatient();
+    auto kard = static_cast<AAnalyserApplication*>(QApplication::instance())->getCurrentPatient();
     setTitle(tr("Тест со ступенчатым отклонением") + " - " + kard.fio);
     isShowValues(false);
     isTraceControl(false);

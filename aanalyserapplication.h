@@ -70,17 +70,28 @@ public:
     /*!
      * \brief Возвращает карточку выбранного пациента
      */
-    DataDefines::PatientKard getSelectedPatient() const;
+    DataDefines::PatientKard getCurrentPatient() const;
 
     /*!
      * \brief Возвращает данные о выбранной методике
      */
-    MetodicDefines::MetodicInfo getSelectedMetodic() const;
+    MetodicDefines::MetodicInfo getCurrentMetodic() const;
 
     /*!
      * \brief Возвращает информацию о выбранном тесте
      */
-    DataDefines::TestInfo getSelectedTest() const;
+    DataDefines::TestInfo getCurrentTest() const;
+
+    /*!
+     * \brief Возвращает кол-во выделенных тестов
+     */
+    int selectedTestsCount() const;
+
+    /*!
+     * \brief Возвращает uid выделенного теста
+     * \param idx - индекс теста в списке
+     */
+    QString selectedTest(const int idx) const;
 
     /*!
      * \brief Возвращает указатель на список методик
@@ -117,6 +128,12 @@ public:
      * \param uid
      */
     void doSelectTest(const QString &uid);
+
+    /*!
+     * \brief Получение информации о выделенных тестах
+     * \param tests - список выделенных тестов
+     */
+    void setSelectedTests(QStringList &tests);
 
     /*!
      * \brief Выполнение методики
@@ -156,11 +173,6 @@ public:
      * \brief Добавление показателей теста в сводку
      */
     void summaryAddTest();
-
-    /*!
-     * \brief Построение сводки
-     */
-    void summaryBuild();
 
     /*!
      * \brief Возвращает список uid подключенных драйверов
@@ -484,9 +496,10 @@ private:
     NormsManager *m_normsManager {nullptr};
     VisualsFactory *m_visualsFactory {nullptr};
 
-    QString m_patientUid = "";  ///< uid выбранного пациента
-    QString m_metodicUid = "";  ///< uid выбранной методики
-    QString m_testUid = "";     ///< uid выбранного теста
+    QString m_patientUid = "";    ///< uid выбранного пациента
+    QString m_metodicUid = "";    ///< uid выбранной методики
+    QString m_testUid = "";       ///< uid выбранного теста
+    QStringList m_selectedTests;  ///< Список uid выделенных тестов
 
     AddTestToSummaryDialog* m_addTSDlg {nullptr};
     SummaryDefines::ActiveSummaryInfo m_asi;

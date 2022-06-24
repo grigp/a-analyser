@@ -116,7 +116,7 @@ void Extend3DGamesExecute::savePatientData() const
     if (file.open(QIODevice::WriteOnly | QIODevice::Text))
     {
         QJsonObject patient;
-        DataDefines::PatientKard kard = static_cast<AAnalyserApplication*>(QApplication::instance())->getSelectedPatient();
+        DataDefines::PatientKard kard = static_cast<AAnalyserApplication*>(QApplication::instance())->getCurrentPatient();
         patient["fio"] = kard.fio;
         patient["born"] = kard.born.toString("dd.MM.yyyy");
         QJsonDocument doc(patient);
@@ -147,8 +147,8 @@ void Extend3DGamesExecute::getGameResult() const
     {
         QList<GameResultsFactorInfo> fl = getResultsFactors(fn);
 
-        DataDefines::PatientKard m_kard = static_cast<AAnalyserApplication*>(QApplication::instance())->getSelectedPatient();
-        MetodicDefines::MetodicInfo mi = static_cast<AAnalyserApplication*>(QApplication::instance())->getSelectedMetodic();
+        DataDefines::PatientKard m_kard = static_cast<AAnalyserApplication*>(QApplication::instance())->getCurrentPatient();
+        MetodicDefines::MetodicInfo mi = static_cast<AAnalyserApplication*>(QApplication::instance())->getCurrentMetodic();
 
         TestResultData *m_trd = new TestResultData();
         m_trd->newTest(m_kard.uid, mi.uid);

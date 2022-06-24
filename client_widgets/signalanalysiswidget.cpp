@@ -47,7 +47,7 @@ QString SignalAnalysisWidget::name()
 
 void SignalAnalysisWidget::onShow()
 {
-    auto ti = static_cast<AAnalyserApplication*>(QApplication::instance())->getSelectedTest();
+    auto ti = static_cast<AAnalyserApplication*>(QApplication::instance())->getCurrentTest();
     if (ti.uid != "")
     {
         if (!isTestOpened(ti.uid))
