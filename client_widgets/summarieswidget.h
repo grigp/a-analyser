@@ -89,6 +89,8 @@ private slots:
     void on_exportSummary();
     void on_importSummary();
 
+    void on_deleteSummary(const QString& fileName);
+
     void splitterMoved(int pos,int index);
 
     void on_itemChanged(QStandardItem* item);

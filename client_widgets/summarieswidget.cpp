@@ -127,6 +127,7 @@ void SummariesWidget::on_selectIndex(QModelIndex index)
 void SummariesWidget::on_openSummary()
 {
     auto dlg = new OpenSummaryDialog(nullptr);
+    connect(dlg, &OpenSummaryDialog::deleteSummary, this, &SummariesWidget::on_deleteSummary);
     if (dlg->exec() == QDialog::Accepted)
     {
         auto fn = dlg->summaryFileName();
@@ -168,6 +169,7 @@ void SummariesWidget::on_openSummary()
         else
             QMessageBox::information(nullptr, tr("Предупреждение"), tr("Сводка не выбрана"));
     }
+    disconnect(dlg, &OpenSummaryDialog::deleteSummary, this, &SummariesWidget::on_deleteSummary);
     delete dlg;
 }
 
@@ -182,6 +184,8 @@ void SummariesWidget::on_saveSummary()
             SummaryWidget* wgt = var.value<SummaryWidget*>();
             if (wgt)
             {
+                qDebug() << Q_FUNC_INFO << wgt->model()->fileName();
+
                 saveSummary(wgt);
                 QMessageBox::information(nullptr, tr("Информация"), tr("Сводка сохранена") + " : \"" + wgt->model()->name() + "\"");
             }
@@ -306,6 +310,11 @@ void SummariesWidget::on_importSummary()
         //! Создаем виджет и т.д.
         openSummarySecond(summary);
     }
+}
+
+void SummariesWidget::on_deleteSummary(const QString &fileName)
+{
+
 }
 
 void SummariesWidget::splitterMoved(int pos, int index)

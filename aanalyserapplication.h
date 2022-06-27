@@ -511,6 +511,8 @@ protected:
 private:
     void on_AddTestToSummaryAccepted();
 
+    bool isOneMethodicOnAddTests();
+
     QMainWindow *m_mw;
     QString m_languargeCode = DataDefines::LANG_CODE_RUS;
 

@@ -28,6 +28,9 @@ public:
      */
     QString summaryFileName() const;
 
+signals:
+    void deleteSummary(const QString& fileName);
+
 protected:
     void resizeEvent(QResizeEvent *) override;
 

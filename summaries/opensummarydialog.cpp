@@ -92,6 +92,7 @@ void OpenSummaryDialog::on_deleteSummary()
                 QFile::remove(fn);
 
             m_mdlSummaries->removeRow(index.row());
+            emit deleteSummary(fn);
         }
     }
 }

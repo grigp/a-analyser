@@ -610,24 +610,29 @@ void AAnalyserApplication::on_AddTestToSummaryAccepted()
     if (m_addTSDlg->mode() == SummaryDefines::atmNew)
     {
         if (m_addTSDlg->summaryName() == "")
-            QMessageBox::warning(nullptr, tr("Предупреждение"), tr("Не задано название сводки"));
+            QMessageBox::information(nullptr, tr("Предупреждение"), tr("Не задано название сводки"));
         else
         {
-            initProgress("Добавление показателей в сводку", 0, selectedTestsCount());
-            for (int i = 0; i < selectedTestsCount(); ++i)
+            if (isOneMethodicOnAddTests())
             {
-                auto testUid = selectedTest(i);
-                DataDefines::TestInfo ti;
-                DataProvider::getTestInfo(testUid, ti);
-                DataDefines::PatientKard kard;
-                DataProvider::getPatient(ti.patientUid, kard);
-                setProgressPosition(i, kard.fio + " - " + ti.dateTime.toString("dd.MM.yyyy hh:mm"));
-                if (i == 0)
-                    emit addTestToSummary(testUid, SummaryDefines::atmNew, m_addTSDlg->summaryName(), m_addTSDlg->kind());
-                else
-                    emit addTestToSummary(testUid, SummaryDefines::atmActive, "", m_addTSDlg->kind());
+                initProgress("Добавление показателей в сводку", 0, selectedTestsCount());
+                for (int i = 0; i < selectedTestsCount(); ++i)
+                {
+                    auto testUid = selectedTest(i);
+                    DataDefines::TestInfo ti;
+                    DataProvider::getTestInfo(testUid, ti);
+                    DataDefines::PatientKard kard;
+                    DataProvider::getPatient(ti.patientUid, kard);
+                    setProgressPosition(i, kard.fio + " - " + ti.dateTime.toString("dd.MM.yyyy hh:mm"));
+                    if (i == 0)
+                        emit addTestToSummary(testUid, SummaryDefines::atmNew, m_addTSDlg->summaryName(), m_addTSDlg->kind());
+                    else
+                        emit addTestToSummary(testUid, SummaryDefines::atmActive, "", m_addTSDlg->kind());
+                }
+                doneProgress();
             }
-            doneProgress();
+            else
+                QMessageBox::information(nullptr, tr("Предупреждение"), tr("Выбраны тесты по разным методикам"));
         }
     }
     if (m_addTSDlg->mode() == SummaryDefines::atmActive)
@@ -639,6 +644,32 @@ void AAnalyserApplication::on_AddTestToSummaryAccepted()
         }
     }
 
+}
+
+bool AAnalyserApplication::isOneMethodicOnAddTests()
+{
+    bool retval = true;
+    QString testUid = "";
+    if (selectedTestsCount() > 0)
+    {
+        testUid = selectedTest(0);
+        DataDefines::TestInfo ti;
+        DataProvider::getTestInfo(testUid, ti);
+        testUid = ti.metodUid;
+    }
+
+    for (int i = 1; i < selectedTestsCount(); ++i)
+    {
+        DataDefines::TestInfo ti;
+        DataProvider::getTestInfo(selectedTest(i), ti);
+        auto mUid = ti.metodUid;
+        if (mUid != testUid)
+        {
+            retval = false;
+            break;
+        }
+    }
+    return retval;
 }
 
 //void AAnalyserApplication::on_AddTestToSummaryAccepted()
