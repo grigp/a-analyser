@@ -25,6 +25,7 @@
 #include "visualdescriptor.h"
 #include "log.h"
 #include "addtesttosummarydialog.h"
+#include "dataprovider.h"
 
 AAnalyserApplication::AAnalyserApplication(int &argc, char **argv)
     : QApplication(argc, argv)
@@ -557,6 +558,24 @@ void AAnalyserApplication::getActiveSummary(SummaryDefines::ActiveSummaryInfo &a
     asi.kind = m_asi.kind;
 }
 
+void AAnalyserApplication::initProgress(const QString &title, const int begin, const int end, const QString &stage)
+{
+    if (m_mw)
+        static_cast<MainWindow*>(m_mw)->initProgress(title, begin, end, stage);
+}
+
+void AAnalyserApplication::setProgressPosition(const int pos, const QString &stage)
+{
+    if (m_mw)
+        static_cast<MainWindow*>(m_mw)->setProgressPosition(pos, stage);
+}
+
+void AAnalyserApplication::doneProgress()
+{
+    if (m_mw)
+        static_cast<MainWindow*>(m_mw)->doneProgress();
+}
+
 bool AAnalyserApplication::notify(QObject *re, QEvent *ev)
 {
     try
@@ -594,14 +613,21 @@ void AAnalyserApplication::on_AddTestToSummaryAccepted()
             QMessageBox::warning(nullptr, tr("Предупреждение"), tr("Не задано название сводки"));
         else
         {
+            initProgress("Добавление показателей в сводку", 0, selectedTestsCount());
             for (int i = 0; i < selectedTestsCount(); ++i)
             {
                 auto testUid = selectedTest(i);
+                DataDefines::TestInfo ti;
+                DataProvider::getTestInfo(testUid, ti);
+                DataDefines::PatientKard kard;
+                DataProvider::getPatient(ti.patientUid, kard);
+                setProgressPosition(i, kard.fio + " - " + ti.dateTime.toString("dd.MM.yyyy hh:mm"));
                 if (i == 0)
                     emit addTestToSummary(testUid, SummaryDefines::atmNew, m_addTSDlg->summaryName(), m_addTSDlg->kind());
                 else
                     emit addTestToSummary(testUid, SummaryDefines::atmActive, "", m_addTSDlg->kind());
             }
+            doneProgress();
         }
     }
     if (m_addTSDlg->mode() == SummaryDefines::atmActive)
@@ -612,6 +638,7 @@ void AAnalyserApplication::on_AddTestToSummaryAccepted()
             emit addTestToSummary(testUid, m_addTSDlg->mode(), "", m_addTSDlg->kind());
         }
     }
+
 }
 
 //void AAnalyserApplication::on_AddTestToSummaryAccepted()

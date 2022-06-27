@@ -80,6 +80,8 @@ MainWindow::MainWindow(QWidget *parent) :
     auto val = SettingsProvider::valueFromRegAppCopy("MainWindow", "Geometry").toByteArray();
     restoreGeometry(val);
 
+    ui->frProgress->setVisible(false);
+
     connect(ui->acSettings, &QAction::triggered, this, &MainWindow::onSettings);
 }
 
@@ -113,6 +115,29 @@ QWidget *MainWindow::getExecuteWidget()
         if (static_cast<ClientWidget*>(wgt)->uid() == ClientWidgets::uidExecuteWidgetUid)
             return wgt;
     return nullptr;
+}
+
+void MainWindow::initProgress(const QString &title, const int begin, const int end, const QString &stage)
+{
+    ui->lblProgressTitle->setText(title);
+    ui->lblProgressStage->setText(stage);
+    ui->progressBar->setMinimum(begin);
+    ui->progressBar->setMaximum(end);
+    ui->frProgress->setVisible(true);
+}
+
+void MainWindow::setProgressPosition(const int pos, const QString &stage)
+{
+    ui->progressBar->setValue(pos);
+    ui->lblProgressStage->setText(stage);
+}
+
+void MainWindow::doneProgress()
+{
+    ui->progressBar->setValue(0);
+    ui->lblProgressTitle->setText("");
+    ui->lblProgressStage->setText("");
+    ui->frProgress->setVisible(false);
 }
 
 void MainWindow::onDbConnected()

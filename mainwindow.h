@@ -28,6 +28,27 @@ public:
 
     QWidget *getExecuteWidget();
 
+    /*!
+     * \brief Инициализирует полосу процесса, показывает ее
+     * \param title - заголовок прогресса
+     * \param begin - начальная точка
+     * \param end - конечная точка
+     * \param stage - название этапа
+     */
+    void initProgress(const QString &title, const int begin = 0, const int end = 100, const QString &stage = "");
+
+    /*!
+     * \brief Устанавливает позицию процесса
+     * \param pos - значение позиции
+     * \param stage - название этапа
+     */
+    void setProgressPosition(const int pos, const QString &stage = "");
+
+    /*!
+     * \brief Прячет полосу процесса
+     */
+    void doneProgress();
+
 signals:
     void dataBaseChange(const QString &dataBaseFolder);
     void dataBaseClear();
