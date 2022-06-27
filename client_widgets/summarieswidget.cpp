@@ -70,7 +70,8 @@ bool SummariesWidget::isCloseProgramQuery()
                                                     QMessageBox::StandardButtons(QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel));
                     if (mr == QMessageBox::Yes)
                         saveSummary(wgt);
-                    return mr != QMessageBox::Cancel;
+                    if (mr == QMessageBox::Cancel)
+                        return false;
                 }
             }
         }
