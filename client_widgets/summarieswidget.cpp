@@ -184,8 +184,6 @@ void SummariesWidget::on_saveSummary()
             SummaryWidget* wgt = var.value<SummaryWidget*>();
             if (wgt)
             {
-                qDebug() << Q_FUNC_INFO << wgt->model()->fileName();
-
                 saveSummary(wgt);
                 QMessageBox::information(nullptr, tr("Информация"), tr("Сводка сохранена") + " : \"" + wgt->model()->name() + "\"");
             }
@@ -314,7 +312,18 @@ void SummariesWidget::on_importSummary()
 
 void SummariesWidget::on_deleteSummary(const QString &fileName)
 {
+    for (int i = 0; i < m_mdlLS->rowCount(); ++i)
+    {
+        QVariant var = m_mdlLS->index(i, 0).data(lsWidgetRole);
+        if (var.isValid())
+        {
+            SummaryWidget* wgt = var.value<SummaryWidget*>();
+            if (wgt)
+                if (wgt->model()->fileName() == fileName)
+                    closeSummary(wgt);
+        }
 
+    }
 }
 
 void SummariesWidget::splitterMoved(int pos, int index)
