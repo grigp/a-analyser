@@ -9,6 +9,7 @@
 #include "metodicdefines.h"
 
 class MultiFactor;
+class MSExcelExporter;
 
 /*!
  * \brief Класс сводки показателей The Summary class
@@ -116,6 +117,13 @@ public:
      * \param fName - имя файла
      */
     void saveAsText(const QString& fName);
+
+#ifdef Q_OS_WIN32
+    /*!
+     * \brief Открывает сводку в MS Excel
+     */
+    void openInMSExcel();
+#endif
 
     /*!
      * \brief Доступ к m_uid

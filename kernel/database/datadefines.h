@@ -185,6 +185,11 @@ QString dataBasesPath();
 QString aanalyserSummariesPath();
 
 /*!
+ * \brief возвращает путь к папке временных файлов для всех приложений a-analyser
+ */
+QString aanalyserTemporaryPath();
+
+/*!
  * \brief Возвращает uid копии приложения
  */
 QString appCopyUid();

@@ -122,7 +122,17 @@ QString DataDefines::dataBasesPath()
 
 QString DataDefines::aanalyserSummariesPath()
 {
-    return DataDefines::aanalyserDocumentsPath() + "summaries/";
+    return aanalyserDataPath() + "summaries/";
+}
+
+QString DataDefines::aanalyserTemporaryPath()
+{
+    QString path = QStandardPaths::locate(QStandardPaths::TempLocation, QString(), QStandardPaths::LocateDirectory);
+    path = path + "a-analyzer/";
+    QDir dir(path);
+    if (!dir.exists())
+        dir.mkpath(path);
+    return path;
 }
 
 QString DataDefines::appCopyUid()
@@ -225,5 +235,6 @@ QColor DataDefines::normValueToColorDark(const DataDefines::NormValue val)
     };
     return normColors.value(val);
 }
+
 
 

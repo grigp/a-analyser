@@ -9,10 +9,14 @@
 #include "multifactordescriptor.h"
 #include "multifactor.h"
 #include "metodicsfactory.h"
+#ifdef Q_OS_WIN32
+#include "msexcelexporter.h"
+#endif
 
 #include <QUuid>
 #include <QJsonDocument>
 #include <QJsonArray>
+#include <QMessageBox>
 #include <QDebug>
 
 namespace  {
@@ -140,6 +144,38 @@ void Summary::saveAsText(const QString &fName)
 {
     BaseUtils::modelToText(this, fName, "\t");
 }
+
+#ifdef Q_OS_WIN32
+void Summary::openInMSExcel()
+{
+    try
+    {
+        QString fileName = DataDefines::aanalyserTemporaryPath() + "summary.xlsx";
+        fileName = fileName.replace(QString("/"), QString("\\"));
+
+        MSExcelExporter exporter;
+
+        //! По строкам
+        for (int i = 0; i < rowCount(); ++i)
+        {
+            //! По столбцам для строки
+            QJsonArray columns;
+            for (int j = 0; j < columnCount(); ++j)
+            {
+                //! Всегда выводим текст итема
+                auto text = index(i, j).data().toString();
+                exporter.setCellValue(i + 1, j + 1, text);
+            }
+        }
+
+        exporter.saveAs(fileName);
+    }
+    catch (const std::exception& e)
+    {
+        QMessageBox::warning(nullptr, tr("Предупреждение"), tr("Произошла ошибка открытия сводки в MS Excel") + e.what());
+    }
+}
+#endif
 
 void Summary::setUid(const QString uid)
 {

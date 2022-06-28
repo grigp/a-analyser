@@ -35,6 +35,11 @@ SummariesWidget::SummariesWidget(QWidget *parent) :
     ui->tvSummaries->header()->resizeSections(QHeaderView::ResizeToContents);
 
     connect(m_mdlLS, &QStandardItemModel::itemChanged, this, &SummariesWidget::on_itemChanged);
+
+    #ifdef Q_OS_WIN32
+    #elif
+    ui->btnOpenInExcel->setVisible(false);
+    #endif
 }
 
 SummariesWidget::~SummariesWidget()
@@ -308,6 +313,25 @@ void SummariesWidget::on_importSummary()
         //! Создаем виджет и т.д.
         openSummarySecond(summary);
     }
+}
+
+void SummariesWidget::on_openInExcel()
+{
+#ifdef Q_OS_WIN32
+    auto selIdx = ui->tvSummaries->selectionModel()->currentIndex();
+    if (selIdx != QModelIndex())
+    {
+        QVariant var = selIdx.data(lsWidgetRole);
+        if (var.isValid())
+        {
+            SummaryWidget* wgt = var.value<SummaryWidget*>();
+            if (wgt)
+                wgt->model()->openInMSExcel();
+        }
+    }
+    else
+        QMessageBox::information(nullptr, tr("Предупреждение"), tr("Нет выбранной сводки"));
+#endif
 }
 
 void SummariesWidget::on_deleteSummary(const QString &fileName)

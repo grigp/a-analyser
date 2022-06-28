@@ -88,6 +88,7 @@ private slots:
     void on_deleteTest();
     void on_exportSummary();
     void on_importSummary();
+    void on_openInExcel();
 
     void on_deleteSummary(const QString& fileName);
 

@@ -185,6 +185,23 @@
        </widget>
       </item>
       <item>
+       <widget class="QPushButton" name="btnOpenInExcel">
+        <property name="text">
+         <string>Открыть в MS Excel</string>
+        </property>
+        <property name="icon">
+         <iconset resource="../kernel.qrc">
+          <normaloff>:/images/OpenMSExcel.png</normaloff>:/images/OpenMSExcel.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>22</width>
+          <height>22</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item>
        <spacer name="horizontalSpacer">
         <property name="orientation">
          <enum>Qt::Horizontal</enum>
@@ -436,6 +453,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>btnOpenInExcel</sender>
+   <signal>clicked()</signal>
+   <receiver>SummariesWidget</receiver>
+   <slot>on_openInExcel()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1011</x>
+     <y>34</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1105</x>
+     <y>23</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>on_selectIndex(QModelIndex)</slot>
@@ -446,5 +479,6 @@
   <slot>on_deleteTest()</slot>
   <slot>on_exportSummary()</slot>
   <slot>on_importSummary()</slot>
+  <slot>on_openInExcel()</slot>
  </slots>
 </ui>

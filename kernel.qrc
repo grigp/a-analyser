@@ -223,5 +223,6 @@
         <file>images/delete22.png</file>
         <file>images/SummaryExport.png</file>
         <file>images/SummaryImport.png</file>
+        <file>images/OpenMSExcel.png</file>
     </qresource>
 </RCC>
