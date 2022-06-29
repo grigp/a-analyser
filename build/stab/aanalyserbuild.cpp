@@ -15,20 +15,20 @@
 #include "octaedrontemplate.h"
 #include "boxerdodgingtemplate.h"
 
-#include "classicfactors.h"
-#include "vectorfactors.h"
-#include "ratioprobesfactors.h"
-#include "idsfactors.h"
-#include "targetfactors.h"
-#include "trenresultfactors.h"
-#include "crossfactors.h"
-#include "stepoffsetfactors.h"
-#include "evolventafactors.h"
-#include "octaedronfactors.h"
-#include "boxerdodgingmultifactor.h"
-#include "stepdeviationfactors.h"
-#include "trianglefactors.h"
-#include "triangleconslutionfactors.h"
+#include "classicfactorsdescriptor.h"
+#include "vectorfactorsdescriptor.h"
+#include "ratioprobesfactorsdescriptor.h"
+#include "idsfactorsdescriptor.h"
+#include "targetfactorsdescriptor.h"
+#include "trenresultfactorsdescriptor.h"
+#include "crossfactorsdescriptor.h"
+#include "stepoffsetfactorsdescriptor.h"
+#include "evolventafactorsdescriptor.h"
+#include "octaedronfactorsdescritor.h"
+#include "boxerdodgingmultifactordescriptor.h"
+#include "stepdeviationfactorsdescriptor.h"
+#include "trianglefactorsdescriptor.h"
+#include "triangleconslutionfactorsdescriptor.h"
 
 #include "skgvisual.h"
 #include "stabilogramvisual.h"
@@ -59,20 +59,21 @@ QList<MetodicTemplate *> AAnalyserBuild::getBuildTemplates(QObject *parent)
 
 void AAnalyserBuild::registerFactors()
 {
-    ClassicFactors::registerFactors();
-    VectorFactors::registerFactors();
-    RatioProbesFactors::registerFactors();
-    IDSFactors::registerFactors();
-    TargetFactors::registerFactors();
-    TrenResultFactors::registerFactors();
-    CrossFactors::registerFactors();
-    StepOffsetFactors::registerFactors();
-    EvolventaFactors::registerFactors();
-    OctaedronFactors::registerFactors();
-    BoxerDodgingMultifactor::registerFactors();
-    StepDeviationFactors::registerFactors();
-    TriangleFactors::registerFactors();
-    TriangleConslutionFactors::registerFactors();
+    auto* app = static_cast<AAnalyserApplication*>(QApplication::instance());
+    app->registerGroup(new ClassicFactorsDescriptor(BaseDefines::tlChannel));
+    app->registerGroup(new VectorFactorsDescriptor(BaseDefines::tlChannel));
+    app->registerGroup(new IDSFactorsDescriptor(BaseDefines::tlChannel));
+    app->registerGroup(new RatioProbesFactorsDescriptor(BaseDefines::tlTest));
+    app->registerGroup(new TargetFactorsDescriptor(BaseDefines::tlProbe));
+    app->registerGroup(new TrenResultFactorsDescriptor(BaseDefines::tlProbe));
+    app->registerGroup(new BoxerDodgingMultifactorDescriptor(BaseDefines::tlProbe));
+    app->registerGroup(new CrossFactorsDescriptor(BaseDefines::tlProbe));
+    app->registerGroup(new EvolventaFactorsDescriptor(BaseDefines::tlProbe));
+    app->registerGroup(new OctaedronFactorsDescritior(BaseDefines::tlProbe));
+    app->registerGroup(new StepDeviationFactorsDescriptor(BaseDefines::tlProbe));
+    app->registerGroup(new StepOffsetFactorsDescriptor(BaseDefines::tlProbe));
+    app->registerGroup(new TriangleFactorsDescriptor(BaseDefines::tlProbe));
+    app->registerGroup(new TriangleConslutionFactorsDescriptor(BaseDefines::tlProbe));
 }
 
 void AAnalyserBuild::registerVisuals()

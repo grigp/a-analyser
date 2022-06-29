@@ -8,6 +8,10 @@ QMAKE_EXTRA_TARGETS += before_build makefilehook
 
 QT       += core gui serialport multimedia printsupport
 
+    #ifdef Q_OS_WIN32
+QT       += axcontainer
+    #endif
+
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = a-med_bch
@@ -45,6 +49,7 @@ include(service/service_src.pri)
 include(visual_widgets/visual_widgets_sch_src.pri)
 include(factors/factors_sch_src.pri)
 include(signal_analysis/signal_analysis_src.pri)
+include(summaries/summaries_src.pri)
 
 SOURCES += \
         main.cpp \

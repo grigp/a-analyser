@@ -5,11 +5,11 @@
 #include "metodictemplate.h"
 #include "stabtesttemplate.h"
 
-#include "classicfactors.h"
-#include "vectorfactors.h"
-#include "ratioprobesfactors.h"
-#include "idsfactors.h"
-#include "targetfactors.h"
+#include "classicfactorsdescriptor.h"
+#include "vectorfactorsdescriptor.h"
+#include "ratioprobesfactorsdescriptor.h"
+#include "idsfactorsdescriptor.h"
+#include "targetfactorsdescriptor.h"
 
 #include "skgvisual.h"
 #include "stabilogramvisual.h"
@@ -30,23 +30,24 @@ QList<MetodicTemplate *> AAnalyserBuild::getBuildTemplates(QObject *parent)
 
 void AAnalyserBuild::registerFactors()
 {
-    ClassicFactors::registerFactors();
-    VectorFactors::registerFactors();
-    RatioProbesFactors::registerFactors();
-    IDSFactors::registerFactors();
-    TargetFactors::registerFactors();
+    auto* app = static_cast<AAnalyserApplication*>(QApplication::instance());
+    app->registerGroup(new ClassicFactorsDescriptor(BaseDefines::tlChannel));
+    app->registerGroup(new VectorFactorsDescriptor(BaseDefines::tlChannel));
+    app->registerGroup(new RatioProbesFactorsDescriptor(BaseDefines::tlTest));
+    app->registerGroup(new IDSFactorsDescriptor(BaseDefines::tlChannel));
+    app->registerGroup(new TargetFactorsDescriptor(BaseDefines::tlChannel));
 }
 
 void AAnalyserBuild::registerVisuals()
 {
     auto* app = static_cast<AAnalyserApplication*>(QApplication::instance());
-    app->registerVisual(new SKGVisual(VisualDefines::vlChannel));
-    app->registerVisual(new StabilogramVisual(VisualDefines::vlChannel));
-    app->registerVisual(new BalistogramVisual(VisualDefines::vlChannel));
-    app->registerVisual(new MyogramSignalVisual(VisualDefines::vlChannel));
-    app->registerVisual(new DynamoSignalVisual(VisualDefines::vlChannel));
-    app->registerVisual(new VectorAnalysisVisual(VisualDefines::vlChannel));
-    app->registerVisual(new BilateralVisual(VisualDefines::vlProbe));
+    app->registerVisual(new SKGVisual(BaseDefines::tlChannel));
+    app->registerVisual(new StabilogramVisual(BaseDefines::tlChannel));
+    app->registerVisual(new BalistogramVisual(BaseDefines::tlChannel));
+    app->registerVisual(new MyogramSignalVisual(BaseDefines::tlChannel));
+    app->registerVisual(new DynamoSignalVisual(BaseDefines::tlChannel));
+    app->registerVisual(new VectorAnalysisVisual(BaseDefines::tlChannel));
+    app->registerVisual(new BilateralVisual(BaseDefines::tlProbe));
 }
 
 QList<DeviceProtocols::Ports> AAnalyserBuild::getDriverPorts(const QString &drvUid)
