@@ -160,11 +160,15 @@ private:
     int m_dataByteCount {0};     ///< Счетчик байтов пакета. Должно быть 8
     quint8 m_lo {0};             ///< Младший байт
     double m_values[4];          ///< Принятый пакет данных
+    double m_offset[4];          ///< Установленные смещения при калибровке
     quint16 m_adcValues[4];      ///< Принятый пакет данных в дискретах АЦП
     quint8 m_bPrev {0};          ///< Предыдущий байт
     quint8 m_circleCnt {0xFF};   ///< Кольцевой счетчик пакетов
     quint8 m_crc {0};            ///< Контрольная сумма
     int m_errorCount {0};        ///< Количество ошибок по результатам анализа колцевого счетчика
+
+    bool m_isCalibrating {false}; ///< Идет ли процесс калибровки
+    int m_calibrCount {0};        ///< Счетчик калибровки
 };
 
 #endif // BEDSIDESCALES01_H

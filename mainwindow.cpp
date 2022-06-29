@@ -134,10 +134,10 @@ void MainWindow::setProgressPosition(const int pos, const QString &stage)
 
 void MainWindow::doneProgress()
 {
+    ui->frProgress->setVisible(false);
     ui->progressBar->setValue(0);
     ui->lblProgressTitle->setText("");
     ui->lblProgressStage->setText("");
-    ui->frProgress->setVisible(false);
 }
 
 void MainWindow::onDbConnected()

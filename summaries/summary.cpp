@@ -153,11 +153,15 @@ void Summary::openInMSExcel()
         QString fileName = DataDefines::aanalyserTemporaryPath() + "summary.xlsx";
         fileName = fileName.replace(QString("/"), QString("\\"));
 
+        static_cast<AAnalyserApplication*>(QApplication::instance())->initProgress(tr("Открытие сводки в MS Excel"),
+                                                                                   0, rowCount() + 2,
+                                                                                   tr("Инициализация"));
         MSExcelExporter exporter;
 
         //! По строкам
         for (int i = 0; i < rowCount(); ++i)
         {
+            static_cast<AAnalyserApplication*>(QApplication::instance())->setProgressPosition(i+1, tr("Строка") + " " + QString::number(i + 1));
             //! По столбцам для строки
             QJsonArray columns;
             for (int j = 0; j < columnCount(); ++j)
@@ -168,7 +172,9 @@ void Summary::openInMSExcel()
             }
         }
 
+        static_cast<AAnalyserApplication*>(QApplication::instance())->setProgressPosition(rowCount() + 2, tr("Завершение"));
         exporter.saveAs(fileName);
+        static_cast<AAnalyserApplication*>(QApplication::instance())->doneProgress();
     }
     catch (const std::exception& e)
     {

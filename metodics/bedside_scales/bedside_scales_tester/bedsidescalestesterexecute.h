@@ -51,6 +51,7 @@ private slots:
      */
     void recording();
 
+
 private:
     Ui::BedsideScalesTesterExecute *ui;
 

@@ -194,7 +194,8 @@ void BedsideScalesTesterExecute::on_communicationError(const QString &drvName, c
 
 void BedsideScalesTesterExecute::calibrate()
 {
-
+    if (m_tenzoControl)
+        m_tenzoControl->calibrateTenso(ChannelsDefines::chanWeightPlate);
 }
 
 void BedsideScalesTesterExecute::recording()

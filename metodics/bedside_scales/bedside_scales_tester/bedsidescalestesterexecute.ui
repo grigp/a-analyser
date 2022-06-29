@@ -671,6 +671,13 @@
        </widget>
       </item>
       <item>
+       <widget class="QPushButton" name="btnCalibrate">
+        <property name="text">
+         <string>Калибровка</string>
+        </property>
+       </widget>
+      </item>
+      <item>
        <spacer name="horizontalSpacer">
         <property name="orientation">
          <enum>Qt::Horizontal</enum>
@@ -779,9 +786,26 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>btnCalibrate</sender>
+   <signal>clicked()</signal>
+   <receiver>BedsideScalesTesterExecute</receiver>
+   <slot>calibrate()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>395</x>
+     <y>709</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1056</x>
+     <y>621</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>on_scaleChange(int)</slot>
   <slot>recording()</slot>
+  <slot>calibrate()</slot>
  </slots>
 </ui>

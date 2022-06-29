@@ -10,7 +10,7 @@ namespace
 {
 static const quint8 Divider = 0xFF;
 static const quint8 Addition = 0xFE;
-static const quint8 NetAddr = 0x03;
+//static const quint8 NetAddr = 0x03;
 static const quint8 CodeOp = 0xCC;
 
 }
@@ -18,7 +18,8 @@ static const quint8 CodeOp = 0xCC;
 BedsideScales01::BedsideScales01(QObject *parent)
     : Driver(parent)
 {
-
+    for (int i = 0; i < 4; ++i)
+        m_offset[i] = 0;
 }
 
 void BedsideScales01::setParams(const DeviceProtocols::Ports port, const QJsonObject &params)
@@ -122,7 +123,8 @@ QList<DeviceProtocols::Ports> BedsideScales01::getPorts()
 void BedsideScales01::calibrateTenso(const QString &channelUid)
 {
     Q_UNUSED(channelUid);
-
+    m_isCalibrating = true;
+    m_calibrCount = 0;
 }
 
 void BedsideScales01::getTensoValueDiapasone(const int chanNumber, double &min, double &max)
@@ -176,6 +178,7 @@ void BedsideScales01::on_error(const QString &err)
 
 void BedsideScales01::assignByteFromDevice(quint8 b)
 {
+//    qDebug() << QString::number(b, 16);
     auto nextMark = [&](const quint8 marker)
     {
         if (b == marker)
@@ -227,13 +230,35 @@ void BedsideScales01::assignByteFromDevice(quint8 b)
             {
                 m_adcValues[m_dataByteCount / 2] = b * 256 + m_lo;
 //                m_values[m_dataByteCount / 2] = m_adcValues[m_dataByteCount / 2] * (50.0 / 65535.0);
-                m_values[m_dataByteCount / 2] = (50 * static_cast<double>(m_adcValues[m_dataByteCount / 2])) /
-                                                (static_cast<double>(65535) * 2 / 2);
+                if (!m_isCalibrating)
+                    m_values[m_dataByteCount / 2] = (50 * static_cast<double>(m_adcValues[m_dataByteCount / 2])) /
+                                                    (static_cast<double>(65535) * 2 / 2)
+                                                    - m_offset[m_dataByteCount / 2];
+                else
+                    m_values[m_dataByteCount / 2] = (50 * static_cast<double>(m_adcValues[m_dataByteCount / 2])) /
+                                                    (static_cast<double>(65535) * 2 / 2);
             }
             ++m_dataByteCount;
         }
         else
         {
+            if (m_isCalibrating)
+            {
+                ++m_calibrCount;
+                if (m_calibrCount < frequency(""))
+                {
+                    for (int i = 0; i < 4; ++i)
+                        m_offset[i] += m_values[i];
+                }
+                else
+                {
+                    for (int i = 0; i < 4; ++i)
+                        m_offset[i] /= m_calibrCount;
+                    m_calibrCount = 0;
+                    m_isCalibrating = false;
+                }
+            }
+
 //            QString s = "";
 //            foreach (auto v, buf)
 //                s += (QString::number(v, 16) + " ");
