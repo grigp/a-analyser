@@ -212,6 +212,12 @@ private:
                               QList<QStandardItem*> &lineHdrFactors);
 
     /*!
+     * \brief Освобождает список групп показателей
+     * \param fgs - список групп показателей
+     */
+    void doneFactors(QList<MultiFactor*> &fgs);
+
+    /*!
      * \brief Создает итем и добавляет его в строку - список итемов для последующего занесения в модель
      * \param line - строка итемов
      * \param text - отображаемый текст итема

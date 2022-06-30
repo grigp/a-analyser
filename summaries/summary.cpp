@@ -316,11 +316,15 @@ void Summary::addTestAll(const QString &testUid)
                         //! Добавляем итемы с показателями уровня канала
                         addCalculatedFactors(fgChannel, BaseDefines::tlChannel, lineFactors, lineHdrProbes, lineHdrChannels, lineHdrMultiFactors, lineHdrFactors);
                     }
+                    doneFactors(fgChannel);
                 }
+
+                doneFactors(fgProbe);
 
                 m_spanCells << SpanCellsInfo(RowProbes, spp, lineHdrProbes.size() - spp);
             }
         }
+        doneFactors(fgTest);
 
         if (rowCount() == 0)
         {
@@ -493,6 +497,13 @@ void Summary::addCalculatedFactors(QList<MultiFactor *> &fgs, BaseDefines::TestL
         }
 
     }
+}
+
+void Summary::doneFactors(QList<MultiFactor *> &fgs)
+{
+    foreach (auto fg, fgs)
+        delete fg;
+    fgs.clear();
 }
 
 QStandardItem *Summary::createItem(QList<QStandardItem *> &line, const QString text)
