@@ -141,10 +141,19 @@ void TestsWidget::print(QPrinter* printer)
     metFactory->print(printer, m_selectedTestUid);
 }
 
+void TestsWidget::setEnabledButtons(const bool isEnabled)
+{
+    ui->btnTestPrint->setVisible(isEnabled);
+    ui->btnSelectAllTests->setVisible(isEnabled);
+    ui->btnUnSelectAllTests->setVisible(isEnabled);
+    ui->btnSummaryAddTest->setVisible(isEnabled);
+}
+
 void TestsWidget::selectResult()
 {
     ui->wgtDynamic->setVisible(false);
     ui->wgtResult->setVisible(true);
+    setEnabledButtons(true);
     saveVisibleWidget(ui->wgtResult->widgetName());
 }
 
@@ -152,6 +161,7 @@ void TestsWidget::selectDynamic()
 {
     ui->wgtResult->setVisible(false);
     ui->wgtDynamic->setVisible(true);
+    setEnabledButtons(false);
     saveVisibleWidget(ui->wgtDynamic->widgetName());
 }
 
@@ -163,6 +173,7 @@ void TestsWidget::restoreVisibleWidget()
     else
     if (val == ui->wgtDynamic->widgetName())
         ui->wgtResult->setVisible(false);
+    setEnabledButtons(val == ui->wgtResult->widgetName());
 }
 
 void TestsWidget::saveVisibleWidget(const QString &value)

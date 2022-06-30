@@ -50,6 +50,8 @@ private slots:
 private:
     Ui::TestsWidget *ui;
 
+    void setEnabledButtons(const bool isEnabled);
+
     void restoreVisibleWidget();
     void saveVisibleWidget(const QString &value);
 
