@@ -45,6 +45,9 @@ public:
 
     static QString widgetName() {return QString("result");}
 
+    void selectAllTests();
+    void unSelectAllTests();
+
 private slots:
 
     void on_selectionChanged(const QItemSelection &selected, const QItemSelection &deselected);

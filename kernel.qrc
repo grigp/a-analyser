@@ -224,5 +224,7 @@
         <file>images/SummaryExport.png</file>
         <file>images/SummaryImport.png</file>
         <file>images/OpenMSExcel.png</file>
+        <file>images/SelectAll.png</file>
+        <file>images/UnselectAll.png</file>
     </qresource>
 </RCC>

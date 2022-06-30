@@ -77,6 +77,18 @@ void ResultsWidget::onDbDisconnect()
     m_mdlTest->clear();
 }
 
+void ResultsWidget::selectAllTests()
+{
+    ui->tvTests->selectAll();
+    calculateSelected();
+}
+
+void ResultsWidget::unSelectAllTests()
+{
+    ui->tvTests->selectionModel()->clearSelection();
+    calculateSelected();
+}
+
 void ResultsWidget::on_selectionChanged(const QItemSelection &selected, const QItemSelection &deselected)
 {
     Q_UNUSED(selected);
@@ -174,6 +186,7 @@ void ResultsWidget::on_selectMetodic(const QString &metodicUid)
         ui->tvTests->header()->resizeSections(QHeaderView::ResizeToContents);
         ui->tvTests->header()->resizeSection(0, WidthColumn0);
         ui->tvTests->header()->resizeSection(1, WidthColumn1);
+        ui->tvTests->selectionModel()->clearSelection();
     });
 }
 

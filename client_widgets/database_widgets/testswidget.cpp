@@ -117,12 +117,22 @@ void TestsWidget::summaries()
 
 void TestsWidget::summaryAddTest()
 {
-    if (m_selectedTestUid != "")
+    if (static_cast<AAnalyserApplication*>(QApplication::instance())->selectedTestsCount() > 0)
     {
         static_cast<AAnalyserApplication*>(QApplication::instance())->summaryAddTest();
     }
     else
         QMessageBox::information(nullptr, tr("Предупрежение"), tr("Не выбран тест"));
+}
+
+void TestsWidget::on_selectAllTests()
+{
+    ui->wgtResult->selectAllTests();
+}
+
+void TestsWidget::on_unselectAllTests()
+{
+    ui->wgtResult->unSelectAllTests();
 }
 
 void TestsWidget::print(QPrinter* printer)

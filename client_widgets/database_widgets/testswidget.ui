@@ -179,6 +179,68 @@
        </widget>
       </item>
       <item>
+       <spacer name="horizontalSpacer_3">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeType">
+         <enum>QSizePolicy::Fixed</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>20</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btnSelectAllTests">
+        <property name="toolTip">
+         <string>Выделить все тесты</string>
+        </property>
+        <property name="statusTip">
+         <string/>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset resource="../../kernel.qrc">
+          <normaloff>:/images/SelectAll.png</normaloff>:/images/SelectAll.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>32</width>
+          <height>32</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btnUnSelectAllTests">
+        <property name="toolTip">
+         <string>Снять выделение со всех тестов</string>
+        </property>
+        <property name="statusTip">
+         <string/>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset resource="../../kernel.qrc">
+          <normaloff>:/images/UnselectAll.png</normaloff>:/images/UnselectAll.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>32</width>
+          <height>32</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item>
        <spacer name="horizontalSpacer">
         <property name="orientation">
          <enum>Qt::Horizontal</enum>
@@ -468,8 +530,8 @@
    <slot>summaries()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>372</x>
-     <y>27</y>
+     <x>520</x>
+     <y>32</y>
     </hint>
     <hint type="destinationlabel">
      <x>1079</x>
@@ -484,12 +546,44 @@
    <slot>summaryAddTest()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>422</x>
-     <y>33</y>
+     <x>572</x>
+     <y>38</y>
     </hint>
     <hint type="destinationlabel">
      <x>1076</x>
      <y>74</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btnSelectAllTests</sender>
+   <signal>clicked()</signal>
+   <receiver>TestsWidget</receiver>
+   <slot>on_selectAllTests()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>383</x>
+     <y>31</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1079</x>
+     <y>16</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btnUnSelectAllTests</sender>
+   <signal>clicked()</signal>
+   <receiver>TestsWidget</receiver>
+   <slot>on_unselectAllTests()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>422</x>
+     <y>33</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1078</x>
+     <y>42</y>
     </hint>
    </hints>
   </connection>
@@ -505,5 +599,7 @@
   <slot>summaries()</slot>
   <slot>summaryAddTest()</slot>
   <slot>summaryBuild()</slot>
+  <slot>on_selectAllTests()</slot>
+  <slot>on_unselectAllTests()</slot>
  </slots>
 </ui>

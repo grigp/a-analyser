@@ -302,7 +302,7 @@ void AAnalyserApplication::summaries()
 void AAnalyserApplication::summaryAddTest()
 {
 //    if (m_testUid != "")
-    if (static_cast<AAnalyserApplication*>(QApplication::instance())->selectedTestsCount() > 0)
+    if (selectedTestsCount() > 0)
     {
         if (!m_addTSDlg)
         {

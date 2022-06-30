@@ -39,6 +39,9 @@ private slots:
     void summaries();
     void summaryAddTest();
 
+    void on_selectAllTests();
+    void on_unselectAllTests();
+
     void selectResult();
     void selectDynamic();
 
