@@ -132,6 +132,7 @@ void SummariesWidget::on_selectIndex(QModelIndex index)
 void SummariesWidget::on_openSummary()
 {
     auto dlg = new OpenSummaryDialog(nullptr);
+    dlg->setStyleSheet(static_cast<AAnalyserApplication*>(QApplication::instance())->mainWindow()->styleSheet());
     connect(dlg, &OpenSummaryDialog::deleteSummary, this, &SummariesWidget::on_deleteSummary);
     if (dlg->exec() == QDialog::Accepted)
     {

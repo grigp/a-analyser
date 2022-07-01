@@ -134,9 +134,6 @@ void SummaryWidget::on_ItemSelected(QModelIndex index)
 
 void SummaryWidget::on_modify(const bool isModify)
 {
-    if (isModify)
-        ui->lblIsModify->setText("*");
-    else
-        ui->lblIsModify->setText("");
+    ui->lblIsModify->setVisible(isModify);
 }
 
