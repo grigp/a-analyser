@@ -45,6 +45,8 @@ private slots:
     void selectResult();
     void selectDynamic();
 
+    void signalExport();
+
     void print(QPrinter* printer);
 
 private:

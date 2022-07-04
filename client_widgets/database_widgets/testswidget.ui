@@ -297,6 +297,42 @@
        </widget>
       </item>
       <item>
+       <spacer name="horizontalSpacer_4">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeType">
+         <enum>QSizePolicy::Fixed</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>20</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btnSignalExport">
+        <property name="toolTip">
+         <string>Экспорт сигналов...</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset resource="../../kernel.qrc">
+          <normaloff>:/images/SignalExport.png</normaloff>:/images/SignalExport.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>32</width>
+          <height>32</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item>
        <spacer name="horizontalSpacer_2">
         <property name="orientation">
          <enum>Qt::Horizontal</enum>
@@ -587,6 +623,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>btnSignalExport</sender>
+   <signal>clicked()</signal>
+   <receiver>TestsWidget</receiver>
+   <slot>signalExport()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>632</x>
+     <y>5</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1075</x>
+     <y>138</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>runTest()</slot>
@@ -601,5 +653,6 @@
   <slot>summaryBuild()</slot>
   <slot>on_selectAllTests()</slot>
   <slot>on_unselectAllTests()</slot>
+  <slot>signalExport()</slot>
  </slots>
 </ui>

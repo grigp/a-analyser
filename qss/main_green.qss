@@ -267,7 +267,8 @@ QPushButton#btnSignalsAnalysis,
 QPushButton#btnShowSummaries,
 QPushButton#btnSummaryAddTest,
 QPushButton#btnSelectAllTests,
-QPushButton#btnUnSelectAllTests
+QPushButton#btnUnSelectAllTests,
+QPushButton#btnSignalExport
 {
     border: 2px solid #8f8f91;
     border-radius: 6px;
@@ -287,7 +288,8 @@ QPushButton#btnSignalsAnalysis:hover,
 QPushButton#btnShowSummaries:hover,
 QPushButton#btnSummaryAddTest:hover,
 QPushButton#btnSelectAllTests:hover,
-QPushButton#btnUnSelectAllTests:hover
+QPushButton#btnUnSelectAllTests:hover,
+QPushButton#btnSignalExport:hover
 {
     background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 rgb(100, 200, 120), stop: 0.5 rgb(120, 220, 120), stop: 1 rgb(100, 200, 120));
 }
@@ -304,7 +306,8 @@ QPushButton#btnSignalsAnalysis:pressed,
 QPushButton#btnShowSummaries:pressed,
 QPushButton#btnSummaryAddTest:pressed,
 QPushButton#btnSelectAllTests:pressed,
-QPushButton#btnUnSelectAllTests:pressed
+QPushButton#btnUnSelectAllTests:pressed,
+QPushButton#btnSignalExport:pressed
 {
     background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 rgb(70, 110, 100), stop: 0.5 rgb(90, 140, 80), stop: 1 rgb(70, 110, 100));
 }

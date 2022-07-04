@@ -16,6 +16,7 @@
 #include "testpropertydialog.h"
 #include "dataprovider.h"
 #include "metodicsfactory.h"
+#include "signalexporter.h"
 
 TestsWidget::TestsWidget(QWidget *parent) :
     QWidget(parent),
@@ -163,6 +164,15 @@ void TestsWidget::selectDynamic()
     ui->wgtDynamic->setVisible(true);
     setEnabledButtons(false);
     saveVisibleWidget(ui->wgtDynamic->widgetName());
+}
+
+void TestsWidget::signalExport()
+{
+    QStringList tests;
+    for (int i = 0; i < static_cast<AAnalyserApplication*>(QApplication::instance())->selectedTestsCount(); ++i)
+        tests << static_cast<AAnalyserApplication*>(QApplication::instance())->selectedTest(i);
+    auto exp = new SignalExporter(tests);
+    delete exp;
 }
 
 void TestsWidget::restoreVisibleWidget()

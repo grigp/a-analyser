@@ -50,6 +50,7 @@ include(visual_widgets/visual_widgets_src.pri)
 include(factors/factors_src.pri)
 include(signal_analysis/signal_analysis_src.pri)
 include(summaries/summaries_src.pri)
+include(signal_export/signal_export_src.pri)
 
 SOURCES += \
         main.cpp \

@@ -226,5 +226,6 @@
         <file>images/OpenMSExcel.png</file>
         <file>images/SelectAll.png</file>
         <file>images/UnselectAll.png</file>
+        <file>images/SignalExport.png</file>
     </qresource>
 </RCC>
