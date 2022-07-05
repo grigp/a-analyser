@@ -38,6 +38,12 @@ public:
     int subChansCount() const override;
 
     /*!
+     * \brief Возвращает название подканала по номеру
+     * \param i - номер подканала
+     */
+    QString subChanName(const int i) const override;
+
+    /*!
      * \brief Перекрытая функция, возвращающая данные канала
      * \param subChan - номер подканала (отведения)
      * \param rec - номер записи

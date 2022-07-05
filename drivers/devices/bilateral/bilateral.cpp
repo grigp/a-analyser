@@ -299,7 +299,7 @@ QList<QString> Bilateral::getChannels() const
 int Bilateral::getSubChannelsCount(const QString &channelUid) const
 {
     if (ChannelsUtils::instance().channelType(channelUid) == ChannelsDefines::ctStabilogram ||
-        ChannelsUtils::instance().channelType(channelUid) == ChannelsDefines::ctBallistogram ||
+        ChannelsUtils::instance().channelType(channelUid) == ChannelsDefines::ctBalistogram ||
         ChannelsUtils::instance().channelType(channelUid) == ChannelsDefines::ctDynamo ||
         ChannelsUtils::instance().channelType(channelUid) == ChannelsDefines::ctBreath)
         return 1;
@@ -312,7 +312,7 @@ int Bilateral::getSubChannelsCount(const QString &channelUid) const
 bool Bilateral::isChannelRecordingDefault(const QString &channelUid, const int subChan) const
 {
     if (ChannelsUtils::instance().channelType(channelUid) == ChannelsDefines::ctStabilogram ||
-            ChannelsUtils::instance().channelType(channelUid) == ChannelsDefines::ctBallistogram)
+            ChannelsUtils::instance().channelType(channelUid) == ChannelsDefines::ctBalistogram)
         return true;
     else
     {

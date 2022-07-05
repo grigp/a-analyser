@@ -71,6 +71,14 @@ int SignalResultInfo::subChansCount() const
     return 0;
 }
 
+QString SignalResultInfo::subChanName(const int i) const
+{
+    SignalData* signal = dynamic_cast<SignalData*>(m_channel);
+    if (signal)
+        return signal->subChanName(i);
+    return "";
+}
+
 double SignalResultInfo::value(const int chan, const int rec) const
 {
     SignalData* signal = dynamic_cast<SignalData*>(m_channel);

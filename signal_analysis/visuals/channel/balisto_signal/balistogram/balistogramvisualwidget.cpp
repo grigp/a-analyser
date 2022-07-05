@@ -35,7 +35,7 @@ BalistogramVisualWidget::~BalistogramVisualWidget()
 
 bool BalistogramVisualWidget::isValid()
 {
-    return ChannelsUtils::instance().channelType(channelUid()) == ChannelsDefines::ctBallistogram;
+    return ChannelsUtils::instance().channelType(channelUid()) == ChannelsDefines::ctBalistogram;
 }
 
 void BalistogramVisualWidget::calculate()

@@ -21,7 +21,7 @@ static QString cfNoSignal = "{90e313c6-8805-4235-8981-1fb85d7aea5f}";          /
  */
  static QString ctDecartTraectory = "{589AC0CD-CC3C-467D-9C48-90223F673ACC}";
  static QString ctStabilogram = "{1F7A5F8A-FC64-44E2-B2D2-5245D02ED2CA}";
- static QString ctBallistogram = "{98CA38D2-8423-4AE5-9AF3-A47AA58F2616}";
+ static QString ctBalistogram = "{98CA38D2-8423-4AE5-9AF3-A47AA58F2616}";
  static QString ctRitmogram = "{C211078B-9219-4806-9D1D-52B1A4AC5282}";
  static QString ctDynamo = "{6534BEE8-F805-4E9D-B972-1279E0A3FA3A}";
  static QString ctBreath = "{B3366A97-6EBC-4E6C-B004-AE04A96C3260}";

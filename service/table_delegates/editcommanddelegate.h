@@ -14,13 +14,19 @@ public:
 
     enum EdditingCommand
     {
-          CmdAdd = 0
+        cmdNone = 0
+        , CmdAdd
         , CmdUp
         , CmdDown
         , CmdDelete
         , CmdClose
+        , CmdExport
     };
 
+    enum Roles
+    {
+        CommandRole = Qt::UserRole + 1  ///< Роль, определяющая, какая кнопка будет отображаться
+    };
 
     explicit EditCommandDelegate(const EdditingCommand cmd,
                                  const int column,
@@ -31,7 +37,9 @@ public:
                const QModelIndex &index) const override;
 
 private:
-    EdditingCommand m_command;      ///< Команда
+    QIcon getIcon(EdditingCommand cmd) const;
+
+    EdditingCommand m_command {cmdNone};      ///< Команда
     int m_column;           ///< Колонка
     mutable QModelIndex m_pressedIndex;
     bool m_commandsButtonVisible {true};

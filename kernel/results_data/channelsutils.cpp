@@ -62,19 +62,19 @@ ChannelsUtils::ChannelsUtils()
                , std::pair<QString, ChannelsDefines::ChannelInfo>(ChannelsDefines::chanZ,
                                                                   std::make_tuple(QString("Баллистограмма"),
                                                                                   QString("Z"),
-                                                                                  ChannelsDefines::ctBallistogram))
+                                                                                  ChannelsDefines::ctBalistogram))
                , std::pair<QString, ChannelsDefines::ChannelInfo>(ChannelsDefines::chanZLeft,
                                                                   std::make_tuple(QString("Баллистограмма (слева)"),
                                                                                   QString("ZLeft"),
-                                                                                  ChannelsDefines::ctBallistogram))
+                                                                                  ChannelsDefines::ctBalistogram))
                , std::pair<QString, ChannelsDefines::ChannelInfo>(ChannelsDefines::chanZRight,
                                                                   std::make_tuple(QString("Баллистограмма (справа)"),
                                                                                   QString("ZRight"),
-                                                                                  ChannelsDefines::ctBallistogram))
+                                                                                  ChannelsDefines::ctBalistogram))
                , std::pair<QString, ChannelsDefines::ChannelInfo>(ChannelsDefines::chanWeight,
                                                                   std::make_tuple(QString("Динамика веса"),
                                                                                   QString("Weight"),
-                                                                                  ChannelsDefines::ctBallistogram))
+                                                                                  ChannelsDefines::ctBalistogram))
                , std::pair<QString, ChannelsDefines::ChannelInfo>(ChannelsDefines::chanRitmogram,
                                                                     std::make_tuple(QString("Ритмограмма"),
                                                                                     QString("RR"),
@@ -331,7 +331,7 @@ ChannelsUtils::ChannelsUtils()
     , m_formats({
                   std::pair<QString, QString>(ChannelsDefines::ctDecartTraectory, ChannelsDefines::cfDecartCoordinates)
                 , std::pair<QString, QString>(ChannelsDefines::ctStabilogram, ChannelsDefines::cfDecartCoordinates)
-                , std::pair<QString, QString>(ChannelsDefines::ctBallistogram, ChannelsDefines::cfSinglePositive)
+                , std::pair<QString, QString>(ChannelsDefines::ctBalistogram, ChannelsDefines::cfSinglePositive)
                 , std::pair<QString, QString>(ChannelsDefines::ctRitmogram, ChannelsDefines::cfSinglePositive)
                 , std::pair<QString, QString>(ChannelsDefines::ctDynamo, ChannelsDefines::cfSinglePositive)
                 , std::pair<QString, QString>(ChannelsDefines::ctBreath, ChannelsDefines::cfSingleDual)

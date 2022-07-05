@@ -5,10 +5,11 @@
 
 #include "datadefines.h"
 
-FileNameWidget::FileNameWidget(QWidget *parent) :
+FileNameWidget::FileNameWidget(const Mode mode, QWidget *parent) :
     QWidget(parent),
     ui(new Ui::FileNameWidget)
 {
+    m_mode = mode;
     ui->setupUi(this);
 }
 
@@ -35,8 +36,13 @@ void FileNameWidget::setFileName(const QString &fn)
 void FileNameWidget::browseFile()
 {
     QString path = DataDefines::aanalyserDocumentsPath();
-    ui->edFileName->setText(QFileDialog::getSaveFileName(nullptr,
-                                                         tr("Файл для экспорта сигнала"),
-                                                         path,
-                                                         tr("Текстовые файлы") + " *.txt (*.txt)"));
+    if (m_mode == mdFile)
+        ui->edFileName->setText(QFileDialog::getSaveFileName(nullptr,
+                                                             tr("Файл для экспорта сигнала"),
+                                                             path,
+                                                             tr("Текстовые файлы") + " *.txt (*.txt)"));
+    else
+        ui->edFileName->setText(QFileDialog::getExistingDirectory(nullptr,
+                                                                  tr("Выбор пустой папки для экспорта"),
+                                                                  path));
 }

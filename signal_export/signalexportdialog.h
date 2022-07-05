@@ -2,6 +2,7 @@
 #define SIGNALEXPORTDIALOG_H
 
 #include <QDialog>
+#include <QStandardItemModel>
 
 namespace Ui {
 class SignalExportDialog;
@@ -16,21 +17,54 @@ class SignalExportDialog : public QDialog
 
 public:
     explicit SignalExportDialog(QWidget *parent = nullptr);
-    ~SignalExportDialog();
+    ~SignalExportDialog() override;
 
     enum Roles
     {
         FilterUidRole = Qt::UserRole + 0
     };
 
-    void setFileNameCount(const int count);
-    int fileNameCount() const;
+    /*!
+     * \brief Устанавливает виджеты выбора имен файлов в режиме одиночного экспорта
+     * \param titles - список заголовков
+     */
+    void setFileNameSelectors(QStringList &titles);
+
+    /*!
+     * \brief Устанавливает виджет выбора имени папки в режиме пакетного экспорта
+     */
+    void setFolderSelector();
+
+    /*!
+     * \brief Возвращает количество виджетов выбора имен файлов
+     */
+    int fileNameSelectorCount() const;
+
+    /*!
+     * \brief Возвращает имена файлов по номеру виджета
+     * \param idx - номер виджета
+     */
     QString fileName(const int idx) const;
 
     void addFilter(const QString& uid, const QString& name);
 
+    /*!
+     * \brief Возвращает uid выбранного фильтра
+     */
+    QString filter() const {return m_filterUid;}
+
+public slots:
+    void accept() override;
+
+private slots:
+    void on_selectFilter(QModelIndex index);
+
 private:
     Ui::SignalExportDialog *ui;
+
+    void clearFNSelectors();
+
+    QString m_filterUid {""};
 };
 
 #endif // SIGNALEXPORTDIALOG_H

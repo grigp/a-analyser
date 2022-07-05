@@ -1,7 +1,7 @@
 #include "signalexportdialog.h"
 #include "ui_signalexportdialog.h"
 
-#include <QStandardItemModel>
+#include <QMessageBox>
 #include <QDebug>
 
 #include "aanalyserapplication.h"
@@ -24,21 +24,31 @@ SignalExportDialog::~SignalExportDialog()
     delete ui;
 }
 
-void SignalExportDialog::setFileNameCount(const int count)
+void SignalExportDialog::setFileNameSelectors(QStringList &titles)
 {
-    QObjectList children = ui->frFileName->children();
-    foreach(QObject * child, children)
-        if (child->isWidgetType())
-            delete child;
+    clearFNSelectors();
 
-    for (int i = 0; i < count; ++i)
+    for (int i = 0; i < titles.size(); ++i)
     {
-        auto wgt = new FileNameWidget(ui->frFileName);
+        auto wgt = new FileNameWidget(FileNameWidget::mdFile, ui->frFileName);
+        if (titles.size() > 1 && titles.at(i) != "")
+            wgt->setTitle(tr("Выбор файла для поканала") + " \"" + titles.at(i) + "\"");
+        else
+            wgt->setTitle(tr("Выбор файла для экспорта"));
         ui->frFileName->layout()->addWidget(wgt);
     }
 }
 
-int SignalExportDialog::fileNameCount() const
+void SignalExportDialog::setFolderSelector()
+{
+    clearFNSelectors();
+
+    auto wgt = new FileNameWidget(FileNameWidget::mdFolder, ui->frFileName);
+    wgt->setTitle(tr("Выбор папки"));
+    ui->frFileName->layout()->addWidget(wgt);
+}
+
+int SignalExportDialog::fileNameSelectorCount() const
 {
     int cnt = 0;
     QObjectList children = ui->frFileName->children();
@@ -69,4 +79,25 @@ void SignalExportDialog::addFilter(const QString &uid, const QString &name)
     auto item = new QStandardItem(name);
     item->setData(uid, FilterUidRole);
     static_cast<QStandardItemModel*>(ui->tvFilters->model())->appendRow(item);
+}
+
+void SignalExportDialog::accept()
+{
+    if (m_filterUid != "")
+        QDialog::accept();
+    else
+        QMessageBox::information(nullptr, tr("Предупреждение"), tr("Не выбран фильтр экспорта"));
+}
+
+void SignalExportDialog::on_selectFilter(QModelIndex index)
+{
+    m_filterUid = index.data(FilterUidRole).toString();
+}
+
+void SignalExportDialog::clearFNSelectors()
+{
+    QObjectList children = ui->frFileName->children();
+    foreach(QObject * child, children)
+        if (child->isWidgetType())
+            delete child;
 }

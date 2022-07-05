@@ -29,6 +29,12 @@ public:
     virtual int subChansCount() const = 0;
 
     /*!
+     * \brief Возвращает название подканала по номеру
+     * \param i - номер подканала
+     */
+    virtual QString subChanName(const int i) const = 0;
+
+    /*!
      * \brief Виртуальная функция, возвращающая данные канала
      * \param subChan - номер подканала (отведения)
      * \param rec - номер записи

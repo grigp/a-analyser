@@ -15,7 +15,17 @@ class FileNameWidget : public QWidget
     Q_OBJECT
 
 public:
-    explicit FileNameWidget(QWidget *parent = nullptr);
+    /*!
+     * \brief Режим выбора The Mode enum
+     */
+    enum Mode
+    {
+          mdNone = 0   ///< Не задан
+        , mdFile       ///< файла
+        , mdFolder     ///< папки
+    };
+
+    explicit FileNameWidget(const Mode mode, QWidget *parent = nullptr);
     ~FileNameWidget();
 
     void setTitle(const QString &title);
@@ -28,6 +38,8 @@ private slots:
 
 private:
     Ui::FileNameWidget *ui;
+
+    Mode m_mode {mdNone};
 };
 
 #endif // FILENAMEWIDGET_H

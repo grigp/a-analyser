@@ -168,11 +168,16 @@ void TestsWidget::selectDynamic()
 
 void TestsWidget::signalExport()
 {
-    QStringList tests;
-    for (int i = 0; i < static_cast<AAnalyserApplication*>(QApplication::instance())->selectedTestsCount(); ++i)
-        tests << static_cast<AAnalyserApplication*>(QApplication::instance())->selectedTest(i);
-    auto exp = new SignalExporter(tests);
-    delete exp;
+    if (static_cast<AAnalyserApplication*>(QApplication::instance())->selectedTestsCount() > 0)
+    {
+        QStringList tests;
+        for (int i = 0; i < static_cast<AAnalyserApplication*>(QApplication::instance())->selectedTestsCount(); ++i)
+            tests << static_cast<AAnalyserApplication*>(QApplication::instance())->selectedTest(i);
+        auto exp = new SignalExporter(tests);
+        delete exp;
+    }
+    else
+        QMessageBox::information(nullptr, tr("Предупрежение"), tr("Не выбран тест"));
 }
 
 void TestsWidget::restoreVisibleWidget()

@@ -1,5 +1,6 @@
 #include "decartcoordinatessignal.h"
 
+#include <QCoreApplication>
 #include <QDataStream>
 
 DecartCoordinatesSignal::DecartCoordinatesSignal(const QString &chanId, const int freq)
@@ -34,6 +35,16 @@ int DecartCoordinatesSignal::size() const
 int DecartCoordinatesSignal::subChansCount() const
 {
     return 2;
+}
+
+QString DecartCoordinatesSignal::subChanName(const int i) const
+{
+    if (i == 0)
+        return QCoreApplication::tr("Фронталь (X)");
+    else
+    if (i == 1)
+        return QCoreApplication::tr("Сагитталь (Y)");
+    return "";
 }
 
 double DecartCoordinatesSignal::value(const int subChan, const int rec) const

@@ -14,6 +14,7 @@
 #include "visualdescriptor.h"
 #include "visuals.h"
 #include "databaseresultwidget.h"
+#include "signalexporter.h"
 
 SignalAnalysisWidget::SignalAnalysisWidget(QWidget *parent) :
     ClientWidget(parent)
@@ -24,8 +25,8 @@ SignalAnalysisWidget::SignalAnalysisWidget(QWidget *parent) :
 
     restoreSplitterPosition();
     ui->tvTests->setModel(m_mdlTests);
-    ui->tvTests->setItemDelegateForColumn(ColCloseBtn,
-                                          new EditCommandDelegate(EditCommandDelegate::CmdClose, ColCloseBtn, ui->tvTests));
+    ui->tvTests->setItemDelegateForColumn(ColButtons,
+                                          new EditCommandDelegate(EditCommandDelegate::CmdClose, ColButtons, ui->tvTests));
     ui->tvTests->viewport()->installEventFilter(this);
     m_mdlTests->setHorizontalHeaderLabels(QStringList() << tr("Элементы") << "");
 }
@@ -71,8 +72,14 @@ bool SignalAnalysisWidget::eventFilter(QObject *obj, QEvent *event)
             if (me->button() == Qt::LeftButton && me->modifiers() == Qt::NoModifier)
             {
                 QModelIndex index = ui->tvTests->indexAt(me->pos());
-                if (index.column() == ColCloseBtn)
-                    closeTest(index);
+                if (index.column() == ColButtons)
+                {
+                    if (index.data(ButtonActionRole) == baClose)
+                        closeTest(index);
+                    else
+                    if (index.data(ButtonActionRole) == baExport)
+                        signalExport(index);
+                }
             }
         }
     }
@@ -156,6 +163,8 @@ void SignalAnalysisWidget::openTest(const QString testUid)
         auto *itemTestClose = new QStandardItem("");
         itemTestClose->setEditable(false);
         itemTestClose->setData(ti.uid, UidRole);
+        itemTestClose->setData(baClose, ButtonActionRole);
+        itemTestClose->setData(EditCommandDelegate::CmdClose, EditCommandDelegate::CommandRole);
         m_mdlTests->appendRow(QList<QStandardItem*>() << itemTest << itemTestClose);
 
         for (int i = 0; i < ti.probes.size(); ++i)
@@ -179,8 +188,14 @@ void SignalAnalysisWidget::openTest(const QString testUid)
                     itemChan->setData(chi.uid, ChannelUidRole);
                     calcVisLine(itemChan, n, ti.uid, pi.uid, chi.channelId);
                     itemChan->setIcon(QIcon(":/images/tree/signal.png"));
+                    auto *itemChanExport = new QStandardItem("");
+                    itemChanExport->setEditable(false);
+                    itemChanExport->setData(pi.uid, ProbeUidRole);
+                    itemChanExport->setData(chi.channelId, ChannelUidRole);
+                    itemChanExport->setData(baExport, ButtonActionRole);
+                    itemChanExport->setData(EditCommandDelegate::CmdExport, EditCommandDelegate::CommandRole);
                     if (n > 0)
-                        itemProbe->appendRow(itemChan);
+                        itemProbe->appendRow(QList<QStandardItem*>() << itemChan << itemChanExport);
                     else
                         delete itemChan;
                 }
@@ -199,7 +214,7 @@ void SignalAnalysisWidget::openTest(const QString testUid)
     }
 
     ui->tvTests->header()->resizeSection(ColElement, 320);
-    ui->tvTests->header()->resizeSection(ColCloseBtn, 50);
+    ui->tvTests->header()->resizeSection(ColButtons, 50);
 }
 
 void SignalAnalysisWidget::selectTest(const QString testUid)
@@ -282,6 +297,15 @@ QString SignalAnalysisWidget::getMethodName(const QString &metUid)
         if (mi.uid == metUid)
             return mi.name;
     return "";
+}
+
+void SignalAnalysisWidget::signalExport(QModelIndex &index)
+{
+    auto puid = index.data(ProbeUidRole).toString();
+    auto cid = index.data(ChannelUidRole).toString();
+
+    auto exp = new SignalExporter(puid, cid);
+    delete exp;
 }
 
 QList<QString> SignalAnalysisWidget::getTests()

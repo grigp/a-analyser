@@ -38,6 +38,12 @@ int SingleSignal::subChansCount() const
     return 1;
 }
 
+QString SingleSignal::subChanName(const int i) const
+{
+    Q_UNUSED(i);
+    return "";
+}
+
 double SingleSignal::value(const int subChan, const int rec) const
 {
     Q_ASSERT(subChan == 0);

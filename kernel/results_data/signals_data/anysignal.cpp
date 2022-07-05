@@ -1,5 +1,6 @@
 #include "anysignal.h"
 
+#include <QCoreApplication>
 #include <QIODevice>
 #include <QUuid>
 #include <QDataStream>
@@ -35,6 +36,11 @@ int AnySignal::size() const
 int AnySignal::subChansCount() const
 {
     return m_subChansCount;
+}
+
+QString AnySignal::subChanName(const int i) const
+{
+    return QCoreApplication::tr("Канал") + " " + QString::number(i + 1);
 }
 
 double AnySignal::value(const int subChan, const int rec) const

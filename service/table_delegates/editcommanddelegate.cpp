@@ -2,6 +2,7 @@
 
 #include <QPainter>
 #include <QApplication>
+#include <QDebug>
 
 EditCommandDelegate::EditCommandDelegate(const EdditingCommand cmd,
                                          const int column,
@@ -38,23 +39,32 @@ void EditCommandDelegate::paint(QPainter *painter,
             && option.state) // & QStyle::State_Selected)
     {
         QIcon icon;
-        switch (m_command) {
-        case CmdDelete:
-            icon = QIcon(":/images/delete.png");
-            break;
-        case CmdAdd:
-            icon = QIcon(":/images/add.png");
-            break;
-        case CmdUp:
-            icon = QIcon(":/images/up.png");
-            break;
-        case CmdDown:
-            icon = QIcon(":/images/down.png");
-            break;
-        case CmdClose:
-            icon = QIcon(":/images/Close.png");
-            break;
-        }
+        EdditingCommand cmd = static_cast<EdditingCommand>(index.data(CommandRole).toInt());
+        if (cmd != cmdNone)
+            icon = getIcon(cmd);
+        else
+            icon = getIcon(m_command);
         icon.paint(painter, iconRect, Qt::AlignRight | Qt::AlignVCenter);
+    }
+}
+
+QIcon EditCommandDelegate::getIcon(EditCommandDelegate::EdditingCommand cmd) const
+{
+    switch (cmd)
+    {
+    case CmdDelete:
+        return QIcon(":/images/delete.png");
+    case CmdAdd:
+        return QIcon(":/images/add.png");
+    case CmdUp:
+        return QIcon(":/images/up.png");
+    case CmdDown:
+        return QIcon(":/images/down.png");
+    case CmdClose:
+        return QIcon(":/images/Close.png");
+    case CmdExport:
+        return QIcon(":/images/SignalExport.png");
+    case cmdNone:
+        return QIcon();
     }
 }

@@ -80,6 +80,12 @@ public:
     int subChansCount() const override;
 
     /*!
+     * \brief Возвращает название подканала по номеру
+     * \param i - номер подканала
+     */
+    QString subChanName(const int i) const override;
+
+    /*!
      * \brief Возвращает значение сигнала
      * \param chan - номер канала
      * \param rec - номер записи

@@ -230,7 +230,7 @@ int Stabilan01::frequency(const QString &channelId) const
     static QMap<QString, int> ChannelsFreq =
     {
         std::pair<QString, int> (ChannelsDefines::ctStabilogram, 50)
-      , std::pair<QString, int> (ChannelsDefines::ctBallistogram, 50)
+      , std::pair<QString, int> (ChannelsDefines::ctBalistogram, 50)
       , std::pair<QString, int> (ChannelsDefines::ctDynamo, 50)
       , std::pair<QString, int> (ChannelsDefines::ctBreath, 50)
       , std::pair<QString, int> (ChannelsDefines::ctMyogram, 200)
@@ -324,7 +324,7 @@ QList<QString> Stabilan01::getChannels() const
 int Stabilan01::getSubChannelsCount(const QString &channelUid) const
 {
     if (ChannelsUtils::instance().channelType(channelUid) == ChannelsDefines::ctStabilogram ||
-        ChannelsUtils::instance().channelType(channelUid) == ChannelsDefines::ctBallistogram ||
+        ChannelsUtils::instance().channelType(channelUid) == ChannelsDefines::ctBalistogram ||
         ChannelsUtils::instance().channelType(channelUid) == ChannelsDefines::ctDynamo ||
         ChannelsUtils::instance().channelType(channelUid) == ChannelsDefines::ctBreath)
         return 1;

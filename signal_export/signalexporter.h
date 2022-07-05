@@ -4,6 +4,7 @@
 #include <QObject>
 
 class ExportFilter;
+class SignalAccess;
 
 /*!
  * \brief Класс экспортера сигналов The SignalExporter class
@@ -32,12 +33,16 @@ private:
 
     void doExport();
 
+    SignalAccess* createSignal(const QString& probeUid, const QString& channelId) const;
+
     QString m_probeUid {""};
     QString m_channelId {""};
     QStringList m_testUids;
     Mode m_mode {mdUndefined};
 
     bool m_isSeparate {false};
+
+    SignalAccess *m_signal {nullptr};   ///< Экспортируемый сигнал в одиночном режиме
 
     QList<ExportFilter*> m_filters;
 };

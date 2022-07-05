@@ -1,5 +1,6 @@
 #include "myogram.h"
 
+#include <QCoreApplication>
 #include <QIODevice>
 #include <QDataStream>
 #include <QDebug>
@@ -43,6 +44,11 @@ void Myogram::setSubChansCount(const int scc)
 {
     Q_ASSERT(!m_isDataAdded);
     m_subChansCount = scc;
+}
+
+QString Myogram::subChanName(const int i) const
+{
+    return QCoreApplication::tr("Отведение") + " " + QString::number(i + 1);
 }
 
 double Myogram::value(const int subChan, const int rec) const

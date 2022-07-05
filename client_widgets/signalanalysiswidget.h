@@ -30,15 +30,26 @@ public:
     enum Columns
     {
           ColElement = 0
-        , ColCloseBtn
+        , ColButtons
+    };
+
+    /*!
+     * \brief Действия по нажатии кнопок The ButtonActions enum
+     */
+    enum ButtonActions
+    {
+          baClose = 0 ///< Закрыть тест
+        , baExport    ///< Экспорт сигналов
     };
 
     ///< Роли для доступа к данным
     enum TestsTreeModelRoles
     {
-          UidRole = Qt::UserRole + 1  ///< uid элемента (теста, пробы, канала). QString в итеме элеметнов ColElement
-        , ChannelUidRole = Qt::UserRole + 2              ///< uid канала, именно реальной записи канала, а не channelID
-        , TabWidgetRole = Qt::UserRole + 3               ///< указатель на табулированный виджет, содержащий линейку визуализаторов
+          UidRole = Qt::UserRole + 1     ///< uid элемента (теста, пробы, канала). QString в итеме элеметнов ColElement
+        , ProbeUidRole                   ///< uid пробы
+        , ChannelUidRole                 ///< uid канала, именно реальной записи канала, а не channelID
+        , ButtonActionRole               ///< действие на кнопке. Столбец ColButtons. Возвращает bsClose или baExport
+        , TabWidgetRole                  ///< указатель на табулированный виджет, содержащий линейку визуализаторов
     };
 
 
@@ -104,14 +115,20 @@ private:
     QModelIndex getFirstVisualLineIndex(QModelIndex &index);
 
     /*!
-     * \brief Закрывает тест с заданным uid
-     * \param uid - uid теста
+     * \brief Закрывает тест
+     * \param index - индекс, на котором находится кнопка рядом с тестом, который надо закрыть
      */
     void closeTest(QModelIndex& index);
 
     void closeVisuals(QModelIndex& index);
 
     QString getMethodName(const QString& metUid);
+
+    /*!
+     * \brief Экспор сигнала
+     * \param index - индекс, на котором находится кнопка рядом с каналом, сигнал которого надо экспортировать
+     */
+    void signalExport(QModelIndex& index);
 
     /*!
      * \brief Возвращает список uid открытых тестов
