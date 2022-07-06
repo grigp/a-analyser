@@ -3,6 +3,8 @@
 
 #include <QObject>
 
+#include "signalexportdefines.h"
+
 class ExportFilter;
 class SignalAccess;
 class SignalExportDialog;
@@ -17,16 +19,6 @@ public:
     SignalExporter(const QStringList &testUids);
 
     ~SignalExporter();
-
-    /*!
-     * \brief Режим экспортирования The Mode enum
-     */
-    enum Mode
-    {
-          mdUndefined = 0
-        , mdOnce       ///< Одиночный
-        , mdBatch      ///< Пакетный
-    };
 
 private:
 
@@ -43,7 +35,7 @@ private:
     QString m_probeUid {""};
     QString m_channelId {""};
     QStringList m_testUids;
-    Mode m_mode {mdUndefined};
+    SignalExportDefines::Mode m_mode {SignalExportDefines::mdUndefined};
 
     bool m_isSeparate {false};
 

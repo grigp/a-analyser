@@ -4,6 +4,8 @@
 #include <QDialog>
 #include <QStandardItemModel>
 
+#include "signalexportdefines.h"
+
 namespace Ui {
 class SignalExportDialog;
 }
@@ -52,6 +54,8 @@ public:
      * \brief Возвращает uid выбранного фильтра
      */
     QString filter() const {return m_filterUid;}
+
+    SignalExportDefines::FilesMode filesMode() const;
 
 public slots:
     void accept() override;

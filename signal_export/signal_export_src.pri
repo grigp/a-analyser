@@ -5,7 +5,8 @@ include(filtres/filtres_src.pri)
 HEADERS += \
     $$PWD/signalexporter.h \
     $$PWD/signalexportdialog.h \
-    $$PWD/filenamewidget.h
+    $$PWD/filenamewidget.h \
+    $$PWD/signalexportdefines.h
 
 SOURCES += \
     $$PWD/signalexporter.cpp \

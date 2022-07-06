@@ -88,6 +88,16 @@ void SignalExportDialog::addFilter(const QString &uid, const QString &name)
     static_cast<QStandardItemModel*>(ui->tvFilters->model())->appendRow(item);
 }
 
+SignalExportDefines::FilesMode SignalExportDialog::filesMode() const
+{
+    if (ui->rbToSingleFile->isChecked())
+        return SignalExportDefines::fSingle;
+    else
+    if (ui->rbToDifferentFiles->isChecked())
+        return SignalExportDefines::fDifferent;
+    return SignalExportDefines::fUndefined;
+}
+
 void SignalExportDialog::accept()
 {
     if (m_filterUid != "")

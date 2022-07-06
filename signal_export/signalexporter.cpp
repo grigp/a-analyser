@@ -20,7 +20,7 @@ SignalExporter::SignalExporter(const QString &probeUid, const QString &channelId
 {
     m_probeUid = probeUid;
     m_channelId = channelId;
-    m_mode = mdOnce;
+    m_mode = SignalExportDefines::mdOnce;
     getFilters();
     doExport();
 }
@@ -28,7 +28,7 @@ SignalExporter::SignalExporter(const QString &probeUid, const QString &channelId
 SignalExporter::SignalExporter(const QStringList &testUids)
 {
     m_testUids = testUids;
-    m_mode = mdBatch;
+    m_mode = SignalExportDefines::mdBatch;
     getFilters();
     doExport();
 }
@@ -52,7 +52,7 @@ void SignalExporter::doExport()
     auto dlg = new SignalExportDialog(nullptr);
     foreach (auto filter, m_filters)
         dlg->addFilter(filter->uid(), filter->name());
-    if (m_mode == mdOnce)
+    if (m_mode == SignalExportDefines::mdOnce)
     {
         m_signal = createSignal(m_probeUid, m_channelId);
         if (m_signal)
@@ -65,21 +65,15 @@ void SignalExporter::doExport()
         }
     }
     else
-    if (m_mode == mdBatch)
+    if (m_mode == SignalExportDefines::mdBatch)
         dlg->setFolderSelector();
 
     if (dlg->exec() == QDialog::Accepted)
     {
-        qDebug() << dlg->fileNameSelectorCount();
-        for (int i = 0; i < dlg->fileNameSelectorCount(); ++i)
-        {
-            qDebug() << dlg->fileName(i);
-        }
-
-        if (m_mode == mdOnce)
+        if (m_mode == SignalExportDefines::mdOnce)
             doExportOnce(dlg);
         else
-        if (m_mode == mdBatch)
+        if (m_mode == SignalExportDefines::mdBatch)
             doExportBatch(dlg);
     }
     if (m_signal)
@@ -89,20 +83,32 @@ void SignalExporter::doExport()
 
 void SignalExporter::doExportOnce(SignalExportDialog* dialog)
 {
-//    foreach (auto filter, m_filters)
-//    {
-//        if (filter->uid() == dialog->filter())
-//        {
-//            filter->doExport(m_signal, )
-//        }
-//    }
+    foreach (auto filter, m_filters)
+    {
+        if (filter->uid() == dialog->filter())
+        {
+            if (dialog->filesMode() == SignalExportDefines::fSingle)
+            {
+                QString s = dialog->fileName(0);
+                filter->doExport(m_signal, s);
+            }
+            else
+            if (dialog->filesMode() == SignalExportDefines::fDifferent)
+            {
+                QStringList fn;
+                for (int i = 0; i < dialog->fileNameSelectorCount(); ++i)
+                    fn << dialog->fileName(i);
+                filter->doExport(m_signal, fn);
+            }
+        }
+    }
 
 //    qDebug() << dialog->fileNameSelectorCount();
 //    for (int i = 0; i < dialog->fileNameSelectorCount(); ++i)
-//    {
 //        qDebug() << dialog->fileName(i);
-//    }
 
+//    qDebug() << "files mode" << dialog->filesMode();
+//    qDebug() << "filter" << dialog->filter();
 }
 
 void SignalExporter::doExportBatch(SignalExportDialog* dialog)
