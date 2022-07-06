@@ -22,3 +22,9 @@ void TextExportFilter::doExport(SignalAccess *signal, QString &fileName)
 {
 
 }
+
+void TextExportFilter::doExport(SignalAccess *signal, QStringList &fileNames)
+{
+    Q_ASSERT(fileNames.size() == signal->subChansCount());
+
+}

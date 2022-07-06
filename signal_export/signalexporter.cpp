@@ -58,6 +58,7 @@ void SignalExporter::doExport()
         if (m_signal)
         {
             QStringList titles;
+            titles << "";  //! Для режима "все отведения в один файл"
             for (int i = 0; i < m_signal->subChansCount(); ++i)
                 titles << m_signal->subChanName(i);
             dlg->setFileNameSelectors(titles);
@@ -74,10 +75,39 @@ void SignalExporter::doExport()
         {
             qDebug() << dlg->fileName(i);
         }
+
+        if (m_mode == mdOnce)
+            doExportOnce(dlg);
+        else
+        if (m_mode == mdBatch)
+            doExportBatch(dlg);
     }
     if (m_signal)
         delete m_signal;
     delete dlg;
+}
+
+void SignalExporter::doExportOnce(SignalExportDialog* dialog)
+{
+//    foreach (auto filter, m_filters)
+//    {
+//        if (filter->uid() == dialog->filter())
+//        {
+//            filter->doExport(m_signal, )
+//        }
+//    }
+
+//    qDebug() << dialog->fileNameSelectorCount();
+//    for (int i = 0; i < dialog->fileNameSelectorCount(); ++i)
+//    {
+//        qDebug() << dialog->fileName(i);
+//    }
+
+}
+
+void SignalExporter::doExportBatch(SignalExportDialog* dialog)
+{
+
 }
 
 SignalAccess *SignalExporter::createSignal(const QString &probeUid, const QString &channelId) const

@@ -59,6 +59,8 @@ public slots:
 private slots:
     void on_selectFilter(QModelIndex index);
 
+    void on_isSeparateChanged(bool);
+
 private:
     Ui::SignalExportDialog *ui;
 

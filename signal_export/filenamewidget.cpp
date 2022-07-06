@@ -33,6 +33,12 @@ void FileNameWidget::setFileName(const QString &fn)
     ui->edFileName->setText(fn);
 }
 
+void FileNameWidget::setActive(const bool active)
+{
+    m_active = active;
+    setVisible(active);
+}
+
 void FileNameWidget::browseFile()
 {
     QString path = DataDefines::aanalyserDocumentsPath();

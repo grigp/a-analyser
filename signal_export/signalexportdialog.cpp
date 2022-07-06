@@ -32,10 +32,15 @@ void SignalExportDialog::setFileNameSelectors(QStringList &titles)
     {
         auto wgt = new FileNameWidget(FileNameWidget::mdFile, ui->frFileName);
         if (titles.size() > 1 && titles.at(i) != "")
-            wgt->setTitle(tr("Выбор файла для поканала") + " \"" + titles.at(i) + "\"");
+            wgt->setTitle(tr("Выбор файла для подканала") + " \"" + titles.at(i) + "\"");
         else
             wgt->setTitle(tr("Выбор файла для экспорта"));
         ui->frFileName->layout()->addWidget(wgt);
+
+        if (ui->rbToDifferentFiles->isChecked() && i == 0)
+            wgt->setActive(false);  //->setVisible(false);
+        if (ui->rbToSingleFile->isChecked() && i != 0)
+            wgt->setActive(false);  //->setVisible(false);
     }
 }
 
@@ -53,8 +58,10 @@ int SignalExportDialog::fileNameSelectorCount() const
     int cnt = 0;
     QObjectList children = ui->frFileName->children();
     foreach(QObject * child, children)
-        if (child->isWidgetType())
+    {
+        if (child && child->isWidgetType() && static_cast<FileNameWidget*>(child)->active())
             ++cnt;
+    }
     return cnt;
 }
 
@@ -64,7 +71,7 @@ QString SignalExportDialog::fileName(const int idx) const
     QObjectList children = ui->frFileName->children();
     for (int i = 0; i < children.size(); ++i)
     {
-        if (children.at(i)->isWidgetType())
+        if (children.at(i)->isWidgetType() && static_cast<FileNameWidget*>(children.at(i))->active())
         {
             if (n == idx)
                 return static_cast<FileNameWidget*>(children.at(i))->fileName();
@@ -92,6 +99,31 @@ void SignalExportDialog::accept()
 void SignalExportDialog::on_selectFilter(QModelIndex index)
 {
     m_filterUid = index.data(FilterUidRole).toString();
+}
+
+void SignalExportDialog::on_isSeparateChanged(bool)
+{
+    QObjectList children = ui->frFileName->children();
+    int n = 0;
+    for (int i = 0; i < children.size(); ++i)
+        if (children.at(i)->isWidgetType())
+            ++n;
+
+    if (n > 1)
+    {
+        int n = 0;
+        for (int i = 0; i < children.size(); ++i)
+        {
+            if (children.at(i)->isWidgetType())
+            {
+                bool vis = (ui->rbToDifferentFiles->isChecked() && n != 0) ||
+                           (ui->rbToSingleFile->isChecked() && n == 0);
+                static_cast<FileNameWidget*>(children.at(i))->setActive(vis);
+//                static_cast<FileNameWidget*>(children.at(i))->setVisible(vis);
+                ++n;
+            }
+        }
+    }
 }
 
 void SignalExportDialog::clearFNSelectors()

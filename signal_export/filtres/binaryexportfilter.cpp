@@ -22,3 +22,8 @@ void BinaryExportFilter::doExport(SignalAccess *signal, QString &fileName)
 {
 
 }
+
+void BinaryExportFilter::doExport(SignalAccess *signal, QStringList &fileNames)
+{
+    Q_ASSERT(fileNames.size() == signal->subChansCount());
+}

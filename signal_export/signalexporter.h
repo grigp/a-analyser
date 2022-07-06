@@ -5,6 +5,7 @@
 
 class ExportFilter;
 class SignalAccess;
+class SignalExportDialog;
 
 /*!
  * \brief Класс экспортера сигналов The SignalExporter class
@@ -32,6 +33,10 @@ private:
     void getFilters();
 
     void doExport();
+
+    void doExportOnce(SignalExportDialog* dialog);
+
+    void doExportBatch(SignalExportDialog* dialog);
 
     SignalAccess* createSignal(const QString& probeUid, const QString& channelId) const;
 
