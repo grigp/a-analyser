@@ -29,7 +29,7 @@ public:
      * \param signal - указатель на сигнал
      * \param fileName - имя файла
      */
-    virtual void doExport(SignalAccess* signal, QString& fileName) = 0;
+    void doExport(SignalAccess* signal, QString& fileName);
 
     /*!
      * \brief Производит экспорт сигналов. Каждый подканал в свой файл
@@ -37,7 +37,10 @@ public:
      * \param fileNames - имена файлов подканалов.
      *                    Кол-во должно равняться кол-ву подканалов fileNames.size() == signal->subChansCount()
      */
-    virtual void doExport(SignalAccess* signal, QStringList& fileNames) = 0;
+    void doExport(SignalAccess* signal, QStringList& fileNames);
+
+
+    virtual void writeToFile(SignalAccess* signal, QString& fileName, const int chan = -1) = 0;
 };
 
 #endif // EXPORTFILTER_H

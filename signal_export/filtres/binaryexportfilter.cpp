@@ -18,12 +18,8 @@ QString BinaryExportFilter::name()
     return tr("Бинарный");
 }
 
-void BinaryExportFilter::doExport(SignalAccess *signal, QString &fileName)
+void BinaryExportFilter::writeToFile(SignalAccess *signal, QString &fileName, const int chan)
 {
 
 }
 
-void BinaryExportFilter::doExport(SignalAccess *signal, QStringList &fileNames)
-{
-    Q_ASSERT(fileNames.size() == signal->subChansCount());
-}

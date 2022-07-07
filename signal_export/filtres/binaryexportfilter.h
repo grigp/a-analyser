@@ -20,20 +20,7 @@ public:
      */
     QString name() override;
 
-    /*!
-     * \brief Производит экспорт сигналов. Все подканалы в один файл
-     * \param signal - указатель на сигнал
-     * \param fileName - имя файла
-     */
-    void doExport(SignalAccess* signal, QString& fileName) override;
-
-    /*!
-     * \brief Производит экспорт сигналов. Каждый подканал в свой файл
-     * \param signal - указатель на сигнал
-     * \param fileNames - имена файлов подканалов.
-     *                    Кол-во должно равняться кол-ву подканалов fileNames.size() == signal->subChansCount()
-     */
-    void doExport(SignalAccess* signal, QStringList& fileNames) override;
+    void writeToFile(SignalAccess* signal, QString& fileName, const int chan = -1) override;
 };
 
 #endif // BINARYEXPORTFILTER_H

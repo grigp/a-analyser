@@ -102,18 +102,11 @@ void SignalExporter::doExportOnce(SignalExportDialog* dialog)
             }
         }
     }
-
-//    qDebug() << dialog->fileNameSelectorCount();
-//    for (int i = 0; i < dialog->fileNameSelectorCount(); ++i)
-//        qDebug() << dialog->fileName(i);
-
-//    qDebug() << "files mode" << dialog->filesMode();
-//    qDebug() << "filter" << dialog->filter();
 }
 
 void SignalExporter::doExportBatch(SignalExportDialog* dialog)
 {
-
+    qDebug() << m_testUids;
 }
 
 SignalAccess *SignalExporter::createSignal(const QString &probeUid, const QString &channelId) const
