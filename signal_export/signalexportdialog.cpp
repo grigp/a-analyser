@@ -100,10 +100,39 @@ SignalExportDefines::FilesMode SignalExportDialog::filesMode() const
 
 void SignalExportDialog::accept()
 {
-    if (m_filterUid != "")
-        QDialog::accept();
-    else
+    //! Проверка, задан ли фильтр
+    if (m_filterUid == "")
         QMessageBox::information(nullptr, tr("Предупреждение"), tr("Не выбран фильтр экспорта"));
+
+    //! Проверка, заданы ли имена файлов для экспорта
+    bool isNamesPresent = true;
+    bool isNamesRepeat = false;
+    QSet<QString> fns;
+    for (int i = 0; i < fileNameSelectorCount(); ++i)
+    {
+        auto fn = fileName(i);
+        if (fn == "")
+        {
+            isNamesPresent = false;
+            break;
+        }
+        else
+        {
+            if (fns.contains(fn))
+            {
+                isNamesRepeat = true;
+                break;
+            }
+            fns << fn;
+        }
+    }
+    if (!isNamesPresent)
+        QMessageBox::information(nullptr, tr("Предупреждение"), tr("Не задано имя файла для экспорта"));
+    if (isNamesRepeat)
+        QMessageBox::information(nullptr, tr("Предупреждение"), tr("Заданы повторяющиеся имена файлов"));
+
+    if (m_filterUid != "" && isNamesPresent && !isNamesRepeat)
+        QDialog::accept();
 }
 
 void SignalExportDialog::on_selectFilter(QModelIndex index)
