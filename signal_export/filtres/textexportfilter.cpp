@@ -38,9 +38,9 @@ void TextExportFilter::writeToFile(SignalAccess *signal, QString &fileName, cons
 
             if (chan == -1)
                 for (int j = 0; j < signal->subChansCount(); ++j)
-                    sl << QString::number(signal->value(j, i)); // << "\t";
+                    sl << QString::number(signal->value(j, i));
             else
-                sl << QString::number(signal->value(chan, i)); // << "\t";
+                sl << QString::number(signal->value(chan, i));
 
             ts << sl.join("\t") + "\n";
         }

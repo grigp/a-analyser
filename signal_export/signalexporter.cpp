@@ -1,5 +1,6 @@
 #include "signalexporter.h"
 
+#include <QDir>
 #include <QDebug>
 
 #include "aanalyserapplication.h"
@@ -115,10 +116,11 @@ void SignalExporter::doExportBatch(SignalExportDialog* dialog)
                         if (signal)
                         {
                             QStringList names;
-                            QString baseName = dialog->fileName(0) + "/" + QString(pk.fio + "_" + mi.name + "_" +
-                                                                                   ti.dateTime.toString("dd_MM_yyyy_hh_mm_ss") + "_" +
-                                                                                   pi.name + "_" +
-                                                                                   ChannelsUtils::instance().channelName(ci.channelId));
+                            QDir dir(dialog->fileName(0));
+                            QString baseName = dir.absoluteFilePath(QString(pk.fio + "_" + mi.name + "_" +
+                                                                            ti.dateTime.toString("dd_MM_yyyy_hh_mm_ss") + "_" +
+                                                                            pi.name + "_" +
+                                                                            ChannelsUtils::instance().channelName(ci.channelId)));
                             if (dialog->filesMode() == SignalExportDefines::fSingle)
                                 names << baseName + ".txt";
                             if (dialog->filesMode() == SignalExportDefines::fDifferent)
