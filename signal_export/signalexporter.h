@@ -30,6 +30,8 @@ private:
 
     void doExportBatch(SignalExportDialog* dialog);
 
+    void doExportSignal(SignalExportDialog* dialog, SignalAccess *signal, QStringList& names);
+
     SignalAccess* createSignal(const QString& probeUid, const QString& channelId) const;
 
     QString m_probeUid {""};

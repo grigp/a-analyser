@@ -43,7 +43,6 @@ void TextExportFilter::writeToFile(SignalAccess *signal, QString &fileName, cons
                 sl << QString::number(signal->value(chan, i)); // << "\t";
 
             ts << sl.join("\t") + "\n";
-//            ts << sl.join("        ") + "\n";
         }
 
         file.close();

@@ -2,9 +2,11 @@
 
 #include <QDebug>
 
+#include "aanalyserapplication.h"
 #include "textexportfilter.h"
 #include "binaryexportfilter.h"
 #include "signalexportdialog.h"
+#include "metodicsfactory.h"
 
 #include "datadefines.h"
 #include "dataprovider.h"
@@ -83,30 +85,71 @@ void SignalExporter::doExport()
 
 void SignalExporter::doExportOnce(SignalExportDialog* dialog)
 {
+    QStringList names;
+    for (int i = 0; i < dialog->fileNameSelectorCount(); ++i)
+        names << dialog->fileName(i);
+    doExportSignal(dialog, m_signal, names);
+}
+
+void SignalExporter::doExportBatch(SignalExportDialog* dialog)
+{
+    foreach (auto testUid, m_testUids)
+    {
+        DataDefines::TestInfo ti;
+        if (DataProvider::getTestInfo(testUid, ti))
+        {
+            DataDefines::PatientKard pk;
+            DataProvider::getPatient(ti.patientUid, pk);
+            MetodicDefines::MetodicInfo mi =
+                    static_cast<AAnalyserApplication*>(QApplication::instance())->
+                    getMetodics()->metodic(ti.metodUid);
+
+            foreach (auto probeUid, ti.probes)
+            {
+                DataDefines::ProbeInfo pi;
+                if (DataProvider::getProbeInfo(probeUid, pi))
+                {
+                    foreach (auto ci, pi.channels)
+                    {
+                        auto signal = createSignal(probeUid, ci.channelId);
+                        if (signal)
+                        {
+                            QStringList names;
+                            QString baseName = dialog->fileName(0) + "/" + QString(pk.fio + "_" + mi.name + "_" +
+                                                                                   ti.dateTime.toString("dd_MM_yyyy_hh_mm_ss") + "_" +
+                                                                                   pi.name + "_" +
+                                                                                   ChannelsUtils::instance().channelName(ci.channelId));
+                            if (dialog->filesMode() == SignalExportDefines::fSingle)
+                                names << baseName + ".txt";
+                            if (dialog->filesMode() == SignalExportDefines::fDifferent)
+                                for (int i = 0; i < signal->subChansCount(); ++i)
+                                    names << baseName + "_" + signal->subChanName(i) + ".txt";
+                            doExportSignal(dialog, signal, names);
+                            delete signal;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+void SignalExporter::doExportSignal(SignalExportDialog *dialog, SignalAccess *signal, QStringList &names)
+{
     foreach (auto filter, m_filters)
     {
         if (filter->uid() == dialog->filter())
         {
             if (dialog->filesMode() == SignalExportDefines::fSingle)
             {
-                QString s = dialog->fileName(0);
-                filter->doExport(m_signal, s);
+                QString s = names.at(0);
+                filter->doExport(signal, s);
             }
             else
             if (dialog->filesMode() == SignalExportDefines::fDifferent)
-            {
-                QStringList fn;
-                for (int i = 0; i < dialog->fileNameSelectorCount(); ++i)
-                    fn << dialog->fileName(i);
-                filter->doExport(m_signal, fn);
-            }
+                filter->doExport(signal, names);
         }
     }
-}
-
-void SignalExporter::doExportBatch(SignalExportDialog* dialog)
-{
-    qDebug() << m_testUids;
 }
 
 SignalAccess *SignalExporter::createSignal(const QString &probeUid, const QString &channelId) const
