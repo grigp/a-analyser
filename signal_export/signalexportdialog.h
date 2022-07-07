@@ -71,6 +71,7 @@ private:
     void clearFNSelectors();
 
     QString m_filterUid {""};
+    SignalExportDefines::Mode m_mode {SignalExportDefines::mdUndefined};
 };
 
 #endif // SIGNALEXPORTDIALOG_H

@@ -2,6 +2,7 @@
 #include "ui_signalexportdialog.h"
 
 #include <QMessageBox>
+#include <QDir>
 #include <QDebug>
 
 #include "aanalyserapplication.h"
@@ -26,6 +27,7 @@ SignalExportDialog::~SignalExportDialog()
 
 void SignalExportDialog::setFileNameSelectors(QStringList &titles)
 {
+    m_mode = SignalExportDefines::mdOnce;
     clearFNSelectors();
 
     for (int i = 0; i < titles.size(); ++i)
@@ -46,6 +48,7 @@ void SignalExportDialog::setFileNameSelectors(QStringList &titles)
 
 void SignalExportDialog::setFolderSelector()
 {
+    m_mode = SignalExportDefines::mdBatch;
     clearFNSelectors();
 
     auto wgt = new FileNameWidget(FileNameWidget::mdFolder, ui->frFileName);
@@ -131,8 +134,21 @@ void SignalExportDialog::accept()
     if (isNamesRepeat)
         QMessageBox::information(nullptr, tr("Предупреждение"), tr("Заданы повторяющиеся имена файлов"));
 
-    if (m_filterUid != "" && isNamesPresent && !isNamesRepeat)
-        QDialog::accept();
+    QDir dir(fileName(0));
+    if (m_mode == SignalExportDefines::mdBatch && !dir.isEmpty())
+        QMessageBox::information(nullptr, tr("Предупреждение"), tr("Папка для пакетного экспорта не пуста"));
+
+    if (m_mode == SignalExportDefines::mdBatch)
+    {
+        if (m_filterUid != "" && isNamesPresent && !isNamesRepeat && dir.isEmpty())
+            QDialog::accept();
+    }
+    if (m_mode == SignalExportDefines::mdOnce)
+    {
+        if (m_filterUid != "" && isNamesPresent && !isNamesRepeat)
+            QDialog::accept();
+    }
+
 }
 
 void SignalExportDialog::on_selectFilter(QModelIndex index)
