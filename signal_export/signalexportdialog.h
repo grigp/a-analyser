@@ -23,7 +23,8 @@ public:
 
     enum Roles
     {
-        FilterUidRole = Qt::UserRole + 0
+          FilterUidRole = Qt::UserRole + 0
+        , FilterSuffixRole
     };
 
     /*!
@@ -48,7 +49,7 @@ public:
      */
     QString fileName(const int idx) const;
 
-    void addFilter(const QString& uid, const QString& name);
+    void addFilter(const QString& uid, const QString& name, const QString& suffics);
 
     /*!
      * \brief Возвращает uid выбранного фильтра
@@ -71,6 +72,7 @@ private:
     void clearFNSelectors();
 
     QString m_filterUid {""};
+    QString m_filterSuffix {""};
     SignalExportDefines::Mode m_mode {SignalExportDefines::mdUndefined};
 };
 

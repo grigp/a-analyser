@@ -36,6 +36,8 @@ public:
     bool active() const {return m_active;}
     void setActive(const bool active);
 
+    void setFilter(const QString filter) {m_filter = filter;}
+
 private slots:
     void browseFile();
 
@@ -44,6 +46,7 @@ private:
 
     Mode m_mode {mdNone};
     bool m_active {true};
+    QString m_filter {""}; //{tr("Текстовые файлы") + " *.txt (*.txt)"};
 };
 
 #endif // FILENAMEWIDGET_H

@@ -54,7 +54,7 @@ void SignalExporter::doExport()
 {
     auto dlg = new SignalExportDialog(nullptr);
     foreach (auto filter, m_filters)
-        dlg->addFilter(filter->uid(), filter->name());
+        dlg->addFilter(filter->uid(), filter->name(), filter->suffixFilter());
     if (m_mode == SignalExportDefines::mdOnce)
     {
         m_signal = createSignal(m_probeUid, m_channelId);
@@ -122,10 +122,10 @@ void SignalExporter::doExportBatch(SignalExportDialog* dialog)
                                                                             pi.name + "_" +
                                                                             ChannelsUtils::instance().channelName(ci.channelId)));
                             if (dialog->filesMode() == SignalExportDefines::fSingle)
-                                names << baseName + ".txt";
+                                names << baseName + "." + filterSuffix(dialog->filter());
                             if (dialog->filesMode() == SignalExportDefines::fDifferent)
                                 for (int i = 0; i < signal->subChansCount(); ++i)
-                                    names << baseName + "_" + signal->subChanName(i) + ".txt";
+                                    names << baseName + "_" + signal->subChanName(i) + "." + filterSuffix(dialog->filter());
                             doExportSignal(dialog, signal, names);
                             delete signal;
                         }
@@ -152,6 +152,14 @@ void SignalExporter::doExportSignal(SignalExportDialog *dialog, SignalAccess *si
                 filter->doExport(signal, names);
         }
     }
+}
+
+QString SignalExporter::filterSuffix(const QString &filterUid) const
+{
+    foreach (auto filter, m_filters)
+        if (filter->uid() == filterUid)
+            return filter->suffix();
+    return "";
 }
 
 SignalAccess *SignalExporter::createSignal(const QString &probeUid, const QString &channelId) const

@@ -2,6 +2,7 @@
 #include "ui_filenamewidget.h"
 
 #include <QFileDialog>
+#include <QMessageBox>
 
 #include "datadefines.h"
 
@@ -43,10 +44,15 @@ void FileNameWidget::browseFile()
 {
     QString path = DataDefines::aanalyserDocumentsPath();
     if (m_mode == mdFile)
-        ui->edFileName->setText(QFileDialog::getSaveFileName(nullptr,
-                                                             tr("Файл для экспорта сигнала"),
-                                                             path,
-                                                             tr("Текстовые файлы") + " *.txt (*.txt)"));
+    {
+        if (m_filter != "")
+            ui->edFileName->setText(QFileDialog::getSaveFileName(nullptr,
+                                                                 tr("Файл для экспорта сигнала"),
+                                                                 path,
+                                                                 m_filter)); // tr("Текстовые файлы") + " *.txt (*.txt)"));
+        else
+            QMessageBox::information(nullptr, tr("Информация"), tr("Не выбран фильтр экспорта"));
+    }
     else
         ui->edFileName->setText(QFileDialog::getExistingDirectory(nullptr,
                                                                   tr("Выбор пустой папки для экспорта"),

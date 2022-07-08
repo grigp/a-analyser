@@ -32,6 +32,11 @@ private:
 
     void doExportSignal(SignalExportDialog* dialog, SignalAccess *signal, QStringList& names);
 
+    /*!
+     * \brief Возвращает суффикс (расширение) для файлов выбранного фильтра
+     */
+    QString filterSuffix(const QString &filterUid) const;
+
     SignalAccess* createSignal(const QString& probeUid, const QString& channelId) const;
 
     QString m_probeUid {""};

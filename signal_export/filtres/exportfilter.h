@@ -39,8 +39,23 @@ public:
      */
     void doExport(SignalAccess* signal, QStringList& fileNames);
 
-
+    /*!
+     * \brief Записывает данные сигнала в файл
+     * \param signal - указатель на сигнал
+     * \param fileName - полное имя файла с путем и суффиксом (расширением)
+     * \param chan - номер подканала -1 - все в один файл
+     */
     virtual void writeToFile(SignalAccess* signal, QString& fileName, const int chan = -1) = 0;
+
+    /*!
+     * \brief Возвращает суффикс (расширение) для файла экспорта сигнала
+     */
+    virtual QString suffix() const = 0;
+
+    /*!
+     * \brief Возвращает фильтр для диалога выбора файла с суффиксом (расширением)
+     */
+    virtual QString suffixFilter() const = 0;
 };
 
 #endif // EXPORTFILTER_H

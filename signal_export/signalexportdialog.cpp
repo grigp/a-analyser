@@ -84,10 +84,11 @@ QString SignalExportDialog::fileName(const int idx) const
     return "";
 }
 
-void SignalExportDialog::addFilter(const QString &uid, const QString &name)
+void SignalExportDialog::addFilter(const QString &uid, const QString &name, const QString& suffics)
 {
     auto item = new QStandardItem(name);
     item->setData(uid, FilterUidRole);
+    item->setData(suffics, FilterSuffixRole);
     static_cast<QStandardItemModel*>(ui->tvFilters->model())->appendRow(item);
 }
 
@@ -154,6 +155,14 @@ void SignalExportDialog::accept()
 void SignalExportDialog::on_selectFilter(QModelIndex index)
 {
     m_filterUid = index.data(FilterUidRole).toString();
+    m_filterSuffix = index.data(FilterSuffixRole).toString();
+
+    QObjectList children = ui->frFileName->children();
+    foreach(QObject * child, children)
+    {
+        if (child && child->isWidgetType())
+            static_cast<FileNameWidget*>(child)->setFilter(m_filterSuffix);
+    }
 }
 
 void SignalExportDialog::on_isSeparateChanged(bool)
