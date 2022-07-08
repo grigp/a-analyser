@@ -5,6 +5,9 @@
 
 #include "exportfilter.h"
 
+/*!
+ * \brief Класс фильтра экспорта сигналов в текстовом виде The TextExportFilter class
+ */
 class TextExportFilter : public ExportFilter
 {
 public:
