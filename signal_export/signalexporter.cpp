@@ -94,6 +94,10 @@ void SignalExporter::doExportOnce(SignalExportDialog* dialog)
 
 void SignalExporter::doExportBatch(SignalExportDialog* dialog)
 {
+    static_cast<AAnalyserApplication*>(QApplication::instance())->initProgress(QCoreApplication::tr("Экспорт сигналов нескольких тестов"),
+                                                                               0, m_testUids.size(),
+                                                                               QCoreApplication::tr("Инициализация"));
+    int n = 0;
     foreach (auto testUid, m_testUids)
     {
         DataDefines::TestInfo ti;
@@ -104,6 +108,11 @@ void SignalExporter::doExportBatch(SignalExportDialog* dialog)
             MetodicDefines::MetodicInfo mi =
                     static_cast<AAnalyserApplication*>(QApplication::instance())->
                     getMetodics()->metodic(ti.metodUid);
+
+            static_cast<AAnalyserApplication*>(QApplication::instance())->
+                    setProgressPosition(n + 1,
+                                        QCoreApplication::tr("Тест") + " " + QString::number(n + 1) + ") " +
+                                        pk.fio + " - " + mi.name + " (" + ti.dateTime.toString("dd.MM.yyyy hh:mm:ss") + ")");
 
             foreach (auto probeUid, ti.probes)
             {
@@ -132,8 +141,11 @@ void SignalExporter::doExportBatch(SignalExportDialog* dialog)
                     }
                 }
             }
+
+            ++n;
         }
     }
+    static_cast<AAnalyserApplication*>(QApplication::instance())->doneProgress();
 }
 
 void SignalExporter::doExportSignal(SignalExportDialog *dialog, SignalAccess *signal, QStringList &names)
