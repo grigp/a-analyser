@@ -8,6 +8,7 @@ include(ratio_prb/ratio_prb_src.pri)
 include(tren_result/tren_result_src.pri)
 include(stab_dynamic/stab_dynamic_src.pri)
 
+
 HEADERS += \
     $$PWD/factorsdefines.h \
     $$PWD/factorsfactory.h \

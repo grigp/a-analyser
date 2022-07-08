@@ -37,6 +37,11 @@ int WeightPlateSignal::subChansCount() const
     return m_subChansCount;
 }
 
+QString WeightPlateSignal::subChanName(const int i) const
+{
+    return QCoreApplication::tr("Реакция опоры") + " " + QString::number(i);
+}
+
 double WeightPlateSignal::value(const int subChan, const int rec) const
 {
     Q_ASSERT(subChan >= 0 && subChan < m_subChansCount);
