@@ -19,8 +19,21 @@ public:
     explicit BedsideScales01ParamsDialog(QWidget *parent = nullptr);
     ~BedsideScales01ParamsDialog() override;
 
+    double rkpSensor1() const;
+    void setRkpSensor1(const double rkp);
+
+    double rkpSensor2() const;
+    void setRkpSensor2(const double rkp);
+
+    double rkpSensor3() const;
+    void setRkpSensor3(const double rkp);
+
+    double rkpSensor4() const;
+    void setRkpSensor4(const double rkp);
+
 private:
     Ui::BedsideScales01ParamsDialog *ui;
+
 };
 
 #endif // BEDSIDESCALES01PARAMSDIALOG_H

@@ -303,7 +303,6 @@ void SignalAnalysisWidget::signalExport(QModelIndex &index)
 {
     auto puid = index.data(ProbeUidRole).toString();
     auto cid = index.data(ChannelUidRole).toString();
-
     auto exp = new SignalExporter(puid, cid);
     delete exp;
 }

@@ -25,7 +25,11 @@ BedsideScales01::BedsideScales01(QObject *parent)
 void BedsideScales01::setParams(const DeviceProtocols::Ports port, const QJsonObject &params)
 {
     setPortName(port);
-    Q_UNUSED(params);
+
+    m_rkpSensor[0] = params["rkp1"].toDouble(1.9);
+    m_rkpSensor[1] = params["rkp2"].toDouble(1.9);
+    m_rkpSensor[2] = params["rkp3"].toDouble(1.9);
+    m_rkpSensor[3] = params["rkp4"].toDouble(1.9);
 }
 
 bool BedsideScales01::editParams(QJsonObject &params)
@@ -33,8 +37,17 @@ bool BedsideScales01::editParams(QJsonObject &params)
     Q_UNUSED(params);
     BedsideScales01ParamsDialog dlg(static_cast<AAnalyserApplication*>(QApplication::instance())->mainWindow());
 
+    dlg.setRkpSensor1(params["rkp1"].toDouble(1.9));
+    dlg.setRkpSensor2(params["rkp2"].toDouble(1.9));
+    dlg.setRkpSensor3(params["rkp3"].toDouble(1.9));
+    dlg.setRkpSensor4(params["rkp4"].toDouble(1.9));
+
     if (dlg.exec() == QDialog::Accepted)
     {
+        params["rkp1"] = dlg.rkpSensor1();
+        params["rkp2"] = dlg.rkpSensor2();
+        params["rkp3"] = dlg.rkpSensor3();
+        params["rkp4"] = dlg.rkpSensor4();
 
         return true;
     }
@@ -233,7 +246,7 @@ void BedsideScales01::assignByteFromDevice(quint8 b)
                 if (!m_isCalibrating)
                     m_values[m_dataByteCount / 2] = (50 * static_cast<double>(m_adcValues[m_dataByteCount / 2])) /
                                                     (static_cast<double>(65535) * 2 / 2)
-                                                    - m_offset[m_dataByteCount / 2];
+                                                    - m_offset[m_dataByteCount / 2];  // m_rkpSensor[m_dataByteCount / 2]
                 else
                     m_values[m_dataByteCount / 2] = (50 * static_cast<double>(m_adcValues[m_dataByteCount / 2])) /
                                                     (static_cast<double>(65535) * 2 / 2);

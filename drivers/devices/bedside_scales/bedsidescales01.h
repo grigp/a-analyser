@@ -169,6 +169,8 @@ private:
 
     bool m_isCalibrating {false}; ///< Идет ли процесс калибровки
     int m_calibrCount {0};        ///< Счетчик калибровки
+
+    double m_rkpSensor[4] {1.9};
 };
 
 #endif // BEDSIDESCALES01_H
