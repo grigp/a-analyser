@@ -63,7 +63,7 @@ QIcon EditCommandDelegate::getIcon(EditCommandDelegate::EdditingCommand cmd) con
     case CmdClose:
         return QIcon(":/images/Close.png");
     case CmdExport:
-        return QIcon(":/images/SignalExport.png");
+        return QIcon(":/images/SignalExport1.png");
     case cmdNone:
         return QIcon();
     }

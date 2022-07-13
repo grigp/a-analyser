@@ -227,5 +227,6 @@
         <file>images/SelectAll.png</file>
         <file>images/UnselectAll.png</file>
         <file>images/SignalExport.png</file>
+        <file>images/SignalExport1.png</file>
     </qresource>
 </RCC>
