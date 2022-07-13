@@ -19,7 +19,10 @@ BedsideScales01::BedsideScales01(QObject *parent)
     : Driver(parent)
 {
     for (int i = 0; i < 4; ++i)
+    {
         m_offset[i] = 0;
+        m_adcOffset[i] = 0;
+    }
 }
 
 void BedsideScales01::setParams(const DeviceProtocols::Ports port, const QJsonObject &params)
@@ -242,14 +245,17 @@ void BedsideScales01::assignByteFromDevice(quint8 b)
             else
             {
                 m_adcValues[m_dataByteCount / 2] = b * 256 + m_lo;
-//                m_values[m_dataByteCount / 2] = m_adcValues[m_dataByteCount / 2] * (50.0 / 65535.0);
                 if (!m_isCalibrating)
+                {
                     m_values[m_dataByteCount / 2] = (50 * static_cast<double>(m_adcValues[m_dataByteCount / 2])) /
-                                                    (static_cast<double>(65535) * 2 / 2)
-                                                    - m_offset[m_dataByteCount / 2];  // m_rkpSensor[m_dataByteCount / 2]
+                                                    (static_cast<double>(65535) * m_rkpSensor[m_dataByteCount / 2] / 2)
+                                                    - m_offset[m_dataByteCount / 2];
+                }
                 else
+                {
                     m_values[m_dataByteCount / 2] = (50 * static_cast<double>(m_adcValues[m_dataByteCount / 2])) /
-                                                    (static_cast<double>(65535) * 2 / 2);
+                                                    (static_cast<double>(65535) * m_rkpSensor[m_dataByteCount / 2] / 2);
+                }
             }
             ++m_dataByteCount;
         }
@@ -261,12 +267,18 @@ void BedsideScales01::assignByteFromDevice(quint8 b)
                 if (m_calibrCount < frequency(""))
                 {
                     for (int i = 0; i < 4; ++i)
+                    {
                         m_offset[i] += m_values[i];
+                        m_adcOffset[i] += m_adcValues[i];
+                    }
                 }
                 else
                 {
                     for (int i = 0; i < 4; ++i)
+                    {
                         m_offset[i] /= m_calibrCount;
+                        m_adcOffset[i] /= static_cast<quint32>(m_calibrCount);
+                    }
                     m_calibrCount = 0;
                     m_isCalibrating = false;
                 }
@@ -292,15 +304,32 @@ void BedsideScales01::sendDataBlock()
     incBlockCount();
 
     QVector<double> valDbl;
+    QVector<quint16> valInt;
     for (int i = 0; i < 4; ++i)
-        valDbl << m_values[i] ;
+    {
+        bool isZeroCorrect = false;
+        double d = m_values[i];
+        if (d < 0)
+        {
+            d = 0;
+            isZeroCorrect = true;
+        }
+        valDbl << d;
+
+        if (!m_isCalibrating)
+        {
+            quint16 v = static_cast<quint16>(m_adcValues[i] - m_adcOffset[i]);
+            if (isZeroCorrect)
+                v = 0;
+            valInt << v;
+        }
+        else
+            valInt << m_adcValues[i];
+    }
     auto dataDbl = new DeviceProtocols::WeightPlateDvcData(this, ChannelsDefines::chanWeightPlate, valDbl);
     emit sendData(dataDbl);
     delete dataDbl;
 
-    QVector<quint16> valInt;
-    for (int i = 0; i < 4; ++i)
-        valInt << m_adcValues[i] ;
     auto dataInt = new DeviceProtocols::ADCValuesDvcData(this, ChannelsDefines::chanADCValues, valInt);
     emit sendData(dataInt);
     delete dataInt;

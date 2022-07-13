@@ -41,6 +41,7 @@
 
 #include "skgvisual.h"
 #include "stabilogramvisual.h"
+#include "histogramvisual.h"
 #include "balistogramvisual.h"
 #include "vectoranalysisvisual.h"
 #include "bilateralvisual.h"
@@ -101,6 +102,7 @@ void AAnalyserBuild::registerVisuals()
     auto* app = static_cast<AAnalyserApplication*>(QApplication::instance());
     app->registerVisual(new SKGVisual(BaseDefines::tlChannel));
     app->registerVisual(new StabilogramVisual(BaseDefines::tlChannel));
+    app->registerVisual(new HistogramVisual(BaseDefines::tlChannel));
     app->registerVisual(new BalistogramVisual(BaseDefines::tlChannel));
     app->registerVisual(new MyogramSignalVisual(BaseDefines::tlChannel));
     app->registerVisual(new DynamoSignalVisual(BaseDefines::tlChannel));
