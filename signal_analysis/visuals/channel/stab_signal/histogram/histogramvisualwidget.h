@@ -17,6 +17,8 @@ class HistogramVisualWidget : public ChannelVisual
     Q_OBJECT
 
 public:
+    static const int HistBarsCount = 19;
+
     explicit HistogramVisualWidget(VisualDescriptor* visual,
                                    const QString& testUid, const QString& probeUid, const QString& channelUid,
                                    QWidget *parent = nullptr);
@@ -27,6 +29,19 @@ public:
 
 private:
     Ui::HistogramVisualWidget *ui;
+
+    double m_dataX[HistBarsCount];
+    double m_dataY[HistBarsCount];
+
+    double m_minX {INT_MAX};
+    double m_maxX {-INT_MAX};
+    double m_minY {INT_MAX};
+    double m_maxY {-INT_MAX};
+    double m_sizeOneX = {1};
+    double m_sizeOneY = {1};
+
+    void computeHist();
+    void showHist();
 };
 
 #endif // HISTOGRAMVISUALWIDGET_H

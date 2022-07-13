@@ -1,8 +1,13 @@
 #include "histogramvisualwidget.h"
 #include "ui_histogramvisualwidget.h"
 
+#include <QDebug>
+
 #include "channelsdefines.h"
 #include "channelsutils.h"
+#include "dynamicdiagram.h"
+#include "dataprovider.h"
+#include "stabilogram.h"
 
 HistogramVisualWidget::HistogramVisualWidget(VisualDescriptor* visual,
                                              const QString& testUid, const QString& probeUid, const QString& channelUid,
@@ -25,5 +30,80 @@ bool HistogramVisualWidget::isValid()
 
 void HistogramVisualWidget::calculate()
 {
+    computeHist();
+    showHist();
+}
+
+void HistogramVisualWidget::computeHist()
+{
+    QByteArray data;
+    if (DataProvider::getChannel(probeUid(), channelUid(), data))
+    {
+        auto stab = new Stabilogram(data);
+
+        //! Минимум и максимум
+        for (int i = 0; i < stab->size(); ++i)
+        {
+            auto rec = stab->value(i);
+            if (rec.x < m_minX) m_minX = rec.x;
+            if (rec.x > m_maxX) m_maxX = rec.x;
+            if (rec.y < m_minY) m_minY = rec.y;
+            if (rec.y > m_maxY) m_maxY = rec.y;
+        }
+        //! Размер зон по X и Y
+        m_sizeOneX = (m_maxX - m_minX) / static_cast<double>(HistBarsCount);
+        m_sizeOneY = (m_maxY - m_minY) / static_cast<double>(HistBarsCount);
+
+        //! Инициализация гистограммы
+        for (int i = 0; i < HistBarsCount; ++i)
+        {
+            m_dataX[i] = 0;
+            m_dataY[i] = 0;
+        }
+        //! Расчет гистограммы
+        for (int i = 0; i < stab->size(); ++i)
+        {
+            auto rec = stab->value(i);
+
+            int idx = static_cast<int>((rec.x - m_minX) / m_sizeOneX);
+            if (idx < 0) idx = 0;
+            if (idx >= HistBarsCount) idx = HistBarsCount - 1;
+            ++m_dataX[idx];
+
+            idx = static_cast<int>((rec.y - m_minY) / m_sizeOneY);
+            if (idx < 0) idx = 0;
+            if (idx >= HistBarsCount) idx = HistBarsCount - 1;
+            ++m_dataY[idx];
+        }
+
+        for (int i = 0; i < HistBarsCount; ++i)
+        {
+            m_dataX[i] /= HistBarsCount;
+            m_dataY[i] /= HistBarsCount;
+        }
+    }
+
+}
+
+void HistogramVisualWidget::showHist()
+{
+    ui->wgtHistX->setKind(DynamicDiagram::KindBar);
+    ui->wgtHistX->setVolume(DynamicDiagram::Volume3D);
+    ui->wgtHistX->setTitle(tr("Фронталь"));
+    ui->wgtHistX->setAxisSpaceLeft(30);
+
+    ui->wgtHistY->setKind(DynamicDiagram::KindBar);
+    ui->wgtHistY->setVolume(DynamicDiagram::Volume3D);
+    ui->wgtHistY->setTitle(tr("Сагитталь"));
+    ui->wgtHistY->setAxisSpaceLeft(30);
+
+    for (int i = 0; i < HistBarsCount; ++i)
+    {
+        auto itemX = new DiagItem(m_dataX[i], QString::number(m_minX + i * m_sizeOneX));
+        ui->wgtHistX->appendItem(itemX);
+
+        auto itemY = new DiagItem(m_dataY[i], QString::number(m_minY + i * m_sizeOneY));
+        ui->wgtHistY->appendItem(itemY);
+    }
 
 }
