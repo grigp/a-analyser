@@ -27,6 +27,14 @@ public:
     bool isValid() override;
     void calculate() override;
 
+private slots:
+    /*!
+     * \brief Возникает при выборе итема мышкой
+     * \param idx - индекс выбранного итема
+     */
+    void on_selectItem(const int idx);
+
+
 private:
     Ui::HistogramVisualWidget *ui;
 

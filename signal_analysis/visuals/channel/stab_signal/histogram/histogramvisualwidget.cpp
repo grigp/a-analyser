@@ -16,6 +16,9 @@ HistogramVisualWidget::HistogramVisualWidget(VisualDescriptor* visual,
     ui(new Ui::HistogramVisualWidget)
 {
     ui->setupUi(this);
+
+    connect(ui->wgtHistX, &DynamicDiagram::selectItem, this, &HistogramVisualWidget::on_selectItem);
+    connect(ui->wgtHistY, &DynamicDiagram::selectItem, this, &HistogramVisualWidget::on_selectItem);
 }
 
 HistogramVisualWidget::~HistogramVisualWidget()
@@ -32,6 +35,12 @@ void HistogramVisualWidget::calculate()
 {
     computeHist();
     showHist();
+}
+
+void HistogramVisualWidget::on_selectItem(const int idx)
+{
+    auto value = static_cast<DynamicDiagram*>(sender())->value(idx);
+    static_cast<DynamicDiagram*>(sender())->setBottomText(QString::number(value) + " %");
 }
 
 void HistogramVisualWidget::computeHist()
@@ -78,11 +87,10 @@ void HistogramVisualWidget::computeHist()
 
         for (int i = 0; i < HistBarsCount; ++i)
         {
-            m_dataX[i] /= HistBarsCount;
-            m_dataY[i] /= HistBarsCount;
+            m_dataX[i] = m_dataX[i] / stab->size() * 100;
+            m_dataY[i] = m_dataY[i] / stab->size() * 100;
         }
     }
-
 }
 
 void HistogramVisualWidget::showHist()
@@ -91,19 +99,20 @@ void HistogramVisualWidget::showHist()
     ui->wgtHistX->setVolume(DynamicDiagram::Volume3D);
     ui->wgtHistX->setTitle(tr("Фронталь"));
     ui->wgtHistX->setAxisSpaceLeft(30);
+    ui->wgtHistX->setSizeDivider(2);
 
     ui->wgtHistY->setKind(DynamicDiagram::KindBar);
     ui->wgtHistY->setVolume(DynamicDiagram::Volume3D);
     ui->wgtHistY->setTitle(tr("Сагитталь"));
     ui->wgtHistY->setAxisSpaceLeft(30);
+    ui->wgtHistY->setSizeDivider(2);
 
     for (int i = 0; i < HistBarsCount; ++i)
     {
-        auto itemX = new DiagItem(m_dataX[i], QString::number(m_minX + i * m_sizeOneX));
+        auto itemX = new DiagItem(m_dataX[i], QString::number(m_minX + i * m_sizeOneX, 'f', 2));
         ui->wgtHistX->appendItem(itemX);
 
-        auto itemY = new DiagItem(m_dataY[i], QString::number(m_minY + i * m_sizeOneY));
+        auto itemY = new DiagItem(m_dataY[i], QString::number(m_minY + i * m_sizeOneY, 'f', 2));
         ui->wgtHistY->appendItem(itemY);
     }
-
 }

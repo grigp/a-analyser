@@ -227,7 +227,7 @@ void DynamicDiagram::paintEvent(QPaintEvent *event)
         if (m_kind == KindBar)
         {
             int x = xv - static_cast<int>(m_sizeH / 10);
-            int w = static_cast<int>(m_sizeH / 5);
+            int w = static_cast<int>(m_sizeH / m_sizeDivider);  //5);
             int y = zeroY;
             int h = 0;
             if (m_items.at(i)->value() > 0)

@@ -111,6 +111,8 @@ public:
      */
     void doSelectItem(const int idx);
 
+    void setSizeDivider(const int sd) {m_sizeDivider = sd;}
+
 signals:
     /*!
      * \brief Возникает при выборе итема мышкой
@@ -163,6 +165,7 @@ private:
     QColor m_titleColor {Qt::black};
 
     double m_sizeH {0};
+    int m_sizeDivider {5};   ///< Ширина столбика "скважность" sizeOne / m_sizeDivider
     int m_selectItem {-1};   ///< Выбранный элемент
 
     double m_minimum {INT_MAX};
