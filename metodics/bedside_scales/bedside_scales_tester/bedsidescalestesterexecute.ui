@@ -600,6 +600,13 @@
        <widget class="QComboBox" name="cbScale"/>
       </item>
       <item>
+       <widget class="QPushButton" name="btnZeroing">
+        <property name="text">
+         <string>Центровка</string>
+        </property>
+       </widget>
+      </item>
+      <item>
        <spacer name="horizontalSpacer_6">
         <property name="orientation">
          <enum>Qt::Horizontal</enum>
@@ -777,8 +784,8 @@
    <slot>recording()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>191</x>
-     <y>711</y>
+     <x>351</x>
+     <y>725</y>
     </hint>
     <hint type="destinationlabel">
      <x>1057</x>
@@ -793,12 +800,28 @@
    <slot>calibrate()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>395</x>
-     <y>709</y>
+     <x>544</x>
+     <y>723</y>
     </hint>
     <hint type="destinationlabel">
      <x>1056</x>
      <y>621</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btnZeroing</sender>
+   <signal>clicked()</signal>
+   <receiver>BedsideScalesTesterExecute</receiver>
+   <slot>on_zeroing()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>182</x>
+     <y>714</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1058</x>
+     <y>544</y>
     </hint>
    </hints>
   </connection>
@@ -807,5 +830,6 @@
   <slot>on_scaleChange(int)</slot>
   <slot>recording()</slot>
   <slot>calibrate()</slot>
+  <slot>on_zeroing()</slot>
  </slots>
 </ui>

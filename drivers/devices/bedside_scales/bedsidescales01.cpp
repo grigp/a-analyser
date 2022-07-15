@@ -140,6 +140,7 @@ void BedsideScales01::calibrateTenso(const QString &channelUid)
 {
     Q_UNUSED(channelUid);
     m_isCalibrating = true;
+    m_calibrateStage = 0;
     m_calibrCount = 0;
 }
 
@@ -280,7 +281,12 @@ void BedsideScales01::assignByteFromDevice(quint8 b)
                         m_adcOffset[i] /= static_cast<quint32>(m_calibrCount);
                     }
                     m_calibrCount = 0;
-                    m_isCalibrating = false;
+                    ++m_calibrateStage;
+                    if (m_calibrateStage == 2)
+                    {
+                        m_calibrateStage = 0;
+                        m_isCalibrating = false;
+                    }
                 }
             }
 

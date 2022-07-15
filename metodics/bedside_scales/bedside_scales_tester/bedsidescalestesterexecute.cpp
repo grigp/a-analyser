@@ -29,6 +29,9 @@ BedsideScalesTesterExecute::BedsideScalesTesterExecute(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    for (int i = 0; i < 4; ++i)
+        m_offsets << 0;
+
     setupUI();
 }
 
@@ -135,8 +138,49 @@ void BedsideScalesTesterExecute::start()
     }
 }
 
+//void BedsideScalesTesterExecute::on_scaleChange(int scaleId)
+//{
+//    int scale = 1;
+//    for (int i = 0; i < scaleId; ++i)
+//        scale *= 2;
+
+//    double min = 0;
+//    double max0 = 50;
+//    double max1 = 50;
+//    double max2 = 50;
+//    double max3 = 50;
+//    if (m_tenzoControl)
+//    {
+//        m_tenzoControl->getTensoValueDiapasone(0, min, max0);
+//        m_tenzoControl->getTensoValueDiapasone(1, min, max1);
+//        m_tenzoControl->getTensoValueDiapasone(2, min, max2);
+//        m_tenzoControl->getTensoValueDiapasone(3, min, max3);
+//    }
+
+//    if (m_mode == BedsideScalesDefines::bsmScales)
+//    {
+//        ui->wgtWeighting->setDiapazone(0, 0, (max0 + max1 + max2 + max3) / scale);
+//    }
+//    else
+//    if (m_mode == BedsideScalesDefines::bsmTester)
+//    {
+//        ui->wgtOscillTester0->setDiapazone(0, 0, max0 / scale);
+//        ui->wgtOscillTester1->setDiapazone(0, 0, max0 / scale);
+//        ui->wgtOscillTester2->setDiapazone(0, 0, max0 / scale);
+//        ui->wgtOscillTester3->setDiapazone(0, 0, max0 / scale);
+//    }
+//    if (m_mode == BedsideScalesDefines::bsmSleepResearch)
+//    {
+//        ui->wgtOscillApnoe->setDiapazone(0, min, max0 / scale);
+//        ui->wgtOscillApnoe->setDiapazone(1, min, max1 / scale);
+//        ui->wgtOscillApnoe->setDiapazone(2, min, max2 / scale);
+//        ui->wgtOscillApnoe->setDiapazone(3, min, max3 / scale);
+//    }
+//}
+
 void BedsideScalesTesterExecute::on_scaleChange(int scaleId)
 {
+    m_curScaleId = scaleId;
     int scale = 1;
     for (int i = 0; i < scaleId; ++i)
         scale *= 2;
@@ -154,25 +198,72 @@ void BedsideScalesTesterExecute::on_scaleChange(int scaleId)
         m_tenzoControl->getTensoValueDiapasone(3, min, max3);
     }
 
+    auto setDiapazone = [&](Oscilloscope *area, double offset, double diap, int idx = 0)
+    {
+        double min = offset - diap / 2;
+        double max = offset + diap / 2;
+        if (min < 0)
+        {
+            min = 0;
+            max = min + diap;
+        }
+        area->setDiapazone(idx, min, max);
+    };
+
+
     if (m_mode == BedsideScalesDefines::bsmScales)
     {
-        ui->wgtWeighting->setDiapazone(0, 0, (max0 + max1 + max2 + max3) / scale);
+        double diap = (max0 + max1 + max2 + max3) / scale;
+        double offs = 0;
+        foreach (auto ofs, m_offsets)
+            offs += ofs;
+        setDiapazone(ui->wgtWeighting, offs, diap);
     }
     else
     if (m_mode == BedsideScalesDefines::bsmTester)
     {
-        ui->wgtOscillTester0->setDiapazone(0, 0, max0 / scale);
-        ui->wgtOscillTester1->setDiapazone(0, 0, max0 / scale);
-        ui->wgtOscillTester2->setDiapazone(0, 0, max0 / scale);
-        ui->wgtOscillTester3->setDiapazone(0, 0, max0 / scale);
+        setDiapazone(ui->wgtOscillTester0, m_offsets.at(0), (max0 / scale));
+        setDiapazone(ui->wgtOscillTester1, m_offsets.at(1), (max1 / scale));
+        setDiapazone(ui->wgtOscillTester2, m_offsets.at(2), (max2 / scale));
+        setDiapazone(ui->wgtOscillTester3, m_offsets.at(3), (max3 / scale));
     }
     if (m_mode == BedsideScalesDefines::bsmSleepResearch)
     {
-        ui->wgtOscillApnoe->setDiapazone(0, min, max0 / scale);
-        ui->wgtOscillApnoe->setDiapazone(1, min, max1 / scale);
-        ui->wgtOscillApnoe->setDiapazone(2, min, max2 / scale);
-        ui->wgtOscillApnoe->setDiapazone(3, min, max3 / scale);
+        setDiapazone(ui->wgtOscillApnoe, m_offsets.at(0), (max0 / scale), 0);
+        setDiapazone(ui->wgtOscillApnoe, m_offsets.at(1), (max0 / scale), 1);
+        setDiapazone(ui->wgtOscillApnoe, m_offsets.at(2), (max0 / scale), 2);
+        setDiapazone(ui->wgtOscillApnoe, m_offsets.at(3), (max0 / scale), 3);
     }
+}
+
+void BedsideScalesTesterExecute::on_zeroing()
+{
+    for (int i = 0; i < m_offsets.size(); ++i)
+    {
+        auto v = m_offsets.at(i);
+        v = 0;
+        m_offsets.replace(i, v);
+    }
+    foreach (auto rec, m_values)
+    {
+        for (int i = 0; i < rec.size(); ++i)
+        {
+            if (i < m_offsets.size())
+            {
+                auto v = m_offsets.at(i);
+                v += rec.at(i);
+                m_offsets.replace(i, v);
+            }
+        }
+    }
+    for (int i = 0; i < m_offsets.size(); ++i)
+    {
+        auto v = m_offsets.at(i);
+        v /= m_values.size();
+        m_offsets.replace(i, v);
+    }
+
+    on_scaleChange(m_curScaleId);
 }
 
 void BedsideScalesTesterExecute::getData(DeviceProtocols::DeviceData *data)
@@ -249,8 +340,17 @@ void BedsideScalesTesterExecute::getDataWeight(DeviceProtocols::DeviceData *data
     DeviceProtocols::WeightPlateDvcData *wData = static_cast<DeviceProtocols::WeightPlateDvcData*>(data);
 
     double massa = 0;
+    QVector<double> recS;
     for (int i = 0; i < wData->subChanCount(); ++i)
+    {
         massa += wData->value(i).toDouble();
+        recS << wData->value(i).toDouble();
+    }
+
+    m_values.enqueue(recS);
+    if (m_values.size() == 100)
+        m_values.dequeue();
+
 
     if (m_mode == BedsideScalesDefines::bsmSleepResearch)
     {

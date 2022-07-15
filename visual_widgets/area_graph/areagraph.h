@@ -95,7 +95,7 @@ private:
     QVector<QColor> m_palette;
     double m_minVal {0};
     double m_maxVal {0};
-    QList<double> m_average;
+    QList<double> m_average;         ///< Среднее значение по всему сигналу
     int m_cursorPos {-1};   ///< Номер отсчета, на котором стоит курсор
     QList<MarkerInfo> m_markers;
     bool m_isFillBetweenSubchans {false};

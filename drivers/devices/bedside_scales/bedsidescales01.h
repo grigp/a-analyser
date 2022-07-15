@@ -169,6 +169,7 @@ private:
     int m_errorCount {0};        ///< Количество ошибок по результатам анализа колцевого счетчика
 
     bool m_isCalibrating {false}; ///< Идет ли процесс калибровки
+    int m_calibrateStage {0};
     int m_calibrCount {0};        ///< Счетчик калибровки
 
     double m_rkpSensor[4] {1.9};

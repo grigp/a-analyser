@@ -9,6 +9,8 @@
 #include "dataprovider.h"
 #include "stabilogram.h"
 
+#include "computefft.h"
+
 HistogramVisualWidget::HistogramVisualWidget(VisualDescriptor* visual,
                                              const QString& testUid, const QString& probeUid, const QString& channelUid,
                                              QWidget *parent) :
@@ -45,6 +47,8 @@ void HistogramVisualWidget::on_selectItem(const int idx)
 
 void HistogramVisualWidget::computeHist()
 {
+    ComputeFFT fft;
+
     QByteArray data;
     if (DataProvider::getChannel(probeUid(), channelUid(), data))
     {

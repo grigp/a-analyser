@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <QJsonObject>
+#include <QQueue>
 
 #include "datadefines.h"
 #include "deviceprotocols.h"
@@ -37,6 +38,7 @@ private slots:
     void start();
 
     void on_scaleChange(int scaleId);
+    void on_zeroing();
 
     void getData(DeviceProtocols::DeviceData *data);
     void on_communicationError(const QString &drvName, const QString &port, const int errorCode);
@@ -74,6 +76,10 @@ private:
     WeightPlateSignal *m_wps {nullptr};     ///< Записываемый сигнал
     Balistogram *m_weight {nullptr};
 
+    QQueue<QVector<double>> m_values;       ///< Значения за последние N секунд
+    QVector<double> m_offsets;              ///< Смещения (центровка)
+
+    int m_curScaleId {0};                   ///< Текущий индекс масштаба
 };
 
 #endif // BEDSIDESCALESTESTEREXECUTE_H
