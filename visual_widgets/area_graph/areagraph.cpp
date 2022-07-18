@@ -260,6 +260,11 @@ int AreaGraph::bottomSpace() const
     return BottomSpace;
 }
 
+int AreaGraph::areaWidth() const
+{
+    return width() - LeftSpace - RightSpace;
+}
+
 void AreaGraph::paintEvent(QPaintEvent *event)
 {
     QWidget::paintEvent(event);

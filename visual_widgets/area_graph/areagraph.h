@@ -253,6 +253,10 @@ public:
     int rightSpace() const;
     int topSpace() const;
     int bottomSpace() const;
+    /*!
+     * \brief Возвращает ширину зоны построения
+     */
+    int areaWidth() const;
 
 
 signals:

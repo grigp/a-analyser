@@ -48,10 +48,15 @@ private slots:
 private:
     Ui::WeightPlateGraphVisualWidget *ui;
 
+    int scaleMultiplier(const int scaleIdx) const;
+
     void getSignal();
 
     void showGraph(const int chanIdx);
 
+    void setDiapazones();
+
+    bool m_isCalculate {false};
     WeightPlateSignal* m_signal {nullptr};
 };
 
