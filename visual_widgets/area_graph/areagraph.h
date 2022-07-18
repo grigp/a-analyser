@@ -201,8 +201,8 @@ public:
     int startPoint() const {return m_startPoint;}
     void setStartPoint(const int startPoint);
 
-    int hScale() const {return m_hScale;}
-    void setHScale(const int hScale);
+    double hScale() const {return m_hScale;}
+    void setHScale(const double hScale);
 
     bool isZeroing() const {return m_isZeroing;}
     void setIsZeroing(const bool zeroing);
@@ -282,7 +282,7 @@ private:
 
     XCoordSignalMode m_xcsm {xsm_fullSignal}; ///< Режим отображения сигнала по горизонтали
     int m_startPoint {0};                     ///< Начальная точка прорисовки в режиме скроллинга
-    int m_hScale {1};                         ///< Множитель горизонтального масштабирования (увеличения)
+    double m_hScale {1};                      ///< Множитель горизонтального масштабирования (увеличения)
     bool m_isZeroing {false};                 ///< Центровка
 
     bool m_isShowCursor {false};

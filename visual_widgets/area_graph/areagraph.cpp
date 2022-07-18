@@ -142,7 +142,7 @@ void AreaGraph::setStartPoint(const int startPoint)
     update();
 }
 
-void AreaGraph::setHScale(const int hScale)
+void AreaGraph::setHScale(const double hScale)
 {
     m_hScale = hScale;
     update();
@@ -209,7 +209,7 @@ int AreaGraph::cursorPos() const
 {
     if (m_areases.size() > 0)
     {
-        int hScale = 1;
+        double hScale = 1;
         int startPoint = 0;
         if (m_xcsm == xsm_scrolling)
         {
@@ -361,7 +361,7 @@ void AreaGraph::paintEvent(QPaintEvent *event)
             }
 
             //! Настройка растяжения и позиции в зависимости от установок
-            int hScale = 1;
+            double hScale = 1;
             int startPoint = 0;
             if (m_xcsm == xsm_scrolling)
             {

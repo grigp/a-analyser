@@ -87,7 +87,7 @@ void WeightPlateGraphVisualWidget::btnPlusClicked()
 void WeightPlateGraphVisualWidget::btnMinusClicked()
 {
     auto hScale = ui->wgtGraph->hScale();
-    if (hScale > 1)
+    if (hScale > 0.0625) //1)
         ui->wgtGraph->setHScale(hScale / 2);
     setDiapazones();
 }
