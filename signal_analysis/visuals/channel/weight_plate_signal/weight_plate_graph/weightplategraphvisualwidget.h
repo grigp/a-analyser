@@ -58,6 +58,7 @@ private:
 
     bool m_isCalculate {false};
     WeightPlateSignal* m_signal {nullptr};
+    int m_selectedChan {-1};  ///< Выбранный канал 0 - N. -1 - нет выбранного
 };
 
 #endif // WEIGHTPLATEGRAPHVISUALWIDGET_H

@@ -101,7 +101,10 @@ void WeightPlateGraphVisualWidget::signalScroll(int pos)
 void WeightPlateGraphVisualWidget::on_selectChannel(int chanIdx)
 {
     if (m_isCalculate)
+    {
         showGraph(chanIdx - 1);
+        setDiapazones();
+    }
 }
 
 int WeightPlateGraphVisualWidget::scaleMultiplier(const int scaleIdx) const
@@ -153,6 +156,7 @@ void WeightPlateGraphVisualWidget::showGraph(const int chanIdx)
     if (m_signal)
     {
         ui->wgtGraph->clear();
+        m_selectedChan = chanIdx;
         if (chanIdx == -1)
             for (int i = 0; i < m_signal->subChansCount(); ++i)
                 show(i, i);
@@ -165,10 +169,6 @@ void WeightPlateGraphVisualWidget::setDiapazones()
 {
     if (m_isCalculate)
     {
-        //    QList<BaseDefines::MinMaxValue> diaps;
-        //    diaps.clear();
-        //    for (int i = 0; i < m_signal->subChansCount(); ++i)
-        //        diaps << BaseDefines::MinMaxValue(INT_MAX, -INT_MAX);
             QList<double> mids;
             mids.clear();
             for (int i = 0; i < m_signal->subChansCount(); ++i)
@@ -187,15 +187,6 @@ void WeightPlateGraphVisualWidget::setDiapazones()
                         mids.replace(j, mid);
                     }
                     ++n;
-        //            auto v = m_signal->value(j, i);
-        //            auto diap = diaps.at(j);
-        //            bool isChange = (v < diap.min) || (v > diap.max);
-        //            if (v < diap.min)
-        //                diap.min = v;
-        //            if (v > diap.max)
-        //                diap.max = v;
-        //            if (isChange)
-        //                diaps.replace(j, diap);
                 }
             }
             if (n > 0)
@@ -207,16 +198,27 @@ void WeightPlateGraphVisualWidget::setDiapazones()
                 }
 
             int v = scaleMultiplier(ui->cbScale->currentIndex());
-            for (int i = 0; i < m_signal->subChansCount(); ++i)
+            if (ui->wgtGraph->areasesCount() == m_signal->subChansCount())
             {
-                auto min = m_signal->minValueChan(i);
-                auto max = m_signal->maxValueChan(i);
-                double diap = (max - min) / v * 1.2;
-                ui->wgtGraph->setDiapazone(i, mids.at(i) - diap / 2, mids.at(i) + diap / 2);
-        //        double diap = (diaps.at(i).max - diaps.at(i).min) / v * 1.2;
-        //        ui->wgtGraph->setDiapazone(i,
-        //                                   (diaps.at(i).max + diaps.at(i).min) / 2 - diap / 2,
-        //                                   (diaps.at(i).max + diaps.at(i).min) / 2 + diap / 2);
+                for (int i = 0; i < m_signal->subChansCount(); ++i)
+                {
+                    auto min = m_signal->minValueChan(i);
+                    auto max = m_signal->maxValueChan(i);
+                    double diap = (max - min) / v * 1.2;
+                    ui->wgtGraph->setDiapazone(i, mids.at(i) - diap / 2, mids.at(i) + diap / 2);
+                }
+            }
+            else
+            {
+                if (m_selectedChan >= 0 && m_selectedChan < m_signal->subChansCount())
+                {
+                    auto min = m_signal->minValueChan(m_selectedChan);
+                    auto max = m_signal->maxValueChan(m_selectedChan);
+                    double diap = (max - min) / v * 1.2;
+                    ui->wgtGraph->setDiapazone(0,
+                                               mids.at(m_selectedChan) - diap / 2,
+                                               mids.at(m_selectedChan) + diap / 2);
+                }
             }
     }
 }
