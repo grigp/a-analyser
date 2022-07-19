@@ -311,6 +311,15 @@ void AreaGraph::paintEvent(QPaintEvent *event)
 
             bool isHour = m_areases.at(iz)->signal()->size() / m_areases.at(iz)->signal()->frequency() > 6000;
 
+            //! Настройка растяжения и позиции в зависимости от установок
+            double hScale = 1;
+            int startPoint = 0;
+            if (m_xcsm == xsm_scrolling)
+            {
+                hScale = m_hScale;
+                startPoint = m_startPoint;
+            }
+
             m_areases.at(iz)->setStep(step);
             //! Определение шага секундных меток
             double stepMark = step * m_areases.at(iz)->signal()->frequency();
@@ -318,19 +327,19 @@ void AreaGraph::paintEvent(QPaintEvent *event)
             QString s = QString::number(secCount);
             auto sizeOne = BaseUtils::getTextSize(&painter, s);
             LabelStep ls = lsOne;
-            if ((stepMark < (sizeOne.width() * 2 + 7)) && (stepMark * 5 >= (sizeOne.width() * 2 + 7)))
+            if ((stepMark * hScale < (sizeOne.width() * 2 + 7)) && (stepMark * hScale * 5 >= (sizeOne.width() * 2 + 7)))
                 ls = lsFive;
             else
-            if ((stepMark * 5 < (sizeOne.width() * 2 + 7)) && (stepMark * 10 >= (sizeOne.width() * 2 + 7)))
+            if ((stepMark * hScale * 5 < (sizeOne.width() * 2 + 7)) && (stepMark * hScale * 10 >= (sizeOne.width() * 2 + 7)))
                 ls = lsTen;
             else
-            if ((stepMark * 10 < (sizeOne.width() * 2 + 7)) && (stepMark * 60 >= (sizeOne.width() * 2 + 7)))
+            if ((stepMark * hScale * 10 < (sizeOne.width() * 2 + 7)) && (stepMark * hScale * 60 >= (sizeOne.width() * 2 + 7)))
                 ls = lsSixty;
             else
-            if ((stepMark * 60 < (sizeOne.width() * 2 + 7)) && (stepMark * 300 >= (sizeOne.width() * 2 + 7)))
+            if ((stepMark * hScale * 60 < (sizeOne.width() * 2 + 7)) && (stepMark * hScale * 300 >= (sizeOne.width() * 2 + 7)))
                 ls = lsMinutesFive;
             else
-            if ((stepMark * 300 < (sizeOne.width() * 2 + 7)) && (stepMark * 600 >= (sizeOne.width() * 2 + 7)))
+            if ((stepMark * hScale * 300 < (sizeOne.width() * 2 + 7)) && (stepMark * hScale * 600 >= (sizeOne.width() * 2 + 7)))
                 ls = lsMinutesTen;
 
             //! Минимальное значение
@@ -360,14 +369,6 @@ void AreaGraph::paintEvent(QPaintEvent *event)
                 painter.drawText(LeftSpace - size.width() - 5, line0 + size.height()/2, "0");
             }
 
-            //! Настройка растяжения и позиции в зависимости от установок
-            double hScale = 1;
-            int startPoint = 0;
-            if (m_xcsm == xsm_scrolling)
-            {
-                hScale = m_hScale;
-                startPoint = m_startPoint;
-            }
             //! Для усреднения сигнала на одной координате x
             chansMinMax = new MinMax[m_areases.at(iz)->signal()->subChansCount()];
 

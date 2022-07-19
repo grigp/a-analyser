@@ -138,7 +138,7 @@ void WeightPlateGraphVisualWidget::getSignal()
         {
             m_signal = new WeightPlateSignal(data);
             for (int i = 0; i < m_signal->subChansCount(); ++i)
-                ui->cbChannels->addItem(tr("Канал") + " " + QString::number(i+1));
+                ui->cbChannels->addItem(m_signal->subChanName(i));
         }
     }
 }
@@ -147,7 +147,7 @@ void WeightPlateGraphVisualWidget::showGraph(const int chanIdx)
 {
     auto show = [&](const int chan, const int chanDiap)
     {
-        ui->wgtGraph->appendSignal(m_signal, tr("Канал") + " " + QString::number(chan + 1) + ", " + tr("кг"), chan);
+        ui->wgtGraph->appendSignal(m_signal, m_signal->subChanName(chan), chan);
         auto min = m_signal->minValueChan(chan);
         auto max = m_signal->maxValueChan(chan);
         ui->wgtGraph->setDiapazone(chanDiap, min  - (max - min) * 0.1, max + (max - min) * 0.1);

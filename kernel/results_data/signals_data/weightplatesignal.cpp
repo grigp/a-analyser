@@ -1,6 +1,12 @@
 #include "weightplatesignal.h"
 
 #include <QDataStream>
+#include <QDebug>
+
+namespace  {
+static const int CalcChanCount = 3;
+
+}
 
 WeightPlateSignal::WeightPlateSignal(const QString &chanId, const int freq, const int subChansCount)
     : SignalData ()
@@ -39,7 +45,17 @@ int WeightPlateSignal::subChansCount() const
 
 QString WeightPlateSignal::subChanName(const int i) const
 {
-    return QCoreApplication::tr("Реакция опоры") + " " + QString::number(i);
+    if (i < 4)
+        return QCoreApplication::tr("Реакция опоры") + " " + QString::number(i);
+    else
+    if (i == 4)
+        return QCoreApplication::tr("Общая масса");
+    else
+    if (i == 5)
+        return QCoreApplication::tr("Отклонение по фронтали");
+    else
+    if (i == 6)
+        return QCoreApplication::tr("Отклонение по сагиттали");
 }
 
 double WeightPlateSignal::value(const int subChan, const int rec) const
@@ -69,7 +85,7 @@ void WeightPlateSignal::fromByteArray(const QByteArray &data)
 
     m_maxValue = -INT_MAX;
     m_minValue = INT_MAX;
-    for (int i = 0; i < m_subChansCount; ++i)
+    for (int i = 0; i < m_subChansCount + CalcChanCount; ++i)
         m_minMax << BaseDefines::MinMaxValue(INT_MAX, -INT_MAX);
 
     int count = 0;
@@ -79,10 +95,23 @@ void WeightPlateSignal::fromByteArray(const QByteArray &data)
     for (int i = 0; i < count; ++i)
     {
         QVector<double> rec;
-        for (int j = 0; j < m_subChansCount; ++j)
+        for (int j = 0; j < m_subChansCount + CalcChanCount; ++j)
         {
-            double v;
-            stream >> v;
+            double v = 0;
+            if (j < m_subChansCount)
+                stream >> v;
+            else
+            if (j == m_subChansCount)
+            {
+                v = 0;
+                foreach (auto r, rec)
+                    v += r;
+            }
+            else
+            if (j == m_subChansCount + 1)
+                v = rec.at(1) + rec.at(2) - rec.at(0) - rec.at(3);
+            if (j == m_subChansCount + 2)
+                v = rec.at(0) + rec.at(1) - rec.at(2) - rec.at(3);
             rec << v;
             //! Минимум и максимум
             if (v > m_maxValue)
@@ -97,6 +126,8 @@ void WeightPlateSignal::fromByteArray(const QByteArray &data)
 
         m_data.replace(i, rec);
     }
+
+    m_subChansCount += CalcChanCount;
 }
 
 void WeightPlateSignal::toByteArray(QByteArray &data) const
