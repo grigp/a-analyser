@@ -18,6 +18,7 @@
 #include "breathsignal.h"
 #include "dynamosignal.h"
 #include "ritmogram.h"
+#include "weightplatesignal.h"
 
 SignalExporter::SignalExporter(const QString &probeUid, const QString &channelId)
 {
@@ -196,6 +197,9 @@ SignalAccess *SignalExporter::createSignal(const QString &probeUid, const QStrin
         else
         if (ChannelsUtils::instance().channelType(channelId) == ChannelsDefines::ctRitmogram)
             return new Ritmogram(data);
+        else
+        if (ChannelsUtils::instance().channelType(channelId) == ChannelsDefines::ctWeightPlate)
+            return new WeightPlateSignal(data);
     }
     return nullptr;
 }
