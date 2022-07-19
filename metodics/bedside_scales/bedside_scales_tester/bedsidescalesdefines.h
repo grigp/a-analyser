@@ -34,7 +34,7 @@ static QMap<QString, Mode> modeCode {
 
 ///< По режиму получить его name
 static QMap<Mode, QString> modeName {
-    std::pair<Mode, QString> (bsmTester, QCoreApplication::tr("Тестировние"))
+    std::pair<Mode, QString> (bsmTester, QCoreApplication::tr("Тестирование"))
   , std::pair<Mode, QString> (bsmScales, QCoreApplication::tr("Весы"))
   , std::pair<Mode, QString> (bsmSleepResearch, QCoreApplication::tr("Исследования сна"))
 };
