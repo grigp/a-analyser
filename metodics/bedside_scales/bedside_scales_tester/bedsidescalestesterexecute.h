@@ -4,6 +4,7 @@
 #include <QWidget>
 #include <QJsonObject>
 #include <QQueue>
+#include <QMediaPlayer>
 
 #include "datadefines.h"
 #include "deviceprotocols.h"
@@ -69,10 +70,16 @@ private:
     TestResultData *m_trd;  ///< Объект, записывающий данные в базу
 
     int m_freq {150};
-    int m_recCounter {0};
+    int m_counter {0};                      ///< Счетчик принятых пакетов данных
+    int m_recCounter {0};                   ///< Счетчик записанных пакетов данных
     BedsideScalesDefines::Mode m_mode {BedsideScalesDefines::bsmTester};
+    bool m_isAutoRecord {false};
+    QTime m_startTime {QTime::fromString("0:00:20", "h:mm:ss")};
+    QTime m_recLength {QTime::fromString("0:10:00", "h:mm:ss")};
+    bool m_isSound {true};
 
     bool m_isRecording {false};
+    bool m_isCalibrate {false};
     WeightPlateSignal *m_wps {nullptr};     ///< Записываемый сигнал
     Balistogram *m_weight {nullptr};
 
@@ -80,6 +87,7 @@ private:
     QVector<double> m_offsets;              ///< Смещения (центровка)
 
     int m_curScaleId {0};                   ///< Текущий индекс масштаба
+    QMediaPlayer m_player;
 };
 
 #endif // BEDSIDESCALESTESTEREXECUTE_H

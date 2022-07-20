@@ -46,7 +46,7 @@ int WeightPlateSignal::subChansCount() const
 QString WeightPlateSignal::subChanName(const int i) const
 {
     if (i < 4)
-        return QCoreApplication::tr("Реакция опоры") + " " + QString::number(i);
+        return QCoreApplication::tr("Реакция опоры") + " " + QString::number(i + 1);
     else
     if (i == 4)
         return QCoreApplication::tr("Общая масса");

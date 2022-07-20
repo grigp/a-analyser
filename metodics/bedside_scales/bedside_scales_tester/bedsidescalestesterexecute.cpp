@@ -48,6 +48,16 @@ void BedsideScalesTesterExecute::setParams(const QJsonObject &probeParams)
     ui->frTester->setVisible(m_mode == BedsideScalesDefines::bsmTester);
     ui->frWeighting->setVisible(m_mode == BedsideScalesDefines::bsmScales);
     ui->frApnoe->setVisible(m_mode == BedsideScalesDefines::bsmSleepResearch);
+
+    m_isAutoRecord = probeParams["auto_record"].toBool(false);
+
+    auto startTime = probeParams["start_time"].toString("0:00:20");
+    m_startTime = QTime::fromString(startTime, "h:mm:ss");
+
+    auto recLength = probeParams["rec_length"].toString("0:10:00");
+    m_recLength = QTime::fromString(recLength, "h:mm:ss");
+
+    m_isSound = probeParams["sound"].toBool(true);
 }
 
 void BedsideScalesTesterExecute::closeEvent(QCloseEvent *event)
@@ -286,26 +296,37 @@ void BedsideScalesTesterExecute::on_communicationError(const QString &drvName, c
 void BedsideScalesTesterExecute::calibrate()
 {
     if (m_tenzoControl)
+    {
         m_tenzoControl->calibrateTenso(ChannelsDefines::chanWeightPlate);
+        m_isCalibrate = true;
+    }
 }
 
 void BedsideScalesTesterExecute::recording()
 {
-    m_isRecording = ! m_isRecording;
-    m_recCounter = 0;
-
-    if (m_isRecording)
+    if (m_isCalibrate)
     {
-        ui->btnRecord->setIcon(QIcon(":/images/SaveOK.png"));
-        ui->btnRecord->setText(tr("Завершить запись"));
+        m_isRecording = ! m_isRecording;
+        m_recCounter = 0;
+
+        if (m_isRecording)
+        {
+            ui->btnRecord->setIcon(QIcon(":/images/SaveOK.png"));
+            ui->btnRecord->setText(tr("Завершить запись"));
+        }
+        else
+        {
+            ui->btnRecord->setIcon(QIcon(":/images/Save.png"));
+            ui->btnRecord->setText(tr("Запись"));
+
+            m_trd->saveTest();
+            static_cast<ExecuteWidget*>(parent())->showDB();
+        }
     }
     else
     {
-        ui->btnRecord->setIcon(QIcon(":/images/Save.png"));
-        ui->btnRecord->setText(tr("Запись"));
-
-        m_trd->saveTest();
-        static_cast<ExecuteWidget*>(parent())->showDB();
+        m_isAutoRecord = false;
+        QMessageBox::information(nullptr, tr("Предупреждение"), tr("Сначала необходимо откалибровать устройство"));
     }
 }
 
@@ -390,11 +411,35 @@ void BedsideScalesTesterExecute::getDataWeight(DeviceProtocols::DeviceData *data
             m_weight->addValue(massa);
     }
 
+    //! Если установлено автоматическое управление записью, то начать запись
+    ++m_counter;
+    if (!m_isRecording && m_isAutoRecord &&
+            m_counter >= abs(m_startTime.secsTo(QTime(0, 0)) * m_driver->frequency(ChannelsDefines::chanWeightPlate)))
+    {
+        recording();
+        m_player.setMedia(QUrl("qrc:/sound/03.wav"));
+        m_player.play();
+    }
+
     ui->lblMassa->setText(QString::number(massa, 'f', 3) + tr("кг"));
     if (m_isRecording)
         ++m_recCounter;
     ui->lblLenTime->setText(BaseUtils::getTimeBySecCount(m_recCounter / m_driver->frequency(ChannelsDefines::chanWeightPlate)));
 
+    if (m_isRecording)
+    {
+        if (m_isAutoRecord &&
+                m_recCounter ==
+                (abs(m_recLength.secsTo(QTime(0, 0))) - 2) * m_driver->frequency(ChannelsDefines::chanWeightPlate))
+        {
+            m_player.setMedia(QUrl("qrc:/sound/05.wav"));
+            m_player.play();
+        }
+        //! Если установлено автоматическое управление записью, то завершить запись
+        if (m_isAutoRecord &&
+                m_recCounter >= abs(m_recLength.secsTo(QTime(0, 0))) * m_driver->frequency(ChannelsDefines::chanWeightPlate))
+            recording();
+    }
 }
 
 void BedsideScalesTesterExecute::getDataADC(DeviceProtocols::DeviceData *data)
