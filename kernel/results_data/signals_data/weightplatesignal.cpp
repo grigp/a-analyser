@@ -56,6 +56,8 @@ QString WeightPlateSignal::subChanName(const int i) const
     else
     if (i == 6)
         return QCoreApplication::tr("Отклонение по сагиттали");
+    else
+        return "";
 }
 
 double WeightPlateSignal::value(const int subChan, const int rec) const
