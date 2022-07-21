@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1056</width>
-    <height>729</height>
+    <width>1226</width>
+    <height>606</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -624,6 +624,12 @@
       </item>
       <item>
        <widget class="QPushButton" name="btnRecord">
+        <property name="minimumSize">
+         <size>
+          <width>220</width>
+          <height>0</height>
+         </size>
+        </property>
         <property name="text">
          <string>Запись</string>
         </property>
@@ -641,11 +647,17 @@
       </item>
       <item>
        <widget class="QFrame" name="frLenRecTimer">
+        <property name="minimumSize">
+         <size>
+          <width>400</width>
+          <height>0</height>
+         </size>
+        </property>
         <property name="frameShape">
-         <enum>QFrame::StyledPanel</enum>
+         <enum>QFrame::Panel</enum>
         </property>
         <property name="frameShadow">
-         <enum>QFrame::Raised</enum>
+         <enum>QFrame::Sunken</enum>
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_10">
          <property name="spacing">
@@ -661,6 +673,9 @@
           <widget class="QLabel" name="lblLenRec">
            <property name="text">
             <string>Время записи</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
            </property>
           </widget>
          </item>

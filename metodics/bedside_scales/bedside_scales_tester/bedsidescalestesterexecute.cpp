@@ -51,6 +51,9 @@ void BedsideScalesTesterExecute::setParams(const QJsonObject &probeParams)
 
     m_isAutoRecord = probeParams["auto_record"].toBool(false);
 
+    if (m_isAutoRecord)
+        ui->lblLenRec->setText(tr("До начала записи"));
+
     auto startTime = probeParams["start_time"].toString("0:00:20");
     m_startTime = QTime::fromString(startTime, "h:mm:ss");
 
@@ -304,6 +307,7 @@ void BedsideScalesTesterExecute::calibrate()
 
 void BedsideScalesTesterExecute::recording()
 {
+    ui->lblLenTime->setText(BaseUtils::getTimeBySecCount(0));
     if (m_isCalibrate)
     {
         m_isRecording = ! m_isRecording;
@@ -354,6 +358,10 @@ void BedsideScalesTesterExecute::setupUI()
     ui->lblMassa->setStyleSheet("font-size: 24pt;");
 
     ui->cbScale->addItems(QStringList() << "1" << "2" << "4" << "8" << "16" << "32" << "64" << "128");
+
+    ui->lblLenRec->setStyleSheet("font-size: 24pt; color: rgb(230, 230, 0);");
+    ui->lblLenTime->setStyleSheet("font-size: 24pt; color: rgb(230, 230, 0);");
+    ui->frLenRecTimer->setStyleSheet("background-color: rgb(20, 20, 0);");
 }
 
 void BedsideScalesTesterExecute::getDataWeight(DeviceProtocols::DeviceData *data)
@@ -413,22 +421,35 @@ void BedsideScalesTesterExecute::getDataWeight(DeviceProtocols::DeviceData *data
 
     //! Если установлено автоматическое управление записью, то начать запись
     ++m_counter;
-    if (!m_isRecording && m_isAutoRecord &&
-            m_counter >= abs(m_startTime.secsTo(QTime(0, 0)) * m_driver->frequency(ChannelsDefines::chanWeightPlate)))
+    if (!m_isRecording && m_isAutoRecord)
     {
-        recording();
-        m_player.setMedia(QUrl("qrc:/sound/03.wav"));
-        m_player.play();
+        int secCount =  abs(m_startTime.secsTo(QTime(0, 0))) -
+                m_counter / m_driver->frequency(ChannelsDefines::chanWeightPlate);
+        ui->lblLenTime->setText(BaseUtils::getTimeBySecCount(secCount));
+
+        if (m_counter >= abs(m_startTime.secsTo(QTime(0, 0)) * m_driver->frequency(ChannelsDefines::chanWeightPlate)))
+        {
+            recording();
+            if (m_isSound)
+            {
+                m_player.setMedia(QUrl("qrc:/sound/03.wav"));
+                m_player.play();
+            }
+            ui->lblLenRec->setText(tr("Время записи"));
+
+        }
     }
 
     ui->lblMassa->setText(QString::number(massa, 'f', 3) + tr("кг"));
     if (m_isRecording)
+    {
         ++m_recCounter;
-    ui->lblLenTime->setText(BaseUtils::getTimeBySecCount(m_recCounter / m_driver->frequency(ChannelsDefines::chanWeightPlate)));
+        ui->lblLenTime->setText(BaseUtils::getTimeBySecCount(m_recCounter / m_driver->frequency(ChannelsDefines::chanWeightPlate)));
+    }
 
     if (m_isRecording)
     {
-        if (m_isAutoRecord &&
+        if (m_isAutoRecord && m_isSound &&
                 m_recCounter ==
                 (abs(m_recLength.secsTo(QTime(0, 0))) - 2) * m_driver->frequency(ChannelsDefines::chanWeightPlate))
         {
