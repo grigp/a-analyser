@@ -13,6 +13,20 @@
 class WeightPlateSignal : public SignalData
 {
 public:
+    /*!
+     * \brief Перечисление подканалов The SubChannels enum
+     */
+    enum SubChannels
+    {
+          scForce0 = 0
+        , scForce1
+        , scForce2
+        , scForce3
+        , scZ
+        , scX
+        , scY
+    };
+
     explicit WeightPlateSignal(const QString &chanId, const int freq, const int subChansCount);
 
     /*!
