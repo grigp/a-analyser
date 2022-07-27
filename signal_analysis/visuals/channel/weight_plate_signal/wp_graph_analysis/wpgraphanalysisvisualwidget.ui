@@ -368,6 +368,29 @@
        </widget>
       </item>
       <item>
+       <spacer name="horizontalSpacer_2">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeType">
+         <enum>QSizePolicy::Fixed</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>20</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btnExport">
+        <property name="text">
+         <string>Экспорт сигналов</string>
+        </property>
+       </widget>
+      </item>
+      <item>
        <spacer name="horizontalSpacer">
         <property name="orientation">
          <enum>Qt::Horizontal</enum>
@@ -477,6 +500,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>btnExport</sender>
+   <signal>clicked()</signal>
+   <receiver>WPGraphAnalysisVisualWidget</receiver>
+   <slot>on_signalExport()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>247</x>
+     <y>556</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>914</x>
+     <y>484</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>scaleChange(int)</slot>
@@ -484,5 +523,6 @@
   <slot>btnPlusClicked()</slot>
   <slot>btnMinusClicked()</slot>
   <slot>signalScroll(int)</slot>
+  <slot>on_signalExport()</slot>
  </slots>
 </ui>

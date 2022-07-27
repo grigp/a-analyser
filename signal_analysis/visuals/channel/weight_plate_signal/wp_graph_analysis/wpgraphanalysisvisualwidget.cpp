@@ -1,6 +1,10 @@
 #include "wpgraphanalysisvisualwidget.h"
 #include "ui_wpgraphanalysisvisualwidget.h"
 
+#include <QFile>
+#include <QFileDialog>
+#include <QTextStream>
+
 #include "baseutils.h"
 #include "channelsdefines.h"
 #include "channelsutils.h"
@@ -109,6 +113,37 @@ void WPGraphAnalysisVisualWidget::signalScroll(int pos)
     setDiapazones(m_signalY, ui->wgtAreaY);
 }
 
+void WPGraphAnalysisVisualWidget::on_signalExport()
+{
+    auto fileName = QFileDialog::getSaveFileName(this,
+                                                 tr("Файл для экспорта сигнала"),
+                                                 DataDefines::aanalyserDocumentsPath(),
+                                                 tr("Текстовые файлы") + " *.txt (*.txt)");
+
+    QFile file(fileName);
+    if (file.open(QIODevice::WriteOnly))
+    {
+        QTextStream ts(&file);
+        QStringList sl;
+
+        sl.clear();
+
+        for (int i = 0; i < m_signalZ->size(); ++i)
+        {
+            sl.clear();
+
+            for (int j = 0; j < m_signalZ->subChansCount(); ++j)
+                sl << QString::number(m_signalZ->value(j, i));
+            for (int j = 0; j < m_signalY->subChansCount(); ++j)
+                sl << QString::number(m_signalY->value(j, i));
+
+            ts << sl.join("\t") + "\n";
+        }
+
+        file.close();
+    }
+}
+
 void WPGraphAnalysisVisualWidget::getSignal()
 {
     QByteArray data;
@@ -131,9 +166,9 @@ void WPGraphAnalysisVisualWidget::filtration()
         }
 
         //! Фильтрация
-        BaseUtils::filterLowFreq(m_fltZ, m_signal->frequency(), 0.5, BaseUtils::fkChebyshev, 0, m_fltZ.size() - 1);
+        BaseUtils::filterLowFreq(m_fltZ, m_signal->frequency(), 2, BaseUtils::fkChebyshev, 0, m_fltZ.size() - 1);
         BaseUtils::swapVector(m_fltZ);
-        BaseUtils::filterLowFreq(m_fltZ, m_signal->frequency(), 0.5, BaseUtils::fkChebyshev, 0, m_fltZ.size() - 1);
+        BaseUtils::filterLowFreq(m_fltZ, m_signal->frequency(), 2, BaseUtils::fkChebyshev, 0, m_fltZ.size() - 1);
         BaseUtils::swapVector(m_fltZ);
 
         BaseUtils::filterLowFreq(m_fltY, m_signal->frequency(), 0.5, BaseUtils::fkChebyshev, 0, m_fltY.size() - 1);

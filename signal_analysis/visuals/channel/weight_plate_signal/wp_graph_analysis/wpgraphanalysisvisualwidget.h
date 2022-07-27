@@ -36,6 +36,8 @@ private slots:
 
     void signalScroll(int pos);
 
+    void on_signalExport();
+
 private:
     Ui::WPGraphAnalysisVisualWidget *ui;
 
