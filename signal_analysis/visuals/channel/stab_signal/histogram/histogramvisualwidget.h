@@ -50,6 +50,8 @@ private:
 
     void computeHist();
     void showHist();
+
+    void spectrTest();
 };
 
 #endif // HISTOGRAMVISUALWIDGET_H

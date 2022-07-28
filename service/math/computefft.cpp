@@ -1,43 +1,81 @@
 #include "computefft.h"
 
 #include <QVector>
-#include "complex.h"
+#include <complex>
 #include <QDebug>
 
-#include "fftw3.h"
+#include "baseutils.h"
+#include "datadefines.h"
 
 
 
-ComputeFFT::ComputeFFT()
+ComputeFFT_::ComputeFFT_()
 {
-    // создаем одномерную выборку, все значения которой равны 1
-//    QVector<complex<double> > data(64, 1.);
-    QVector<double> data(64, 0.);
-    double r = 0;
-    qDebug() << "---------------------------------------------";
-    for (int i = 0; i < 64; ++i)
-    {
-        data[i] = 10 * sin(r);
-        qDebug() << data[i];
-        r = r + (2 * M_PI) / 64;
-//        r = r + 2 / (2 * M_PI);
-    }
-    qDebug() << "---------------------------------------------";
+    static const int FFT_COUNT = 1024;
 
-    // создаем план для библиотеки fftw
-    fftw_plan plan = fftw_plan_dft_1d(data.size(), (fftw_complex*) &data[0], (fftw_complex*) &data[0], FFTW_FORWARD, FFTW_ESTIMATE);
-//    fftw_plan plan = fftw_plan_dft_1d(data.size(), static_cast<fftw_complex*>(&data[0]), (fftw_complex*) &data[0], FFTW_FORWARD, FFTW_ESTIMATE);
+    fftw_complex buffer[FFT_COUNT];
+    getBuffer(&buffer[0], FFT_COUNT);
+    QVector<double> src;
+    for (int i = 0; i < FFT_COUNT; ++i)
+        src << buffer[i][0];
+    BaseUtils::vectorToText(src, DataDefines::aanalyserDocumentsPath() + "Export/fft_source.txt");
 
-    // преобразование Фурье
+    fftw_plan plan = fftw_plan_dft_1d(FFT_COUNT, (fftw_complex*) &buffer[0], (fftw_complex*) &buffer[0], FFTW_FORWARD, FFTW_ESTIMATE);
     fftw_execute(plan);
+
+    QVector<double> fft;
+    for (int i = 0; i < FFT_COUNT / 2; ++i)
+    {
+        double* digit = (double*)&buffer[i];
+        double value = 4 * sqrt(pow(digit[0], 2) + pow(digit[1], 2));
+        fft << value;
+    }
+    BaseUtils::vectorToText(fft, DataDefines::aanalyserDocumentsPath() + "Export/fft_result.txt");
+
     fftw_destroy_plan(plan);
 
-    // выводим в файл результат преобразования Фурье (должна получиться Дельта-функция)
-//    ofstream out("speсtr.txt");
-//    for(size_t i=0; i < data.size(); ++i)
-    for(auto i = 0; i < data.size(); ++i)
+}
+
+void ComputeFFT_::getBuffer(fftw_complex *bufferPtr, const int count)
+{
+    double *complexDigit;
+    double r = 0;
+    double r1 = 0;
+    for(int i = 0; i < count; i++)
     {
-        qDebug() << data[i];
-//       out<<data[i]<<endl;
+        complexDigit = (double*)&bufferPtr[i];
+        complexDigit[0] = 10 * sin(r) + 5 * sin(r1);	// re - реальная часть
+        complexDigit[1] = 0;			// im - мнимая часть
+
+        r += (2 * M_PI) / 51.2;
+        r1 += (2 * M_PI) / 25.6;
     }
+}
+
+bool ComputeFFT::baseFFT(QVector<double> &data)
+{
+    const int size = data.size();
+    //! Контроль на значение и степень двойки
+    Q_ASSERT(((size >= 8) && ((size & (~size + 1)) == size)));
+
+    fftw_complex buffer[size];
+    double *complexDigit;
+    for(int i = 0; i < size; i++)
+    {
+        complexDigit = (double*)&buffer[i];
+        complexDigit[0] = data.at(i);	// re - реальная часть
+        complexDigit[1] = 0;			// im - мнимая часть
+    }
+
+    fftw_plan plan = fftw_plan_dft_1d(size, (fftw_complex*) &buffer[0], (fftw_complex*) &buffer[0], FFTW_FORWARD, FFTW_ESTIMATE);
+    fftw_execute(plan);
+
+    for (int i = 0; i < size / 2; ++i)
+    {
+        double* digit = (double*)&buffer[i];
+        double value = 4 * sqrt(pow(digit[0], 2) + pow(digit[1], 2));
+        data.replace(i, value);
+    }
+
+    fftw_destroy_plan(plan);
 }

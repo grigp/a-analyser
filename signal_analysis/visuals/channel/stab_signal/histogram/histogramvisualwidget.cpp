@@ -3,6 +3,7 @@
 
 #include <QDebug>
 
+#include "baseutils.h"
 #include "channelsdefines.h"
 #include "channelsutils.h"
 #include "dynamicdiagram.h"
@@ -47,7 +48,7 @@ void HistogramVisualWidget::on_selectItem(const int idx)
 
 void HistogramVisualWidget::computeHist()
 {
-    ComputeFFT fft;
+    spectrTest();
 
     QByteArray data;
     if (DataProvider::getChannel(probeUid(), channelUid(), data))
@@ -120,3 +121,29 @@ void HistogramVisualWidget::showHist()
         ui->wgtHistY->appendItem(itemY);
     }
 }
+
+void HistogramVisualWidget::spectrTest()
+{
+
+    QVector<double> data;
+    double r = 0;
+    double r1 = 0;
+    for (int i = 0; i < ComputeFFT::FFT_COUNT; ++i)
+    {
+        data << 10 * sin(r) + 5 * sin(r1);
+        r += (2 * M_PI) / 51.2;
+        r1 += (2 * M_PI) / 25.6;
+    }
+    BaseUtils::vectorToText(data, DataDefines::aanalyserDocumentsPath() + "Export/fft_source.txt");
+
+    ComputeFFT::baseFFT(data);
+
+//    for (int i = 0; i < data.size(); ++i)
+//    {
+//        double* digit = (double*)&buffer[i];
+//        double value = 4 * sqrt(pow(digit[0], 2) + pow(digit[1], 2));
+//        fft << value;
+//    }
+    BaseUtils::vectorToText(data, DataDefines::aanalyserDocumentsPath() + "Export/fft_result.txt");
+}
+
