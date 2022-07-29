@@ -128,22 +128,27 @@ void HistogramVisualWidget::spectrTest()
     QVector<double> data;
     double r = 0;
     double r1 = 0;
-    for (int i = 0; i < ComputeFFT::FFT_COUNT; ++i)
+    for (int i = 0; i < ComputeFFT::FFT_COUNT * 2; ++i)
     {
-        data << 10 * sin(r) + 5 * sin(r1);
+//        data << static_cast<double>(100/100);
+//        data << static_cast<double>(qrand() % 1000) / 100.0 - 5;
+//        data << 10 * sin(r); // + 5 * sin(r1);
+
+        if (i < ComputeFFT::FFT_COUNT)
+            data << 10 * sin(r); // + 5 * sin(r1);
+        else
+            data << 5 * sin(r1);
+
         r += (2 * M_PI) / 51.2;
         r1 += (2 * M_PI) / 25.6;
     }
     BaseUtils::vectorToText(data, DataDefines::aanalyserDocumentsPath() + "Export/fft_source.txt");
 
-    ComputeFFT::baseFFT(data);
+//    ComputeFFT::baseFFT(data);
+    QVector<double> spectr;
+    ComputeFFT::extendFFT(data, spectr, ComputeFFT::FFT_COUNT, ComputeFFT::FFT_COUNT - 1);
 
-//    for (int i = 0; i < data.size(); ++i)
-//    {
-//        double* digit = (double*)&buffer[i];
-//        double value = 4 * sqrt(pow(digit[0], 2) + pow(digit[1], 2));
-//        fft << value;
-//    }
-    BaseUtils::vectorToText(data, DataDefines::aanalyserDocumentsPath() + "Export/fft_result.txt");
+    BaseUtils::vectorToText(spectr, DataDefines::aanalyserDocumentsPath() + "Export/fft_result.txt");
+//    BaseUtils::vectorToText(data, DataDefines::aanalyserDocumentsPath() + "Export/fft_result.txt");
 }
 

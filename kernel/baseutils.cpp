@@ -206,7 +206,7 @@ void BaseUtils::vectorToText(QVector<double> &vector, const QString &fileName)
         for (int i = 0; i < vector.size(); ++i)
         {
             auto s = QString::number(vector[i]);
-            ts << s << "\n";
+            ts << s << " " << "\n";
         }
 
 
