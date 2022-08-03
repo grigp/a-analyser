@@ -143,17 +143,17 @@ void HistogramVisualWidget::spectrTest()
         r += (2 * M_PI) / 51.2;
         r1 += (2 * M_PI) / 25.6;
     }
-    QString path = DataDefines::aanalyserDocumentsPath() + "Export/";
-    QDir dir(path);
-    if (!dir.exists())
-        dir.mkpath(path);
-    BaseUtils::vectorToText(data, path + "fft_source.txt");
+//    QString path = DataDefines::aanalyserDocumentsPath() + "Export/";
+//    QDir dir(path);
+//    if (!dir.exists())
+//        dir.mkpath(path);
+//    BaseUtils::vectorToText(data, path + "fft_source.txt");
 
 //    ComputeFFT::baseFFT(data);
     QVector<double> spectr;
     ComputeFFT::extendFFT(data, spectr, ComputeFFT::FFT_COUNT, ComputeFFT::FFT_COUNT - 1);
 
-    BaseUtils::vectorToText(spectr, path + "fft_result.txt");
+//    BaseUtils::vectorToText(spectr, path + "fft_result.txt");
 //    BaseUtils::vectorToText(data, DataDefines::aanalyserDocumentsPath() + "Export/fft_result.txt");
 }
 

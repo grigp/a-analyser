@@ -1,5 +1,7 @@
 #include "signalfft.h"
 
+#include <QDebug>
+
 #include "signalaccess.h"
 #include "computefft.h"
 
@@ -46,7 +48,8 @@ void SignalFFT::calculateSpectr()
     {
         QVector<double> spectr;
         auto sig = signal.at(j);
-        if (ComputeFFT::extendFFT(sig, spectr, m_points, m_step))
+        bool b = ComputeFFT::extendFFT(sig, spectr, m_points, m_step);
+        if (b)
             m_spectr << spectr;
     }
 }
