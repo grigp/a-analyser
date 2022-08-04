@@ -22,7 +22,7 @@ public:
     /*!
      * \brief Возвращает кол-во точек в спектре
      */
-    int points() const {return m_points;}
+    int points() const {return m_points / 2;}
 
     /*!
      * \brief Возвращает значение спектра

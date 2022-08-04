@@ -110,10 +110,6 @@ public:
     int frequency() const {return m_frequency;}
 
 private:
-
-    void computeFactors();
-    void addFactors();
-
     struct FactorValues
     {
         double freq1 {0};
@@ -129,6 +125,10 @@ private:
         double power2 {0};
         double power3 {0};
     };
+
+    void computeFactors();
+    void computeFactorsChan(const int chan, FactorValues& values);
+    void addFactors();
 
     SignalFFT *m_spectr {nullptr};
     int m_frequency {50};

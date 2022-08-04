@@ -120,7 +120,7 @@ void SpectrStabFactors::registerFactors()
 
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(SpectrStabFactorsDefines::Sagittal::Level60Uid, SpectrStabFactorsDefines::GroupUid,
-                           tr("60% мощности спектра по сагиттали"), tr("60%Y"), tr("мм"), 2, 1, FactorsDefines::nsDual, 12);
+                           tr("60% мощности спектра по сагиттали"), tr("60%Y"), tr("Гц"), 2, 1, FactorsDefines::nsDual, 12);
 
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(SpectrStabFactorsDefines::Sagittal::Power1Uid, SpectrStabFactorsDefines::GroupUid,
@@ -156,19 +156,83 @@ double SpectrStabFactors::value(const int spectr, const int point) const
 
 void SpectrStabFactors::computeFactors()
 {
-    QString path = DataDefines::aanalyserDocumentsPath() + "Export/";
-    QDir dir(path);
-    if (!dir.exists())
-        dir.mkpath(path);
+    Q_ASSERT(m_spectr->channelsCount() == 2);
+    computeFactorsChan(0, m_valuesX);
+    computeFactorsChan(1, m_valuesY);
 
-    for (int i = 0; i < m_spectr->channelsCount(); ++i)
-    {
-        QVector<double> data;
-        for (int j = 0; j < m_spectr->points(); ++j)
-            data << m_spectr->value(i, j);
+//    QString path = DataDefines::aanalyserDocumentsPath() + "Export/";
+//    QDir dir(path);
+//    if (!dir.exists())
+//        dir.mkpath(path);
+
+//    for (int i = 0; i < m_spectr->channelsCount(); ++i)
+//    {
+//        QVector<double> data;
+//        for (int j = 0; j < m_spectr->points(); ++j)
+//            data << m_spectr->value(i, j);
 
 //        BaseUtils::vectorToText(data, path + "fft_" + QString::number(i) + ".txt");
+//    }
+}
+
+void SpectrStabFactors::computeFactorsChan(const int chan, SpectrStabFactors::FactorValues &values)
+{
+    QVector<double> data;
+    for (int i = 0; i < m_spectr->points(); ++i)
+        data << m_spectr->value(chan, i);
+
+    QMap<double, int> maxs;
+
+    values.power1 = 0;
+    values.power2 = 0;
+    values.power3 = 0;
+
+    double summ = 0;
+    for (int i = 0; i < data.size(); ++i)
+    {
+        if (i == 0 && data.at(i) > data.at(i+1))
+            maxs.insert(data.at(i), i);
+        else
+        if (i == data.size() - 1 && data.at(i) > data.at(i-1))
+            maxs.insert(data.at(i), i);
+        else
+        if (i > 0 && i < data.size() - 1 && data.at(i) > data.at(i-1) && data.at(i) > data.at(i+1))
+            maxs.insert(data.at(i), i);
+
+        summ += data.at(i);
+
+        double f = static_cast<double>(i * m_frequency) / static_cast<double>(m_spectr->points());
+        if (f <= 0.2)
+            values.power1 += data.at(i);
+        else
+        if (f > 0.2 && f <= 2)
+            values.power2 += data.at(i);
+        else
+            values.power3 += data.at(i);
     }
+
+    values.power1 = round(values.power1 / summ * 100);
+    values.power2 = round(values.power2 / summ * 100);
+    values.power3 = round(100 - values.power1 - values.power2);
+
+    double s = 0;
+    for (int i = 0; i < data.size(); ++i)
+    {
+        s += data.at(i);
+        if (s > summ * 0.6)
+        {
+            values.pwr60 = static_cast<double>(i * m_frequency) / static_cast<double>(m_spectr->points());
+            break;
+        }
+    }
+
+    int n = maxs.keys().size();
+    values.freq1 = static_cast<double>(maxs.value(maxs.keys().at(n - 1)) * m_frequency) / static_cast<double>(m_spectr->points());
+    values.freq2 = static_cast<double>(maxs.value(maxs.keys().at(n - 2)) * m_frequency) / static_cast<double>(m_spectr->points());
+    values.freq3 = static_cast<double>(maxs.value(maxs.keys().at(n - 3)) * m_frequency) / static_cast<double>(m_spectr->points());
+    values.ampl1 = maxs.keys().at(n - 1);
+    values.ampl2 = maxs.keys().at(n - 2);
+    values.ampl3 = maxs.keys().at(n - 3);
 }
 
 void SpectrStabFactors::addFactors()

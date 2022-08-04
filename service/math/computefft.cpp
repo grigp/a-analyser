@@ -105,7 +105,7 @@ bool ComputeFFT::baseFFT(QVector<double> &data)
         for (int i = 0; i < size / 2; ++i)
         {
             double* digit = (double*)&buffer[i];
-            double value = 4 * sqrt(pow(digit[0], 2) + pow(digit[1], 2));
+            double value = 4 * sqrt(pow(digit[0], 2) + pow(digit[1], 2)) / (size / 2);
             data.replace(i, value);
         }
 
