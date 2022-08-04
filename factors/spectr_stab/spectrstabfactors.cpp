@@ -54,9 +54,9 @@ void SpectrStabFactors::calculate()
         Stabilogram stab(baStab);
         m_frequency = stab.frequency();
         m_spectr = new SignalFFT(&stab, ComputeFFT::FFT_COUNT, m_frequency);
+        computeFactors();
     }
 
-    computeFactors();
     addFactors();
 }
 
@@ -159,37 +159,27 @@ void SpectrStabFactors::computeFactors()
     Q_ASSERT(m_spectr->channelsCount() == 2);
     computeFactorsChan(0, m_valuesX);
     computeFactorsChan(1, m_valuesY);
-
-//    QString path = DataDefines::aanalyserDocumentsPath() + "Export/";
-//    QDir dir(path);
-//    if (!dir.exists())
-//        dir.mkpath(path);
-
-//    for (int i = 0; i < m_spectr->channelsCount(); ++i)
-//    {
-//        QVector<double> data;
-//        for (int j = 0; j < m_spectr->points(); ++j)
-//            data << m_spectr->value(i, j);
-
-//        BaseUtils::vectorToText(data, path + "fft_" + QString::number(i) + ".txt");
-//    }
 }
 
 void SpectrStabFactors::computeFactorsChan(const int chan, SpectrStabFactors::FactorValues &values)
 {
+    //! Создадим буфер, чтоб проще было
     QVector<double> data;
     for (int i = 0; i < m_spectr->points(); ++i)
         data << m_spectr->value(chan, i);
 
+    //! Для запоминания экстремумов используем карту, чтоб в один проход
     QMap<double, int> maxs;
 
     values.power1 = 0;
     values.power2 = 0;
     values.power3 = 0;
 
+    //! По спектру
     double summ = 0;
     for (int i = 0; i < data.size(); ++i)
     {
+        //! Добавление экстремумов
         if (i == 0 && data.at(i) > data.at(i+1))
             maxs.insert(data.at(i), i);
         else
@@ -199,8 +189,10 @@ void SpectrStabFactors::computeFactorsChan(const int chan, SpectrStabFactors::Fa
         if (i > 0 && i < data.size() - 1 && data.at(i) > data.at(i-1) && data.at(i) > data.at(i+1))
             maxs.insert(data.at(i), i);
 
+        //! Общая мощность
         summ += data.at(i);
 
+        //!Мощность по зонам
         double f = static_cast<double>(i * m_frequency) / static_cast<double>(m_spectr->points());
         if (f <= 0.2)
             values.power1 += data.at(i);
@@ -211,10 +203,12 @@ void SpectrStabFactors::computeFactorsChan(const int chan, SpectrStabFactors::Fa
             values.power3 += data.at(i);
     }
 
+    //! Мощность по зонам в процентах
     values.power1 = round(values.power1 / summ * 100);
     values.power2 = round(values.power2 / summ * 100);
     values.power3 = round(100 - values.power1 - values.power2);
 
+    //! Поиск уровня 60% мощности
     double s = 0;
     for (int i = 0; i < data.size(); ++i)
     {
@@ -226,6 +220,7 @@ void SpectrStabFactors::computeFactorsChan(const int chan, SpectrStabFactors::Fa
         }
     }
 
+    //! Амплитуды и частоты первых трех пиков
     int n = maxs.keys().size();
     values.freq1 = static_cast<double>(maxs.value(maxs.keys().at(n - 1)) * m_frequency) / static_cast<double>(m_spectr->points());
     values.freq2 = static_cast<double>(maxs.value(maxs.keys().at(n - 2)) * m_frequency) / static_cast<double>(m_spectr->points());
