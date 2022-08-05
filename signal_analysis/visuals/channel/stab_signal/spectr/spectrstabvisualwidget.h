@@ -31,6 +31,7 @@ private:
     Ui::SpectrStabVisualWidget *ui;
 
     void showTable();
+    void showSpectrs();
 
     void saveSplitterPosition();
     void restoreSplitterPosition();

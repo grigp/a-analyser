@@ -33,7 +33,8 @@ bool SpectrStabVisualWidget::isValid()
 void SpectrStabVisualWidget::calculate()
 {
     m_factors = new SpectrStabFactors(testUid(), probeUid(), channelUid());
-//    showTable();
+    showTable();
+    showSpectrs();
     restoreSplitterPosition();
 }
 
@@ -76,6 +77,19 @@ void SpectrStabVisualWidget::showTable()
     ui->tvFactors->setModel(model);
     ui->tvFactors->header()->resizeSections(QHeaderView::ResizeToContents);
     ui->tvFactors->header()->resizeSection(0, 500);
+}
+
+void SpectrStabVisualWidget::showSpectrs()
+{
+    ui->wgtSpectrX->setTitle(tr("Фронталь X"));
+    for (int i = 0; i < m_factors->points(); ++i)
+        ui->wgtSpectrX->addValue(m_factors->value(0, i));
+    ui->wgtSpectrX->setFormatData(m_factors->frequency(), m_factors->points(), 6);
+
+    ui->wgtSpectrY->setTitle(tr("Сагитталь Y"));
+    for (int i = 0; i < m_factors->points(); ++i)
+        ui->wgtSpectrY->addValue(m_factors->value(1, i));
+    ui->wgtSpectrY->setFormatData(m_factors->frequency(), m_factors->points(), 6);
 }
 
 void SpectrStabVisualWidget::saveSplitterPosition()
