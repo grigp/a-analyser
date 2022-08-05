@@ -156,9 +156,11 @@ double SpectrStabFactors::value(const int spectr, const int point) const
 
 void SpectrStabFactors::computeFactors()
 {
-    Q_ASSERT(m_spectr->channelsCount() == 2);
-    computeFactorsChan(0, m_valuesX);
-    computeFactorsChan(1, m_valuesY);
+    if (m_spectr->channelsCount() == 2)
+    {
+        computeFactorsChan(0, m_valuesX);
+        computeFactorsChan(1, m_valuesY);
+    }
 }
 
 void SpectrStabFactors::computeFactorsChan(const int chan, SpectrStabFactors::FactorValues &values)

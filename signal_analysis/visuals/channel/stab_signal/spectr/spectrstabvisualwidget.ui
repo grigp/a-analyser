@@ -30,7 +30,7 @@
     <number>1</number>
    </property>
    <item>
-    <widget class="QSplitter" name="splitter">
+    <widget class="QSplitter" name="splVertical">
      <property name="orientation">
       <enum>Qt::Vertical</enum>
      </property>
@@ -40,6 +40,12 @@
         <horstretch>0</horstretch>
         <verstretch>1</verstretch>
        </sizepolicy>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>0</width>
+        <height>200</height>
+       </size>
       </property>
       <property name="frameShape">
        <enum>QFrame::StyledPanel</enum>
@@ -64,7 +70,7 @@
         <number>0</number>
        </property>
        <item>
-        <widget class="QSplitter" name="splitter_2">
+        <widget class="QSplitter" name="splHorizontal">
          <property name="orientation">
           <enum>Qt::Horizontal</enum>
          </property>
@@ -204,5 +210,41 @@
   </layout>
  </widget>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>splVertical</sender>
+   <signal>splitterMoved(int,int)</signal>
+   <receiver>SpectrStabVisualWidget</receiver>
+   <slot>splitterMoved(int,int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>420</x>
+     <y>205</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>999</x>
+     <y>211</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>splHorizontal</sender>
+   <signal>splitterMoved(int,int)</signal>
+   <receiver>SpectrStabVisualWidget</receiver>
+   <slot>splitterMoved(int,int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>501</x>
+     <y>121</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>997</x>
+     <y>88</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>splitterMoved(int,int)</slot>
+ </slots>
 </ui>
