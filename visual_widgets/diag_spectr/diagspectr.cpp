@@ -53,6 +53,60 @@ void DiagSpectr::paintEvent(QPaintEvent *event)
 
     QPainter painter(this);
 
+    //! Определение максимума спектра
+    double max = 0;
+    if (m_minValue > -1 && m_maxValue > -1 && m_maxValue > m_minValue)
+        max = m_maxValue - m_minValue;
+    else
+        foreach (auto v, m_data)
+            if (v > max)
+                max = v;
+    //! Определение размерности оси ординат для вывода сетки по амплитуде
+    int tw = 0;
+    QStringList yLabels;
+    yLabels.clear();
+    painter.setFont(QFont("Sans", 10, 0, false));
+    for (int i = 1; i < 10; ++i)
+    {
+        double v = max / 10 * i;
+        QString s = "";
+        if (max >= 10)
+            s = QString::number(v, 'f', 0);
+        else
+        if (max < 10 && max >= 3)
+            s = QString::number(v, 'f', 1);
+        else
+        if (max < 3 && max >= 0.5)
+            s = QString::number(v, 'f', 2);
+        else
+        if (max < 0.5 && max >= 0.1)
+            s = QString::number(v, 'f', 3);
+        else
+            s = QString::number(v, 'f', 4);
+        yLabels << s;
+        auto size = BaseUtils::getTextSize(&painter, s);
+        if (size.width() > tw)
+            tw = size.width();
+    }
+    if (tw + 5 > m_bounds.x())
+        m_bounds.setX(tw + 5);
+
+    //! Пропорция абсцисс
+    double minFreq = 0.0;
+    double maxFreq = 6.1;
+    double propX = static_cast<double>(width() - m_bounds.x() - m_bounds.right()) / 6.0;
+    if (m_minFreq > 0 && m_maxFreq < m_maxFrequency && m_maxFreq > m_minFreq)
+    {
+        propX = static_cast<double>(width() - m_bounds.x() - m_bounds.right()) / (m_maxFreq - m_minFreq);
+        minFreq = m_minFreq;
+        maxFreq = m_maxFreq;
+    }
+
+    //! Пропорция ординат
+    double propY = static_cast<double>(height() - m_bounds.top() - m_bounds.bottom()) / max;
+//    if (m_minValue > -1 && m_maxValue > -1 && m_maxValue > m_minValue)
+//        propY = static_cast<double>(height() - m_bounds.top() - m_bounds.bottom()) / (m_maxValue - m_minValue);
+
     //! Фон
     auto backColor = palette().background().color();
     painter.setBrush(QBrush(backColor , Qt::SolidPattern));
@@ -74,21 +128,11 @@ void DiagSpectr::paintEvent(QPaintEvent *event)
     painter.setFont(QFont("Sans", 10, 0, false));
     painter.drawText(5, 15, m_nameAxisY);
     size = BaseUtils::getTextSize(&painter, m_nameAxisX);
-    painter.drawText(width() - size.width() - 5, height() - size.height() + 5, m_nameAxisX);
+    painter.drawText(width() - size.width() - 5, height() - size.height() + 14, m_nameAxisX);
 
-    //! Пропорция абсцисс
-    double propX = static_cast<double>(width() - m_bounds.x() - m_bounds.right()) / 6.0;
-    if (m_minFreq > 0 && m_maxFreq < m_maxFrequency && m_maxFreq > m_minFreq)
-        propX = static_cast<double>(width() - m_bounds.x() - m_bounds.right()) / (m_maxFreq - m_minFreq);
-
-    //! Пропорция ординат
-    double max = 0;
-    foreach (auto v, m_data)
-        if (v > max)
-            max = v;
-    double propY = static_cast<double>(height() - m_bounds.top() - m_bounds.bottom()) / max;
-    if (m_minValue > -1 && m_maxValue > -1 && m_maxValue > m_minValue)
-        propY = static_cast<double>(height() - m_bounds.top() - m_bounds.bottom()) / (m_maxValue - m_minValue);
+    //! Вывод диаграммы спектра
+    painter.setBrush(QBrush(m_line1Color, Qt::SolidPattern));
+    painter.setPen(QPen(m_line1Color, 1, Qt::SolidLine, Qt::FlatCap));
 
     int ox = m_bounds.x();
     int ov = height() - m_bounds.bottom();
@@ -96,11 +140,8 @@ void DiagSpectr::paintEvent(QPaintEvent *event)
     {
         double freq = static_cast<double>(i * m_frequency) / static_cast<double>(m_points);
 
-        if (freq > m_minFreq && freq < m_maxFreq)
+        if (freq > minFreq && freq < maxFreq)
         {
-
-            painter.setBrush(QBrush(m_line1Color, Qt::SolidPattern));
-            painter.setPen(QPen(m_line1Color, 1, Qt::SolidLine, Qt::FlatCap));
 
             int x = static_cast<int>(m_bounds.x() + freq * propX);
             int v = static_cast<int>(height() - m_bounds.bottom() - m_data.at(i) * propY);
@@ -111,4 +152,55 @@ void DiagSpectr::paintEvent(QPaintEvent *event)
             ov = v;
         }
     }
+
+    //! Вывод сетки по частоте
+    //! propX - кол-во точек на 1 Гц, выводим с шагом 0.1 Гц
+    int i = 1;
+    do {
+        int x = static_cast<int>(m_bounds.x() + (static_cast<double>(i) / 10) * propX);
+        if (i % 10 == 0)
+            painter.setPen(QPen(m_colorGrid, 1, Qt::SolidLine, Qt::FlatCap));
+        else
+        if (i % 5 == 0)
+            painter.setPen(QPen(m_colorGrid, 1, Qt::DashLine, Qt::FlatCap));
+        else
+            painter.setPen(QPen(m_colorGrid, 1, Qt::DotLine, Qt::FlatCap));
+
+        painter.drawLine(x, m_bounds.top(), x, height() - m_bounds.bottom());
+
+        if (i % 5 == 0)
+        {
+            QString s = QString::number(static_cast<double>(i) / 10);
+            auto size = BaseUtils::getTextSize(&painter, s);
+            painter.setPen(QPen(m_colorAxis, 1, Qt::DashLine, Qt::FlatCap));
+            painter.drawText(x - size.width() / 2, height() - m_bounds.bottom() + size.height(), s);
+        }
+        ++i;
+    }
+    while (i / 10 < maxFreq);
+
+    //! Вывод сетки по амплитуде. Просто десять значений
+    painter.setFont(QFont("Sans", 10, 0, false));
+    for (int i = 0; i < yLabels.size(); ++i)
+    {
+        double v = max / 10 * (i+1);
+        int y = static_cast<int>(height() - m_bounds.bottom() - v * propY);
+        painter.setPen(QPen(m_colorGrid, 1, Qt::DotLine, Qt::FlatCap));
+        painter.drawLine(m_bounds.x(), y, width() - m_bounds.right(), y);
+
+        painter.setPen(QPen(m_colorAxis, 1, Qt::DotLine, Qt::FlatCap));
+        painter.drawText(2, y, yLabels.at(i));
+    }
+}
+
+void DiagSpectr::mousePressEvent(QMouseEvent *event)
+{
+    QWidget::mousePressEvent(event);
+    qDebug() << "press";
+}
+
+void DiagSpectr::mouseReleaseEvent(QMouseEvent *event)
+{
+    QWidget::mouseReleaseEvent(event);
+    qDebug() << "release";
 }

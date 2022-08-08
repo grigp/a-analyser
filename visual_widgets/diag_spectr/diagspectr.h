@@ -2,6 +2,7 @@
 #define DIAGSPECTR_H
 
 #include <QWidget>
+#include <QMouseEvent>
 
 namespace Ui {
 class DiagSpectr;
@@ -68,13 +69,15 @@ public:
 
 protected:
     void paintEvent(QPaintEvent *event) override;
+    void mousePressEvent(QMouseEvent *event) override;
+    void mouseReleaseEvent(QMouseEvent *event) override;
 
 private:
     Ui::DiagSpectr *ui;
 
     QColor m_line1Color {Qt::darkGreen};
     QColor m_colorAxis {Qt::black};
-    QColor m_colorGrid {Qt::gray};
+    QColor m_colorGrid {Qt::lightGray};
 
     QString m_title {""};
     QString m_nameAxisX {"F,Гц"};
@@ -83,12 +86,12 @@ private:
     QRect m_bounds = QRect(QPoint(30, 30), QPoint(10, 30));
 
     QVector<double> m_data;
-    int m_frequency {50};      ///< Частота дискретизации
-    int m_points {1024};       ///< Кол-во точек
-    double m_maxFrequency {6}; ///< Максимальная отображаемая частота
+    int m_frequency {50};        ///< Частота дискретизации
+    int m_points {1024};         ///< Кол-во точек
+    double m_maxFrequency {6.1}; ///< Максимальная отображаемая частота
 
     double m_minFreq {0};      ///< Минимальная частота
-    double m_maxFreq {6};      ///< Максимальная частота
+    double m_maxFreq {6.1};    ///< Максимальная частота
     double m_minValue {-1};    ///< Минимальное значение
     double m_maxValue {-1};    ///< Максимальное значение
 };
