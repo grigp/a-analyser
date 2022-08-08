@@ -47,6 +47,22 @@ void DiagSpectr::resetVisualArea()
     m_maxValue = -1;
 }
 
+void DiagSpectr::selectArea(QRect rect)
+{
+    m_selectRect = rect;
+    update();
+}
+
+QPointF DiagSpectr::getValues(const QPoint point) const
+{
+
+}
+
+QPoint DiagSpectr::getPoint(const QPointF values) const
+{
+
+}
+
 void DiagSpectr::paintEvent(QPaintEvent *event)
 {
     Q_UNUSED(event);
@@ -104,8 +120,6 @@ void DiagSpectr::paintEvent(QPaintEvent *event)
 
     //! Пропорция ординат
     double propY = static_cast<double>(height() - m_bounds.top() - m_bounds.bottom()) / max;
-//    if (m_minValue > -1 && m_maxValue > -1 && m_maxValue > m_minValue)
-//        propY = static_cast<double>(height() - m_bounds.top() - m_bounds.bottom()) / (m_maxValue - m_minValue);
 
     //! Фон
     auto backColor = palette().background().color();
@@ -191,16 +205,28 @@ void DiagSpectr::paintEvent(QPaintEvent *event)
         painter.setPen(QPen(m_colorAxis, 1, Qt::DotLine, Qt::FlatCap));
         painter.drawText(2, y, yLabels.at(i));
     }
+
+    if (m_selectRect != QRect())
+    {
+        painter.setBrush(QBrush(QColor(0, 0, 0, 125) , Qt::SolidPattern));
+        painter.drawRect(m_selectRect);
+    }
 }
 
 void DiagSpectr::mousePressEvent(QMouseEvent *event)
 {
     QWidget::mousePressEvent(event);
-    qDebug() << "press";
+    emit press(event->x(), event->y());
 }
 
 void DiagSpectr::mouseReleaseEvent(QMouseEvent *event)
 {
     QWidget::mouseReleaseEvent(event);
-    qDebug() << "release";
+    emit release(event->x(), event->y());
+}
+
+void DiagSpectr::mouseMoveEvent(QMouseEvent *event)
+{
+    QWidget::mouseMoveEvent(event);
+    emit move(event->x(), event->y());
 }

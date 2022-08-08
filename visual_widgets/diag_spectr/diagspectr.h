@@ -67,10 +67,48 @@ public:
      */
     void resetVisualArea();
 
+    /*!
+     * \brief Выделение зоны на диаграмме
+     * \param rect - прямоугольник выделения
+     */
+    void selectArea(QRect rect);
+
+    /*!
+     * \brief Возвращает значения (частоту и амплитуду) спектра по точке.
+     * Если точка за пределами, возвращает QPointF()
+     * \param point - точка x и y
+     */
+    QPointF getValues(const QPoint point) const;
+
+    /*!
+     * \brief Возвращает точку на диаграмме по значениям (частоте и амплитуде) спектра.
+     * Если точка за пределами, возвращает QPoint()
+     * \param values - значения
+     */
+    QPoint getPoint(const QPointF values) const;
+
+signals:
+    /*!
+     * \brief Сигнал нажатия мышки на теле виджета
+     * \param x, y - координаты нажатия
+     */
+    void press(const int x, const int y);
+    /*!
+     * \brief Сигнал отпускания мышки на теле виджета
+     * \param x, y - координаты отпускания
+     */
+    void release(const int x, const int y);
+    /*!
+     * \brief Сигнал переноса мышки по телу виджета
+     * \param x, y - координаты положения
+     */
+    void move(const int x, const int y);
+
 protected:
     void paintEvent(QPaintEvent *event) override;
     void mousePressEvent(QMouseEvent *event) override;
     void mouseReleaseEvent(QMouseEvent *event) override;
+    void mouseMoveEvent(QMouseEvent *event) override;
 
 private:
     Ui::DiagSpectr *ui;
@@ -94,6 +132,8 @@ private:
     double m_maxFreq {6.1};    ///< Максимальная частота
     double m_minValue {-1};    ///< Минимальное значение
     double m_maxValue {-1};    ///< Максимальное значение
+
+    QRect m_selectRect = QRect();
 };
 
 #endif // DIAGSPECTR_H
