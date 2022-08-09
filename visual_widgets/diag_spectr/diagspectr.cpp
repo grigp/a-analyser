@@ -55,12 +55,18 @@ void DiagSpectr::selectArea(QRect rect)
 
 QPointF DiagSpectr::getValues(const QPoint point) const
 {
-
+    double f = static_cast<double>((point.x() - m_bounds.x()) / m_propX) + m_minFreq;
+    double a = - static_cast<double>((point.y() - height() + m_bounds.bottom()) / m_propY);
+    if (m_minValue > -1)
+        a += m_minValue;
+    return QPointF(f, a);
 }
 
 QPoint DiagSpectr::getPoint(const QPointF values) const
 {
-
+    int x = static_cast<int>(m_bounds.x() + (values.x() - m_minFreq) * m_propX);
+    int v = static_cast<int>(height() - m_bounds.bottom() - (values.y() - m_minValue) * m_propY);
+    return QPoint(x, v);
 }
 
 void DiagSpectr::paintEvent(QPaintEvent *event)
@@ -71,8 +77,12 @@ void DiagSpectr::paintEvent(QPaintEvent *event)
 
     //! Определение максимума спектра
     double max = 0;
+    double min = 0;
     if (m_minValue > -1 && m_maxValue > -1 && m_maxValue > m_minValue)
+    {
         max = m_maxValue - m_minValue;
+        min = m_minValue;
+    }
     else
         foreach (auto v, m_data)
             if (v > max)
@@ -110,16 +120,16 @@ void DiagSpectr::paintEvent(QPaintEvent *event)
     //! Пропорция абсцисс
     double minFreq = 0.0;
     double maxFreq = 6.1;
-    double propX = static_cast<double>(width() - m_bounds.x() - m_bounds.right()) / 6.0;
+    m_propX = static_cast<double>(width() - m_bounds.x() - m_bounds.right()) / 6.0;
     if (m_minFreq > 0 && m_maxFreq < m_maxFrequency && m_maxFreq > m_minFreq)
     {
-        propX = static_cast<double>(width() - m_bounds.x() - m_bounds.right()) / (m_maxFreq - m_minFreq);
+        m_propX = static_cast<double>(width() - m_bounds.x() - m_bounds.right()) / (m_maxFreq - m_minFreq);
         minFreq = m_minFreq;
         maxFreq = m_maxFreq;
     }
 
     //! Пропорция ординат
-    double propY = static_cast<double>(height() - m_bounds.top() - m_bounds.bottom()) / max;
+    m_propY = static_cast<double>(height() - m_bounds.top() - m_bounds.bottom()) / max;
 
     //! Фон
     auto backColor = palette().background().color();
@@ -157,8 +167,8 @@ void DiagSpectr::paintEvent(QPaintEvent *event)
         if (freq > minFreq && freq < maxFreq)
         {
 
-            int x = static_cast<int>(m_bounds.x() + freq * propX);
-            int v = static_cast<int>(height() - m_bounds.bottom() - m_data.at(i) * propY);
+            int x = static_cast<int>(m_bounds.x() + (freq - minFreq) * m_propX);
+            int v = static_cast<int>(height() - m_bounds.bottom() - (m_data.at(i) - min) * m_propY);
             painter.drawLine(x, height() - m_bounds.bottom(), x, v);
             painter.drawLine(ox, ov, x, v);
 
@@ -169,9 +179,9 @@ void DiagSpectr::paintEvent(QPaintEvent *event)
 
     //! Вывод сетки по частоте
     //! propX - кол-во точек на 1 Гц, выводим с шагом 0.1 Гц
-    int i = 1;
+    int i = static_cast<int>(minFreq * 10);
     do {
-        int x = static_cast<int>(m_bounds.x() + (static_cast<double>(i) / 10) * propX);
+        int x = static_cast<int>(m_bounds.x() + ((static_cast<double>(i) / 10) - minFreq) * m_propX);
         if (i % 10 == 0)
             painter.setPen(QPen(m_colorGrid, 1, Qt::SolidLine, Qt::FlatCap));
         else
@@ -198,7 +208,7 @@ void DiagSpectr::paintEvent(QPaintEvent *event)
     for (int i = 0; i < yLabels.size(); ++i)
     {
         double v = max / 10 * (i+1);
-        int y = static_cast<int>(height() - m_bounds.bottom() - v * propY);
+        int y = static_cast<int>(height() - m_bounds.bottom() - (v - min) * m_propY);
         painter.setPen(QPen(m_colorGrid, 1, Qt::DotLine, Qt::FlatCap));
         painter.drawLine(m_bounds.x(), y, width() - m_bounds.right(), y);
 

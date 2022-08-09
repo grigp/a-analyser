@@ -75,6 +75,7 @@ public:
 
     /*!
      * \brief Возвращает значения (частоту и амплитуду) спектра по точке.
+     * retval.x() - частота, retval.y() - амплитуда
      * Если точка за пределами, возвращает QPointF()
      * \param point - точка x и y
      */
@@ -132,6 +133,9 @@ private:
     double m_maxFreq {6.1};    ///< Максимальная частота
     double m_minValue {-1};    ///< Минимальное значение
     double m_maxValue {-1};    ///< Максимальное значение
+
+    double m_propX {0};
+    double m_propY {0};
 
     QRect m_selectRect = QRect();
 };

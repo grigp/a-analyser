@@ -228,5 +228,6 @@
         <file>images/UnselectAll.png</file>
         <file>images/SignalExport.png</file>
         <file>images/SignalExport1.png</file>
+        <file>images/CursorArea.png</file>
     </qresource>
 </RCC>

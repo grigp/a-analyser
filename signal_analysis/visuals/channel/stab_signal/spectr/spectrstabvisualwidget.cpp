@@ -24,6 +24,10 @@ SpectrStabVisualWidget::SpectrStabVisualWidget(VisualDescriptor* visual,
     connect(ui->wgtSpectrY, &DiagSpectr::press, this, &SpectrStabVisualWidget::on_press);
     connect(ui->wgtSpectrY, &DiagSpectr::release, this, &SpectrStabVisualWidget::on_release);
     connect(ui->wgtSpectrY, &DiagSpectr::move, this, &SpectrStabVisualWidget::on_move);
+
+    QCursor cursor = QCursor(QPixmap(":/images/CursorArea.png"));
+    ui->wgtSpectrX->setCursor(cursor);
+    ui->wgtSpectrY->setCursor(cursor);
 }
 
 SpectrStabVisualWidget::~SpectrStabVisualWidget()
@@ -65,13 +69,19 @@ void SpectrStabVisualWidget::on_press(const int x, const int y)
 
 void SpectrStabVisualWidget::on_release(const int x, const int y)
 {
+    Q_UNUSED(x);
+    Q_UNUSED(y);
     if (m_selectionProcess)
     {
         if (m_selTo.x() > m_selFrom.x() && m_selTo.y() > m_selFrom.y())
-            qDebug() << (static_cast<DiagSpectr*>(sender()) == m_selectAreaWidget) << x << y;
+        {
+            auto from = static_cast<DiagSpectr*>(sender())->getValues(m_selFrom);
+            auto to = static_cast<DiagSpectr*>(sender())->getValues(m_selTo);
+            static_cast<DiagSpectr*>(sender())->setVisualArea(from.x(), to.x(), to.y(), from.y());
+        }
         else
         if (m_selTo.x() < m_selFrom.x() && m_selTo.y() < m_selFrom.y())
-            qDebug() << "deselect";
+            static_cast<DiagSpectr*>(sender())->resetVisualArea();
 
         selectionReset();
     }
@@ -124,14 +134,20 @@ void SpectrStabVisualWidget::showTable()
 void SpectrStabVisualWidget::showSpectrs()
 {
     ui->wgtSpectrX->setTitle(tr("Фронталь X"));
-    for (int i = 0; i < m_factors->points(); ++i)
-        ui->wgtSpectrX->addValue(m_factors->value(0, i));
-    ui->wgtSpectrX->setFormatData(m_factors->frequency(), m_factors->points(), 6);
+    if (m_factors->channelsCount() == 2)
+    {
+        for (int i = 0; i < m_factors->points(); ++i)
+            ui->wgtSpectrX->addValue(m_factors->value(0, i));
+        ui->wgtSpectrX->setFormatData(m_factors->frequency(), m_factors->points(), 6);
 
-    ui->wgtSpectrY->setTitle(tr("Сагитталь Y"));
-    for (int i = 0; i < m_factors->points(); ++i)
-        ui->wgtSpectrY->addValue(m_factors->value(1, i));
-    ui->wgtSpectrY->setFormatData(m_factors->frequency(), m_factors->points(), 6);
+        ui->wgtSpectrY->setTitle(tr("Сагитталь Y"));
+        for (int i = 0; i < m_factors->points(); ++i)
+            ui->wgtSpectrY->addValue(m_factors->value(1, i));
+        ui->wgtSpectrY->setFormatData(m_factors->frequency(), m_factors->points(), 6);
+    }
+    ui->lblNoCalculated->setVisible(m_factors->channelsCount() != 2);
+    ui->frControl->setVisible(m_factors->channelsCount() == 2);
+    ui->splVertical->setVisible(m_factors->channelsCount() == 2);
 }
 
 void SpectrStabVisualWidget::saveSplitterPosition()
