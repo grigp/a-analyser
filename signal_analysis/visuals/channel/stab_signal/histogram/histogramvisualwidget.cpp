@@ -11,8 +11,6 @@
 #include "dataprovider.h"
 #include "stabilogram.h"
 
-#include "computefft.h"
-
 HistogramVisualWidget::HistogramVisualWidget(VisualDescriptor* visual,
                                              const QString& testUid, const QString& probeUid, const QString& channelUid,
                                              QWidget *parent) :
@@ -49,8 +47,6 @@ void HistogramVisualWidget::on_selectItem(const int idx)
 
 void HistogramVisualWidget::computeHist()
 {
-    spectrTest();
-
     QByteArray data;
     if (DataProvider::getChannel(probeUid(), channelUid(), data))
     {
@@ -121,39 +117,5 @@ void HistogramVisualWidget::showHist()
         auto itemY = new DiagItem(m_dataY[i], QString::number(m_minY + i * m_sizeOneY, 'f', 2));
         ui->wgtHistY->appendItem(itemY);
     }
-}
-
-void HistogramVisualWidget::spectrTest()
-{
-
-    QVector<double> data;
-    double r = 0;
-    double r1 = 0;
-    for (int i = 0; i < ComputeFFT::FFT_COUNT * 2; ++i)
-    {
-//        data << static_cast<double>(100/100);
-//        data << static_cast<double>(qrand() % 1000) / 100.0 - 5;
-//        data << 10 * sin(r); // + 5 * sin(r1);
-
-        if (i < ComputeFFT::FFT_COUNT)
-            data << 10 * sin(r); // + 5 * sin(r1);
-        else
-            data << 5 * sin(r1);
-
-        r += (2 * M_PI) / 51.2;
-        r1 += (2 * M_PI) / 25.6;
-    }
-//    QString path = DataDefines::aanalyserDocumentsPath() + "Export/";
-//    QDir dir(path);
-//    if (!dir.exists())
-//        dir.mkpath(path);
-//    BaseUtils::vectorToText(data, path + "fft_source.txt");
-
-//    ComputeFFT::baseFFT(data);
-    QVector<double> spectr;
-    ComputeFFT::extendFFT(data, spectr, ComputeFFT::FFT_COUNT, ComputeFFT::FFT_COUNT - 1);
-
-//    BaseUtils::vectorToText(spectr, path + "fft_result.txt");
-//    BaseUtils::vectorToText(data, DataDefines::aanalyserDocumentsPath() + "Export/fft_result.txt");
 }
 

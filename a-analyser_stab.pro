@@ -11,6 +11,11 @@ QT       += core gui serialport multimedia printsupport
 QT       += axcontainer
     #endif
 
+INCLUDEPATH += $$PWD/fftw/
+LIBS +=  $$PWD/fftw/libfftw3-3.a\
+         $$PWD/fftw/libfftw3f-3.a\
+         $$PWD/fftw/libfftw3l-3.a
+
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = a-med_stab

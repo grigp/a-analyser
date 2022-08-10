@@ -24,6 +24,8 @@
 #include "stabilogramvisual.h"
 #include "balistogramvisual.h"
 #include "vectoranalysisvisual.h"
+#include "histogramvisual.h"
+#include "spectrstabvisual.h"
 
 #include "stabilan01.h"
 #include "jumpplate.h"
@@ -60,6 +62,8 @@ void AAnalyserBuild::registerVisuals()
     app->registerVisual(new StabilogramVisual(BaseDefines::tlChannel));
     app->registerVisual(new BalistogramVisual(BaseDefines::tlChannel));
     app->registerVisual(new VectorAnalysisVisual(BaseDefines::tlChannel));
+    app->registerVisual(new HistogramVisual(BaseDefines::tlChannel));
+    app->registerVisual(new SpectrStabVisual(BaseDefines::tlChannel));
 }
 
 QList<DeviceProtocols::Ports> AAnalyserBuild::getDriverPorts(const QString &drvUid)

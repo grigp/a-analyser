@@ -11,10 +11,14 @@ QT       += core gui serialport multimedia printsupport
 QT       += axcontainer
     #endif
 
-INCLUDEPATH += C:/Qt/lib/fftw/
-LIBS +=  C:/Qt/lib/fftw/libfftw3-3.a\
-         C:/Qt/lib/fftw/libfftw3f-3.a\
-         C:/Qt/lib/fftw/libfftw3l-3.a
+# INCLUDEPATH += C:/Qt/lib/fftw/
+# LIBS +=  C:/Qt/lib/fftw/libfftw3-3.a\
+#          C:/Qt/lib/fftw/libfftw3f-3.a\
+#          C:/Qt/lib/fftw/libfftw3l-3.a
+INCLUDEPATH += $$PWD/fftw/
+LIBS +=  $$PWD/fftw/libfftw3-3.a\
+         $$PWD/fftw/libfftw3f-3.a\
+         $$PWD/fftw/libfftw3l-3.a
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 

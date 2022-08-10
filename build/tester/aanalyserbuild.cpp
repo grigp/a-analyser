@@ -15,6 +15,8 @@
 #include "stabilogramvisual.h"
 #include "balistogramvisual.h"
 #include "vectoranalysisvisual.h"
+#include "histogramvisual.h"
+#include "spectrstabvisual.h"
 #include "bilateralvisual.h"
 #include "dynamosignalvisual.h"
 #include "myogramsignalvisual.h"
@@ -47,6 +49,8 @@ void AAnalyserBuild::registerVisuals()
     app->registerVisual(new MyogramSignalVisual(BaseDefines::tlChannel));
     app->registerVisual(new DynamoSignalVisual(BaseDefines::tlChannel));
     app->registerVisual(new VectorAnalysisVisual(BaseDefines::tlChannel));
+    app->registerVisual(new HistogramVisual(BaseDefines::tlChannel));
+    app->registerVisual(new SpectrStabVisual(BaseDefines::tlChannel));
     app->registerVisual(new BilateralVisual(BaseDefines::tlProbe));
 }
 
