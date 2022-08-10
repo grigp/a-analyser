@@ -109,6 +109,9 @@ void SpectrStabVisualWidget::showTable()
 
         auto fi = static_cast<AAnalyserApplication*>(QApplication::instance())->getFactorInfo(uidX);
         QString fn = fi.name();
+        auto sl = fn.split('(');
+        if (sl.size() > 0)
+            fn = sl.at(0);
         if (fi.measure() != "")
             fn = fn + ", " + fi.measure();
         auto* itemName = new QStandardItem(fn);
@@ -127,8 +130,10 @@ void SpectrStabVisualWidget::showTable()
 
     model->setHorizontalHeaderLabels(QStringList() << tr("Показатель") << tr("Фронталь") << tr("Сагитталь"));
     ui->tvFactors->setModel(model);
-    ui->tvFactors->header()->resizeSections(QHeaderView::ResizeToContents);
+//    ui->tvFactors->header()->resizeSections(QHeaderView::ResizeToContents);
     ui->tvFactors->header()->resizeSection(0, 500);
+    ui->tvFactors->header()->resizeSection(1, 200);
+    ui->tvFactors->header()->resizeSection(2, 200);
 }
 
 void SpectrStabVisualWidget::showSpectrs()
