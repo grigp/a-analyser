@@ -18,6 +18,33 @@ class DiagSpectr : public QWidget
     Q_PROPERTY(QColor line1_color MEMBER m_line1Color DESIGNABLE true)
 
 public:
+    /*!
+     * \brief Зона по частоте на спектре The FreqArea struct
+     */
+    struct FreqArea
+    {
+        double begin {0};                    ///< Начало зоны
+        double end {0};                      ///< Конец зоны
+        QString name {""};                   ///< Название
+        QColor colorBackground {Qt::cyan};   ///< Цвет фона
+        QColor colorText {Qt::darkCyan};     ///< Цвет текста
+        FreqArea(const double b, const double e, const QString n, const QColor cb, const QColor ct)
+            : begin(b), end(e), name(n), colorBackground(cb), colorText(ct) {}
+        FreqArea() {}
+    };
+
+    /*!
+     * \brief Метка по частоте на спектре The FreqLabel struct
+     */
+    struct FreqLabel
+    {
+        double freq {0};
+        QString name {""};
+        FreqLabel(const double f, const QString n)
+            : freq(f), name(n) {}
+        FreqLabel() {}
+    };
+
     explicit DiagSpectr(QWidget *parent = nullptr);
     ~DiagSpectr() override;
 
@@ -25,10 +52,13 @@ public:
     void setLine1Color(const QColor color) {m_line1Color = color;}
 
     QColor colorAxis() const {return m_colorAxis;}
-    void setColorAxis(const QColor &color);
+    void setColorAxis(const QColor &color) {m_colorAxis = color;}
 
     QColor colorGrid() const {return m_colorGrid;}
-    void setColorGrid(const QColor &color);
+    void setColorGrid(const QColor &color) {m_colorGrid = color;}
+
+    QColor colorFreqLabel() const {return m_colorFreqLabel;}
+    void setColorFreqLabel(const QColor &color) {m_colorFreqLabel = color;}
 
     QString title() const {return m_title;}
     void setTitle(const QString title) {m_title = title;}
@@ -88,6 +118,16 @@ public:
      */
     QPoint getPoint(const QPointF values) const;
 
+    /*!
+     * \brief Добавляет зону по частоте на спектре
+     */
+    void addFreqArea(const double begin, const double end, const QString name, const QColor colorBackground, const QColor colorText);
+
+    /*!
+     * \brief Добавляет метку по частоте на спектре
+     */
+    void addFreqLabel(const double freq, const QString name);
+
 signals:
     /*!
      * \brief Сигнал нажатия мышки на теле виджета
@@ -117,6 +157,7 @@ private:
     QColor m_line1Color {Qt::darkGreen};
     QColor m_colorAxis {Qt::black};
     QColor m_colorGrid {Qt::lightGray};
+    QColor m_colorFreqLabel {Qt::darkRed};
 
     QString m_title {""};
     QString m_nameAxisX {"F,Гц"};
@@ -138,6 +179,9 @@ private:
     double m_propY {0};
 
     QRect m_selectRect = QRect();
+
+    QList<FreqArea> m_freqAeases;
+    QList<FreqLabel> m_freqLabels;
 };
 
 #endif // DIAGSPECTR_H

@@ -130,7 +130,6 @@ void SpectrStabVisualWidget::showTable()
 
     model->setHorizontalHeaderLabels(QStringList() << tr("Показатель") << tr("Фронталь") << tr("Сагитталь"));
     ui->tvFactors->setModel(model);
-//    ui->tvFactors->header()->resizeSections(QHeaderView::ResizeToContents);
     ui->tvFactors->header()->resizeSection(0, 500);
     ui->tvFactors->header()->resizeSection(1, 200);
     ui->tvFactors->header()->resizeSection(2, 200);
@@ -153,6 +152,15 @@ void SpectrStabVisualWidget::showSpectrs()
     ui->lblNoCalculated->setVisible(m_factors->channelsCount() != 2);
     ui->frControl->setVisible(m_factors->channelsCount() == 2);
     ui->splVertical->setVisible(m_factors->channelsCount() == 2);
+
+    ui->wgtSpectrX->addFreqArea(0, 0.2, "1", QColor(200, 210, 210), QColor(30, 120, 120));
+    ui->wgtSpectrX->addFreqArea(0.2, 2, "2", QColor(220, 230, 230), QColor(50, 140, 140));
+    ui->wgtSpectrX->addFreqArea(2, 6, "3", QColor(240, 250, 250), QColor(80, 160, 160));
+    ui->wgtSpectrX->addFreqLabel(m_factors->factorValue(SpectrStabFactorsDefines::Frontal::Level60Uid), "60%");
+    ui->wgtSpectrY->addFreqArea(0, 0.2, "1", QColor(200, 210, 210), QColor(30, 120, 120));
+    ui->wgtSpectrY->addFreqArea(0.2, 2, "2", QColor(220, 230, 230), QColor(50, 140, 140));
+    ui->wgtSpectrY->addFreqArea(2, 6, "3", QColor(240, 250, 250), QColor(80, 160, 160));
+    ui->wgtSpectrY->addFreqLabel(m_factors->factorValue(SpectrStabFactorsDefines::Sagittal::Level60Uid), "60%");
 }
 
 void SpectrStabVisualWidget::saveSplitterPosition()

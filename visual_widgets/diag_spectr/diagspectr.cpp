@@ -69,6 +69,16 @@ QPoint DiagSpectr::getPoint(const QPointF values) const
     return QPoint(x, v);
 }
 
+void DiagSpectr::addFreqArea(const double begin, const double end, const QString name, const QColor colorBackground, const QColor colorText)
+{
+    m_freqAeases << FreqArea(begin, end, name, colorBackground, colorText);
+}
+
+void DiagSpectr::addFreqLabel(const double freq, const QString name)
+{
+    m_freqLabels << FreqLabel(freq, name);
+}
+
 void DiagSpectr::paintEvent(QPaintEvent *event)
 {
     Q_UNUSED(event);
@@ -137,6 +147,27 @@ void DiagSpectr::paintEvent(QPaintEvent *event)
     painter.setPen(QPen(backColor , 1, Qt::SolidLine, Qt::FlatCap));
     painter.drawRect(geometry());
 
+    //! Вывод зон по частоте
+    foreach (auto area, m_freqAeases)
+    {
+        painter.setBrush(QBrush(area.colorBackground, Qt::SolidPattern));
+        painter.setPen(QPen(area.colorBackground, 1, Qt::SolidLine, Qt::FlatCap));
+
+        int xb = static_cast<int>(m_bounds.x() + (area.begin - minFreq) * m_propX);
+        int xe = static_cast<int>(m_bounds.x() + (area.end - minFreq) * m_propX);
+        if (xe > m_bounds.x())
+        {
+            if (xb < m_bounds.x())
+                xb = m_bounds.x();
+            painter.drawRect(xb, m_bounds.y(), xe, height() - m_bounds.bottom());
+
+            painter.setPen(QPen(area.colorText, 1, Qt::SolidLine, Qt::FlatCap));
+            painter.setFont(QFont("Sans", 20, 0, false));
+            auto size = BaseUtils::getTextSize(&painter, area.name);
+            painter.drawText(xb + 3, m_bounds.y() + size.height() - 5, area.name);
+        }
+    }
+
     //! Оси
     painter.setPen(QPen(m_colorAxis, 1, Qt::SolidLine, Qt::FlatCap));
     painter.drawLine(m_bounds.x(), m_bounds.y(), m_bounds.x(), geometry().height() - m_bounds.bottom());
@@ -179,6 +210,7 @@ void DiagSpectr::paintEvent(QPaintEvent *event)
 
     //! Вывод сетки по частоте
     //! propX - кол-во точек на 1 Гц, выводим с шагом 0.1 Гц
+    painter.setFont(QFont("Sans", 10, 0, false));
     int i = static_cast<int>(minFreq * 10);
     do {
         int x = static_cast<int>(m_bounds.x() + ((static_cast<double>(i) / 10) - minFreq) * m_propX);
@@ -190,7 +222,8 @@ void DiagSpectr::paintEvent(QPaintEvent *event)
         else
             painter.setPen(QPen(m_colorGrid, 1, Qt::DotLine, Qt::FlatCap));
 
-        painter.drawLine(x, m_bounds.top(), x, height() - m_bounds.bottom());
+        if (i > 0)
+            painter.drawLine(x, m_bounds.top(), x, height() - m_bounds.bottom());
 
         if (i % 5 == 0)
         {
@@ -202,6 +235,18 @@ void DiagSpectr::paintEvent(QPaintEvent *event)
         ++i;
     }
     while (i / 10 < maxFreq);
+
+    //! Вывод меток по частоте
+    painter.setFont(QFont("Sans", 10, 0, false));
+    painter.setPen(QPen(m_colorFreqLabel, 2, Qt::SolidLine, Qt::FlatCap));
+    foreach (auto label, m_freqLabels)
+    {
+        int x = static_cast<int>(m_bounds.x() + (label.freq - minFreq) * m_propX);
+        painter.drawLine(x, m_bounds.top(), x, height() - m_bounds.bottom() + 5);
+        auto size = BaseUtils::getTextSize(&painter, label.name);
+        painter.drawText(x - size.width() / 2, height() - size.height() + 14, label.name);
+    }
+
 
     //! Вывод сетки по амплитуде. Просто десять значений
     painter.setFont(QFont("Sans", 10, 0, false));
