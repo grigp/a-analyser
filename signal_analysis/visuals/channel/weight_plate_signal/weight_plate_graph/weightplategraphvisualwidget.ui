@@ -138,7 +138,7 @@
          <string/>
         </property>
         <property name="icon">
-         <iconset resource="../../../../kernel.qrc">
+         <iconset resource="../../../../../kernel.qrc">
           <normaloff>:/images/Tools/FullSignal.png</normaloff>:/images/Tools/FullSignal.png</iconset>
         </property>
         <property name="iconSize">
@@ -188,7 +188,7 @@
             <string/>
            </property>
            <property name="icon">
-            <iconset resource="../../../../kernel.qrc">
+            <iconset resource="../../../../../kernel.qrc">
              <normaloff>:/images/Tools/Plus_10.png</normaloff>:/images/Tools/Plus_10.png</iconset>
            </property>
            <property name="iconSize">
@@ -211,7 +211,7 @@
             <string/>
            </property>
            <property name="icon">
-            <iconset resource="../../../../kernel.qrc">
+            <iconset resource="../../../../../kernel.qrc">
              <normaloff>:/images/Tools/Minus_10.png</normaloff>:/images/Tools/Minus_10.png</iconset>
            </property>
            <property name="iconSize">
@@ -299,7 +299,7 @@
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="../../../../kernel.qrc"/>
+  <include location="../../../../../kernel.qrc"/>
  </resources>
  <connections>
   <connection>

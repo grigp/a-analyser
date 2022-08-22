@@ -40,6 +40,25 @@ private slots:
     void on_moveCursor();
 
     /*!
+     * \brief Сигнал нажатия мышки на теле виджета
+     * \param x, y - координаты нажатия
+    * \param buttons - нажатые кнопки
+     */
+    void on_press(const int x, const int y, const Qt::MouseButtons buttons);
+    /*!
+     * \brief Сигнал отпускания мышки на теле виджета
+     * \param x, y - координаты отпускания
+    * \param buttons - нажатые кнопки
+     */
+    void on_release(const int x, const int y, const Qt::MouseButtons buttons);
+    /*!
+     * \brief Сигнал переноса мышки по телу виджета
+     * \param x, y - координаты положения
+    * \param buttons - нажатые кнопки
+     */
+    void on_move(const int x, const int y, const Qt::MouseButtons buttons);
+
+    /*!
      * \brief Выбор канала
      * \param chanIdx - номер канала (0 - все, 1, n - номера каналов)
      */
@@ -52,6 +71,7 @@ private:
     void showGraph(const int chanIdx = -1);
 
     Myogram* m_signal {nullptr};
+    int m_selBeg {-1};
 };
 
 #endif // MYOGRAMSIGNALVISUALWIDGET_H

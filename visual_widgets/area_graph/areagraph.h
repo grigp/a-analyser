@@ -249,6 +249,22 @@ public:
 
     QList<double> cursorValues() const;
 
+    /*!
+     * \brief Возвращает время в секундах позиции по координате на теле виджета
+     * Если x < левой оси, возвращает 0
+     * Если x > правой границы, возвращает максимум
+     * \param x - значение координаты
+     */
+    double getTime(const int x) const;
+
+    /*!
+     * \brief Возращает координату на теле виджета временной позиции
+     * Если x < 0, возвращает положение левой оси
+     * Если x > максимума, возвращает значение правой границы
+     * \param time - время в секундах
+     */
+    int getXPosition(const double time) const;
+
     int leftSpace() const;
     int rightSpace() const;
     int topSpace() const;
@@ -258,15 +274,44 @@ public:
      */
     int areaWidth() const;
 
+    /*!
+     * \brief Выделение зоны по времени на графике
+     * \param x1, x2 - границы участка в координатах тела виджета.
+     * Допустимо x1 < x2 и  x1 > x2
+     */
+    void selectArea(const int x1, const int x2);
+
+    void clearSelectArea();
+
 
 signals:
     void moveCursor();
 
+    /*!
+     * \brief Сигнал нажатия мышки на теле виджета
+     * \param x, y - координаты нажатия
+     * \param buttons - нажатые кнопки
+     */
+    void press(const int x, const int y, const Qt::MouseButtons buttons);
+    /*!
+     * \brief Сигнал отпускания мышки на теле виджета
+     * \param x, y - координаты отпускания
+     * \param buttons - нажатые кнопки
+     */
+    void release(const int x, const int y, const Qt::MouseButtons buttons);
+    /*!
+     * \brief Сигнал переноса мышки по телу виджета
+     * \param x, y - координаты положения
+     * \param buttons - нажатые кнопки
+     */
+    void move(const int x, const int y, const Qt::MouseButtons buttons);
+
 protected:
     void paintEvent(QPaintEvent *event) override;
     void mousePressEvent(QMouseEvent *event) override;
-
+    void mouseReleaseEvent(QMouseEvent *event) override;
     void mouseMoveEvent(QMouseEvent *event) override;
+
 
 private:
     Ui::AreaGraph *ui;
@@ -288,6 +333,8 @@ private:
     bool m_isShowCursor {false};
     int m_cursorX {0};
     int m_cursorY {0};
+    int m_selectAreaBegin {-1};
+    int m_selectAreaEnd {-1};
 };
 
 #endif // AREAGRAPH_H

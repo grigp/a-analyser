@@ -27,6 +27,9 @@ WeightPlateGraphVisualWidget::WeightPlateGraphVisualWidget(VisualDescriptor* vis
 //    ui->wgtGraph->setCursor(cursorGraph);
 
 //    connect(ui->wgtGraph, &AreaGraph::moveCursor, this, &WeightPlateGraphVisualWidget::on_moveCursor);
+    connect(ui->wgtGraph, &AreaGraph::press, this, &WeightPlateGraphVisualWidget::on_press);
+    connect(ui->wgtGraph, &AreaGraph::move, this, &WeightPlateGraphVisualWidget::on_move);
+    connect(ui->wgtGraph, &AreaGraph::release, this, &WeightPlateGraphVisualWidget::on_release);
 }
 
 WeightPlateGraphVisualWidget::~WeightPlateGraphVisualWidget()
@@ -104,6 +107,36 @@ void WeightPlateGraphVisualWidget::on_selectChannel(int chanIdx)
     {
         showGraph(chanIdx - 1);
         setDiapazones();
+    }
+}
+
+void WeightPlateGraphVisualWidget::on_press(const int x, const int y, const Qt::MouseButtons buttons)
+{
+    Q_UNUSED(y);
+    if (buttons == Qt::LeftButton)
+    {
+        ui->wgtGraph->clearSelectArea();
+        m_selBeg = x;
+    }
+}
+
+void WeightPlateGraphVisualWidget::on_release(const int x, const int y, const Qt::MouseButtons buttons)
+{
+    Q_UNUSED(x);
+    Q_UNUSED(y);
+    if (buttons == Qt::LeftButton)
+    {
+        m_selBeg = -1;
+    }
+}
+
+void WeightPlateGraphVisualWidget::on_move(const int x, const int y, const Qt::MouseButtons buttons)
+{
+    Q_UNUSED(y);
+    if (buttons == Qt::LeftButton)
+    {
+        if (m_selBeg > -1)
+            ui->wgtGraph->selectArea(m_selBeg, x);
     }
 }
 

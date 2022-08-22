@@ -39,12 +39,32 @@ private slots:
 
     void on_moveCursor();
 
+    /*!
+     * \brief Сигнал нажатия мышки на теле виджета
+     * \param x, y - координаты нажатия
+    * \param buttons - нажатые кнопки
+     */
+    void on_press(const int x, const int y, const Qt::MouseButtons buttons);
+    /*!
+     * \brief Сигнал отпускания мышки на теле виджета
+     * \param x, y - координаты отпускания
+    * \param buttons - нажатые кнопки
+     */
+    void on_release(const int x, const int y, const Qt::MouseButtons buttons);
+    /*!
+     * \brief Сигнал переноса мышки по телу виджета
+     * \param x, y - координаты положения
+    * \param buttons - нажатые кнопки
+     */
+    void on_move(const int x, const int y, const Qt::MouseButtons buttons);
+
 private:
     Ui::BalistogramVisualWidget *ui;
 
     void showGraph();
 
     Balistogram* m_z {nullptr};
+    int m_selBeg {-1};
 };
 
 #endif // BALISTOGRAMVISUALWIDGET_H

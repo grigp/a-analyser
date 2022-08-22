@@ -27,6 +27,9 @@ StabilogramVisualWidget::StabilogramVisualWidget(VisualDescriptor* visual,
     ui->wgtGraph->setCursor(cursorGraph);
 
     connect(ui->wgtGraph, &AreaGraph::moveCursor, this, &StabilogramVisualWidget::on_moveCursor);
+    connect(ui->wgtGraph, &AreaGraph::press, this, &StabilogramVisualWidget::on_press);
+    connect(ui->wgtGraph, &AreaGraph::move, this, &StabilogramVisualWidget::on_move);
+    connect(ui->wgtGraph, &AreaGraph::release, this, &StabilogramVisualWidget::on_release);
 }
 
 StabilogramVisualWidget::~StabilogramVisualWidget()
@@ -103,6 +106,37 @@ void StabilogramVisualWidget::on_moveCursor()
         ui->edX->setText(QString::number(vals.at(0)));
         ui->edY->setText(QString::number(vals.at(1)));
     }
+}
+
+void StabilogramVisualWidget::on_press(const int x, const int y, const Qt::MouseButtons buttons)
+{
+    Q_UNUSED(y);
+    if (buttons == Qt::LeftButton)
+    {
+        ui->wgtGraph->clearSelectArea();
+        m_selBeg = x;
+    }
+}
+
+void StabilogramVisualWidget::on_release(const int x, const int y, const Qt::MouseButtons buttons)
+{
+    Q_UNUSED(x);
+    Q_UNUSED(y);
+    if (buttons == Qt::LeftButton)
+    {
+        m_selBeg = -1;
+    }
+}
+
+void StabilogramVisualWidget::on_move(const int x, const int y, const Qt::MouseButtons buttons)
+{
+    Q_UNUSED(y);
+    if (buttons == Qt::LeftButton)
+    {
+        if (m_selBeg > -1)
+            ui->wgtGraph->selectArea(m_selBeg, x);
+    }
+//    qDebug() << ui->wgtGraph->getTime(x);
 }
 
 void StabilogramVisualWidget::showGraph()

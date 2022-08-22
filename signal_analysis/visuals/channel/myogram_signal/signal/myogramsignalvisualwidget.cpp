@@ -40,6 +40,9 @@ void MyogramSignalVisualWidget::calculate()
     ui->wgtGraph->setCursor(cursorGraph);
 
     connect(ui->wgtGraph, &AreaGraph::moveCursor, this, &MyogramSignalVisualWidget::on_moveCursor);
+    connect(ui->wgtGraph, &AreaGraph::press, this, &MyogramSignalVisualWidget::on_press);
+    connect(ui->wgtGraph, &AreaGraph::move, this, &MyogramSignalVisualWidget::on_move);
+    connect(ui->wgtGraph, &AreaGraph::release, this, &MyogramSignalVisualWidget::on_release);
 
     getSignal();
     showGraph();
@@ -100,6 +103,36 @@ void MyogramSignalVisualWidget::on_moveCursor()
         for (int i = 0; i < m_signal->subChansCount(); ++i)
             s += (QString::number(i + 1) + ": " + QString::number(vals.at(i), 'f', 2) + "  ");
         ui->edValue->setText(s);
+    }
+}
+
+void MyogramSignalVisualWidget::on_press(const int x, const int y, const Qt::MouseButtons buttons)
+{
+    Q_UNUSED(y);
+    if (buttons == Qt::LeftButton)
+    {
+        ui->wgtGraph->clearSelectArea();
+        m_selBeg = x;
+    }
+}
+
+void MyogramSignalVisualWidget::on_release(const int x, const int y, const Qt::MouseButtons buttons)
+{
+    Q_UNUSED(x);
+    Q_UNUSED(y);
+    if (buttons == Qt::LeftButton)
+    {
+        m_selBeg = -1;
+    }
+}
+
+void MyogramSignalVisualWidget::on_move(const int x, const int y, const Qt::MouseButtons buttons)
+{
+    Q_UNUSED(y);
+    if (buttons == Qt::LeftButton)
+    {
+        if (m_selBeg > -1)
+            ui->wgtGraph->selectArea(m_selBeg, x);
     }
 }
 

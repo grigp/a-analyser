@@ -239,6 +239,54 @@ QList<double> AreaGraph::cursorValues() const
     return  retval;
 }
 
+double AreaGraph::getTime(const int x) const
+{
+    if (m_areases.size() > 0)
+    {
+        double hScale = 1;
+        int startPoint = 0;
+        if (m_xcsm == xsm_scrolling)
+        {
+            hScale = m_hScale;
+            startPoint = m_startPoint;
+        }
+
+        if (x >= LeftSpace)
+        {
+            int pos = static_cast<int>((x - LeftSpace) / (m_areases.at(0)->step() * hScale) + startPoint);
+            if (pos < m_areases.at(0)->signal()->size())
+                return static_cast<double>(pos) / static_cast<double>(m_areases.at(0)->signal()->frequency());
+            else
+                return static_cast<double>(m_areases.at(0)->signal()->size()) / static_cast<double>(m_areases.at(0)->signal()->frequency());
+        }
+    }
+    return 0;
+}
+
+int AreaGraph::getXPosition(const double time) const
+{
+    if (m_areases.size() > 0)
+    {
+        double hScale = 1;
+        int startPoint = 0;
+        if (m_xcsm == xsm_scrolling)
+        {
+            hScale = m_hScale;
+            startPoint = m_startPoint;
+        }
+
+        if (time >= 0)
+        {
+            int pos = static_cast<int>(time * m_areases.at(0)->signal()->frequency());
+            int x = m_areases.at(0)->signal()->size();
+            if (pos < m_areases.at(0)->signal()->size())
+                x = static_cast<int>((pos - startPoint) * (m_areases.at(0)->step() * hScale) + LeftSpace);
+            return x;
+        }
+    }
+    return 0;
+}
+
 int AreaGraph::leftSpace() const
 {
     return LeftSpace;
@@ -265,6 +313,28 @@ int AreaGraph::areaWidth() const
     return width() - LeftSpace - RightSpace;
 }
 
+void AreaGraph::selectArea(const int x1, const int x2)
+{
+    if (x1 < x2)
+    {
+        m_selectAreaBegin = x1;
+        m_selectAreaEnd = x2;
+    }
+    else
+    {
+        m_selectAreaBegin = x1;
+        m_selectAreaEnd = x2;
+    }
+    update();
+}
+
+void AreaGraph::clearSelectArea()
+{
+    m_selectAreaBegin = -1;
+    m_selectAreaEnd = -1;
+    update();
+}
+
 void AreaGraph::paintEvent(QPaintEvent *event)
 {
     QWidget::paintEvent(event);
@@ -284,6 +354,16 @@ void AreaGraph::paintEvent(QPaintEvent *event)
 
     //QTime t1 = QTime::currentTime(); // Вывод времени прорисовки
 
+    //! Настройка растяжения и позиции в зависимости от установок
+    double hScale = 1;
+    int startPoint = 0;
+    if (m_xcsm == xsm_scrolling)
+    {
+        hScale = m_hScale;
+        startPoint = m_startPoint;
+    }
+    double step = 1;
+
     if (m_areases.size() > 0)
     {
         int zoneH = (height() - TopSpace - BottomSpace) / m_areases.size();
@@ -298,7 +378,6 @@ void AreaGraph::paintEvent(QPaintEvent *event)
 
             //! Пропорции по значениям и шаг
             double prop = zoneH / (m_areases.at(iz)->maxValue() - m_areases.at(iz)->minValue());
-            double step = 1;
             double offset = 1;  //! Смещение по графику. Шаг выбора точек
             if (m_xcsm == xsm_fullSignal)
             {
@@ -310,15 +389,6 @@ void AreaGraph::paintEvent(QPaintEvent *event)
             }
 
             bool isHour = m_areases.at(iz)->signal()->size() / m_areases.at(iz)->signal()->frequency() > 6000;
-
-            //! Настройка растяжения и позиции в зависимости от установок
-            double hScale = 1;
-            int startPoint = 0;
-            if (m_xcsm == xsm_scrolling)
-            {
-                hScale = m_hScale;
-                startPoint = m_startPoint;
-            }
 
             m_areases.at(iz)->setStep(step);
             //! Определение шага секундных меток
@@ -557,17 +627,33 @@ void AreaGraph::paintEvent(QPaintEvent *event)
 
 //    qDebug() << t1.msecsTo(QTime::currentTime()); // Вывод времени прорисовки
 
+    //! Отображение выделенной зоны
+    if (m_selectAreaBegin > -1 and m_selectAreaEnd > -1)
+    {
+        painter.setBrush(QBrush(QColor(0, 0, 0, 125) , Qt::SolidPattern));
+        painter.drawRect(m_selectAreaBegin, TopSpace, m_selectAreaEnd - m_selectAreaBegin, height() - BottomSpace - TopSpace);
+    }
+
     painter.restore();
 }
 
 void AreaGraph::mousePressEvent(QMouseEvent *event)
 {
     QWidget::mousePressEvent(event);
+    emit press(event->x(), event->y(), event->buttons());
+}
+
+void AreaGraph::mouseReleaseEvent(QMouseEvent *event)
+{
+    QWidget::mouseReleaseEvent(event);
+    emit release(event->x(), event->y(), event->buttons());
 }
 
 void AreaGraph::mouseMoveEvent(QMouseEvent *event)
 {
     QWidget::mouseMoveEvent(event);
+    emit move(event->x(), event->y(), event->buttons());
+
     if (event->x() != m_cursorX)
         emit moveCursor();
     if (event->x() >= LeftSpace)

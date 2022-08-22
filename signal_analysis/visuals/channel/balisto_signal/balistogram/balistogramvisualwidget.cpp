@@ -26,6 +26,9 @@ BalistogramVisualWidget::BalistogramVisualWidget(VisualDescriptor *visual,
     ui->wgtGraph->setCursor(cursorGraph);
 
     connect(ui->wgtGraph, &AreaGraph::moveCursor, this, &BalistogramVisualWidget::on_moveCursor);
+    connect(ui->wgtGraph, &AreaGraph::press, this, &BalistogramVisualWidget::on_press);
+    connect(ui->wgtGraph, &AreaGraph::move, this, &BalistogramVisualWidget::on_move);
+    connect(ui->wgtGraph, &AreaGraph::release, this, &BalistogramVisualWidget::on_release);
 }
 
 BalistogramVisualWidget::~BalistogramVisualWidget()
@@ -100,6 +103,36 @@ void BalistogramVisualWidget::on_moveCursor()
     if (vals.size() == 1)
     {
         ui->edZ->setText(QString::number(vals.at(0)));
+    }
+}
+
+void BalistogramVisualWidget::on_press(const int x, const int y, const Qt::MouseButtons buttons)
+{
+    Q_UNUSED(y);
+    if (buttons == Qt::LeftButton)
+    {
+        ui->wgtGraph->clearSelectArea();
+        m_selBeg = x;
+    }
+}
+
+void BalistogramVisualWidget::on_release(const int x, const int y, const Qt::MouseButtons buttons)
+{
+    Q_UNUSED(x);
+    Q_UNUSED(y);
+    if (buttons == Qt::LeftButton)
+    {
+        m_selBeg = -1;
+    }
+}
+
+void BalistogramVisualWidget::on_move(const int x, const int y, const Qt::MouseButtons buttons)
+{
+    Q_UNUSED(y);
+    if (buttons == Qt::LeftButton)
+    {
+        if (m_selBeg > -1)
+            ui->wgtGraph->selectArea(m_selBeg, x);
     }
 }
 

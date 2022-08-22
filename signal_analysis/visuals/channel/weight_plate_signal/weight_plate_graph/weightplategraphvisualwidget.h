@@ -43,6 +43,25 @@ private slots:
      */
     void on_selectChannel(int chanIdx);
 
+    /*!
+     * \brief Сигнал нажатия мышки на теле виджета
+     * \param x, y - координаты нажатия
+    * \param buttons - нажатые кнопки
+     */
+    void on_press(const int x, const int y, const Qt::MouseButtons buttons);
+    /*!
+     * \brief Сигнал отпускания мышки на теле виджета
+     * \param x, y - координаты отпускания
+    * \param buttons - нажатые кнопки
+     */
+    void on_release(const int x, const int y, const Qt::MouseButtons buttons);
+    /*!
+     * \brief Сигнал переноса мышки по телу виджета
+     * \param x, y - координаты положения
+    * \param buttons - нажатые кнопки
+     */
+    void on_move(const int x, const int y, const Qt::MouseButtons buttons);
+
     //void on_moveCursor();
 
 private:
@@ -59,6 +78,7 @@ private:
     bool m_isCalculate {false};
     WeightPlateSignal* m_signal {nullptr};
     int m_selectedChan {-1};  ///< Выбранный канал 0 - N. -1 - нет выбранного
+    int m_selBeg {-1};
 };
 
 #endif // WEIGHTPLATEGRAPHVISUALWIDGET_H

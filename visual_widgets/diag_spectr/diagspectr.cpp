@@ -261,6 +261,7 @@ void DiagSpectr::paintEvent(QPaintEvent *event)
         painter.drawText(2, y, yLabels.at(i));
     }
 
+    //! Отображение выделенной зоны
     if (m_selectRect != QRect())
     {
         painter.setBrush(QBrush(QColor(0, 0, 0, 125) , Qt::SolidPattern));
