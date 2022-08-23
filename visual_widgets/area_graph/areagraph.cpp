@@ -335,6 +335,34 @@ void AreaGraph::clearSelectArea()
     update();
 }
 
+void AreaGraph::selectedArea(int &begin, int &end)
+{
+    if (m_selectAreaBegin == -1 || m_selectAreaEnd == -1)
+    {
+        begin = -1;
+        end = -1;
+    }
+    else
+    {
+        double hScale = 1;
+        int startPoint = 0;
+        if (m_xcsm == xsm_scrolling)
+        {
+            hScale = m_hScale;
+            startPoint = m_startPoint;
+        }
+        double step = 1;
+        if (m_xcsm == xsm_fullSignal)
+        {
+            step = static_cast<double>(width() - LeftSpace - RightSpace) /
+                   static_cast<double>(m_areases.at(0)->signal()->size());
+        }
+
+        begin = static_cast<int>((m_selectAreaBegin - LeftSpace) / (step * hScale) + startPoint);
+        end = static_cast<int>((m_selectAreaEnd - LeftSpace) / (step * hScale) + startPoint);
+    }
+}
+
 void AreaGraph::paintEvent(QPaintEvent *event)
 {
     QWidget::paintEvent(event);

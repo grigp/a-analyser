@@ -2,6 +2,7 @@
 #define STABILOGRAMVISUALWIDGET_H
 
 #include <QWidget>
+#include <QMenu>
 
 #include "visuals.h"
 
@@ -40,6 +41,10 @@ private slots:
 
     void signalScroll(int pos);
 
+    void on_popupMenuRequested(QPoint pos);
+
+    void on_createSection();
+
     void on_moveCursor();
     /*!
      * \brief Сигнал нажатия мышки на теле виджета
@@ -66,8 +71,8 @@ private:
     void showGraph();
 
     Stabilogram* m_stab {nullptr};
-
     int m_selBeg {-1};
+    QMenu *m_menu {nullptr};
 };
 
 #endif // STABILOGRAMVISUALWIDGET_H

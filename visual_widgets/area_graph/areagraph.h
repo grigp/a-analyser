@@ -283,6 +283,12 @@ public:
 
     void clearSelectArea();
 
+    /*!
+     * \brief Возвращает выделенную зону по времени
+     * \param begin - начало зоны в отсчетах
+     * \param end - конец зоны в отсчетах
+     */
+    void selectedArea(int &begin, int &end);
 
 signals:
     void moveCursor();

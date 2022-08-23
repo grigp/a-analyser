@@ -1,6 +1,7 @@
 #include "stabilogramvisualwidget.h"
 #include "ui_stabilogramvisualwidget.h"
 
+#include <QMessageBox>
 #include <QDebug>
 
 #include "visualdescriptor.h"
@@ -9,6 +10,7 @@
 #include "dataprovider.h"
 #include "stabilogram.h"
 #include "baseutils.h"
+#include "createsectiondialog.h"
 
 StabilogramVisualWidget::StabilogramVisualWidget(VisualDescriptor* visual,
                                                  const QString& testUid, const QString& probeUid, const QString& channelUid,
@@ -26,6 +28,9 @@ StabilogramVisualWidget::StabilogramVisualWidget(VisualDescriptor* visual,
     QCursor cursorGraph = QCursor(QPixmap(":/images/SignalCursor.png"));
     ui->wgtGraph->setCursor(cursorGraph);
 
+    ui->wgtGraph->setContextMenuPolicy(Qt::CustomContextMenu);
+    connect(ui->wgtGraph, &AreaGraph::customContextMenuRequested, this, &StabilogramVisualWidget::on_popupMenuRequested);
+
     connect(ui->wgtGraph, &AreaGraph::moveCursor, this, &StabilogramVisualWidget::on_moveCursor);
     connect(ui->wgtGraph, &AreaGraph::press, this, &StabilogramVisualWidget::on_press);
     connect(ui->wgtGraph, &AreaGraph::move, this, &StabilogramVisualWidget::on_move);
@@ -34,6 +39,8 @@ StabilogramVisualWidget::StabilogramVisualWidget(VisualDescriptor* visual,
 
 StabilogramVisualWidget::~StabilogramVisualWidget()
 {
+    if (m_menu)
+        delete m_menu;
     delete ui;
     delete m_stab;
 }
@@ -94,6 +101,31 @@ void StabilogramVisualWidget::signalScroll(int pos)
         int p = static_cast<int>((ui->wgtGraph->area(0)->signal()->size() * ui->wgtGraph->hScale() - w)
                                  * pos / 100.0 / ui->wgtGraph->hScale());
         ui->wgtGraph->setStartPoint(p);
+    }
+}
+
+void StabilogramVisualWidget::on_popupMenuRequested(QPoint pos)
+{
+    if (!m_menu)
+    {
+        m_menu = new QMenu(this);
+        QAction * createSection = new QAction(tr("Создать секцию"), this);
+        connect(createSection, &QAction::triggered, this, &StabilogramVisualWidget::on_createSection);
+        m_menu->addAction(createSection);
+    }
+    m_menu->popup(ui->wgtGraph->mapToGlobal(pos));
+}
+
+void StabilogramVisualWidget::on_createSection()
+{
+    int begin = -1;
+    int end = -1;
+    ui->wgtGraph->selectedArea(begin, end);
+    CreateSectionDialog dlg;
+    dlg.assignSignal(m_stab);
+    if (dlg.exec() == QDialog::Accepted)
+    {
+        qDebug() << "Создали секцию - " + dlg.sectionName() << dlg.channel() << begin << end;
     }
 }
 
