@@ -155,6 +155,19 @@ enum NormValue
 };
 
 /*!
+ * \brief Структура, содержащая информацию о секции сигнала The SectionInfo struct
+ */
+struct SectionInfo
+{
+    QString number; ///< Номер секции в строковом виде {channelUid}.data.number(6 digits) QString::number(n).rightJustified(6, '0'));
+    QString name;   ///< Название секции
+    int channel;    ///< Номер подканала
+    int from;       ///< Начальная точка
+    int to;         ///<  Конечная точка
+    //Actions actions;
+};
+
+/*!
  * \brief возвращает путь к папке данных для всех приложений А-Мед
  */
 QString amedDataPath();

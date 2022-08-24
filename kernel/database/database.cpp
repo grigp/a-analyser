@@ -446,11 +446,43 @@ bool DataBase::createSection(QString &channelUid, QString &name, int channel, in
     sectionObj["chan"] = channel;
     sectionObj["from"] = from;
     sectionObj["to"] = to;
+    //sectionObj["actions"] = actions;
     writeTableRec(fnCfg, sectionObj);
 
-    qDebug() << fnData << fnCfg;
+    return true;
+}
+
+bool DataBase::getSections(const QString &channelUid, QList<DataDefines::SectionInfo> &sections)
+{
+    QDir dir = channelsDir();
+    auto files = dir.entryList(QStringList() << channelUid + ".cfg.*");
+
+    sections.clear();
+    foreach (auto fn, files)
+    {
+        DataDefines::SectionInfo si;
+
+        QJsonObject sectionObj;
+        if (readTableRec(dir.absoluteFilePath(fn), sectionObj))
+        {
+            si.name = sectionObj["name"].toString();
+            si.channel = sectionObj["chan"].toInt();
+            si.from = sectionObj["from"].toInt();
+            si.to = sectionObj["to"].toInt();
+//            si.actions = sectionObj["actions"].toArray();
+            auto parts = fn.split('.');
+            if (parts.size() == 3)
+                si.number = parts.at(2);
+            sections << si;
+        }
+    }
 
     return true;
+}
+
+bool DataBase::getSectionData(const QString &channelUid, const int number, QByteArray &data)
+{
+
 }
 
 void DataBase::addPrimaryFactor(const QString &testUid,

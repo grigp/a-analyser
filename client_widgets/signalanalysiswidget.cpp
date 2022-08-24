@@ -195,7 +195,18 @@ void SignalAnalysisWidget::openTest(const QString testUid)
                     itemChanExport->setData(baExport, ButtonActionRole);
                     itemChanExport->setData(EditCommandDelegate::CmdExport, EditCommandDelegate::CommandRole);
                     if (n > 0)
+                    {
                         itemProbe->appendRow(QList<QStandardItem*>() << itemChan << itemChanExport);
+                        QList<DataDefines::SectionInfo> sections;
+                        if (DataProvider::getSections(chi.uid, sections))
+                        {
+                            foreach (auto section, sections)
+                            {
+                                qDebug() << section.name << section.number;
+
+                            }
+                        }
+                    }
                     else
                         delete itemChan;
                 }

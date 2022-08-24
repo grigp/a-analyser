@@ -210,6 +210,22 @@ QString getChannelUid(const QString &probeUid, const QString &channelId);
  */
 bool createSection(QString& channelUid, QString &name, int channel, int from, int to, QByteArray &data);
 
+/*!
+ * \brief Возвращает список секций для канала
+ * \param channelUid - uid канала в пробе
+ * \param sections - возвращаемый список сеций
+ * \return true, если успешно
+ */
+bool getSections(const QString& channelUid, QList<DataDefines::SectionInfo> &sections);
+
+/*!
+ * \brief Возвращает данные секции, сигнал
+ * \param channelUid - uid канала в пробе
+ * \param number - номер секции
+ * \param data - возвращаемые данные
+ * \return true, если успешно
+ */
+bool getSectionData(const QString &channelUid, const int number, QByteArray &data);
 
 //! ------------------- Первичные показатели -------------------
 
