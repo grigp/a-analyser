@@ -11,9 +11,9 @@
 #include "settingsprovider.h"
 
 SpectrStabVisualWidget::SpectrStabVisualWidget(VisualDescriptor* visual,
-                                               const QString& testUid, const QString& probeUid, const QString& channelUid,
+                                               const QString& testUid, const QString& probeUid, const QString& channelId,
                                                QWidget *parent) :
-    ChannelVisual(visual, testUid, probeUid, channelUid, parent),
+    ChannelVisual(visual, testUid, probeUid, channelId, parent),
     ui(new Ui::SpectrStabVisualWidget)
 {
     ui->setupUi(this);
@@ -39,12 +39,12 @@ SpectrStabVisualWidget::~SpectrStabVisualWidget()
 
 bool SpectrStabVisualWidget::isValid()
 {
-    return ChannelsUtils::instance().channelType(channelUid()) == ChannelsDefines::ctStabilogram;
+    return ChannelsUtils::instance().channelType(channelId()) == ChannelsDefines::ctStabilogram;
 }
 
 void SpectrStabVisualWidget::calculate()
 {
-    m_factors = new SpectrStabFactors(testUid(), probeUid(), channelUid());
+    m_factors = new SpectrStabFactors(testUid(), probeUid(), channelId());
     showTable();
     showSpectrs();
     restoreSplitterPosition();

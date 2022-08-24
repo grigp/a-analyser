@@ -59,12 +59,12 @@ private:
 class ChannelVisual : public ProbeVisual
 {
 public:
-    ChannelVisual(VisualDescriptor* visual, const QString& testUid, const QString& probeUid, const QString& channelUid, QWidget *parent = nullptr);
+    ChannelVisual(VisualDescriptor* visual, const QString& testUid, const QString& probeUid, const QString& channelId, QWidget *parent = nullptr);
 
-    QString channelUid() {return m_channelUid;}
+    QString channelId() {return m_channelId;}
 
 private:
-    QString m_channelUid {""};
+    QString m_channelId {""};
 };
 
 

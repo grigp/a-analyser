@@ -25,7 +25,7 @@ QString BalistogramVisual::name()
 }
 
 Visual *BalistogramVisual::getVisualWidget(QWidget *parent,
-                                           const QString &testUid, const QString &probeUid, const QString &channelUid)
+                                           const QString &testUid, const QString &probeUid, const QString &channelId)
 {
-    return new BalistogramVisualWidget(this, testUid, probeUid, channelUid, parent);
+    return new BalistogramVisualWidget(this, testUid, probeUid, channelId, parent);
 }

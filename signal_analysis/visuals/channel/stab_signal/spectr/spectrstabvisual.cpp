@@ -23,7 +23,7 @@ QString SpectrStabVisual::name()
     return VisualNames::Name_SpectrStab;
 }
 
-Visual *SpectrStabVisual::getVisualWidget(QWidget *parent, const QString &testUid, const QString &probeUid, const QString &channelUid)
+Visual *SpectrStabVisual::getVisualWidget(QWidget *parent, const QString &testUid, const QString &probeUid, const QString &channelId)
 {
-    return new SpectrStabVisualWidget(this, testUid, probeUid, channelUid, parent);
+    return new SpectrStabVisualWidget(this, testUid, probeUid, channelId, parent);
 }

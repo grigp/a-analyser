@@ -10,9 +10,9 @@
 #include "dataprovider.h"
 
 MyogramSignalVisualWidget::MyogramSignalVisualWidget(VisualDescriptor* visual,
-                                                     const QString& testUid, const QString& probeUid, const QString& channelUid,
+                                                     const QString& testUid, const QString& probeUid, const QString& channelId,
                                                      QWidget *parent)
-    : ChannelVisual(visual, testUid, probeUid, channelUid, parent),
+    : ChannelVisual(visual, testUid, probeUid, channelId, parent),
     ui(new Ui::MyogramSignalVisualWidget)
 {
     ui->setupUi(this);
@@ -26,7 +26,7 @@ MyogramSignalVisualWidget::~MyogramSignalVisualWidget()
 
 bool MyogramSignalVisualWidget::isValid()
 {
-    return ChannelsUtils::instance().channelType(channelUid()) == ChannelsDefines::ctMyogram;
+    return ChannelsUtils::instance().channelType(channelId()) == ChannelsDefines::ctMyogram;
 }
 
 void MyogramSignalVisualWidget::calculate()
@@ -147,7 +147,7 @@ void MyogramSignalVisualWidget::getSignal()
     ui->cbChannels->addItem(tr("Все"));
 
     QByteArray data;
-    if (DataProvider::getChannel(probeUid(), channelUid(), data))
+    if (DataProvider::getChannel(probeUid(), channelId(), data))
     {
         if (!m_signal)
         {

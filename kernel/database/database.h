@@ -162,6 +162,13 @@ public:
     bool getChannel(const QString &channelUid, QByteArray &data) const;
 
     /*!
+     * \brief Возвращает channelUid, идентификатор канала в пробе
+     * \param probeUid - uid пробы
+     * \param channelId - идентификатор канала
+     */
+    QString getChannelUid(const QString &probeUid, const QString &channelId) const;
+
+    /*!
      * \brief Удаление записи о тесте
      * \param testUid - uid теста
      * \return true, если успешно

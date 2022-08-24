@@ -8,9 +8,9 @@
 #include "dynamosignal.h"
 
 DynamoSignalVisualWidget::DynamoSignalVisualWidget(VisualDescriptor* visual,
-                                                   const QString& testUid, const QString& probeUid, const QString& channelUid,
+                                                   const QString& testUid, const QString& probeUid, const QString& channelId,
                                                    QWidget *parent)
-    : ChannelVisual(visual, testUid, probeUid, channelUid, parent),
+    : ChannelVisual(visual, testUid, probeUid, channelId, parent),
     ui(new Ui::DynamoSignalVisualWidget)
 {
     ui->setupUi(this);
@@ -36,8 +36,8 @@ DynamoSignalVisualWidget::~DynamoSignalVisualWidget()
 
 bool DynamoSignalVisualWidget::isValid()
 {
-    return ChannelsUtils::instance().channelType(channelUid()) == ChannelsDefines::ctDynamo ||
-           ChannelsUtils::instance().channelType(channelUid()) == ChannelsDefines::ctBreath;
+    return ChannelsUtils::instance().channelType(channelId()) == ChannelsDefines::ctDynamo ||
+           ChannelsUtils::instance().channelType(channelId()) == ChannelsDefines::ctBreath;
 }
 
 void DynamoSignalVisualWidget::calculate()
@@ -53,10 +53,10 @@ void DynamoSignalVisualWidget::scaleChange(int idx)
     {
         if (ui->cbScale->currentData().toDouble() > 1)
         {
-            if (ChannelsUtils::instance().channelType(channelUid()) == ChannelsDefines::ctBreath)
+            if (ChannelsUtils::instance().channelType(channelId()) == ChannelsDefines::ctBreath)
                 ui->wgtGraph->setDiapazone(m_signal->midValue() - diap / 2, m_signal->midValue() + diap / 2);
             else
-            if (ChannelsUtils::instance().channelType(channelUid()) == ChannelsDefines::ctDynamo)
+            if (ChannelsUtils::instance().channelType(channelId()) == ChannelsDefines::ctDynamo)
                 ui->wgtGraph->setDiapazone(0, diap);
         }
         else
@@ -143,13 +143,13 @@ void DynamoSignalVisualWidget::on_move(const int x, const int y, const Qt::Mouse
 void DynamoSignalVisualWidget::showGraph()
 {
     QByteArray data;
-    if (DataProvider::getChannel(probeUid(), channelUid(), data))
+    if (DataProvider::getChannel(probeUid(), channelId(), data))
     {
         if (!m_signal)
         {
             m_signal = new DynamoSignal(data);
             QString title = "";
-            if (ChannelsUtils::instance().channelType(channelUid()) == ChannelsDefines::ctDynamo)
+            if (ChannelsUtils::instance().channelType(channelId()) == ChannelsDefines::ctDynamo)
                 title = tr("кг");
             ui->wgtGraph->appendSignal(m_signal, title);
             auto absMax = m_signal->absMaxValue();

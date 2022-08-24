@@ -23,7 +23,7 @@ QString HistogramVisual::name()
     return VisualNames::Name_Histogram;
 }
 
-Visual *HistogramVisual::getVisualWidget(QWidget *parent, const QString &testUid, const QString &probeUid, const QString &channelUid)
+Visual *HistogramVisual::getVisualWidget(QWidget *parent, const QString &testUid, const QString &probeUid, const QString &channelId)
 {
-    return new HistogramVisualWidget(this, testUid, probeUid, channelUid, parent);
+    return new HistogramVisualWidget(this, testUid, probeUid, channelId, parent);
 }

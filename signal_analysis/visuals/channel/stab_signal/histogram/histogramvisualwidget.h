@@ -20,7 +20,7 @@ public:
     static const int HistBarsCount = 19;
 
     explicit HistogramVisualWidget(VisualDescriptor* visual,
-                                   const QString& testUid, const QString& probeUid, const QString& channelUid,
+                                   const QString& testUid, const QString& probeUid, const QString& channelId,
                                    QWidget *parent = nullptr);
     ~HistogramVisualWidget() override;
 

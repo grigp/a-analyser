@@ -18,7 +18,7 @@ class SKGVisualWidget : public ChannelVisual
 
 public:
     explicit SKGVisualWidget(VisualDescriptor* visual,
-                             const QString& testUid, const QString& probeUid, const QString& channelUid,
+                             const QString& testUid, const QString& probeUid, const QString& channelId,
                              QWidget *parent = nullptr);
     ~SKGVisualWidget() override;
 

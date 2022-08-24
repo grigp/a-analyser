@@ -340,16 +340,9 @@ bool DataBase::channelExists(const QString &channelUid) const
 
 bool DataBase::getChannel(const QString &probeUid, const QString &channelId, QByteArray &data) const
 {
-    DataDefines::ProbeInfo pi;
-    if (getProbeInfo(probeUid, pi))
-    {
-        for (int i = 0; i < pi.channels.size(); ++i)
-        {
-            auto chanRec = pi.channels.at(i);
-            if (chanRec.channelId == channelId)
-                return getChannel(chanRec.uid, data);
-        }
-    }
+    QString uid = getChannelUid(probeUid, channelId);
+    if (uid != QUuid().toString())
+        return getChannel(uid, data);
     return false;
 }
 
@@ -370,6 +363,21 @@ bool DataBase::getChannel(const QString &channelUid, QByteArray &data) const
         }
     }
     return false;
+}
+
+QString DataBase::getChannelUid(const QString &probeUid, const QString &channelId) const
+{
+    DataDefines::ProbeInfo pi;
+    if (getProbeInfo(probeUid, pi))
+    {
+        for (int i = 0; i < pi.channels.size(); ++i)
+        {
+            auto chanRec = pi.channels.at(i);
+            if (chanRec.channelId == channelId)
+                return chanRec.uid;
+        }
+    }
+    return QUuid().toString();
 }
 
 bool DataBase::deleteTest(const QString &testUid) const
@@ -411,14 +419,38 @@ bool DataBase::deleteTest(const QString &testUid) const
 
 bool DataBase::createSection(QString &channelUid, QString &name, int channel, int from, int to, QByteArray &data)
 {
+    //! Определение имени файлов для новой секции
     QDir dir = channelsDir();
-    auto fileName = dir.absoluteFilePath(channelUid);
-    qDebug() << fileName;
-    if (QFile::exists(fileName))
+    int n = 1;
+    QString fnData = "";
+    QString fnCfg = "";
+    do
     {
+        fnData = dir.absoluteFilePath(channelUid + ".data." + QString::number(n).rightJustified(6, '0'));
+        fnCfg = dir.absoluteFilePath(channelUid + ".cfg." + QString::number(n).rightJustified(6, '0'));
+        ++n;
+    }
+    while (QFile::exists(fnData) || QFile::exists(fnCfg));
 
+    //! Запись сигналов
+    QFile fileData(fnData);
+    if (fileData.open(QIODevice::WriteOnly))
+    {
+        fileData.write(data);
+        fileData.close();
     }
 
+    //! Запись параметров секции
+    QJsonObject sectionObj;
+    sectionObj["name"] = name;
+    sectionObj["chan"] = channel;
+    sectionObj["from"] = from;
+    sectionObj["to"] = to;
+    writeTableRec(fnCfg, sectionObj);
+
+    qDebug() << fnData << fnCfg;
+
+    return true;
 }
 
 void DataBase::addPrimaryFactor(const QString &testUid,

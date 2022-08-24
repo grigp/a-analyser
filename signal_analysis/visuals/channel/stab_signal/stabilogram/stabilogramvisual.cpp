@@ -23,8 +23,8 @@ QString StabilogramVisual::name()
     return VisualNames::Name_Stabilogram;
 }
 
-Visual *StabilogramVisual::getVisualWidget(QWidget *parent, const QString &testUid, const QString &probeUid, const QString &channelUid)
+Visual *StabilogramVisual::getVisualWidget(QWidget *parent, const QString &testUid, const QString &probeUid, const QString &channelId)
 {
-    return new StabilogramVisualWidget(this, testUid, probeUid, channelUid, parent);
+    return new StabilogramVisualWidget(this, testUid, probeUid, channelId, parent);
 }
 

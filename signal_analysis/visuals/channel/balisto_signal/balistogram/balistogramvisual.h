@@ -25,7 +25,7 @@ public:
     QString name() override;
 
     Visual* getVisualWidget(QWidget *parent = nullptr,
-                            const QString& testUid = "", const QString& probeUid = "", const QString& channelUid = "") override;
+                            const QString& testUid = "", const QString& probeUid = "", const QString& channelId = "") override;
 };
 
 #endif // BALISTOGRAMVISUAL_H

@@ -20,7 +20,7 @@ class DynamoSignalVisualWidget : public ChannelVisual
 
 public:
     explicit DynamoSignalVisualWidget(VisualDescriptor* visual,
-                                      const QString& testUid, const QString& probeUid, const QString& channelUid,
+                                      const QString& testUid, const QString& probeUid, const QString& channelId,
                                       QWidget *parent = nullptr);
     ~DynamoSignalVisualWidget() override;
 

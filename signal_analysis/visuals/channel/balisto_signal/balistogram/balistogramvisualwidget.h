@@ -21,7 +21,7 @@ class BalistogramVisualWidget : public ChannelVisual
 
 public:
     explicit BalistogramVisualWidget(VisualDescriptor* visual,
-                                     const QString& testUid, const QString& probeUid, const QString& channelUid,
+                                     const QString& testUid, const QString& probeUid, const QString& channelId,
                                      QWidget *parent = nullptr);
     ~BalistogramVisualWidget() override;
 

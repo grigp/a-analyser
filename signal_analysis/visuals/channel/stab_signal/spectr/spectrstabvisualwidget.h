@@ -18,7 +18,7 @@ class SpectrStabVisualWidget : public ChannelVisual
 
 public:
     explicit SpectrStabVisualWidget(VisualDescriptor* visual,
-                                    const QString& testUid, const QString& probeUid, const QString& channelUid,
+                                    const QString& testUid, const QString& probeUid, const QString& channelId,
                                     QWidget *parent = nullptr);
     ~SpectrStabVisualWidget() override;
 

@@ -24,7 +24,7 @@ QString VectorAnalysisVisual::name()
 }
 
 Visual *VectorAnalysisVisual::getVisualWidget(QWidget *parent,
-                                              const QString &testUid, const QString &probeUid, const QString &channelUid)
+                                              const QString &testUid, const QString &probeUid, const QString &channelId)
 {
-    return new VectorAnalysisVisualWidget(this, testUid, probeUid, channelUid, parent);
+    return new VectorAnalysisVisualWidget(this, testUid, probeUid, channelId, parent);
 }

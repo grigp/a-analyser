@@ -11,9 +11,9 @@
 #include "settingsprovider.h"
 
 VectorAnalysisVisualWidget::VectorAnalysisVisualWidget(VisualDescriptor* visual,
-                                                       const QString& testUid, const QString& probeUid, const QString& channelUid,
+                                                       const QString& testUid, const QString& probeUid, const QString& channelId,
                                                        QWidget *parent) :
-    ChannelVisual(visual, testUid, probeUid, channelUid, parent),
+    ChannelVisual(visual, testUid, probeUid, channelId, parent),
     ui(new Ui::VectorAnalysisVisualWidget)
 {
     ui->setupUi(this);
@@ -26,13 +26,13 @@ VectorAnalysisVisualWidget::~VectorAnalysisVisualWidget()
 
 bool VectorAnalysisVisualWidget::isValid()
 {
-    return ChannelsUtils::instance().channelType(channelUid()) == ChannelsDefines::ctStabilogram;
+    return ChannelsUtils::instance().channelType(channelId()) == ChannelsDefines::ctStabilogram;
 }
 
 void VectorAnalysisVisualWidget::calculate()
 {
     if (!m_factors)
-        m_factors = new VectorFactors(testUid(), probeUid(), channelUid());
+        m_factors = new VectorFactors(testUid(), probeUid(), channelId());
 
     showFactors();
     showAccumulationFunction();

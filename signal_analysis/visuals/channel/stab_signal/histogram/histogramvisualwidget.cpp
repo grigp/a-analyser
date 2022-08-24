@@ -12,9 +12,9 @@
 #include "stabilogram.h"
 
 HistogramVisualWidget::HistogramVisualWidget(VisualDescriptor* visual,
-                                             const QString& testUid, const QString& probeUid, const QString& channelUid,
+                                             const QString& testUid, const QString& probeUid, const QString& channelId,
                                              QWidget *parent) :
-    ChannelVisual (visual, testUid, probeUid, channelUid, parent),
+    ChannelVisual (visual, testUid, probeUid, channelId, parent),
     ui(new Ui::HistogramVisualWidget)
 {
     ui->setupUi(this);
@@ -30,7 +30,7 @@ HistogramVisualWidget::~HistogramVisualWidget()
 
 bool HistogramVisualWidget::isValid()
 {
-    return ChannelsUtils::instance().channelType(channelUid()) == ChannelsDefines::ctStabilogram;
+    return ChannelsUtils::instance().channelType(channelId()) == ChannelsDefines::ctStabilogram;
 }
 
 void HistogramVisualWidget::calculate()
@@ -48,7 +48,7 @@ void HistogramVisualWidget::on_selectItem(const int idx)
 void HistogramVisualWidget::computeHist()
 {
     QByteArray data;
-    if (DataProvider::getChannel(probeUid(), channelUid(), data))
+    if (DataProvider::getChannel(probeUid(), channelId(), data))
     {
         auto stab = new Stabilogram(data);
 

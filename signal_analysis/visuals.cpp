@@ -30,7 +30,7 @@ ChannelVisual::ChannelVisual(VisualDescriptor *visual,
                              const QString &testUid, const QString &probeUid, const QString &channelUid,
                              QWidget *parent)
     : ProbeVisual (visual, testUid, probeUid, parent)
-    , m_channelUid(channelUid)
+    , m_channelId(channelUid)
 {
 
 }

@@ -14,9 +14,9 @@
 #include "signalanalysisutils.h"
 
 StabilogramVisualWidget::StabilogramVisualWidget(VisualDescriptor* visual,
-                                                 const QString& testUid, const QString& probeUid, const QString& channelUid,
+                                                 const QString& testUid, const QString& probeUid, const QString& channelId,
                                                  QWidget *parent) :
-    ChannelVisual(visual, testUid, probeUid, channelUid, parent),
+    ChannelVisual(visual, testUid, probeUid, channelId, parent),
     ui(new Ui::StabilogramVisualWidget)
 {
     ui->setupUi(this);
@@ -48,7 +48,7 @@ StabilogramVisualWidget::~StabilogramVisualWidget()
 
 bool StabilogramVisualWidget::isValid()
 {
-    return ChannelsUtils::instance().channelType(channelUid()) == ChannelsDefines::ctStabilogram;
+    return ChannelsUtils::instance().channelType(channelId()) == ChannelsDefines::ctStabilogram;
 }
 
 void StabilogramVisualWidget::calculate()
@@ -127,8 +127,9 @@ void StabilogramVisualWidget::on_createSection()
     if (dlg.exec() == QDialog::Accepted)
     {
         QString chId = m_stab->channelId();
-//        SignalAnalysisUtils::createSection(, chId, dlg.sectionName(), dlg.channel(), begin, end, m_stab);
-        qDebug() << "Создали секцию - " + dlg.sectionName() << dlg.channel() << begin << end;
+        QString chUid = DataProvider::getChannelUid(probeUid(), channelId());
+        QString name = dlg.sectionName();
+        SignalAnalysisUtils::createSection(chUid, chId, name, dlg.channel(), begin, end, m_stab);
     }
 }
 
@@ -177,7 +178,7 @@ void StabilogramVisualWidget::on_move(const int x, const int y, const Qt::MouseB
 void StabilogramVisualWidget::showGraph()
 {
     QByteArray data;
-    if (DataProvider::getChannel(probeUid(), channelUid(), data))
+    if (DataProvider::getChannel(probeUid(), channelId(), data))
     {
         if (!m_stab)
         {

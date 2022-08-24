@@ -188,6 +188,13 @@ bool getChannel(const QString &probeUid, const QString &channelId, QByteArray &d
  */
 bool getChannel(const QString &channelUid, QByteArray &data);
 
+/*!
+ * \brief Возвращает channelUid, идентификатор канала в пробе
+ * \param probeUid - uid пробы
+ * \param channelId - идентификатор канала
+ */
+QString getChannelUid(const QString &probeUid, const QString &channelId);
+
 
 //! ------------------- Секции сигналов -------------------
 

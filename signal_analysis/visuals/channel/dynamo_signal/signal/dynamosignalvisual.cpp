@@ -23,7 +23,7 @@ QString DynamoSignalVisual::name()
     return VisualNames::Name_DynamoSignal;
 }
 
-Visual *DynamoSignalVisual::getVisualWidget(QWidget *parent, const QString &testUid, const QString &probeUid, const QString &channelUid)
+Visual *DynamoSignalVisual::getVisualWidget(QWidget *parent, const QString &testUid, const QString &probeUid, const QString &channelId)
 {
-    return new DynamoSignalVisualWidget(this, testUid, probeUid, channelUid, parent);
+    return new DynamoSignalVisualWidget(this, testUid, probeUid, channelId, parent);
 }

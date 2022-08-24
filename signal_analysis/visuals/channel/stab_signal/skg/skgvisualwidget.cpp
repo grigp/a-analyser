@@ -13,9 +13,9 @@
 #include "classicfactors.h"
 
 SKGVisualWidget::SKGVisualWidget(VisualDescriptor* visual,
-                                 const QString& testUid, const QString& probeUid, const QString& channelUid,
+                                 const QString& testUid, const QString& probeUid, const QString& channelId,
                                  QWidget *parent) :
-    ChannelVisual(visual, testUid, probeUid, channelUid, parent),
+    ChannelVisual(visual, testUid, probeUid, channelId, parent),
     ui(new Ui::SKGVisualWidget)
 {
     ui->setupUi(this);
@@ -28,7 +28,7 @@ SKGVisualWidget::~SKGVisualWidget()
 
 bool SKGVisualWidget::isValid()
 {
-    return ChannelsUtils::instance().channelType(channelUid()) == ChannelsDefines::ctStabilogram;
+    return ChannelsUtils::instance().channelType(channelId()) == ChannelsDefines::ctStabilogram;
 }
 
 void SKGVisualWidget::calculate()
@@ -70,7 +70,7 @@ void SKGVisualWidget::on_btnZeroingClicked(bool isZeroing)
 void SKGVisualWidget::showSKG()
 {
     QByteArray data;
-    if (DataProvider::getChannel(probeUid(), channelUid(), data))
+    if (DataProvider::getChannel(probeUid(), channelId(), data))
     {
         if (!m_stab)
         {
@@ -99,7 +99,7 @@ void SKGVisualWidget::showFactors()
     auto *model = new QStandardItemModel();
 
     if (!m_factors)
-        m_factors = new ClassicFactors(testUid(), probeUid(), channelUid());
+        m_factors = new ClassicFactors(testUid(), probeUid(), channelId());
 
     for (int i = 0; i < m_factors->size(); ++i)
     {

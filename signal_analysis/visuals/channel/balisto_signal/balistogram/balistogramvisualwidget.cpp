@@ -12,9 +12,9 @@
 #include "createsectiondialog.h"
 
 BalistogramVisualWidget::BalistogramVisualWidget(VisualDescriptor *visual,
-                                                 const QString &testUid, const QString &probeUid, const QString &channelUid,
+                                                 const QString &testUid, const QString &probeUid, const QString &channelId,
                                                  QWidget *parent)
-    : ChannelVisual(visual, testUid, probeUid, channelUid, parent),
+    : ChannelVisual(visual, testUid, probeUid, channelId, parent),
       ui(new Ui::BalistogramVisualWidget)
 {
     ui->setupUi(this);
@@ -43,7 +43,7 @@ BalistogramVisualWidget::~BalistogramVisualWidget()
 
 bool BalistogramVisualWidget::isValid()
 {
-    return ChannelsUtils::instance().channelType(channelUid()) == ChannelsDefines::ctBalistogram;
+    return ChannelsUtils::instance().channelType(channelId()) == ChannelsDefines::ctBalistogram;
 }
 
 void BalistogramVisualWidget::calculate()
@@ -169,7 +169,7 @@ void BalistogramVisualWidget::on_move(const int x, const int y, const Qt::MouseB
 void BalistogramVisualWidget::showGraph()
 {
     QByteArray data;
-    if (DataProvider::getChannel(probeUid(), channelUid(), data))
+    if (DataProvider::getChannel(probeUid(), channelId(), data))
     {
         if (!m_z)
         {
