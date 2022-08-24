@@ -11,6 +11,7 @@
 #include "stabilogram.h"
 #include "baseutils.h"
 #include "createsectiondialog.h"
+#include "signalanalysisutils.h"
 
 StabilogramVisualWidget::StabilogramVisualWidget(VisualDescriptor* visual,
                                                  const QString& testUid, const QString& probeUid, const QString& channelUid,
@@ -125,6 +126,8 @@ void StabilogramVisualWidget::on_createSection()
     dlg.assignSignal(m_stab);
     if (dlg.exec() == QDialog::Accepted)
     {
+        QString chId = m_stab->channelId();
+//        SignalAnalysisUtils::createSection(, chId, dlg.sectionName(), dlg.channel(), begin, end, m_stab);
         qDebug() << "Создали секцию - " + dlg.sectionName() << dlg.channel() << begin << end;
     }
 }

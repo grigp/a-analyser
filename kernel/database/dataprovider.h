@@ -189,6 +189,23 @@ bool getChannel(const QString &probeUid, const QString &channelId, QByteArray &d
 bool getChannel(const QString &channelUid, QByteArray &data);
 
 
+//! ------------------- Секции сигналов -------------------
+
+/*!
+ * \brief Создает секцию сигнала
+ * \param channelUid - uid канала
+ * \param name - название секции
+ * \param channel - номер подканала
+ * \param from - начальная точка
+ * \param to - конечная точка
+ * \param data - байтовый массив, содержащий сигнал
+ * \return true, если успешно
+ */
+bool createSection(QString& channelUid, QString &name, int channel, int from, int to, QByteArray &data);
+
+
+//! ------------------- Первичные показатели -------------------
+
 /*!
  * \brief Добавляет в запись о тесте запись о первичном показателе
  * \param testUid - uid теста

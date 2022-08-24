@@ -1,6 +1,7 @@
 #include "balistogramvisualwidget.h"
 #include "ui_balistogramvisualwidget.h"
 
+#include <QMessageBox>
 #include <QDebug>
 
 #include "channelsdefines.h"
@@ -8,6 +9,7 @@
 #include "dataprovider.h"
 #include "balistogram.h"
 #include "baseutils.h"
+#include "createsectiondialog.h"
 
 BalistogramVisualWidget::BalistogramVisualWidget(VisualDescriptor *visual,
                                                  const QString &testUid, const QString &probeUid, const QString &channelUid,
@@ -24,6 +26,9 @@ BalistogramVisualWidget::BalistogramVisualWidget(VisualDescriptor *visual,
 
     QCursor cursorGraph = QCursor(QPixmap(":/images/SignalCursor.png"));
     ui->wgtGraph->setCursor(cursorGraph);
+
+    ui->wgtGraph->setContextMenuPolicy(Qt::CustomContextMenu);
+    connect(ui->wgtGraph, &AreaGraph::customContextMenuRequested, this, &BalistogramVisualWidget::on_popupMenuRequested);
 
     connect(ui->wgtGraph, &AreaGraph::moveCursor, this, &BalistogramVisualWidget::on_moveCursor);
     connect(ui->wgtGraph, &AreaGraph::press, this, &BalistogramVisualWidget::on_press);
@@ -103,6 +108,31 @@ void BalistogramVisualWidget::on_moveCursor()
     if (vals.size() == 1)
     {
         ui->edZ->setText(QString::number(vals.at(0)));
+    }
+}
+
+void BalistogramVisualWidget::on_popupMenuRequested(QPoint pos)
+{
+    if (!m_menu)
+    {
+        m_menu = new QMenu(this);
+        QAction * createSection = new QAction(tr("Создать секцию"), this);
+        connect(createSection, &QAction::triggered, this, &BalistogramVisualWidget::on_createSection);
+        m_menu->addAction(createSection);
+    }
+    m_menu->popup(ui->wgtGraph->mapToGlobal(pos));
+}
+
+void BalistogramVisualWidget::on_createSection()
+{
+    int begin = -1;
+    int end = -1;
+    ui->wgtGraph->selectedArea(begin, end);
+    CreateSectionDialog dlg;
+    dlg.assignSignal(m_z);
+    if (dlg.exec() == QDialog::Accepted)
+    {
+        qDebug() << "Создали секцию - " + dlg.sectionName() << dlg.channel() << begin << end;
     }
 }
 

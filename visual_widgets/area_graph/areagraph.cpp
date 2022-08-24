@@ -360,6 +360,16 @@ void AreaGraph::selectedArea(int &begin, int &end)
 
         begin = static_cast<int>((m_selectAreaBegin - LeftSpace) / (step * hScale) + startPoint);
         end = static_cast<int>((m_selectAreaEnd - LeftSpace) / (step * hScale) + startPoint);
+        if (begin > end)
+        {
+            int i = begin;
+            begin = end;
+            end = i;
+            if (begin < 0)
+                begin = 0;
+            if (end > m_areases.at(0)->signal()->size())
+                end = m_areases.at(0)->signal()->size();
+        }
     }
 }
 

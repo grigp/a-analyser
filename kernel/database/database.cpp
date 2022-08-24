@@ -409,6 +409,18 @@ bool DataBase::deleteTest(const QString &testUid) const
     return false;
 }
 
+bool DataBase::createSection(QString &channelUid, QString &name, int channel, int from, int to, QByteArray &data)
+{
+    QDir dir = channelsDir();
+    auto fileName = dir.absoluteFilePath(channelUid);
+    qDebug() << fileName;
+    if (QFile::exists(fileName))
+    {
+
+    }
+
+}
+
 void DataBase::addPrimaryFactor(const QString &testUid,
                                 const QString &uid,
                                 const double value,
