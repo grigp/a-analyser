@@ -27,6 +27,7 @@ private:
     QList<VisualDescriptor*> m_visTest;
     QList<VisualDescriptor*> m_visProbe;
     QList<VisualDescriptor*> m_visChannel;
+    QList<VisualDescriptor*> m_visSections;
 
 };
 

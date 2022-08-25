@@ -352,17 +352,18 @@ bool DataBase::getChannel(const QString &channelUid, QByteArray &data) const
 
     QDir dir = channelsDir();
     auto fileName = dir.absoluteFilePath(channelUid);
-    if (QFile::exists(fileName))
-    {
-        QFile fChan(fileName);
-        if (fChan.open(QIODevice::ReadOnly))
-        {
-            data = fChan.readAll();
-            fChan.close();
-            return true;
-        }
-    }
-    return false;
+    return readSignal(fileName, data);
+//    if (QFile::exists(fileName))
+//    {
+//        QFile fChan(fileName);
+//        if (fChan.open(QIODevice::ReadOnly))
+//        {
+//            data = fChan.readAll();
+//            fChan.close();
+//            return true;
+//        }
+//    }
+//    return false;
 }
 
 QString DataBase::getChannelUid(const QString &probeUid, const QString &channelId) const
@@ -480,9 +481,11 @@ bool DataBase::getSections(const QString &channelUid, QList<DataDefines::Section
     return true;
 }
 
-bool DataBase::getSectionData(const QString &channelUid, const int number, QByteArray &data)
+bool DataBase::getSectionData(const QString &channelUid, const QString number, QByteArray &data)
 {
-
+    QDir dir = channelsDir();
+    auto fileName = dir.absoluteFilePath(channelUid + ".data." + number);
+    return readSignal(fileName, data);
 }
 
 void DataBase::addPrimaryFactor(const QString &testUid,
@@ -923,6 +926,21 @@ bool DataBase::writeTableRec(const QString &fullFileName, const QJsonObject &rec
 
         fileRec.close();
         return true;
+    }
+    return false;
+}
+
+bool DataBase::readSignal(const QString& fileName, QByteArray &data) const
+{
+    if (QFile::exists(fileName))
+    {
+        QFile fChan(fileName);
+        if (fChan.open(QIODevice::ReadOnly))
+        {
+            data = fChan.readAll();
+            fChan.close();
+            return true;
+        }
     }
     return false;
 }

@@ -200,11 +200,11 @@ public:
     /*!
      * \brief Возвращает данные секции, сигнал
      * \param channelUid - uid канала в пробе
-     * \param number - номер секции
+     * \param number - номер секции в строковом виде
      * \param data - возвращаемые данные
      * \return true, если успешно
      */
-    bool getSectionData(const QString &channelUid, const int number, QByteArray &data);
+    bool getSectionData(const QString &channelUid, const QString number, QByteArray &data);
 
     //! ------------------- Первичные показатели -------------------
 
@@ -372,6 +372,8 @@ private:
      * \return - true, если успешно и false, если нет
      */
     bool writeTableRec(const QString &fullFileName, const QJsonObject &rec) const;
+
+    bool readSignal(const QString& fileName, QByteArray &data) const;
 
     bool readTestRec(const QString &fullFileName, QJsonObject &test) const;
     bool writeTestRec(const QString &fullFileName, const QJsonObject &test) const;

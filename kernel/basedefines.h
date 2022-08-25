@@ -193,6 +193,8 @@ enum TestLevel
     , tlTest        ///< Теста
     , tlProbe       ///< Пробы
     , tlChannel     ///< Канала
+    , tlSection     ///< Секции сигнала
+    , tlFragment    ///< Фрагмента сигнала (на будущее)
 };
 
 

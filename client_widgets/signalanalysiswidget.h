@@ -50,6 +50,7 @@ public:
         , ChannelUidRole                 ///< uid канала, именно реальной записи канала, а не channelID
         , ButtonActionRole               ///< действие на кнопке. Столбец ColButtons. Возвращает bsClose или baExport
         , TabWidgetRole                  ///< указатель на табулированный виджет, содержащий линейку визуализаторов
+        , SectionNumberRole              ///< номер секции в строковом виде QString
     };
 
 
@@ -150,7 +151,10 @@ private:
      * \return указатель на виджет табуляции, связанный с элементом на дереве теста и nulptr, если нет визуализаторов
      */
     QTabWidget* calculateVisualsLine(int &count,
-                                     const QString &testUid, const QString &probeUid = "", const QString &channelId = "");
+                                     const QString &testUid,
+                                     const QString &probeUid = "",
+                                     const QString &channelId = "",
+                                     const QString &sectionNumber = "");
 
 
     QStandardItemModel* m_mdlTests {nullptr};

@@ -141,7 +141,7 @@ bool DataProvider::getSections(const QString &channelUid, QList<DataDefines::Sec
     return static_cast<AAnalyserApplication*>(QApplication::instance())->getDB()->getSections(channelUid, sections);
 }
 
-bool DataProvider::getSectionData(const QString &channelUid, const int number, QByteArray &data)
+bool DataProvider::getSectionData(const QString &channelUid, const QString number, QByteArray &data)
 {
     return static_cast<AAnalyserApplication*>(QApplication::instance())->getDB()->getSectionData(channelUid, number, data);
 }

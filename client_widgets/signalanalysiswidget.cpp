@@ -135,9 +135,12 @@ void SignalAnalysisWidget::openTest(const QString testUid)
 
     auto calcVisLine = [&](QStandardItem* item,
                            int& count,
-                           const QString &testUid, const QString &probeUid = "", const QString &channelId = "")
+                           const QString &testUid,
+                           const QString &probeUid = "",
+                           const QString &channelId = "",
+                           const QString &sectionNumber = "")
     {
-        auto* wgt = calculateVisualsLine(count, testUid, probeUid, channelId);
+        auto* wgt = calculateVisualsLine(count, testUid, probeUid, channelId, sectionNumber);
         //! Если итем с визуалами еще не найден и этот итем с визуалами, то запомним на него указатель
         if (!itemWithVisuals  && wgt)
             itemWithVisuals = item;
@@ -197,14 +200,23 @@ void SignalAnalysisWidget::openTest(const QString testUid)
                     if (n > 0)
                     {
                         itemProbe->appendRow(QList<QStandardItem*>() << itemChan << itemChanExport);
+
                         QList<DataDefines::SectionInfo> sections;
                         if (DataProvider::getSections(chi.uid, sections))
                         {
                             foreach (auto section, sections)
                             {
-                                qDebug() << section.name << section.number;
+                                auto *itemSection = new QStandardItem(section.name);
+                                itemSection->setData(section.number, SectionNumberRole);
+                                calcVisLine(itemSection, n, ti.uid, pi.uid, chi.channelId, section.name);
+                                itemSection->setIcon(QIcon(":/images/tree/signal.png"));
+
+                                itemChan->appendRow(QList<QStandardItem*>() << itemSection);
+  //                              qDebug() << section.name << section.number;
 
                             }
+
+                            ui->tvTests->expand(itemChan->index());
                         }
                     }
                     else
@@ -335,18 +347,24 @@ bool SignalAnalysisWidget::isTestOpened(const QString &testUid)
 }
 
 QTabWidget *SignalAnalysisWidget::calculateVisualsLine(int &count,
-                                                       const QString &testUid, const QString &probeUid, const QString &channelId)
+                                                       const QString &testUid,
+                                                       const QString &probeUid,
+                                                       const QString &channelId,
+                                                       const QString &sectionNumber)
 {
     QTabWidget *tw = nullptr;
     count = 0;
     BaseDefines::TestLevel level = BaseDefines::tlNone;
-    if (probeUid == "" && channelId == "")
+    if (probeUid == "" && channelId == "" && sectionNumber == "")
         level = BaseDefines::tlTest;
     else
-    if (channelId == "")
+    if (channelId == "" && sectionNumber == "")
         level = BaseDefines::tlProbe;
     else
+    if (sectionNumber == "")
         level = BaseDefines::tlChannel;
+    else
+        level = BaseDefines::tlSection;
 
     auto *app = static_cast<AAnalyserApplication*>(QApplication::instance());
     for (int i = 0; i < app->visualCount(level); ++i)

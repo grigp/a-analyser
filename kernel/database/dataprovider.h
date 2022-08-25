@@ -225,7 +225,7 @@ bool getSections(const QString& channelUid, QList<DataDefines::SectionInfo> &sec
  * \param data - возвращаемые данные
  * \return true, если успешно
  */
-bool getSectionData(const QString &channelUid, const int number, QByteArray &data);
+bool getSectionData(const QString &channelUid, const QString number, QByteArray &data);
 
 //! ------------------- Первичные показатели -------------------
 

@@ -24,6 +24,9 @@ VisualsFactory::~VisualsFactory()
     foreach (auto vis, m_visChannel)
         delete vis;
     m_visChannel.clear();
+    foreach (auto vis, m_visSections)
+        delete vis;
+    m_visSections.clear();
 }
 
 void VisualsFactory::registerVisual(VisualDescriptor *visual)
@@ -36,6 +39,8 @@ void VisualsFactory::registerVisual(VisualDescriptor *visual)
     else
     if (visual->level() == BaseDefines::tlChannel)
         m_visChannel << visual;
+    if (visual->level() == BaseDefines::tlSection)
+        m_visSections << visual;
 }
 
 int VisualsFactory::visualCount(const BaseDefines::TestLevel level)
@@ -44,6 +49,8 @@ int VisualsFactory::visualCount(const BaseDefines::TestLevel level)
     case BaseDefines::tlTest: return m_visTest.size();
     case BaseDefines::tlProbe: return m_visProbe.size();
     case BaseDefines::tlChannel: return m_visChannel.size();
+    case BaseDefines::tlSection: return m_visSections.size();
+    case BaseDefines::tlFragment: return 0;
     case BaseDefines::tlNone: return 0;
     }
     return 0;
@@ -66,6 +73,17 @@ VisualDescriptor *VisualsFactory::getVisual(const BaseDefines::TestLevel level, 
     {
         Q_ASSERT(idx >= 0 && idx < m_visChannel.size());
         return m_visChannel.at(idx);
+    }
+    case BaseDefines::tlSection:
+    {
+        Q_ASSERT(idx >= 0 && idx < m_visSections.size());
+        return m_visSections.at(idx);
+    }
+    case BaseDefines::tlFragment:
+    {
+        return nullptr;
+//        Q_ASSERT(idx >= 0 && idx < m_visSections.size());
+//        return m_visSections.at(idx);
     }
     case BaseDefines::tlNone: return nullptr;
     }
