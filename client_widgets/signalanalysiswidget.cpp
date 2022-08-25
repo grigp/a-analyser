@@ -370,7 +370,7 @@ QTabWidget *SignalAnalysisWidget::calculateVisualsLine(int &count,
     for (int i = 0; i < app->visualCount(level); ++i)
     {
         auto *visual = app->getVisual(level, i);
-        auto *wgt = visual->getVisualWidget(nullptr, testUid, probeUid, channelId);
+        auto *wgt = visual->getVisualWidget(nullptr, testUid, probeUid, channelId, sectionNumber);
         if (wgt->isValid())
         {
             wgt->calculate();

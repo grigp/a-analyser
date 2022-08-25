@@ -21,7 +21,10 @@ public:
     virtual QString name() = 0;
 
     virtual Visual* getVisualWidget(QWidget *parent = nullptr,
-                                    const QString& testUid = "", const QString& probeUid = "", const QString& channelId = "") = 0;
+                                    const QString& testUid = "",
+                                    const QString& probeUid = "",
+                                    const QString& channelId = "",
+                                    const QString& sectionNumber = "") = 0;
 
     BaseDefines::TestLevel level() {return m_level;}
 

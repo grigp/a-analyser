@@ -18,8 +18,10 @@ QString BilateralVisual::name()
     return VisualNames::Name_Bilateral;
 }
 
-Visual *BilateralVisual::getVisualWidget(QWidget *parent, const QString &testUid, const QString &probeUid, const QString &channelUid)
+Visual *BilateralVisual::getVisualWidget(QWidget *parent, const QString &testUid, const QString &probeUid, const QString &channelId,
+                                         const QString& sectionNumber)
 {
-    Q_UNUSED(channelUid);
+    Q_UNUSED(channelId);
+    Q_UNUSED(sectionNumber);
     return new BilateralVisualWidget(this, testUid, probeUid, parent);
 }

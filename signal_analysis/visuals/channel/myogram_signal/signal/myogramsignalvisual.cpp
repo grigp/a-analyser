@@ -23,7 +23,9 @@ QString MyogramSignalVisual::name()
     return VisualNames::Name_MyogramSignal;
 }
 
-Visual *MyogramSignalVisual::getVisualWidget(QWidget *parent, const QString &testUid, const QString &probeUid, const QString &channelId)
+Visual *MyogramSignalVisual::getVisualWidget(QWidget *parent, const QString &testUid, const QString &probeUid, const QString &channelId,
+                                             const QString& sectionNumber)
 {
+    Q_UNUSED(sectionNumber);
     return new MyogramSignalVisualWidget(this, testUid, probeUid, channelId, parent);
 }

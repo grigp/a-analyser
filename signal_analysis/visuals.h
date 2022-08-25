@@ -67,5 +67,20 @@ private:
     QString m_channelId {""};
 };
 
+/*!
+ * \brief Класс описателя базового класса визуализаторов уровня секции The SectionVisual class
+ */
+class SectionVisual : public ChannelVisual
+{
+public:
+    SectionVisual(VisualDescriptor* visual,
+                  const QString& testUid, const QString& probeUid, const QString& channelId, const QString& sectionNumber,
+                  QWidget *parent = nullptr);
+
+    QString sectionNumber() {return m_sectionNumber;}
+
+private:
+    QString m_sectionNumber {""};
+};
 
 #endif // VISUALS_H

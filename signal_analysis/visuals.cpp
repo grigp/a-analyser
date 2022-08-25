@@ -34,3 +34,12 @@ ChannelVisual::ChannelVisual(VisualDescriptor *visual,
 {
 
 }
+
+SectionVisual::SectionVisual(VisualDescriptor *visual,
+                             const QString &testUid,  const QString &probeUid, const QString &channelId, const QString &sectionNumber,
+                             QWidget *parent)
+    : ChannelVisual (visual, testUid, probeUid, channelId, parent)
+    , m_sectionNumber(sectionNumber)
+{
+
+}

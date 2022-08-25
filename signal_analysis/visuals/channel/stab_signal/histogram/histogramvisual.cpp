@@ -23,7 +23,9 @@ QString HistogramVisual::name()
     return VisualNames::Name_Histogram;
 }
 
-Visual *HistogramVisual::getVisualWidget(QWidget *parent, const QString &testUid, const QString &probeUid, const QString &channelId)
+Visual *HistogramVisual::getVisualWidget(QWidget *parent, const QString &testUid, const QString &probeUid, const QString &channelId,
+                                         const QString& sectionNumber)
 {
+    Q_UNUSED(sectionNumber);
     return new HistogramVisualWidget(this, testUid, probeUid, channelId, parent);
 }

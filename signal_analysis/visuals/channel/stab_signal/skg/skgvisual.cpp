@@ -18,7 +18,9 @@ QString SKGVisual::name()
     return VisualNames::Name_SKG;
 }
 
-Visual *SKGVisual::getVisualWidget(QWidget *parent, const QString &testUid, const QString &probeUid, const QString &channelId)
+Visual *SKGVisual::getVisualWidget(QWidget *parent, const QString &testUid, const QString &probeUid, const QString &channelId,
+                                   const QString& sectionNumber)
 {
+    Q_UNUSED(sectionNumber);
     return new SKGVisualWidget(this, testUid, probeUid, channelId, parent);
 }
