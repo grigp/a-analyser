@@ -485,6 +485,7 @@ bool DataBase::getSectionData(const QString &channelUid, const QString number, Q
 {
     QDir dir = channelsDir();
     auto fileName = dir.absoluteFilePath(channelUid + ".data." + number);
+    qDebug() << fileName;
     return readSignal(fileName, data);
 }
 

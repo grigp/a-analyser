@@ -208,7 +208,7 @@ void SignalAnalysisWidget::openTest(const QString testUid)
                             {
                                 auto *itemSection = new QStandardItem(section.name);
                                 itemSection->setData(section.number, SectionNumberRole);
-                                calcVisLine(itemSection, n, ti.uid, pi.uid, chi.channelId, section.name);
+                                calcVisLine(itemSection, n, ti.uid, pi.uid, chi.channelId, section.number);
                                 itemSection->setIcon(QIcon(":/images/tree/signal.png"));
 
                                 itemChan->appendRow(QList<QStandardItem*>() << itemSection);

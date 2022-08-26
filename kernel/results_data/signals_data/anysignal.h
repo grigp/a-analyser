@@ -15,6 +15,8 @@ class AnySignal : public SignalData
 public:
     explicit AnySignal(const int freq, const int subChans);
 
+    explicit AnySignal(const QByteArray &data);
+
     /*!
      * \brief Перекрытая функция, возвращающая идентификатор канала
      */

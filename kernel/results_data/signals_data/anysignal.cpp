@@ -13,6 +13,12 @@ AnySignal::AnySignal(const int freq, const int subChans)
 
 }
 
+AnySignal::AnySignal(const QByteArray &data)
+{
+    fromByteArray(data);
+
+}
+
 QString AnySignal::channelId() const
 {
     return m_channelId;
