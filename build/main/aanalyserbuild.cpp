@@ -51,6 +51,8 @@
 #include "myogramsignalvisual.h"
 #include "sectiongraphvisual.h"
 
+#include "filterlowfrequency.h"
+
 #include "stabilan01.h"
 #include "bilateral.h"
 #include "jumpplate.h"
@@ -114,6 +116,12 @@ void AAnalyserBuild::registerVisuals()
     app->registerVisual(new VectorAnalysisVisual(BaseDefines::tlChannel));
     app->registerVisual(new BilateralVisual(BaseDefines::tlProbe));
     app->registerVisual(new SectionGraphVisual(BaseDefines::tlSection));
+}
+
+void AAnalyserBuild::registerSignalTransformers()
+{
+    auto* app = static_cast<AAnalyserApplication*>(QApplication::instance());
+    app->registerSignalTransformer(new FilterLowFrequency());
 }
 
 
@@ -182,4 +190,5 @@ void AAnalyserBuild::assignDrivers(QMap<QString, QString> &drivers)
     drivers.insert(JumpPlate::uid(), JumpPlate::name());
     drivers.insert(Bilateral::uid(), Bilateral::name());
 }
+
 

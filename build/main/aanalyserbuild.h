@@ -27,6 +27,11 @@ void registerFactors();
 void registerVisuals();
 
 /*!
+ * \brief Регистрирует преобразователи сигналов, вызывая метод SignalTransformFactory::registerTransformer для преобразователя
+ */
+void registerSignalTransformers();
+
+/*!
  * \brief Возвращает список допустимых портов для драйвера по его uid
  * \param drvUid - uid драйвера
  */
@@ -59,6 +64,7 @@ Driver* createDriver(const QString &drvUid);
  * \param drivers - сам список
  */
 void assignDrivers(QMap<QString, QString> &drivers);
+
 
 }
 

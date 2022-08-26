@@ -5,12 +5,14 @@
 #include <QMessageBox>
 #include <QLayout>
 #include <QDesktopWidget>
+#include <QUuid>
 #include <QDebug>
 
 #include "mainwindow.h"
 #include "metodicsfactory.h"
 #include "driversfactory.h"
 #include "factorsfactory.h"
+#include "signaltransformfactory.h"
 #include "driver.h"
 #include "normsmanager.h"
 #include "executewidget.h"
@@ -32,6 +34,7 @@ AAnalyserApplication::AAnalyserApplication(int &argc, char **argv)
     , m_metodics(new MetodicsFactory(this))
     , m_drivers(new DriversFactory(this))
     , m_factors(new FactorsFactory(this))
+    , m_transformers(new SignalTransformFactory(this))
     , m_normsManager(new NormsManager(this))
     , m_visualsFactory(new VisualsFactory(this))
 {
@@ -78,6 +81,8 @@ AAnalyserApplication::~AAnalyserApplication()
         delete m_drivers;
     if (m_factors)
         delete(m_factors);
+    if (m_transformers)
+        delete m_transformers;
 //    if (m_addTSDlg)       TODO: Не пойму, почему вызывает сбой !!!
 //        delete m_addTSDlg;
 }
@@ -475,6 +480,45 @@ MultiFactorDescriptor *AAnalyserApplication::getMultiFactor(const BaseDefines::T
     if (m_factors)
         return m_factors->getMultiFactor(level, idx);
     return nullptr;
+}
+
+void AAnalyserApplication::registerSignalTransformer(SignalTransformer *st)
+{
+    if (m_transformers)
+        m_transformers->registerTransformer(st);
+}
+
+int AAnalyserApplication::signalTransformersCount()
+{
+    if (m_transformers)
+        return m_transformers->count();
+    return 0;
+}
+
+QString AAnalyserApplication::signalTransformerUid(const int idx) const
+{
+    if (m_transformers)
+        return m_transformers->uid(idx);
+    return QUuid().toString();
+}
+
+QString AAnalyserApplication::signalTransformerName(const int idx) const
+{
+    if (m_transformers)
+        return m_transformers->name(idx);
+    return "";
+}
+
+void AAnalyserApplication::transformSignal(const int idx, QVector<double> &buffer) const
+{
+    if (m_transformers)
+        m_transformers->transform(idx, buffer);
+}
+
+void AAnalyserApplication::transformSignal(const QString uid, QVector<double> &buffer) const
+{
+    if (m_transformers)
+        m_transformers->transform(uid, buffer);
 }
 
 QStringList AAnalyserApplication::getTestConditions()

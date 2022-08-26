@@ -3,6 +3,7 @@
 
 #include <QDebug>
 
+#include "aanalyserapplication.h"
 #include "dataprovider.h"
 #include "anysignal.h"
 #include "baseutils.h"
@@ -45,6 +46,10 @@ void SectionGraphVisualWidget::calculate()
             ui->cbScale->setCurrentIndex(0);
         }
     }
+
+   qDebug() << "-----------"
+            << static_cast<AAnalyserApplication*>(QApplication::instance())->signalTransformersCount()
+            << static_cast<AAnalyserApplication*>(QApplication::instance())->signalTransformerName(0);
 }
 
 void SectionGraphVisualWidget::scaleChange(int idx)

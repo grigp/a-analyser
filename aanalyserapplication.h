@@ -18,6 +18,8 @@ class DataBase;
 class MetodicsFactory;
 class DriversFactory;
 class FactorsFactory;
+class SignalTransformFactory;
+class SignalTransformer;
 class Driver;
 class NormsManager;
 class VisualsFactory;
@@ -315,6 +317,46 @@ public:
      */
     MultiFactorDescriptor* getMultiFactor(const BaseDefines::TestLevel level, const int idx);
 
+    ///<-----------------------------------------------------------------------------
+    ///< Преобразование сигналов
+
+    /*!
+     * \brief Регистрирует преобразователь сигнала
+     * \param st - указатель на экземпляр класса преобразователя сигнала
+     */
+    void registerSignalTransformer(SignalTransformer* st);
+
+    /*!
+     * \brief Возвращает кол-во преобразователей
+     */
+    int signalTransformersCount();
+
+    /*!
+     * \brief Возвращает uid преобразователя по индексу в списке
+     * \param idx - индекс в списке
+     */
+    QString signalTransformerUid(const int idx) const;
+
+    /*!
+     * \brief Возвращает название преобразователя по индексу в списке
+     * \param idx - индекс в списке
+     */
+    QString signalTransformerName(const int idx) const;
+
+    /*!
+     * \brief Преобразование сигнала
+     * \param idx - индекс в списке
+     * \param buffer - преобразуемый сигнал
+     */
+    void transformSignal(const int idx, QVector<double> &buffer) const;
+
+    /*!
+     * \brief Преобразование сигнала
+     * \param uid - идентификатор преобразователя
+     * \param buffer - преобразуемый сигнал
+     */
+    void transformSignal(const QString uid, QVector<double> &buffer) const;
+
 
     ///<-----------------------------------------------------------------------------
 
@@ -520,6 +562,7 @@ private:
     MetodicsFactory *m_metodics {nullptr};
     DriversFactory *m_drivers {nullptr};
     FactorsFactory *m_factors {nullptr};
+    SignalTransformFactory *m_transformers {nullptr};
     NormsManager *m_normsManager {nullptr};
     VisualsFactory *m_visualsFactory {nullptr};
 

@@ -1,6 +1,7 @@
 INCLUDEPATH += $$PWD
 
 include(visuals/visuals_src.pri)
+include(transformers/transformers_src.pri)
 include(misc/misc_src.pri)
 
 HEADERS += \
