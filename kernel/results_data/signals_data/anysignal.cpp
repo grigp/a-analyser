@@ -4,6 +4,7 @@
 #include <QIODevice>
 #include <QUuid>
 #include <QDataStream>
+#include <QDebug>
 
 AnySignal::AnySignal(const int freq, const int subChans)
     : SignalData()

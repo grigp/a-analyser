@@ -212,8 +212,6 @@ void SignalAnalysisWidget::openTest(const QString testUid)
                                 itemSection->setIcon(QIcon(":/images/tree/signal.png"));
 
                                 itemChan->appendRow(QList<QStandardItem*>() << itemSection);
-  //                              qDebug() << section.name << section.number;
-
                             }
 
                             ui->tvTests->expand(itemChan->index());

@@ -1,5 +1,7 @@
 #include "signaltransformer.h"
 
+#include "signaltransformerparamswidget.h"
+
 SignalTransformer::SignalTransformer()
 {
 

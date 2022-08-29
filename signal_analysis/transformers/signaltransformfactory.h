@@ -2,8 +2,10 @@
 #define SIGNALTRANSFORMFACTORY_H
 
 #include <QObject>
+#include <QJsonObject>
 
 class SignalTransformer;
+class SignalTransformerParamsWidget;
 
 /*!
  * \brief Класс фабрики классов преобразователей сигналов The SignalTransformFactory class
@@ -41,15 +43,29 @@ public:
      * \brief Преобразование сигнала
      * \param idx - индекс в списке
      * \param buffer - преобразуемый сигнал
+     * \param params - параметры преобразователя
      */
-    void transform(const int idx, QVector<double> &buffer) const;
+    void transform(const int idx, QVector<double> &buffer, const QJsonObject& params) const;
 
     /*!
      * \brief Преобразование сигнала
      * \param uid - идентификатор преобразователя
      * \param buffer - преобразуемый сигнал
+     * \param params - параметры преобразователя
      */
-    void transform(const QString uid, QVector<double> &buffer) const;
+    void transform(const QString uid, QVector<double> &buffer, const QJsonObject& params) const;
+
+    /*!
+     * \brief Создает виджет редактирования параметров преобразователя и возвращает указатель на него
+     * \param idx - индекс в списке
+     */
+    SignalTransformerParamsWidget* getParamsWidget(const int idx) const;
+
+    /*!
+     * \brief Создает виджет редактирования параметров преобразователя и возвращает указатель на него
+     * \param uid - идентификатор преобразователя
+     */
+    SignalTransformerParamsWidget* getParamsWidget(const QString uid) const;
 
 private:
     QList<SignalTransformer*> m_transformers;

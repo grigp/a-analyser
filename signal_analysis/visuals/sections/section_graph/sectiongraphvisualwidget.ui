@@ -226,6 +226,29 @@
        </widget>
       </item>
       <item>
+       <spacer name="horizontalSpacer_2">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeType">
+         <enum>QSizePolicy::Fixed</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>20</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btnTransform">
+        <property name="text">
+         <string>Преобразовать...</string>
+        </property>
+       </widget>
+      </item>
+      <item>
        <spacer name="horizontalSpacer">
         <property name="orientation">
          <enum>Qt::Horizontal</enum>
@@ -335,6 +358,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>btnTransform</sender>
+   <signal>clicked()</signal>
+   <receiver>SectionGraphVisualWidget</receiver>
+   <slot>on_transform()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>234</x>
+     <y>547</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>940</x>
+     <y>202</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>scaleChange(int)</slot>
@@ -342,5 +381,6 @@
   <slot>btnPlusClicked()</slot>
   <slot>btnMinusClicked()</slot>
   <slot>signalScroll(int)</slot>
+  <slot>on_transform()</slot>
  </slots>
 </ui>

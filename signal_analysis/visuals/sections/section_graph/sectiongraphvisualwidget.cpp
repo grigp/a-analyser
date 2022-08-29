@@ -7,6 +7,7 @@
 #include "dataprovider.h"
 #include "anysignal.h"
 #include "baseutils.h"
+#include "selecttransformerdialog.h"
 
 SectionGraphVisualWidget::SectionGraphVisualWidget(VisualDescriptor* visual,
                                                    const QString& testUid,
@@ -47,9 +48,6 @@ void SectionGraphVisualWidget::calculate()
         }
     }
 
-   qDebug() << "-----------"
-            << static_cast<AAnalyserApplication*>(QApplication::instance())->signalTransformersCount()
-            << static_cast<AAnalyserApplication*>(QApplication::instance())->signalTransformerName(0);
 }
 
 void SectionGraphVisualWidget::scaleChange(int idx)
@@ -117,4 +115,33 @@ void SectionGraphVisualWidget::on_release(const int x, const int y, const Qt::Mo
 void SectionGraphVisualWidget::on_move(const int x, const int y, const Qt::MouseButtons buttons)
 {
 
+}
+
+void SectionGraphVisualWidget::on_transform()
+{
+    SelectTransformerDialog dlg(this);
+    if (dlg.exec() == QDialog::Accepted)
+    {
+        QVector<double> buffer;
+        for (int i = 0; i < m_signal->size(); ++i)
+            buffer << m_signal->value(1, i);
+        int freq = m_signal->frequency();
+
+        static_cast<AAnalyserApplication*>(QApplication::instance())->transformSignal(dlg.transformer(), buffer, dlg.params());
+
+        auto *signal = new AnySignal(freq, 2);
+        for (int i = 0; i < m_signal->size(); ++i)
+        {
+            QVector<double> rec;
+            rec << m_signal->value(0, i) << buffer.at(i);
+            signal->appendValue(rec);
+        }
+
+        ui->wgtGraph->clear();
+        m_signal = signal;
+        ui->wgtGraph->appendSignal(m_signal, tr(""));
+        m_absMax = m_signal->absMaxValue();
+        ui->wgtGraph->setDiapazone(-m_absMax, m_absMax);
+        ui->cbScale->setCurrentIndex(0);
+    }
 }

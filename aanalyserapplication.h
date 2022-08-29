@@ -29,6 +29,7 @@ class ProbeVisual;
 class ChannelVisual;
 class MultiFactorDescriptor;
 class AddTestToSummaryDialog;
+class SignalTransformerParamsWidget;
 
 class AAnalyserApplication : public QApplication
 {
@@ -348,14 +349,26 @@ public:
      * \param idx - индекс в списке
      * \param buffer - преобразуемый сигнал
      */
-    void transformSignal(const int idx, QVector<double> &buffer) const;
+    void transformSignal(const int idx, QVector<double> &buffer, const QJsonObject& params) const;
 
     /*!
      * \brief Преобразование сигнала
      * \param uid - идентификатор преобразователя
      * \param buffer - преобразуемый сигнал
      */
-    void transformSignal(const QString uid, QVector<double> &buffer) const;
+    void transformSignal(const QString uid, QVector<double> &buffer, const QJsonObject& params) const;
+
+    /*!
+     * \brief Создает виджет редактирования параметров преобразователя и возвращает указатель на него
+     * \param idx - индекс в списке
+     */
+    SignalTransformerParamsWidget* getSignalTransformParamsWidget(const int idx) const;
+
+    /*!
+     * \brief Создает виджет редактирования параметров преобразователя и возвращает указатель на него
+     * \param uid - идентификатор преобразователя
+     */
+    SignalTransformerParamsWidget* getSignalTransformParamsWidget(const QString uid) const;
 
 
     ///<-----------------------------------------------------------------------------

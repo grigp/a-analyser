@@ -60,7 +60,7 @@ private slots:
      */
     void on_move(const int x, const int y, const Qt::MouseButtons buttons);
 
-
+    void on_transform();
 
 private:
     Ui::SectionGraphVisualWidget *ui;

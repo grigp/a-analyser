@@ -2,6 +2,9 @@
 #define SIGNALTRANSFORMER_H
 
 #include <QObject>
+#include <QJsonObject>
+
+class SignalTransformerParamsWidget;
 
 /*!
  * \brief Базовый класс преобразователя сигнала The SignalTransformer class
@@ -25,8 +28,14 @@ public:
     /*!
      * \brief Преобразование
      * \param buffer - буфер сигнала. На входе - исходный сигнал, на выходе - преобразованный
+     * \param params - параметры преобразования
      */
-    virtual void transform(QVector<double> &buffer) = 0;
+    virtual void transform(QVector<double> &buffer, const QJsonObject& params) = 0;
+
+    /*!
+     * \brief Создает виджет редактирования параметров преобразователя и возвращает указатель на него
+     */
+    virtual SignalTransformerParamsWidget* getParamsWidget() = 0;
 };
 
 #endif // SIGNALTRANSFORMER_H

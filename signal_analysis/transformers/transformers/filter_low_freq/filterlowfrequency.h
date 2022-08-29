@@ -23,7 +23,13 @@ public:
      * \brief Преобразование
      * \param buffer - буфер сигнала. На входе - исходный сигнал, на выходе - преобразованный
      */
-    void transform(QVector<double> &buffer) override;
+    void transform(QVector<double> &buffer, const QJsonObject& params) override;
+
+    /*!
+     * \brief Создает виджет редактирования параметров преобразователя и возвращает указатель на него
+     */
+    SignalTransformerParamsWidget* getParamsWidget() override;
+
 };
 
 #endif // FILTERLOWFREQUENCY_H

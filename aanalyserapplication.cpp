@@ -28,6 +28,7 @@
 #include "log.h"
 #include "addtesttosummarydialog.h"
 #include "dataprovider.h"
+#include "signaltransformerparamswidget.h"
 
 AAnalyserApplication::AAnalyserApplication(int &argc, char **argv)
     : QApplication(argc, argv)
@@ -509,16 +510,30 @@ QString AAnalyserApplication::signalTransformerName(const int idx) const
     return "";
 }
 
-void AAnalyserApplication::transformSignal(const int idx, QVector<double> &buffer) const
+void AAnalyserApplication::transformSignal(const int idx, QVector<double> &buffer, const QJsonObject& params) const
 {
     if (m_transformers)
-        m_transformers->transform(idx, buffer);
+        m_transformers->transform(idx, buffer, params);
 }
 
-void AAnalyserApplication::transformSignal(const QString uid, QVector<double> &buffer) const
+void AAnalyserApplication::transformSignal(const QString uid, QVector<double> &buffer, const QJsonObject& params) const
 {
     if (m_transformers)
-        m_transformers->transform(uid, buffer);
+        m_transformers->transform(uid, buffer, params);
+}
+
+SignalTransformerParamsWidget *AAnalyserApplication::getSignalTransformParamsWidget(const int idx) const
+{
+    if (m_transformers)
+        return m_transformers->getParamsWidget(idx);
+    return nullptr;
+}
+
+SignalTransformerParamsWidget *AAnalyserApplication::getSignalTransformParamsWidget(const QString uid) const
+{
+    if (m_transformers)
+        return m_transformers->getParamsWidget(uid);
+    return nullptr;
 }
 
 QStringList AAnalyserApplication::getTestConditions()
