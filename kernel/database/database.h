@@ -206,6 +206,15 @@ public:
      */
     bool getSectionData(const QString &channelUid, const QString number, QByteArray &data);
 
+    /*!
+     * \brief Обновляет данные секции
+     * \param channelUid - uid канала в пробе
+     * \param number - номер секции в строковом виде
+     * \param data - новые данные секции
+     * \return true, если успешно
+     */
+    bool updateSection(const QString &channelUid, const QString &number, QByteArray &data);
+
     //! ------------------- Первичные показатели -------------------
 
     /*!

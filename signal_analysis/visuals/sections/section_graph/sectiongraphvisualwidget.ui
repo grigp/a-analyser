@@ -249,6 +249,13 @@
        </widget>
       </item>
       <item>
+       <widget class="QPushButton" name="btnRevert">
+        <property name="text">
+         <string>Отменить преобразования...</string>
+        </property>
+       </widget>
+      </item>
+      <item>
        <spacer name="horizontalSpacer">
         <property name="orientation">
          <enum>Qt::Horizontal</enum>
@@ -374,6 +381,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>btnRevert</sender>
+   <signal>clicked()</signal>
+   <receiver>SectionGraphVisualWidget</receiver>
+   <slot>on_revert()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>333</x>
+     <y>541</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>939</x>
+     <y>228</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>scaleChange(int)</slot>
@@ -382,5 +405,6 @@
   <slot>btnMinusClicked()</slot>
   <slot>signalScroll(int)</slot>
   <slot>on_transform()</slot>
+  <slot>on_revert()</slot>
  </slots>
 </ui>

@@ -62,6 +62,7 @@ void SelectTransformerDialog::load()
     {
         auto item = new QStandardItem(app->signalTransformerName(i));
         item->setData(app->signalTransformerUid(i), UidRole);
+        item->setEditable(false);
         model->appendRow(item);
     }
     ui->lvTransform->setModel(model);

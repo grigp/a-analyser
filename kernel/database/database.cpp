@@ -485,8 +485,24 @@ bool DataBase::getSectionData(const QString &channelUid, const QString number, Q
 {
     QDir dir = channelsDir();
     auto fileName = dir.absoluteFilePath(channelUid + ".data." + number);
-    qDebug() << fileName;
     return readSignal(fileName, data);
+}
+
+bool DataBase::updateSection(const QString &channelUid, const QString &number, QByteArray &data)
+{
+    //! Определение имени файлов для новой секции
+    QDir dir = channelsDir();
+    QString fnData = dir.absoluteFilePath(channelUid + ".data." + number);
+
+    //! Запись сигналов
+    QFile fileData(fnData);
+    if (fileData.open(QIODevice::WriteOnly))
+    {
+        fileData.write(data);
+        fileData.close();
+    }
+
+    return true;
 }
 
 void DataBase::addPrimaryFactor(const QString &testUid,

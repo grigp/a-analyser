@@ -52,6 +52,7 @@
 #include "sectiongraphvisual.h"
 
 #include "filterlowfrequency.h"
+#include "filterhighfrequency.h"
 
 #include "stabilan01.h"
 #include "bilateral.h"
@@ -122,6 +123,7 @@ void AAnalyserBuild::registerSignalTransformers()
 {
     auto* app = static_cast<AAnalyserApplication*>(QApplication::instance());
     app->registerSignalTransformer(new FilterLowFrequency());
+    app->registerSignalTransformer(new FilterHighFrequency());
 }
 
 

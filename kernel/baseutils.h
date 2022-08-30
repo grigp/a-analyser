@@ -117,6 +117,14 @@ enum FilterKind
     , fkChebyshev                ///< Чебышева с неравн. 0,5 дБ
 };
 
+static QMap<FilterKind, QString> FilterName =
+{
+      std::pair<FilterKind, QString> (fkCriticalAttenuation, QCoreApplication::tr("Критического затухания"))
+    , std::pair<FilterKind, QString> (fkBessel, QCoreApplication::tr("Бесселя"))
+    , std::pair<FilterKind, QString> (fkBatterwort, QCoreApplication::tr("Баттерворта"))
+    , std::pair<FilterKind, QString> (fkChebyshev, QCoreApplication::tr("Чебышева с неравн. 0,5 дБ"))
+};
+
 /*!
  * \brief Фильтр низкой частоты. Тип фильтра 2-го порядка табл. 13.6 стр. 194
  * \param buffer - фильтруемый массив

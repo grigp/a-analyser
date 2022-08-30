@@ -1,6 +1,7 @@
 #include "sectiongraphvisualwidget.h"
 #include "ui_sectiongraphvisualwidget.h"
 
+#include <QMessageBox>
 #include <QDebug>
 
 #include "aanalyserapplication.h"
@@ -41,6 +42,8 @@ void SectionGraphVisualWidget::calculate()
         if (!m_signal)
         {
             m_signal = new AnySignal(data);
+            ui->wgtGraph->setLine1Color(Qt::blue);
+            ui->wgtGraph->setLine2Color(Qt::red);
             ui->wgtGraph->appendSignal(m_signal, tr(""));
             m_absMax = m_signal->absMaxValue();
             ui->wgtGraph->setDiapazone(-m_absMax, m_absMax);
@@ -127,7 +130,10 @@ void SectionGraphVisualWidget::on_transform()
             buffer << m_signal->value(1, i);
         int freq = m_signal->frequency();
 
-        static_cast<AAnalyserApplication*>(QApplication::instance())->transformSignal(dlg.transformer(), buffer, dlg.params());
+        auto params = dlg.params();
+        params["freq_sample"] = freq;
+
+        static_cast<AAnalyserApplication*>(QApplication::instance())->transformSignal(dlg.transformer(), buffer, params);
 
         auto *signal = new AnySignal(freq, 2);
         for (int i = 0; i < m_signal->size(); ++i)
@@ -139,9 +145,42 @@ void SectionGraphVisualWidget::on_transform()
 
         ui->wgtGraph->clear();
         m_signal = signal;
-        ui->wgtGraph->appendSignal(m_signal, tr(""));
-        m_absMax = m_signal->absMaxValue();
-        ui->wgtGraph->setDiapazone(-m_absMax, m_absMax);
-        ui->cbScale->setCurrentIndex(0);
+        updateSectionData();
     }
+}
+
+void SectionGraphVisualWidget::on_revert()
+{
+    auto id = QMessageBox::question(nullptr, tr("Запрос"), tr("Отменить все преобразования?"));
+    if (id == QMessageBox::Yes)
+    {
+        int freq = m_signal->frequency();
+        auto *signal = new AnySignal(freq, 2);
+        for (int i = 0; i < m_signal->size(); ++i)
+        {
+            QVector<double> rec;
+            rec << m_signal->value(0, i) << m_signal->value(0, i);
+            signal->appendValue(rec);
+        }
+
+        ui->wgtGraph->clear();
+        m_signal = signal;
+        updateSectionData();
+    }
+
+}
+
+void SectionGraphVisualWidget::updateSectionData()
+{
+    ui->wgtGraph->appendSignal(m_signal, tr(""));
+    ui->wgtGraph->setLine1Color(Qt::blue);
+    ui->wgtGraph->setLine2Color(Qt::red);
+    m_absMax = m_signal->absMaxValue();
+    ui->wgtGraph->setDiapazone(-m_absMax, m_absMax);
+    ui->cbScale->setCurrentIndex(0);
+
+    QByteArray data;
+    m_signal->toByteArray(data);
+    auto channelUid = DataProvider::getChannelUid(probeUid(), channelId());
+    DataProvider::updateSection(channelUid, sectionNumber(), data);
 }

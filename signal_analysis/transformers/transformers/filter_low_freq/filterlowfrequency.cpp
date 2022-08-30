@@ -1,5 +1,7 @@
 #include "filterlowfrequency.h"
 
+#include <QDebug>
+
 #include "baseutils.h"
 #include "signaltransformerdefines.h"
 #include "filterlowfrequencyparamswidget.h"
@@ -22,11 +24,15 @@ QString FilterLowFrequency::name()
 
 void FilterLowFrequency::transform(QVector<double> &buffer, const QJsonObject& params)
 {
-   auto freq = params["freq"].toDouble(1.0);
 
-   BaseUtils::filterLowFreq(buffer, 50, freq, BaseUtils::fkChebyshev, 0, buffer.size() - 1);
+   auto freqCutoff = params["freq_cutoff"].toDouble(1.0);
+   auto freqSample = params["freq_sample"].toDouble(100);
+
+   auto kind = static_cast<BaseUtils::FilterKind>(params["kind"].toInt());
+
+   BaseUtils::filterLowFreq(buffer, freqSample, freqCutoff, kind, 0, buffer.size() - 1);
    BaseUtils::swapVector(buffer);
-   BaseUtils::filterLowFreq(buffer, 50, freq, BaseUtils::fkChebyshev, 0, buffer.size() - 1);
+   BaseUtils::filterLowFreq(buffer, freqSample, freqCutoff, kind, 0, buffer.size() - 1);
    BaseUtils::swapVector(buffer);
 
 }

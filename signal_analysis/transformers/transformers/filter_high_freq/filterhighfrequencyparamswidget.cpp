@@ -1,11 +1,11 @@
-#include "filterlowfrequencyparamswidget.h"
-#include "ui_filterlowfrequencyparamswidget.h"
+#include "filterhighfrequencyparamswidget.h"
+#include "ui_filterhighfrequencyparamswidget.h"
 
 #include "baseutils.h"
 
-FilterLowFrequencyParamsWidget::FilterLowFrequencyParamsWidget(QWidget *parent) :
+FilterHighFrequencyParamsWidget::FilterHighFrequencyParamsWidget(QWidget *parent) :
     SignalTransformerParamsWidget(parent),
-    ui(new Ui::FilterLowFrequencyParamsWidget)
+    ui(new Ui::FilterHighFrequencyParamsWidget)
 {
     ui->setupUi(this);
 
@@ -13,12 +13,12 @@ FilterLowFrequencyParamsWidget::FilterLowFrequencyParamsWidget(QWidget *parent) 
         ui->cbKind->addItem(BaseUtils::FilterName.value(fk), fk);
 }
 
-FilterLowFrequencyParamsWidget::~FilterLowFrequencyParamsWidget()
+FilterHighFrequencyParamsWidget::~FilterHighFrequencyParamsWidget()
 {
     delete ui;
 }
 
-void FilterLowFrequencyParamsWidget::setParams(const QJsonObject &params)
+void FilterHighFrequencyParamsWidget::setParams(const QJsonObject &params)
 {
     ui->edFreq->setValue(params["freq_cutoff"].toDouble(1.0));
     int idx = 0;
@@ -34,7 +34,7 @@ void FilterLowFrequencyParamsWidget::setParams(const QJsonObject &params)
     ui->cbKind->setCurrentIndex(idx);
 }
 
-QJsonObject FilterLowFrequencyParamsWidget::params() const
+QJsonObject FilterHighFrequencyParamsWidget::params() const
 {
     QJsonObject retval;
     retval["freq_cutoff"] = ui->edFreq->value();

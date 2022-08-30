@@ -62,8 +62,12 @@ private slots:
 
     void on_transform();
 
+    void on_revert();
+
 private:
     Ui::SectionGraphVisualWidget *ui;
+
+    void updateSectionData();
 
     AnySignal *m_signal {nullptr};
     double m_absMax {0};
