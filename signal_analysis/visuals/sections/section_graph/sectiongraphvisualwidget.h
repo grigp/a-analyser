@@ -64,6 +64,8 @@ private slots:
 
     void on_revert();
 
+    void on_calculateSpectr();
+
 private:
     Ui::SectionGraphVisualWidget *ui;
 

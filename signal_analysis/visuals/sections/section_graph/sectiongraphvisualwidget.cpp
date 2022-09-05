@@ -21,6 +21,8 @@ SectionGraphVisualWidget::SectionGraphVisualWidget(VisualDescriptor* visual,
 {
     ui->setupUi(this);
     ui->cbScale->addItems(QStringList() << "1" << "2" << "4" << "8" << "16" << "32" << "64" << "128");
+
+    ui->splHorizontal->setSizes(QList<int>() << 500 << 0);
 }
 
 SectionGraphVisualWidget::~SectionGraphVisualWidget()
@@ -167,6 +169,11 @@ void SectionGraphVisualWidget::on_revert()
         m_signal = signal;
         updateSectionData();
     }
+
+}
+
+void SectionGraphVisualWidget::on_calculateSpectr()
+{
 
 }
 
