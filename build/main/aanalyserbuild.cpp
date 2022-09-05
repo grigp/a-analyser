@@ -51,8 +51,7 @@
 #include "myogramsignalvisual.h"
 #include "sectiongraphvisual.h"
 
-#include "filterlowfrequency.h"
-#include "filterhighfrequency.h"
+#include "filtersignal.h"
 
 #include "stabilan01.h"
 #include "bilateral.h"
@@ -122,8 +121,7 @@ void AAnalyserBuild::registerVisuals()
 void AAnalyserBuild::registerSignalTransformers()
 {
     auto* app = static_cast<AAnalyserApplication*>(QApplication::instance());
-    app->registerSignalTransformer(new FilterLowFrequency());
-    app->registerSignalTransformer(new FilterHighFrequency());
+    app->registerSignalTransformer(new FilterSignal());
 }
 
 
