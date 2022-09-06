@@ -23,6 +23,11 @@ void DiagSpectr::addValue(const double value)
     m_data << value;
 }
 
+void DiagSpectr::clear()
+{
+    m_data.clear();
+}
+
 void DiagSpectr::setFormatData(const int frequency, const int points, const double maxFrequency)
 {
     m_frequency = frequency;

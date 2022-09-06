@@ -9,6 +9,8 @@
 #include "anysignal.h"
 #include "baseutils.h"
 #include "selecttransformerdialog.h"
+#include "computefft.h"
+#include "spectrparamsdialog.h"
 
 SectionGraphVisualWidget::SectionGraphVisualWidget(VisualDescriptor* visual,
                                                    const QString& testUid,
@@ -174,7 +176,79 @@ void SectionGraphVisualWidget::on_revert()
 
 void SectionGraphVisualWidget::on_calculateSpectr()
 {
+    SpectrParamsDialog dlg(m_signal->size(), m_signal->frequency());
+    if (dlg.exec() == QDialog::Accepted)
+    {
+//        qDebug() << m_signal->size() << dlg.points() << "  " << m_signal->frequency() << dlg.maxFrequency();
 
+        auto initData = [&](QVector<double> &data)
+        {
+            data.clear();
+            for (int i = 0; i < dlg.points(); ++i)
+                data << 0;
+        };
+
+        QVector<double> dataSrc;
+        QVector<double> dataRes;
+        initData(dataSrc);
+        initData(dataRes);
+
+        int start = 0;
+        int n = 0;
+        do
+        {
+            QVector<double> ds;
+            QVector<double> dr;
+
+            for (int i = 0; i < dlg.points(); ++i)
+            {
+                ds << m_signal->value(0, start + i);
+                dr << m_signal->value(1, start + i);
+            }
+
+            ComputeFFT::baseFFT(ds);
+            ComputeFFT::baseFFT(dr);
+
+            for (int i = 0; i < dlg.points(); ++i)
+            {
+                dataSrc[i] += ds[i];
+                dataRes[i] += dr[i];
+            }
+
+            start += dlg.averagingOffset();
+            ++n;
+        }
+        while(start + dlg.points() < m_signal->size());
+
+        if (n > 0)
+            for (int i = 0; i < dlg.points(); ++i)
+            {
+                dataSrc[i] /= n;
+                dataRes[i] /= n;
+            }
+
+        double maxV = 0;
+        ui->wgtSpectrSrc->clear();
+        for (int i = 0; i < dataSrc.size(); ++i)
+        {
+            ui->wgtSpectrSrc->addValue(dataSrc[i]);
+            if (dataSrc[i] > maxV)
+                maxV = dataSrc[i];
+        }
+        ui->wgtSpectrSrc->setFormatData(m_signal->frequency(), m_signal->size(), dlg.maxFrequency());
+        ui->wgtSpectrRes->clear();
+        for (int i = 0; i < dataRes.size(); ++i)
+        {
+            ui->wgtSpectrRes->addValue(dataRes[i]);
+            if (dataRes[i] > maxV)
+                maxV = dataRes[i];
+        }
+        ui->wgtSpectrRes->setFormatData(m_signal->frequency(), m_signal->size(), dlg.maxFrequency());
+        ui->wgtSpectrSrc->setVisualArea(0, dlg.maxFrequency(), 0, maxV);
+        ui->wgtSpectrRes->setVisualArea(0, dlg.maxFrequency(), 0, maxV);
+
+        ui->splHorizontal->setSizes(QList<int>() << 500 << 500);
+    }
 }
 
 void SectionGraphVisualWidget::updateSectionData()

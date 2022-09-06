@@ -78,6 +78,11 @@ public:
     void addValue(const double value);
 
     /*!
+     * \brief Очищает спектр
+     */
+    void clear();
+
+    /*!
      * \brief задает данные для форматирования:
      * \param frequency - частота дискретизации
      * \param points - кол-во точек

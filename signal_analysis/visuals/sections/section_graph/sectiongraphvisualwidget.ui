@@ -388,7 +388,7 @@
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
             </property>
-            <widget class="QFrame" name="frSpectrX">
+            <widget class="QFrame" name="frSpectrSrc">
              <property name="frameShape">
               <enum>QFrame::Panel</enum>
              </property>
@@ -413,7 +413,7 @@
               </item>
              </layout>
             </widget>
-            <widget class="QFrame" name="frSpectrY">
+            <widget class="QFrame" name="frSpectrRes">
              <property name="frameShape">
               <enum>QFrame::Panel</enum>
              </property>
@@ -434,7 +434,7 @@
                <number>1</number>
               </property>
               <item>
-               <widget class="DiagSpectr" name="wgtSpectrTransf" native="true"/>
+               <widget class="DiagSpectr" name="wgtSpectrRes" native="true"/>
               </item>
              </layout>
             </widget>
