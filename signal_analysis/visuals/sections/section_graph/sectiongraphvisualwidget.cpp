@@ -176,79 +176,113 @@ void SectionGraphVisualWidget::on_revert()
 
 void SectionGraphVisualWidget::on_calculateSpectr()
 {
+    //! Диалог параметров спектра
     SpectrParamsDialog dlg(m_signal->size(), m_signal->frequency());
     if (dlg.exec() == QDialog::Accepted)
     {
-//        qDebug() << m_signal->size() << dlg.points() << "  " << m_signal->frequency() << dlg.maxFrequency();
-
-        auto initData = [&](QVector<double> &data)
-        {
-            data.clear();
-            for (int i = 0; i < dlg.points(); ++i)
-                data << 0;
-        };
-
+        //! Буфера данных для спектра
         QVector<double> dataSrc;
         QVector<double> dataRes;
-        initData(dataSrc);
-        initData(dataRes);
 
-        int start = 0;
-        int n = 0;
-        do
+        //! Расчет спектра
+        int frequency = m_signal->frequency();
+        if (dlg.isAveraging())
+            computeSpectrAveraging(dataSrc, dataRes, dlg.points(), dlg.averagingOffset());
+        else
         {
-            QVector<double> ds;
-            QVector<double> dr;
-
-            for (int i = 0; i < dlg.points(); ++i)
-            {
-                ds << m_signal->value(0, start + i);
-                dr << m_signal->value(1, start + i);
-            }
-
-            ComputeFFT::baseFFT(ds);
-            ComputeFFT::baseFFT(dr);
-
-            for (int i = 0; i < dlg.points(); ++i)
-            {
-                dataSrc[i] += ds[i];
-                dataRes[i] += dr[i];
-            }
-
-            start += dlg.averagingOffset();
-            ++n;
+            computeSpectrDecimation(dataSrc, dataRes, dlg.points());
+            frequency = static_cast<int>(static_cast<double>(frequency) / (static_cast<double>(m_signal->size()) / static_cast<double>(dlg.points())));
         }
-        while(start + dlg.points() < m_signal->size());
 
-        if (n > 0)
-            for (int i = 0; i < dlg.points(); ++i)
-            {
-                dataSrc[i] /= n;
-                dataRes[i] /= n;
-            }
+        //! Прорисовка спектра в одном диапазоне амплитуд
+        double maxVS = 0;
+        double maxVR = 0;
+        showSpectr(ui->wgtSpectrSrc, dataSrc, maxVS, frequency, m_signal->size(), dlg.maxFrequency());
+        showSpectr(ui->wgtSpectrRes, dataRes, maxVR, frequency, m_signal->size(), dlg.maxFrequency());
+        double max = qMax(maxVS, maxVR);
+        ui->wgtSpectrSrc->setVisualArea(0, dlg.maxFrequency(), 0, max);
+        ui->wgtSpectrRes->setVisualArea(0, dlg.maxFrequency(), 0, max);
 
-        double maxV = 0;
-        ui->wgtSpectrSrc->clear();
-        for (int i = 0; i < dataSrc.size(); ++i)
-        {
-            ui->wgtSpectrSrc->addValue(dataSrc[i]);
-            if (dataSrc[i] > maxV)
-                maxV = dataSrc[i];
-        }
-        ui->wgtSpectrSrc->setFormatData(m_signal->frequency(), m_signal->size(), dlg.maxFrequency());
-        ui->wgtSpectrRes->clear();
-        for (int i = 0; i < dataRes.size(); ++i)
-        {
-            ui->wgtSpectrRes->addValue(dataRes[i]);
-            if (dataRes[i] > maxV)
-                maxV = dataRes[i];
-        }
-        ui->wgtSpectrRes->setFormatData(m_signal->frequency(), m_signal->size(), dlg.maxFrequency());
-        ui->wgtSpectrSrc->setVisualArea(0, dlg.maxFrequency(), 0, maxV);
-        ui->wgtSpectrRes->setVisualArea(0, dlg.maxFrequency(), 0, maxV);
-
+        //! Автоматически показать панель спектров
         ui->splHorizontal->setSizes(QList<int>() << 500 << 500);
     }
+}
+
+void SectionGraphVisualWidget::computeSpectrAveraging(QVector<double> &dataSrc, QVector<double> &dataRes,
+                                                      const int points, const int offset)
+{
+    initData(dataSrc, points);
+    initData(dataRes, points);
+
+    int start = 0;
+    int n = 0;
+    do
+    {
+        QVector<double> ds;
+        QVector<double> dr;
+
+        for (int i = 0; i < points; ++i)
+        {
+            ds << m_signal->value(0, start + i);
+            dr << m_signal->value(1, start + i);
+        }
+
+        ComputeFFT::baseFFT(ds);
+        ComputeFFT::baseFFT(dr);
+
+        for (int i = 0; i < points; ++i)
+        {
+            dataSrc[i] += ds[i];
+            dataRes[i] += dr[i];
+        }
+
+        start += offset;
+        ++n;
+    }
+    while(start + points < m_signal->size());
+
+    if (n > 0)
+        for (int i = 0; i < points; ++i)
+        {
+            dataSrc[i] /= n;
+            dataRes[i] /= n;
+        }
+}
+
+void SectionGraphVisualWidget::computeSpectrDecimation(QVector<double> &dataSrc, QVector<double> &dataRes, const int points)
+{
+    double prop = static_cast<double>(m_signal->size()) / static_cast<double>(points);
+    double ir = 0.0;
+    while (ir < m_signal->size())
+    {
+        int i = static_cast<int>(ir);
+        dataSrc << m_signal->value(0, i);
+        dataRes << m_signal->value(1, i);
+        ir += prop;
+    }
+
+    ComputeFFT::baseFFT(dataSrc);
+    ComputeFFT::baseFFT(dataRes);
+}
+
+void SectionGraphVisualWidget::initData(QVector<double> &data, const int size)
+{
+    data.clear();
+    for (int i = 0; i < size; ++i)
+        data << 0;
+}
+
+void SectionGraphVisualWidget::showSpectr(DiagSpectr *area, QVector<double> &data, double &maxV,
+                                          const int freqSample, const int size, const double maxFreq)
+{
+    area->clear();
+    for (int i = 0; i < data.size(); ++i)
+    {
+        area->addValue(data[i]);
+        if (data[i] > maxV)
+            maxV = data[i];
+    }
+    area->setFormatData(freqSample, size, maxFreq);
 }
 
 void SectionGraphVisualWidget::updateSectionData()

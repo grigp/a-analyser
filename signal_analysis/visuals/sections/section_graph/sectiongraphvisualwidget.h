@@ -10,6 +10,7 @@ class SectionGraphVisualWidget;
 }
 
 class AnySignal;
+class DiagSpectr;
 
 /*!
  * \brief Виджет визуализатора графика секции The SectionGraphVisualWidget class
@@ -68,6 +69,30 @@ private slots:
 
 private:
     Ui::SectionGraphVisualWidget *ui;
+
+    /*!
+     * \brief Расчет спектра с усреднением
+     * \param dataSrc - буфер исходного сигнала
+     * \param dataRes - буфер преобразованного сигнала
+     * \param points - кол-во точее
+     * \param offset - смещение при усреднении
+     */
+    void computeSpectrAveraging(QVector<double> &dataSrc, QVector<double> &dataRes,
+                                const int points, const int offset);
+
+    /*!
+     * \brief Расчет спектра с прореживанием
+     * \param dataSrc - буфер исходного сигнала
+     * \param dataRes - буфер преобразованного сигнала
+     * \param points - кол-во точее
+     */
+    void computeSpectrDecimation(QVector<double> &dataSrc, QVector<double> &dataRes, const int points);
+
+    void initData(QVector<double> &data, const int size);
+
+    void showSpectr(DiagSpectr *area, QVector<double> &data, double &maxV,
+                    const int freqSample, const int size, const double maxFreq)
+;
 
     void updateSectionData();
 

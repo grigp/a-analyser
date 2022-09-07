@@ -134,8 +134,8 @@ void DiagSpectr::paintEvent(QPaintEvent *event)
 
     //! Пропорция абсцисс
     double minFreq = 0.0;
-    double maxFreq = 6.1;
-    m_propX = static_cast<double>(width() - m_bounds.x() - m_bounds.right()) / 6.0;
+    double maxFreq = m_maxFrequency; //6.1;
+    m_propX = static_cast<double>(width() - m_bounds.x() - m_bounds.right()) / m_maxFrequency; //6.0;
     if (m_minFreq > 0 && m_maxFreq < m_maxFrequency && m_maxFreq > m_minFreq)
     {
         m_propX = static_cast<double>(width() - m_bounds.x() - m_bounds.right()) / (m_maxFreq - m_minFreq);

@@ -142,12 +142,12 @@ void SpectrStabVisualWidget::showSpectrs()
     {
         for (int i = 0; i < m_factors->points(); ++i)
             ui->wgtSpectrX->addValue(m_factors->value(0, i));
-        ui->wgtSpectrX->setFormatData(m_factors->frequency(), m_factors->points(), 6);
+        ui->wgtSpectrX->setFormatData(m_factors->frequency(), m_factors->points(), 6.1);
 
         ui->wgtSpectrY->setTitle(tr("Сагитталь Y"));
         for (int i = 0; i < m_factors->points(); ++i)
             ui->wgtSpectrY->addValue(m_factors->value(1, i));
-        ui->wgtSpectrY->setFormatData(m_factors->frequency(), m_factors->points(), 6);
+        ui->wgtSpectrY->setFormatData(m_factors->frequency(), m_factors->points(), 6.1);
     }
     ui->lblNoCalculated->setVisible(m_factors->channelsCount() != 2);
     ui->frControl->setVisible(m_factors->channelsCount() == 2);
