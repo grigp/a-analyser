@@ -276,12 +276,17 @@ void SectionGraphVisualWidget::showSpectr(DiagSpectr *area, QVector<double> &dat
                                           const int freqSample, const int size, const double maxFreq)
 {
     area->clear();
-    for (int i = 0; i < data.size(); ++i)
+    QFile file("d://1//spectr.txt");                             //TODO: убрать запись в файл
+    file.open(QIODevice::WriteOnly | QIODevice::Text);
+    QTextStream fs(&file);
+    for (int i = 0; i < data.size() / 2; ++i)
     {
         area->addValue(data[i]);
+        fs << QString::number(data[i]) << "\n";
         if (data[i] > maxV)
             maxV = data[i];
     }
+    file.close();
     area->setFormatData(freqSample, size, maxFreq);
 }
 

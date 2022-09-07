@@ -102,10 +102,14 @@ bool ComputeFFT::baseFFT(QVector<double> &data)
         fftw_plan plan = fftw_plan_dft_1d(size, (fftw_complex*) &buffer[0], (fftw_complex*) &buffer[0], FFTW_FORWARD, FFTW_ESTIMATE);
         fftw_execute(plan);
 
-        for (int i = 0; i < size / 2; ++i)
+        for (int i = 0; i < size; ++i)
         {
-            double* digit = (double*)&buffer[i];
-            double value = 4 * sqrt(pow(digit[0], 2) + pow(digit[1], 2)) / (size / 2);
+            double value = 0;
+            if (i < size / 2)
+            {
+                double* digit = (double*)&buffer[i];
+                value = 4 * sqrt(pow(digit[0], 2) + pow(digit[1], 2)) / (size / 2);
+            }
             data.replace(i, value);
         }
 
