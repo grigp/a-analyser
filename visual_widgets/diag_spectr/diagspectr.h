@@ -85,10 +85,9 @@ public:
     /*!
      * \brief задает данные для форматирования:
      * \param frequency - частота дискретизации
-     * \param points - кол-во точек
      * \param maxFrequency - максимальная отображаемая частота
      */
-    void setFormatData(const int frequency, const int points, const double maxFrequency);
+    void setFormatData(const int frequency, const double maxFrequency);
 
     /*!
      * \brief Задает размеры отображаемой области
@@ -172,7 +171,6 @@ private:
 
     QVector<double> m_data;
     int m_frequency {50};        ///< Частота дискретизации
-    int m_points {1024};         ///< Кол-во точек
     double m_maxFrequency {6.1}; ///< Максимальная отображаемая частота
 
     double m_minFreq {0};      ///< Минимальная частота

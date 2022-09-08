@@ -30,7 +30,7 @@ WPGraphAnalysisVisualWidget::~WPGraphAnalysisVisualWidget()
 
 bool WPGraphAnalysisVisualWidget::isValid()
 {
-    return ChannelsUtils::instance().channelType(channelUid()) == ChannelsDefines::ctWeightPlate;
+    return ChannelsUtils::instance().channelType(channelId()) == ChannelsDefines::ctWeightPlate;
 }
 
 void WPGraphAnalysisVisualWidget::calculate()
@@ -147,7 +147,7 @@ void WPGraphAnalysisVisualWidget::on_signalExport()
 void WPGraphAnalysisVisualWidget::getSignal()
 {
     QByteArray data;
-    if (DataProvider::getChannel(probeUid(), channelUid(), data))
+    if (DataProvider::getChannel(probeUid(), channelId(), data))
         if (!m_signal)
             m_signal = new WeightPlateSignal(data);
 }

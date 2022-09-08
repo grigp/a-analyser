@@ -28,10 +28,9 @@ void DiagSpectr::clear()
     m_data.clear();
 }
 
-void DiagSpectr::setFormatData(const int frequency, const int points, const double maxFrequency)
+void DiagSpectr::setFormatData(const int frequency, const double maxFrequency)
 {
     m_frequency = frequency;
-    m_points = points;
     m_maxFrequency = maxFrequency;
     m_maxFreq = maxFrequency;
 }
@@ -198,7 +197,7 @@ void DiagSpectr::paintEvent(QPaintEvent *event)
     int ov = height() - m_bounds.bottom();
     for (int i = 0; i < m_data.size(); ++i)
     {
-        double freq = static_cast<double>(i * m_frequency) / static_cast<double>(m_points);
+        double freq = static_cast<double>(i * m_frequency) / static_cast<double>(m_data.size());
 
         if (freq > minFreq && freq < maxFreq)
         {

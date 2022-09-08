@@ -8,6 +8,8 @@
 #include "baseutils.h"
 #include "dataprovider.h"
 #include "weightplatesignal.h"
+#include "createsectiondialog.h"
+#include "signalanalysisutils.h"
 
 WeightPlateGraphVisualWidget::WeightPlateGraphVisualWidget(VisualDescriptor* visual,
                                                            const QString& testUid, const QString& probeUid, const QString& channelUid,
@@ -27,6 +29,10 @@ WeightPlateGraphVisualWidget::WeightPlateGraphVisualWidget(VisualDescriptor* vis
 //    ui->wgtGraph->setCursor(cursorGraph);
 
 //    connect(ui->wgtGraph, &AreaGraph::moveCursor, this, &WeightPlateGraphVisualWidget::on_moveCursor);
+
+    ui->wgtGraph->setContextMenuPolicy(Qt::CustomContextMenu);
+    connect(ui->wgtGraph, &AreaGraph::customContextMenuRequested, this, &WeightPlateGraphVisualWidget::on_popupMenuRequested);
+
     connect(ui->wgtGraph, &AreaGraph::press, this, &WeightPlateGraphVisualWidget::on_press);
     connect(ui->wgtGraph, &AreaGraph::move, this, &WeightPlateGraphVisualWidget::on_move);
     connect(ui->wgtGraph, &AreaGraph::release, this, &WeightPlateGraphVisualWidget::on_release);
@@ -39,7 +45,7 @@ WeightPlateGraphVisualWidget::~WeightPlateGraphVisualWidget()
 
 bool WeightPlateGraphVisualWidget::isValid()
 {
-    return ChannelsUtils::instance().channelType(channelUid()) == ChannelsDefines::ctWeightPlate;
+    return ChannelsUtils::instance().channelType(channelId()) == ChannelsDefines::ctWeightPlate;
 }
 
 void WeightPlateGraphVisualWidget::calculate()
@@ -110,6 +116,34 @@ void WeightPlateGraphVisualWidget::on_selectChannel(int chanIdx)
     }
 }
 
+void WeightPlateGraphVisualWidget::on_popupMenuRequested(QPoint pos)
+{
+    if (!m_menu)
+    {
+        m_menu = new QMenu(this);
+        QAction * createSection = new QAction(tr("Создать секцию"), this);
+        connect(createSection, &QAction::triggered, this, &WeightPlateGraphVisualWidget::on_createSection);
+        m_menu->addAction(createSection);
+    }
+    m_menu->popup(ui->wgtGraph->mapToGlobal(pos));
+}
+
+void WeightPlateGraphVisualWidget::on_createSection()
+{
+    int begin = -1;
+    int end = -1;
+    ui->wgtGraph->selectedArea(begin, end);
+    CreateSectionDialog dlg;
+    dlg.assignSignal(m_signal);
+    if (dlg.exec() == QDialog::Accepted)
+    {
+        QString chId = m_signal->channelId();
+        QString chUid = DataProvider::getChannelUid(probeUid(), channelId());
+        QString name = dlg.sectionName();
+        SignalAnalysisUtils::createSection(chUid, chId, name, dlg.channel(), begin, end, m_signal);
+    }
+}
+
 void WeightPlateGraphVisualWidget::on_press(const int x, const int y, const Qt::MouseButtons buttons)
 {
     Q_UNUSED(y);
@@ -165,7 +199,7 @@ void WeightPlateGraphVisualWidget::getSignal()
     ui->cbChannels->addItem(tr("Все"));
 
     QByteArray data;
-    if (DataProvider::getChannel(probeUid(), channelUid(), data))
+    if (DataProvider::getChannel(probeUid(), channelId(), data))
     {
         if (!m_signal)
         {

@@ -91,11 +91,14 @@ private:
     void initData(QVector<double> &data, const int size);
 
     void showSpectr(DiagSpectr *area, QVector<double> &data, double &maxV,
-                    const int freqSample, const int size, const double maxFreq)
+                    const int freqSample, const double maxFreq)
 ;
 
     void updateSectionData();
 
+    void setDiapazones();
+
+    bool m_isCalculate {false};
     AnySignal *m_signal {nullptr};
     double m_absMax {0};
 };

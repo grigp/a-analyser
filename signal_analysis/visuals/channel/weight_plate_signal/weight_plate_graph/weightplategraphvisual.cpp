@@ -23,7 +23,12 @@ QString WeightPlateGraphVisual::name()
     return VisualNames::Name_WeightPlateGraph;
 }
 
-Visual *WeightPlateGraphVisual::getVisualWidget(QWidget *parent, const QString &testUid, const QString &probeUid, const QString &channelUid)
+Visual *WeightPlateGraphVisual::getVisualWidget(QWidget *parent,
+                                                const QString &testUid,
+                                                const QString &probeUid,
+                                                const QString &channelId,
+                                                const QString& sectionNumber)
 {
-    return new WeightPlateGraphVisualWidget(this, testUid, probeUid, channelUid, parent);
+    Q_UNUSED(sectionNumber);
+    return new WeightPlateGraphVisualWidget(this, testUid, probeUid, channelId, parent);
 }

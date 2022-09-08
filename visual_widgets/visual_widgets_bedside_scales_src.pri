@@ -15,6 +15,7 @@ include(diag_cross/diag_cross_src.pri)
 include(diag_triangle/diag_triangle_src.pri)
 include(dual_state_diagram/dual_state_diagram_src.pri)
 include(paint_mix/paint_mix_src.pri)
+include(diag_spectr/diag_spectr_src.pri)
 
 HEADERS += \
 

@@ -13,6 +13,9 @@
 #include "balistogramvisual.h"
 #include "weightplategraphvisual.h"
 #include "wpgraphanalysisvisual.h"
+#include "sectiongraphvisual.h"
+
+#include "filtersignal.h"
 
 QList<MetodicTemplate *> AAnalyserBuild::getBuildTemplates(QObject *parent)
 {
@@ -30,6 +33,13 @@ void AAnalyserBuild::registerVisuals()
     app->registerVisual(new BalistogramVisual(BaseDefines::tlChannel));
     app->registerVisual(new WeightPlateGraphVisual(BaseDefines::tlChannel));
     app->registerVisual(new WPGraphAnalysisVisual(BaseDefines::tlChannel));
+    app->registerVisual(new SectionGraphVisual(BaseDefines::tlSection));
+}
+
+void AAnalyserBuild::registerSignalTransformers()
+{
+    auto* app = static_cast<AAnalyserApplication*>(QApplication::instance());
+    app->registerSignalTransformer(new FilterSignal());
 }
 
 QList<DeviceProtocols::Ports> AAnalyserBuild::getDriverPorts(const QString &drvUid)

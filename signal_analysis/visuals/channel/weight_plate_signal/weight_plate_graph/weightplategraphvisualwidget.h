@@ -2,6 +2,7 @@
 #define WEIGHTPLATEGRAPHVISUALWIDGET_H
 
 #include <QWidget>
+#include <QMenu>
 
 #include "visuals.h"
 
@@ -43,6 +44,10 @@ private slots:
      */
     void on_selectChannel(int chanIdx);
 
+    void on_popupMenuRequested(QPoint pos);
+
+    void on_createSection();
+
     /*!
      * \brief Сигнал нажатия мышки на теле виджета
      * \param x, y - координаты нажатия
@@ -79,6 +84,7 @@ private:
     WeightPlateSignal* m_signal {nullptr};
     int m_selectedChan {-1};  ///< Выбранный канал 0 - N. -1 - нет выбранного
     int m_selBeg {-1};
+    QMenu *m_menu {nullptr};
 };
 
 #endif // WEIGHTPLATEGRAPHVISUALWIDGET_H

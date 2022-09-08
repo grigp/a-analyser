@@ -51,16 +51,20 @@ void SectionGraphVisualWidget::calculate()
             ui->wgtGraph->appendSignal(m_signal, tr(""));
             m_absMax = m_signal->absMaxValue();
             ui->wgtGraph->setDiapazone(-m_absMax, m_absMax);
+            ui->wgtGraph->setIsZeroing(true);
             ui->cbScale->setCurrentIndex(0);
         }
     }
-
+    m_isCalculate = true;
 }
 
 void SectionGraphVisualWidget::scaleChange(int idx)
 {
-    auto diap = BaseUtils::scaleMultiplier(idx);
-    ui->wgtGraph->setDiapazone(-m_absMax/diap, m_absMax/diap);
+    if (m_isCalculate)
+    {
+        auto diap = BaseUtils::scaleMultiplier(idx);
+        ui->wgtGraph->setDiapazone(-m_absMax/diap, m_absMax/diap);
+    }
 }
 
 void SectionGraphVisualWidget::btnFulSignalClicked(bool isFullSignal)
@@ -72,6 +76,7 @@ void SectionGraphVisualWidget::btnFulSignalClicked(bool isFullSignal)
         ui->wgtGraph->setXCoordSignalMode(AreaGraph::xsm_fullSignal);
     else
         ui->wgtGraph->setXCoordSignalMode(AreaGraph::xsm_scrolling);
+    setDiapazones();
 }
 
 void SectionGraphVisualWidget::btnPlusClicked()
@@ -79,6 +84,7 @@ void SectionGraphVisualWidget::btnPlusClicked()
     auto hScale = ui->wgtGraph->hScale();
     if (hScale < 8)
         ui->wgtGraph->setHScale(hScale * 2);
+    setDiapazones();
 }
 
 void SectionGraphVisualWidget::btnMinusClicked()
@@ -86,6 +92,7 @@ void SectionGraphVisualWidget::btnMinusClicked()
     auto hScale = ui->wgtGraph->hScale();
     if (hScale > 1)
         ui->wgtGraph->setHScale(hScale / 2);
+    setDiapazones();
 }
 
 void SectionGraphVisualWidget::signalScroll(int pos)
@@ -97,6 +104,7 @@ void SectionGraphVisualWidget::signalScroll(int pos)
                                  * pos / 100.0 / ui->wgtGraph->hScale());
         ui->wgtGraph->setStartPoint(p);
     }
+    setDiapazones();
 }
 
 void SectionGraphVisualWidget::on_popupMenuRequested(QPoint pos)
@@ -197,8 +205,8 @@ void SectionGraphVisualWidget::on_calculateSpectr()
         //! Прорисовка спектра в одном диапазоне амплитуд
         double maxVS = 0;
         double maxVR = 0;
-        showSpectr(ui->wgtSpectrSrc, dataSrc, maxVS, frequency, m_signal->size(), dlg.maxFrequency());
-        showSpectr(ui->wgtSpectrRes, dataRes, maxVR, frequency, m_signal->size(), dlg.maxFrequency());
+        showSpectr(ui->wgtSpectrSrc, dataSrc, maxVS, frequency, dlg.maxFrequency());
+        showSpectr(ui->wgtSpectrRes, dataRes, maxVR, frequency, dlg.maxFrequency());
         double max = qMax(maxVS, maxVR);
         ui->wgtSpectrSrc->setVisualArea(0, dlg.maxFrequency(), 0, max);
         ui->wgtSpectrRes->setVisualArea(0, dlg.maxFrequency(), 0, max);
@@ -273,21 +281,21 @@ void SectionGraphVisualWidget::initData(QVector<double> &data, const int size)
 }
 
 void SectionGraphVisualWidget::showSpectr(DiagSpectr *area, QVector<double> &data, double &maxV,
-                                          const int freqSample, const int size, const double maxFreq)
+                                          const int freqSample, const double maxFreq)
 {
     area->clear();
-    QFile file("d://1//spectr.txt");                             //TODO: убрать запись в файл
-    file.open(QIODevice::WriteOnly | QIODevice::Text);
-    QTextStream fs(&file);
+//    QFile file("d://1//spectr.txt");
+//    file.open(QIODevice::WriteOnly | QIODevice::Text);
+//    QTextStream fs(&file);
     for (int i = 0; i < data.size() / 2; ++i)
     {
         area->addValue(data[i]);
-        fs << QString::number(data[i]) << "\n";
+//        fs << QString::number(data[i]) << "\n";
         if (data[i] > maxV)
             maxV = data[i];
     }
-    file.close();
-    area->setFormatData(freqSample, size, maxFreq);
+//    file.close();
+    area->setFormatData(freqSample, maxFreq);
 }
 
 void SectionGraphVisualWidget::updateSectionData()
@@ -303,4 +311,57 @@ void SectionGraphVisualWidget::updateSectionData()
     m_signal->toByteArray(data);
     auto channelUid = DataProvider::getChannelUid(probeUid(), channelId());
     DataProvider::updateSection(channelUid, sectionNumber(), data);
+}
+
+void SectionGraphVisualWidget::setDiapazones()
+{
+//    if (m_isCalculate)
+//    {
+//            double mid;
+
+//            int n = 0;
+//            for (int i = ui->wgtGraph->startPoint(); i < ui->wgtGraph->startPoint() + ui->wgtGraph->areaWidth() / ui->wgtGraph->hScale(); ++i)
+//            {
+//                if (i < m_signal->size())
+//                {
+//                    for (int j = 0; j < m_signal->subChansCount(); ++j)
+//                    {
+//                        auto v = m_signal->value(j, i);
+//                        mid += v;
+//                    }
+//                    ++n;
+//                }
+//            }
+//            if (n > 0)
+//                for (int i = 0; i < m_signal->subChansCount(); ++i)
+//                {
+//                    auto mid = mids.at(i);
+//                    mid /= n;
+//                    mids.replace(i, mid);
+//                }
+
+//            int v = scaleMultiplier(ui->cbScale->currentIndex());
+//            if (ui->wgtGraph->areasesCount() == m_signal->subChansCount())
+//            {
+//                for (int i = 0; i < m_signal->subChansCount(); ++i)
+//                {
+//                    auto min = m_signal->minValueChan(i);
+//                    auto max = m_signal->maxValueChan(i);
+//                    double diap = (max - min) / v * 1.2;
+//                    ui->wgtGraph->setDiapazone(i, mids.at(i) - diap / 2, mids.at(i) + diap / 2);
+//                }
+//            }
+//            else
+//            {
+//                if (m_selectedChan >= 0 && m_selectedChan < m_signal->subChansCount())
+//                {
+//                    auto min = m_signal->minValueChan(m_selectedChan);
+//                    auto max = m_signal->maxValueChan(m_selectedChan);
+//                    double diap = (max - min) / v * 1.2;
+//                    ui->wgtGraph->setDiapazone(0,
+//                                               mids.at(m_selectedChan) - diap / 2,
+//                                               mids.at(m_selectedChan) + diap / 2);
+//                }
+//            }
+//    }
 }
