@@ -92,6 +92,15 @@ private slots:
 
     void selectElement(QModelIndex index);
 
+    void on_dbConnected();
+
+    /*!
+     * \brief Сообщает миру о создании секции
+     * \param channelUid - uid канала
+     * \param number - номер секции в строковом виде
+     */
+    void on_sectionCreated(QString &channelUid, const QString number);
+
 private:
     void saveSplitterPosition();
     void restoreSplitterPosition();

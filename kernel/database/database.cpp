@@ -425,10 +425,12 @@ bool DataBase::createSection(QString &channelUid, QString &name, int channel, in
     int n = 1;
     QString fnData = "";
     QString fnCfg = "";
+    QString fnNumber = "";
     do
     {
-        fnData = dir.absoluteFilePath(channelUid + ".data." + QString::number(n).rightJustified(6, '0'));
-        fnCfg = dir.absoluteFilePath(channelUid + ".cfg." + QString::number(n).rightJustified(6, '0'));
+        fnNumber = QString::number(n).rightJustified(6, '0');
+        fnData = dir.absoluteFilePath(channelUid + ".data." + fnNumber);
+        fnCfg = dir.absoluteFilePath(channelUid + ".cfg." + fnNumber);
         ++n;
     }
     while (QFile::exists(fnData) || QFile::exists(fnCfg));
@@ -449,6 +451,9 @@ bool DataBase::createSection(QString &channelUid, QString &name, int channel, in
     sectionObj["to"] = to;
     //sectionObj["actions"] = actions;
     writeTableRec(fnCfg, sectionObj);
+
+    //! Известим мир о создании секции
+    emit sectionCreated(channelUid, fnNumber);
 
     return true;
 }

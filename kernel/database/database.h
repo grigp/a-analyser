@@ -341,6 +341,13 @@ signals:
      */
     void changeTestCondition(const QString &testUid);
 
+    /*!
+     * \brief Сообщает миру о создании секции
+     * \param channelUid - uid канала
+     * \param number - номер секции в строковом виде
+     */
+    void sectionCreated(QString &channelUid, const QString number);
+
 public slots:
 
     /*!

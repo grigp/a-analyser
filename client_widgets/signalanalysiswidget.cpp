@@ -29,6 +29,9 @@ SignalAnalysisWidget::SignalAnalysisWidget(QWidget *parent) :
                                           new EditCommandDelegate(EditCommandDelegate::CmdClose, ColButtons, ui->tvTests));
     ui->tvTests->viewport()->installEventFilter(this);
     m_mdlTests->setHorizontalHeaderLabels(QStringList() << tr("Элементы") << "");
+
+    connect(static_cast<AAnalyserApplication*>(QApplication::instance()), &AAnalyserApplication::dbConnected,
+            this, &SignalAnalysisWidget::on_dbConnected);
 }
 
 SignalAnalysisWidget::~SignalAnalysisWidget()
@@ -114,6 +117,18 @@ void SignalAnalysisWidget::selectElement(QModelIndex index)
     }
 
     ui->lblNoVisuals->setVisible(!tabPresent);
+}
+
+void SignalAnalysisWidget::on_dbConnected()
+{
+    connect(static_cast<AAnalyserApplication*>(QApplication::instance()), &AAnalyserApplication::sectionCreated,
+            this, &SignalAnalysisWidget::on_sectionCreated);
+}
+
+void SignalAnalysisWidget::on_sectionCreated(QString &channelUid, const QString number)
+{
+    qDebug() << Q_FUNC_INFO << "Создана секция:" << channelUid << number;
+
 }
 
 void SignalAnalysisWidget::saveSplitterPosition()

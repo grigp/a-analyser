@@ -54,6 +54,7 @@ AAnalyserApplication::AAnalyserApplication(int &argc, char **argv)
         connect(m_database, &DataBase::connected, this, &AAnalyserApplication::dbConnected);
         connect(m_database, &DataBase::disconnected, this, &AAnalyserApplication::dbDisconnected);
         connect(m_database, &DataBase::newTest, this, &AAnalyserApplication::newTest);
+        connect(m_database, &DataBase::sectionCreated, this, &AAnalyserApplication::sectionCreated);
 
         connect(static_cast<MainWindow*>(m_mw), &MainWindow::dataBaseChange, m_database, &DataBase::changeDatabase);
         connect(static_cast<MainWindow*>(m_mw), &MainWindow::dataBaseClear, m_database, &DataBase::clear);

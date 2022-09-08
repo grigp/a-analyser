@@ -501,6 +501,13 @@ signals:
     void newTest(const QString &testUid);
     void removeTest(const QString &testUid);
 
+    /*!
+     * \brief Сообщает миру о создании секции
+     * \param channelUid - uid канала
+     * \param number - номер секции в строковом виде
+     */
+    void sectionCreated(QString &channelUid, const QString number);
+
     void selectPatient(const QString &patientUid);
     void selectMetodic(const QString &metodicUid);
     void selectTest(const QString &testUid);
