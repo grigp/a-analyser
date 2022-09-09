@@ -89,6 +89,8 @@ void AnySignal::fromByteArray(const QByteArray &data)
 
     m_maxValue = -INT_MAX;
     m_minValue = INT_MAX;
+    m_midValue = 0;
+    int n = 0;
 
     for (int i = 0; i < count; ++i)
     {
@@ -104,10 +106,15 @@ void AnySignal::fromByteArray(const QByteArray &data)
                 m_maxValue = val;
             if (val < m_minValue)
                 m_minValue = val;
+            m_midValue += val;
+            ++n;
         }
 
         m_data.replace(i, rec);
     }
+
+    if (n > 0)
+        m_midValue /= n;
 }
 
 void AnySignal::toByteArray(QByteArray &data) const

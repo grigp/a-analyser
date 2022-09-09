@@ -100,7 +100,7 @@ private:
 
     bool m_isCalculate {false};
     AnySignal *m_signal {nullptr};
-    double m_absMax {0};
+    double m_diap {0};
 };
 
 #endif // SECTIONGRAPHVISUALWIDGET_H

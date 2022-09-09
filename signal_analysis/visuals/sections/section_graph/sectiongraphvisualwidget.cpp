@@ -49,8 +49,11 @@ void SectionGraphVisualWidget::calculate()
             ui->wgtGraph->setLine1Color(Qt::blue);
             ui->wgtGraph->setLine2Color(Qt::red);
             ui->wgtGraph->appendSignal(m_signal, tr(""));
-            m_absMax = m_signal->absMaxValue();
-            ui->wgtGraph->setDiapazone(-m_absMax, m_absMax);
+
+            m_diap = qMax(m_signal->midValue() - m_signal->minValue(), m_signal->maxValue() - m_signal->midValue());
+
+            qDebug() << m_signal->minValue() << m_signal->midValue() << m_signal->maxValue();
+            ui->wgtGraph->setDiapazone(-m_diap, m_diap);
             ui->wgtGraph->setIsZeroing(true);
             ui->cbScale->setCurrentIndex(0);
         }
@@ -63,7 +66,7 @@ void SectionGraphVisualWidget::scaleChange(int idx)
     if (m_isCalculate)
     {
         auto diap = BaseUtils::scaleMultiplier(idx);
-        ui->wgtGraph->setDiapazone(-m_absMax/diap, m_absMax/diap);
+        ui->wgtGraph->setDiapazone(-m_diap/diap, m_diap/diap);
     }
 }
 
@@ -303,8 +306,8 @@ void SectionGraphVisualWidget::updateSectionData()
     ui->wgtGraph->appendSignal(m_signal, tr(""));
     ui->wgtGraph->setLine1Color(Qt::blue);
     ui->wgtGraph->setLine2Color(Qt::red);
-    m_absMax = m_signal->absMaxValue();
-    ui->wgtGraph->setDiapazone(-m_absMax, m_absMax);
+    m_diap = qMax(m_signal->midValue() - m_signal->minValue(), m_signal->maxValue() - m_signal->midValue());
+    ui->wgtGraph->setDiapazone(-m_diap, m_diap);
     ui->cbScale->setCurrentIndex(0);
 
     QByteArray data;
