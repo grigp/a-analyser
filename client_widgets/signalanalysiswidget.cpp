@@ -105,7 +105,8 @@ void SignalAnalysisWidget::selectElement(QModelIndex index)
             static_cast<QWidget*>(child)->setVisible(false);
 
     bool tabPresent = false;
-    QVariant var = m_mdlTests->index(index.row(), ColElement, index.parent()).data(TabWidgetRole);
+    auto idxElement = m_mdlTests->index(index.row(), ColElement, index.parent());
+    QVariant var = idxElement.data(TabWidgetRole);
     if (var.isValid())
     {
         QTabWidget* wgt = var.value<QTabWidget*>();
@@ -115,6 +116,9 @@ void SignalAnalysisWidget::selectElement(QModelIndex index)
             tabPresent = true;
         }
     }
+
+    qDebug() << idxElement.data(ChannelUidRole).toString() << idxElement.data(SectionNumberRole).toString();
+
 
     ui->lblNoVisuals->setVisible(!tabPresent);
 }
@@ -265,6 +269,7 @@ void SignalAnalysisWidget::addSection(QString name,
 {
     auto *itemSection = new QStandardItem(name);
     itemSection->setData(number, SectionNumberRole);
+    itemSection->setData(itemChan->data(ChannelUidRole).toString(), ChannelUidRole);
     bool isVisualsPresent = buildElement(itemSection, count, testUid, probeUid, channelId, number);
     if (!itemWithVisuals  && isVisualsPresent)  //! Если итем с визуалами еще не найден и этот итем с визуалами, то запомним на него указатель
         itemWithVisuals = itemChan;

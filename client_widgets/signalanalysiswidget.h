@@ -45,9 +45,9 @@ public:
     ///< Роли для доступа к данным
     enum TestsTreeModelRoles
     {
-          UidRole = Qt::UserRole + 1     ///< uid элемента (теста, пробы, канала). QString в итеме элеметнов ColElement
+          UidRole = Qt::UserRole + 1     ///< uid элемента (теста, пробы, channelId канала). QString в итеме элеметнов ColElement
         , ProbeUidRole                   ///< uid пробы. Только в итемах уровня канала, чтобы не скакать по родителям!!!
-        , ChannelUidRole                 ///< uid канала, именно реальной записи канала, а не channelID
+        , ChannelUidRole                 ///< uid канала, именно реальной записи канала, а не channelID. В канале и в секциях
         , ButtonActionRole               ///< действие на кнопке. Столбец ColButtons. Возвращает bsClose или baExport
         , TabWidgetRole                  ///< указатель на табулированный виджет, содержащий линейку визуализаторов
         , SectionNumberRole              ///< номер секции в строковом виде QString
