@@ -453,7 +453,7 @@ bool DataBase::createSection(QString &channelUid, QString &name, int channel, in
     writeTableRec(fnCfg, sectionObj);
 
     //! Известим мир о создании секции
-    emit sectionCreated(channelUid, fnNumber);
+    emit sectionCreated(channelUid, name, fnNumber);
 
     return true;
 }

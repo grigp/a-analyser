@@ -504,9 +504,10 @@ signals:
     /*!
      * \brief Сообщает миру о создании секции
      * \param channelUid - uid канала
+     * \param name - название секции
      * \param number - номер секции в строковом виде
      */
-    void sectionCreated(QString &channelUid, const QString number);
+    void sectionCreated(QString &channelUid, const QString &name, const QString number);
 
     void selectPatient(const QString &patientUid);
     void selectMetodic(const QString &metodicUid);

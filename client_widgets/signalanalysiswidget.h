@@ -46,7 +46,7 @@ public:
     enum TestsTreeModelRoles
     {
           UidRole = Qt::UserRole + 1     ///< uid элемента (теста, пробы, канала). QString в итеме элеметнов ColElement
-        , ProbeUidRole                   ///< uid пробы
+        , ProbeUidRole                   ///< uid пробы. Только в итемах уровня канала, чтобы не скакать по родителям!!!
         , ChannelUidRole                 ///< uid канала, именно реальной записи канала, а не channelID
         , ButtonActionRole               ///< действие на кнопке. Столбец ColButtons. Возвращает bsClose или baExport
         , TabWidgetRole                  ///< указатель на табулированный виджет, содержащий линейку визуализаторов
@@ -97,9 +97,10 @@ private slots:
     /*!
      * \brief Сообщает миру о создании секции
      * \param channelUid - uid канала
+     * \param name - название секции
      * \param number - номер секции в строковом виде
      */
-    void on_sectionCreated(QString &channelUid, const QString number);
+    void on_sectionCreated(QString &channelUid, const QString &name, const QString number);
 
 private:
     void saveSplitterPosition();
@@ -110,6 +111,15 @@ private:
      * \param testUid - uid теста
      */
     void openTest(const QString testUid);
+
+    void addSection(QString name,
+                    QString number,
+                    QStandardItem* itemChan,
+                    QStandardItem *itemWithVisuals,
+                    int& count,
+                    const QString &testUid,
+                    const QString &probeUid = "",
+                    const QString &channelId = "");
 
     /*!
      * \brief Устанавливает курсор на первую линейку визуализаторов открытого теста
@@ -150,6 +160,13 @@ private:
      * \param testUid - uid теста
      */
     bool isTestOpened(const QString &testUid);
+
+    bool buildElement(QStandardItem* item,
+                     int& count,
+                     const QString &testUid,
+                     const QString &probeUid = "",
+                     const QString &channelId = "",
+                     const QString &sectionNumber = "");
 
     /*!
      * \brief Рассчитывает линейку визуализаторов для элемента на дереве теста

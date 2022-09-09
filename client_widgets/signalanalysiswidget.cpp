@@ -125,10 +125,29 @@ void SignalAnalysisWidget::on_dbConnected()
             this, &SignalAnalysisWidget::on_sectionCreated);
 }
 
-void SignalAnalysisWidget::on_sectionCreated(QString &channelUid, const QString number)
+void SignalAnalysisWidget::on_sectionCreated(QString &channelUid, const QString &name, const QString number)
 {
-    qDebug() << Q_FUNC_INFO << "Создана секция:" << channelUid << number;
-
+    QStandardItem* itemWithVisuals = nullptr;  //! Первый итем с визуалами
+    for (int it = 0; it < m_mdlTests->rowCount(); ++it)
+    {
+        auto idxTest = m_mdlTests->index(it, 0);
+        auto testUid = idxTest.data(UidRole).toString();
+        for (int ip = 0; ip < m_mdlTests->itemFromIndex(idxTest)->rowCount(); ++ip)
+        {
+            auto idxProbe = m_mdlTests->index(ip, 0, idxTest);
+            auto probeUid = idxProbe.data(UidRole).toString();
+            for (int ic = 0; ic < m_mdlTests->itemFromIndex(idxProbe)->rowCount(); ++ic)
+            {
+                auto idxChannel = m_mdlTests->index(ic, 0, idxProbe);
+                auto channelId = idxChannel.data(UidRole).toString();
+                if (channelUid == idxChannel.data(ChannelUidRole).toString())
+                {
+                    int n = 0;
+                    addSection(name, number, m_mdlTests->itemFromIndex(idxChannel), itemWithVisuals, n, testUid, probeUid, channelId);
+                }
+            }
+        }
+    }
 }
 
 void SignalAnalysisWidget::saveSplitterPosition()
@@ -148,22 +167,6 @@ void SignalAnalysisWidget::openTest(const QString testUid)
 {
     QStandardItem* itemWithVisuals = nullptr;  //! Первый итем с визуалами
 
-    auto calcVisLine = [&](QStandardItem* item,
-                           int& count,
-                           const QString &testUid,
-                           const QString &probeUid = "",
-                           const QString &channelId = "",
-                           const QString &sectionNumber = "")
-    {
-        auto* wgt = calculateVisualsLine(count, testUid, probeUid, channelId, sectionNumber);
-        //! Если итем с визуалами еще не найден и этот итем с визуалами, то запомним на него указатель
-        if (!itemWithVisuals  && wgt)
-            itemWithVisuals = item;
-        QVariant var;
-        var.setValue(wgt);
-        item->setData(var, TabWidgetRole);
-    };
-
     DataDefines::TestInfo ti;
     if (DataProvider::getTestInfo(testUid, ti))
     {
@@ -176,7 +179,9 @@ void SignalAnalysisWidget::openTest(const QString testUid)
         itemTest->setEditable(false);
         itemTest->setData(ti.uid, UidRole);
         int n = 0;
-        calcVisLine(itemTest, n, ti.uid);
+        bool isVisualsPresent = buildElement(itemTest, n, ti.uid);
+        if (!itemWithVisuals  && isVisualsPresent)  //! Если итем с визуалами еще не найден и этот итем с визуалами, то запомним на него указатель
+            itemWithVisuals = itemTest;
         itemTest->setIcon(QIcon(":/images/tree/test.png"));
         auto *itemTestClose = new QStandardItem("");
         itemTestClose->setEditable(false);
@@ -193,7 +198,9 @@ void SignalAnalysisWidget::openTest(const QString testUid)
                 auto *itemProbe = new QStandardItem(pi.name);
                 itemProbe->setEditable(false);
                 itemProbe->setData(pi.uid, UidRole);
-                calcVisLine(itemProbe, n, ti.uid, pi.uid);
+                bool isVisualsPresent = buildElement(itemProbe, n, ti.uid, pi.uid);
+                if (!itemWithVisuals  && isVisualsPresent)  //! Если итем с визуалами еще не найден и этот итем с визуалами, то запомним на него указатель
+                    itemWithVisuals = itemProbe;
                 itemProbe->setIcon(QIcon(":/images/tree/probe.png"));
                 itemTest->appendRow(itemProbe);
 
@@ -204,7 +211,9 @@ void SignalAnalysisWidget::openTest(const QString testUid)
                     itemChan->setEditable(false);
                     itemChan->setData(chi.channelId, UidRole);
                     itemChan->setData(chi.uid, ChannelUidRole);
-                    calcVisLine(itemChan, n, ti.uid, pi.uid, chi.channelId);
+                    bool isVisualsPresent = buildElement(itemChan, n, ti.uid, pi.uid, chi.channelId);
+                    if (!itemWithVisuals  && isVisualsPresent)  //! Если итем с визуалами еще не найден и этот итем с визуалами, то запомним на него указатель
+                        itemWithVisuals = itemChan;
                     itemChan->setIcon(QIcon(":/images/tree/signal.png"));
                     auto *itemChanExport = new QStandardItem("");
                     itemChanExport->setEditable(false);
@@ -220,15 +229,7 @@ void SignalAnalysisWidget::openTest(const QString testUid)
                         if (DataProvider::getSections(chi.uid, sections))
                         {
                             foreach (auto section, sections)
-                            {
-                                auto *itemSection = new QStandardItem(section.name);
-                                itemSection->setData(section.number, SectionNumberRole);
-                                calcVisLine(itemSection, n, ti.uid, pi.uid, chi.channelId, section.number);
-                                itemSection->setIcon(QIcon(":/images/tree/signal.png"));
-
-                                itemChan->appendRow(QList<QStandardItem*>() << itemSection);
-                            }
-
+                                addSection(section.name, section.number, itemChan, itemWithVisuals, n, ti.uid, pi.uid, chi.channelId);
                             ui->tvTests->expand(itemChan->index());
                         }
                     }
@@ -251,6 +252,25 @@ void SignalAnalysisWidget::openTest(const QString testUid)
 
     ui->tvTests->header()->resizeSection(ColElement, 320);
     ui->tvTests->header()->resizeSection(ColButtons, 50);
+}
+
+void SignalAnalysisWidget::addSection(QString name,
+                                      QString number,
+                                      QStandardItem *itemChan,
+                                      QStandardItem *itemWithVisuals,
+                                      int& count,
+                                      const QString &testUid,
+                                      const QString &probeUid,
+                                      const QString &channelId)
+{
+    auto *itemSection = new QStandardItem(name);
+    itemSection->setData(number, SectionNumberRole);
+    bool isVisualsPresent = buildElement(itemSection, count, testUid, probeUid, channelId, number);
+    if (!itemWithVisuals  && isVisualsPresent)  //! Если итем с визуалами еще не найден и этот итем с визуалами, то запомним на него указатель
+        itemWithVisuals = itemChan;
+    itemSection->setIcon(QIcon(":/images/tree/signal.png"));
+
+    itemChan->appendRow(QList<QStandardItem*>() << itemSection);
 }
 
 void SignalAnalysisWidget::selectTest(const QString testUid)
@@ -357,6 +377,20 @@ bool SignalAnalysisWidget::isTestOpened(const QString &testUid)
         if (m_mdlTests->index(i, 0).data(UidRole).toString() == testUid)
             return true;
     return false;
+}
+
+bool SignalAnalysisWidget::buildElement(QStandardItem *item,
+                                       int &count,
+                                       const QString &testUid,
+                                       const QString &probeUid,
+                                       const QString &channelId,
+                                       const QString &sectionNumber)
+{
+    auto* wgt = calculateVisualsLine(count, testUid, probeUid, channelId, sectionNumber);
+    QVariant var;
+    var.setValue(wgt);
+    item->setData(var, TabWidgetRole);
+    return wgt;
 }
 
 QTabWidget *SignalAnalysisWidget::calculateVisualsLine(int &count,
