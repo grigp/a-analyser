@@ -236,6 +236,15 @@ bool getSectionData(const QString &channelUid, const QString number, QByteArray 
  */
 bool updateSection(const QString &channelUid, const QString &number, QByteArray &data);
 
+/*!
+ * \brief Удаление секции
+ * \param channelUid - uid канала
+ * \param number - номер секции
+ * \return true, если успешно
+ */
+bool deleteSection(const QString &channelUid, const QString &number);
+
+
 //! ------------------- Первичные показатели -------------------
 
 /*!

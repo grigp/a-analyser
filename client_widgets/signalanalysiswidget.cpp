@@ -32,6 +32,10 @@ SignalAnalysisWidget::SignalAnalysisWidget(QWidget *parent) :
 
     connect(static_cast<AAnalyserApplication*>(QApplication::instance()), &AAnalyserApplication::dbConnected,
             this, &SignalAnalysisWidget::on_dbConnected);
+
+    ui->tvTests->setContextMenuPolicy(Qt::CustomContextMenu);
+    connect(ui->tvTests, &QTreeView::customContextMenuRequested, this, &SignalAnalysisWidget::on_popupMenuRequested);
+
 }
 
 SignalAnalysisWidget::~SignalAnalysisWidget()
@@ -117,9 +121,6 @@ void SignalAnalysisWidget::selectElement(QModelIndex index)
         }
     }
 
-    qDebug() << idxElement.data(ChannelUidRole).toString() << idxElement.data(SectionNumberRole).toString();
-
-
     ui->lblNoVisuals->setVisible(!tabPresent);
 }
 
@@ -152,6 +153,67 @@ void SignalAnalysisWidget::on_sectionCreated(QString &channelUid, const QString 
             }
         }
     }
+}
+
+void SignalAnalysisWidget::on_popupMenuRequested(QPoint pos)
+{
+    if (!m_menu)
+    {
+        m_menu = new QMenu(this);
+
+        QAction * closeTest = new QAction(tr("Закрыть тест..."), this);
+        connect(closeTest, &QAction::triggered, this, &SignalAnalysisWidget::on_closeTest);
+        m_menu->addAction(closeTest);
+
+        QAction * signalExport = new QAction(tr("Экспорт сигнала..."), this);
+        connect(signalExport, &QAction::triggered, this, &SignalAnalysisWidget::on_signalExport);
+        m_menu->addAction(signalExport);
+
+        QAction * deleteSection = new QAction(tr("Удаление секции..."), this);
+        connect(deleteSection, &QAction::triggered, this, &SignalAnalysisWidget::on_deleteSection);
+        m_menu->addAction(deleteSection);
+    }
+    m_menu->popup(ui->tvTests->mapToGlobal(pos));
+}
+
+void SignalAnalysisWidget::on_closeTest()
+{
+    QModelIndex root = getRootTest();
+    if (root != QModelIndex())
+        closeTest(root);
+}
+
+void SignalAnalysisWidget::on_signalExport()
+{
+    auto selIdxs = ui->tvTests->selectionModel()->selectedIndexes();
+    if (selIdxs.size() == 2)
+    {
+        foreach (auto idx, selIdxs)
+            if (idx.column() == 1)
+            {
+                auto puid = idx.data(ProbeUidRole).toString();
+                auto cuid = idx.data(ChannelUidRole).toString();
+                if (puid != "" && cuid != "")
+                    signalExport(idx);
+                else
+                    QMessageBox::information(nullptr, tr("Предупреждение"), tr("Экспортировать можно только сигналы"));
+            }
+    }
+    else
+        QMessageBox::information(nullptr, tr("Предупреждение"), tr("Экспортировать можно только сигналы"));
+}
+
+void SignalAnalysisWidget::on_deleteSection()
+{
+    auto selIdxs = ui->tvTests->selectionModel()->selectedIndexes();
+    foreach (auto idx, selIdxs)
+        if (idx.column() == 0)
+        {
+            if (idx.data(ChannelUidRole).toString() != "" && idx.data(SectionNumberRole).toString() != "")
+                deleteSection(idx);
+            else
+                QMessageBox::information(nullptr, tr("Предупреждение"), tr("Необходимо выбрать секцию"));
+        }
 }
 
 void SignalAnalysisWidget::saveSplitterPosition()
@@ -363,9 +425,29 @@ QString SignalAnalysisWidget::getMethodName(const QString &metUid)
 void SignalAnalysisWidget::signalExport(QModelIndex &index)
 {
     auto puid = index.data(ProbeUidRole).toString();
-    auto cid = index.data(ChannelUidRole).toString();
-    auto exp = new SignalExporter(puid, cid);
+    auto cuid = index.data(ChannelUidRole).toString();
+    auto exp = new SignalExporter(puid, cuid);
     delete exp;
+}
+
+void SignalAnalysisWidget::deleteSection(QModelIndex &index)
+{
+    auto mr = QMessageBox::question(nullptr, tr("Запрос"), tr("Удалить секцию") + " \"" + index.data().toString() + "\"?");
+    if (mr == QMessageBox::Yes)
+    {
+        QVariant var = index.data(TabWidgetRole);
+        if (var.isValid())
+        {
+            QTabWidget* wgt = var.value<QTabWidget*>();
+            if (wgt)
+                wgt->setVisible(true);
+        }
+
+        ui->lblNoVisuals->setVisible(true);
+
+        DataProvider::deleteSection(index.data(ChannelUidRole).toString(), index.data(SectionNumberRole).toString());
+        m_mdlTests->removeRow(index.row(), index.parent());
+    }
 }
 
 QList<QString> SignalAnalysisWidget::getTests()
@@ -382,6 +464,22 @@ bool SignalAnalysisWidget::isTestOpened(const QString &testUid)
         if (m_mdlTests->index(i, 0).data(UidRole).toString() == testUid)
             return true;
     return false;
+}
+
+QModelIndex SignalAnalysisWidget::getRootTest()
+{
+    auto selIdxs = ui->tvTests->selectionModel()->selectedIndexes();
+    foreach (auto idx, selIdxs)
+    {
+        if (idx.column() == 0)
+        {
+            QModelIndex root = idx;
+            while (root.parent() != QModelIndex())
+                root = root.parent();
+            return root;
+        }
+    }
+    return QModelIndex();
 }
 
 bool SignalAnalysisWidget::buildElement(QStandardItem *item,

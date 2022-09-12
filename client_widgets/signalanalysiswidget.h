@@ -4,6 +4,7 @@
 #include <QWidget>
 #include <QTabWidget>
 #include <QStandardItemModel>
+#include <QMenu>
 
 #include "clientwidget.h"
 #include "metodicdefines.h"
@@ -102,6 +103,12 @@ private slots:
      */
     void on_sectionCreated(QString &channelUid, const QString &name, const QString number);
 
+    void on_popupMenuRequested(QPoint pos);
+
+    void on_closeTest();
+    void on_signalExport();
+    void on_deleteSection();
+
 private:
     void saveSplitterPosition();
     void restoreSplitterPosition();
@@ -145,10 +152,16 @@ private:
     QString getMethodName(const QString& metUid);
 
     /*!
-     * \brief Экспор сигнала
+     * \brief Экспорт сигнала
      * \param index - индекс, на котором находится кнопка рядом с каналом, сигнал которого надо экспортировать
      */
     void signalExport(QModelIndex& index);
+
+    /*!
+     * \brief Удаление секции
+     * \param index - модельный индекс элемента секции
+     */
+    void deleteSection(QModelIndex& index);
 
     /*!
      * \brief Возвращает список uid открытых тестов
@@ -160,6 +173,11 @@ private:
      * \param testUid - uid теста
      */
     bool isTestOpened(const QString &testUid);
+
+    /*!
+     * \brief Возвращает модельный индекс корневого объекта выделенного теста
+     */
+    QModelIndex getRootTest();
 
     bool buildElement(QStandardItem* item,
                      int& count,
@@ -188,6 +206,8 @@ private:
 
 private:
     Ui::SignalAnalysisWidget *ui;
+
+    QMenu *m_menu {nullptr};
 };
 
 #endif // SIGNALANALYSISWIDGET_H

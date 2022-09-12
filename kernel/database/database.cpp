@@ -510,6 +510,26 @@ bool DataBase::updateSection(const QString &channelUid, const QString &number, Q
     return true;
 }
 
+bool DataBase::deleteSection(const QString &channelUid, const QString &number)
+{
+    QDir dir = channelsDir();
+    bool retval = true;
+
+    QString fnData = dir.absoluteFilePath(channelUid + ".data." + number);
+    if (QFile::exists(fnData))
+        QFile::remove(fnData);
+    else
+        retval = false;
+
+    QString fnCfg = dir.absoluteFilePath(channelUid + ".cfg." + number);
+    if (QFile::exists(fnCfg))
+        QFile::remove(fnCfg);
+    else
+        retval = false;
+
+    return retval;
+}
+
 void DataBase::addPrimaryFactor(const QString &testUid,
                                 const QString &uid,
                                 const double value,
