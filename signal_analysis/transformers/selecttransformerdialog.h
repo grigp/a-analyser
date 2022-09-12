@@ -46,6 +46,7 @@ private:
     Ui::SelectTransformerDialog *ui;
 
     SignalTransformerParamsWidget *m_wgtParams {nullptr};
+    QString m_uid {""};
 
     void load();
 };

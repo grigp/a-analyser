@@ -11,6 +11,7 @@
 #include "selecttransformerdialog.h"
 #include "computefft.h"
 #include "spectrparamsdialog.h"
+#include "settingsprovider.h"
 
 SectionGraphVisualWidget::SectionGraphVisualWidget(VisualDescriptor* visual,
                                                    const QString& testUid,
@@ -138,6 +139,7 @@ void SectionGraphVisualWidget::on_move(const int x, const int y, const Qt::Mouse
 void SectionGraphVisualWidget::on_transform()
 {
     SelectTransformerDialog dlg(this);
+
     if (dlg.exec() == QDialog::Accepted)
     {
         QVector<double> buffer;

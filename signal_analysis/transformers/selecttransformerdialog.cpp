@@ -6,6 +6,7 @@
 
 #include "aanalyserapplication.h"
 #include "signaltransformerparamswidget.h"
+#include "settingsprovider.h"
 
 SelectTransformerDialog::SelectTransformerDialog(QWidget *parent) :
     QDialog(parent),
@@ -31,25 +32,33 @@ QString SelectTransformerDialog::transformer() const
 QJsonObject SelectTransformerDialog::params() const
 {
     if (m_wgtParams)
-        return m_wgtParams->params();
+    {
+        auto params = m_wgtParams->params();
+        //QJsonValue val = params;
+        SettingsProvider::setValueToRegAppCopy("SignalTransformSettings", m_uid, QJsonValue(params).toString());
+        return params;
+    }
     return QJsonObject();
 }
 
 
 void SelectTransformerDialog::on_selectItem(QModelIndex index)
 {
-    auto uid = index.data(UidRole).toString();
-    m_wgtParams = static_cast<AAnalyserApplication*>(QApplication::instance())->getSignalTransformParamsWidget(uid);
+    m_uid = index.data(UidRole).toString();
+    m_wgtParams = static_cast<AAnalyserApplication*>(QApplication::instance())->getSignalTransformParamsWidget(m_uid);
 
     if (m_wgtParams)
     {
-        //! Очистка панели кнопок
+        //! Очистка панели
         while (QLayoutItem* item = ui->frParams->layout()->takeAt(0))
         {
             delete item->widget();
             delete item;
         }
 
+        auto sp = SettingsProvider::valueFromRegAppCopy("SignalTransformSettings", m_uid, "").toString();
+        QJsonValue vp(sp);
+        m_wgtParams->setParams(vp.toObject());
         ui->frParams->layout()->addWidget(static_cast<QWidget*>(m_wgtParams));
     }
 }
