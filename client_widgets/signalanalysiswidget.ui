@@ -146,6 +146,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>tvTests</sender>
+   <signal>activated(QModelIndex)</signal>
+   <receiver>SignalAnalysisWidget</receiver>
+   <slot>selectElement(QModelIndex)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>262</x>
+     <y>223</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>864</x>
+     <y>194</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>splitterMoved(int,int)</slot>

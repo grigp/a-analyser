@@ -169,7 +169,7 @@ void SignalAnalysisWidget::on_popupMenuRequested(QPoint pos)
         connect(signalExport, &QAction::triggered, this, &SignalAnalysisWidget::on_signalExport);
         m_menu->addAction(signalExport);
 
-        QAction * deleteSection = new QAction(tr("Удаление секции..."), this);
+        QAction * deleteSection = new QAction(tr("Удалить секцию..."), this);
         connect(deleteSection, &QAction::triggered, this, &SignalAnalysisWidget::on_deleteSection);
         m_menu->addAction(deleteSection);
     }
@@ -435,18 +435,26 @@ void SignalAnalysisWidget::deleteSection(QModelIndex &index)
     auto mr = QMessageBox::question(nullptr, tr("Запрос"), tr("Удалить секцию") + " \"" + index.data().toString() + "\"?");
     if (mr == QMessageBox::Yes)
     {
+        //! Удаление строки визуализаторов, связанных с элементом
         QVariant var = index.data(TabWidgetRole);
         if (var.isValid())
         {
             QTabWidget* wgt = var.value<QTabWidget*>();
             if (wgt)
-                wgt->setVisible(true);
+                delete wgt;
         }
-
         ui->lblNoVisuals->setVisible(true);
 
+        //! Удаление секции из БД
         DataProvider::deleteSection(index.data(ChannelUidRole).toString(), index.data(SectionNumberRole).toString());
+        //! Удаление строки из модели
         m_mdlTests->removeRow(index.row(), index.parent());
+
+        //! Показ визуализаторов следующего выбранного элемента
+        auto selIdxs = ui->tvTests->selectionModel()->selectedIndexes();
+        foreach (auto idx, selIdxs)
+            if (idx.column() == 0)
+                selectElement(idx);
     }
 }
 
