@@ -3,6 +3,8 @@
 
 #include <QStandardItemModel>
 #include <QUuid>
+#include <QJsonDocument>
+#include <QDebug>
 
 #include "aanalyserapplication.h"
 #include "signaltransformerparamswidget.h"
@@ -34,13 +36,13 @@ QJsonObject SelectTransformerDialog::params() const
     if (m_wgtParams)
     {
         auto params = m_wgtParams->params();
-        //QJsonValue val = params;
-        SettingsProvider::setValueToRegAppCopy("SignalTransformSettings", m_uid, QJsonValue(params).toString());
+        QJsonDocument doc(params);
+        QByteArray ba = doc.toJson();
+        SettingsProvider::setValueToRegAppCopy("SignalTransformSettings", m_uid, ba);
         return params;
     }
     return QJsonObject();
 }
-
 
 void SelectTransformerDialog::on_selectItem(QModelIndex index)
 {
@@ -56,9 +58,10 @@ void SelectTransformerDialog::on_selectItem(QModelIndex index)
             delete item;
         }
 
-        auto sp = SettingsProvider::valueFromRegAppCopy("SignalTransformSettings", m_uid, "").toString();
-        QJsonValue vp(sp);
-        m_wgtParams->setParams(vp.toObject());
+        auto sp = SettingsProvider::valueFromRegAppCopy("SignalTransformSettings", m_uid).toByteArray();
+        QJsonDocument doc(QJsonDocument::fromJson(sp));
+        QJsonObject params = doc.object();
+        m_wgtParams->setParams(params);
         ui->frParams->layout()->addWidget(static_cast<QWidget*>(m_wgtParams));
     }
 }

@@ -2,6 +2,7 @@
 #include "ui_sectiongraphvisualwidget.h"
 
 #include <QMessageBox>
+#include <QJsonDocument>
 #include <QDebug>
 
 #include "aanalyserapplication.h"
@@ -53,7 +54,6 @@ void SectionGraphVisualWidget::calculate()
 
             m_diap = qMax(m_signal->midValue() - m_signal->minValue(), m_signal->maxValue() - m_signal->midValue());
 
-            qDebug() << m_signal->minValue() << m_signal->midValue() << m_signal->maxValue();
             ui->wgtGraph->setDiapazone(-m_diap, m_diap);
             ui->wgtGraph->setIsZeroing(true);
             ui->cbScale->setCurrentIndex(0);
@@ -191,30 +191,44 @@ void SectionGraphVisualWidget::on_calculateSpectr()
 {
     //! Диалог параметров спектра
     SpectrParamsDialog dlg(m_signal->size(), m_signal->frequency());
+
+    auto sp = SettingsProvider::valueFromRegAppCopy("CalculateSpectr", "Settings").toByteArray();
+    if (sp.size() != 0)
+    {
+        QJsonDocument doc(QJsonDocument::fromJson(sp));
+        QJsonObject params = doc.object();
+        dlg.setParams(params);
+    }
+
     if (dlg.exec() == QDialog::Accepted)
     {
+        auto params = dlg.params();
+        QJsonDocument doc(params);
+        QByteArray ba = doc.toJson();
+        SettingsProvider::setValueToRegAppCopy("CalculateSpectr", "Settings", ba);
+
         //! Буфера данных для спектра
         QVector<double> dataSrc;
         QVector<double> dataRes;
 
         //! Расчет спектра
         int frequency = m_signal->frequency();
-        if (dlg.isAveraging())
-            computeSpectrAveraging(dataSrc, dataRes, dlg.points(), dlg.averagingOffset());
+        if (params["is_averaging"].toBool())
+            computeSpectrAveraging(dataSrc, dataRes, params["points"].toInt(), params["averaging_offset"].toInt());
         else
         {
-            computeSpectrDecimation(dataSrc, dataRes, dlg.points());
-            frequency = static_cast<int>(static_cast<double>(frequency) / (static_cast<double>(m_signal->size()) / static_cast<double>(dlg.points())));
+            computeSpectrDecimation(dataSrc, dataRes, params["points"].toInt());
+            frequency = static_cast<int>(static_cast<double>(frequency) / (static_cast<double>(m_signal->size()) / static_cast<double>(params["points"].toInt())));
         }
 
         //! Прорисовка спектра в одном диапазоне амплитуд
         double maxVS = 0;
         double maxVR = 0;
-        showSpectr(ui->wgtSpectrSrc, dataSrc, maxVS, frequency, dlg.maxFrequency());
-        showSpectr(ui->wgtSpectrRes, dataRes, maxVR, frequency, dlg.maxFrequency());
+        showSpectr(ui->wgtSpectrSrc, dataSrc, maxVS, frequency, params["max_frequency"].toDouble());
+        showSpectr(ui->wgtSpectrRes, dataRes, maxVR, frequency, params["max_frequency"].toDouble());
         double max = qMax(maxVS, maxVR);
-        ui->wgtSpectrSrc->setVisualArea(0, dlg.maxFrequency(), 0, max);
-        ui->wgtSpectrRes->setVisualArea(0, dlg.maxFrequency(), 0, max);
+        ui->wgtSpectrSrc->setVisualArea(0, params["max_frequency"].toDouble(), 0, max);
+        ui->wgtSpectrRes->setVisualArea(0, params["max_frequency"].toDouble(), 0, max);
 
         //! Автоматически показать панель спектров
         ui->splHorizontal->setSizes(QList<int>() << 500 << 500);

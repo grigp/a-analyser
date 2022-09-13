@@ -37,7 +37,7 @@ bool SpectrParamsDialog::isAveraging() const
     return ui->cbAveraging->isChecked();
 }
 
-void SpectrParamsDialog::setAsAveraging(const bool ia)
+void SpectrParamsDialog::setIsAveraging(const bool ia)
 {
     ui->cbAveraging->setChecked(ia);
 }
@@ -60,6 +60,24 @@ double SpectrParamsDialog::maxFrequency() const
 void SpectrParamsDialog::setMaxFrequency(const double maxFreq)
 {
     ui->edMaxFrequency->setValue(maxFreq);
+}
+
+QJsonObject SpectrParamsDialog::params() const
+{
+    QJsonObject retval;
+    retval["points"] = points();
+    retval["is_averaging"] = isAveraging();
+    retval["averaging_offset"] = averagingOffset();
+    retval["max_frequency"] = maxFrequency();
+    return retval;
+}
+
+void SpectrParamsDialog::setParams(const QJsonObject params)
+{
+    setPoints(params["points"].toInt());
+    setIsAveraging(params["is_averaging"].toBool());
+    setAveragingOffset(params["averaging_offset"].toInt());
+    setMaxFrequency(params["max_frequency"].toDouble());
 }
 
 void SpectrParamsDialog::on_averagingClicked(bool val)

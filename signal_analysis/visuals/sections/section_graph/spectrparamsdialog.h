@@ -2,6 +2,7 @@
 #define SPECTRPARAMSDIALOG_H
 
 #include <QDialog>
+#include <QJsonObject>
 
 namespace Ui {
 class SpectrParamsDialog;
@@ -22,13 +23,16 @@ public:
     void setPoints(const int points);
 
     bool isAveraging() const;
-    void setAsAveraging(const bool ia);
+    void setIsAveraging(const bool ia);
 
     int averagingOffset() const;
     void setAveragingOffset(const int offs);
 
     double maxFrequency() const;
     void setMaxFrequency(const double maxFreq);
+
+    QJsonObject params() const;
+    void setParams(const QJsonObject params);
 
 private slots:
     void on_averagingClicked(bool val);
