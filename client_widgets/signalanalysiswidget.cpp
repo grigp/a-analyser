@@ -335,7 +335,7 @@ void SignalAnalysisWidget::addSection(QString name,
     bool isVisualsPresent = buildElement(itemSection, count, testUid, probeUid, channelId, number);
     if (!itemWithVisuals  && isVisualsPresent)  //! Если итем с визуалами еще не найден и этот итем с визуалами, то запомним на него указатель
         itemWithVisuals = itemChan;
-    itemSection->setIcon(QIcon(":/images/tree/signal.png"));
+    itemSection->setIcon(QIcon(":/images/tree/section.png"));
 
     itemChan->appendRow(QList<QStandardItem*>() << itemSection);
 }
