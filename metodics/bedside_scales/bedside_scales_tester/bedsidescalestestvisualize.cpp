@@ -31,6 +31,8 @@ void BedsideScalesTestVisualize::setTest(const QString &testUid)
         int secCnt = m_calculator->signalSize() / m_calculator->signalFrequency();
         auto sSize = BaseUtils::getTimeBySecCount(secCnt, true);
         ui->lblSignalSize->setText(tr("Длительность сигнала") + " : " + sSize);
+
+        ui->frWeighingResults->setVisible(m_calculator->isParticalWeighting());
     }
 }
 

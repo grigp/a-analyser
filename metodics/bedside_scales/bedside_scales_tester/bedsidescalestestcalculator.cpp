@@ -7,6 +7,7 @@
 #include "dataprovider.h"
 #include "weightplatesignal.h"
 #include "balistogram.h"
+#include "weighingresultdata.h"
 
 BedsideScalesTestCalculator::BedsideScalesTestCalculator(const QString &testUid, QObject *parent)
     : TestCalculator (testUid, parent)
@@ -32,9 +33,18 @@ void BedsideScalesTestCalculator::calculate()
         {
             DataDefines::ProbeInfo pi;
             if (DataProvider::getProbeInfo(ti.probes.at(i), pi))
+            {
                 if (DataProvider::channelExists(pi.uid, ChannelsDefines::chanWeight) ||
                     DataProvider::channelExists(pi.uid, ChannelsDefines::chanWeightPlate))
                     getSignal(pi.uid);
+
+                if (DataProvider::channelExists(pi.uid, ChannelsDefines::chanParticalWeighting))
+                {
+                    QByteArray data;
+                    if (DataProvider::getChannel(pi.uid, ChannelsDefines::chanParticalWeighting, data))
+                        m_wd = new WeighingResultData(data);
+                }
+            }
         }
     }
 }
@@ -69,6 +79,40 @@ double BedsideScalesTestCalculator::signalValue(const int subChan, const int rec
 {
     if (m_signal)
         return m_signal->value(subChan, rec);
+    return 0;
+}
+
+bool BedsideScalesTestCalculator::isParticalWeighting() const
+{
+    return (m_wd);
+//    return (m_wd != nullptr);
+}
+
+QTime BedsideScalesTestCalculator::scalingInterval() const
+{
+    if (m_wd)
+        return m_wd->scalingInterval();
+    return QTime(0, 0);
+}
+
+int BedsideScalesTestCalculator::averageTime() const
+{
+    if (m_wd)
+        return m_wd->averageTime();
+    return 0;
+}
+
+int BedsideScalesTestCalculator::size() const
+{
+    if (m_wd)
+        return m_wd->size();
+    return 0;
+}
+
+double BedsideScalesTestCalculator::weight(const int idx) const
+{
+    if (m_wd)
+        return m_wd->weight(idx);
     return 0;
 }
 

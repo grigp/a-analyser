@@ -6,6 +6,7 @@
 #include "testcalculator.h"
 
 class SignalAccess;
+class WeighingResultData;
 
 /*!
  * \brief Класс рассчета данных для прикроватных весов The BedsideScalesTestCalculator class
@@ -53,10 +54,28 @@ public:
     double signalValue(const int subChan, const int rec) const;
 
 
+    bool isParticalWeighting() const;
+
+    QTime scalingInterval() const;
+
+    int averageTime() const;
+
+    /*!
+     * \brief Возвращает кол-во измерений веса в канале
+     */
+    int size() const;
+
+    /*!
+     * \brief Возвращает данные об измерении веса по номеру измерения
+     */
+    double weight(const int idx) const;
+
+
 private:
     void getSignal(const QString &probeId);
 
     SignalAccess* m_signal {nullptr};
+    WeighingResultData* m_wd {nullptr};
 };
 
 #endif // BEDSIDESCALESTESTCALCULATOR_H
