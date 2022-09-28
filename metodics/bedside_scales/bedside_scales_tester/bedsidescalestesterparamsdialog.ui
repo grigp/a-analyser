@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>300</height>
+    <width>470</width>
+    <height>412</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -175,6 +175,117 @@
        </widget>
       </item>
       <item>
+       <widget class="QFrame" name="frScalesMode">
+        <property name="frameShape">
+         <enum>QFrame::Panel</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Sunken</enum>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout_4">
+         <item>
+          <widget class="QCheckBox" name="cbIntervalScaling">
+           <property name="text">
+            <string>Взвешивать с заданным интервалом времени</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QFrame" name="frScalingInterval">
+           <property name="frameShape">
+            <enum>QFrame::StyledPanel</enum>
+           </property>
+           <property name="frameShadow">
+            <enum>QFrame::Raised</enum>
+           </property>
+           <layout class="QHBoxLayout" name="horizontalLayout_4">
+            <property name="leftMargin">
+             <number>0</number>
+            </property>
+            <property name="topMargin">
+             <number>4</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
+             <number>4</number>
+            </property>
+            <item>
+             <widget class="QLabel" name="lblScalingInterval">
+              <property name="text">
+               <string>Время начала записи</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QTimeEdit" name="edScalingInterval">
+              <property name="currentSection">
+               <enum>QDateTimeEdit::MinuteSection</enum>
+              </property>
+              <property name="displayFormat">
+               <string>mm:ss</string>
+              </property>
+              <property name="time">
+               <time>
+                <hour>0</hour>
+                <minute>0</minute>
+                <second>20</second>
+               </time>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </item>
+         <item>
+          <widget class="QFrame" name="frAverageTime">
+           <property name="frameShape">
+            <enum>QFrame::StyledPanel</enum>
+           </property>
+           <property name="frameShadow">
+            <enum>QFrame::Raised</enum>
+           </property>
+           <layout class="QHBoxLayout" name="horizontalLayout_5">
+            <property name="leftMargin">
+             <number>0</number>
+            </property>
+            <property name="topMargin">
+             <number>4</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
+             <number>4</number>
+            </property>
+            <item>
+             <widget class="QLabel" name="lblAverageTime">
+              <property name="text">
+               <string>Время усреднения, сек</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QSpinBox" name="edAverageTime">
+              <property name="minimum">
+               <number>1</number>
+              </property>
+              <property name="maximum">
+               <number>25</number>
+              </property>
+              <property name="value">
+               <number>3</number>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item>
        <spacer name="verticalSpacer">
         <property name="orientation">
          <enum>Qt::Vertical</enum>
@@ -211,8 +322,8 @@
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>248</x>
-     <y>254</y>
+     <x>257</x>
+     <y>402</y>
     </hint>
     <hint type="destinationlabel">
      <x>157</x>
@@ -227,8 +338,8 @@
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>316</x>
-     <y>260</y>
+     <x>325</x>
+     <y>402</y>
     </hint>
     <hint type="destinationlabel">
      <x>286</x>
@@ -236,5 +347,24 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>cbMode</sender>
+   <signal>currentIndexChanged(int)</signal>
+   <receiver>BedsideScalesTesterParamsDialog</receiver>
+   <slot>on_modeChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>406</x>
+     <y>40</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>472</x>
+     <y>42</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
+ <slots>
+  <slot>on_modeChanged(int)</slot>
+ </slots>
 </ui>

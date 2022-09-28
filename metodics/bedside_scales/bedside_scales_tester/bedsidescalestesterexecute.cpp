@@ -8,6 +8,7 @@
 #include "executewidget.h"
 #include "weightplatesignal.h"
 #include "balistogram.h"
+#include "weighingresultdata.h"
 #include "baseutils.h"
 
 #include <QTimer>
@@ -61,6 +62,13 @@ void BedsideScalesTesterExecute::setParams(const QJsonObject &probeParams)
     m_recLength = QTime::fromString(recLength, "h:mm:ss");
 
     m_isSound = probeParams["sound"].toBool(true);
+
+    m_isIntervalScaling = probeParams["is_interval_scaling"].toBool(true);
+
+    auto scalingInterval = probeParams["scaling_interval"].toString("05:00");
+    m_scalingInterval = QTime::fromString(scalingInterval, "mm:ss");
+
+    m_averageTime = probeParams["average_time"].toInt(3);
 }
 
 void BedsideScalesTesterExecute::closeEvent(QCloseEvent *event)
@@ -142,6 +150,16 @@ void BedsideScalesTesterExecute::start()
         {
             m_weight = new Balistogram(ChannelsDefines::chanWeight, m_driver->frequency(ChannelsDefines::chanWeightPlate));
             m_trd->addChannel(m_weight);
+            if (m_isIntervalScaling)
+            {
+                m_wrd = new WeighingResultData(ChannelsDefines::chanParticalWeighting);
+                m_wrd->setAverageTime(m_averageTime);
+                m_wrd->setScalingInterval(m_scalingInterval);
+                m_trd->addChannel(m_wrd);
+                m_scalingIntervalPt = (m_scalingInterval.minute() * 60 + m_scalingInterval.second()) *
+                        m_driver->frequency(ChannelsDefines::chanWeightPlate);
+                m_averageTimePt = m_averageTime * m_driver->frequency(ChannelsDefines::chanWeightPlate);
+            }
         }
     }
     else
@@ -416,7 +434,36 @@ void BedsideScalesTesterExecute::getDataWeight(DeviceProtocols::DeviceData *data
         rec << massa;
         ui->wgtWeighting->addValue(rec);
         if (m_isRecording)
+        {
             m_weight->addValue(massa);
+            if (m_isIntervalScaling)
+            {
+                ++m_pwmCounter;
+                if (m_pwm == pwmWait)
+                {
+                    if (m_pwmCounter >= m_scalingIntervalPt)
+                    {
+                        m_pwm = pwmAveraging;
+                        m_pwmCounter = 0;
+                    }
+                }
+                else
+                if (m_pwm == pwmAveraging)
+                {
+                    if (m_pwmCounter < m_averageTimePt)
+                    {
+                        m_pwmWeight += massa;
+                    }
+                    else
+                    {
+                        m_pwm = pwmWait;
+                        m_pwmCounter = 0;
+                        m_wrd->addWeight(m_pwmWeight / m_averageTimePt);
+                        m_pwmWeight = 0;
+                    }
+                }
+            }
+        }
     }
 
     //! Если установлено автоматическое управление записью, то начать запись

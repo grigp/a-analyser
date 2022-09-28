@@ -151,6 +151,9 @@ private:
      */
     void assignByteFromDevice(quint8 b);
 
+    void saveCalibrationData();
+    void restoreCalibrationData();
+
     /*!
      * \brief Передача данных пакета
      */

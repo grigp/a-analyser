@@ -17,6 +17,7 @@ class BedsideScalesTesterExecute;
 class TestResultData;
 class Driver;
 class WeightPlateSignal;
+class WeighingResultData;
 class Balistogram;
 
 /*!
@@ -77,17 +78,32 @@ private:
     QTime m_startTime {QTime::fromString("0:00:20", "h:mm:ss")};
     QTime m_recLength {QTime::fromString("0:10:00", "h:mm:ss")};
     bool m_isSound {true};
+    bool m_isIntervalScaling {true};
+    QTime m_scalingInterval = {QTime::fromString("05:00", "mm:ss")};
+    int m_averageTime {3};
 
     bool m_isRecording {false};
     bool m_isCalibrate {false};
     WeightPlateSignal *m_wps {nullptr};     ///< Записываемый сигнал
     Balistogram *m_weight {nullptr};
+    WeighingResultData *m_wrd {nullptr};
 
     QQueue<QVector<double>> m_values;       ///< Значения за последние N секунд
     QVector<double> m_offsets;              ///< Смещения (центровка)
 
     int m_curScaleId {0};                   ///< Текущий индекс масштаба
     QMediaPlayer m_player;
+
+    enum ParticalWeightingMode
+    {
+        pwmWait = 0
+      , pwmAveraging
+    };
+    ParticalWeightingMode m_pwm {pwmWait};
+    int m_scalingIntervalPt {0};
+    int m_averageTimePt {0};
+    int m_pwmCounter {0};
+    double m_pwmWeight {0};
 };
 
 #endif // BEDSIDESCALESTESTEREXECUTE_H

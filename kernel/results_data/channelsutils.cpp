@@ -327,6 +327,10 @@ ChannelsUtils::ChannelsUtils()
                                                                     std::make_tuple(QString("Билатеральный режим"),
                                                                                     QString("Bilat"),
                                                                                     ChannelsDefines::ctBilat))
+                 , std::pair<QString, ChannelsDefines::ChannelInfo>(ChannelsDefines::chanParticalWeighting,
+                                                                    std::make_tuple(QString("Взвешивание"),
+                                                                                    QString("Weight"),
+                                                                                    ChannelsDefines::ctParticalWeighting))
                  })
     , m_formats({
                   std::pair<QString, QString>(ChannelsDefines::ctDecartTraectory, ChannelsDefines::cfDecartCoordinates)

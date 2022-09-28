@@ -30,6 +30,9 @@ public:
      */
     QJsonObject getParams();
 
+private slots:
+    void on_modeChanged(int mode);
+
 private:
     Ui::BedsideScalesTesterParamsDialog *ui;
 };

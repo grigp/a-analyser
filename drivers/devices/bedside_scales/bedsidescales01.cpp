@@ -4,6 +4,9 @@
 #include "bedsidescales01paramsdialog.h"
 #include "channelsutils.h"
 
+#include <QJsonArray>
+#include <QJsonObject>
+#include <QJsonDocument>
 #include <QDebug>
 
 namespace
@@ -23,6 +26,7 @@ BedsideScales01::BedsideScales01(QObject *parent)
         m_offset[i] = 0;
         m_adcOffset[i] = 0;
     }
+    restoreCalibrationData();
 }
 
 void BedsideScales01::setParams(const DeviceProtocols::Ports port, const QJsonObject &params)
@@ -280,6 +284,7 @@ void BedsideScales01::assignByteFromDevice(quint8 b)
                         m_offset[i] /= m_calibrCount;
                         m_adcOffset[i] /= static_cast<quint32>(m_calibrCount);
                     }
+                    saveCalibrationData();
                     m_calibrCount = 0;
                     ++m_calibrateStage;
                     if (m_calibrateStage == 2)
@@ -303,6 +308,55 @@ void BedsideScales01::assignByteFromDevice(quint8 b)
     }
 
     m_bPrev = b;
+}
+
+void BedsideScales01::saveCalibrationData()
+{
+    QJsonArray arr;
+    for (int i = 0; i < 4; ++i)
+    {
+        QJsonObject obj;
+        obj["offset"] = m_offset[i];
+        obj["adc_offset"] = static_cast<int>(m_adcOffset[i]);
+        arr << obj;
+    }
+    QJsonObject root;
+    root["sensors"] = arr;
+
+    auto patient = static_cast<AAnalyserApplication*>(QApplication::instance())->getCurrentPatient();
+    QFile fileRec(DataDefines::aanalyserTemporaryPath() + "bss_calibration-" + patient.uid + ".json");
+    fileRec.remove();
+    if (fileRec.open(QIODevice::WriteOnly | QIODevice::Text))
+    {
+        QJsonDocument doc(root);
+        QByteArray ba = doc.toJson();
+        fileRec.write(ba);
+        fileRec.close();
+    }
+}
+
+void BedsideScales01::restoreCalibrationData()
+{
+    QJsonObject root;
+    auto patient = static_cast<AAnalyserApplication*>(QApplication::instance())->getCurrentPatient();
+    QFile fileRec(DataDefines::aanalyserTemporaryPath() + "bss_calibration-" + patient.uid + ".json");
+    if (fileRec.open(QIODevice::ReadOnly | QIODevice::Text))
+    {
+        QByteArray ba = fileRec.readAll();
+        QJsonDocument loadDoc(QJsonDocument::fromJson(ba));
+        root = loadDoc.object();
+        fileRec.close();
+    }
+
+    auto arr = root["sensors"].toArray();
+    for (int i = 0; i < arr.size(); ++i)
+    {
+        if (i > 4)
+            break;
+        auto obj = arr.at(i).toObject();
+        m_offset[i] = obj["offset"].toDouble(0);
+        m_adcOffset[i] = static_cast<quint32>(obj["adc_offset"].toInt(0));
+    }
 }
 
 void BedsideScales01::sendDataBlock()
