@@ -14,6 +14,8 @@ BedsideScalesTestVisualize::BedsideScalesTestVisualize(QWidget *parent) :
     ui(new Ui::BedsideScalesTestVisualize)
 {
     ui->setupUi(this);
+
+    connect(ui->wgtWeighingResults, &DynamicDiagram::selectItem, this, &BedsideScalesTestVisualize::on_selectItem);
 }
 
 BedsideScalesTestVisualize::~BedsideScalesTestVisualize()
@@ -33,6 +35,8 @@ void BedsideScalesTestVisualize::setTest(const QString &testUid)
         ui->lblSignalSize->setText(tr("Длительность сигнала") + " : " + sSize);
 
         ui->frWeighingResults->setVisible(m_calculator->isParticalWeighting());
+
+        showDiagParticalWeighting();
     }
 }
 
@@ -50,6 +54,39 @@ void BedsideScalesTestVisualize::signalExport()
         auto fileName = QFileDialog::getSaveFileName(this, tr("Файл для экспорта сигнала"), path, tr("Текстовые файлы (*.txt)"));
         if (fileName != "")
             saveSignal(fileName);
+    }
+}
+
+void BedsideScalesTestVisualize::on_weighingResultsGraph()
+{
+    ui->wgtWeighingResults->setKind(DynamicDiagram::KindGraph);
+    ui->btnBar->setChecked(false);
+}
+
+void BedsideScalesTestVisualize::on_weighingResultsBar()
+{
+    ui->wgtWeighingResults->setKind(DynamicDiagram::KindBar);
+    ui->btnGraph->setChecked(false);
+}
+
+void BedsideScalesTestVisualize::on_weighingResults3D(bool is3D)
+{
+    if (is3D)
+        ui->wgtWeighingResults->setVolume(DynamicDiagram::Volume3D);
+    else
+        ui->wgtWeighingResults->setVolume(DynamicDiagram::Volume2D);
+}
+
+void BedsideScalesTestVisualize::on_selectItem(const int idx)
+{
+    if (idx >= 0 && idx < m_calculator->size())
+    {
+        auto value = m_calculator->weight(idx);
+        auto dt = m_calculator->dateTime(idx);
+        ui->wgtWeighingResults->setBottomText(tr("Измерение") + (" (") + QString::number(idx + 1) + ") : (" +
+                                              dt.toString("dd.MM.yyyy hh:mm:ss") + ") - " +
+                                              QString::number(value) + " " + tr("кг"));
+//        ui->wgtWeighingResults->setBottomText(QString(tr("Тест") + " " + sdt + " - " + QString::number(value)));
     }
 }
 
@@ -77,5 +114,16 @@ void BedsideScalesTestVisualize::saveSignal(const QString &fileName)
 
         file.close();
     }
+}
+
+void BedsideScalesTestVisualize::showDiagParticalWeighting()
+{
+    for (int i = 0; i < m_calculator->size(); ++i)
+    {
+        auto value = m_calculator->weight(i);
+        auto di = new DiagItem(value, QString::number(i + 1)); //dt.toString("dd.MM.yyyy hh:mm"));
+        ui->wgtWeighingResults->appendItem(di);
+    }
+
 }
 

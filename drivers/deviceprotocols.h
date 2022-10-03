@@ -497,6 +497,7 @@ public:
     virtual void getTensoValueDiapasone(const int chanNumber, double &min, double &max) = 0;
     virtual void getTensoValueDiapasone(const QString channelId, double &min, double &max) = 0;
     virtual void setTensoValueDiapasone(const int chanNumber, const double min, const double max) = 0;
+    virtual bool isCalibrated() const = 0;
 
     static QString uid() {return uid_TensoControl;}
 

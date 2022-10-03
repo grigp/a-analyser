@@ -34,6 +34,7 @@ BedsideScalesTesterExecute::BedsideScalesTesterExecute(QWidget *parent) :
         m_offsets << 0;
 
     setupUI();
+    connect(ui->wgtParticalWeighting, &DynamicDiagram::selectItem, this, &BedsideScalesTesterExecute::on_selectItem);
 }
 
 BedsideScalesTesterExecute::~BedsideScalesTesterExecute()
@@ -161,6 +162,8 @@ void BedsideScalesTesterExecute::start()
                 m_averageTimePt = m_averageTime * m_driver->frequency(ChannelsDefines::chanWeightPlate);
             }
         }
+
+        m_isCalibrated = m_tenzoControl->isCalibrated();
     }
     else
     {
@@ -319,14 +322,14 @@ void BedsideScalesTesterExecute::calibrate()
     if (m_tenzoControl)
     {
         m_tenzoControl->calibrateTenso(ChannelsDefines::chanWeightPlate);
-        m_isCalibrate = true;
+        m_isCalibrated = true;
     }
 }
 
 void BedsideScalesTesterExecute::recording()
 {
     ui->lblLenTime->setText(BaseUtils::getTimeBySecCount(0));
-    if (m_isCalibrate)
+    if (m_isCalibrated)
     {
         m_isRecording = ! m_isRecording;
         m_recCounter = 0;
@@ -349,6 +352,16 @@ void BedsideScalesTesterExecute::recording()
     {
         m_isAutoRecord = false;
         QMessageBox::information(nullptr, tr("Предупреждение"), tr("Сначала необходимо откалибровать устройство"));
+    }
+}
+
+void BedsideScalesTesterExecute::on_selectItem(const int idx)
+{
+    if (idx >= 0 && idx < ui->wgtParticalWeighting->size())
+    {
+        auto value = ui->wgtParticalWeighting->value(idx);
+        ui->wgtParticalWeighting->setBottomText(tr("Измерение") + (" (") + QString::number(idx + 1) + ") : " +
+                                              QString::number(value) + " " + tr("кг"));
     }
 }
 
@@ -458,7 +471,12 @@ void BedsideScalesTesterExecute::getDataWeight(DeviceProtocols::DeviceData *data
                     {
                         m_pwm = pwmWait;
                         m_pwmCounter = 0;
-                        m_wrd->addWeight(m_pwmWeight / m_averageTimePt);
+                        double value = m_pwmWeight / m_averageTimePt;
+                        m_wrd->addWeight(value, QDateTime::currentDateTime());
+                        ++m_partWeightCount;
+                        ui->wgtParticalWeighting->appendItem(new DiagItem(value, QString::number(m_partWeightCount)));
+                        ui->wgtParticalWeighting->setKind(DynamicDiagram::KindBar);
+                        ui->wgtParticalWeighting->setVolume(DynamicDiagram::Volume3D);
                         m_pwmWeight = 0;
                     }
                 }

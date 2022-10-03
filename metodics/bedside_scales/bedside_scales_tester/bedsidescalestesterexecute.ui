@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1226</width>
-    <height>606</height>
+    <width>1278</width>
+    <height>691</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -439,7 +439,29 @@
        <number>0</number>
       </property>
       <item>
+       <widget class="DynamicDiagram" name="wgtParticalWeighting" native="true">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>1</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>100</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item>
        <widget class="Oscilloscope" name="wgtWeighting" native="true">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>2</verstretch>
+         </sizepolicy>
+        </property>
         <property name="minimumSize">
          <size>
           <width>0</width>
@@ -765,6 +787,12 @@
   </layout>
  </widget>
  <customwidgets>
+  <customwidget>
+   <class>DynamicDiagram</class>
+   <extends>QWidget</extends>
+   <header location="global">dynamicdiagram.h</header>
+   <container>1</container>
+  </customwidget>
   <customwidget>
    <class>Oscilloscope</class>
    <extends>QWidget</extends>

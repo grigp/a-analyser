@@ -70,6 +70,11 @@ public:
      */
     double weight(const int idx) const;
 
+    /*!
+     * \brief Возвращает данные о моменте измерения веса по номеру измерения
+     */
+    QDateTime dateTime(const int idx) const;
+
 
 private:
     void getSignal(const QString &probeId);

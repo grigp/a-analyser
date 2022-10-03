@@ -169,6 +169,11 @@ void BedsideScales01::setTensoValueDiapasone(const int chanNumber, const double 
     Q_UNUSED(max);
 }
 
+bool BedsideScales01::isCalibrated() const
+{
+    return m_isCalibrated;
+}
+
 SerialPortDefines::Settings BedsideScales01::getSerialPortSettings()
 {
     return SerialPortDefines::Settings(115200,
@@ -291,6 +296,7 @@ void BedsideScales01::assignByteFromDevice(quint8 b)
                     {
                         m_calibrateStage = 0;
                         m_isCalibrating = false;
+                        m_isCalibrated = true;
                     }
                 }
             }
@@ -339,23 +345,28 @@ void BedsideScales01::restoreCalibrationData()
 {
     QJsonObject root;
     auto patient = static_cast<AAnalyserApplication*>(QApplication::instance())->getCurrentPatient();
-    QFile fileRec(DataDefines::aanalyserTemporaryPath() + "bss_calibration-" + patient.uid + ".json");
-    if (fileRec.open(QIODevice::ReadOnly | QIODevice::Text))
+    auto fn = DataDefines::aanalyserTemporaryPath() + "bss_calibration-" + patient.uid + ".json";
+    if (QFile::exists(fn))
     {
-        QByteArray ba = fileRec.readAll();
-        QJsonDocument loadDoc(QJsonDocument::fromJson(ba));
-        root = loadDoc.object();
-        fileRec.close();
-    }
+        QFile fileRec(fn);
+        if (fileRec.open(QIODevice::ReadOnly | QIODevice::Text))
+        {
+            QByteArray ba = fileRec.readAll();
+            QJsonDocument loadDoc(QJsonDocument::fromJson(ba));
+            root = loadDoc.object();
+            fileRec.close();
+        }
 
-    auto arr = root["sensors"].toArray();
-    for (int i = 0; i < arr.size(); ++i)
-    {
-        if (i > 4)
-            break;
-        auto obj = arr.at(i).toObject();
-        m_offset[i] = obj["offset"].toDouble(0);
-        m_adcOffset[i] = static_cast<quint32>(obj["adc_offset"].toInt(0));
+        auto arr = root["sensors"].toArray();
+        for (int i = 0; i < arr.size(); ++i)
+        {
+            if (i > 4)
+                break;
+            auto obj = arr.at(i).toObject();
+            m_offset[i] = obj["offset"].toDouble(0);
+            m_adcOffset[i] = static_cast<quint32>(obj["adc_offset"].toInt(0));
+        }
+        m_isCalibrated = true;
     }
 }
 

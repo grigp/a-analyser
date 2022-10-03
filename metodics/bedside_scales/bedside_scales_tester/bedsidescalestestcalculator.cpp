@@ -85,7 +85,6 @@ double BedsideScalesTestCalculator::signalValue(const int subChan, const int rec
 bool BedsideScalesTestCalculator::isParticalWeighting() const
 {
     return (m_wd);
-//    return (m_wd != nullptr);
 }
 
 QTime BedsideScalesTestCalculator::scalingInterval() const
@@ -114,6 +113,13 @@ double BedsideScalesTestCalculator::weight(const int idx) const
     if (m_wd)
         return m_wd->weight(idx);
     return 0;
+}
+
+QDateTime BedsideScalesTestCalculator::dateTime(const int idx) const
+{
+    if (m_wd)
+        return m_wd->dateTime(idx);
+    return QDateTime();
 }
 
 void BedsideScalesTestCalculator::getSignal(const QString &probeId)

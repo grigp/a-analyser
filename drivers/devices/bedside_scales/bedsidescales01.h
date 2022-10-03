@@ -131,6 +131,7 @@ public:
     void getTensoValueDiapasone(const int chanNumber, double &min, double &max) override;
     void getTensoValueDiapasone(const QString channelId, double &min, double &max) override;
     void setTensoValueDiapasone(const int chanNumber, const double min, const double max) override;
+    bool isCalibrated() const override;
 
 protected:
     /*!
@@ -172,6 +173,7 @@ private:
     int m_errorCount {0};        ///< Количество ошибок по результатам анализа колцевого счетчика
 
     bool m_isCalibrating {false}; ///< Идет ли процесс калибровки
+    bool m_isCalibrated {false};  ///< Было ли откалибровано
     int m_calibrateStage {0};
     int m_calibrCount {0};        ///< Счетчик калибровки
 

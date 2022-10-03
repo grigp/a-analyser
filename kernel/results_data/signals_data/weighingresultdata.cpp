@@ -56,13 +56,27 @@ double WeighingResultData::weight(const int idx) const
     return 0;
 }
 
-void WeighingResultData::addWeight(const double value)
+QDateTime WeighingResultData::dateTime(const int idx) const
+{
+    auto arr = data()["weights"].toArray();
+    for (int i = 0; i < arr.size(); ++i)
+        if (i == idx)
+        {
+            auto obj = arr.at(i).toObject();
+            auto dts = obj["datetime"].toString();
+            return QDateTime::fromString(dts, "dd.MM.yyyy hh:mm:ss");
+        }
+    return QDateTime();
+}
+
+void WeighingResultData::addWeight(const double value, QDateTime dt)
 {
     QJsonObject obj = data();
     auto arr = obj["weights"].toArray();
 
     QJsonObject objValue;
     objValue["value"] = value;
+    objValue["datetime"] = dt.toString("dd.MM.yyyy hh:mm:ss");
     arr.append(objValue);
 
     obj["weights"] = arr;

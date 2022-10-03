@@ -55,6 +55,7 @@ private slots:
      */
     void recording();
 
+    void on_selectItem(const int idx);
 
 private:
     Ui::BedsideScalesTesterExecute *ui;
@@ -83,7 +84,7 @@ private:
     int m_averageTime {3};
 
     bool m_isRecording {false};
-    bool m_isCalibrate {false};
+    bool m_isCalibrated {false};
     WeightPlateSignal *m_wps {nullptr};     ///< Записываемый сигнал
     Balistogram *m_weight {nullptr};
     WeighingResultData *m_wrd {nullptr};
@@ -103,6 +104,7 @@ private:
     int m_scalingIntervalPt {0};
     int m_averageTimePt {0};
     int m_pwmCounter {0};
+    int m_partWeightCount {0};
     double m_pwmWeight {0};
 };
 

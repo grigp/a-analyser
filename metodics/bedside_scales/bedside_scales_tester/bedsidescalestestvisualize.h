@@ -33,10 +33,18 @@ public:
 private slots:
     void signalExport();
 
+    void on_weighingResultsGraph();
+    void on_weighingResultsBar();
+    void on_weighingResults3D(bool is3D);
+
+    void on_selectItem(const int idx);
+
 private:
     Ui::BedsideScalesTestVisualize *ui;
 
     void saveSignal(const QString &fileName);
+
+    void showDiagParticalWeighting();
 
     BedsideScalesTestCalculator* m_calculator {nullptr};
 };

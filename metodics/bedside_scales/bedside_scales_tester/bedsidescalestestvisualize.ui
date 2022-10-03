@@ -130,6 +130,134 @@
         </layout>
        </widget>
       </item>
+      <item>
+       <widget class="QFrame" name="frWeighingResultsTools">
+        <property name="frameShape">
+         <enum>QFrame::StyledPanel</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Raised</enum>
+        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout_2">
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
+         <item>
+          <widget class="QPushButton" name="btnGraph">
+           <property name="toolTip">
+            <string>Показать в виде графика</string>
+           </property>
+           <property name="statusTip">
+            <string/>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset resource="../../../kernel.qrc">
+             <normaloff>:/images/Dynamic/DynAsGraph.png</normaloff>:/images/Dynamic/DynAsGraph.png</iconset>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>20</width>
+             <height>20</height>
+            </size>
+           </property>
+           <property name="checkable">
+            <bool>true</bool>
+           </property>
+           <property name="checked">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="btnBar">
+           <property name="toolTip">
+            <string>Показать в виде гистограммы</string>
+           </property>
+           <property name="statusTip">
+            <string/>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset resource="../../../kernel.qrc">
+             <normaloff>:/images/Dynamic/DynAsBar.png</normaloff>:/images/Dynamic/DynAsBar.png</iconset>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>20</width>
+             <height>20</height>
+            </size>
+           </property>
+           <property name="checkable">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer_3">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeType">
+            <enum>QSizePolicy::Fixed</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>10</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QPushButton" name="btn3D">
+           <property name="toolTip">
+            <string>Объемное представление</string>
+           </property>
+           <property name="statusTip">
+            <string/>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset resource="../../../kernel.qrc">
+             <normaloff>:/images/Dynamic/Dyn3D.png</normaloff>:/images/Dynamic/Dyn3D.png</iconset>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>20</width>
+             <height>20</height>
+            </size>
+           </property>
+           <property name="checkable">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer_2">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+        </layout>
+       </widget>
+      </item>
      </layout>
     </widget>
    </item>
@@ -156,7 +284,9 @@
    <container>1</container>
   </customwidget>
  </customwidgets>
- <resources/>
+ <resources>
+  <include location="../../../kernel.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>btnSignalExport</sender>
@@ -174,8 +304,59 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>btnGraph</sender>
+   <signal>clicked()</signal>
+   <receiver>BedsideScalesTestVisualize</receiver>
+   <slot>on_weighingResultsGraph()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>28</x>
+     <y>631</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>991</x>
+     <y>100</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btnBar</sender>
+   <signal>clicked()</signal>
+   <receiver>BedsideScalesTestVisualize</receiver>
+   <slot>on_weighingResultsBar()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>75</x>
+     <y>626</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>986</x>
+     <y>127</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btn3D</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>BedsideScalesTestVisualize</receiver>
+   <slot>on_weighingResults3D(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>127</x>
+     <y>628</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>988</x>
+     <y>159</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>signalExport()</slot>
+  <slot>on_weighingResultsGraph()</slot>
+  <slot>on_weighingResultsBar()</slot>
+  <slot>on_weighingResults3D(bool)</slot>
  </slots>
 </ui>

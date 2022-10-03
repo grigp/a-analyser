@@ -35,10 +35,16 @@ public:
     double weight(const int idx) const;
 
     /*!
+     * \brief Возвращает данные о моменте измерения веса по номеру измерения
+     */
+    QDateTime dateTime(const int idx) const;
+
+    /*!
      * \brief Добавляет данные об измерении веса в канал (в пробах)
      * \param value - значение веса
+     * \param dt - дата и время измерения
      */
-    void addWeight(const double value);
+    void addWeight(const double value, QDateTime dt);
 };
 
 #endif // WEIGHINGRESULTDATA_H
