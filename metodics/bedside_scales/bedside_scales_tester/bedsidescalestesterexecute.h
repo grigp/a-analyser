@@ -65,6 +65,8 @@ private:
     void getDataWeight(DeviceProtocols::DeviceData *data);
     void getDataADC(DeviceProtocols::DeviceData *data);
 
+    double computeMassaAverage();
+
     DataDefines::PatientKard m_kard;
     Driver* m_driver {nullptr};     ///< Драйвер передающий данные
     DeviceProtocols::TensoControl* m_tenzoControl;  ///< Управление силовыми каналами в драйвере
@@ -82,6 +84,7 @@ private:
     bool m_isIntervalScaling {true};
     QTime m_scalingInterval = {QTime::fromString("05:00", "mm:ss")};
     int m_averageTime {3};
+    bool m_isSignalsRecord {true};
 
     bool m_isRecording {false};
     bool m_isCalibrated {false};
@@ -105,7 +108,8 @@ private:
     int m_averageTimePt {0};
     int m_pwmCounter {0};
     int m_partWeightCount {0};
-    double m_pwmWeight {0};
+//    double m_pwmWeight_ {0};
+    QVector<double> m_pwmWeight;
 };
 
 #endif // BEDSIDESCALESTESTEREXECUTE_H

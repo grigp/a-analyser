@@ -46,6 +46,9 @@ void BedsideScalesTesterParamsDialog::setParams(const QJsonObject &params)
 
     auto averageTime = params["average_time"].toInt(3);
     ui->edAverageTime->setValue(averageTime);
+
+    auto isSignalsRecord = params["is_signals_record"].toBool(true);
+    ui->cbIsSignalsRecord->setChecked(isSignalsRecord);
 }
 
 QJsonObject BedsideScalesTesterParamsDialog::getParams()
@@ -64,6 +67,7 @@ QJsonObject BedsideScalesTesterParamsDialog::getParams()
     retval["is_interval_scaling"] = ui->cbIntervalScaling->isChecked();
     retval["scaling_interval"] = ui->edScalingInterval->time().toString("mm:ss");
     retval["average_time"] = ui->edAverageTime->value();
+    retval["is_signals_record"] = ui->cbIsSignalsRecord->isChecked();
 
     return retval;
 }

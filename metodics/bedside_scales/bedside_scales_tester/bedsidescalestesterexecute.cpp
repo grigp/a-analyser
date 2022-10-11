@@ -70,6 +70,8 @@ void BedsideScalesTesterExecute::setParams(const QJsonObject &probeParams)
     m_scalingInterval = QTime::fromString(scalingInterval, "mm:ss");
 
     m_averageTime = probeParams["average_time"].toInt(3);
+
+    m_isSignalsRecord = probeParams["is_signals_record"].toBool(true);
 }
 
 void BedsideScalesTesterExecute::closeEvent(QCloseEvent *event)
@@ -149,8 +151,12 @@ void BedsideScalesTesterExecute::start()
         else
         if (m_mode == BedsideScalesDefines::bsmScales)
         {
-            m_weight = new Balistogram(ChannelsDefines::chanWeight, m_driver->frequency(ChannelsDefines::chanWeightPlate));
-            m_trd->addChannel(m_weight);
+            qDebug() << m_isIntervalScaling << m_isSignalsRecord;
+            if ((m_isIntervalScaling && m_isSignalsRecord) || (!m_isIntervalScaling))
+            {
+                m_weight = new Balistogram(ChannelsDefines::chanWeight, m_driver->frequency(ChannelsDefines::chanWeightPlate));
+                m_trd->addChannel(m_weight);
+            }
             if (m_isIntervalScaling)
             {
                 m_wrd = new WeighingResultData(ChannelsDefines::chanParticalWeighting);
@@ -448,7 +454,8 @@ void BedsideScalesTesterExecute::getDataWeight(DeviceProtocols::DeviceData *data
         ui->wgtWeighting->addValue(rec);
         if (m_isRecording)
         {
-            m_weight->addValue(massa);
+            if ((m_isIntervalScaling && m_isSignalsRecord) || (!m_isIntervalScaling))
+                m_weight->addValue(massa);
             if (m_isIntervalScaling)
             {
                 ++m_pwmCounter;
@@ -465,19 +472,22 @@ void BedsideScalesTesterExecute::getDataWeight(DeviceProtocols::DeviceData *data
                 {
                     if (m_pwmCounter < m_averageTimePt)
                     {
-                        m_pwmWeight += massa;
+                        //m_pwmWeight_ += massa;
+                        m_pwmWeight << massa;
                     }
                     else
                     {
                         m_pwm = pwmWait;
                         m_pwmCounter = 0;
-                        double value = m_pwmWeight / m_averageTimePt;
+                        double value = computeMassaAverage(); //m_pwmWeight_ / m_averageTimePt;
+
                         m_wrd->addWeight(value, QDateTime::currentDateTime());
                         ++m_partWeightCount;
                         ui->wgtParticalWeighting->appendItem(new DiagItem(value, QString::number(m_partWeightCount)));
                         ui->wgtParticalWeighting->setKind(DynamicDiagram::KindBar);
                         ui->wgtParticalWeighting->setVolume(DynamicDiagram::Volume3D);
-                        m_pwmWeight = 0;
+                        //m_pwmWeight_ = 0;
+                        m_pwmWeight.clear();
                     }
                 }
             }
@@ -545,3 +555,46 @@ void BedsideScalesTesterExecute::getDataADC(DeviceProtocols::DeviceData *data)
         }
     }
 }
+
+double BedsideScalesTesterExecute::computeMassaAverage()
+{
+    double mid = 0;
+    double q = 0;
+    double min = INT_MAX;
+    double max = -INT_MAX;
+
+    for (int i = 0; i < m_pwmWeight.size(); ++i)
+    {
+        auto val = m_pwmWeight.at(i);
+        mid += val;
+        if (val < min) min = val;
+        if (val > max) max = val;
+    }
+    mid /= m_pwmWeight.size();
+
+    for (int i = 0; i < m_pwmWeight.size(); ++i)
+    {
+        auto val = m_pwmWeight.at(i);
+        q += pow(val - mid, 2) / m_pwmWeight.size();
+    }
+    q = sqrt(q);
+
+    double retval = 0;
+    int n = 0;
+    for (int i = 0; i < m_pwmWeight.size(); ++i)
+    {
+        auto val = m_pwmWeight.at(i);
+        if (val >= mid - q && val <= mid + q)
+        {
+            retval += val;
+            ++n;
+        }
+    }
+    retval /= n;
+
+    qDebug() << min << "   " << mid - q << mid << mid + q << "   " << max << "  |  "
+             << n << m_pwmWeight.size() << static_cast<double>(n)/m_pwmWeight.size();
+
+    return retval;
+}
+

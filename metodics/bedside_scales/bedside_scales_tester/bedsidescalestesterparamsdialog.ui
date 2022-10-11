@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>Параметры теста</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
@@ -283,6 +283,13 @@
              </widget>
             </item>
            </layout>
+          </widget>
+         </item>
+         <item>
+          <widget class="QCheckBox" name="cbIsSignalsRecord">
+           <property name="text">
+            <string>Записывать сигналы</string>
+           </property>
           </widget>
          </item>
         </layout>
