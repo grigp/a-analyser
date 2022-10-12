@@ -35,6 +35,10 @@ BedsideScalesTesterExecute::BedsideScalesTesterExecute(QWidget *parent) :
 
     setupUI();
     connect(ui->wgtParticalWeighting, &DynamicDiagram::selectItem, this, &BedsideScalesTesterExecute::on_selectItem);
+
+    for (int i = 0; i < m_N; ++i)
+        m_fa[i] = 0.0;
+    ui->lblMassa1->setVisible(false);
 }
 
 BedsideScalesTesterExecute::~BedsideScalesTesterExecute()
@@ -151,7 +155,6 @@ void BedsideScalesTesterExecute::start()
         else
         if (m_mode == BedsideScalesDefines::bsmScales)
         {
-            qDebug() << m_isIntervalScaling << m_isSignalsRecord;
             if ((m_isIntervalScaling && m_isSignalsRecord) || (!m_isIntervalScaling))
             {
                 m_weight = new Balistogram(ChannelsDefines::chanWeight, m_driver->frequency(ChannelsDefines::chanWeightPlate));
@@ -480,8 +483,9 @@ void BedsideScalesTesterExecute::getDataWeight(DeviceProtocols::DeviceData *data
                         m_pwm = pwmWait;
                         m_pwmCounter = 0;
                         double value = computeMassaAverage(); //m_pwmWeight_ / m_averageTimePt;
+                        writeToFile(value);
 
-                        m_wrd->addWeight(value, QDateTime::currentDateTime());
+                        m_wrd->addWeight(value, QDateTime::currentDateTime(), m_recCounter - m_pwmWeight.size(), m_recCounter);
                         ++m_partWeightCount;
                         ui->wgtParticalWeighting->appendItem(new DiagItem(value, QString::number(m_partWeightCount)));
                         ui->wgtParticalWeighting->setKind(DynamicDiagram::KindBar);
@@ -515,7 +519,12 @@ void BedsideScalesTesterExecute::getDataWeight(DeviceProtocols::DeviceData *data
         }
     }
 
-    ui->lblMassa->setText(QString::number(massa, 'f', 3) + tr("кг"));
+    m_mv = m_mv + (massa - m_fa[m_n]);
+    m_fa[m_n] = massa;
+    m_n = (m_n + 1) % m_N;
+
+    ui->lblMassa->setText(QString::number(m_mv / m_N, 'f', 3) + " " + tr("кг"));
+    ui->lblMassa1->setText(QString::number(massa, 'f', 3) + " " + tr("кг"));
     if (m_isRecording)
     {
         ++m_recCounter;
@@ -596,5 +605,19 @@ double BedsideScalesTesterExecute::computeMassaAverage()
              << n << m_pwmWeight.size() << static_cast<double>(n)/m_pwmWeight.size();
 
     return retval;
+}
+
+void BedsideScalesTesterExecute::writeToFile(const double massa)
+{
+    QString path = DataDefines::aanalyserDocumentsPath();
+
+    QFile file(path + "weight.txt");
+    if (file.open(QIODevice::Append | QIODevice::Text))
+    {
+        QTextStream out(&file);
+        QString line = QString::number(massa) + "\n";
+        out << line;
+    }
+    file.close();
 }
 

@@ -67,6 +67,8 @@ private:
 
     double computeMassaAverage();
 
+    void writeToFile(const double massa);
+
     DataDefines::PatientKard m_kard;
     Driver* m_driver {nullptr};     ///< Драйвер передающий данные
     DeviceProtocols::TensoControl* m_tenzoControl;  ///< Управление силовыми каналами в драйвере
@@ -110,6 +112,13 @@ private:
     int m_partWeightCount {0};
 //    double m_pwmWeight_ {0};
     QVector<double> m_pwmWeight;
+
+    ///< Фильтрация выводимой массы
+    static const int m_N {128};
+    int m_n {0};
+    double m_fa[m_N];
+    double m_mv {0};
+
 };
 
 #endif // BEDSIDESCALESTESTEREXECUTE_H

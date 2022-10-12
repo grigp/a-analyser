@@ -40,11 +40,19 @@ public:
     QDateTime dateTime(const int idx) const;
 
     /*!
+     * \brief Возвращает данные о номерах отсчетов при измерении веса по номеру измерения
+     * \param idx - номер измерения
+     * \param begin - отсчет начала измерения
+     * \param end - отсчет окончания измерения
+     */
+    void diap(const int idx, int& begin, int& end);
+
+    /*!
      * \brief Добавляет данные об измерении веса в канал (в пробах)
      * \param value - значение веса
      * \param dt - дата и время измерения
      */
-    void addWeight(const double value, QDateTime dt);
+    void addWeight(const double value, const QDateTime dt, const int begin, const int end);
 };
 
 #endif // WEIGHINGRESULTDATA_H
