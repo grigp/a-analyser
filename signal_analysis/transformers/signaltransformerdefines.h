@@ -9,6 +9,9 @@ namespace SignalTransformerDefines
 static const QString FilterSignal_UID = "{C7C3D706-940E-4837-B2C1-33630EA43B5D}";
 static const QString FilterSignal_name = "Фильтрация сигнала";
 
+static const QString MotionRecognition_UID = "{F8779B69-B21B-4A7A-8D38-96DDC9FD32F0}";
+static const QString MotionRecognition_name = "Выявление движений лежащего человека";
+
 static const QString FilterLowFreq_UID = "{7566F426-E91B-4E2D-9B57-D9114569912A}";
 static const QString FilterLowFreq_name = "Фильтр низкой частоты";
 

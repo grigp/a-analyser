@@ -16,6 +16,7 @@
 #include "sectiongraphvisual.h"
 
 #include "filtersignal.h"
+#include "motionrecognition.h"
 
 QList<MetodicTemplate *> AAnalyserBuild::getBuildTemplates(QObject *parent)
 {
@@ -40,6 +41,7 @@ void AAnalyserBuild::registerSignalTransformers()
 {
     auto* app = static_cast<AAnalyserApplication*>(QApplication::instance());
     app->registerSignalTransformer(new FilterSignal());
+    app->registerSignalTransformer(new MotionRecognition());
 }
 
 QList<DeviceProtocols::Ports> AAnalyserBuild::getDriverPorts(const QString &drvUid)
