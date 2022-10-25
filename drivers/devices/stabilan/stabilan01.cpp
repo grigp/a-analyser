@@ -455,6 +455,7 @@ void Stabilan01::calibrateTenso(const QString &channelUid)
         cmd[2] = 0x33;
         cmd[3] = 0x7;
         emit writeData(cmd);
+        m_isCalibrated = true;
     }
 }
 
@@ -508,6 +509,11 @@ void Stabilan01::setTensoValueDiapasone(const int chanNumber, const double min, 
     Q_ASSERT(chanNumber >= 0 && chanNumber < 3);
     m_tensoPercMin[chanNumber] = min;
     m_tensoPercMax[chanNumber] = max;
+}
+
+bool Stabilan01::isCalibrated() const
+{
+    return m_isCalibrated;
 }
 
 void Stabilan01::setBoundsDelArtifacts(const int low, const int high)

@@ -2,6 +2,7 @@
 #define SECTIONGRAPHVISUALWIDGET_H
 
 #include <QWidget>
+#include <QMouseEvent>
 
 #include "visuals.h"
 
@@ -47,19 +48,19 @@ private slots:
      * \param x, y - координаты нажатия
     * \param buttons - нажатые кнопки
      */
-    void on_press(const int x, const int y, const Qt::MouseButtons buttons);
+    void on_press(const int x, const int y);
     /*!
      * \brief Сигнал отпускания мышки на теле виджета
      * \param x, y - координаты отпускания
     * \param buttons - нажатые кнопки
      */
-    void on_release(const int x, const int y, const Qt::MouseButtons buttons);
+    void on_release(const int x, const int y);
     /*!
      * \brief Сигнал переноса мышки по телу виджета
      * \param x, y - координаты положения
     * \param buttons - нажатые кнопки
      */
-    void on_move(const int x, const int y, const Qt::MouseButtons buttons);
+    void on_move(const int x, const int y);
 
     void on_transform();
 
@@ -98,9 +99,20 @@ private:
 
     void setDiapazones();
 
+    void selectionReset();
+
     bool m_isCalculate {false};
     AnySignal *m_signal {nullptr};
     double m_diap {0};
+
+    ///< Выделение зоны на спектре
+    DiagSpectr* m_selectAreaWidget {nullptr};  ///< Указатель на виджет
+    int m_selAreaX {-1};                       ///< Начальная координата X
+    int m_selAreaY {-1};                       ///< Начальная координата Y
+
+    bool m_selectionProcess {false};
+    QPoint m_selFrom = QPoint(-1, -1);
+    QPoint m_selTo = QPoint(-1, -1);
 };
 
 #endif // SECTIONGRAPHVISUALWIDGET_H

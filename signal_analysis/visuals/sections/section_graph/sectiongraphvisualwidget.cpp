@@ -13,6 +13,7 @@
 #include "computefft.h"
 #include "spectrparamsdialog.h"
 #include "settingsprovider.h"
+#include "diagspectr.h"
 
 SectionGraphVisualWidget::SectionGraphVisualWidget(VisualDescriptor* visual,
                                                    const QString& testUid,
@@ -27,6 +28,14 @@ SectionGraphVisualWidget::SectionGraphVisualWidget(VisualDescriptor* visual,
     ui->cbScale->addItems(QStringList() << "1" << "2" << "4" << "8" << "16" << "32" << "64" << "128");
 
     ui->splHorizontal->setSizes(QList<int>() << 500 << 0);
+
+    connect(ui->wgtSpectrSrc, &DiagSpectr::press, this, &SectionGraphVisualWidget::on_press);
+    connect(ui->wgtSpectrSrc, &DiagSpectr::release, this, &SectionGraphVisualWidget::on_release);
+    connect(ui->wgtSpectrSrc, &DiagSpectr::move, this, &SectionGraphVisualWidget::on_move);
+    connect(ui->wgtSpectrRes, &DiagSpectr::press, this, &SectionGraphVisualWidget::on_press);
+    connect(ui->wgtSpectrRes, &DiagSpectr::release, this, &SectionGraphVisualWidget::on_release);
+    connect(ui->wgtSpectrRes, &DiagSpectr::move, this, &SectionGraphVisualWidget::on_move);
+
 }
 
 SectionGraphVisualWidget::~SectionGraphVisualWidget()
@@ -94,7 +103,7 @@ void SectionGraphVisualWidget::btnPlusClicked()
 void SectionGraphVisualWidget::btnMinusClicked()
 {
     auto hScale = ui->wgtGraph->hScale();
-    if (hScale > 1)
+    if (hScale > 0.0625) //1)
         ui->wgtGraph->setHScale(hScale / 2);
     setDiapazones();
 }
@@ -121,19 +130,44 @@ void SectionGraphVisualWidget::on_createSection()
 
 }
 
-void SectionGraphVisualWidget::on_press(const int x, const int y, const Qt::MouseButtons buttons)
+void SectionGraphVisualWidget::on_press(const int x, const int y)
 {
+    m_selectionProcess = true;
+    m_selFrom = QPoint(x, y);
 
+    m_selectAreaWidget = static_cast<DiagSpectr*>(sender());
+    m_selAreaX = x;
+    m_selAreaY = y;
 }
 
-void SectionGraphVisualWidget::on_release(const int x, const int y, const Qt::MouseButtons buttons)
+void SectionGraphVisualWidget::on_release(const int x, const int y)
 {
+    Q_UNUSED(x);
+    Q_UNUSED(y);
+    if (m_selectionProcess)
+    {
+        if (m_selTo.x() > m_selFrom.x() && m_selTo.y() > m_selFrom.y())
+        {
+            auto from = static_cast<DiagSpectr*>(sender())->getValues(m_selFrom);
+            auto to = static_cast<DiagSpectr*>(sender())->getValues(m_selTo);
+            static_cast<DiagSpectr*>(sender())->setVisualArea(from.x(), to.x(), to.y(), from.y());
+        }
+        else
+        if (m_selTo.x() < m_selFrom.x() && m_selTo.y() < m_selFrom.y())
+            static_cast<DiagSpectr*>(sender())->resetVisualArea();
 
+        selectionReset();
+    }
 }
 
-void SectionGraphVisualWidget::on_move(const int x, const int y, const Qt::MouseButtons buttons)
+void SectionGraphVisualWidget::on_move(const int x, const int y)
 {
-
+    if (m_selectionProcess)
+    {
+        m_selTo = QPoint(x, y);
+        if (m_selTo.x() > m_selFrom.x() && m_selTo.y() > m_selFrom.y())
+            m_selectAreaWidget->selectArea(QRect(m_selFrom, m_selTo));
+    }
 }
 
 void SectionGraphVisualWidget::on_transform()
@@ -382,5 +416,13 @@ void SectionGraphVisualWidget::setDiapazones()
 //                                               mids.at(m_selectedChan) + diap / 2);
 //                }
 //            }
-//    }
+    //    }
+}
+
+void SectionGraphVisualWidget::selectionReset()
+{
+    m_selectionProcess = false;
+    m_selFrom = QPoint(-1, -1);
+    m_selTo = QPoint(-1, -1);
+    m_selectAreaWidget->selectArea(QRect());
 }

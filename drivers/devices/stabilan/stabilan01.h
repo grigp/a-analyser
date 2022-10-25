@@ -139,9 +139,10 @@ public:
      * \param min - минимальное значение
      * \param max - максимальное значение
      */
-    void getTensoValueDiapasone(const int chanNumber, double &min, double &max);
-    void getTensoValueDiapasone(const QString channelId, double &min, double &max);
-    void setTensoValueDiapasone(const int chanNumber, const double min, const double max);
+    void getTensoValueDiapasone(const int chanNumber, double &min, double &max) override;
+    void getTensoValueDiapasone(const QString channelId, double &min, double &max) override;
+    void setTensoValueDiapasone(const int chanNumber, const double min, const double max) override;
+    bool isCalibrated() const override;
 
     void setBoundsDelArtifacts(const int low, const int high) override;
 
@@ -234,6 +235,7 @@ private:
     DeviceProtocols::TensoChannel m_tenso3 {DeviceProtocols::TensoChannel(DeviceProtocols::tdBreath, 1.7, 1)};
     double m_tensoPercMin[3] {0, 0, 0};
     double m_tensoPercMax[3] {100, 100, 100};
+    bool m_isCalibrated {false};  ///< Было ли откалибровано
 
     ///< Миограмма
     double m_myoValue[4][4];   ///< Данные миограммы. Первый индекс - номер записи, второй - номер подканала.
