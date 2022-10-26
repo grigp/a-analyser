@@ -22,20 +22,22 @@ QString MotionRecognition::name()
 
 void MotionRecognition::transform(QVector<double> &buffer, const QJsonObject &params)
 {
+    //! Частота дискретизации
     auto freqSample = params["freq_sample"].toInt(50);
 
+    //! Исходный сигнал - во внутренний буфер
     QVector<double> buf;
     buf.clear();
     foreach (auto v, buffer)
         buf << v;
     buffer.clear();
-    for (int i = 0; i < freqSample / 2; ++i)
-        buffer << buf[i]; //0;
 
+    //! Расчет общего СКО
     double moAll = 0;
     double qAll = 0;
     computeMQ(buf, 0, buf.size(), moAll, qAll);
 
+    //! Расчет динамики СКО
     int begin = 0;
     m_sko.clear();
     while (begin + freqSample < buf.size())
@@ -48,41 +50,78 @@ void MotionRecognition::transform(QVector<double> &buffer, const QJsonObject &pa
         begin += 1; //freqSample;
     }
 
+    //! Фильтрация динамики СКО
     BaseUtils::filterLowFreq(m_sko, freqSample, 0.7, BaseUtils::fkCriticalAttenuation, 0, m_sko.size() - 1);
     BaseUtils::swapVector(m_sko);
     BaseUtils::filterLowFreq(m_sko, freqSample, 0.7, BaseUtils::fkCriticalAttenuation, 0, m_sko.size() - 1);
     BaseUtils::swapVector(m_sko);
 
+    //! Поиск на динамике СКО участков превышения общего СКО
     bool above = false;
     int aib = 0;
     int aie = 0;
     m_parts.clear();
-    foreach (auto v, m_sko)
+    for (int i = 0; i < m_sko.size(); ++i)
     {
+        auto v = m_sko.at(i);
         if (!above)
         {
-            buffer << 0;
             if (v > qAll) // * 3)
             {
-                aib = begin;
+                aib = i;
                 above = true;
             }
         }
         else
         {
-            buffer << 1;
-            if (v < qAll) // * 3)
+            if (v < qAll * 0.5) // * 3)
             {
-                aie = begin;
+                aie = i;
                 m_parts << Part(aib, aie);
-                qDebug() << aib / static_cast<double>(freqSample) << aie / static_cast<double>(freqSample);
                 above = false;
             }
         }
     }
 
+    //! Поиск участков, между которыми меньше 10 секунд. Их надо объединить
+    QVector<int> toDelete;
+    int i = 0;
+    while (i < m_parts.size() - 1)
+    {
+        if ((m_parts.at(i+1).begin - m_parts.at(i).end) < freqSample * 10)
+        {
+            m_parts.replace(i, Part(m_parts.at(i).begin, m_parts.at(i+1).end));
+            toDelete << i+1;
+            ++i;
+        }
+        ++i;
+    }
+    //! Удаление участков
+    foreach (auto idx, toDelete)
+        m_parts.removeAt(idx);
 
-    qDebug() << moAll << qAll << freqSample;
+    //! Заполнение буфера преобразованного сигнала в зависимости от участка
+    //! 1 - превышение, есть двигательная активность
+    //! 0 - нет превышения, человек в покое
+    int n = 0;
+//    qDebug() << m_sko.size();
+//    qDebug() << "-------------";
+    for (int i = 0; i < m_sko.size(); ++i)
+    {
+        Part part(0, 0);
+        if (n < m_parts.size())
+            part = m_parts.at(n);
+//        qDebug() << i << "  " << part.begin << part.end << "  " << n << m_parts.size();
+        if (i >= part.begin && i <= part.end)
+            buffer << 1;
+        else
+            buffer << 0;
+        if (i == part.end)
+            ++n;
+    }
+
+    for (int i = 0; i < freqSample; ++i)
+        buffer << 0;
 }
 
 SignalTransformerParamsWidget *MotionRecognition::getParamsWidget()
