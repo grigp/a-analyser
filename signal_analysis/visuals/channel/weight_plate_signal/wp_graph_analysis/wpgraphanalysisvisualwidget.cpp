@@ -4,6 +4,7 @@
 #include <QFile>
 #include <QFileDialog>
 #include <QTextStream>
+#include <QDebug>
 
 #include "baseutils.h"
 #include "channelsdefines.h"
@@ -11,6 +12,7 @@
 #include "weightplatesignal.h"
 #include "dataprovider.h"
 #include "decartcoordinatessignal.h"
+#include "motionrecognition.h"
 
 WPGraphAnalysisVisualWidget::WPGraphAnalysisVisualWidget(VisualDescriptor* visual,
                                                          const QString& testUid, const QString& probeUid, const QString& channelUid,
@@ -43,6 +45,7 @@ void WPGraphAnalysisVisualWidget::calculate()
 
 void WPGraphAnalysisVisualWidget::scaleChange(int idx)
 {
+    Q_UNUSED(idx);
     if (m_isCalculate)
     {
 //        int v = scaleMultiplier(idx);
@@ -166,14 +169,26 @@ void WPGraphAnalysisVisualWidget::filtration()
         }
 
         //! Фильтрация
-        BaseUtils::filterLowFreq(m_fltZ, m_signal->frequency(), 2, BaseUtils::fkChebyshev, 0, m_fltZ.size() - 1);
-        BaseUtils::swapVector(m_fltZ);
-        BaseUtils::filterLowFreq(m_fltZ, m_signal->frequency(), 2, BaseUtils::fkChebyshev, 0, m_fltZ.size() - 1);
-        BaseUtils::swapVector(m_fltZ);
+        QJsonObject params;
+        params["freq_sample"] = m_signal->frequency();
+        auto filterZ = new MotionRecognition();
+        filterZ->setValues(0, 100);
+        filterZ->transform(m_fltZ, params);
+        qDebug() << "----------";
+        qDebug() << filterZ->partsNoMotionCount();
+        for (int i = 0; i < filterZ->partsNoMotionCount(); ++i)
+            qDebug() << filterZ->partNoMotion(i).begin << filterZ->partNoMotion(i).end;
+        qDebug() << "----------";
+        delete filterZ;
 
-        BaseUtils::filterLowFreq(m_fltY, m_signal->frequency(), 0.5, BaseUtils::fkChebyshev, 0, m_fltY.size() - 1);
+//        BaseUtils::filterLowFreq(m_fltZ, m_signal->frequency(), 2, BaseUtils::fkChebyshev, 0, m_fltZ.size() - 1);
+//        BaseUtils::swapVector(m_fltZ);
+//        BaseUtils::filterLowFreq(m_fltZ, m_signal->frequency(), 2, BaseUtils::fkChebyshev, 0, m_fltZ.size() - 1);
+//        BaseUtils::swapVector(m_fltZ);
+
+        BaseUtils::filterLowFreq(m_fltY, m_signal->frequency(), 0.24, BaseUtils::fkChebyshev, 0, m_fltY.size() - 1);
         BaseUtils::swapVector(m_fltY);
-        BaseUtils::filterLowFreq(m_fltY, m_signal->frequency(), 0.5, BaseUtils::fkChebyshev, 0, m_fltY.size() - 1);
+        BaseUtils::filterLowFreq(m_fltY, m_signal->frequency(), 0.24, BaseUtils::fkChebyshev, 0, m_fltY.size() - 1);
         BaseUtils::swapVector(m_fltY);
     }
 }

@@ -60,7 +60,7 @@ void MotionRecognition::transform(QVector<double> &buffer, const QJsonObject &pa
     bool above = false;
     int aib = 0;
     int aie = 0;
-    m_parts.clear();
+    m_partsMotions.clear();
     for (int i = 0; i < m_sko.size(); ++i)
     {
         auto v = m_sko.at(i);
@@ -77,7 +77,7 @@ void MotionRecognition::transform(QVector<double> &buffer, const QJsonObject &pa
             if (v < qAll * 0.5) // * 3)
             {
                 aie = i;
-                m_parts << Part(aib, aie);
+                m_partsMotions << Part(aib, aie);
                 above = false;
             }
         }
@@ -86,11 +86,11 @@ void MotionRecognition::transform(QVector<double> &buffer, const QJsonObject &pa
     //! Поиск участков, между которыми меньше 10 секунд. Их надо объединить
     QVector<int> toDelete;
     int i = 0;
-    while (i < m_parts.size() - 1)
+    while (i < m_partsMotions.size() - 1)
     {
-        if ((m_parts.at(i+1).begin - m_parts.at(i).end) < freqSample * 10)
+        if ((m_partsMotions.at(i+1).begin - m_partsMotions.at(i).end) < freqSample * 10)
         {
-            m_parts.replace(i, Part(m_parts.at(i).begin, m_parts.at(i+1).end));
+            m_partsMotions.replace(i, Part(m_partsMotions.at(i).begin, m_partsMotions.at(i+1).end));
             toDelete << i+1;
             ++i;
         }
@@ -98,7 +98,7 @@ void MotionRecognition::transform(QVector<double> &buffer, const QJsonObject &pa
     }
     //! Удаление участков
     foreach (auto idx, toDelete)
-        m_parts.removeAt(idx);
+        m_partsMotions.removeAt(idx);
 
     //! Заполнение буфера преобразованного сигнала в зависимости от участка
     //! 1 - превышение, есть двигательная активность
@@ -109,24 +109,60 @@ void MotionRecognition::transform(QVector<double> &buffer, const QJsonObject &pa
     for (int i = 0; i < m_sko.size(); ++i)
     {
         Part part(0, 0);
-        if (n < m_parts.size())
-            part = m_parts.at(n);
+        if (n < m_partsMotions.size())
+            part = m_partsMotions.at(n);
 //        qDebug() << i << "  " << part.begin << part.end << "  " << n << m_parts.size();
         if (i >= part.begin && i <= part.end)
-            buffer << 1;
+        {
+            if (qAll >= 0.15)
+                buffer << m_presentMotion;
+            else
+                buffer << m_noMotion;
+        }
         else
-            buffer << 0;
+            buffer << m_noMotion;
         if (i == part.end)
             ++n;
     }
 
     for (int i = 0; i < freqSample; ++i)
-        buffer << 0;
+        buffer << m_noMotion;
+
+    //! Создание списка участков без двигательной активности
+    m_partsNoMotions.clear();
+    aie = -1;
+    foreach (auto part, m_partsMotions)
+    {
+        if (part.begin != 0 && m_partsNoMotions.size() == 0)
+            m_partsNoMotions << Part(0, part.begin);
+        if (aie > -1)
+            m_partsNoMotions << Part(aie, part.begin);
+        aie = part.end;
+    }
+    if (aie < m_sko.size() - 1)
+        m_partsNoMotions << Part(aie, m_sko.size() - 1);
 }
 
 SignalTransformerParamsWidget *MotionRecognition::getParamsWidget()
 {
     return nullptr;
+}
+
+void MotionRecognition::setValues(const int noMotion, const int presentMotion)
+{
+    m_noMotion = noMotion;
+    m_presentMotion = presentMotion;
+}
+
+int MotionRecognition::partsNoMotionCount() const
+{
+    return m_partsNoMotions.size();
+}
+
+MotionRecognition::Part MotionRecognition::partNoMotion(const int idx) const
+{
+    Q_ASSERT(idx >= 0 && idx < m_partsNoMotions.size());
+    return m_partsNoMotions.at(idx);
 }
 
 void MotionRecognition::computeMQ(QVector<double> &buffer, const int begin, const int end, double &m, double &q)
