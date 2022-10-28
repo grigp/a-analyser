@@ -140,7 +140,7 @@ void MotionRecognition::transform(QVector<double> &buffer, const QJsonObject &pa
         aie = part.end;
     }
     if (aie < m_sko.size() - 1)
-        m_partsNoMotions << Part(aie, m_sko.size() - 1);
+        m_partsNoMotions << Part(aie, m_sko.size() + freqSample - 1);
 }
 
 SignalTransformerParamsWidget *MotionRecognition::getParamsWidget()

@@ -43,6 +43,7 @@ private:
 
     void getSignal();
     void filtration();
+    void filtrationY(QVector<double> &arr);
     void showGraph();
 
     int scaleMultiplier(const int scaleIdx) const;

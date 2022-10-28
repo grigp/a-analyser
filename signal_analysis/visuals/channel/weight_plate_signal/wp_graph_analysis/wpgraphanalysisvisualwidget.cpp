@@ -165,20 +165,40 @@ void WPGraphAnalysisVisualWidget::filtration()
         for (int i = 0; i < m_signal->size(); ++i)
         {
             m_fltZ << m_signal->value(WeightPlateSignal::scZ, i);
-            m_fltY << m_signal->value(WeightPlateSignal::scY, i);
+//            m_fltY << m_signal->value(WeightPlateSignal::scY, i);
         }
 
         //! Фильтрация
         QJsonObject params;
         params["freq_sample"] = m_signal->frequency();
         auto filterZ = new MotionRecognition();
+
         filterZ->setValues(0, 100);
         filterZ->transform(m_fltZ, params);
-        qDebug() << "----------";
-        qDebug() << filterZ->partsNoMotionCount();
         for (int i = 0; i < filterZ->partsNoMotionCount(); ++i)
-            qDebug() << filterZ->partNoMotion(i).begin << filterZ->partNoMotion(i).end;
-        qDebug() << "----------";
+        {
+            if (filterZ->partNoMotion(i).begin > 0 && m_fltY.size() == 0)
+                for (int l = 0; l < filterZ->partNoMotion(i).begin; ++l)
+                    m_fltY << 0;
+
+            QVector<double> arr;
+            arr.clear();
+            for (int j = filterZ->partNoMotion(i).begin; j < filterZ->partNoMotion(i).end; ++j)
+                arr << m_signal->value(WeightPlateSignal::scY, j);
+            if (arr.size() > 20)
+                filtrationY(arr);
+            for (int j = 0; j < arr.size(); ++j)
+                m_fltY << arr.at(j);
+
+            if (i < filterZ->partsNoMotionCount() - 1)
+                for (int j = 0; j < filterZ->partNoMotion(i+1).begin - filterZ->partNoMotion(i).end; ++j)
+                    m_fltY << 0;
+        }
+
+        while (m_fltY.size() < m_signal->size())
+            m_fltY << 0;
+
+
         delete filterZ;
 
 //        BaseUtils::filterLowFreq(m_fltZ, m_signal->frequency(), 2, BaseUtils::fkChebyshev, 0, m_fltZ.size() - 1);
@@ -186,11 +206,29 @@ void WPGraphAnalysisVisualWidget::filtration()
 //        BaseUtils::filterLowFreq(m_fltZ, m_signal->frequency(), 2, BaseUtils::fkChebyshev, 0, m_fltZ.size() - 1);
 //        BaseUtils::swapVector(m_fltZ);
 
-        BaseUtils::filterLowFreq(m_fltY, m_signal->frequency(), 0.24, BaseUtils::fkChebyshev, 0, m_fltY.size() - 1);
-        BaseUtils::swapVector(m_fltY);
-        BaseUtils::filterLowFreq(m_fltY, m_signal->frequency(), 0.24, BaseUtils::fkChebyshev, 0, m_fltY.size() - 1);
-        BaseUtils::swapVector(m_fltY);
+//        BaseUtils::filterLowFreq(m_fltY, m_signal->frequency(), 0.24, BaseUtils::fkChebyshev, 0, m_fltY.size() - 1);
+//        BaseUtils::swapVector(m_fltY);
+//        BaseUtils::filterLowFreq(m_fltY, m_signal->frequency(), 0.24, BaseUtils::fkChebyshev, 0, m_fltY.size() - 1);
+//        BaseUtils::swapVector(m_fltY);
     }
+}
+
+void WPGraphAnalysisVisualWidget::filtrationY(QVector<double> &arr)
+{
+    double mid = 0;
+    foreach (auto val, arr)
+        mid += val;
+    mid /= arr.size();
+    for (int i = 0; i < arr.size(); ++i)
+        arr.replace(i, arr.at(i) - mid);
+
+    BaseUtils::filterLowFreq(arr, m_signal->frequency(), 0.24, BaseUtils::fkChebyshev, 0, arr.size() - 1);
+    BaseUtils::swapVector(arr);
+    BaseUtils::filterLowFreq(arr, m_signal->frequency(), 0.24, BaseUtils::fkChebyshev, 0, arr.size() - 1);
+    BaseUtils::swapVector(arr);
+
+    for (int i = 0; i < arr.size(); ++i)
+        arr.replace(i, arr.at(i) + mid);
 }
 
 void WPGraphAnalysisVisualWidget::showGraph()
