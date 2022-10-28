@@ -130,17 +130,22 @@ void MotionRecognition::transform(QVector<double> &buffer, const QJsonObject &pa
 
     //! Создание списка участков без двигательной активности
     m_partsNoMotions.clear();
-    aie = -1;
-    foreach (auto part, m_partsMotions)
+    if (qAll >= 0.15)
     {
-        if (part.begin != 0 && m_partsNoMotions.size() == 0)
-            m_partsNoMotions << Part(0, part.begin);
-        if (aie > -1)
-            m_partsNoMotions << Part(aie, part.begin);
-        aie = part.end;
+        aie = -1;
+        foreach (auto part, m_partsMotions)
+        {
+            if (part.begin != 0 && m_partsNoMotions.size() == 0)
+                m_partsNoMotions << Part(0, part.begin);
+            if (aie > -1)
+                m_partsNoMotions << Part(aie, part.begin);
+            aie = part.end;
+        }
+        if (aie < m_sko.size() - 1)
+            m_partsNoMotions << Part(aie, m_sko.size() + freqSample - 1);
     }
-    if (aie < m_sko.size() - 1)
-        m_partsNoMotions << Part(aie, m_sko.size() + freqSample - 1);
+    else
+        m_partsNoMotions << Part(0, m_sko.size() + freqSample - 1);
 }
 
 SignalTransformerParamsWidget *MotionRecognition::getParamsWidget()
