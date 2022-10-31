@@ -37,6 +37,7 @@ private slots:
     void signalScroll(int pos);
 
     void on_signalExport();
+    void on_apnoeFactorsCalculate();
 
 private:
     Ui::WPGraphAnalysisVisualWidget *ui;
@@ -55,6 +56,7 @@ private:
     DecartCoordinatesSignal* m_signalY {nullptr};
     QVector<double> m_fltZ;
     QVector<double> m_fltY;
+    QList<QVector<double>> m_fragments; ///< Фрагменты сигнала в покое для анализа дыхания
 };
 
 #endif // WPGRAPHANALYSISVISUALWIDGET_H

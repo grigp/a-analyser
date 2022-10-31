@@ -13,6 +13,7 @@
 #include "dataprovider.h"
 #include "decartcoordinatessignal.h"
 #include "motionrecognition.h"
+#include "apnoefactors.h"
 
 WPGraphAnalysisVisualWidget::WPGraphAnalysisVisualWidget(VisualDescriptor* visual,
                                                          const QString& testUid, const QString& probeUid, const QString& channelUid,
@@ -147,6 +148,15 @@ void WPGraphAnalysisVisualWidget::on_signalExport()
     }
 }
 
+void WPGraphAnalysisVisualWidget::on_apnoeFactorsCalculate()
+{
+    foreach (auto fragment, m_fragments)
+    {
+        auto factors = new ApnoeFactors(fragment);
+        delete factors;
+    }
+}
+
 void WPGraphAnalysisVisualWidget::getSignal()
 {
     QByteArray data;
@@ -189,6 +199,7 @@ void WPGraphAnalysisVisualWidget::filtration()
                 filtrationY(arr);
             for (int j = 0; j < arr.size(); ++j)
                 m_fltY << arr.at(j);
+            m_fragments << arr;
 
             if (i < filterZ->partsNoMotionCount() - 1)
                 for (int j = 0; j < filterZ->partNoMotion(i+1).begin - filterZ->partNoMotion(i).end; ++j)
@@ -215,6 +226,7 @@ void WPGraphAnalysisVisualWidget::filtration()
 
 void WPGraphAnalysisVisualWidget::filtrationY(QVector<double> &arr)
 {
+    //! Центровка сигнала
     double mid = 0;
     foreach (auto val, arr)
         mid += val;
@@ -222,11 +234,24 @@ void WPGraphAnalysisVisualWidget::filtrationY(QVector<double> &arr)
     for (int i = 0; i < arr.size(); ++i)
         arr.replace(i, arr.at(i) - mid);
 
-    BaseUtils::filterLowFreq(arr, m_signal->frequency(), 0.24, BaseUtils::fkChebyshev, 0, arr.size() - 1);
+    //! ФНЧ 0.24 Гц
+    BaseUtils::filterLowFreq(arr, m_signal->frequency(), 0.24, BaseUtils::fkCriticalAttenuation, 0, arr.size() - 1);
     BaseUtils::swapVector(arr);
-    BaseUtils::filterLowFreq(arr, m_signal->frequency(), 0.24, BaseUtils::fkChebyshev, 0, arr.size() - 1);
+    BaseUtils::filterLowFreq(arr, m_signal->frequency(), 0.24, BaseUtils::fkCriticalAttenuation, 0, arr.size() - 1);
     BaseUtils::swapVector(arr);
 
+    //! ФВЧ 0.1 Гц
+    QVector<double> src = arr;
+
+    BaseUtils::filterLowFreq(arr, m_signal->frequency(), 0.1, BaseUtils::fkCriticalAttenuation, 0, arr.size() - 1);
+    BaseUtils::swapVector(arr);
+    BaseUtils::filterLowFreq(arr, m_signal->frequency(), 0.1, BaseUtils::fkCriticalAttenuation, 0, arr.size() - 1);
+    BaseUtils::swapVector(arr);
+
+    for (int i = 0; i < src.size(); ++i)
+        arr[i] = src[i] - arr[i];
+
+    //! Восстановление y позиции сигнала
     for (int i = 0; i < arr.size(); ++i)
         arr.replace(i, arr.at(i) + mid);
 }

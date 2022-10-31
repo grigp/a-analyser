@@ -143,7 +143,7 @@ void MotionRecognition::transform(QVector<double> &buffer, const QJsonObject &pa
         }
         if (aie < m_sko.size() - 1)
             m_partsNoMotions << Part(aie, m_sko.size() + freqSample - 1);
-    }
+    }  //Переяcлов Григорий 20.07.2022 14:44 Участок 13 начало > конца
     else
         m_partsNoMotions << Part(0, m_sko.size() + freqSample - 1);
 }
