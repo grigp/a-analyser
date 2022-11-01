@@ -135,7 +135,7 @@ void MotionRecognition::transform(QVector<double> &buffer, const QJsonObject &pa
         aie = -1;
         foreach (auto part, m_partsMotions)
         {
-            if (part.begin != 0 && m_partsNoMotions.size() == 0)
+            if (part.begin != 0 && m_partsNoMotions.size() == 0 && aie == -1)
                 m_partsNoMotions << Part(0, part.begin);
             if (aie > -1)
                 m_partsNoMotions << Part(aie, part.begin);

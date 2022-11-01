@@ -57,12 +57,6 @@ void ApnoeFactors::calculate()
             }
             else
                 isDelay = true;
-            //Вывод показателей
-//            QString s = "";
-//            if (sw.amplitude < m_midAmpl - m_qAmpl)
-//                s = "no";
-//            qDebug() << sw.begin / 150.0 << " " << sw.amplitude << (m_midAmpl - m_qAmpl) << "    "
-//                     << s;
         }
 
         m_apnoeFactTimeAverage /= m_apnoeFactsCount;
