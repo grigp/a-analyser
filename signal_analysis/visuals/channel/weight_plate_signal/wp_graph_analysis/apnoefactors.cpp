@@ -4,11 +4,23 @@
 
 #include <QDebug>
 
-ApnoeFactors::ApnoeFactors(QVector<double> signal, QObject *parent)
+ApnoeFactors::ApnoeFactors(QVector<double> signal, const int frequency, QObject *parent)
     : QObject(parent)
     , m_signal(signal)
+    , m_frequency(frequency)
 {
     calculate();
+}
+
+int ApnoeFactors::semiWavesCount() const
+{
+    return m_semiWaves.size();
+}
+
+ApnoeFactors::SemiWave ApnoeFactors::semiWave(const int idx) const
+{
+    Q_ASSERT(idx >= 0 && idx < m_semiWaves.size());
+    return m_semiWaves.at(idx);
 }
 
 void ApnoeFactors::calculate()
@@ -22,26 +34,38 @@ void ApnoeFactors::calculate()
 
         int begin = 0;
         bool isDelay = false;
+        m_apnoeFactsCount = 0;
+        m_apnoeFactTimeAverage = 0;
+        m_apnoeFactTimeMax = 0;
         foreach (auto sw, m_semiWaves)
         {
             if (sw.amplitude >= m_midAmpl - m_qAmpl)
             {
                 if (isDelay)
                 {
-                    qDebug() << BaseUtils::getTimeBySecCount(static_cast<int>(begin / 150.0)) <<
-                                BaseUtils::getTimeBySecCount(static_cast<int>(sw.end / 150.0));
+                    qDebug() << BaseUtils::getTimeBySecCount(static_cast<int>(static_cast<double>(begin) / m_frequency))
+                             << BaseUtils::getTimeBySecCount(static_cast<int>(static_cast<double>(sw.end) / m_frequency));
+                    ++m_apnoeFactsCount;
+                    double t = static_cast<double>(sw.end) / m_frequency - static_cast<double>(begin) / m_frequency;
+                    m_apnoeFactTimeAverage += t;
+                    if (t > m_apnoeFactTimeMax)
+                        m_apnoeFactTimeMax = t;
+
                     isDelay = false;
                 }
                 begin = sw.begin;
             }
             else
                 isDelay = true;
+            //Вывод показателей
 //            QString s = "";
 //            if (sw.amplitude < m_midAmpl - m_qAmpl)
 //                s = "no";
 //            qDebug() << sw.begin / 150.0 << " " << sw.amplitude << (m_midAmpl - m_qAmpl) << "    "
 //                     << s;
         }
+
+        m_apnoeFactTimeAverage /= m_apnoeFactsCount;
     }
 }
 

@@ -57,6 +57,10 @@ private:
     QVector<double> m_fltZ;
     QVector<double> m_fltY;
     QList<QVector<double>> m_fragments; ///< Фрагменты сигнала в покое для анализа дыхания
+
+    int m_apnoeFactsCount {0};          ///< Кол-во приступов апноэ
+    double m_apnoeFactTimeAverage {0};  ///< Средняя продолжительность приступа апноэ
+    double m_apnoeFactTimeMax {0};      ///< Максимальная продолжительность приступа апноэ
 };
 
 #endif // WPGRAPHANALYSISVISUALWIDGET_H

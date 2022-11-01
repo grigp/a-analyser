@@ -4,8 +4,10 @@
 #include <QFile>
 #include <QFileDialog>
 #include <QTextStream>
+#include <QApplication>
 #include <QDebug>
 
+#include "aanalyserapplication.h"
 #include "baseutils.h"
 #include "channelsdefines.h"
 #include "channelsutils.h"
@@ -14,6 +16,7 @@
 #include "decartcoordinatessignal.h"
 #include "motionrecognition.h"
 #include "apnoefactors.h"
+#include "apnoefactorsvaluedisplay.h"
 
 WPGraphAnalysisVisualWidget::WPGraphAnalysisVisualWidget(VisualDescriptor* visual,
                                                          const QString& testUid, const QString& probeUid, const QString& channelUid,
@@ -152,9 +155,19 @@ void WPGraphAnalysisVisualWidget::on_apnoeFactorsCalculate()
 {
     foreach (auto fragment, m_fragments)
     {
-        auto factors = new ApnoeFactors(fragment);
+        auto factors = new ApnoeFactors(fragment, m_signal->frequency());
+        m_apnoeFactsCount += factors->apnoeFactsCount();
+        m_apnoeFactTimeAverage += factors->apnoeFactTimeAverage();
+        if (factors->apnoeFactTimeMax() > m_apnoeFactTimeMax)
+            m_apnoeFactTimeMax = factors->apnoeFactTimeMax();
         delete factors;
     }
+    m_apnoeFactTimeAverage /= m_fragments.size();
+
+    ApnoeFactorsValueDisplay dlg;
+    dlg.setStyleSheet(static_cast<AAnalyserApplication*>(QApplication::instance())->mainWindow()->styleSheet());
+    dlg.assignValues(m_apnoeFactsCount, m_apnoeFactTimeAverage, m_apnoeFactTimeMax);
+    dlg.exec();
 }
 
 void WPGraphAnalysisVisualWidget::getSignal()
