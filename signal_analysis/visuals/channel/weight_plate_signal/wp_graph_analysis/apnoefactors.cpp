@@ -38,14 +38,19 @@ void ApnoeFactors::calculate()
         m_apnoeFactsCount = 0;
         m_apnoeFactTimeAverage = 0;
         m_apnoeFactTimeMax = 0;
+        double d = 0; //TODO: лишнее
+        int ws = 0;
+        int iPrevTop = -1;
         foreach (auto sw, m_semiWaves)
         {
-            if (sw.amplitude >= m_midAmpl - m_qAmpl)
+            if (sw.amplitude / (sw.end - sw.begin) > 0.04) //0.05)
+//            if (sw.amplitude >= m_midAmpl - m_qAmpl)
             {
                 if (isDelay)
                 {
                     qDebug() << BaseUtils::getTimeBySecCount(static_cast<int>(static_cast<double>(begin) / m_frequency))
-                             << BaseUtils::getTimeBySecCount(static_cast<int>(static_cast<double>(sw.end) / m_frequency));
+                             << BaseUtils::getTimeBySecCount(static_cast<int>(static_cast<double>(sw.end) / m_frequency))
+                             << d << "  " << sw.end - begin << m_frequency << "  " << ws;
                     ++m_apnoeFactsCount;
                     double t = static_cast<double>(sw.end) / m_frequency - static_cast<double>(begin) / m_frequency;
                     m_apnoeFactTimeAverage += t;
@@ -58,6 +63,17 @@ void ApnoeFactors::calculate()
             }
             else
                 isDelay = true;
+
+            d = sw.amplitude / (sw.end - sw.begin); //TODO: лишнее
+            if (sw.kind == ekMaximum)
+            {
+                if (iPrevTop > -1 && begin > iPrevTop)
+                    ws = begin - iPrevTop;
+                iPrevTop = begin;
+            }
+
+//            qDebug() << BaseUtils::getTimeBySecCount(static_cast<int>(static_cast<double>(begin) / m_frequency))
+//                     << sw.kind << ws;
         }
 
         if (m_apnoeFactsCount > 0)
@@ -109,10 +125,31 @@ void ApnoeFactors::computeSemiWavesParams()
 
 void ApnoeFactors::computeAmplitudes()
 {
+    //! Приводим амплитуды к диапазону 0 - 100 для того, чтоб сравнивать сравнимое
+    double minA = INT_MAX;
+    double maxA = 0;
+    foreach (auto sw, m_semiWaves)
+    {
+        if (sw.amplitude < minA)
+            minA = sw.amplitude;
+        if (sw.amplitude > maxA)
+            maxA = sw.amplitude;
+    }
+    for (int i = 0; i < m_semiWaves.size(); ++i)
+        m_semiWaves[i].amplitude = (m_semiWaves.at(i).amplitude - minA) * 100.0 / maxA;
+
+//    qDebug() << "-----" << m_semiWaves.size();
+//    foreach (auto sw, m_semiWaves)
+//    {
+//        qDebug() << sw.amplitude / (sw.end - sw.begin)
+//                 << BaseUtils::getTimeBySecCount(static_cast<int>(static_cast<double>(sw.begin) / m_frequency));
+//    }
+//    qDebug() << "-----";
+
+    //! Находим min, max, mid и СКО
     m_minAmpl = INT_MAX;
     m_maxAmpl = 0;
     m_midAmpl = 0;
-
     foreach (auto sw, m_semiWaves)
     {
         if (sw.amplitude < m_minAmpl)
