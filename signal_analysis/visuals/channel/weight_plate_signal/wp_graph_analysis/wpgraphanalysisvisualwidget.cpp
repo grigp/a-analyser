@@ -162,7 +162,8 @@ void WPGraphAnalysisVisualWidget::on_apnoeFactorsCalculate()
             m_apnoeFactTimeMax = factors->apnoeFactTimeMax();
         delete factors;
     }
-    m_apnoeFactTimeAverage /= m_fragments.size();
+    if (m_fragments.size() > 0)
+        m_apnoeFactTimeAverage /= m_fragments.size();
 
     ApnoeFactorsValueDisplay dlg;
     dlg.setStyleSheet(static_cast<AAnalyserApplication*>(QApplication::instance())->mainWindow()->styleSheet());

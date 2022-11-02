@@ -9,6 +9,7 @@ ApnoeFactors::ApnoeFactors(QVector<double> signal, const int frequency, QObject 
     , m_signal(signal)
     , m_frequency(frequency)
 {
+    Q_ASSERT(frequency > 0);
     calculate();
 }
 
@@ -59,7 +60,8 @@ void ApnoeFactors::calculate()
                 isDelay = true;
         }
 
-        m_apnoeFactTimeAverage /= m_apnoeFactsCount;
+        if (m_apnoeFactsCount > 0)
+            m_apnoeFactTimeAverage /= m_apnoeFactsCount;
     }
 }
 
@@ -71,7 +73,14 @@ void ApnoeFactors::computeSemiWavesParams()
     int prevI = -1;
     double prevV = 0;
     ExtremumKind prevK = ekUndefined;
+
     int dir = 0;
+    if (m_signal.at(1) > m_signal.at(0))
+        dir = 1;
+    else
+    if (m_signal.at(1) < m_signal.at(0))
+        dir = -1;
+
     for (int i = 1; i < m_signal.size(); ++i)
     {
         double v = m_signal.at(i);
