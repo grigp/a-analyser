@@ -11,7 +11,7 @@ class ApnoeFactors : public QObject
 {
     Q_OBJECT
 public:
-    explicit ApnoeFactors(QVector<double> signal, const int frequency, QObject *parent = nullptr);
+    explicit ApnoeFactors(QVector<double> signal, const int begin, const int frequency, QObject *parent = nullptr);
 
     enum ExtremumKind
     {
@@ -28,9 +28,12 @@ public:
         int begin {0};
         int end {0};
         double amplitude {0};
+        double amplAbs {0};
+        double value {0};
         ExtremumKind kind {ekUndefined};
-        SemiWave(const int b, const int e, const double a, const ExtremumKind k)
-            : begin(b), end(e), amplitude(a), kind(k){}
+        SemiWave(const int b, const int e, const double a, double v, const ExtremumKind k)
+            : begin(b), end(e), amplitude(a), value(v), kind(k)
+        {amplAbs = amplitude;}
     };
 
     /*!
@@ -70,6 +73,7 @@ private:
     void computeAmplitudes();
 
     QVector<double> m_signal;
+    int m_begin {0};
     int m_frequency {50};
     QList<SemiWave> m_semiWaves;
     double m_minAmpl {0};

@@ -4,9 +4,10 @@
 
 #include <QDebug>
 
-ApnoeFactors::ApnoeFactors(QVector<double> signal, const int frequency, QObject *parent)
+ApnoeFactors::ApnoeFactors(QVector<double> signal, const int begin, const int frequency, QObject *parent)
     : QObject(parent)
     , m_signal(signal)
+    , m_begin(begin)
     , m_frequency(frequency)
 {
     Q_ASSERT(frequency > 0);
@@ -30,8 +31,8 @@ void ApnoeFactors::calculate()
     {
         computeSemiWavesParams();
         computeAmplitudes();
-        qDebug() << "----------------";
-        qDebug() << "ampl :" << m_minAmpl << m_midAmpl << m_maxAmpl << "  " << m_qAmpl;
+//        qDebug() << "----------------";
+//        qDebug() << "ampl :" << m_minAmpl << m_midAmpl << m_maxAmpl << "  " << m_qAmpl;
 
         int begin = 0;
         bool isDelay = false;
@@ -48,9 +49,9 @@ void ApnoeFactors::calculate()
             {
                 if (isDelay)
                 {
-                    qDebug() << BaseUtils::getTimeBySecCount(static_cast<int>(static_cast<double>(begin) / m_frequency))
-                             << BaseUtils::getTimeBySecCount(static_cast<int>(static_cast<double>(sw.end) / m_frequency))
-                             << d << "  " << sw.end - begin << m_frequency << "  " << ws;
+//                    qDebug() << BaseUtils::getTimeBySecCount(static_cast<int>(static_cast<double>(begin + m_begin) / m_frequency))
+//                             << BaseUtils::getTimeBySecCount(static_cast<int>(static_cast<double>(sw.end + m_begin) / m_frequency))
+//                             << d << "  " << sw.end - begin << m_frequency << "  " << ws;
                     ++m_apnoeFactsCount;
                     double t = static_cast<double>(sw.end) / m_frequency - static_cast<double>(begin) / m_frequency;
                     m_apnoeFactTimeAverage += t;
@@ -73,7 +74,7 @@ void ApnoeFactors::calculate()
             }
 
 //            qDebug() << BaseUtils::getTimeBySecCount(static_cast<int>(static_cast<double>(begin) / m_frequency))
-//                     << sw.kind << ws;
+//                     << sw.kind << sw.value << sw.amplitude;
         }
 
         if (m_apnoeFactsCount > 0)
@@ -111,7 +112,7 @@ void ApnoeFactors::computeSemiWavesParams()
         if (kind == ekMaximum || kind == ekMinimum)
         {
             if (prevI > -1)
-                m_semiWaves << SemiWave(prevI, i, fabs(v - prevV), prevK);
+                m_semiWaves << SemiWave(prevI, i, fabs(v - prevV), v, prevK);
 
             prevI = i;
             prevV = v;

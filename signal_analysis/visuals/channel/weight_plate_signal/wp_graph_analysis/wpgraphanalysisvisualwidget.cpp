@@ -153,9 +153,12 @@ void WPGraphAnalysisVisualWidget::on_signalExport()
 
 void WPGraphAnalysisVisualWidget::on_apnoeFactorsCalculate()
 {
-    foreach (auto fragment, m_fragments)
+    m_apnoeFactsCount = 0;
+    m_apnoeFactTimeAverage = 0;
+    m_apnoeFactTimeMax = 0;
+    for (int i = 0; i < m_fragments.size(); ++i)
     {
-        auto factors = new ApnoeFactors(fragment, m_signal->frequency());
+        auto factors = new ApnoeFactors(m_fragments.at(i), m_begFragments.at(i), m_signal->frequency());
         m_apnoeFactsCount += factors->apnoeFactsCount();
         m_apnoeFactTimeAverage += factors->apnoeFactTimeAverage();
         if (factors->apnoeFactTimeMax() > m_apnoeFactTimeMax)
@@ -197,6 +200,8 @@ void WPGraphAnalysisVisualWidget::filtration()
         params["freq_sample"] = m_signal->frequency();
         auto filterZ = new MotionRecognition();
 
+        m_fragments.clear();
+        m_begFragments.clear();
         filterZ->setValues(0, 100);
         filterZ->transform(m_fltZ, params);
         for (int i = 0; i < filterZ->partsNoMotionCount(); ++i)
@@ -214,6 +219,7 @@ void WPGraphAnalysisVisualWidget::filtration()
             for (int j = 0; j < arr.size(); ++j)
                 m_fltY << arr.at(j);
             m_fragments << arr;
+            m_begFragments << filterZ->partNoMotion(i).begin;
 
             if (i < filterZ->partsNoMotionCount() - 1)
                 for (int j = 0; j < filterZ->partNoMotion(i+1).begin - filterZ->partNoMotion(i).end; ++j)

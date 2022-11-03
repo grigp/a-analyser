@@ -57,6 +57,7 @@ private:
     QVector<double> m_fltZ;
     QVector<double> m_fltY;
     QList<QVector<double>> m_fragments; ///< Фрагменты сигнала в покое для анализа дыхания
+    QList<int> m_begFragments;          ///< Начальные точки фрагментов сигнала
 
     int m_apnoeFactsCount {0};          ///< Кол-во приступов апноэ
     double m_apnoeFactTimeAverage {0};  ///< Средняя продолжительность приступа апноэ
