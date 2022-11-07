@@ -27,6 +27,11 @@ void registerFactors();
 void registerVisuals();
 
 /*!
+ * \brief Регистрирует преобразователи сигналов, вызывая метод SignalTransformFactory::registerTransformer для преобразователя
+ */
+void registerSignalTransformers();
+
+/*!
  * \brief Возвращает список допустимых портов для драйвера по его uid
  * \param drvUid - uid драйвера
  */

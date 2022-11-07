@@ -17,6 +17,7 @@ FactorsFactory::FactorsFactory(QObject *parent) : QObject(parent)
 
 FactorsDefines::FactorInfo FactorsFactory::getFactorInfo(const QString &uid) const
 {
+    Q_ASSERT_X(m_factors.contains(uid), "FactorsFactory", "Factor not found");
     if (m_factors.contains(uid))
         return m_factors.value(uid);
     else

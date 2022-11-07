@@ -124,7 +124,6 @@ void AAnalyserBuild::registerSignalTransformers()
     app->registerSignalTransformer(new FilterSignal());
 }
 
-
 QList<DeviceProtocols::Ports> AAnalyserBuild::getDriverPorts(const QString &drvUid)
 {
     //! Надо хардкодить все драйвера

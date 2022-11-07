@@ -19,6 +19,7 @@
 #include "vectorfactorsdescriptor.h"
 #include "ratioprobesfactorsdescriptor.h"
 #include "idsfactorsdescriptor.h"
+#include "spectrstabfactorsdescriptor.h"
 #include "targetfactorsdescriptor.h"
 #include "trenresultfactorsdescriptor.h"
 #include "crossfactorsdescriptor.h"
@@ -39,6 +40,8 @@
 #include "bilateralvisual.h"
 #include "dynamosignalvisual.h"
 #include "myogramsignalvisual.h"
+
+#include "filtersignal.h"
 
 #include "stabilan01.h"
 #include "bilateral.h"
@@ -65,6 +68,7 @@ void AAnalyserBuild::registerFactors()
     app->registerGroup(new ClassicFactorsDescriptor(BaseDefines::tlChannel));
     app->registerGroup(new VectorFactorsDescriptor(BaseDefines::tlChannel));
     app->registerGroup(new IDSFactorsDescriptor(BaseDefines::tlChannel));
+    app->registerGroup(new SpectrStabFactorsDescriptor(BaseDefines::tlChannel));
     app->registerGroup(new RatioProbesFactorsDescriptor(BaseDefines::tlTest));
     app->registerGroup(new TargetFactorsDescriptor(BaseDefines::tlProbe));
     app->registerGroup(new TrenResultFactorsDescriptor(BaseDefines::tlProbe));
@@ -90,6 +94,12 @@ void AAnalyserBuild::registerVisuals()
     app->registerVisual(new DynamoSignalVisual(BaseDefines::tlChannel));
     app->registerVisual(new VectorAnalysisVisual(BaseDefines::tlChannel));
     app->registerVisual(new BilateralVisual(BaseDefines::tlProbe));
+}
+
+void AAnalyserBuild::registerSignalTransformers()
+{
+    auto* app = static_cast<AAnalyserApplication*>(QApplication::instance());
+    app->registerSignalTransformer(new FilterSignal());
 }
 
 QList<DeviceProtocols::Ports> AAnalyserBuild::getDriverPorts(const QString &drvUid)

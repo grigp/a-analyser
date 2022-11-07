@@ -18,6 +18,7 @@
 #include "droptestfactorsdescriptor.h"
 #include "hoppingfactorsdescriptor.h"
 #include "idsfactorsdescriptor.h"
+#include "spectrstabfactorsdescriptor.h"
 #include "targetfactorsdescriptor.h"
 
 #include "skgvisual.h"
@@ -52,6 +53,7 @@ void AAnalyserBuild::registerFactors()
     app->registerGroup(new DropTestFactorsDescriptor(BaseDefines::tlChannel));
     app->registerGroup(new HoppingFactorsDescriptor(BaseDefines::tlChannel));
     app->registerGroup(new IDSFactorsDescriptor(BaseDefines::tlChannel));
+    app->registerGroup(new SpectrStabFactorsDescriptor(BaseDefines::tlChannel));
     app->registerGroup(new TargetFactorsDescriptor(BaseDefines::tlChannel));
 }
 
@@ -64,6 +66,12 @@ void AAnalyserBuild::registerVisuals()
     app->registerVisual(new VectorAnalysisVisual(BaseDefines::tlChannel));
     app->registerVisual(new HistogramVisual(BaseDefines::tlChannel));
     app->registerVisual(new SpectrStabVisual(BaseDefines::tlChannel));
+}
+
+void AAnalyserBuild::registerSignalTransformers()
+{
+//    auto* app = static_cast<AAnalyserApplication*>(QApplication::instance());
+//    app->registerSignalTransformer(new FilterSignal());
 }
 
 QList<DeviceProtocols::Ports> AAnalyserBuild::getDriverPorts(const QString &drvUid)
