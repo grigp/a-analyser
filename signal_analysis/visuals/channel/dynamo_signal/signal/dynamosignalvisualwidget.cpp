@@ -1,11 +1,15 @@
 #include "dynamosignalvisualwidget.h"
 #include "ui_dynamosignalvisualwidget.h"
 
+#include <QMessageBox>
+
 #include "baseutils.h"
 #include "channelsdefines.h"
 #include "channelsutils.h"
 #include "dataprovider.h"
 #include "dynamosignal.h"
+#include "createsectiondialog.h"
+#include "signalanalysisutils.h"
 
 DynamoSignalVisualWidget::DynamoSignalVisualWidget(VisualDescriptor* visual,
                                                    const QString& testUid, const QString& probeUid, const QString& channelId,
@@ -22,6 +26,9 @@ DynamoSignalVisualWidget::DynamoSignalVisualWidget(VisualDescriptor* visual,
 
     QCursor cursorGraph = QCursor(QPixmap(":/images/SignalCursor.png"));
     ui->wgtGraph->setCursor(cursorGraph);
+
+    ui->wgtGraph->setContextMenuPolicy(Qt::CustomContextMenu);
+    connect(ui->wgtGraph, &AreaGraph::customContextMenuRequested, this, &DynamoSignalVisualWidget::on_popupMenuRequested);
 
     connect(ui->wgtGraph, &AreaGraph::moveCursor, this, &DynamoSignalVisualWidget::on_moveCursor);
     connect(ui->wgtGraph, &AreaGraph::press, this, &DynamoSignalVisualWidget::on_press);
@@ -107,6 +114,44 @@ void DynamoSignalVisualWidget::on_moveCursor()
     if (vals.size() == 1)
     {
         ui->edValue->setText(QString::number(vals.at(0)));
+    }
+}
+
+void DynamoSignalVisualWidget::on_popupMenuRequested(QPoint pos)
+{
+    if (!m_menu)
+    {
+        m_menu = new QMenu(this);
+        QAction * createSection = new QAction(tr("Создать секцию"), this);
+        connect(createSection, &QAction::triggered, this, &DynamoSignalVisualWidget::on_createSection);
+        m_menu->addAction(createSection);
+    }
+    m_menu->popup(ui->wgtGraph->mapToGlobal(pos));
+}
+
+void DynamoSignalVisualWidget::on_createSection()
+{
+    int begin = -1;
+    int end = -1;
+    ui->wgtGraph->selectedArea(begin, end);
+    if (begin < end && end > 0)
+    {
+        CreateSectionDialog dlg;
+        dlg.assignSignal(m_signal);
+        if (dlg.exec() == QDialog::Accepted)
+        {
+            QString chId = m_signal->channelId();
+            QString chUid = DataProvider::getChannelUid(probeUid(), channelId());
+            QString name = dlg.sectionName();
+            SignalAnalysisUtils::createSection(chUid, chId, name, dlg.channel(), begin, end, m_signal);
+        }
+    }
+    else
+    {
+        if (begin == -1 && end == -1)
+            QMessageBox::information(nullptr, tr("Сообщение"), tr("Не выделен участок сигнала"));
+        else
+            QMessageBox::information(nullptr, tr("Сообщение"), tr("Неправильно выделен участок сигнала"));
     }
 }
 

@@ -2,6 +2,7 @@
 #define DYNAMOSIGNALVISUALWIDGET_H
 
 #include <QWidget>
+#include <QMenu>
 
 #include "visuals.h"
 
@@ -39,6 +40,10 @@ private slots:
 
     void on_moveCursor();
 
+    void on_popupMenuRequested(QPoint pos);
+
+    void on_createSection();
+
     /*!
      * \brief Сигнал нажатия мышки на теле виджета
      * \param x, y - координаты нажатия
@@ -65,6 +70,7 @@ private:
 
     DynamoSignal* m_signal {nullptr};
     int m_selBeg {-1};
+    QMenu *m_menu {nullptr};
 };
 
 #endif // DYNAMOSIGNALVISUALWIDGET_H
