@@ -1,6 +1,7 @@
 #include "weightplategraphvisualwidget.h"
 #include "ui_weightplategraphvisualwidget.h"
 
+#include <QMessageBox>
 #include <QDebug>
 
 #include "channelsdefines.h"
@@ -133,14 +134,24 @@ void WeightPlateGraphVisualWidget::on_createSection()
     int begin = -1;
     int end = -1;
     ui->wgtGraph->selectedArea(begin, end);
-    CreateSectionDialog dlg;
-    dlg.assignSignal(m_signal);
-    if (dlg.exec() == QDialog::Accepted)
+    if (begin < end && end > 0)
     {
-        QString chId = m_signal->channelId();
-        QString chUid = DataProvider::getChannelUid(probeUid(), channelId());
-        QString name = dlg.sectionName();
-        SignalAnalysisUtils::createSection(chUid, chId, name, dlg.channel(), begin, end, m_signal);
+        CreateSectionDialog dlg;
+        dlg.assignSignal(m_signal);
+        if (dlg.exec() == QDialog::Accepted)
+        {
+            QString chId = m_signal->channelId();
+            QString chUid = DataProvider::getChannelUid(probeUid(), channelId());
+            QString name = dlg.sectionName();
+            SignalAnalysisUtils::createSection(chUid, chId, name, dlg.channel(), begin, end, m_signal);
+        }
+    }
+    else
+    {
+        if (begin == -1 && end == -1)
+            QMessageBox::information(nullptr, tr("Сообщение"), tr("Не выделен участок сигнала"));
+        else
+            QMessageBox::information(nullptr, tr("Сообщение"), tr("Неправильно выделен участок сигнала"));
     }
 }
 

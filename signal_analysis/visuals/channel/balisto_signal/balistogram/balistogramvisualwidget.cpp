@@ -10,6 +10,7 @@
 #include "balistogram.h"
 #include "baseutils.h"
 #include "createsectiondialog.h"
+#include "signalanalysisutils.h"
 
 BalistogramVisualWidget::BalistogramVisualWidget(VisualDescriptor *visual,
                                                  const QString &testUid, const QString &probeUid, const QString &channelId,
@@ -128,11 +129,24 @@ void BalistogramVisualWidget::on_createSection()
     int begin = -1;
     int end = -1;
     ui->wgtGraph->selectedArea(begin, end);
-    CreateSectionDialog dlg;
-    dlg.assignSignal(m_z);
-    if (dlg.exec() == QDialog::Accepted)
+    if (begin < end && end > 0)
     {
-        qDebug() << "Создали секцию - " + dlg.sectionName() << dlg.channel() << begin << end;
+        CreateSectionDialog dlg;
+        dlg.assignSignal(m_z);
+        if (dlg.exec() == QDialog::Accepted)
+        {
+            QString chId = m_z->channelId();
+            QString chUid = DataProvider::getChannelUid(probeUid(), channelId());
+            QString name = dlg.sectionName();
+            SignalAnalysisUtils::createSection(chUid, chId, name, dlg.channel(), begin, end, m_z);
+        }
+    }
+    else
+    {
+        if (begin == -1 && end == -1)
+            QMessageBox::information(nullptr, tr("Сообщение"), tr("Не выделен участок сигнала"));
+        else
+            QMessageBox::information(nullptr, tr("Сообщение"), tr("Неправильно выделен участок сигнала"));
     }
 }
 
