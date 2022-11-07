@@ -15,13 +15,16 @@ class CreateSectionDialog : public QDialog
 
 public:
     explicit CreateSectionDialog(QWidget *parent = nullptr);
-    ~CreateSectionDialog();
+    ~CreateSectionDialog() override;
 
     QString sectionName() const;
     void setSectionName(const QString name);
 
     void assignSignal(SignalAccess* signal, const int def = 0);
     int channel() const;
+
+public slots:
+    void accept() override;
 
 private:
     Ui::CreateSectionDialog *ui;

@@ -122,14 +122,24 @@ void StabilogramVisualWidget::on_createSection()
     int begin = -1;
     int end = -1;
     ui->wgtGraph->selectedArea(begin, end);
-    CreateSectionDialog dlg;
-    dlg.assignSignal(m_stab);
-    if (dlg.exec() == QDialog::Accepted)
+    if (begin < end && end > 0)
     {
-        QString chId = m_stab->channelId();
-        QString chUid = DataProvider::getChannelUid(probeUid(), channelId());
-        QString name = dlg.sectionName();
-        SignalAnalysisUtils::createSection(chUid, chId, name, dlg.channel(), begin, end, m_stab);
+        CreateSectionDialog dlg;
+        dlg.assignSignal(m_stab);
+        if (dlg.exec() == QDialog::Accepted)
+        {
+            QString chId = m_stab->channelId();
+            QString chUid = DataProvider::getChannelUid(probeUid(), channelId());
+            QString name = dlg.sectionName();
+            SignalAnalysisUtils::createSection(chUid, chId, name, dlg.channel(), begin, end, m_stab);
+        }
+    }
+    else
+    {
+        if (begin == -1 && end == -1)
+            QMessageBox::information(nullptr, tr("Сообщение"), tr("Не выделен участок сигнала"));
+        else
+            QMessageBox::information(nullptr, tr("Сообщение"), tr("Неправильно выделен участок сигнала"));
     }
 }
 
