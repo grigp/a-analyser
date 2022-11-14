@@ -8,6 +8,7 @@
 #include <QApplication>
 #include <QCoreApplication>
 #include <QJsonObject>
+#include <QJsonArray>
 
 /*!
  * Набор типов данных из БД
@@ -159,12 +160,12 @@ enum NormValue
  */
 struct SectionInfo
 {
-    QString number; ///< Номер секции в строковом виде {channelUid}.data.number(6 digits) QString::number(n).rightJustified(6, '0'));
-    QString name;   ///< Название секции
-    int channel;    ///< Номер подканала
-    int from;       ///< Начальная точка
-    int to;         ///<  Конечная точка
-    //Actions actions;
+    QString number;       ///< Номер секции в строковом виде {channelUid}.data.number(6 digits) QString::number(n).rightJustified(6, '0'));
+    QString name;         ///< Название секции
+    int channel;          ///< Номер подканала
+    int from;             ///< Начальная точка
+    int to;               ///<  Конечная точка
+    QJsonArray actions;   ///< Последовательность преобразований
 };
 
 /*!

@@ -530,6 +530,47 @@ bool DataBase::deleteSection(const QString &channelUid, const QString &number)
     return retval;
 }
 
+bool DataBase::addTransformActionToSection(const QString &channelUid, const QString &number, const QString &transformUid, QJsonObject &params)
+{
+    QDir dir = channelsDir();
+    auto fileName = dir.absoluteFilePath(channelUid + ".cfg." + number);
+
+    DataDefines::SectionInfo si;
+
+    QJsonObject sectionObj;
+    if (readTableRec(fileName, sectionObj))
+    {
+        auto actions = sectionObj["actions"].toArray();
+
+        QJsonObject na;
+        na["uid"] = transformUid;
+        na["params"] = params;
+        actions.append(na);
+        sectionObj["actions"] = actions;
+
+        writeTableRec(fileName, sectionObj);
+    }
+
+    return true;
+}
+
+bool DataBase::clearTransformActionToSection(const QString &channelUid, const QString &number)
+{
+    QDir dir = channelsDir();
+    auto fileName = dir.absoluteFilePath(channelUid + ".cfg." + number);
+
+    DataDefines::SectionInfo si;
+
+    QJsonObject sectionObj;
+    if (readTableRec(fileName, sectionObj))
+    {
+        sectionObj["actions"] = QJsonArray();
+        writeTableRec(fileName, sectionObj);
+    }
+
+    return true;
+}
+
 void DataBase::addPrimaryFactor(const QString &testUid,
                                 const QString &uid,
                                 const double value,

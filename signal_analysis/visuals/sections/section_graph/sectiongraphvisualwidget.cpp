@@ -197,6 +197,10 @@ void SectionGraphVisualWidget::on_transform()
         ui->wgtGraph->clear();
         m_signal = signal;
         updateSectionData();
+
+        //! Запомнить действие
+        auto channelUid = DataProvider::getChannelUid(probeUid(), channelId());
+        DataProvider::addTransformActionToSection(channelUid, sectionNumber(), dlg.transformer(), params);
     }
 }
 
@@ -217,6 +221,10 @@ void SectionGraphVisualWidget::on_revert()
         ui->wgtGraph->clear();
         m_signal = signal;
         updateSectionData();
+
+        //! Запомнить действие
+        auto channelUid = DataProvider::getChannelUid(probeUid(), channelId());
+        DataProvider::clearTransformActionToSection(channelUid, sectionNumber());
     }
 
 }

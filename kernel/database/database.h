@@ -223,6 +223,25 @@ public:
      */
     bool deleteSection(const QString &channelUid, const QString &number);
 
+    /*!
+     * \brief Добавление преобразования к секции
+     * \param channelUid - uid канала
+     * \param number - номер секции
+     * \param transformUid - uid преобразователя
+     * \param params - параметры преобразователя
+     * \return true, если успешно
+     */
+    bool addTransformActionToSection(const QString &channelUid, const QString &number,
+                                     const QString &transformUid, QJsonObject &params);
+
+    /*!
+     * \brief Отменяет все преобразования для секции
+     * \param channelUid - uid канала
+     * \param number - номер секции
+     * \return true, если успешно
+     */
+    bool clearTransformActionToSection(const QString &channelUid, const QString &number);
+
     //! ------------------- Первичные показатели -------------------
 
     /*!

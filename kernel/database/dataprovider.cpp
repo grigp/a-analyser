@@ -156,6 +156,16 @@ bool DataProvider::deleteSection(const QString &channelUid, const QString &numbe
     return static_cast<AAnalyserApplication*>(QApplication::instance())->getDB()->deleteSection(channelUid, number);
 }
 
+bool DataProvider::addTransformActionToSection(const QString &channelUid, const QString &number, const QString &transformUid, QJsonObject &params)
+{
+    return static_cast<AAnalyserApplication*>(QApplication::instance())->getDB()->addTransformActionToSection(channelUid, number, transformUid, params);
+}
+
+bool DataProvider::clearTransformActionToSection(const QString &channelUid, const QString &number)
+{
+    return static_cast<AAnalyserApplication*>(QApplication::instance())->getDB()->clearTransformActionToSection(channelUid, number);
+}
+
 bool DataProvider::channelExists(const QString &probeUid, const QString &channelId)
 {
     return static_cast<AAnalyserApplication*>(QApplication::instance())->getDB()->channelExists(probeUid, channelId);
