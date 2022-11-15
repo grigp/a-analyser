@@ -537,6 +537,25 @@ SignalTransformerParamsWidget *AAnalyserApplication::getSignalTransformParamsWid
     return nullptr;
 }
 
+void AAnalyserApplication::rememberTransformerScheme(const QJsonArray &sheme)
+{
+    if (m_transformers)
+        m_transformers->rememberScheme(sheme);
+}
+
+QJsonArray AAnalyserApplication::getTransformerScheme()
+{
+    if (m_transformers)
+        return m_transformers->getScheme();
+    return QJsonArray();
+}
+
+void AAnalyserApplication::clearTransformerSheme()
+{
+    if (m_transformers)
+        m_transformers->clearSheme();
+}
+
 QStringList AAnalyserApplication::getTestConditions()
 {
     if (m_normsManager)

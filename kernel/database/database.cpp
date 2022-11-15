@@ -475,7 +475,7 @@ bool DataBase::getSections(const QString &channelUid, QList<DataDefines::Section
             si.channel = sectionObj["chan"].toInt();
             si.from = sectionObj["from"].toInt();
             si.to = sectionObj["to"].toInt();
-//            si.actions = sectionObj["actions"].toArray();
+            si.actions = sectionObj["actions"].toArray();
             auto parts = fn.split('.');
             if (parts.size() == 3)
                 si.number = parts.at(2);
@@ -491,6 +491,25 @@ bool DataBase::getSectionData(const QString &channelUid, const QString number, Q
     QDir dir = channelsDir();
     auto fileName = dir.absoluteFilePath(channelUid + ".data." + number);
     return readSignal(fileName, data);
+}
+
+bool DataBase::getSectionData(const QString &channelUid, const QString number, DataDefines::SectionInfo &si)
+{
+    QDir dir = channelsDir();
+    auto fileName = dir.absoluteFilePath(channelUid + ".cfg." + number);
+
+    QJsonObject sectionObj;
+    if (readTableRec(fileName, sectionObj))
+    {
+        si.name = sectionObj["name"].toString();
+        si.channel = sectionObj["chan"].toInt();
+        si.from = sectionObj["from"].toInt();
+        si.to = sectionObj["to"].toInt();
+        si.actions = sectionObj["actions"].toArray();
+        si.number = number;
+        return true;
+    }
+    return false;
 }
 
 bool DataBase::updateSection(const QString &channelUid, const QString &number, QByteArray &data)

@@ -2,6 +2,7 @@
 #include "ui_sectiongraphvisualwidget.h"
 
 #include <QMessageBox>
+#include <QFileDialog>
 #include <QJsonDocument>
 #include <QDebug>
 
@@ -14,6 +15,14 @@
 #include "spectrparamsdialog.h"
 #include "settingsprovider.h"
 #include "diagspectr.h"
+
+namespace
+{
+static const QString TransformSuffix = "sigtfm";
+static const QString emfnTransform = QCoreApplication::tr("Файлы преобразований сигнала") + " *." + TransformSuffix + " (*." + TransformSuffix + ")";
+
+
+}
 
 SectionGraphVisualWidget::SectionGraphVisualWidget(VisualDescriptor* visual,
                                                    const QString& testUid,
@@ -36,6 +45,7 @@ SectionGraphVisualWidget::SectionGraphVisualWidget(VisualDescriptor* visual,
     connect(ui->wgtSpectrRes, &DiagSpectr::release, this, &SectionGraphVisualWidget::on_release);
     connect(ui->wgtSpectrRes, &DiagSpectr::move, this, &SectionGraphVisualWidget::on_move);
 
+    createBtnActions();
 }
 
 SectionGraphVisualWidget::~SectionGraphVisualWidget()
@@ -122,6 +132,7 @@ void SectionGraphVisualWidget::signalScroll(int pos)
 
 void SectionGraphVisualWidget::on_popupMenuRequested(QPoint pos)
 {
+    Q_UNUSED(pos);
 
 }
 
@@ -170,7 +181,7 @@ void SectionGraphVisualWidget::on_move(const int x, const int y)
     }
 }
 
-void SectionGraphVisualWidget::on_transform()
+void SectionGraphVisualWidget::on_transformNew()
 {
     SelectTransformerDialog dlg(this);
 
@@ -202,6 +213,33 @@ void SectionGraphVisualWidget::on_transform()
         auto channelUid = DataProvider::getChannelUid(probeUid(), channelId());
         DataProvider::addTransformActionToSection(channelUid, sectionNumber(), dlg.transformer(), params);
     }
+}
+
+void SectionGraphVisualWidget::on_transformFile()
+{
+    //! Запрос файла схемы преобразования
+    QString path = DataDefines::aanalyserDocumentsPath();
+    auto fileName = QFileDialog::getOpenFileName(this, tr("Файл схемы преобразований сигнала"), path, emfnTransform);
+    if (fileName != "")
+    {
+        //! Чтение файла схемы преобазования
+        QFile file(fileName);
+        if (file.open(QIODevice::ReadOnly | QIODevice::Text))
+        {
+            QByteArray ba = file.readAll();
+            QJsonDocument loadDoc(QJsonDocument::fromJson(ba));
+            auto tfmArray = loadDoc.array();
+            file.close();
+
+            transform(tfmArray);
+        }
+    }
+}
+
+void SectionGraphVisualWidget::on_transformMemory()
+{
+    auto tfmArray = static_cast<AAnalyserApplication*>(QApplication::instance())->getTransformerScheme();
+    transform(tfmArray);
 }
 
 void SectionGraphVisualWidget::on_revert()
@@ -275,6 +313,89 @@ void SectionGraphVisualWidget::on_calculateSpectr()
         //! Автоматически показать панель спектров
         ui->splHorizontal->setSizes(QList<int>() << 500 << 500);
     }
+}
+
+void SectionGraphVisualWidget::on_saveTransformToFile()
+{
+    DataDefines::SectionInfo si;
+    auto channelUid = DataProvider::getChannelUid(probeUid(), channelId());
+    if (DataProvider::getSectionData(channelUid, sectionNumber(), si))
+    {
+        if (si.actions != QJsonArray())
+        {
+            QString path = DataDefines::aanalyserDocumentsPath();
+            auto fileName = QFileDialog::getSaveFileName(this, tr("Файл схемы преобразований сигнала"), path, emfnTransform);
+            if (fileName != "")
+            {
+                QFile fileRec(fileName);
+                fileRec.remove();
+                if (fileRec.open(QIODevice::WriteOnly | QIODevice::Text))
+                {
+                    QJsonDocument doc(si.actions);
+                    QByteArray ba = doc.toJson();
+                    fileRec.write(ba);
+
+                    fileRec.close();
+                }
+            }
+        }
+        else
+            QMessageBox::information(nullptr, tr("Предупреждение"), tr("Преобразований не было"));
+    }
+}
+
+void SectionGraphVisualWidget::on_saveTransformToMemory()
+{
+    DataDefines::SectionInfo si;
+    auto channelUid = DataProvider::getChannelUid(probeUid(), channelId());
+    if (DataProvider::getSectionData(channelUid, sectionNumber(), si))
+    {
+        if (si.actions != QJsonArray())
+            static_cast<AAnalyserApplication*>(QApplication::instance())->rememberTransformerScheme(si.actions);
+        else
+            QMessageBox::information(nullptr, tr("Предупреждение"), tr("Преобразований не было"));
+    }
+}
+
+void SectionGraphVisualWidget::transform(QJsonArray &sheme)
+{
+    if (sheme != QJsonArray())
+    {
+        //! Создания буфера для преобразования
+        QVector<double> buffer;
+        for (int i = 0; i < m_signal->size(); ++i)
+            buffer << m_signal->value(1, i);
+        int freq = m_signal->frequency();
+
+        //! Последовательное применение преобразований
+        auto channelUid = DataProvider::getChannelUid(probeUid(), channelId());
+        for (int i = 0; i < sheme.size(); ++i)
+        {
+            auto tfmObj = sheme.at(i).toObject();
+            auto uid = tfmObj["uid"].toString();
+            auto params = tfmObj["params"].toObject();
+
+            static_cast<AAnalyserApplication*>(QApplication::instance())->transformSignal(uid, buffer, params);
+
+            //! Запомнить действие
+            DataProvider::addTransformActionToSection(channelUid, sectionNumber(), uid, params);
+        }
+
+        //! Замена исходного сигнала преобразованным
+        auto *signal = new AnySignal(freq, 2);
+        for (int i = 0; i < m_signal->size(); ++i)
+        {
+            QVector<double> rec;
+            rec << m_signal->value(0, i) << buffer.at(i);
+            signal->appendValue(rec);
+        }
+
+        ui->wgtGraph->clear();
+        m_signal = signal;
+        updateSectionData();
+    }
+    else
+        QMessageBox::information(nullptr, tr("Предупреждение"), tr("Отсутствует схема преобразований"));
 }
 
 void SectionGraphVisualWidget::computeSpectrAveraging(QVector<double> &dataSrc, QVector<double> &dataRes,
@@ -433,4 +554,25 @@ void SectionGraphVisualWidget::selectionReset()
     m_selFrom = QPoint(-1, -1);
     m_selTo = QPoint(-1, -1);
     m_selectAreaWidget->selectArea(QRect());
+}
+
+void SectionGraphVisualWidget::createBtnActions()
+{
+    auto acSaveTransformToFile = new QAction(tr("В файл..."));
+    connect(acSaveTransformToFile, &QAction::triggered, this, &SectionGraphVisualWidget::on_saveTransformToFile);
+    ui->btnSaveTransform->addAction(acSaveTransformToFile);
+    auto acSaveTransformToMemory = new QAction(tr("В память"));
+    connect(acSaveTransformToMemory, &QAction::triggered, this, &SectionGraphVisualWidget::on_saveTransformToMemory);
+    ui->btnSaveTransform->addAction(acSaveTransformToMemory);
+
+
+    auto acTransformNew = new QAction(tr("Новое преобразование..."));
+    connect(acTransformNew, &QAction::triggered, this, &SectionGraphVisualWidget::on_transformNew);
+    ui->btnTransform->addAction(acTransformNew);
+    auto acTransformFile = new QAction(tr("Схема из файла..."));
+    connect(acTransformFile, &QAction::triggered, this, &SectionGraphVisualWidget::on_transformFile);
+    ui->btnTransform->addAction(acTransformFile);
+    auto acTransformMemory = new QAction(tr("Схема из памяти"));
+    connect(acTransformMemory, &QAction::triggered, this, &SectionGraphVisualWidget::on_transformMemory);
+    ui->btnTransform->addAction(acTransformMemory);
 }

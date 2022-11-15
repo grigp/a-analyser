@@ -228,6 +228,15 @@ bool getSections(const QString& channelUid, QList<DataDefines::SectionInfo> &sec
 bool getSectionData(const QString &channelUid, const QString number, QByteArray &data);
 
 /*!
+ * \brief Возвращает данные секции, описание
+ * \param channelUid - uid канала в пробе
+ * \param number - номер секции в строковом виде
+ * \param si - возвращаемые данные
+ * \return true, если успешно
+ */
+bool getSectionData(const QString &channelUid, const QString number, DataDefines::SectionInfo &si);
+
+/*!
  * \brief Обновляет данные секции
  * \param channelUid - uid канала в пробе
  * \param number - номер секции в строковом виде

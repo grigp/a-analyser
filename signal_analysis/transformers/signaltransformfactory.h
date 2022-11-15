@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QJsonObject>
+#include <QJsonArray>
 
 class SignalTransformer;
 class SignalTransformerParamsWidget;
@@ -67,8 +68,26 @@ public:
      */
     SignalTransformerParamsWidget* getParamsWidget(const QString uid) const;
 
+    /*!
+     * \brief Запомнить схему преобразований
+     * \param sheme - Схема преобразований
+     */
+    void rememberScheme(const QJsonArray& sheme);
+
+    /*!
+     * \brief Возвращает запомненную схему преобразований
+     */
+    QJsonArray getScheme();
+
+    /*!
+     * \brief Очищает запомненную схему преобразований
+     */
+    void clearSheme();
+
 private:
     QList<SignalTransformer*> m_transformers;
+
+    QJsonArray m_sheme {QJsonArray()};
 };
 
 #endif // SIGNALTRANSFORMFACTORY_H

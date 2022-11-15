@@ -270,9 +270,12 @@
            </spacer>
           </item>
           <item>
-           <widget class="QPushButton" name="btnTransform">
+           <widget class="QToolButton" name="btnTransform">
             <property name="text">
-             <string>Преобразовать...</string>
+             <string>Преобразовать</string>
+            </property>
+            <property name="popupMode">
+             <enum>QToolButton::InstantPopup</enum>
             </property>
            </widget>
           </item>
@@ -280,6 +283,19 @@
            <widget class="QPushButton" name="btnRevert">
             <property name="text">
              <string>Отменить преобразования...</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QToolButton" name="btnSaveTransform">
+            <property name="text">
+             <string>Сохранить преобразования</string>
+            </property>
+            <property name="popupMode">
+             <enum>QToolButton::InstantPopup</enum>
+            </property>
+            <property name="toolButtonStyle">
+             <enum>Qt::ToolButtonIconOnly</enum>
             </property>
            </widget>
           </item>
@@ -544,22 +560,6 @@
     <hint type="destinationlabel">
      <x>938</x>
      <y>161</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>btnTransform</sender>
-   <signal>clicked()</signal>
-   <receiver>SectionGraphVisualWidget</receiver>
-   <slot>on_transform()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>275</x>
-     <y>314</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>940</x>
-     <y>202</y>
     </hint>
    </hints>
   </connection>

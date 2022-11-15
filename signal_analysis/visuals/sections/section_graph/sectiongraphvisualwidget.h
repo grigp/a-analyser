@@ -62,14 +62,21 @@ private slots:
      */
     void on_move(const int x, const int y);
 
-    void on_transform();
+    void on_transformNew();
+    void on_transformFile();
+    void on_transformMemory();
 
     void on_revert();
 
     void on_calculateSpectr();
 
+    void on_saveTransformToFile();
+    void on_saveTransformToMemory();
+
 private:
     Ui::SectionGraphVisualWidget *ui;
+
+    void transform(QJsonArray &sheme);
 
     /*!
      * \brief Расчет спектра с усреднением
@@ -99,6 +106,8 @@ private:
     void setDiapazones();
 
     void selectionReset();
+
+    void createBtnActions();
 
     bool m_isCalculate {false};
     AnySignal *m_signal {nullptr};

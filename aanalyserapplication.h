@@ -370,6 +370,21 @@ public:
      */
     SignalTransformerParamsWidget* getSignalTransformParamsWidget(const QString uid) const;
 
+    /*!
+     * \brief Запомнить схему преобразований
+     * \param sheme - Схема преобразований
+     */
+    void rememberTransformerScheme(const QJsonArray& sheme);
+
+    /*!
+     * \brief Возвращает запомненную схему преобразований
+     */
+    QJsonArray getTransformerScheme();
+
+    /*!
+     * \brief Очищает запомненную схему преобразований
+     */
+    void clearTransformerSheme();
 
     ///<-----------------------------------------------------------------------------
 

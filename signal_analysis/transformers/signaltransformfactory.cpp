@@ -71,3 +71,18 @@ SignalTransformerParamsWidget *SignalTransformFactory::getParamsWidget(const QSt
     return nullptr;
 }
 
+void SignalTransformFactory::rememberScheme(const QJsonArray &sheme)
+{
+    m_sheme = sheme;
+}
+
+QJsonArray SignalTransformFactory::getScheme()
+{
+    return m_sheme;
+}
+
+void SignalTransformFactory::clearSheme()
+{
+    m_sheme = QJsonArray();
+}
+
