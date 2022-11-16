@@ -40,6 +40,7 @@
 #include "bilateralvisual.h"
 #include "dynamosignalvisual.h"
 #include "myogramsignalvisual.h"
+#include "sectiongraphvisual.h"
 
 #include "filtersignal.h"
 
@@ -94,6 +95,7 @@ void AAnalyserBuild::registerVisuals()
     app->registerVisual(new DynamoSignalVisual(BaseDefines::tlChannel));
     app->registerVisual(new VectorAnalysisVisual(BaseDefines::tlChannel));
     app->registerVisual(new BilateralVisual(BaseDefines::tlProbe));
+    app->registerVisual(new SectionGraphVisual(BaseDefines::tlSection));
 }
 
 void AAnalyserBuild::registerSignalTransformers()

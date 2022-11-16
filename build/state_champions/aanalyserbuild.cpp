@@ -27,6 +27,9 @@
 #include "vectoranalysisvisual.h"
 #include "histogramvisual.h"
 #include "spectrstabvisual.h"
+#include "sectiongraphvisual.h"
+
+#include "filtersignal.h"
 
 #include "stabilan01.h"
 #include "jumpplate.h"
@@ -66,12 +69,13 @@ void AAnalyserBuild::registerVisuals()
     app->registerVisual(new VectorAnalysisVisual(BaseDefines::tlChannel));
     app->registerVisual(new HistogramVisual(BaseDefines::tlChannel));
     app->registerVisual(new SpectrStabVisual(BaseDefines::tlChannel));
+    app->registerVisual(new SectionGraphVisual(BaseDefines::tlSection));
 }
 
 void AAnalyserBuild::registerSignalTransformers()
 {
-//    auto* app = static_cast<AAnalyserApplication*>(QApplication::instance());
-//    app->registerSignalTransformer(new FilterSignal());
+    auto* app = static_cast<AAnalyserApplication*>(QApplication::instance());
+    app->registerSignalTransformer(new FilterSignal());
 }
 
 QList<DeviceProtocols::Ports> AAnalyserBuild::getDriverPorts(const QString &drvUid)

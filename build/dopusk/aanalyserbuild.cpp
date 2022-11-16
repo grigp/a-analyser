@@ -18,6 +18,7 @@
 #include "spectrstabvisual.h"
 #include "balistogramvisual.h"
 #include "vectoranalysisvisual.h"
+#include "sectiongraphvisual.h"
 
 #include "filtersignal.h"
 
@@ -49,6 +50,7 @@ void AAnalyserBuild::registerVisuals()
     app->registerVisual(new SpectrStabVisual(BaseDefines::tlChannel));
     app->registerVisual(new BalistogramVisual(BaseDefines::tlChannel));
     app->registerVisual(new VectorAnalysisVisual(BaseDefines::tlChannel));
+    app->registerVisual(new SectionGraphVisual(BaseDefines::tlSection));
 }
 
 void AAnalyserBuild::registerSignalTransformers()
