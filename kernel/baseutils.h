@@ -221,6 +221,18 @@ int scaleMultiplier(const int idx);
 int sign(const int value);
 
 /*!
+ * \brief Возвращает uuid без символов '{', '-', '}'
+ * \param fullUuid - полный uuid
+ */
+QString removeSignesFromUuid(const QString fullUuid);
+
+/*!
+ * \brief добавляет в uuid символы '{', '-', '}' на нужные позиции
+ * \param numberUuid - обрезанный uuid
+ */
+QString addSignesToUuid(const QString numberUuid);
+
+/*!
  * \brief Класс, рассчитывающий математическое ожидание и стандартное отклонение с итеративным добавлением MidAndStandardDeviation class
  */
 class MidAndStandardDeviation

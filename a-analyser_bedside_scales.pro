@@ -6,7 +6,7 @@
 
 QMAKE_EXTRA_TARGETS += before_build makefilehook
 
-QT       += core gui serialport multimedia printsupport
+QT       += core gui serialport multimedia printsupport network
     #ifdef Q_OS_WIN32
 QT       += axcontainer
     #endif

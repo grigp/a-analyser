@@ -3,11 +3,15 @@
 
 #include <QFileDialog>
 #include <QTextStream>
+#include <QNetworkAccessManager>
+#include <QNetworkReply>
+#include <QJsonDocument>
 #include <QDebug>
 
 #include "bedsidescalestestcalculator.h"
 #include "baseutils.h"
 #include "datadefines.h"
+#include "dataprovider.h"
 
 BedsideScalesTestVisualize::BedsideScalesTestVisualize(QWidget *parent) :
     QWidget(parent),
@@ -27,6 +31,7 @@ void BedsideScalesTestVisualize::setTest(const QString &testUid)
 {
     if (!m_calculator)
     {
+        m_testUid = testUid;
         m_calculator = new BedsideScalesTestCalculator(testUid, this);
         m_calculator->calculate();
 
@@ -75,6 +80,68 @@ void BedsideScalesTestVisualize::on_weighingResults3D(bool is3D)
         ui->wgtWeighingResults->setVolume(DynamicDiagram::Volume3D);
     else
         ui->wgtWeighingResults->setVolume(DynamicDiagram::Volume2D);
+}
+
+void BedsideScalesTestVisualize::on_sendToWeb()
+{
+    DataDefines::TestInfo ti;
+    if (DataProvider::getTestInfo(m_testUid, ti))
+    {
+        DataDefines::PatientKard patient;
+        if (DataProvider::getPatient(ti.patientUid, patient))
+        {
+            auto su = BaseUtils::removeSignesFromUuid(ti.patientUid);
+
+            QNetworkAccessManager *mgr = new QNetworkAccessManager(this);
+            const QUrl url(QStringLiteral("https://med-api.nordavind.ru/api/protocol/user/register"));
+            QNetworkRequest request(url);
+            request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+
+            QJsonObject obj;
+            obj["username"] = "grig_p@mail.ru";
+            obj["password"] = "MVSfWhPb5HqWvj2";
+            obj["publickey"] = BaseUtils::removeSignesFromUuid(ti.patientUid);
+            QJsonDocument doc(obj);
+            QByteArray data = doc.toJson();
+            qDebug() << data;
+            // or
+            // QByteArray data("{\"key1\":\"value1\",\"key2\":\"value2\"}");
+            QNetworkReply *reply = mgr->post(request, data);
+
+            QObject::connect(reply, &QNetworkReply::finished, [=](){
+                if(reply->error() == QNetworkReply::NoError){
+                    QString contents = QString::fromUtf8(reply->readAll());
+                    qDebug() << contents;
+                }
+                else{
+                    QString err = reply->errorString();
+                    qDebug() << err;
+                }
+                reply->deleteLater();
+            });
+
+
+//            QNetworkAccessManager *manager = new QNetworkAccessManager(this);
+
+//            QNetworkRequest request(QUrl("https://med-api.nordavind.ru/api/protocol/user/register"));
+
+//            request.setRawHeader("userId", "\"" + patient.uid);
+        //    request.setHeader(QNetworkRequest::ContentTypeHeader,"application/x-www-form-urlencoded;charset=UTF-8");
+        //    request.setRawHeader("Authorization","Basic " + (CONSUMER_KEY + ":" + CONSUMER_SECRET).toBase64() + "==");
+
+        //    request.setRawHeader("Accept-Encoding","gzip");
+
+        //    QUrl params;
+        //    params.addQueryItem("grant_type","client_credentials");
+
+
+        //    connect(manager,SIGNAL(finished(QNetworkReply*)),this,SLOT(getResponse(QNetworkReply*)));
+
+        //    manager->post(request,params.encodedQuery());
+//            manager->deleteLater();
+        }
+
+    }
 }
 
 void BedsideScalesTestVisualize::on_selectItem(const int idx)

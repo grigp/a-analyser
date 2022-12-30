@@ -37,6 +37,8 @@ private slots:
     void on_weighingResultsBar();
     void on_weighingResults3D(bool is3D);
 
+    void on_sendToWeb();
+
     void on_selectItem(const int idx);
 
 private:
@@ -47,6 +49,7 @@ private:
     void showDiagParticalWeighting();
 
     BedsideScalesTestCalculator* m_calculator {nullptr};
+    QString m_testUid {""};
 };
 
 #endif // BEDSIDESCALESTESTVISUALIZE_H

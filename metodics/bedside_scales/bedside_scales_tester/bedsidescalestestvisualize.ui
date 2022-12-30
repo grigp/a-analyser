@@ -243,6 +243,29 @@
           </widget>
          </item>
          <item>
+          <spacer name="horizontalSpacer_4">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeType">
+            <enum>QSizePolicy::Fixed</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QPushButton" name="btnSendToWeb">
+           <property name="text">
+            <string>Передать на сервер</string>
+           </property>
+          </widget>
+         </item>
+         <item>
           <spacer name="horizontalSpacer_2">
            <property name="orientation">
             <enum>Qt::Horizontal</enum>
@@ -352,11 +375,28 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>btnSendToWeb</sender>
+   <signal>clicked()</signal>
+   <receiver>BedsideScalesTestVisualize</receiver>
+   <slot>on_sendToWeb()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>255</x>
+     <y>633</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>986</x>
+     <y>492</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>signalExport()</slot>
   <slot>on_weighingResultsGraph()</slot>
   <slot>on_weighingResultsBar()</slot>
   <slot>on_weighingResults3D(bool)</slot>
+  <slot>on_sendToWeb()</slot>
  </slots>
 </ui>

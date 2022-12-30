@@ -523,3 +523,22 @@ int BaseUtils::sign(const int value)
         return BaseDefines::NegativeValue;
     return BaseDefines::ZeroValue;
 }
+
+QString BaseUtils::removeSignesFromUuid(const QString fullUuid)
+{
+    QString retval = fullUuid;
+    retval.remove(QChar('{'));
+    retval.remove(QChar('-'));
+    retval.remove(QChar('}'));
+    return retval;
+}
+
+QString BaseUtils::addSignesToUuid(const QString numberUuid)
+{
+    QString retval = numberUuid;
+    retval.insert(20, QChar('-'));
+    retval.insert(16, QChar('-'));
+    retval.insert(12, QChar('-'));
+    retval.insert(8, QChar('-'));
+    return "{" + retval + "}";
+}
