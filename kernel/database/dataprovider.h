@@ -38,6 +38,22 @@ bool getPatient(const QString &uid, DataDefines::PatientKard &patient);
 QString updatePatient(const DataDefines::PatientKard &patient);
 
 /*!
+ * \brief Получение именованных данных из записи пациента
+ * \param uid - uid пациента
+ * \param name - имя данных
+ * \return данные или QVariant() при их отсутствии
+ */
+QVariant patientData(const QString &uid, const QString &name);
+
+/*!
+ * \brief Сохраняет именнованные данные для пациента
+ * \param uid - uid пациента
+ * \param name - имя данных
+ * \param value - данные
+ */
+void patientSetData(const QString &uid, const QString &name, const QVariant value);
+
+/*!
  * \brief Удаляет запись о пациенте
  * \param uid - uid пациента
  */

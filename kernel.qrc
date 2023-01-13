@@ -231,5 +231,6 @@
         <file>images/CursorArea.png</file>
         <file>images/tree/section.png</file>
         <file>images/Methodics/VR_Games.png</file>
+        <file>images/Keys.png</file>
     </qresource>
 </RCC>

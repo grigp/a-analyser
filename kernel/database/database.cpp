@@ -65,6 +65,67 @@ QString DataBase::updatePatient(const DataDefines::PatientKard &patient)
     }
 }
 
+QVariant DataBase::patientData(const QString &uid, const QString &name) const
+{
+    QDir dir = patientsDir();
+    QJsonObject patObj;
+    if (readTableRec(dir.absoluteFilePath(uid), patObj))
+    {
+        QJsonArray data = patObj["data"].toArray();
+        for (int i = 0; i < data.size(); ++i)
+        {
+            auto obj = data.at(i).toObject();
+            if (obj["name"].toString() == name)
+            {
+                auto value = obj["value"];
+                if (value.isNull() || value.isArray() || value.isObject() || value.isUndefined())
+                    return QVariant();
+                else
+                if (value.isBool())
+                    return value.toBool();
+                else
+                if (value.isDouble())
+                    return value.toDouble();
+                else
+                if (value.isString())
+                    return value.toString();
+            }
+        }
+    }
+    return QVariant();
+}
+
+void DataBase::patientSetData(const QString &uid, const QString &name, const QVariant value)
+{
+    QDir dir = patientsDir();
+    QJsonObject patObj;
+    if (readTableRec(dir.absoluteFilePath(uid), patObj))
+    {
+        QJsonArray data = patObj["data"].toArray();
+        bool fnd = false;
+        for (int i = 0; i < data.size(); ++i)
+        {
+            auto obj = data.at(i).toObject();
+            if (obj["name"].toString() == name)
+            {
+                obj["value"] = QJsonValue::fromVariant(value);
+                fnd = true;
+            }
+        }
+
+        if (!fnd)
+        {
+            QJsonObject obj;
+            obj["name"] = name;
+            obj["value"] = QJsonValue::fromVariant(value);
+            data << obj;
+        }
+
+        patObj["data"] = data;
+        writeTableRec(dir.absoluteFilePath(uid), patObj);
+    }
+}
+
 void DataBase::removePatient(const QString &uid)
 {
     if (patientExists(uid))

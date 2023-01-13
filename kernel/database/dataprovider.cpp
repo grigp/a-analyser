@@ -24,6 +24,16 @@ QString DataProvider::updatePatient(const DataDefines::PatientKard &patient)
     return static_cast<AAnalyserApplication*>(QApplication::instance())->getDB()->updatePatient(patient);
 }
 
+QVariant DataProvider::patientData(const QString &uid, const QString &name)
+{
+    return static_cast<AAnalyserApplication*>(QApplication::instance())->getDB()->patientData(uid, name);
+}
+
+void DataProvider::patientSetData(const QString &uid, const QString &name, const QVariant value)
+{
+    static_cast<AAnalyserApplication*>(QApplication::instance())->getDB()->patientSetData(uid, name, value);
+}
+
 void DataProvider::removePatient(const QString &uid)
 {
     static_cast<AAnalyserApplication*>(QApplication::instance())->getDB()->removePatient(uid);
@@ -255,5 +265,6 @@ void DataProvider::importBD(const QString &fileName)
 {
     static_cast<AAnalyserApplication*>(QApplication::instance())->getDB()->importBD(fileName);
 }
+
 
 
