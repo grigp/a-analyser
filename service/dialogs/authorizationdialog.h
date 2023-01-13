@@ -18,14 +18,12 @@ public:
     explicit AuthorizationDialog(QWidget *parent = nullptr);
     ~AuthorizationDialog();
 
-    void setWindowTitle(const QString &title);
-
     void setTitle(const QString &title);
     void setInfo(const QString &info);
     void setTextName(const QString &text);
     void setTextPassword(const QString &text);
 
-
+    void setLogotip(QPixmap &pixmap);
 
 private:
     Ui::AuthorizationDialog *ui;
