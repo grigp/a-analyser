@@ -542,3 +542,54 @@ QString BaseUtils::addSignesToUuid(const QString numberUuid)
     retval.insert(8, QChar('-'));
     return "{" + retval + "}";
 }
+
+QString BaseUtils::stringEncrypt(const QString &str)
+{
+    QString retval;
+    auto ba = str.toUtf8();
+    for (int i = 0; i < ba.size(); ++i)
+    {
+        int code = ba.at(i);
+        code = 255 - code;
+        QString s = QString::number(code, 16);
+        if (code >= 16)
+            retval.append(s);
+        else
+            retval.append("0" + s);
+//        if (code >= 100)
+//            retval.append(s);
+//        else
+//        if (code >= 10 && code <= 99)
+//            retval.append("0" + s);
+//        else
+//        if (code <= 9)
+//            retval.append("00" + s);
+    }
+    return retval;
+}
+
+QString BaseUtils::stringDecrypt(const QString &str)
+{
+    QString src = str;
+    QByteArray ba;
+    while (src.size() >= 2)
+    {
+        QString sCode = src.left(2);
+        src = src.remove(0, 2);
+        quint8 ci = static_cast<quint8>(sCode.toInt(nullptr, 16));
+        ci = 255 - ci;
+        char code = static_cast<char>(ci);
+        ba.append(code);
+    }
+
+//    while (src.size() >= 3)
+//    {
+//        QString sCode = src.left(3);
+//        src = src.remove(0, 3);
+//        quint8 ci = static_cast<quint8>(sCode.toInt());
+//        ci = 255 - ci;
+//        char code = static_cast<char>(ci);
+//        ba.append(code);
+//    }
+    return QString::fromUtf8(ba);
+}

@@ -109,6 +109,7 @@ void DataBase::patientSetData(const QString &uid, const QString &name, const QVa
             if (obj["name"].toString() == name)
             {
                 obj["value"] = QJsonValue::fromVariant(value);
+                data.replace(i, obj);
                 fnd = true;
             }
         }

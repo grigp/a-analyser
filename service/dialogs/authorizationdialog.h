@@ -25,6 +25,15 @@ public:
 
     void setLogotip(QPixmap &pixmap);
 
+    QString name() const;
+    void setName(const QString& name);
+
+    QString password() const;
+    void setPassword(const QString& password);
+
+private slots:
+    void on_showPassword(bool visible);
+
 private:
     Ui::AuthorizationDialog *ui;
 };

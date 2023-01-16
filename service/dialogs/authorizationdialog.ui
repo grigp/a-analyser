@@ -147,13 +147,63 @@
        </widget>
       </item>
       <item>
-       <widget class="QLineEdit" name="edPassword">
-        <property name="frame">
-         <bool>true</bool>
+       <widget class="QFrame" name="frPassword">
+        <property name="frameShape">
+         <enum>QFrame::StyledPanel</enum>
         </property>
-        <property name="echoMode">
-         <enum>QLineEdit::Password</enum>
+        <property name="frameShadow">
+         <enum>QFrame::Raised</enum>
         </property>
+        <layout class="QHBoxLayout" name="horizontalLayout_4">
+         <property name="spacing">
+          <number>0</number>
+         </property>
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
+         <item>
+          <widget class="QLineEdit" name="edPassword">
+           <property name="frame">
+            <bool>true</bool>
+           </property>
+           <property name="echoMode">
+            <enum>QLineEdit::Password</enum>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="btnPasswordEcho">
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset resource="../../kernel.qrc">
+             <normaloff>:/images/eye20.png</normaloff>:/images/eye20.png</iconset>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>20</width>
+             <height>20</height>
+            </size>
+           </property>
+           <property name="checkable">
+            <bool>true</bool>
+           </property>
+           <property name="checked">
+            <bool>false</bool>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </widget>
       </item>
       <item>
@@ -251,8 +301,8 @@
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>248</x>
-     <y>254</y>
+     <x>258</x>
+     <y>307</y>
     </hint>
     <hint type="destinationlabel">
      <x>157</x>
@@ -267,8 +317,8 @@
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>316</x>
-     <y>260</y>
+     <x>326</x>
+     <y>307</y>
     </hint>
     <hint type="destinationlabel">
      <x>286</x>
@@ -276,5 +326,24 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>btnPasswordEcho</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>AuthorizationDialog</receiver>
+   <slot>on_showPassword(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>550</x>
+     <y>193</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>579</x>
+     <y>167</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
+ <slots>
+  <slot>on_showPassword(bool)</slot>
+ </slots>
 </ui>

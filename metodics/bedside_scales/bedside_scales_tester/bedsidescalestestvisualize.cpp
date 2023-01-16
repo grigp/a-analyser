@@ -18,6 +18,9 @@ namespace
 {
 static const QString DeviceDataType = "Type1";//"bed_side_weight";
 
+static const QString HealthLineName = "health_line_line1";
+static const QString HealthLinePassword = "health_line_line2";
+
 }
 
 BedsideScalesTestVisualize::BedsideScalesTestVisualize(QWidget *parent) :
@@ -175,8 +178,8 @@ void BedsideScalesTestVisualize::networkRegisterUser(const QString userUid)
 {
     m_netWebSendStage = nwsRegUser;
     QJsonObject obj;
-    obj["username"] = "grig_p@mail.ru";
-    obj["password"] = "MVSfWhPb5HqWvj2";
+    obj["username"] = m_email; //"grig_p@mail.ru";
+    obj["password"] = m_password; //"MVSfWhPb5HqWvj2";
     obj["publickey"] = userUid;
     networkRequest(m_netManager, QUrl(QStringLiteral("https://med-api.nordavind.ru/api/protocol/user/register")), obj);
 }
@@ -267,14 +270,28 @@ void BedsideScalesTestVisualize::networkSendData()
 
 void BedsideScalesTestVisualize::on_sendToWeb()
 {
-    AuthorizationDialog dialog(this);
-    dialog.setTitle("Введите регистрационые данные");
-    dialog.setInfo("Необходимо ввести регистрационые данные, адрес электронной почты и пароль,\nс которыми Вы регистрировались на сайте HealthLine (https://med.nordavind.ru/)");
-    dialog.setTextName("Адрес электронной почты :");
-    dialog.setTextPassword("Пароль :");
-    if (dialog.exec() == QDialog::Accepted)
+    DataDefines::TestInfo ti;
+    if (DataProvider::getTestInfo(m_testUid, ti))
     {
-        //sendToWeb();
+        AuthorizationDialog dialog(this);
+        dialog.setTitle("Введите регистрационые данные");
+        dialog.setInfo("Необходимо ввести регистрационые данные, адрес электронной почты и пароль,\nс которыми Вы регистрировались на сайте HealthLine (https://med.nordavind.ru/)");
+        dialog.setTextName("Адрес электронной почты :");
+        dialog.setTextPassword("Пароль :");
+
+        auto name = DataProvider::patientData(ti.patientUid, HealthLineName).toString();
+        auto password = DataProvider::patientData(ti.patientUid, HealthLinePassword).toString();
+        dialog.setName(BaseUtils::stringDecrypt(name));
+        dialog.setPassword(BaseUtils::stringDecrypt(password));
+
+        if (dialog.exec() == QDialog::Accepted)
+        {
+            m_email = dialog.name();
+            m_password = dialog.password();
+            DataProvider::patientSetData(ti.patientUid, HealthLineName, BaseUtils::stringEncrypt(m_email));
+            DataProvider::patientSetData(ti.patientUid, HealthLinePassword, BaseUtils::stringEncrypt(m_password));
+            sendToWeb();
+        }
     }
 }
 

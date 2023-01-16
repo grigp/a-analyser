@@ -82,6 +82,8 @@ private:
     BedsideScalesTestCalculator* m_calculator {nullptr};
     QString m_testUid {""};
 
+    QString m_email {""};
+    QString m_password {""};
     QNetworkAccessManager *m_netManager {nullptr};
     QNetworkReply *m_reply {nullptr};
     QString m_answer {""};

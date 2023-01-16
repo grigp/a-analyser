@@ -233,6 +233,20 @@ QString removeSignesFromUuid(const QString fullUuid);
 QString addSignesToUuid(const QString numberUuid);
 
 /*!
+ * \brief Зашифровка строки
+ * \param str - строка
+ * \return Зашифрованная строка
+ */
+QString stringEncrypt(const QString& str);
+
+/*!
+ * \brief Расшифровка строки
+ * \param str - строка
+ * \return Разшифрованная строка
+ */
+QString stringDecrypt(const QString& str);
+
+/*!
  * \brief Класс, рассчитывающий математическое ожидание и стандартное отклонение с итеративным добавлением MidAndStandardDeviation class
  */
 class MidAndStandardDeviation
