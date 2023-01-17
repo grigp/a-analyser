@@ -54,6 +54,7 @@
 #include "filtersignal.h"
 
 #include "stabilan01.h"
+#include "amedplatform01.h"
 #include "bilateral.h"
 #include "jumpplate.h"
 
@@ -130,6 +131,9 @@ QList<DeviceProtocols::Ports> AAnalyserBuild::getDriverPorts(const QString &drvU
     if (drvUid == Stabilan01::uid())
         return Stabilan01::getPorts();
     else
+    if (drvUid == AMedPlatform01::uid())
+        return AMedPlatform01::getPorts();
+    else
     if (drvUid == JumpPlate::uid())
         return JumpPlate::getPorts();
     else
@@ -145,6 +149,9 @@ QStringList AAnalyserBuild::getDriverProtocols(const QString &drvUid)
     if (drvUid == Stabilan01::uid())
         return Stabilan01::getProtocols();
     else
+    if (drvUid == AMedPlatform01::uid())
+        return AMedPlatform01::getProtocols();
+    else
     if (drvUid == JumpPlate::uid())
         return JumpPlate::getProtocols();
     else
@@ -158,6 +165,9 @@ bool AAnalyserBuild::editDriverParams(const QString &drvUid, QJsonObject &params
     //! Надо хардкодить все драйвера
     if (drvUid == Stabilan01::uid())
         return Stabilan01::editParams(params);
+    else
+    if (drvUid == AMedPlatform01::uid())
+        return AMedPlatform01::editParams(params);
     else
     if (drvUid == JumpPlate::uid())
         return JumpPlate::editParams(params);
@@ -173,6 +183,9 @@ Driver *AAnalyserBuild::createDriver(const QString &drvUid)
     if (drvUid == Stabilan01::uid())
         return new Stabilan01();
     else
+    if (drvUid == AMedPlatform01::uid())
+        return new AMedPlatform01();
+    else
     if (drvUid == JumpPlate::uid())
         return new JumpPlate();
     else
@@ -186,6 +199,7 @@ void AAnalyserBuild::assignDrivers(QMap<QString, QString> &drivers)
 {
     //! Надо хардкодить все драйвера
     drivers.insert(Stabilan01::uid(), Stabilan01::name());
+    drivers.insert(AMedPlatform01::uid(), AMedPlatform01::name());
     drivers.insert(JumpPlate::uid(), JumpPlate::name());
     drivers.insert(Bilateral::uid(), Bilateral::name());
 }
