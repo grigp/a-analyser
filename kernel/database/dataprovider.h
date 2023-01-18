@@ -262,6 +262,15 @@ bool getSectionData(const QString &channelUid, const QString number, DataDefines
 bool updateSection(const QString &channelUid, const QString &number, QByteArray &data);
 
 /*!
+ * \brief Переименование секции
+ * \param channelUid - uid канала в пробе
+ * \param number - номер секции
+ * \param name - новое название
+ * \return true, если успешно
+ */
+bool renameSection(const QString &channelUid, const QString &number, const QString& name);
+
+/*!
  * \brief Удаление секции
  * \param channelUid - uid канала
  * \param number - номер секции

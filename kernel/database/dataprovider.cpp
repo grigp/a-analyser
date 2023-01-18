@@ -166,6 +166,11 @@ bool DataProvider::updateSection(const QString &channelUid, const QString &numbe
     return static_cast<AAnalyserApplication*>(QApplication::instance())->getDB()->updateSection(channelUid, number, data);
 }
 
+bool DataProvider::renameSection(const QString &channelUid, const QString &number, const QString &name)
+{
+    return static_cast<AAnalyserApplication*>(QApplication::instance())->getDB()->renameSection(channelUid, number, name);
+}
+
 bool DataProvider::deleteSection(const QString &channelUid, const QString &number)
 {
     return static_cast<AAnalyserApplication*>(QApplication::instance())->getDB()->deleteSection(channelUid, number);
@@ -265,6 +270,4 @@ void DataProvider::importBD(const QString &fileName)
 {
     static_cast<AAnalyserApplication*>(QApplication::instance())->getDB()->importBD(fileName);
 }
-
-
 

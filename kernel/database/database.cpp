@@ -591,6 +591,21 @@ bool DataBase::updateSection(const QString &channelUid, const QString &number, Q
     return true;
 }
 
+bool DataBase::renameSection(const QString &channelUid, const QString &number, const QString &name)
+{
+    QDir dir = channelsDir();
+    auto fileName = dir.absoluteFilePath(channelUid + ".cfg." + number);
+
+    QJsonObject sectionObj;
+    if (readTableRec(fileName, sectionObj))
+    {
+        sectionObj["name"] = name;
+        writeTableRec(fileName, sectionObj);
+        return true;
+    }
+    return false;
+}
+
 bool DataBase::deleteSection(const QString &channelUid, const QString &number)
 {
     QDir dir = channelsDir();

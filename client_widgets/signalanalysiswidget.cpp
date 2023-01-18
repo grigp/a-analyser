@@ -36,6 +36,7 @@ SignalAnalysisWidget::SignalAnalysisWidget(QWidget *parent) :
     ui->tvTests->setContextMenuPolicy(Qt::CustomContextMenu);
     connect(ui->tvTests, &QTreeView::customContextMenuRequested, this, &SignalAnalysisWidget::on_popupMenuRequested);
 
+    connect(m_mdlTests, &QStandardItemModel::dataChanged, this, &SignalAnalysisWidget::on_dataChanged);
 }
 
 SignalAnalysisWidget::~SignalAnalysisWidget()
@@ -214,6 +215,18 @@ void SignalAnalysisWidget::on_deleteSection()
             else
                 QMessageBox::information(nullptr, tr("Предупреждение"), tr("Необходимо выбрать секцию"));
         }
+}
+
+void SignalAnalysisWidget::on_dataChanged(const QModelIndex &topLeft, const QModelIndex &bottomRight, const QVector<int> &roles)
+{
+    Q_UNUSED(roles);
+    if (topLeft == bottomRight)
+    {
+        auto channelUid = topLeft.data(ChannelUidRole).toString();
+        auto number = topLeft.data(SectionNumberRole).toString();
+        auto newName = topLeft.data().toString();
+        DataProvider::renameSection(channelUid, number, newName);
+    }
 }
 
 void SignalAnalysisWidget::saveSplitterPosition()

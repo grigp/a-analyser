@@ -109,6 +109,8 @@ private slots:
     void on_signalExport();
     void on_deleteSection();
 
+     void on_dataChanged(const QModelIndex &topLeft, const QModelIndex &bottomRight, const QVector<int> &roles = QVector<int> ());
+
 private:
     void saveSplitterPosition();
     void restoreSplitterPosition();
