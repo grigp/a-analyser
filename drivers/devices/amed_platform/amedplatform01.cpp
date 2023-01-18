@@ -4,6 +4,8 @@
 #include "amedplatform01paramsdialog.h"
 #include "channelsutils.h"
 
+#include <QDebug>
+
 namespace
 {
 ///< Идентификаторы тензоканалов по типу для разъемов
@@ -62,6 +64,7 @@ static QMap<DeviceProtocols::TensoDevice, QStringList> td3ChannelsByDevice{
                                                                         << ChannelsDefines::SecondPlatform::chanDynPush3)
 };
 
+const quint8 MarkerValue = 0x80;
 
 }
 
@@ -140,10 +143,12 @@ bool AMedPlatform01::editParams(QJsonObject &params)
 void AMedPlatform01::start()
 {
     Driver::start();
+    cmdStartImpulse();
 }
 
 void AMedPlatform01::stop()
 {
+    cmdStop();
     Driver::stop();
 }
 
@@ -337,6 +342,151 @@ bool AMedPlatform01::isCalibrated() const
 
 }
 
+SerialPortDefines::Settings AMedPlatform01::getSerialPortSettings()
+{
+    return SerialPortDefines::Settings(115200,
+                                       QSerialPort::Data8,
+                                       QSerialPort::NoParity,
+                                       QSerialPort::OneStop,
+                                       QSerialPort::NoFlowControl);
+}
+
+void AMedPlatform01::on_readData(const QByteArray data)
+{
+    Driver::on_readData(data);
+    for (int i = 0; i < data.count(); i++)
+    {
+        quint8 B = static_cast<quint8>(data[i]);
+        assignByteFromDevice(B);
+    }
+}
+
+void AMedPlatform01::on_error(const QString &err)
+{
+    Driver::on_error(err);
+    qDebug() << "AMedPlatform01 :" << err;
+}
+
+//double min {INT_MAX};
+//double max {-INT_MAX};
+
+int n {0};
+
+void AMedPlatform01::assignByteFromDevice(quint8 b)
+{
+    qDebug() << n << b;
+    ++n;
+    bool isTwoMarkers = false;
+    bool isError = false;
+
+    if (b == MarkerValue)    //! Пришел байт маркера
+    {
+        if (!m_isMarker){    //! Ожидание первого байта маркера
+            m_isMarker = true;
+        }
+        else
+        {           //! Ожидание второго байта маркера
+            if (m_isPackage){   //! Два маркера внутри пакета - ошибка
+                isError = true;
+            }
+            m_isMarker = false;
+            m_isPackage = true;    //! Признак начала приема пакета
+            m_countBytePack = 0;
+            isTwoMarkers = true;
+            n = 0;
+        }
+    }
+    else              //! Не байт маркера
+        m_isMarker = false;
+
+    if (!isTwoMarkers)   //! Если не было два маркера подряд, то эта ситуация внутри пакета и нам надо это отрабатывать
+    {
+        if (m_isPackage)
+        {
+            if (m_countBytePack == 0)
+            {
+                m_circleCounter = b;
+            }
+            else
+            {
+                int cnt = m_countBytePack - 1;
+                if (cnt % 3 == 0)
+                    m_byteLo = b;
+                else
+                if (cnt % 3 == 1)
+                    m_byteMid = b;
+                else
+                {
+                    int value = (b << 16) + (m_byteMid << 8) + m_byteLo;
+                    if (cnt / 3 == 0)
+                        m_A = value;
+                    else
+                    if (cnt / 3 == 1)
+                        m_B = value;
+                    else
+                    if (cnt / 3 == 2)
+                        m_C = value;
+                    else
+                    if (cnt / 3 == 3)
+                        m_D = value;
+                    else
+                    if (cnt / 3 == 4)
+                        m_t1 = value;
+                    else
+                    if (cnt / 3 == 5)
+                        m_t2 = value;
+                    else
+                    if (cnt / 3 == 6)
+                        m_t3 = value;
+                }
+            }
+
+            //! Окончание разбора пакета
+            if (m_countBytePack + 1 == m_countChannels * 3){  //! Достигли заданного кол-ва каналов
+//                qDebug() << m_B;
+                m_X = m_A;
+                m_Y = m_B;
+                m_Z = m_C;//m_A + m_B + m_C + m_D;                     //! Расчет баллистограммы
+
+                incBlockCount();
+                sendDataBlock();
+                m_isPackage = false;                     //! Сбросим признак пакета
+            }
+
+            m_countBytePack++;
+        }
+    }
+
+    //! Передача информации об ошибке маркера внутри пакета
+    if (isError)
+    {
+        emit error(EC_MarkerIinsidePackage);
+    }
+}
+
+void AMedPlatform01::sendDataBlock()
+{
+    sendStab();
+//    sendPulse();
+//    sendTensoChannels();
+}
+
+void AMedPlatform01::sendStab()
+{
+    //! Эмуляция стабилограммы кругом
+//                m_X = 10 * sin(r);
+//                m_Y = 10 * cos(r);
+//                r = r + 2 * M_PI / 50;
+
+    //! Передача стабилограммы
+    auto stabData = new DeviceProtocols::StabDvcData(this, ChannelsDefines::chanStab,
+                                                     m_X, m_Y,
+//                                                     m_X - m_offsetX, m_Y - m_offsetY,
+                                                     m_A, m_B, m_C, m_D);
+    emit sendData(stabData);
+    delete stabData;
+}
+
 QMap<QString, bool> AMedPlatform01::getChanRecordingDefault(const QJsonObject &obj)
 {
     QMap<QString, bool> retval;
@@ -361,4 +511,31 @@ QJsonObject AMedPlatform01::setChanRecordingDefault(const QMap<QString, bool> &r
     recObj["tenso3"] = recMap.value(ChannelsDefines::chanTenso3);
 
     return recObj;
+}
+
+void AMedPlatform01::cmdStartSinus()
+{
+    QByteArray cmd;
+    cmd.resize(2);
+    cmd[0] = static_cast<char>(0xA5);
+    cmd[1] = static_cast<char>(0x63);
+    emit writeData(cmd);
+}
+
+void AMedPlatform01::cmdStartImpulse()
+{
+    QByteArray cmd;
+    cmd.resize(2);
+    cmd[0] = static_cast<char>(0xA5);
+    cmd[1] = static_cast<char>(0x64);
+    emit writeData(cmd);
+}
+
+void AMedPlatform01::cmdStop()
+{
+    QByteArray cmd;
+    cmd.resize(2);
+    cmd[0] = static_cast<char>(0xA5);
+    cmd[1] = static_cast<char>(0x6F);
+    emit writeData(cmd);
 }

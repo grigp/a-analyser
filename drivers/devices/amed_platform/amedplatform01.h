@@ -132,17 +132,58 @@ public:
     DeviceProtocols::TensoChannel tenso2Params() const {return m_tenso2;}
     DeviceProtocols::TensoChannel tenso3Params() const {return m_tenso3;}
 
+protected:
+    /*!
+     * \brief Возвращает настройки порта
+     */
+    SerialPortDefines::Settings getSerialPortSettings() override;
+
+
+protected slots:
+    void on_readData(const QByteArray data) override;
+    void on_error(const QString &err) override;
+
 private:
+
+    /*!
+     * \brief Обрабатывает принятый байт из пакета данных байт
+     * \param b - текущий байт
+     */
+    void assignByteFromDevice(quint8 b);
+
+    /*!
+     * \brief Передача данных пакета
+     */
+    void sendDataBlock();
+
+    /*!
+     * \brief Передача данных стабилограммы
+     */
+    void sendStab();
+
     static QMap<QString, bool> getChanRecordingDefault(const QJsonObject &obj);
     static QJsonObject setChanRecordingDefault(const QMap<QString, bool>& recMap);
 
-    int m_countChannels {8};     ///< Кол-во каналов. Должно инициализироваться как параметр драйвера
+    void cmdStartSinus();
+    void cmdStartImpulse();
+    void cmdStop();
 
     DeviceProtocols::TensoChannel m_tenso1 {DeviceProtocols::TensoChannel(DeviceProtocols::tdDynHand, 1.7, 100)};
     DeviceProtocols::TensoChannel m_tenso2 {DeviceProtocols::TensoChannel(DeviceProtocols::tdDynStand, 1.7, 500)};
     DeviceProtocols::TensoChannel m_tenso3 {DeviceProtocols::TensoChannel(DeviceProtocols::tdBreath, 1.7, 1)};
 
     QMap<QString, bool> m_chanRecordingDefault;
+
+    ///< Разбор принятых данных
+    bool m_isMarker {false};      ///< Счетчик байтов маркера. При первом 0x80 становится true. При втором 0x80 начинается прием пакета. При true и не 0x80 сбрасывается
+    bool m_isPackage {false};     ///< true - идет разбор пакета, false - нет разбора пакета
+    int m_countBytePack {0};      ///< Счетчик байтов пакета
+    quint8 m_circleCounter {0};   ///< Кольцевой счетчик пакетов
+    int m_countChannels {8};      ///< Кол-во каналов. Должно инициализироваться как параметр драйвера
+    quint8 m_byteLo;              ///< Первый принятый байт - младший
+    quint8 m_byteMid;             ///< Второй принятый байт - средний
+    double m_X, m_Y, m_A, m_B, m_C, m_D, m_Z; ///< Принятые и разобранные данные
+    double m_t1, m_t2, m_t3;                  ///< Значения тензоканалов
 };
 
 #endif // AMEDPLATFORM01_H

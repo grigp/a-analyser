@@ -26,6 +26,7 @@ public:
           EC_NoError = 0
         , EC_NoData = 1
         , EC_User = 100
+        , EC_MarkerIinsidePackage = 101
     };
 
     /*!

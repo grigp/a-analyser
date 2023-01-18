@@ -30,7 +30,7 @@ DeviceControlDialog::DeviceControlDialog(QWidget *parent) :
                                                 new StringValueDelegate(ui->tvConnections));
 
     ui->tvConnections->header()->resizeSection(DeviceControlModel::ColActive, 60);
-    ui->tvConnections->header()->resizeSection(DeviceControlModel::ColDriver, 150);
+    ui->tvConnections->header()->resizeSection(DeviceControlModel::ColDriver, 250);
     ui->tvConnections->header()->resizeSection(DeviceControlModel::ColPort, 80);
 
     connect(m_model, &DeviceControlModel::dataChanged, this, &DeviceControlDialog::on_dataChanged);

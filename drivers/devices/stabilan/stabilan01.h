@@ -31,12 +31,6 @@ public:
     explicit Stabilan01(QObject *parent = nullptr);
     ~Stabilan01() override;
 
-    enum ErrorCodes
-    {
-        EC_MarkerIinsidePackage = Driver::EC_User + 1
-
-    };
-
     static QString uid() {return DevicesDefines::uid_stabilan01;}
     static QString name() {return tr("Стабилан - 01");} //DevicesDefines::name_stabilan01);} Не локализуется через константу
 

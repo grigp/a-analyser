@@ -713,6 +713,9 @@ static QMap<TensoDevice, QString> tensoDevices {
   , std::pair<TensoDevice, QString> (tdPushDevice, name_PushDevice)
 };
 
+
+
+
 }
 
 Q_DECLARE_METATYPE(QList<DeviceProtocols::Ports>)
