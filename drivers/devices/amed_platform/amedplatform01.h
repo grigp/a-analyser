@@ -146,6 +146,11 @@ protected slots:
 private:
 
     /*!
+     * \brief Вовзращает true, если найдена последовательность маркера
+     */
+    bool isMarkerFound();
+
+    /*!
      * \brief Обрабатывает принятый байт из пакета данных байт
      * \param b - текущий байт
      */
@@ -175,7 +180,9 @@ private:
     QMap<QString, bool> m_chanRecordingDefault;
 
     ///< Разбор принятых данных
-    bool m_isMarker {false};      ///< Счетчик байтов маркера. При первом 0x80 становится true. При втором 0x80 начинается прием пакета. При true и не 0x80 сбрасывается
+    QList<quint8> m_markerCollect;
+    int m_markerCnt {0};          ///< Счетчик байтов маркера
+//    bool m_isMarker {false};      ///< Счетчик байтов маркера. При первом 0x80 становится true. При втором 0x80 начинается прием пакета. При true и не 0x80 сбрасывается
     bool m_isPackage {false};     ///< true - идет разбор пакета, false - нет разбора пакета
     int m_countBytePack {0};      ///< Счетчик байтов пакета
     quint8 m_circleCounter {0};   ///< Кольцевой счетчик пакетов
