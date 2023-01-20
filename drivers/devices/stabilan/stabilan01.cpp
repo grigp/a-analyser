@@ -5,6 +5,7 @@
 #include "serialport.h"
 #include "channelsutils.h"
 #include "settingsprovider.h"
+#include "driverdefines.h"
 
 #include <QApplication>
 #include <QJsonObject>
@@ -811,7 +812,7 @@ void Stabilan01::assignByteFromDevice(quint8 b)
 
     //! Передача информации об ошибке маркера внутри пакета
     if (isError){
-        emit error(EC_MarkerIinsidePackage);
+        emit error(DriverDefines::EC_MarkerIinsidePackage);
     }
 }
 

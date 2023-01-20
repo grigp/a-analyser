@@ -1,6 +1,7 @@
 #include "driver.h"
 
 #include "serialport.h"
+#include "driverdefines.h"
 
 #include <QDebug>
 
@@ -81,7 +82,7 @@ void Driver::timerEvent(QTimerEvent *event)
             {
                 m_isCommunicationError = true;
                 qDebug() << "error";
-                emit communicationError(driverName(), DeviceProtocols::portName(m_portName), EC_NoData);
+                emit communicationError(driverName(), DeviceProtocols::portName(m_portName), DriverDefines::EC_NoData);
             }
         }
         else

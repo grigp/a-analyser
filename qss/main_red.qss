@@ -91,6 +91,12 @@ QLabel#lblCommunicationError
     color: rgb(255,0,0);
 }
 
+QLabel#lblErrorInDriver
+{
+    font-size: 8pt;
+    color: rgb(150,150,0);
+}
+
 QLabel#lblMassa
 {
     font-size: 24pt;

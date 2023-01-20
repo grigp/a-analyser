@@ -19,6 +19,7 @@
 #include "soundpickwindow.h"
 #include "targetwindow.h"
 #include "fivezoneswindow.h"
+#include "driverdefines.h"
 
 #include <QJsonObject>
 #include <QJsonArray>
@@ -38,6 +39,7 @@ StabTestExecute::StabTestExecute(QWidget *parent) :
 
     ui->wgtSKG->addMarker();
     ui->lblCommunicationError->setVisible(false);
+    ui->lblErrorInDriver->setVisible(false);
     QTimer::singleShot(0, this, &StabTestExecute::start);
 
     ui->cbScale->addItem("1");
@@ -122,6 +124,7 @@ void StabTestExecute::start()
 
         connect(m_driver, &Driver::sendData, this, &StabTestExecute::getData);
         connect(m_driver, &Driver::communicationError, this, &StabTestExecute::on_communicationError);
+        connect(m_driver, &Driver::error, this, &StabTestExecute::on_error);
 
         setChannels();
 
@@ -262,6 +265,13 @@ void StabTestExecute::on_communicationError(const QString &drvName, const QStrin
     ui->lblCommunicationError->setText(QString(tr("Ошибка связи с устройством") + ": %1 (" + tr("порт") + ": %2)").
                                        arg(drvName).arg(port));
     ui->lblCommunicationError->setVisible(true);
+}
+
+void StabTestExecute::on_error(const int errorCode)
+{
+    auto eName = DriverDefines::errorName.value(static_cast<DriverDefines::ErrorCodes>(errorCode));
+    ui->lblErrorInDriver->setText(QString(tr("Ошибка в драйвере") + ": %1").arg(eName));
+    ui->lblErrorInDriver->setVisible(true);
 }
 
 void StabTestExecute::zeroing()

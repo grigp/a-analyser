@@ -41,6 +41,7 @@ private slots:
 
     void getData(DeviceProtocols::DeviceData *data);
     void on_communicationError(const QString &drvName, const QString &port, const int errorCode);
+    void on_error(const int errorCode);
 
     /*!
      * \brief Центровка

@@ -21,14 +21,6 @@ public:
     explicit Driver(QObject *parent = nullptr);
     ~Driver() override;
 
-    enum ErrorCodes
-    {
-          EC_NoError = 0
-        , EC_NoData = 1
-        , EC_User = 100
-        , EC_MarkerIinsidePackage = 101
-    };
-
     /*!
      * \brief Виртуальные методы, возвращающие uid и name драйверов
      * Есть методы в подклассах uid и name, но они статические и невиртуальные

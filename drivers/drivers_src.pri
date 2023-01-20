@@ -9,7 +9,8 @@ HEADERS += \
     $$PWD/deviceprotocols.h \
     $$PWD/connection.h \
     $$PWD/devicecontroldialog.h \
-    $$PWD/addconnectiondialog.h
+    $$PWD/addconnectiondialog.h \
+    $$PWD/driverdefines.h
 
 SOURCES += \
     $$PWD/driversfactory.cpp \

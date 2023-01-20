@@ -3,6 +3,7 @@
 #include "aanalyserapplication.h"
 #include "amedplatform01paramsdialog.h"
 #include "channelsutils.h"
+#include "driverdefines.h"
 
 #include <QDebug>
 
@@ -146,8 +147,8 @@ bool AMedPlatform01::editParams(QJsonObject &params)
 void AMedPlatform01::start()
 {
     Driver::start();
-    cmdStartSinus();
-//    cmdStartImpulse();
+//    cmdStartSinus();
+    cmdStartImpulse();
 }
 
 void AMedPlatform01::stop()
@@ -160,15 +161,27 @@ int AMedPlatform01::frequency(const QString &channelId) const
 {
     static QMap<QString, int> ChannelsFreq =
     {
-        std::pair<QString, int> (ChannelsDefines::ctStabilogram, 100)
-      , std::pair<QString, int> (ChannelsDefines::ctBalistogram, 100)
-      , std::pair<QString, int> (ChannelsDefines::ctDynamo, 100)
-      , std::pair<QString, int> (ChannelsDefines::ctBreath, 100)
+        std::pair<QString, int> (ChannelsDefines::ctStabilogram, 1000)
+      , std::pair<QString, int> (ChannelsDefines::ctBalistogram, 1000)
+      , std::pair<QString, int> (ChannelsDefines::ctDynamo, 1000)
+      , std::pair<QString, int> (ChannelsDefines::ctBreath, 1000)
     };
 
     if (ChannelsFreq.contains(ChannelsUtils::instance().channelType(channelId)))
         return ChannelsFreq.value(ChannelsUtils::instance().channelType(channelId));
-    return 100;
+    return 1000;
+
+//    static QMap<QString, int> ChannelsFreq =
+//    {
+//        std::pair<QString, int> (ChannelsDefines::ctStabilogram, 100)
+//      , std::pair<QString, int> (ChannelsDefines::ctBalistogram, 100)
+//      , std::pair<QString, int> (ChannelsDefines::ctDynamo, 100)
+//      , std::pair<QString, int> (ChannelsDefines::ctBreath, 100)
+//    };
+
+//    if (ChannelsFreq.contains(ChannelsUtils::instance().channelType(channelId)))
+//        return ChannelsFreq.value(ChannelsUtils::instance().channelType(channelId));
+//    return 100;
 }
 
 QList<QString> AMedPlatform01::getChannelsByProtocol(const QString &protocolUid) const
@@ -348,7 +361,7 @@ bool AMedPlatform01::isCalibrated() const
 
 SerialPortDefines::Settings AMedPlatform01::getSerialPortSettings()
 {
-    return SerialPortDefines::Settings(115200,
+    return SerialPortDefines::Settings(921600, //1843200,//115200,
                                        QSerialPort::Data8,
                                        QSerialPort::NoParity,
                                        QSerialPort::OneStop,
@@ -423,7 +436,12 @@ void AMedPlatform01::assignByteFromDevice(quint8 b)
         }
         else
         if (m_countBytePack == 1)
-            m_circleCounter = b;
+        {
+            if (!m_isFirstCycle && m_circleCounter != b)
+                emit error(DriverDefines::EC_LossData);  //! Ошибка - потеря пакета
+            m_circleCounter = b + 1;
+            m_isFirstCycle = false;
+        }
         else
         {
             int cnt = m_countBytePack - 2;
@@ -437,7 +455,7 @@ void AMedPlatform01::assignByteFromDevice(quint8 b)
                 int value = (b << 16) + (m_byteMid << 8) + m_byteLo;
                 if (cnt / 3 == 0)
                 {
-                    qDebug() << b << m_byteMid << m_byteLo << "    " << value;
+//                    qDebug() << b << m_byteMid << m_byteLo << "    " << value;
                     m_A = static_cast<double>(value) / 8000000 * 100;
                 }
                 else
@@ -564,7 +582,12 @@ void AMedPlatform01::assignByteFromDevice(quint8 b)
 //    if (isError)
 //    {
 //        emit error(EC_MarkerIinsidePackage);
-//    }
+    //    }
+}
+
+double AMedPlatform01::filtration(const double value)
+{
+
 }
 
 void AMedPlatform01::sendDataBlock()

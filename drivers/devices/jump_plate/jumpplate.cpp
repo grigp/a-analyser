@@ -2,6 +2,7 @@
 
 #include "jumpplateparamsdialog.h"
 #include "aanalyserapplication.h"
+#include "driverdefines.h"
 
 #include <QJsonObject>
 #include <QDebug>
@@ -310,6 +311,6 @@ void JumpPlate::assignByteFromDevice(quint8 b)
 
     //! Передача информации об ошибке маркера внутри пакета
     if (isError){
-        emit error(EC_MarkerIinsidePackage);
+        emit error(DriverDefines::EC_MarkerIinsidePackage);
     }
 }

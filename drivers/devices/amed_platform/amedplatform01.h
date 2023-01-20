@@ -157,6 +157,13 @@ private:
     void assignByteFromDevice(quint8 b);
 
     /*!
+     * \brief Фильтрация сигнала онлайн
+     * \param value - текущее значение исходного сигнала
+     * \return текущее значение фильтрованного сигнала
+     */
+    double filtration(const double value);
+
+    /*!
      * \brief Передача данных пакета
      */
     void sendDataBlock();
@@ -186,11 +193,20 @@ private:
     bool m_isPackage {false};     ///< true - идет разбор пакета, false - нет разбора пакета
     int m_countBytePack {0};      ///< Счетчик байтов пакета
     quint8 m_circleCounter {0};   ///< Кольцевой счетчик пакетов
+    bool m_isFirstCycle {true};
     int m_countChannels {8};      ///< Кол-во каналов. Должно инициализироваться как параметр драйвера
     quint8 m_byteLo;              ///< Первый принятый байт - младший
     quint8 m_byteMid;             ///< Второй принятый байт - средний
     double m_X, m_Y, m_A, m_B, m_C, m_D, m_Z; ///< Принятые и разобранные данные
     double m_t1, m_t2, m_t3;                  ///< Значения тензоканалов
+
+    ///< Фильтрация стабилограммы онлайн
+    QVector<double> m_srcBufX;
+    QVector<double> m_srcBufY;
+    QVector<double> m_fltBufX;
+    QVector<double> m_fltBufY;
+    const int m_fltLevel {7};
+    const QVector<int> m_fltCoef {1, 3, -4};
 };
 
 #endif // AMEDPLATFORM01_H

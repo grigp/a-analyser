@@ -16,12 +16,6 @@ class JumpPlate : public Driver, public DeviceProtocols::JumpPlateControl
 public:
     explicit JumpPlate(QObject *parent = nullptr);
 
-    enum ErrorCodes
-    {
-        EC_MarkerIinsidePackage = Driver::EC_User + 1
-
-    };
-
     static QString uid() {return DevicesDefines::uid_jumpPlate;}
     static QString name() {return tr("Прыжковая платформа");} //DevicesDefines::name_jumpPlate;}  Не локализуется через константу
 
