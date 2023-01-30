@@ -479,27 +479,28 @@ void AMedPlatform01::assignByteFromDevice(quint8 b)
                 int value = (b << 16) + (m_byteMid << 8) + m_byteLo;
                 if (cnt / 3 == 0)
                 {
-//                    qDebug() << b << m_byteMid << m_byteLo << "    " << value;
-                    m_B = static_cast<double>(value) / 8000000 * 100;
-                    m_A = filtration(m_B, m_chanA);
+                    m_A = static_cast<double>(value) / 8000000 * 100;
+                    m_A = filtration(m_A, m_chanA);
+//                    m_B = static_cast<double>(value) / 8000000 * 100;
+//                    m_A = filtration(m_B, m_chanA);
                 }
                 else
                 if (cnt / 3 == 1)
                 {
-                    //m_B = static_cast<double>(value) / 8000000 * 100;
-                    //m_B = filtration(m_B, m_chanB);
+                    m_B = static_cast<double>(value) / 8000000 * 100;
+                    m_B = filtration(m_B, m_chanB);
                 }
                 else
                 if (cnt / 3 == 2)
                 {
                     m_C = static_cast<double>(value) / 8000000 * 100;
-//                    m_C = filtration(m_C, m_chanC);
+                    m_C = filtration(m_C, m_chanC);
                 }
                 else
                 if (cnt / 3 == 3)
                 {
                     m_D = static_cast<double>(value) / 8000000 * 100;
-  //                  m_D = filtration(m_D, m_chanD);
+                    m_D = filtration(m_D, m_chanD);
                 }
                 else
                 if (cnt / 3 == 4)
@@ -516,10 +517,11 @@ void AMedPlatform01::assignByteFromDevice(quint8 b)
         //! Окончание разбора пакета
         if (m_countBytePack + 2 == m_countChannels * 3)  //! Достигли заданного кол-ва каналов
         {
-//                qDebug() << m_B;
-            m_X = m_A;
-            m_Y = m_B;
-            m_Z = m_C;//m_A + m_B + m_C + m_D;                     //! Расчет баллистограммы
+//            m_X = m_A;
+//            m_Y = m_B;
+            m_Z = m_A + m_B + m_C + m_D;                     //! Расчет баллистограммы
+            m_X = (m_B + m_C - m_A - m_D) / m_Z * 1000;
+            m_Y = (m_A + m_B - m_C - m_D) / m_Z * 1000;
 
             incBlockCount();
             sendDataBlock();
