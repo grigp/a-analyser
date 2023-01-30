@@ -69,13 +69,37 @@ const quint8 MarkerValue = 0x80;
 const quint8 MarkerZeroValue = 0;
 const QList<quint8> Marker {MarkerValue, MarkerValue, MarkerValue, MarkerZeroValue};
 
+const QVector<double> FilterCoeffitients {0.001024802545104,  0.0004350705088769, 0.0004626757878989,  0.0004347648472345,
+                                          0.0003343654281472, 0.0001457765897806, -0.0001439466593728, -0.0005436198067695,
+                                          -0.001055564935799, -0.001675475050851, -0.002389121388028,  -0.003173791465471,
+                                          -0.00399625740302,  -0.004812869023811, -0.005571194077192, -0.006210772078814,
+                                          -0.006664730843076, -0.006863298666262, -0.006736406559539, -0.006217202533336,
+                                          -0.005245374779051, -0.003770842752896, -0.001757946666038,  0.0008120195225341,
+                                           0.003938227985415, 0.007598021527862,  0.01174677993832,    0.01631797515236,
+                                           0.02122327445216,  0.02635558318732,   0.03159202395571,    0.03679906840838,
+                                           0.04183605707565,  0.04655968121692,   0.05083183146564,    0.05452592913944,
+                                           0.05752566860538,  0.05973957461959,   0.06109654774824,    0.06155378012888,
+                                           0.06109654774824,  0.05973957461959,   0.05752566860538,    0.05452592913944,
+                                           0.05083183146564,  0.04655968121692,   0.04183605707565,    0.03679906840838,
+                                           0.03159202395571,  0.02635558318732,   0.02122327445216,    0.01631797515236,
+                                           0.01174677993832,  0.007598021527862,  0.003938227985415,   0.0008120195225341,
+                                          -0.001757946666038, -0.003770842752896, -0.005245374779051,  -0.006217202533336,
+                                          -0.006736406559539, -0.006863298666262, -0.006664730843076,  -0.006210772078814,
+                                          -0.005571194077192, -0.004812869023811, -0.00399625740302,   -0.003173791465471,
+                                          -0.002389121388028, -0.001675475050851, -0.001055564935799,  -0.0005436198067695,
+                                          -0.0001439466593728, 0.0001457765897806, 0.0003343654281472, 0.0004347648472345,
+                                           0.0004626757878989, 0.0004350705088769, 0.001024802545104};
+
 }
 
 AMedPlatform01::AMedPlatform01(QObject *parent)
     : Driver (parent)
 {
     m_markerCollect.clear();
-
+    m_chanA.clear();
+    m_chanB.clear();
+    m_chanC.clear();
+    m_chanD.clear();
 }
 
 AMedPlatform01::~AMedPlatform01()
@@ -147,8 +171,8 @@ bool AMedPlatform01::editParams(QJsonObject &params)
 void AMedPlatform01::start()
 {
     Driver::start();
-//    cmdStartSinus();
-    cmdStartImpulse();
+    cmdStartSinus();
+//    cmdStartImpulse();
 }
 
 void AMedPlatform01::stop()
@@ -456,17 +480,27 @@ void AMedPlatform01::assignByteFromDevice(quint8 b)
                 if (cnt / 3 == 0)
                 {
 //                    qDebug() << b << m_byteMid << m_byteLo << "    " << value;
-                    m_A = static_cast<double>(value) / 8000000 * 100;
+                    m_B = static_cast<double>(value) / 8000000 * 100;
+                    m_A = filtration(m_B, m_chanA);
                 }
                 else
                 if (cnt / 3 == 1)
-                    m_B = static_cast<double>(value) / 8000000 * 100;
+                {
+                    //m_B = static_cast<double>(value) / 8000000 * 100;
+                    //m_B = filtration(m_B, m_chanB);
+                }
                 else
                 if (cnt / 3 == 2)
+                {
                     m_C = static_cast<double>(value) / 8000000 * 100;
+//                    m_C = filtration(m_C, m_chanC);
+                }
                 else
                 if (cnt / 3 == 3)
+                {
                     m_D = static_cast<double>(value) / 8000000 * 100;
+  //                  m_D = filtration(m_D, m_chanD);
+                }
                 else
                 if (cnt / 3 == 4)
                     m_t1 = static_cast<double>(value) / 8000000 * 100;
@@ -585,9 +619,22 @@ void AMedPlatform01::assignByteFromDevice(quint8 b)
     //    }
 }
 
-double AMedPlatform01::filtration(const double value)
+double AMedPlatform01::filtration(const double value, QVector<double> &chan)
 {
+    //! Накопление исходных данных в буфере
+    chan.append(value);
+    if (chan.size() > FilterCoeffitients.size())  //! Не должен быть длиннее массива коэффициентов
+        chan.remove(0);
 
+    double retval = value;
+    //! Расчет фильрованного значения
+    if (chan.size() == FilterCoeffitients.size())
+    {
+        retval = 0;
+        for (int i = 0; i < chan.size(); ++i)
+            retval = retval + chan[i] * FilterCoeffitients[i];
+    }
+    return retval;
 }
 
 void AMedPlatform01::sendDataBlock()

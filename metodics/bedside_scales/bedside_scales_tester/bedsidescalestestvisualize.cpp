@@ -16,10 +16,13 @@
 
 namespace
 {
-static const QString DeviceDataType = "Type1";//"bed_side_weight";
+static const QString DeviceDataType = "bed_side_weight";//"Type1";//"bed_side_weight";
 
 static const QString HealthLineName = "health_line_line1";
 static const QString HealthLinePassword = "health_line_line2";
+
+static const QString DevicePrivateKey = "cd4c11893d8ca16992387e8405a713eaa8edfa2905ef068670c0c7f4e0bdcf9f";
+static const QString DevicePublicKey = "04f4c453191f38cf67c8c32472fc36196848bc1d3b61e2e2ebdbc85082d4ec830724b3dd79a352e2b97b56156e338a798c51003001fa18d4ec2da62c1333d470a9";
 
 }
 
@@ -99,41 +102,49 @@ void BedsideScalesTestVisualize::networkRequest(QNetworkAccessManager *mgr, cons
     qDebug() << ++n << ") ------";
     qDebug() << "Запрос :" << url;
     qDebug() << "Данные формы :" << obj;
+
+    //! Создание запроса
     QNetworkRequest request(url);
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
 
+    //! Формирование запроса
     QJsonDocument doc(obj);
     QByteArray data = doc.toJson();
+    //! Передача запроса
     m_reply = mgr->post(request, data);
 
+    //! Подключение для получения ответа на запрос
     connect(m_reply, &QNetworkReply::finished, this, &BedsideScalesTestVisualize::networkAnswer);
 }
 
 void BedsideScalesTestVisualize::networkAnswer()
 {
+    //! Запрос реально был
     if (m_reply)
     {
+        //! Проверка на ошибку
         bool ar = m_reply->error() == QNetworkReply::NoError;
-        if(ar)
-        {
+        if(ar)  //! Не было ошибки
             m_answer = QString::fromUtf8(m_reply->readAll());
-        }
         else
-        {
+        {       //! Была ошибка
             m_answer = m_reply->errorString();
             qDebug() << "---- error ----" << QString::fromUtf8(m_reply->readAll());
         }
         qDebug() << "Ответ :" << m_answer;
         m_reply->deleteLater();
 
+        //! При отсутствии ошибки следующий запрос
         if (ar)
         {
+            //! Зарегистрировали пациента - получим список устройств
             if (m_netWebSendStage == nwsRegUser)
             {
                 m_userId = m_answer;
                 networkGetListDevice();
             }
             else
+            //! Получили список устройств - если нашего устройства нет, зарегистрируем его, иначе получим TimrMarker
             if (m_netWebSendStage == nwsGetListDevice)
             {
                 if (!isDeviceOnList(m_answer))
@@ -142,15 +153,21 @@ void BedsideScalesTestVisualize::networkAnswer()
                     networkGetTimeMarker();
             }
             else
+            //! Добавили устройство - получим TimrMarker
             if (m_netWebSendStage == nwsAddDevice)
             {
                 m_deviceId = m_answer;
                 networkGetTimeMarker();
             }
             else
+            //! Получили TimrMarker - запросим данные
             if (m_netWebSendStage == nwsTimeMarker)
             {
                 m_timeMarker = m_answer;
+                //! Разберем TimeMarker - выделим значение
+                QJsonDocument doc(QJsonDocument::fromJson(m_timeMarker.toUtf8()));
+                auto obj = doc.object();
+                m_timeMarkerValue = obj["value"].toString();
                 networkSendData();
             }
         }
@@ -181,6 +198,7 @@ void BedsideScalesTestVisualize::networkRegisterUser(const QString userUid)
     obj["username"] = m_email; //"grig_p@mail.ru";
     obj["password"] = m_password; //"MVSfWhPb5HqWvj2";
     obj["publickey"] = userUid;
+    //! Передача запроса на сервер через единую процедуру
     networkRequest(m_netManager, QUrl(QStringLiteral("https://med-api.nordavind.ru/api/protocol/user/register")), obj);
 }
 
@@ -189,107 +207,209 @@ void BedsideScalesTestVisualize::networkAddDevice(const QString userId)
     m_netWebSendStage = nwsAddDevice;
     QJsonObject obj;
     obj["user"] = userId;
-    obj["publickey"] = "04f4c453191f38cf67c8c32472fc36196848bc1d3b61e2e2ebdbc85082d4ec830724b3dd79a352e2b97b56156e338a798c51003001fa18d4ec2da62c1333d470a9";
+    obj["publickey"] = DevicePublicKey;
     obj["type"] = DeviceDataType;
+    //! Передача запроса на сервер через единую процедуру
     networkRequest(m_netManager, QUrl(QStringLiteral("https://med-api.nordavind.ru/api/protocol/medicalDevice/register")), obj);
 }
 
 void BedsideScalesTestVisualize::networkGetListDevice()
 {
     m_netWebSendStage = nwsGetListDevice;
-//    QJsonObject obj;
-//    obj["userAddress"] = m_userId;
-    networkRequest(m_netManager, QUrl(QStringLiteral("https://med-api.nordavind.ru/api/protocol/medicalDevice/getList?userAddress=") + m_userId), QJsonObject());
+    //! Передача запроса на сервер через единую процедуру
+    networkRequest(m_netManager,
+                   QUrl(QStringLiteral("https://med-api.nordavind.ru/api/protocol/medicalDevice/getList?userAddress=") + m_userId),
+                   QJsonObject());
 }
 
 void BedsideScalesTestVisualize::networkGetTimeMarker()
 {
     m_netWebSendStage = nwsTimeMarker;
-    //QJsonObject obj;
-    networkRequest(m_netManager, QUrl(QStringLiteral("https://med-api.nordavind.ru/api/protocol/getTimeMarker?user=") + m_userId), QJsonObject());
+    //! Передача запроса на сервер через единую процедуру
+    networkRequest(m_netManager,
+                   QUrl(QStringLiteral("https://med-api.nordavind.ru/api/protocol/getTimeMarker?user=") + m_userId),
+                   QJsonObject());
 }
 
 void BedsideScalesTestVisualize::networkSendData()
 {
     m_netWebSendStage = nwsSendData;
 
-      QHttpMultiPart *multiPart = new QHttpMultiPart(QHttpMultiPart::FormDataType);
+    //! Подготовим данные для передачи в виде байтового массива baData
+    QJsonArray data;
+    for (int i = 0; i < m_calculator->size(); ++i)
+    {
+        auto value = m_calculator->weight(i);
+        auto dt = m_calculator->dateTime(i);
+        QJsonObject valObj;
+        valObj["massa"] = value;
+        valObj["date_time"] = dt.toString("dd:MM:yyyy hh.mm.ss");
 
-      QString body = "User=" + m_userId;
-      QHttpPart tpUser;
-      tpUser.setHeader(QNetworkRequest::ContentDispositionHeader, QVariant("form-data; name=\"text\""));
-      tpUser.setBody(body.toUtf8());
+        data << valObj;
+    }
+    QJsonDocument doc(data);
+    QByteArray baData = doc.toJson();
 
-      body = "Device.Address=" + m_deviceId;
-      QHttpPart tpDvcAddr;
-      tpDvcAddr.setHeader(QNetworkRequest::ContentDispositionHeader, QVariant("form-data; name=\"text\""));
-      tpDvcAddr.setBody(body.toUtf8());
+    //! Запрос в виде множественного сообщения
+    QHttpMultiPart *multiPart = new QHttpMultiPart(QHttpMultiPart::FormDataType);
 
-      body = "Device.Type=" + DeviceDataType;
-      QHttpPart tpDvcType;
-      tpDvcType.setHeader(QNetworkRequest::ContentDispositionHeader, QVariant("form-data; name=\"text\""));
-      tpDvcType.setBody(body.toUtf8());
+    //! Добавим пациента по id от сервера
+    QString body = m_userId;
+    QString header = "form-data; name=\"User\"";
+    QHttpPart tpUser;
+    tpUser.setHeader(QNetworkRequest::ContentDispositionHeader, QVariant(header));
+    tpUser.setBody(body.toUtf8());
+    qDebug() << "------  Данные для передачи данных ------------";
+    qDebug() << "header :" << header;
+    qDebug() << "body :" << body.toUtf8();
 
-      body = "TimeMarker=" + m_timeMarker;
-      QHttpPart tpTimeMarker;
-      tpTimeMarker.setHeader(QNetworkRequest::ContentDispositionHeader, QVariant("form-data; name=\"text\""));
-      tpTimeMarker.setBody(body.toUtf8());
+    //! Добавим идентификатор устройства по id от сервера
+    body = m_deviceId;
+    header = "form-data; name=\"Device.Address\"";
+    QHttpPart tpDvcAddr;
+    tpDvcAddr.setHeader(QNetworkRequest::ContentDispositionHeader, QVariant(header));
+    tpDvcAddr.setBody(body.toUtf8());
+    qDebug() << "header :" << header;
+    qDebug() << "body :" << body.toUtf8();
 
-      QJsonArray data;
-      for (int i = 0; i < m_calculator->size(); ++i)
-      {
-          auto value = m_calculator->weight(i);
-          auto dt = m_calculator->dateTime(i);
-          QJsonObject valObj;
-          valObj["massa"] = value;
-          valObj["date_time"] = dt.toString("dd:MM:yyyy hh.mm.ss");
+    //! Добавим тип данных
+    body = DeviceDataType;
+    header = "form-data; name=\"Device.Type\"";
+    QHttpPart tpDvcType;
+    tpDvcType.setHeader(QNetworkRequest::ContentDispositionHeader, QVariant(header));
+    tpDvcType.setBody(body.toUtf8());
+    qDebug() << "header :" << header;
+    qDebug() << "body :" << body.toUtf8();
 
-          data << valObj;
-      }
-      QJsonDocument doc(data);
-      QByteArray ba = doc.toJson();
-      qDebug() << ba;
-      QHttpPart tpData;
-      tpData.setHeader(QNetworkRequest::ContentDispositionHeader, QVariant("form-data; name=\"data\""));
-      tpData.setBody(ba);
+    //! Добавим TimeMarker
+    body = m_timeMarkerValue;
+    header = "form-data; name=\"TimeMarker\"";
+    QHttpPart tpTimeMarker;
+    tpTimeMarker.setHeader(QNetworkRequest::ContentDispositionHeader, QVariant(header));
+    tpTimeMarker.setBody(body.toUtf8());
+    qDebug() << "header :" << header;
+    qDebug() << "body :" << body.toUtf8();
 
-      multiPart->append(tpUser);
-      multiPart->append(tpDvcAddr);
-      multiPart->append(tpDvcType);
-      multiPart->append(tpTimeMarker);
-      multiPart->append(tpData);
+    //! Разделим TimeMarker на две части, передавать для сигнатуры только вторую
+    auto tmv_sep = m_timeMarkerValue.split(':');
+    QString tmv2 = m_timeMarkerValue;
+    if (tmv_sep.size() > 1)
+        tmv2 = tmv_sep.at(1);
+    //! Добавим сигнатуру
+    body = getSignature(convertToBytes(m_userId.mid(2)),
+                        convertToBytes(m_deviceId.mid(2)),
+                        DeviceDataType.toUtf8(),
+                        convertToBytes(tmv2.mid(2)),
+                        baData,
+                        convertToBytes(DevicePrivateKey));
+    QHttpPart tpSignature;
+    header = "form-data; name=\"Signature\"";
+    tpSignature.setHeader(QNetworkRequest::ContentDispositionHeader, QVariant(header));
+    tpSignature.setBody(body.toUtf8());
+    qDebug() << "header :" << header;
+    qDebug() << "body :" << body.toUtf8();
 
-      QNetworkRequest request(QUrl(QStringLiteral("https://med-api.nordavind.ru/api/protocol/request")));
-//      request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+    //! Добавим данные
+    QHttpPart tpData;
+    header = "form-data; name=\"data\"; filename=\"data\"";
+    tpData.setHeader(QNetworkRequest::ContentTypeHeader, QVariant("application/octet-stream"));
+    tpData.setHeader(QNetworkRequest::ContentDispositionHeader, QVariant(header));
+    tpData.setBody(baData);
+    qDebug() << "header :" << header;
+    qDebug() << "body :" << baData;
 
-      m_reply = m_netManager->post(request, multiPart);
-      multiPart->setParent(m_reply);
+    //! Собираем все в кучу
+    multiPart->append(tpUser);
+    multiPart->append(tpDvcAddr);
+    multiPart->append(tpDvcType);
+    multiPart->append(tpTimeMarker);
+    multiPart->append(tpSignature);
+    multiPart->append(tpData);
 
-      connect(m_reply, &QNetworkReply::finished, this, &BedsideScalesTestVisualize::networkAnswer);
+    qDebug() << ++n << ") ------";
+    qDebug() << "Запрос :" << QUrl(QStringLiteral("https://med-api.nordavind.ru/api/protocol/request"));
+    //! И передаем запрос
+    QNetworkRequest request(QUrl(QStringLiteral("https://med-api.nordavind.ru/api/protocol/request")));
+    m_reply = m_netManager->post(request, multiPart);
+    multiPart->setParent(m_reply);
+
+    //! Подключаемся и ждем ответ
+    connect(m_reply, &QNetworkReply::finished, this, &BedsideScalesTestVisualize::networkAnswer);
 }
+
+QString BedsideScalesTestVisualize::getSignature(QByteArray userAddress,
+                                                 QByteArray deviceAddress,
+                                                 QByteArray deviceType,
+                                                 QByteArray timeMarker,
+                                                 QByteArray dataBytes,
+                                                 QByteArray key)
+{
+    QByteArray buffer;
+
+    buffer.append(userAddress);
+    buffer.append(deviceAddress);
+    buffer.append(deviceType);
+    buffer.append(timeMarker);
+    buffer.append(dataBytes);
+    buffer.append(key);
+
+    QByteArray signatureHash = QCryptographicHash::hash(buffer, QCryptographicHash::Sha256);
+    return convertToString(signatureHash);
+}
+
+QByteArray BedsideScalesTestVisualize::convertToBytes(QString hexString)
+{
+    QByteArray result;
+    bool ok;
+    for(int i = 0; i < hexString.length() / 2; ++i)
+    {
+        QString hexByte = hexString.mid(i*2,2);
+        auto num = quint8(hexByte.toUShort(&ok, 16));
+        result.append(static_cast<char>(num));
+    }
+    return result;
+}
+
+QString BedsideScalesTestVisualize::convertToString(QByteArray array)
+{
+    QString output = "0x";
+    int length = array.length();
+    for(int i = 0; i < length; ++i)
+    {
+        auto value = quint8(array.at(i));
+        output.append(QString::number(value, 16).rightJustified(2, '0'));
+    }
+    return output;
+}
+
 
 void BedsideScalesTestVisualize::on_sendToWeb()
 {
     DataDefines::TestInfo ti;
     if (DataProvider::getTestInfo(m_testUid, ti))
     {
+        //! Запрос аутентификационных данных для сервера HealthLine (https://med.nordavind.ru/)
         AuthorizationDialog dialog(this);
         dialog.setTitle("Введите регистрационые данные");
         dialog.setInfo("Необходимо ввести регистрационые данные, адрес электронной почты и пароль,\nс которыми Вы регистрировались на сайте HealthLine (https://med.nordavind.ru/)");
         dialog.setTextName("Адрес электронной почты :");
         dialog.setTextPassword("Пароль :");
 
+        //! Данные хранятся в карточке пациента, как свободные данные пациента
         auto name = DataProvider::patientData(ti.patientUid, HealthLineName).toString();
         auto password = DataProvider::patientData(ti.patientUid, HealthLinePassword).toString();
         dialog.setName(BaseUtils::stringDecrypt(name));
         dialog.setPassword(BaseUtils::stringDecrypt(password));
 
+        //! Диалог
         if (dialog.exec() == QDialog::Accepted)
         {
+            //! Сохранение
             m_email = dialog.name();
             m_password = dialog.password();
             DataProvider::patientSetData(ti.patientUid, HealthLineName, BaseUtils::stringEncrypt(m_email));
             DataProvider::patientSetData(ti.patientUid, HealthLinePassword, BaseUtils::stringEncrypt(m_password));
+            //! Передача на сервер
             sendToWeb();
         }
     }
@@ -310,66 +430,18 @@ void BedsideScalesTestVisualize::on_selectItem(const int idx)
 
 void BedsideScalesTestVisualize::sendToWeb()
 {
+    //! Получение uid пациента для данного теста
     DataDefines::TestInfo ti;
     if (DataProvider::getTestInfo(m_testUid, ti))
     {
         DataDefines::PatientKard patient;
         if (DataProvider::getPatient(ti.patientUid, patient))
         {
+            n = 0;
             m_netManager = new QNetworkAccessManager(this);
+            //! Первым этапом - регистрация пациента
             networkRegisterUser(BaseUtils::removeSignesFromUuid(ti.patientUid));
-
-//            const QUrl url(QStringLiteral("https://med-api.nordavind.ru/api/protocol/user/register"));
-//            QNetworkRequest request(url);
-//            request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
-
-//            QJsonObject obj;
-//            obj["username"] = "grig_p@mail.ru";
-//            obj["password"] = "MVSfWhPb5HqWvj2";
-//            obj["publickey"] = BaseUtils::removeSignesFromUuid(ti.patientUid);
-//            QJsonDocument doc(obj);
-//            QByteArray data = doc.toJson();
-//            qDebug() << data;
-//            // or
-//            // QByteArray data("{\"key1\":\"value1\",\"key2\":\"value2\"}");
-//            QNetworkReply *reply = mgr->post(request, data);
-
-//            QObject::connect(reply, &QNetworkReply::finished, [=]()
-//            {
-//                if(reply->error() == QNetworkReply::NoError)
-//                {
-//                    QString contents = QString::fromUtf8(reply->readAll());
-//                    qDebug() << contents;
-//                }
-//                else
-//                {
-//                    QString err = reply->errorString();
-//                    qDebug() << err;
-//                }
-//                reply->deleteLater();
-//            });
-
-
-//            QNetworkAccessManager *manager = new QNetworkAccessManager(this);
-
-//            QNetworkRequest request(QUrl("https://med-api.nordavind.ru/api/protocol/user/register"));
-
-//            request.setRawHeader("userId", "\"" + patient.uid);
-        //    request.setHeader(QNetworkRequest::ContentTypeHeader,"application/x-www-form-urlencoded;charset=UTF-8");
-        //    request.setRawHeader("Authorization","Basic " + (CONSUMER_KEY + ":" + CONSUMER_SECRET).toBase64() + "==");
-
-        //    request.setRawHeader("Accept-Encoding","gzip");
-
-        //    QUrl params;
-        //    params.addQueryItem("grant_type","client_credentials");
-
-
-        //    connect(manager,SIGNAL(finished(QNetworkReply*)),this,SLOT(getResponse(QNetworkReply*)));
-
-        //    manager->post(request,params.encodedQuery());
-//            manager->deleteLater();
         }
-
     }
 }
 

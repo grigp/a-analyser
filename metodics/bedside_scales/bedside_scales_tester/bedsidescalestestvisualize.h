@@ -39,6 +39,7 @@ private slots:
     void on_weighingResultsBar();
     void on_weighingResults3D(bool is3D);
 
+    //! ----- Методы передачи данных на сервер HealthLine (https://med.nordavind.ru/) ----------------
     void networkRequest(QNetworkAccessManager *m_netManager, const QUrl url, QJsonObject obj = QJsonObject());
     void networkAnswer();
     /*!
@@ -47,13 +48,50 @@ private slots:
      */
     bool isDeviceOnList(const QString list);
 
+    /*!
+     * \brief Регистрация пациента в системе HealthLine
+     * \param userUid - uid пациента
+     */
     void networkRegisterUser(const QString userUid);
+    /*!
+     * \brief Добавление устройства для пациента
+     * \param userId - uid пациента
+     */
     void networkAddDevice(const QString userId);
+    /*!
+     * \brief Получение списка устройств для пациента
+     */
     void networkGetListDevice();
+    /*!
+     * \brief Получение TimeMarker от сервера
+     */
     void networkGetTimeMarker();
+    /*!
+     * \brief Передача данных на сервер
+     */
     void networkSendData();
 
+    /*!
+     * \brief Формирование сигнатуры для передачи данных
+     * \param userAddress - id пациента от сервера
+     * \param deviceAddress - id устройства
+     * \param deviceType - тип устройства
+     * \param timeMarker
+     * \param dataBytes
+     * \param key
+     * \return строку сигнатуры
+     */
+    QString getSignature(QByteArray userAddress,
+                         QByteArray deviceAddress,
+                         QByteArray deviceType,
+                         QByteArray timeMarker,
+                         QByteArray dataBytes,
+                         QByteArray key);
+    QByteArray convertToBytes(QString hexString);
+    QString convertToString(QByteArray array);
+
     void on_sendToWeb();
+    //! ----------------------
 
     void on_selectItem(const int idx);
 
@@ -90,6 +128,7 @@ private:
     QString m_userId {""};
     QString m_deviceId {""};
     QString m_timeMarker {""};
+    QString m_timeMarkerValue {""};
     NWStage m_netWebSendStage {nwsNone};
 };
 
