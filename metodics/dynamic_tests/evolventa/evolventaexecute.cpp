@@ -65,7 +65,6 @@ void EvolventaExecute::fillSpecific(QFrame *frSpecific)
 {
     StabDynamicTestExecute::fillSpecific(frSpecific);
 
-    auto lblTitle = new QLabel(frSpecific);
     m_lblStage = new QLabel(frSpecific);
     m_lblStage->setText(tr("Этап") + " : " + tr("ожидание"));
     frSpecific->layout()->addWidget(m_lblStage);

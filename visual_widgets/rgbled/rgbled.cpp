@@ -3,7 +3,6 @@
 
 RGBLed::RGBLed(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::RGBLed),
     ledColor(Qt::green),
     lightColor(QColor(0xE0, 0xE0, 0xE0)),
     shadowColor(QColor(0x70, 0x70, 0x70)),
@@ -13,7 +12,8 @@ RGBLed::RGBLed(QWidget *parent) :
     topReflexUpColor(QColor(0xFF, 0xFF, 0xFF, 0xA0)),
     topReflexDownColor(QColor(0xFF, 0xFF, 0xFF, 0x00)),
     bottomReflexCenterColor(QColor(0xFF, 0xFF, 0xFF, 0x00)),
-    bottomReflexSideColor(QColor(0xFF, 0xFF, 0xFF, 0x70))
+    bottomReflexSideColor(QColor(0xFF, 0xFF, 0xFF, 0x70)),
+    ui(new Ui::RGBLed)
 {
     ui->setupUi(this);
 }

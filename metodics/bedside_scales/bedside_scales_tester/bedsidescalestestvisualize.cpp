@@ -390,10 +390,10 @@ void BedsideScalesTestVisualize::on_sendToWeb()
     {
         //! Запрос аутентификационных данных для сервера HealthLine (https://med.nordavind.ru/)
         AuthorizationDialog dialog(this);
-        dialog.setTitle("Введите регистрационые данные");
-        dialog.setInfo("Необходимо ввести регистрационые данные, адрес электронной почты и пароль,\nс которыми Вы регистрировались на сайте HealthLine (https://med.nordavind.ru/)");
-        dialog.setTextName("Адрес электронной почты :");
-        dialog.setTextPassword("Пароль :");
+        dialog.setTitle(tr("Введите регистрационые данные"));
+        dialog.setInfo(tr("Необходимо ввести регистрационые данные, адрес электронной почты и пароль, с которыми Вы регистрировались на сайте HealthLine (https://med.nordavind.ru/)"));
+        dialog.setTextName(tr("Адрес электронной почты") + " :");
+        dialog.setTextPassword(tr("Пароль") + " :");
 
         //! Данные хранятся в карточке пациента, как свободные данные пациента
         auto name = DataProvider::patientData(ti.patientUid, HealthLineName).toString();

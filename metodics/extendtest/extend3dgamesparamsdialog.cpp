@@ -15,7 +15,7 @@ Extend3DGamesParamsDialog::~Extend3DGamesParamsDialog()
 
 void Extend3DGamesParamsDialog::setParams(const QJsonObject &params)
 {
-
+    Q_UNUSED(params);
 }
 
 QJsonObject Extend3DGamesParamsDialog::getParams()

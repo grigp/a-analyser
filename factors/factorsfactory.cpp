@@ -63,6 +63,8 @@ int FactorsFactory::multiFactorCount(const BaseDefines::TestLevel level)
     case BaseDefines::tlTest: return m_groupsTest.size();
     case BaseDefines::tlProbe: return m_groupsProbe.size();
     case BaseDefines::tlChannel: return m_groupsChannel.size();
+    case BaseDefines::tlSection: return 0;
+    case BaseDefines::tlFragment: return 0;
     case BaseDefines::tlNone: return 0;
     }
     return 0;
@@ -86,6 +88,14 @@ MultiFactorDescriptor *FactorsFactory::getMultiFactor(const BaseDefines::TestLev
     {
         Q_ASSERT(idx >= 0 && idx < m_groupsChannel.size());
         return m_groupsChannel.at(idx);
+    }
+    case BaseDefines::tlSection:
+    {
+        return nullptr;
+    }
+    case BaseDefines::tlFragment:
+    {
+        return nullptr;
     }
     case BaseDefines::tlNone: return nullptr;
     }

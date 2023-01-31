@@ -130,8 +130,6 @@ void CrossFactors::fillBuffers()
     {
         Stabilogram stab(baStab);
 
-        int kindS = 0;
-        int directionS = 0;
         int counterS = 0;
         QList<QList<SignalsDefines::StabRec>> bufferUp;
         QList<QList<SignalsDefines::StabRec>> bufferDn;
@@ -227,9 +225,7 @@ void CrossFactors::fillBuffers()
                 //! Начало движения
                 if (kind == 1)
                 {
-                    kindS = kind;  //! Запоминаем параметры
-                    directionS = direction;
-                    counterS = counter;
+                    counterS = counter;  //! Запоминаем параметры
                 }
                 else
                 //! Окончание движения

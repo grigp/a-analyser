@@ -554,6 +554,8 @@ bool TetrisGlass::figureIntoConfig()
 
 void TetrisGlass::correctFigurePosition(const qreal tx, const qreal ty)
 {
+    Q_UNUSED(tx);
+    Q_UNUSED(ty);
     auto correct = [&]()
     {
         auto p = getFigureRect();                 //! Позиция и размер фигуры

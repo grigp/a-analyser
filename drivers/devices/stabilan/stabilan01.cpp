@@ -564,7 +564,8 @@ QString Stabilan01::modelName(const Stabilan01Defines::Model mdlCode)
     case Stabilan01Defines::smcStabilan01_05NG : return QCoreApplication::tr("Стабилан-01. Исполнение 05 (после 2014)");
     case Stabilan01Defines::smcStabilan01_12NG : return QCoreApplication::tr("Стабилан-01. Исполнение 12 (после 2014)");
     }
-//    return StabilanModels.value(mdlCode);
+    return QCoreApplication::tr("Модель неизвестная");
+    //return StabilanModels.value(mdlCode);
 }
 
 QList<Stabilan01Defines::Model> Stabilan01::models()
@@ -579,6 +580,7 @@ QString Stabilan01::zeroingTypeName(const Stabilan01Defines::ZeroingType ztCode)
     case Stabilan01Defines::ztAveragePrev : return QCoreApplication::tr("С усреднением после команды");
     case Stabilan01Defines::ztAverageNext : return QCoreApplication::tr("С усреднением по предыстории");
     }
+    return QCoreApplication::tr("Мгновенная");
 //    return ZeroingTypes.value(ztCode);
 }
 

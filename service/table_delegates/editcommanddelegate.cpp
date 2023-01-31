@@ -67,4 +67,5 @@ QIcon EditCommandDelegate::getIcon(EditCommandDelegate::EdditingCommand cmd) con
     case cmdNone:
         return QIcon();
     }
+    return QIcon();
 }

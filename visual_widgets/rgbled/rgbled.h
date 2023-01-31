@@ -17,7 +17,7 @@ class RGBLed : public QWidget
     Q_OBJECT
 
 public:
-    explicit RGBLed(QWidget *parent = 0);
+    explicit RGBLed(QWidget *parent = nullptr);
     ~RGBLed();
 
     void setColor(const QColor &color);
@@ -39,7 +39,7 @@ protected:
     QColor bottomReflexSideColor;
 
 private:
-    Ui::RGBLed *ui;
+    Ui::RGBLed *ui {nullptr};
 
     void drawLed(const QColor &color);
 

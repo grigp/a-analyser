@@ -194,18 +194,6 @@ int AMedPlatform01::frequency(const QString &channelId) const
     if (ChannelsFreq.contains(ChannelsUtils::instance().channelType(channelId)))
         return ChannelsFreq.value(ChannelsUtils::instance().channelType(channelId));
     return 1000;
-
-//    static QMap<QString, int> ChannelsFreq =
-//    {
-//        std::pair<QString, int> (ChannelsDefines::ctStabilogram, 100)
-//      , std::pair<QString, int> (ChannelsDefines::ctBalistogram, 100)
-//      , std::pair<QString, int> (ChannelsDefines::ctDynamo, 100)
-//      , std::pair<QString, int> (ChannelsDefines::ctBreath, 100)
-//    };
-
-//    if (ChannelsFreq.contains(ChannelsUtils::instance().channelType(channelId)))
-//        return ChannelsFreq.value(ChannelsUtils::instance().channelType(channelId));
-//    return 100;
 }
 
 QList<QString> AMedPlatform01::getChannelsByProtocol(const QString &protocolUid) const
@@ -294,6 +282,7 @@ int AMedPlatform01::getSubChannelsCount(const QString &channelUid) const
 
 bool AMedPlatform01::isChannelRecordingDefault(const QString &channelUid, const int subChan) const
 {
+    Q_UNUSED(subChan);
     if (m_chanRecordingDefault.contains(channelUid))
         return m_chanRecordingDefault.value(channelUid);
     else
@@ -350,37 +339,43 @@ void AMedPlatform01::calibrate(const QString &channelUid)
 
 void AMedPlatform01::zeroing(const QString &channelUid)
 {
-
+    Q_UNUSED(channelUid);
 }
 
 QSize AMedPlatform01::stabSize()
 {
-
+    return QSize(500, 500);
 }
 
 void AMedPlatform01::calibrateTenso(const QString &channelUid)
 {
-
+    Q_UNUSED(channelUid);
 }
 
 void AMedPlatform01::getTensoValueDiapasone(const int chanNumber, double &min, double &max)
 {
-
+    Q_UNUSED(chanNumber);
+    Q_UNUSED(min);
+    Q_UNUSED(max);
 }
 
 void AMedPlatform01::getTensoValueDiapasone(const QString channelId, double &min, double &max)
 {
-
+    Q_UNUSED(channelId);
+    Q_UNUSED(min);
+    Q_UNUSED(max);
 }
 
 void AMedPlatform01::setTensoValueDiapasone(const int chanNumber, const double min, const double max)
 {
-
+    Q_UNUSED(chanNumber);
+    Q_UNUSED(min);
+    Q_UNUSED(max);
 }
 
 bool AMedPlatform01::isCalibrated() const
 {
-
+    return true;
 }
 
 SerialPortDefines::Settings AMedPlatform01::getSerialPortSettings()
@@ -410,7 +405,7 @@ void AMedPlatform01::on_error(const QString &err)
 
 bool AMedPlatform01::isMarkerFound()
 {
-
+    return m_isPackage;
 }
 
 //double min {INT_MAX};

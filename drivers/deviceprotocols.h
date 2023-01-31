@@ -105,7 +105,7 @@ public:
     explicit DeviceData(Driver* sender, const QString &channelId)
         : m_sender(sender), m_channelId(channelId) {}
 
-    virtual ~DeviceData(){}
+    virtual ~DeviceData();
 
     virtual QString uid() const = 0; // {return QString("");}
 //    virtual QString name() const = 0; // {return QString("");}  Непонятно, как быть с локализацией
@@ -134,6 +134,7 @@ class MultiData : public DeviceData
 public:
     explicit MultiData(Driver* sender, const QString &channelId)
         : DeviceData(sender, channelId){}
+    ~MultiData() override;
 
     /*!
      * \brief Возвращает кол-во подканалов
@@ -154,11 +155,11 @@ class StabDvcData : public MultiData
 public:
     StabDvcData(Driver *sender, const QString &channelId, double x, double y)
         : MultiData(sender, channelId)
-        , m_x(x), m_y(y) {m_z = 0; m_a = 0; m_b = 0; m_c = 0, m_d = 0;}
+        , m_x(x), m_y(y) {m_z = 0; m_a = 0; m_b = 0; m_c = 0; m_d = 0;}
 
     StabDvcData(Driver *sender, const QString &channelId, double x, double y, double z)
         : MultiData(sender, channelId)
-        , m_x(x), m_y(y), m_z(z) {m_a = 0; m_b = 0; m_c = 0, m_d = 0;}
+        , m_x(x), m_y(y), m_z(z) {m_a = 0; m_b = 0; m_c = 0; m_d = 0;}
 
     StabDvcData(Driver *sender, const QString &channelId, double x, double y, double a, double b, double c)
         : MultiData(sender, channelId)
@@ -173,7 +174,7 @@ public:
 //        , m_x(obj.x()), m_y(obj.y()), m_z(obj.z()),
 //          m_a(obj.a()), m_b(obj.b()), m_c(obj.c()), m_d(obj.d())
 //    {}
-    ~StabDvcData(){}
+    ~StabDvcData() override;
 
     double x() const {return m_x;}
     double y() const {return m_y;}
@@ -216,6 +217,7 @@ class TensoDvcData : public MultiData
 public:
     TensoDvcData(Driver *sender, const QString &channelId, const double &value)
         : MultiData(sender, channelId), m_value(value) {}
+    ~TensoDvcData() override;
 
     int subChanCount() const override {return 1;}
     QVariant value(const int idx) const override {Q_UNUSED(idx); return m_value;}
@@ -234,6 +236,7 @@ class WeightPlateDvcData : public MultiData
 public:
     WeightPlateDvcData(Driver *sender, const QString &channelId, const QVector<double> &value)
         : MultiData(sender, channelId), m_value(value) {}
+    ~WeightPlateDvcData() override;
 
     int subChanCount() const override {return m_value.size();}
     QVariant value(const int idx) const override {return m_value.at(idx);}
@@ -252,6 +255,7 @@ class ADCValuesDvcData : public MultiData
 public:
     ADCValuesDvcData(Driver *sender, const QString &channelId, const QVector<quint16> &value)
         : MultiData(sender, channelId), m_value(value) {}
+    ~ADCValuesDvcData() override;
 
     int subChanCount() const override {return m_value.size();}
     QVariant value(const int idx) const override {return m_value.at(idx);}
@@ -289,6 +293,7 @@ class PulseDvcData : public MultiData
 public:
     PulseDvcData(Driver *sender, const QString &channelId, const double &value)
         : MultiData(sender, channelId), m_value(value) {}
+    ~PulseDvcData() override;
 
     int subChanCount() const override {return 1;}
     QVariant value(const int idx) const override {Q_UNUSED(idx); return m_value;}
@@ -307,6 +312,7 @@ class MyogramDvcData : public MultiData
 public:
     MyogramDvcData(Driver *sender, const QString &channelId, const QVector<double> &data)
         : MultiData(sender, channelId), m_data(data) {}
+    ~MyogramDvcData() override;
 
     int subChanCount() const override {return m_data.size();}
     QVariant value(const int idx) const override
@@ -329,6 +335,7 @@ class JumpPlateDvcData : public MultiData
 public:
     JumpPlateDvcData(Driver *sender, const QString &channelId, int plate, bool busy, double time)
         : MultiData(sender, channelId), m_plate(plate), m_busy(busy), m_time(time) {}
+    ~JumpPlateDvcData() override;
 
     int plate() const {return m_plate;}
     bool busy() const {return m_busy;}
@@ -359,6 +366,7 @@ public:
         , m_busy1(busy1), m_counter1(counter1), m_con1(con1)
         , m_busy2(busy2), m_counter2(counter2), m_con2(con2)
     {}
+    ~JumpPlateBlockData() override;
 
     QString uid() const override {return uid_JumpPlateBlockData;}
 //    QString name() const override {return name_JumpPlateBlockData;}
@@ -418,7 +426,7 @@ class DeviceControl
 {
 public:
     explicit DeviceControl() {}
-    ~DeviceControl() {}
+    virtual ~DeviceControl();
 
 //    virtual QString uid() const = 0;
 //    virtual QString name() const = 0;
@@ -438,7 +446,7 @@ public:
 
 //    static QString name() {return name_CommonControl;}   Непонятно, как быть с локализацией
 
-    ~CommonControl() {}
+    ~CommonControl() override;
 };
 
 /*!
@@ -454,7 +462,7 @@ public:
      */
     virtual QSize stabSize() = 0;
 
-    ~DecartCoordControl() {}
+    ~DecartCoordControl() override;
 };
 
 /*!
@@ -463,7 +471,7 @@ public:
 class LinearChanControl : public DeviceControl
 {
 public:
-    ~LinearChanControl() {}
+    ~LinearChanControl() override;
 };
 
 /*!
@@ -477,7 +485,7 @@ public:
     static QString uid() {return uid_StabControl;}
 //    static QString name() {return name_StabControl;}         Непонятно, как быть с локализацией
 
-    ~StabControl() {}
+    ~StabControl() override;
 };
 
 /*!
@@ -501,7 +509,7 @@ public:
 
     static QString uid() {return uid_TensoControl;}
 
-    ~TensoControl() {}
+    ~TensoControl() override;
 };
 
 ///*!
@@ -527,7 +535,7 @@ public:
 
     static QString uid() {return uid_PulseControl;}
 
-    ~PulseControl() {}
+    ~PulseControl() override;
 };
 
 /*!
@@ -542,7 +550,7 @@ public:
 
     static QString uid() {return uid_MyoControl;}
 
-    ~MyoControl() {}
+    ~MyoControl() override;
 };
 
 /*!
@@ -573,7 +581,7 @@ public:
      */
     virtual double platformTime(const int pltNum) const = 0;
 
-    ~JumpPlateControl() {}
+    ~JumpPlateControl() override;
 };
 
 /*!
@@ -598,7 +606,7 @@ public:
      */
     virtual int size() const = 0;
 
-    ~MultiPlatformControl() {}
+    ~MultiPlatformControl() override;
 };
 
 

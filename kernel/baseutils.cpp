@@ -260,6 +260,7 @@ double getCoef1(const BaseUtils::FilterKind tf)
     case BaseUtils::fkBatterwort: return 1.4142;
     case BaseUtils::fkChebyshev: return 1.3614;
     }
+    return 1;
 }
 
 double getCoef2(const BaseUtils::FilterKind tf)
@@ -270,6 +271,7 @@ double getCoef2(const BaseUtils::FilterKind tf)
     case BaseUtils::fkBatterwort: return 1.0;
     case BaseUtils::fkChebyshev: return 1.3827;
     }
+    return 1;
 }
 
 void BaseUtils::filterLowFreq(QVector<double> &buffer, const double fd, const double fc, const BaseUtils::FilterKind tf, const int n1, const int n2)
