@@ -1,6 +1,8 @@
 #include "amedplatform01paramsdialog.h"
 #include "ui_amedplatform01paramsdialog.h"
 
+#include "amedplatform01defines.h"
+
 AMedPlatform01ParamsDialog::AMedPlatform01ParamsDialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::AMedPlatform01ParamsDialog)
@@ -14,6 +16,10 @@ AMedPlatform01ParamsDialog::AMedPlatform01ParamsDialog(QWidget *parent) :
         ui->cbTensoChan2->addItem(DeviceProtocols::tensoDevices.value(tdKey), tdKey);
         ui->cbTensoChan3->addItem(DeviceProtocols::tensoDevices.value(tdKey), tdKey);
     }
+
+    foreach (auto freq, AMedPlatform01Defines::Frequencies)
+        ui->cbFrequency->addItem(QString::number(freq), freq);
+
 }
 
 AMedPlatform01ParamsDialog::~AMedPlatform01ParamsDialog()

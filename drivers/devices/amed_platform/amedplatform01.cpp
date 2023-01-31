@@ -4,6 +4,7 @@
 #include "amedplatform01paramsdialog.h"
 #include "channelsutils.h"
 #include "driverdefines.h"
+#include "amedplatform01defines.h"
 
 #include <QDebug>
 
@@ -89,6 +90,8 @@ const QVector<double> FilterCoeffitients {0.001024802545104,  0.0004350705088769
                                           -0.002389121388028, -0.001675475050851, -0.001055564935799,  -0.0005436198067695,
                                           -0.0001439466593728, 0.0001457765897806, 0.0003343654281472, 0.0004347648472345,
                                            0.0004626757878989, 0.0004350705088769, 0.001024802545104};
+
+const int FrequencyNative = 1000;
 
 }
 
@@ -185,15 +188,28 @@ int AMedPlatform01::frequency(const QString &channelId) const
 {
     static QMap<QString, int> ChannelsFreq =
     {
-        std::pair<QString, int> (ChannelsDefines::ctStabilogram, 1000)
-      , std::pair<QString, int> (ChannelsDefines::ctBalistogram, 1000)
-      , std::pair<QString, int> (ChannelsDefines::ctDynamo, 1000)
-      , std::pair<QString, int> (ChannelsDefines::ctBreath, 1000)
+        std::pair<QString, int> (ChannelsDefines::ctStabilogram, m_frequency)
+      , std::pair<QString, int> (ChannelsDefines::ctBalistogram, m_frequency)
+      , std::pair<QString, int> (ChannelsDefines::ctDynamo, m_frequency)
+      , std::pair<QString, int> (ChannelsDefines::ctBreath, m_frequency)
     };
 
     if (ChannelsFreq.contains(ChannelsUtils::instance().channelType(channelId)))
         return ChannelsFreq.value(ChannelsUtils::instance().channelType(channelId));
-    return 1000;
+    return m_frequency;
+}
+
+QVector<int> AMedPlatform01::frequencyList() const
+{
+    return AMedPlatform01Defines::Frequencies;
+}
+
+void AMedPlatform01::setFrequency(const int freq)
+{
+    if (AMedPlatform01Defines::Frequencies.contains(freq))
+    {
+        m_frequency = freq;
+    }
 }
 
 QList<QString> AMedPlatform01::getChannelsByProtocol(const QString &protocolUid) const
@@ -411,7 +427,7 @@ bool AMedPlatform01::isMarkerFound()
 //double min {INT_MAX};
 //double max {-INT_MAX};
 
-int n {0};
+static int n {0};
 
 void AMedPlatform01::assignByteFromDevice(quint8 b)
 {
@@ -450,6 +466,7 @@ void AMedPlatform01::assignByteFromDevice(quint8 b)
     }
     else         //! Пакет найден - разбор
     {
+        auto useBlock = isUseBlock();
         if (m_countBytePack == 0)
         {
         }
@@ -475,7 +492,7 @@ void AMedPlatform01::assignByteFromDevice(quint8 b)
                 if (cnt / 3 == 0)
                 {
                     m_A = static_cast<double>(value) / 8000000 * 100;
-                    m_A = filtration(m_A, m_chanA);
+                    m_A = filtration(m_A, m_chanA, useBlock);
 //                    m_B = static_cast<double>(value) / 8000000 * 100;
 //                    m_A = filtration(m_B, m_chanA);
                 }
@@ -483,19 +500,19 @@ void AMedPlatform01::assignByteFromDevice(quint8 b)
                 if (cnt / 3 == 1)
                 {
                     m_B = static_cast<double>(value) / 8000000 * 100;
-                    m_B = filtration(m_B, m_chanB);
+                    m_B = filtration(m_B, m_chanB, useBlock);
                 }
                 else
                 if (cnt / 3 == 2)
                 {
                     m_C = static_cast<double>(value) / 8000000 * 100;
-                    m_C = filtration(m_C, m_chanC);
+                    m_C = filtration(m_C, m_chanC, useBlock);
                 }
                 else
                 if (cnt / 3 == 3)
                 {
                     m_D = static_cast<double>(value) / 8000000 * 100;
-                    m_D = filtration(m_D, m_chanD);
+                    m_D = filtration(m_D, m_chanD, useBlock);
                 }
                 else
                 if (cnt / 3 == 4)
@@ -514,100 +531,22 @@ void AMedPlatform01::assignByteFromDevice(quint8 b)
         {
 //            m_X = m_A;
 //            m_Y = m_B;
-            m_Z = m_A + m_B + m_C + m_D;                     //! Расчет баллистограммы
-            m_X = (m_B + m_C - m_A - m_D) / m_Z * 1000;
-            m_Y = (m_A + m_B - m_C - m_D) / m_Z * 1000;
+            if (useBlock)
+            {
+                m_Z = m_A + m_B + m_C + m_D;                     //! Расчет баллистограммы
+                m_X = (m_B + m_C - m_A - m_D) / m_Z * 1000;
+                m_Y = (m_A + m_B - m_C - m_D) / m_Z * 1000;
+            }
 
             incBlockCount();
-            sendDataBlock();
+            if (useBlock)
+                sendDataBlock();
             m_isPackage = false;                     //! Сбросим признак пакета
         }
 
         m_countBytePack++;
     }
 
-
-
-//    bool isTwoMarkers = false;
-//    bool isError = false;
-
-//    if (b == MarkerValue)    //! Пришел байт маркера
-//    {
-//        if (!m_isMarker){    //! Ожидание первого байта маркера
-//            m_isMarker = true;
-//        }
-//        else
-//        {           //! Ожидание второго байта маркера
-//            if (m_isPackage){   //! Два маркера внутри пакета - ошибка
-//                isError = true;
-//            }
-//            m_isMarker = false;
-//            m_isPackage = true;    //! Признак начала приема пакета
-//            m_countBytePack = 0;
-//            isTwoMarkers = true;
-//            n = 0;
-//        }
-//    }
-//    else              //! Не байт маркера
-//        m_isMarker = false;
-
-//    if (!isTwoMarkers)   //! Если не было два маркера подряд, то эта ситуация внутри пакета и нам надо это отрабатывать
-//    {
-//        if (m_isPackage)
-//        {
-//            if (m_countBytePack == 0)
-//            {
-//                m_circleCounter = b;
-//            }
-//            else
-//            {
-//                int cnt = m_countBytePack - 1;
-//                if (cnt % 3 == 0)
-//                    m_byteLo = b;
-//                else
-//                if (cnt % 3 == 1)
-//                    m_byteMid = b;
-//                else
-//                {
-//                    int value = (b << 16) + (m_byteMid << 8) + m_byteLo;
-//                    if (cnt / 3 == 0)
-//                        m_A = value;
-//                    else
-//                    if (cnt / 3 == 1)
-//                        m_B = value;
-//                    else
-//                    if (cnt / 3 == 2)
-//                        m_C = value;
-//                    else
-//                    if (cnt / 3 == 3)
-//                        m_D = value;
-//                    else
-//                    if (cnt / 3 == 4)
-//                        m_t1 = value;
-//                    else
-//                    if (cnt / 3 == 5)
-//                        m_t2 = value;
-//                    else
-//                    if (cnt / 3 == 6)
-//                        m_t3 = value;
-//                }
-//            }
-
-//            //! Окончание разбора пакета
-//            if (m_countBytePack + 1 == m_countChannels * 3){  //! Достигли заданного кол-ва каналов
-////                qDebug() << m_B;
-//                m_X = m_A;
-//                m_Y = m_B;
-//                m_Z = m_C;//m_A + m_B + m_C + m_D;                     //! Расчет баллистограммы
-
-//                incBlockCount();
-//                sendDataBlock();
-//                m_isPackage = false;                     //! Сбросим признак пакета
-//            }
-
-//            m_countBytePack++;
-//        }
-//    }
 
     //! Передача информации об ошибке маркера внутри пакета
 //    if (isError)
@@ -616,7 +555,7 @@ void AMedPlatform01::assignByteFromDevice(quint8 b)
     //    }
 }
 
-double AMedPlatform01::filtration(const double value, QVector<double> &chan)
+double AMedPlatform01::filtration(const double value, QVector<double> &chan, const bool useBlock)
 {
     //! Накопление исходных данных в буфере
     chan.append(value);
@@ -624,14 +563,22 @@ double AMedPlatform01::filtration(const double value, QVector<double> &chan)
         chan.remove(0);
 
     double retval = value;
-    //! Расчет фильрованного значения
-    if (chan.size() == FilterCoeffitients.size())
+    if (useBlock)
     {
-        retval = 0;
-        for (int i = 0; i < chan.size(); ++i)
-            retval = retval + chan[i] * FilterCoeffitients[i];
+        //! Расчет фильрованного значения
+        if (chan.size() == FilterCoeffitients.size())
+        {
+            retval = 0;
+            for (int i = 0; i < chan.size(); ++i)
+                retval = retval + chan[i] * FilterCoeffitients[i];
+        }
     }
     return retval;
+}
+
+bool AMedPlatform01::isUseBlock() const
+{
+    return (blockCount() % (FrequencyNative / m_frequency)) == 0;
 }
 
 void AMedPlatform01::sendDataBlock()

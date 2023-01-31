@@ -16,6 +16,7 @@
 class AMedPlatform01 : public Driver
         , public DeviceProtocols::StabControl
         , public DeviceProtocols::TensoControl
+        , public DeviceProtocols::FrequencyControl
 {
 public:
     explicit AMedPlatform01(QObject *parent = nullptr);
@@ -60,6 +61,17 @@ public:
      * \param channelId - идентификатор канала
      */
     int frequency(const QString &channelId) const override;
+
+    /*!
+     * \brief Возвращает список доступных частот дискретизации для драйвера
+     */
+    QVector<int> frequencyList() const override;
+    /*!
+     * \brief Устанавливает частоту дискретизации по конкретному значению.
+     * Если частота не поддерживается, то игнорируется
+     * \param frequency - устанавливаемая частота
+     */
+    void setFrequency(const int frequency) override;
 
     /*!
      * \brief Возвращает список uid-ов каналов, передаваемых драйвером по uid протокола
@@ -160,9 +172,15 @@ private:
      * \brief Фильтрация сигнала онлайн
      * \param value - текущее значение исходного сигнала
      * \param chan - значения сигнала исходные
+     * \param useBlock - будет ли блок использоваться (записиываться)
      * \return текущее значение фильтрованного сигнала
      */
-    double filtration(const double value, QVector<double> &chan);
+    double filtration(const double value, QVector<double> &chan, const bool useBlock);
+
+    /*!
+     * \brief Возвращает true, если этот блок необходимо учитывать
+     */
+    bool isUseBlock() const;
 
     /*!
      * \brief Передача данных пакета
@@ -190,7 +208,6 @@ private:
     ///< Разбор принятых данных
     QList<quint8> m_markerCollect;
     int m_markerCnt {0};          ///< Счетчик байтов маркера
-//    bool m_isMarker {false};      ///< Счетчик байтов маркера. При первом 0x80 становится true. При втором 0x80 начинается прием пакета. При true и не 0x80 сбрасывается
     bool m_isPackage {false};     ///< true - идет разбор пакета, false - нет разбора пакета
     int m_countBytePack {0};      ///< Счетчик байтов пакета
     quint8 m_circleCounter {0};   ///< Кольцевой счетчик пакетов
@@ -206,6 +223,8 @@ private:
     QVector<double> m_chanB;   ///< Буфер исходного сигнала опоры B
     QVector<double> m_chanC;   ///< Буфер исходного сигнала опоры C
     QVector<double> m_chanD;   ///< Буфер исходного сигнала опоры D
+
+    int m_frequency {50};   ///< Текущая установленная частота дискретизации
 };
 
 #endif // AMEDPLATFORM01_H

@@ -489,6 +489,34 @@ public:
 };
 
 /*!
+ * \brief Класс управления частотой дискретизации The FrequencyControl class
+ * Предполагается, что методика запрашивает у драйвера список частот и, если нужная поддерживается и она не установлена,
+ * то дается команда установить нужную
+ * if (driver.frequency != reqFreq)
+ * {
+ *     auto fl = driver.frequencyList();
+ *     foreach (auto freq, fl)
+ *     {
+ *         if (freq == reqFreq)
+ *             driver.setFrequency(freq);
+ *     }
+ * }
+ */
+class FrequencyControl : public DeviceControl
+{
+    /*!
+     * \brief Возвращает список доступных частот дискретизации для драйвера
+     */
+    virtual QVector<int> frequencyList() const = 0;
+    /*!
+     * \brief Устанавливает частоту дискретизации по конкретному значению.
+     * Если частота не поддерживается, то игнорируется
+     * \param frequency - устанавливаемая частота
+     */
+    virtual void setFrequency(const int frequency) = 0;
+};
+
+/*!
  * \brief Класс управления устройствами данными динамометрии TensoControl class
  */
 class TensoControl : public LinearChanControl
