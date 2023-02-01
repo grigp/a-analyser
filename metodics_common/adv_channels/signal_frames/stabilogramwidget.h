@@ -22,8 +22,8 @@ class StabilogramWidget : public SignalWidget
     Q_OBJECT
 
 public:
-    explicit StabilogramWidget(Driver *driver, const QString channelId, QWidget *parent = 0);
-    ~StabilogramWidget();
+    explicit StabilogramWidget(Driver *driver, const QString channelId, QWidget *parent = nullptr);
+    ~StabilogramWidget() override;
 
     /*!
      * \brief Начало новой пробы
@@ -62,7 +62,7 @@ public:
     void setAllwaysRecordingChannel(const QString &channelId) override;
 
 protected:
-    bool eventFilter(QObject *watched, QEvent *event);
+    bool eventFilter(QObject *watched, QEvent *event) override;
 
 private slots:
     void on_changeScaleStab(int scaleIdx);

@@ -490,7 +490,7 @@ void Bilateral::sendAdvancedChannels(DeviceProtocols::DeviceData *data)
         auto bChan = convertMap.value(data->channelId());
         if (bChan != "")
         {
-            data->changeCahnnelId(bChan);
+            data->changeChannelId(bChan);
             emit sendData(data);
         }
     };

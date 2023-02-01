@@ -149,3 +149,8 @@ DeviceProtocols::JumpPlateBlockData::~JumpPlateBlockData()
 {
 
 }
+
+DeviceProtocols::SourceDvcData::~SourceDvcData()
+{
+
+}

@@ -79,6 +79,7 @@ static const QString uid_StabDvcData = "{69941064-D628-4A6F-A415-0EA12156D237}";
 static const QString uid_DynDvcData = "{EB0F8C35-048E-412C-B7B9-26C0479FEC6E}";
 static const QString uid_BreathDvcData = "{C030543B-A417-4FDB-94E8-547557373D22}";
 static const QString uid_PulseDvcData = "{7311EDCB-9E7D-4D87-9A5C-F382C85C4F1B}";
+static const QString uid_SourceDvcData = "{F2A5A85A-6D25-4997-A15D-07E32BB73A5E}";
 static const QString uid_MyoDvcData = "{4F170074-1F17-4214-9BA9-BA53C732BF5F}";
 static const QString uid_JumpPlateDvcData = "{F7EF6F97-3502-4EC0-A798-68DDF40DFB7F}";
 static const QString uid_JumpPlateBlockData = "{A3CE22EA-1D4D-4C3F-8E61-7FED58C7044B}";
@@ -118,7 +119,7 @@ public:
     //! Использовать в билатеральном режиме для изменения id каналов латеральных платформ
     //! \param channelID - новый id канала
     //!
-    void changeCahnnelId(const QString channelID) {m_channelId = channelID;}
+    void changeChannelId(const QString channelID) {m_channelId = channelID;}
 
 private:
     Driver* m_sender;
@@ -305,14 +306,14 @@ private:
 };
 
 /*!
- * \brief Класс данных миограммы, получаемых от устройств MyogramDvcData class
+ * \brief Класс исходных данных от устройства. Несколько каналов в формате double The SourceDvcData class
  */
-class MyogramDvcData : public MultiData
+class SourceDvcData : public MultiData
 {
 public:
-    MyogramDvcData(Driver *sender, const QString &channelId, const QVector<double> &data)
+    SourceDvcData(Driver *sender, const QString &channelId, const QVector<double> &data)
         : MultiData(sender, channelId), m_data(data) {}
-    ~MyogramDvcData() override;
+    ~SourceDvcData() override;
 
     int subChanCount() const override {return m_data.size();}
     QVariant value(const int idx) const override
@@ -321,10 +322,23 @@ public:
         return m_data.at(idx);
     }
 
-    QString uid() const override {return uid_MyoDvcData;}
+    QString uid() const override {return uid_SourceDvcData;}
 
 private:
     QVector<double> m_data;
+};
+
+/*!
+ * \brief Класс данных миограммы, получаемых от устройств MyogramDvcData class
+ */
+class MyogramDvcData : public SourceDvcData
+{
+public:
+    MyogramDvcData(Driver *sender, const QString &channelId, const QVector<double> &data)
+        : SourceDvcData (sender, channelId, data) {}
+    ~MyogramDvcData() override;
+
+    QString uid() const override {return uid_MyoDvcData;}
 };
 
 /*!
