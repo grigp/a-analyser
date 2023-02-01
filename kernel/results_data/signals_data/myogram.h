@@ -6,7 +6,9 @@
 #include "signaldata.h"
 #include "signalsdefines.h"
 
-
+/*!
+ * \brief Класс для записи в БД данных миограммы The Myogram class
+ */
 class Myogram : public SignalData
 {
 public:
@@ -94,7 +96,7 @@ private:
 
     bool m_isDataAdded {false};
 
-    QVector<SignalsDefines::MyoRec> m_data;
+    QVector<SignalsDefines::SourceRec> m_data;
 };
 
 #endif // MYOGRAM_H

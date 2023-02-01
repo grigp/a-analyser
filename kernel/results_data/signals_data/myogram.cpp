@@ -67,7 +67,7 @@ QVector<double> Myogram::value(const int rec) const
 void Myogram::addValue(const QVector<double> rec)
 {
     Q_ASSERT(rec.size() == m_subChansCount);
-    SignalsDefines::MyoRec myoRec(rec);
+    SignalsDefines::SourceRec myoRec(rec);
     m_data.append(myoRec);
     m_isDataAdded = true;
 }
@@ -95,7 +95,7 @@ void Myogram::fromByteArray(const QByteArray &data)
 
     for (int i = 0; i < count; ++i)
     {
-        SignalsDefines::MyoRec rec;
+        SignalsDefines::SourceRec rec;
         rec.data.resize(m_subChansCount);
         for (int j = 0; j < m_subChansCount; ++j)
         {

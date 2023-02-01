@@ -24,7 +24,8 @@ HEADERS += \
     $$PWD/weightplatesignal.h \
     $$PWD/takeputresultdata.h \
     $$PWD/bilateralresultdata.h \
-    $$PWD/weighingresultdata.h
+    $$PWD/weighingresultdata.h \
+    $$PWD/sourcedata.h
 
 SOURCES += \
     $$PWD/signaldata.cpp \
@@ -50,4 +51,5 @@ SOURCES += \
     $$PWD/weightplatesignal.cpp \
     $$PWD/takeputresultdata.cpp \
     $$PWD/bilateralresultdata.cpp \
-    $$PWD/weighingresultdata.cpp
+    $$PWD/weighingresultdata.cpp \
+    $$PWD/sourcedata.cpp

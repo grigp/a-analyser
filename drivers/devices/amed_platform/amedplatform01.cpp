@@ -6,6 +6,7 @@
 #include "driverdefines.h"
 #include "amedplatform01defines.h"
 
+#include <QMutex>
 #include <QDebug>
 
 namespace
@@ -177,13 +178,18 @@ bool AMedPlatform01::editParams(QJsonObject &params)
 void AMedPlatform01::start()
 {
     Driver::start();
-    cmdStartSinus();
-//    cmdStartImpulse();
+//    cmdStartSinus();
+    cmdStartImpulse();
 }
 
 void AMedPlatform01::stop()
 {
     cmdStop();
+
+    static QMutex mutex;
+    static QMutexLocker locker(&mutex);
+    mutex.tryLock(100);  //:TODO Сделать правильно
+
     Driver::stop();
 }
 
@@ -537,8 +543,16 @@ void AMedPlatform01::assignByteFromDevice(quint8 b)
             if (useBlock)
             {
                 m_Z = m_A + m_B + m_C + m_D;                     //! Расчет баллистограммы
-                m_X = (m_B + m_C - m_A - m_D) / m_Z * 1000;
-                m_Y = (m_A + m_B - m_C - m_D) / m_Z * 1000;
+                if (m_Z > 0)
+                {
+                    m_X = (m_B + m_C - m_A - m_D) / m_Z * 1000;
+                    m_Y = (m_A + m_B - m_C - m_D) / m_Z * 1000;
+                }
+                else
+                {
+                    m_X = 0;
+                    m_Y = 0;
+                }
             }
 
             incBlockCount();

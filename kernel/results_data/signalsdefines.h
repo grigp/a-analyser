@@ -34,6 +34,18 @@ struct MyoRec
 };
 
 /*!
+ * \brief Запись в канале исходных данных The SourceRec struct
+ */
+struct SourceRec
+{
+    QVector<double> data;
+    SourceRec() {}
+    SourceRec(QVector<double> rec)
+        : data(rec)
+    {}
+};
+
+/*!
  * \brief Данные о прыжке JumpRec struct
  */
 struct JumpRec
