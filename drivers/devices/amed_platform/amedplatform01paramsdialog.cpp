@@ -1,6 +1,8 @@
 #include "amedplatform01paramsdialog.h"
 #include "ui_amedplatform01paramsdialog.h"
 
+#include <QDebug>
+
 #include "amedplatform01defines.h"
 
 AMedPlatform01ParamsDialog::AMedPlatform01ParamsDialog(QWidget *parent) :
@@ -25,6 +27,26 @@ AMedPlatform01ParamsDialog::AMedPlatform01ParamsDialog(QWidget *parent) :
 AMedPlatform01ParamsDialog::~AMedPlatform01ParamsDialog()
 {
     delete ui;
+}
+
+int AMedPlatform01ParamsDialog::frequency() const
+{
+    return ui->cbFrequency->currentData().toInt();
+}
+
+void AMedPlatform01ParamsDialog::setFrequency(const int freq)
+{
+    int idx = -1;
+    for (int i = 0; i < ui->cbFrequency->count(); ++i)
+    {
+        if (ui->cbFrequency->itemData(i).toInt() == freq)
+        {
+            idx = i;
+            break;
+        }
+    }
+    if (idx > -1)
+        ui->cbFrequency->setCurrentIndex(idx);
 }
 
 DeviceProtocols::TensoDevice AMedPlatform01ParamsDialog::kindTenso1() const

@@ -117,6 +117,7 @@ void AMedPlatform01::setParams(const DeviceProtocols::Ports port, const QJsonObj
 //    m_zt = static_cast<Stabilan01Defines::ZeroingType>(params["zeroing_type"].toInt());
     m_chanRecordingDefault = AMedPlatform01::getChanRecordingDefault(params["chan_recording_default"].toObject());
 
+    m_frequency = params["frequency"].toInt(50);
     m_tenso1.device = static_cast<DeviceProtocols::TensoDevice>(params["tenso1"].toInt(0));
     m_tenso2.device = static_cast<DeviceProtocols::TensoDevice>(params["tenso2"].toInt(1));
     m_tenso3.device = static_cast<DeviceProtocols::TensoDevice>(params["tenso3"].toInt(2));
@@ -140,6 +141,7 @@ bool AMedPlatform01::editParams(QJsonObject &params)
 //    dlg.setZeroingType(static_cast<Stabilan01Defines::ZeroingType>(zt));
 //    dlg.setRecording(getChanRecordingDefault(params["chan_recording_default"].toObject()));
 
+    dlg.setFrequency(params["frequency"].toInt(50));
     dlg.setKindTenso1(static_cast<DeviceProtocols::TensoDevice>(params["tenso1"].toInt(0)));
     dlg.setKindTenso2(static_cast<DeviceProtocols::TensoDevice>(params["tenso2"].toInt(1)));
     dlg.setKindTenso3(static_cast<DeviceProtocols::TensoDevice>(params["tenso3"].toInt(2)));
@@ -156,6 +158,7 @@ bool AMedPlatform01::editParams(QJsonObject &params)
 //        params["zeroing_type"] = static_cast<int>(dlg.zeroingType());
 //        params["chan_recording_default"] = setChanRecordingDefault(dlg.getRecording());
 
+        params["frequency"] = dlg.frequency();
         params["tenso1"] = dlg.kindTenso1();
         params["tenso2"] = dlg.kindTenso2();
         params["tenso3"] = dlg.kindTenso3();
@@ -186,7 +189,7 @@ void AMedPlatform01::stop()
 
 int AMedPlatform01::frequency(const QString &channelId) const
 {
-    static QMap<QString, int> ChannelsFreq =
+    QMap<QString, int> ChannelsFreq =
     {
         std::pair<QString, int> (ChannelsDefines::ctStabilogram, m_frequency)
       , std::pair<QString, int> (ChannelsDefines::ctBalistogram, m_frequency)

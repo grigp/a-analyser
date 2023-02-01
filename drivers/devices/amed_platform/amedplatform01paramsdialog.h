@@ -20,6 +20,9 @@ public:
     explicit AMedPlatform01ParamsDialog(QWidget *parent = nullptr);
     ~AMedPlatform01ParamsDialog();
 
+    int frequency() const;
+    void setFrequency(const int freq);
+
     DeviceProtocols::TensoDevice kindTenso1() const;
     void setKindTenso1(const DeviceProtocols::TensoDevice kind);
 
