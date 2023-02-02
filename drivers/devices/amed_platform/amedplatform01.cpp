@@ -119,6 +119,7 @@ void AMedPlatform01::setParams(const DeviceProtocols::Ports port, const QJsonObj
     m_chanRecordingDefault = AMedPlatform01::getChanRecordingDefault(params["chan_recording_default"].toObject());
 
     m_frequency = params["frequency"].toInt(50);
+    m_isFiltration = params["filtration"].toBool(true);
     m_tenso1.device = static_cast<DeviceProtocols::TensoDevice>(params["tenso1"].toInt(0));
     m_tenso2.device = static_cast<DeviceProtocols::TensoDevice>(params["tenso2"].toInt(1));
     m_tenso3.device = static_cast<DeviceProtocols::TensoDevice>(params["tenso3"].toInt(2));
@@ -143,6 +144,7 @@ bool AMedPlatform01::editParams(QJsonObject &params)
 //    dlg.setRecording(getChanRecordingDefault(params["chan_recording_default"].toObject()));
 
     dlg.setFrequency(params["frequency"].toInt(50));
+    dlg.setFiltration(params["filtration"].toBool(true));
     dlg.setKindTenso1(static_cast<DeviceProtocols::TensoDevice>(params["tenso1"].toInt(0)));
     dlg.setKindTenso2(static_cast<DeviceProtocols::TensoDevice>(params["tenso2"].toInt(1)));
     dlg.setKindTenso3(static_cast<DeviceProtocols::TensoDevice>(params["tenso3"].toInt(2)));
@@ -160,6 +162,7 @@ bool AMedPlatform01::editParams(QJsonObject &params)
 //        params["chan_recording_default"] = setChanRecordingDefault(dlg.getRecording());
 
         params["frequency"] = dlg.frequency();
+        params["filtration"] = dlg.isFiltration();
         params["tenso1"] = dlg.kindTenso1();
         params["tenso2"] = dlg.kindTenso2();
         params["tenso3"] = dlg.kindTenso3();
@@ -219,6 +222,16 @@ void AMedPlatform01::setFrequency(const int freq)
     {
         m_frequency = freq;
     }
+}
+
+bool AMedPlatform01::isFiltration() const
+{
+    return m_isFiltration;
+}
+
+void AMedPlatform01::setIsFiltration(const bool isFlt)
+{
+    m_isFiltration = isFlt;
 }
 
 QList<QString> AMedPlatform01::getChannelsByProtocol(const QString &protocolUid) const
@@ -441,7 +454,7 @@ static int n {0};
 void AMedPlatform01::assignByteFromDevice(quint8 b)
 {
 //    qDebug() << n << b;
-//    ++n;
+    ++n;
 
     if (!m_isPackage)  //! В пакет не вошли - ищем маркер
     {
@@ -501,27 +514,31 @@ void AMedPlatform01::assignByteFromDevice(quint8 b)
                 if (cnt / 3 == 0)
                 {
                     m_A = static_cast<double>(value) / 8000000 * 100;
-                    m_A = filtration(m_A, m_chanA, useBlock);
+                    if (m_isFiltration)
+                        m_A = filtration(m_A, m_chanA, useBlock);
 //                    m_B = static_cast<double>(value) / 8000000 * 100;
-//                    m_A = filtration(m_B, m_chanA);
+//                    m_A = filtration(m_B, m_chanA, useBlock);
                 }
                 else
                 if (cnt / 3 == 1)
                 {
                     m_B = static_cast<double>(value) / 8000000 * 100;
-                    m_B = filtration(m_B, m_chanB, useBlock);
+                    if (m_isFiltration)
+                        m_B = filtration(m_B, m_chanB, useBlock);
                 }
                 else
                 if (cnt / 3 == 2)
                 {
                     m_C = static_cast<double>(value) / 8000000 * 100;
-                    m_C = filtration(m_C, m_chanC, useBlock);
+                    if (m_isFiltration)
+                        m_C = filtration(m_C, m_chanC, useBlock);
                 }
                 else
                 if (cnt / 3 == 3)
                 {
                     m_D = static_cast<double>(value) / 8000000 * 100;
-                    m_D = filtration(m_D, m_chanD, useBlock);
+                    if (m_isFiltration)
+                        m_D = filtration(m_D, m_chanD, useBlock);
                 }
                 else
                 if (cnt / 3 == 4)
@@ -538,27 +555,28 @@ void AMedPlatform01::assignByteFromDevice(quint8 b)
         //! Окончание разбора пакета
         if (m_countBytePack + 2 == m_countChannels * 3)  //! Достигли заданного кол-ва каналов
         {
-//            m_X = m_A;
-//            m_Y = m_B;
             if (useBlock)
             {
-                m_Z = m_A + m_B + m_C + m_D;                     //! Расчет баллистограммы
-                if (m_Z > 0)
-                {
-                    m_X = (m_B + m_C - m_A - m_D) / m_Z * 1000;
-                    m_Y = (m_A + m_B - m_C - m_D) / m_Z * 1000;
-                }
-                else
-                {
-                    m_X = 0;
-                    m_Y = 0;
-                }
+                m_X = m_A;
+                m_Y = m_D;
+//                m_Z = m_A + m_B + m_C + m_D;                     //! Расчет баллистограммы
+//                if (m_Z > 0)
+//                {
+//                    m_X = (m_B + m_C - m_A - m_D) / m_Z * 1000;
+//                    m_Y = (m_A + m_B - m_C - m_D) / m_Z * 1000;
+//                }
+//                else
+//                {
+//                    m_X = 0;
+//                    m_Y = 0;
+//                }
             }
 
             incBlockCount();
             if (useBlock)
                 sendDataBlock();
             m_isPackage = false;                     //! Сбросим признак пакета
+            n = 0;
         }
 
         m_countBytePack++;

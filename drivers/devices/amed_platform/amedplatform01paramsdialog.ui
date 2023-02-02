@@ -217,6 +217,25 @@
            </widget>
           </item>
           <item>
+           <widget class="QWidget" name="frFiltration" native="true">
+            <layout class="QHBoxLayout" name="horizontalLayout_8">
+             <property name="topMargin">
+              <number>1</number>
+             </property>
+             <property name="bottomMargin">
+              <number>1</number>
+             </property>
+             <item>
+              <widget class="QCheckBox" name="cbFiltration">
+               <property name="text">
+                <string>Использовать фильтрацию принимаемых сигналов</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item>
            <spacer name="verticalSpacer">
             <property name="orientation">
              <enum>Qt::Vertical</enum>

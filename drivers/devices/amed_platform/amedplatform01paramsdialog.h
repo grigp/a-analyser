@@ -23,6 +23,9 @@ public:
     int frequency() const;
     void setFrequency(const int freq);
 
+    bool isFiltration() const;
+    void setFiltration(const bool isFilt);
+
     DeviceProtocols::TensoDevice kindTenso1() const;
     void setKindTenso1(const DeviceProtocols::TensoDevice kind);
 

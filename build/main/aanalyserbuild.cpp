@@ -111,10 +111,10 @@ void AAnalyserBuild::registerVisuals()
     app->registerVisual(new StabilogramVisual(BaseDefines::tlChannel));
     app->registerVisual(new HistogramVisual(BaseDefines::tlChannel));
     app->registerVisual(new SpectrStabVisual(BaseDefines::tlChannel));
+    app->registerVisual(new VectorAnalysisVisual(BaseDefines::tlChannel));
     app->registerVisual(new BalistogramVisual(BaseDefines::tlChannel));
     app->registerVisual(new MyogramSignalVisual(BaseDefines::tlChannel));
     app->registerVisual(new DynamoSignalVisual(BaseDefines::tlChannel));
-    app->registerVisual(new VectorAnalysisVisual(BaseDefines::tlChannel));
     app->registerVisual(new BilateralVisual(BaseDefines::tlProbe));
     app->registerVisual(new SectionGraphVisual(BaseDefines::tlSection));
 }

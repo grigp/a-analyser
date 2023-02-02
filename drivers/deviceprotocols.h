@@ -518,6 +518,7 @@ public:
  */
 class FrequencyControl : public DeviceControl
 {
+public:
     /*!
      * \brief Возвращает список доступных частот дискретизации для драйвера
      */
@@ -528,6 +529,24 @@ class FrequencyControl : public DeviceControl
      * \param frequency - устанавливаемая частота
      */
     virtual void setFrequency(const int frequency) = 0;
+};
+
+/*!
+ * \brief Класс управления устройствами. Управление фильтрацией The FiltrationControl class
+ */
+class FiltrationControl : public DeviceControl
+{
+public:
+    /*!
+     * \brief Возвращает true, если включена фильтрацию
+     */
+    virtual bool isFiltration() const = 0;
+
+    /*!
+     * \brief Включает и выключает фильтрацию
+     * \param isFlt - признак
+     */
+    virtual void setIsFiltration(const bool isFlt) = 0;
 };
 
 /*!

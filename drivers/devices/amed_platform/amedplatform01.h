@@ -17,6 +17,7 @@ class AMedPlatform01 : public Driver
         , public DeviceProtocols::StabControl
         , public DeviceProtocols::TensoControl
         , public DeviceProtocols::FrequencyControl
+        , public DeviceProtocols::FiltrationControl
 {
 public:
     explicit AMedPlatform01(QObject *parent = nullptr);
@@ -72,6 +73,17 @@ public:
      * \param frequency - устанавливаемая частота
      */
     void setFrequency(const int frequency) override;
+
+    /*!
+     * \brief Возвращает true, если включена фильтрацию
+     */
+    bool isFiltration() const override;
+
+    /*!
+     * \brief Включает и выключает фильтрацию
+     * \param isFlt - признак
+     */
+    void setIsFiltration(const bool isFlt) override;
 
     /*!
      * \brief Возвращает список uid-ов каналов, передаваемых драйвером по uid протокола
@@ -224,7 +236,8 @@ private:
     QVector<double> m_chanC;   ///< Буфер исходного сигнала опоры C
     QVector<double> m_chanD;   ///< Буфер исходного сигнала опоры D
 
-    int m_frequency {50};   ///< Текущая установленная частота дискретизации
+    int m_frequency {50};        ///< Текущая установленная частота дискретизации
+    bool m_isFiltration {true};  ///< Признак фильтрации
 };
 
 #endif // AMEDPLATFORM01_H

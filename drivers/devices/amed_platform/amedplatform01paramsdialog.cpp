@@ -49,6 +49,16 @@ void AMedPlatform01ParamsDialog::setFrequency(const int freq)
         ui->cbFrequency->setCurrentIndex(idx);
 }
 
+bool AMedPlatform01ParamsDialog::isFiltration() const
+{
+    return ui->cbFiltration->isChecked();
+}
+
+void AMedPlatform01ParamsDialog::setFiltration(const bool isFilt)
+{
+    ui->cbFiltration->setChecked(isFilt);
+}
+
 DeviceProtocols::TensoDevice AMedPlatform01ParamsDialog::kindTenso1() const
 {
     return static_cast<DeviceProtocols::TensoDevice>(ui->cbTensoChan1->currentData().toInt());

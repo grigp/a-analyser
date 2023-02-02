@@ -223,13 +223,25 @@ void SpectrStabFactors::computeFactorsChan(const int chan, SpectrStabFactors::Fa
     }
 
     //! Амплитуды и частоты первых трех пиков
-    int n = maxs.keys().size();
-    values.freq1 = static_cast<double>(maxs.value(maxs.keys().at(n - 1)) * m_frequency) / static_cast<double>(m_spectr->points());
-    values.freq2 = static_cast<double>(maxs.value(maxs.keys().at(n - 2)) * m_frequency) / static_cast<double>(m_spectr->points());
-    values.freq3 = static_cast<double>(maxs.value(maxs.keys().at(n - 3)) * m_frequency) / static_cast<double>(m_spectr->points());
-    values.ampl1 = maxs.keys().at(n - 1);
-    values.ampl2 = maxs.keys().at(n - 2);
-    values.ampl3 = maxs.keys().at(n - 3);
+    if (maxs.size() > 3)
+    {
+        int n = maxs.keys().size();
+        values.freq1 = static_cast<double>(maxs.value(maxs.keys().at(n - 1)) * m_frequency) / static_cast<double>(m_spectr->points());
+        values.freq2 = static_cast<double>(maxs.value(maxs.keys().at(n - 2)) * m_frequency) / static_cast<double>(m_spectr->points());
+        values.freq3 = static_cast<double>(maxs.value(maxs.keys().at(n - 3)) * m_frequency) / static_cast<double>(m_spectr->points());
+        values.ampl1 = maxs.keys().at(n - 1);
+        values.ampl2 = maxs.keys().at(n - 2);
+        values.ampl3 = maxs.keys().at(n - 3);
+    }
+    else
+    {
+        values.freq1 = 0;
+        values.freq2 = 0;
+        values.freq3 = 0;
+        values.ampl1 = 0;
+        values.ampl2 = 0;
+        values.ampl3 = 0;
+    }
 }
 
 void SpectrStabFactors::addFactors()
