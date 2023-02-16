@@ -150,7 +150,7 @@ void ClassicFactors::computeParamsEllipse(Stabilogram *stab)
         xy = xy + ((stab->value(0, i) - moX) * (stab->value(1, i) - moY));
 
     double korr = 0;
-    if (qx * qy * stab->size() != 0)
+    if (fabs(qx * qy * stab->size()) > 0)
         korr = xy / (qx * qy * stab->size());
 
     //! Угол поворота
@@ -197,7 +197,7 @@ void ClassicFactors::computeParamsEllipse(Stabilogram *stab)
             m_ellipse.angle = m_ellipse.angle - 90;
     }
     m_ellipse.ellE = 0;
-    if (m_ellipse.sizeB != 0)
+    if (fabs(m_ellipse.sizeB) > 0)
         m_ellipse.ellE = m_ellipse.sizeA / m_ellipse.sizeB;
 
     m_angle = m_ellipse.angle;

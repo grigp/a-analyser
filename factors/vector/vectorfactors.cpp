@@ -14,7 +14,7 @@ namespace  {
 static const int BoundKRIND = 45;
 
 //! Кол-во точек в распределении векторов
-static const int RaspredCount = 100;
+//static const int RaspredCount = 100;
 
 //! Множитель диапазонов
 static const double KoefDiap = 37.5;
@@ -97,7 +97,7 @@ void VectorFactors::calculate()
             //! Мощность векторограммы
             computePowerVector(&stab);
 
-            if (m_wMid != 0)
+            if (fabs(m_wMid) > 0)
                 m_vw = m_vMid / m_wMid;
             else
                 m_vw = 0;
@@ -293,9 +293,9 @@ void VectorFactors::vectorSpeed(const QVector<double> &spdX, const QVector<doubl
 
             //! Кол-во право- и лево- вращений
             if (a2 > 0)
-                m_rotRt = m_rotRt + abs(a2);
+                m_rotRt = m_rotRt + fabs(a2);
             else
-                m_rotLf = m_rotLf + abs(a2);
+                m_rotLf = m_rotLf + fabs(a2);
         }
     }
 
@@ -369,7 +369,7 @@ void VectorFactors::computeKFR(const QVector<double> &spd)
             m_diapazones[i].freq = 0;
         accF = accF + m_diapazones[i].freq;
         m_diapazones[i].freqAcc = accF;
-        m_diapazones[i].s = ceil(KoefDiap * i);
+        m_diapazones[i].s = static_cast<int>(ceil(KoefDiap * i));
 
         accVCnt = accVCnt + m_diapazones[i].vectorsCnt;
         m_diapazones[i].vectorsAcc = accVCnt;

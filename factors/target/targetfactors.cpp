@@ -77,7 +77,7 @@ void TargetFactors::calculate()
         {
             auto rec = stab.value(i);
             double val = sqrt(pow(rec.x/* - offsetX*/, 2) + pow(rec.y/* - offsetY*/, 2));
-            int idx = 9 - trunc(val / step);
+            int idx = static_cast<int>(9 - trunc(val / step));
             if (idx < 0)
                 idx = 0;
             if (idx > 9)
@@ -92,8 +92,8 @@ void TargetFactors::calculate()
         for (int i = 0; i < 10; ++i)
         {
             m_totalScore = m_totalScore + m_hist[i] * 0.1 * (i + 1);
-            if (m_score != 0)
-                m_hist[i] = m_hist[i] / m_score * 100;
+            if (fabs(m_score) > 0)
+                m_hist[i] = static_cast<int>(m_hist[i] / m_score * 100);
             else
                 m_hist[i] = 0;
             if (m_hist[i] > max)
