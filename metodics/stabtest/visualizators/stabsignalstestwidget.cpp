@@ -60,6 +60,7 @@ QStandardItemModel *mdlNorms {nullptr};
 QTreeView *tvRombergNorms {nullptr};
 QList<AreaSKG*> areasesSKG;
 AreaGraph *wgtGraph;
+QTabWidget *wgtTab;
 }
 
 StabSignalsTestWidget::StabSignalsTestWidget(QWidget *parent) :
@@ -71,6 +72,7 @@ StabSignalsTestWidget::StabSignalsTestWidget(QWidget *parent) :
 
     auto val = SettingsProvider::valueFromRegAppCopy("StabSignalsTestWidget", "CurrentPage").toInt();
     ui->tabWidget->setCurrentIndex(val);
+    wgtTab = ui->tabWidget;
 
     ui->sbSignal->setEnabled(false);
     ui->btnHScalePlus->setEnabled(false);
@@ -101,6 +103,11 @@ void StabSignalsTestWidget::calculate(StabSignalsTestCalculator *calculator, con
 
 void StabSignalsTestWidget::print(QPrinter *printer, const QString &testUid)
 {
+    int tab = wgtTab->currentIndex();
+    for (int i = 0; i < wgtTab->count(); ++i)
+        wgtTab->setCurrentIndex(i);
+    wgtTab->setCurrentIndex(tab);
+
     QPainter *painter = new QPainter(printer);
     QRect paper = printer->pageRect();
 
