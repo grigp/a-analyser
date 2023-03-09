@@ -792,12 +792,12 @@ void StabSignalsTestWidget::printTwoPortrait(QPrinter *printer, QPainter *painte
     if (areasesSKG.size() == 2)
     {
         ReportElements::drawWidget(painter, areasesSKG.at(0),
-                                   static_cast<int>(paper.width() * 0.45), static_cast<int>(paper.height() * 0.45),
+                                   static_cast<int>(paper.width() * 0.43), static_cast<int>(paper.height() * 0.43),
                                    paper.x() + paper.width() / 4 - static_cast<int>(paper.width() * 0.2),
                                    static_cast<int>(paper.y() + paper.height() / 10 * 1.5));
         ReportElements::drawWidget(painter, areasesSKG.at(1),
-                                   static_cast<int>(paper.width() * 0.45), static_cast<int>(paper.height() * 0.45),
-                                   paper.x() + paper.width() / 4 * 3 - static_cast<int>(paper.width() * 0.2),
+                                   static_cast<int>(paper.width() * 0.43), static_cast<int>(paper.height() * 0.43),
+                                   paper.x() + paper.width() / 4 * 3 - static_cast<int>(paper.width() * 0.25),
                                    static_cast<int>(paper.y() + paper.height() / 10 * 1.5));
 
         QRect rectTableRF(static_cast<int>(paper.x() + paper.width() / 10),
@@ -828,9 +828,9 @@ void StabSignalsTestWidget::printTwoPortrait(QPrinter *printer, QPainter *painte
         ReportElements::drawWidget(painter, wgtGraph,
                                    static_cast<int>(paper.width() * 0.85), static_cast<int>(paper.height() * 0.85),
                                    paper.x() + paper.width() / 12,
-                                   static_cast<int>(paper.y() + paper.height() / 10));
+                                   static_cast<int>(paper.y() + paper.height() / 20));
         QRect rectTable(paper.x() + paper.width() / 10,
-                        static_cast<int>(paper.y() + paper.height() / 10 * 5.5),
+                        static_cast<int>(paper.y() + paper.height() / 10 * 5.6),
                         paper.width() / 10 * 8,
                         paper.height() / 2);
         ReportElements::drawTable(painter, mdlTable, rectTable, QList<int>() << 3 << 1,
@@ -988,34 +988,34 @@ void StabSignalsTestWidget::printFivePortrait(QPrinter *printer, QPainter *paint
     {
         ReportElements::drawWidget(painter, areasesSKG.at(0),
                                    static_cast<int>(paper.width() * 0.2), static_cast<int>(paper.height() * 0.2),
-                                   static_cast<int>(paper.x() + paper.width() / 10 * 1.1 - paper.width() * 0.1),
+                                   static_cast<int>(paper.x() + paper.width() / 10 * 2 - paper.width() * 0.1),
                                    static_cast<int>(paper.y() + paper.height() / 10 * 1.5));
         ReportElements::drawWidget(painter, areasesSKG.at(1),
                                    static_cast<int>(paper.width() * 0.2), static_cast<int>(paper.height() * 0.2),
-                                   static_cast<int>(paper.x() + paper.width() / 10 * 3 - paper.width() * 0.1),
+                                   static_cast<int>(paper.x() + paper.width() / 10 * 5 - paper.width() * 0.1),
                                    static_cast<int>(paper.y() + paper.height() / 10 * 1.5));
         ReportElements::drawWidget(painter, areasesSKG.at(2),
                                    static_cast<int>(paper.width() * 0.2), static_cast<int>(paper.height() * 0.2),
-                                   static_cast<int>(paper.x() + paper.width() / 10 * 5 - paper.width() * 0.1),
+                                   static_cast<int>(paper.x() + paper.width() / 10 * 8 - paper.width() * 0.1),
                                    static_cast<int>(paper.y() + paper.height() / 10 * 1.5));
         ReportElements::drawWidget(painter, areasesSKG.at(3),
                                    static_cast<int>(paper.width() * 0.2), static_cast<int>(paper.height() * 0.2),
-                                   static_cast<int>(paper.x() + paper.width() / 10 * 7 - paper.width() * 0.1),
-                                   static_cast<int>(paper.y() + paper.height() / 10 * 1.5));
+                                   static_cast<int>(paper.x() + paper.width() / 10 * 3.5 - paper.width() * 0.1),
+                                   static_cast<int>(paper.y() + paper.height() / 10 * 3.21));
         ReportElements::drawWidget(painter, areasesSKG.at(4),
                                    static_cast<int>(paper.width() * 0.2), static_cast<int>(paper.height() * 0.2),
-                                   static_cast<int>(paper.x() + paper.width() / 10 * 9 - paper.width() * 0.1),
-                                   static_cast<int>(paper.y() + paper.height() / 10 * 1.5));
+                                   static_cast<int>(paper.x() + paper.width() / 10 * 6.5 - paper.width() * 0.1),
+                                   static_cast<int>(paper.y() + paper.height() / 10 * 3.21));
 
         QRect rectTableRF(static_cast<int>(paper.x() + paper.width() / 10),
-                        static_cast<int>(paper.y() + paper.height() / 10 * 4.2),
+                        static_cast<int>(paper.y() + paper.height() / 10 * 5.1),
                         paper.width() / 10 * 8,
                         static_cast<int>(paper.height() * 0.12));
         ReportElements::drawTable(painter, mdlRF, rectTableRF, QList<int>() << 2 << 2 << 2 << 2 << 2,
                                   ReportElements::Table::tvsStretched, 8, -1, QFont::Thin);
 
         QRect rectTable(paper.x() + paper.width() / 10,
-                        static_cast<int>(paper.y() + paper.height() / 10 * 5.6),
+                        static_cast<int>(paper.y() + paper.height() / 10 * 6.4),
                         paper.width() / 10 * 8,
                         paper.height() / 2);
         ReportElements::drawTable(painter, mdlTable, rectTable, QList<int>() << 5 << 1 << 1 << 1 << 1 << 1,
@@ -1038,28 +1038,28 @@ void StabSignalsTestWidget::printFiveLandscape(QPrinter *printer, QPainter *pain
     if (areasesSKG.size() == 5)
     {
         ReportElements::drawWidget(painter, areasesSKG.at(0),
-                                   static_cast<int>(paper.width() * 0.2), static_cast<int>(paper.height() * 0.5),
-                                   static_cast<int>(paper.x() + paper.width() / 10 * 1.0 - paper.width() * 0.1),
-                                   static_cast<int>(paper.y() + paper.height() / 10 * 1.5));
+                                   static_cast<int>(paper.width() * 0.2), static_cast<int>(paper.height() * 0.3),
+                                   static_cast<int>(paper.x() + paper.width() / 10 * 2 - paper.width() * 0.1),
+                                   static_cast<int>(paper.y() + paper.height() / 10 * 1.4));
         ReportElements::drawWidget(painter, areasesSKG.at(1),
-                                   static_cast<int>(paper.width() * 0.2), static_cast<int>(paper.height() * 0.5),
-                                   paper.x() + paper.width() / 10 * 3 - static_cast<int>(paper.width() * 0.1),
-                                   static_cast<int>(paper.y() + paper.height() / 10 * 1.5));
-        ReportElements::drawWidget(painter, areasesSKG.at(2),
-                                   static_cast<int>(paper.width() * 0.2), static_cast<int>(paper.height() * 0.5),
+                                   static_cast<int>(paper.width() * 0.2), static_cast<int>(paper.height() * 0.3),
                                    static_cast<int>(paper.x() + paper.width() / 10 * 5 - paper.width() * 0.1),
-                                   static_cast<int>(paper.y() + paper.height() / 10 * 1.5));
+                                   static_cast<int>(paper.y() + paper.height() / 10 * 1.4));
+        ReportElements::drawWidget(painter, areasesSKG.at(2),
+                                   static_cast<int>(paper.width() * 0.2), static_cast<int>(paper.height() * 0.3),
+                                   static_cast<int>(paper.x() + paper.width() / 10 * 8 - paper.width() * 0.1),
+                                   static_cast<int>(paper.y() + paper.height() / 10 * 1.4));
         ReportElements::drawWidget(painter, areasesSKG.at(3),
-                                   static_cast<int>(paper.width() * 0.2), static_cast<int>(paper.height() * 0.5),
-                                   paper.x() + paper.width() / 10 * 7 - static_cast<int>(paper.width() * 0.1),
-                                   static_cast<int>(paper.y() + paper.height() / 10 * 1.5));
+                                   static_cast<int>(paper.width() * 0.2), static_cast<int>(paper.height() * 0.3),
+                                   static_cast<int>(paper.x() + paper.width() / 10 * 3.5 - paper.width() * 0.1),
+                                   static_cast<int>(paper.y() + paper.height() / 10 * 4.5));
         ReportElements::drawWidget(painter, areasesSKG.at(4),
-                                   static_cast<int>(paper.width() * 0.2), static_cast<int>(paper.height() * 0.5),
-                                   paper.x() + paper.width() / 10 * 9 - static_cast<int>(paper.width() * 0.1),
-                                   static_cast<int>(paper.y() + paper.height() / 10 * 1.5));
+                                   static_cast<int>(paper.width() * 0.2), static_cast<int>(paper.height() * 0.3),
+                                   static_cast<int>(paper.x() + paper.width() / 10 * 6.5 - paper.width() * 0.1),
+                                   static_cast<int>(paper.y() + paper.height() / 10 * 4.5));
 
         QRect rectTableRF(static_cast<int>(paper.x() + paper.width() / 12),
-                        static_cast<int>(paper.y() + paper.height() / 10 * 7),
+                        static_cast<int>(paper.y() + paper.height() / 10 * 8),
                         static_cast<int>(paper.width() / 10 * 8),
                         static_cast<int>(paper.height() * 0.15));
         ReportElements::drawTable(painter, mdlRF, rectTableRF, QList<int>() << 2 << 2 << 2 << 2 << 2 ,
