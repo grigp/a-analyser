@@ -74,6 +74,7 @@ AreaSKG *wgtSKGAnalysis {nullptr};
 QStandardItemModel *mdlDiagTable {nullptr};
 QStandardItemModel *mdlEffectiveness {nullptr};
 QStandardItemModel *mdlMainTable {nullptr};
+QTabWidget *twPages {nullptr};
 
 QString sLatentMoving {""};
 QString sAccRepeat {""};
@@ -103,9 +104,6 @@ TriangleVisualize::TriangleVisualize(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    auto val = SettingsProvider::valueFromRegAppCopy("TriangleResultWidget", "CurrentPage").toInt();
-    ui->twPages->setCurrentIndex(val);
-
     restoreSplitterPositionDiag();
 }
 
@@ -116,6 +114,10 @@ TriangleVisualize::~TriangleVisualize()
 
 void TriangleVisualize::setTest(const QString &testUid)
 {
+    auto val = SettingsProvider::valueFromRegAppCopy("TriangleResultWidget", "CurrentPage").toInt();
+    ui->twPages->setCurrentIndex(val);
+    twPages = ui->twPages;
+
     if (!m_calculator)
     {
         m_calculator = new TriangleCalculator(testUid, this);
@@ -145,6 +147,11 @@ void TriangleVisualize::setTest(const QString &testUid)
 
 void TriangleVisualize::print(QPrinter *printer, const QString &testUid)
 {
+    int tab = twPages->currentIndex();
+    for (int i = 0; i < twPages->count(); ++i)
+        twPages->setCurrentIndex(i);
+    twPages->setCurrentIndex(tab);
+
     QPainter *painter = new QPainter(printer);
     QRect paper = printer->pageRect();
 

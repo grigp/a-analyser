@@ -37,6 +37,8 @@ QString sCorrectionPredominace {""};
 QString sCorrectionResume {""};
 QColor sCorrectionResumeColorTrain;
 DualStateDiagram *wgtCorrectionDiagTrain {nullptr};
+
+QTabWidget *wgtTab {nullptr};
 }
 
 
@@ -44,11 +46,9 @@ StepOffsetVisualize::StepOffsetVisualize(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::StepOffsetVisualize)
 {
-    auto val = SettingsProvider::valueFromRegAppCopy("StepOffsetTestWidget", "CurrentPage").toInt();
 
     ui->setupUi(this);
 
-    ui->tabWidget->setCurrentIndex(val);
     restoreSplitterPosition();
 }
 
@@ -59,6 +59,10 @@ StepOffsetVisualize::~StepOffsetVisualize()
 
 void StepOffsetVisualize::setTest(const QString &testUid)
 {
+    auto val = SettingsProvider::valueFromRegAppCopy("StepOffsetTestWidget", "CurrentPage").toInt();
+    ui->tabWidget->setCurrentIndex(val);
+    wgtTab = ui->tabWidget;
+
     if (!m_calculator)
     {
         m_calculator = new StepOffsetCalculator(testUid, this);
@@ -74,6 +78,11 @@ void StepOffsetVisualize::setTest(const QString &testUid)
 
 void StepOffsetVisualize::print(QPrinter *printer, const QString &testUid)
 {
+    int tab = wgtTab->currentIndex();
+    for (int i = 0; i < wgtTab->count(); ++i)
+        wgtTab->setCurrentIndex(i);
+    wgtTab->setCurrentIndex(tab);
+
     QPainter *painter = new QPainter(printer);
     QRect paper = printer->pageRect();
 

@@ -483,36 +483,20 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>Transients</class>
-   <extends>QWidget</extends>
-   <header location="global">transients.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
    <class>DualStateDiagram</class>
    <extends>QWidget</extends>
    <header location="global">dualstatediagram.h</header>
    <container>1</container>
   </customwidget>
+  <customwidget>
+   <class>Transients</class>
+   <extends>QWidget</extends>
+   <header location="global">transients.h</header>
+   <container>1</container>
+  </customwidget>
  </customwidgets>
  <resources/>
  <connections>
-  <connection>
-   <sender>tabWidget</sender>
-   <signal>currentChanged(int)</signal>
-   <receiver>StepOffsetVisualize</receiver>
-   <slot>curPageChanged(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>183</x>
-     <y>97</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>908</x>
-     <y>122</y>
-    </hint>
-   </hints>
-  </connection>
   <connection>
    <sender>splProcess</sender>
    <signal>splitterMoved(int,int)</signal>
@@ -526,6 +510,22 @@
     <hint type="destinationlabel">
      <x>904</x>
      <y>152</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>tabWidget</sender>
+   <signal>tabBarClicked(int)</signal>
+   <receiver>StepOffsetVisualize</receiver>
+   <slot>curPageChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>248</x>
+     <y>631</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>906</x>
+     <y>510</y>
     </hint>
    </hints>
   </connection>

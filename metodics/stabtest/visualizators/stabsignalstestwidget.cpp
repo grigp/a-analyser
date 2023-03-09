@@ -70,10 +70,6 @@ StabSignalsTestWidget::StabSignalsTestWidget(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    auto val = SettingsProvider::valueFromRegAppCopy("StabSignalsTestWidget", "CurrentPage").toInt();
-    ui->tabWidget->setCurrentIndex(val);
-    wgtTab = ui->tabWidget;
-
     ui->sbSignal->setEnabled(false);
     ui->btnHScalePlus->setEnabled(false);
     ui->btnHScaleMinus->setEnabled(false);
@@ -94,6 +90,10 @@ StabSignalsTestWidget::~StabSignalsTestWidget()
 
 void StabSignalsTestWidget::calculate(StabSignalsTestCalculator *calculator, const QString &testUid)
 {
+    auto val = SettingsProvider::valueFromRegAppCopy("StabSignalsTestWidget", "CurrentPage").toInt();
+    ui->tabWidget->setCurrentIndex(val);
+    wgtTab = ui->tabWidget;
+
     showTable(calculator, testUid);
     showSKG(calculator, testUid);
     showRationalTable(calculator, testUid);
