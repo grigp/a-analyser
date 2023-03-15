@@ -1,9 +1,9 @@
-#ifndef AREASKGDEFINES_H
-#define AREASKGDEFINES_H
+#ifndef SKGDEFINES_H
+#define SKGDEFINES_H
 
 #include <QPainter>
 
-namespace AreaSKGDefines {
+namespace SKGDefines {
 
 static const int I_LABEL_SPACE = 20;
 
@@ -17,7 +17,6 @@ struct BrokenLine
     int width;           ///< Толщина линий
 };
 
-
 }
 
-#endif // AREASKGDEFINES_H
+#endif // SKGDEFINES_H

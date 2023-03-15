@@ -7,7 +7,6 @@
 #include "platforms.h"
 #include "brokenlinesskg.h"
 #include "signalaccess.h"
-#include "areaskgdefines.h"
 
 #include <QTimer>
 #include <QDebug>
@@ -68,7 +67,7 @@ void AreaSKG::setMarker(const double x, const double y)
     if (m_marker)
     {
         int minS = qMin(ui->panSKG->width(), ui->panSKG->height());
-        double prop = static_cast<double>(minS / 2 - AreaSKGDefines::I_LABEL_SPACE) / static_cast<double>(m_diap);
+        double prop = static_cast<double>(minS / 2 - SKGDefines::I_LABEL_SPACE) / static_cast<double>(m_diap);
 
         m_marker->setPos(x * prop - m_marker->boundingRect().width() / 2,
                          - y * prop - m_marker->boundingRect().height() / 2);
@@ -215,7 +214,7 @@ void AreaSKG::addTarget(const double x, const double y, const QColor colorBackgr
 void AreaSKG::setTarget(const double x, const double y, const int idx)
 {
     int minS = qMin(ui->panSKG->width(), ui->panSKG->height());
-    double prop = static_cast<double>(minS / 2 - AreaSKGDefines::I_LABEL_SPACE) / static_cast<double>(m_diap);
+    double prop = static_cast<double>(minS / 2 - SKGDefines::I_LABEL_SPACE) / static_cast<double>(m_diap);
     auto target = m_targets.at(idx);
     target.item->setPos(x * prop - m_targets.at(idx).item->boundingRect().width() / 2,
                         - y * prop - m_targets.at(idx).item->boundingRect().height() / 2);
@@ -234,7 +233,7 @@ void AreaSKG::clearTargets()
     }
 }
 
-int AreaSKG::addBrokenLine(AreaSKGDefines::BrokenLine &bl)
+int AreaSKG::addBrokenLine(SKGDefines::BrokenLine &bl)
 {
     if (m_brokenLinesSKG)
         return m_brokenLinesSKG->addBrokenLine(bl);

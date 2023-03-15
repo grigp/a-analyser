@@ -12,7 +12,7 @@
 #include "trianglecalculator.h"
 #include "reportelements.h"
 #include "stabilogram.h"
-#include "areaskgdefines.h"
+#include "skgdefines.h"
 #include "trianglefactors.h"
 #include "triangleconslutionfactors.h"
 #include "baseutils.h"
@@ -529,7 +529,7 @@ void TriangleVisualize::showSKG(AreaSKG *area, BaseDefines::Section section)
 
 int TriangleVisualize::addTriangleDiag(AreaSKG *area, TriangleDefines::Triangle triangle, QColor color)
 {
-    AreaSKGDefines::BrokenLine blTrngl;
+    SKGDefines::BrokenLine blTrngl;
     blTrngl.polygon << QPointF(triangle.topCorner().x(), triangle.topCorner().y())
                     << QPointF(triangle.leftDownCorner().x(), triangle.leftDownCorner().y())
                     << QPointF(triangle.rightDownCorner().x(), triangle.rightDownCorner().y());

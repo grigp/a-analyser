@@ -4,7 +4,7 @@
 #include <QObject>
 #include <QGraphicsItem>
 
-#include "areaskgdefines.h"
+#include "skgdefines.h"
 
 
 class BrokenLinesSKG : public QGraphicsItem
@@ -21,7 +21,7 @@ public:
      * \param bl - ломанная
      * \return индекс в списке ломаных
      */
-    int addBrokenLine(AreaSKGDefines::BrokenLine &bl);
+    int addBrokenLine(SKGDefines::BrokenLine &bl);
 
     /*!
      * \brief Удаляет ломаную по индексу
@@ -39,7 +39,7 @@ private:
     int m_width {0};
     int m_height {0};
 
-    QList<AreaSKGDefines::BrokenLine> m_brokenLines;   ///< Список ломаных для построения
+    QList<SKGDefines::BrokenLine> m_brokenLines;   ///< Список ломаных для построения
 
 };
 

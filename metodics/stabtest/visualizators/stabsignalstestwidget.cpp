@@ -735,11 +735,21 @@ void StabSignalsTestWidget::printOnePortrait(QPrinter *printer, QPainter *painte
 {
     Q_UNUSED(testUid);
 
+    auto rectSKG = QRect(paper.x() + paper.width() / 2 - static_cast<int>(paper.width() * 0.3),
+                         static_cast<int>(paper.y() + paper.height() / 10 * 1.5),
+                         static_cast<int>(paper.width() * 0.6),
+                         static_cast<int>(paper.height() * 0.3));
+
+    double ratio = static_cast<double>(paper.width()) / static_cast<double>(areasesSKG.at(0)->geometry().width());
+    if (static_cast<double>(paper.height()) / static_cast<double>(areasesSKG.at(0)->geometry().height()) < ratio)
+        ratio = static_cast<double>(paper.height()) / static_cast<double>(areasesSKG.at(0)->geometry().height());
+
     if (areasesSKG.size() == 1)
-        ReportElements::drawWidget(painter, areasesSKG.at(0),
-                                   static_cast<int>(paper.width() * 0.6), static_cast<int>(paper.height() * 0.6),
-                                   paper.x() + paper.width() / 2 - static_cast<int>(paper.width() * 0.3),
-                                   static_cast<int>(paper.y() + paper.height() / 10 * 1.5));
+        ReportElements::drawSKG(painter, rectSKG, testUid, ratio);
+//        ReportElements::drawWidget(painter, areasesSKG.at(0),
+//                                   static_cast<int>(paper.width() * 0.6), static_cast<int>(paper.height() * 0.6),
+//                                   paper.x() + paper.width() / 2 - static_cast<int>(paper.width() * 0.3),
+//                                   static_cast<int>(paper.y() + paper.height() / 10 * 1.5));
 
     QRect rectTable(paper.x() + paper.width() / 10,
                     static_cast<int>(paper.y() + paper.height() / 10 * 5.5),

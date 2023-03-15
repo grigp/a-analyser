@@ -1,7 +1,7 @@
 #include "lineskg.h"
 
 #include "signalaccess.h"
-#include "areaskgdefines.h"
+#include "skgdefines.h"
 
 #include <QPainter>
 #include <QWidget>
@@ -16,8 +16,8 @@ LineSKG::LineSKG(int diap, QGraphicsItem *parent)
 
 QRectF LineSKG::boundingRect() const
 {
-    QPointF pos(-m_diap * m_prop - AreaSKGDefines::I_LABEL_SPACE, -m_diap * m_prop - AreaSKGDefines::I_LABEL_SPACE);
-    QSizeF size((m_diap * m_prop + AreaSKGDefines::I_LABEL_SPACE) * 2, (m_diap * m_prop + AreaSKGDefines::I_LABEL_SPACE) * 2);
+    QPointF pos(-m_diap * m_prop - SKGDefines::I_LABEL_SPACE, -m_diap * m_prop - SKGDefines::I_LABEL_SPACE);
+    QSizeF size((m_diap * m_prop + SKGDefines::I_LABEL_SPACE) * 2, (m_diap * m_prop + SKGDefines::I_LABEL_SPACE) * 2);
     return QRectF(pos, size);
 }
 
@@ -31,7 +31,7 @@ void LineSKG::paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWi
     m_width = widget->size().width();
     m_height = widget->size().height();
     int minS = qMin(m_width, m_height);
-    m_prop = static_cast<double>(minS / 2 - AreaSKGDefines::I_LABEL_SPACE) / static_cast<double>(m_diap);
+    m_prop = static_cast<double>(minS / 2 - SKGDefines::I_LABEL_SPACE) / static_cast<double>(m_diap);
 
     painter->save();
 
@@ -55,13 +55,13 @@ void LineSKG::paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWi
         {
             if (m_isZeroing)
             {
-                x1 = (m_signal->value(0, i) - m_offsX) * m_prop;
-                y1 = - (m_signal->value(1, i) - m_offsY) * m_prop;
+                x1 = static_cast<int>((m_signal->value(0, i) - m_offsX) * m_prop);
+                y1 = static_cast<int>(- (m_signal->value(1, i) - m_offsY) * m_prop);
             }
             else
             {
-                x1 = m_signal->value(0, i) * m_prop;
-                y1 = - m_signal->value(1, i) * m_prop;
+                x1 = static_cast<int>(m_signal->value(0, i) * m_prop);
+                y1 = static_cast<int>(- m_signal->value(1, i) * m_prop);
             }
             if (i > b)
                 painter->drawLine(x1, y1, x2, y2);
@@ -187,6 +187,6 @@ void LineSKG::setVisible(const bool isVisible)
 void LineSKG::updateItem()
 {
     int minS = qMin(m_width, m_height);
-    m_prop = static_cast<double>(minS / 2 - AreaSKGDefines::I_LABEL_SPACE) / static_cast<double>(m_diap);
+    m_prop = static_cast<double>(minS / 2 - SKGDefines::I_LABEL_SPACE) / static_cast<double>(m_diap);
     update(boundingRect());
 }

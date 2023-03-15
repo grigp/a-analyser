@@ -63,6 +63,14 @@ void drawTable(QPainter *painter, QStandardItemModel *model, QRect rect,
                const Table::VerticalStretch vStretch = Table::tvsStretched,
                const int pointSize = -1, const int weight = -1, const int titleWeight = -1);
 
+/*!
+ * \brief Прорисовывает СКГ на заданной канве
+ * \param painter - рисователь
+ * \param rect - зона СКГ
+ * \param testUid - uid теста
+ */
+void drawSKG(QPainter *painter, const QRect& rect, const QString& testUid, const double ratio);
+
 
 };
 

@@ -1,5 +1,5 @@
 #include "platforms.h"
-#include "areaskgdefines.h"
+#include "skgdefines.h"
 
 #include <QPainter>
 #include <QDebug>
@@ -14,8 +14,8 @@ Platforms::Platforms(int diap, QGraphicsItem *parent)
 
 QRectF Platforms::boundingRect() const
 {
-    QPointF pos(-m_diap * m_prop - AreaSKGDefines::I_LABEL_SPACE, -m_diap * m_prop - AreaSKGDefines::I_LABEL_SPACE);
-    QSizeF size((m_diap * m_prop + AreaSKGDefines::I_LABEL_SPACE) * 2, (m_diap * m_prop + AreaSKGDefines::I_LABEL_SPACE) * 2);
+    QPointF pos(-m_diap * m_prop - SKGDefines::I_LABEL_SPACE, -m_diap * m_prop - SKGDefines::I_LABEL_SPACE);
+    QSizeF size((m_diap * m_prop + SKGDefines::I_LABEL_SPACE) * 2, (m_diap * m_prop + SKGDefines::I_LABEL_SPACE) * 2);
     return QRectF(pos, size);
 }
 
@@ -26,7 +26,7 @@ void Platforms::paint(QPainter *painter, const QStyleOptionGraphicsItem *item, Q
     m_width = widget->size().width();
     m_height = widget->size().height();
     int minS = qMin(m_width, m_height);
-    m_prop = static_cast<double>(minS / 2 - AreaSKGDefines::I_LABEL_SPACE) / static_cast<double>(m_diap);
+    m_prop = static_cast<double>(minS / 2 - SKGDefines::I_LABEL_SPACE) / static_cast<double>(m_diap);
 
     painter->save();
 

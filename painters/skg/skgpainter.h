@@ -1,35 +1,29 @@
-#ifndef AREASKG_H
-#define AREASKG_H
+#ifndef SKGPAINTER_H
+#define SKGPAINTER_H
 
-#include <QWidget>
+#include <QObject>
+#include <QPainter>
 #include <QGraphicsScene>
 #include <QList>
 
 #include "skgdefines.h"
 
-namespace Ui {
-class AreaSKG;
-}
-
-class GridSKG;
-class TraceSKG;
-class LineSKG;
-class Platforms;
-class BrokenLinesSKG;
 class SignalAccess;
 
-class AreaSKG : public QWidget
+/*!
+ * \brief Класс рисователя статокинезиграммы The SKGPainter class
+ */
+class SKGPainter : public QObject
 {
     Q_OBJECT
 
-    Q_PROPERTY(QColor skg_color READ colorSKG WRITE setColorSKG DESIGNABLE true)
-    Q_PROPERTY(QColor ellipse_color READ colorEllipse WRITE setColorEllipse DESIGNABLE true)
-    Q_PROPERTY(QColor marker_color READ colorMarker WRITE setColorMarker DESIGNABLE true)
-    Q_PROPERTY(QColor platforms_color READ colorPlatforms WRITE setColorPlatforms DESIGNABLE true)
+//    Q_PROPERTY(QColor skg_color READ colorSKG WRITE setColorSKG DESIGNABLE true)
+//    Q_PROPERTY(QColor ellipse_color READ colorEllipse WRITE setColorEllipse DESIGNABLE true)
+//    Q_PROPERTY(QColor marker_color READ colorMarker WRITE setColorMarker DESIGNABLE true)
+//    Q_PROPERTY(QColor platforms_color READ colorPlatforms WRITE setColorPlatforms DESIGNABLE true)
 
 public:
-    explicit AreaSKG(QWidget *parent = nullptr);
-    ~AreaSKG();
+    explicit SKGPainter(QPainter* painter, QRect geometry);
 
     int diap() const;
     void setDiap(const int diap);
@@ -162,16 +156,30 @@ public:
      */
     void addPlatform(QRect platform);
 
-
-protected:
-    void resizeEvent(QResizeEvent *event);
+    /*!
+     * \brief Процедура прорисовки на рисователе m_painter  в рамках m_geometry
+     */
+    void doPaint(const double ratio);
 
 private:
-    Ui::AreaSKG *ui;
+    QPainter* m_painter {nullptr};
+    QRect m_geometry {QRect()};
 
     void setAreaSKG();
 
     QColor getFrameColor(const QColor color) const;
+
+    /*!
+     * \brief Прорисовка сетки
+     */
+    void drawGrid();
+
+    /*!
+     * \brief Прорисовка позиции сетки на позиции posGrid
+     * \param posGrid
+     * \param isLabels
+     */
+    void drawPositionGrid(int posGrid, bool isLabels);
 
     struct TargetInfo
     {
@@ -181,14 +189,14 @@ private:
             : item(itm), pos(pt) {}
     };
 
-    QGraphicsScene* m_sceneSKG {nullptr};
-    GridSKG* m_gridSKG {nullptr};
-    TraceSKG* m_traceSKG {nullptr};
-    QList<LineSKG*> m_lineSKG;
-    Platforms* m_platforms {nullptr};
-    BrokenLinesSKG* m_brokenLinesSKG {nullptr};
-    QGraphicsRectItem* m_marker {nullptr};
-    QList<TargetInfo> m_targets;
+//    QGraphicsScene* m_sceneSKG {nullptr};
+//    GridSKG* m_gridSKG {nullptr};
+//    TraceSKG* m_traceSKG {nullptr};
+//    QList<LineSKG*> m_lineSKG;
+//    Platforms* m_platforms {nullptr};
+//    BrokenLinesSKG* m_brokenLinesSKG {nullptr};
+//    QGraphicsRectItem* m_marker {nullptr};
+//    QList<TargetInfo> m_targets;
 
     QColor m_markerColor {Qt::red};
     QColor m_platformsColor {Qt::gray};
@@ -196,6 +204,18 @@ private:
     int m_diap {128};
     bool m_isShowTrace {false};
     bool m_isVisibleMarker {true};
+
+    double m_prop {1};
+    int m_width {0};
+    int m_height {0};
+    int m_midX {0};
+    int m_midY {0};
+    int m_left {0};
+    int m_top {0};
+    int m_right {0};
+    int m_bottom {0};
+    int m_space {0};
+    double m_ratio {1};
 };
 
-#endif // AREASKG_H
+#endif // SKGPAINTER_H

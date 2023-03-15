@@ -3,7 +3,7 @@
 #include <QWidget>
 #include <QDebug>
 
-#include "areaskgdefines.h"
+#include "skgdefines.h"
 
 TraceSKG::TraceSKG(int diap, QGraphicsItem *parent)
     : QGraphicsItem(parent)
@@ -14,8 +14,8 @@ TraceSKG::TraceSKG(int diap, QGraphicsItem *parent)
 
 QRectF TraceSKG::boundingRect() const
 {
-    QPointF pos(-m_diap * m_prop - AreaSKGDefines::I_LABEL_SPACE, -m_diap * m_prop - AreaSKGDefines::I_LABEL_SPACE);
-    QSizeF size((m_diap * m_prop + AreaSKGDefines::I_LABEL_SPACE) * 2, (m_diap * m_prop + AreaSKGDefines::I_LABEL_SPACE) * 2);
+    QPointF pos(-m_diap * m_prop - SKGDefines::I_LABEL_SPACE, -m_diap * m_prop - SKGDefines::I_LABEL_SPACE);
+    QSizeF size((m_diap * m_prop + SKGDefines::I_LABEL_SPACE) * 2, (m_diap * m_prop + SKGDefines::I_LABEL_SPACE) * 2);
     return QRectF(pos, size);
 }
 
@@ -26,7 +26,7 @@ void TraceSKG::paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QW
     m_width = widget->size().width();
     m_height = widget->size().height();
     int minS = qMin(m_width, m_height);
-    m_prop = static_cast<double>(minS / 2 - AreaSKGDefines::I_LABEL_SPACE) / static_cast<double>(m_diap);
+    m_prop = static_cast<double>(minS / 2 - SKGDefines::I_LABEL_SPACE) / static_cast<double>(m_diap);
 
     painter->save();
 
@@ -41,8 +41,8 @@ void TraceSKG::paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QW
     while (it.hasNext())
     {
         QPointF pt = it.next();
-        x1 = pt.x() * m_prop;
-        y1 = - pt.y() * m_prop;
+        x1 = static_cast<int>(pt.x() * m_prop);
+        y1 = static_cast<int>(- pt.y() * m_prop);
 
         if (i > 0)
             painter->drawLine(x1, y1, x2, y2);
@@ -77,6 +77,6 @@ void TraceSKG::clear()
 void TraceSKG::updateItem()
 {
     int minS = qMin(m_width, m_height);
-    m_prop = static_cast<double>(minS / 2 - AreaSKGDefines::I_LABEL_SPACE) / static_cast<double>(m_diap);
+    m_prop = static_cast<double>(minS / 2 - SKGDefines::I_LABEL_SPACE) / static_cast<double>(m_diap);
     update(boundingRect());
 }

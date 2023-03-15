@@ -8,6 +8,7 @@
 #include "settingsprovider.h"
 #include "dataprovider.h"
 #include "datadefines.h"
+#include "skgpainter.h"
 
 void ReportElements::drawHeader(QPainter *painter, const QString &testUid, QRect rect)
 {
@@ -135,4 +136,10 @@ void ReportElements::drawTable(QPainter *painter, QStandardItemModel *model, QRe
             auto label = model->index(i, j).data().toString();
             painter->drawText(static_cast<int>(rect.x() + rect.width() * cs.at(j) / sSum), static_cast<int>(rect.y() + (i + 1) * dh), label);
         }
+}
+
+void ReportElements::drawSKG(QPainter *painter, const QRect &rect, const QString &testUid, const double ratio)
+{
+    SKGPainter skg(painter, rect);
+    skg.doPaint(ratio);
 }

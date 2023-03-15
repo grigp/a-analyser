@@ -13,8 +13,8 @@ BrokenLinesSKG::BrokenLinesSKG(int diap, QGraphicsItem *parent)
 
 QRectF BrokenLinesSKG::boundingRect() const
 {
-    QPointF pos(-m_diap * m_prop - AreaSKGDefines::I_LABEL_SPACE, -m_diap * m_prop - AreaSKGDefines::I_LABEL_SPACE);
-    QSizeF size((m_diap * m_prop + AreaSKGDefines::I_LABEL_SPACE) * 2, (m_diap * m_prop + AreaSKGDefines::I_LABEL_SPACE) * 2);
+    QPointF pos(-m_diap * m_prop - SKGDefines::I_LABEL_SPACE, -m_diap * m_prop - SKGDefines::I_LABEL_SPACE);
+    QSizeF size((m_diap * m_prop + SKGDefines::I_LABEL_SPACE) * 2, (m_diap * m_prop + SKGDefines::I_LABEL_SPACE) * 2);
     return QRectF(pos, size);
 }
 
@@ -25,7 +25,7 @@ void BrokenLinesSKG::paint(QPainter *painter, const QStyleOptionGraphicsItem *it
     m_width = widget->size().width();
     m_height = widget->size().height();
     int minS = qMin(m_width, m_height);
-    m_prop = static_cast<double>(minS / 2 - AreaSKGDefines::I_LABEL_SPACE) / static_cast<double>(m_diap);
+    m_prop = static_cast<double>(minS / 2 - SKGDefines::I_LABEL_SPACE) / static_cast<double>(m_diap);
 
     painter->save();
 
@@ -52,7 +52,7 @@ void BrokenLinesSKG::paint(QPainter *painter, const QStyleOptionGraphicsItem *it
     painter->restore();
 }
 
-int BrokenLinesSKG::addBrokenLine(AreaSKGDefines::BrokenLine &bl)
+int BrokenLinesSKG::addBrokenLine(SKGDefines::BrokenLine &bl)
 {
     m_brokenLines << bl;
     return  m_brokenLines.size() - 1;

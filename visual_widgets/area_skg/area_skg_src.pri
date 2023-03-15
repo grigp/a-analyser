@@ -7,7 +7,6 @@ HEADERS += \
     $$PWD/viewskg.h \
     $$PWD/lineskg.h \
     $$PWD/brokenlinesskg.h \
-    $$PWD/areaskgdefines.h \
     $$PWD/platforms.h
 
 SOURCES += \
