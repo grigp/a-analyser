@@ -131,6 +131,16 @@
            </widget>
           </item>
           <item>
+           <widget class="SKGWidget" name="wgtSKG_" native="true">
+            <property name="minimumSize">
+             <size>
+              <width>500</width>
+              <height>200</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+          <item>
            <spacer name="horizontalSpacer_2">
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
@@ -163,6 +173,12 @@
    <class>DynamicDiagram</class>
    <extends>QWidget</extends>
    <header location="global">dynamicdiagram.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>SKGWidget</class>
+   <extends>QWidget</extends>
+   <header location="global">skgwidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

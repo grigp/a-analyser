@@ -3,9 +3,20 @@
 #include <QDebug>
 
 SKGPainter::SKGPainter(QPainter* painter, QRect geometry)
-    : QObject(), m_painter(painter), m_geometry(geometry)
+    : m_painter(painter), m_geometry(geometry)
 {
 
+}
+
+SKGPainter::SKGPainter()
+{
+
+}
+
+void SKGPainter::setCanvas(QPainter *painter, QRect geometry)
+{
+    m_painter = painter;
+    m_geometry = geometry;
 }
 
 int SKGPainter::diap() const
@@ -145,6 +156,10 @@ void SKGPainter::addPlatform(QRect platform)
 
 void SKGPainter::doPaint(const double ratio)
 {
+    qDebug() << m_painter << m_geometry << m_diap;
+    if (!m_painter || (m_geometry == QRect(0, 0, 0, 0)))
+        return;
+
 //    int space = static_cast<int>(SKGDefines::I_LABEL_SPACE * ratio);
     m_space = static_cast<int>(SKGDefines::I_LABEL_SPACE);
 

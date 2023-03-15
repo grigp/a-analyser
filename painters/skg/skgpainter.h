@@ -13,9 +13,9 @@ class SignalAccess;
 /*!
  * \brief Класс рисователя статокинезиграммы The SKGPainter class
  */
-class SKGPainter : public QObject
+class SKGPainter
 {
-    Q_OBJECT
+//    Q_OBJECT
 
 //    Q_PROPERTY(QColor skg_color READ colorSKG WRITE setColorSKG DESIGNABLE true)
 //    Q_PROPERTY(QColor ellipse_color READ colorEllipse WRITE setColorEllipse DESIGNABLE true)
@@ -24,6 +24,14 @@ class SKGPainter : public QObject
 
 public:
     explicit SKGPainter(QPainter* painter, QRect geometry);
+    explicit SKGPainter();
+
+    /*!
+     * \brief Задает канву прорисовки. Будет испльзоваться в режиме виджета для задания
+     * \param painter - рисователь
+     * \param geometry - размер области прорисовки
+     */
+    void setCanvas(QPainter* painter, QRect geometry);
 
     int diap() const;
     void setDiap(const int diap);
@@ -163,7 +171,7 @@ public:
 
 private:
     QPainter* m_painter {nullptr};
-    QRect m_geometry {QRect()};
+    QRect m_geometry {QRect(0, 0, 0, 0)};
 
     void setAreaSKG();
 
