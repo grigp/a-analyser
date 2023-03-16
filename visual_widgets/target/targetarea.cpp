@@ -3,6 +3,7 @@
 
 #include <QPainter>
 #include <QFontMetrics>
+#include <QDebug>
 
 TargetArea::TargetArea(QWidget *parent) :
     QWidget(parent),

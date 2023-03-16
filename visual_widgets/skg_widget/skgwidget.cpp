@@ -4,9 +4,12 @@
 #include <QPainter>
 #include <QDebug>
 
+
+
 SKGWidget::SKGWidget(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::SKGWidget)
+    ui(new Ui::SKGWidget),
+  SKGPainter ()
 {
     ui->setupUi(this);
 }
@@ -18,12 +21,18 @@ SKGWidget::~SKGWidget()
 
 void SKGWidget::paintEvent(QPaintEvent *event)
 {
-//    QWidget::paintEvent(event);
+    QWidget::paintEvent(event);
 
-    qDebug() << geometry();
+    QRect geo = QRect(0, 0, geometry().width(), geometry().height());
+
     QPainter painter(this);
-    painter.setBrush(QBrush(Qt::red));
-    painter.drawRect(geometry());
-    setCanvas(&painter, geometry());
-    doPaint(1);
+//    painter.setBrush(QBrush(Qt::red));
+//    painter.drawRect(geo);
+    setCanvas(&painter, geo);
+    doPaint(2);
+}
+
+void SKGWidget::doUpdate()
+{
+    update();
 }

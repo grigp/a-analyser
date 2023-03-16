@@ -15,16 +15,10 @@ class SignalAccess;
  */
 class SKGPainter
 {
-//    Q_OBJECT
-
-//    Q_PROPERTY(QColor skg_color READ colorSKG WRITE setColorSKG DESIGNABLE true)
-//    Q_PROPERTY(QColor ellipse_color READ colorEllipse WRITE setColorEllipse DESIGNABLE true)
-//    Q_PROPERTY(QColor marker_color READ colorMarker WRITE setColorMarker DESIGNABLE true)
-//    Q_PROPERTY(QColor platforms_color READ colorPlatforms WRITE setColorPlatforms DESIGNABLE true)
-
 public:
     explicit SKGPainter(QPainter* painter, QRect geometry);
     explicit SKGPainter();
+    virtual ~SKGPainter();
 
     /*!
      * \brief Задает канву прорисовки. Будет испльзоваться в режиме виджета для задания
@@ -169,6 +163,9 @@ public:
      */
     void doPaint(const double ratio);
 
+protected:
+    virtual void doUpdate();
+
 private:
     QPainter* m_painter {nullptr};
     QRect m_geometry {QRect(0, 0, 0, 0)};
@@ -183,11 +180,16 @@ private:
     void drawGrid();
 
     /*!
-     * \brief Прорисовка позиции сетки на позиции posGrid
+     * \brief Прорисовывает позиции сетки на позиции posGrid
      * \param posGrid
      * \param isLabels
      */
     void drawPositionGrid(int posGrid, bool isLabels);
+
+    /*!
+     * \brief Прорисовывает статокинезиграммы
+     */
+    void drawSKG();
 
     struct TargetInfo
     {
@@ -195,6 +197,23 @@ private:
         QPointF pos;
         TargetInfo(QGraphicsItem* itm, QPointF pt)
             : item(itm), pos(pt) {}
+    };
+
+    /*!
+     * \brief Структура данных, содержащая сигнал и его параметры The SignalData struct
+     */
+    struct SignalData
+    {
+        SignalAccess* signal {nullptr};
+        QColor color {Qt::darkCyan};
+        int begin {-1};
+        int end {-1};
+        double offsX {0}, offsY {0};
+        SignalData(SignalAccess* sig, const QColor col, const int b, const int e);
+//        SignalData(SignalAccess* sig, const QColor col, const int b, const int e)
+//            : signal(sig), color(col), begin(b), end(e) {}
+        //! Рассчитывает параметры сигнала
+        void assignSignal(SignalAccess* sig = nullptr);
     };
 
 //    QGraphicsScene* m_sceneSKG {nullptr};
@@ -224,6 +243,9 @@ private:
     int m_bottom {0};
     int m_space {0};
     double m_ratio {1};
+
+    QList<SignalData> m_signals;
+    bool m_isZeroing {false};
 };
 
 #endif // SKGPAINTER_H

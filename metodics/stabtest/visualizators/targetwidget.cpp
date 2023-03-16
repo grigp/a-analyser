@@ -115,6 +115,7 @@ void TargetWidget::showSKG(TargetCalculator *calculator, const QString &testUid)
 
     auto *sig = probe->signal(ChannelsDefines::chanStab);
     ui->wgtSKG->setSignal(sig);
+    ui->wgtSKG_->setSignal(sig);
     auto max = sig->absMaxValue();
     ui->wgtSKG->setVisibleMarker(false);
 
@@ -128,6 +129,7 @@ void TargetWidget::showSKG(TargetCalculator *calculator, const QString &testUid)
             ++step;
         }
         ui->wgtSKG->setDiap(diap);
+        ui->wgtSKG_->setDiap(diap);
     });
 
     wgtSKG = ui->wgtSKG;

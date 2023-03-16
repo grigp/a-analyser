@@ -1,5 +1,6 @@
 #include "skgpainter.h"
 
+#include "signalaccess.h"
 #include <QDebug>
 
 SKGPainter::SKGPainter(QPainter* painter, QRect geometry)
@@ -13,6 +14,11 @@ SKGPainter::SKGPainter()
 
 }
 
+SKGPainter::~SKGPainter()
+{
+
+}
+
 void SKGPainter::setCanvas(QPainter *painter, QRect geometry)
 {
     m_painter = painter;
@@ -21,12 +27,13 @@ void SKGPainter::setCanvas(QPainter *painter, QRect geometry)
 
 int SKGPainter::diap() const
 {
-
+    return m_diap;
 }
 
 void SKGPainter::setDiap(const int diap)
 {
-
+    m_diap = diap;
+    doUpdate();
 }
 
 void SKGPainter::addMarker()
@@ -51,7 +58,17 @@ void SKGPainter::showTrace(const bool trace)
 
 void SKGPainter::setSignal(SignalAccess *signal, const int num, const int begin, const int end)
 {
-
+    Q_UNUSED(begin);
+    Q_UNUSED(end);
+    if (num == m_signals.size())
+        m_signals.append(SignalData(signal, Qt::darkCyan, begin, end));
+    else
+    if (num >= 0 && num < m_signals.size())
+    {
+        auto sd = m_signals.at(num);
+        sd.assignSignal(signal);
+        m_signals.replace(num, sd);
+    }
 }
 
 void SKGPainter::setSection(const int begin, const int end, const int num)
@@ -66,7 +83,8 @@ void SKGPainter::setVisibleMarker(const bool visibleMarker)
 
 void SKGPainter::setZeroing(const bool zeroing)
 {
-
+    m_isZeroing = zeroing;
+    doUpdate();
 }
 
 void SKGPainter::setOffset(const double offsetX, const double offsetY, const int num)
@@ -81,12 +99,19 @@ void SKGPainter::setEllipse(const double sizeA, const double sizeB, const double
 
 void SKGPainter::setColorSKG(const QColor &color, const int num)
 {
-
+    if (num >= 0 && num < m_signals.size())
+    {
+        auto sd = m_signals.at(num);
+        sd.color = color;
+        m_signals.replace(num, sd);
+    }
 }
 
 QColor SKGPainter::colorSKG(const int num) const
 {
-
+    if (num >= 0 && num < m_signals.size())
+        return m_signals.at(num).color;
+    return Qt::darkCyan;
 }
 
 void SKGPainter::setColorEllipse(const QColor &color)
@@ -156,7 +181,7 @@ void SKGPainter::addPlatform(QRect platform)
 
 void SKGPainter::doPaint(const double ratio)
 {
-    qDebug() << m_painter << m_geometry << m_diap;
+//    qDebug() << m_painter << m_geometry << m_diap;
     if (!m_painter || (m_geometry == QRect(0, 0, 0, 0)))
         return;
 
@@ -180,8 +205,14 @@ void SKGPainter::doPaint(const double ratio)
     m_painter->save();
 
     drawGrid();
+    drawSKG();
 
     m_painter->restore();
+}
+
+void SKGPainter::doUpdate()
+{
+
 }
 
 void SKGPainter::setAreaSKG()
@@ -295,4 +326,64 @@ void SKGPainter::drawPositionGrid(int posGrid, bool isLabels)
         m_painter->rotate(-90);
         m_painter->translate(-m_midX, -m_midY);
     }
+}
+
+void SKGPainter::drawSKG()
+{
+    for (int chan = 0; chan < m_signals.size(); ++chan)
+    {
+        m_painter->setPen(QPen(m_signals.at(chan).color, 1));
+        auto signal = m_signals.at(chan).signal;
+
+        int x1 = 0;
+        int y1 = 0;
+        int x2 = 0;
+        int y2 = 0;
+
+        int b = 0;
+        if (m_signals.at(chan).begin != -1)
+            b = m_signals.at(chan).begin;
+        int e = signal->size();
+        if (m_signals.at(chan).end != -1)
+            e = m_signals.at(chan).end;
+
+        for (int i = b; i < e; ++i)
+        {
+            if (m_isZeroing)
+            {
+                x1 = static_cast<int>(m_midX + (signal->value(0, i) - m_signals.at(chan).offsX) * m_prop);
+                y1 = static_cast<int>(m_midY - (signal->value(1, i) - m_signals.at(chan).offsY) * m_prop);
+            }
+            else
+            {
+                x1 = static_cast<int>(m_midX + m_signals.at(chan).signal->value(0, i) * m_prop);
+                y1 = static_cast<int>(m_midY - m_signals.at(chan).signal->value(1, i) * m_prop);
+            }
+            if (i > b)
+                m_painter->drawLine(x1, y1, x2, y2);
+            x2 = x1;
+            y2 = y1;
+        }
+    }
+}
+
+SKGPainter::SignalData::SignalData(SignalAccess *sig, const QColor col, const int b, const int e)
+    : signal(sig), color(col), begin(b), end(e)
+{
+    assignSignal();  //! Рассчитать параметры сигнала
+}
+
+void SKGPainter::SignalData::assignSignal(SignalAccess *sig)
+{
+    if (sig != nullptr)
+        signal = sig;
+    offsX = 0;
+    offsY = 0;
+    for (int i = 0; i < signal->size(); ++i)
+    {
+        offsX = offsX + signal->value(0, i);
+        offsY = offsY + signal->value(1, i);
+    }
+    offsX = offsX / signal->size();
+    offsY = offsY / signal->size();
 }

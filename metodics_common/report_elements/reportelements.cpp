@@ -140,6 +140,8 @@ void ReportElements::drawTable(QPainter *painter, QStandardItemModel *model, QRe
 
 void ReportElements::drawSKG(QPainter *painter, const QRect &rect, const QString &testUid, const double ratio)
 {
+
     SKGPainter skg(painter, rect);
+    //skg.setSignal();
     skg.doPaint(ratio);
 }
