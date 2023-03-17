@@ -4,6 +4,7 @@
 #include <QDebug>
 
 #include "baseutils.h"
+#include "channelsutils.h"
 #include "aanalyserapplication.h"
 #include "metodicsfactory.h"
 #include "settingsprovider.h"
@@ -143,19 +144,47 @@ void ReportElements::drawTable(QPainter *painter, QStandardItemModel *model, QRe
 void ReportElements::drawSKG(QPainter *painter,
                              const QRect &rect,
                              const QString &testUid,
-                             const QString &probeUid,
-                             const QString &channelId,
+                             const int probeNum,
                              const double ratio)
 {
-    Q_UNUSED(testUid);
-    SKGPainter skg(painter, rect);
-    QByteArray baStab;
-    if (DataProvider::getChannel(probeUid, channelId, baStab))
+    QString csMain = "";
+    QString csLeft = "";
+    QString csRight = "";
+    QString probeUid = "";
+    DataDefines::TestInfo ti;
+    if (DataProvider::getTestInfo(testUid, ti))
+        if (probeNum >= 0 && probeNum < ti.probes.size())
+        {
+            probeUid = ti.probes.at(probeNum);
+            if (DataProvider::channelExists(probeUid, ChannelsDefines::chanStab))
+                csMain = ChannelsDefines::chanStab;
+            if (DataProvider::channelExists(probeUid, ChannelsDefines::chanStabLeft))
+                csLeft = ChannelsDefines::chanStabLeft;
+            if (DataProvider::channelExists(probeUid, ChannelsDefines::chanStabRight))
+                csRight = ChannelsDefines::chanStabRight;
+        }
+
+    if (probeUid != "" && csMain != "")
     {
-        Stabilogram stab(baStab);
-        skg.setSignal(&stab);
-        auto diap = BaseUtils::scaleAbove(stab.absMaxValue());
-        skg.setDiap(diap);
-        skg.doPaint(ratio);
+        SKGPainter skg(painter, rect);
+        QByteArray baStab;
+        if (DataProvider::getChannel(probeUid, csMain, baStab))
+        {
+            Stabilogram stab(baStab);
+            skg.setSignal(&stab);
+//            if (csLeft != "")
+//            {
+//                QByteArray baStab;
+//                if (DataProvider::getChannel(probeUid, csLeft, baStab))
+//                {
+//                    Stabilogram stabL(baStab);
+//                    skg.setSignal(&stabL);
+//                }
+//            }
+
+            auto diap = BaseUtils::scaleAbove(stab.absMaxValue());
+            skg.setDiap(diap);
+            skg.doPaint(ratio);
+        }
     }
 }

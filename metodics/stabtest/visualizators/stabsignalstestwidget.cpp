@@ -748,13 +748,12 @@ void StabSignalsTestWidget::printOnePortrait(QPrinter *printer, QPainter *painte
 
         DataDefines::TestInfo ti;
         if (DataProvider::getTestInfo(testUid, ti))
-            for (int i = 0; i < ti.probes.size(); ++i)
-            {
-                DataDefines::ProbeInfo pi;
-                if (DataProvider::getProbeInfo(ti.probes.at(i), pi))
-                    if (DataProvider::channelExists(pi.uid, ChannelsDefines::chanStab))
-                        ReportElements::drawSKG(painter, rectSKG, testUid, pi.uid, ChannelsDefines::chanStab, ratio);
-            }
+        {
+            DataDefines::ProbeInfo pi;
+            if (DataProvider::getProbeInfo(ti.probes.at(0), pi))
+                if (DataProvider::channelExists(pi.uid, ChannelsDefines::chanStab))
+                    ReportElements::drawSKG(painter, rectSKG, testUid, 0, ratio);
+        }
 
 //        ReportElements::drawWidget(painter, areasesSKG.at(0),
 //                                   static_cast<int>(paper.width() * 0.6), static_cast<int>(paper.height() * 0.6),

@@ -67,15 +67,14 @@ void drawTable(QPainter *painter, QStandardItemModel *model, QRect rect,
  * \brief Прорисовывает СКГ на заданной канве
  * \param painter - рисователь
  * \param rect - зона СКГ
- * \param probeId - номер пробы
- * \param channelId - идентификатор канала
  * \param testUid - uid теста
+ * \param probeNum - номер пробы
+ * \param ratio - множитель
  */
 void drawSKG(QPainter *painter,
              const QRect &rect,
              const QString &testUid,
-             const QString &probeUid,
-             const QString &channelId,
+             const int probeNum,
              const double ratio);
 
 
