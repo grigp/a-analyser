@@ -3,12 +3,14 @@
 #include <QApplication>
 #include <QDebug>
 
+#include "baseutils.h"
 #include "aanalyserapplication.h"
 #include "metodicsfactory.h"
 #include "settingsprovider.h"
 #include "dataprovider.h"
 #include "datadefines.h"
 #include "skgpainter.h"
+#include "stabilogram.h"
 
 void ReportElements::drawHeader(QPainter *painter, const QString &testUid, QRect rect)
 {
@@ -138,10 +140,22 @@ void ReportElements::drawTable(QPainter *painter, QStandardItemModel *model, QRe
         }
 }
 
-void ReportElements::drawSKG(QPainter *painter, const QRect &rect, const QString &testUid, const double ratio)
+void ReportElements::drawSKG(QPainter *painter,
+                             const QRect &rect,
+                             const QString &testUid,
+                             const QString &probeUid,
+                             const QString &channelId,
+                             const double ratio)
 {
-
+    Q_UNUSED(testUid);
     SKGPainter skg(painter, rect);
-    //skg.setSignal();
-    skg.doPaint(ratio);
+    QByteArray baStab;
+    if (DataProvider::getChannel(probeUid, channelId, baStab))
+    {
+        Stabilogram stab(baStab);
+        skg.setSignal(&stab);
+        auto diap = BaseUtils::scaleAbove(stab.absMaxValue());
+        skg.setDiap(diap);
+        skg.doPaint(ratio);
+    }
 }

@@ -214,6 +214,13 @@ void setOutrunningResume(const double orv, QString &resume, QString &resumeColor
 int scaleMultiplier(const int idx);
 
 /*!
+ * \brief Возвращает масштабный множитель по значению сигнала, превышающий значение
+ * \param value - макисмальное значение сигнала
+ * \return 1, 2, 4, 8, 16, 32, ....
+ */
+int scaleAbove(const double& value);
+
+/*!
  * \brief Возвращает знак числа
  * \param value - число
  * \return BaseDefines::NegativeValue, если value < 0, BaseDefines::ZeroValue, если value == 0, BaseDefines::PositiveValue, если value > 0;

@@ -498,6 +498,14 @@ int BaseUtils::scaleMultiplier(const int idx)
     return retval;
 }
 
+int BaseUtils::scaleAbove(const double& value)
+{
+    int retval = 1;
+    while (retval < value)
+        retval *= 2;
+    return retval;
+}
+
 void BaseUtils::MidAndStandardDeviation::calculate(double &mid, double &stdDev) const
 {
     mid = 0;
