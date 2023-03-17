@@ -9,6 +9,8 @@
 #include "dynamicdiagram.h"
 #include "testresultdata.h"
 #include "reportelements.h"
+#include "datadefines.h"
+#include "dataprovider.h"
 
 #include <QTimer>
 #include <QDebug>
@@ -70,9 +72,29 @@ void TargetWidget::print(QPrinter *printer, const QString &testUid)
         ReportElements::drawWidget(painter, wgtDiagram,
                                    static_cast<int>(paper.width() * 0.85), static_cast<int>(paper.height() * 0.85),
                                    paper.x() + paper.width() / 10, paper.y() + paper.height() / 10 * 2);
-        ReportElements::drawWidget(painter, wgtSKG,
-                                   static_cast<int>(paper.width() * 0.45), static_cast<int>(paper.height() * 0.45),
-                                   paper.x() + paper.width() / 10 * 3, paper.y() + paper.height() / 10 * 5);
+
+        auto rectSKG = QRect(paper.x() + paper.width() / 2 - static_cast<int>(paper.width() * 0.33),
+                             static_cast<int>(paper.y() + paper.height() / 10 * 4.7),
+                             static_cast<int>(paper.width() * 0.65),
+                             static_cast<int>(paper.height() * 0.45));
+
+        double ratio = static_cast<double>(paper.width()) / static_cast<double>(wgtSKG->geometry().width());
+        if (static_cast<double>(paper.height()) / static_cast<double>(wgtSKG->geometry().height()) < ratio)
+            ratio = static_cast<double>(paper.height()) / static_cast<double>(wgtSKG->geometry().height());
+        if (ratio > 5) ratio = 5;
+
+        DataDefines::TestInfo ti;
+        if (DataProvider::getTestInfo(testUid, ti))
+            for (int i = 0; i < ti.probes.size(); ++i)
+            {
+                DataDefines::ProbeInfo pi;
+                if (DataProvider::getProbeInfo(ti.probes.at(i), pi))
+                    if (DataProvider::channelExists(pi.uid, ChannelsDefines::chanStab))
+                        ReportElements::drawSKG(painter, rectSKG, testUid, pi.uid, ChannelsDefines::chanStab, ratio);
+            }
+//        ReportElements::drawWidget(painter, wgtSKG,
+//                                   static_cast<int>(paper.width() * 0.45), static_cast<int>(paper.height() * 0.45),
+//                                   paper.x() + paper.width() / 10 * 3, paper.y() + paper.height() / 10 * 5);
     }
     else
     if (printer->orientation() == QPrinter::Landscape)
