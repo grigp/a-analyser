@@ -191,6 +191,11 @@ private:
      */
     void drawSKG();
 
+    /*!
+     * \brief Прорисовывает платформы
+     */
+    void drawPlatforms();
+
     struct TargetInfo
     {
         QGraphicsItem* item;
@@ -246,6 +251,8 @@ private:
 
     QList<SignalData> m_signals;
     bool m_isZeroing {false};
+
+    QList<QRect> m_platforms;
 };
 
 #endif // SKGPAINTER_H

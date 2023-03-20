@@ -89,7 +89,13 @@ void SKGPainter::setZeroing(const bool zeroing)
 
 void SKGPainter::setOffset(const double offsetX, const double offsetY, const int num)
 {
-
+    if (num >= 0 && num < m_signals.size())
+    {
+        auto sd = m_signals.at(num);
+        sd.offsX = offsetX;
+        sd.offsY = offsetY;
+        m_signals.replace(num, sd);
+    }
 }
 
 void SKGPainter::setEllipse(const double sizeA, const double sizeB, const double angle)
@@ -136,12 +142,12 @@ void SKGPainter::setColorMarker(const QColor &color)
 
 QColor SKGPainter::colorPlatforms() const
 {
-
+    return m_platformsColor;
 }
 
 void SKGPainter::setColorPlatforms(const QColor &color)
 {
-
+   m_platformsColor = color;
 }
 
 void SKGPainter::addTarget(const double x, const double y, const QColor colorBackground, const QColor colorBorder)
@@ -176,12 +182,11 @@ void SKGPainter::setVisibleSKG(const bool isVisible, const int num)
 
 void SKGPainter::addPlatform(QRect platform)
 {
-
+    m_platforms << platform;
 }
 
 void SKGPainter::doPaint(const double ratio)
 {
-//    qDebug() << m_painter << m_geometry << m_diap;
     if (!m_painter || (m_geometry == QRect(0, 0, 0, 0)))
         return;
 
@@ -202,12 +207,10 @@ void SKGPainter::doPaint(const double ratio)
     m_bottom = m_midY + static_cast<int>(m_diap * m_prop);
     m_ratio = ratio;
 
-    m_painter->save();
-
+    drawPlatforms();
     drawGrid();
     drawSKG();
 
-    m_painter->restore();
 }
 
 void SKGPainter::doUpdate()
@@ -279,6 +282,7 @@ void SKGPainter::drawGrid()
 
 void SKGPainter::drawPositionGrid(int posGrid, bool isLabels)
 {
+    m_painter->save();
     //! Линии
     m_painter->drawLine(static_cast<int>(m_midX - posGrid * m_prop), m_top, static_cast<int>(m_midX - posGrid * m_prop), m_bottom);
     m_painter->drawLine(static_cast<int>(m_midX + posGrid * m_prop), m_top, static_cast<int>(m_midX + posGrid * m_prop), m_bottom);
@@ -326,10 +330,12 @@ void SKGPainter::drawPositionGrid(int posGrid, bool isLabels)
         m_painter->rotate(-90);
         m_painter->translate(-m_midX, -m_midY);
     }
+    m_painter->restore();
 }
 
 void SKGPainter::drawSKG()
 {
+    m_painter->save();
     for (int chan = 0; chan < m_signals.size(); ++chan)
     {
         m_painter->setPen(QPen(m_signals.at(chan).color, 1));
@@ -365,6 +371,27 @@ void SKGPainter::drawSKG()
             y2 = y1;
         }
     }
+    m_painter->restore();
+}
+
+void SKGPainter::drawPlatforms()
+{
+    m_painter->save();
+    m_painter->setBrush(QBrush(m_platformsColor, Qt::SolidPattern));
+    QColor frameColor = QColor(m_platformsColor.red() / 8, m_platformsColor.green() / 8, m_platformsColor.blue() / 8);
+    m_painter->setPen(QPen(frameColor, 2, Qt::SolidLine, Qt::FlatCap));
+    m_painter->setFont(QFont("Sans", 20, QFont::Bold, false));
+
+    for (int i = 0; i < m_platforms.size(); ++i)
+    {
+        QRect r = QRect(static_cast<int>(m_midX + m_platforms.at(i).x() * m_prop),
+                        static_cast<int>(m_midY - m_platforms.at(i).y() * m_prop),
+                        static_cast<int>(m_platforms.at(i).width() * m_prop),
+                        static_cast<int>(m_platforms.at(i).height() * m_prop));
+        m_painter->drawRect(r);
+        m_painter->drawText(r, QString::number(i + 1));
+    }
+    m_painter->restore();
 }
 
 SKGPainter::SignalData::SignalData(SignalAccess *sig, const QColor col, const int b, const int e)

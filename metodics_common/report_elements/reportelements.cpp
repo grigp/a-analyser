@@ -12,6 +12,7 @@
 #include "datadefines.h"
 #include "skgpainter.h"
 #include "stabilogram.h"
+#include "bilateralresultdata.h"
 
 void ReportElements::drawHeader(QPainter *painter, const QString &testUid, QRect rect)
 {
@@ -141,6 +142,31 @@ void ReportElements::drawTable(QPainter *painter, QStandardItemModel *model, QRe
         }
 }
 
+int computeDiap(BilateralResultData& bData)
+{
+    auto plate1 = bData.platform(0);
+    auto plate2 = bData.platform(1);
+    int xMin = plate1.x();
+    if (plate2.x() < plate1.x())
+        xMin = plate2.x();
+    int xMax = plate1.x() + plate1.width();
+    if (plate2.x() + plate2.width() > plate1.x() + plate1.width())
+        xMax = plate2.x() + plate2.width();
+
+    int yMax = plate1.y();
+    if (plate2.y() > plate1.y())
+        yMax = plate2.y();
+    int yMin = plate1.y() - plate1.height();
+    if (plate2.y() - plate2.height() < plate1.y() - plate1.height())
+        yMin = plate2.y() - plate2.height();
+
+    int diap = qMax(abs(xMin), abs(xMax));
+    diap = qMax(diap, abs(yMin));
+    diap = qMax(diap, abs(yMax));
+
+    return diap;
+}
+
 void ReportElements::drawSKG(QPainter *painter,
                              const QRect &rect,
                              const QString &testUid,
@@ -172,19 +198,50 @@ void ReportElements::drawSKG(QPainter *painter,
         {
             Stabilogram stab(baStab);
             skg.setSignal(&stab);
-//            if (csLeft != "")
-//            {
-//                QByteArray baStab;
-//                if (DataProvider::getChannel(probeUid, csLeft, baStab))
-//                {
-//                    Stabilogram stabL(baStab);
-//                    skg.setSignal(&stabL);
-//                }
-//            }
 
-            auto diap = BaseUtils::scaleAbove(stab.absMaxValue());
-            skg.setDiap(diap);
-            skg.doPaint(ratio);
+            QByteArray baData;
+            int diap = -1;
+            if (DataProvider::getChannel(probeUid, ChannelsDefines::chanBilat, baData))
+            {
+                BilateralResultData bData(baData);
+
+                QByteArray baStabLeft;
+                if (csLeft != "")
+                    DataProvider::getChannel(probeUid, csLeft, baStabLeft);
+                Stabilogram stabL(baStabLeft);
+                if (baStabLeft.size() > 0)
+                {
+                    skg.setSignal(&stabL, 1);
+                    skg.setOffset(-bData.platform(0).center().x(),
+                                  -bData.platform(0).y() + bData.platform(0).height() / 2, 1);
+                }
+
+                QByteArray baStabRight;
+                if (csRight!= "")
+                    DataProvider::getChannel(probeUid, csRight, baStabRight);
+                Stabilogram stabR(baStabRight);
+                if (baStabRight.size() > 0)
+                {
+                    skg.setSignal(&stabR, 2);
+                    skg.setOffset(-bData.platform(1).center().x(),
+                                  -bData.platform(1).y() + bData.platform(1).height() / 2, 2);
+                }
+
+                for (int i = 0; i < bData.platformsCount(); ++i)
+                    skg.addPlatform(bData.platform(i));
+                diap = computeDiap(bData);
+
+                skg.setDiap(diap);    //! Объединять нельзя, вызов должен быть в зоне видимости stabL и stabR
+                skg.setZeroing(true);
+
+                skg.doPaint(ratio);
+            }
+            else
+            {
+                diap = BaseUtils::scaleAbove(stab.absMaxValue());
+                skg.setDiap(diap);
+                skg.doPaint(ratio);
+            }
         }
     }
 }
