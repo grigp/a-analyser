@@ -177,7 +177,7 @@ private:
     /*!
      * \brief Прорисовка сетки
      */
-    void drawGrid();
+    void drawGrid(const double ratio);
 
     /*!
      * \brief Прорисовывает позиции сетки на позиции posGrid
@@ -194,7 +194,7 @@ private:
     /*!
      * \brief Прорисовывает платформы
      */
-    void drawPlatforms();
+    void drawPlatforms(const double ratio);
 
     struct TargetInfo
     {

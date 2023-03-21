@@ -207,8 +207,10 @@ void SKGPainter::doPaint(const double ratio)
     m_bottom = m_midY + static_cast<int>(m_diap * m_prop);
     m_ratio = ratio;
 
-    drawPlatforms();
-    drawGrid();
+    qDebug() << m_prop << ratio;
+
+    drawPlatforms(ratio);
+    drawGrid(ratio);
     drawSKG();
 
 }
@@ -228,7 +230,7 @@ QColor SKGPainter::getFrameColor(const QColor color) const
 
 }
 
-void SKGPainter::drawGrid()
+void SKGPainter::drawGrid(const double ratio)
 {
     //! Оси и метки 0
     m_painter->setPen(QPen(Qt::black, 1));
@@ -261,7 +263,7 @@ void SKGPainter::drawGrid()
             if (i % 10 == 0)
             {
                 m_painter->setPen(QPen(Qt::darkGray, 1, Qt::DotLine));
-                drawPositionGrid(i, m_prop * 10 > 20);
+                drawPositionGrid(i, m_prop / (ratio/2) * 10 > 20);
             }
         }
         else
@@ -274,7 +276,7 @@ void SKGPainter::drawGrid()
             else
             {
                 m_painter->setPen(QPen(Qt::darkGray, 1, Qt::DotLine));
-                drawPositionGrid(i, m_prop > 20);
+                drawPositionGrid(i, m_prop / (ratio/2) > 20);
             }
         }
     }
@@ -374,13 +376,13 @@ void SKGPainter::drawSKG()
     m_painter->restore();
 }
 
-void SKGPainter::drawPlatforms()
+void SKGPainter::drawPlatforms(const double ratio)
 {
     m_painter->save();
     m_painter->setBrush(QBrush(m_platformsColor, Qt::SolidPattern));
     QColor frameColor = QColor(m_platformsColor.red() / 8, m_platformsColor.green() / 8, m_platformsColor.blue() / 8);
     m_painter->setPen(QPen(frameColor, 2, Qt::SolidLine, Qt::FlatCap));
-    m_painter->setFont(QFont("Sans", 20, QFont::Bold, false));
+    m_painter->setFont(QFont("Sans", static_cast<int>(20 / (ratio/2)), QFont::Bold, false));
 
     for (int i = 0; i < m_platforms.size(); ++i)
     {
