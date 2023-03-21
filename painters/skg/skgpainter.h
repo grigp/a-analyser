@@ -221,17 +221,13 @@ private:
         void assignSignal(SignalAccess* sig = nullptr);
     };
 
-//    QGraphicsScene* m_sceneSKG {nullptr};
-//    GridSKG* m_gridSKG {nullptr};
 //    TraceSKG* m_traceSKG {nullptr};
-//    QList<LineSKG*> m_lineSKG;
-//    Platforms* m_platforms {nullptr};
 //    BrokenLinesSKG* m_brokenLinesSKG {nullptr};
 //    QGraphicsRectItem* m_marker {nullptr};
 //    QList<TargetInfo> m_targets;
 
     QColor m_markerColor {Qt::red};
-    QColor m_platformsColor {Qt::gray};
+    QColor m_platformsColor {QColor(235, 235, 235)};
     QColor m_ellipseColor {Qt::darkBlue};
 
     int m_diap {128};

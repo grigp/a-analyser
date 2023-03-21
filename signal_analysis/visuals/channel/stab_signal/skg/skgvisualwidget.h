@@ -39,8 +39,6 @@ private:
     void showSKG();
     void showFactors();
 
-    void setSizeSKG();
-
     Stabilogram* m_stab {nullptr};
     ClassicFactors* m_factors {nullptr};
 };

@@ -10,7 +10,7 @@
 #include "channelsutils.h"
 #include "stabilogram.h"
 #include "balistogram.h"
-#include "areaskg.h"
+#include "skgwidget.h"
 
 
 BilateralVisualWidget::BilateralVisualWidget(VisualDescriptor* visual,

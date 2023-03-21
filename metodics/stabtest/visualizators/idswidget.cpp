@@ -14,6 +14,7 @@
 #include "idsfactors.h"
 #include "anysignal.h"
 #include "reportelements.h"
+#include "skgwidget.h"
 
 #include <QPainter>
 #include <QPushButton>
@@ -29,7 +30,7 @@
 namespace
 {
 QStandardItemModel *mdlTable {nullptr};
-AreaSKG *wgtSKG {nullptr};
+SKGWidget *wgtSKG {nullptr};
 AreaGraph *wgtFDS {nullptr};
 
 }
@@ -210,7 +211,7 @@ void IDSWidget::timerEvent(QTimerEvent *event)
         {
             ui->wgtFDS->setCursorOnPosition(0, m_animCurPos);
             double freq = m_fds->value(0, m_animCurPos) / m_fds->absMaxValue() * 5000;
-            m_soundGenerator->reset(m_audioFormat, m_fds->size() / m_fds->frequency() * 1000000, freq);
+            m_soundGenerator->reset(m_audioFormat, m_fds->size() / m_fds->frequency() * 1000000, static_cast<int>(freq));
         }
         else
         {

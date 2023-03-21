@@ -7,7 +7,7 @@
 #include "aanalyserapplication.h"
 #include "channelsdefines.h"
 #include "channelsutils.h"
-#include "areaskg.h"
+#include "skgwidget.h"
 #include "dataprovider.h"
 #include "stabilogram.h"
 #include "classicfactors.h"
@@ -33,10 +33,6 @@ bool SKGVisualWidget::isValid()
 
 void SKGVisualWidget::calculate()
 {
-    QTimer::singleShot(0, [=]{
-        setSizeSKG();
-    });
-
     showSKG();
     showFactors();
 }
@@ -45,7 +41,6 @@ void SKGVisualWidget::splitterMoved(int pos, int index)
 {
     Q_UNUSED(pos);
     Q_UNUSED(index);
-    setSizeSKG();
 }
 
 void SKGVisualWidget::on_btnPlusClicked()
@@ -125,10 +120,3 @@ void SKGVisualWidget::showFactors()
     ui->tvFactors->header()->resizeSection(0, 500);
 }
 
-void SKGVisualWidget::setSizeSKG()
-{
-    auto rect = ui->wgtSKG->geometry();
-    rect.setHeight(rect.width());
-    rect.setY(ui->frSKG->geometry().height() / 2 - rect.height() / 2);
-    ui->wgtSKG->setGeometry(rect);
-}

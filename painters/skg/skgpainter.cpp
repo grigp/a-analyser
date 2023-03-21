@@ -1,5 +1,6 @@
 #include "skgpainter.h"
 
+#include "aanalyserapplication.h"
 #include "signalaccess.h"
 #include <QDebug>
 
@@ -375,7 +376,6 @@ void SKGPainter::drawSKG()
     }
 
     //! Эллипс
-    qDebug() << Q_FUNC_INFO << m_sizeA << m_sizeB << m_angle;
     if (m_sizeA > 0 && m_sizeA < 5000
             && m_sizeB > 0 && m_sizeB < 5000
             && m_angle >= -360 && m_angle <= 360)
@@ -433,7 +433,11 @@ void SKGPainter::drawSKG()
 
 void SKGPainter::drawPlatforms(const double ratio)
 {
-    m_painter->save();
+//TODO: настраивать цвет платформ на печати в зависимости от стиля главного окна
+//    qDebug() << static_cast<AAnalyserApplication*>(QApplication::instance())->mainWindow()->styleSheet();
+//    static_cast<AAnalyserApplication*>(QApplication::instance())->mainWindow()->palette().color()
+
+            m_painter->save();
     m_painter->setBrush(QBrush(m_platformsColor, Qt::SolidPattern));
     QColor frameColor = QColor(m_platformsColor.red() / 8, m_platformsColor.green() / 8, m_platformsColor.blue() / 8);
     m_painter->setPen(QPen(frameColor, 2, Qt::SolidLine, Qt::FlatCap));

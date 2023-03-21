@@ -106,7 +106,7 @@
             <number>0</number>
            </property>
            <item>
-            <widget class="AreaSKG" name="wgtSKG" native="true">
+            <widget class="SKGWidget" name="wgtSKG" native="true">
              <property name="minimumSize">
               <size>
                <width>150</width>
@@ -476,15 +476,15 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>AreaSKG</class>
-   <extends>QWidget</extends>
-   <header location="global">areaskg.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
    <class>AreaGraph</class>
    <extends>QWidget</extends>
    <header location="global">areagraph.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>SKGWidget</class>
+   <extends>QWidget</extends>
+   <header location="global">skgwidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

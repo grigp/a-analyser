@@ -5,7 +5,7 @@
 #include "channelsdefines.h"
 #include "targetcalculator.h"
 #include "targetfactors.h"
-#include "areaskg.h"
+#include "skgwidget.h"
 #include "dynamicdiagram.h"
 #include "testresultdata.h"
 #include "reportelements.h"
@@ -18,7 +18,7 @@
 namespace
 {
 DynamicDiagram *wgtDiagram {nullptr};
-AreaSKG *wgtSKG {nullptr};
+SKGWidget *wgtSKG {nullptr};
 QString sScore {""};
 QString sTotalScore {""};
 }
@@ -74,9 +74,9 @@ void TargetWidget::print(QPrinter *printer, const QString &testUid)
                                    paper.x() + paper.width() / 10, paper.y() + paper.height() / 10 * 2);
 
         auto rectSKG = QRect(paper.x() + paper.width() / 2 - static_cast<int>(paper.width() * 0.33),
-                             static_cast<int>(paper.y() + paper.height() / 10 * 4.7),
+                             static_cast<int>(paper.y() + paper.height() / 10 * 4.9),
                              static_cast<int>(paper.width() * 0.65),
-                             static_cast<int>(paper.height() * 0.45));
+                             static_cast<int>(paper.height() * 0.42));
 
         double ratio = static_cast<double>(paper.width()) / static_cast<double>(wgtSKG->geometry().width());
         if (static_cast<double>(paper.height()) / static_cast<double>(wgtSKG->geometry().height()) < ratio)
@@ -141,7 +141,6 @@ void TargetWidget::showSKG(TargetCalculator *calculator, const QString &testUid)
 
     auto *sig = probe->signal(ChannelsDefines::chanStab);
     ui->wgtSKG->setSignal(sig);
-    ui->wgtSKG_->setSignal(sig);
     auto max = sig->absMaxValue();
     ui->wgtSKG->setVisibleMarker(false);
 
@@ -155,7 +154,6 @@ void TargetWidget::showSKG(TargetCalculator *calculator, const QString &testUid)
             ++step;
         }
         ui->wgtSKG->setDiap(diap);
-        ui->wgtSKG_->setDiap(diap);
     });
 
     wgtSKG = ui->wgtSKG;

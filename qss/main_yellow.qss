@@ -399,7 +399,8 @@ QWidget#wgtSKGAreases
     background-color: rgb(255, 255, 250);
 }
 
-AreaSKG
+AreaSKG,
+SKGWidget
 {
     background-color: rgb(255, 255, 250);
     qproperty-skg_color: rgb(100, 100, 0);

@@ -9,7 +9,7 @@
 #include "vectorfactors.h"
 #include "aanalyserapplication.h"
 #include "stabsignalstestcalculator.h"
-#include "areaskg.h"
+#include "skgwidget.h"
 #include "areagraph.h"
 #include "testresultdata.h"
 #include "resultinfo.h"
@@ -58,7 +58,7 @@ QStandardItemModel *mdlTable {nullptr};
 QStandardItemModel *mdlRF {nullptr};
 QStandardItemModel *mdlNorms {nullptr};
 QTreeView *tvRombergNorms {nullptr};
-QList<AreaSKG*> areasesSKG;
+QList<SKGWidget*> areasesSKG;
 AreaGraph *wgtGraph;
 QTabWidget *wgtTab;
 }
@@ -177,9 +177,9 @@ void StabSignalsTestWidget::zoomIn()
     for (int i = 0; i < ui->wgtSKGAreases->layout()->count(); ++i)
     {
         QLayoutItem* item = ui->wgtSKGAreases->layout()->itemAt(i);
-        auto diap = static_cast<AreaSKG*>(item->widget())->diap();
+        auto diap = static_cast<SKGWidget*>(item->widget())->diap();
         if (diap > 1)
-            static_cast<AreaSKG*>(item->widget())->setDiap(diap / 2);
+            static_cast<SKGWidget*>(item->widget())->setDiap(diap / 2);
     }
 }
 
@@ -188,9 +188,9 @@ void StabSignalsTestWidget::zoomOut()
     for (int i = 0; i < ui->wgtSKGAreases->layout()->count(); ++i)
     {
         QLayoutItem* item = ui->wgtSKGAreases->layout()->itemAt(i);
-        auto diap = static_cast<AreaSKG*>(item->widget())->diap();
+        auto diap = static_cast<SKGWidget*>(item->widget())->diap();
         if (diap < 128)
-            static_cast<AreaSKG*>(item->widget())->setDiap(diap * 2);
+            static_cast<SKGWidget*>(item->widget())->setDiap(diap * 2);
     }
 }
 
@@ -199,7 +199,7 @@ void StabSignalsTestWidget::zeroing(bool isZeroing)
     for (int i = 0; i < ui->wgtSKGAreases->layout()->count(); ++i)
     {
         QLayoutItem* item = ui->wgtSKGAreases->layout()->itemAt(i);
-        static_cast<AreaSKG*>(item->widget())->setZeroing(isZeroing);
+        static_cast<SKGWidget*>(item->widget())->setZeroing(isZeroing);
     }
 }
 
@@ -643,7 +643,7 @@ void StabSignalsTestWidget::showSKG(StabSignalsTestCalculator *calculator, const
             if (DataProvider::getProbeInfo(ti.probes.at(i), pi))
             {
                 auto* probe = m_trd->probe(i);
-                auto *skg = new AreaSKG(ui->wgtSKGAreases);
+                auto *skg = new SKGWidget(ui->wgtSKGAreases);
                 areasesSKG << skg;
                 skg->setVisibleMarker(false);
 

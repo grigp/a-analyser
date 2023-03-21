@@ -9,7 +9,6 @@
 #include "datadefines.h"
 
 class TestResultData;
-class AreaSKG;
 
 namespace Ui {
 class StabSignalsTestWidget;

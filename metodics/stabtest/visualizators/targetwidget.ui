@@ -121,23 +121,13 @@
            </spacer>
           </item>
           <item>
-           <widget class="SKGWidget" name="wgtSKG_" native="true">
+           <widget class="SKGWidget" name="wgtSKG" native="true">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
-            <property name="minimumSize">
-             <size>
-              <width>200</width>
-              <height>200</height>
-             </size>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="AreaSKG" name="wgtSKG" native="true">
             <property name="minimumSize">
              <size>
               <width>200</width>
@@ -169,12 +159,6 @@
   </layout>
  </widget>
  <customwidgets>
-  <customwidget>
-   <class>AreaSKG</class>
-   <extends>QWidget</extends>
-   <header location="global">areaskg.h</header>
-   <container>1</container>
-  </customwidget>
   <customwidget>
    <class>DynamicDiagram</class>
    <extends>QWidget</extends>
