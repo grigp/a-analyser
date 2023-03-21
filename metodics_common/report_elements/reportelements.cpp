@@ -13,6 +13,7 @@
 #include "skgpainter.h"
 #include "stabilogram.h"
 #include "bilateralresultdata.h"
+#include "classicfactors.h"
 
 void ReportElements::drawHeader(QPainter *painter, const QString &testUid, QRect rect)
 {
@@ -198,6 +199,8 @@ void ReportElements::drawSKG(QPainter *painter,
         {
             Stabilogram stab(baStab);
             skg.setSignal(&stab);
+            ClassicFactors fctClassic(testUid, ti.probes.at(probeNum), ChannelsDefines::chanStab);
+            skg.setEllipse(fctClassic.ellipse().sizeA, fctClassic.ellipse().sizeB, fctClassic.ellipse().angle);
 
             QByteArray baData;
             int diap = -1;

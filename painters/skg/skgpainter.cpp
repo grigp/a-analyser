@@ -100,7 +100,9 @@ void SKGPainter::setOffset(const double offsetX, const double offsetY, const int
 
 void SKGPainter::setEllipse(const double sizeA, const double sizeB, const double angle)
 {
-
+    m_sizeA = sizeA;
+    m_sizeB = sizeB;
+    m_angle = angle;
 }
 
 void SKGPainter::setColorSKG(const QColor &color, const int num)
@@ -122,12 +124,12 @@ QColor SKGPainter::colorSKG(const int num) const
 
 void SKGPainter::setColorEllipse(const QColor &color)
 {
-
+    m_ellipseColor = color;
 }
 
 QColor SKGPainter::colorEllipse() const
 {
-
+    return m_ellipseColor;
 }
 
 QColor SKGPainter::colorMarker() const
@@ -206,8 +208,6 @@ void SKGPainter::doPaint(const double ratio)
     m_right = m_midX + static_cast<int>(m_diap * m_prop);
     m_bottom = m_midY + static_cast<int>(m_diap * m_prop);
     m_ratio = ratio;
-
-    qDebug() << m_prop << ratio;
 
     drawPlatforms(ratio);
     drawGrid(ratio);
@@ -373,6 +373,61 @@ void SKGPainter::drawSKG()
             y2 = y1;
         }
     }
+
+    //! Эллипс
+    qDebug() << Q_FUNC_INFO << m_sizeA << m_sizeB << m_angle;
+    if (m_sizeA > 0 && m_sizeA < 5000
+            && m_sizeB > 0 && m_sizeB < 5000
+            && m_angle >= -360 && m_angle <= 360)
+    {
+        double fi = - m_angle * M_PI / 180 - M_PI / 2;
+        double psi = 0;
+        int ox = 0;
+        int oy = 0;
+        int x = 0;
+        int y = 0;
+        bool first = true;
+        m_painter->setPen(QPen(m_ellipseColor, 1));
+        while (psi < 2 * M_PI)
+        {
+            if (m_isZeroing)
+            {
+                x = lround(m_midX + (m_sizeA * cos(psi) * cos(-fi) + m_sizeB * sin(psi) * sin(-fi)) * m_prop);
+                y = lround(m_midY + (-m_sizeA * cos(psi) * sin(-fi) + m_sizeB * sin(psi) * cos(-fi)) * m_prop);
+            }
+            else
+            {
+                x = lround(m_midX + (m_sizeA * cos(psi) * cos(-fi) + m_sizeB * sin(psi) * sin(-fi) + m_signals.at(0).offsX) * m_prop);
+                y = lround(m_midY + (-m_sizeA * cos(psi) * sin(-fi) + m_sizeB * sin(psi) * cos(-fi) - m_signals.at(0).offsY) * m_prop);
+            }
+
+            if (!first)
+                m_painter->drawLine(ox, oy, x, y);
+
+            ox = x;
+            oy = y;
+            first = false;
+            psi = psi + 2 * M_PI / 360;
+        }
+
+        //! Ось
+        if (m_isZeroing)
+        {
+            x = lround(m_midX + (m_sizeA * 1.1 * cos(0) * cos(-fi) + m_sizeB * sin(0) * sin(-fi)) * m_prop);
+            y = lround(m_midY + (-m_sizeA * 1.1 * cos(0) * sin(-fi) + m_sizeB * sin(0) * cos(-fi)) * m_prop);
+            ox = lround(m_midX + (m_sizeA * 1.1 * cos(M_PI) * cos(-fi) + m_sizeB * sin(M_PI) * sin(-fi)) * m_prop);
+            oy = lround(m_midY + (-m_sizeA * 1.1 * cos(M_PI) * sin(-fi) + m_sizeB * sin(M_PI) * cos(-fi)) * m_prop);
+        }
+        else
+        {
+            x = lround(m_midX + (m_sizeA * 1.1 * cos(0) * cos(-fi) + m_sizeB * sin(0) * sin(-fi) + m_signals.at(0).offsX) * m_prop);
+            y = lround(m_midY + (-m_sizeA * 1.1 * cos(0) * sin(-fi) + m_sizeB * sin(0) * cos(-fi) - m_signals.at(0).offsY) * m_prop);
+            ox = lround(m_midX + (m_sizeA * 1.1 * cos(M_PI) * cos(-fi) + m_sizeB * sin(M_PI) * sin(-fi) + m_signals.at(0).offsX) * m_prop);
+            oy = lround(m_midY + (-m_sizeA * 1.1 * cos(M_PI) * sin(-fi) + m_sizeB * sin(M_PI) * cos(-fi) - m_signals.at(0).offsY) * m_prop);
+        }
+        m_painter->drawLine(ox, oy, x, y);
+    }
+
     m_painter->restore();
 }
 

@@ -232,6 +232,7 @@ private:
 
     QColor m_markerColor {Qt::red};
     QColor m_platformsColor {Qt::gray};
+    QColor m_ellipseColor {Qt::darkBlue};
 
     int m_diap {128};
     bool m_isShowTrace {false};
@@ -253,6 +254,11 @@ private:
     bool m_isZeroing {false};
 
     QList<QRect> m_platforms;
+
+    ///< Параметры эллипса
+    double m_sizeA {0};
+    double m_sizeB {0};
+    double m_angle {0};
 };
 
 #endif // SKGPAINTER_H
