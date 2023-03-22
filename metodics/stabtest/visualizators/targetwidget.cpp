@@ -85,17 +85,10 @@ void TargetWidget::print(QPrinter *printer, const QString &testUid)
 
         DataDefines::TestInfo ti;
         if (DataProvider::getTestInfo(testUid, ti))
-        {
             if (ti.probes.size() == 1)
-            {
-                DataDefines::ProbeInfo pi;
-                if (DataProvider::getProbeInfo(ti.probes.at(0), pi))
-                {
-                    if (DataProvider::channelExists(pi.uid, ChannelsDefines::chanStab))
-                        ReportElements::drawSKG(painter, rectSKG, testUid, 0, ratio);
-                }
-            }
-        }
+                if (DataProvider::channelExists(ti.probes.at(0), ChannelsDefines::chanStab))
+                    ReportElements::drawSKG(painter, rectSKG, testUid, 0, ratio);
+
 //        ReportElements::drawWidget(painter, wgtSKG,
 //                                   static_cast<int>(paper.width() * 0.45), static_cast<int>(paper.height() * 0.45),
 //                                   paper.x() + paper.width() / 10 * 3, paper.y() + paper.height() / 10 * 5);
