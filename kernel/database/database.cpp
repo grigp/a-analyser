@@ -400,6 +400,15 @@ bool DataBase::channelExists(const QString &channelUid) const
     return QFile::exists(fileName);
 }
 
+bool DataBase::channelExists(const QString &testUid, const int probeNum, const QString &channelId)
+{
+    DataDefines::TestInfo ti;
+    if (getTestInfo(testUid, ti))
+        if (ti.probes.size() == 1)
+            return channelExists(ti.probes.at(probeNum), channelId);
+    return false;
+}
+
 bool DataBase::getChannel(const QString &probeUid, const QString &channelId, QByteArray &data) const
 {
     QString uid = getChannelUid(probeUid, channelId);

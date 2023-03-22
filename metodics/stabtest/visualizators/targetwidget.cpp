@@ -73,21 +73,14 @@ void TargetWidget::print(QPrinter *printer, const QString &testUid)
                                    static_cast<int>(paper.width() * 0.85), static_cast<int>(paper.height() * 0.85),
                                    paper.x() + paper.width() / 10, paper.y() + paper.height() / 10 * 2);
 
+        //! СКГ
         auto rectSKG = QRect(paper.x() + paper.width() / 2 - static_cast<int>(paper.width() * 0.33),
                              static_cast<int>(paper.y() + paper.height() / 10 * 4.9),
                              static_cast<int>(paper.width() * 0.65),
                              static_cast<int>(paper.height() * 0.42));
-
-        double ratio = static_cast<double>(paper.width()) / static_cast<double>(wgtSKG->geometry().width());
-        if (static_cast<double>(paper.height()) / static_cast<double>(wgtSKG->geometry().height()) < ratio)
-            ratio = static_cast<double>(paper.height()) / static_cast<double>(wgtSKG->geometry().height());
-        if (ratio > 5) ratio = 5;
-
-        DataDefines::TestInfo ti;
-        if (DataProvider::getTestInfo(testUid, ti))
-            if (ti.probes.size() == 1)
-                if (DataProvider::channelExists(ti.probes.at(0), ChannelsDefines::chanStab))
-                    ReportElements::drawSKG(painter, rectSKG, testUid, 0, ratio);
+        double ratio = ReportElements::ratio(paper, wgtSKG, 5);
+        if (DataProvider::channelExists(testUid, 0, ChannelsDefines::chanStab))
+            ReportElements::drawSKG(painter, rectSKG, testUid, 0, ratio);
 
 //        ReportElements::drawWidget(painter, wgtSKG,
 //                                   static_cast<int>(paper.width() * 0.45), static_cast<int>(paper.height() * 0.45),

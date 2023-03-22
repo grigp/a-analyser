@@ -16,6 +16,7 @@
 #include "trianglefactors.h"
 #include "triangleconslutionfactors.h"
 #include "baseutils.h"
+#include "skgwidget.h"
 
 namespace
 {
@@ -68,8 +69,8 @@ static QList<BaseDefines::FctTblPair> FactorsEffectiveness = {
     , BaseDefines::FctTblPair(TriangleConslutionFactorsDefines::ErrCntMotorTstUid, TriangleConslutionFactorsDefines::ErrCntMotorAnlUid)
 };
 
-AreaSKG *wgtSKGTraining {nullptr};
-AreaSKG *wgtSKGAnalysis {nullptr};
+SKGWidget *wgtSKGTraining {nullptr};
+SKGWidget *wgtSKGAnalysis {nullptr};
 
 QStandardItemModel *mdlDiagTable {nullptr};
 QStandardItemModel *mdlEffectiveness {nullptr};
@@ -95,6 +96,8 @@ QString sCorrectionPredominaceAnal {""};
 QString sCorrectionResumeAnal {""};
 QColor sCorrectionResumeColorAnal {Qt::black};
 DualStateDiagram * wgtCorrectionDiagAnal {nullptr};
+
+TriangleCalculator* calculator {nullptr};
 
 }
 
@@ -122,6 +125,7 @@ void TriangleVisualize::setTest(const QString &testUid)
     {
         m_calculator = new TriangleCalculator(testUid, this);
         m_calculator->calculate();
+        calculator = m_calculator;
 
         getSignal(testUid);
 
@@ -242,13 +246,50 @@ void TriangleVisualize::print(QPrinter *printer, const QString &testUid)
 
     if (printer->orientation() == QPrinter::Portrait)
     {
+        int trainingLength = -1;
+        int signalLength = -1;
+        SKGDefines::BrokenLine blTrnOrigin;
+        SKGDefines::BrokenLine blTrnTren;
+        SKGDefines::BrokenLine blTrnAnal;
+        if (calculator)
+        {
+            trainingLength = calculator->trainingLength();
+            signalLength = calculator->signalLength();
+            auto assignTriangle = [&](SKGDefines::BrokenLine& bl, TriangleDefines::Triangle& triangle, const QColor color)
+            {
+                bl.polygon << QPointF(triangle.topCorner().x(), triangle.topCorner().y())
+                           << QPointF(triangle.leftDownCorner().x(), triangle.leftDownCorner().y())
+                           << QPointF(triangle.rightDownCorner().x(), triangle.rightDownCorner().y());
+                bl.color = color;
+                bl.width = 3;
+            };
+            auto trnOrigin = calculator->triangleOriginal();
+            assignTriangle(blTrnOrigin, trnOrigin, Qt::darkYellow);
+            auto trnTren = calculator->triangleTraining();
+            assignTriangle(blTrnTren, trnTren, Qt::darkGreen);
+            auto trnAnal = calculator->triangleAnalysis();
+            assignTriangle(blTrnAnal, trnAnal, Qt::darkGreen);
+        }
         //! Диаграмма. Копируется из виджета
-        ReportElements::drawWidget(painter, wgtSKGTraining,
-                                   static_cast<int>(paper.width() * 0.45), static_cast<int>(paper.height() * 0.45),
-                                   paper.x() + paper.width()/20, static_cast<int>(paper.y() + paper.height()/6));
-        ReportElements::drawWidget(painter, wgtSKGAnalysis,
-                                   static_cast<int>(paper.width() * 0.45), static_cast<int>(paper.height() * 0.45),
-                                   paper.x() + paper.width()/20 * 10, static_cast<int>(paper.y() + paper.height()/6));
+        auto rectSKG = QRect(paper.x() + paper.width()/20, static_cast<int>(paper.y() + paper.height()/9),
+                             static_cast<int>(paper.width() * 0.42), static_cast<int>(paper.height() * 0.42));
+        double ratio = ReportElements::ratio(paper, wgtSKGTraining, 5);
+        if (DataProvider::channelExists(testUid, 0, ChannelsDefines::chanStab))
+            ReportElements::drawSKG(painter, rectSKG, testUid, 0, ratio, 0, trainingLength - 1,
+                                    QList<SKGDefines::BrokenLine>() << blTrnOrigin << blTrnTren);
+
+        rectSKG = QRect(paper.x() + paper.width()/20 * 10, static_cast<int>(paper.y() + paper.height()/9),
+                        static_cast<int>(paper.width() * 0.42), static_cast<int>(paper.height() * 0.42));
+        if (DataProvider::channelExists(testUid, 0, ChannelsDefines::chanStab))
+            ReportElements::drawSKG(painter, rectSKG, testUid, 0, ratio, trainingLength, signalLength,
+                                    QList<SKGDefines::BrokenLine>() << blTrnOrigin << blTrnAnal);
+
+//        ReportElements::drawWidget(painter, wgtSKGTraining,
+//                                   static_cast<int>(paper.width() * 0.45), static_cast<int>(paper.height() * 0.45),
+//                                   paper.x() + paper.width()/20, static_cast<int>(paper.y() + paper.height()/6));
+//        ReportElements::drawWidget(painter, wgtSKGAnalysis,
+//                                   static_cast<int>(paper.width() * 0.45), static_cast<int>(paper.height() * 0.45),
+//                                   paper.x() + paper.width()/20 * 10, static_cast<int>(paper.y() + paper.height()/6));
         //! Таблица показателей. Берется модель таблицы из визуализатора
         QRect rectDT(paper.x() + paper.width() / 10,
                         paper.y() + paper.height() / 14 * 7,
@@ -521,13 +562,13 @@ void TriangleVisualize::getSignal(const QString &testUid)
         }
 }
 
-void TriangleVisualize::showSKG(AreaSKG *area, BaseDefines::Section section)
+void TriangleVisualize::showSKG(SKGWidget *area, BaseDefines::Section section)
 {
     area->setSignal(m_stab, 0, section.begin, section.end);
     addTriangleDiag(area, m_calculator->triangleOriginal(), Qt::darkYellow);
 }
 
-int TriangleVisualize::addTriangleDiag(AreaSKG *area, TriangleDefines::Triangle triangle, QColor color)
+int TriangleVisualize::addTriangleDiag(SKGWidget *area, TriangleDefines::Triangle triangle, QColor color)
 {
     SKGDefines::BrokenLine blTrngl;
     blTrngl.polygon << QPointF(triangle.topCorner().x(), triangle.topCorner().y())

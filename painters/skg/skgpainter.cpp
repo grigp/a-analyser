@@ -74,7 +74,13 @@ void SKGPainter::setSignal(SignalAccess *signal, const int num, const int begin,
 
 void SKGPainter::setSection(const int begin, const int end, const int num)
 {
-
+    if (num >= 0 && num < m_signals.size())
+    {
+        auto sd = m_signals.at(num);
+        sd.begin = begin;
+        sd.end = end;
+        m_signals.replace(num, sd);
+    }
 }
 
 void SKGPainter::setVisibleMarker(const bool visibleMarker)
@@ -170,17 +176,28 @@ void SKGPainter::clearTargets()
 
 int SKGPainter::addBrokenLine(SKGDefines::BrokenLine &bl)
 {
-
+    m_brokenLines << bl;
+    return  m_brokenLines.size() - 1;
 }
 
 bool SKGPainter::deleteBrokenLine(const int idx)
 {
-
+    if (idx >= 0 && idx < m_brokenLines.size())
+    {
+        m_brokenLines.removeAt(idx);
+        return true;
+    }
+    return false;
 }
 
 void SKGPainter::setVisibleSKG(const bool isVisible, const int num)
 {
-
+    if (num >= 0 && num < m_signals.size())
+    {
+        auto sd = m_signals.at(num);
+        sd.visible = isVisible;
+        m_signals.replace(num, sd);
+    }
 }
 
 void SKGPainter::addPlatform(QRect platform)
@@ -194,6 +211,7 @@ void SKGPainter::doPaint(const double ratio)
         return;
 
 //    int space = static_cast<int>(SKGDefines::I_LABEL_SPACE * ratio);
+    //! Диапазон между границами и зоной диаграммы для вывода отсчетов
     m_space = static_cast<int>(SKGDefines::I_LABEL_SPACE);
 
     //! Параметры построения
@@ -210,10 +228,11 @@ void SKGPainter::doPaint(const double ratio)
     m_bottom = m_midY + static_cast<int>(m_diap * m_prop);
     m_ratio = ratio;
 
+    //! Пошаговое рисование
     drawPlatforms(ratio);
     drawGrid(ratio);
     drawSKG();
-
+    drawBrokenLines(ratio);
 }
 
 void SKGPainter::doUpdate()
@@ -339,46 +358,52 @@ void SKGPainter::drawPositionGrid(int posGrid, bool isLabels)
 void SKGPainter::drawSKG()
 {
     m_painter->save();
+    //! По сигналу
     for (int chan = 0; chan < m_signals.size(); ++chan)
     {
-        m_painter->setPen(QPen(m_signals.at(chan).color, 1));
-        auto signal = m_signals.at(chan).signal;
-
-        int x1 = 0;
-        int y1 = 0;
-        int x2 = 0;
-        int y2 = 0;
-
-        int b = 0;
-        if (m_signals.at(chan).begin != -1)
-            b = m_signals.at(chan).begin;
-        int e = signal->size();
-        if (m_signals.at(chan).end != -1)
-            e = m_signals.at(chan).end;
-
-        for (int i = b; i < e; ++i)
+        //! Только, если сигнал видим
+        if (m_signals.at(chan).visible)
         {
-            if (m_isZeroing)
+            m_painter->setPen(QPen(m_signals.at(chan).color, 1));
+            auto signal = m_signals.at(chan).signal;
+
+            int x1 = 0;
+            int y1 = 0;
+            int x2 = 0;
+            int y2 = 0;
+
+            int b = 0;
+            if (m_signals.at(chan).begin != -1)
+                b = m_signals.at(chan).begin;
+            int e = signal->size();
+            if (m_signals.at(chan).end != -1)
+                e = m_signals.at(chan).end;
+
+            for (int i = b; i < e; ++i)
             {
-                x1 = static_cast<int>(m_midX + (signal->value(0, i) - m_signals.at(chan).offsX) * m_prop);
-                y1 = static_cast<int>(m_midY - (signal->value(1, i) - m_signals.at(chan).offsY) * m_prop);
+                if (m_isZeroing)
+                {
+                    x1 = static_cast<int>(m_midX + (signal->value(0, i) - m_signals.at(chan).offsX) * m_prop);
+                    y1 = static_cast<int>(m_midY - (signal->value(1, i) - m_signals.at(chan).offsY) * m_prop);
+                }
+                else
+                {
+                    x1 = static_cast<int>(m_midX + m_signals.at(chan).signal->value(0, i) * m_prop);
+                    y1 = static_cast<int>(m_midY - m_signals.at(chan).signal->value(1, i) * m_prop);
+                }
+                if (i > b)
+                    m_painter->drawLine(x1, y1, x2, y2);
+                x2 = x1;
+                y2 = y1;
             }
-            else
-            {
-                x1 = static_cast<int>(m_midX + m_signals.at(chan).signal->value(0, i) * m_prop);
-                y1 = static_cast<int>(m_midY - m_signals.at(chan).signal->value(1, i) * m_prop);
-            }
-            if (i > b)
-                m_painter->drawLine(x1, y1, x2, y2);
-            x2 = x1;
-            y2 = y1;
         }
     }
 
-    //! Эллипс
-    if (m_sizeA > 0 && m_sizeA < 5000
-            && m_sizeB > 0 && m_sizeB < 5000
-            && m_angle >= -360 && m_angle <= 360)
+    //! Эллипс. Рисуется, если заданы его параметры и виден сам сигнал
+    if (m_signals.at(0).visible
+         && m_sizeA > 0 && m_sizeA < 5000
+         && m_sizeB > 0 && m_sizeB < 5000
+         && m_angle >= -360 && m_angle <= 360)
     {
         double fi = - m_angle * M_PI / 180 - M_PI / 2;
         double psi = 0;
@@ -437,7 +462,7 @@ void SKGPainter::drawPlatforms(const double ratio)
 //    qDebug() << static_cast<AAnalyserApplication*>(QApplication::instance())->mainWindow()->styleSheet();
 //    static_cast<AAnalyserApplication*>(QApplication::instance())->mainWindow()->palette().color()
 
-            m_painter->save();
+    m_painter->save();
     m_painter->setBrush(QBrush(m_platformsColor, Qt::SolidPattern));
     QColor frameColor = QColor(m_platformsColor.red() / 8, m_platformsColor.green() / 8, m_platformsColor.blue() / 8);
     m_painter->setPen(QPen(frameColor, 2, Qt::SolidLine, Qt::FlatCap));
@@ -453,6 +478,29 @@ void SKGPainter::drawPlatforms(const double ratio)
         m_painter->drawText(r, QString::number(i + 1));
     }
     m_painter->restore();
+}
+
+void SKGPainter::drawBrokenLines(const double ratio)
+{
+    //! По ломаным, их может быть несколько
+    foreach (auto bLine, m_brokenLines)
+    {
+        m_painter->setPen(QPen(bLine.color, bLine.width * (ratio / 2)));
+
+        //! По точкам ломаной
+        QPolygonF plgn;
+        foreach (auto point, bLine.polygon)
+        {
+            double x = m_midX + point.x() * m_prop;
+            double y = m_midY - point.y() * m_prop;
+            plgn << QPointF(x, y);
+        }
+        double x = m_midX + bLine.polygon.at(0).x() * m_prop;
+        double y = m_midY - bLine.polygon.at(0).y() * m_prop;
+        plgn << QPointF(x, y);
+
+        m_painter->drawPolyline(plgn);
+    }
 }
 
 SKGPainter::SignalData::SignalData(SignalAccess *sig, const QColor col, const int b, const int e)

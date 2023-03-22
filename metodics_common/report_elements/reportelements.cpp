@@ -172,8 +172,12 @@ void ReportElements::drawSKG(QPainter *painter,
                              const QRect &rect,
                              const QString &testUid,
                              const int probeNum,
-                             const double ratio)
+                             const double ratio,
+                             const int begin,
+                             const int end,
+                             QList<SKGDefines::BrokenLine> brokenLines)
 {
+    //! Признаки наличия каналов: основного, правого и левого
     QString csMain = "";
     QString csLeft = "";
     QString csRight = "";
@@ -191,48 +195,63 @@ void ReportElements::drawSKG(QPainter *painter,
                 csRight = ChannelsDefines::chanStabRight;
         }
 
+    //! Есть проба и основной канал
     if (probeUid != "" && csMain != "")
     {
+        //! Создаем рисователь СКГ
         SKGPainter skg(painter, rect);
+        //! Получаем основной канал
         QByteArray baStab;
         if (DataProvider::getChannel(probeUid, csMain, baStab))
         {
+            //! Передаем его в рисователь
             Stabilogram stab(baStab);
-            skg.setSignal(&stab);
-            ClassicFactors fctClassic(testUid, ti.probes.at(probeNum), ChannelsDefines::chanStab);
-            skg.setEllipse(fctClassic.ellipse().sizeA, fctClassic.ellipse().sizeB, fctClassic.ellipse().angle);
-
-            QByteArray baData;
-            int diap = -1;
-            if (DataProvider::getChannel(probeUid, ChannelsDefines::chanBilat, baData))
+            skg.setSignal(&stab, 0, begin, end);
+            //! Эллипс
+            if (begin == -1 || end == -1)  //! Эллипс строится только если задан полный сигнал
             {
-                BilateralResultData bData(baData);
+                ClassicFactors fctClassic(testUid, ti.probes.at(probeNum), ChannelsDefines::chanStab);
+                skg.setEllipse(fctClassic.ellipse().sizeA, fctClassic.ellipse().sizeB, fctClassic.ellipse().angle);
+            }
+            //! Ломаные, например, треугольники
+            foreach (auto bl, brokenLines)
+                skg.addBrokenLine(bl);
 
+            //! Данные канала билатерального теста. Он может быть, а может и нет. Если есть, то рисуем платформы
+            QByteArray badBilat;
+            int diap = -1;
+            if (DataProvider::getChannel(probeUid, ChannelsDefines::chanBilat, badBilat))
+            {
+                BilateralResultData bData(badBilat);
+
+                //! Получаем канал левый и передаем его в рисователь
                 QByteArray baStabLeft;
                 if (csLeft != "")
                     DataProvider::getChannel(probeUid, csLeft, baStabLeft);
                 Stabilogram stabL(baStabLeft);
                 if (baStabLeft.size() > 0)
                 {
-                    skg.setSignal(&stabL, 1);
-                    skg.setOffset(-bData.platform(0).center().x(),
-                                  -bData.platform(0).y() + bData.platform(0).height() / 2, 1);
+                    skg.setSignal(&stabL, 1, begin, end);
+                    //! Смещение - положение левой платформы
+                    skg.setOffset(-bData.platform(0).center().x(), -bData.platform(0).y() + bData.platform(0).height() / 2, 1);
                 }
 
+                //! Получаем канал левый и передаем его в рисователь
                 QByteArray baStabRight;
                 if (csRight!= "")
                     DataProvider::getChannel(probeUid, csRight, baStabRight);
                 Stabilogram stabR(baStabRight);
                 if (baStabRight.size() > 0)
                 {
-                    skg.setSignal(&stabR, 2);
-                    skg.setOffset(-bData.platform(1).center().x(),
-                                  -bData.platform(1).y() + bData.platform(1).height() / 2, 2);
+                    skg.setSignal(&stabR, 2, begin, end);
+                    //! Смещение - положение правой платформы
+                    skg.setOffset(-bData.platform(1).center().x(), -bData.platform(1).y() + bData.platform(1).height() / 2, 2);
                 }
 
+                //! Добавляем платформы в рисователь
                 for (int i = 0; i < bData.platformsCount(); ++i)
                     skg.addPlatform(bData.platform(i));
-                diap = computeDiap(bData);
+                diap = computeDiap(bData);  //! И корректируем diap, он должен показавать платформы
 
                 skg.setDiap(diap);    //! Объединять нельзя, вызов должен быть в зоне видимости stabL и stabR
                 skg.setZeroing(true);
@@ -241,10 +260,20 @@ void ReportElements::drawSKG(QPainter *painter,
             }
             else
             {
+                //! Не билатеральный тест. Просто выведем СКГ
                 diap = BaseUtils::scaleAbove(stab.absMaxValue());
                 skg.setDiap(diap);
                 skg.doPaint(ratio);
             }
         }
     }
+}
+
+double ReportElements::ratio(const QRect paper, QWidget *widget, const double maxVal)
+{
+    double retval = static_cast<double>(paper.width()) / static_cast<double>(widget->geometry().width());
+    if (static_cast<double>(paper.height()) / static_cast<double>(widget->geometry().height()) < retval)
+        retval = static_cast<double>(paper.height()) / static_cast<double>(widget->geometry().height());
+    if (maxVal > -1 && retval > maxVal) retval = maxVal;
+    return retval;
 }

@@ -737,19 +737,14 @@ void StabSignalsTestWidget::printOnePortrait(QPrinter *printer, QPainter *painte
 
     if (areasesSKG.size() == 1)
     {
+        //! СКГ
         auto rectSKG = QRect(paper.x() + paper.width() / 2 - static_cast<int>(paper.width() * 0.3),
                              static_cast<int>(paper.y() + paper.height() / 10 * 1.5),
                              static_cast<int>(paper.width() * 0.6),
                              static_cast<int>(paper.height() * 0.3));
-
-        double ratio = static_cast<double>(paper.width()) / static_cast<double>(areasesSKG.at(0)->geometry().width());
-        if (static_cast<double>(paper.height()) / static_cast<double>(areasesSKG.at(0)->geometry().height()) < ratio)
-            ratio = static_cast<double>(paper.height()) / static_cast<double>(areasesSKG.at(0)->geometry().height());
-
-        DataDefines::TestInfo ti;
-        if (DataProvider::getTestInfo(testUid, ti))
-            if (DataProvider::channelExists(ti.probes.at(0), ChannelsDefines::chanStab))
-                ReportElements::drawSKG(painter, rectSKG, testUid, 0, ratio);
+        double ratio = ReportElements::ratio(paper, areasesSKG.at(0));
+        if (DataProvider::channelExists(testUid, 0, ChannelsDefines::chanStab))
+            ReportElements::drawSKG(painter, rectSKG, testUid, 0, ratio);
 
 //        ReportElements::drawWidget(painter, areasesSKG.at(0),
 //                                   static_cast<int>(paper.width() * 0.6), static_cast<int>(paper.height() * 0.6),

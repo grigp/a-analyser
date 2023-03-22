@@ -23,11 +23,11 @@ void SKGWidget::paintEvent(QPaintEvent *event)
 {
     QWidget::paintEvent(event);
 
+    //! Собственно, определяем границы и канву
     QRect geo = QRect(0, 0, geometry().width(), geometry().height());
-
     QPainter painter(this);
-//    painter.setBrush(QBrush(Qt::red));
-//    painter.drawRect(geo);
+
+    //! И рисуем
     setCanvas(&painter, geo);
     doPaint(2);
 }

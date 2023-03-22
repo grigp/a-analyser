@@ -223,6 +223,14 @@ public:
     bool channelExists(const QString &channelUid) const;
 
     /*!
+     * \brief Возращает true, если канал имеется
+     * \param testUid - uid теста
+     * \param probeNum - номер пробы в тесте
+     * \param channelId - идентификатор канала в пробе
+     */
+    bool channelExists(const QString &testUid, const int probeNum, const QString &channelId);
+
+    /*!
      * \brief Возвращает данные канала в виде массива байт
      * \param probeUid - uid пробы
      * \param channelId - идентификатор канала

@@ -707,7 +707,7 @@
                 </widget>
                </item>
                <item>
-                <widget class="AreaSKG" name="wgtSKGTraining" native="true"/>
+                <widget class="SKGWidget" name="wgtSKGTraining" native="true"/>
                </item>
                <item>
                 <widget class="QCheckBox" name="cbShowTraectoryTraining">
@@ -896,7 +896,7 @@
                 </widget>
                </item>
                <item>
-                <widget class="AreaSKG" name="wgtSKGAnalysis" native="true"/>
+                <widget class="SKGWidget" name="wgtSKGAnalysis" native="true"/>
                </item>
                <item>
                 <widget class="QCheckBox" name="cbShowTraectoryAnalysis">
@@ -1377,12 +1377,6 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>AreaSKG</class>
-   <extends>QWidget</extends>
-   <header location="global">areaskg.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
    <class>DynamicDiagram</class>
    <extends>QWidget</extends>
    <header location="global">dynamicdiagram.h</header>
@@ -1392,6 +1386,12 @@
    <class>DualStateDiagram</class>
    <extends>QWidget</extends>
    <header location="global">dualstatediagram.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>SKGWidget</class>
+   <extends>QWidget</extends>
+   <header location="global">skgwidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

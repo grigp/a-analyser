@@ -196,6 +196,11 @@ private:
      */
     void drawPlatforms(const double ratio);
 
+    /*!
+     * \brief Прорисовывает ломаные
+     */
+    void drawBrokenLines(const double ratio);
+
     struct TargetInfo
     {
         QGraphicsItem* item;
@@ -214,6 +219,7 @@ private:
         int begin {-1};
         int end {-1};
         double offsX {0}, offsY {0};
+        bool visible {true};
         SignalData(SignalAccess* sig, const QColor col, const int b, const int e);
 //        SignalData(SignalAccess* sig, const QColor col, const int b, const int e)
 //            : signal(sig), color(col), begin(b), end(e) {}
@@ -255,6 +261,8 @@ private:
     double m_sizeA {0};
     double m_sizeB {0};
     double m_angle {0};
+
+    QList<SKGDefines::BrokenLine> m_brokenLines;   ///< Список ломаных для построения
 };
 
 #endif // SKGPAINTER_H

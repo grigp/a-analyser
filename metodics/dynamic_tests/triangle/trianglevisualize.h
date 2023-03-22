@@ -12,7 +12,7 @@ class TriangleVisualize;
 }
 
 class TriangleCalculator;
-class AreaSKG;
+class SKGWidget;
 class Stabilogram;
 
 /*!
@@ -67,7 +67,7 @@ private:
      * \param area - зона построения
      * \param section - участок сигнала
      */
-    void showSKG(AreaSKG* area, BaseDefines::Section section);
+    void showSKG(SKGWidget* area, BaseDefines::Section section);
 
     /*!
      * \brief Добавляет диаграмму треугольника в зону СКГ
@@ -76,7 +76,7 @@ private:
      * \param color - цвет диаграммы
      * \return номер диаграммы треугольника в зоне построения
      */
-    int addTriangleDiag(AreaSKG* area, TriangleDefines::Triangle triangle, QColor color);
+    int addTriangleDiag(SKGWidget* area, TriangleDefines::Triangle triangle, QColor color);
 
     /*!
      * \brief Выводит польную таблицу показателей

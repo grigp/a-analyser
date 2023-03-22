@@ -5,6 +5,8 @@
 #include <QPainter>
 #include <QStandardItemModel>
 
+#include "skgdefines.h"
+
 namespace ReportElements
 {
 
@@ -64,7 +66,8 @@ void drawTable(QPainter *painter, QStandardItemModel *model, QRect rect,
                const int pointSize = -1, const int weight = -1, const int titleWeight = -1);
 
 /*!
- * \brief Прорисовывает СКГ на заданной канве
+ * \brief Прорисовывает СКГ на заданной канве.
+ * Подготавливает данные для рисователя SKGPainter и вызывает его
  * \param painter - рисователь
  * \param rect - зона СКГ
  * \param testUid - uid теста
@@ -75,7 +78,18 @@ void drawSKG(QPainter *painter,
              const QRect &rect,
              const QString &testUid,
              const int probeNum,
-             const double ratio);
+             const double ratio,
+             const int begin = -1,
+             const int end = -1,
+             QList<SKGDefines::BrokenLine> brokenLines = QList<SKGDefines::BrokenLine>());
+
+/*!
+ * \brief Вычисляет ratio для упрощения кода
+ * \param paper - страница
+ * \param widget - указатель на исходный виджет
+ * \param maxVal - максимальное значение
+ */
+double ratio(const QRect paper, QWidget* widget, const double maxVal = -1);
 
 
 };
