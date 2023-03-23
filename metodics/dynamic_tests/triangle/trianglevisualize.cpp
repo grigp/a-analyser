@@ -244,33 +244,34 @@ void TriangleVisualize::print(QPrinter *printer, const QString &testUid)
                                    paper.x() + paper.width()/10, paper.y() + paper.height() / 90 * pos);
     };
 
+    int trainingLength = -1;
+    int signalLength = -1;
+    SKGDefines::BrokenLine blTrnOrigin;
+    SKGDefines::BrokenLine blTrnTren;
+    SKGDefines::BrokenLine blTrnAnal;
+    if (calculator)
+    {
+        trainingLength = calculator->trainingLength();
+        signalLength = calculator->signalLength();
+        auto assignTriangle = [&](SKGDefines::BrokenLine& bl, TriangleDefines::Triangle& triangle, const QColor color)
+        {
+            bl.polygon << QPointF(triangle.topCorner().x(), triangle.topCorner().y())
+                       << QPointF(triangle.leftDownCorner().x(), triangle.leftDownCorner().y())
+                       << QPointF(triangle.rightDownCorner().x(), triangle.rightDownCorner().y());
+            bl.color = color;
+            bl.width = 3;
+        };
+        auto trnOrigin = calculator->triangleOriginal();
+        assignTriangle(blTrnOrigin, trnOrigin, Qt::darkYellow);
+        auto trnTren = calculator->triangleTraining();
+        assignTriangle(blTrnTren, trnTren, Qt::darkGreen);
+        auto trnAnal = calculator->triangleAnalysis();
+        assignTriangle(blTrnAnal, trnAnal, Qt::darkGreen);
+    }
+
     if (printer->orientation() == QPrinter::Portrait)
     {
-        int trainingLength = -1;
-        int signalLength = -1;
-        SKGDefines::BrokenLine blTrnOrigin;
-        SKGDefines::BrokenLine blTrnTren;
-        SKGDefines::BrokenLine blTrnAnal;
-        if (calculator)
-        {
-            trainingLength = calculator->trainingLength();
-            signalLength = calculator->signalLength();
-            auto assignTriangle = [&](SKGDefines::BrokenLine& bl, TriangleDefines::Triangle& triangle, const QColor color)
-            {
-                bl.polygon << QPointF(triangle.topCorner().x(), triangle.topCorner().y())
-                           << QPointF(triangle.leftDownCorner().x(), triangle.leftDownCorner().y())
-                           << QPointF(triangle.rightDownCorner().x(), triangle.rightDownCorner().y());
-                bl.color = color;
-                bl.width = 3;
-            };
-            auto trnOrigin = calculator->triangleOriginal();
-            assignTriangle(blTrnOrigin, trnOrigin, Qt::darkYellow);
-            auto trnTren = calculator->triangleTraining();
-            assignTriangle(blTrnTren, trnTren, Qt::darkGreen);
-            auto trnAnal = calculator->triangleAnalysis();
-            assignTriangle(blTrnAnal, trnAnal, Qt::darkGreen);
-        }
-        //! Диаграмма. Копируется из виджета
+        //! СКГ
         auto rectSKG = QRect(paper.x() + paper.width()/20, static_cast<int>(paper.y() + paper.height()/9),
                              static_cast<int>(paper.width() * 0.42), static_cast<int>(paper.height() * 0.42));
         double ratio = ReportElements::ratio(paper, wgtSKGTraining, 5);
@@ -284,12 +285,6 @@ void TriangleVisualize::print(QPrinter *printer, const QString &testUid)
             ReportElements::drawSKG(painter, rectSKG, testUid, 0, ratio, trainingLength, signalLength,
                                     QList<SKGDefines::BrokenLine>() << blTrnOrigin << blTrnAnal);
 
-//        ReportElements::drawWidget(painter, wgtSKGTraining,
-//                                   static_cast<int>(paper.width() * 0.45), static_cast<int>(paper.height() * 0.45),
-//                                   paper.x() + paper.width()/20, static_cast<int>(paper.y() + paper.height()/6));
-//        ReportElements::drawWidget(painter, wgtSKGAnalysis,
-//                                   static_cast<int>(paper.width() * 0.45), static_cast<int>(paper.height() * 0.45),
-//                                   paper.x() + paper.width()/20 * 10, static_cast<int>(paper.y() + paper.height()/6));
         //! Таблица показателей. Берется модель таблицы из визуализатора
         QRect rectDT(paper.x() + paper.width() / 10,
                         paper.y() + paper.height() / 14 * 7,
@@ -328,13 +323,20 @@ void TriangleVisualize::print(QPrinter *printer, const QString &testUid)
     else
     if (printer->orientation() == QPrinter::Landscape)
     {
-        //! Диаграмма. Копируется из виджета
-        ReportElements::drawWidget(painter, wgtSKGTraining,
-                                   static_cast<int>(paper.width() * 0.4), static_cast<int>(paper.height() * 0.4),
-                                   static_cast<int>(paper.x() + paper.width()/10 * 1.5), paper.y() + paper.height()/6);
-        ReportElements::drawWidget(painter, wgtSKGAnalysis,
-                                   static_cast<int>(paper.width() * 0.4), static_cast<int>(paper.height() * 0.4),
-                                   static_cast<int>(paper.x() + paper.width()/10 * 6), paper.y() + paper.height()/6);
+        //! СКГ
+        auto rectSKG = QRect(static_cast<int>(paper.x() + paper.width()/10 * 0.8), paper.y() + paper.height()/7,
+                             static_cast<int>(paper.width() * 0.4), static_cast<int>(paper.height() * 0.4));
+        double ratio = ReportElements::ratio(paper, wgtSKGTraining, 5);
+        if (DataProvider::channelExists(testUid, 0, ChannelsDefines::chanStab))
+            ReportElements::drawSKG(painter, rectSKG, testUid, 0, ratio, 0, trainingLength - 1,
+                                    QList<SKGDefines::BrokenLine>() << blTrnOrigin << blTrnTren);
+
+        rectSKG = QRect(static_cast<int>(paper.x() + paper.width()/10 * 5), paper.y() + paper.height()/7,
+                        static_cast<int>(paper.width() * 0.4), static_cast<int>(paper.height() * 0.4));
+        if (DataProvider::channelExists(testUid, 0, ChannelsDefines::chanStab))
+            ReportElements::drawSKG(painter, rectSKG, testUid, 0, ratio, trainingLength, signalLength,
+                                    QList<SKGDefines::BrokenLine>() << blTrnOrigin << blTrnAnal);
+
         //! Таблица показателей. Берется модель таблицы из визуализатора
         QRect rectDT(paper.x() + paper.width() / 10,
                         paper.y() + paper.height() / 40 * 24,
