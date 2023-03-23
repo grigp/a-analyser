@@ -80,6 +80,7 @@ void SKGPainter::setSection(const int begin, const int end, const int num)
         sd.begin = begin;
         sd.end = end;
         m_signals.replace(num, sd);
+        doUpdate();
     }
 }
 
