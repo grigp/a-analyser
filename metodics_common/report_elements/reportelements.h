@@ -56,12 +56,16 @@ void drawWidget(QPainter *painter, QWidget *widget, const int w, const int h, co
  * \param painter - указатель на текущий рисователь
  * \param model - указатель на модель
  * \param rect - прямоугольник, в котором надо рисовать
+ * \param columnStretch - пропорциональная ширина каждого столбца в долях QList<int>() << 2 << 1 << 1
+ * \param isReplaceTitle - Заменять названия колонок на их номера в скобках: (<n>)
+ * \param vStretch - Вертикальное растяжение таблицы
  * \param pointSize - Размер шрифта
  * \param weight - толщина шрифта в таблице (QFont::Bold)
  * \param titleWeight - толщина шрифта в заголовке (QFont::Bold)
  */
 void drawTable(QPainter *painter, QStandardItemModel *model, QRect rect,
                QList<int> columnStretch = QList<int>(),
+               bool isReplaceTitle = false,
                const Table::VerticalStretch vStretch = Table::tvsStretched,
                const int pointSize = -1, const int weight = -1, const int titleWeight = -1);
 
@@ -79,6 +83,7 @@ void drawSKG(QPainter *painter,
              const QString &testUid,
              const int probeNum,
              const double ratio,
+             const int diap = -1,
              const int begin = -1,
              const int end = -1,
              QList<SKGDefines::BrokenLine> brokenLines = QList<SKGDefines::BrokenLine>());

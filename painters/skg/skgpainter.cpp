@@ -253,6 +253,7 @@ QColor SKGPainter::getFrameColor(const QColor color) const
 
 void SKGPainter::drawGrid(const double ratio)
 {
+    m_painter->save();
     //! Оси и метки 0
     m_painter->setPen(QPen(Qt::black, 1));
     m_painter->drawRect(m_left, m_top, m_right - m_left, m_bottom - m_top);
@@ -301,6 +302,7 @@ void SKGPainter::drawGrid(const double ratio)
             }
         }
     }
+    m_painter->restore();
 }
 
 void SKGPainter::drawPositionGrid(int posGrid, bool isLabels)
@@ -483,6 +485,7 @@ void SKGPainter::drawPlatforms(const double ratio)
 
 void SKGPainter::drawBrokenLines(const double ratio)
 {
+    m_painter->save();
     //! По ломаным, их может быть несколько
     foreach (auto bLine, m_brokenLines)
     {
@@ -502,6 +505,7 @@ void SKGPainter::drawBrokenLines(const double ratio)
 
         m_painter->drawPolyline(plgn);
     }
+    m_painter->restore();
 }
 
 SKGPainter::SignalData::SignalData(SignalAccess *sig, const QColor col, const int b, const int e)

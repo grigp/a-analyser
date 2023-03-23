@@ -404,7 +404,7 @@ bool DataBase::channelExists(const QString &testUid, const int probeNum, const Q
 {
     DataDefines::TestInfo ti;
     if (getTestInfo(testUid, ti))
-        if (ti.probes.size() == 1)
+        if (probeNum >= 0 && probeNum < ti.probes.size())
             return channelExists(ti.probes.at(probeNum), channelId);
     return false;
 }

@@ -82,7 +82,7 @@ void TrenVisualize::print(QPrinter *printer, const QString &testUid)
                         paper.width() / 10 * 8,
                         paper.height() / 2);
         ReportElements::drawTable(painter, mdlFactors,
-                                  rectTable, QList<int>() << 3 << 1, ReportElements::Table::tvsCompressed,
+                                  rectTable, QList<int>() << 3 << 1, false, ReportElements::Table::tvsCompressed,
                                   16, -1, QFont::Bold);
     }
     else
@@ -94,7 +94,7 @@ void TrenVisualize::print(QPrinter *printer, const QString &testUid)
                         paper.width() / 10 * 8,
                         paper.height() / 10 * 8);
         ReportElements::drawTable(painter, mdlFactors, rectTable,
-                                  QList<int>() << 3 << 1, ReportElements::Table::tvsCompressed,
+                                  QList<int>() << 3 << 1, false, ReportElements::Table::tvsCompressed,
                                   16, -1, QFont::Bold);
     }
 

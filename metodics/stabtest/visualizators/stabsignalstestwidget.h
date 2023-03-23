@@ -163,6 +163,13 @@ private:
      */
     static void printFiveLandscape(QPrinter *printer, QPainter *painter, const QString &testUid, const QRect paper);
 
+    /*!
+     * \brief Возвращает список названий проб
+     * \param testUid - uid теста
+     * \param count - кол-во проб в выходном списке
+     */
+    static QStringList getProbesNameList(const QString& testUid, const int count);
+
     Ui::StabSignalsTestWidget *ui;
     QStandardItemModel m_mdlTable;
     TestResultData* m_trd {nullptr};

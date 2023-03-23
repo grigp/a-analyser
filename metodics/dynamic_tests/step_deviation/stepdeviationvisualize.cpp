@@ -79,7 +79,7 @@ void StepDeviationVisualize::print(QPrinter *printer, const QString &testUid)
                         paper.width() / 10 * 8,
                         paper.height() / 5 * 2);
         ReportElements::drawTable(painter, mdlFactors, rectTable,
-                                  QList<int>() << 3 << 1, ReportElements::Table::tvsStretched,
+                                  QList<int>() << 3 << 1, false, ReportElements::Table::tvsStretched,
                                   12, -1, QFont::Bold);
 
         painter->setFont(QFont("Sans", 12, QFont::Bold, false));
@@ -114,7 +114,7 @@ void StepDeviationVisualize::print(QPrinter *printer, const QString &testUid)
                         paper.width() / 10 * 9,
                         paper.height() / 10 * 8);
         ReportElements::drawTable(painter, mdlFactors, rectTable,
-                                  QList<int>() << 3 << 1, ReportElements::Table::tvsStretched,
+                                  QList<int>() << 3 << 1, false, ReportElements::Table::tvsStretched,
                                   12, -1, QFont::Bold);
     }
 

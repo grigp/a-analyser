@@ -102,6 +102,7 @@ void ReportElements::drawWidget(QPainter *painter, QWidget *widget, const int w,
 
 void ReportElements::drawTable(QPainter *painter, QStandardItemModel *model, QRect rect,
                                QList<int> columnStretch,
+                               bool isReplaceTitle,
                                const Table::VerticalStretch vStretch,
                                const int pointSize, const int weight, const int titleWeight)
 {
@@ -130,7 +131,11 @@ void ReportElements::drawTable(QPainter *painter, QStandardItemModel *model, QRe
     painter->setFont(QFont("Sans", pointSize, titleWeight, false));
     for (int j = 0; j < model->columnCount(); ++j)
     {
-        auto title = model->headerData(j, Qt::Horizontal).toString();
+        QString title = "";
+        if (isReplaceTitle && (j > 0))
+            title = "(" + QString::number(j) + ")";
+        else
+            title = model->headerData(j, Qt::Horizontal).toString();
         painter->drawText(static_cast<int>(rect.x() + rect.width() * cs.at(j) / sSum), rect.y(), title);
     }
     //! Таблица
@@ -173,6 +178,7 @@ void ReportElements::drawSKG(QPainter *painter,
                              const QString &testUid,
                              const int probeNum,
                              const double ratio,
+                             const int diap,
                              const int begin,
                              const int end,
                              QList<SKGDefines::BrokenLine> brokenLines)
@@ -219,7 +225,6 @@ void ReportElements::drawSKG(QPainter *painter,
 
             //! Данные канала билатерального теста. Он может быть, а может и нет. Если есть, то рисуем платформы
             QByteArray badBilat;
-            int diap = -1;
             if (DataProvider::getChannel(probeUid, ChannelsDefines::chanBilat, badBilat))
             {
                 BilateralResultData bData(badBilat);
@@ -251,9 +256,9 @@ void ReportElements::drawSKG(QPainter *painter,
                 //! Добавляем платформы в рисователь
                 for (int i = 0; i < bData.platformsCount(); ++i)
                     skg.addPlatform(bData.platform(i));
-                diap = computeDiap(bData);  //! И корректируем diap, он должен показавать платформы
+                int diapSKG = computeDiap(bData);  //! И корректируем diap, он должен показавать платформы
 
-                skg.setDiap(diap);    //! Объединять нельзя, вызов должен быть в зоне видимости stabL и stabR
+                skg.setDiap(diapSKG);    //! Объединять нельзя, вызов должен быть в зоне видимости stabL и stabR
                 skg.setZeroing(true);
 
                 skg.doPaint(ratio);
@@ -261,8 +266,10 @@ void ReportElements::drawSKG(QPainter *painter,
             else
             {
                 //! Не билатеральный тест. Просто выведем СКГ
-                diap = BaseUtils::scaleAbove(stab.absMaxValue());
-                skg.setDiap(diap);
+                int diapSKG = BaseUtils::scaleAbove(stab.absMaxValue());
+                if (diap != -1)
+                    diapSKG = diap;
+                skg.setDiap(diapSKG);
                 skg.doPaint(ratio);
             }
         }

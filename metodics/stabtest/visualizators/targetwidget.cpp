@@ -75,16 +75,12 @@ void TargetWidget::print(QPrinter *printer, const QString &testUid)
 
         //! СКГ
         auto rectSKG = QRect(paper.x() + paper.width() / 2 - static_cast<int>(paper.width() * 0.33),
-                             static_cast<int>(paper.y() + paper.height() / 10 * 4.9),
+                             static_cast<int>(paper.y() + paper.height() / 10 * 5.1),
                              static_cast<int>(paper.width() * 0.65),
                              static_cast<int>(paper.height() * 0.42));
         double ratio = ReportElements::ratio(paper, wgtSKG, 5);
         if (DataProvider::channelExists(testUid, 0, ChannelsDefines::chanStab))
             ReportElements::drawSKG(painter, rectSKG, testUid, 0, ratio);
-
-//        ReportElements::drawWidget(painter, wgtSKG,
-//                                   static_cast<int>(paper.width() * 0.45), static_cast<int>(paper.height() * 0.45),
-//                                   paper.x() + paper.width() / 10 * 3, paper.y() + paper.height() / 10 * 5);
     }
     else
     if (printer->orientation() == QPrinter::Landscape)
@@ -100,10 +96,13 @@ void TargetWidget::print(QPrinter *printer, const QString &testUid)
 
         ReportElements::drawWidget(painter, wgtDiagram,
                                    static_cast<int>(paper.width() * 0.6), static_cast<int>(paper.height() * 0.6),
-                                   paper.x() + paper.width() / 12, paper.y() + paper.height() / 10 * 3);
-        ReportElements::drawWidget(painter, wgtSKG,
-                                   static_cast<int>(paper.width() * 0.4), static_cast<int>(paper.height() * 0.4),
-                                   static_cast<int>(paper.x() + paper.width() / 10 * 6.5), paper.y() + paper.height() / 10 * 3);
+                                   paper.x() + paper.width() / 15, paper.y() + paper.height() / 10 * 3);
+        //! СКГ
+        auto rectSKG = QRect(static_cast<int>(paper.x() + paper.width() / 10 * 6.2), paper.y() + paper.height() / 10 * 3,
+                             static_cast<int>(paper.width() * 0.4), static_cast<int>(paper.height() * 0.4));
+        double ratio = ReportElements::ratio(paper, wgtSKG, 5);
+        if (DataProvider::channelExists(testUid, 0, ChannelsDefines::chanStab))
+            ReportElements::drawSKG(painter, rectSKG, testUid, 0, ratio);
     }
 
     //! Нижний колонтитул

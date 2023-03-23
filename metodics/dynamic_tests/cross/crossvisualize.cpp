@@ -90,9 +90,8 @@ void CrossVisualize::print(QPrinter *printer, const QString &testUid)
                         paper.y() + paper.height() / 3 * 2,
                         paper.width() / 10 * 8,
                         paper.height() / 4);
-        ReportElements::drawTable(painter, mdlFactors, rectTable,
-                                  QList<int>() << 3 << 1, ReportElements::Table::tvsStretched,
-                                  12, -1, QFont::Bold);
+        ReportElements::drawTable(painter, mdlFactors, rectTable, QList<int>() << 3 << 1,
+                                  false, ReportElements::Table::tvsStretched, 12, -1, QFont::Bold);
     }
     else
     if (printer->orientation() == QPrinter::Landscape)
@@ -107,9 +106,8 @@ void CrossVisualize::print(QPrinter *printer, const QString &testUid)
                         static_cast<int>(paper.y() + paper.height() / 3.5),
                         paper.width() / 7 * 3,
                         paper.height() / 2);
-        ReportElements::drawTable(painter, mdlFactors, rectTable,
-                                  QList<int>() << 3 << 1, ReportElements::Table::tvsStretched,
-                                  12, -1, QFont::Bold);
+        ReportElements::drawTable(painter, mdlFactors, rectTable, QList<int>() << 3 << 1, false,
+                                  ReportElements::Table::tvsStretched, 12, -1, QFont::Bold);
     }
 
     //! Нижний колонтитул

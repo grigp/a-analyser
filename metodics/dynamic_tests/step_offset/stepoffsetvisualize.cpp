@@ -162,9 +162,8 @@ void StepOffsetVisualize::print(QPrinter *printer, const QString &testUid)
                         paper.y() + paper.height() / 7 * 3,
                         paper.width() / 10 * 9,
                         paper.height() / 3);
-        ReportElements::drawTable(painter, mdlFactors, rectTable,
-                                  QList<int>() << 3 << 2 << 2, ReportElements::Table::tvsStretched,
-                                  8, -1, QFont::Bold);
+        ReportElements::drawTable(painter, mdlFactors, rectTable, QList<int>() << 3 << 2 << 2,
+                                  false, ReportElements::Table::tvsStretched, 8, -1, QFont::Bold);
 
         //! Параметры воздействия
         drawParams();
@@ -206,9 +205,8 @@ void StepOffsetVisualize::print(QPrinter *printer, const QString &testUid)
                         paper.y() + paper.height() / 7,
                         paper.width() / 10 * 9,
                         paper.height() / 3);
-        ReportElements::drawTable(painter, mdlFactors, rectTable,
-                                  QList<int>() << 3 << 2 << 2, ReportElements::Table::tvsStretched,
-                                  8, -1, QFont::Bold);
+        ReportElements::drawTable(painter, mdlFactors, rectTable, QList<int>() << 3 << 2 << 2,
+                                  false, ReportElements::Table::tvsStretched, 8, -1, QFont::Bold);
 
         //! Нижний колонтитул
         ReportElements::drawFooter(painter, testUid, rectFooter);

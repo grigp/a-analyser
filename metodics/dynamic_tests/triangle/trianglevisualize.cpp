@@ -207,9 +207,8 @@ void TriangleVisualize::print(QPrinter *printer, const QString &testUid)
                      paper.y() + paper.height() / 90 * pos,
                      paper.width() / 10 * 9,
                      paper.height() / 90 * (offset + 5));
-        ReportElements::drawTable(painter, mdlEffectiveness, rectDT,
-                                  QList<int>() << 3 << 2 << 2, ReportElements::Table::tvsStretched,
-                                  8, -1, QFont::Bold);
+        ReportElements::drawTable(painter, mdlEffectiveness, rectDT, QList<int>() << 3 << 2 << 2,
+                                  false, ReportElements::Table::tvsStretched, 8, -1, QFont::Bold);
         pos += offset + 5;
 
         painter->setFont(QFont("Sans", 14, QFont::Bold, false));
@@ -276,13 +275,13 @@ void TriangleVisualize::print(QPrinter *printer, const QString &testUid)
                              static_cast<int>(paper.width() * 0.42), static_cast<int>(paper.height() * 0.42));
         double ratio = ReportElements::ratio(paper, wgtSKGTraining, 5);
         if (DataProvider::channelExists(testUid, 0, ChannelsDefines::chanStab))
-            ReportElements::drawSKG(painter, rectSKG, testUid, 0, ratio, 0, trainingLength - 1,
+            ReportElements::drawSKG(painter, rectSKG, testUid, 0, ratio, -1, 0, trainingLength - 1,
                                     QList<SKGDefines::BrokenLine>() << blTrnOrigin << blTrnTren);
 
         rectSKG = QRect(paper.x() + paper.width()/20 * 10, static_cast<int>(paper.y() + paper.height()/9),
                         static_cast<int>(paper.width() * 0.42), static_cast<int>(paper.height() * 0.42));
         if (DataProvider::channelExists(testUid, 0, ChannelsDefines::chanStab))
-            ReportElements::drawSKG(painter, rectSKG, testUid, 0, ratio, trainingLength, signalLength,
+            ReportElements::drawSKG(painter, rectSKG, testUid, 0, ratio, -1, trainingLength, signalLength,
                                     QList<SKGDefines::BrokenLine>() << blTrnOrigin << blTrnAnal);
 
         //! Таблица показателей. Берется модель таблицы из визуализатора
@@ -290,9 +289,8 @@ void TriangleVisualize::print(QPrinter *printer, const QString &testUid)
                         paper.y() + paper.height() / 14 * 7,
                         paper.width() / 10 * 9,
                         paper.height() / 3);
-        ReportElements::drawTable(painter, mdlDiagTable, rectDT,
-                                  QList<int>() << 3 << 2 << 2, ReportElements::Table::tvsStretched,
-                                  8, -1, QFont::Bold);
+        ReportElements::drawTable(painter, mdlDiagTable, rectDT, QList<int>() << 3 << 2 << 2,
+                                  false, ReportElements::Table::tvsStretched, 8, -1, QFont::Bold);
 
         painter->setFont(QFont("Sans", 10, 0, false));
         painter->drawText(paper.x() + paper.width() / 10, paper.y() + paper.height() / 14 * 12, sLatentMoving);
@@ -316,9 +314,8 @@ void TriangleVisualize::print(QPrinter *printer, const QString &testUid)
                         paper.y() + paper.height() / 10,
                         paper.width() / 10 * 9,
                         paper.height() / 10 * 8);
-        ReportElements::drawTable(painter, mdlMainTable, rectMT,
-                                  QList<int>() << 3 << 2 << 2, ReportElements::Table::tvsStretched,
-                                  8, -1, QFont::Bold);
+        ReportElements::drawTable(painter, mdlMainTable, rectMT, QList<int>() << 3 << 2 << 2,
+                                  false, ReportElements::Table::tvsStretched, 8, -1, QFont::Bold);
     }
     else
     if (printer->orientation() == QPrinter::Landscape)
@@ -328,13 +325,13 @@ void TriangleVisualize::print(QPrinter *printer, const QString &testUid)
                              static_cast<int>(paper.width() * 0.4), static_cast<int>(paper.height() * 0.4));
         double ratio = ReportElements::ratio(paper, wgtSKGTraining, 5);
         if (DataProvider::channelExists(testUid, 0, ChannelsDefines::chanStab))
-            ReportElements::drawSKG(painter, rectSKG, testUid, 0, ratio, 0, trainingLength - 1,
+            ReportElements::drawSKG(painter, rectSKG, testUid, 0, ratio, -1, 0, trainingLength - 1,
                                     QList<SKGDefines::BrokenLine>() << blTrnOrigin << blTrnTren);
 
         rectSKG = QRect(static_cast<int>(paper.x() + paper.width()/10 * 5), paper.y() + paper.height()/7,
                         static_cast<int>(paper.width() * 0.4), static_cast<int>(paper.height() * 0.4));
         if (DataProvider::channelExists(testUid, 0, ChannelsDefines::chanStab))
-            ReportElements::drawSKG(painter, rectSKG, testUid, 0, ratio, trainingLength, signalLength,
+            ReportElements::drawSKG(painter, rectSKG, testUid, 0, ratio, -1, trainingLength, signalLength,
                                     QList<SKGDefines::BrokenLine>() << blTrnOrigin << blTrnAnal);
 
         //! Таблица показателей. Берется модель таблицы из визуализатора
@@ -342,9 +339,8 @@ void TriangleVisualize::print(QPrinter *printer, const QString &testUid)
                         paper.y() + paper.height() / 40 * 24,
                         paper.width() / 10 * 9,
                         paper.height() / 3);
-        ReportElements::drawTable(painter, mdlDiagTable, rectDT,
-                                  QList<int>() << 3 << 2 << 2, ReportElements::Table::tvsStretched,
-                                  8, -1, QFont::Bold);
+        ReportElements::drawTable(painter, mdlDiagTable, rectDT, QList<int>() << 3 << 2 << 2,
+                                  false, ReportElements::Table::tvsStretched, 8, -1, QFont::Bold);
 
         painter->setFont(QFont("Sans", 10, 0, false));
         painter->drawText(paper.x() + paper.width() / 10, paper.y() + paper.height() / 56 * 53, sLatentMoving);
@@ -368,9 +364,8 @@ void TriangleVisualize::print(QPrinter *printer, const QString &testUid)
                         paper.y() + paper.height() / 10,
                         paper.width() / 10 * 9,
                         paper.height() / 10 * 8);
-        ReportElements::drawTable(painter, mdlMainTable, rectMT,
-                                  QList<int>() << 3 << 2 << 2, ReportElements::Table::tvsStretched,
-                                  8, -1, QFont::Bold);
+        ReportElements::drawTable(painter, mdlMainTable, rectMT, QList<int>() << 3 << 2 << 2,
+                                  false, ReportElements::Table::tvsStretched, 8, -1, QFont::Bold);
     }
 
     //! Нижний колонтитул

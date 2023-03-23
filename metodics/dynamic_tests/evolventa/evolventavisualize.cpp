@@ -120,9 +120,8 @@ void EvolventaVisualize::print(QPrinter *printer, const QString &testUid)
                         static_cast<int>(paper.y() + paper.height() / 10 * 4.2),
                         paper.width() / 10 * 9,
                         paper.height() / 3);
-        ReportElements::drawTable(painter, mdlMain, rectTable,
-                                  QList<int>() << 4 << 1 << 1, ReportElements::Table::tvsStretched,
-                                  10, -1, QFont::Bold);
+        ReportElements::drawTable(painter, mdlMain, rectTable, QList<int>() << 4 << 1 << 1,
+                                  false, ReportElements::Table::tvsStretched, 10, -1, QFont::Bold);
 
         //! Опережение / отставание от цели
         ReportElements::drawWidget(painter, wgtOutrunningDiag,
@@ -164,9 +163,8 @@ void EvolventaVisualize::print(QPrinter *printer, const QString &testUid)
                                static_cast<int>(paper.y() + paper.height() / 10 * 2.7),
                                paper.width() / 10 * 9,
                                paper.height() / 3);
-        ReportElements::drawTable(painter, mdlKorrect, rectTableKorrect,
-                                  QList<int>() << 2 << 1 << 1, ReportElements::Table::tvsCompressed,
-                                  10, -1, QFont::Bold);
+        ReportElements::drawTable(painter, mdlKorrect, rectTableKorrect, QList<int>() << 2 << 1 << 1,
+                                  false, ReportElements::Table::tvsCompressed, 10, -1, QFont::Bold);
     }
     else
     if (printer->orientation() == QPrinter::Landscape)
@@ -203,9 +201,8 @@ void EvolventaVisualize::print(QPrinter *printer, const QString &testUid)
                         static_cast<int>(paper.y() + paper.height() / 10),
                         paper.width() / 10 * 9,
                         paper.height() / 3);
-        ReportElements::drawTable(painter, mdlMain, rectTable,
-                                  QList<int>() << 4 << 1 << 1, ReportElements::Table::tvsStretched,
-                                  10, -1, QFont::Bold);
+        ReportElements::drawTable(painter, mdlMain, rectTable, QList<int>() << 4 << 1 << 1,
+                                  false, ReportElements::Table::tvsStretched, 10, -1, QFont::Bold);
 
         //! Заголовок "Коррекции"
         painter->setFont(QFont("Sans", 12, QFont::Bold, false));
@@ -229,9 +226,8 @@ void EvolventaVisualize::print(QPrinter *printer, const QString &testUid)
                                static_cast<int>(paper.y() + paper.height() / 10 * 5.6),
                                paper.width() / 10 * 4,
                                paper.height() / 3);
-        ReportElements::drawTable(painter, mdlKorrect, rectTableKorrect,
-                                  QList<int>() << 2 << 1 << 1, ReportElements::Table::tvsCompressed,
-                                  10, -1, QFont::Bold);
+        ReportElements::drawTable(painter, mdlKorrect, rectTableKorrect, QList<int>() << 2 << 1 << 1, false,
+                                  ReportElements::Table::tvsCompressed, 10, -1, QFont::Bold);
     }
 
     //! Нижний колонтитул

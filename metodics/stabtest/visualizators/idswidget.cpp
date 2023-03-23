@@ -153,7 +153,7 @@ void IDSWidget::print(QPrinter *printer, const QString &testUid)
                         paper.y() + paper.height() / 6,
                         paper.width() / 10 * 8,
                         paper.height() / 5);
-        ReportElements::drawTable(painter, mdlTable, rectTable, colW, ReportElements::Table::tvsStretched, 11, -1, QFont::Bold);
+        ReportElements::drawTable(painter, mdlTable, rectTable, colW, false, ReportElements::Table::tvsStretched, 11, -1, QFont::Bold);
 
         if (mdlTable->columnCount() <= 2)
         {
@@ -173,7 +173,7 @@ void IDSWidget::print(QPrinter *printer, const QString &testUid)
                         paper.y() + paper.height() / 6,
                         paper.width() / 10 * 8,
                         paper.height() / 5);
-        ReportElements::drawTable(painter, mdlTable, rectTable, colW, ReportElements::Table::tvsStretched, 11, -1, QFont::Bold);
+        ReportElements::drawTable(painter, mdlTable, rectTable, colW, false, ReportElements::Table::tvsStretched, 11, -1, QFont::Bold);
 
         if (mdlTable->columnCount() <= 2)
         {
