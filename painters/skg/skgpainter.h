@@ -49,6 +49,12 @@ public:
     void setMarkerColor(const QColor colorBackground, const QColor colorBorder);
 
     /*!
+     * \brief Устанавливает размер маркера
+     * \param size - размер маркера
+     */
+    void setMarkerSize(const int size);
+
+    /*!
      * \brief Переключает режим рисования следа
      * \param trace - признак рисования следа
      */
@@ -170,10 +176,6 @@ private:
     QPainter* m_painter {nullptr};
     QRect m_geometry {QRect(0, 0, 0, 0)};
 
-    void setAreaSKG();
-
-    QColor getFrameColor(const QColor color) const;
-
     /*!
      * \brief Прорисовка сетки
      */
@@ -200,6 +202,11 @@ private:
      * \brief Прорисовывает ломаные
      */
     void drawBrokenLines(const double ratio);
+
+    /*!
+     * \brief Прорисовывает маркер
+     */
+    void drawMarker();
 
     struct TargetInfo
     {
@@ -228,11 +235,10 @@ private:
     };
 
 //    TraceSKG* m_traceSKG {nullptr};
-//    BrokenLinesSKG* m_brokenLinesSKG {nullptr};
-//    QGraphicsRectItem* m_marker {nullptr};
 //    QList<TargetInfo> m_targets;
 
     QColor m_markerColor {Qt::red};
+    QColor m_markerBorderColor {Qt::darkRed};
     QColor m_platformsColor {QColor(235, 235, 235)};
     QColor m_ellipseColor {Qt::darkBlue};
 
@@ -263,6 +269,11 @@ private:
     double m_angle {0};
 
     QList<SKGDefines::BrokenLine> m_brokenLines;   ///< Список ломаных для построения
+
+    ///< Координаты маркера
+    double m_mx {0};
+    double m_my {0};
+    int m_mSize {10};
 };
 
 #endif // SKGPAINTER_H

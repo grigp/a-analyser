@@ -170,6 +170,7 @@ void BilateralVisualWidget::showSKG()
             ui->wgtSKG->setOffset(-m_bData->platform(1).center().x(),
                                   -m_bData->platform(1).y() + m_bData->platform(1).height() / 2, 2);
             ui->wgtSKG->setZeroing(true);
+            ui->wgtSKG->setVisibleMarker(false);
         }
     }
 }

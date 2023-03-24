@@ -157,12 +157,17 @@ void IDSWidget::print(QPrinter *printer, const QString &testUid)
 
         if (mdlTable->columnCount() <= 2)
         {
-            ReportElements::drawWidget(painter, wgtSKG,
-                                       static_cast<int>(paper.width() * 0.35), static_cast<int>(paper.height() * 0.35),
-                                       paper.x() + paper.width() / 12, paper.y() + paper.height() / 10 * 4);
+            //! СКГ
+            auto rectSKG = QRect(static_cast<int>(paper.x() + paper.width() / 2 - paper.width() * 0.175),
+                                 paper.y() + paper.height() / 10 * 3,
+                                 static_cast<int>(paper.width() * 0.35), static_cast<int>(paper.height() * 0.35));
+            double ratio = ReportElements::ratio(paper, wgtSKG, 5);
+            if (DataProvider::channelExists(testUid, 0, ChannelsDefines::chanStab))
+                ReportElements::drawSKG(painter, rectSKG, testUid, 0, ratio);
+            //! ФДС
             ReportElements::drawWidget(painter, wgtFDS,
-                                       static_cast<int>(paper.width() * 0.55), static_cast<int>(paper.height() * 0.55),
-                                       paper.x() + paper.width() / 12 * 5, paper.y() + paper.height() / 10 * 4);
+                                       static_cast<int>(paper.width() * 0.8), static_cast<int>(paper.height() * 0.35),
+                                       paper.x() + paper.width() / 12, static_cast<int>(paper.y() + paper.height() / 10 * 6.1));
         }
     }
     else
@@ -177,9 +182,12 @@ void IDSWidget::print(QPrinter *printer, const QString &testUid)
 
         if (mdlTable->columnCount() <= 2)
         {
-            ReportElements::drawWidget(painter, wgtSKG,
-                                       static_cast<int>(paper.width() * 0.55), static_cast<int>(paper.height() * 0.55),
-                                       paper.x() + paper.width() / 12, paper.y() + paper.height() / 10 * 4);
+            //! СКГ
+            auto rectSKG = QRect(paper.x() + paper.width() / 20, static_cast<int>(paper.y() + paper.height() / 10 * 3.8),
+                                 static_cast<int>(paper.height() * 0.5), static_cast<int>(paper.height() * 0.5));
+            double ratio = ReportElements::ratio(paper, wgtSKG, 5);
+            if (DataProvider::channelExists(testUid, 0, ChannelsDefines::chanStab))
+                ReportElements::drawSKG(painter, rectSKG, testUid, 0, ratio);
             ReportElements::drawWidget(painter, wgtFDS,
                                        static_cast<int>(paper.width() * 0.55), static_cast<int>(paper.height() * 0.55),
                                        paper.x() + paper.width() / 12 * 5, paper.y() + paper.height() / 10 * 4);

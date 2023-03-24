@@ -39,17 +39,25 @@ void SKGPainter::setDiap(const int diap)
 
 void SKGPainter::addMarker()
 {
-
+    m_isVisibleMarker = true;
 }
 
 void SKGPainter::setMarker(const double x, const double y)
 {
-
+    m_mx = x;
+    m_my = y;
+    doUpdate();
 }
 
 void SKGPainter::setMarkerColor(const QColor colorBackground, const QColor colorBorder)
 {
+    m_markerColor = colorBackground;
+    m_markerBorderColor = colorBorder;
+}
 
+void SKGPainter::setMarkerSize(const int size)
+{
+    m_mSize = size;
 }
 
 void SKGPainter::showTrace(const bool trace)
@@ -86,7 +94,7 @@ void SKGPainter::setSection(const int begin, const int end, const int num)
 
 void SKGPainter::setVisibleMarker(const bool visibleMarker)
 {
-
+    m_isVisibleMarker = visibleMarker;
 }
 
 void SKGPainter::setZeroing(const bool zeroing)
@@ -234,19 +242,10 @@ void SKGPainter::doPaint(const double ratio)
     drawGrid(ratio);
     drawSKG();
     drawBrokenLines(ratio);
+    drawMarker();
 }
 
 void SKGPainter::doUpdate()
-{
-
-}
-
-void SKGPainter::setAreaSKG()
-{
-
-}
-
-QColor SKGPainter::getFrameColor(const QColor color) const
 {
 
 }
@@ -506,6 +505,21 @@ void SKGPainter::drawBrokenLines(const double ratio)
         m_painter->drawPolyline(plgn);
     }
     m_painter->restore();
+}
+
+void SKGPainter::drawMarker()
+{
+    if (m_isVisibleMarker)
+    {
+        double x = m_midX + m_mx * m_prop;
+        double y = m_midY - m_my * m_prop;
+
+        m_painter->save();
+        m_painter->setBrush(QBrush(m_markerColor, Qt::SolidPattern));
+        m_painter->setPen(QPen(m_markerBorderColor, 2, Qt::SolidLine, Qt::FlatCap));
+        m_painter->drawRect(static_cast<int>(x - m_mSize / 2), static_cast<int>(y - m_mSize / 2), m_mSize, m_mSize);
+        m_painter->restore();
+    }
 }
 
 SKGPainter::SignalData::SignalData(SignalAccess *sig, const QColor col, const int b, const int e)
