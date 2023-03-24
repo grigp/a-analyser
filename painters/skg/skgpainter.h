@@ -208,12 +208,22 @@ private:
      */
     void drawMarker();
 
+    /*!
+     * \brief Прорисовывает цели
+     */
+    void drawTargets();
+
+    /*!
+     * \brief Структура данных, содержащая данные цели The TargetInfo struct
+     */
     struct TargetInfo
     {
-        QGraphicsItem* item;
+        QSize size;
         QPointF pos;
-        TargetInfo(QGraphicsItem* itm, QPointF pt)
-            : item(itm), pos(pt) {}
+        QColor colorBackground {Qt::green};
+        QColor colorBorder {Qt::darkGreen};
+        TargetInfo(QSize sz, QPointF pt, QColor c, QColor cb)
+            : size(sz), pos(pt), colorBackground(c), colorBorder(cb) {}
     };
 
     /*!
@@ -274,6 +284,9 @@ private:
     double m_mx {0};
     double m_my {0};
     int m_mSize {10};
+
+    ///< Цели
+    QList<TargetInfo> m_targets;
 };
 
 #endif // SKGPAINTER_H

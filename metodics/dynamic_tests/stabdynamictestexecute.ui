@@ -176,7 +176,7 @@
               <number>1</number>
              </property>
              <item>
-              <widget class="AreaSKG" name="wgtSKG" native="true"/>
+              <widget class="SKGWidget" name="wgtSKG" native="true"/>
              </item>
             </layout>
            </widget>
@@ -577,15 +577,15 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>AreaSKG</class>
-   <extends>QWidget</extends>
-   <header location="global">areaskg.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
    <class>AdvancedChannels</class>
    <extends>QWidget</extends>
    <header location="global">advancedchannels.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>SKGWidget</class>
+   <extends>QWidget</extends>
+   <header location="global">skgwidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

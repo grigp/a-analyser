@@ -150,12 +150,12 @@ QColor SKGPainter::colorEllipse() const
 
 QColor SKGPainter::colorMarker() const
 {
-
+    return m_markerColor;
 }
 
 void SKGPainter::setColorMarker(const QColor &color)
 {
-
+    m_markerColor = color;
 }
 
 QColor SKGPainter::colorPlatforms() const
@@ -170,17 +170,22 @@ void SKGPainter::setColorPlatforms(const QColor &color)
 
 void SKGPainter::addTarget(const double x, const double y, const QColor colorBackground, const QColor colorBorder)
 {
-
+    m_targets << TargetInfo(QSize(10, 10), QPointF(x, y), colorBackground, colorBorder);
 }
 
 void SKGPainter::setTarget(const double x, const double y, const int idx)
 {
-
+    if (idx >= 0 && idx < m_targets.size())
+    {
+        auto ti = m_targets.at(idx);
+        ti.pos = QPointF(x, y);
+        m_targets.replace(idx, ti);
+    }
 }
 
 void SKGPainter::clearTargets()
 {
-
+    m_targets.clear();
 }
 
 int SKGPainter::addBrokenLine(SKGDefines::BrokenLine &bl)
@@ -242,6 +247,7 @@ void SKGPainter::doPaint(const double ratio)
     drawGrid(ratio);
     drawSKG();
     drawBrokenLines(ratio);
+    drawTargets();
     drawMarker();
 }
 
@@ -402,7 +408,7 @@ void SKGPainter::drawSKG()
     }
 
     //! Эллипс. Рисуется, если заданы его параметры и виден сам сигнал
-    if (m_signals.at(0).visible
+    if (m_signals.size() > 0 && m_signals.at(0).visible
          && m_sizeA > 0 && m_sizeA < 5000
          && m_sizeB > 0 && m_sizeB < 5000
          && m_angle >= -360 && m_angle <= 360)
@@ -516,10 +522,27 @@ void SKGPainter::drawMarker()
 
         m_painter->save();
         m_painter->setBrush(QBrush(m_markerColor, Qt::SolidPattern));
-        m_painter->setPen(QPen(m_markerBorderColor, 2, Qt::SolidLine, Qt::FlatCap));
+        m_painter->setPen(QPen(m_markerBorderColor, 1, Qt::SolidLine, Qt::FlatCap));
         m_painter->drawRect(static_cast<int>(x - m_mSize / 2), static_cast<int>(y - m_mSize / 2), m_mSize, m_mSize);
         m_painter->restore();
     }
+}
+
+void SKGPainter::drawTargets()
+{
+    m_painter->save();
+    foreach (auto ti, m_targets)
+    {
+        double x = m_midX + ti.pos.x() * m_prop;
+        double y = m_midY - ti.pos.y() * m_prop;
+        int w = ti.size.width();
+        int h = ti.size.height();
+
+        m_painter->setBrush(QBrush(ti.colorBackground, Qt::SolidPattern));
+        m_painter->setPen(QPen(ti.colorBorder, 1, Qt::SolidLine, Qt::FlatCap));
+        m_painter->drawRect(static_cast<int>(x - w / 2), static_cast<int>(y - h / 2), w, h);
+    }
+    m_painter->restore();
 }
 
 SKGPainter::SignalData::SignalData(SignalAccess *sig, const QColor col, const int b, const int e)
