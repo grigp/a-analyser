@@ -8,12 +8,13 @@
 #include "aanalyserapplication.h"
 #include "crosscalculator.h"
 #include "reportelements.h"
+#include "crosspainter.h"
 
 namespace
 {
     DiagCross *wgtDiag {nullptr};
     QStandardItemModel *mdlFactors {nullptr};
-
+    CrossCalculator* calculator {nullptr};
 }
 
 CrossVisualize::CrossVisualize(QWidget *parent) :
@@ -34,6 +35,7 @@ void CrossVisualize::setTest(const QString &testUid)
     {
         m_calculator = new CrossCalculator(testUid, this);
         m_calculator->calculate();
+        calculator = m_calculator;
 
         auto model = new QStandardItemModel();
         for (int i = 0; i < m_calculator->primaryFactorsCount(); ++i)
@@ -81,9 +83,20 @@ void CrossVisualize::print(QPrinter *printer, const QString &testUid)
     if (printer->orientation() == QPrinter::Portrait)
     {
         //! Диаграмма Cross. Копируется из виджета
-        ReportElements::drawWidget(painter, wgtDiag,
-                                   static_cast<int>(paper.width() * 0.8), static_cast<int>(paper.height() * 0.8),
-                                   paper.x() + paper.width()/10, paper.y() + paper.height()/7);
+        auto rectDiag = QRect(paper.x() + paper.width()/10, paper.y() + paper.height()/7,
+                             static_cast<int>(paper.width() * 0.8), static_cast<int>(paper.height() * 0.8));
+        double ratio = ReportElements::ratio(paper, wgtDiag, 5);
+        CrossPainter cp(painter, rectDiag);
+        cp.setDiap(static_cast<int>(calculator->diap()));
+        cp.setValueUp(static_cast<int>(calculator->valueUp()));
+        cp.setValueDown(static_cast<int>(calculator->valueDown()));
+        cp.setValueLeft(static_cast<int>(calculator->valueLeft()));
+        cp.setValueRight(static_cast<int>(calculator->valueRight()));
+        cp.doPaint(ratio);
+
+//        ReportElements::drawWidget(painter, wgtDiag,
+//                                   static_cast<int>(paper.width() * 0.8), static_cast<int>(paper.height() * 0.8),
+//                                   paper.x() + paper.width()/10, paper.y() + paper.height()/7);
 
         //! Таблица показателей. Берется модель таблицы из визуализатора
         QRect rectTable(paper.x() + paper.width() / 10,

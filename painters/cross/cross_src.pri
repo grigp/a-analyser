@@ -1,11 +1,11 @@
 INCLUDEPATH += $$PWD
 
-include(skg/skg_src.pri)
-include(cross/cross_src.pri)
 
 HEADERS += \
+    $$PWD/crosspainter.h
 
 SOURCES += \
+    $$PWD/crosspainter.cpp
 
 FORMS += \
 
