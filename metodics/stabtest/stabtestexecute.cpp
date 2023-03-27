@@ -393,7 +393,6 @@ void StabTestExecute::initRecSignals()
         {
             m_trd->newProbe(probeParams().name);
             ui->wgtAdvChannels->newProbe();
-            qDebug() << m_probe << m_trd->probesCount() << m_params.size();
             addBilatChannel();
         }
         else
