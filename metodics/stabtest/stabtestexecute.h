@@ -92,6 +92,11 @@ private:
     void finishTest();
 
     /*!
+     * \brief Добавляет канал билатеральных данных в пробу
+     */
+    void addBilatChannel();
+
+    /*!
      * \brief Показывает окно пациента
      * \param winCode - код окна
      */
@@ -123,7 +128,6 @@ private:
     DeviceProtocols::MultiPlatformControl* m_bilatControl {nullptr};   ///< Управление билатаральным режимом в драйвере
     QRect m_platform1 {QRect(0, 0, 0, 0)};   ///< Платформы в билатеральном режиме
     QRect m_platform2 {QRect(0, 0, 0, 0)};
-    BilateralResultData* m_rdBilat {nullptr};
 };
 
 #endif // STABTESTEXECUTE_H

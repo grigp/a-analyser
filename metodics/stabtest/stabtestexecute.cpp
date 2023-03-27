@@ -33,7 +33,6 @@ StabTestExecute::StabTestExecute(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::StabTestExecute)
   , m_trd(new TestResultData())
-  , m_rdBilat(new BilateralResultData(ChannelsDefines::chanBilat))
 {
     ui->setupUi(this);
 
@@ -394,6 +393,8 @@ void StabTestExecute::initRecSignals()
         {
             m_trd->newProbe(probeParams().name);
             ui->wgtAdvChannels->newProbe();
+            qDebug() << m_probe << m_trd->probesCount() << m_params.size();
+            addBilatChannel();
         }
         else
         {                               //! Проба была прервана - очистить сигналы
@@ -437,14 +438,19 @@ void StabTestExecute::finishTest()
 {
     hidePatientWindow();
     m_isRecording = false;
-    if (m_bilatControl)
-    {
-        m_rdBilat->addPlatform(m_platform1);
-        m_rdBilat->addPlatform(m_platform2);
-        m_trd->addChannel(m_rdBilat);
-    }
     m_trd->saveTest();
     static_cast<ExecuteWidget*>(parent())->showDB();
+}
+
+void StabTestExecute::addBilatChannel()
+{
+    if (m_bilatControl)
+    {
+        auto rdBilat = new BilateralResultData(ChannelsDefines::chanBilat);
+        rdBilat->addPlatform(m_platform1);
+        rdBilat->addPlatform(m_platform2);
+        m_trd->addChannel(rdBilat);
+    }
 }
 
 void StabTestExecute::showPatientWindow(const int winCode)
