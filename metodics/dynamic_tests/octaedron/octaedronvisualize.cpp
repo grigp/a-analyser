@@ -6,11 +6,13 @@
 #include "basedefines.h"
 #include "octaedroncalculator.h"
 #include "reportelements.h"
+#include "octaedronpainter.h"
 
 namespace
 {
 DiagOctaedron *wgtDiag {nullptr};
 QString sAverageQuality {""};
+OctaedronCalculator* calculator {nullptr};
 }
 
 OctaedronVisualize::OctaedronVisualize(QWidget *parent) :
@@ -31,6 +33,7 @@ void OctaedronVisualize::setTest(const QString &testUid)
     {
         m_calculator = new OctaedronCalculator(testUid, this);
         m_calculator->calculate();
+        calculator = m_calculator;
 
         auto crm = BaseDefines::CirceRoundRuleModeValueIndex.value(m_calculator->circeRoundRuleMode());
         ui->wgtDiag->setCirceRoundRuleMode(crm);
@@ -40,7 +43,7 @@ void OctaedronVisualize::setTest(const QString &testUid)
         for (int i = 0; i < 8; ++i)
             ui->wgtDiag->setData(i, static_cast<int>(m_calculator->getValue(i)));
 
-        ui->wgtDiag->endUpdate();
+        ui->wgtDiag->doUpdate();
 
         sAverageQuality = tr("Среднее качество выполнения задания") + " " +
                 QString::number(m_calculator->getAverageValue(), 'f', 0) + " " + tr("%");
@@ -63,12 +66,19 @@ void OctaedronVisualize::print(QPrinter *printer, const QString &testUid)
 
     if (printer->orientation() == QPrinter::Portrait)
     {
-        //! Диаграмма. Копируется из виджета
-        ReportElements::drawWidget(painter, wgtDiag,
-                                   static_cast<int>(paper.width() * 0.85),
-                                   static_cast<int>(paper.height() * 0.85),
-                                   paper.x() + paper.width()/10,
-                                   static_cast<int>(paper.y() + paper.height()/4));
+        //! Диаграмма
+        auto rectDiag = QRect(static_cast<int>(paper.x() + paper.width() * 0.1),
+                              static_cast<int>(paper.y() + paper.height() * 0.2),
+                              static_cast<int>(paper.width() * 0.8), static_cast<int>(paper.width() * 0.8));
+        double ratio = ReportElements::ratio(paper, wgtDiag, 3);
+        OctaedronPainter cp(painter, rectDiag);
+        auto crm = BaseDefines::CirceRoundRuleModeValueIndex.value(calculator->circeRoundRuleMode());
+        cp.setCirceRoundRuleMode(crm);
+        auto dm = BaseDefines::DirectionModeValueIndex.value(calculator->directionMode());
+        cp.setDirection(dm);
+        for (int i = 0; i < 8; ++i)
+            cp.setData(i, static_cast<int>(calculator->getValue(i)));
+        cp.doPaint(ratio);
 
         painter->setFont(QFont("Sans", 14, QFont::Bold, false));
         painter->setPen(Qt::darkCyan);
