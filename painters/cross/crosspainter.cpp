@@ -1,6 +1,9 @@
 #include "crosspainter.h"
 
 #include <QPalette>
+#include <QDebug>
+
+#include "baseutils.h"
 
 CrossPainter::CrossPainter(QPainter *painter, QRect geometry)
     : m_painter(painter), m_geometry(geometry)
@@ -55,48 +58,56 @@ void CrossPainter::doPaint(const double ratio)
     if (m_widget)
         backColor = m_widget->palette().background().color();
     m_painter->setBrush(QBrush(backColor , Qt::SolidPattern));
-    m_painter->setPen(QPen(backColor , 1, Qt::SolidLine, Qt::FlatCap));
+    m_painter->setPen(QPen(backColor, 1, Qt::SolidLine, Qt::FlatCap));
     m_painter->drawRect(m_geometry);
 
-    int mx = m_geometry.width() / 2;
-    int my = m_geometry.height() / 2;
+    int mx = m_geometry.center().x();
+    int my = m_geometry.center().y();
+    int thick = static_cast<int>(qMin(m_geometry.width() - m_geometry.left(),
+                                      m_geometry.height() - m_geometry.top())
+                                 * 0.06);  //! 6% от ширины
 
-    auto font = m_painter->font();
-    font.setPixelSize(22);
-    font.setBold(true);
-    m_painter->setFont(font);
+    m_painter->setFont(QFont("Arial", static_cast<int>(22 / (ratio / 2)), 0, false));
+    QString sVL = QString::number(m_valueLeft);
+    auto sizeVL = BaseUtils::getTextSize(m_painter, sVL);
+    QString sVR = QString::number(m_valueRight);
+    auto sizeVR = BaseUtils::getTextSize(m_painter, sVR);
+    QString sVU = QString::number(m_valueUp);
+    auto sizeVU = BaseUtils::getTextSize(m_painter, sVU);
+    QString sVD = QString::number(m_valueDown);
+//    auto sizeVD = BaseUtils::getTextSize(m_painter, sVD);
 
     if (m_diap > 0)
     {
         m_painter->setBrush(QBrush(m_frontalColor, Qt::SolidPattern));
         m_painter->setPen(QPen(m_frontalColor, 1, Qt::SolidLine, Qt::FlatCap));
-        int w = (mx - 10) * m_valueLeft / m_diap;
-        m_painter->drawRect(mx - 10 - w, my - 10, w, 20);
-        w = (mx - 10) * m_valueRight / m_diap;
-        m_painter->drawRect(mx + 10, my - 10, w, 20);
+        int w = (mx - thick/2 - m_geometry.left()) * m_valueLeft / m_diap;
+        m_painter->drawRect(mx - thick/2 - w, my - thick/2, w, thick);
+        w = (mx - thick/2 - m_geometry.left()) * m_valueRight / m_diap;
+        m_painter->drawRect(mx + thick/2, my - thick/2, w, thick);
         if (m_isShowValueLeft)
-            m_painter->drawText(10, my + 35, QString::number(m_valueLeft));
+            m_painter->drawText(m_geometry.left() + 10, my + thick / 2 + sizeVL.height() + 5, sVL);
         if (m_isShowValueRight)
-            m_painter->drawText(m_geometry.width() - 50, my + 35, QString::number(m_valueRight));
+            m_painter->drawText(m_geometry.left() + m_geometry.width() - sizeVR.width() - 5, my + thick / 2 + sizeVR.height() + 5, sVR);
 
         m_painter->setBrush(QBrush(m_sagittalColor, Qt::SolidPattern));
         m_painter->setPen(QPen(m_sagittalColor, 1, Qt::SolidLine, Qt::FlatCap));
-        int h = (my - 10) * m_valueUp / m_diap;
-        m_painter->drawRect(mx - 10, my - 10 - h, 20, h);
-        h = (my - 10) * m_valueDown / m_diap;
-        m_painter->drawRect(mx - 10, my + 10, 20, h);
+        int h = (my - thick/2 - m_geometry.top()) * m_valueUp / m_diap;
+        m_painter->drawRect(mx - thick/2, my - thick/2 - h, thick, h);
+        h = (my - thick/2 - m_geometry.top()) * m_valueDown / m_diap;
+        m_painter->drawRect(mx - thick/2, my + thick/2, thick, h);
         if (m_isShowValueUp)
-            m_painter->drawText(mx + 15, 22, QString::number(m_valueUp));
+            m_painter->drawText(mx + thick / 2 + 15, m_geometry.top() + sizeVU.height() + 5, sVU);
         if (m_isShowValueDown)
-            m_painter->drawText(mx + 15, m_geometry.height() - 10, QString::number(m_valueDown));
+            m_painter->drawText(mx + thick / 2 + 15, m_geometry.top() + m_geometry.height() - 5, sVD);
     }
 
     m_painter->setPen(QPen(m_frameColor, 1, Qt::SolidLine, Qt::FlatCap));
     m_painter->setBrush(QBrush(m_frameColor, Qt::NoBrush));
-    m_painter->drawRect(0, my - 10, mx - 10, 20);
-    m_painter->drawRect(mx + 10, my - 10, mx - 10 - 1, 20);
-    m_painter->drawRect(mx - 10, 0, 20, my - 10);
-    m_painter->drawRect(mx - 10, my + 10, 20, my - 10 - 1);
+    m_painter->drawRect(m_geometry.left(), my - thick/2, mx - thick/2 - m_geometry.left(), thick);
+    m_painter->drawRect(mx + thick/2, my - thick/2, mx - thick/2 - m_geometry.left() - 1, thick);
+    m_painter->drawRect(mx - thick/2, m_geometry.top(), thick, my - thick/2 - m_geometry.top());
+    m_painter->drawRect(mx - thick/2, my + thick/2, thick, my - thick/2 - m_geometry.top() - 1);
 }
 
 void CrossPainter::doUpdate()

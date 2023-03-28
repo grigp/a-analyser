@@ -82,10 +82,11 @@ void CrossVisualize::print(QPrinter *printer, const QString &testUid)
 
     if (printer->orientation() == QPrinter::Portrait)
     {
-        //! Диаграмма Cross. Копируется из виджета
-        auto rectDiag = QRect(paper.x() + paper.width()/10, paper.y() + paper.height()/7,
-                             static_cast<int>(paper.width() * 0.8), static_cast<int>(paper.height() * 0.8));
-        double ratio = ReportElements::ratio(paper, wgtDiag, 5);
+        //! Диаграмма Cross
+        auto rectDiag = QRect(static_cast<int>(paper.x() + paper.width() / 2 - paper.height() * 0.25),
+                              paper.y() + paper.height()/7,
+                             static_cast<int>(paper.height() * 0.5), static_cast<int>(paper.height() * 0.5));
+        double ratio = ReportElements::ratio(paper, wgtDiag, 3);
         CrossPainter cp(painter, rectDiag);
         cp.setDiap(static_cast<int>(calculator->diap()));
         cp.setValueUp(static_cast<int>(calculator->valueUp()));
@@ -93,10 +94,6 @@ void CrossVisualize::print(QPrinter *printer, const QString &testUid)
         cp.setValueLeft(static_cast<int>(calculator->valueLeft()));
         cp.setValueRight(static_cast<int>(calculator->valueRight()));
         cp.doPaint(ratio);
-
-//        ReportElements::drawWidget(painter, wgtDiag,
-//                                   static_cast<int>(paper.width() * 0.8), static_cast<int>(paper.height() * 0.8),
-//                                   paper.x() + paper.width()/10, paper.y() + paper.height()/7);
 
         //! Таблица показателей. Берется модель таблицы из визуализатора
         QRect rectTable(paper.x() + paper.width() / 10,
@@ -109,10 +106,17 @@ void CrossVisualize::print(QPrinter *printer, const QString &testUid)
     else
     if (printer->orientation() == QPrinter::Landscape)
     {
-        //! Диаграмма Cross. Копируется из виджета
-        ReportElements::drawWidget(painter, wgtDiag,
-                                   static_cast<int>(paper.width() * 0.6), static_cast<int>(paper.height() * 0.6),
-                                   paper.x() + paper.width()/20, paper.y() + paper.height()/4);
+        //! Диаграмма Cross
+        auto rectDiag = QRect(paper.x() + paper.width()/25, paper.y() + paper.height()/5,
+                             static_cast<int>(paper.height() * 0.7), static_cast<int>(paper.height() * 0.7));
+        double ratio = ReportElements::ratio(paper, wgtDiag, 3);
+        CrossPainter cp(painter, rectDiag);
+        cp.setDiap(static_cast<int>(calculator->diap()));
+        cp.setValueUp(static_cast<int>(calculator->valueUp()));
+        cp.setValueDown(static_cast<int>(calculator->valueDown()));
+        cp.setValueLeft(static_cast<int>(calculator->valueLeft()));
+        cp.setValueRight(static_cast<int>(calculator->valueRight()));
+        cp.doPaint(ratio);
 
         //! Таблица показателей. Берется модель таблицы из визуализатора
         QRect rectTable(paper.x() + paper.width() / 7 * 4,
