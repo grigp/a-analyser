@@ -19,6 +19,7 @@ public:
      * \brief Задает канву прорисовки. Будет испльзоваться в режиме виджета для задания
      * \param painter - рисователь
      * \param geometry - размер области прорисовки
+     * \param wgt - указатель на виджет, если рисуем на виджете
      */
     void setCanvas(QPainter* painter, QRect geometry, QWidget *wgt = nullptr);
 

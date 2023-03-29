@@ -9,6 +9,7 @@ class StepOffsetVisualize;
 }
 
 class StepOffsetCalculator;
+class TransientsPainter;
 
 /*!
  * \brief Класс виджета показа результатов теста "Ступени" StepOffsetVisualize class
@@ -64,6 +65,8 @@ private:
      * \brief Показывает заключение по стратегии
      */
     void showConslutionStrategy();
+
+    static void printTransistents(TransientsPainter* tp);
 
     StepOffsetCalculator* m_calculator {nullptr};
 };

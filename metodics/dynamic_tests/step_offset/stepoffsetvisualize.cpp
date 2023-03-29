@@ -13,6 +13,7 @@
 #include "stepoffsetfactors.h"
 #include "settingsprovider.h"
 #include "reportelements.h"
+#include "transientspainter.h"
 
 namespace
 {
@@ -39,6 +40,7 @@ QColor sCorrectionResumeColorTrain;
 DualStateDiagram *wgtCorrectionDiagTrain {nullptr};
 
 QTabWidget *wgtTab {nullptr};
+StepOffsetCalculator* calculator {nullptr};
 }
 
 
@@ -67,6 +69,7 @@ void StepOffsetVisualize::setTest(const QString &testUid)
     {
         m_calculator = new StepOffsetCalculator(testUid, this);
         m_calculator->calculate();
+        calculator = m_calculator;
 
         showTransients();
         showTable();
@@ -152,10 +155,18 @@ void StepOffsetVisualize::print(QPrinter *printer, const QString &testUid)
 
     if (printer->orientation() == QPrinter::Portrait)
     {
+        //! Диаграмма
+        auto rectDiag = QRect(paper.x() + paper.width()/10, paper.y() + paper.height()/7,
+                              static_cast<int>(paper.width() * 0.85), static_cast<int>(paper.height() * 0.27));
+        double ratio = ReportElements::ratio(paper, wgtProcess, 3);
+        TransientsPainter tp(painter, rectDiag);
+        printTransistents(&tp);
+        tp.doPaint(ratio);
+
         //! Диаграмма. Копируется из виджета
-        ReportElements::drawWidget(painter, wgtProcess,
-                                   static_cast<int>(paper.width() * 0.8), static_cast<int>(paper.height() * 0.8),
-                                   paper.x() + paper.width()/10, paper.y() + paper.height()/7);
+//        ReportElements::drawWidget(painter, wgtProcess,
+//                                   static_cast<int>(paper.width() * 0.8), static_cast<int>(paper.height() * 0.8),
+//                                   paper.x() + paper.width()/10, paper.y() + paper.height()/7);
 
         //! Таблица показателей. Берется модель таблицы из визуализатора
         QRect rectTable(paper.x() + paper.width() / 10,
@@ -419,4 +430,44 @@ void StepOffsetVisualize::showConslutionStrategy()
     ui->wgtCorrectionDiag->setDescriptionLeft(tr("Быстрые коррекции"));
     ui->wgtCorrectionDiag->setDescriptionRight(tr("Медленные коррекции"));
     wgtCorrectionDiagTrain = ui->wgtCorrectionDiag;
+}
+
+void StepOffsetVisualize::printTransistents(TransientsPainter* tp)
+{
+    int min = qMin(calculator->bufferCompensationCount(), calculator->bufferReturnCount());
+    tp->setFreq(calculator->freq());
+
+    //! Время броска от стимула = время броска + время размаха.
+    //! Если время размаха == 0, то время броска + латентный период.
+    double spurtTime = calculator->factorValue(StepOffsetFactorsDefines::Compensation::SpurtTimeUid) +
+                       calculator->factorValue(StepOffsetFactorsDefines::Compensation::SwingTimeUid);
+    if (calculator->factorValue(StepOffsetFactorsDefines::Compensation::SwingTimeUid) - 0 < 1e-10)
+        spurtTime = spurtTime + calculator->factorValue(StepOffsetFactorsDefines::Compensation::LatentUid);
+    tp->setParams(StepOffsetDefines::stgCompensaton,
+                              calculator->factorValue(StepOffsetFactorsDefines::Compensation::LatentUid),
+                              calculator->factorValue(StepOffsetFactorsDefines::Compensation::SwingTimeUid),
+                              spurtTime,
+                              calculator->factorValue(StepOffsetFactorsDefines::Compensation::ReactionTimeUid),
+                              calculator->factorValue(StepOffsetFactorsDefines::Compensation::StatismUid),
+                              calculator->factorValue(StepOffsetFactorsDefines::Compensation::RetentionDeviationUid));
+
+    spurtTime = calculator->factorValue(StepOffsetFactorsDefines::Return::SpurtTimeUid) +
+                           calculator->factorValue(StepOffsetFactorsDefines::Return::SwingTimeUid);
+        if (calculator->factorValue(StepOffsetFactorsDefines::Return::SwingTimeUid) - 0 < 1e-10)
+            spurtTime = spurtTime + calculator->factorValue(StepOffsetFactorsDefines::Return::LatentUid);
+    tp->setParams(StepOffsetDefines::stgReturn,
+                              calculator->factorValue(StepOffsetFactorsDefines::Return::LatentUid),
+                              calculator->factorValue(StepOffsetFactorsDefines::Return::SwingTimeUid),
+                              spurtTime,
+                              calculator->factorValue(StepOffsetFactorsDefines::Return::ReactionTimeUid),
+                              calculator->factorValue(StepOffsetFactorsDefines::Return::StatismUid),
+                              calculator->factorValue(StepOffsetFactorsDefines::Return::RetentionDeviationUid));
+
+    tp->beginAddValues();
+    for (int i = 0; i < min; ++i)
+    {
+        tp->setCompensationValue(calculator->bufferCompensationValue(i));
+        tp->setReturnValue(calculator->bufferReturnValue(i));
+    }
+    tp->endAddValues();
 }
