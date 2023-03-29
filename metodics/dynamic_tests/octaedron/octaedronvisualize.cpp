@@ -87,10 +87,18 @@ void OctaedronVisualize::print(QPrinter *printer, const QString &testUid)
     else
     if (printer->orientation() == QPrinter::Landscape)
     {
-        //! Диаграмма. Копируется из виджета
-        ReportElements::drawWidget(painter, wgtDiag,
-                                   static_cast<int>(paper.width() * 0.7), static_cast<int>(paper.height() * 0.7),
-                                   static_cast<int>(paper.x() + paper.width()/5.5), paper.y() + paper.height()/7);
+        //! Диаграмма
+        auto rectDiag = QRect(static_cast<int>(paper.x() + paper.width()/5), paper.y() + paper.height()/7,
+                              static_cast<int>(paper.height() * 0.8), static_cast<int>(paper.height() * 0.8));
+        double ratio = ReportElements::ratio(paper, wgtDiag, 3);
+        OctaedronPainter cp(painter, rectDiag);
+        auto crm = BaseDefines::CirceRoundRuleModeValueIndex.value(calculator->circeRoundRuleMode());
+        cp.setCirceRoundRuleMode(crm);
+        auto dm = BaseDefines::DirectionModeValueIndex.value(calculator->directionMode());
+        cp.setDirection(dm);
+        for (int i = 0; i < 8; ++i)
+            cp.setData(i, static_cast<int>(calculator->getValue(i)));
+        cp.doPaint(ratio);
 
         painter->setFont(QFont("Sans", 14, QFont::Bold, false));
         painter->setPen(Qt::darkCyan);

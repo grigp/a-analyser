@@ -1,5 +1,7 @@
 #include "octaedronpainter.h"
 
+#include <QDebug>
+
 namespace
 {
 struct ArrowIndexes
@@ -77,21 +79,25 @@ int OctaedronPainter::data(const int idx) const
 
 void OctaedronPainter::doPaint(const double ratio)
 {
+    m_painter->save();
+
     QColor backColor = Qt::white;
     if (m_widget)
         backColor = m_widget->palette().background().color();
 
     m_painter->setBrush(QBrush(backColor, Qt::SolidPattern));
-    m_painter->setPen(QPen(Qt::black, 1, Qt::SolidLine, Qt::FlatCap));
-//    m_painter->setPen(QPen(backColor, 1, Qt::SolidLine, Qt::FlatCap));
+    m_painter->setPen(QPen(backColor, 1, Qt::SolidLine, Qt::FlatCap));
     m_painter->drawRect(m_geometry);
 
-    int mx = m_geometry.center().x(); //m_geometry.left() + m_geometry.width() / 2;
-    int my = m_geometry.center().y(); //m_geometry.top() + m_geometry.height() / 2;
+    int mx = m_geometry.center().x();
+    int my = m_geometry.center().y();
     int radius = static_cast<int>(m_geometry.height() / 2 * 0.85);
     const int sizeLabel = static_cast<int>(40 * ratio);
 
-    m_painter->setFont(QFont("Arial", static_cast<int>(18 / (ratio / 2)), 0, false));
+    int tw = 18;
+    if (ratio > 1)
+        tw = static_cast<int>(18 / (ratio / 2));
+    m_painter->setFont(QFont("Arial", tw, 0, false));
 
     //! Прямоугольники меток
     QList<QRect> labels = {
@@ -111,7 +117,7 @@ void OctaedronPainter::doPaint(const double ratio)
 
     //! Диаграмма
     m_painter->setBrush(QBrush(m_labelColor, Qt::SolidPattern));
-    m_painter->setPen(QPen(m_lineColor, 5, Qt::SolidLine, Qt::FlatCap));
+    m_painter->setPen(QPen(m_lineColor, 5 * ratio, Qt::SolidLine, Qt::FlatCap));
 
     //! Радиальный режим
     if (m_mode == 0)
@@ -152,6 +158,8 @@ void OctaedronPainter::doPaint(const double ratio)
         m_painter->setPen(QPen(m_labelTextColor, 1, Qt::SolidLine, Qt::FlatCap));
         m_painter->drawText(labels.at(i), QString::number(m_data[i]), QTextOption(Qt::AlignHCenter | Qt::AlignVCenter));
     }
+
+    m_painter->restore();
 }
 
 void OctaedronPainter::doUpdate()
