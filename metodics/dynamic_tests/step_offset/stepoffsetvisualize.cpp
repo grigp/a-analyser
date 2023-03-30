@@ -163,11 +163,6 @@ void StepOffsetVisualize::print(QPrinter *printer, const QString &testUid)
         printTransistents(&tp);
         tp.doPaint(ratio);
 
-        //! Диаграмма. Копируется из виджета
-//        ReportElements::drawWidget(painter, wgtProcess,
-//                                   static_cast<int>(paper.width() * 0.8), static_cast<int>(paper.height() * 0.8),
-//                                   paper.x() + paper.width()/10, paper.y() + paper.height()/7);
-
         //! Таблица показателей. Берется модель таблицы из визуализатора
         QRect rectTable(paper.x() + paper.width() / 10,
                         paper.y() + paper.height() / 7 * 3,
@@ -197,10 +192,13 @@ void StepOffsetVisualize::print(QPrinter *printer, const QString &testUid)
     else
     if (printer->orientation() == QPrinter::Landscape)
     {
-        //! Диаграмма. Копируется из виджета
-        ReportElements::drawWidget(painter, wgtProcess,
-                                   static_cast<int>(paper.width() * 0.9), static_cast<int>(paper.height() * 0.9),
-                                   paper.x() + paper.width()/20, paper.y() + paper.height()/7);
+        //! Диаграмма
+        auto rectDiag = QRect(paper.x() + paper.width()/20, paper.y() + paper.height()/7,
+                              static_cast<int>(paper.width() * 0.9), static_cast<int>(paper.height() * 0.6));
+        double ratio = ReportElements::ratio(paper, wgtProcess, 3);
+        TransientsPainter tp(painter, rectDiag);
+        printTransistents(&tp);
+        tp.doPaint(ratio);
 
         //! Параметры воздействия
         drawParams();

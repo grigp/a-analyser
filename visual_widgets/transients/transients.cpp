@@ -115,7 +115,7 @@ void Transients::paintEvent(QPaintEvent *event)
 
     //! И рисуем
     setCanvas(&painter, geo);
-    doPaint(2);
+    doPaint(1);
 
 //    QPainter painter(this);
 
