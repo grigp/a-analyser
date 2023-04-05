@@ -89,6 +89,24 @@ void drawSKG(QPainter *painter,
              QList<SKGDefines::BrokenLine> brokenLines = QList<SKGDefines::BrokenLine>());
 
 /*!
+ * \brief Прорисовывает график на заданной канве.
+ * Подготавливает данные для рисователя SKGPainter и вызывает его
+ * \param painter - рисователь
+ * \param rect - зона СКГ
+ * \param testUid - uid теста
+ * \param probeNum - номер пробы
+ * \param ratio - множитель
+ */
+void drawGraph(QPainter *painter,
+               const QRect &rect,
+               const QString &testUid,
+               const int probeNum,
+               const double ratio,
+               const int diap = -1,
+               const int begin = -1,
+               const int end = -1);
+
+/*!
  * \brief Вычисляет ratio для упрощения кода
  * \param paper - страница
  * \param widget - указатель на исходный виджет

@@ -11,6 +11,7 @@
 #include "dataprovider.h"
 #include "datadefines.h"
 #include "skgpainter.h"
+#include "graphpainter.h"
 #include "stabilogram.h"
 #include "bilateralresultdata.h"
 #include "classicfactors.h"
@@ -276,6 +277,58 @@ void ReportElements::drawSKG(QPainter *painter,
     }
 }
 
+void ReportElements::drawGraph(QPainter *painter,
+                               const QRect &rect,
+                               const QString &testUid,
+                               const int probeNum,
+                               const double ratio,
+                               const int diap,
+                               const int begin,
+                               const int end)
+{
+    Q_UNUSED(diap);
+    Q_UNUSED(begin);
+    Q_UNUSED(end);
+
+    //! Признаки наличия каналов: основного, правого и левого
+    QString csMain = "";
+    QString probeUid = "";
+    DataDefines::TestInfo ti;
+    if (DataProvider::getTestInfo(testUid, ti))
+        if (probeNum >= 0 && probeNum < ti.probes.size())
+        {
+            probeUid = ti.probes.at(probeNum);
+            if (DataProvider::channelExists(probeUid, ChannelsDefines::chanStab))
+                csMain = ChannelsDefines::chanStab;
+        }
+
+    //! Есть проба и основной канал
+    if (probeUid != "" && csMain != "")
+    {
+        //! Создаем рисователь СКГ
+        GraphPainter gp(painter, rect);
+        //! Получаем основной канал
+        QByteArray baStab;
+        if (DataProvider::getChannel(probeUid, csMain, baStab))
+        {
+            //! Передаем его в рисователь
+            Stabilogram stab(baStab);
+            gp.appendSignal(&stab, "");
+
+            gp.setLegend(0, QStringList() << "Фронталь" << "Сагитталь");
+            int diap = 1;
+            int step = 0;
+            while (diap < stab.absMaxValue())
+            {
+                diap = diap * 2;
+                ++step;
+            }
+            gp.setDiapazone(-diap, diap);
+            gp.doPaint(ratio);
+        }
+    }
+}
+
 double ReportElements::ratio(const QRect paper, QWidget *widget, const double maxVal)
 {
     double retval = static_cast<double>(paper.width()) / static_cast<double>(widget->geometry().width());
@@ -284,3 +337,4 @@ double ReportElements::ratio(const QRect paper, QWidget *widget, const double ma
     if (maxVal > -1 && retval > maxVal) retval = maxVal;
     return retval;
 }
+

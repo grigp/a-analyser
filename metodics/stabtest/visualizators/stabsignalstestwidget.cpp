@@ -759,10 +759,16 @@ void StabSignalsTestWidget::printOnePortrait(QPrinter *printer, QPainter *painte
 
     printer->newPage();
 
-    ReportElements::drawWidget(painter, wgtGraph,
-                               static_cast<int>(paper.width() * 0.85), static_cast<int>(paper.height() * 0.85),
-                               paper.x() + paper.width() / 12,
-                               static_cast<int>(paper.y() + paper.height() / 10));
+    auto rectGraph = QRect(paper.x() + paper.width() / 12,
+                           static_cast<int>(paper.y() + paper.height() / 10),
+                           static_cast<int>(paper.width() * 0.85), static_cast<int>(paper.height() * 0.5));
+    double ratio = ReportElements::ratio(paper, wgtGraph);
+    ReportElements::drawGraph(painter, rectGraph, testUid, 0, ratio);
+
+//    ReportElements::drawWidget(painter, wgtGraph,
+//                               static_cast<int>(paper.width() * 0.85), static_cast<int>(paper.height() * 0.85),
+//                               paper.x() + paper.width() / 12,
+//                               static_cast<int>(paper.y() + paper.height() / 10));
 }
 
 void StabSignalsTestWidget::printOneLandscape(QPrinter *printer, QPainter *painter, const QString &testUid, const QRect paper)

@@ -384,11 +384,15 @@ void GraphPainter::doPaint(const double ratio)
     //! Фон
     m_painter->setBrush(QBrush(backColor, Qt::SolidPattern));
     m_painter->setPen(QPen(backColor, 1, Qt::SolidLine, Qt::FlatCap));
-    m_painter->drawRect(0, 0, m_geometry.width(), m_geometry.height());
+    m_painter->drawRect(m_geometry.left(), m_geometry.top(), m_geometry.width(), m_geometry.height());
 
     m_painter->setPen(QPen(m_envColors.colorAxis, 1, Qt::SolidLine, Qt::FlatCap));
-    m_painter->drawLine(LeftSpace, TopSpace, LeftSpace, m_geometry.height() - BottomSpace);
-    m_painter->drawLine(LeftSpace, m_geometry.height() - BottomSpace, m_geometry.width() - RightSpace, m_geometry.height() - BottomSpace);
+    m_painter->drawLine(m_geometry.left() + LeftSpace, m_geometry.top() + TopSpace,
+                        m_geometry.left() + LeftSpace, m_geometry.top() + m_geometry.height() - BottomSpace);
+    m_painter->drawLine(m_geometry.left() + LeftSpace, m_geometry.top() + m_geometry.height() - BottomSpace,
+                        m_geometry.left() + m_geometry.width() - RightSpace, m_geometry.top() + m_geometry.height() - BottomSpace);
+
+    m_painter->setFont(QFont("Arial", static_cast<int>(8 / (ratio / 2)), 0, false));
 
     //QTime t1 = QTime::currentTime(); // Вывод времени прорисовки
 
@@ -411,15 +415,15 @@ void GraphPainter::doPaint(const double ratio)
         {
             //! Ось зоны
             m_painter->setPen(QPen(m_envColors.colorAxis, 1, Qt::SolidLine, Qt::FlatCap));
-            int axisY = TopSpace + (iz + 1) * zoneH;
-            m_painter->drawLine(LeftSpace, axisY, m_geometry.width() - RightSpace, axisY);
+            int axisY = m_geometry.top() + TopSpace + (iz + 1) * zoneH;
+            m_painter->drawLine(m_geometry.left() + LeftSpace, axisY, m_geometry.left() + m_geometry.width() - RightSpace, axisY);
 
             //! Пропорции по значениям и шаг
             double prop = zoneH / (m_areases.at(iz)->maxValue() - m_areases.at(iz)->minValue());
             double offset = 1;  //! Смещение по графику. Шаг выбора точек
             if (m_xcsm == xsm_fullSignal)
             {
-                step = static_cast<double>(m_geometry.width() - LeftSpace - RightSpace) /
+                step = static_cast<double>(m_geometry.width() - m_geometry.left() - LeftSpace - RightSpace) /
                        static_cast<double>(m_areases.at(iz)->signal()->size());
                 offset = static_cast<double>(m_areases.at(iz)->signal()->size()) / 10000;
                 if (offset < 1)
@@ -455,26 +459,26 @@ void GraphPainter::doPaint(const double ratio)
             if (m_areases.at(iz)->minValue() < 1 || m_areases.at(iz)->maxValue() - m_areases.at(iz)->minValue() < 2)
                 sMin = QString::number(m_areases.at(iz)->minValue());
             auto size = BaseUtils::getTextSize(m_painter, sMin);
-            m_painter->drawText(LeftSpace - size.width() - 5, axisY - 3, sMin);
+            m_painter->drawText(m_geometry.left() + LeftSpace - size.width() - 5, axisY - 3, sMin);
 
             //! Максимальное значение
             QString sMax = QString::number(trunc(m_areases.at(iz)->maxValue()));
             if (m_areases.at(iz)->maxValue() < 1 || m_areases.at(iz)->maxValue() - m_areases.at(iz)->minValue() < 2)
                 sMax = QString::number(m_areases.at(iz)->maxValue());
             size = BaseUtils::getTextSize(m_painter, sMax);
-            m_painter->drawText(LeftSpace - size.width() - 5, axisY - zoneH + size.height(), sMax);
+            m_painter->drawText(m_geometry.left() + LeftSpace - size.width() - 5, axisY - zoneH + size.height(), sMax);
 
             //! Название зоны
             size = BaseUtils::getTextSize(m_painter, m_areases.at(iz)->name());
-            m_painter->drawText(LeftSpace + 5, axisY - zoneH + size.height(), m_areases.at(iz)->name());
+            m_painter->drawText(m_geometry.left() + LeftSpace + 5, axisY - zoneH + size.height(), m_areases.at(iz)->name());
 
             //! Линия нуля
             if (m_areases.at(iz)->maxValue() > 0 && m_areases.at(iz)->minValue() < 0)
             {
                 int line0 = static_cast<int>(axisY - (0 - m_areases.at(iz)->minValue()) * prop);
-                m_painter->drawLine(LeftSpace, line0, m_geometry.width() - RightSpace, line0);
+                m_painter->drawLine(m_geometry.left() + LeftSpace, line0, m_geometry.left() + m_geometry.width() - RightSpace, line0);
                 auto size = BaseUtils::getTextSize(m_painter, "0");
-                m_painter->drawText(LeftSpace - size.width() - 5, line0 + size.height()/2, "0");
+                m_painter->drawText(m_geometry.left() + LeftSpace - size.width() - 5, line0 + size.height()/2, "0");
             }
 
             //! Для усреднения сигнала на одной координате x
@@ -494,15 +498,15 @@ void GraphPainter::doPaint(const double ratio)
 
                     if (iPos2 >= m_areases.at(iz)->signal()->size() - 1)
                         break;
-                    x2 = LeftSpace + static_cast<int>((iPos2 - startPoint) * step * hScale);
+                    x2 = m_geometry.left() + LeftSpace + static_cast<int>((iPos2 - startPoint) * step * hScale);
 
-                    if (x1 > m_geometry.width() - RightSpace)
+                    if (x1 > m_geometry.left() + m_geometry.width() - RightSpace)
                         break;
 
                     if (i > startPoint)
                     {
-                        if (x1 < LeftSpace)
-                            x1 = LeftSpace;
+                        if (x1 < m_geometry.left() + LeftSpace)
+                            x1 = m_geometry.left() + LeftSpace;
 
                         //! Лямбда функция вывода линии.
                         //! Необходима, чтобы не передавать кучу параметров в приватный метод
@@ -597,7 +601,7 @@ void GraphPainter::doPaint(const double ratio)
                             (ls == lsMinutesTen && i % (m_areases.at(iz)->signal()->frequency() * 600) == 0))
                         {
                             m_painter->setPen(QPen(m_envColors.colorGrid, 1, Qt::DotLine, Qt::FlatCap));
-                            m_painter->drawLine(x1, TopSpace, x1, m_geometry.height() - BottomSpace);
+                            m_painter->drawLine(x1, m_geometry.top() + TopSpace, x1, m_geometry.top() + m_geometry.height() - BottomSpace);
                             QString s = "";
                             if (m_areases.at(iz)->signal()->size() <= 60 * m_areases.at(iz)->signal()->frequency())
                                 s = QString::number(i / m_areases.at(iz)->signal()->frequency());
@@ -605,7 +609,7 @@ void GraphPainter::doPaint(const double ratio)
                                 s = BaseUtils::getTimeBySecCount(i / m_areases.at(iz)->signal()->frequency(), isHour);
                             auto size = BaseUtils::getTextSize(m_painter, s);
                             m_painter->setPen(QPen(m_envColors.colorAxis, 1, Qt::SolidLine, Qt::FlatCap));
-                            m_painter->drawText(x1 - size.width() / 2, m_geometry.height() - BottomSpace + size.height() + 1, s);
+                            m_painter->drawText(x1 - size.width() / 2, m_geometry.top() + m_geometry.height() - BottomSpace + size.height() + 1, s);
                         }
                     }
                 }
@@ -616,7 +620,7 @@ void GraphPainter::doPaint(const double ratio)
             //! Курсор в зоне
             if (m_areases.at(iz)->cursorPos() > -1)
             {
-                int x = LeftSpace + static_cast<int>((m_areases.at(iz)->cursorPos() - startPoint) * step * hScale);
+                int x = m_geometry.left() + LeftSpace + static_cast<int>((m_areases.at(iz)->cursorPos() - startPoint) * step * hScale);
                 m_painter->setPen(QPen(m_envColors.colorCursor, 1, Qt::SolidLine, Qt::FlatCap));
                 m_painter->drawLine(x, axisY, x, axisY - zoneH);
             }
@@ -625,7 +629,7 @@ void GraphPainter::doPaint(const double ratio)
             m_painter->setPen(QPen(m_envColors.colorMarkers, 1, Qt::SolidLine, Qt::FlatCap));
             for (int i = 0; i < m_areases.at(iz)->markerCount(); ++i)
             {
-                int x = LeftSpace + static_cast<int>((m_areases.at(iz)->marker(i).position - startPoint) * step * hScale);
+                int x = m_geometry.left() + LeftSpace + static_cast<int>((m_areases.at(iz)->marker(i).position - startPoint) * step * hScale);
                 m_painter->drawLine(x, axisY, x, axisY - zoneH);
                 m_painter->drawText(x + 5, axisY - 5, m_areases.at(iz)->marker(i).comment);
             }
@@ -645,12 +649,12 @@ void GraphPainter::doPaint(const double ratio)
                 {
                     m_painter->setPen(QPen(m_areases.at(iz)->color(i), 1, Qt::SolidLine, Qt::FlatCap));
                     auto size = BaseUtils::getTextSize(m_painter, m_areases.at(iz)->legend(i));
-                    m_painter->drawLine(m_geometry.width() - RightSpace - max - 30, axisY - size.height() * 2 + i * size.height(),
-                                     m_geometry.width() - RightSpace - max - 10, axisY - size.height() * 2 + i * size.height());
+                    m_painter->drawLine(m_geometry.left() + m_geometry.width() - RightSpace - max - 30, axisY - size.height() * 2 + i * size.height(),
+                                        m_geometry.left() + m_geometry.width() - RightSpace - max - 10, axisY - size.height() * 2 + i * size.height());
                     m_painter->setPen(QPen(m_envColors.colorAxis, 1, Qt::SolidLine, Qt::FlatCap));
-                    m_painter->drawText(m_geometry.width() - RightSpace - max,
-                                     axisY - size.height() * 2 + i * size.height() + size.height() / 4,
-                                     m_areases.at(iz)->legend(i));
+                    m_painter->drawText(m_geometry.left() + m_geometry.width() - RightSpace - max,
+                                        axisY - size.height() * 2 + i * size.height() + size.height() / 4,
+                                        m_areases.at(iz)->legend(i));
                 }
             }
         }
