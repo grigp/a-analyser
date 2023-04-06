@@ -141,6 +141,11 @@ QString DataProvider::getChannelUid(const QString &probeUid, const QString &chan
     return static_cast<AAnalyserApplication*>(QApplication::instance())->getDB()->getChannelUid(probeUid, channelId);
 }
 
+QStringList DataProvider::getProbesNames(const QString &testUid)
+{
+    return static_cast<AAnalyserApplication*>(QApplication::instance())->getDB()->getProbesNames(testUid);
+}
+
 bool DataProvider::createSection(QString &channelUid, QString &name, int channel, int from, int to, QByteArray &data)
 {
     return static_cast<AAnalyserApplication*>(QApplication::instance())->getDB()->createSection(channelUid, name, channel, from, to, data);
@@ -275,4 +280,5 @@ void DataProvider::importBD(const QString &fileName)
 {
     static_cast<AAnalyserApplication*>(QApplication::instance())->getDB()->importBD(fileName);
 }
+
 

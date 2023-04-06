@@ -164,6 +164,11 @@ private:
     static void printFiveLandscape(QPrinter *printer, QPainter *painter, const QString &testUid, const QRect paper);
 
     /*!
+     * \brief Печать графиков в режиме пяти проб
+     */
+    static void printGraphFive(QPainter *painter, const QString &testUid, const QRect paper);
+
+    /*!
      * \brief Возвращает список названий проб
      * \param testUid - uid теста
      * \param count - кол-во проб в выходном списке

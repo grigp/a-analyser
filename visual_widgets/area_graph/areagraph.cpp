@@ -383,7 +383,7 @@ void AreaGraph::paintEvent(QPaintEvent *event)
 
     //! И рисуем
     setCanvas(&painter, geo, this);
-    doPaint(2);
+    doPaint(4);
 
 //    QPainter painter(this);
 //    painter.save();

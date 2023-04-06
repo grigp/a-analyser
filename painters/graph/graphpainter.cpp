@@ -392,7 +392,7 @@ void GraphPainter::doPaint(const double ratio)
     m_painter->drawLine(m_geometry.left() + LeftSpace, m_geometry.top() + m_geometry.height() - BottomSpace,
                         m_geometry.left() + m_geometry.width() - RightSpace, m_geometry.top() + m_geometry.height() - BottomSpace);
 
-    m_painter->setFont(QFont("Arial", static_cast<int>(8 / (ratio / 2)), 0, false));
+    m_painter->setFont(QFont("Arial", static_cast<int>(8 / (ratio / 4)), 0, false));
 
     //QTime t1 = QTime::currentTime(); // Вывод времени прорисовки
 
@@ -423,7 +423,7 @@ void GraphPainter::doPaint(const double ratio)
             double offset = 1;  //! Смещение по графику. Шаг выбора точек
             if (m_xcsm == xsm_fullSignal)
             {
-                step = static_cast<double>(m_geometry.width() - m_geometry.left() - LeftSpace - RightSpace) /
+                step = static_cast<double>(m_geometry.width() - LeftSpace - RightSpace) /
                        static_cast<double>(m_areases.at(iz)->signal()->size());
                 offset = static_cast<double>(m_areases.at(iz)->signal()->size()) / 10000;
                 if (offset < 1)

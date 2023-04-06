@@ -489,6 +489,24 @@ bool DataBase::deleteTest(const QString &testUid) const
     return false;
 }
 
+QStringList DataBase::getProbesNames(const QString &testUid)
+{
+    QStringList retval;
+
+    DataDefines::TestInfo ti;
+    if (getTestInfo(testUid, ti))
+    {
+        foreach (auto probeId, ti.probes)
+        {
+            DataDefines::ProbeInfo pi;
+            if (getProbeInfo(probeId, pi))
+                retval << pi.name;
+        }
+    }
+
+    return retval;
+}
+
 bool DataBase::createSection(QString &channelUid, QString &name, int channel, int from, int to, QByteArray &data)
 {
     //! Определение имени файлов для новой секции

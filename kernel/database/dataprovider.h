@@ -219,6 +219,11 @@ bool getChannel(const QString &channelUid, QByteArray &data);
  */
 QString getChannelUid(const QString &probeUid, const QString &channelId);
 
+/*!
+ * \brief Возвращает список имен проб по uid теста
+ * \param testUid - идентификатор теста
+ */
+QStringList getProbesNames(const QString& testUid);
 
 //! ------------------- Секции сигналов -------------------
 

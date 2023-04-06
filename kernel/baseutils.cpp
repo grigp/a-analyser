@@ -8,6 +8,7 @@
 
 #include "basedefines.h"
 
+
 QString BaseUtils::getTimeBySecCount(const int secCnt, const bool isHour)
 {
     int min = secCnt / 60;
@@ -603,3 +604,4 @@ QString BaseUtils::stringDecrypt(const QString &str)
 //    }
     return QString::fromUtf8(ba);
 }
+

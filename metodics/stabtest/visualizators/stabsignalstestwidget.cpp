@@ -22,6 +22,7 @@
 #include <QTimer>
 #include <QJsonArray>
 #include <QJsonObject>
+#include <QPainter>
 #include <QDebug>
 
 namespace  {
@@ -764,11 +765,6 @@ void StabSignalsTestWidget::printOnePortrait(QPrinter *printer, QPainter *painte
                            static_cast<int>(paper.width() * 0.85), static_cast<int>(paper.height() * 0.5));
     double ratio = ReportElements::ratio(paper, wgtGraph);
     ReportElements::drawGraph(painter, rectGraph, testUid, 0, ratio);
-
-//    ReportElements::drawWidget(painter, wgtGraph,
-//                               static_cast<int>(paper.width() * 0.85), static_cast<int>(paper.height() * 0.85),
-//                               paper.x() + paper.width() / 12,
-//                               static_cast<int>(paper.y() + paper.height() / 10));
 }
 
 void StabSignalsTestWidget::printOneLandscape(QPrinter *printer, QPainter *painter, const QString &testUid, const QRect paper)
@@ -797,10 +793,11 @@ void StabSignalsTestWidget::printOneLandscape(QPrinter *printer, QPainter *paint
 
     printer->newPage();
 
-    ReportElements::drawWidget(painter, wgtGraph,
-                               static_cast<int>(paper.width() * 0.85), static_cast<int>(paper.height() * 0.85),
-                               paper.x() + paper.width() / 12,
-                               static_cast<int>(paper.y() + paper.height() / 10));
+    auto rectGraph = QRect(paper.x() + paper.width() / 12,
+                           static_cast<int>(paper.y() + paper.height() / 15),
+                           static_cast<int>(paper.width() * 0.85), static_cast<int>(paper.height() * 0.85));
+    double ratio = ReportElements::ratio(paper, wgtGraph);
+    ReportElements::drawGraph(painter, rectGraph, testUid, 0, ratio);
 }
 
 void StabSignalsTestWidget::printTwoPortrait(QPrinter *printer, QPainter *painter, const QString &testUid, const QRect paper)
@@ -845,10 +842,21 @@ void StabSignalsTestWidget::printTwoPortrait(QPrinter *printer, QPainter *painte
 
         printer->newPage();
 
-        ReportElements::drawWidget(painter, wgtGraph,
-                                   static_cast<int>(paper.width() * 0.85), static_cast<int>(paper.height() * 0.85),
-                                   paper.x() + paper.width() / 12,
-                                   static_cast<int>(paper.y() + paper.height() / 20));
+        painter->setFont(QFont("Arial", 8, 0, false));
+        auto pn = DataProvider::getProbesNames(testUid);
+        if (pn.size() < 2) return;
+        painter->drawText(paper.x() + paper.width() / 12, static_cast<int>(paper.y() + paper.height() * 0.04), pn.at(0));
+        auto rectGraph = QRect(paper.x() + paper.width() / 12,
+                               static_cast<int>(paper.y() + paper.height() * 0.045),
+                               static_cast<int>(paper.width() * 0.85), static_cast<int>(paper.height() * 0.23));
+        ratio = ReportElements::ratio(paper, wgtGraph);
+        ReportElements::drawGraph(painter, rectGraph, testUid, 0, ratio);
+        painter->drawText(paper.x() + paper.width() / 12, static_cast<int>(paper.y() + paper.height() * 0.295), pn.at(1));
+        rectGraph = QRect(paper.x() + paper.width() / 12,
+                          static_cast<int>(paper.y() + paper.height() * 0.30),
+                          static_cast<int>(paper.width() * 0.85), static_cast<int>(paper.height() * 0.23));
+        ReportElements::drawGraph(painter, rectGraph, testUid, 1, ratio);
+
         QRect rectTable(paper.x() + paper.width() / 10,
                         static_cast<int>(paper.y() + paper.height() / 10 * 5.6),
                         paper.width() / 10 * 8,
@@ -899,10 +907,21 @@ void StabSignalsTestWidget::printTwoLandscape(QPrinter *printer, QPainter *paint
         ReportElements::drawFooter(painter, testUid, rectFooter(paper));
         printer->newPage();
 
-        ReportElements::drawWidget(painter, wgtGraph,
-                                   static_cast<int>(paper.width() * 0.85), static_cast<int>(paper.height() * 0.85),
-                                   paper.x() + paper.width() / 12,
-                                   static_cast<int>(paper.y() + paper.height() / 10));
+        painter->setFont(QFont("Arial", 8, 0, false));
+        auto pn = DataProvider::getProbesNames(testUid);
+        if (pn.size() < 2) return;
+        painter->drawText(paper.x() + paper.width() / 12, static_cast<int>(paper.y() + paper.height() * 0.04), pn.at(0));
+        auto rectGraph = QRect(paper.x() + paper.width() / 12,
+                               static_cast<int>(paper.y() + paper.height() * 0.05),
+                               static_cast<int>(paper.width() * 0.85), static_cast<int>(paper.height() * 0.41));
+        ratio = ReportElements::ratio(paper, wgtGraph);
+        ReportElements::drawGraph(painter, rectGraph, testUid, 0, ratio);
+        painter->drawText(paper.x() + paper.width() / 12, static_cast<int>(paper.y() + paper.height() * 0.49), pn.at(1));
+        rectGraph = QRect(paper.x() + paper.width() / 12,
+                          static_cast<int>(paper.y() + paper.height() * 0.50),
+                          static_cast<int>(paper.width() * 0.85), static_cast<int>(paper.height() * 0.41));
+        ratio = ReportElements::ratio(paper, wgtGraph);
+        ReportElements::drawGraph(painter, rectGraph, testUid, 1, ratio);
 
         //! Нижний колонтитул
         ReportElements::drawFooter(painter, testUid, rectFooter(paper));
@@ -959,10 +978,27 @@ void StabSignalsTestWidget::printThreePortrait(QPrinter *printer, QPainter *pain
 
         printer->newPage();
 
-        ReportElements::drawWidget(painter, wgtGraph,
-                                   static_cast<int>(paper.width() * 0.85), static_cast<int>(paper.height() * 0.85),
-                                   paper.x() + paper.width() / 12,
-                                   static_cast<int>(paper.y() + paper.height() / 10));
+        painter->setFont(QFont("Arial", 8, 0, false));
+        auto pn = DataProvider::getProbesNames(testUid);
+        if (pn.size() < 3) return;
+        painter->drawText(paper.x() + paper.width() / 12, static_cast<int>(paper.y() + paper.height() * 0.04), pn.at(0));
+        auto rectGraph = QRect(paper.x() + paper.width() / 12,
+                               static_cast<int>(paper.y() + paper.height() * 0.05),
+                               static_cast<int>(paper.width() * 0.85), static_cast<int>(paper.height() * 0.28));
+        ratio = ReportElements::ratio(paper, wgtGraph);
+        ReportElements::drawGraph(painter, rectGraph, testUid, 0, ratio);
+
+        painter->drawText(paper.x() + paper.width() / 12, static_cast<int>(paper.y() + paper.height() * 0.345), pn.at(1));
+        rectGraph = QRect(paper.x() + paper.width() / 12,
+                               static_cast<int>(paper.y() + paper.height() * 0.35),
+                               static_cast<int>(paper.width() * 0.85), static_cast<int>(paper.height() * 0.28));
+        ReportElements::drawGraph(painter, rectGraph, testUid, 1, ratio);
+
+        painter->drawText(paper.x() + paper.width() / 12, static_cast<int>(paper.y() + paper.height() * 0.645), pn.at(2));
+        rectGraph = QRect(paper.x() + paper.width() / 12,
+                               static_cast<int>(paper.y() + paper.height() * 0.65),
+                               static_cast<int>(paper.width() * 0.85), static_cast<int>(paper.height() * 0.28));
+        ReportElements::drawGraph(painter, rectGraph, testUid, 2, ratio);
     }
 }
 
@@ -1000,10 +1036,29 @@ void StabSignalsTestWidget::printThreeLandscape(QPrinter *printer, QPainter *pai
         ReportElements::drawFooter(painter, testUid, rectFooter(paper));
         printer->newPage();
 
-        ReportElements::drawWidget(painter, wgtGraph,
-                                   static_cast<int>(paper.width() * 0.85), static_cast<int>(paper.height() * 0.85),
-                                   paper.x() + paper.width() / 12,
-                                   static_cast<int>(paper.y() + paper.height() / 10));
+        painter->setFont(QFont("Arial", 8, 0, false));
+        auto pn = DataProvider::getProbesNames(testUid);
+        if (pn.size() < 3) return;
+        painter->drawText(paper.x() + paper.width() / 12, static_cast<int>(paper.y() + paper.height() * 0.02), pn.at(0));
+        auto rectGraph = QRect(static_cast<int>(paper.x() + paper.width() * 0.05),
+                               static_cast<int>(paper.y() + paper.height() * 0.025),
+                               static_cast<int>(paper.width() * 0.9), static_cast<int>(paper.height() * 0.28));
+        ratio = ReportElements::ratio(paper, wgtGraph);
+        ReportElements::drawGraph(painter, rectGraph, testUid, 0, ratio);
+
+        painter->drawText(paper.x() + paper.width() / 12, static_cast<int>(paper.y() + paper.height() * 0.33), pn.at(1));
+        rectGraph = QRect(static_cast<int>(paper.x() + paper.width() * 0.05),
+                          static_cast<int>(paper.y() + paper.height() * 0.335),
+                          static_cast<int>(paper.width() * 0.9), static_cast<int>(paper.height() * 0.28));
+        ratio = ReportElements::ratio(paper, wgtGraph);
+        ReportElements::drawGraph(painter, rectGraph, testUid, 1, ratio);
+
+        painter->drawText(paper.x() + paper.width() / 12, static_cast<int>(paper.y() + paper.height() * 0.64), pn.at(2));
+        rectGraph = QRect(static_cast<int>(paper.x() + paper.width() * 0.05),
+                          static_cast<int>(paper.y() + paper.height() * 0.645),
+                          static_cast<int>(paper.width() * 0.9), static_cast<int>(paper.height() * 0.28));
+        ratio = ReportElements::ratio(paper, wgtGraph);
+        ReportElements::drawGraph(painter, rectGraph, testUid, 2, ratio);
 
         //! Нижний колонтитул
         ReportElements::drawFooter(painter, testUid, rectFooter(paper));
@@ -1087,10 +1142,8 @@ void StabSignalsTestWidget::printFivePortrait(QPrinter *printer, QPainter *paint
 
         printer->newPage();
 
-        ReportElements::drawWidget(painter, wgtGraph,
-                                   static_cast<int>(paper.width() * 0.85), static_cast<int>(paper.height() * 0.85),
-                                   paper.x() + paper.width() / 12,
-                                   static_cast<int>(paper.y() + paper.height() / 10));
+        //! Печать графиков
+        printGraphFive(painter, testUid, paper);
     }
 }
 
@@ -1154,10 +1207,8 @@ void StabSignalsTestWidget::printFiveLandscape(QPrinter *printer, QPainter *pain
         ReportElements::drawFooter(painter, testUid, rectFooter(paper));
         printer->newPage();
 
-        ReportElements::drawWidget(painter, wgtGraph,
-                                   static_cast<int>(paper.width() * 0.85), static_cast<int>(paper.height() * 0.85),
-                                   paper.x() + paper.width() / 12,
-                                   static_cast<int>(paper.y() + paper.height() / 10));
+        //! Печать графиков
+        printGraphFive(painter, testUid, paper);
 
         //! Нижний колонтитул
         ReportElements::drawFooter(painter, testUid, rectFooter(paper));
@@ -1170,6 +1221,43 @@ void StabSignalsTestWidget::printFiveLandscape(QPrinter *printer, QPainter *pain
         ReportElements::drawTable(painter, mdlTable, rectTable, QList<int>() << 3 << 1 << 1 << 1 << 1, false,
                                   ReportElements::Table::tvsCompressed, 10, -1, QFont::Bold);
     }
+}
+
+void StabSignalsTestWidget::printGraphFive(QPainter *painter, const QString &testUid, const QRect paper)
+{
+    painter->setFont(QFont("Arial", 8, 0, false));
+    auto pn = DataProvider::getProbesNames(testUid);
+    if (pn.size() < 5) return;
+    painter->drawText(paper.x() + paper.width() / 12, static_cast<int>(paper.y() + paper.height() * 0.02), pn.at(0));
+    auto rectGraph = QRect(static_cast<int>(paper.x() + paper.width() * 0.05),
+                           static_cast<int>(paper.y() + paper.height() * 0.025),
+                           static_cast<int>(paper.width() * 0.9), static_cast<int>(paper.height() * 0.16));
+    auto ratio = ReportElements::ratio(paper, wgtGraph);
+    ReportElements::drawGraph(painter, rectGraph, testUid, 0, ratio);
+
+    painter->drawText(paper.x() + paper.width() / 12, static_cast<int>(paper.y() + paper.height() * 0.20), pn.at(1));
+    rectGraph = QRect(static_cast<int>(paper.x() + paper.width() * 0.05),
+                      static_cast<int>(paper.y() + paper.height() * 0.205),
+                      static_cast<int>(paper.width() * 0.9), static_cast<int>(paper.height() * 0.16));
+    ReportElements::drawGraph(painter, rectGraph, testUid, 1, ratio);
+
+    painter->drawText(paper.x() + paper.width() / 12, static_cast<int>(paper.y() + paper.height() * 0.38), pn.at(2));
+    rectGraph = QRect(static_cast<int>(paper.x() + paper.width() * 0.05),
+                      static_cast<int>(paper.y() + paper.height() * 0.385),
+                      static_cast<int>(paper.width() * 0.9), static_cast<int>(paper.height() * 0.16));
+    ReportElements::drawGraph(painter, rectGraph, testUid, 2, ratio);
+
+    painter->drawText(paper.x() + paper.width() / 12, static_cast<int>(paper.y() + paper.height() * 0.56), pn.at(3));
+    rectGraph = QRect(static_cast<int>(paper.x() + paper.width() * 0.05),
+                      static_cast<int>(paper.y() + paper.height() * 0.565),
+                      static_cast<int>(paper.width() * 0.9), static_cast<int>(paper.height() * 0.16));
+    ReportElements::drawGraph(painter, rectGraph, testUid, 3, ratio);
+
+    painter->drawText(paper.x() + paper.width() / 12, static_cast<int>(paper.y() + paper.height() * 0.74), pn.at(4));
+    rectGraph = QRect(static_cast<int>(paper.x() + paper.width() * 0.05),
+                      static_cast<int>(paper.y() + paper.height() * 0.745),
+                      static_cast<int>(paper.width() * 0.9), static_cast<int>(paper.height() * 0.16));
+    ReportElements::drawGraph(painter, rectGraph, testUid, 4, ratio);
 }
 
 QStringList StabSignalsTestWidget::getProbesNameList(const QString &testUid, const int count)
