@@ -71,6 +71,8 @@ AAnalyserApplication::AAnalyserApplication(int &argc, char **argv)
 
     m_asi.uidMethodic = "";
     m_asi.kind = SummaryDefines::skNone;
+
+    m_openedTests.clear();
 }
 
 AAnalyserApplication::~AAnalyserApplication()
@@ -653,6 +655,29 @@ void AAnalyserApplication::doneProgress()
 {
     if (m_mw)
         static_cast<MainWindow*>(m_mw)->doneProgress();
+}
+
+void AAnalyserApplication::addOpenedTest(const QString &testUid, QWidget *visual)
+{
+    m_openedTests.insert(testUid, visual);
+}
+
+void AAnalyserApplication::delOpenedTestFromList(const QString &testUid)
+{
+    if (m_openedTests.contains(testUid))
+        m_openedTests.remove(testUid);
+}
+
+void AAnalyserApplication::clearOpenedTestList()
+{
+    m_openedTests.clear();
+}
+
+QWidget *AAnalyserApplication::getOpenedTest(const QString &testUid)
+{
+    if (m_openedTests.contains(testUid))
+        return m_openedTests.value(testUid, nullptr);
+    return nullptr;
 }
 
 bool AAnalyserApplication::notify(QObject *re, QEvent *ev)

@@ -48,16 +48,6 @@ static QList<BaseDefines::FctTblPair> FactorsKorrect = {
     , BaseDefines::FctTblPair(EvolventaFactorsDefines::CorrectionsMotor::Power, EvolventaFactorsDefines::CorrectionsKognitive::Power)
 };
 
-AreaGraph *wgtGraphX {nullptr};
-AreaGraph *wgtGraphY {nullptr};
-QStandardItemModel *mdlMain {nullptr};
-QStandardItemModel *mdlKorrect {nullptr};
-DualStateDiagram *wgtOutrunningDiag {nullptr};
-QLabel *lblOutrunningValue {nullptr};
-QLabel *lblOutrunningResume {nullptr};
-DualStateDiagram *wgtCorrectionDominanceDiag {nullptr};
-QLabel *lblCorrectionDominanceValue {nullptr};
-QLabel *lblCorrectionDominanceResume {nullptr};
 
 }
 
@@ -94,6 +84,10 @@ void EvolventaVisualize::print(QPrinter *printer, const QString &testUid)
     QPainter *painter = new QPainter(printer);
     QRect paper = printer->pageRect();
 
+    //! Получаем указатель на элземпляр визуализатора
+    auto vis = static_cast<AAnalyserApplication*>(QCoreApplication::instance())->getOpenedTest(testUid);
+    EvolventaVisualize* visual = static_cast<EvolventaVisualize*>(vis);
+
     painter->begin(printer);
     //! Заголовок
     QRect rectHeader(paper.x() + paper.width() / 20, paper.y() + paper.height() / 30, paper.width() / 20 * 18, paper.height() / 30 * 3);
@@ -107,33 +101,35 @@ void EvolventaVisualize::print(QPrinter *printer, const QString &testUid)
     if (printer->orientation() == QPrinter::Portrait)
     {
         //! Графики эвольвенты
-        ReportElements::drawWidget(painter, wgtGraphX,
-                                   static_cast<int>(paper.width() * 0.85), static_cast<int>(paper.height() * 0.4),
-                                   paper.x() + paper.width()/10, static_cast<int>(paper.y() + paper.height() / 10 * 1.5));
-        ReportElements::drawWidget(painter, wgtGraphY,
-                                   static_cast<int>(paper.width() * 0.85), static_cast<int>(paper.height() * 0.4),
-                                   paper.x() + paper.width()/10, static_cast<int>(paper.y() + paper.height() / 10 * 2.7));
-
+        double ratio = ReportElements::ratio(paper, visual->m_wgtGraphX, 5);
+        printGraph(printer, painter, testUid, visual, ratio,
+                   QRect(paper.x() + paper.width()/10, static_cast<int>(paper.y() + paper.height() * 0.14),
+                         static_cast<int>(paper.width() * 0.85), static_cast<int>(paper.height() * 0.12)),
+                   visual->m_calculator->frontal());
+        printGraph(printer, painter, testUid, visual, ratio,
+                   QRect(paper.x() + paper.width()/10, static_cast<int>(paper.y() + paper.height() * 0.27),
+                         static_cast<int>(paper.width() * 0.85), static_cast<int>(paper.height() * 0.12)),
+                   visual->m_calculator->sagittal());
 
         //! Таблица основных показателей
         QRect rectTable(paper.x() + paper.width() / 10,
                         static_cast<int>(paper.y() + paper.height() / 10 * 4.2),
                         paper.width() / 10 * 9,
                         paper.height() / 3);
-        ReportElements::drawTable(painter, mdlMain, rectTable, QList<int>() << 4 << 1 << 1,
+        ReportElements::drawTable(painter, visual->m_mdlMain, rectTable, QList<int>() << 4 << 1 << 1,
                                   false, ReportElements::Table::tvsStretched, 10, -1, QFont::Bold);
 
         //! Опережение / отставание от цели
-        ReportElements::drawWidget(painter, wgtOutrunningDiag,
+        ReportElements::drawWidget(painter, visual->m_wgtOutrunningDiag,
                                    static_cast<int>(paper.width() * 0.4), static_cast<int>(paper.height() * 0.1),
                                    paper.x() + paper.width()/10, static_cast<int>(paper.y() + paper.height() / 10 * 7.4));
         painter->setFont(QFont("Sans", 10, QFont::Bold, false));
-        QPalette pal = lblOutrunningValue->palette();
+        QPalette pal = visual->m_lblOutrunningValue->palette();
         painter->setPen(pal.color(QPalette::WindowText));
-        painter->drawText(paper.x() + paper.width()/10, static_cast<int>(paper.y() + paper.height() / 10 * 8.1), lblOutrunningValue->text());
-        pal = lblOutrunningResume->palette();
+        painter->drawText(paper.x() + paper.width()/10, static_cast<int>(paper.y() + paper.height() / 10 * 8.1), visual->m_lblOutrunningValue->text());
+        pal = visual->m_lblOutrunningResume->palette();
         painter->setPen(pal.color(QPalette::WindowText));
-        painter->drawText(paper.x() + paper.width()/10, static_cast<int>(paper.y() + paper.height() / 10 * 8.3), lblOutrunningResume->text());
+        painter->drawText(paper.x() + paper.width()/10, static_cast<int>(paper.y() + paper.height() / 10 * 8.3), visual->m_lblOutrunningResume->text());
 
         //! Нижний колонтитул
         ReportElements::drawFooter(painter, testUid, rectFooter);
@@ -147,47 +143,54 @@ void EvolventaVisualize::print(QPrinter *printer, const QString &testUid)
         painter->drawText(paper.x() + paper.width() / 10, static_cast<int>(paper.y() + paper.height() / 10), tr("Коррекции"));
 
         //! Диаграмма преобладания коррекций
-        ReportElements::drawWidget(painter, wgtCorrectionDominanceDiag,
+        ReportElements::drawWidget(painter, visual->m_wgtCorrectionDominanceDiag,
                                    static_cast<int>(paper.width() * 0.4), static_cast<int>(paper.height() * 0.1),
                                    paper.x() + paper.width() / 10, static_cast<int>(paper.y() + paper.height() / 10 * 1.2));
         painter->setFont(QFont("Sans", 10, QFont::Bold, false));
-        pal = lblCorrectionDominanceValue->palette();
+        pal = visual->m_lblCorrectionDominanceValue->palette();
         painter->setPen(pal.color(QPalette::WindowText));
-        painter->drawText(paper.x() + paper.width() / 10, static_cast<int>(paper.y() + paper.height() / 10 * 1.9), lblCorrectionDominanceValue->text());
-        pal = lblCorrectionDominanceResume->palette();
+        painter->drawText(paper.x() + paper.width() / 10, static_cast<int>(paper.y() + paper.height() / 10 * 1.9), visual->m_lblCorrectionDominanceValue->text());
+        pal = visual->m_lblCorrectionDominanceResume->palette();
         painter->setPen(pal.color(QPalette::WindowText));
-        painter->drawText(paper.x() + paper.width() / 10, static_cast<int>(paper.y() + paper.height() / 10 * 2.1), lblCorrectionDominanceResume->text());
+        painter->drawText(paper.x() + paper.width() / 10, static_cast<int>(paper.y() + paper.height() / 10 * 2.1), visual->m_lblCorrectionDominanceResume->text());
 
         //! Таблица коррекций
         QRect rectTableKorrect(paper.x() + paper.width() / 10,
                                static_cast<int>(paper.y() + paper.height() / 10 * 2.7),
                                paper.width() / 10 * 9,
                                paper.height() / 3);
-        ReportElements::drawTable(painter, mdlKorrect, rectTableKorrect, QList<int>() << 2 << 1 << 1,
+        ReportElements::drawTable(painter, visual->m_mdlKorrect, rectTableKorrect, QList<int>() << 2 << 1 << 1,
                                   false, ReportElements::Table::tvsCompressed, 10, -1, QFont::Bold);
     }
     else
     if (printer->orientation() == QPrinter::Landscape)
     {
         //! Графики эвольвенты
-        ReportElements::drawWidget(painter, wgtGraphX,
-                                   static_cast<int>(paper.width() * 0.85), static_cast<int>(paper.height() * 0.3),
-                                   paper.x() + paper.width()/10, static_cast<int>(paper.y() + paper.height() / 10 * 1.5));
-        ReportElements::drawWidget(painter, wgtGraphY,
-                                   static_cast<int>(paper.width() * 0.85), static_cast<int>(paper.height() * 0.3),
-                                   paper.x() + paper.width()/10, static_cast<int>(paper.y() + paper.height() / 10 * 3.9));
+        double ratio = ReportElements::ratio(paper, visual->m_wgtGraphX, 5);
+        printGraph(printer, painter, testUid, visual, ratio,
+                   QRect(paper.x() + paper.width()/10, static_cast<int>(paper.y() + paper.height() / 10 * 1.5),
+                         static_cast<int>(paper.width() * 0.85), static_cast<int>(paper.height() * 0.3)),
+                   visual->m_calculator->frontal());
+        printGraph(printer, painter, testUid, visual, ratio,
+                   QRect(paper.x() + paper.width()/10, static_cast<int>(paper.y() + paper.height() / 10 * 4.5),
+                         static_cast<int>(paper.width() * 0.85), static_cast<int>(paper.height() * 0.3)),
+                   visual->m_calculator->sagittal());
 
         //! Опережение / отставание от цели
-        ReportElements::drawWidget(painter, wgtOutrunningDiag,
+        ReportElements::drawWidget(painter, visual->m_wgtOutrunningDiag,
                                    static_cast<int>(paper.width() * 0.4), static_cast<int>(paper.height() * 0.1),
-                                   paper.x() + paper.width()/10, static_cast<int>(paper.y() + paper.height() / 10 * 6.5));
+                                   paper.x() + paper.width()/10, static_cast<int>(paper.y() + paper.height() * 0.8));
         painter->setFont(QFont("Sans", 10, QFont::Bold, false));
-        QPalette pal = lblOutrunningValue->palette();
+        QPalette pal = visual->m_lblOutrunningValue->palette();
         painter->setPen(pal.color(QPalette::WindowText));
-        painter->drawText(paper.x() + paper.width()/10, static_cast<int>(paper.y() + paper.height() / 10 * 7.8), lblOutrunningValue->text());
-        pal = lblOutrunningResume->palette();
+        painter->drawText(static_cast<int>(paper.x() + paper.width() * 0.51),
+                          static_cast<int>(paper.y() + paper.height() * 0.83),
+                          visual->m_lblOutrunningValue->text());
+        pal = visual->m_lblOutrunningResume->palette();
         painter->setPen(pal.color(QPalette::WindowText));
-        painter->drawText(paper.x() + paper.width()/10, static_cast<int>(paper.y() + paper.height() / 10 * 8.2), lblOutrunningResume->text());
+        painter->drawText(static_cast<int>(paper.x() + paper.width() * 0.51),
+                          static_cast<int>(paper.y() + paper.height() * 0.87),
+                          visual->m_lblOutrunningResume->text());
 
 
         //! Нижний колонтитул
@@ -201,7 +204,7 @@ void EvolventaVisualize::print(QPrinter *printer, const QString &testUid)
                         static_cast<int>(paper.y() + paper.height() / 10),
                         paper.width() / 10 * 9,
                         paper.height() / 3);
-        ReportElements::drawTable(painter, mdlMain, rectTable, QList<int>() << 4 << 1 << 1,
+        ReportElements::drawTable(painter, visual->m_mdlMain, rectTable, QList<int>() << 4 << 1 << 1,
                                   false, ReportElements::Table::tvsStretched, 10, -1, QFont::Bold);
 
         //! Заголовок "Коррекции"
@@ -210,23 +213,23 @@ void EvolventaVisualize::print(QPrinter *printer, const QString &testUid)
         painter->drawText(paper.x() + paper.width() / 10, static_cast<int>(paper.y() + paper.height() / 10 * 5.3), tr("Коррекции"));
 
         //! Диаграмма преобладания коррекций
-        ReportElements::drawWidget(painter, wgtCorrectionDominanceDiag,
+        ReportElements::drawWidget(painter, visual->m_wgtCorrectionDominanceDiag,
                                    static_cast<int>(paper.width() * 0.4), static_cast<int>(paper.height() * 0.1),
                                    paper.x() + paper.width() / 10, static_cast<int>(paper.y() + paper.height() / 10 * 5.6));
         painter->setFont(QFont("Sans", 10, QFont::Bold, false));
-        pal = lblCorrectionDominanceValue->palette();
+        pal = visual->m_lblCorrectionDominanceValue->palette();
         painter->setPen(pal.color(QPalette::WindowText));
-        painter->drawText(paper.x() + paper.width() / 10, static_cast<int>(paper.y() + paper.height() / 10 * 6.8), lblCorrectionDominanceValue->text());
-        pal = lblCorrectionDominanceResume->palette();
+        painter->drawText(paper.x() + paper.width() / 10, static_cast<int>(paper.y() + paper.height() / 10 * 6.8), visual->m_lblCorrectionDominanceValue->text());
+        pal = visual->m_lblCorrectionDominanceResume->palette();
         painter->setPen(pal.color(QPalette::WindowText));
-        painter->drawText(paper.x() + paper.width() / 10, static_cast<int>(paper.y() + paper.height() / 10 * 7.1), lblCorrectionDominanceResume->text());
+        painter->drawText(paper.x() + paper.width() / 10, static_cast<int>(paper.y() + paper.height() / 10 * 7.1), visual->m_lblCorrectionDominanceResume->text());
 
         //! Таблица коррекций
         QRect rectTableKorrect(static_cast<int>(paper.x() + paper.width() / 10 * 5.5),
                                static_cast<int>(paper.y() + paper.height() / 10 * 5.6),
                                paper.width() / 10 * 4,
                                paper.height() / 3);
-        ReportElements::drawTable(painter, mdlKorrect, rectTableKorrect, QList<int>() << 2 << 1 << 1, false,
+        ReportElements::drawTable(painter, visual->m_mdlKorrect, rectTableKorrect, QList<int>() << 2 << 1 << 1, false,
                                   ReportElements::Table::tvsCompressed, 10, -1, QFont::Bold);
     }
 
@@ -234,6 +237,35 @@ void EvolventaVisualize::print(QPrinter *printer, const QString &testUid)
     ReportElements::drawFooter(painter, testUid, rectFooter);
 
     painter->end();
+}
+
+void EvolventaVisualize::printGraph(QPrinter *printer, QPainter *painter, const QString &testUid,
+                                    EvolventaVisualize* visual, double ratio,
+                                    QRect rect, DecartCoordinatesSignal *signal)
+{
+    //! Создаем рисователь
+    GraphPainter gp(painter, rect);
+    //! Передаем его в рисователь
+    gp.appendSignal(signal, "");
+
+    gp.setLegend(0, QStringList() << "Фронталь" << "Сагитталь");
+    int diap = 1;
+    int step = 0;
+    while (diap < signal->absMaxValue())
+    {
+        diap = diap * 2;
+        ++step;
+    }
+
+    gp.setLegend(0, QStringList() << "Траектория" << "Цель");
+    gp.setDiapazone(0, -diap, diap);
+    gp.addMarker(0, visual->m_calculator->timeUpwinding(), EvolventaDefines::StageValueName.value(EvolventaDefines::stgUpwinding));
+    gp.addMarker(0, visual->m_calculator->timeHold(), EvolventaDefines::StageValueName.value(EvolventaDefines::stgHold));
+    gp.addMarker(0, visual->m_calculator->timeConvolution(), EvolventaDefines::StageValueName.value(EvolventaDefines::stgConvolution));
+    gp.setIsFillBetweenSubchans(0, true);
+
+    gp.setDiapazone(-diap, diap);
+    gp.doPaint(ratio);
 }
 
 void EvolventaVisualize::saveFactorsCorrections()
@@ -299,7 +331,7 @@ void EvolventaVisualize::showEvolventa()
     ui->wgtGraphX->addMarker(0, m_calculator->timeHold(), EvolventaDefines::StageValueName.value(EvolventaDefines::stgHold));
     ui->wgtGraphX->addMarker(0, m_calculator->timeConvolution(), EvolventaDefines::StageValueName.value(EvolventaDefines::stgConvolution));
     ui->wgtGraphX->setIsFillBetweenSubchans(0, true);
-    wgtGraphX = ui->wgtGraphX;
+    m_wgtGraphX = ui->wgtGraphX;
 
     auto *sigY = m_calculator->sagittal();
     max = sigY->absMaxValue();
@@ -310,7 +342,7 @@ void EvolventaVisualize::showEvolventa()
     ui->wgtGraphY->addMarker(0, m_calculator->timeHold(), EvolventaDefines::StageValueName.value(EvolventaDefines::stgHold));
     ui->wgtGraphY->addMarker(0, m_calculator->timeConvolution(), EvolventaDefines::StageValueName.value(EvolventaDefines::stgConvolution));
     ui->wgtGraphY->setIsFillBetweenSubchans(0, true);
-    wgtGraphY = ui->wgtGraphY;
+    m_wgtGraphY = ui->wgtGraphY;
 }
 
 void EvolventaVisualize::showMainFactorsTable()
@@ -340,7 +372,7 @@ void EvolventaVisualize::showMainFactorsTable()
     ui->tvEvolvMainFactors->header()->resizeSections(QHeaderView::ResizeToContents);
     ui->tvEvolvMainFactors->header()->resizeSection(0, 370);
 
-    mdlMain = static_cast<QStandardItemModel*>(ui->tvEvolvMainFactors->model());
+    m_mdlMain = static_cast<QStandardItemModel*>(ui->tvEvolvMainFactors->model());
 }
 
 void EvolventaVisualize::showKorrectionFactorsTable()
@@ -370,7 +402,7 @@ void EvolventaVisualize::showKorrectionFactorsTable()
     ui->tvEvolvKorrectionFactors->header()->resizeSections(QHeaderView::ResizeToContents);
     ui->tvEvolvKorrectionFactors->header()->resizeSection(0, 200);
 
-    mdlKorrect = static_cast<QStandardItemModel*>(ui->tvEvolvKorrectionFactors->model());
+    m_mdlKorrect = static_cast<QStandardItemModel*>(ui->tvEvolvKorrectionFactors->model());
 }
 
 void EvolventaVisualize::setTableSpecialStyle()
@@ -397,9 +429,9 @@ void EvolventaVisualize::showWithoutTableFactors()
     BaseUtils::setOutrunningResume(valOrv, resume, resumeColor);
     ui->lblOutrunningResume->setText(resume);
     ui->lblOutrunningResume->setStyleSheet(resumeColor);
-    wgtOutrunningDiag = ui->wgtOutrunningDiag;
-    lblOutrunningValue = ui->lblOutrunningValue;
-    lblOutrunningResume = ui->lblOutrunningResume;
+    m_wgtOutrunningDiag = ui->wgtOutrunningDiag;
+    m_lblOutrunningValue = ui->lblOutrunningValue;
+    m_lblOutrunningResume = ui->lblOutrunningResume;
 
     auto valCD = m_calculator->factorValue(EvolventaFactorsDefines::KorrDominance);
     ui->lblCorrectionDominanceValue->setText(tr("Преобладание коррекций") + " : " + QString::number(valCD, 'f', 0) + "%");
@@ -409,9 +441,9 @@ void EvolventaVisualize::showWithoutTableFactors()
     BaseUtils::setCorrectionsDominanceResume(valCD, resume, resumeColor);
     ui->lblCorrectionDominanceResume->setText(resume);
     ui->lblCorrectionDominanceResume->setStyleSheet(resumeColor);
-    wgtCorrectionDominanceDiag = ui->wgtCorrectionDominanceDiag;
-    lblCorrectionDominanceValue = ui->lblCorrectionDominanceValue;
-    lblCorrectionDominanceResume = ui->lblCorrectionDominanceResume;
+    m_wgtCorrectionDominanceDiag = ui->wgtCorrectionDominanceDiag;
+    m_lblCorrectionDominanceValue = ui->lblCorrectionDominanceValue;
+    m_lblCorrectionDominanceResume = ui->lblCorrectionDominanceResume;
 
 
     auto valSvl = m_calculator->factorValueFormatted(EvolventaFactorsDefines::SemiWavLenDAC);

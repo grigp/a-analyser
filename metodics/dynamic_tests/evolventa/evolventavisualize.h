@@ -3,12 +3,17 @@
 
 #include <QWidget>
 #include <QPrinter>
+#include <QStandardItemModel>
+#include <QLabel>
 
 namespace Ui {
 class EvolventaVisualize;
 }
 
 class EvolventaCalculator;
+class AreaGraph;
+class DualStateDiagram;
+class DecartCoordinatesSignal;
 
 /*!
  * \brief Класс виджета показа результатов теста Эвольвента EvolventaVisualize class
@@ -29,6 +34,10 @@ public:
      * \param testUid - uid теста
      */
     static void print(QPrinter *printer, const QString &testUid);
+
+    static void printGraph(QPrinter *printer, QPainter *painter, const QString &testUid,
+                           EvolventaVisualize* visual, double ratio,
+                           QRect rect, DecartCoordinatesSignal *signal);
 
 private slots:
     /*!
@@ -67,6 +76,17 @@ private:
     void showWithoutTableFactors();
 
     EvolventaCalculator* m_calculator {nullptr};
+
+    AreaGraph *m_wgtGraphX {nullptr};
+    AreaGraph *m_wgtGraphY {nullptr};
+    QStandardItemModel *m_mdlMain {nullptr};
+    QStandardItemModel *m_mdlKorrect {nullptr};
+    DualStateDiagram *m_wgtOutrunningDiag {nullptr};
+    QLabel *m_lblOutrunningValue {nullptr};
+    QLabel *m_lblOutrunningResume {nullptr};
+    DualStateDiagram *m_wgtCorrectionDominanceDiag {nullptr};
+    QLabel *m_lblCorrectionDominanceValue {nullptr};
+    QLabel *m_lblCorrectionDominanceResume {nullptr};
 };
 
 #endif // EVOLVENTAVISUALIZE_H

@@ -507,6 +507,32 @@ public:
      */
     void doneProgress();
 
+    ///<-----------------------------------------------------------------------------
+    /// Управление ссылками на визуализаторы открытых тестов
+
+    /*!
+     * \brief Добавить открываемый тест в список
+     * \param testUid - uid теста
+     * \param visual - указатель на визуализатор
+     */
+    void addOpenedTest(const QString& testUid, QWidget* visual);
+
+    /*!
+     * \brief Удаляет открытый тест из списка
+     * \param testUid - uid теста
+     */
+    void delOpenedTestFromList(const QString& testUid);
+
+    /*!
+     * \brief Очистить список открытых тестов
+     */
+    void clearOpenedTestList();
+
+    /*!
+     * \brief Возвращает указатель на виджет визуала открытого теста
+     * \param testUid - uid теста
+     */
+    QWidget* getOpenedTest(const QString& testUid);
 
 signals:
     void dbConnected();
@@ -609,6 +635,8 @@ private:
 
     AddTestToSummaryDialog* m_addTSDlg {nullptr};
     SummaryDefines::ActiveSummaryInfo m_asi;
+
+    QMap<QString, QWidget*> m_openedTests;   ///< Указатели на виджет визуализатора открытого теста
 };
 
 #endif // AANALYSERAPPLICATION_H

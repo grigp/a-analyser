@@ -241,6 +241,10 @@ void ResultsWidget::openTest(const QString testUid)
         ui->wgtNoTest->setVisible(!m_wgtResult);
         ui->wgtBugTest->setVisible(false);
 
+        //! Запомнить указатель на виджет визуализатора
+        static_cast<AAnalyserApplication*>(QCoreApplication::instance())->clearOpenedTestList();
+        static_cast<AAnalyserApplication*>(QCoreApplication::instance())->addOpenedTest(testUid, m_wgtResult);
+
         static_cast<AAnalyserApplication*>(QApplication::instance())->doSelectTest(testUid);
         DataProvider::setTestIsOpening(testUid, false);  //! Помечаем тест, что он открыт успешно
     }

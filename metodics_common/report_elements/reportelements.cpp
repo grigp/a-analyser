@@ -305,9 +305,9 @@ void ReportElements::drawGraph(QPainter *painter,
     //! Есть проба и основной канал
     if (probeUid != "" && csMain != "")
     {
-        //! Создаем рисователь СКГ
+        //! Создаем рисователь
         GraphPainter gp(painter, rect);
-        //! Получаем основной канал
+        //! Получаем канал
         QByteArray baStab;
         if (DataProvider::getChannel(probeUid, csMain, baStab))
         {
