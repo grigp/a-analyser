@@ -9,14 +9,15 @@
 #include "decartcoordinatessignal.h"
 
 #include <QPainter>
+#include <QDebug>
 
 namespace
 {
-AreaGraph *wgtGraph {nullptr};
-DynamicDiagram *wgtGrowth {nullptr};
-DynamicDiagram *wgtLength {nullptr};
-QStandardItemModel *mdlFactors {nullptr};
-QString directionText {""};
+//AreaGraph *m_wgtGraph {nullptr};
+//DynamicDiagram *m_wgtGrowth {nullptr};
+//DynamicDiagram *m_wgtLength {nullptr};
+//QStandardItemModel *m_mdlFactors {nullptr};
+//QString m_directionText {""};
 }
 
 StepDeviationVisualize::StepDeviationVisualize(QWidget *parent) :
@@ -50,6 +51,10 @@ void StepDeviationVisualize::print(QPrinter *printer, const QString &testUid)
     QPainter *painter = new QPainter(printer);
     QRect paper = printer->pageRect();
 
+    //! Получаем указатель на элземпляр визуализатора
+    auto vis = static_cast<AAnalyserApplication*>(QCoreApplication::instance())->getOpenedTest(testUid);
+    StepDeviationVisualize* visual = static_cast<StepDeviationVisualize*>(vis);
+
     painter->begin(printer);
     //! Заголовок
     QRect rectHeader(paper.x() + paper.width() / 20, paper.y() + paper.height() / 30, paper.width() / 20 * 18, paper.height() / 30 * 3);
@@ -63,13 +68,18 @@ void StepDeviationVisualize::print(QPrinter *printer, const QString &testUid)
     if (printer->orientation() == QPrinter::Portrait)
     {
         //! Диаграмма. Копируется из виджета
-        ReportElements::drawWidget(painter, wgtGraph,
-                                   static_cast<int>(paper.width() * 0.8), static_cast<int>(paper.height() * 0.8),
-                                   paper.x() + paper.width()/10, static_cast<int>(paper.y() + paper.height() / 14 * 2.3));
-        ReportElements::drawWidget(painter, wgtGrowth,
+        auto rect = QRect(paper.x() + paper.width()/10, static_cast<int>(paper.y() + paper.height() / 14 * 2.3),
+                          static_cast<int>(paper.width() * 0.8), static_cast<int>(paper.height() * 0.1));
+        double ratio = ReportElements::ratio(paper, visual->m_wgtGraph, 5);
+        printGraph(painter, rect, visual, ratio);
+
+//        ReportElements::drawWidget(painter, visual->m_wgtGraph,
+//                                   static_cast<int>(paper.width() * 0.8), static_cast<int>(paper.height() * 0.8),
+//                                   paper.x() + paper.width()/10, static_cast<int>(paper.y() + paper.height() / 14 * 2.3));
+        ReportElements::drawWidget(painter, visual->m_wgtGrowth,
                                    static_cast<int>(paper.width() * 0.8), static_cast<int>(paper.height() * 0.8),
                                    paper.x() + paper.width()/10, paper.y() + paper.height() / 14 * 4);
-        ReportElements::drawWidget(painter, wgtLength,
+        ReportElements::drawWidget(painter, visual->m_wgtLength,
                                    static_cast<int>(paper.width() * 0.8), static_cast<int>(paper.height() * 0.8),
                                    paper.x() + paper.width()/10, static_cast<int>(paper.y() + paper.height() / 14 * 5.3));
 
@@ -78,29 +88,29 @@ void StepDeviationVisualize::print(QPrinter *printer, const QString &testUid)
                         paper.y() + paper.height() / 2,
                         paper.width() / 10 * 8,
                         paper.height() / 5 * 2);
-        ReportElements::drawTable(painter, mdlFactors, rectTable,
+        ReportElements::drawTable(painter, visual->m_mdlFactors, rectTable,
                                   QList<int>() << 3 << 1, false, ReportElements::Table::tvsStretched,
                                   12, -1, QFont::Bold);
 
         painter->setFont(QFont("Sans", 12, QFont::Bold, false));
-        painter->drawText(paper.x() + paper.width() / 10, paper.y() + paper.height() / 60 * 55, directionText);
+        painter->drawText(paper.x() + paper.width() / 10, paper.y() + paper.height() / 60 * 55, visual->m_directionText);
     }
     else
     if (printer->orientation() == QPrinter::Landscape)
     {
         //! Диаграмма. Копируется из виджета
-        ReportElements::drawWidget(painter, wgtGraph,
+        ReportElements::drawWidget(painter, visual->m_wgtGraph,
                                    static_cast<int>(paper.width() * 0.9), static_cast<int>(paper.height() * 0.9),
                                    paper.x() + paper.width()/20, paper.y() + paper.height()/6);
-        ReportElements::drawWidget(painter, wgtGrowth,
+        ReportElements::drawWidget(painter, visual->m_wgtGrowth,
                                    static_cast<int>(paper.width() * 0.9), static_cast<int>(paper.height() * 0.9),
                                    paper.x() + paper.width()/20, static_cast<int>(paper.y() + paper.height() / 6 * 2.6));
-        ReportElements::drawWidget(painter, wgtLength,
+        ReportElements::drawWidget(painter, visual->m_wgtLength,
                                    static_cast<int>(paper.width() * 0.9), static_cast<int>(paper.height() * 0.9),
                                    paper.x() + paper.width()/20, static_cast<int>(paper.y() + paper.height() / 6 * 4));
 
         painter->setFont(QFont("Sans", 12, QFont::Bold, false));
-        painter->drawText(paper.x() + paper.width() / 10, paper.y() + paper.height() / 60 * 55, directionText);
+        painter->drawText(paper.x() + paper.width() / 10, paper.y() + paper.height() / 60 * 55, visual->m_directionText);
 
         //! Нижний колонтитул
         ReportElements::drawFooter(painter, testUid, rectFooter);
@@ -113,7 +123,7 @@ void StepDeviationVisualize::print(QPrinter *printer, const QString &testUid)
                         static_cast<int>(paper.y() + paper.height() / 7),
                         paper.width() / 10 * 9,
                         paper.height() / 10 * 8);
-        ReportElements::drawTable(painter, mdlFactors, rectTable,
+        ReportElements::drawTable(painter, visual->m_mdlFactors, rectTable,
                                   QList<int>() << 3 << 1, false, ReportElements::Table::tvsStretched,
                                   12, -1, QFont::Bold);
     }
@@ -122,6 +132,29 @@ void StepDeviationVisualize::print(QPrinter *printer, const QString &testUid)
     ReportElements::drawFooter(painter, testUid, rectFooter);
 
     painter->end();
+}
+
+void StepDeviationVisualize::printGraph(QPainter *painter, const QRect &rect, StepDeviationVisualize *visual, double ratio)
+{
+    auto signal = new DecartCoordinatesSignal(ChannelsDefines::chanAnySignalDual, visual->m_calculator->signalFrequency());
+    for (int i = 0; i < visual->m_calculator->signalSize(); ++i)
+    {
+        SignalsDefines::StabRec rec;
+        rec.x = visual->m_calculator->signal(i);
+        rec.y = visual->m_calculator->signal(i);
+        signal->addValue(rec);
+    }
+
+    //! Создаем рисователь
+    GraphPainter gp(painter, rect);
+    //! Передаем его в рисователь
+    gp.appendSignal(signal, "");
+
+    double max = signal->maxValue();
+    double min = signal->minValue();
+    gp.appendSignal(signal, tr("Прирост"));
+    gp.setDiapazone(0, min, max);
+    gp.doPaint(ratio);
 }
 
 void StepDeviationVisualize::showGraph()
@@ -141,7 +174,7 @@ void StepDeviationVisualize::showGraph()
     ui->wgtGraph->appendSignal(signal, tr("Прирост"));
     ui->wgtGraph->setDiapazone(0, min, max);
 
-    wgtGraph = ui->wgtGraph;
+    m_wgtGraph = ui->wgtGraph;
 }
 
 void StepDeviationVisualize::showTable()
@@ -167,7 +200,7 @@ void StepDeviationVisualize::showTable()
     ui->tvFactors->header()->resizeSections(QHeaderView::ResizeToContents);
     ui->tvFactors->header()->resizeSection(0, 450);
 
-    mdlFactors = static_cast<QStandardItemModel*>(ui->tvFactors->model());
+    m_mdlFactors = static_cast<QStandardItemModel*>(ui->tvFactors->model());
 }
 
 void StepDeviationVisualize::showDiags()
@@ -178,7 +211,7 @@ void StepDeviationVisualize::showDiags()
     ui->wgtGrowth->setTitle(tr("Динамика прироста"));
     ui->wgtGrowth->setAxisSpaceLeft(30);
     ui->wgtGrowth->setAxisSpaceBottom(10);
-    wgtGrowth = ui->wgtGrowth;
+    m_wgtGrowth = ui->wgtGrowth;
 
     for (int i = 0; i < m_calculator->growthDynCount(); ++i)
     {
@@ -191,7 +224,7 @@ void StepDeviationVisualize::showDiags()
     ui->wgtLength->setTitle(tr("Динамика длительности отклонений"));
     ui->wgtLength->setAxisSpaceLeft(30);
     ui->wgtLength->setAxisSpaceBottom(10);
-    wgtLength = ui->wgtLength;
+    m_wgtLength = ui->wgtLength;
 
     for (int i = 0; i < m_calculator->lengthDynCount(); ++i)
     {
@@ -202,6 +235,6 @@ void StepDeviationVisualize::showDiags()
 
 void StepDeviationVisualize::showDirection()
 {
-    directionText = tr("Направление отклонений") + " - " + BaseDefines::DirectionValueName.value(m_calculator->direction());
-    ui->lblDirection->setText(directionText);
+    m_directionText = tr("Направление отклонений") + " - " + BaseDefines::DirectionValueName.value(m_calculator->direction());
+    ui->lblDirection->setText(m_directionText);
 }

@@ -3,12 +3,15 @@
 
 #include <QWidget>
 #include <QPrinter>
+#include <QStandardItemModel>
 
 namespace Ui {
 class StepDeviationVisualize;
 }
 
 class StepDeviationCalculator;
+class AreaGraph;
+class DynamicDiagram;
 
 class StepDeviationVisualize : public QWidget
 {
@@ -31,6 +34,8 @@ public:
 private:
     Ui::StepDeviationVisualize *ui;
 
+    static void printGraph(QPainter *painter, const QRect& rect, StepDeviationVisualize* visual, double ratio);
+
     /*!
      * \brief Построение графика прироста шагов
      */
@@ -52,6 +57,12 @@ private:
     void showDirection();
 
     StepDeviationCalculator* m_calculator {nullptr};
+
+    AreaGraph *m_wgtGraph {nullptr};
+    DynamicDiagram *m_wgtGrowth {nullptr};
+    DynamicDiagram *m_wgtLength {nullptr};
+    QStandardItemModel *m_mdlFactors {nullptr};
+    QString m_directionText {""};
 };
 
 #endif // STEPDEVIATIONVISUALIZE_H
