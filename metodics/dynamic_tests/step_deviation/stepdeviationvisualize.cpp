@@ -67,15 +67,12 @@ void StepDeviationVisualize::print(QPrinter *printer, const QString &testUid)
 
     if (printer->orientation() == QPrinter::Portrait)
     {
-        //! Диаграмма. Копируется из виджета
+        //! Диаграмма.
         auto rect = QRect(paper.x() + paper.width()/10, static_cast<int>(paper.y() + paper.height() / 14 * 2.3),
                           static_cast<int>(paper.width() * 0.8), static_cast<int>(paper.height() * 0.1));
         double ratio = ReportElements::ratio(paper, visual->m_wgtGraph, 5);
         printGraph(painter, rect, visual, ratio);
 
-//        ReportElements::drawWidget(painter, visual->m_wgtGraph,
-//                                   static_cast<int>(paper.width() * 0.8), static_cast<int>(paper.height() * 0.8),
-//                                   paper.x() + paper.width()/10, static_cast<int>(paper.y() + paper.height() / 14 * 2.3));
         ReportElements::drawWidget(painter, visual->m_wgtGrowth,
                                    static_cast<int>(paper.width() * 0.8), static_cast<int>(paper.height() * 0.8),
                                    paper.x() + paper.width()/10, paper.y() + paper.height() / 14 * 4);
@@ -98,10 +95,12 @@ void StepDeviationVisualize::print(QPrinter *printer, const QString &testUid)
     else
     if (printer->orientation() == QPrinter::Landscape)
     {
-        //! Диаграмма. Копируется из виджета
-        ReportElements::drawWidget(painter, visual->m_wgtGraph,
-                                   static_cast<int>(paper.width() * 0.9), static_cast<int>(paper.height() * 0.9),
-                                   paper.x() + paper.width()/20, paper.y() + paper.height()/6);
+        //! Диаграмма.
+        auto rect = QRect(paper.x() + paper.width()/20, static_cast<int>(paper.y() + paper.height() * 0.15),
+                          static_cast<int>(paper.width() * 0.9), static_cast<int>(paper.height() * 0.26));
+        double ratio = ReportElements::ratio(paper, visual->m_wgtGraph, 5);
+        printGraph(painter, rect, visual, ratio);
+
         ReportElements::drawWidget(painter, visual->m_wgtGrowth,
                                    static_cast<int>(paper.width() * 0.9), static_cast<int>(paper.height() * 0.9),
                                    paper.x() + paper.width()/20, static_cast<int>(paper.y() + paper.height() / 6 * 2.6));
@@ -148,11 +147,10 @@ void StepDeviationVisualize::printGraph(QPainter *painter, const QRect &rect, St
     //! Создаем рисователь
     GraphPainter gp(painter, rect);
     //! Передаем его в рисователь
-    gp.appendSignal(signal, "");
+    gp.appendSignal(signal, "Прирост");
 
     double max = signal->maxValue();
     double min = signal->minValue();
-    gp.appendSignal(signal, tr("Прирост"));
     gp.setDiapazone(0, min, max);
     gp.doPaint(ratio);
 }
