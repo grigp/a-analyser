@@ -36,6 +36,11 @@ private:
 
     static void printGraph(QPainter *painter, const QRect& rect, StepDeviationVisualize* visual, double ratio);
 
+    static void printDiag(QPainter *painter, const QRect& rect,
+//                          StepDeviationVisualize* visual,
+                          const double ratio,
+                          QVector<double> &data, const QString& title);
+
     /*!
      * \brief Построение графика прироста шагов
      */
