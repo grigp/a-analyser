@@ -182,7 +182,7 @@ void DynamicDiagramPainter::doPaint(const double ratio)
     }
     else
         computeDiap(min, max);
-    m_sizeH = (m_geometry.width() - m_geometry.left() - 3 - 2 * m_axisSpaceLeft) / (m_items.size() + 1);
+    m_sizeH = (m_geometry.width()/* - m_geometry.left()*/ - 3 - 2 * m_axisSpaceLeft) / (m_items.size() + 1);
     double prop = 0;
     if (max > min)
         prop = (m_geometry.height() - m_axisSpaceBottom - m_titleHeight - 3) / (max - min);

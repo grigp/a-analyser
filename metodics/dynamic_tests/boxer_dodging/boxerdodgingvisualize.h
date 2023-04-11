@@ -64,6 +64,12 @@ private:
                                        const BoxerDodgingDefines::Stages stage);
 
     BoxerDodgingCalculator* m_calculator {nullptr};
+    DynamicDiagram *m_wgtDiagLatent {nullptr};
+    DynamicDiagram *m_wgtDiagTime {nullptr};
+    DynamicDiagram *m_wgtDiagAmpl {nullptr};
+    DynamicDiagram *m_wgtDiagErrors {nullptr};
+
+    QStandardItemModel *m_mdlFactors {nullptr};
 };
 
 #endif // BOXERDODGINGVISUALIZE_H
