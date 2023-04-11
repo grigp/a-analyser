@@ -55,33 +55,33 @@ void TeppingTestVisualize::setTest(const QString &testUid)
 
 void TeppingTestVisualize::on_selectGraph()
 {
-    ui->wgtDiagLeft->setKind(DynamicDiagram::KindGraph);
-    ui->wgtDiagRight->setKind(DynamicDiagram::KindGraph);
+    ui->wgtDiagLeft->setKind(DynamicDiagramDefines::KindGraph);
+    ui->wgtDiagRight->setKind(DynamicDiagramDefines::KindGraph);
 
-    SettingsProvider::setValueToRegAppCopy("JumpTest", "TeppingTestDiagKind", static_cast<int>(DynamicDiagram::KindGraph));
+    SettingsProvider::setValueToRegAppCopy("JumpTest", "TeppingTestDiagKind", static_cast<int>(DynamicDiagramDefines::KindGraph));
 }
 
 void TeppingTestVisualize::on_selectBar()
 {
-    ui->wgtDiagLeft->setKind(DynamicDiagram::KindBar);
-    ui->wgtDiagRight->setKind(DynamicDiagram::KindBar);
+    ui->wgtDiagLeft->setKind(DynamicDiagramDefines::KindBar);
+    ui->wgtDiagRight->setKind(DynamicDiagramDefines::KindBar);
 
-    SettingsProvider::setValueToRegAppCopy("JumpTest", "TeppingTestDiagKind", static_cast<int>(DynamicDiagram::KindBar));
+    SettingsProvider::setValueToRegAppCopy("JumpTest", "TeppingTestDiagKind", static_cast<int>(DynamicDiagramDefines::KindBar));
 }
 
 void TeppingTestVisualize::on_select3D(bool checked)
 {
     if (checked)
     {
-        ui->wgtDiagLeft->setVolume(DynamicDiagram::Volume3D);
-        ui->wgtDiagRight->setVolume(DynamicDiagram::Volume3D);
-        SettingsProvider::setValueToRegAppCopy("JumpTest", "TeppingTestDiagVolume", static_cast<int>(DynamicDiagram::Volume3D));
+        ui->wgtDiagLeft->setVolume(DynamicDiagramDefines::Volume3D);
+        ui->wgtDiagRight->setVolume(DynamicDiagramDefines::Volume3D);
+        SettingsProvider::setValueToRegAppCopy("JumpTest", "TeppingTestDiagVolume", static_cast<int>(DynamicDiagramDefines::Volume3D));
     }
     else
     {
-        ui->wgtDiagLeft->setVolume(DynamicDiagram::Volume2D);
-        ui->wgtDiagRight->setVolume(DynamicDiagram::Volume2D);
-        SettingsProvider::setValueToRegAppCopy("JumpTest", "TeppingTestDiagVolume", static_cast<int>(DynamicDiagram::Volume2D));
+        ui->wgtDiagLeft->setVolume(DynamicDiagramDefines::Volume2D);
+        ui->wgtDiagRight->setVolume(DynamicDiagramDefines::Volume2D);
+        SettingsProvider::setValueToRegAppCopy("JumpTest", "TeppingTestDiagVolume", static_cast<int>(DynamicDiagramDefines::Volume2D));
     }
 }
 
@@ -213,17 +213,17 @@ void TeppingTestVisualize::setDiags()
 void TeppingTestVisualize::restoreGraphParams()
 {
     auto kindCode = SettingsProvider::valueFromRegAppCopy("JumpTest", "TeppingTestDiagKind", 1).toInt();
-    DynamicDiagram::Kind kind = static_cast<DynamicDiagram::Kind>(kindCode);
+    DynamicDiagramDefines::Kind kind = static_cast<DynamicDiagramDefines::Kind>(kindCode);
     ui->wgtDiagLeft->setKind(kind);
     ui->wgtDiagRight->setKind(kind);
-    ui->btnGraph->setChecked(kind == DynamicDiagram::KindGraph);
-    ui->btnBar->setChecked(kind == DynamicDiagram::KindBar);
+    ui->btnGraph->setChecked(kind == DynamicDiagramDefines::KindGraph);
+    ui->btnBar->setChecked(kind == DynamicDiagramDefines::KindBar);
 
     auto volumeCode = SettingsProvider::valueFromRegAppCopy("JumpTest", "TeppingTestDiagVolume", 1).toInt();
-    DynamicDiagram::Volume volume = static_cast<DynamicDiagram::Volume>(volumeCode);
+    DynamicDiagramDefines::Volume volume = static_cast<DynamicDiagramDefines::Volume>(volumeCode);
     ui->wgtDiagLeft->setVolume(volume);
     ui->wgtDiagRight->setVolume(volume);
-    ui->btn3D->setChecked(volume == DynamicDiagram::Volume3D);
+    ui->btn3D->setChecked(volume == DynamicDiagramDefines::Volume3D);
 }
 
 void TeppingTestVisualize::showCurrentValues(const int idx)

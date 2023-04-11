@@ -33,11 +33,16 @@ public:
      */
     static void print(QPrinter *printer, const QString &testUid);
 
+    /*!
+     * \brief Возвращает указатель на виджет визуализации для конкретного теста
+     */
+    QWidget* widget() {return m_widget;}
 
 private:
     Ui::StabTestVisualize *ui;
 
     TestCalculator* m_calculator;
+    QWidget *m_widget {nullptr};
 
 };
 

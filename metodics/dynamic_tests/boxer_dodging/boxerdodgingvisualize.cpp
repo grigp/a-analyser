@@ -146,8 +146,8 @@ void BoxerDodgingVisualize::print(QPrinter *printer, const QString &testUid)
 void BoxerDodgingVisualize::showDiagram(DynamicDiagram* diag, const QString title,
                                         const QString leftFctUid, const QString rightFctUid, const QString aheadFctUid, const QString backFctUid)
 {
-    diag->setKind(DynamicDiagram::KindBar);
-    diag->setVolume(DynamicDiagram::Volume3D);
+    diag->setKind(DynamicDiagramDefines::KindBar);
+    diag->setVolume(DynamicDiagramDefines::Volume3D);
     diag->setTitle(title);
 
     diag->setAxisSpaceLeft(30);

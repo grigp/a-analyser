@@ -4,6 +4,7 @@
 #include "datadefines.h"
 #include "dataprovider.h"
 
+#include "aanalyserapplication.h"
 #include "channelsdefines.h"
 #include "stabilogram.h"
 #include "balistogram.h"
@@ -27,7 +28,7 @@
 
 namespace
 {
-QWidget *widget {nullptr};
+//QWidget *m_widget {nullptr};
 
 }
 
@@ -56,40 +57,50 @@ void StabTestVisualize::setTest(const QString &testUid)
         auto cnd = params["condition"].toInt();
         for (int i = 0; i < ui->wgtMain->layout()->count(); ++i)
         {
-            widget = ui->wgtMain->layout()->itemAt(i)->widget();
+            auto widget = ui->wgtMain->layout()->itemAt(i)->widget();
             if (widget)
             {
-//                widget->setVisible(
-//                            (cnd == 0 && widget->objectName() == "wgtSignals")
-//                         || (cnd == 1 && widget->objectName() == "wgtStateChampions")
-//                         || (cnd == 2 && widget->objectName() == "wgtDopusk")
-//                         || (cnd == 3 && widget->objectName() == "wgtIDSAnalysis")
-//                         || (cnd == 4 && widget->objectName() == "wgtTarget")
-//                         || (cnd == 5 && widget->objectName() == "wgtStressStrategy")
-//                                );
                 if (cnd == 0 && widget->objectName() == "wgtSignals")
+                {
                     static_cast<StabSignalsTestWidget*>(widget)->
                         calculate(static_cast<StabSignalsTestCalculator*>(m_calculator), testUid);
+                    m_widget = widget;
+                }
                 else
                 if (cnd == 1 && widget->objectName() == "wgtStateChampions")
+                {
                     static_cast<StateChampionsWidget*>(widget)->
                         calculate(static_cast<StateChampionsTestCalculator*>(m_calculator), testUid);
+                    m_widget = widget;
+                }
                 else
                 if (cnd == 2 && widget->objectName() == "wgtDopusk")
+                {
                     static_cast<DopuskWidget*>(widget)->
                         calculate(static_cast<DopuskCalculator*>(m_calculator), testUid);
+                    m_widget = widget;
+                }
                 else
                 if (cnd == 3 && widget->objectName() == "wgtIDSAnalysis")
+                {
                     static_cast<IDSWidget*>(widget)->
                         calculate(static_cast<IDSCalculator*>(m_calculator), testUid);
+                    m_widget = widget;
+                }
                 else
                 if (cnd == 4 && widget->objectName() == "wgtTarget")
+                {
                     static_cast<TargetWidget*>(widget)->
                         calculate(static_cast<TargetCalculator*>(m_calculator), testUid);
+                    m_widget = widget;
+                }
                 else
                 if (cnd == 5 && widget->objectName() == "wgtStressStrategy")
+                {
                     static_cast<StressStrategyWidget*>(widget)->
                         calculate(static_cast<StressStrategyCalculator*>(m_calculator), testUid);
+                    m_widget = widget;
+                }
 
                 widget->setVisible(
                             (cnd == 0 && widget->objectName() == "wgtSignals")
@@ -142,28 +153,32 @@ void StabTestVisualize::setTest(const QString &testUid)
 
 void StabTestVisualize::print(QPrinter *printer, const QString &testUid)
 {
+    //! Получаем указатель на элземпляр визуализатора
+    auto vis = static_cast<AAnalyserApplication*>(QCoreApplication::instance())->getOpenedTest(testUid);
+    StabTestVisualize* visual = static_cast<StabTestVisualize*>(vis);
+
     DataDefines::TestInfo ti;
     if (DataProvider::getTestInfo(testUid, ti))
     {
         auto params = ti.params;
         auto cnd = params["condition"].toInt();
         if (cnd == 0)
-            static_cast<StabSignalsTestWidget*>(widget)->print(printer, testUid);
+            static_cast<StabSignalsTestWidget*>(visual->m_widget)->print(printer, testUid);
         else
         if (cnd == 1)
-            static_cast<StateChampionsWidget*>(widget)->print(printer, testUid);
+            static_cast<StateChampionsWidget*>(visual->m_widget)->print(printer, testUid);
         else
         if (cnd == 2)
-            static_cast<DopuskWidget*>(widget)->print(printer, testUid);
+            static_cast<DopuskWidget*>(visual->m_widget)->print(printer, testUid);
         else
         if (cnd == 3)
-            static_cast<IDSWidget*>(widget)->print(printer, testUid);
+            static_cast<IDSWidget*>(visual->m_widget)->print(printer, testUid);
         else
         if (cnd == 4)
-            static_cast<TargetWidget*>(widget)->print(printer, testUid);
+            static_cast<TargetWidget*>(visual->m_widget)->print(printer, testUid);
         else
         if (cnd == 5)
-            static_cast<StressStrategyWidget*>(widget)->print(printer, testUid);
+            static_cast<StressStrategyWidget*>(visual->m_widget)->print(printer, testUid);
     }
 }
 

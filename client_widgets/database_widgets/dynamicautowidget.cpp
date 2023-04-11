@@ -97,29 +97,29 @@ void DynamicAutoWidget::selectFactor(const QModelIndex index)
 
 void DynamicAutoWidget::dynamicAsGraph()
 {
-    ui->wgtDynamic->setKind(DynamicDiagram::KindGraph);
+    ui->wgtDynamic->setKind(DynamicDiagramDefines::KindGraph);
     ui->btnBar->setChecked(false);
-    saveDynamicKind(static_cast<int>(DynamicDiagram::KindGraph));
+    saveDynamicKind(static_cast<int>(DynamicDiagramDefines::KindGraph));
 }
 
 void DynamicAutoWidget::dynamicAsBar()
 {
-    ui->wgtDynamic->setKind(DynamicDiagram::KindBar);
+    ui->wgtDynamic->setKind(DynamicDiagramDefines::KindBar);
     ui->btnGraph->setChecked(false);
-    saveDynamicKind(static_cast<int>(DynamicDiagram::KindBar));
+    saveDynamicKind(static_cast<int>(DynamicDiagramDefines::KindBar));
 }
 
 void DynamicAutoWidget::dynamic3D(bool pressed)
 {
     if (pressed)
     {
-        ui->wgtDynamic->setVolume(DynamicDiagram::Volume3D);
-        saveDynamicVolume(DynamicDiagram::Volume3D);
+        ui->wgtDynamic->setVolume(DynamicDiagramDefines::Volume3D);
+        saveDynamicVolume(DynamicDiagramDefines::Volume3D);
     }
     else
     {
-        ui->wgtDynamic->setVolume(DynamicDiagram::Volume2D);
-        saveDynamicVolume(DynamicDiagram::Volume2D);
+        ui->wgtDynamic->setVolume(DynamicDiagramDefines::Volume2D);
+        saveDynamicVolume(DynamicDiagramDefines::Volume2D);
     }
 }
 
@@ -237,10 +237,10 @@ void DynamicAutoWidget::restoreDynamicKind()
 {
     auto kindCode = SettingsProvider::valueFromRegAppCopy("DynamicWidget", "DynamicKind", 0).toInt();
 
-    DynamicDiagram::Kind kind = static_cast<DynamicDiagram::Kind>(kindCode);
+    DynamicDiagramDefines::Kind kind = static_cast<DynamicDiagramDefines::Kind>(kindCode);
     ui->wgtDynamic->setKind(kind);
-    ui->btnGraph->setChecked(kind == DynamicDiagram::KindGraph);
-    ui->btnBar->setChecked(kind == DynamicDiagram::KindBar);
+    ui->btnGraph->setChecked(kind == DynamicDiagramDefines::KindGraph);
+    ui->btnBar->setChecked(kind == DynamicDiagramDefines::KindBar);
 }
 
 void DynamicAutoWidget::saveDynamicVolume(const int volumeCode) const
@@ -252,7 +252,7 @@ void DynamicAutoWidget::restoreDynamicVolume()
 {
     auto volumeCode = SettingsProvider::valueFromRegAppCopy("DynamicWidget", "DynamicVolume", 0).toInt();
 
-    DynamicDiagram::Volume volume = static_cast<DynamicDiagram::Volume>(volumeCode);
+    DynamicDiagramDefines::Volume volume = static_cast<DynamicDiagramDefines::Volume>(volumeCode);
     ui->wgtDynamic->setVolume(volume);
-    ui->btn3D->setChecked(volume == DynamicDiagram::Volume3D);
+    ui->btn3D->setChecked(volume == DynamicDiagramDefines::Volume3D);
 }

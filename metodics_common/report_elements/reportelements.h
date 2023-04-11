@@ -6,6 +6,7 @@
 #include <QStandardItemModel>
 
 #include "skgdefines.h"
+#include "dynamicdiagramdefines.h"
 
 namespace ReportElements
 {
@@ -92,7 +93,7 @@ void drawSKG(QPainter *painter,
  * \brief Прорисовывает график на заданной канве.
  * Подготавливает данные для рисователя SKGPainter и вызывает его
  * \param painter - рисователь
- * \param rect - зона СКГ
+ * \param rect - зона построения
  * \param testUid - uid теста
  * \param probeNum - номер пробы
  * \param ratio - множитель
@@ -105,6 +106,25 @@ void drawGraph(QPainter *painter,
                const int diap = -1,
                const int begin = -1,
                const int end = -1);
+
+/*!
+ * \brief Прорисовывают диаграмму динамики
+ * \param painter - рисователь
+ * \param rect - зона построения
+ * \param ratio - множитель
+ * \param data - данные для диаграммы
+ * \param title - заголовок
+ * \param kind - вид: график / столбик
+ * \param volume - объем
+ */
+void drawDynamicDiag(QPainter *painter, const QRect& rect,
+                     const double ratio,
+                     QVector<double> &data,
+                     QStringList &labels,
+                     const QString& title,
+                     DynamicDiagramDefines::Kind kind,
+                     DynamicDiagramDefines::Volume volume);
+
 
 /*!
  * \brief Вычисляет ratio для упрощения кода

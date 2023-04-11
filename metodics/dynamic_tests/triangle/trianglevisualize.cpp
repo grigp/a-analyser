@@ -669,8 +669,8 @@ void TriangleVisualize::showMainDiagrams()
 
     auto setupDiag = [&](DynamicDiagram* diag, const QString title, const double min, const double max)
     {
-        diag->setKind(DynamicDiagram::KindGraph);
-        diag->setVolume(DynamicDiagram::Volume3D);
+        diag->setKind(DynamicDiagramDefines::KindGraph);
+        diag->setVolume(DynamicDiagramDefines::Volume3D);
         diag->setTitle(title);
         diag->setAxisSpaceLeft(30);
         diag->setAxisSpaceBottom(10);

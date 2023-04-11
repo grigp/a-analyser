@@ -70,16 +70,26 @@ void StepDeviationVisualize::print(QPrinter *printer, const QString &testUid)
                           static_cast<int>(paper.width() * 0.8), static_cast<int>(paper.height() * 0.1));
         ratio = ReportElements::ratio(paper, visual->m_wgtGrowth, 2);
         QVector<double> bars;
+        QStringList labels;
         for (int i = 0; i < visual->m_calculator->growthDynCount(); ++i)
+        {
             bars << visual->m_calculator->growthDynValue(i);
-        printDiag(painter, rect, ratio, bars, tr("Динамика прироста"));
+            labels << "";
+        }
+        ReportElements::drawDynamicDiag(painter, rect, ratio, bars, labels, tr("Динамика прироста"),
+                                        DynamicDiagramDefines::KindBar, DynamicDiagramDefines::Volume3D);
 
         rect = QRect(paper.x() + paper.width()/10, static_cast<int>(paper.y() + paper.height() / 14 * 5.2),
                      static_cast<int>(paper.width() * 0.8), static_cast<int>(paper.height() * 0.1));
         bars.clear();
+        labels.clear();
         for (int i = 0; i < visual->m_calculator->lengthDynCount(); ++i)
+        {
             bars << visual->m_calculator->lengthDynValue(i);
-        printDiag(painter, rect, ratio, bars, tr("Динамика длительности отклонений"));
+            labels << "";
+        }
+        ReportElements::drawDynamicDiag(painter, rect, ratio, bars, labels, tr("Динамика длительности отклонений"),
+                                        DynamicDiagramDefines::KindBar, DynamicDiagramDefines::Volume3D);
 
         //! Таблица показателей. Берется модель таблицы из визуализатора
         QRect rectTable(paper.x() + paper.width() / 10,
@@ -107,16 +117,26 @@ void StepDeviationVisualize::print(QPrinter *printer, const QString &testUid)
                           static_cast<int>(paper.width() * 0.9), static_cast<int>(paper.height() * 0.2));
         ratio = ReportElements::ratio(paper, visual->m_wgtGrowth, 2);
         QVector<double> bars;
+        QStringList labels;
         for (int i = 0; i < visual->m_calculator->growthDynCount(); ++i)
+        {
             bars << visual->m_calculator->growthDynValue(i);
-        printDiag(painter, rect, ratio, bars, tr("Динамика прироста"));
+            labels << "";
+        }
+        ReportElements::drawDynamicDiag(painter, rect, ratio, bars, labels, tr("Динамика прироста"),
+                                        DynamicDiagramDefines::KindBar, DynamicDiagramDefines::Volume3D);
 
         rect = QRect(paper.x() + paper.width()/20, static_cast<int>(paper.y() + paper.height() * 0.68),
                      static_cast<int>(paper.width() * 0.9), static_cast<int>(paper.height() * 0.2));
         bars.clear();
+        labels.clear();
         for (int i = 0; i < visual->m_calculator->lengthDynCount(); ++i)
+        {
             bars << visual->m_calculator->lengthDynValue(i);
-        printDiag(painter, rect, ratio, bars, tr("Динамика длительности отклонений"));
+            labels << "";
+        }
+        ReportElements::drawDynamicDiag(painter, rect, ratio, bars, labels, tr("Динамика длительности отклонений"),
+                                        DynamicDiagramDefines::KindBar, DynamicDiagramDefines::Volume3D);
 
         painter->setFont(QFont("Sans", 12, QFont::Bold, false));
         painter->drawText(paper.x() + paper.width() / 10, paper.y() + paper.height() / 60 * 56, visual->m_directionText);
@@ -163,27 +183,6 @@ void StepDeviationVisualize::printGraph(QPainter *painter, const QRect &rect, St
     double min = signal->minValue();
     gp.setDiapazone(0, min, max);
     gp.doPaint(ratio);
-}
-
-void StepDeviationVisualize::printDiag(QPainter *painter,
-                                       const QRect &rect,
-//                                       StepDeviationVisualize *visual,
-                                       const double ratio, QVector<double> &data,
-                                       const QString &title)
-{
-    DynamicDiagramPainter dp(painter, rect);
-    dp.setKind(DynamicDiagram::KindBar);
-    dp.setVolume(DynamicDiagram::Volume3D);
-    dp.setTitle(title);
-    dp.setAxisSpaceLeft(30);
-    dp.setAxisSpaceBottom(10);
-
-    for (int i = 0; i < data.size(); ++i)
-    {
-        auto item = new DiagItem(data.at(i), tr(""));
-        dp.appendItem(item);
-    }
-    dp.doPaint(ratio);
 }
 
 void StepDeviationVisualize::showGraph()
@@ -235,8 +234,8 @@ void StepDeviationVisualize::showTable()
 void StepDeviationVisualize::showDiags()
 {
 
-    ui->wgtGrowth->setKind(DynamicDiagram::KindBar);
-    ui->wgtGrowth->setVolume(DynamicDiagram::Volume3D);
+    ui->wgtGrowth->setKind(DynamicDiagramDefines::KindBar);
+    ui->wgtGrowth->setVolume(DynamicDiagramDefines::Volume3D);
     ui->wgtGrowth->setTitle(tr("Динамика прироста"));
     ui->wgtGrowth->setAxisSpaceLeft(30);
     ui->wgtGrowth->setAxisSpaceBottom(10);
@@ -248,8 +247,8 @@ void StepDeviationVisualize::showDiags()
         ui->wgtGrowth->appendItem(item);
     }
 
-    ui->wgtLength->setKind(DynamicDiagram::KindBar);
-    ui->wgtLength->setVolume(DynamicDiagram::Volume3D);
+    ui->wgtLength->setKind(DynamicDiagramDefines::KindBar);
+    ui->wgtLength->setVolume(DynamicDiagramDefines::Volume3D);
     ui->wgtLength->setTitle(tr("Динамика длительности отклонений"));
     ui->wgtLength->setAxisSpaceLeft(30);
     ui->wgtLength->setAxisSpaceBottom(10);

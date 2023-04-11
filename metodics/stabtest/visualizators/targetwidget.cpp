@@ -1,6 +1,7 @@
 #include "targetwidget.h"
 #include "ui_targetwidget.h"
 
+#include "aanalyserapplication.h"
 #include "resultinfo.h"
 #include "channelsdefines.h"
 #include "targetcalculator.h"
@@ -11,17 +12,11 @@
 #include "reportelements.h"
 #include "datadefines.h"
 #include "dataprovider.h"
+#include "stabtestvisualize.h"
 
 #include <QTimer>
 #include <QDebug>
 
-namespace
-{
-DynamicDiagram *wgtDiagram {nullptr};
-SKGWidget *wgtSKG {nullptr};
-QString sScore {""};
-QString sTotalScore {""};
-}
 
 TargetWidget::TargetWidget(QWidget *parent) :
     QWidget(parent),
@@ -39,10 +34,11 @@ void TargetWidget::calculate(TargetCalculator *calculator, const QString &testUi
 {
     auto val = calculator->factors()->factorValue(TargetFactorsDefines::TargetScoreUid);
     auto valT = calculator->factors()->factorValue(TargetFactorsDefines::TargetTotalScoreUid);
-    sScore = QString(tr("Количество очков") + " %1").arg(QString::number(val, 'f', 0));
-    sTotalScore = QString(tr("Суммарный балл") + " %1").arg(QString::number(valT, 'f', 0));
-    ui->lblScore->setText(sScore);
-    ui->lblTotalScore->setText(sTotalScore);
+    m_sScore = QString(tr("Количество очков") + " %1").arg(QString::number(val, 'f', 0));
+    m_sTotalScore = QString(tr("Суммарный балл") + " %1").arg(QString::number(valT, 'f', 0));
+    ui->lblScore->setText(m_sScore);
+    ui->lblTotalScore->setText(m_sTotalScore);
+    m_calculator = calculator;
 
     showSKG(calculator, testUid);
     showDiagram(calculator, testUid);
@@ -52,6 +48,11 @@ void TargetWidget::print(QPrinter *printer, const QString &testUid)
 {
     QPainter *painter = new QPainter(printer);
     QRect paper = printer->pageRect();
+
+    //! Получаем указатель на элземпляр визуализатора
+    auto vis = static_cast<AAnalyserApplication*>(QCoreApplication::instance())->getOpenedTest(testUid);
+    StabTestVisualize* visualPanel = static_cast<StabTestVisualize*>(vis);
+    TargetWidget* visual = static_cast<TargetWidget*>(visualPanel->widget());
 
     painter->begin(printer);
     //! Заголовок
@@ -63,22 +64,31 @@ void TargetWidget::print(QPrinter *printer, const QString &testUid)
         painter->setFont(QFont("Sans", 16, QFont::Bold, false));
         painter->drawText(paper.x() + paper.width() / 10,
                           static_cast<int>(paper.y() + paper.height() / 10 * 1.6),
-                          sScore);
+                          visual->m_sScore);
         painter->setFont(QFont("Sans", 12, QFont::Bold, false));
         painter->drawText(paper.x() + paper.width() / 10,
                           static_cast<int>(paper.y() + paper.height() / 10 * 1.8),
-                          sTotalScore);
+                          visual->m_sTotalScore);
 
-        ReportElements::drawWidget(painter, wgtDiagram,
-                                   static_cast<int>(paper.width() * 0.85), static_cast<int>(paper.height() * 0.85),
-                                   paper.x() + paper.width() / 10, paper.y() + paper.height() / 10 * 2);
+        auto rect = QRect(paper.x() + paper.width() / 10, paper.y() + paper.height() / 10 * 2,
+                          static_cast<int>(paper.width() * 0.85), static_cast<int>(paper.height() * 0.28));
+        auto ratio = ReportElements::ratio(paper, visual->m_wgtDiagram, 2);
+        QVector<double> bars;
+        QStringList labels;
+        for (int i = 9; i >= 0; --i)
+        {
+            bars << visual->m_calculator->factors()->histogram(i);
+            labels << QString::number(i + 1);
+        }
+        ReportElements::drawDynamicDiag(painter, rect, ratio, bars, labels, tr("Процент времени пребывания в зонах"),
+                                        DynamicDiagramDefines::KindBar, DynamicDiagramDefines::Volume3D);
 
         //! СКГ
         auto rectSKG = QRect(paper.x() + paper.width() / 2 - static_cast<int>(paper.width() * 0.33),
                              static_cast<int>(paper.y() + paper.height() / 10 * 5.1),
                              static_cast<int>(paper.width() * 0.65),
                              static_cast<int>(paper.height() * 0.42));
-        double ratio = ReportElements::ratio(paper, wgtSKG, 5);
+        ratio = ReportElements::ratio(paper, visual->m_wgtSKG, 5);
         if (DataProvider::channelExists(testUid, 0, ChannelsDefines::chanStab))
             ReportElements::drawSKG(painter, rectSKG, testUid, 0, ratio);
     }
@@ -88,19 +98,28 @@ void TargetWidget::print(QPrinter *printer, const QString &testUid)
         painter->setFont(QFont("Sans", 16, QFont::Bold, false));
         painter->drawText(paper.x() + paper.width() / 10,
                           static_cast<int>(paper.y() + paper.height() / 10 * 2),
-                          sScore);
+                          visual->m_sScore);
         painter->setFont(QFont("Sans", 12, QFont::Bold, false));
         painter->drawText(paper.x() + paper.width() / 10,
                           static_cast<int>(paper.y() + paper.height() / 10 * 2.4),
-                          sTotalScore);
+                          visual->m_sTotalScore);
 
-        ReportElements::drawWidget(painter, wgtDiagram,
-                                   static_cast<int>(paper.width() * 0.6), static_cast<int>(paper.height() * 0.6),
-                                   paper.x() + paper.width() / 15, paper.y() + paper.height() / 10 * 3);
+        auto rect = QRect(paper.x() + paper.width() / 15, static_cast<int>(paper.y() + paper.height() * 0.28),
+                          static_cast<int>(paper.width() * 0.6), static_cast<int>(paper.height() * 0.5));
+        auto ratio = ReportElements::ratio(paper, visual->m_wgtDiagram, 2);
+        QVector<double> bars;
+        QStringList labels;
+        for (int i = 9; i >= 0; --i)
+        {
+            bars << visual->m_calculator->factors()->histogram(i);
+            labels << QString::number(i + 1);
+        }
+        ReportElements::drawDynamicDiag(painter, rect, ratio, bars, labels, tr("Процент времени пребывания в зонах"),
+                                        DynamicDiagramDefines::KindBar, DynamicDiagramDefines::Volume3D);
         //! СКГ
         auto rectSKG = QRect(static_cast<int>(paper.x() + paper.width() / 10 * 6.2), paper.y() + paper.height() / 10 * 3,
                              static_cast<int>(paper.width() * 0.4), static_cast<int>(paper.height() * 0.4));
-        double ratio = ReportElements::ratio(paper, wgtSKG, 5);
+        ratio = ReportElements::ratio(paper, visual->m_wgtSKG, 5);
         if (DataProvider::channelExists(testUid, 0, ChannelsDefines::chanStab))
             ReportElements::drawSKG(painter, rectSKG, testUid, 0, ratio);
     }
@@ -115,7 +134,7 @@ void TargetWidget::print(QPrinter *printer, const QString &testUid)
     painter->end();
 }
 
-void TargetWidget::showSKG(TargetCalculator *calculator, const QString &testUid) const
+void TargetWidget::showSKG(TargetCalculator *calculator, const QString &testUid)
 {
     Q_UNUSED(calculator);
     auto* trd = new TestResultData();
@@ -141,7 +160,7 @@ void TargetWidget::showSKG(TargetCalculator *calculator, const QString &testUid)
         ui->wgtSKG->setDiap(diap);
     });
 
-    wgtSKG = ui->wgtSKG;
+    m_wgtSKG = ui->wgtSKG;
 
 //    auto angle = calculator->factors()->ellipse().angle;
 //    auto sizeA = calculator->classicFactors(i)->ellipse().sizeA;
@@ -149,16 +168,16 @@ void TargetWidget::showSKG(TargetCalculator *calculator, const QString &testUid)
     //    ui->wgtSKG->setEllipse(sizeA, sizeB, angle);
 }
 
-void TargetWidget::showDiagram(TargetCalculator *calculator, const QString &testUid) const
+void TargetWidget::showDiagram(TargetCalculator *calculator, const QString &testUid)
 {
     Q_UNUSED(testUid);
-    ui->wgtDiagram->setKind(DynamicDiagram::KindBar);
-    ui->wgtDiagram->setVolume(DynamicDiagram::Volume3D);
+    ui->wgtDiagram->setKind(DynamicDiagramDefines::KindBar);
+    ui->wgtDiagram->setVolume(DynamicDiagramDefines::Volume3D);
     ui->wgtDiagram->setTitle(tr("Процент времени пребывания в зонах"));
     for (int i = 9; i >= 0; --i)
     {
         auto item = new DiagItem(calculator->factors()->histogram(i), QString::number(i + 1));
         ui->wgtDiagram->appendItem(item);
     }
-    wgtDiagram = ui->wgtDiagram;
+    m_wgtDiagram = ui->wgtDiagram;
 }

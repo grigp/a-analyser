@@ -27,23 +27,23 @@ void DynamicDiagramPainter::setCanvas(QPainter *painter, QRect geometry, QWidget
     m_widget = wgt;
 }
 
-DynamicDiagramPainter::Kind DynamicDiagramPainter::kind() const
+DynamicDiagramDefines::Kind DynamicDiagramPainter::kind() const
 {
     return m_kind;
 }
 
-void DynamicDiagramPainter::setKind(const DynamicDiagramPainter::Kind kind)
+void DynamicDiagramPainter::setKind(const DynamicDiagramDefines::Kind kind)
 {
     m_kind = kind;
     doUpdate();
 }
 
-DynamicDiagramPainter::Volume DynamicDiagramPainter::volume() const
+DynamicDiagramDefines::Volume DynamicDiagramPainter::volume() const
 {
     return m_volume;
 }
 
-void DynamicDiagramPainter::setVolume(const DynamicDiagramPainter::Volume volume)
+void DynamicDiagramPainter::setVolume(const DynamicDiagramDefines::Volume volume)
 {
     m_volume = volume;
     doUpdate();
@@ -194,7 +194,6 @@ void DynamicDiagramPainter::doPaint(const double ratio)
         backColor = m_widget->palette().background().color();
     m_painter->setBrush(QBrush(backColor , Qt::SolidPattern));
     m_painter->setPen(QPen(backColor, 1, Qt::SolidLine, Qt::FlatCap));
-    //m_painter->setPen(QPen(Qt::red, 2, Qt::SolidLine, Qt::FlatCap));
     m_painter->drawRect(m_geometry);
 
     double r = ratio;
@@ -235,7 +234,7 @@ void DynamicDiagramPainter::doPaint(const double ratio)
     {
         int xv = m_geometry.left() + m_axisSpaceLeft + static_cast<int>((i + 1) * m_sizeH);
         int yv = m_geometry.top() + m_geometry.height() - m_axisSpaceBottom - static_cast<int>((m_items.at(i)->value() - min) * prop);
-        if (m_kind == KindBar)
+        if (m_kind == DynamicDiagramDefines::KindBar)
         {
             int x = xv - static_cast<int>(m_sizeH / 10);
             int w = static_cast<int>(m_sizeH / m_sizeDivider);  //5);
@@ -257,7 +256,7 @@ void DynamicDiagramPainter::doPaint(const double ratio)
             m_painter->setBrush(QBrush(barColor, Qt::SolidPattern));
             m_painter->setPen(QPen(m_titleColor, 1, Qt::SolidLine, Qt::FlatCap));
             m_painter->drawRect(x, y, w, h);
-            if (m_volume == Volume3D)
+            if (m_volume == DynamicDiagramDefines::Volume3D)
             {
                 auto dk = getDarkColor(barColor);
                 m_painter->setBrush(QBrush(dk, Qt::SolidPattern));
@@ -279,18 +278,18 @@ void DynamicDiagramPainter::doPaint(const double ratio)
             }
         }
         else
-        if (m_kind == KindGraph)
+        if (m_kind == DynamicDiagramDefines::KindGraph)
         {
             if (i > 0)
             {
-                if (m_volume == Volume2D)
+                if (m_volume == DynamicDiagramDefines::Volume2D)
                 {
                     m_painter->setBrush(QBrush(m_diagColor, Qt::SolidPattern));
                     m_painter->setPen(QPen(m_diagColor, 4, Qt::SolidLine, Qt::FlatCap));
                     m_painter->drawLine(ox, oy, xv, yv);
                 }
                 else
-                if (m_volume == Volume3D)
+                if (m_volume == DynamicDiagramDefines::Volume3D)
                 {
                     m_painter->setBrush(QBrush(m_diagColor, Qt::SolidPattern));
                     m_painter->setPen(QPen(m_titleColor, 1, Qt::SolidLine, Qt::FlatCap));
@@ -310,14 +309,14 @@ void DynamicDiagramPainter::doPaint(const double ratio)
 
             if (i == m_selectItem)
             {
-                if (m_volume == Volume2D)
+                if (m_volume == DynamicDiagramDefines::Volume2D)
                 {
                     m_painter->setPen(QPen(m_selectItemColor, 3, Qt::SolidLine, Qt::FlatCap));
                     m_painter->drawLine(xv, m_geometry.height() - m_axisSpaceBottom,
                                         xv, m_geometry.height() - static_cast<int>(m_axisSpaceBottom - (max - min) * prop));
                 }
                 else
-                if (m_volume == Volume3D)
+                if (m_volume == DynamicDiagramDefines::Volume3D)
                 {
                     m_painter->setBrush(QBrush(m_selectItemColor, Qt::SolidPattern));
                     m_painter->setPen(QPen(m_titleColor, 1, Qt::SolidLine, Qt::FlatCap));
@@ -339,11 +338,15 @@ void DynamicDiagramPainter::doPaint(const double ratio)
         auto size = BaseUtils::getTextSize(m_painter, m_items.at(i)->name());
         m_painter->setPen(QPen(m_titleColor, 1, Qt::SolidLine, Qt::FlatCap));
         if (so.width() < m_sizeH)
-            m_painter->drawText(xv - size.width() / 2, m_geometry.height() - m_axisSpaceBottom + size.height(), m_items.at(i)->name());
+            m_painter->drawText(xv - size.width() / 2,
+                                m_geometry.top() + m_geometry.height() - m_axisSpaceBottom + size.height(),
+                                m_items.at(i)->name());
         else
         {
             if ((i+1) % 5 == 0)
-                m_painter->drawText(xv - size.width() / 2, m_geometry.height() - m_axisSpaceBottom + size.height(), m_items.at(i)->name());
+                m_painter->drawText(xv - size.width() / 2,
+                                    m_geometry.top() + m_geometry.height() - m_axisSpaceBottom + size.height(),
+                                    m_items.at(i)->name());
         }
     }
 
@@ -385,7 +388,7 @@ void DynamicDiagramPainter::computeDiap(double &min, double &max)
             max = item->value();
     }
     //! Столбиковые диаграммы начинаются от 0
-    if (m_kind == KindBar)
+    if (m_kind == DynamicDiagramDefines::KindBar)
     {
         if (min > 0 && max > 0)
         {
@@ -400,7 +403,7 @@ void DynamicDiagramPainter::computeDiap(double &min, double &max)
         }
     }
     else
-    if (m_kind == KindGraph)
+    if (m_kind == DynamicDiagramDefines::KindGraph)
     {
         double max_ = max;
         double min_ = min;

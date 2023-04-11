@@ -114,37 +114,37 @@ void DropTestVisualize::setTest(const QString &testUid)
 
 void DropTestVisualize::on_selectGraph()
 {
-    ui->wgtDiag1->setKind(DynamicDiagram::KindGraph);
-    ui->wgtDiag2->setKind(DynamicDiagram::KindGraph);
-    ui->wgtDiag3->setKind(DynamicDiagram::KindGraph);
+    ui->wgtDiag1->setKind(DynamicDiagramDefines::KindGraph);
+    ui->wgtDiag2->setKind(DynamicDiagramDefines::KindGraph);
+    ui->wgtDiag3->setKind(DynamicDiagramDefines::KindGraph);
 
-    SettingsProvider::setValueToRegAppCopy("JumpTest", "DropTestDiagKind", static_cast<int>(DynamicDiagram::KindGraph));
+    SettingsProvider::setValueToRegAppCopy("JumpTest", "DropTestDiagKind", static_cast<int>(DynamicDiagramDefines::KindGraph));
 }
 
 void DropTestVisualize::on_selectBar()
 {
-    ui->wgtDiag1->setKind(DynamicDiagram::KindBar);
-    ui->wgtDiag2->setKind(DynamicDiagram::KindBar);
-    ui->wgtDiag3->setKind(DynamicDiagram::KindBar);
+    ui->wgtDiag1->setKind(DynamicDiagramDefines::KindBar);
+    ui->wgtDiag2->setKind(DynamicDiagramDefines::KindBar);
+    ui->wgtDiag3->setKind(DynamicDiagramDefines::KindBar);
 
-    SettingsProvider::setValueToRegAppCopy("JumpTest", "DropTestDiagKind", static_cast<int>(DynamicDiagram::KindBar));
+    SettingsProvider::setValueToRegAppCopy("JumpTest", "DropTestDiagKind", static_cast<int>(DynamicDiagramDefines::KindBar));
 }
 
 void DropTestVisualize::on_select3D(bool checked)
 {
     if (checked)
     {
-        ui->wgtDiag1->setVolume(DynamicDiagram::Volume3D);
-        ui->wgtDiag2->setVolume(DynamicDiagram::Volume3D);
-        ui->wgtDiag3->setVolume(DynamicDiagram::Volume3D);
-        SettingsProvider::setValueToRegAppCopy("JumpTest", "DropTestDiagVolume", static_cast<int>(DynamicDiagram::Volume3D));
+        ui->wgtDiag1->setVolume(DynamicDiagramDefines::Volume3D);
+        ui->wgtDiag2->setVolume(DynamicDiagramDefines::Volume3D);
+        ui->wgtDiag3->setVolume(DynamicDiagramDefines::Volume3D);
+        SettingsProvider::setValueToRegAppCopy("JumpTest", "DropTestDiagVolume", static_cast<int>(DynamicDiagramDefines::Volume3D));
     }
     else
     {
-        ui->wgtDiag1->setVolume(DynamicDiagram::Volume2D);
-        ui->wgtDiag2->setVolume(DynamicDiagram::Volume2D);
-        ui->wgtDiag3->setVolume(DynamicDiagram::Volume2D);
-        SettingsProvider::setValueToRegAppCopy("JumpTest", "DropTestDiagVolume", static_cast<int>(DynamicDiagram::Volume2D));
+        ui->wgtDiag1->setVolume(DynamicDiagramDefines::Volume2D);
+        ui->wgtDiag2->setVolume(DynamicDiagramDefines::Volume2D);
+        ui->wgtDiag3->setVolume(DynamicDiagramDefines::Volume2D);
+        SettingsProvider::setValueToRegAppCopy("JumpTest", "DropTestDiagVolume", static_cast<int>(DynamicDiagramDefines::Volume2D));
     }
 }
 
@@ -294,17 +294,17 @@ void DropTestVisualize::showDiagram(const int column, DynamicDiagram *diag)
 void DropTestVisualize::restoreGraphParams()
 {
     auto kindCode = SettingsProvider::valueFromRegAppCopy("JumpTest", "DropTestDiagKind", 1).toInt();
-    DynamicDiagram::Kind kind = static_cast<DynamicDiagram::Kind>(kindCode);
+    DynamicDiagramDefines::Kind kind = static_cast<DynamicDiagramDefines::Kind>(kindCode);
     ui->wgtDiag1->setKind(kind);
     ui->wgtDiag2->setKind(kind);
     ui->wgtDiag3->setKind(kind);
-    ui->btnGraph->setChecked(kind == DynamicDiagram::KindGraph);
-    ui->btnBar->setChecked(kind == DynamicDiagram::KindBar);
+    ui->btnGraph->setChecked(kind == DynamicDiagramDefines::KindGraph);
+    ui->btnBar->setChecked(kind == DynamicDiagramDefines::KindBar);
 
     auto volumeCode = SettingsProvider::valueFromRegAppCopy("JumpTest", "DropTestDiagVolume", 1).toInt();
-    DynamicDiagram::Volume volume = static_cast<DynamicDiagram::Volume>(volumeCode);
+    DynamicDiagramDefines::Volume volume = static_cast<DynamicDiagramDefines::Volume>(volumeCode);
     ui->wgtDiag1->setVolume(volume);
     ui->wgtDiag2->setVolume(volume);
     ui->wgtDiag3->setVolume(volume);
-    ui->btn3D->setChecked(volume == DynamicDiagram::Volume3D);
+    ui->btn3D->setChecked(volume == DynamicDiagramDefines::Volume3D);
 }

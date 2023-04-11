@@ -203,8 +203,8 @@ void BilateralVisualWidget::showDiagram()
         ui->lblRight->setText(QString::number(right));
     }
 
-    ui->wgtDiag->setKind(DynamicDiagram::KindBar);
-    ui->wgtDiag->setVolume(DynamicDiagram::Volume3D);
+    ui->wgtDiag->setKind(DynamicDiagramDefines::KindBar);
+    ui->wgtDiag->setVolume(DynamicDiagramDefines::Volume3D);
     ui->wgtDiag->setAxisSpaceLeft(15);
     ui->wgtDiag->setAxisSpaceBottom(5);
     ui->wgtDiag->appendItem(new DiagItem(left, ""));

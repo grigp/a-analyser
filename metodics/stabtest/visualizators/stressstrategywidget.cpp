@@ -51,8 +51,8 @@ void StressStrategyWidget::calculate(StressStrategyCalculator *calculator, const
     ui->lblStressStrategyResume->setText(sStressStrategyResume);
 
     ui->wgtDiag->clear();
-    ui->wgtDiag->setVolume(DynamicDiagram::Volume3D);
-    ui->wgtDiag->setKind(DynamicDiagram::KindBar);
+    ui->wgtDiag->setVolume(DynamicDiagramDefines::Volume3D);
+    ui->wgtDiag->setKind(DynamicDiagramDefines::KindBar);
     auto itemTarget = new DiagItem(valTarget, tr("Мишень"));
     ui->wgtDiag->appendItem(itemTarget);
     auto itemZones = new DiagItem(valZones, tr("С выделенной зоной"));

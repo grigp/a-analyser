@@ -15,6 +15,7 @@
 #include "stabilogram.h"
 #include "bilateralresultdata.h"
 #include "classicfactors.h"
+#include "dynamicdiagrampainter.h"
 
 void ReportElements::drawHeader(QPainter *painter, const QString &testUid, QRect rect)
 {
@@ -329,6 +330,32 @@ void ReportElements::drawGraph(QPainter *painter,
     }
 }
 
+void ReportElements::drawDynamicDiag(QPainter *painter,
+                                     const QRect &rect,
+                                     const double ratio,
+                                     QVector<double> &data,
+                                     QStringList &labels,
+                                     const QString &title,
+                                     DynamicDiagramDefines::Kind kind,
+                                     DynamicDiagramDefines::Volume volume)
+{
+    Q_ASSERT(data.size() == labels.size());
+
+    DynamicDiagramPainter dp(painter, rect);
+    dp.setKind(kind);
+    dp.setVolume(volume);
+    dp.setTitle(title);
+    dp.setAxisSpaceLeft(30);
+    dp.setAxisSpaceBottom(10);
+
+    for (int i = 0; i < data.size(); ++i)
+    {
+        auto item = new DiagItem(data.at(i), labels.at(i));
+        dp.appendItem(item);
+    }
+    dp.doPaint(ratio);
+}
+
 double ReportElements::ratio(const QRect paper, QWidget *widget, const double maxVal)
 {
     double retval = static_cast<double>(paper.width()) / static_cast<double>(widget->geometry().width());
@@ -337,4 +364,5 @@ double ReportElements::ratio(const QRect paper, QWidget *widget, const double ma
     if (maxVal > -1 && retval > maxVal) retval = maxVal;
     return retval;
 }
+
 

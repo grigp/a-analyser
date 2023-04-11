@@ -97,14 +97,14 @@ void HistogramVisualWidget::computeHist()
 
 void HistogramVisualWidget::showHist()
 {
-    ui->wgtHistX->setKind(DynamicDiagram::KindBar);
-    ui->wgtHistX->setVolume(DynamicDiagram::Volume3D);
+    ui->wgtHistX->setKind(DynamicDiagramDefines::KindBar);
+    ui->wgtHistX->setVolume(DynamicDiagramDefines::Volume3D);
     ui->wgtHistX->setTitle(tr("Фронталь"));
     ui->wgtHistX->setAxisSpaceLeft(30);
     ui->wgtHistX->setSizeDivider(2);
 
-    ui->wgtHistY->setKind(DynamicDiagram::KindBar);
-    ui->wgtHistY->setVolume(DynamicDiagram::Volume3D);
+    ui->wgtHistY->setKind(DynamicDiagramDefines::KindBar);
+    ui->wgtHistY->setVolume(DynamicDiagramDefines::Volume3D);
     ui->wgtHistY->setTitle(tr("Сагитталь"));
     ui->wgtHistY->setAxisSpaceLeft(30);
     ui->wgtHistY->setSizeDivider(2);

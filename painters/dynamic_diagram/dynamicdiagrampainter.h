@@ -5,6 +5,8 @@
 #include <QWidget>
 #include <QPainter>
 
+#include "dynamicdiagramdefines.h"
+
 /*!
  * \brief Класс элемента диаграммы (отсчета) DiagItem class
  */
@@ -45,25 +47,11 @@ public:
      */
     void setCanvas(QPainter* painter, QRect geometry, QWidget *wgt = nullptr);
 
-    ///< Вид динамики
-    enum Kind
-    {
-          KindGraph = 0   ///< График
-        , KindBar         ///< Столбиковая диаграмма
-    };
+    DynamicDiagramDefines::Kind kind() const;
+    void setKind(const DynamicDiagramDefines::Kind kind);
 
-    ///< Объем
-    enum Volume
-    {
-          Volume2D = 0  ///< Двухмерная диаграмма
-        , Volume3D      ///< Трехмерная диаграмма
-    };
-
-    Kind kind() const;
-    void setKind(const Kind kind);
-
-    Volume volume() const;
-    void setVolume(const Volume volume);
+    DynamicDiagramDefines::Volume volume() const;
+    void setVolume(const DynamicDiagramDefines::Volume volume);
 
     QString title() const;
     void setTitle(const QString &title);
@@ -158,8 +146,8 @@ private:
     int m_axisSpaceLeft {50};
     int m_axisSpaceBottom {50};
 
-    Kind m_kind {KindGraph};
-    Volume m_volume {Volume2D};
+    DynamicDiagramDefines::Kind m_kind {DynamicDiagramDefines::KindGraph};
+    DynamicDiagramDefines::Volume m_volume {DynamicDiagramDefines::Volume2D};
     QString m_title {""};
     QString m_bottomText {""};
 

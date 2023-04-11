@@ -9,6 +9,8 @@ class TargetWidget;
 }
 
 class TargetCalculator;
+class DynamicDiagram;
+class SKGWidget;
 
 /*!
  * \brief Класс виджета визуализатора мишени в рамках стабилографического теста TargetWidget class
@@ -37,8 +39,14 @@ public:
 private:
     Ui::TargetWidget *ui;
 
-    void showSKG(TargetCalculator *calculator, const QString &testUid) const;
-    void showDiagram(TargetCalculator *calculator, const QString &testUid) const;
+    void showSKG(TargetCalculator *calculator, const QString &testUid);
+    void showDiagram(TargetCalculator *calculator, const QString &testUid);
+
+    DynamicDiagram *m_wgtDiagram {nullptr};
+    SKGWidget *m_wgtSKG {nullptr};
+    QString m_sScore {""};
+    QString m_sTotalScore {""};
+    TargetCalculator *m_calculator {nullptr};
 };
 
 #endif // TARGETWIDGET_H
