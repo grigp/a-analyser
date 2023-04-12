@@ -6,28 +6,9 @@
 #include "aanalyserapplication.h"
 #include "dataprovider.h"
 #include "reportelements.h"
+#include "stabtestvisualize.h"
 
 #include <QDebug>
-
-namespace
-{
-CircleNormIndicator *wgtOpenEyesNorm {nullptr};
-CircleNormIndicator *wgtCloseEyesNorm {nullptr};
-CircleNormIndicator *wgtTargetNorm {nullptr};
-QString sOpenEyesResult {""};
-QString sOpenEyesFactor {""};
-QString sCloseEyesResult {""};
-QString sCloseEyesFactor {""};
-QString sTargetResult {""};
-QString sTargetFactor {""};
-
-QString sOpenEyesGroupNormResume {""};
-QString sCloseEyesGroupNormResume {""};
-QString sTargetGroupNormResume {""};
-QString sOpenEyesPersonalNormResume {""};
-QString sCloseEyesPersonalNormResume {""};
-QString sTargetPersonalNormResume {""};
-}
 
 DopuskWidget::DopuskWidget(QWidget *parent) :
     QWidget(parent),
@@ -54,22 +35,22 @@ void DopuskWidget::calculate(DopuskCalculator *calculator, const QString &testUi
                 getFactorInfo(VectorFactorsDefines::KFRUid).name();
 
         m_values[0] = calculator->factors(0)->factorValue(VectorFactorsDefines::KFRUid);
-        sOpenEyesResult = QString("%1 %").arg(m_values[0], 3, 'f', format);
-        ui->lblOpenEyesResult->setText(sOpenEyesResult);
-        sOpenEyesFactor = fctName;
+        m_sOpenEyesResult = QString("%1 %").arg(m_values[0], 3, 'f', format);
+        ui->lblOpenEyesResult->setText(m_sOpenEyesResult);
+        m_sOpenEyesFactor = fctName;
         ui->lblOpenEyesFactor->setText(fctName);
 
 
         m_values[1] = calculator->factors(1)->factorValue(VectorFactorsDefines::KFRUid);
-        sCloseEyesResult = QString("%1 %").arg(m_values[1], 3, 'f', format);
-        ui->lblCloseEyesResult->setText(sCloseEyesResult);
-        sCloseEyesFactor = fctName;
+        m_sCloseEyesResult = QString("%1 %").arg(m_values[1], 3, 'f', format);
+        ui->lblCloseEyesResult->setText(m_sCloseEyesResult);
+        m_sCloseEyesFactor = fctName;
         ui->lblCloseEyesFactor->setText(fctName);
 
         m_values[2] = calculator->factors(2)->factorValue(VectorFactorsDefines::KFRUid);
-        sTargetResult = QString("%1 %").arg(m_values[2], 3, 'f', format);
-        ui->lblTargetResult->setText(sTargetResult);
-        sTargetFactor = fctName;
+        m_sTargetResult = QString("%1 %").arg(m_values[2], 3, 'f', format);
+        ui->lblTargetResult->setText(m_sTargetResult);
+        m_sTargetFactor = fctName;
         ui->lblTargetFactor->setText(fctName);
 
         getPersonalNorms();
@@ -97,6 +78,11 @@ void DopuskWidget::print(QPrinter *printer, const QString &testUid)
     QPainter *painter = new QPainter(printer);
     QRect paper = printer->pageRect();
 
+    //! Получаем указатель на экземпляр визуализатора
+    auto vis = static_cast<AAnalyserApplication*>(QCoreApplication::instance())->getOpenedTest(testUid);
+    StabTestVisualize* visualPanel = static_cast<StabTestVisualize*>(vis);
+    DopuskWidget* visual = static_cast<DopuskWidget*>(visualPanel->widget());
+
     painter->begin(printer);
     //! Заголовок
     QRect rectHeader(paper.x() + paper.width() / 20, paper.y() + paper.height() / 30, paper.width() / 20 * 18, paper.height() / 30 * 3);
@@ -112,16 +98,16 @@ void DopuskWidget::print(QPrinter *printer, const QString &testUid)
         painter->setFont(QFont("Sans", 12, QFont::Bold, false));
         painter->drawText(paper.x() + paper.width() / 12,
                           static_cast<int>(paper.y() + paper.height() / 7 * 1.3),
-                          sOpenEyesFactor + " : " + sOpenEyesResult);
+                          visual->m_sOpenEyesFactor + " : " + visual->m_sOpenEyesResult);
         painter->drawText(paper.x() + paper.width() / 12,
                           static_cast<int>(paper.y() + paper.height() / 7 * 1.4),
-                          tr("Групповая норма") + " : " + sOpenEyesGroupNormResume);
+                          tr("Групповая норма") + " : " + visual->m_sOpenEyesGroupNormResume);
         painter->drawText(paper.x() + paper.width() / 12,
                           static_cast<int>(paper.y() + paper.height() / 7 * 1.5),
-                          tr("Индивидуальная норма") + " : " + sOpenEyesPersonalNormResume);
+                          tr("Индивидуальная норма") + " : " + visual->m_sOpenEyesPersonalNormResume);
 
 
-        ReportElements::drawWidget(painter, wgtOpenEyesNorm,
+        ReportElements::drawWidget(painter, visual->m_wgtOpenEyesNorm,
                                    static_cast<int>(paper.width() * 0.35), static_cast<int>(paper.height() * 0.35),
                                    paper.x() + paper.width() / 10 * 6, paper.y() + paper.height() / 7);
 
@@ -133,15 +119,15 @@ void DopuskWidget::print(QPrinter *printer, const QString &testUid)
         painter->setFont(QFont("Sans", 12, QFont::Bold, false));
         painter->drawText(paper.x() + paper.width() / 12,
                           static_cast<int>(paper.y() + paper.height() / 7 * 3.1),
-                          sCloseEyesFactor + " : " + sCloseEyesResult);
+                          visual->m_sCloseEyesFactor + " : " + visual->m_sCloseEyesResult);
         painter->drawText(paper.x() + paper.width() / 12,
                           static_cast<int>(paper.y() + paper.height() / 7 * 3.2),
-                          tr("Групповая норма") + " : " + sCloseEyesGroupNormResume);
+                          tr("Групповая норма") + " : " + visual->m_sCloseEyesGroupNormResume);
         painter->drawText(paper.x() + paper.width() / 12,
                           static_cast<int>(paper.y() + paper.height() / 7 * 3.3),
-                          tr("Индивидуальная норма") + " : " + sCloseEyesPersonalNormResume);
+                          tr("Индивидуальная норма") + " : " + visual->m_sCloseEyesPersonalNormResume);
 
-        ReportElements::drawWidget(painter, wgtCloseEyesNorm,
+        ReportElements::drawWidget(painter, visual->m_wgtCloseEyesNorm,
                                    static_cast<int>(paper.width() * 0.35), static_cast<int>(paper.height() * 0.35),
                                    paper.x() + paper.width() / 10 * 6, static_cast<int>(paper.y() + paper.height() / 7 * 2.8));
 
@@ -153,15 +139,15 @@ void DopuskWidget::print(QPrinter *printer, const QString &testUid)
         painter->setFont(QFont("Sans", 12, QFont::Bold, false));
         painter->drawText(paper.x() + paper.width() / 12,
                           static_cast<int>(paper.y() + paper.height() / 7 * 4.9),
-                          sTargetFactor + " : " + sTargetResult);
+                          visual->m_sTargetFactor + " : " + visual->m_sTargetResult);
         painter->drawText(paper.x() + paper.width() / 12,
                           static_cast<int>(paper.y() + paper.height() / 7 * 5.0),
-                          tr("Групповая норма") + " : " + sTargetGroupNormResume);
+                          tr("Групповая норма") + " : " + visual->m_sTargetGroupNormResume);
         painter->drawText(paper.x() + paper.width() / 12,
                           static_cast<int>(paper.y() + paper.height() / 7 * 5.1),
-                          tr("Индивидуальная норма") + " : " + sTargetPersonalNormResume);
+                          tr("Индивидуальная норма") + " : " + visual->m_sTargetPersonalNormResume);
 
-        ReportElements::drawWidget(painter, wgtTargetNorm,
+        ReportElements::drawWidget(painter, visual->m_wgtTargetNorm,
                                    static_cast<int>(paper.width() * 0.35), static_cast<int>(paper.height() * 0.35),
                                    paper.x() + paper.width() / 10 * 6, static_cast<int>(paper.y() + paper.height() / 7 * 4.6));
     }
@@ -176,16 +162,16 @@ void DopuskWidget::print(QPrinter *printer, const QString &testUid)
         painter->setFont(QFont("Sans", 10, QFont::Bold, false));
         painter->drawText(paper.x() + paper.width() / 10,
                           static_cast<int>(paper.y() + paper.height() / 7 * 4.4),
-                          sOpenEyesFactor + " : " + sOpenEyesResult);
+                          visual->m_sOpenEyesFactor + " : " + visual->m_sOpenEyesResult);
         painter->drawText(paper.x() + paper.width() / 10,
                           static_cast<int>(paper.y() + paper.height() / 7 * 4.6),
-                          tr("Групповая норма") + " : " + sOpenEyesGroupNormResume);
+                          tr("Групповая норма") + " : " + visual->m_sOpenEyesGroupNormResume);
         painter->drawText(paper.x() + paper.width() / 10,
                           static_cast<int>(paper.y() + paper.height() / 7 * 4.8),
-                          tr("Индивидуальная норма") + " : " + sOpenEyesPersonalNormResume);
+                          tr("Индивидуальная норма") + " : " + visual->m_sOpenEyesPersonalNormResume);
 
 
-        ReportElements::drawWidget(painter, wgtOpenEyesNorm,
+        ReportElements::drawWidget(painter, visual->m_wgtOpenEyesNorm,
                                    static_cast<int>(paper.width() * 0.35), static_cast<int>(paper.height() * 0.35),
                                    paper.x() + paper.width() / 10, static_cast<int>(paper.y() + paper.height() / 7 * 1.4));
 
@@ -197,15 +183,15 @@ void DopuskWidget::print(QPrinter *printer, const QString &testUid)
         painter->setFont(QFont("Sans", 10, QFont::Bold, false));
         painter->drawText(static_cast<int>(paper.x() + paper.width() / 10 * 4),
                           static_cast<int>(paper.y() + paper.height() / 7 * 4.4),
-                          sCloseEyesFactor + " : " + sCloseEyesResult);
+                          visual->m_sCloseEyesFactor + " : " + visual->m_sCloseEyesResult);
         painter->drawText(static_cast<int>(paper.x() + paper.width() / 10 * 4),
                           static_cast<int>(paper.y() + paper.height() / 7 * 4.6),
-                          tr("Групповая норма") + " : " + sCloseEyesGroupNormResume);
+                          tr("Групповая норма") + " : " + visual->m_sCloseEyesGroupNormResume);
         painter->drawText(static_cast<int>(paper.x() + paper.width() / 10 * 4),
                           static_cast<int>(paper.y() + paper.height() / 7 * 4.8),
-                          tr("Индивидуальная норма") + " : " + sCloseEyesPersonalNormResume);
+                          tr("Индивидуальная норма") + " : " + visual->m_sCloseEyesPersonalNormResume);
 
-        ReportElements::drawWidget(painter, wgtCloseEyesNorm,
+        ReportElements::drawWidget(painter, visual->m_wgtCloseEyesNorm,
                                    static_cast<int>(paper.width() * 0.35), static_cast<int>(paper.height() * 0.35),
                                    paper.x() + paper.width() / 10 * 4, static_cast<int>(paper.y() + paper.height() / 7 * 1.4));
 
@@ -217,15 +203,15 @@ void DopuskWidget::print(QPrinter *printer, const QString &testUid)
         painter->setFont(QFont("Sans", 10, QFont::Bold, false));
         painter->drawText(static_cast<int>(paper.x() + paper.width() / 10 * 7),
                           static_cast<int>(paper.y() + paper.height() / 7 * 4.4),
-                          sTargetFactor + " : " + sTargetResult);
+                          visual->m_sTargetFactor + " : " + visual->m_sTargetResult);
         painter->drawText(static_cast<int>(paper.x() + paper.width() / 10 * 7),
                           static_cast<int>(paper.y() + paper.height() / 7 * 4.6),
-                          tr("Групповая норма") + " : " + sTargetGroupNormResume);
+                          tr("Групповая норма") + " : " + visual->m_sTargetGroupNormResume);
         painter->drawText(static_cast<int>(paper.x() + paper.width() / 10 * 7),
                           static_cast<int>(paper.y() + paper.height() / 7 * 4.8),
-                          tr("Индивидуальная норма") + " : " + sTargetPersonalNormResume);
+                          tr("Индивидуальная норма") + " : " + visual->m_sTargetPersonalNormResume);
 
-        ReportElements::drawWidget(painter, wgtTargetNorm,
+        ReportElements::drawWidget(painter, visual->m_wgtTargetNorm,
                                    static_cast<int>(paper.width() * 0.35), static_cast<int>(paper.height() * 0.35),
                                    paper.x() + paper.width() / 10 * 7, static_cast<int>(paper.y() + paper.height() / 7 * 1.4));
 
@@ -350,15 +336,15 @@ void DopuskWidget::showConslution()
             getPersonalNormContainedTestCount(m_testUid);
     ui->lblNormContainsCount->setText(QString(tr("Количество нормообразующих обследований") + " - %1").arg(cnt));
 
-    wgtOpenEyesNorm = ui->wgtOpenEyesNorm;
-    wgtCloseEyesNorm = ui->wgtCloseEyesNorm;
-    wgtTargetNorm = ui->wgtTargetNorm;
-    sOpenEyesGroupNormResume = ui->lblOpenEyesGroupNormResume->text();
-    sCloseEyesGroupNormResume = ui->lblCloseEyesGroupNormResume->text();
-    sTargetGroupNormResume = ui->lblTargetGroupNormResume->text();
-    sOpenEyesPersonalNormResume = ui->lblOpenEyesPersonalNormResume->text();
-    sCloseEyesPersonalNormResume = ui->lblCloseEyesPersonalNormResume->text();
-    sTargetPersonalNormResume = ui->lblTargetPersonalNormResume->text();
+    m_wgtOpenEyesNorm = ui->wgtOpenEyesNorm;
+    m_wgtCloseEyesNorm = ui->wgtCloseEyesNorm;
+    m_wgtTargetNorm = ui->wgtTargetNorm;
+    m_sOpenEyesGroupNormResume = ui->lblOpenEyesGroupNormResume->text();
+    m_sCloseEyesGroupNormResume = ui->lblCloseEyesGroupNormResume->text();
+    m_sTargetGroupNormResume = ui->lblTargetGroupNormResume->text();
+    m_sOpenEyesPersonalNormResume = ui->lblOpenEyesPersonalNormResume->text();
+    m_sCloseEyesPersonalNormResume = ui->lblCloseEyesPersonalNormResume->text();
+    m_sTargetPersonalNormResume = ui->lblTargetPersonalNormResume->text();
 }
 
 DataDefines::NormValue DopuskWidget::getGroupNormValue(const int numProbe)

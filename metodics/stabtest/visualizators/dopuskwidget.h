@@ -81,6 +81,23 @@ private:
     QList<DataDefines::PersonalNormInfo> m_pnil;
 
     QMap<int, GroupNorm> m_groupNorms;      ///< Групповые нормы int - номер пробы
+
+    CircleNormIndicator *m_wgtOpenEyesNorm {nullptr};
+    CircleNormIndicator *m_wgtCloseEyesNorm {nullptr};
+    CircleNormIndicator *m_wgtTargetNorm {nullptr};
+    QString m_sOpenEyesResult {""};
+    QString m_sOpenEyesFactor {""};
+    QString m_sCloseEyesResult {""};
+    QString m_sCloseEyesFactor {""};
+    QString m_sTargetResult {""};
+    QString m_sTargetFactor {""};
+
+    QString m_sOpenEyesGroupNormResume {""};
+    QString m_sCloseEyesGroupNormResume {""};
+    QString m_sTargetGroupNormResume {""};
+    QString m_sOpenEyesPersonalNormResume {""};
+    QString m_sCloseEyesPersonalNormResume {""};
+    QString m_sTargetPersonalNormResume {""};
 };
 
 #endif // DOPUSKWIDGET_H

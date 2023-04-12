@@ -9,6 +9,8 @@
 #include "datadefines.h"
 
 class TestResultData;
+class SKGWidget;
+class AreaGraph;
 
 namespace Ui {
 class StabSignalsTestWidget;
@@ -132,41 +134,42 @@ private:
      * \param painter - указатель на рисователь
      * \param testUid - uid теста
      * \param paper - страница
+     * \param visual - указатель на виджет визуализатора
      */
-    static void printOnePortrait(QPrinter *printer, QPainter *painter, const QString &testUid, const QRect paper);
+    static void printOnePortrait(QPrinter *printer, QPainter *painter, const QString &testUid, const QRect paper, StabSignalsTestWidget* visual);
     /*!
      * \brief Печать отчета одна проба, ландшафтная ориентация
      */
-    static void printOneLandscape(QPrinter *printer, QPainter *painter, const QString &testUid, const QRect paper);
+    static void printOneLandscape(QPrinter *printer, QPainter *painter, const QString &testUid, const QRect paper, StabSignalsTestWidget* visual);
     /*!
      * \brief Печать отчета две пробы, портретная ориентация
      */
-    static void printTwoPortrait(QPrinter *printer, QPainter *painter, const QString &testUid, const QRect paper);
+    static void printTwoPortrait(QPrinter *printer, QPainter *painter, const QString &testUid, const QRect paper, StabSignalsTestWidget* visual);
     /*!
      * \brief Печать отчета две пробы, ландшафтная ориентация
      */
-    static void printTwoLandscape(QPrinter *printer, QPainter *painter, const QString &testUid, const QRect paper);
+    static void printTwoLandscape(QPrinter *printer, QPainter *painter, const QString &testUid, const QRect paper, StabSignalsTestWidget* visual);
     /*!
      * \brief Печать отчета три пробы, портретная ориентация
      */
-    static void printThreePortrait(QPrinter *printer, QPainter *painter, const QString &testUid, const QRect paper);
+    static void printThreePortrait(QPrinter *printer, QPainter *painter, const QString &testUid, const QRect paper, StabSignalsTestWidget* visual);
     /*!
      * \brief Печать отчета три пробы, ландшафтная ориентация
      */
-    static void printThreeLandscape(QPrinter *printer, QPainter *painter, const QString &testUid, const QRect paper);
+    static void printThreeLandscape(QPrinter *printer, QPainter *painter, const QString &testUid, const QRect paper, StabSignalsTestWidget* visual);
     /*!
      * \brief Печать отчета пять проб, портретная ориентация
      */
-    static void printFivePortrait(QPrinter *printer, QPainter *painter, const QString &testUid, const QRect paper);
+    static void printFivePortrait(QPrinter *printer, QPainter *painter, const QString &testUid, const QRect paper, StabSignalsTestWidget* visual);
     /*!
      * \brief Печать отчета пять проб, ландшафтная ориентация
      */
-    static void printFiveLandscape(QPrinter *printer, QPainter *painter, const QString &testUid, const QRect paper);
+    static void printFiveLandscape(QPrinter *printer, QPainter *painter, const QString &testUid, const QRect paper, StabSignalsTestWidget* visual);
 
     /*!
      * \brief Печать графиков в режиме пяти проб
      */
-    static void printGraphFive(QPainter *painter, const QString &testUid, const QRect paper);
+    static void printGraphFive(QPainter *painter, const QString &testUid, const QRect paper, StabSignalsTestWidget* visual);
 
     /*!
      * \brief Возвращает список названий проб
@@ -181,6 +184,11 @@ private:
     QStandardItemModel* m_mdlRF {nullptr};
     QStandardItemModel* m_mdlNorms {nullptr};
     double m_absMax {0};
+
+    QTreeView *m_tvRombergNorms {nullptr};
+    QList<SKGWidget*> m_areasesSKG;
+    AreaGraph *m_wgtGraph;
+    QTabWidget *m_wgtTab;
 };
 
 #endif // STABSIGNALSTESTWIDGET_H

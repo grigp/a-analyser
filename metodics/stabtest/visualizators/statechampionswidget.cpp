@@ -7,22 +7,10 @@
 #include "classicfactors.h"
 #include "ratioprobesfactors.h"
 #include "reportelements.h"
+#include "stabtestvisualize.h"
 
 #include <QDebug>
 
-namespace
-{
-QString sSquareProbe1 {""};
-QString sSquareProbe2 {""};
-QString sSquareProbe3 {""};
-QString sSpeedProbe1 {""};
-QString sSpeedProbe2 {""};
-QString sSpeedProbe3 {""};
-QString sKFRProbe3 {""};
-QString sRombKoefValue {""};
-
-
-}
 
 StateChampionsWidget::StateChampionsWidget(QWidget *parent) :
     QWidget(parent),
@@ -50,28 +38,33 @@ void StateChampionsWidget::calculate(StateChampionsTestCalculator *calculator,
     auto fmtRK = static_cast<AAnalyserApplication*>(QApplication::instance())->
             getFactorInfo(RatioProbesFactorsDefines::Probe2SUid).format();
 
-    sSquareProbe1 = QString::number(calculator->square(0), 'f', fmtS);
-    sSquareProbe2 = QString::number(calculator->square(1), 'f', fmtS);
-    sSquareProbe3 = QString::number(calculator->square(2), 'f', fmtS);
-    sSpeedProbe1 = QString::number(calculator->speed(0), 'f', fmtV);
-    sSpeedProbe2 = QString::number(calculator->speed(1), 'f', fmtV);
-    sSpeedProbe3 = QString::number(calculator->speed(2), 'f', fmtV);
-    sKFRProbe3 = QString::number(calculator->targetKFR(), 'f', fmtKFR);
-    sRombKoefValue = QString::number(calculator->rombKoef(), 'f', fmtRK);
-    ui->lblSquareProbe1->setText(sSquareProbe1);
-    ui->lblSquareProbe2->setText(sSquareProbe2);
-    ui->lblSquareProbe3->setText(sSquareProbe3);
-    ui->lblSpeedProbe1->setText(sSpeedProbe1);
-    ui->lblSpeedProbe2->setText(sSpeedProbe2);
-    ui->lblSpeedProbe3->setText(sSpeedProbe3);
-    ui->lblKFRProbe3->setText(sKFRProbe3);
-    ui->lblRombKoefValue->setText(sRombKoefValue);
+    m_sSquareProbe1 = QString::number(calculator->square(0), 'f', fmtS);
+    m_sSquareProbe2 = QString::number(calculator->square(1), 'f', fmtS);
+    m_sSquareProbe3 = QString::number(calculator->square(2), 'f', fmtS);
+    m_sSpeedProbe1 = QString::number(calculator->speed(0), 'f', fmtV);
+    m_sSpeedProbe2 = QString::number(calculator->speed(1), 'f', fmtV);
+    m_sSpeedProbe3 = QString::number(calculator->speed(2), 'f', fmtV);
+    m_sKFRProbe3 = QString::number(calculator->targetKFR(), 'f', fmtKFR);
+    m_sRombKoefValue = QString::number(calculator->rombKoef(), 'f', fmtRK);
+    ui->lblSquareProbe1->setText(m_sSquareProbe1);
+    ui->lblSquareProbe2->setText(m_sSquareProbe2);
+    ui->lblSquareProbe3->setText(m_sSquareProbe3);
+    ui->lblSpeedProbe1->setText(m_sSpeedProbe1);
+    ui->lblSpeedProbe2->setText(m_sSpeedProbe2);
+    ui->lblSpeedProbe3->setText(m_sSpeedProbe3);
+    ui->lblKFRProbe3->setText(m_sKFRProbe3);
+    ui->lblRombKoefValue->setText(m_sRombKoefValue);
 }
 
 void StateChampionsWidget::print(QPrinter *printer, const QString &testUid)
 {
     QPainter *painter = new QPainter(printer);
     QRect paper = printer->pageRect();
+
+    //! Получаем указатель на экземпляр визуализатора
+    auto vis = static_cast<AAnalyserApplication*>(QCoreApplication::instance())->getOpenedTest(testUid);
+    StabTestVisualize* visualPanel = static_cast<StabTestVisualize*>(vis);
+    StateChampionsWidget* visual = static_cast<StateChampionsWidget*>(visualPanel->widget());
 
     painter->begin(printer);
     //! Заголовок
@@ -97,13 +90,13 @@ void StateChampionsWidget::print(QPrinter *printer, const QString &testUid)
         painter->setFont(QFont("Sans", 18, QFont::Bold, false));
         painter->drawText(paper.x() + paper.width() / 10 * 4,
                           static_cast<int>(paper.y() + paper.height() / 10 * 4),
-                          sSpeedProbe1);
+                          visual->m_sSpeedProbe1);
         painter->drawText(paper.x() + paper.width() / 10 * 6,
                           static_cast<int>(paper.y() + paper.height() / 10 * 4),
-                          sSpeedProbe2);
+                          visual->m_sSpeedProbe2);
         painter->drawText(paper.x() + paper.width() / 10 * 8,
                           static_cast<int>(paper.y() + paper.height() / 10 * 4),
-                          sSpeedProbe3);
+                          visual->m_sSpeedProbe3);
 
         painter->setFont(QFont("Sans", 12, QFont::Bold, false));
         painter->drawText(paper.x() + paper.width() / 10,
@@ -112,13 +105,13 @@ void StateChampionsWidget::print(QPrinter *printer, const QString &testUid)
         painter->setFont(QFont("Sans", 18, QFont::Bold, false));
         painter->drawText(paper.x() + paper.width() / 10 * 4,
                           static_cast<int>(paper.y() + paper.height() / 10 * 5),
-                          sSquareProbe1);
+                          visual->m_sSquareProbe1);
         painter->drawText(paper.x() + paper.width() / 10 * 6,
                           static_cast<int>(paper.y() + paper.height() / 10 * 5),
-                          sSquareProbe2);
+                          visual->m_sSquareProbe2);
         painter->drawText(paper.x() + paper.width() / 10 * 8,
                           static_cast<int>(paper.y() + paper.height() / 10 * 5),
-                          sSquareProbe3);
+                          visual->m_sSquareProbe3);
 
         painter->setFont(QFont("Sans", 12, QFont::Bold, false));
         painter->drawText(paper.x() + paper.width() / 10,
@@ -127,7 +120,7 @@ void StateChampionsWidget::print(QPrinter *printer, const QString &testUid)
         painter->setFont(QFont("Sans", 18, QFont::Bold, false));
         painter->drawText(paper.x() + paper.width() / 10 * 8,
                           static_cast<int>(paper.y() + paper.height() / 10 * 6),
-                          sKFRProbe3);
+                          visual->m_sKFRProbe3);
 
         painter->setFont(QFont("Sans", 12, QFont::Bold, false));
         painter->drawText(paper.x() + paper.width() / 10,
@@ -136,7 +129,7 @@ void StateChampionsWidget::print(QPrinter *printer, const QString &testUid)
         painter->setFont(QFont("Sans", 18, QFont::Bold, false));
         painter->drawText(paper.x() + paper.width() / 10 * 4,
                           static_cast<int>(paper.y() + paper.height() / 10 * 7),
-                          sRombKoefValue);
+                          visual->m_sRombKoefValue);
     };
 
 

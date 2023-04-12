@@ -36,6 +36,15 @@ public:
 
 private:
     Ui::StateChampionsWidget *ui;
+
+    QString m_sSquareProbe1 {""};
+    QString m_sSquareProbe2 {""};
+    QString m_sSquareProbe3 {""};
+    QString m_sSpeedProbe1 {""};
+    QString m_sSpeedProbe2 {""};
+    QString m_sSpeedProbe3 {""};
+    QString m_sKFRProbe3 {""};
+    QString m_sRombKoefValue {""};
 };
 
 #endif // STATECHAMPIONSWIDGET_H

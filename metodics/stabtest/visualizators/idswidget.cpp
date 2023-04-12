@@ -135,7 +135,7 @@ void IDSWidget::print(QPrinter *printer, const QString &testUid)
     QPainter *painter = new QPainter(printer);
     QRect paper = printer->pageRect();
 
-    //! Получаем указатель на элземпляр визуализатора
+    //! Получаем указатель на экземпляр визуализатора
     auto vis = static_cast<AAnalyserApplication*>(QCoreApplication::instance())->getOpenedTest(testUid);
     StabTestVisualize* visualPanel = static_cast<StabTestVisualize*>(vis);
     IDSWidget* visual = static_cast<IDSWidget*>(visualPanel->widget());
