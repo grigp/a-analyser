@@ -10,12 +10,6 @@
 #include "reportelements.h"
 #include "crosspainter.h"
 
-namespace
-{
-    DiagCross *wgtDiag {nullptr};
-    QStandardItemModel *mdlFactors {nullptr};
-    CrossCalculator* calculator {nullptr};
-}
 
 CrossVisualize::CrossVisualize(QWidget *parent) :
     QWidget(parent),
@@ -35,7 +29,6 @@ void CrossVisualize::setTest(const QString &testUid)
     {
         m_calculator = new CrossCalculator(testUid, this);
         m_calculator->calculate();
-        calculator = m_calculator;
 
         auto model = new QStandardItemModel();
         for (int i = 0; i < m_calculator->primaryFactorsCount(); ++i)
@@ -65,8 +58,8 @@ void CrossVisualize::setTest(const QString &testUid)
         ui->wgtDiag->setValueLeft(static_cast<int>(m_calculator->valueLeft()));
 
         //! Запомнить указатели для печати
-        wgtDiag = ui->wgtDiag;
-        mdlFactors = static_cast<QStandardItemModel*>(ui->tvFactors->model());
+        m_wgtDiag = ui->wgtDiag;
+        m_mdlFactors = static_cast<QStandardItemModel*>(ui->tvFactors->model());
     }
 }
 
@@ -74,6 +67,10 @@ void CrossVisualize::print(QPrinter *printer, const QString &testUid)
 {
     QPainter *painter = new QPainter(printer);
     QRect paper = printer->pageRect();
+
+    //! Получаем указатель на элземпляр визуализатора
+    auto vis = static_cast<AAnalyserApplication*>(QCoreApplication::instance())->getOpenedTest(testUid);
+    CrossVisualize* visual = static_cast<CrossVisualize*>(vis);
 
     painter->begin(printer);
     //! Заголовок
@@ -86,13 +83,13 @@ void CrossVisualize::print(QPrinter *printer, const QString &testUid)
         auto rectDiag = QRect(static_cast<int>(paper.x() + paper.width() / 2 - paper.height() * 0.25),
                               paper.y() + paper.height()/7,
                              static_cast<int>(paper.height() * 0.5), static_cast<int>(paper.height() * 0.5));
-        double ratio = ReportElements::ratio(paper, wgtDiag, 3);
+        double ratio = ReportElements::ratio(paper, visual->m_wgtDiag, 3);
         CrossPainter cp(painter, rectDiag);
-        cp.setDiap(static_cast<int>(calculator->diap()));
-        cp.setValueUp(static_cast<int>(calculator->valueUp()));
-        cp.setValueDown(static_cast<int>(calculator->valueDown()));
-        cp.setValueLeft(static_cast<int>(calculator->valueLeft()));
-        cp.setValueRight(static_cast<int>(calculator->valueRight()));
+        cp.setDiap(static_cast<int>(visual->m_calculator->diap()));
+        cp.setValueUp(static_cast<int>(visual->m_calculator->valueUp()));
+        cp.setValueDown(static_cast<int>(visual->m_calculator->valueDown()));
+        cp.setValueLeft(static_cast<int>(visual->m_calculator->valueLeft()));
+        cp.setValueRight(static_cast<int>(visual->m_calculator->valueRight()));
         cp.doPaint(ratio);
 
         //! Таблица показателей. Берется модель таблицы из визуализатора
@@ -100,7 +97,7 @@ void CrossVisualize::print(QPrinter *printer, const QString &testUid)
                         paper.y() + paper.height() / 3 * 2,
                         paper.width() / 10 * 8,
                         paper.height() / 4);
-        ReportElements::drawTable(painter, mdlFactors, rectTable, QList<int>() << 3 << 1,
+        ReportElements::drawTable(painter, visual->m_mdlFactors, rectTable, QList<int>() << 3 << 1,
                                   false, ReportElements::Table::tvsStretched, 12, -1, QFont::Bold);
     }
     else
@@ -109,13 +106,13 @@ void CrossVisualize::print(QPrinter *printer, const QString &testUid)
         //! Диаграмма Cross
         auto rectDiag = QRect(paper.x() + paper.width()/25, paper.y() + paper.height()/5,
                              static_cast<int>(paper.height() * 0.7), static_cast<int>(paper.height() * 0.7));
-        double ratio = ReportElements::ratio(paper, wgtDiag, 3);
+        double ratio = ReportElements::ratio(paper, visual->m_wgtDiag, 3);
         CrossPainter cp(painter, rectDiag);
-        cp.setDiap(static_cast<int>(calculator->diap()));
-        cp.setValueUp(static_cast<int>(calculator->valueUp()));
-        cp.setValueDown(static_cast<int>(calculator->valueDown()));
-        cp.setValueLeft(static_cast<int>(calculator->valueLeft()));
-        cp.setValueRight(static_cast<int>(calculator->valueRight()));
+        cp.setDiap(static_cast<int>(visual->m_calculator->diap()));
+        cp.setValueUp(static_cast<int>(visual->m_calculator->valueUp()));
+        cp.setValueDown(static_cast<int>(visual->m_calculator->valueDown()));
+        cp.setValueLeft(static_cast<int>(visual->m_calculator->valueLeft()));
+        cp.setValueRight(static_cast<int>(visual->m_calculator->valueRight()));
         cp.doPaint(ratio);
 
         //! Таблица показателей. Берется модель таблицы из визуализатора
@@ -123,7 +120,7 @@ void CrossVisualize::print(QPrinter *printer, const QString &testUid)
                         static_cast<int>(paper.y() + paper.height() / 3.5),
                         paper.width() / 7 * 3,
                         paper.height() / 2);
-        ReportElements::drawTable(painter, mdlFactors, rectTable, QList<int>() << 3 << 1, false,
+        ReportElements::drawTable(painter, visual->m_mdlFactors, rectTable, QList<int>() << 3 << 1, false,
                                   ReportElements::Table::tvsStretched, 12, -1, QFont::Bold);
     }
 

@@ -9,6 +9,7 @@ class OctaedronVisualize;
 }
 
 class OctaedronCalculator;
+class DiagOctaedron;
 
 /*!
  * \brief Класс виджета показа результатов тренажера "Октаэдр" OctaedronVisualize class
@@ -34,6 +35,8 @@ private:
     Ui::OctaedronVisualize *ui;
 
     OctaedronCalculator* m_calculator {nullptr};
+    DiagOctaedron *m_wgtDiag {nullptr};
+    QString m_sAverageQuality {""};
 };
 
 #endif // OCTAEDRONVISUALIZE_H

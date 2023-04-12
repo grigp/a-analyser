@@ -9,6 +9,8 @@ class CrossVisualize;
 }
 
 class CrossCalculator;
+class DiagCross;
+class QStandardItemModel;
 
 /*!
  * \brief Класс виджета показа результатов теста на устойчивость CrossVisualize class
@@ -34,6 +36,8 @@ private:
     Ui::CrossVisualize *ui;
 
     CrossCalculator* m_calculator {nullptr};
+    DiagCross *m_wgtDiag {nullptr};
+    QStandardItemModel *m_mdlFactors {nullptr};
 };
 
 #endif // CROSSVISUALIZE_H
