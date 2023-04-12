@@ -9,6 +9,7 @@ class StressStrategyWidget;
 }
 
 class StressStrategyCalculator;
+class DynamicDiagram;
 
 /*!
  * \brief Класс виджета визуализатора оценки стрессовой стратегии в рамках стабилографического теста StressStrategyWidget class
@@ -36,6 +37,14 @@ public:
 
 private:
     Ui::StressStrategyWidget *ui;
+
+    DynamicDiagram *m_wgtDiag {nullptr};
+
+    double m_valTarget {0};
+    double m_valZones {0};
+    QString m_sTarget {""};
+    QString m_sFiveZones {""};
+    QString m_sStressStrategyResume {""};
 };
 
 #endif // STRESSSTRATEGYWIDGET_H
