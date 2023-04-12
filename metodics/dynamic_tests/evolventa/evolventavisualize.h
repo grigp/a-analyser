@@ -35,7 +35,7 @@ public:
      */
     static void print(QPrinter *printer, const QString &testUid);
 
-    static void printGraph(QPrinter *printer, QPainter *painter, const QString &testUid,
+    static void printGraph(QPainter *painter,
                            EvolventaVisualize* visual, double ratio,
                            QRect rect, DecartCoordinatesSignal *signal);
 

@@ -15,6 +15,7 @@
 #include "anysignal.h"
 #include "reportelements.h"
 #include "skgwidget.h"
+#include "stabtestvisualize.h"
 
 #include <QPainter>
 #include <QPushButton>
@@ -29,9 +30,9 @@
 
 namespace
 {
-QStandardItemModel *mdlTable {nullptr};
-SKGWidget *wgtSKG {nullptr};
-AreaGraph *wgtFDS {nullptr};
+//QStandardItemModel *mdlTable {nullptr};
+//SKGWidget *wgtSKG {nullptr};
+//AreaGraph *wgtFDS {nullptr};
 
 }
 
@@ -120,9 +121,8 @@ void IDSWidget::calculate(IDSCalculator *calculator, const QString &testUid)
         resizeColumns();
     });
 
-    mdlTable = &m_mdlTable;
-    wgtSKG = ui->wgtSKG;
-    wgtFDS = ui->wgtFDS;
+    m_wgtSKG = ui->wgtSKG;
+    m_wgtFDS = ui->wgtFDS;
 
     QTimer::singleShot(100, [=]
     {
@@ -135,6 +135,11 @@ void IDSWidget::print(QPrinter *printer, const QString &testUid)
     QPainter *painter = new QPainter(printer);
     QRect paper = printer->pageRect();
 
+    //! Получаем указатель на элземпляр визуализатора
+    auto vis = static_cast<AAnalyserApplication*>(QCoreApplication::instance())->getOpenedTest(testUid);
+    StabTestVisualize* visualPanel = static_cast<StabTestVisualize*>(vis);
+    IDSWidget* visual = static_cast<IDSWidget*>(visualPanel->widget());
+
     painter->begin(printer);
     //! Заголовок
     QRect rectHeader(paper.x() + paper.width() / 20, paper.y() + paper.height() / 30, paper.width() / 20 * 18, paper.height() / 30 * 3);
@@ -142,7 +147,7 @@ void IDSWidget::print(QPrinter *printer, const QString &testUid)
 
     QList<int> colW;
     colW << 2;
-    for (int i = 1; i < mdlTable->columnCount(); ++i)
+    for (int i = 1; i < visual->m_mdlTable.columnCount(); ++i)
         colW << 1;
 
     if (printer->orientation() == QPrinter::Portrait)
@@ -153,21 +158,22 @@ void IDSWidget::print(QPrinter *printer, const QString &testUid)
                         paper.y() + paper.height() / 6,
                         paper.width() / 10 * 8,
                         paper.height() / 5);
-        ReportElements::drawTable(painter, mdlTable, rectTable, colW, false, ReportElements::Table::tvsStretched, 11, -1, QFont::Bold);
+        ReportElements::drawTable(painter, &visual->m_mdlTable, rectTable, colW, false, ReportElements::Table::tvsStretched, 11, -1, QFont::Bold);
 
-        if (mdlTable->columnCount() <= 2)
+        if (visual->m_mdlTable.columnCount() <= 2)
         {
             //! СКГ
             auto rectSKG = QRect(static_cast<int>(paper.x() + paper.width() / 2 - paper.width() * 0.175),
                                  paper.y() + paper.height() / 10 * 3,
                                  static_cast<int>(paper.width() * 0.35), static_cast<int>(paper.height() * 0.35));
-            double ratio = ReportElements::ratio(paper, wgtSKG, 5);
+            double ratio = ReportElements::ratio(paper, visual->m_wgtSKG, 5);
             if (DataProvider::channelExists(testUid, 0, ChannelsDefines::chanStab))
                 ReportElements::drawSKG(painter, rectSKG, testUid, 0, ratio);
             //! ФДС
-            ReportElements::drawWidget(painter, wgtFDS,
-                                       static_cast<int>(paper.width() * 0.8), static_cast<int>(paper.height() * 0.35),
-                                       paper.x() + paper.width() / 12, static_cast<int>(paper.y() + paper.height() / 10 * 6.1));
+            auto rectGraph = QRect(paper.x() + paper.width() / 12, static_cast<int>(paper.y() + paper.height() / 10 * 6.1),
+                                   static_cast<int>(paper.width() * 0.8), static_cast<int>(paper.height() * 0.33));
+            ratio = ReportElements::ratio(paper, visual->m_wgtFDS);
+            printGraph(painter, visual, ratio, rectGraph);
         }
     }
     else
@@ -178,19 +184,21 @@ void IDSWidget::print(QPrinter *printer, const QString &testUid)
                         paper.y() + paper.height() / 6,
                         paper.width() / 10 * 8,
                         paper.height() / 5);
-        ReportElements::drawTable(painter, mdlTable, rectTable, colW, false, ReportElements::Table::tvsStretched, 11, -1, QFont::Bold);
+        ReportElements::drawTable(painter, &visual->m_mdlTable, rectTable, colW, false, ReportElements::Table::tvsStretched, 11, -1, QFont::Bold);
 
-        if (mdlTable->columnCount() <= 2)
+        if (visual->m_mdlTable.columnCount() <= 2)
         {
             //! СКГ
             auto rectSKG = QRect(paper.x() + paper.width() / 20, static_cast<int>(paper.y() + paper.height() / 10 * 3.8),
                                  static_cast<int>(paper.height() * 0.5), static_cast<int>(paper.height() * 0.5));
-            double ratio = ReportElements::ratio(paper, wgtSKG, 5);
+            double ratio = ReportElements::ratio(paper, visual->m_wgtSKG, 5);
             if (DataProvider::channelExists(testUid, 0, ChannelsDefines::chanStab))
                 ReportElements::drawSKG(painter, rectSKG, testUid, 0, ratio);
-            ReportElements::drawWidget(painter, wgtFDS,
-                                       static_cast<int>(paper.width() * 0.55), static_cast<int>(paper.height() * 0.55),
-                                       paper.x() + paper.width() / 12 * 5, paper.y() + paper.height() / 10 * 4);
+            //! ФДС
+            auto rectGraph = QRect(paper.x() + paper.width() / 12 * 5, static_cast<int>(paper.y() + paper.height() * 0.37),
+                                   static_cast<int>(paper.width() * 0.55), static_cast<int>(paper.height() * 0.55));
+            ratio = ReportElements::ratio(paper, visual->m_wgtFDS);
+            printGraph(painter, visual, ratio, rectGraph);
         }
     }
 
@@ -419,7 +427,7 @@ void IDSWidget::initAudio(const double frequency, const int duration)
     if (!QAudioDeviceInfo::defaultOutputDevice().isFormatSupported(m_audioFormat))
         m_audioFormat = QAudioDeviceInfo::defaultOutputDevice().nearestFormat(m_audioFormat);
 
-    m_soundGenerator = new SoundGenerator(m_audioFormat, duration * 1000000, frequency);
+    m_soundGenerator = new SoundGenerator(m_audioFormat, duration * 1000000, static_cast<int>(frequency));
     m_audioOutput = new QAudioOutput(QAudioDeviceInfo::defaultOutputDevice(), m_audioFormat);
 }
 
@@ -531,10 +539,32 @@ void IDSWidget::resizeColumns()
 
 void IDSWidget::setSKGSize()
 {
-    auto g = wgtSKG->geometry();
+    auto g = m_wgtSKG->geometry();
     g.setHeight(g.width());
     g.setY(ui->wgtSKGContainer->height() / 2 - g.height() / 2);
-    wgtSKG->setGeometry(g);
+    m_wgtSKG->setGeometry(g);
+}
+
+void IDSWidget::printGraph(QPainter *painter, IDSWidget *visual, double ratio, QRect rect)
+{
+    //! Создаем рисователь
+    GraphPainter gp(painter, rect);
+
+    auto* factors = visual->m_calculator->factors(0);
+    auto sig = AnySignal(factors->freqDiskr(), 1);
+
+    for (int i = 0; i < factors->fdsSize(); ++i)
+    {
+        QVector<double> rec;
+        rec << factors->fds(i);
+        sig.appendValue(rec);
+    }
+
+    gp.appendSignal(&sig, tr("ФДС"));
+    double maxV = fmax(fabs(sig.minValue()), fabs(sig.maxValue()));
+    gp.area(0)->setDiapazone(-maxV, maxV);
+
+    gp.doPaint(ratio);
 }
 
 

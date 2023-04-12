@@ -102,11 +102,11 @@ void EvolventaVisualize::print(QPrinter *printer, const QString &testUid)
     {
         //! Графики эвольвенты
         double ratio = ReportElements::ratio(paper, visual->m_wgtGraphX, 5);
-        printGraph(printer, painter, testUid, visual, ratio,
+        printGraph(painter, visual, ratio,
                    QRect(paper.x() + paper.width()/10, static_cast<int>(paper.y() + paper.height() * 0.14),
                          static_cast<int>(paper.width() * 0.85), static_cast<int>(paper.height() * 0.12)),
                    visual->m_calculator->frontal());
-        printGraph(printer, painter, testUid, visual, ratio,
+        printGraph(painter, visual, ratio,
                    QRect(paper.x() + paper.width()/10, static_cast<int>(paper.y() + paper.height() * 0.27),
                          static_cast<int>(paper.width() * 0.85), static_cast<int>(paper.height() * 0.12)),
                    visual->m_calculator->sagittal());
@@ -167,11 +167,11 @@ void EvolventaVisualize::print(QPrinter *printer, const QString &testUid)
     {
         //! Графики эвольвенты
         double ratio = ReportElements::ratio(paper, visual->m_wgtGraphX, 5);
-        printGraph(printer, painter, testUid, visual, ratio,
+        printGraph(painter, visual, ratio,
                    QRect(paper.x() + paper.width()/10, static_cast<int>(paper.y() + paper.height() / 10 * 1.5),
                          static_cast<int>(paper.width() * 0.85), static_cast<int>(paper.height() * 0.3)),
                    visual->m_calculator->frontal());
-        printGraph(printer, painter, testUid, visual, ratio,
+        printGraph(painter, visual, ratio,
                    QRect(paper.x() + paper.width()/10, static_cast<int>(paper.y() + paper.height() / 10 * 4.5),
                          static_cast<int>(paper.width() * 0.85), static_cast<int>(paper.height() * 0.3)),
                    visual->m_calculator->sagittal());
@@ -239,7 +239,7 @@ void EvolventaVisualize::print(QPrinter *printer, const QString &testUid)
     painter->end();
 }
 
-void EvolventaVisualize::printGraph(QPrinter *printer, QPainter *painter, const QString &testUid,
+void EvolventaVisualize::printGraph(QPainter *painter,
                                     EvolventaVisualize* visual, double ratio,
                                     QRect rect, DecartCoordinatesSignal *signal)
 {

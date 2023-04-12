@@ -17,6 +17,8 @@ class IDSCalculator;
 class SoundGenerator;
 class TestResultData;
 class AnySignal;
+class SKGWidget;
+class AreaGraph;
 
 /*!
  * \brief Класс виджета визуализатора динамической стабилизации в рамках стабилографического теста IDSWidget class
@@ -96,7 +98,11 @@ private:
 
     void setSKGSize();
 
+    static void printGraph(QPainter *painter, IDSWidget* visual, double ratio, QRect rect);
+
     QStandardItemModel m_mdlTable;
+    SKGWidget *m_wgtSKG {nullptr};
+    AreaGraph *m_wgtFDS {nullptr};
 
     int m_tmStopSound {-1};
     int m_curRow {-1};
@@ -114,6 +120,7 @@ private:
     ///< Анимация
     int m_tmAnimate {-1};
     int m_animCurPos {-1};
+
 };
 
 
