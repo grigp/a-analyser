@@ -135,18 +135,53 @@ void BoxerDodgingVisualize::print(QPrinter *printer, const QString &testUid)
     else
     if (printer->orientation() == QPrinter::Landscape)
     {
-        ReportElements::drawWidget(painter, visual->m_wgtDiagLatent,
-                                   static_cast<int>(paper.width() * 0.23), static_cast<int>(paper.height() * 0.5),
-                                   paper.x() + paper.width()/20, paper.y() + paper.height()/5);
-        ReportElements::drawWidget(painter, visual->m_wgtDiagTime,
-                                   static_cast<int>(paper.width() * 0.23), static_cast<int>(paper.height() * 0.5),
-                                   paper.x() + paper.width()/20*5, paper.y() + paper.height()/5);
-        ReportElements::drawWidget(painter, visual->m_wgtDiagAmpl,
-                                   static_cast<int>(paper.width() * 0.23), static_cast<int>(paper.height() * 0.5),
-                                   paper.x() + paper.width()/20 * 10, paper.y() + paper.height()/5);
-        ReportElements::drawWidget(painter, visual->m_wgtDiagErrors,
-                                   static_cast<int>(paper.width() * 0.23), static_cast<int>(paper.height() * 0.5),
-                                   paper.x() + paper.width()/20*15, paper.y() + paper.height()/5);
+        auto rectLat = QRect(static_cast<int>(paper.x() + paper.width() * 0.05),
+                             static_cast<int>(paper.y() + paper.height() * 0.16),
+                             static_cast<int>(paper.width() * 0.20), static_cast<int>(paper.height() * 0.38));
+        auto ratioLat = ReportElements::ratio(paper, visual->m_wgtDiagLatent, 2);
+        auto barsLat = QVector<double>() << visual->m_calculator->factorValue(BoxerDodgingFactorsDefines::LeftLatUid)
+                                         << visual->m_calculator->factorValue(BoxerDodgingFactorsDefines::RightLatUid)
+                                         << visual->m_calculator->factorValue(BoxerDodgingFactorsDefines::AheadLatUid)
+                                         << visual->m_calculator->factorValue(BoxerDodgingFactorsDefines::BackLatUid);
+        auto labelsLat = QStringList() << tr("Влево") << tr("Вправо") << tr("Вперед") << tr("Назад");
+        ReportElements::drawDynamicDiag(painter, rectLat, ratioLat, barsLat, labelsLat, tr("Латентный период, сек"),
+                                        DynamicDiagramDefines::KindBar, DynamicDiagramDefines::Volume3D);
+
+        auto rectTime = QRect(static_cast<int>(paper.x() + paper.width() * 0.29),
+                              static_cast<int>(paper.y() + paper.height() * 0.16),
+                              static_cast<int>(paper.width() * 0.20), static_cast<int>(paper.height() * 0.38));
+        auto ratioTime = ReportElements::ratio(paper, visual->m_wgtDiagTime, 2);
+        auto barsTime = QVector<double>() << visual->m_calculator->factorValue(BoxerDodgingFactorsDefines::LeftTimeUid)
+                                          << visual->m_calculator->factorValue(BoxerDodgingFactorsDefines::RightTimeUid)
+                                          << visual->m_calculator->factorValue(BoxerDodgingFactorsDefines::AheadTimeUid)
+                                          << visual->m_calculator->factorValue(BoxerDodgingFactorsDefines::BackTimeUid);
+        auto labelsTime = QStringList() << tr("Влево") << tr("Вправо") << tr("Вперед") << tr("Назад");
+        ReportElements::drawDynamicDiag(painter, rectTime, ratioTime, barsTime, labelsTime, tr("Время реакции, сек"),
+                                        DynamicDiagramDefines::KindBar, DynamicDiagramDefines::Volume3D);
+
+        auto rectAmpl = QRect(static_cast<int>(paper.x() + paper.width() * 0.55),
+                              static_cast<int>(paper.y() + paper.height() * 0.16),
+                              static_cast<int>(paper.width() * 0.20), static_cast<int>(paper.height() * 0.38));
+        auto ratioAmpl = ReportElements::ratio(paper, visual->m_wgtDiagLatent, 2);
+        auto barsAmpl = QVector<double>() << visual->m_calculator->factorValue(BoxerDodgingFactorsDefines::LeftAmplUid)
+                                          << visual->m_calculator->factorValue(BoxerDodgingFactorsDefines::RightAmplUid)
+                                          << visual->m_calculator->factorValue(BoxerDodgingFactorsDefines::AheadAmplUid)
+                                          << visual->m_calculator->factorValue(BoxerDodgingFactorsDefines::BackAmplUid);
+        auto labelsAmpl = QStringList() << tr("Влево") << tr("Вправо") << tr("Вперед") << tr("Назад");
+        ReportElements::drawDynamicDiag(painter, rectAmpl, ratioAmpl, barsAmpl, labelsAmpl, tr("Амплитуда, мм"),
+                                        DynamicDiagramDefines::KindBar, DynamicDiagramDefines::Volume3D);
+
+        auto rectErr = QRect(static_cast<int>(paper.x() + paper.width() * 0.78),
+                             static_cast<int>(paper.y() + paper.height() * 0.16),
+                             static_cast<int>(paper.width() * 0.20), static_cast<int>(paper.height() * 0.38));
+        auto ratioErr = ReportElements::ratio(paper, visual->m_wgtDiagLatent, 2);
+        auto barsErr = QVector<double>() << visual->m_calculator->factorValue(BoxerDodgingFactorsDefines::LeftErrorsUid)
+                                         << visual->m_calculator->factorValue(BoxerDodgingFactorsDefines::RightErrorsUid)
+                                         << visual->m_calculator->factorValue(BoxerDodgingFactorsDefines::AheadErrorsUid)
+                                         << visual->m_calculator->factorValue(BoxerDodgingFactorsDefines::BackErrorsUid);
+        auto labelsErr = QStringList() << tr("Влево") << tr("Вправо") << tr("Вперед") << tr("Назад");
+        ReportElements::drawDynamicDiag(painter, rectErr, ratioErr, barsErr, labelsErr, tr("Ошибки"),
+                                        DynamicDiagramDefines::KindBar, DynamicDiagramDefines::Volume3D);
 
         //! Таблица показателей. Берется модель таблицы из визуализатора
         QRect rectTable(paper.x() + paper.width() / 10,
