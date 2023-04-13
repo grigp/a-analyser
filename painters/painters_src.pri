@@ -6,6 +6,7 @@ include(cross/cross_src.pri)
 include(octaedron/octaedron_src.pri)
 include(transients/transients_src.pri)
 include(dynamic_diagram/dynamic_diagram_src.pri)
+include(dual_state_diagram/dual_state_diagram_src.pri)
 
 
 HEADERS += \

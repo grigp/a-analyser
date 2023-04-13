@@ -12,6 +12,7 @@
 #include "reportelements.h"
 #include "basedefines.h"
 #include "baseutils.h"
+#include "dualstatediagrampainter.h"
 
 namespace
 {
@@ -120,16 +121,23 @@ void EvolventaVisualize::print(QPrinter *printer, const QString &testUid)
                                   false, ReportElements::Table::tvsStretched, 10, -1, QFont::Bold);
 
         //! Опережение / отставание от цели
-        ReportElements::drawWidget(painter, visual->m_wgtOutrunningDiag,
-                                   static_cast<int>(paper.width() * 0.4), static_cast<int>(paper.height() * 0.1),
-                                   paper.x() + paper.width()/10, static_cast<int>(paper.y() + paper.height() / 10 * 7.4));
+        auto rectDSD = QRect(paper.x() + paper.width()/10, static_cast<int>(paper.y() + paper.height() * 0.74),
+                             static_cast<int>(paper.width() * 0.4), static_cast<int>(paper.height() * 0.1));
+        ratio = ReportElements::ratio(paper, visual->m_wgtOutrunningDiag, 2);
+        auto dsd = DualStateDiagramPainter(painter, rectDSD);
+        auto valOrv = visual->m_calculator->factorValue(EvolventaFactorsDefines::DAPercent);
+        dsd.setValue(valOrv);
+        dsd.doPaint(ratio);
+//        ReportElements::drawWidget(painter, visual->m_wgtOutrunningDiag,
+//                                   static_cast<int>(paper.width() * 0.4), static_cast<int>(paper.height() * 0.1),
+//                                   paper.x() + paper.width()/10, static_cast<int>(paper.y() + paper.height() / 10 * 7.4));
         painter->setFont(QFont("Sans", 10, QFont::Bold, false));
         QPalette pal = visual->m_lblOutrunningValue->palette();
         painter->setPen(pal.color(QPalette::WindowText));
-        painter->drawText(paper.x() + paper.width()/10, static_cast<int>(paper.y() + paper.height() / 10 * 8.1), visual->m_lblOutrunningValue->text());
+        painter->drawText(paper.x() + paper.width()/10, static_cast<int>(paper.y() + paper.height() / 10 * 8.4), visual->m_lblOutrunningValue->text());
         pal = visual->m_lblOutrunningResume->palette();
         painter->setPen(pal.color(QPalette::WindowText));
-        painter->drawText(paper.x() + paper.width()/10, static_cast<int>(paper.y() + paper.height() / 10 * 8.3), visual->m_lblOutrunningResume->text());
+        painter->drawText(paper.x() + paper.width()/10, static_cast<int>(paper.y() + paper.height() / 10 * 8.6), visual->m_lblOutrunningResume->text());
 
         //! Нижний колонтитул
         ReportElements::drawFooter(painter, testUid, rectFooter);

@@ -4,11 +4,11 @@
 #include <QPainter>
 #include <QDebug>
 
-namespace
-{
-static const int Field = 10;
+//namespace
+//{
+//static const int Field = 10;
 
-}
+//}
 
 DualStateDiagram::DualStateDiagram(QWidget *parent) :
     QWidget(parent),
@@ -24,68 +24,83 @@ DualStateDiagram::~DualStateDiagram()
 
 void DualStateDiagram::paintEvent(QPaintEvent *event)
 {
-    Q_UNUSED(event);
+    QWidget::paintEvent(event);
 
+    //! Собственно, определяем границы и канву
+    QRect geo = QRect(0, 0, geometry().width(), geometry().height());
     QPainter painter(this);
 
-    auto backColor = palette().background().color();
-    painter.setBrush(QBrush(backColor, Qt::SolidPattern));
-    painter.setPen(QPen(backColor, 1, Qt::SolidLine, Qt::FlatCap));
-    painter.drawRect(geometry());
+    //! И рисуем
+    setCanvas(&painter, geo);
+    doPaint(1);
 
-    int x0 = geometry().width() / 2;
-    int ym = geometry().height() / 2;
-    int yh = geometry().height() / 4;
-    double prop = (static_cast<double>(geometry().width()) / 2 - Field) / m_diap;
+//    Q_UNUSED(event);
 
-    //! Зоны незначительных изменений
-    painter.setBrush(QBrush(m_insignificantlyColor, Qt::SolidPattern));
-    painter.setPen(QPen(m_insignificantlyColor, 1, Qt::SolidLine, Qt::FlatCap));
-    painter.drawRect(static_cast<int>(x0 + m_insignificantlyLo * prop), ym - yh / 2,
-                     static_cast<int>((m_moderateLo - m_insignificantlyLo) * prop), yh);
-    painter.drawRect(static_cast<int>(x0 - m_moderateLo * prop), ym - yh / 2,
-                     static_cast<int>((m_moderateLo - m_insignificantlyLo) * prop), yh);
+//    QPainter painter(this);
 
-    //! Зоны умеренных изменений
-    painter.setBrush(QBrush(m_moderateColor, Qt::SolidPattern));
-    painter.setPen(QPen(m_moderateColor, 1, Qt::SolidLine, Qt::FlatCap));
-    painter.drawRect(static_cast<int>(x0 + m_moderateLo * prop), ym - yh / 2,
-                     static_cast<int>((m_averageLo - m_moderateLo) * prop), yh);
-    painter.drawRect(static_cast<int>(x0 - m_averageLo * prop), ym - yh / 2,
-                     static_cast<int>((m_averageLo - m_moderateLo) * prop), yh);
+//    auto backColor = palette().background().color();
+//    painter.setBrush(QBrush(backColor, Qt::SolidPattern));
+//    painter.setPen(QPen(backColor, 1, Qt::SolidLine, Qt::FlatCap));
+//    painter.drawRect(geometry());
 
-    //! Зоны выраженных изменений
-    painter.setBrush(QBrush(m_averageColor, Qt::SolidPattern));
-    painter.setPen(QPen(m_averageColor, 1, Qt::SolidLine, Qt::FlatCap));
-    painter.drawRect(static_cast<int>(x0 + m_averageLo * prop), ym - yh / 2,
-                     static_cast<int>((m_diap - m_averageLo) * prop), yh);
-    painter.drawRect(static_cast<int>(x0 - m_diap * prop), ym - yh / 2,
-                     static_cast<int>((m_diap - m_averageLo) * prop), yh);
+//    int x0 = geometry().width() / 2;
+//    int ym = geometry().height() / 2;
+//    int yh = geometry().height() / 4;
+//    double prop = (static_cast<double>(geometry().width()) / 2 - Field) / m_diap;
 
-    //! Рамка диаграммы
-    painter.setPen(QPen(m_frameColor, 1, Qt::SolidLine, Qt::FlatCap));
-    painter.setBrush(QBrush(backColor, Qt::NoBrush));
-    painter.drawRect(Field, ym - yh / 2, geometry().width() - 2 * Field, yh);
+//    //! Зоны незначительных изменений
+//    painter.setBrush(QBrush(m_insignificantlyColor, Qt::SolidPattern));
+//    painter.setPen(QPen(m_insignificantlyColor, 1, Qt::SolidLine, Qt::FlatCap));
+//    painter.drawRect(static_cast<int>(x0 + m_insignificantlyLo * prop), ym - yh / 2,
+//                     static_cast<int>((m_moderateLo - m_insignificantlyLo) * prop), yh);
+//    painter.drawRect(static_cast<int>(x0 - m_moderateLo * prop), ym - yh / 2,
+//                     static_cast<int>((m_moderateLo - m_insignificantlyLo) * prop), yh);
 
-    auto font = painter.font();
-    font.setPixelSize(16);
-    painter.setFont(font);
-    painter.setPen(QPen(m_labelsColor, 1, Qt::SolidLine, Qt::FlatCap));
+//    //! Зоны умеренных изменений
+//    painter.setBrush(QBrush(m_moderateColor, Qt::SolidPattern));
+//    painter.setPen(QPen(m_moderateColor, 1, Qt::SolidLine, Qt::FlatCap));
+//    painter.drawRect(static_cast<int>(x0 + m_moderateLo * prop), ym - yh / 2,
+//                     static_cast<int>((m_averageLo - m_moderateLo) * prop), yh);
+//    painter.drawRect(static_cast<int>(x0 - m_averageLo * prop), ym - yh / 2,
+//                     static_cast<int>((m_averageLo - m_moderateLo) * prop), yh);
 
-    //! Метка нуля
-    painter.drawLine(x0, ym - yh / 2 - 5, x0, ym + yh / 2 + 5);
-    painter.drawText(x0 - 5, ym + yh / 2 + 20, "0");
-    painter.drawText(Field, ym + yh / 2 + 20, "-" + QString::number(m_diap));
-    painter.drawText(geometry().width() - Field - 25, ym + yh / 2 + 20, QString::number(m_diap));
+//    //! Зоны выраженных изменений
+//    painter.setBrush(QBrush(m_averageColor, Qt::SolidPattern));
+//    painter.setPen(QPen(m_averageColor, 1, Qt::SolidLine, Qt::FlatCap));
+//    painter.drawRect(static_cast<int>(x0 + m_averageLo * prop), ym - yh / 2,
+//                     static_cast<int>((m_diap - m_averageLo) * prop), yh);
+//    painter.drawRect(static_cast<int>(x0 - m_diap * prop), ym - yh / 2,
+//                     static_cast<int>((m_diap - m_averageLo) * prop), yh);
 
-    //! Описания осей
-    QFontMetrics fm(painter.font());
-    auto lw = fm.width(m_descriptionRight);
-    painter.drawText(Field, ym - yh / 2 - 5, m_descriptionLeft);
-    painter.drawText(geometry().width() - Field - lw - 5, ym - yh / 2 - 5, m_descriptionRight);
+//    //! Рамка диаграммы
+//    painter.setPen(QPen(m_frameColor, 1, Qt::SolidLine, Qt::FlatCap));
+//    painter.setBrush(QBrush(backColor, Qt::NoBrush));
+//    painter.drawRect(Field, ym - yh / 2, geometry().width() - 2 * Field, yh);
 
-    //! Значение
-    painter.setPen(QPen(m_frameColor, 1, Qt::SolidLine, Qt::FlatCap));
-    painter.setBrush(QBrush(m_valuerColor, Qt::SolidPattern));
-    painter.drawRect(static_cast<int>(x0 + m_value * prop - 3), ym - yh / 2 - 10, 6, yh + 20);
+//    auto font = painter.font();
+//    font.setPixelSize(16);
+//    painter.setFont(font);
+//    painter.setPen(QPen(m_labelsColor, 1, Qt::SolidLine, Qt::FlatCap));
+
+//    //! Метка нуля
+//    painter.drawLine(x0, ym - yh / 2 - 5, x0, ym + yh / 2 + 5);
+//    painter.drawText(x0 - 5, ym + yh / 2 + 20, "0");
+//    painter.drawText(Field, ym + yh / 2 + 20, "-" + QString::number(m_diap));
+//    painter.drawText(geometry().width() - Field - 25, ym + yh / 2 + 20, QString::number(m_diap));
+
+//    //! Описания осей
+//    QFontMetrics fm(painter.font());
+//    auto lw = fm.width(m_descriptionRight);
+//    painter.drawText(Field, ym - yh / 2 - 5, m_descriptionLeft);
+//    painter.drawText(geometry().width() - Field - lw - 5, ym - yh / 2 - 5, m_descriptionRight);
+
+//    //! Значение
+//    painter.setPen(QPen(m_frameColor, 1, Qt::SolidLine, Qt::FlatCap));
+//    painter.setBrush(QBrush(m_valuerColor, Qt::SolidPattern));
+    //    painter.drawRect(static_cast<int>(x0 + m_value * prop - 3), ym - yh / 2 - 10, 6, yh + 20);
+}
+
+void DualStateDiagram::doUpdate()
+{
+    update();
 }
