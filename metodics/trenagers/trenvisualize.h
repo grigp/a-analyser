@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <QPrinter>
+#include <QStandardItemModel>
 
 namespace Ui {
 class TrenVisualize;
@@ -34,6 +35,7 @@ private:
     Ui::TrenVisualize *ui;
 
     TrenTestCalculator* m_calculator {nullptr};
+    QStandardItemModel *m_mdlFactors;
 };
 
 #endif // TRENVISUALIZE_H

@@ -52,7 +52,7 @@ void StepOffsetVisualize::setTest(const QString &testUid)
 
 void StepOffsetVisualize::print(QPrinter *printer, const QString &testUid)
 {
-    //! Получаем указатель на элземпляр визуализатора
+    //! Получаем указатель на экземпляр визуализатора
     auto vis = static_cast<AAnalyserApplication*>(QCoreApplication::instance())->getOpenedTest(testUid);
     StepOffsetVisualize* visual = static_cast<StepOffsetVisualize*>(vis);
 

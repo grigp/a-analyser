@@ -69,36 +69,6 @@ static QList<BaseDefines::FctTblPair> FactorsEffectiveness = {
     , BaseDefines::FctTblPair(TriangleConslutionFactorsDefines::ErrCntMotorTstUid, TriangleConslutionFactorsDefines::ErrCntMotorAnlUid)
 };
 
-SKGWidget *wgtSKGTraining {nullptr};
-SKGWidget *wgtSKGAnalysis {nullptr};
-
-QStandardItemModel *mdlDiagTable {nullptr};
-QStandardItemModel *mdlEffectiveness {nullptr};
-QStandardItemModel *mdlMainTable {nullptr};
-QTabWidget *twPages {nullptr};
-
-QString sLatentMoving {""};
-QString sAccRepeat {""};
-QString sAccForm {""};
-QString sAccMidX {""};
-QString sAccMidY {""};
-QString sMidSquareErrTst {""};
-QString sMidTimeErrAnl {""};
-QString sMidSquareErrAnl {""};
-QString sMidPosErrAnl {""};
-QString sMidAmplErrAnl {""};
-
-QString sCorrectionPredominaceTrain {""};
-QString sCorrectionResumeTrain {""};
-QColor sCorrectionResumeColorTrain {Qt::black};
-DualStateDiagram * wgtCorrectionDiagTrain {nullptr};
-QString sCorrectionPredominaceAnal {""};
-QString sCorrectionResumeAnal {""};
-QColor sCorrectionResumeColorAnal {Qt::black};
-DualStateDiagram * wgtCorrectionDiagAnal {nullptr};
-
-TriangleCalculator* calculator {nullptr};
-
 }
 
 TriangleVisualize::TriangleVisualize(QWidget *parent) :
@@ -119,13 +89,12 @@ void TriangleVisualize::setTest(const QString &testUid)
 {
     auto val = SettingsProvider::valueFromRegAppCopy("TriangleResultWidget", "CurrentPage").toInt();
     ui->twPages->setCurrentIndex(val);
-    twPages = ui->twPages;
+    m_twPages = ui->twPages;
 
     if (!m_calculator)
     {
         m_calculator = new TriangleCalculator(testUid, this);
         m_calculator->calculate();
-        calculator = m_calculator;
 
         getSignal(testUid);
 
@@ -144,17 +113,21 @@ void TriangleVisualize::setTest(const QString &testUid)
         showDiagsResultFactors();
         showConslution();
 
-        wgtSKGTraining = ui->wgtSKGTraining;
-        wgtSKGAnalysis = ui->wgtSKGAnalysis;
+        m_wgtSKGTraining = ui->wgtSKGTraining;
+        m_wgtSKGAnalysis = ui->wgtSKGAnalysis;
     }
 }
 
 void TriangleVisualize::print(QPrinter *printer, const QString &testUid)
 {
-    int tab = twPages->currentIndex();
-    for (int i = 0; i < twPages->count(); ++i)
-        twPages->setCurrentIndex(i);
-    twPages->setCurrentIndex(tab);
+    //! Получаем указатель на экземпляр визуализатора
+    auto vis = static_cast<AAnalyserApplication*>(QCoreApplication::instance())->getOpenedTest(testUid);
+    TriangleVisualize* visual = static_cast<TriangleVisualize*>(vis);
+
+    int tab = visual->m_twPages->currentIndex();
+    for (int i = 0; i < visual->m_twPages->count(); ++i)
+        visual->m_twPages->setCurrentIndex(i);
+    visual->m_twPages->setCurrentIndex(tab);
 
     QPainter *painter = new QPainter(printer);
     QRect paper = printer->pageRect();
@@ -179,23 +152,23 @@ void TriangleVisualize::print(QPrinter *printer, const QString &testUid)
         pos += offset;
 
 
-        painter->drawText(paper.x() + paper.width() / 10, paper.y() + paper.height() / 90 * pos, sAccRepeat);
+        painter->drawText(paper.x() + paper.width() / 10, paper.y() + paper.height() / 90 * pos, visual->m_sAccRepeat);
         pos += offset;
-        painter->drawText(paper.x() + paper.width() / 10, paper.y() + paper.height() / 90 * pos, sAccForm);
+        painter->drawText(paper.x() + paper.width() / 10, paper.y() + paper.height() / 90 * pos, visual->m_sAccForm);
         pos += offset;
-        painter->drawText(paper.x() + paper.width() / 10, paper.y() + paper.height() / 90 * pos, sAccMidX);
+        painter->drawText(paper.x() + paper.width() / 10, paper.y() + paper.height() / 90 * pos, visual->m_sAccMidX);
         pos += offset;
-        painter->drawText(paper.x() + paper.width() / 10, paper.y() + paper.height() / 90 * pos, sAccMidY);
+        painter->drawText(paper.x() + paper.width() / 10, paper.y() + paper.height() / 90 * pos, visual->m_sAccMidY);
         pos += offset;
-        painter->drawText(paper.x() + paper.width() / 10, paper.y() + paper.height() / 90 * pos, sMidSquareErrTst);
+        painter->drawText(paper.x() + paper.width() / 10, paper.y() + paper.height() / 90 * pos, visual->m_sMidSquareErrTst);
         pos += offset;
-        painter->drawText(paper.x() + paper.width() / 10, paper.y() + paper.height() / 90 * pos, sMidTimeErrAnl);
+        painter->drawText(paper.x() + paper.width() / 10, paper.y() + paper.height() / 90 * pos, visual->m_sMidTimeErrAnl);
         pos += offset;
-        painter->drawText(paper.x() + paper.width() / 10, paper.y() + paper.height() / 90 * pos, sMidSquareErrAnl);
+        painter->drawText(paper.x() + paper.width() / 10, paper.y() + paper.height() / 90 * pos, visual->m_sMidSquareErrAnl);
         pos += offset;
-        painter->drawText(paper.x() + paper.width() / 10, paper.y() + paper.height() / 90 * pos, sMidPosErrAnl);
+        painter->drawText(paper.x() + paper.width() / 10, paper.y() + paper.height() / 90 * pos, visual->m_sMidPosErrAnl);
         pos += offset;
-        painter->drawText(paper.x() + paper.width() / 10, paper.y() + paper.height() / 90 * pos, sMidAmplErrAnl);
+        painter->drawText(paper.x() + paper.width() / 10, paper.y() + paper.height() / 90 * pos, visual->m_sMidAmplErrAnl);
         pos += offset;
 
         painter->setFont(QFont("Sans", 14, QFont::Bold, false));
@@ -207,7 +180,7 @@ void TriangleVisualize::print(QPrinter *printer, const QString &testUid)
                      paper.y() + paper.height() / 90 * pos,
                      paper.width() / 10 * 9,
                      paper.height() / 90 * (offset + 5));
-        ReportElements::drawTable(painter, mdlEffectiveness, rectDT, QList<int>() << 3 << 2 << 2,
+        ReportElements::drawTable(painter, visual->m_mdlEffectiveness, rectDT, QList<int>() << 3 << 2 << 2,
                                   false, ReportElements::Table::tvsStretched, 8, -1, QFont::Bold);
         pos += offset + 5;
 
@@ -218,13 +191,13 @@ void TriangleVisualize::print(QPrinter *printer, const QString &testUid)
         pos += offset;
         painter->drawText(paper.x() + paper.width() / 10, paper.y() + paper.height() / 90 * pos, tr("Этап обучения"));
         pos += offset;
-        painter->drawText(paper.x() + paper.width() / 10, paper.y() + paper.height() / 90 * pos, sCorrectionPredominaceTrain);
-        painter->setPen(sCorrectionResumeColorTrain);
+        painter->drawText(paper.x() + paper.width() / 10, paper.y() + paper.height() / 90 * pos, visual->m_sCorrectionPredominaceTrain);
+        painter->setPen(visual->m_sCorrectionResumeColorTrain);
         pos += offset;
-        painter->drawText(paper.x() + paper.width() / 10, paper.y() + paper.height() / 90 * pos, sCorrectionResumeTrain);
+        painter->drawText(paper.x() + paper.width() / 10, paper.y() + paper.height() / 90 * pos, visual->m_sCorrectionResumeTrain);
         pos += offset;
         //! Диаграмма преобладания коррекций.
-        ReportElements::drawWidget(painter, wgtCorrectionDiagTrain,
+        ReportElements::drawWidget(painter, visual->m_wgtCorrectionDiagTrain,
                                    static_cast<int>(paper.width() * 0.8), static_cast<int>(paper.height() * 0.8),
                                    paper.x() + paper.width()/10, paper.y() + paper.height() / 90 * pos);
         pos += offset + 4;
@@ -232,13 +205,13 @@ void TriangleVisualize::print(QPrinter *printer, const QString &testUid)
         pos += offset;
         painter->drawText(paper.x() + paper.width() / 10, paper.y() + paper.height() / 90 * pos, tr("Этап анализа"));
         pos += offset;
-        painter->drawText(paper.x() + paper.width() / 10, paper.y() + paper.height() / 90 * pos, sCorrectionPredominaceAnal);
-        painter->setPen(sCorrectionResumeColorAnal);
+        painter->drawText(paper.x() + paper.width() / 10, paper.y() + paper.height() / 90 * pos, visual->m_sCorrectionPredominaceAnal);
+        painter->setPen(visual->m_sCorrectionResumeColorAnal);
         pos += offset;
-        painter->drawText(paper.x() + paper.width() / 10, paper.y() + paper.height() / 90 * pos, sCorrectionResumeAnal);
+        painter->drawText(paper.x() + paper.width() / 10, paper.y() + paper.height() / 90 * pos, visual->m_sCorrectionResumeAnal);
         pos += offset;
         //! Диаграмма преобладания коррекций.
-        ReportElements::drawWidget(painter, wgtCorrectionDiagAnal,
+        ReportElements::drawWidget(painter, visual->m_wgtCorrectionDiagAnal,
                                    static_cast<int>(paper.width() * 0.8), static_cast<int>(paper.height() * 0.8),
                                    paper.x() + paper.width()/10, paper.y() + paper.height() / 90 * pos);
     };
@@ -248,10 +221,10 @@ void TriangleVisualize::print(QPrinter *printer, const QString &testUid)
     SKGDefines::BrokenLine blTrnOrigin;
     SKGDefines::BrokenLine blTrnTren;
     SKGDefines::BrokenLine blTrnAnal;
-    if (calculator)
+    if (visual->m_calculator)
     {
-        trainingLength = calculator->trainingLength();
-        signalLength = calculator->signalLength();
+        trainingLength = visual->m_calculator->trainingLength();
+        signalLength = visual->m_calculator->signalLength();
         auto assignTriangle = [&](SKGDefines::BrokenLine& bl, TriangleDefines::Triangle& triangle, const QColor color)
         {
             bl.polygon << QPointF(triangle.topCorner().x(), triangle.topCorner().y())
@@ -260,11 +233,11 @@ void TriangleVisualize::print(QPrinter *printer, const QString &testUid)
             bl.color = color;
             bl.width = 3;
         };
-        auto trnOrigin = calculator->triangleOriginal();
+        auto trnOrigin = visual->m_calculator->triangleOriginal();
         assignTriangle(blTrnOrigin, trnOrigin, Qt::darkYellow);
-        auto trnTren = calculator->triangleTraining();
+        auto trnTren = visual->m_calculator->triangleTraining();
         assignTriangle(blTrnTren, trnTren, Qt::darkGreen);
-        auto trnAnal = calculator->triangleAnalysis();
+        auto trnAnal = visual->m_calculator->triangleAnalysis();
         assignTriangle(blTrnAnal, trnAnal, Qt::darkGreen);
     }
 
@@ -273,7 +246,7 @@ void TriangleVisualize::print(QPrinter *printer, const QString &testUid)
         //! СКГ
         auto rectSKG = QRect(paper.x() + paper.width()/20, static_cast<int>(paper.y() + paper.height()/9),
                              static_cast<int>(paper.width() * 0.42), static_cast<int>(paper.height() * 0.42));
-        double ratio = ReportElements::ratio(paper, wgtSKGTraining, 5);
+        double ratio = ReportElements::ratio(paper, visual->m_wgtSKGTraining, 5);
         if (DataProvider::channelExists(testUid, 0, ChannelsDefines::chanStab))
             ReportElements::drawSKG(painter, rectSKG, testUid, 0, ratio, -1, 0, trainingLength - 1,
                                     QList<SKGDefines::BrokenLine>() << blTrnOrigin << blTrnTren);
@@ -289,11 +262,11 @@ void TriangleVisualize::print(QPrinter *printer, const QString &testUid)
                         paper.y() + paper.height() / 14 * 7,
                         paper.width() / 10 * 9,
                         paper.height() / 3);
-        ReportElements::drawTable(painter, mdlDiagTable, rectDT, QList<int>() << 3 << 2 << 2,
+        ReportElements::drawTable(painter, visual->m_mdlDiagTable, rectDT, QList<int>() << 3 << 2 << 2,
                                   false, ReportElements::Table::tvsStretched, 8, -1, QFont::Bold);
 
         painter->setFont(QFont("Sans", 10, 0, false));
-        painter->drawText(paper.x() + paper.width() / 10, paper.y() + paper.height() / 14 * 12, sLatentMoving);
+        painter->drawText(paper.x() + paper.width() / 10, paper.y() + paper.height() / 14 * 12, visual->m_sLatentMoving);
 
         //! Нижний колонтитул
         ReportElements::drawFooter(painter, testUid, rectFooter);
@@ -314,7 +287,7 @@ void TriangleVisualize::print(QPrinter *printer, const QString &testUid)
                         paper.y() + paper.height() / 10,
                         paper.width() / 10 * 9,
                         paper.height() / 10 * 8);
-        ReportElements::drawTable(painter, mdlMainTable, rectMT, QList<int>() << 3 << 2 << 2,
+        ReportElements::drawTable(painter, visual->m_mdlMainTable, rectMT, QList<int>() << 3 << 2 << 2,
                                   false, ReportElements::Table::tvsStretched, 8, -1, QFont::Bold);
     }
     else
@@ -323,7 +296,7 @@ void TriangleVisualize::print(QPrinter *printer, const QString &testUid)
         //! СКГ
         auto rectSKG = QRect(static_cast<int>(paper.x() + paper.width()/10 * 0.8), paper.y() + paper.height()/7,
                              static_cast<int>(paper.width() * 0.4), static_cast<int>(paper.height() * 0.4));
-        double ratio = ReportElements::ratio(paper, wgtSKGTraining, 5);
+        double ratio = ReportElements::ratio(paper, visual->m_wgtSKGTraining, 5);
         if (DataProvider::channelExists(testUid, 0, ChannelsDefines::chanStab))
             ReportElements::drawSKG(painter, rectSKG, testUid, 0, ratio, -1, 0, trainingLength - 1,
                                     QList<SKGDefines::BrokenLine>() << blTrnOrigin << blTrnTren);
@@ -339,11 +312,11 @@ void TriangleVisualize::print(QPrinter *printer, const QString &testUid)
                         paper.y() + paper.height() / 40 * 24,
                         paper.width() / 10 * 9,
                         paper.height() / 3);
-        ReportElements::drawTable(painter, mdlDiagTable, rectDT, QList<int>() << 3 << 2 << 2,
+        ReportElements::drawTable(painter, visual->m_mdlDiagTable, rectDT, QList<int>() << 3 << 2 << 2,
                                   false, ReportElements::Table::tvsStretched, 8, -1, QFont::Bold);
 
         painter->setFont(QFont("Sans", 10, 0, false));
-        painter->drawText(paper.x() + paper.width() / 10, paper.y() + paper.height() / 56 * 53, sLatentMoving);
+        painter->drawText(paper.x() + paper.width() / 10, paper.y() + paper.height() / 56 * 53, visual->m_sLatentMoving);
 
         //! Нижний колонтитул
         ReportElements::drawFooter(painter, testUid, rectFooter);
@@ -364,7 +337,7 @@ void TriangleVisualize::print(QPrinter *printer, const QString &testUid)
                         paper.y() + paper.height() / 10,
                         paper.width() / 10 * 9,
                         paper.height() / 10 * 8);
-        ReportElements::drawTable(painter, mdlMainTable, rectMT, QList<int>() << 3 << 2 << 2,
+        ReportElements::drawTable(painter, visual->m_mdlMainTable, rectMT, QList<int>() << 3 << 2 << 2,
                                   false, ReportElements::Table::tvsStretched, 8, -1, QFont::Bold);
     }
 
@@ -610,7 +583,7 @@ void TriangleVisualize::showAllFactors()
     ui->tvFactors->header()->resizeSections(QHeaderView::ResizeToContents);
     ui->tvFactors->header()->resizeSection(0, 430);
 
-    mdlMainTable = static_cast<QStandardItemModel*>(ui->tvFactors->model());
+    m_mdlMainTable = static_cast<QStandardItemModel*>(ui->tvFactors->model());
 }
 
 void TriangleVisualize::showMainDiagrams()
@@ -751,10 +724,10 @@ void TriangleVisualize::showDiagsResultFactors()
     ui->tvDiagTable->header()->resizeSection(0, 430);
 
     auto fi = static_cast<AAnalyserApplication*>(QApplication::instance())->getFactorInfo(TriangleFactorsDefines::LatentMovingUid);
-    sLatentMoving = fi.name() + ", " + fi.measure() + "    " + m_calculator->factorValueFormatted(TriangleFactorsDefines::LatentMovingUid);
-    ui->lblLatentMoving->setText(sLatentMoving);
+    m_sLatentMoving = fi.name() + ", " + fi.measure() + "    " + m_calculator->factorValueFormatted(TriangleFactorsDefines::LatentMovingUid);
+    ui->lblLatentMoving->setText(m_sLatentMoving);
 
-    mdlDiagTable = static_cast<QStandardItemModel*>(ui->tvDiagTable->model());
+    m_mdlDiagTable = static_cast<QStandardItemModel*>(ui->tvDiagTable->model());
 }
 
 void TriangleVisualize::showConslution()
@@ -767,15 +740,15 @@ void TriangleVisualize::showConslution()
         label->setText(value);
     };
 
-    writeFactor(ui->lblAccRepeat, TriangleConslutionFactorsDefines::AccRepeatUid, sAccRepeat);
-    writeFactor(ui->lblAccForm, TriangleConslutionFactorsDefines::AccFormUid, sAccForm);
-    writeFactor(ui->lblAccMidX, TriangleConslutionFactorsDefines::AccMidXUid, sAccMidX);
-    writeFactor(ui->lblAccMidY, TriangleConslutionFactorsDefines::AccMidYUid, sAccMidY);
-    writeFactor(ui->lblMidSquareErrTst, TriangleConslutionFactorsDefines::MidSquareErrTstUid, sMidSquareErrTst);
-    writeFactor(ui->lblMidTimeErrAnl, TriangleConslutionFactorsDefines::MidTimeErrAnlUid, sMidTimeErrAnl);
-    writeFactor(ui->lblMidSquareErrAnl, TriangleConslutionFactorsDefines::MidSquareErrAnlUid, sMidSquareErrAnl);
-    writeFactor(ui->lblMidPosErrAnl, TriangleConslutionFactorsDefines::MidPosErrAnlUid, sMidPosErrAnl);
-    writeFactor(ui->lblMidAmplErrAnl, TriangleConslutionFactorsDefines::MidAmplErrAnlUid, sMidAmplErrAnl);
+    writeFactor(ui->lblAccRepeat, TriangleConslutionFactorsDefines::AccRepeatUid, m_sAccRepeat);
+    writeFactor(ui->lblAccForm, TriangleConslutionFactorsDefines::AccFormUid, m_sAccForm);
+    writeFactor(ui->lblAccMidX, TriangleConslutionFactorsDefines::AccMidXUid, m_sAccMidX);
+    writeFactor(ui->lblAccMidY, TriangleConslutionFactorsDefines::AccMidYUid, m_sAccMidY);
+    writeFactor(ui->lblMidSquareErrTst, TriangleConslutionFactorsDefines::MidSquareErrTstUid, m_sMidSquareErrTst);
+    writeFactor(ui->lblMidTimeErrAnl, TriangleConslutionFactorsDefines::MidTimeErrAnlUid, m_sMidTimeErrAnl);
+    writeFactor(ui->lblMidSquareErrAnl, TriangleConslutionFactorsDefines::MidSquareErrAnlUid, m_sMidSquareErrAnl);
+    writeFactor(ui->lblMidPosErrAnl, TriangleConslutionFactorsDefines::MidPosErrAnlUid, m_sMidPosErrAnl);
+    writeFactor(ui->lblMidAmplErrAnl, TriangleConslutionFactorsDefines::MidAmplErrAnlUid, m_sMidAmplErrAnl);
 
     showFactorsEffectiveness();
     showConslutionStrategy();
@@ -809,7 +782,7 @@ void TriangleVisualize::showFactorsEffectiveness()
     ui->tvEffectiveness->header()->resizeSections(QHeaderView::ResizeToContents);
     ui->tvEffectiveness->header()->resizeSection(0, 430);
 
-    mdlEffectiveness = static_cast<QStandardItemModel*>(ui->tvEffectiveness->model());
+    m_mdlEffectiveness = static_cast<QStandardItemModel*>(ui->tvEffectiveness->model());
 }
 
 void TriangleVisualize::showConslutionStrategy()
@@ -837,18 +810,18 @@ void TriangleVisualize::showConslutionStrategy()
         diag->setValue(v);
         diag->setDescriptionLeft(tr("Быстрые коррекции"));
         diag->setDescriptionRight(tr("Медленные коррекции"));
-        wgtCorrectionDiagTrain = ui->wgtCorrectionDiagTrain;
+        m_wgtCorrectionDiagTrain = ui->wgtCorrectionDiagTrain;
     };
 
     showStrategy(TriangleConslutionFactorsDefines::KorrDominTstUid,
-                 sCorrectionPredominaceTrain, sCorrectionResumeTrain, sCorrectionResumeColorTrain,
+                 m_sCorrectionPredominaceTrain, m_sCorrectionResumeTrain, m_sCorrectionResumeColorTrain,
                  ui->wgtCorrectionDiagTrain, ui->lblCorrectionPredominaceTrain, ui->lblCorrectionResumeTrain);
-    wgtCorrectionDiagTrain = ui->wgtCorrectionDiagTrain;
+    m_wgtCorrectionDiagTrain = ui->wgtCorrectionDiagTrain;
 
     showStrategy(TriangleConslutionFactorsDefines::KorrDominAnlUid,
-                 sCorrectionPredominaceAnal, sCorrectionResumeAnal, sCorrectionResumeColorAnal,
+                 m_sCorrectionPredominaceAnal, m_sCorrectionResumeAnal, m_sCorrectionResumeColorAnal,
                  ui->wgtCorrectionDiagAnal, ui->lblCorrectionPredominaceAnal, ui->lblCorrectionResumeAnal);
-    wgtCorrectionDiagAnal = ui->wgtCorrectionDiagAnal;
+    m_wgtCorrectionDiagAnal = ui->wgtCorrectionDiagAnal;
 }
 
 void TriangleVisualize::saveSplitterPositionDiag()

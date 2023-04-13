@@ -8,11 +8,6 @@
 #include "baseutils.h"
 #include "reportelements.h"
 
-namespace
-{
-QStandardItemModel *mdlFactors;
-
-}
 
 TrenVisualize::TrenVisualize(QWidget *parent) :
     QWidget(parent),
@@ -61,11 +56,15 @@ void TrenVisualize::setTest(const QString &testUid)
     ui->tvFactorsTrenResult->setModel(model);
     ui->tvFactorsTrenResult->header()->setSectionResizeMode(QHeaderView::ResizeToContents);
 
-    mdlFactors = static_cast<QStandardItemModel*>(ui->tvFactorsTrenResult->model());
+    m_mdlFactors = static_cast<QStandardItemModel*>(ui->tvFactorsTrenResult->model());
 }
 
 void TrenVisualize::print(QPrinter *printer, const QString &testUid)
 {
+    //! Получаем указатель на экземпляр визуализатора
+    auto vis = static_cast<AAnalyserApplication*>(QCoreApplication::instance())->getOpenedTest(testUid);
+    TrenVisualize* visual = static_cast<TrenVisualize*>(vis);
+
     QPainter *painter = new QPainter(printer);
     QRect paper = printer->pageRect();
 
@@ -81,7 +80,7 @@ void TrenVisualize::print(QPrinter *printer, const QString &testUid)
                         paper.y() + paper.height() / 5,
                         paper.width() / 10 * 8,
                         paper.height() / 2);
-        ReportElements::drawTable(painter, mdlFactors,
+        ReportElements::drawTable(painter, visual->m_mdlFactors,
                                   rectTable, QList<int>() << 3 << 1, false, ReportElements::Table::tvsCompressed,
                                   16, -1, QFont::Bold);
     }
@@ -93,7 +92,7 @@ void TrenVisualize::print(QPrinter *printer, const QString &testUid)
                         static_cast<int>(paper.y() + paper.height() / 6),
                         paper.width() / 10 * 8,
                         paper.height() / 10 * 8);
-        ReportElements::drawTable(painter, mdlFactors, rectTable,
+        ReportElements::drawTable(painter, visual->m_mdlFactors, rectTable,
                                   QList<int>() << 3 << 1, false, ReportElements::Table::tvsCompressed,
                                   16, -1, QFont::Bold);
     }

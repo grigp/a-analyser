@@ -3,6 +3,8 @@
 
 #include <QWidget>
 #include <QPrinter>
+#include <QStandardItemModel>
+#include <QTabWidget>
 
 #include "basedefines.h"
 #include "triangledefines.h"
@@ -14,6 +16,7 @@ class TriangleVisualize;
 class TriangleCalculator;
 class SKGWidget;
 class Stabilogram;
+class DualStateDiagram;
 
 /*!
  * \brief Класс виджета показа результатов теста Треугольник TriangleVisualize class
@@ -125,6 +128,33 @@ private:
     int m_triangleDiagIdxTraining {-1};   ///< Индекс диаграммы реального треугольника в зоне СКГ этапа обучения
     int m_triangleDiagIdxAnalysis {-1};   ///< Индекс диаграммы реального треугольника в зоне СКГ этапа анализа
 
+    SKGWidget *m_wgtSKGTraining {nullptr};
+    SKGWidget *m_wgtSKGAnalysis {nullptr};
+
+    QStandardItemModel *m_mdlDiagTable {nullptr};
+    QStandardItemModel *m_mdlEffectiveness {nullptr};
+    QStandardItemModel *m_mdlMainTable {nullptr};
+    QTabWidget *m_twPages {nullptr};
+
+    QString m_sLatentMoving {""};
+    QString m_sAccRepeat {""};
+    QString m_sAccForm {""};
+    QString m_sAccMidX {""};
+    QString m_sAccMidY {""};
+    QString m_sMidSquareErrTst {""};
+    QString m_sMidTimeErrAnl {""};
+    QString m_sMidSquareErrAnl {""};
+    QString m_sMidPosErrAnl {""};
+    QString m_sMidAmplErrAnl {""};
+
+    QString m_sCorrectionPredominaceTrain {""};
+    QString m_sCorrectionResumeTrain {""};
+    QColor m_sCorrectionResumeColorTrain {Qt::black};
+    DualStateDiagram * m_wgtCorrectionDiagTrain {nullptr};
+    QString m_sCorrectionPredominaceAnal {""};
+    QString m_sCorrectionResumeAnal {""};
+    QColor m_sCorrectionResumeColorAnal {Qt::black};
+    DualStateDiagram * m_wgtCorrectionDiagAnal {nullptr};
 };
 
 #endif // TRIANGLEVISUALIZE_H
