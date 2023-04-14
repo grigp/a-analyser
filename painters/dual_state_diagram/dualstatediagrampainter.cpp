@@ -76,7 +76,7 @@ void DualStateDiagramPainter::doPaint(const double ratio)
     m_painter->drawRect(m_geometry.left() + Field, ym - yh / 2, m_geometry.width() - 2 * Field, yh);
 
     m_painter->setFont(QFont("Arial", static_cast<int>(8/* * ratio*/), 0, false));
-    //qDebug() << ratio << 8; // * ratio;
+//    qDebug() << ratio << 8; // * ratio;
     m_painter->setPen(QPen(m_labelsColor, 1, Qt::SolidLine, Qt::FlatCap));
 
     //! Метка нуля

@@ -121,16 +121,14 @@ void EvolventaVisualize::print(QPrinter *printer, const QString &testUid)
                                   false, ReportElements::Table::tvsStretched, 10, -1, QFont::Bold);
 
         //! Опережение / отставание от цели
-        auto rectDSD = QRect(paper.x() + paper.width()/10, static_cast<int>(paper.y() + paper.height() * 0.74),
-                             static_cast<int>(paper.width() * 0.4), static_cast<int>(paper.height() * 0.1));
-        ratio = ReportElements::ratio(paper, visual->m_wgtOutrunningDiag, 2);
-        auto dsd = DualStateDiagramPainter(painter, rectDSD);
+        auto rectDSDLeading = QRect(paper.x() + paper.width()/10, static_cast<int>(paper.y() + paper.height() * 0.74),
+                                    static_cast<int>(paper.width() * 0.8), static_cast<int>(paper.height() * 0.1));
+        ratio = ReportElements::ratio(paper, visual->m_wgtOutrunningDiag, 4);
+        auto dsdLeading = DualStateDiagramPainter(painter, rectDSDLeading);
         auto valOrv = visual->m_calculator->factorValue(EvolventaFactorsDefines::DAPercent);
-        dsd.setValue(valOrv);
-        dsd.doPaint(ratio);
-//        ReportElements::drawWidget(painter, visual->m_wgtOutrunningDiag,
-//                                   static_cast<int>(paper.width() * 0.4), static_cast<int>(paper.height() * 0.1),
-//                                   paper.x() + paper.width()/10, static_cast<int>(paper.y() + paper.height() / 10 * 7.4));
+        dsdLeading.setValue(valOrv);
+        dsdLeading.doPaint(ratio);
+
         painter->setFont(QFont("Sans", 10, QFont::Bold, false));
         QPalette pal = visual->m_lblOutrunningValue->palette();
         painter->setPen(pal.color(QPalette::WindowText));
@@ -151,16 +149,26 @@ void EvolventaVisualize::print(QPrinter *printer, const QString &testUid)
         painter->drawText(paper.x() + paper.width() / 10, static_cast<int>(paper.y() + paper.height() / 10), tr("Коррекции"));
 
         //! Диаграмма преобладания коррекций
-        ReportElements::drawWidget(painter, visual->m_wgtCorrectionDominanceDiag,
-                                   static_cast<int>(paper.width() * 0.4), static_cast<int>(paper.height() * 0.1),
-                                   paper.x() + paper.width() / 10, static_cast<int>(paper.y() + paper.height() / 10 * 1.2));
+        auto rectDSDDomCorr = QRect(static_cast<int>(paper.x() + paper.width() * 0.1),
+                                    static_cast<int>(paper.y() + paper.height() * 0.12),
+                                    static_cast<int>(paper.width() * 0.8), static_cast<int>(paper.height() * 0.1));
+        ratio = ReportElements::ratio(paper, visual->m_wgtOutrunningDiag, 4);
+        auto dsdDomCorr = DualStateDiagramPainter(painter, rectDSDDomCorr);
+        auto valCD = visual->m_calculator->factorValue(EvolventaFactorsDefines::KorrDominance);
+        dsdDomCorr.setValue(valCD);
+        dsdDomCorr.doPaint(ratio);
+
         painter->setFont(QFont("Sans", 10, QFont::Bold, false));
         pal = visual->m_lblCorrectionDominanceValue->palette();
         painter->setPen(pal.color(QPalette::WindowText));
-        painter->drawText(paper.x() + paper.width() / 10, static_cast<int>(paper.y() + paper.height() / 10 * 1.9), visual->m_lblCorrectionDominanceValue->text());
+        painter->drawText(paper.x() + paper.width() / 10,
+                          static_cast<int>(paper.y() + paper.height() / 10 * 2.1),
+                          visual->m_lblCorrectionDominanceValue->text());
         pal = visual->m_lblCorrectionDominanceResume->palette();
         painter->setPen(pal.color(QPalette::WindowText));
-        painter->drawText(paper.x() + paper.width() / 10, static_cast<int>(paper.y() + paper.height() / 10 * 2.1), visual->m_lblCorrectionDominanceResume->text());
+        painter->drawText(paper.x() + paper.width() / 10,
+                          static_cast<int>(paper.y() + paper.height() / 10 * 2.3),
+                          visual->m_lblCorrectionDominanceResume->text());
 
         //! Таблица коррекций
         QRect rectTableKorrect(paper.x() + paper.width() / 10,
@@ -185,18 +193,23 @@ void EvolventaVisualize::print(QPrinter *printer, const QString &testUid)
                    visual->m_calculator->sagittal());
 
         //! Опережение / отставание от цели
-        ReportElements::drawWidget(painter, visual->m_wgtOutrunningDiag,
-                                   static_cast<int>(paper.width() * 0.4), static_cast<int>(paper.height() * 0.1),
-                                   paper.x() + paper.width()/10, static_cast<int>(paper.y() + paper.height() * 0.8));
+        auto rectDSDLeading = QRect(paper.x() + paper.width()/10, static_cast<int>(paper.y() + paper.height() * 0.8),
+                                    static_cast<int>(paper.width() * 0.4), static_cast<int>(paper.height() * 0.1));
+        ratio = ReportElements::ratio(paper, visual->m_wgtOutrunningDiag, 4);
+        auto dsdLeading = DualStateDiagramPainter(painter, rectDSDLeading);
+        auto valOrv = visual->m_calculator->factorValue(EvolventaFactorsDefines::DAPercent);
+        dsdLeading.setValue(valOrv);
+        dsdLeading.doPaint(ratio);
+
         painter->setFont(QFont("Sans", 10, QFont::Bold, false));
         QPalette pal = visual->m_lblOutrunningValue->palette();
         painter->setPen(pal.color(QPalette::WindowText));
-        painter->drawText(static_cast<int>(paper.x() + paper.width() * 0.51),
+        painter->drawText(static_cast<int>(paper.x() + paper.width() * 0.55),
                           static_cast<int>(paper.y() + paper.height() * 0.83),
                           visual->m_lblOutrunningValue->text());
         pal = visual->m_lblOutrunningResume->palette();
         painter->setPen(pal.color(QPalette::WindowText));
-        painter->drawText(static_cast<int>(paper.x() + paper.width() * 0.51),
+        painter->drawText(static_cast<int>(paper.x() + paper.width() * 0.55),
                           static_cast<int>(paper.y() + paper.height() * 0.87),
                           visual->m_lblOutrunningResume->text());
 
@@ -221,9 +234,15 @@ void EvolventaVisualize::print(QPrinter *printer, const QString &testUid)
         painter->drawText(paper.x() + paper.width() / 10, static_cast<int>(paper.y() + paper.height() / 10 * 5.3), tr("Коррекции"));
 
         //! Диаграмма преобладания коррекций
-        ReportElements::drawWidget(painter, visual->m_wgtCorrectionDominanceDiag,
-                                   static_cast<int>(paper.width() * 0.4), static_cast<int>(paper.height() * 0.1),
-                                   paper.x() + paper.width() / 10, static_cast<int>(paper.y() + paper.height() / 10 * 5.6));
+        auto rectDSDDomCorr = QRect(static_cast<int>(paper.x() + paper.width() * 0.1),
+                                    static_cast<int>(paper.y() + paper.height() * 0.56),
+                                    static_cast<int>(paper.width() * 0.4), static_cast<int>(paper.height() * 0.1));
+        ratio = ReportElements::ratio(paper, visual->m_wgtOutrunningDiag, 4);
+        auto dsdDomCorr = DualStateDiagramPainter(painter, rectDSDDomCorr);
+        auto valCD = visual->m_calculator->factorValue(EvolventaFactorsDefines::KorrDominance);
+        dsdDomCorr.setValue(valCD);
+        dsdDomCorr.doPaint(ratio);
+
         painter->setFont(QFont("Sans", 10, QFont::Bold, false));
         pal = visual->m_lblCorrectionDominanceValue->palette();
         painter->setPen(pal.color(QPalette::WindowText));
