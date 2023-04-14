@@ -156,6 +156,8 @@ void EvolventaVisualize::print(QPrinter *printer, const QString &testUid)
         auto dsdDomCorr = DualStateDiagramPainter(painter, rectDSDDomCorr);
         auto valCD = visual->m_calculator->factorValue(EvolventaFactorsDefines::KorrDominance);
         dsdDomCorr.setValue(valCD);
+        dsdDomCorr.setDescriptionLeft(tr("Быстрые коррекции"));
+        dsdDomCorr.setDescriptionRight(tr("Медленные коррекции"));
         dsdDomCorr.doPaint(ratio);
 
         painter->setFont(QFont("Sans", 10, QFont::Bold, false));
@@ -241,6 +243,8 @@ void EvolventaVisualize::print(QPrinter *printer, const QString &testUid)
         auto dsdDomCorr = DualStateDiagramPainter(painter, rectDSDDomCorr);
         auto valCD = visual->m_calculator->factorValue(EvolventaFactorsDefines::KorrDominance);
         dsdDomCorr.setValue(valCD);
+        dsdDomCorr.setDescriptionLeft(tr("Быстрые коррекции"));
+        dsdDomCorr.setDescriptionRight(tr("Медленные коррекции"));
         dsdDomCorr.doPaint(ratio);
 
         painter->setFont(QFont("Sans", 10, QFont::Bold, false));

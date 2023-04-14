@@ -158,11 +158,16 @@ void StepOffsetVisualize::print(QPrinter *printer, const QString &testUid)
         drawConslutionFactors(7, 2);
 
         //! Диаграмма преобладания коррекций.
-        ReportElements::drawWidget(painter, visual->m_wgtCorrectionDiagTrain,
-                                   static_cast<int>(paper.width() * 0.8), static_cast<int>(paper.height() * 0.8),
-                                   paper.x() + paper.width()/10, paper.y() + paper.height() / 90 * 39);
-
-
+        auto rectDSDDomCorr = QRect(static_cast<int>(paper.x() + paper.width() * 0.1),
+                                    static_cast<int>(paper.y() + paper.height() * 0.43),
+                                    static_cast<int>(paper.width() * 0.8), static_cast<int>(paper.height() * 0.1));
+        ratio = ReportElements::ratio(paper, visual->m_wgtCorrectionDiagTrain, 4);
+        auto dsdDomCorr = DualStateDiagramPainter(painter, rectDSDDomCorr);
+        auto valCD = visual->m_calculator->factorValue(StepOffsetFactorsDefines::Compensation::CorrectDominanceUid);
+        dsdDomCorr.setValue(valCD);
+        dsdDomCorr.setDescriptionLeft(tr("Быстрые коррекции"));
+        dsdDomCorr.setDescriptionRight(tr("Медленные коррекции"));
+        dsdDomCorr.doPaint(ratio);
     }
     else
     if (printer->orientation() == QPrinter::Landscape)
@@ -201,9 +206,16 @@ void StepOffsetVisualize::print(QPrinter *printer, const QString &testUid)
         drawConslutionFactors(7, 3);
 
         //! Диаграмма преобладания коррекций.
-        ReportElements::drawWidget(painter, visual->m_wgtCorrectionDiagTrain,
-                                   static_cast<int>(paper.width() * 0.8), static_cast<int>(paper.height() * 0.8),
-                                   paper.x() + paper.width()/10, paper.y() + paper.height() / 90 * 54);
+        auto rectDSDDomCorr = QRect(static_cast<int>(paper.x() + paper.width() * 0.1),
+                                    static_cast<int>(paper.y() + paper.height() * 0.6),
+                                    static_cast<int>(paper.width() * 0.8), static_cast<int>(paper.height() * 0.1));
+        ratio = ReportElements::ratio(paper, visual->m_wgtCorrectionDiagTrain, 4);
+        auto dsdDomCorr = DualStateDiagramPainter(painter, rectDSDDomCorr);
+        auto valCD = visual->m_calculator->factorValue(StepOffsetFactorsDefines::Compensation::CorrectDominanceUid);
+        dsdDomCorr.setValue(valCD);
+        dsdDomCorr.setDescriptionLeft(tr("Быстрые коррекции"));
+        dsdDomCorr.setDescriptionRight(tr("Медленные коррекции"));
+        dsdDomCorr.doPaint(ratio);
     }
 
     //! Нижний колонтитул

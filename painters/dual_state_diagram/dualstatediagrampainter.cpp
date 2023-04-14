@@ -34,6 +34,8 @@ void DualStateDiagramPainter::setCanvas(QPainter *painter, QRect geometry, QWidg
 
 void DualStateDiagramPainter::doPaint(const double ratio)
 {
+    m_painter->save();
+
     QColor backColor = Qt::white;
     if (m_widget)
         backColor = m_widget->palette().background().color();
@@ -104,6 +106,8 @@ void DualStateDiagramPainter::doPaint(const double ratio)
                         static_cast<int>(ym - yh / 2 - 10 * ratio),
                         static_cast<int>(6 * ratio),
                         static_cast<int>(yh + 20 * ratio));
+
+    m_painter->restore();
 }
 
 void DualStateDiagramPainter::doUpdate()

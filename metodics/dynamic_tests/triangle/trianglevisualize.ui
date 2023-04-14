@@ -32,7 +32,7 @@
       <enum>QTabWidget::South</enum>
      </property>
      <property name="currentIndex">
-      <number>1</number>
+      <number>3</number>
      </property>
      <widget class="QWidget" name="tabResult">
       <attribute name="title">
@@ -1377,15 +1377,15 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>DynamicDiagram</class>
-   <extends>QWidget</extends>
-   <header location="global">dynamicdiagram.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
    <class>DualStateDiagram</class>
    <extends>QWidget</extends>
    <header location="global">dualstatediagram.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>DynamicDiagram</class>
+   <extends>QWidget</extends>
+   <header location="global">dynamicdiagram.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>

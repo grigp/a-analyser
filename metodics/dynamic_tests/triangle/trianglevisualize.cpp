@@ -196,12 +196,23 @@ void TriangleVisualize::print(QPrinter *printer, const QString &testUid)
         pos += offset;
         painter->drawText(paper.x() + paper.width() / 10, paper.y() + paper.height() / 90 * pos, visual->m_sCorrectionResumeTrain);
         pos += offset;
-        //! Диаграмма преобладания коррекций.
-        ReportElements::drawWidget(painter, visual->m_wgtCorrectionDiagTrain,
-                                   static_cast<int>(paper.width() * 0.8), static_cast<int>(paper.height() * 0.8),
-                                   paper.x() + paper.width()/10, paper.y() + paper.height() / 90 * pos);
-        pos += offset + 4;
 
+        //! Диаграмма преобладания коррекций.
+        auto rectDSDDomCorrT = QRect(static_cast<int>(paper.x() + paper.width() * 0.1),
+                                     static_cast<int>(paper.y() + paper.height() / 90 * pos - paper.height() * 0.02),
+                                     static_cast<int>(paper.width() * 0.8), static_cast<int>(paper.height() * 0.1));
+        auto ratio = ReportElements::ratio(paper, visual->m_wgtCorrectionDiagTrain, 4);
+        auto dsdDomCorrT = DualStateDiagramPainter(painter, rectDSDDomCorrT);
+        auto valCDT = visual->m_calculator->factorConslutionValue(TriangleConslutionFactorsDefines::KorrDominTstUid);
+        dsdDomCorrT.setValue(valCDT);
+        dsdDomCorrT.setDescriptionLeft(tr("Быстрые коррекции"));
+        dsdDomCorrT.setDescriptionRight(tr("Медленные коррекции"));
+        dsdDomCorrT.doPaint(ratio);
+
+        pos += offset + 7;
+
+        painter->setFont(QFont("Sans", 12, QFont::Bold, false));
+        painter->setPen(Qt::black);
         pos += offset;
         painter->drawText(paper.x() + paper.width() / 10, paper.y() + paper.height() / 90 * pos, tr("Этап анализа"));
         pos += offset;
@@ -210,10 +221,18 @@ void TriangleVisualize::print(QPrinter *printer, const QString &testUid)
         pos += offset;
         painter->drawText(paper.x() + paper.width() / 10, paper.y() + paper.height() / 90 * pos, visual->m_sCorrectionResumeAnal);
         pos += offset;
+
         //! Диаграмма преобладания коррекций.
-        ReportElements::drawWidget(painter, visual->m_wgtCorrectionDiagAnal,
-                                   static_cast<int>(paper.width() * 0.8), static_cast<int>(paper.height() * 0.8),
-                                   paper.x() + paper.width()/10, paper.y() + paper.height() / 90 * pos);
+        auto rectDSDDomCorrA = QRect(static_cast<int>(paper.x() + paper.width() * 0.1),
+                                     static_cast<int>(paper.y() + paper.height() / 90 * pos - paper.height() * 0.02),
+                                     static_cast<int>(paper.width() * 0.8), static_cast<int>(paper.height() * 0.1));
+        ratio = ReportElements::ratio(paper, visual->m_wgtCorrectionDiagTrain, 4);
+        auto dsdDomCorrA = DualStateDiagramPainter(painter, rectDSDDomCorrA);
+        auto valCDA = visual->m_calculator->factorConslutionValue(TriangleConslutionFactorsDefines::KorrDominAnlUid);
+        dsdDomCorrA.setValue(valCDA);
+        dsdDomCorrA.setDescriptionLeft(tr("Быстрые коррекции"));
+        dsdDomCorrA.setDescriptionRight(tr("Медленные коррекции"));
+        dsdDomCorrA.doPaint(ratio);
     };
 
     int trainingLength = -1;
