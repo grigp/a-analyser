@@ -314,7 +314,7 @@
             }
         },
         {
-            "uid": "94021282-6B50-432F-A715-D34B3FEC4FD7",
+            "uid": "{94021282-6B50-432F-A715-D34B3FEC4FD7}",
             "name": "Test \"Evolvent\"",
             "image": "Evolventa.png",
             "template": "met_evolventa_uid",
@@ -347,7 +347,7 @@
             }
         },
         {
-            "uid": "005ADEA5-EF51-4BFD-9E8D-F5CF41EE0B9D",
+            "uid": "{005ADEA5-EF51-4BFD-9E8D-F5CF41EE0B9D}",
             "name": "Trainer \"Octaedron\"",
             "image": "Octaedron.png",
             "template": "met_octaedron_uid",
@@ -362,7 +362,7 @@
             }
         },
         {
-            "uid": "3E45F4DE-F959-425E-8067-D2B91F8B8B1D",
+            "uid": "{3E45F4DE-F959-425E-8067-D2B91F8B8B1D}",
             "name": "Evasion trainer for boxers",
             "image": "BoxingDodging.png",
             "template": "met_boxer_dodging_uid",

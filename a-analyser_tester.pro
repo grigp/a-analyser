@@ -52,11 +52,12 @@ include(metodics_common/metodics_common_src.pri)
 include(metodics/metodics_tester_src.pri)
 include(drivers/drivers_src.pri)
 include(service/service_src.pri)
-include(visual_widgets/visual_widgets_tester_src.pri)
 include(factors/factors_tester_src.pri)
 include(signal_analysis/signal_analysis_src.pri)
 include(summaries/summaries_src.pri)
 include(signal_export/signal_export_src.pri)
+include(painters/painters_tester_src.pri)
+include(visual_widgets/visual_widgets_tester_src.pri)
 
 SOURCES += \
         main.cpp \

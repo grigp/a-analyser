@@ -401,7 +401,7 @@
             }
         },
         {
-            "uid": "94021282-6B50-432F-A715-D34B3FEC4FD7",
+            "uid": "{94021282-6B50-432F-A715-D34B3FEC4FD7}",
             "name": "Тест \"Эвольвента\"",
             "image": "Evolventa.png",
             "template": "met_evolventa_uid",

@@ -50,11 +50,12 @@ include(metodics_common/metodics_common_src.pri)
 include(metodics/metodics_ids_src.pri)
 include(drivers/drivers_src.pri)
 include(service/service_src.pri)
-include(visual_widgets/visual_widgets_ids_src.pri)
 include(factors/factors_ids_src.pri)
 include(signal_analysis/signal_analysis_src.pri)
 include(summaries/summaries_src.pri)
 include(signal_export/signal_export_src.pri)
+include(painters/painters_ids_src.pri)
+include(visual_widgets/visual_widgets_ids_src.pri)
 
 SOURCES += \
         main.cpp \

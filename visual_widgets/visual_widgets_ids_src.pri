@@ -1,6 +1,6 @@
 INCLUDEPATH += $$PWD
 
-include(area_skg/area_skg_src.pri)
+include(skg_widget/skg_widget_src.pri)
 include(figures/figures_src.pri)
 include(target/target_src.pri)
 include(five_zones/five_zones.pri)
