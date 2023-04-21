@@ -171,6 +171,12 @@ void StabSignalsTestWidget::resizeEvent(QResizeEvent *event)
     QWidget::resizeEvent(event);
 }
 
+void StabSignalsTestWidget::showEvent(QShowEvent *event)
+{
+    resizeColumnsTable(m_mdlNorms, ui->tvRombergNorms, false);
+    QWidget::showEvent(event);
+}
+
 void StabSignalsTestWidget::zoomIn()
 {
     for (int i = 0; i < ui->wgtSKGAreases->layout()->count(); ++i)
