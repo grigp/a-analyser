@@ -233,5 +233,7 @@
         <file>images/Methodics/VR_Games.png</file>
         <file>images/Keys.png</file>
         <file>images/eye20.png</file>
+        <file>images/Methodics/GamesHard1.png</file>
+        <file>images/Methodics/Jump1.png</file>
     </qresource>
 </RCC>

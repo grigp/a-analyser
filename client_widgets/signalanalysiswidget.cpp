@@ -28,7 +28,7 @@ SignalAnalysisWidget::SignalAnalysisWidget(QWidget *parent) :
     ui->tvTests->setItemDelegateForColumn(ColButtons,
                                           new EditCommandDelegate(EditCommandDelegate::CmdClose, ColButtons, ui->tvTests));
     ui->tvTests->viewport()->installEventFilter(this);
-    m_mdlTests->setHorizontalHeaderLabels(QStringList() << tr("Элементы") << "");
+    m_mdlTests->setHorizontalHeaderLabels(QStringList() << tr("Элементы"));
 
     connect(static_cast<AAnalyserApplication*>(QApplication::instance()), &AAnalyserApplication::dbConnected,
             this, &SignalAnalysisWidget::on_dbConnected);
@@ -187,13 +187,13 @@ void SignalAnalysisWidget::on_closeTest()
 void SignalAnalysisWidget::on_signalExport()
 {
     auto selIdxs = ui->tvTests->selectionModel()->selectedIndexes();
-    if (selIdxs.size() == 2)
+    if (selIdxs.size() == 1)
     {
         foreach (auto idx, selIdxs)
-            if (idx.column() == 1)
+            if (idx.column() == 0)
             {
                 auto puid = idx.data(ProbeUidRole).toString();
-                auto cuid = idx.data(ChannelUidRole).toString();
+                auto cuid = idx.data(ChannelIdRole).toString();
                 if (puid != "" && cuid != "")
                     signalExport(idx);
                 else
@@ -203,6 +203,26 @@ void SignalAnalysisWidget::on_signalExport()
     else
         QMessageBox::information(nullptr, tr("Предупреждение"), tr("Экспортировать можно только сигналы"));
 }
+
+//void SignalAnalysisWidget::on_signalExport()
+//{
+//    auto selIdxs = ui->tvTests->selectionModel()->selectedIndexes();
+//    if (selIdxs.size() == 2)
+//    {
+//        foreach (auto idx, selIdxs)
+//            if (idx.column() == 1)
+//            {
+//                auto puid = idx.data(ProbeUidRole).toString();
+//                auto cuid = idx.data(ChannelUidRole).toString();
+//                if (puid != "" && cuid != "")
+//                    signalExport(idx);
+//                else
+//                    QMessageBox::information(nullptr, tr("Предупреждение"), tr("Экспортировать можно только сигналы"));
+//            }
+//    }
+//    else
+//        QMessageBox::information(nullptr, tr("Предупреждение"), tr("Экспортировать можно только сигналы"));
+//}
 
 void SignalAnalysisWidget::on_deleteSection()
 {
@@ -262,12 +282,12 @@ void SignalAnalysisWidget::openTest(const QString testUid)
         if (!itemWithVisuals  && isVisualsPresent)  //! Если итем с визуалами еще не найден и этот итем с визуалами, то запомним на него указатель
             itemWithVisuals = itemTest;
         itemTest->setIcon(QIcon(":/images/tree/test.png"));
-        auto *itemTestClose = new QStandardItem("");
-        itemTestClose->setEditable(false);
-        itemTestClose->setData(ti.uid, UidRole);
-        itemTestClose->setData(baClose, ButtonActionRole);
-        itemTestClose->setData(EditCommandDelegate::CmdClose, EditCommandDelegate::CommandRole);
-        m_mdlTests->appendRow(QList<QStandardItem*>() << itemTest << itemTestClose);
+//        auto *itemTestClose = new QStandardItem("");
+//        itemTestClose->setEditable(false);
+//        itemTestClose->setData(ti.uid, UidRole);
+//        itemTestClose->setData(baClose, ButtonActionRole);
+//        itemTestClose->setData(EditCommandDelegate::CmdClose, EditCommandDelegate::CommandRole);
+        m_mdlTests->appendRow(QList<QStandardItem*>() << itemTest); // << itemTestClose);
 
         for (int i = 0; i < ti.probes.size(); ++i)
         {
@@ -290,19 +310,21 @@ void SignalAnalysisWidget::openTest(const QString testUid)
                     itemChan->setEditable(false);
                     itemChan->setData(chi.channelId, UidRole);
                     itemChan->setData(chi.uid, ChannelUidRole);
+                    itemChan->setData(pi.uid, ProbeUidRole);
+                    itemChan->setData(chi.channelId, ChannelIdRole);
                     bool isVisualsPresent = buildElement(itemChan, n, ti.uid, pi.uid, chi.channelId);
                     if (!itemWithVisuals  && isVisualsPresent)  //! Если итем с визуалами еще не найден и этот итем с визуалами, то запомним на него указатель
                         itemWithVisuals = itemChan;
                     itemChan->setIcon(QIcon(":/images/tree/signal.png"));
-                    auto *itemChanExport = new QStandardItem("");
-                    itemChanExport->setEditable(false);
-                    itemChanExport->setData(pi.uid, ProbeUidRole);
-                    itemChanExport->setData(chi.channelId, ChannelUidRole);
-                    itemChanExport->setData(baExport, ButtonActionRole);
-                    itemChanExport->setData(EditCommandDelegate::CmdExport, EditCommandDelegate::CommandRole);
+//                    auto *itemChanExport = new QStandardItem("");
+//                    itemChanExport->setEditable(false);
+//                    itemChanExport->setData(pi.uid, ProbeUidRole);
+//                    itemChanExport->setData(chi.channelId, ChannelUidRole);
+//                    itemChanExport->setData(baExport, ButtonActionRole);
+//                    itemChanExport->setData(EditCommandDelegate::CmdExport, EditCommandDelegate::CommandRole);
                     if (n > 0)
                     {
-                        itemProbe->appendRow(QList<QStandardItem*>() << itemChan << itemChanExport);
+                        itemProbe->appendRow(QList<QStandardItem*>() << itemChan); // << itemChanExport);
 
                         QList<DataDefines::SectionInfo> sections;
                         if (DataProvider::getSections(chi.uid, sections))
@@ -438,7 +460,7 @@ QString SignalAnalysisWidget::getMethodName(const QString &metUid)
 void SignalAnalysisWidget::signalExport(QModelIndex &index)
 {
     auto puid = index.data(ProbeUidRole).toString();
-    auto cuid = index.data(ChannelUidRole).toString();
+    auto cuid = index.data(ChannelIdRole).toString();
     auto exp = new SignalExporter(puid, cuid);
     delete exp;
 }

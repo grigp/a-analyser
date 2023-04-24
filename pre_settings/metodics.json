@@ -2464,12 +2464,12 @@
         },
         {
             "uid": "{E7829C54-4F99-4870-A91C-404238B43E50}",
-            "image": "GamesHard.png",
+            "image": "GamesHard1.png",
             "name": "Развивающие тренажеры"
         },
         {
             "uid": "{956A8685-4925-4E0B-826E-E1EB2D1CB0FC}",
-            "image": "Jump.png",
+            "image": "Jump1.png",
             "name": "Прыжковая платформа"
         }
     ]
