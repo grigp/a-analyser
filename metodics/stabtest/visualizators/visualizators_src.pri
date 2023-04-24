@@ -8,7 +8,8 @@ HEADERS += \
     $$PWD/idswidget.h \
     $$PWD/rombergnormvaluedelegate.h \
     $$PWD/targetwidget.h \
-    $$PWD/stressstrategywidget.h
+    $$PWD/stressstrategywidget.h \
+    $$PWD/rombergkoefvaluedelegate.h
 
 SOURCES += \
     $$PWD/stabsignalstestwidget.cpp \
@@ -17,7 +18,8 @@ SOURCES += \
     $$PWD/idswidget.cpp \
     $$PWD/rombergnormvaluedelegate.cpp \
     $$PWD/targetwidget.cpp \
-    $$PWD/stressstrategywidget.cpp
+    $$PWD/stressstrategywidget.cpp \
+    $$PWD/rombergkoefvaluedelegate.cpp
 
 FORMS += \
     $$PWD/stabsignalstestwidget.ui \

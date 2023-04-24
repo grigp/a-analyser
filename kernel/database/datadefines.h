@@ -156,6 +156,17 @@ enum NormValue
 };
 
 /*!
+ * \brief Варианты значений направления отклонения от нормы The NormSideValue enum
+ */
+enum NormSideValue
+{
+      nsvMissing = -2 ///< Отсутствует
+    , nsvBelow = -1   ///< Ниже нормы
+    , nsvNorm = 0     ///< В норме
+    , nsvAbove = 1    ///< Выше нормы
+};
+
+/*!
  * \brief Структура, содержащая информацию о секции сигнала The SectionInfo struct
  */
 struct SectionInfo

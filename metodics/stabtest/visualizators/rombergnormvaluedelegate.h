@@ -4,6 +4,9 @@
 #include <QObject>
 #include <QStyledItemDelegate>
 
+/*!
+ * \brief Класс делегата значений норм для теста Ромберга The RombergNormValueDelegate class
+ */
 class RombergNormValueDelegate : public QStyledItemDelegate
 {
     Q_OBJECT

@@ -98,7 +98,7 @@ private:
 
     static bool isRombergTest(DataDefines::TestInfo ti);
 
-    QString getKoefRombResume(const double value, const int format) const;
+    QString getKoefRombResume(const double value, const int format, DataDefines::NormSideValue& nsv) const;
 
     QString getOffsetResume(const double value, const char chan) const;
 

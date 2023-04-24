@@ -17,6 +17,7 @@
 #include "ratioprobesfactors.h"
 #include "stabtesttemplate.h"
 #include "rombergnormvaluedelegate.h"
+#include "rombergkoefvaluedelegate.h"
 #include "reportelements.h"
 #include "stabtestvisualize.h"
 
@@ -301,12 +302,17 @@ void StabSignalsTestWidget::showRationalTable(StabSignalsTestCalculator *calcula
     DataDefines::TestInfo ti;
     if (DataProvider::getTestInfo(testUid, ti))
     {
-        QString metPrefix = "";
-        if (isRombergTest(ti))
-            metPrefix = tr("Коэффициент Ромберга");
+        bool itr = isRombergTest(ti);
+        QString nameTRS = tr("Площадь эллипса");
+        QString nameTRKFR = tr("КФР");
+        if (itr)
+        {
+            nameTRS = tr("Коэффициент Ромберга по площади эллипса");
+            nameTRKFR = tr("Коэффициент Ромберга по КФР");
+        }
         m_mdlRF = new QStandardItemModel(this);
-        QStandardItem* itemFctS = new QStandardItem(metPrefix + " " + tr("по площади эллипса"));
-        QStandardItem* itemFctKFR = new QStandardItem(metPrefix + " " + tr("по КФР"));
+        QStandardItem* itemFctS = new QStandardItem(nameTRS);
+        QStandardItem* itemFctKFR = new QStandardItem(nameTRKFR);
         QStandardItem* itemFctMoX = new QStandardItem(tr("Смещение по X"));
         QStandardItem* itemFctMoY = new QStandardItem(tr("Смещение по Y"));
         QStandardItem* itemFctQX = new QStandardItem(tr("Разброс по X"));
@@ -325,19 +331,27 @@ void StabSignalsTestWidget::showRationalTable(StabSignalsTestCalculator *calcula
                     getFactorInfo(uid);
             if (i % 2 == 0)
             {
-                if (isRombergTest(ti))
-                    itemS = new QStandardItem(getKoefRombResume(rationalFactors->factorValue(i), fi.format()));
+                DataDefines::NormSideValue nsv = DataDefines::nsvMissing;
+                if (itr)
+                    itemS = new QStandardItem(getKoefRombResume(rationalFactors->factorValue(i), fi.format(), nsv));
                 else
                     itemS = new QStandardItem(QString::number(rationalFactors->factorValue(i), 'f', fi.format()));
+                itemS->setData(nsv, NormRole);
+                itemS->setData(rationalFactors->factorValue(i), ValueRole);
+                itemS->setData(fi.format(), FormatRole);
             }
             else
             if (i % 2 == 1)
             {
+                DataDefines::NormSideValue nsv = DataDefines::nsvMissing;
                 QStandardItem* itemKFR = nullptr;
-                if (isRombergTest(ti))
-                    itemKFR = new QStandardItem(getKoefRombResume(rationalFactors->factorValue(i), fi.format()));
+                if (itr)
+                    itemKFR = new QStandardItem(getKoefRombResume(rationalFactors->factorValue(i), fi.format(), nsv));
                 else
                     itemKFR = new QStandardItem(QString::number(rationalFactors->factorValue(i), 'f', fi.format()));
+                itemKFR->setData(nsv, NormRole);
+                itemKFR->setData(rationalFactors->factorValue(i), ValueRole);
+                itemKFR->setData(fi.format(), FormatRole);
 
                 QStandardItem* itemMoX = createItemRationalFactors(calculator, i, ClassicFactorsDefines::MoXUid, 1, 'x');
                 QStandardItem* itemMoY = createItemRationalFactors(calculator, i, ClassicFactorsDefines::MoYUid, 1, 'y');
@@ -346,9 +360,12 @@ void StabSignalsTestWidget::showRationalTable(StabSignalsTestCalculator *calcula
 
                 if (itemS)
                     appendColumnReadOnly(m_mdlRF,
-                                         QList<QStandardItem*>() <<
-                                                itemS << itemKFR << itemMoX << itemMoY << itemQX << itemQY);
+                                         QList<QStandardItem*>()
+                                         << itemS << itemKFR
+                                         << itemMoX << itemMoY << itemQX << itemQY);
             }
+
+            ui->tvRationalFactors->setItemDelegateForColumn(i+1, new RombergKoefValueDelegate(ui->tvRationalFactors));
         }
         delete rationalFactors;
 
@@ -365,6 +382,7 @@ void StabSignalsTestWidget::showRationalTable(StabSignalsTestCalculator *calcula
 
         ui->tvRationalFactors->setModel(m_mdlRF);
         ui->tvRationalFactors->resizeColumnToContents(0);
+//        ui->tvRationalFactors->setItemDelegateForColumn(1, new RombergKoefValueDelegate(ui->tvRationalFactors));
     }
 }
 
@@ -492,16 +510,27 @@ bool StabSignalsTestWidget::isRombergTest(DataDefines::TestInfo ti)
             static_cast<StabTestParams::ProbeKinds>(kinds.at(1)) == StabTestParams::pkCloseEyes);
 }
 
-QString StabSignalsTestWidget::getKoefRombResume(const double value, const int format) const
+QString StabSignalsTestWidget::getKoefRombResume(const double value, const int format, DataDefines::NormSideValue& nsv) const
 {
     QString sVal = QString::number(value, 'f', format);
     if (value >= 100 && value <= 250)
-        return QString("%1 " + tr("В норме") + " (100 - 250)").arg(sVal);
+    {
+        nsv = DataDefines::nsvNorm;
+        return QString("%1 - " + tr("В норме") + " (100 - 250)").arg(sVal);
+    }
     else
     if (value < 100)
-        return QString("%1 " + tr("Ниже нормы (Постуральная слепота)")).arg(sVal);
+    {
+        nsv = DataDefines::nsvBelow;
+        return QString("%1 - " + tr("Ниже нормы")).arg(sVal);
+//        return QString("%1 - " + tr("Ниже нормы (Постуральная слепота)")).arg(sVal);
+    }
     else
-        return QString("%1 " + tr("Выше нормы (Держится за счет зрения)")).arg(sVal);
+    {
+        nsv = DataDefines::nsvAbove;
+        return QString("%1 - " + tr("Выше нормы")).arg(sVal);
+//        return QString("%1 - " + tr("Выше нормы (Держится за счет зрения)")).arg(sVal);
+    }
 }
 
 QString StabSignalsTestWidget::getOffsetResume(const double value, const char chan) const
