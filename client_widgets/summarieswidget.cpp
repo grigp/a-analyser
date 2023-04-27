@@ -27,6 +27,10 @@ SummariesWidget::SummariesWidget(QWidget *parent) :
 
     connect(static_cast<AAnalyserApplication*>(QApplication::instance()), &AAnalyserApplication::addTestToSummary,
             this, &SummariesWidget::addTestToSummary);
+    connect(static_cast<AAnalyserApplication*>(QApplication::instance()), &AAnalyserApplication::addTestToSummaryBegin,
+            this, &SummariesWidget::addTestToSummaryBegin);
+    connect(static_cast<AAnalyserApplication*>(QApplication::instance()), &AAnalyserApplication::addTestToSummaryEnd,
+            this, &SummariesWidget::addTestToSummaryEnd);
 
     restoreSplitterPosition();
     m_mdlLS = new QStandardItemModel(ui->tvSummaries);
@@ -93,11 +97,39 @@ void SummariesWidget::onHide()
 
 }
 
+void SummariesWidget::addTestToSummaryBegin()
+{
+    m_cntAdded = 0;
+    m_cntAll = 0;
+    m_isActivePresent = true;
+    m_isAnotherMethod = false;
+}
+
+void SummariesWidget::addTestToSummaryEnd()
+{
+    if (!m_isActivePresent && m_cntAdded == 0)
+        QMessageBox::information(nullptr, tr("Сообщение"), tr("Отсутствует активная сводка"));
+    else
+    {
+
+        QString sAnotherMethod = "";
+        if (m_isAnotherMethod && m_cntAdded <= m_cntAll)
+            sAnotherMethod = tr("Активная сводка создана для другой методики");
+        if (m_cntAdded != m_cntAll)
+            QMessageBox::information(nullptr,
+                                     tr("Сообщение"),
+                                     tr("В сводку добавлено") + " " + QString::number(m_cntAdded) + " " + tr("тестов") + " " +
+                                     tr("из") + " " + QString::number(m_cntAll) + ".  " + sAnotherMethod);
+    }
+}
+
 void SummariesWidget::addTestToSummary(const QString testUid,
                                        const SummaryDefines::AddTestMode mode,
                                        const QString summaryName,
                                        const SummaryDefines::Kind kind)
 {
+    ++m_cntAll;
+
     //! В новую сводку
     bool isAdded = false;
     if (mode == SummaryDefines::atmNew)
@@ -109,7 +141,10 @@ void SummariesWidget::addTestToSummary(const QString testUid,
 
     //! Показываем виджет сводок
     if (isAdded)
+    {
+        ++m_cntAdded;
         static_cast<AAnalyserApplication*>(QApplication::instance())->summaries();
+    }
 }
 
 void SummariesWidget::on_selectIndex(QModelIndex index)
@@ -440,13 +475,15 @@ bool SummariesWidget::addTestToActiveSummary(const QString testUid, const Summar
                         return true;
                     }
                     else
-                        QMessageBox::information(nullptr, tr("Предупреждение"), tr("Активная сводка создана для другой методики"));
+                        m_isAnotherMethod = true;
+//                        QMessageBox::information(nullptr, tr("Предупреждение"), tr("Активная сводка создана для другой методики"));
                 }
             }
         }
     }
     else
-        QMessageBox::information(nullptr, tr("Предупреждение"), tr("Отсутствует активная сводка"));
+        m_isActivePresent = false;
+//        QMessageBox::information(nullptr, tr("Предупреждение"), tr("Отсутствует активная сводка"));
     return false;
 }
 

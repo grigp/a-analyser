@@ -711,6 +711,15 @@ bool AAnalyserApplication::notify(QObject *re, QEvent *ev)
 
 void AAnalyserApplication::on_AddTestToSummaryAccepted()
 {
+    auto testInfo = [&](const QString testUid, QString& info)
+    {
+        DataDefines::TestInfo ti;
+        DataProvider::getTestInfo(testUid, ti);
+        DataDefines::PatientKard kard;
+        DataProvider::getPatient(ti.patientUid, kard);
+        info = kard.fio + " - " + ti.dateTime.toString("dd.MM.yyyy hh:mm");
+    };
+
     if (m_addTSDlg->mode() == SummaryDefines::atmNew)
     {
         if (m_addTSDlg->summaryName() == "")
@@ -720,20 +729,20 @@ void AAnalyserApplication::on_AddTestToSummaryAccepted()
             if (isOneMethodicOnAddTests())
             {
                 initProgress("Добавление показателей в сводку", 0, selectedTestsCount());
+                emit addTestToSummaryBegin();
                 for (int i = 0; i < selectedTestsCount(); ++i)
                 {
                     auto testUid = selectedTest(i);
-                    DataDefines::TestInfo ti;
-                    DataProvider::getTestInfo(testUid, ti);
-                    DataDefines::PatientKard kard;
-                    DataProvider::getPatient(ti.patientUid, kard);
-                    setProgressPosition(i, kard.fio + " - " + ti.dateTime.toString("dd.MM.yyyy hh:mm"));
+                    QString info = "";
+                    testInfo(testUid, info);
+                    setProgressPosition(i, info);
                     if (i == 0)
                         emit addTestToSummary(testUid, SummaryDefines::atmNew, m_addTSDlg->summaryName(), m_addTSDlg->kind());
                     else
                         emit addTestToSummary(testUid, SummaryDefines::atmActive, "", m_addTSDlg->kind());
                 }
                 doneProgress();
+                emit addTestToSummaryEnd();
             }
             else
                 QMessageBox::information(nullptr, tr("Предупреждение"), tr("Выбраны тесты по разным методикам"));
@@ -741,11 +750,18 @@ void AAnalyserApplication::on_AddTestToSummaryAccepted()
     }
     if (m_addTSDlg->mode() == SummaryDefines::atmActive)
     {
+        initProgress("Добавление показателей в сводку", 0, selectedTestsCount());
+        emit addTestToSummaryBegin();
         for (int i = 0; i < selectedTestsCount(); ++i)
         {
             auto testUid = selectedTest(i);
+            QString info = "";
+            testInfo(testUid, info);
+            setProgressPosition(i, info);
             emit addTestToSummary(testUid, m_addTSDlg->mode(), "", m_addTSDlg->kind());
         }
+        doneProgress();
+        emit addTestToSummaryEnd();
     }
 
 }

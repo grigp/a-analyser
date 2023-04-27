@@ -67,6 +67,9 @@ public:
     void onHide() override;
 
 private slots:
+    void addTestToSummaryBegin();
+    void addTestToSummaryEnd();
+
     /*!
      * \brief Добавление теста в сводку
      * \param testUid - uid теста
@@ -149,6 +152,11 @@ private:
     SummaryWidget* isSummaryOpen(const QString& fn, QModelIndex& index);
 
     QStandardItemModel* m_mdlLS {nullptr};
+
+    int m_cntAdded {0};  ///< Кол-во тестов, добавленных в сводку
+    int m_cntAll {0};    ///< Общее кол-во тестов, которые добавлялись в сводку
+    bool m_isActivePresent {true};   ///< Активная сводка есть
+    bool m_isAnotherMethod {false};  ///< Попытка добавить методику другого типа
 };
 
 #endif // SUMMARIESWIDGET_H

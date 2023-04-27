@@ -597,6 +597,15 @@ signals:
     void applicationParamChanged(const QString &group, const QString &param, const QVariant &value);
 
     /*!
+     * \brief Сигнал начала добавления тестов в сводку
+     */
+    void addTestToSummaryBegin();
+    /*!
+     * \brief Сигнал окончания добавления тестов в сводку
+     */
+    void addTestToSummaryEnd();
+
+    /*!
      * \brief Сигнал добавления теста в сводку
      * \param testUid - uid теста
      * \param mode - режим: в существующую, в новую, в активную
