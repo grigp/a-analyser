@@ -51,7 +51,6 @@
         <file>pre_settings/metodics_st_champ.json</file>
         <file>pre_settings/metodics_st_champ_en_US.json</file>
         <file>images/MainIcon2.png</file>
-        <file>images/MainIcon2.ico</file>
         <file>pre_settings/conditions.json</file>
         <file>pre_settings/conditions_en_US.json</file>
         <file>images/TestProperty.png</file>
@@ -189,18 +188,12 @@
         <file>images/up200.png</file>
         <file>images/Methodics/Triangle.png</file>
         <file>images/Animate/Triangles.png</file>
-        <file>images/MainIcon_Dopusk.ico</file>
-        <file>images/MainIcon_stab.ico</file>
-        <file>images/MainIcon_DCI.ico</file>
-        <file>images/MainIcon_sch.ico</file>
-        <file>images/MainIcon_Tester.ico</file>
         <file>images/SignalAnalysis.png</file>
         <file>images/tree/probe.png</file>
         <file>images/tree/test.png</file>
         <file>images/SignalCursor.png</file>
         <file>images/Close.png</file>
         <file>images/MainIcon_bss.png</file>
-        <file>images/MainIcon_bss.ico</file>
         <file>images/Methodics/Scales.png</file>
         <file>images/Methodics/Scales_tester.png</file>
         <file>pre_settings/metodics_bss.json</file>
@@ -235,5 +228,9 @@
         <file>images/eye20.png</file>
         <file>images/Methodics/GamesHard1.png</file>
         <file>images/Methodics/Jump1.png</file>
+        <file>images/MainIcon3.png</file>
+        <file>images/MainIcon4.ico</file>
+        <file>images/MainIcon_stab_1.ico</file>
+        <file>images/MainIcon_sch_01.ico</file>
     </qresource>
 </RCC>

@@ -20,10 +20,10 @@ namespace AAnalyserDefines
 static const QString BuildUid = "{CA26008C-79DE-4DD7-A1A9-4FACAF79A283}";
 
 //! Главная иконка приложения
-static const QString MainIcon = ":/images/MainIcon2.ico";
+static const QString MainIcon = ":/images/MainIcon4.ico";
 
 //! Текст главного окна приложения
-static const QString MainWindowTitle = "Физиологические исследования a-analyzer";
+static const QString MainWindowTitle = "Исследования А-Мед";
 
 
 //! Имя файла предустановленных методик. Это заголовок имени.

@@ -77,22 +77,22 @@ void BedsideScalesTestVisualize::signalExport()
 
 void BedsideScalesTestVisualize::on_weighingResultsGraph()
 {
-    ui->wgtWeighingResults->setKind(DynamicDiagram::KindGraph);
+    ui->wgtWeighingResults->setKind(DynamicDiagramDefines::KindGraph);
     ui->btnBar->setChecked(false);
 }
 
 void BedsideScalesTestVisualize::on_weighingResultsBar()
 {
-    ui->wgtWeighingResults->setKind(DynamicDiagram::KindBar);
+    ui->wgtWeighingResults->setKind(DynamicDiagramDefines::KindBar);
     ui->btnGraph->setChecked(false);
 }
 
 void BedsideScalesTestVisualize::on_weighingResults3D(bool is3D)
 {
     if (is3D)
-        ui->wgtWeighingResults->setVolume(DynamicDiagram::Volume3D);
+        ui->wgtWeighingResults->setVolume(DynamicDiagramDefines::Volume3D);
     else
-        ui->wgtWeighingResults->setVolume(DynamicDiagram::Volume2D);
+        ui->wgtWeighingResults->setVolume(DynamicDiagramDefines::Volume2D);
 }
 
 int n {0};

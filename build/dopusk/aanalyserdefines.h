@@ -20,7 +20,7 @@ namespace AAnalyserDefines
 static const QString BuildUid = "{FF360170-015F-4825-9CD1-BCDC5A16B9C5}";
 
 //! Главная иконка приложения
-static const QString MainIcon = ":/images/MainIcon_Dopusk.ico";
+static const QString MainIcon = ":/images/MainIcon_Dopusk_1.ico";
 
 //! Текст главного окна приложения
 static const QString MainWindowTitle = "Допусковый контроль А-Мед";

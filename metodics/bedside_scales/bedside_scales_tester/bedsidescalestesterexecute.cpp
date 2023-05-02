@@ -366,7 +366,7 @@ void BedsideScalesTesterExecute::recording()
 
 void BedsideScalesTesterExecute::on_selectItem(const int idx)
 {
-    if (idx >= 0 && idx < ui->wgtParticalWeighting->size())
+    if (idx >= 0 && idx < static_cast<DynamicDiagramPainter*>(ui->wgtParticalWeighting)->size())
     {
         auto value = ui->wgtParticalWeighting->value(idx);
         ui->wgtParticalWeighting->setBottomText(tr("Измерение") + (" (") + QString::number(idx + 1) + ") : " +
@@ -488,8 +488,8 @@ void BedsideScalesTesterExecute::getDataWeight(DeviceProtocols::DeviceData *data
                         m_wrd->addWeight(value, QDateTime::currentDateTime(), m_recCounter - m_pwmWeight.size(), m_recCounter);
                         ++m_partWeightCount;
                         ui->wgtParticalWeighting->appendItem(new DiagItem(value, QString::number(m_partWeightCount)));
-                        ui->wgtParticalWeighting->setKind(DynamicDiagram::KindBar);
-                        ui->wgtParticalWeighting->setVolume(DynamicDiagram::Volume3D);
+                        ui->wgtParticalWeighting->setKind(DynamicDiagramDefines::KindBar);
+                        ui->wgtParticalWeighting->setVolume(DynamicDiagramDefines::Volume3D);
                         //m_pwmWeight_ = 0;
                         m_pwmWeight.clear();
                     }

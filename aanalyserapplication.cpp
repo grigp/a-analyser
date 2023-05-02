@@ -40,7 +40,7 @@ AAnalyserApplication::AAnalyserApplication(int &argc, char **argv)
     , m_visualsFactory(new VisualsFactory(this))
 {
     setApplicationName("a-analyzer");
-//    setApplicationDisplayName(tr("Физиологические исследования a-analyzer")); Не переводится
+//    setApplicationDisplayName(tr("Исследования А-Мед")); Не переводится
     setOrganizationName("A-Med");
 //    setWindowIcon(QIcon(":/images/MainIcon2.ico"));
 
