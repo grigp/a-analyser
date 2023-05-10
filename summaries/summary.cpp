@@ -300,13 +300,14 @@ void Summary::addTestAll(const QString &testUid)
                 {
                     //! Расчет показателей уровня канала
                     auto fgChannel = calculateFactors(fCount, testUid, pi.uid, chi.channelId);
+
                     if (fgChannel.size() > 0)
                     {
                         m_spanCells << SpanCellsInfo(RowChannels, lineHdrChannels.size(), fCount);
 
                         //! Итем названия канала
                         QString cn = "";
-                        if (ci == 0)
+//                        if (ci == 0) Непонятно, зачем была эта проверка ...
                             cn = ChannelsUtils::instance().channelName(chi.channelId);
                         auto itemChan = createItem(lineHdrChannels, cn);
                         itemChan->setData(chi.channelId, ChannelIdRole);

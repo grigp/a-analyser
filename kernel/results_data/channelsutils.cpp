@@ -1,5 +1,7 @@
 #include "channelsutils.h"
 
+#include <QDebug>
+
 ChannelsUtils ChannelsUtils::instance()
 {
     static ChannelsUtils _instance;
