@@ -27,12 +27,9 @@ enum LabelStep
 
 struct MinMax
 {
-    int minPrev {INT_MAX};
-    int maxPrev {INT_MAX};
-    int min {INT_MAX};
-    int max {-INT_MAX};
-    int n {0};
-    bool isRepeatX {false};
+    int ox {INT_MAX};        ///! Предыдущее значение x
+    int oy {INT_MAX};        ///! Предыдущее значение y
+    bool isRepeatX {false};  ///! Было ли повторение значений координат x
     bool reserv1 {false};    ///! Заглушки, чтоб не появлялось сообщение компилятора
     bool reserv2 {false};
     bool reserv3 {false};
@@ -524,45 +521,29 @@ void GraphPainter::doPaint(const double ratio)
                             }
                             int y1 = axisY - static_cast<int>((v1 - m_areases[iz]->minValue()) * prop);
                             int y2 = axisY - static_cast<int>((v2 - m_areases[iz]->minValue()) * prop);
-              //              qDebug() << iPos1 << iPos2 << "   " << x1 << x2 << "   " << y1 << y2;
 
+                            //! Прорисовка линии
                             if (x1 == x2)
                             {
-                                if (y1 < chansMinMax[chan1].min) chansMinMax[chan1].min = y1;
-                                if (y2 < chansMinMax[chan1].min) chansMinMax[chan1].min = y2;
-                                if (y1 > chansMinMax[chan1].max) chansMinMax[chan1].max = y1;
-                                if (y2 > chansMinMax[chan1].max) chansMinMax[chan1].max = y2;
-                                ++chansMinMax[chan1].n;
+                                //! Если смещения по x нет, то запоминаем этот факт
+                                chansMinMax[chan1].isRepeatX = true;
                             }
-                            else
+                            else  //! Смещение по x есть
                             {
                                 m_painter->setPen(QPen(color, 1, Qt::SolidLine, Qt::FlatCap));
-                                if (chansMinMax[chan1].isRepeatX)
+                                //! Были точки на повторяющихся координатах и уже были прорисовки
+                                if (chansMinMax[chan1].isRepeatX && chansMinMax[chan1].ox != INT_MAX && chansMinMax[chan1].oy != INT_MAX)
                                 {
-                                    m_painter->drawLine(x1, chansMinMax[chan1].min, x1, chansMinMax[chan1].max);
-                                    if (chansMinMax[chan1].minPrev != INT_MAX)
-                                    {
-                                        if (chansMinMax[chan1].max < chansMinMax[chan1].minPrev)
-                                            m_painter->drawLine(x1 - 1, chansMinMax[chan1].minPrev, x1, chansMinMax[chan1].max);
-                                        else
-                                        if (chansMinMax[chan1].min > chansMinMax[chan1].maxPrev)
-                                            m_painter->drawLine(x1 - 1, chansMinMax[chan1].maxPrev, x1, chansMinMax[chan1].min);
-                                    }
-                                    chansMinMax[chan1].minPrev = chansMinMax[chan1].min;
-                                    chansMinMax[chan1].maxPrev = chansMinMax[chan1].max;
-                                    chansMinMax[chan1].min = INT_MAX;
-                                    chansMinMax[chan1].max = -INT_MIN;
-                                    chansMinMax[chan1].isRepeatX = false;
-                                    chansMinMax[chan1].n = 0;
+                                    //! Рисуем от последней точки к текущей
+                                    m_painter->drawLine(chansMinMax[chan1].ox, chansMinMax[chan1].oy, x2, y2);
                                 }
-                                else
-                                    m_painter->drawLine(x1, y1, x2, y2);
-
+                                //! Рисуем линию на текущих точках
+                                m_painter->drawLine(x1, y1, x2, y2);
+                                //! Запоминаем последнюю прорисовываемую точку
+                                chansMinMax[chan1].ox = x2;
+                                chansMinMax[chan1].oy = y2;
+                                chansMinMax[chan1].isRepeatX = false;
                             }
-                            chansMinMax[chan1].isRepeatX = x1 == x2;
-
-    //                        painter.setPen(QPen(color, 1, Qt::SolidLine, Qt::FlatCap));
-    //                        painter.drawLine(x1, y1, x2, y2);
                         };
 
                         //! Межканальная заливка. Только для первых двух каналов
