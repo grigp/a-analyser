@@ -52,45 +52,48 @@ void HistogramVisualWidget::computeHist()
     {
         auto stab = new Stabilogram(data);
 
-        //! Минимум и максимум
-        for (int i = 0; i < stab->size(); ++i)
+        if (stab->size() > 0)
         {
-            auto rec = stab->value(i);
-            if (rec.x < m_minX) m_minX = rec.x;
-            if (rec.x > m_maxX) m_maxX = rec.x;
-            if (rec.y < m_minY) m_minY = rec.y;
-            if (rec.y > m_maxY) m_maxY = rec.y;
-        }
-        //! Размер зон по X и Y
-        m_sizeOneX = (m_maxX - m_minX) / static_cast<double>(HistBarsCount);
-        m_sizeOneY = (m_maxY - m_minY) / static_cast<double>(HistBarsCount);
+            //! Минимум и максимум
+            for (int i = 0; i < stab->size(); ++i)
+            {
+                auto rec = stab->value(i);
+                if (rec.x < m_minX) m_minX = rec.x;
+                if (rec.x > m_maxX) m_maxX = rec.x;
+                if (rec.y < m_minY) m_minY = rec.y;
+                if (rec.y > m_maxY) m_maxY = rec.y;
+            }
+            //! Размер зон по X и Y
+            m_sizeOneX = (m_maxX - m_minX) / static_cast<double>(HistBarsCount);
+            m_sizeOneY = (m_maxY - m_minY) / static_cast<double>(HistBarsCount);
 
-        //! Инициализация гистограммы
-        for (int i = 0; i < HistBarsCount; ++i)
-        {
-            m_dataX[i] = 0;
-            m_dataY[i] = 0;
-        }
-        //! Расчет гистограммы
-        for (int i = 0; i < stab->size(); ++i)
-        {
-            auto rec = stab->value(i);
+            //! Инициализация гистограммы
+            for (int i = 0; i < HistBarsCount; ++i)
+            {
+                m_dataX[i] = 0;
+                m_dataY[i] = 0;
+            }
+            //! Расчет гистограммы
+            for (int i = 0; i < stab->size(); ++i)
+            {
+                auto rec = stab->value(i);
 
-            int idx = static_cast<int>((rec.x - m_minX) / m_sizeOneX);
-            if (idx < 0) idx = 0;
-            if (idx >= HistBarsCount) idx = HistBarsCount - 1;
-            ++m_dataX[idx];
+                int idx = static_cast<int>((rec.x - m_minX) / m_sizeOneX);
+                if (idx < 0) idx = 0;
+                if (idx >= HistBarsCount) idx = HistBarsCount - 1;
+                ++m_dataX[idx];
 
-            idx = static_cast<int>((rec.y - m_minY) / m_sizeOneY);
-            if (idx < 0) idx = 0;
-            if (idx >= HistBarsCount) idx = HistBarsCount - 1;
-            ++m_dataY[idx];
-        }
+                idx = static_cast<int>((rec.y - m_minY) / m_sizeOneY);
+                if (idx < 0) idx = 0;
+                if (idx >= HistBarsCount) idx = HistBarsCount - 1;
+                ++m_dataY[idx];
+            }
 
-        for (int i = 0; i < HistBarsCount; ++i)
-        {
-            m_dataX[i] = m_dataX[i] / stab->size() * 100;
-            m_dataY[i] = m_dataY[i] / stab->size() * 100;
+            for (int i = 0; i < HistBarsCount; ++i)
+            {
+                m_dataX[i] = m_dataX[i] / stab->size() * 100;
+                m_dataY[i] = m_dataY[i] / stab->size() * 100;
+            }
         }
     }
 }

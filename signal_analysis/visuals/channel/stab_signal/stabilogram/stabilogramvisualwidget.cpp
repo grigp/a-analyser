@@ -194,24 +194,28 @@ void StabilogramVisualWidget::showGraph()
         {
             //! Назначить сигнал
             m_stab = new Stabilogram(data);
-            ui->wgtGraph->appendSignal(m_stab, tr("мм"));
-            ui->wgtGraph->setLegend(0, QStringList() << "Фронталь" << "Сагитталь");
 
-            //! Диапазон сигнала
-            auto absMax = m_stab->absMaxValue();
-            int v = 1;
-            while (v < absMax)
-                v *= 2;
-            ui->wgtGraph->setDiapazone(-v, v);
+            if (m_stab->size() > 0)
+            {
+                ui->wgtGraph->appendSignal(m_stab, tr("мм"));
+                ui->wgtGraph->setLegend(0, QStringList() << "Фронталь" << "Сагитталь");
 
-            //! Позиция в переключателе масштаба
-            double scM = BaseUtils::StabDefaultDiap / static_cast<double>(v);
-            for (int i = 0; i < ui->cbScale->count(); ++i)
-                if (static_cast<int>(ui->cbScale->itemData(i).toDouble() * 10000) == static_cast<int>(scM * 10000)) // * 10000 - уход от double
-                {
-                    ui->cbScale->setCurrentIndex(i);
-                    break;
-                }
+                //! Диапазон сигнала
+                auto absMax = m_stab->absMaxValue();
+                int v = 1;
+                while (v < absMax)
+                    v *= 2;
+                ui->wgtGraph->setDiapazone(-v, v);
+
+                //! Позиция в переключателе масштаба
+                double scM = BaseUtils::StabDefaultDiap / static_cast<double>(v);
+                for (int i = 0; i < ui->cbScale->count(); ++i)
+                    if (static_cast<int>(ui->cbScale->itemData(i).toDouble() * 10000) == static_cast<int>(scM * 10000)) // * 10000 - уход от double
+                    {
+                        ui->cbScale->setCurrentIndex(i);
+                        break;
+                    }
+            }
         }
     }
 }

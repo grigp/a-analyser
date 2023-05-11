@@ -3,6 +3,7 @@
 
 #include <QTimer>
 #include <QStandardItemModel>
+#include <QDebug>
 
 #include "aanalyserapplication.h"
 #include "channelsdefines.h"
@@ -76,7 +77,7 @@ void SKGVisualWidget::showSKG()
     }
 
     ui->wgtSKG->setVisibleMarker(false);
-    if (m_stab)
+    if (m_stab && m_stab->size() > 0)
     {
         auto absMax = m_stab->absMaxValue();
         int v = 1;
@@ -91,32 +92,35 @@ void SKGVisualWidget::showSKG()
 
 void SKGVisualWidget::showFactors()
 {
-    auto *model = new QStandardItemModel();
-
-    if (!m_factors)
-        m_factors = new ClassicFactors(testUid(), probeUid(), channelId());
-
-    for (int i = 0; i < m_factors->size(); ++i)
+    if (m_stab->size() > 0)
     {
-        auto uid = m_factors->factorUid(i);
+        auto *model = new QStandardItemModel();
 
-        auto fi = static_cast<AAnalyserApplication*>(QApplication::instance())->getFactorInfo(uid);
-        QString fn = fi.name();
-        if (fi.measure() != "")
-            fn = fn + ", " + fi.measure();
-        auto* itemName = new QStandardItem(fn);
-        itemName->setEditable(false);
+        if (!m_factors)
+            m_factors = new ClassicFactors(testUid(), probeUid(), channelId());
 
-        auto fvf = m_factors->factorValueFormatted(uid);
-        auto* itemValue = new QStandardItem(fvf);
-        itemValue->setEditable(false);
+        for (int i = 0; i < m_factors->size(); ++i)
+        {
+            auto uid = m_factors->factorUid(i);
 
-        model->appendRow(QList<QStandardItem*>() << itemName << itemValue);
+            auto fi = static_cast<AAnalyserApplication*>(QApplication::instance())->getFactorInfo(uid);
+            QString fn = fi.name();
+            if (fi.measure() != "")
+                fn = fn + ", " + fi.measure();
+            auto* itemName = new QStandardItem(fn);
+            itemName->setEditable(false);
+
+            auto fvf = m_factors->factorValueFormatted(uid);
+            auto* itemValue = new QStandardItem(fvf);
+            itemValue->setEditable(false);
+
+            model->appendRow(QList<QStandardItem*>() << itemName << itemValue);
+        }
+
+        model->setHorizontalHeaderLabels(QStringList() << tr("Показатель") << tr("Значение"));
+        ui->tvFactors->setModel(model);
+        ui->tvFactors->header()->resizeSections(QHeaderView::ResizeToContents);
+        ui->tvFactors->header()->resizeSection(0, 500);
     }
-
-    model->setHorizontalHeaderLabels(QStringList() << tr("Показатель") << tr("Значение"));
-    ui->tvFactors->setModel(model);
-    ui->tvFactors->header()->resizeSections(QHeaderView::ResizeToContents);
-    ui->tvFactors->header()->resizeSection(0, 500);
 }
 

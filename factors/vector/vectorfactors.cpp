@@ -63,44 +63,47 @@ void VectorFactors::calculate()
     if (DataProvider::getChannel(probeUid(), channelId(), baStab))
     {
         Stabilogram stab(baStab);
-        auto r = deviation(&stab);
-
-        //! Только для значимых отклонений, с амплитудой, большей чем 0,5 мм
-        if (r >= 0.5)
+        if (stab.size() > 0)
         {
-            //! Расчет скоростей и ускорений по фронтали и сагиттали
-            QVector<double> accelX, accelY;
-            computeSpeed(&stab, m_spdX, m_spdY, accelX, accelY);
+            auto r = deviation(&stab);
 
-            //! Расчет векторов скорости и угловых скоростей
-            QVector<double> spd;
-            QVector<double> angles;
-            QVector<double> wSpeed;
-            vectorSpeed(m_spdX, m_spdY, spd, angles, wSpeed);
+            //! Только для значимых отклонений, с амплитудой, большей чем 0,5 мм
+            if (r >= 0.5)
+            {
+                //! Расчет скоростей и ускорений по фронтали и сагиттали
+                QVector<double> accelX, accelY;
+                computeSpeed(&stab, m_spdX, m_spdY, accelX, accelY);
 
-            //! Расчет КФР
-            computeKFR(spd);
+                //! Расчет векторов скорости и угловых скоростей
+                QVector<double> spd;
+                QVector<double> angles;
+                QVector<double> wSpeed;
+                vectorSpeed(m_spdX, m_spdY, spd, angles, wSpeed);
 
-            //! Расчет НПВ
-            computeNPV(m_spdX, m_spdY, stab.frequency());
+                //! Расчет КФР
+                computeKFR(spd);
 
-            //! Расчет НУС
-            computeNUS(wSpeed);
+                //! Расчет НПВ
+                computeNPV(m_spdX, m_spdY, stab.frequency());
 
-            computeVariationFactors(spd, stab.frequency(), m_amplV, m_tV);
-            computeVariationFactors(wSpeed, stab.frequency(), m_amplW, m_tW);
+                //! Расчет НУС
+                computeNUS(wSpeed);
 
-            //! Коэффициенты асимметрии
-            m_kals_f = computeAsymmetry(m_spdX);
-            m_kals_s = computeAsymmetry(m_spdY);
+                computeVariationFactors(spd, stab.frequency(), m_amplV, m_tV);
+                computeVariationFactors(wSpeed, stab.frequency(), m_amplW, m_tW);
 
-            //! Мощность векторограммы
-            computePowerVector(&stab);
+                //! Коэффициенты асимметрии
+                m_kals_f = computeAsymmetry(m_spdX);
+                m_kals_s = computeAsymmetry(m_spdY);
 
-            if (fabs(m_wMid) > 0)
-                m_vw = m_vMid / m_wMid;
-            else
-                m_vw = 0;
+                //! Мощность векторограммы
+                computePowerVector(&stab);
+
+                if (fabs(m_wMid) > 0)
+                    m_vw = m_vMid / m_wMid;
+                else
+                    m_vw = 0;
+            }
         }
     }
 
