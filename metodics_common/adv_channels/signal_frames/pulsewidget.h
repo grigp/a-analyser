@@ -61,6 +61,9 @@ public:
      */
     void setAllwaysRecordingChannel(const QString &channelId) override;
 
+protected:
+    void timerEvent(QTimerEvent *event);
+
 private slots:
     void on_resetPulse();
     void on_pulseRecChange(bool checked);
@@ -75,6 +78,8 @@ private:
     double m_pulseMiddle {0};
     int m_pulseCount {0};
     bool m_isFinish {false};
+
+    int m_pickTimerId {-1};
 
     Ritmogram* m_ritmogram {nullptr};
 };

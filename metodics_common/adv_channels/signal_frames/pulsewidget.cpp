@@ -64,14 +64,8 @@ void PulseWidget::getData(DeviceProtocols::DeviceData *data)
 
         ui->lblPulseMid->setText(QString("Средний пульс - %1 уд/мин").arg(m_pulseMiddle/m_pulseCount));
 
-        //! Погасим индикатор через 100 мс
-//        QTimer::singleShot(100, [=]
-//        {
-//            if (!m_isFinish)
-//            {
-//                ui->pbPulse->setValue(0);
-//            }
-//        });
+        //! Погасим индикатор через 100 мс с использованием таймера объекта
+        m_pickTimerId = startTimer(100);
 
         QVector<double> recPulse;
         recPulse << value;
@@ -103,6 +97,19 @@ void PulseWidget::enabledControls(const bool enabled)
 void PulseWidget::setAllwaysRecordingChannel(const QString &channelId)
 {
     Q_UNUSED(channelId);
+}
+
+void PulseWidget::timerEvent(QTimerEvent *event)
+{
+    if (event->timerId() == m_pickTimerId && m_pickTimerId > -1)
+    {
+        if (!m_isFinish)
+        {
+            killTimer(m_pickTimerId);
+            m_pickTimerId = -1;
+            ui->pbPulse->setValue(0);
+        }
+    }
 }
 
 void PulseWidget::on_resetPulse()
