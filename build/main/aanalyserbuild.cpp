@@ -40,6 +40,8 @@
 #include "trianglefactorsdescriptor.h"
 #include "triangleconslutionfactorsdescriptor.h"
 
+#include "pulsefactorsdescriptor.h"
+
 #include "skgvisual.h"
 #include "stabilogramvisual.h"
 #include "histogramvisual.h"
@@ -49,6 +51,7 @@
 #include "bilateralvisual.h"
 #include "dynamosignalvisual.h"
 #include "myogramsignalvisual.h"
+#include "ritmogramvisual.h"
 #include "sectiongraphvisual.h"
 
 #include "filtersignal.h"
@@ -97,6 +100,8 @@ void AAnalyserBuild::registerFactors()
     app->registerGroup(new TriangleFactorsDescriptor(BaseDefines::tlProbe));
     app->registerGroup(new TriangleConslutionFactorsDescriptor(BaseDefines::tlProbe));
 
+    app->registerGroup(new PulseFactorsDescriptor(BaseDefines::tlChannel));
+
     app->registerGroup(new DropTestFactorsDescriptor(BaseDefines::tlChannel));
     app->registerGroup(new HoppingFactorsDescriptor(BaseDefines::tlChannel));
     app->registerGroup(new JumpHeightFactorsDescriptor(BaseDefines::tlChannel));
@@ -115,6 +120,7 @@ void AAnalyserBuild::registerVisuals()
     app->registerVisual(new BalistogramVisual(BaseDefines::tlChannel));
     app->registerVisual(new MyogramSignalVisual(BaseDefines::tlChannel));
     app->registerVisual(new DynamoSignalVisual(BaseDefines::tlChannel));
+    app->registerVisual(new RitmogramVisual(BaseDefines::tlChannel));
     app->registerVisual(new BilateralVisual(BaseDefines::tlProbe));
     app->registerVisual(new SectionGraphVisual(BaseDefines::tlSection));
 }

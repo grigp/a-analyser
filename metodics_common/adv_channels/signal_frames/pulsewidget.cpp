@@ -31,7 +31,7 @@ void PulseWidget::newProbe()
     if (ui->btnRecord->isChecked())
     {
         m_ritmogram = new Ritmogram(channelId(), 10);
-        objTestResultData()->addChannel(m_ritmogram);
+//        objTestResultData()->addChannel(m_ritmogram);
     }
 }
 
@@ -40,13 +40,14 @@ void PulseWidget::abortProbe()
     if (ui->btnRecord->isChecked())
     {
         m_ritmogram->clear();
-        delete m_ritmogram;
+//        delete m_ritmogram;
     }
 }
 
 void PulseWidget::saveProbe()
 {
-
+    if (ui->btnRecord->isChecked() && m_ritmogram)
+        objTestResultData()->addChannel(m_ritmogram);
 }
 
 void PulseWidget::getData(DeviceProtocols::DeviceData *data)
@@ -126,13 +127,15 @@ void PulseWidget::on_pulseRecChange(bool checked)
     setRecButton(ui->btnRecord, checked);
     if (checked)
     {
-        m_ritmogram = new Ritmogram(channelId(), 10);
-        objTestResultData()->addChannel(m_ritmogram);
+        if (!m_ritmogram)
+            m_ritmogram = new Ritmogram(channelId(), 10);
+//        objTestResultData()->addChannel(m_ritmogram);
     }
     else
     {
-        m_ritmogram->clear();
-        delete m_ritmogram;
+        if (m_ritmogram)
+            m_ritmogram->clear();
+//        delete m_ritmogram;
     }
 }
 
