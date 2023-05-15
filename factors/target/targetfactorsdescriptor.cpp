@@ -23,8 +23,14 @@ bool TargetFactorsDescriptor::isValid(const QString &testUid, const QString &pro
     return TargetFactors::isValid(testUid, probeUid, channelId);
 }
 
-MultiFactor *TargetFactorsDescriptor::caclulate(const QString &testUid, const QString &probeUid, const QString &channelUid)
+MultiFactor *TargetFactorsDescriptor::caclulate(const QString &testUid,
+                                                const QString &probeUid,
+                                                const QString &channelUid,
+                                                const int begin,
+                                                const int end)
 {
     Q_UNUSED(channelUid);
+    Q_UNUSED(begin);
+    Q_UNUSED(end);
     return new TargetFactors(testUid, probeUid);
 }

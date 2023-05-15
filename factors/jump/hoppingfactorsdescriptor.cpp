@@ -23,7 +23,11 @@ bool HoppingFactorsDescriptor::isValid(const QString &testUid, const QString &pr
     return HoppingFactors::isValid(testUid, probeUid, channelId);
 }
 
-MultiFactor *HoppingFactorsDescriptor::caclulate(const QString &testUid, const QString &probeUid, const QString &channelUid)
+MultiFactor *HoppingFactorsDescriptor::caclulate(const QString &testUid,
+                                                 const QString &probeUid,
+                                                 const QString &channelUid,
+                                                 const int begin,
+                                                 const int end)
 {
-    return new HoppingFactors(testUid, probeUid, channelUid);
+    return new HoppingFactors(testUid, probeUid, channelUid, begin, end);
 }

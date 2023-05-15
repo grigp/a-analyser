@@ -23,7 +23,11 @@ bool PulseFactorsDescriptor::isValid(const QString &testUid, const QString &prob
     return PulseFactors::isValid(testUid, probeUid, channelId);
 }
 
-MultiFactor *PulseFactorsDescriptor::caclulate(const QString &testUid, const QString &probeUid, const QString &channelUid)
+MultiFactor *PulseFactorsDescriptor::caclulate(const QString &testUid,
+                                               const QString &probeUid,
+                                               const QString &channelUid,
+                                               const int begin,
+                                               const int end)
 {
-    return new PulseFactors(testUid, probeUid, channelUid);
+    return new PulseFactors(testUid, probeUid, channelUid, begin, end);
 }

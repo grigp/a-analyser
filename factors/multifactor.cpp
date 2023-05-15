@@ -70,9 +70,13 @@ ProbeMultifactor::ProbeMultifactor(const QString &testUid, const QString &probeU
 ChannelMultifactor::ChannelMultifactor(const QString &testUid,
                                        const QString &probeUid,
                                        const QString &channelId,
+                                       const int begin,
+                                       const int end,
                                        QObject *parent)
     : ProbeMultifactor(testUid, probeUid, parent)
     , m_channelId(channelId)
+    , m_begin(begin)
+    , m_end(end)
 {
 
 }

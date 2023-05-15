@@ -24,8 +24,14 @@ bool OctaedronFactorsDescritior::isValid(const QString &testUid, const QString &
     return OctaedronFactors::isValid(testUid, probeUid);
 }
 
-MultiFactor *OctaedronFactorsDescritior::caclulate(const QString &testUid, const QString &probeUid, const QString &channelUid)
+MultiFactor *OctaedronFactorsDescritior::caclulate(const QString &testUid,
+                                                   const QString &probeUid,
+                                                   const QString &channelUid,
+                                                   const int begin,
+                                                   const int end)
 {
     Q_UNUSED(channelUid);
+    Q_UNUSED(begin);
+    Q_UNUSED(end);
     return new OctaedronFactors(testUid, probeUid);
 }

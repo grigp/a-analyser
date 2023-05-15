@@ -23,7 +23,11 @@ public:
      */
     bool isValid(const QString &testUid, const QString &probeUid = "", const QString &channelId = "") override;
 
-    MultiFactor* caclulate(const QString& testUid = "", const QString& probeUid = "", const QString& channelUid = "") override;
+    MultiFactor* caclulate(const QString& testUid = "",
+                           const QString& probeUid = "",
+                           const QString& channelUid = "",
+                           const int begin = -1,
+                           const int end  = -1) override;
 };
 
 #endif // PULSEFACTORSDESCRIPTOR_H

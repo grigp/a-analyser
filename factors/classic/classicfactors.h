@@ -52,6 +52,8 @@ public:
     explicit ClassicFactors(const QString &testUid,
                             const QString &probeUid,
                             const QString &channelId,
+                            const int begin = -1,
+                            const int end  = -1,
                             QObject *parent = nullptr);
 
     /*!

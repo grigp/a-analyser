@@ -23,7 +23,11 @@ bool JumpHeightSingleFactorsDescriptor::isValid(const QString &testUid, const QS
     return JumpHeightSingleFactors::isValid(testUid, probeUid, channelId);
 }
 
-MultiFactor *JumpHeightSingleFactorsDescriptor::caclulate(const QString &testUid, const QString &probeUid, const QString &channelUid)
+MultiFactor *JumpHeightSingleFactorsDescriptor::caclulate(const QString &testUid,
+                                                          const QString &probeUid,
+                                                          const QString &channelUid,
+                                                          const int begin,
+                                                          const int end)
 {
-    return new JumpHeightSingleFactors(testUid, probeUid, channelUid);
+    return new JumpHeightSingleFactors(testUid, probeUid, channelUid, begin, end);
 }

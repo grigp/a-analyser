@@ -24,7 +24,11 @@ public:
      */
     virtual bool isValid(const QString &testUid, const QString &probeUid = "", const QString &channelId = "") = 0;
 
-    virtual MultiFactor* caclulate(const QString& testUid = "", const QString& probeUid = "", const QString& channelUid = "") = 0;
+    virtual MultiFactor* caclulate(const QString& testUid = "",
+                                   const QString& probeUid = "",
+                                   const QString& channelUid = "",
+                                   const int begin = -1,
+                                   const int end  = -1) = 0;
 
     BaseDefines::TestLevel level() {return m_level;}
 

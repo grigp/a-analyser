@@ -24,8 +24,14 @@ bool StepOffsetFactorsDescriptor::isValid(const QString &testUid, const QString 
     return StepOffsetFactors::isValid(testUid, probeUid);
 }
 
-MultiFactor *StepOffsetFactorsDescriptor::caclulate(const QString &testUid, const QString &probeUid, const QString &channelUid)
+MultiFactor *StepOffsetFactorsDescriptor::caclulate(const QString &testUid,
+                                                    const QString &probeUid,
+                                                    const QString &channelUid,
+                                                    const int begin,
+                                                    const int end)
 {
     Q_UNUSED(channelUid);
+    Q_UNUSED(begin);
+    Q_UNUSED(end);
     return new StepOffsetFactors(testUid, probeUid);
 }

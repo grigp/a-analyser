@@ -24,8 +24,14 @@ bool StepDeviationFactorsDescriptor::isValid(const QString &testUid, const QStri
     return StepDeviationFactors::isValid(testUid, probeUid);
 }
 
-MultiFactor *StepDeviationFactorsDescriptor::caclulate(const QString &testUid, const QString &probeUid, const QString &channelUid)
+MultiFactor *StepDeviationFactorsDescriptor::caclulate(const QString &testUid,
+                                                       const QString &probeUid,
+                                                       const QString &channelUid,
+                                                       const int begin,
+                                                       const int end)
 {
     Q_UNUSED(channelUid);
+    Q_UNUSED(begin);
+    Q_UNUSED(end);
     return new StepDeviationFactors(testUid, probeUid);
 }

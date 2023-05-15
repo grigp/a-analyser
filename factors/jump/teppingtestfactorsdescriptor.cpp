@@ -23,7 +23,11 @@ bool TeppingTestFactorsDescriptor::isValid(const QString &testUid, const QString
     return TeppingTestFactors::isValid(testUid, probeUid, channelId);
 }
 
-MultiFactor *TeppingTestFactorsDescriptor::caclulate(const QString &testUid, const QString &probeUid, const QString &channelUid)
+MultiFactor *TeppingTestFactorsDescriptor::caclulate(const QString &testUid,
+                                                     const QString &probeUid,
+                                                     const QString &channelUid,
+                                                     const int begin,
+                                                     const int end)
 {
-    return new TeppingTestFactors(testUid, probeUid, channelUid);
+    return new TeppingTestFactors(testUid, probeUid, channelUid, begin, end);
 }

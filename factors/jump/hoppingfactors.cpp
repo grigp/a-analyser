@@ -8,8 +8,10 @@
 HoppingFactors::HoppingFactors(const QString &testUid,
                                const QString &probeUid,
                                const QString &channelId,
+                               const int begin,
+                               const int end,
                                QObject *parent)
-    : ChannelMultifactor(testUid, probeUid, channelId, parent)
+    : ChannelMultifactor(testUid, probeUid, channelId, begin, end, parent)
 {
     if (isValid())
         calculate();

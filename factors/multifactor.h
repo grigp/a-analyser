@@ -137,6 +137,8 @@ public:
     explicit ChannelMultifactor(const QString &testUid,
                                 const QString &probeUid,
                                 const QString &channelId,
+                                const int begin = -1,
+                                const int end  = -1,
                                 QObject *parent = nullptr);
 
 protected:
@@ -144,9 +146,13 @@ protected:
      * \brief Возвращает id канала. Для использования в подклассах
      */
     QString channelId() const {return m_channelId;}
+    int begin() const {return m_begin;}
+    int end() const {return m_end;}
 
 private:
     QString m_channelId;
+    int m_begin {-1};
+    int m_end {-1};
 };
 
 

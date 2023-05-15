@@ -23,7 +23,11 @@ bool VectorFactorsDescriptor::isValid(const QString &testUid, const QString &pro
     return VectorFactors::isValid(testUid, probeUid, channelId);
 }
 
-MultiFactor *VectorFactorsDescriptor::caclulate(const QString &testUid, const QString &probeUid, const QString &channelUid)
+MultiFactor *VectorFactorsDescriptor::caclulate(const QString &testUid,
+                                                const QString &probeUid,
+                                                const QString &channelUid,
+                                                const int begin,
+                                                const int end)
 {
-    return new VectorFactors(testUid, probeUid, channelUid);
+    return new VectorFactors(testUid, probeUid, channelUid, begin, end);
 }

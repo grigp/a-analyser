@@ -23,7 +23,11 @@ bool DropTestFactorsDescriptor::isValid(const QString &testUid, const QString &p
     return DropTestFactors::isValid(testUid, probeUid, channelId);
 }
 
-MultiFactor *DropTestFactorsDescriptor::caclulate(const QString &testUid, const QString &probeUid, const QString &channelUid)
+MultiFactor *DropTestFactorsDescriptor::caclulate(const QString &testUid,
+                                                  const QString &probeUid,
+                                                  const QString &channelUid,
+                                                  const int begin,
+                                                  const int end)
 {
-    return new DropTestFactors(testUid, probeUid, channelUid);
+    return new DropTestFactors(testUid, probeUid, channelUid, begin, end);
 }

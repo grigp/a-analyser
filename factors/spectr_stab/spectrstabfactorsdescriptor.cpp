@@ -23,7 +23,11 @@ bool SpectrStabFactorsDescriptor::isValid(const QString &testUid, const QString 
     return SpectrStabFactors::isValid(testUid, probeUid, channelId);
 }
 
-MultiFactor *SpectrStabFactorsDescriptor::caclulate(const QString &testUid, const QString &probeUid, const QString &channelUid)
+MultiFactor *SpectrStabFactorsDescriptor::caclulate(const QString &testUid,
+                                                    const QString &probeUid,
+                                                    const QString &channelUid,
+                                                    const int begin,
+                                                    const int end)
 {
-    return new SpectrStabFactors(testUid, probeUid, channelUid);
+    return new SpectrStabFactors(testUid, probeUid, channelUid, begin, end);
 }

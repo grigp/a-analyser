@@ -24,8 +24,14 @@ bool TriangleFactorsDescriptor::isValid(const QString &testUid, const QString &p
     return TriangleFactors::isValid(testUid, probeUid);
 }
 
-MultiFactor *TriangleFactorsDescriptor::caclulate(const QString &testUid, const QString &probeUid, const QString &channelUid)
+MultiFactor *TriangleFactorsDescriptor::caclulate(const QString &testUid,
+                                                  const QString &probeUid,
+                                                  const QString &channelUid,
+                                                  const int begin,
+                                                  const int end)
 {
     Q_UNUSED(channelUid);
+    Q_UNUSED(begin);
+    Q_UNUSED(end);
     return new TriangleFactors(testUid, probeUid);
 }

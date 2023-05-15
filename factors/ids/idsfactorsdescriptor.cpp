@@ -23,7 +23,11 @@ bool IDSFactorsDescriptor::isValid(const QString &testUid, const QString &probeU
     return IDSFactors::isValid(testUid, probeUid, channelId);
 }
 
-MultiFactor *IDSFactorsDescriptor::caclulate(const QString &testUid, const QString &probeUid, const QString &channelUid)
+MultiFactor *IDSFactorsDescriptor::caclulate(const QString &testUid,
+                                             const QString &probeUid,
+                                             const QString &channelUid,
+                                             const int begin,
+                                             const int end)
 {
-    return new IDSFactors(testUid, probeUid, channelUid);
+    return new IDSFactors(testUid, probeUid, channelUid, begin, end);
 }

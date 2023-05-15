@@ -23,7 +23,11 @@ bool ClassicFactorsDescriptor::isValid(const QString &testUid, const QString &pr
     return ClassicFactors::isValid(testUid, probeUid, channelId);
 }
 
-MultiFactor *ClassicFactorsDescriptor::caclulate(const QString &testUid, const QString &probeUid, const QString &channelUid)
+MultiFactor *ClassicFactorsDescriptor::caclulate(const QString &testUid,
+                                                 const QString &probeUid,
+                                                 const QString &channelUid,
+                                                 const int begin,
+                                                 const int end)
 {
-    return new ClassicFactors(testUid, probeUid, channelUid);
+    return new ClassicFactors(testUid, probeUid, channelUid, begin, end);
 }
