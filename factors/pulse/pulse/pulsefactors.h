@@ -97,6 +97,15 @@ private:
     void finalCalculate();  /// Done;
     void processHist();
 
+    /*!
+     * \brief Генерация заключения
+     */
+    void computeConslution();
+    /*!
+     * \brief Расчет параметров автокорреляции
+     */
+    void computeAKA();
+
     double m_pulse {0};
     double m_RMSSD {0};
     int m_NN50 {0};
