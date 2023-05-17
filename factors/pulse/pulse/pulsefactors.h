@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QCoreApplication>
+#include <QVector>
 #include "multifactor.h"
 
 
@@ -12,6 +13,22 @@ static const QString GroupUid = "{BAED5445-97FE-48B9-99DF-1A5FF367A870}";
 static const QString GroupName = QCoreApplication::tr("Показатели вариационной пульсометрии");
 
 static const QString PulseUid = "{6930C0E6-6858-4BE3-8040-6A9E130FA0E1}";
+static const QString IVRUid = "{627AE093-E357-4034-ADED-70A6CF33EE5E}";
+static const QString PAPRUid = "{A5665485-3B20-4FB8-8AB9-64771358F1D9}";
+static const QString VPRUid = "{E12CBCF8-DE3D-4942-AEFD-98B58BEF52C9}";
+static const QString INUid = "{40A48ADD-91D8-4679-8E75-31F963720CA1}";
+static const QString ModeUid = "{B3E5291E-444F-42D5-ABDE-F0A0ACC842C7}";
+static const QString AModeUid = "{6ECBB464-AF64-4392-A54B-32EA6D1B9026}";
+static const QString MxDMnUid = "{527835F4-19CF-49CC-8971-6D360D93BFFF}";
+static const QString SDNNUid = "{CED883B8-8F38-41CD-B9D8-2F4200AB87B5}";
+static const QString RMSSDUid = "{EEC2F1E5-B527-4ADB-88B1-0E3C75BF4300}";
+static const QString pNN50Uid = "{8631AEA7-F9D0-4A1B-8002-D26E07049AEE}";
+static const QString CVUid = "{C730DAD5-8658-4B22-BABF-7C5605130105}";
+static const QString SDSDUid = "{67DD0651-AA19-4E69-B409-563E9884A812}";
+static const QString MDUid = "{F4DD9750-05E1-423C-959C-B3E40B8B428D}";
+static const QString AKACClUid = "{0FA4BFE9-6CE7-4DF0-B9E3-78B788057C14}";
+static const QString AKACC0Uid = "{C6035C76-DC9C-4380-BB73-E90875A64D12}";
+static const QString DXUid = "{7AAC21AF-617B-49E9-B96E-975201D5FD2E}";
 }
 
 /*!
@@ -62,8 +79,64 @@ public:
      */
     static void registerFactors();
 
+    /*!
+     * \brief Доступ к границам статистики
+     */
+    int statBoundsCount() const;
+    double statBounds(const int idx) const;
+
+    /*!
+     * \brief Доступ к счетчикам статистики
+     */
+    int statCountsCount() const;
+    double statCounts(const int idx) const;
+
 private:
+    void assignStat(const double sdt, const double tMin, const double tMax);
+    void addRRValue(const double val, const double t);
+    void finalCalculate();  /// Done;
+    void processHist();
+
     double m_pulse {0};
+    double m_RMSSD {0};
+    int m_NN50 {0};
+    double m_pNN50;
+    double m_meanD1 {0}, m_meanD2 {0};
+    double m_SDSD {0};
+    double m_CVR {0};
+    double m_HRM {0};
+    double m_MDNN {0};
+
+    // стандартная статистика по интервалам
+    // Момент 1,2 (для SDNN)
+    double m_meanNN {0}, m_mean2NN {0};
+    double m_SDNN {0};
+
+    double m_minNN {0};
+    double m_maxNN {0};
+    double m_prevNN {-1};
+    int m_nCnt {0};   ///< Счетчик данных
+    int m_nD2Cnt {0}; ///< Количество пар интервалов
+
+    double m_BASC {0};    ///< Коэф регрессии скаттерограммы (a)
+    double m_BSC {0};     ///< Коэф угла наклона линии регрессии скаттерограммы (y = b*x + a)
+    double m_BCSC {0};    ///< Коэф регрессии для нормали (уравнение b*y - x = c)
+    double m_bscC11 {0}, m_bscC12 {0}, m_bscC21 {0}, m_bscY1 {0}, m_bscY2 {0};
+    double m_bscCN {0}, m_bscYV2{0};
+
+    QVector<double> m_bStatBnd;  ///< Границы статистики
+    QVector<int> m_bStatCnt;     ///< Счетчики статистики
+    int m_outerMin {0}, m_outerMax {0};  ///< То, что не попало
+    int m_statSize {0};                  ///< Кол-во интервалов
+
+    double m_xMod {0};
+    double m_ampMod {0};  ///< Амплитуда моды
+    double m_MxDMn {0};   ///< Разность между макс. и мин. значениями
+    double m_DXRange {0}; ///< Вариационный размах (по гистограмме)  -> <-
+    double m_ACK1 {0};    ///< Первый коэффициент автокоррел. функции
+    double m_AKSh0 {0};   ///< Число сдвигов автокор. функции до нуля
+    double m_IVR {0}, m_VPR {0}, m_PAPR {0}, m_INNPR {0};
+    double m_SIM {0}, m_PAR {0}; ///< Коэффициенты
 };
 
 #endif // PULSEFACTORS_H
