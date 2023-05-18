@@ -1,9 +1,11 @@
 #ifndef PULSEFACTORS_H
 #define PULSEFACTORS_H
 
+#include <QCoreApplication>
 #include <QObject>
 #include <QCoreApplication>
 #include <QVector>
+#include <QMap>
 #include "multifactor.h"
 
 
@@ -29,7 +31,99 @@ static const QString MDUid = "{F4DD9750-05E1-423C-959C-B3E40B8B428D}";
 static const QString AKACClUid = "{0FA4BFE9-6CE7-4DF0-B9E3-78B788057C14}";
 static const QString AKACC0Uid = "{C6035C76-DC9C-4380-BB73-E90875A64D12}";
 static const QString DXUid = "{7AAC21AF-617B-49E9-B96E-975201D5FD2E}";
+
+static const int iVPGCount = 40;  ///< это для Баевского
+static const int iAKPointsCount = 30;
+static const int iPNNDifValue = 50;
+
+
+/*!
+ * \brief Суммарный эффект регуляции The OverallEffectReg enum
+ */
+enum OverallEffectReg
+{
+      oerSevereTachycardia = -2     ///< выраженная тахикардия
+    , oerModerateTachycardia = -1   ///< умеренная тахикардия
+    , oerNormosystole = -1          ///< нормосистолия
+    , oerModerateBradycardia = 1    ///< умеренная брадикардия
+    , oerSevereBradycardia = 2      ///< выраженная брадикардия
+};
+
+static QMap<OverallEffectReg, QString> OverallEffectRegName =
+{
+      std::pair<OverallEffectReg, QString> (oerSevereTachycardia, QCoreApplication::tr("выраженная тахикардия"))
+    , std::pair<OverallEffectReg, QString> (oerModerateTachycardia, QCoreApplication::tr("умеренная тахикардия"))
+    , std::pair<OverallEffectReg, QString> (oerNormosystole, QCoreApplication::tr("нормосистолия"))
+    , std::pair<OverallEffectReg, QString> (oerModerateBradycardia, QCoreApplication::tr("умеренная брадикардия"))
+    , std::pair<OverallEffectReg, QString> (oerSevereBradycardia, QCoreApplication::tr("выраженная брадикардия"))
+};
+
+/*!
+ * \brief Функция автоматизма The AutomaticFunction enum
+ */
+enum AutomaticFunction
+{
+      afPronDisturbAuto = -2         ///< нарушение автоматизма выраженное
+    , afModerateAutoDisorder = -1    ///< нарушение автоматизма умеренное
+    , afModerateSinusArrhythmia = 0  ///< умеренная синусовая аритмия
+    , afSevereSinusArrhythmia = 1    ///< выраженная синусовая аритмия
+    , afRigidRhythm = 2              ///< ригидный ритм
+};
+
+static QMap<AutomaticFunction, QString> AutomaticFunctionName =
+{
+      std::pair<AutomaticFunction, QString> (afPronDisturbAuto, QCoreApplication::tr("нарушение автоматизма выраженное"))
+    , std::pair<AutomaticFunction, QString> (afModerateAutoDisorder, QCoreApplication::tr("нарушение автоматизма умеренное"))
+    , std::pair<AutomaticFunction, QString> (afModerateSinusArrhythmia, QCoreApplication::tr("умеренная синусовая аритмия"))
+    , std::pair<AutomaticFunction, QString> (afSevereSinusArrhythmia, QCoreApplication::tr("выраженная синусовая аритмия"))
+    , std::pair<AutomaticFunction, QString> (afRigidRhythm, QCoreApplication::tr("ригидный ритм"))
+};
+
+/*!
+ * \brief Вегетативный гомеостаз The VegetativeHomeostasis enum
+ */
+enum VegetativeHomeostasis
+{
+      vhSeverePredominancePSNS = -2     ///< выраженное преобладание ПСНС
+    , vhModeratePredominancePSNS = -1   ///< умеренное преобладание ПСНС
+    , vhSaved = 0                       ///< сохранен
+    , vhModeratePredominanceSNS = 1     ///< умеренное преобладание СНС
+    , vhSeverePredominanceSNS = 2       ///< выраженное преобладание СНС
+};
+
+static QMap<VegetativeHomeostasis, QString> VegetativeHomeostasisName =
+{
+      std::pair<VegetativeHomeostasis, QString> (vhSeverePredominancePSNS, QCoreApplication::tr("выраженное преобладание ПСНС"))
+    , std::pair<VegetativeHomeostasis, QString> (vhModeratePredominancePSNS, QCoreApplication::tr("умеренное преобладание ПСНС"))
+    , std::pair<VegetativeHomeostasis, QString> (vhSaved, QCoreApplication::tr("сохранен"))
+    , std::pair<VegetativeHomeostasis, QString> (vhModeratePredominanceSNS, QCoreApplication::tr("умеренное преобладание СНС"))
+    , std::pair<VegetativeHomeostasis, QString> (vhSeverePredominanceSNS, QCoreApplication::tr("выраженное преобладание СНС"))
+};
+
+/*!
+ * \brief Устойчивость регуляции The StabilityRegulation enum
+ */
+enum StabilityRegulation
+{
+      srDysregulationPredominancePSNS = -2   ///< дисрегуляция с преобладанием ПСНС
+    , srTransitionProcess = -1               ///< переходный процесс
+    , srSustainableRegulation = 0            ///< устойчивая регуляция
+    , srCentralDysregulation = 1             ///< дисрегуляция центрального типа
+    , srDominatedDysregulationSNS = 2        ///< дисрегуляция с преобладанием СНС
+};
+
+static QMap<StabilityRegulation, QString> StabilityRegulationName =
+{
+      std::pair<StabilityRegulation, QString> (srDysregulationPredominancePSNS, QCoreApplication::tr("дисрегуляция с преобладанием ПСНС"))
+    , std::pair<StabilityRegulation, QString> (srTransitionProcess, QCoreApplication::tr("переходный процесс"))
+    , std::pair<StabilityRegulation, QString> (srSustainableRegulation, QCoreApplication::tr("устойчивая регуляция"))
+    , std::pair<StabilityRegulation, QString> (srCentralDysregulation, QCoreApplication::tr("дисрегуляция центрального типа"))
+    , std::pair<StabilityRegulation, QString> (srDominatedDysregulationSNS, QCoreApplication::tr("дисрегуляция с преобладанием СНС"))
+};
+
 }
+
+class Ritmogram;
 
 /*!
  * \brief Класс модуля расчета показателей ритмограммы The PulseFactors class
@@ -91,6 +185,31 @@ public:
     int statCountsCount() const;
     double statCounts(const int idx) const;
 
+    /*!
+     * \brief Доступ к коэффициентам корреляции
+     * \param idx - номер коэффициента корреляции 0 - PulseFactorsDefines::iAKPointsCount
+     * \return коэффициент корреляции
+     */
+    double correlationCoef(const int idx);
+
+    /*!
+     * \brief Возвращает значение суммарного эффекта регуляции
+     */
+    PulseFactorsDefines::OverallEffectReg overallEffectReg() {return  m_summReg;}
+    /*!
+     * \brief Возвращает значение функции автоматизма
+     */
+    PulseFactorsDefines::AutomaticFunction automaticFunction() {return  m_funcAuto;}
+
+    /*!
+     * \brief Возвращает значение вегетативного гомеостаза
+     */
+    PulseFactorsDefines::VegetativeHomeostasis vegetativeHomeostasis() {return m_vegHomst;}
+    /*!
+     * \brief Возвращает значение устойчивости регуляции
+     */
+    PulseFactorsDefines::StabilityRegulation stabilityRegulation() {return m_ustReg;}
+
 private:
     void assignStat(const double sdt, const double tMin, const double tMax);
     void addRRValue(const double val, const double t);
@@ -104,7 +223,10 @@ private:
     /*!
      * \brief Расчет параметров автокорреляции
      */
-    void computeAKA();
+    void computeAKA(Ritmogram* signal);
+
+    int m_begin {0};  ///< Начальная точка расчета
+    int m_end {0};    ///< Конечная точка расчета
 
     double m_pulse {0};
     double m_RMSSD {0};
@@ -146,6 +268,13 @@ private:
     double m_AKSh0 {0};   ///< Число сдвигов автокор. функции до нуля
     double m_IVR {0}, m_VPR {0}, m_PAPR {0}, m_INNPR {0};
     double m_SIM {0}, m_PAR {0}; ///< Коэффициенты
+
+    double m_masKK[PulseFactorsDefines::iAKPointsCount]; ///< Массив коэффициентов корреляции
+    ///< Результаты
+    PulseFactorsDefines::OverallEffectReg m_summReg {PulseFactorsDefines::oerNormosystole};
+    PulseFactorsDefines::AutomaticFunction m_funcAuto {PulseFactorsDefines::afModerateSinusArrhythmia};
+    PulseFactorsDefines::VegetativeHomeostasis m_vegHomst {PulseFactorsDefines::vhSaved};
+    PulseFactorsDefines::StabilityRegulation m_ustReg {PulseFactorsDefines::srSustainableRegulation};
 };
 
 #endif // PULSEFACTORS_H

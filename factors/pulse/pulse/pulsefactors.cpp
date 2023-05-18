@@ -8,6 +8,12 @@
 #include "dataprovider.h"
 #include "ritmogram.h"
 
+namespace
+{
+
+
+}
+
 PulseFactors::PulseFactors(const QString &testUid,
                            const QString &probeUid,
                            const QString &channelId,
@@ -59,19 +65,19 @@ void PulseFactors::calculate()
 //            m_pulse /= signal.size();
 
             //! Начальная и конечная точки
-            int b = 0;
-            int e = signal.size() - 1;
+            m_begin = 0;
+            m_end = signal.size() - 1;
             if (begin() < end())
             {
                 if (begin() > -1)
-                    b = begin();
+                    m_begin = begin();
                 if (end() > -1)
-                    e = end();
+                    m_end = end();
             }
 
             //! Добавление значений и предварительная обработка
             double vd = 0;
-            for (int i = b; i <= e; ++i)
+            for (int i = m_begin; i <= m_end; ++i)
             {
                 double v = signal.value(i);
                 if (v > 0)
@@ -87,8 +93,8 @@ void PulseFactors::calculate()
             }
             finalCalculate();
 
+            computeAKA(&signal);
             computeConslution();
-            computeAKA();
         }
     }
 
@@ -190,6 +196,12 @@ double PulseFactors::statCounts(const int idx) const
 {
     Q_ASSERT(idx >= 0 && idx < m_bStatCnt.size());
     return m_bStatCnt.at(idx);
+}
+
+double PulseFactors::correlationCoef(const int idx)
+{
+    Q_ASSERT(idx >= 0 && idx < PulseFactorsDefines::iAKPointsCount);
+    return m_masKK[idx];
 }
 
 void PulseFactors::assignStat(const double sdt, const double tMin, const double tMax)
@@ -440,10 +452,98 @@ void PulseFactors::processHist()
 
 void PulseFactors::computeConslution()
 {
+    if (m_HRM > 0)
+    {
+      //! Суммарный эффект регуляции
+      if ((60 / m_HRM <= 0.66) && (60 / m_HRM > 0.5))
+        m_summReg = PulseFactorsDefines::oerModerateTachycardia;
+      else
+      if (60 / m_HRM <= 0.5)
+        m_summReg = PulseFactorsDefines::oerSevereTachycardia;
+      else
+      if ((60 / m_HRM >= 1.0) && (60 / m_HRM < 1.2))
+        m_summReg = PulseFactorsDefines::oerModerateBradycardia;
+      else
+      if (60 / m_HRM >= 1.2)
+        m_summReg = PulseFactorsDefines::oerSevereBradycardia;
+    }
 
+    //! Функция автоматизма
+    if ((m_SDNN <= 0.02) && (m_maxNN - m_minNN <= 0.1) && (m_CVR <= 2))
+        m_funcAuto = PulseFactorsDefines::afRigidRhythm;
+    if ((m_SDNN >= 0.1) && (m_maxNN - m_minNN >= 0.3 * m_xMod) && (m_CVR >= 8))
+        m_funcAuto = PulseFactorsDefines::afSevereSinusArrhythmia;
+    if (m_maxNN - m_minNN >= 0.45 * m_xMod)
+        m_funcAuto = PulseFactorsDefines::afModerateAutoDisorder;
+    if ((m_SDNN >= 0.1) and (m_maxNN - m_minNN >= 0.6 * m_xMod) && (m_CVR >= 8))
+        m_funcAuto = PulseFactorsDefines::afPronDisturbAuto;
+
+    //! Вегетативный гомеостаз
+    if ((m_maxNN - m_minNN <= 0.06) && (m_INNPR >= 500))
+        m_vegHomst = PulseFactorsDefines::vhSeverePredominanceSNS;
+    if ((m_maxNN - m_minNN <= 0.15) && (m_INNPR >= 200))
+        m_vegHomst = PulseFactorsDefines::vhModeratePredominanceSNS;
+    if ((m_maxNN - m_minNN >= 0.3) && (m_INNPR <= 50))
+        m_vegHomst = PulseFactorsDefines::vhModeratePredominancePSNS;
+    if ((m_maxNN - m_minNN >= 0.5) && (m_INNPR <= 25))
+        m_vegHomst = PulseFactorsDefines::vhSeverePredominancePSNS;
+
+    //! Устойчивость регуляции
+    if (m_CVR <= 3)
+        m_ustReg = PulseFactorsDefines::srCentralDysregulation;
+    if ((m_CVR <= 3) && (m_INNPR >= 200) && (m_xMod >= 0.8))
+        m_ustReg = PulseFactorsDefines::srDominatedDysregulationSNS;
+    if ((m_CVR >= 6) && (m_INNPR <= 50) && (m_xMod <= 0.8))
+        m_ustReg = PulseFactorsDefines::srDysregulationPredominancePSNS;
+    if ((m_CVR >= 10) && (m_INNPR <= 25))
+        m_ustReg = PulseFactorsDefines::srTransitionProcess;
 }
 
-void PulseFactors::computeAKA()
+void PulseFactors::computeAKA(Ritmogram* signal)
 {
+    if (signal->maxValue() - signal->minValue() < 10000)
+    {
+        //! Инициализация
+        for (int i = 0; i < PulseFactorsDefines::iAKPointsCount; ++i)
+            m_masKK[i] = 0.0;
 
+        //! Расчет суммы квадратов
+        double sSqr = 0.0;                              //! Расчет
+        for (int j = m_begin; j <= m_end; ++j)
+        {
+            double r = signal->value(j);
+            sSqr += pow(r - signal->midValue(), 2);
+        }
+
+        //! Расчет 31 коэффициента
+        m_AKSh0 = -1;
+        //! Расчет суммы произведений
+        for (int i = 0; i < PulseFactorsDefines::iAKPointsCount; ++i)
+        {
+            double s = 0.0;
+            int k = 0;
+            for (int j = i; j <= m_end; ++j)
+            {
+                s += ((signal->value(j) - signal->midValue()) * (signal->value(k) - signal->midValue()));
+                ++k;
+            }
+
+           //! Коэффициент корелляции
+           if (sSqr > 0)
+               m_masKK[i] = s / sSqr;
+           else
+               m_masKK[i] = 0;
+
+           //! Первый переход линии 0
+           if ((static_cast<int>(m_AKSh0) == -1) and (m_masKK[i] <= 0))
+              m_AKSh0 = i;
+        }
+
+        m_ACK1 = m_masKK[1]; //! Первый коэффициент корелляции
+
+        //! Если функция корелляции не пересекла 0 за iAKPointsCount точек корелляции, то
+        //! первая точка должна быть за пределами исследуемой зоны корелляции iAKPointsCount + 1
+        if (static_cast<int>(m_AKSh0) == -1)
+            m_AKSh0 = PulseFactorsDefines::iAKPointsCount + 1;
+    }
 }
