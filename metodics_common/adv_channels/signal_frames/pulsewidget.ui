@@ -68,6 +68,15 @@
          <enum>QFrame::Raised</enum>
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_3">
+         <property name="spacing">
+          <number>2</number>
+         </property>
+         <property name="topMargin">
+          <number>2</number>
+         </property>
+         <property name="bottomMargin">
+          <number>2</number>
+         </property>
          <item>
           <widget class="QGroupBox" name="gbPulse">
            <property name="title">
@@ -265,6 +274,146 @@
            </layout>
           </widget>
          </item>
+         <item>
+          <widget class="QFrame" name="frDelAtf">
+           <property name="frameShape">
+            <enum>QFrame::StyledPanel</enum>
+           </property>
+           <property name="frameShadow">
+            <enum>QFrame::Raised</enum>
+           </property>
+           <layout class="QVBoxLayout" name="verticalLayout_5">
+            <property name="spacing">
+             <number>1</number>
+            </property>
+            <property name="topMargin">
+             <number>1</number>
+            </property>
+            <property name="bottomMargin">
+             <number>1</number>
+            </property>
+            <item>
+             <widget class="QCheckBox" name="cbDelAtf">
+              <property name="text">
+               <string>Режим удаления артефактов</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QFrame" name="frLoBound">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="frameShape">
+               <enum>QFrame::StyledPanel</enum>
+              </property>
+              <property name="frameShadow">
+               <enum>QFrame::Raised</enum>
+              </property>
+              <layout class="QHBoxLayout" name="horizontalLayout_5">
+               <property name="topMargin">
+                <number>1</number>
+               </property>
+               <property name="bottomMargin">
+                <number>1</number>
+               </property>
+               <item>
+                <widget class="QLabel" name="lbLoBound">
+                 <property name="text">
+                  <string>Нижняя граница, уд/мин</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QSpinBox" name="edLoBound">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="minimumSize">
+                  <size>
+                   <width>100</width>
+                   <height>0</height>
+                  </size>
+                 </property>
+                 <property name="minimum">
+                  <number>0</number>
+                 </property>
+                 <property name="maximum">
+                  <number>60</number>
+                 </property>
+                 <property name="singleStep">
+                  <number>5</number>
+                 </property>
+                 <property name="value">
+                  <number>30</number>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </item>
+            <item>
+             <widget class="QFrame" name="frUpBound">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="frameShape">
+               <enum>QFrame::StyledPanel</enum>
+              </property>
+              <property name="frameShadow">
+               <enum>QFrame::Raised</enum>
+              </property>
+              <layout class="QHBoxLayout" name="horizontalLayout_4">
+               <property name="topMargin">
+                <number>1</number>
+               </property>
+               <property name="bottomMargin">
+                <number>1</number>
+               </property>
+               <item>
+                <widget class="QLabel" name="lblUpBound">
+                 <property name="text">
+                  <string>Верхняя граница, уд/мин</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QSpinBox" name="edUpBound">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="minimumSize">
+                  <size>
+                   <width>100</width>
+                   <height>0</height>
+                  </size>
+                 </property>
+                 <property name="minimum">
+                  <number>90</number>
+                 </property>
+                 <property name="maximum">
+                  <number>250</number>
+                 </property>
+                 <property name="singleStep">
+                  <number>5</number>
+                 </property>
+                 <property name="value">
+                  <number>200</number>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </item>
         </layout>
        </widget>
       </item>
@@ -335,8 +484,8 @@
    <slot>on_resetPulse()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>69</x>
-     <y>199</y>
+     <x>92</x>
+     <y>173</y>
     </hint>
     <hint type="destinationlabel">
      <x>925</x>
@@ -351,8 +500,8 @@
    <slot>on_pulseRecChange(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>567</x>
-     <y>201</y>
+     <x>582</x>
+     <y>177</y>
     </hint>
     <hint type="destinationlabel">
      <x>926</x>
@@ -360,9 +509,60 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>cbDelAtf</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>PulseWidget</receiver>
+   <slot>on_delAtfMode(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>97</x>
+     <y>197</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>922</x>
+     <y>82</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>edLoBound</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>PulseWidget</receiver>
+   <slot>on_changeLoBound(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>498</x>
+     <y>226</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>925</x>
+     <y>226</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>edUpBound</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>PulseWidget</receiver>
+   <slot>on_changeUpBound(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>532</x>
+     <y>247</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>926</x>
+     <y>264</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>on_resetPulse()</slot>
   <slot>on_pulseRecChange(bool)</slot>
+  <slot>on_delAtfMode(bool)</slot>
+  <slot>on_changeLoBound(int)</slot>
+  <slot>on_changeUpBound(int)</slot>
  </slots>
 </ui>

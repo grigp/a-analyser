@@ -4,6 +4,7 @@
 #include "driver.h"
 #include "ritmogram.h"
 #include "testresultdata.h"
+#include "settingsprovider.h"
 
 #include <QDebug>
 
@@ -18,6 +19,16 @@ PulseWidget::PulseWidget(Driver *drv, const QString channelId, QWidget *parent) 
     ui->wgtRitmogram->setSecundLabels(false);
 
     setRecordedChannels();
+
+    auto valIsDel = SettingsProvider::valueFromRegAppCopy("PulseRecord", "DeleteArtifacts", false).toBool();
+    ui->cbDelAtf->setChecked(valIsDel);
+    setDelAtf(valIsDel);
+
+    auto valLoBnd = SettingsProvider::valueFromRegAppCopy("PulseRecord", "ArtifactBoundLower", 30).toInt();
+    ui->edLoBound->setValue(valLoBnd);
+
+    auto valUpBnd = SettingsProvider::valueFromRegAppCopy("PulseRecord", "ArtifactBoundUpper", 200).toInt();
+    ui->edUpBound->setValue(valUpBnd);
 }
 
 PulseWidget::~PulseWidget()
@@ -57,20 +68,30 @@ void PulseWidget::getData(DeviceProtocols::DeviceData *data)
         DeviceProtocols::PulseDvcData *pulseData = static_cast<DeviceProtocols::PulseDvcData*>(data);
 
         double value = pulseData->value(0).toDouble();
-        ui->pbPulse->setValue(static_cast<int>(value));
-        ui->lblPulse->setText(QString("ЧСС - %1 уд/мин").arg(value));
 
-        m_pulseMiddle = m_pulseMiddle + value;
-        ++m_pulseCount;
+        //! Проверка в режиме отсечения артефактов
+        bool isCorrectValue = true;
+        if (ui->cbDelAtf->isChecked())
+            isCorrectValue = (value >= ui->edLoBound->value() && value <= ui->edUpBound->value());
 
-        ui->lblPulseMid->setText(QString("Средний пульс - %1 уд/мин").arg(m_pulseMiddle/m_pulseCount));
+        //! Регистрация удара пульса
+        if (isCorrectValue)
+        {
+            ui->pbPulse->setValue(static_cast<int>(value));
+            ui->lblPulse->setText(QString("ЧСС - %1 уд/мин").arg(value));
 
-        //! Погасим индикатор через 100 мс с использованием таймера объекта
-        m_pickTimerId = startTimer(100);
+            m_pulseMiddle = m_pulseMiddle + value;
+            ++m_pulseCount;
 
-        QVector<double> recPulse;
-        recPulse << value;
-        ui->wgtRitmogram->addValue(recPulse);
+            ui->lblPulseMid->setText(QString("Средний пульс - %1 уд/мин").arg(m_pulseMiddle/m_pulseCount));
+
+            //! Погасим индикатор через 100 мс с использованием таймера объекта
+            m_pickTimerId = startTimer(100);
+
+            QVector<double> recPulse;
+            recPulse << value;
+            ui->wgtRitmogram->addValue(recPulse);
+        }
     }
 }
 
@@ -139,6 +160,22 @@ void PulseWidget::on_pulseRecChange(bool checked)
     }
 }
 
+void PulseWidget::on_delAtfMode(bool value)
+{
+    setDelAtf(value);
+    SettingsProvider::setValueToRegAppCopy("PulseRecord", "DeleteArtifacts", value);
+}
+
+void PulseWidget::on_changeLoBound(int value)
+{
+    SettingsProvider::setValueToRegAppCopy("PulseRecord", "ArtifactBoundLower", value);
+}
+
+void PulseWidget::on_changeUpBound(int value)
+{
+    SettingsProvider::setValueToRegAppCopy("PulseRecord", "ArtifactBoundUpper", value);
+}
+
 void PulseWidget::setRecordedChannels()
 {
     auto isRec = driver()->isChannelRecordingDefault(channelId());
@@ -153,5 +190,11 @@ void PulseWidget::setRecButton(QPushButton *btn, const bool checked)
         btn->setIcon(QIcon(":/images/SaveOK.png"));
     else
         btn->setIcon(QIcon(":/images/SaveNO.png"));
+}
+
+void PulseWidget::setDelAtf(const bool isDelete)
+{
+    ui->frLoBound->setEnabled(isDelete);
+    ui->frUpBound->setEnabled(isDelete);
 }
 

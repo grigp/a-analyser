@@ -68,12 +68,17 @@ private slots:
     void on_resetPulse();
     void on_pulseRecChange(bool checked);
 
+    void on_delAtfMode(bool value);
+    void on_changeLoBound(int value);
+    void on_changeUpBound(int value);
+
 private:
     Ui::PulseWidget *ui;
 
     void setRecordedChannels();
 
     void setRecButton(QPushButton *btn, const bool checked);
+    void setDelAtf(const bool isDelete);
 
     double m_pulseMiddle {0};
     int m_pulseCount {0};
