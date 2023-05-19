@@ -44,7 +44,7 @@ enum OverallEffectReg
 {
       oerSevereTachycardia = -2     ///< выраженная тахикардия
     , oerModerateTachycardia = -1   ///< умеренная тахикардия
-    , oerNormosystole = -1          ///< нормосистолия
+    , oerNormosystole = 0          ///< нормосистолия
     , oerModerateBradycardia = 1    ///< умеренная брадикардия
     , oerSevereBradycardia = 2      ///< выраженная брадикардия
 };

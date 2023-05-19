@@ -10,6 +10,7 @@ class RitmogramVisualWidget;
 }
 
 class PulseFactors;
+class Ritmogram;
 
 /*!
  * \brief Класс виджета визуализатора сигнала ритмограммы The RitmogramVisualWidget class
@@ -30,7 +31,12 @@ public:
 private:
     Ui::RitmogramVisualWidget *ui;
 
+    void showGraph();
+    void showResume();
+    QString getStyleByValue(const int value) const;
+
     PulseFactors *m_factors {nullptr};
+    Ritmogram *m_signal {nullptr};
 };
 
 #endif // RITMOGRAMVISUALWIDGET_H

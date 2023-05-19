@@ -293,7 +293,6 @@ void PulseFactors::finalCalculate()
         {
             m_CVR = (m_SDNN / m_meanNN) * 100.0;
             m_HRM = 60.0 / m_meanNN; //(1000.0 / m_meanNN) * 60.0;
-            qDebug() << Q_FUNC_INFO << m_meanNN << m_nCnt << m_HRM;
         }
         else
         {

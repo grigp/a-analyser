@@ -116,6 +116,15 @@ public:
     virtual ~GraphPainter();
 
     /*!
+     * \brief Тип горизонтальных меток The HorizontalLabelsKind enum
+     */
+    enum HorizontalLabelsKind
+    {
+          hlkSeconds = 0  ///< Секундные
+        , hlkNumbers       ///< Номера точек
+    };
+
+    /*!
      * \brief Задает канву прорисовки. Будет испльзоваться в режиме виджета для задания
      * \param painter - рисователь
      * \param geometry - размер области прорисовки
@@ -184,6 +193,8 @@ public:
     QColor line6Color() const {return m_line6Color;}
     void setLine6Color(const QColor color) {m_line6Color = color;}
 
+    HorizontalLabelsKind horizontalLabelsKind() const {return m_horizontalLabelsKind;}
+    void setHorizontalLabelsKind(const HorizontalLabelsKind kind);
 
     /*!
      * \brief Режимы отображения сигнала по горизонтали XCoordSignalMode enum
@@ -359,6 +370,8 @@ private:
     int m_cursorY {0};
     int m_selectAreaBegin {-1};
     int m_selectAreaEnd {-1};
+
+    HorizontalLabelsKind m_horizontalLabelsKind {hlkSeconds};
 };
 
 #endif // GRAPHPAINTER_H

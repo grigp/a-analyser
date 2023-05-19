@@ -16,6 +16,7 @@ public:
      * \param data - сигнал в виде массива байт
      */
     explicit Ritmogram(const QByteArray &data);
+
 };
 
 #endif // RITMOGRAM_H

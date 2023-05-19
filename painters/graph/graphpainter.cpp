@@ -128,6 +128,12 @@ void GraphPainter::setColorFillBetweenSubchans(const QColor &color)
     doUpdate();
 }
 
+void GraphPainter::setHorizontalLabelsKind(const GraphPainter::HorizontalLabelsKind kind)
+{
+    m_horizontalLabelsKind = kind;
+    doUpdate();
+}
+
 void GraphPainter::setXCoordSignalMode(const GraphPainter::XCoordSignalMode mode)
 {
     m_xcsm = mode;
@@ -574,23 +580,42 @@ void GraphPainter::doPaint(const double ratio)
                 {
                     if (i != 0)
                     {
-                        if ((ls == lsOne && i % m_areases.at(iz)->signal()->frequency() == 0) ||
-                            (ls == lsFive && i % (m_areases.at(iz)->signal()->frequency() * 5) == 0) ||
-                            (ls == lsTen && i % (m_areases.at(iz)->signal()->frequency() * 10) == 0) ||
-                            (ls == lsSixty && i % (m_areases.at(iz)->signal()->frequency() * 60) == 0) ||
-                            (ls == lsMinutesFive && i % (m_areases.at(iz)->signal()->frequency() * 300) == 0) ||
-                            (ls == lsMinutesTen && i % (m_areases.at(iz)->signal()->frequency() * 600) == 0))
+                        if (m_horizontalLabelsKind == hlkSeconds)
                         {
-                            m_painter->setPen(QPen(m_envColors.colorGrid, 1, Qt::DotLine, Qt::FlatCap));
-                            m_painter->drawLine(x1, m_geometry.top() + TopSpace, x1, m_geometry.top() + m_geometry.height() - BottomSpace);
-                            QString s = "";
-                            if (m_areases.at(iz)->signal()->size() <= 60 * m_areases.at(iz)->signal()->frequency())
-                                s = QString::number(i / m_areases.at(iz)->signal()->frequency());
-                            else
-                                s = BaseUtils::getTimeBySecCount(i / m_areases.at(iz)->signal()->frequency(), isHour);
-                            auto size = BaseUtils::getTextSize(m_painter, s);
-                            m_painter->setPen(QPen(m_envColors.colorAxis, 1, Qt::SolidLine, Qt::FlatCap));
-                            m_painter->drawText(x1 - size.width() / 2, m_geometry.top() + m_geometry.height() - BottomSpace + size.height() + 1, s);
+                            if ((ls == lsOne && i % m_areases.at(iz)->signal()->frequency() == 0) ||
+                                (ls == lsFive && i % (m_areases.at(iz)->signal()->frequency() * 5) == 0) ||
+                                (ls == lsTen && i % (m_areases.at(iz)->signal()->frequency() * 10) == 0) ||
+                                (ls == lsSixty && i % (m_areases.at(iz)->signal()->frequency() * 60) == 0) ||
+                                (ls == lsMinutesFive && i % (m_areases.at(iz)->signal()->frequency() * 300) == 0) ||
+                                (ls == lsMinutesTen && i % (m_areases.at(iz)->signal()->frequency() * 600) == 0))
+                            {
+                                m_painter->setPen(QPen(m_envColors.colorGrid, 1, Qt::DotLine, Qt::FlatCap));
+                                m_painter->drawLine(x1, m_geometry.top() + TopSpace, x1, m_geometry.top() + m_geometry.height() - BottomSpace);
+                                QString s = "";
+                                if (m_areases.at(iz)->signal()->size() <= 60 * m_areases.at(iz)->signal()->frequency())
+                                    s = QString::number(i / m_areases.at(iz)->signal()->frequency());
+                                else
+                                    s = BaseUtils::getTimeBySecCount(i / m_areases.at(iz)->signal()->frequency(), isHour);
+                                auto size = BaseUtils::getTextSize(m_painter, s);
+                                m_painter->setPen(QPen(m_envColors.colorAxis, 1, Qt::SolidLine, Qt::FlatCap));
+                                m_painter->drawText(x1 - size.width() / 2, m_geometry.top() + m_geometry.height() - BottomSpace + size.height() + 1, s);
+                            }
+                        }
+                        else
+                        if (m_horizontalLabelsKind == hlkNumbers)
+                        {
+                            if (i % 10 == 0)
+                            {
+                                if (i % 50 == 0)
+                                    m_painter->setPen(QPen(m_envColors.colorGrid, 1, Qt::DashLine, Qt::FlatCap));
+                                else
+                                    m_painter->setPen(QPen(m_envColors.colorGrid, 1, Qt::DotLine, Qt::FlatCap));
+                                m_painter->drawLine(x1, m_geometry.top() + TopSpace, x1, m_geometry.top() + m_geometry.height() - BottomSpace);
+                                QString s = QString::number(i);
+                                auto size = BaseUtils::getTextSize(m_painter, s);
+                                m_painter->setPen(QPen(m_envColors.colorAxis, 1, Qt::SolidLine, Qt::FlatCap));
+                                m_painter->drawText(x1 - size.width() / 2, m_geometry.top() + m_geometry.height() - BottomSpace + size.height() + 1, s);
+                            }
                         }
                     }
                 }
