@@ -252,12 +252,21 @@ public:
     bool isShowCursor() const {return m_isShowCursor;}
     void setIsShowCursor(const bool isShow) {m_isShowCursor = isShow;}
 
+    bool isShowCursorValue() const {return m_isShowCursorValue;}
+    void setIsShowCursorValue(const bool isShow) {m_isShowCursorValue = isShow;}
+
     /*!
      * \brief Возвращает координату курсора по зоне 0
      */
     int cursorPos() const;
 
     QList<double> cursorValues() const;
+
+    /*!
+     * \brief Возвращает значение по координате по значеию для курсора мыши и зону
+     * \param area - возвращемый номер зоны курсора
+     */
+    double currentValue(int &area) const;
 
     /*!
      * \brief Возвращает время в секундах позиции по координате на теле виджета
@@ -299,6 +308,22 @@ public:
      * \param end - конец зоны в отсчетах
      */
     void selectedArea(int &begin, int &end);
+
+    /*!
+     * \brief Выделение зоны по значениям на графике
+     * \param y1, y2 - границы участка в координатах тела виджета.
+     * Допустимо y1 < y2 и  y1 > y2
+     */
+    void selectAreaValue(const int y1, const int y2);
+
+    void clearSelectAreaValue();
+
+    /*!
+     * \brief Возвращает выделенную зону по времени
+     * \param begin - начало зоны в отсчетах
+     * \param end - конец зоны в отсчетах
+     */
+    void selectedAreaValue(double &begin, double &end);
 
 signals:
     void moveCursor();
@@ -347,6 +372,14 @@ protected:
 private:
     void init();
 
+    /*!
+     * \brief Возвращает значение по координате по значению и зону
+     * \param y - координата по значению
+     * \param area - возвращемый номер зоны курсора
+     */
+    double getValueByY(const int y, int &area) const;
+
+
     QPainter* m_painter {nullptr};
     QRect m_geometry {QRect(0, 0, 0, 0)};
     QWidget* m_widget {nullptr};
@@ -365,11 +398,17 @@ private:
     double m_hScale {1};                      ///< Множитель горизонтального масштабирования (увеличения)
     bool m_isZeroing {false};                 ///< Центровка
 
+    ///< Управление курсором по абсциссе
     bool m_isShowCursor {false};
     int m_cursorX {0};
     int m_cursorY {0};
     int m_selectAreaBegin {-1};
     int m_selectAreaEnd {-1};
+
+    ///< Управление курсором по ординате
+    bool m_isShowCursorValue {false};
+    int m_selectAreaValueBegin {-1};
+    int m_selectAreaValueEnd {-1};
 
     HorizontalLabelsKind m_horizontalLabelsKind {hlkSeconds};
 };

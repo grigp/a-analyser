@@ -46,6 +46,7 @@ private slots:
     void on_createSection();
 
     void on_moveCursor();
+
     /*!
      * \brief Сигнал нажатия мышки на теле виджета
      * \param x, y - координаты нажатия

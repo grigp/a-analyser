@@ -33,7 +33,7 @@ DynamoSignalVisualWidget::DynamoSignalVisualWidget(VisualDescriptor* visual,
     connect(ui->wgtGraph, &AreaGraph::moveCursor, this, &DynamoSignalVisualWidget::on_moveCursor);
     connect(ui->wgtGraph, &AreaGraph::press, this, &DynamoSignalVisualWidget::on_press);
     connect(ui->wgtGraph, &AreaGraph::move, this, &DynamoSignalVisualWidget::on_move);
-    connect(ui->wgtGraph, &AreaGraph::release, this, &DynamoSignalVisualWidget::on_release);
+    connect(ui->wgtGraph, &AreaGraph::mouseRelease, this, &DynamoSignalVisualWidget::on_release);
 }
 
 DynamoSignalVisualWidget::~DynamoSignalVisualWidget()

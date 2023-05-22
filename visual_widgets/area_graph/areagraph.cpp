@@ -49,7 +49,7 @@ void AreaGraph::mouseReleaseEvent(QMouseEvent *event)
 {
     QWidget::mouseReleaseEvent(event);
     onMouseReleaseEvent(event);
-    emit release(event->x(), event->y(), event->buttons());
+    emit mouseRelease(event->x(), event->y(), event->buttons());
 }
 
 void AreaGraph::mouseMoveEvent(QMouseEvent *event)

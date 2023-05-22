@@ -1,6 +1,8 @@
 #include "ritmogramvisualwidget.h"
 #include "ui_ritmogramvisualwidget.h"
 
+#include <QDebug>
+
 #include "aanalyserapplication.h"
 #include "channelsdefines.h"
 #include "channelsutils.h"
@@ -16,6 +18,10 @@ RitmogramVisualWidget::RitmogramVisualWidget(VisualDescriptor* visual,
     ui(new Ui::RitmogramVisualWidget)
 {
     ui->setupUi(this);
+    ui->wgtRitmogram->setIsShowCursorValue(true);
+    connect(ui->wgtRitmogram, &AreaGraph::press, this, &RitmogramVisualWidget::on_press);
+    connect(ui->wgtRitmogram, &AreaGraph::move, this, &RitmogramVisualWidget::on_move);
+    connect(ui->wgtRitmogram, &AreaGraph::mouseRelease, this, &RitmogramVisualWidget::on_release);
 }
 
 RitmogramVisualWidget::~RitmogramVisualWidget()
@@ -39,6 +45,40 @@ void RitmogramVisualWidget::calculate()
 
     showGraph();
     showResume();
+}
+
+void RitmogramVisualWidget::on_press(const int x, const int y, const Qt::MouseButtons buttons)
+{
+    Q_UNUSED(x);
+    if (buttons == Qt::LeftButton)
+    {
+        ui->wgtRitmogram->clearSelectAreaValue();
+        m_selBeg = y;
+    }
+}
+
+void RitmogramVisualWidget::on_release(const int x, const int y, const Qt::MouseButtons buttons)
+{
+    Q_UNUSED(x);
+    Q_UNUSED(y);
+    if (buttons == Qt::LeftButton)
+    {
+        m_selBeg = -1;
+    }
+    double begin;
+    double end;
+    ui->wgtRitmogram->selectedAreaValue(begin, end);
+    qDebug() << Q_FUNC_INFO << begin << end;
+}
+
+void RitmogramVisualWidget::on_move(const int x, const int y, const Qt::MouseButtons buttons)
+{
+    Q_UNUSED(x);
+    if (buttons == Qt::LeftButton)
+    {
+        if (m_selBeg > -1)
+            ui->wgtRitmogram->selectAreaValue(m_selBeg, y);
+    }
 }
 
 void RitmogramVisualWidget::showGraph()

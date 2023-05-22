@@ -243,6 +243,11 @@ QList<double> GraphPainter::cursorValues() const
     return  retval;
 }
 
+double GraphPainter::currentValue(int &area) const
+{
+    return getValueByY(m_cursorY, area);
+}
+
 double GraphPainter::getTime(const int x) const
 {
     if (m_areases.size() > 0)
@@ -374,6 +379,35 @@ void GraphPainter::selectedArea(int &begin, int &end)
                 end = m_areases.at(0)->signal()->size();
         }
     }
+}
+
+void GraphPainter::selectAreaValue(const int y1, const int y2)
+{
+    if (y1 < y2)
+    {
+        m_selectAreaValueBegin = y1;
+        m_selectAreaValueEnd = y2;
+    }
+    else
+    {
+        m_selectAreaValueBegin = y1;
+        m_selectAreaValueEnd = y2;
+    }
+    doUpdate();
+}
+
+void GraphPainter::clearSelectAreaValue()
+{
+    m_selectAreaValueBegin = -1;
+    m_selectAreaValueEnd = -1;
+    doUpdate();
+}
+
+void GraphPainter::selectedAreaValue(double &begin, double &end)
+{
+    int area;
+    begin = getValueByY(m_selectAreaValueBegin, area);
+    end = getValueByY(m_selectAreaValueEnd, area);
 }
 
 void GraphPainter::doPaint(const double ratio)
@@ -671,15 +705,29 @@ void GraphPainter::doPaint(const double ratio)
             m_painter->setPen(QPen(m_envColors.colorCursor, 1, Qt::SolidLine, Qt::FlatCap));
             m_painter->drawLine(m_cursorX, TopSpace, m_cursorX, m_geometry.height() - BottomSpace);
         }
+
+        //! Курсор по значениям
+        if (m_isShowCursorValue)
+        {
+            m_painter->setPen(QPen(m_envColors.colorCursor, 1, Qt::SolidLine, Qt::FlatCap));
+            m_painter->drawLine(LeftSpace, m_cursorY, m_geometry.width() - RightSpace, m_cursorY);
+        }
     }
 
 //    qDebug() << t1.msecsTo(QTime::currentTime()); // Вывод времени прорисовки
 
-    //! Отображение выделенной зоны
+    //! Отображение выделенной зоны по времени
     if (m_selectAreaBegin > -1 and m_selectAreaEnd > -1)
     {
         m_painter->setBrush(QBrush(QColor(0, 0, 0, 125) , Qt::SolidPattern));
         m_painter->drawRect(m_selectAreaBegin, TopSpace, m_selectAreaEnd - m_selectAreaBegin, m_geometry.height() - BottomSpace - TopSpace);
+    }
+
+    //! Отображение выделенной зоны по значениям
+    if (m_selectAreaValueBegin > -1 and m_selectAreaValueEnd > -1)
+    {
+        m_painter->setBrush(QBrush(QColor(0, 0, 0, 125) , Qt::SolidPattern));
+        m_painter->drawRect(LeftSpace, m_selectAreaValueBegin, m_geometry.width() - RightSpace - LeftSpace, m_selectAreaValueEnd - m_selectAreaValueBegin);
     }
 
     m_painter->restore();
@@ -706,7 +754,8 @@ void GraphPainter::onMouseMoveEvent(QMouseEvent *event)
         doMoveCursor();
     if (event->x() >= LeftSpace)
         m_cursorX = event->x();
-    m_cursorY = event->y();
+    if (event->y() >= TopSpace)
+        m_cursorY = event->y();
     doUpdate();
 }
 
@@ -725,6 +774,17 @@ void GraphPainter::init()
     m_envColors.colorFillBetweenSubchans = Qt::cyan;
 
     m_areases.clear();
+}
+
+double GraphPainter::getValueByY(const int y, int &area) const
+{
+    int zoneH = (m_geometry.height() - TopSpace - BottomSpace) / m_areases.size();
+    area = (y - TopSpace) / zoneH;
+    double prop = zoneH / (m_areases.at(area)->maxValue() - m_areases.at(area)->minValue());
+    int axisY = m_geometry.top() + TopSpace + (area + 1) * zoneH;
+
+    double v = (axisY - y) / prop + m_areases[area]->minValue();
+    return v;
 }
 
 

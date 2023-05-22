@@ -34,7 +34,7 @@ BalistogramVisualWidget::BalistogramVisualWidget(VisualDescriptor *visual,
     connect(ui->wgtGraph, &AreaGraph::moveCursor, this, &BalistogramVisualWidget::on_moveCursor);
     connect(ui->wgtGraph, &AreaGraph::press, this, &BalistogramVisualWidget::on_press);
     connect(ui->wgtGraph, &AreaGraph::move, this, &BalistogramVisualWidget::on_move);
-    connect(ui->wgtGraph, &AreaGraph::release, this, &BalistogramVisualWidget::on_release);
+    connect(ui->wgtGraph, &AreaGraph::mouseRelease, this, &BalistogramVisualWidget::on_release);
 }
 
 BalistogramVisualWidget::~BalistogramVisualWidget()

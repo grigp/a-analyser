@@ -28,6 +28,26 @@ public:
     bool isValid() override;
     void calculate() override;
 
+private slots:
+    /*!
+     * \brief Сигнал нажатия мышки на теле виджета
+     * \param x, y - координаты нажатия
+    * \param buttons - нажатые кнопки
+     */
+    void on_press(const int x, const int y, const Qt::MouseButtons buttons);
+    /*!
+     * \brief Сигнал отпускания мышки на теле виджета
+     * \param x, y - координаты отпускания
+    * \param buttons - нажатые кнопки
+     */
+    void on_release(const int x, const int y, const Qt::MouseButtons buttons);
+    /*!
+     * \brief Сигнал переноса мышки по телу виджета
+     * \param x, y - координаты положения
+    * \param buttons - нажатые кнопки
+     */
+    void on_move(const int x, const int y, const Qt::MouseButtons buttons);
+
 private:
     Ui::RitmogramVisualWidget *ui;
 
@@ -37,6 +57,7 @@ private:
 
     PulseFactors *m_factors {nullptr};
     Ritmogram *m_signal {nullptr};
+    int m_selBeg {-1};
 };
 
 #endif // RITMOGRAMVISUALWIDGET_H

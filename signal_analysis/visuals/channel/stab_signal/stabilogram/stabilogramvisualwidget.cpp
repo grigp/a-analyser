@@ -35,7 +35,7 @@ StabilogramVisualWidget::StabilogramVisualWidget(VisualDescriptor* visual,
     connect(ui->wgtGraph, &AreaGraph::moveCursor, this, &StabilogramVisualWidget::on_moveCursor);
     connect(ui->wgtGraph, &AreaGraph::press, this, &StabilogramVisualWidget::on_press);
     connect(ui->wgtGraph, &AreaGraph::move, this, &StabilogramVisualWidget::on_move);
-    connect(ui->wgtGraph, &AreaGraph::release, this, &StabilogramVisualWidget::on_release);
+    connect(ui->wgtGraph, &AreaGraph::mouseRelease, this, &StabilogramVisualWidget::on_release);
 }
 
 StabilogramVisualWidget::~StabilogramVisualWidget()

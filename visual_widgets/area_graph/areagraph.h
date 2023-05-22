@@ -52,7 +52,7 @@ signals:
      * \param x, y - координаты отпускания
      * \param buttons - нажатые кнопки
      */
-    void release(const int x, const int y, const Qt::MouseButtons buttons);
+    void mouseRelease(const int x, const int y, const Qt::MouseButtons buttons);
     /*!
      * \brief Сигнал переноса мышки по телу виджета
      * \param x, y - координаты положения

@@ -48,7 +48,7 @@ void MyogramSignalVisualWidget::calculate()
     connect(ui->wgtGraph, &AreaGraph::moveCursor, this, &MyogramSignalVisualWidget::on_moveCursor);
     connect(ui->wgtGraph, &AreaGraph::press, this, &MyogramSignalVisualWidget::on_press);
     connect(ui->wgtGraph, &AreaGraph::move, this, &MyogramSignalVisualWidget::on_move);
-    connect(ui->wgtGraph, &AreaGraph::release, this, &MyogramSignalVisualWidget::on_release);
+    connect(ui->wgtGraph, &AreaGraph::mouseRelease, this, &MyogramSignalVisualWidget::on_release);
 
     getSignal();
     showGraph();
