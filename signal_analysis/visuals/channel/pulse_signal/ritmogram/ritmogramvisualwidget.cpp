@@ -1,6 +1,7 @@
 #include "ritmogramvisualwidget.h"
 #include "ui_ritmogramvisualwidget.h"
 
+#include <QMessageBox>
 #include <QDebug>
 
 #include "aanalyserapplication.h"
@@ -19,9 +20,15 @@ RitmogramVisualWidget::RitmogramVisualWidget(VisualDescriptor* visual,
 {
     ui->setupUi(this);
     ui->wgtRitmogram->setIsShowCursorValue(true);
+
+    QCursor cursorGraph = QCursor(QPixmap(":/images/ValueCursor.png"));
+    ui->wgtRitmogram->setCursor(cursorGraph);
+
     connect(ui->wgtRitmogram, &AreaGraph::press, this, &RitmogramVisualWidget::on_press);
     connect(ui->wgtRitmogram, &AreaGraph::move, this, &RitmogramVisualWidget::on_move);
     connect(ui->wgtRitmogram, &AreaGraph::mouseRelease, this, &RitmogramVisualWidget::on_release);
+    connect(static_cast<AAnalyserApplication*>(QApplication::instance()), &AAnalyserApplication::channelChanged,
+            this, &RitmogramVisualWidget::on_channelChanged);
 }
 
 RitmogramVisualWidget::~RitmogramVisualWidget()
@@ -38,8 +45,6 @@ bool RitmogramVisualWidget::isValid()
 
 void RitmogramVisualWidget::calculate()
 {
-
-
     if (!m_factors)
         m_factors = new PulseFactors(testUid(), probeUid(), channelId());
 
@@ -54,6 +59,8 @@ void RitmogramVisualWidget::on_press(const int x, const int y, const Qt::MouseBu
     {
         ui->wgtRitmogram->clearSelectAreaValue();
         m_selBeg = y;
+        m_abLower = -1;
+        m_abUpper = -1;
     }
 }
 
@@ -61,14 +68,24 @@ void RitmogramVisualWidget::on_release(const int x, const int y, const Qt::Mouse
 {
     Q_UNUSED(x);
     Q_UNUSED(y);
+
     if (buttons == Qt::LeftButton)
-    {
         m_selBeg = -1;
-    }
+
     double begin;
     double end;
     ui->wgtRitmogram->selectedAreaValue(begin, end);
-    qDebug() << Q_FUNC_INFO << begin << end;
+    if (begin < end)
+    {
+        m_abLower = begin;
+        m_abUpper = end;
+    }
+    else
+    if (end < begin)
+    {
+        m_abLower = end;
+        m_abUpper = begin;
+    }
 }
 
 void RitmogramVisualWidget::on_move(const int x, const int y, const Qt::MouseButtons buttons)
@@ -79,6 +96,46 @@ void RitmogramVisualWidget::on_move(const int x, const int y, const Qt::MouseBut
         if (m_selBeg > -1)
             ui->wgtRitmogram->selectAreaValue(m_selBeg, y);
     }
+
+    int area = -1;
+    auto v = ui->wgtRitmogram->currentValue(area);
+    ui->edValue->setText(QString::number(v, 'f', 1));
+}
+
+void RitmogramVisualWidget::on_deleteArtifacts()
+{
+    if ((m_abLower > -1) && (m_abUpper > -1) && (m_abLower < m_abUpper))
+    {
+        auto mr = QMessageBox::question(nullptr, tr("Запрос"), tr("Удалить артефакты, выпадающие за пределы выделенной области?"));
+        if (mr == QMessageBox::Yes)
+                deleteArtifacts(m_abLower, m_abUpper);
+    }
+    else
+        QMessageBox::information(nullptr, tr("Предупреждение"), tr("Не заданы границы зоны отсечения артефактов"));
+}
+
+void RitmogramVisualWidget::on_rewriteSignal()
+{
+    auto mr = QMessageBox::question(nullptr, tr("Запрос"), tr("Перезаписать ритмограмму?"));
+    if (mr == QMessageBox::Yes)
+    {
+        if (m_signal)
+        {
+            QByteArray data;
+            m_signal->toByteArray(data);
+            DataProvider::setChannel(probeUid(), channelId(), data);
+        }
+    }
+}
+
+void RitmogramVisualWidget::on_channelChanged(const QString &probeUid, const QString &channelId)
+{
+    if (m_factors)
+        delete m_factors;
+    m_factors = new PulseFactors(testUid(), probeUid, channelId);
+
+    showGraph();
+    showResume();
 }
 
 void RitmogramVisualWidget::showGraph()
@@ -144,4 +201,22 @@ QString RitmogramVisualWidget::getStyleByValue(const int value) const
         return QString("font-size: 12pt; color: rgb(150, 0, 0);");
     else
         return QString("font-size: 12pt; color: rgb(50, 50, 50);");
+}
+
+void RitmogramVisualWidget::deleteArtifacts(const double lower, const double upper)
+{
+    if (m_signal)
+    {
+//        qDebug() << "{ " << lower << " - " << upper << " }";
+        for (int i = m_signal->size() - 1; i >= 0; --i)
+        {
+            double val = m_signal->value(0, i);
+            if (val < lower || val > upper)
+            {
+                m_signal->removeValue(i);
+//                qDebug() << "-x-" << i << val;
+            }
+        }
+        ui->wgtRitmogram->update();
+    }
 }

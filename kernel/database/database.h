@@ -248,6 +248,15 @@ public:
     bool getChannel(const QString &channelUid, QByteArray &data) const;
 
     /*!
+     * \brief Записывает канал в БД. Предназначен для перезаписи данных канала
+     * \param probeUid - uid пробы
+     * \param channelId - uid канала
+     * \param data - данные канала
+     * \return true, если успешно
+     */
+    bool setChannel(const QString &probeUid, const QString &channelId, QByteArray &data);
+
+    /*!
      * \brief Возвращает channelUid, идентификатор канала в пробе
      * \param probeUid - uid пробы
      * \param channelId - идентификатор канала
@@ -529,6 +538,7 @@ private:
     bool writeTableRec(const QString &fullFileName, const QJsonObject &rec) const;
 
     bool readSignal(const QString& fileName, QByteArray &data) const;
+    bool writeSignal(const QString& fileName, QByteArray &data) const;
 
     bool readTestRec(const QString &fullFileName, QJsonObject &test) const;
     bool writeTestRec(const QString &fullFileName, const QJsonObject &test) const;

@@ -121,6 +121,80 @@
         </property>
        </widget>
       </item>
+      <item>
+       <widget class="QFrame" name="frTools">
+        <property name="frameShape">
+         <enum>QFrame::StyledPanel</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Raised</enum>
+        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout">
+         <property name="topMargin">
+          <number>1</number>
+         </property>
+         <property name="bottomMargin">
+          <number>1</number>
+         </property>
+         <item>
+          <widget class="QPushButton" name="btnDeleteAtf">
+           <property name="text">
+            <string>Удалить артефакты</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="btnRewrite">
+           <property name="text">
+            <string>Перезаписать сигнал</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QLabel" name="lblValue">
+           <property name="text">
+            <string>Значение</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="edValue">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>100</width>
+             <height>16777215</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>0</string>
+           </property>
+           <property name="readOnly">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
      </layout>
     </widget>
    </item>
@@ -135,5 +209,42 @@
   </customwidget>
  </customwidgets>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>btnDeleteAtf</sender>
+   <signal>clicked()</signal>
+   <receiver>RitmogramVisualWidget</receiver>
+   <slot>on_deleteArtifacts()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>89</x>
+     <y>482</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>695</x>
+     <y>9</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btnRewrite</sender>
+   <signal>clicked()</signal>
+   <receiver>RitmogramVisualWidget</receiver>
+   <slot>on_rewriteSignal()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>166</x>
+     <y>472</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>695</x>
+     <y>36</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>on_deleteArtifacts()</slot>
+  <slot>on_rewriteSignal()</slot>
+ </slots>
 </ui>

@@ -213,6 +213,15 @@ bool getChannel(const QString &probeUid, const QString &channelId, QByteArray &d
 bool getChannel(const QString &channelUid, QByteArray &data);
 
 /*!
+ * \brief Записывает канал в БД. Предназначен для перезаписи данных канала
+ * \param probeUid - uid пробы
+ * \param channelId - uid канала
+ * \param data - данные канала
+ * \return true, если успешно
+ */
+bool setChannel(const QString &probeUid, const QString &channelId, QByteArray &data);
+
+/*!
  * \brief Возвращает channelUid, идентификатор канала в пробе
  * \param probeUid - uid пробы
  * \param channelId - идентификатор канала

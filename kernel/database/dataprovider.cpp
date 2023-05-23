@@ -136,6 +136,11 @@ bool DataProvider::getChannel(const QString &channelUid, QByteArray &data)
     return static_cast<AAnalyserApplication*>(QApplication::instance())->getDB()->getChannel(channelUid, data);
 }
 
+bool DataProvider::setChannel(const QString &probeUid, const QString &channelId, QByteArray &data)
+{
+    return static_cast<AAnalyserApplication*>(QApplication::instance())->getDB()->setChannel(probeUid, channelId, data);
+}
+
 QString DataProvider::getChannelUid(const QString &probeUid, const QString &channelId)
 {
     return static_cast<AAnalyserApplication*>(QApplication::instance())->getDB()->getChannelUid(probeUid, channelId);

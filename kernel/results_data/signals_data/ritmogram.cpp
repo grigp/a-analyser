@@ -11,3 +11,8 @@ Ritmogram::Ritmogram(const QByteArray &data)
 {
 
 }
+
+void Ritmogram::removeValue(const int rec)
+{
+    doRemoveValue(rec);
+}

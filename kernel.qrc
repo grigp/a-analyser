@@ -232,5 +232,6 @@
         <file>images/MainIcon4.ico</file>
         <file>images/MainIcon_stab_1.ico</file>
         <file>images/MainIcon_sch_01.ico</file>
+        <file>images/ValueCursor.png</file>
     </qresource>
 </RCC>

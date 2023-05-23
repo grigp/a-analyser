@@ -83,6 +83,8 @@ public:
      */
     void clear() override;
 
+protected:
+    void doRemoveValue(const int rec);
 
 private:
     QString m_channelId;

@@ -17,6 +17,11 @@ public:
      */
     explicit Ritmogram(const QByteArray &data);
 
+    /*!
+     * \brief Удаляет отсчет с номером rec
+     * \param rec - номерудаляемого отсчета
+     */
+    void removeValue(const int rec);
 };
 
 #endif // RITMOGRAM_H

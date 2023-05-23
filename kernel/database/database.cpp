@@ -6,6 +6,7 @@
 #include "settingsprovider.h"
 #include "normsmanager.h"
 
+#include <QApplication>
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QJsonArray>
@@ -434,7 +435,22 @@ bool DataBase::getChannel(const QString &channelUid, QByteArray &data) const
 //            return true;
 //        }
 //    }
-//    return false;
+    //    return false;
+}
+
+bool DataBase::setChannel(const QString &probeUid, const QString &channelId, QByteArray &data)
+{
+    QString uid = getChannelUid(probeUid, channelId);
+    if (uid != QUuid().toString())
+    {
+        QDir dir = channelsDir();
+        auto fileName = dir.absoluteFilePath(uid);
+        bool isWriting = writeSignal(fileName, data);
+        if (isWriting)
+            static_cast<AAnalyserApplication*>(QApplication::instance())->doChannelChanged(probeUid, channelId);
+        return isWriting;
+    }
+    return false;
 }
 
 QString DataBase::getChannelUid(const QString &probeUid, const QString &channelId) const
@@ -1147,6 +1163,18 @@ bool DataBase::readSignal(const QString& fileName, QByteArray &data) const
             fChan.close();
             return true;
         }
+    }
+    return false;
+}
+
+bool DataBase::writeSignal(const QString &fileName, QByteArray &data) const
+{
+    QFile fChan(fileName);
+    if (fChan.open(QIODevice::WriteOnly))
+    {
+        fChan.write(data);
+        fChan.close();
+        return true;
     }
     return false;
 }

@@ -267,6 +267,13 @@ public:
     int visualCount(const BaseDefines::TestLevel level);
     VisualDescriptor* getVisual(const BaseDefines::TestLevel level, const int idx);
 
+    /*!
+     * \brief Изменение данных канала в БД
+     * Вызывается тем, кто изменяет данные в БД
+     * \param probeUid - uid пробы
+     * \param channelId - id канала
+     */
+    void doChannelChanged(const QString &probeUid, const QString &channelId);
 
     ///<-----------------------------------------------------------------------------
     ///< Показатели
@@ -616,6 +623,13 @@ signals:
                           const SummaryDefines::AddTestMode mode,
                           const QString summary,
                           const SummaryDefines::Kind kind);
+
+    /*!
+     * \brief Сигнал изменения данных канала в БД
+     * \param probeUid - uid пробы
+     * \param channelId - id канала
+     */
+    void channelChanged(const QString &probeUid, const QString &channelId);
 
 protected:
     //! Обработка исключений основного цикла программы

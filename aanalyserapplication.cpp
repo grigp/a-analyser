@@ -437,6 +437,12 @@ VisualDescriptor *AAnalyserApplication::getVisual(const BaseDefines::TestLevel l
     return nullptr;
 }
 
+void AAnalyserApplication::doChannelChanged(const QString &probeUid, const QString &channelId)
+{
+    //! Нам надо только оповестить мир об изменении, чтоб мир перестроился, если ему нужно
+    emit channelChanged(probeUid, channelId);
+}
+
 FactorsDefines::FactorInfo AAnalyserApplication::getFactorInfo(const QString &uid) const
 {
     if (m_factors)

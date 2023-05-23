@@ -780,11 +780,15 @@ double GraphPainter::getValueByY(const int y, int &area) const
 {
     int zoneH = (m_geometry.height() - TopSpace - BottomSpace) / m_areases.size();
     area = (y - TopSpace) / zoneH;
-    double prop = zoneH / (m_areases.at(area)->maxValue() - m_areases.at(area)->minValue());
-    int axisY = m_geometry.top() + TopSpace + (area + 1) * zoneH;
+    if (area >= 0 && area < m_areases.size())
+    {
+        double prop = zoneH / (m_areases.at(area)->maxValue() - m_areases.at(area)->minValue());
+        int axisY = m_geometry.top() + TopSpace + (area + 1) * zoneH;
 
-    double v = (axisY - y) / prop + m_areases[area]->minValue();
-    return v;
+        double v = (axisY - y) / prop + m_areases[area]->minValue();
+        return v;
+    }
+    return 0;
 }
 
 

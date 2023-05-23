@@ -116,3 +116,9 @@ void SingleSignal::clear()
 {
     m_data.clear();
 }
+
+void SingleSignal::doRemoveValue(const int rec)
+{
+    Q_ASSERT(rec >= 0 && rec < m_data.size());
+    m_data.remove(rec);
+}
