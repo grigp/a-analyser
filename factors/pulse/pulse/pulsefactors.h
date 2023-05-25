@@ -243,7 +243,7 @@ private:
     double m_meanNN {0}, m_mean2NN {0};
     double m_SDNN {0};
 
-    double m_minNN {0};
+    double m_minNN {INT_MAX};
     double m_maxNN {0};
     double m_prevNN {-1};
     int m_nCnt {0};   ///< Счетчик данных
@@ -275,6 +275,7 @@ private:
     PulseFactorsDefines::AutomaticFunction m_funcAuto {PulseFactorsDefines::afModerateSinusArrhythmia};
     PulseFactorsDefines::VegetativeHomeostasis m_vegHomst {PulseFactorsDefines::vhSaved};
     PulseFactorsDefines::StabilityRegulation m_ustReg {PulseFactorsDefines::srSustainableRegulation};
+
 };
 
 #endif // PULSEFACTORS_H

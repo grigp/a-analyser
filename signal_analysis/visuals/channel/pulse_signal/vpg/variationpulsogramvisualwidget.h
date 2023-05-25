@@ -35,11 +35,16 @@ private slots:
      */
     void on_channelChanged(const QString &probeUid, const QString &channelId);
 
+    void on_splitterMoved(int,int);
+
 private:
     Ui::VariationPulsogramVisualWidget *ui;
 
     void showVPG();
     void showFactors();
+
+    void saveSplitterPosition();
+    void restoreSplitterPosition();
 
     PulseFactors *m_factors {nullptr};
 };

@@ -71,7 +71,7 @@
        </item>
       </layout>
      </widget>
-     <widget class="QTreeView" name="treeView">
+     <widget class="QTreeView" name="tvFactors">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
         <horstretch>0</horstretch>
@@ -98,8 +98,28 @@
   </customwidget>
  </customwidgets>
  <tabstops>
-  <tabstop>treeView</tabstop>
+  <tabstop>tvFactors</tabstop>
  </tabstops>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>splitter</sender>
+   <signal>splitterMoved(int,int)</signal>
+   <receiver>VariationPulsogramVisualWidget</receiver>
+   <slot>on_splitterMoved(int,int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>97</x>
+     <y>303</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>959</x>
+     <y>189</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>on_splitterMoved(int,int)</slot>
+ </slots>
 </ui>

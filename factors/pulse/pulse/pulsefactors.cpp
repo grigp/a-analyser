@@ -112,9 +112,9 @@ void PulseFactors::calculate()
     addFactor(PulseFactorsDefines::CVUid, m_CVR);
     addFactor(PulseFactorsDefines::SDSDUid, m_SDSD);
     addFactor(PulseFactorsDefines::MDUid, m_MDNN);
-    addFactor(PulseFactorsDefines::AKACC0Uid, m_ACK1);
-    addFactor(PulseFactorsDefines::DXUid, m_AKSh0);
-    addFactor(PulseFactorsDefines::AKACClUid, m_DXRange * 1000.0);
+    addFactor(PulseFactorsDefines::DXUid, m_DXRange * 1000.0);
+    addFactor(PulseFactorsDefines::AKACClUid, m_ACK1);
+    addFactor(PulseFactorsDefines::AKACC0Uid, m_AKSh0);
 }
 
 void PulseFactors::registerFactors()
@@ -152,13 +152,13 @@ void PulseFactors::registerFactors()
                            tr("Станд. отклонение массива кардиоинтервалов"), tr("SDNN"), tr("мс"), 0, 1, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(PulseFactorsDefines::RMSSDUid, PulseFactorsDefines::GroupUid,
-                           tr("Активность парасим. звена вегетат. регуляции"), tr("RMSSD"), tr(""), 0, 1, FactorsDefines::nsDual, 12);
+                           tr("Среднеквадратичное значение последовательных различий"), tr("RMSSD"), tr("мс"), 0, 1, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(PulseFactorsDefines::pNN50Uid, PulseFactorsDefines::GroupUid,
                            tr("Показатель преобладания парасимп. звена"), tr("pNN50"), tr("%"), 0, 1, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(PulseFactorsDefines::CVUid, PulseFactorsDefines::GroupUid,
-                           tr("Коэффициент вариации"), tr("KV"), tr("%"), 2, 1, FactorsDefines::nsDual, 12);
+                           tr("Коэффициент вариации"), tr("CV"), tr("%"), 2, 1, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(PulseFactorsDefines::SDSDUid, PulseFactorsDefines::GroupUid,
                            tr("Станд. откл. разницы между соседними RR"), tr("SDSD"), tr("мс"), 0, 1, FactorsDefines::nsDual, 12);
@@ -166,14 +166,14 @@ void PulseFactors::registerFactors()
             registerFactor(PulseFactorsDefines::MDUid, PulseFactorsDefines::GroupUid,
                            tr("Средняя разница между соседними RR"), tr("MD"), tr("мс"), 0, 1, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
+            registerFactor(PulseFactorsDefines::DXUid, PulseFactorsDefines::GroupUid,
+                           tr("Вариационный размах"), tr("DX"), tr("мс"), 0, 1, FactorsDefines::nsDual, 12);
+    static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(PulseFactorsDefines::AKACClUid, PulseFactorsDefines::GroupUid,
-                           tr("Первый коэффициент автокоррел. функции"), tr("АСК1"), tr("мс"), 0, 1, FactorsDefines::nsDual, 12);
+                           tr("Первый коэффициент автокоррел. функции"), tr("АСК1"), tr(""), 3, 1, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(PulseFactorsDefines::AKACC0Uid, PulseFactorsDefines::GroupUid,
-                           tr("Число сдвигов автокор. функции до нуля"), tr("ACSh0"), tr(""), 3, 1, FactorsDefines::nsDual, 12);
-    static_cast<AAnalyserApplication*>(QApplication::instance())->
-            registerFactor(PulseFactorsDefines::DXUid, PulseFactorsDefines::GroupUid,
-                           tr("Вариационный размах"), tr("DX"), tr(""), 0, 1, FactorsDefines::nsDual, 12);
+                           tr("Число сдвигов автокор. функции до нуля"), tr("ACSh0"), tr(""), 0, 1, FactorsDefines::nsDual, 12);
 }
 
 int PulseFactors::statBoundsCount() const
@@ -215,7 +215,8 @@ void PulseFactors::assignStat(const double sdt, const double tMin, const double 
     m_bStatBnd.resize(m_statSize + 1);
     m_bStatCnt.resize(m_statSize);
     for (int i = 0; i < m_statSize; ++i)
-        m_bStatBnd[i] = i * sdt + tMin;
+        m_bStatBnd[i] = (i * sdt + tMin) / 1000;
+    m_bStatBnd[m_statSize] = (m_statSize * sdt + tMin) / 1000;
 }
 
 void PulseFactors::addRRValue(const double val, const double t)
@@ -232,7 +233,7 @@ void PulseFactors::addRRValue(const double val, const double t)
     {
         double v2 = val - m_prevNN;
         m_RMSSD += (pow(v2, 2));
-        if (fabs(v2) > 50.0)
+        if (fabs(v2) > 0.05)
             ++m_NN50;
 
         if (m_nCnt % 2 == 0)
@@ -257,26 +258,26 @@ void PulseFactors::addRRValue(const double val, const double t)
     m_prevNN = val;
 
     //! Формирование гистограммы
-      if (val < m_bStatBnd[0])
-      {
-        ++m_outerMin;
-      }
-      else
-      if (val > m_bStatBnd[m_statSize])
-      {
-        ++m_outerMax;
-      }
-      else
-      {
-          for (int i = 0; i < m_statSize; ++i)
-          {
-              if ((val >= m_bStatBnd[i]) && (val <= m_bStatBnd[i+1]))
-              {
-                 m_bStatCnt[i] += 1;
-                 break;
-              }
-          }
-      }
+    if (val < m_bStatBnd[0])
+    {
+      ++m_outerMin;
+    }
+    else
+    if (val > m_bStatBnd[m_statSize])
+    {
+      ++m_outerMax;
+    }
+    else
+    {
+        for (int i = 0; i < m_statSize; ++i)
+        {
+            if ((val >= m_bStatBnd[i]) && (val <= m_bStatBnd[i+1]))
+            {
+               m_bStatCnt[i] += 1;
+               break;
+            }
+        }
+    }
 }
 
 void PulseFactors::finalCalculate()
@@ -287,11 +288,11 @@ void PulseFactors::finalCalculate()
         m_mean2NN /= m_nCnt;
 
         //! Стандартная процедура последовательного расчета
-        m_SDNN = sqrt(fabs(m_mean2NN - m_meanNN * m_meanNN));
+        m_SDNN = sqrt(fabs(m_mean2NN - m_meanNN * m_meanNN)) * 1000;
 
         if (m_meanNN > 0)
         {
-            m_CVR = (m_SDNN / m_meanNN) * 100.0;
+            m_CVR = (m_SDNN / (m_meanNN * 1000)) * 100.0;
             m_HRM = 60.0 / m_meanNN; //(1000.0 / m_meanNN) * 60.0;
         }
         else
@@ -302,7 +303,7 @@ void PulseFactors::finalCalculate()
 
         if (m_nCnt > 1 )
         {
-            m_RMSSD = sqrt(m_RMSSD / (m_nCnt - 1));
+            m_RMSSD = sqrt(m_RMSSD / (m_nCnt - 1)) * 1000;
             if (m_nD2Cnt != 0)
             {
                 m_meanD1 = m_meanD1 / m_nD2Cnt;
@@ -313,14 +314,14 @@ void PulseFactors::finalCalculate()
                 m_meanD1 = 0;
                 m_meanD2 = 0;
             }
-            m_SDSD = sqrt(fabs(m_meanD2 - m_meanD1 * m_meanD1));
-            m_MDNN = m_MDNN / (m_nCnt - 1);
-            m_pNN50 = 100.0 * (m_NN50 / m_nCnt);
+            m_SDSD = sqrt(fabs(m_meanD2 - m_meanD1 * m_meanD1)) * 1000;
+            m_MDNN = m_MDNN / (m_nCnt - 1) * 1000;
+            m_pNN50 = 100.0 * (static_cast<double>(m_NN50) / static_cast<double>(m_nCnt));
         }
 
         processHist();
 
-        m_MxDMn = m_maxNN - m_minNN; //1000.0*((60.0/aStat.MinNN) - (60.0/aStat.MinNN));
+        m_MxDMn = (m_maxNN - m_minNN) * 1000; //1000.0*((60.0/aStat.MinNN) - (60.0/aStat.MinNN));
     }
 }
 
@@ -347,7 +348,7 @@ void PulseFactors::processHist()
     if (m_nCnt != 0)
         m_ampMod = (m_ampMod / static_cast<double>(m_nCnt)) * 100;
 
-    m_DXRange = (m_bStatBnd[m_statSize] - m_bStatBnd[0]) / 1000.0;
+    m_DXRange = (m_bStatBnd[m_statSize] - m_bStatBnd[0]); // / 1000.0;
 
     if (iv < 0) return;
 
@@ -370,8 +371,8 @@ void PulseFactors::processHist()
         i2 = i;
     }
 
-    m_DXRange = (m_bStatBnd[i2] - m_bStatBnd[i1]) / 1000.0;
-    m_xMod = m_xMod / 1000.0;
+    m_DXRange = (m_bStatBnd[i2] - m_bStatBnd[i1]); // / 1000.0;
+    //m_xMod = m_xMod / 1000.0;
 
     if (m_DXRange > 0)
         m_IVR = m_ampMod / m_DXRange;
@@ -412,7 +413,7 @@ void PulseFactors::processHist()
         }
     }
 
-    m_SIM = (m_bStatBnd[i2 + 1] - m_bStatBnd[i1]) / 1000.0;
+    m_SIM = (m_bStatBnd[i2 + 1] - m_bStatBnd[i1]); // / 1000.0;
     if (m_SIM > 0)
         m_SIM = m_ampMod * 4.0 / m_SIM;
 
