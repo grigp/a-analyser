@@ -68,6 +68,7 @@ void VariationPulsogramVisualWidget::showVPG()
 
     ui->wgtVPG->setAxisSpaceLeft(30);
 
+    ui->wgtVPG->clear();
     for (int i = 0; i < m_factors->statCountsCount(); ++i)
     {
         auto item = new DiagItem(m_factors->statCounts(i), QString::number(m_factors->statBounds(i), 'f', 2));
