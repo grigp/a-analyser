@@ -14,7 +14,7 @@ static const QString Name_VPG = "Вариационная пульсограмм
 
 
 /*!
- * \brief The Класс визуализатора вариационной пульсограммы RitmogramVisual class
+ * \brief Класс визуализатора вариационной пульсограммы The RitmogramVisual class
  */
 class VariationPulsogramVisual : public VisualDescriptor
 {

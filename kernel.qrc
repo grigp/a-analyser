@@ -233,5 +233,11 @@
         <file>images/MainIcon_stab_1.ico</file>
         <file>images/MainIcon_sch_01.ico</file>
         <file>images/ValueCursor.png</file>
+        <file>images/pulse_types/01_normal.png</file>
+        <file>images/pulse_types/02_Extrasistol.png</file>
+        <file>images/pulse_types/03_parasistol.png</file>
+        <file>images/pulse_types/04_merzat_arythmy.png</file>
+        <file>images/pulse_types/05_lost_qrs.png</file>
+        <file>images/pulse_types/06_rigid_rythm.png</file>
     </qresource>
 </RCC>

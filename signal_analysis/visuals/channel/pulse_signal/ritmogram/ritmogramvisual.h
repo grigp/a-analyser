@@ -14,7 +14,7 @@ static const QString Name_Ritmogram = "Ритмограмма";
 
 
 /*!
- * \brief The Класс визуализатора сигнала ритмограммы RitmogramVisual class
+ * \brief Класс визуализатора сигнала ритмограммы The RitmogramVisual class
  */
 class RitmogramVisual : public VisualDescriptor
 {

@@ -15,8 +15,8 @@ class FiveZoneArea : public QWidget
     Q_OBJECT
 
 public:
-    explicit FiveZoneArea(QWidget *parent = 0);
-    ~FiveZoneArea();
+    explicit FiveZoneArea(QWidget *parent = nullptr);
+    ~FiveZoneArea() override;
 
     void setDiap(const int diap);
     int diap() const;
