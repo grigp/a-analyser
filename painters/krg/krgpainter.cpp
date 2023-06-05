@@ -196,6 +196,8 @@ void KRGPainter::doPaint(const double ratio)
         }
 
     }
+
+    m_painter->restore();
 }
 
 void KRGPainter::appendSignal(Ritmogram *signal)
