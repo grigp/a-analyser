@@ -9,6 +9,8 @@ namespace Ui {
 class KorrelationRitmogramVisualWidget;
 }
 
+class Ritmogram;
+
 /*!
  * \brief Класс виджета визуализатора сигнала корреляционной ритмограммы The KorrelationRitmogramVisualWidget class
  */
@@ -33,6 +35,8 @@ private:
 
     void saveSplitterPosition();
     void restoreSplitterPosition();
+
+    Ritmogram *m_signal {nullptr};
 };
 
 #endif // KORRELATIONRITMOGRAMVISUALWIDGET_H
