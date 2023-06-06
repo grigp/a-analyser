@@ -54,6 +54,7 @@
 #include "ritmogramvisual.h"
 #include "variationpulsogramvisual.h"
 #include "korrelationritmogramvisual.h"
+#include "autocorrelationanalysisvisual.h"
 #include "sectiongraphvisual.h"
 
 #include "filtersignal.h"
@@ -125,6 +126,7 @@ void AAnalyserBuild::registerVisuals()
     app->registerVisual(new RitmogramVisual(BaseDefines::tlChannel));
     app->registerVisual(new VariationPulsogramVisual(BaseDefines::tlChannel));
     app->registerVisual(new KorrelationRitmogramVisual(BaseDefines::tlChannel));
+    app->registerVisual(new AutoCorrelationAnalysisVisual(BaseDefines::tlChannel));
     app->registerVisual(new BilateralVisual(BaseDefines::tlProbe));
     app->registerVisual(new SectionGraphVisual(BaseDefines::tlSection));
 }

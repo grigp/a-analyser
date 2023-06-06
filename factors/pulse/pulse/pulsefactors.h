@@ -8,7 +8,6 @@
 #include <QMap>
 #include "multifactor.h"
 
-
 namespace PulseFactorsDefines
 {
 static const QString GroupUid = "{BAED5445-97FE-48B9-99DF-1A5FF367A870}";

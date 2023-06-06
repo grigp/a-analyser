@@ -1,6 +1,7 @@
 #include "korrelationritmogramvisualwidget.h"
 #include "ui_korrelationritmogramvisualwidget.h"
 
+#include "aanalyserapplication.h"
 #include "dataprovider.h"
 #include "channelsdefines.h"
 #include "channelsutils.h"
@@ -15,6 +16,8 @@ KorrelationRitmogramVisualWidget::KorrelationRitmogramVisualWidget(VisualDescrip
 {
     ui->setupUi(this);
     restoreSplitterPosition();
+    connect(static_cast<AAnalyserApplication*>(QApplication::instance()), &AAnalyserApplication::channelChanged,
+            this, &KorrelationRitmogramVisualWidget::on_channelChanged);
 }
 
 KorrelationRitmogramVisualWidget::~KorrelationRitmogramVisualWidget()
@@ -31,6 +34,43 @@ bool KorrelationRitmogramVisualWidget::isValid()
 
 void KorrelationRitmogramVisualWidget::calculate()
 {
+    showKRG();
+
+    ui->wgtKRG->setNameHorizontal(tr("ЧСС (i), уд/мин"));
+    ui->wgtKRG->setNameVertical(tr("ЧСС (i-1), уд/мин"));
+}
+
+void KorrelationRitmogramVisualWidget::on_splitterMoved(int, int)
+{
+    saveSplitterPosition();
+}
+
+void KorrelationRitmogramVisualWidget::on_channelChanged(const QString &probeUid, const QString &channelId)
+{
+    Q_UNUSED(probeUid);
+    Q_UNUSED(channelId);
+    if (m_signal)
+    {
+        delete m_signal;
+        m_signal = nullptr;
+    }
+    showKRG();
+}
+
+void KorrelationRitmogramVisualWidget::saveSplitterPosition()
+{
+    SettingsProvider::setValueToRegAppCopy("KRGVisualWidget", "VSplitterPosition", ui->splitter->saveState());
+
+}
+
+void KorrelationRitmogramVisualWidget::restoreSplitterPosition()
+{
+    auto val = SettingsProvider::valueFromRegAppCopy("KRGVisualWidget", "VSplitterPosition").toByteArray();
+    ui->splitter->restoreState(val);
+}
+
+void KorrelationRitmogramVisualWidget::showKRG()
+{
     QByteArray data;
     if (DataProvider::getChannel(probeUid(), channelId(), data))
     {
@@ -45,24 +85,4 @@ void KorrelationRitmogramVisualWidget::calculate()
             }
         }
     }
-
-    ui->wgtKRG->setNameHorizontal(tr("ЧСС (i), уд/мин"));
-    ui->wgtKRG->setNameVertical(tr("ЧСС (i-1), уд/мин"));
-}
-
-void KorrelationRitmogramVisualWidget::on_splitterMoved(int, int)
-{
-    saveSplitterPosition();
-}
-
-void KorrelationRitmogramVisualWidget::saveSplitterPosition()
-{
-    SettingsProvider::setValueToRegAppCopy("KRGVisualWidget", "VSplitterPosition", ui->splitter->saveState());
-
-}
-
-void KorrelationRitmogramVisualWidget::restoreSplitterPosition()
-{
-    auto val = SettingsProvider::valueFromRegAppCopy("KRGVisualWidget", "VSplitterPosition").toByteArray();
-    ui->splitter->restoreState(val);
 }
