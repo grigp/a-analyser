@@ -4,6 +4,7 @@ include(ritmogram/ritmogram_src.pri)
 include(vpg/vpg_src.pri)
 include(krg/krg_src.pri)
 include(aka/aka_src.pri)
+include(spectr/spectr_src.pri)
 
 HEADERS += \
 

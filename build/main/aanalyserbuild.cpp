@@ -41,6 +41,7 @@
 #include "triangleconslutionfactorsdescriptor.h"
 
 #include "pulsefactorsdescriptor.h"
+#include "pulsespectrfactorsdescriptor.h"
 
 #include "skgvisual.h"
 #include "stabilogramvisual.h"
@@ -55,6 +56,7 @@
 #include "variationpulsogramvisual.h"
 #include "korrelationritmogramvisual.h"
 #include "autocorrelationanalysisvisual.h"
+#include "spectrpulsevisual.h"
 #include "sectiongraphvisual.h"
 
 #include "filtersignal.h"
@@ -104,6 +106,7 @@ void AAnalyserBuild::registerFactors()
     app->registerGroup(new TriangleConslutionFactorsDescriptor(BaseDefines::tlProbe));
 
     app->registerGroup(new PulseFactorsDescriptor(BaseDefines::tlChannel));
+    app->registerGroup(new PulseSpectrFactorsDescriptor(BaseDefines::tlChannel));
 
     app->registerGroup(new DropTestFactorsDescriptor(BaseDefines::tlChannel));
     app->registerGroup(new HoppingFactorsDescriptor(BaseDefines::tlChannel));
@@ -127,6 +130,7 @@ void AAnalyserBuild::registerVisuals()
     app->registerVisual(new VariationPulsogramVisual(BaseDefines::tlChannel));
     app->registerVisual(new KorrelationRitmogramVisual(BaseDefines::tlChannel));
     app->registerVisual(new AutoCorrelationAnalysisVisual(BaseDefines::tlChannel));
+    app->registerVisual(new SpectrPulseVisual(BaseDefines::tlChannel));
     app->registerVisual(new BilateralVisual(BaseDefines::tlProbe));
     app->registerVisual(new SectionGraphVisual(BaseDefines::tlSection));
 }
