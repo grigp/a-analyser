@@ -3,6 +3,7 @@
 
 #include <QCoreApplication>
 #include <QObject>
+#include <QVector>
 
 #include "multifactor.h"
 
@@ -77,6 +78,50 @@ public:
      * \brief Регистрирует факторсгруппу и показатели
      */
     static void registerFactors();
+
+    /*!
+     * \brief Возвращает кол-во точек спектра
+     */
+    int spectrCount() const;
+
+    /*!
+     * \brief Возвращает значение в точке спектра
+     * \param idx - индекс значения (0 - spectrCount())
+     */
+    double spectrValue(const int idx) const;
+
+    /*!
+     * \brief Возвращает навязанную частоту дискретизации, используемую для расчета спектра ритмограммы.
+     * Так как отсчеты идут нерегулярно, частота равна среднему значению длительности R-R интервала.
+     * Для расчета частоты отсчета спектра, надо воспользоваться формулой: f = (i * freqRate()) / spectrCount()
+     */
+    double freqRate() const {return m_freqRate;}
+
+private:
+    QVector<double> m_spectr;
+    double m_freqRate {1};
+
+    //! Показатели
+    double m_PwHF {0};
+    double m_PwLF {0};
+    double m_PwVLF {0};
+    double m_PwULF {0};
+    double m_PwSum {0};
+    double m_PrHF {0};
+    double m_PrLF {0};
+    double m_PrVLF {0};
+    double m_PrULF {0};
+    double m_PwAvHF {0};
+    double m_PwAvLF {0};
+    double m_PwAvVLF {0};
+    double m_PwAvULF {0};
+    double m_LH {0};
+    double m_Pw60 {0};
+    double m_CentIdx {0};
+    double m_FqMidSp {0};
+    double m_LFnu {0};
+    double m_HFnu {0};
+
 };
 
 #endif // PULSESPECTRFACTORS_H
