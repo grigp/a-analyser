@@ -274,5 +274,7 @@ int PulseSpectrFactors::spectrCount() const
 double PulseSpectrFactors::spectrValue(const int idx) const
 {
     Q_ASSERT(idx >= 0 && idx < FFT_COUNT / 2);
-    return m_spectr.at(idx);
+    if (idx < m_spectr.size())
+        return m_spectr.at(idx);
+    return 0.0;
 }

@@ -10,6 +10,16 @@
 #include "pulsespectrfactors.h"
 #include "settingsprovider.h"
 
+namespace
+{
+QStringList DiagFactorUids = QStringList()
+        << PulseSpectrFactorsDefines::PwULFUid
+        << PulseSpectrFactorsDefines::PwVLFUid
+        << PulseSpectrFactorsDefines::PwLFUid
+        << PulseSpectrFactorsDefines::PwHFUid;
+
+}
+
 
 SpectrPulseVisualWidget::SpectrPulseVisualWidget(VisualDescriptor* visual,
                                                  const QString& testUid, const QString& probeUid, const QString& channelId,
@@ -41,6 +51,7 @@ void SpectrPulseVisualWidget::calculate()
     m_factors = new PulseSpectrFactors(testUid(), probeUid(), channelId());
 
     showSpectr();
+    showDiag();
     showFactors();
 }
 
@@ -68,6 +79,26 @@ void SpectrPulseVisualWidget::showSpectr()
     ui->wgtSpectr->addFreqLabel(m_factors->factorValue(PulseSpectrFactorsDefines::Pw60Uid), "60%");
     ui->wgtSpectr->setNameAxisX(tr("F,Гц"));
     ui->wgtSpectr->setNameAxisY(tr("A,мс"));
+}
+
+
+void SpectrPulseVisualWidget::showDiag()
+{
+    foreach (auto uid, DiagFactorUids)
+    {
+        auto pw = m_factors->factorValue(uid);
+        auto s_pw = m_factors->factorValueFormatted(uid);
+        auto fi = static_cast<AAnalyserApplication*>(QApplication::instance())->getFactorInfo(uid);
+
+        auto item = new DiagItem(pw, fi.shortName() + ": " + s_pw + "," + fi.measure());
+        ui->wgtDiag->appendItem(item);
+    }
+
+    ui->wgtDiag->setKind(DynamicDiagramDefines::KindBar);
+    ui->wgtDiag->setVolume(DynamicDiagramDefines::Volume3D);
+    ui->wgtDiag->setTitle(tr("Распределение мощности"));
+    ui->wgtDiag->setAxisSpaceLeft(30);
+    ui->wgtDiag->setSizeDivider(2);
 }
 
 void SpectrPulseVisualWidget::showFactors()

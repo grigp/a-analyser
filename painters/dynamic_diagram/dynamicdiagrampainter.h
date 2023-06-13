@@ -13,7 +13,7 @@
 class DiagItem
 {
 public:
-    DiagItem(double value, QString name)
+    DiagItem(const double value, const QString name)
         : m_value(value), m_name(name)
     {}
 

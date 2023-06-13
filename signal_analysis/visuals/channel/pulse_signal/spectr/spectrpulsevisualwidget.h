@@ -38,6 +38,7 @@ private:
     Ui::SpectrPulseVisualWidget *ui;
 
     void showSpectr();
+    void showDiag();
     void showFactors();
     void saveSplitterPosition();
     void restoreSplitterPosition();

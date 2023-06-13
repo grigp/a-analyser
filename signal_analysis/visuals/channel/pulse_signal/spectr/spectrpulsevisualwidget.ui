@@ -111,6 +111,26 @@
           <property name="frameShadow">
            <enum>QFrame::Sunken</enum>
           </property>
+          <layout class="QVBoxLayout" name="verticalLayout_3">
+           <property name="spacing">
+            <number>1</number>
+           </property>
+           <property name="leftMargin">
+            <number>1</number>
+           </property>
+           <property name="topMargin">
+            <number>1</number>
+           </property>
+           <property name="rightMargin">
+            <number>1</number>
+           </property>
+           <property name="bottomMargin">
+            <number>1</number>
+           </property>
+           <item>
+            <widget class="DynamicDiagram" name="wgtDiag" native="true"/>
+           </item>
+          </layout>
          </widget>
         </widget>
        </item>
@@ -121,6 +141,12 @@
   </layout>
  </widget>
  <customwidgets>
+  <customwidget>
+   <class>DynamicDiagram</class>
+   <extends>QWidget</extends>
+   <header location="global">dynamicdiagram.h</header>
+   <container>1</container>
+  </customwidget>
   <customwidget>
    <class>DiagSpectr</class>
    <extends>QWidget</extends>
