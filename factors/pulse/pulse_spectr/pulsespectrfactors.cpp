@@ -268,7 +268,8 @@ void PulseSpectrFactors::registerFactors()
 
 int PulseSpectrFactors::spectrCount() const
 {
-    return FFT_COUNT / 2;
+    return qMin(m_spectr.size(), FFT_COUNT / 2);
+//    return FFT_COUNT / 2;
 }
 
 double PulseSpectrFactors::spectrValue(const int idx) const

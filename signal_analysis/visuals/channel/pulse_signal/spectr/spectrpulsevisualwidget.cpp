@@ -2,6 +2,7 @@
 #include "ui_spectrpulsevisualwidget.h"
 
 #include <QStandardItemModel>
+#include <QDebug>
 
 #include "aanalyserapplication.h"
 #include "channelsdefines.h"
@@ -50,9 +51,14 @@ void SpectrPulseVisualWidget::calculate()
         delete m_factors;
     m_factors = new PulseSpectrFactors(testUid(), probeUid(), channelId());
 
-    showSpectr();
-    showDiag();
-    showFactors();
+    ui->frNoSpectr->setVisible(m_factors->spectrCount() <= 0);
+    ui->splVert->setVisible(m_factors->spectrCount() > 0);
+    if (m_factors->spectrCount() > 0)
+    {
+        showSpectr();
+        showDiag();
+        showFactors();
+    }
 }
 
 void SpectrPulseVisualWidget::splitterMoved(int pos, int index)
@@ -64,12 +70,15 @@ void SpectrPulseVisualWidget::splitterMoved(int pos, int index)
 
 void SpectrPulseVisualWidget::on_channelChanged(const QString &probeUid, const QString &channelId)
 {
+    Q_UNUSED(probeUid);
+    Q_UNUSED(channelId);
+    calculate();
 }
 
 void SpectrPulseVisualWidget::showSpectr()
 {
     ui->wgtSpectr->setTitle(tr(""));
-
+    ui->wgtSpectr->clear();
     for (int i = 0; i < m_factors->spectrCount(); ++i)
         ui->wgtSpectr->addValue(m_factors->spectrValue(i));
     ui->wgtSpectr->setFormatData(m_factors->freqRate(), 0.4);
@@ -84,6 +93,7 @@ void SpectrPulseVisualWidget::showSpectr()
 
 void SpectrPulseVisualWidget::showDiag()
 {
+    ui->wgtDiag->clear();
     foreach (auto uid, DiagFactorUids)
     {
         auto pw = m_factors->factorValue(uid);
@@ -96,7 +106,7 @@ void SpectrPulseVisualWidget::showDiag()
 
     ui->wgtDiag->setKind(DynamicDiagramDefines::KindBar);
     ui->wgtDiag->setVolume(DynamicDiagramDefines::Volume3D);
-    ui->wgtDiag->setTitle(tr("Распределение мощности"));
+    ui->wgtDiag->setTitle(tr("Распределение мощности по зонам спектра"));
     ui->wgtDiag->setAxisSpaceLeft(30);
     ui->wgtDiag->setSizeDivider(2);
 }
