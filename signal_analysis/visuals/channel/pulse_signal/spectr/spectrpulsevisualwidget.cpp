@@ -6,6 +6,7 @@
 #include "aanalyserapplication.h"
 #include "channelsdefines.h"
 #include "channelsutils.h"
+#include "pulsespectrfactorsdefines.h"
 #include "pulsespectrfactors.h"
 #include "settingsprovider.h"
 
@@ -39,6 +40,7 @@ void SpectrPulseVisualWidget::calculate()
         delete m_factors;
     m_factors = new PulseSpectrFactors(testUid(), probeUid(), channelId());
 
+    showSpectr();
     showFactors();
 }
 
@@ -51,6 +53,21 @@ void SpectrPulseVisualWidget::splitterMoved(int pos, int index)
 
 void SpectrPulseVisualWidget::on_channelChanged(const QString &probeUid, const QString &channelId)
 {
+}
+
+void SpectrPulseVisualWidget::showSpectr()
+{
+    ui->wgtSpectr->setTitle(tr(""));
+
+    for (int i = 0; i < m_factors->spectrCount(); ++i)
+        ui->wgtSpectr->addValue(m_factors->spectrValue(i));
+    ui->wgtSpectr->setFormatData(m_factors->freqRate(), 0.4);
+
+    foreach (auto area, PulseSpectrFactorsDefines::SpectrAreases)
+        ui->wgtSpectr->addFreqArea(area.lo, area.hi, area.shortName, area.colorBackground, area.colorText);
+    ui->wgtSpectr->addFreqLabel(m_factors->factorValue(PulseSpectrFactorsDefines::Pw60Uid), "60%");
+    ui->wgtSpectr->setNameAxisX(tr("F,Гц"));
+    ui->wgtSpectr->setNameAxisY(tr("A,мс"));
 }
 
 void SpectrPulseVisualWidget::showFactors()

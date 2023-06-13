@@ -41,6 +41,26 @@
       <property name="frameShadow">
        <enum>QFrame::Sunken</enum>
       </property>
+      <layout class="QVBoxLayout" name="verticalLayout_2">
+       <property name="spacing">
+        <number>1</number>
+       </property>
+       <property name="leftMargin">
+        <number>1</number>
+       </property>
+       <property name="topMargin">
+        <number>1</number>
+       </property>
+       <property name="rightMargin">
+        <number>1</number>
+       </property>
+       <property name="bottomMargin">
+        <number>1</number>
+       </property>
+       <item>
+        <widget class="DiagSpectr" name="wgtSpectr" native="true"/>
+       </item>
+      </layout>
      </widget>
      <widget class="QFrame" name="frValues">
       <property name="frameShape">
@@ -100,6 +120,14 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>DiagSpectr</class>
+   <extends>QWidget</extends>
+   <header location="global">diagspectr.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections>
   <connection>

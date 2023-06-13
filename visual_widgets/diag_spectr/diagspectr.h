@@ -87,7 +87,7 @@ public:
      * \param frequency - частота дискретизации
      * \param maxFrequency - максимальная отображаемая частота
      */
-    void setFormatData(const int frequency, const double maxFrequency);
+    void setFormatData(const double frequency, const double maxFrequency);
 
     /*!
      * \brief Задает размеры отображаемой области
@@ -170,7 +170,7 @@ private:
     QRect m_bounds = QRect(QPoint(30, 30), QPoint(10, 30));
 
     QVector<double> m_data;
-    int m_frequency {50};        ///< Частота дискретизации
+    double m_frequency {50.0};   ///< Частота дискретизации
     double m_maxFrequency {6.1}; ///< Максимальная отображаемая частота
 
     double m_minFreq {0};      ///< Минимальная частота
