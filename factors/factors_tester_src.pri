@@ -6,6 +6,7 @@ include(vector/vector_src.pri)
 include(ids/ids_src.pri)
 include(spectr_stab/spectr_stab_src.pri)
 include(ratio_prb/ratio_prb_src.pri)
+include(pulse/pulse_src.pri)
 
 HEADERS += \
     $$PWD/factorsdefines.h \

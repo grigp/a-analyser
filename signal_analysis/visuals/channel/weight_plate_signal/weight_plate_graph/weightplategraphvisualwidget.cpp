@@ -36,7 +36,7 @@ WeightPlateGraphVisualWidget::WeightPlateGraphVisualWidget(VisualDescriptor* vis
 
     connect(ui->wgtGraph, &AreaGraph::press, this, &WeightPlateGraphVisualWidget::on_press);
     connect(ui->wgtGraph, &AreaGraph::move, this, &WeightPlateGraphVisualWidget::on_move);
-    connect(ui->wgtGraph, &AreaGraph::release, this, &WeightPlateGraphVisualWidget::on_release);
+    connect(ui->wgtGraph, &AreaGraph::mouseRelease, this, &WeightPlateGraphVisualWidget::on_release);
 }
 
 WeightPlateGraphVisualWidget::~WeightPlateGraphVisualWidget()

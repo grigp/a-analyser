@@ -31,6 +31,9 @@
 #include "trianglefactorsdescriptor.h"
 #include "triangleconslutionfactorsdescriptor.h"
 
+#include "pulsefactorsdescriptor.h"
+#include "pulsespectrfactorsdescriptor.h"
+
 #include "skgvisual.h"
 #include "stabilogramvisual.h"
 #include "histogramvisual.h"
@@ -40,6 +43,11 @@
 #include "bilateralvisual.h"
 #include "dynamosignalvisual.h"
 #include "myogramsignalvisual.h"
+#include "ritmogramvisual.h"
+#include "variationpulsogramvisual.h"
+#include "korrelationritmogramvisual.h"
+#include "autocorrelationanalysisvisual.h"
+#include "spectrpulsevisual.h"
 #include "sectiongraphvisual.h"
 
 #include "filtersignal.h"
@@ -81,6 +89,9 @@ void AAnalyserBuild::registerFactors()
     app->registerGroup(new StepOffsetFactorsDescriptor(BaseDefines::tlProbe));
     app->registerGroup(new TriangleFactorsDescriptor(BaseDefines::tlProbe));
     app->registerGroup(new TriangleConslutionFactorsDescriptor(BaseDefines::tlProbe));
+
+    app->registerGroup(new PulseFactorsDescriptor(BaseDefines::tlChannel));
+    app->registerGroup(new PulseSpectrFactorsDescriptor(BaseDefines::tlChannel));
 }
 
 void AAnalyserBuild::registerVisuals()
@@ -94,6 +105,12 @@ void AAnalyserBuild::registerVisuals()
     app->registerVisual(new MyogramSignalVisual(BaseDefines::tlChannel));
     app->registerVisual(new DynamoSignalVisual(BaseDefines::tlChannel));
     app->registerVisual(new VectorAnalysisVisual(BaseDefines::tlChannel));
+    app->registerVisual(new RitmogramVisual(BaseDefines::tlChannel));
+    app->registerVisual(new VariationPulsogramVisual(BaseDefines::tlChannel));
+    app->registerVisual(new KorrelationRitmogramVisual(BaseDefines::tlChannel));
+    app->registerVisual(new AutoCorrelationAnalysisVisual(BaseDefines::tlChannel));
+    app->registerVisual(new SpectrPulseVisual(BaseDefines::tlChannel));
+    app->registerVisual(new BilateralVisual(BaseDefines::tlProbe));
     app->registerVisual(new BilateralVisual(BaseDefines::tlProbe));
     app->registerVisual(new SectionGraphVisual(BaseDefines::tlSection));
 }

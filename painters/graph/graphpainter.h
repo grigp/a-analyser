@@ -325,28 +325,6 @@ public:
      */
     void selectedAreaValue(double &begin, double &end);
 
-signals:
-    void moveCursor();
-
-    /*!
-     * \brief Сигнал нажатия мышки на теле виджета
-     * \param x, y - координаты нажатия
-     * \param buttons - нажатые кнопки
-     */
-    void press(const int x, const int y, const Qt::MouseButtons buttons);
-    /*!
-     * \brief Сигнал отпускания мышки на теле виджета
-     * \param x, y - координаты отпускания
-     * \param buttons - нажатые кнопки
-     */
-    void release(const int x, const int y, const Qt::MouseButtons buttons);
-    /*!
-     * \brief Сигнал переноса мышки по телу виджета
-     * \param x, y - координаты положения
-     * \param buttons - нажатые кнопки
-     */
-    void move(const int x, const int y, const Qt::MouseButtons buttons);
-
     /*!
      * \brief Процедура прорисовки на рисователе m_painter  в рамках m_geometry
      */

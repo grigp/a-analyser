@@ -8,6 +8,7 @@ include(spectr_stab/spectr_stab_src.pri)
 include(ratio_prb/ratio_prb_src.pri)
 include(tren_result/tren_result_src.pri)
 include(stab_dynamic/stab_dynamic_src.pri)
+include(pulse/pulse_src.pri)
 
 
 HEADERS += \
