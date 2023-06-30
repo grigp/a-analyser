@@ -3,6 +3,7 @@
 
 #include "aanalyserapplication.h"
 #include "databaseresultwidget.h"
+#include "personalprogramwidget.h"
 #include "executewidget.h"
 #include "signalanalysiswidget.h"
 #include "summarieswidget.h"
@@ -94,7 +95,7 @@ void MainWindow::showClientPage(const QString &uidPage)
 {
     //! Запомнить показываемую страницу
     m_lastPages << uidPage;
-    qDebug() << uidPage << "  " << m_lastPages;
+    //qDebug() << uidPage << "  " << m_lastPages;
 
     foreach (auto *wgt, m_clientWidgets)
         if (static_cast<ClientWidget*>(wgt)->uid() == m_currentClientPage)
@@ -310,6 +311,18 @@ void MainWindow::on_selectColorSheme()
     }
 }
 
+void MainWindow::on_viewDataBase()
+{
+    showClientPage(ClientWidgets::uidDatabaseResultWidgetUid);
+    SettingsProvider::setValueToRegAppCopy("MainWindow", "MainClientWidget", ClientWidgets::uidDatabaseResultWidgetUid);
+}
+
+void MainWindow::on_viewPersonalProgram()
+{
+    showClientPage(ClientWidgets::uidPersonalProgramWidgetUid);
+    SettingsProvider::setValueToRegAppCopy("MainWindow", "MainClientWidget", ClientWidgets::uidPersonalProgramWidgetUid);
+}
+
 void MainWindow::onSummariesShow()
 {
     static_cast<AAnalyserApplication*>(QApplication::instance())->summaries();
@@ -358,15 +371,31 @@ void MainWindow::initMenu()
 
     menuDatabase->addAction(ui->acExit);
 
-    QMenu *menuSummaries = menuBar()->addMenu(tr("Сводки"));
-    ui->acSummariesShow->setIcon(QIcon(":/images/Summaries.png"));
-    menuSummaries->addAction(ui->acSummariesShow);
-    ui->acAddTestToSummary->setIcon(QIcon(":/images/SummaryAddTest.png"));
-    menuSummaries->addAction(ui->acAddTestToSummary);
-    ui->acSummaryBuild->setIcon(QIcon(":/images/SummaryBuild.png"));
-    menuSummaries->addAction(ui->acSummaryBuild);
-    menuSummaries->addSeparator();
-    menuSummaries->addAction(ui->acSummariesBrowse);
+    QMenu *menuView = menuBar()->addMenu(tr("Вид"));
+    m_agViewsMain = new QActionGroup(this);
+    menuView->addAction(ui->acViewDataBase);
+    m_agViewsMain->addAction(ui->acViewDataBase);
+    menuView->addAction(ui->acViewPersonalProgram);
+    m_agViewsMain->addAction(ui->acViewPersonalProgram);
+    ui->acViewDataBase->setCheckable(true);
+    ui->acViewPersonalProgram->setCheckable(true);
+
+    auto cwv = SettingsProvider::valueFromRegAppCopy("MainWindow", "MainClientWidget", ClientWidgets::uidDatabaseResultWidgetUid).toString();
+    if (cwv == ClientWidgets::uidDatabaseResultWidgetUid)
+        ui->acViewDataBase->setChecked(true);
+    else
+    if (cwv == ClientWidgets::uidPersonalProgramWidgetUid)
+        ui->acViewPersonalProgram->setChecked(true);
+
+//    QMenu *menuSummaries = menuBar()->addMenu(tr("Сводки"));
+//    ui->acSummariesShow->setIcon(QIcon(":/images/Summaries.png"));
+//    menuSummaries->addAction(ui->acSummariesShow);
+//    ui->acAddTestToSummary->setIcon(QIcon(":/images/SummaryAddTest.png"));
+//    menuSummaries->addAction(ui->acAddTestToSummary);
+////    ui->acSummaryBuild->setIcon(QIcon(":/images/SummaryBuild.png"));
+////    menuSummaries->addAction(ui->acSummaryBuild);
+////    menuSummaries->addSeparator();
+////    menuSummaries->addAction(ui->acSummariesBrowse);
 
     QMenu *menuSettings = menuBar()->addMenu(tr("Настройки"));
     menuSettings->addAction(ui->acDeviceControl);
@@ -428,6 +457,7 @@ void MainWindow::createClientWidgets()
 {
     m_clientWidgets.clear();
     m_clientWidgets << new DataBaseResultWidget(this)
+                    << new PersonalProgramWidget(this)
                     << new ExecuteWidget(this)
                     << new SignalAnalysisWidget(this)
                     << new SummariesWidget(this);
@@ -435,7 +465,9 @@ void MainWindow::createClientWidgets()
     foreach (auto* wgt, m_clientWidgets)
         ui->wgtClient->layout()->addWidget(wgt);
 
-    showClientPage(ClientWidgets::uidDatabaseResultWidgetUid);
+    auto cwv = SettingsProvider::valueFromRegAppCopy("MainWindow", "MainClientWidget", ClientWidgets::uidDatabaseResultWidgetUid).toString();
+    showClientPage(cwv);
+//    showClientPage(ClientWidgets::uidDatabaseResultWidgetUid);
 }
 
 

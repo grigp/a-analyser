@@ -169,6 +169,11 @@ public:
     void showDataBase();
 
     /*!
+     * \brief Показывает виджет индивидуальных программ
+     */
+    void showPersonalPrograms();
+
+    /*!
      * \brief Переход к окну анализа сигналов
      */
     void signalsAnalysis();

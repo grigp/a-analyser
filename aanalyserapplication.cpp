@@ -19,6 +19,7 @@
 #include "databaseresultwidget.h"
 #include "signalanalysiswidget.h"
 #include "summarieswidget.h"
+#include "personalprogramwidget.h"
 #include "database.h"
 #include "datadefines.h"
 #include "exitcodes.h"
@@ -301,6 +302,11 @@ void AAnalyserApplication::deleteTest(const QString &testUid)
 void AAnalyserApplication::showDataBase()
 {
     showClientPage(ClientWidgets::uidDatabaseResultWidgetUid);
+}
+
+void AAnalyserApplication::showPersonalPrograms()
+{
+    showClientPage(ClientWidgets::uidPersonalProgramWidgetUid);
 }
 
 void AAnalyserApplication::signalsAnalysis()

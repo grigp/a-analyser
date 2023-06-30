@@ -86,6 +86,9 @@ private slots:
     void on_selectDatabase();
     void on_selectColorSheme();
 
+    void on_viewDataBase();
+    void on_viewPersonalProgram();
+
     void onSummariesShow();
     void onAddTestToSymmary();
     void onSummaryBuild();
@@ -110,6 +113,7 @@ private:
     QMenu m_menuSelectDatabase;       ///< Меню выбора БД
 
     QActionGroup* m_agColorShemes {nullptr};
+    QActionGroup* m_agViewsMain {nullptr};
     SettingsValue* m_curColorSheme  {nullptr};  ///< Выбранная цветовая схема
 
     QStack<QString> m_lastPages;   ///< Последние открытые страницы

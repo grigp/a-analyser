@@ -242,6 +242,25 @@
     <string>Просмотр всех созданных сводок</string>
    </property>
   </action>
+  <action name="acViewDataBase">
+   <property name="checkable">
+    <bool>false</bool>
+   </property>
+   <property name="checked">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>База данных</string>
+   </property>
+   <property name="toolTip">
+    <string>Показать базу данных</string>
+   </property>
+  </action>
+  <action name="acViewPersonalProgram">
+   <property name="text">
+    <string>Индивидуальные программы</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources/>
@@ -470,6 +489,38 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>acViewDataBase</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>on_viewDataBase()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>581</x>
+     <y>317</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>acViewPersonalProgram</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>on_viewPersonalProgram()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>581</x>
+     <y>317</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>onDeviceControl()</slot>
@@ -485,5 +536,7 @@
   <slot>onAddTestToSymmary()</slot>
   <slot>onSummaryBuild()</slot>
   <slot>onSummariesBrowse()</slot>
+  <slot>on_viewDataBase()</slot>
+  <slot>on_viewPersonalProgram()</slot>
  </slots>
 </ui>
