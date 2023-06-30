@@ -53,6 +53,7 @@ public:
 
 public slots:
     void showDB();
+    void closeExecutePage();
 
 
 private:

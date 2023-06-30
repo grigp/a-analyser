@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QMenu>
+#include <QStack>
 
 class DataBaseResultWidget;
 class ExecuteWidget;
@@ -25,6 +26,12 @@ public:
      * \param uidPage - uid страницы
      */
     void showClientPage(const QString &uidPage);
+
+    /*!
+     * \brief Восстанавливает предыдущую страницу из стека последних показанных страниц
+     * \return Возвращает true, если было, что восстанавливать
+     */
+    bool restoreClientPage();
 
     QWidget *getExecuteWidget();
 
@@ -104,6 +111,8 @@ private:
 
     QActionGroup* m_agColorShemes {nullptr};
     SettingsValue* m_curColorSheme  {nullptr};  ///< Выбранная цветовая схема
+
+    QStack<QString> m_lastPages;   ///< Последние открытые страницы
 };
 
 #endif // MAINWINDOW_H

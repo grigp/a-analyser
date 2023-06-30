@@ -58,6 +58,12 @@ public:
     void showClientPage(const QString &uidPage);
 
     /*!
+     * \brief Восстанавливает предыдущую страницу из стека последних показанных страниц
+     * \return Возвращает true, если было, что восстанавливать
+     */
+    bool restoreClientPage();
+
+    /*!
      * \brief Возвращает указатель на БД.
      * В клиентских модулях не пользоваться!
      * Вызывать продедуры из namespace DataProvider!

@@ -92,6 +92,10 @@ MainWindow::~MainWindow()
 
 void MainWindow::showClientPage(const QString &uidPage)
 {
+    //! Запомнить показываемую страницу
+    m_lastPages << uidPage;
+    qDebug() << uidPage << "  " << m_lastPages;
+
     foreach (auto *wgt, m_clientWidgets)
         if (static_cast<ClientWidget*>(wgt)->uid() == m_currentClientPage)
             static_cast<ClientWidget*>(wgt)->onHide();
@@ -107,6 +111,18 @@ void MainWindow::showClientPage(const QString &uidPage)
             ui->menuBar->setVisible(static_cast<ClientWidget*>(wgt)->isExternalControl());
         }
     }
+}
+
+bool MainWindow::restoreClientPage()
+{
+    if (m_lastPages.count() > 1)
+    {
+        auto pageId = m_lastPages.pop();  //! Это текущая, которая должна быть закрыта
+        pageId = m_lastPages.pop();       //! А вот эта предыдущая, которую надо показать
+        showClientPage(pageId);           //! Эта функция не только ее покажет, но и запомнит ее снова
+        return true;
+    }
+    return false;
 }
 
 QWidget *MainWindow::getExecuteWidget()
@@ -159,19 +175,22 @@ void MainWindow::closeEvent(QCloseEvent *event)
         auto mr = QMessageBox::question(this, tr("Предупреждение"), tr("Вы уверены, что хотите прервать проведение теста?"),
                                         QMessageBox::Yes | QMessageBox::No);
         if (mr == QMessageBox::Yes)
-            showClientPage(ClientWidgets::uidDatabaseResultWidgetUid);
+            restoreClientPage();
+//            showClientPage(ClientWidgets::uidDatabaseResultWidgetUid);
         event->ignore();
     }
     else
     if (m_currentClientPage == ClientWidgets::uidSignalAnalysisWidgetUid)
     {
-        showClientPage(ClientWidgets::uidDatabaseResultWidgetUid);
+        restoreClientPage();
+//        showClientPage(ClientWidgets::uidDatabaseResultWidgetUid);
         event->ignore();
     }
     else
     if (m_currentClientPage == ClientWidgets::uidSummariesWidgetUid)
     {
-        showClientPage(ClientWidgets::uidDatabaseResultWidgetUid);
+        restoreClientPage();
+//        showClientPage(ClientWidgets::uidDatabaseResultWidgetUid);
         event->ignore();
     }
     else

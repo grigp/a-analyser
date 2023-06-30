@@ -140,6 +140,11 @@ void AAnalyserApplication::showClientPage(const QString &uidPage)
     static_cast<MainWindow*>(m_mw)->showClientPage(uidPage);
 }
 
+bool AAnalyserApplication::restoreClientPage()
+{
+    return static_cast<MainWindow*>(m_mw)->restoreClientPage();
+}
+
 DataBase *AAnalyserApplication::getDB()
 {
     return m_database;

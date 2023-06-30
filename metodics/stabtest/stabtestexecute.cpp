@@ -156,7 +156,7 @@ void StabTestExecute::start()
     else
     {
         QMessageBox::warning(this, tr("Предупреждение"), tr("Отсутствует необходимое подключение для работы теста"));
-        static_cast<ExecuteWidget*>(parent())->showDB();
+        static_cast<ExecuteWidget*>(parent())->closeExecutePage(); //showDB();
     }
 }
 
@@ -438,7 +438,7 @@ void StabTestExecute::finishTest()
     hidePatientWindow();
     m_isRecording = false;
     m_trd->saveTest();
-    static_cast<ExecuteWidget*>(parent())->showDB();
+    static_cast<ExecuteWidget*>(parent())->closeExecutePage(); //showDB();
 }
 
 void StabTestExecute::addBilatChannel()

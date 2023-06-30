@@ -48,3 +48,8 @@ void ExecuteWidget::showDB()
 {
     static_cast<AAnalyserApplication*>(QApplication::instance())->showClientPage(ClientWidgets::uidDatabaseResultWidgetUid);
 }
+
+void ExecuteWidget::closeExecutePage()
+{
+    static_cast<AAnalyserApplication*>(QApplication::instance())->restoreClientPage();
+}

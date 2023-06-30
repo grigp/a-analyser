@@ -423,7 +423,7 @@ void SignalAnalysisWidget::closeTest(QModelIndex& index)
         closeVisuals(idxRoot);
         m_mdlTests->removeRow(idxRoot.row(), idxRoot.parent());
         if (m_mdlTests->rowCount() == 0)
-            static_cast<AAnalyserApplication*>(QApplication::instance())->showClientPage(ClientWidgets::uidDatabaseResultWidgetUid);
+            static_cast<AAnalyserApplication*>(QApplication::instance())->restoreClientPage(); //->showClientPage(ClientWidgets::uidDatabaseResultWidgetUid);
     }
 }
 
