@@ -19,10 +19,15 @@ class MethodsWidget : public QWidget
     Q_OBJECT
 
 public:
-    explicit MethodsWidget(QWidget *parent = 0);
+    explicit MethodsWidget(QWidget *parent = nullptr);
     ~MethodsWidget();
 
-    void onDbConnect();
+    void onDbConnect(const bool isEvent = true);
+
+    /*!
+     * \brief Возвращает uid выбранной методики
+     */
+    QString methodic() const;
 
 //protected:
 //    bool eventFilter(QObject *watched, QEvent *event);

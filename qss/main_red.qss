@@ -18,7 +18,9 @@ QFrame#frTestKindButtons
 /*    background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 rgb(1, 59, 86), stop: 0.5 rgb(2, 112, 164), stop: 1 rgb(1, 59, 86));*/
 }
 
-QFrame#frTitle
+QFrame#frTitle,
+QFrame#frPatientTitle,
+QFrame#frPPTitle
 {
     font-size: 11pt;
     background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 rgb(80, 0, 0), stop: 0.5 rgb(190, 0, 0), stop: 1 rgb(80, 0, 0));
@@ -54,7 +56,9 @@ QLabel
     color: rgb(80, 0, 0);
 }
 
-QLabel#lblTitle
+QLabel#lblTitle,
+QLabel#lblPatientsTitle,
+QLabel#lblPPTitle
 {
     font-size: 11pt;
     color: rgb(255, 255, 255);
@@ -282,7 +286,10 @@ QPushButton#btnSelectAllTests,
 QPushButton#btnUnSelectAllTests,
 QPushButton#btnSignalExport,
 QPushButton#btnExportSignal,
-QPushButton#btnCloseTest
+QPushButton#btnCloseTest,
+QPushButton#btnPPRun,
+QPushButton#btnPPStop,
+QPushButton#btnPPParams
 {
     border: 2px solid #8f8f91;
     border-radius: 6px;
@@ -305,7 +312,10 @@ QPushButton#btnSelectAllTests:hover,
 QPushButton#btnUnSelectAllTests:hover,
 QPushButton#btnSignalExport:hover,
 QPushButton#btnExportSignal:hover,
-QPushButton#btnCloseTest:hover
+QPushButton#btnCloseTest:hover,
+QPushButton#btnPPRun:hover,
+QPushButton#btnPPStop:hover,
+QPushButton#btnPPParams:hover
 {
     background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 rgb(170, 30, 30), stop: 0.5 rgb(250, 30, 30), stop: 1 rgb(170, 30, 30));
 }
@@ -325,7 +335,10 @@ QPushButton#btnSelectAllTests:pressed,
 QPushButton#btnUnSelectAllTests:pressed,
 QPushButton#btnSignalExport:pressed,
 QPushButton#btnExportSignal:pressed,
-QPushButton#btnCloseTest:pressed
+QPushButton#btnCloseTest:pressed,
+QPushButton#btnPPRun:pressed,
+QPushButton#btnPPStop:pressed,
+QPushButton#btnPPParams:pressed
 {
     background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 rgb(100, 0, 0), stop: 0.5 rgb(130, 0, 0), stop: 1 rgb(100, 0, 0));
 }

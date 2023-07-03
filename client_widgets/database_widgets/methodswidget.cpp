@@ -32,7 +32,7 @@ MethodsWidget::~MethodsWidget()
     delete ui;
 }
 
-void MethodsWidget::onDbConnect()
+void MethodsWidget::onDbConnect(const bool isEvent)
 {
     if (m_mdlMethodics && m_pmdlMethodics && m_mdlKinds)
     {
@@ -40,8 +40,9 @@ void MethodsWidget::onDbConnect()
         m_mdlMethodics->load();
         m_pmdlMethodics->setSourceModel(m_mdlMethodics);
         ui->tvMetods->setModel(m_pmdlMethodics);
-        connect(ui->tvMetods->selectionModel(), &QItemSelectionModel::selectionChanged,
-                this, &MethodsWidget::on_selectMetodicChanged);
+        if (isEvent)
+            connect(ui->tvMetods->selectionModel(), &QItemSelectionModel::selectionChanged,
+                    this, &MethodsWidget::on_selectMetodicChanged);
 
         //! Если методика одна, то уберем виджет ее выбора и выберем ее для использования
         static_cast<AAnalyserApplication*>(QApplication::instance())->getMethodicCount(m_mdlMethodics->rowCount());
@@ -55,6 +56,14 @@ void MethodsWidget::onDbConnect()
         m_mdlKinds->load();
         setMethodicKindsButtons();
     }
+}
+
+QString MethodsWidget::methodic() const
+{
+    auto index = m_pmdlMethodics->mapToSource(ui->tvMetods->selectionModel()->currentIndex());
+    if (index.isValid())
+        return index.data(MetodicsModel::MetodicUidRole).toString();
+    return QUuid().toString();
 }
 
 //bool MethodsWidget::eventFilter(QObject *watched, QEvent *event)
