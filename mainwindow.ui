@@ -261,6 +261,22 @@
     <string>Индивидуальные программы</string>
    </property>
   </action>
+  <action name="acEditPersonalPrograms">
+   <property name="text">
+    <string>Индивидуальные программы...</string>
+   </property>
+   <property name="toolTip">
+    <string>Редактирование индивидуальных программ</string>
+   </property>
+  </action>
+  <action name="acEditDailyPrograms">
+   <property name="text">
+    <string>Дневные программы...</string>
+   </property>
+   <property name="toolTip">
+    <string>Редактирование дневных программ</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources/>
@@ -521,6 +537,38 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>acEditPersonalPrograms</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>on_editPersonalPrograms()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>581</x>
+     <y>317</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>581</x>
+     <y>317</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>acEditDailyPrograms</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>on_editDailyPrograms()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>581</x>
+     <y>317</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>onDeviceControl()</slot>
@@ -538,5 +586,7 @@
   <slot>onSummariesBrowse()</slot>
   <slot>on_viewDataBase()</slot>
   <slot>on_viewPersonalProgram()</slot>
+  <slot>on_editPersonalPrograms()</slot>
+  <slot>on_editDailyPrograms()</slot>
  </slots>
 </ui>

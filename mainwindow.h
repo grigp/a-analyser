@@ -94,6 +94,9 @@ private slots:
     void onSummaryBuild();
     void onSummariesBrowse();
 
+    void on_editPersonalPrograms();
+    void on_editDailyPrograms();
+
 private:
     Ui::MainWindow *ui;
 

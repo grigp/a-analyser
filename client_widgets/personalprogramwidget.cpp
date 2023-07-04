@@ -6,8 +6,6 @@
 
 #include "aanalyserapplication.h"
 #include "settingsprovider.h"
-#include "selectmethodicdialog.h"
-#include "metodicsfactory.h"
 
 PersonalProgramWidget::PersonalProgramWidget(QWidget *parent) :
     ClientWidget(parent),
@@ -50,20 +48,6 @@ void PersonalProgramWidget::on_splitterMoved(int, int)
 
 void PersonalProgramWidget::on_run()
 {
-// Пример, как работать с диалогом выбора методики
-//    SelectMethodicDialog dialog(this);
-//    if (dialog.exec() == QDialog::Accepted)
-//    {
-//        auto metUid = dialog.methodic();
-//        if (metUid != QUuid().toString())
-//        {
-//            MetodicsFactory *metFactory = static_cast<AAnalyserApplication*>(QApplication::instance())->getMetodics();
-//            auto mi = metFactory->metodic(metUid);
-//            qDebug() << mi.name;
-//        }
-//        else
-//            qDebug() << "Методика не выбрана";
-//    }
 }
 
 void PersonalProgramWidget::on_delete()

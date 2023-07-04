@@ -32,15 +32,17 @@ MethodsWidget::~MethodsWidget()
     delete ui;
 }
 
-void MethodsWidget::onDbConnect(const bool isEvent)
+void MethodsWidget::onDbConnect(const bool isAppEvent)
 {
+    m_isAppEvent = isAppEvent;
+
     if (m_mdlMethodics && m_pmdlMethodics && m_mdlKinds)
     {
         m_mdlMethodics->clear();
         m_mdlMethodics->load();
         m_pmdlMethodics->setSourceModel(m_mdlMethodics);
         ui->tvMetods->setModel(m_pmdlMethodics);
-        if (isEvent)
+//        if (isAppEvent)
             connect(ui->tvMetods->selectionModel(), &QItemSelectionModel::selectionChanged,
                     this, &MethodsWidget::on_selectMetodicChanged);
 
@@ -98,10 +100,16 @@ void MethodsWidget::selectMetodic(const QModelIndex index)
     if (index.isValid())
     {
         auto uid = index.data(MetodicsModel::MetodicUidRole).toString();
-        static_cast<AAnalyserApplication*>(QApplication::instance())->doSelectMetodic(uid);
+        emit selectMethod(uid);
+        if (m_isAppEvent)
+            static_cast<AAnalyserApplication*>(QApplication::instance())->doSelectMetodic(uid);
     }
     else
-        static_cast<AAnalyserApplication*>(QApplication::instance())->doSelectMetodic("");
+    {
+        emit selectMethod("");
+        if (m_isAppEvent)
+            static_cast<AAnalyserApplication*>(QApplication::instance())->doSelectMetodic("");
+    }
 }
 
 void MethodsWidget::editMetodParams()

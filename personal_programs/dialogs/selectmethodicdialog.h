@@ -20,6 +20,9 @@ public:
      */
     QString methodic() const;
 
+private slots:
+    void on_selectMethod(const QString& uid);
+
 private:
     Ui::SelectMethodicDialog *ui;
 };

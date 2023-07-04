@@ -16,6 +16,7 @@
 #include "aanalysersettings.h"
 #include "aanalyserdefines.h"
 #include "aboutdialog.h"
+#include "dailyprogramseditor.h"
 
 #include <QFile>
 #include <QCloseEvent>
@@ -343,6 +344,17 @@ void MainWindow::onSummariesBrowse()
     qDebug() << "обзор сводок";
 }
 
+void MainWindow::on_editPersonalPrograms()
+{
+    qDebug() << "Персональные программы";
+}
+
+void MainWindow::on_editDailyPrograms()
+{
+    DailyProgramsEditor dlg(this);
+    dlg.exec();
+}
+
 void MainWindow::initUi(const QString& colorSheme)
 {
     QFile style(colorSheme);
@@ -398,6 +410,9 @@ void MainWindow::initMenu()
 ////    menuSummaries->addAction(ui->acSummariesBrowse);
 
     QMenu *menuSettings = menuBar()->addMenu(tr("Настройки"));
+    menuSettings->addAction(ui->acEditPersonalPrograms);
+    menuSettings->addAction(ui->acEditDailyPrograms);
+    menuSettings->addSeparator();
     menuSettings->addAction(ui->acDeviceControl);
     menuSettings->addAction(ui->acSettings);
 

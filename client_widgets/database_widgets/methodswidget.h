@@ -40,6 +40,9 @@ private slots:
 
     void on_btnKindPressed();
 
+signals:
+    void selectMethod(const QString& uid);
+
 private:
     Ui::MethodsWidget *ui;
 
@@ -50,6 +53,8 @@ private:
     MetodicsKindModel *m_mdlKinds;
 
     QMap<QPushButton*, QString> m_btnToKindUid;
+
+    bool m_isAppEvent {true};
 };
 
 #endif // METHODSWIDGET_H

@@ -239,5 +239,6 @@
         <file>images/pulse_types/04_merzat_arythmy.png</file>
         <file>images/pulse_types/05_lost_qrs.png</file>
         <file>images/pulse_types/06_rigid_rythm.png</file>
+        <file>images/Edit.png</file>
     </qresource>
 </RCC>
