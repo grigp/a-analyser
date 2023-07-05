@@ -55,6 +55,19 @@ bool DataProvider::editMetodicParams(QWidget *parent, const QString &metUid)
             editMetodicParams(parent, metUid);
 }
 
+/*!
+ * \brief Вызывает диалог редактирования параметров методики по uid методики
+ * \param parent - родительский виджет для вызываемого диалогового окна
+ * \param metUid - uid методики
+ * \param params - редактируемые параметры методики
+ * \return true, если в диалоге нажали OK и параметры надо сохранить
+ */
+bool DataProvider::editMetodicParams(QWidget *parent, const QString &metUid, QJsonObject &params)
+{
+    return static_cast<AAnalyserApplication*>(QApplication::instance())->getMetodics()->
+            editMetodicParams(parent, metUid, params);
+}
+
 void DataProvider::execute(QWidget *parent, const QString &metUid)
 {
     return static_cast<AAnalyserApplication*>(QApplication::instance())->getMetodics()->execute(parent, metUid);

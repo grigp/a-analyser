@@ -89,6 +89,21 @@ bool MetodicsFactory::editMetodicParams(QWidget *parent, const QString &metUid)
     return false;
 }
 
+bool MetodicsFactory::editMetodicParams(QWidget *parent, const QString &metUid, QJsonObject &params)
+{
+    auto *mt = getMetodicTemplate(metUid);
+    if (mt)
+    {
+        auto mi = getMetodicIndexByUid(metUid);
+        if (mi > -1)
+        {
+            bool retval = mt->editParams(parent, params);
+            return retval;
+        }
+    }
+    return false;
+}
+
 void MetodicsFactory::execute(QWidget *parent, const QString &metUid) const
 {
     auto *mt = getMetodicTemplate(metUid);

@@ -21,7 +21,7 @@ public:
     QString methodic() const;
 
 private slots:
-    void on_selectMethod(const QString& uid);
+    void on_selectMethod(const QString& uid, const bool isAccept);
 
 private:
     Ui::SelectMethodicDialog *ui;

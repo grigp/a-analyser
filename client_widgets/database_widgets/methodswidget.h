@@ -39,9 +39,10 @@ private slots:
     void unselectMetodic();
 
     void on_btnKindPressed();
+    void on_doubleClicked(const QModelIndex &index);
 
 signals:
-    void selectMethod(const QString& uid);
+    void selectMethod(const QString& uid, const bool isAccept = false);
 
 private:
     Ui::MethodsWidget *ui;

@@ -45,6 +45,7 @@ void MethodsWidget::onDbConnect(const bool isAppEvent)
 //        if (isAppEvent)
             connect(ui->tvMetods->selectionModel(), &QItemSelectionModel::selectionChanged,
                     this, &MethodsWidget::on_selectMetodicChanged);
+            connect(ui->tvMetods, &QListView::doubleClicked, this, &MethodsWidget::on_doubleClicked);
 
         //! Если методика одна, то уберем виджет ее выбора и выберем ее для использования
         static_cast<AAnalyserApplication*>(QApplication::instance())->getMethodicCount(m_mdlMethodics->rowCount());
@@ -151,6 +152,15 @@ void MethodsWidget::on_btnKindPressed()
     ui->lblTitle->setText(title);
 
     selectMetodic(QModelIndex());
+}
+
+void MethodsWidget::on_doubleClicked(const QModelIndex &index)
+{
+    if (index.isValid())
+    {
+        auto uid = index.data(MetodicsModel::MetodicUidRole).toString();
+        emit selectMethod(uid, true);
+    }
 }
 
 void MethodsWidget::setMethodicKindsButtons()

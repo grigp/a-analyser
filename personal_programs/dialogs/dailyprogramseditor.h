@@ -16,6 +16,12 @@ public:
     explicit DailyProgramsEditor(QWidget *parent = nullptr);
     ~DailyProgramsEditor();
 
+    enum TableTestsRoles
+    {
+          MethodUidRole = Qt::UserRole + 1  ///< uid методики
+        , MethodParamsRole                  ///< параметры методики
+    };
+
 private slots:
     void on_addTest();
     void on_editTest();

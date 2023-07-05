@@ -61,6 +61,15 @@ public:
     bool editMetodicParams(QWidget *parent, const QString &metUid);
 
     /*!
+     * \brief Вызывает диалог редактирования параметров методики по uid методики
+     * \param parent - родительский виджет для вызываемого диалогового окна
+     * \param metUid - uid методики
+     * \param params - редактируемые параметры методики
+     * \return true, если в диалоге нажали OK и параметры надо сохранить
+     */
+    bool editMetodicParams(QWidget *parent, const QString &metUid, QJsonObject &params);
+
+    /*!
      * \brief выполнение методики
      * \param parent - родительский виджет для размещения виджета выплнения пробы
      * \param metUid - uid методики

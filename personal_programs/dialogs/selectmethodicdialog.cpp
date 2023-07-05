@@ -24,9 +24,13 @@ QString SelectMethodicDialog::methodic() const
     return ui->wgtMethods->methodic();
 }
 
-void SelectMethodicDialog::on_selectMethod(const QString &uid)
+void SelectMethodicDialog::on_selectMethod(const QString &uid, const bool isAccept)
 {
     auto btnOK = ui->buttonBox->button(QDialogButtonBox::Ok);
     btnOK->setEnabled((uid != "" && uid != QUuid().toString()));
+    if (isAccept)
+        accept();
 }
+
+
 
