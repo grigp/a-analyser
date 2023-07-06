@@ -30,6 +30,7 @@
 #include "addtesttosummarydialog.h"
 #include "dataprovider.h"
 #include "signaltransformerparamswidget.h"
+#include "personalprogrammanager.h"
 
 AAnalyserApplication::AAnalyserApplication(int &argc, char **argv)
     : QApplication(argc, argv)
@@ -39,6 +40,7 @@ AAnalyserApplication::AAnalyserApplication(int &argc, char **argv)
     , m_transformers(new SignalTransformFactory(this))
     , m_normsManager(new NormsManager(this))
     , m_visualsFactory(new VisualsFactory(this))
+    , m_ppManager(new PersonalProgramManager(this))
 {
     setApplicationName("a-analyzer");
 //    setApplicationDisplayName(tr("Исследования А-Мед")); Не переводится
@@ -446,6 +448,18 @@ VisualDescriptor *AAnalyserApplication::getVisual(const BaseDefines::TestLevel l
     if (m_visualsFactory)
         return m_visualsFactory->getVisual(level, idx);
     return nullptr;
+}
+
+void AAnalyserApplication::readDailyProgramList(QStandardItemModel &model)
+{
+    if (m_ppManager)
+        m_ppManager->readDailyProgramList(model);
+}
+
+void AAnalyserApplication::saveDailyProgramList(const QStandardItemModel &model)
+{
+    if (m_ppManager)
+        m_ppManager->saveDailyProgramList(model);
 }
 
 void AAnalyserApplication::doChannelChanged(const QString &probeUid, const QString &channelId)

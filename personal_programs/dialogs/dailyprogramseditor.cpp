@@ -9,6 +9,7 @@
 #include "selectmethodicdialog.h"
 #include "metodicsfactory.h"
 #include "dataprovider.h"
+#include "personalprogramdefines.h"
 
 DailyProgramsEditor::DailyProgramsEditor(QWidget *parent) :
     QDialog(parent),
@@ -16,23 +17,36 @@ DailyProgramsEditor::DailyProgramsEditor(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    ui->tvPrograms->setModel(&m_mdlPrograms);
-    ui->tvTests->setModel(&m_mdlTests);
-    ui->tvPrograms->header()->setVisible(false);
-    ui->tvTests->header()->setVisible(false);
 }
 
 DailyProgramsEditor::~DailyProgramsEditor()
 {
+    if (m_dlgSelMethod)
+        delete m_dlgSelMethod;
     delete ui;
+}
+
+int DailyProgramsEditor::exec()
+{
+    ui->tvPrograms->header()->setVisible(false);
+    ui->tvTests->header()->setVisible(false);
+
+    static_cast<AAnalyserApplication*>(QApplication::instance())->readDailyProgramList(m_mdlPrograms);
+
+    ui->tvPrograms->setModel(&m_mdlPrograms);
+    ui->tvTests->setModel(&m_mdlTests);
+
+    return QDialog::exec();
 }
 
 void DailyProgramsEditor::on_addTest()
 {
-    SelectMethodicDialog dialog(this);
-    if (dialog.exec() == QDialog::Accepted)
+    if (!m_dlgSelMethod)
+        m_dlgSelMethod = new SelectMethodicDialog(this);
+
+    if (m_dlgSelMethod->exec() == QDialog::Accepted)
     {
-        auto metUid = dialog.methodic();
+        auto metUid = m_dlgSelMethod->methodic();
         if (metUid != QUuid().toString())
         {
             MetodicsFactory *metFactory = static_cast<AAnalyserApplication*>(QApplication::instance())->getMetodics();
@@ -40,8 +54,8 @@ void DailyProgramsEditor::on_addTest()
 
             auto *item = new QStandardItem(mi.name);
             item->setEditable(false);
-            item->setData(metUid, TableTestsRoles::MethodUidRole);
-            item->setData(mi.params, TableTestsRoles::MethodParamsRole);
+            item->setData(metUid, PersonalProgramDefines::TableTestsRoles::MethodUidRole);
+            item->setData(mi.params, PersonalProgramDefines::TableTestsRoles::MethodParamsRole);
             item->setIcon(QIcon(":/images/Methodics/" + mi.imageName));
             m_mdlTests.appendRow(item);
         }
@@ -58,11 +72,11 @@ void DailyProgramsEditor::on_editTest()
         auto index = selIdxs.at(0);
         if (index.isValid())
         {
-            auto metUid = index.data(TableTestsRoles::MethodUidRole).toString();
-            auto params = index.data(TableTestsRoles::MethodParamsRole).toJsonObject();
+            auto metUid = index.data(PersonalProgramDefines::TableTestsRoles::MethodUidRole).toString();
+            auto params = index.data(PersonalProgramDefines::TableTestsRoles::MethodParamsRole).toJsonObject();
             if (DataProvider::editMetodicParams(this, metUid, params))
             {
-                m_mdlTests.itemFromIndex(index)->setData(params, TableTestsRoles::MethodParamsRole);
+                m_mdlTests.itemFromIndex(index)->setData(params, PersonalProgramDefines::TableTestsRoles::MethodParamsRole);
             }
         }
     }
@@ -125,15 +139,118 @@ void DailyProgramsEditor::on_moveTestDown()
 
 void DailyProgramsEditor::on_dpAdd()
 {
+    if (ui->edName->text() != "")
+    {
+        if (m_mdlTests.rowCount() > 0)
+        {
+            auto objDP = compileDP();
+            objDP["uid"] = QUuid::createUuid().toString();
 
+            auto *item = new QStandardItem(objDP["name"].toString());
+            item->setEditable(false);
+            item->setData(objDP, PersonalProgramDefines::TableDPRoles::DPRole);
+            m_mdlPrograms.appendRow(item);
+
+            //! Выделить добавленный итем
+            QModelIndex lastIdx = m_mdlPrograms.index(m_mdlPrograms.rowCount() - 1, 0);
+            ui->tvPrograms->selectionModel()->clearSelection();
+            ui->tvPrograms->selectionModel()->select(lastIdx, QItemSelectionModel::Select);
+
+            //! Внести изменения на диск
+            static_cast<AAnalyserApplication*>(QApplication::instance())->saveDailyProgramList(m_mdlPrograms);
+        }
+        else
+            QMessageBox::information(nullptr, tr("Предупреждение"), tr("Необходимо добавить тесты в дневную программу"));
+    }
+    else
+        QMessageBox::information(nullptr, tr("Предупреждение"), tr("Не задано название дневной программы"));
 }
 
 void DailyProgramsEditor::on_dpEdit()
 {
+    QModelIndexList selIdxs = ui->tvPrograms->selectionModel()->selectedIndexes();
+    if (selIdxs.size() > 0)
+    {
+        auto index = selIdxs.at(0);
+        if (index.isValid())
+        {
+            auto objDP = compileDP();
 
+            auto item = m_mdlPrograms.itemFromIndex(index);
+            item->setData(objDP, PersonalProgramDefines::TableDPRoles::DPRole);
+            item->setText(objDP["name"].toString());
+
+            static_cast<AAnalyserApplication*>(QApplication::instance())->saveDailyProgramList(m_mdlPrograms);
+        }
+    }
 }
 
 void DailyProgramsEditor::on_dpDel()
 {
+    QModelIndexList selIdxs = ui->tvPrograms->selectionModel()->selectedIndexes();
+    if (selIdxs.size() > 0)
+    {
+        auto index = selIdxs.at(0);
+        if (index.isValid())
+        {
+            QString name = index.data().toString();
+            auto mr = QMessageBox::question(nullptr, tr("Запрос"), tr("Удалить дневную программу") + " \"" + name + "\"?");
+            if (mr == QMessageBox::Yes)
+            {
+                m_mdlPrograms.removeRow(index.row());
+                ui->edName->setText("");
+                m_mdlTests.clear();
+            }
+        }
+    }
+}
 
+void DailyProgramsEditor::on_selectDP(QModelIndex index)
+{
+    if (index.isValid())
+    {
+        auto objDP = index.data(PersonalProgramDefines::TableDPRoles::DPRole).toJsonObject();
+        viewDP(objDP);
+    }
+}
+
+QJsonObject DailyProgramsEditor::compileDP()
+{
+    QJsonObject retval;
+
+    retval["name"] = ui->edName->text();
+    QJsonArray arTests;
+    for (int i = 0; i < m_mdlTests.rowCount(); ++i)
+    {
+        QJsonObject objTest;
+        objTest["uid"] = m_mdlTests.index(i, 0).data(PersonalProgramDefines::TableTestsRoles::MethodUidRole).toString();
+        objTest["params"] = m_mdlTests.index(i, 0).data(PersonalProgramDefines::TableTestsRoles::MethodParamsRole).toJsonObject();
+        arTests << objTest;
+    }
+    retval["test_list"] = arTests;
+
+    return retval;
+}
+
+void DailyProgramsEditor::viewDP(const QJsonObject &objDP)
+{
+    ui->edName->setText(objDP["name"].toString());
+
+    m_mdlTests.clear();
+    auto arTests = objDP["test_list"].toArray();
+    for (int i = 0; i < arTests.size(); ++i)
+    {
+        auto objTest = arTests.at(i).toObject();
+        auto metUid = objTest["uid"].toString();
+
+        MetodicsFactory *metFactory = static_cast<AAnalyserApplication*>(QApplication::instance())->getMetodics();
+        auto mi = metFactory->metodic(metUid);
+
+        auto *item = new QStandardItem(mi.name);
+        item->setEditable(false);
+        item->setData(metUid, PersonalProgramDefines::TableTestsRoles::MethodUidRole);
+        item->setData(mi.params, PersonalProgramDefines::TableTestsRoles::MethodParamsRole);
+        item->setIcon(QIcon(":/images/Methodics/" + mi.imageName));
+        m_mdlTests.appendRow(item);
+    }
 }

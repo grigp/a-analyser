@@ -2,11 +2,15 @@
 #define DAILYPROGRAMSEDITOR_H
 
 #include <QDialog>
+#include <QUuid>
 #include <QStandardItemModel>
+#include <QJsonObject>
 
 namespace Ui {
 class DailyProgramsEditor;
 }
+
+class SelectMethodicDialog;
 
 class DailyProgramsEditor : public QDialog
 {
@@ -14,13 +18,11 @@ class DailyProgramsEditor : public QDialog
 
 public:
     explicit DailyProgramsEditor(QWidget *parent = nullptr);
-    ~DailyProgramsEditor();
+    ~DailyProgramsEditor() override;
 
-    enum TableTestsRoles
-    {
-          MethodUidRole = Qt::UserRole + 1  ///< uid методики
-        , MethodParamsRole                  ///< параметры методики
-    };
+public slots:
+
+    int exec() override;
 
 private slots:
     void on_addTest();
@@ -33,8 +35,24 @@ private slots:
     void on_dpEdit();
     void on_dpDel();
 
+    void on_selectDP(QModelIndex index);
+
 private:
     Ui::DailyProgramsEditor *ui;
+
+    /*!
+     * \brief Собирает дневную программу из виджетов формы в JsonObject. DP хранятся в JsonObject-ах
+     * \return собранную DP
+     */
+    QJsonObject compileDP();
+
+    /*!
+     * \brief Отображает дневную программу в виджетах формы
+     * \param objDP - хранимая DP
+     */
+    void viewDP(const QJsonObject& objDP);
+
+    SelectMethodicDialog* m_dlgSelMethod {nullptr};
 
     QStandardItemModel m_mdlPrograms;
     QStandardItemModel m_mdlTests;

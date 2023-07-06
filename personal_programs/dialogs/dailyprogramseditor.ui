@@ -440,6 +440,38 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>tvPrograms</sender>
+   <signal>activated(QModelIndex)</signal>
+   <receiver>DailyProgramsEditor</receiver>
+   <slot>on_selectDP(QModelIndex)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>97</x>
+     <y>98</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>564</x>
+     <y>182</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>tvPrograms</sender>
+   <signal>clicked(QModelIndex)</signal>
+   <receiver>DailyProgramsEditor</receiver>
+   <slot>on_selectDP(QModelIndex)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>165</x>
+     <y>209</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>562</x>
+     <y>220</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>on_addTest()</slot>
@@ -450,5 +482,6 @@
   <slot>on_dpAdd()</slot>
   <slot>on_dpEdit()</slot>
   <slot>on_dpDel()</slot>
+  <slot>on_selectDP(QModelIndex)</slot>
  </slots>
 </ui>

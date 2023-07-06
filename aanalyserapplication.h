@@ -12,6 +12,7 @@
 #include <QMainWindow>
 #include <QObject>
 #include <QApplication>
+#include <QStandardItemModel>
 
 
 class DataBase;
@@ -30,6 +31,7 @@ class ChannelVisual;
 class MultiFactorDescriptor;
 class AddTestToSummaryDialog;
 class SignalTransformerParamsWidget;
+class PersonalProgramManager;
 
 class AAnalyserApplication : public QApplication
 {
@@ -277,6 +279,18 @@ public:
 
     int visualCount(const BaseDefines::TestLevel level);
     VisualDescriptor* getVisual(const BaseDefines::TestLevel level, const int idx);
+
+    /*!
+     * \brief Читает файл списка дневных программ и заполняет модель данных
+     * \param model - заполняемая модель данных
+     */
+    void readDailyProgramList(QStandardItemModel& model);
+
+    /*!
+     * \brief Сохраняет список дневных программ из модели данных
+     * \param model - модель данных с дневными программами
+     */
+    void saveDailyProgramList(const QStandardItemModel& model);
 
     /*!
      * \brief Изменение данных канала в БД
@@ -661,6 +675,7 @@ private:
     SignalTransformFactory *m_transformers {nullptr};
     NormsManager *m_normsManager {nullptr};
     VisualsFactory *m_visualsFactory {nullptr};
+    PersonalProgramManager *m_ppManager {nullptr};
 
     QString m_patientUid = "";    ///< uid выбранного пациента
     QString m_metodicUid = "";    ///< uid выбранной методики
