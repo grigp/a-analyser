@@ -80,6 +80,8 @@ void DailyProgramsEditor::on_editTest()
             }
         }
     }
+    else
+        QMessageBox::information(nullptr, tr("Предупреждение"), tr("Не выбран тест"));
 }
 
 void DailyProgramsEditor::on_delTest()
@@ -95,6 +97,8 @@ void DailyProgramsEditor::on_delTest()
                 m_mdlTests.removeRow(index.row());
         }
     }
+    else
+        QMessageBox::information(nullptr, tr("Предупреждение"), tr("Не выбран тест"));
 }
 
 void DailyProgramsEditor::on_moveTestUp()
@@ -115,6 +119,8 @@ void DailyProgramsEditor::on_moveTestUp()
             }
         }
     }
+    else
+        QMessageBox::information(nullptr, tr("Предупреждение"), tr("Не выбран тест"));
 }
 
 void DailyProgramsEditor::on_moveTestDown()
@@ -135,6 +141,8 @@ void DailyProgramsEditor::on_moveTestDown()
             }
         }
     }
+    else
+        QMessageBox::information(nullptr, tr("Предупреждение"), tr("Не выбран тест"));
 }
 
 void DailyProgramsEditor::on_dpAdd()
@@ -183,6 +191,8 @@ void DailyProgramsEditor::on_dpEdit()
             static_cast<AAnalyserApplication*>(QApplication::instance())->saveDailyProgramList(m_mdlPrograms);
         }
     }
+    else
+        QMessageBox::information(nullptr, tr("Предупреждение"), tr("Не выбрана дневная программа"));
 }
 
 void DailyProgramsEditor::on_dpDel()
@@ -200,9 +210,14 @@ void DailyProgramsEditor::on_dpDel()
                 m_mdlPrograms.removeRow(index.row());
                 ui->edName->setText("");
                 m_mdlTests.clear();
+                ui->tvPrograms->selectionModel()->clearSelection();
+
+                static_cast<AAnalyserApplication*>(QApplication::instance())->saveDailyProgramList(m_mdlPrograms);
             }
         }
     }
+    else
+        QMessageBox::information(nullptr, tr("Предупреждение"), tr("Не выбрана дневная программа"));
 }
 
 void DailyProgramsEditor::on_selectDP(QModelIndex index)
