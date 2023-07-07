@@ -40,177 +40,170 @@
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_2">
       <item>
-       <widget class="QLabel" name="lblName">
-        <property name="text">
-         <string>Название</string>
+       <widget class="QGroupBox" name="gbDP">
+        <property name="title">
+         <string>Параметры дневной программы</string>
         </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QLineEdit" name="edName"/>
-      </item>
-      <item>
-       <spacer name="verticalSpacer_2">
-        <property name="orientation">
-         <enum>Qt::Vertical</enum>
-        </property>
-        <property name="sizeType">
-         <enum>QSizePolicy::Fixed</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>20</width>
-          <height>10</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item>
-       <widget class="QLabel" name="lblTests">
-        <property name="text">
-         <string>Тесты</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QFrame" name="frTests">
-        <property name="frameShape">
-         <enum>QFrame::Panel</enum>
-        </property>
-        <property name="frameShadow">
-         <enum>QFrame::Plain</enum>
-        </property>
-        <layout class="QHBoxLayout" name="horizontalLayout_3">
+        <layout class="QVBoxLayout" name="verticalLayout_3">
          <item>
-          <widget class="QTreeView" name="tvTests"/>
+          <widget class="QLabel" name="lblName">
+           <property name="text">
+            <string>Название</string>
+           </property>
+          </widget>
          </item>
          <item>
-          <widget class="QFrame" name="frTestsButtons">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
+          <widget class="QLineEdit" name="edName"/>
+         </item>
+         <item>
+          <widget class="QLabel" name="lblTests">
+           <property name="text">
+            <string>Тесты</string>
            </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QFrame" name="frTests">
            <property name="frameShape">
-            <enum>QFrame::StyledPanel</enum>
+            <enum>QFrame::Panel</enum>
            </property>
            <property name="frameShadow">
-            <enum>QFrame::Raised</enum>
+            <enum>QFrame::Plain</enum>
            </property>
-           <layout class="QVBoxLayout" name="verticalLayout">
+           <layout class="QHBoxLayout" name="horizontalLayout_3">
             <item>
-             <widget class="QPushButton" name="btnDPAddTest">
-              <property name="toolTip">
-               <string>Добавить тест в дневную программу...</string>
-              </property>
-              <property name="text">
-               <string/>
-              </property>
-              <property name="icon">
-               <iconset resource="../../kernel.qrc">
-                <normaloff>:/images/Plus.png</normaloff>:/images/Plus.png</iconset>
-              </property>
-              <property name="iconSize">
-               <size>
-                <width>32</width>
-                <height>32</height>
-               </size>
-              </property>
-             </widget>
+             <widget class="QTreeView" name="tvTests"/>
             </item>
             <item>
-             <widget class="QPushButton" name="btnDPEditTestParams">
-              <property name="toolTip">
-               <string>Редактировать параметры теста в дневной программе...</string>
+             <widget class="QFrame" name="frTestsButtons">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
               </property>
-              <property name="text">
-               <string/>
+              <property name="frameShape">
+               <enum>QFrame::StyledPanel</enum>
               </property>
-              <property name="icon">
-               <iconset resource="../../kernel.qrc">
-                <normaloff>:/images/Edit.png</normaloff>:/images/Edit.png</iconset>
+              <property name="frameShadow">
+               <enum>QFrame::Raised</enum>
               </property>
-              <property name="iconSize">
-               <size>
-                <width>32</width>
-                <height>32</height>
-               </size>
-              </property>
+              <layout class="QVBoxLayout" name="verticalLayout">
+               <item>
+                <widget class="QPushButton" name="btnDPAddTest">
+                 <property name="toolTip">
+                  <string>Добавить тест в дневную программу...</string>
+                 </property>
+                 <property name="text">
+                  <string/>
+                 </property>
+                 <property name="icon">
+                  <iconset resource="../../kernel.qrc">
+                   <normaloff>:/images/Plus.png</normaloff>:/images/Plus.png</iconset>
+                 </property>
+                 <property name="iconSize">
+                  <size>
+                   <width>32</width>
+                   <height>32</height>
+                  </size>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="btnDPEditTestParams">
+                 <property name="toolTip">
+                  <string>Редактировать параметры теста в дневной программе...</string>
+                 </property>
+                 <property name="text">
+                  <string/>
+                 </property>
+                 <property name="icon">
+                  <iconset resource="../../kernel.qrc">
+                   <normaloff>:/images/Edit.png</normaloff>:/images/Edit.png</iconset>
+                 </property>
+                 <property name="iconSize">
+                  <size>
+                   <width>32</width>
+                   <height>32</height>
+                  </size>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="btnDPDelTest">
+                 <property name="toolTip">
+                  <string>Удалить тест из дневной программе...</string>
+                 </property>
+                 <property name="text">
+                  <string/>
+                 </property>
+                 <property name="icon">
+                  <iconset resource="../../kernel.qrc">
+                   <normaloff>:/images/delete22.png</normaloff>:/images/delete22.png</iconset>
+                 </property>
+                 <property name="iconSize">
+                  <size>
+                   <width>32</width>
+                   <height>32</height>
+                  </size>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="btnDPTestUp">
+                 <property name="toolTip">
+                  <string>Переместить тест на один шак к началу программы</string>
+                 </property>
+                 <property name="text">
+                  <string/>
+                 </property>
+                 <property name="icon">
+                  <iconset resource="../../kernel.qrc">
+                   <normaloff>:/images/Connects/Up.png</normaloff>:/images/Connects/Up.png</iconset>
+                 </property>
+                 <property name="iconSize">
+                  <size>
+                   <width>32</width>
+                   <height>32</height>
+                  </size>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="btnDPTestDn">
+                 <property name="toolTip">
+                  <string>Переместить тест на один шак к концу программы</string>
+                 </property>
+                 <property name="text">
+                  <string/>
+                 </property>
+                 <property name="icon">
+                  <iconset resource="../../kernel.qrc">
+                   <normaloff>:/images/Connects/Down.png</normaloff>:/images/Connects/Down.png</iconset>
+                 </property>
+                 <property name="iconSize">
+                  <size>
+                   <width>32</width>
+                   <height>32</height>
+                  </size>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <spacer name="verticalSpacer">
+                 <property name="orientation">
+                  <enum>Qt::Vertical</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>20</width>
+                   <height>40</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+              </layout>
              </widget>
-            </item>
-            <item>
-             <widget class="QPushButton" name="btnDPDelTest">
-              <property name="toolTip">
-               <string>Удалить тест из дневной программе...</string>
-              </property>
-              <property name="text">
-               <string/>
-              </property>
-              <property name="icon">
-               <iconset resource="../../kernel.qrc">
-                <normaloff>:/images/delete22.png</normaloff>:/images/delete22.png</iconset>
-              </property>
-              <property name="iconSize">
-               <size>
-                <width>32</width>
-                <height>32</height>
-               </size>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QPushButton" name="btnDPTestUp">
-              <property name="toolTip">
-               <string>Переместить тест на один шак к началу программы</string>
-              </property>
-              <property name="text">
-               <string/>
-              </property>
-              <property name="icon">
-               <iconset resource="../../kernel.qrc">
-                <normaloff>:/images/Connects/Up.png</normaloff>:/images/Connects/Up.png</iconset>
-              </property>
-              <property name="iconSize">
-               <size>
-                <width>32</width>
-                <height>32</height>
-               </size>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QPushButton" name="btnDPTestDn">
-              <property name="toolTip">
-               <string>Переместить тест на один шак к концу программы</string>
-              </property>
-              <property name="text">
-               <string/>
-              </property>
-              <property name="icon">
-               <iconset resource="../../kernel.qrc">
-                <normaloff>:/images/Connects/Down.png</normaloff>:/images/Connects/Down.png</iconset>
-              </property>
-              <property name="iconSize">
-               <size>
-                <width>32</width>
-                <height>32</height>
-               </size>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <spacer name="verticalSpacer">
-              <property name="orientation">
-               <enum>Qt::Vertical</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>20</width>
-                <height>40</height>
-               </size>
-              </property>
-             </spacer>
             </item>
            </layout>
           </widget>

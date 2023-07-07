@@ -17,6 +17,7 @@
 #include "aanalyserdefines.h"
 #include "aboutdialog.h"
 #include "dailyprogramseditor.h"
+#include "personalprogramseditor.h"
 
 #include <QFile>
 #include <QCloseEvent>
@@ -346,7 +347,8 @@ void MainWindow::onSummariesBrowse()
 
 void MainWindow::on_editPersonalPrograms()
 {
-    qDebug() << "Персональные программы";
+    PersonalProgramsEditor dlg(this);
+    dlg.exec();
 }
 
 void MainWindow::on_editDailyPrograms()

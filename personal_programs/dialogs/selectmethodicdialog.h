@@ -7,6 +7,9 @@ namespace Ui {
 class SelectMethodicDialog;
 }
 
+/*!
+ * \brief Класс диалога выбора методики The SelectMethodicDialog class
+ */
 class SelectMethodicDialog : public QDialog
 {
     Q_OBJECT

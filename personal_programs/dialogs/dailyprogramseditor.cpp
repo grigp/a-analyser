@@ -185,10 +185,17 @@ void DailyProgramsEditor::on_dpEdit()
             auto objDP = compileDP();
 
             auto item = m_mdlPrograms.itemFromIndex(index);
-            item->setData(objDP, PersonalProgramDefines::TableDPRoles::DPRole);
-            item->setText(objDP["name"].toString());
+            //! uid при редактировании надо взять из данных итема до редактирования
+            objDP["uid"] = item->data(PersonalProgramDefines::TableDPRoles::DPRole).toJsonObject()["uid"].toString();
 
-            static_cast<AAnalyserApplication*>(QApplication::instance())->saveDailyProgramList(m_mdlPrograms);
+            QString pn = item->text();
+            auto mr = QMessageBox::question(nullptr, tr("Запрос"), tr("Внести изменения в программу") + " \"" + pn + "\"?");
+            if (mr == QMessageBox::Yes)
+            {
+                item->setData(objDP, PersonalProgramDefines::TableDPRoles::DPRole);
+                item->setText(objDP["name"].toString());
+                static_cast<AAnalyserApplication*>(QApplication::instance())->saveDailyProgramList(m_mdlPrograms);
+            }
         }
     }
     else

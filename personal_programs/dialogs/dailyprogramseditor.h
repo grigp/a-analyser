@@ -12,6 +12,9 @@ class DailyProgramsEditor;
 
 class SelectMethodicDialog;
 
+/*!
+ * \brief Класс диалога редактирования дневных программ The DailyProgramsEditor class
+ */
 class DailyProgramsEditor : public QDialog
 {
     Q_OBJECT
@@ -21,7 +24,6 @@ public:
     ~DailyProgramsEditor() override;
 
 public slots:
-
     int exec() override;
 
 private slots:
