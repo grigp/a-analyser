@@ -24,7 +24,12 @@ public:
     /*!
      * \brief Возвращает uid выбранной дневной программы
      */
-    QString dailyProgram() const;
+    QString dailyProgramUid() const;
+
+    /*!
+     * \brief Возвращает дневную программу в виде json объекта
+     */
+    QJsonObject dailyProgram() const;
 
 public slots:
     int exec() override;

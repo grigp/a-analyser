@@ -20,7 +20,29 @@ SelectDailyProgramDialog::~SelectDailyProgramDialog()
     delete ui;
 }
 
-QString SelectDailyProgramDialog::dailyProgram() const
+QString SelectDailyProgramDialog::dailyProgramUid() const
+{
+    auto objDP = dailyProgram();
+    if (objDP != QJsonObject())
+    {
+        return objDP["uid"].toString();
+    }
+
+//    QModelIndexList selIdxs = ui->tvListDP->selectionModel()->selectedIndexes();
+//    if (selIdxs.size() > 0)
+//    {
+//        auto index = selIdxs.at(0);
+//        if (index.isValid())
+//        {
+//            auto item = m_mdlPrograms.itemFromIndex(index);
+//            auto objDP = item->data(PersonalProgramDefines::TableDPRoles::DPRole).toJsonObject();
+//            return objDP["uid"].toString();
+//        }
+//    }
+    return QUuid().toString();
+}
+
+QJsonObject SelectDailyProgramDialog::dailyProgram() const
 {
     QModelIndexList selIdxs = ui->tvListDP->selectionModel()->selectedIndexes();
     if (selIdxs.size() > 0)
@@ -29,11 +51,10 @@ QString SelectDailyProgramDialog::dailyProgram() const
         if (index.isValid())
         {
             auto item = m_mdlPrograms.itemFromIndex(index);
-            auto objDP = item->data(PersonalProgramDefines::TableDPRoles::DPRole).toJsonObject();
-            return objDP["uid"].toString();
+            return item->data(PersonalProgramDefines::TableDPRoles::DPRole).toJsonObject();
         }
     }
-    return QUuid().toString();
+    return QJsonObject();
 }
 
 int SelectDailyProgramDialog::exec()

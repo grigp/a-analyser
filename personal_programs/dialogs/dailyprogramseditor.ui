@@ -39,6 +39,12 @@
       <enum>QFrame::Raised</enum>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_2">
+      <property name="leftMargin">
+       <number>0</number>
+      </property>
+      <property name="rightMargin">
+       <number>0</number>
+      </property>
       <item>
        <widget class="QGroupBox" name="gbDP">
         <property name="title">
@@ -56,21 +62,11 @@
           <widget class="QLineEdit" name="edName"/>
          </item>
          <item>
-          <widget class="QLabel" name="lblTests">
-           <property name="text">
+          <widget class="QGroupBox" name="gbTests">
+           <property name="title">
             <string>Тесты</string>
            </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QFrame" name="frTests">
-           <property name="frameShape">
-            <enum>QFrame::Panel</enum>
-           </property>
-           <property name="frameShadow">
-            <enum>QFrame::Plain</enum>
-           </property>
-           <layout class="QHBoxLayout" name="horizontalLayout_3">
+           <layout class="QHBoxLayout" name="horizontalLayout_4">
             <item>
              <widget class="QTreeView" name="tvTests"/>
             </item>

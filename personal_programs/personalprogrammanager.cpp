@@ -71,3 +71,29 @@ void PersonalProgramManager::saveDailyProgramList(const QStandardItemModel &mode
         fDP.write(ba);
     }
 }
+
+void PersonalProgramManager::readPersonalProgramList(QStandardItemModel &model)
+{
+
+}
+
+void PersonalProgramManager::savePersonalProgramList(const QStandardItemModel &model)
+{
+
+}
+
+void PersonalProgramManager::assignDailyProgramsForPersonal(QString &uidPP, QStringList &uidDPs)
+{
+
+}
+
+void PersonalProgramManager::editDailyProgramsForPersonal(QString &uidPP, QStringList &uidDPs)
+{
+    clearListDailyProgramsForPersonal(uidPP);
+    assignDailyProgramsForPersonal(uidPP, uidDPs);
+}
+
+void PersonalProgramManager::clearListDailyProgramsForPersonal(QString &uidPP)
+{
+
+}

@@ -293,6 +293,39 @@ public:
     void saveDailyProgramList(const QStandardItemModel& model);
 
     /*!
+     * \brief Читает файл списка индивидуальных программ и заполняет модель данных
+     * \param model - заполняемая модель данных
+     */
+    void readPersonalProgramList(QStandardItemModel &model);
+
+    /*!
+     * \brief Сохраняет список индивидуальных программ из модели данных
+     * \param model - модель данных с индивидуальными программами
+     */
+    void savePersonalProgramList(const QStandardItemModel& model);
+
+    /*!
+     * \brief Связывает дневные программы с индивидуальной
+     * \param uidPP - индивидуальная программа
+     * \param uidDPs - список дневных программ
+     */
+    void assignDailyProgramsForPersonal(QString& uidPP, QStringList& uidDPs);
+
+    /*!
+     * \brief Изменяет связку дневных программ с индивидуальной
+     * Старые дневные программы удаляются
+     * \param uidPP - индивидуальная программа
+     * \param uidDPs - новый список дневных программ
+     */
+    void editDailyProgramsForPersonal(QString& uidPP, QStringList& uidDPs);
+
+    /*!
+     * \brief Очищает список дневных программ для индивидуальной
+     * \param uidPP - uid индивидуальной программы
+     */
+    void clearListDailyProgramsForPersonal(QString& uidPP);
+
+    /*!
      * \brief Изменение данных канала в БД
      * Вызывается тем, кто изменяет данные в БД
      * \param probeUid - uid пробы

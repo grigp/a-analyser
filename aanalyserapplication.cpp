@@ -462,6 +462,36 @@ void AAnalyserApplication::saveDailyProgramList(const QStandardItemModel &model)
         m_ppManager->saveDailyProgramList(model);
 }
 
+void AAnalyserApplication::readPersonalProgramList(QStandardItemModel &model)
+{
+    if (m_ppManager)
+        m_ppManager->readPersonalProgramList(model);
+}
+
+void AAnalyserApplication::savePersonalProgramList(const QStandardItemModel &model)
+{
+    if (m_ppManager)
+        m_ppManager->savePersonalProgramList(model);
+}
+
+void AAnalyserApplication::assignDailyProgramsForPersonal(QString &uidPP, QStringList &uidDPs)
+{
+    if (m_ppManager)
+        m_ppManager->assignDailyProgramsForPersonal(uidPP, uidDPs);
+}
+
+void AAnalyserApplication::editDailyProgramsForPersonal(QString &uidPP, QStringList &uidDPs)
+{
+    if (m_ppManager)
+        m_ppManager->editDailyProgramsForPersonal(uidPP, uidDPs);
+}
+
+void AAnalyserApplication::clearListDailyProgramsForPersonal(QString &uidPP)
+{
+    if (m_ppManager)
+        m_ppManager->clearListDailyProgramsForPersonal(uidPP);
+}
+
 void AAnalyserApplication::doChannelChanged(const QString &probeUid, const QString &channelId)
 {
     //! Нам надо только оповестить мир об изменении, чтоб мир перестроился, если ему нужно
