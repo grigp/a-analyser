@@ -27,7 +27,7 @@ int PersonalProgramsEditor::exec()
     ui->tvPrograms->header()->setVisible(false);
     ui->tvSchedule->horizontalHeader()->setVisible(false);
 
-    //static_cast<AAnalyserApplication*>(QApplication::instance())->readDailyProgramList(m_mdlPP);
+    static_cast<AAnalyserApplication*>(QApplication::instance())->readPersonalProgramList(m_mdlPP);
 
     ui->tvPrograms->setModel(&m_mdlPP);
     ui->tvSchedule->setModel(&m_mdlDP);
@@ -152,7 +152,7 @@ void PersonalProgramsEditor::on_ppAdd()
             //! Внести изменения на диск
             static_cast<AAnalyserApplication*>(QApplication::instance())->savePersonalProgramList(m_mdlPP);
             QStringList uidDPs;
-            for (int i = 0; i < m_mdlDP.rowCount() - 1; ++i)
+            for (int i = 0; i < m_mdlDP.rowCount(); ++i)
             {
                 auto objDP = m_mdlDP.item(i)->data(PersonalProgramDefines::TableDPRoles::DPRole).toJsonObject();
                 uidDPs << objDP["uid"].toString();
@@ -169,7 +169,6 @@ void PersonalProgramsEditor::on_ppAdd()
 
 void PersonalProgramsEditor::on_ppEdit()
 {
-
 }
 
 void PersonalProgramsEditor::on_ppDel()
@@ -179,7 +178,17 @@ void PersonalProgramsEditor::on_ppDel()
 
 void PersonalProgramsEditor::on_selectPP(QModelIndex index)
 {
+    if (index.isValid())
+    {
+        auto objPP = index.data(PersonalProgramDefines::TablePPRoles::PPRole).toJsonObject();
+        ui->edName->setText(objPP["name"].toString());
+        ui->cbMinTimeBetweenDP->setCurrentIndex(objPP["min_time_between_dp"].toInt());
+        ui->cbMaxTimeBetweenDP->setCurrentIndex(objPP["max_time_between_dp"].toInt());
 
+        auto uid = objPP["uid"].toString();
+        auto dps = static_cast<AAnalyserApplication*>(QApplication::instance())->getListDailyProgramsForPersonal(uid);
+        static_cast<AAnalyserApplication*>(QApplication::instance())->readDailyProgramList(m_mdlDP, dps);
+    }
 }
 
 void PersonalProgramsEditor::prepareParams()

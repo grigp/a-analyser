@@ -450,10 +450,10 @@ VisualDescriptor *AAnalyserApplication::getVisual(const BaseDefines::TestLevel l
     return nullptr;
 }
 
-void AAnalyserApplication::readDailyProgramList(QStandardItemModel &model)
+void AAnalyserApplication::readDailyProgramList(QStandardItemModel &model, QStringList uids)
 {
     if (m_ppManager)
-        m_ppManager->readDailyProgramList(model);
+        m_ppManager->readDailyProgramList(model, uids);
 }
 
 void AAnalyserApplication::saveDailyProgramList(const QStandardItemModel &model)
@@ -490,6 +490,13 @@ void AAnalyserApplication::clearListDailyProgramsForPersonal(QString &uidPP)
 {
     if (m_ppManager)
         m_ppManager->clearListDailyProgramsForPersonal(uidPP);
+}
+
+QStringList AAnalyserApplication::getListDailyProgramsForPersonal(QString &uidPP)
+{
+    if (m_ppManager)
+        return m_ppManager->getListDailyProgramsForPersonal(uidPP);
+    return QStringList();
 }
 
 void AAnalyserApplication::doChannelChanged(const QString &probeUid, const QString &channelId)

@@ -16,8 +16,9 @@ public:
     /*!
      * \brief Читает файл списка дневных программ и заполняет модель данных
      * \param model - заполняемая модель данных
+     * \param uids - uid-ы дневных программ
      */
-    void readDailyProgramList(QStandardItemModel& model);
+    void readDailyProgramList(QStandardItemModel& model, QStringList uids = QStringList());
 
     /*!
      * \brief Сохраняет список дневных программ из модели данных
@@ -59,6 +60,15 @@ public:
      * \param uidPP - uid индивидуальной программы
      */
     void clearListDailyProgramsForPersonal(QString& uidPP);
+
+    /*!
+     * \brief Вовзращает список дневных программ для индивидуальной
+     * \param uidPP - uid индивидуальной программы
+     */
+    QStringList getListDailyProgramsForPersonal(QString& uidPP);
+
+private:
+    QString createDir();
 };
 
 #endif // PERSONALPROGRAMMANAGER_H

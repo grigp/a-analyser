@@ -455,6 +455,38 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>tvPrograms</sender>
+   <signal>activated(QModelIndex)</signal>
+   <receiver>PersonalProgramsEditor</receiver>
+   <slot>on_selectPP(QModelIndex)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>117</x>
+     <y>34</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>629</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>tvPrograms</sender>
+   <signal>clicked(QModelIndex)</signal>
+   <receiver>PersonalProgramsEditor</receiver>
+   <slot>on_selectPP(QModelIndex)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>201</x>
+     <y>58</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>630</x>
+     <y>47</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>on_addDP()</slot>
@@ -464,5 +496,6 @@
   <slot>on_ppAdd()</slot>
   <slot>on_ppEdit()</slot>
   <slot>on_ppDel()</slot>
+  <slot>on_selectPP(QModelIndex)</slot>
  </slots>
 </ui>

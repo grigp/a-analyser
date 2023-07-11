@@ -284,7 +284,7 @@ public:
      * \brief Читает файл списка дневных программ и заполняет модель данных
      * \param model - заполняемая модель данных
      */
-    void readDailyProgramList(QStandardItemModel& model);
+    void readDailyProgramList(QStandardItemModel& model, QStringList uids = QStringList());
 
     /*!
      * \brief Сохраняет список дневных программ из модели данных
@@ -324,6 +324,12 @@ public:
      * \param uidPP - uid индивидуальной программы
      */
     void clearListDailyProgramsForPersonal(QString& uidPP);
+
+    /*!
+     * \brief Вовзращает список дневных программ для индивидуальной
+     * \param uidPP - uid индивидуальной программы
+     */
+    QStringList getListDailyProgramsForPersonal(QString& uidPP);
 
     /*!
      * \brief Изменение данных канала в БД
