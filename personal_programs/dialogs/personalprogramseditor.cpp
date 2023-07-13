@@ -24,13 +24,12 @@ PersonalProgramsEditor::~PersonalProgramsEditor()
 
 int PersonalProgramsEditor::exec()
 {
-    ui->tvPrograms->header()->setVisible(false);
-    ui->tvSchedule->horizontalHeader()->setVisible(false);
-
     static_cast<AAnalyserApplication*>(QApplication::instance())->readPersonalProgramList(m_mdlPP);
 
     ui->tvPrograms->setModel(&m_mdlPP);
     ui->tvSchedule->setModel(&m_mdlDP);
+    ui->tvPrograms->header()->setVisible(false);
+    ui->tvSchedule->horizontalHeader()->setVisible(false);
 
     QString sSheet = QString("QTableView") +
     "{" +
@@ -169,11 +168,70 @@ void PersonalProgramsEditor::on_ppAdd()
 
 void PersonalProgramsEditor::on_ppEdit()
 {
+    QModelIndexList selIdxs = ui->tvPrograms->selectionModel()->selectedIndexes();
+    if (selIdxs.size() > 0)
+    {
+        auto index = selIdxs.at(0);
+        if (index.isValid())
+        {
+            auto item = m_mdlPP.itemFromIndex(index);
+
+            auto objPP = item->data(PersonalProgramDefines::TablePPRoles::PPRole).toJsonObject();
+            auto uidPP = objPP["uid"].toString();
+            objPP["name"] = ui->edName->text();
+            objPP["min_time_between_dp"] = ui->cbMinTimeBetweenDP->currentIndex();
+            objPP["max_time_between_dp"] = ui->cbMaxTimeBetweenDP->currentIndex();
+
+            QString pn = item->text();
+            auto mr = QMessageBox::question(nullptr, tr("Запрос"), tr("Внести изменения в программу") + " \"" + pn + "\"?");
+            if (mr == QMessageBox::Yes)
+            {
+                item->setData(objPP, PersonalProgramDefines::TablePPRoles::PPRole);
+                item->setText(objPP["name"].toString());
+                static_cast<AAnalyserApplication*>(QApplication::instance())->savePersonalProgramList(m_mdlPP);
+                QStringList uidDPs;
+                for (int i = 0; i < m_mdlDP.rowCount(); ++i)
+                {
+                    auto objDP = m_mdlDP.item(i)->data(PersonalProgramDefines::TableDPRoles::DPRole).toJsonObject();
+                    uidDPs << objDP["uid"].toString();
+                }
+                static_cast<AAnalyserApplication*>(QApplication::instance())->editDailyProgramsForPersonal(uidPP, uidDPs);
+            }
+        }
+    }
+    else
+        QMessageBox::information(nullptr, tr("Предупреждение"), tr("Не выбрана индивидуальная программа"));
 }
 
 void PersonalProgramsEditor::on_ppDel()
 {
+    QModelIndexList selIdxs = ui->tvPrograms->selectionModel()->selectedIndexes();
+    if (selIdxs.size() > 0)
+    {
+        auto index = selIdxs.at(0);
+        if (index.isValid())
+        {
+            QString name = index.data().toString();
+            auto mr = QMessageBox::question(nullptr, tr("Запрос"), tr("Удалить индивидуальную программу") + " \"" + name + "\"?");
+            if (mr == QMessageBox::Yes)
+            {
+                auto objPP = index.data(PersonalProgramDefines::TablePPRoles::PPRole).toJsonObject();
+                auto uidPP = objPP["uid"].toString();
 
+                m_mdlPP.removeRow(index.row());
+                ui->edName->setText("");
+                ui->cbMinTimeBetweenDP->setCurrentIndex(0);
+                ui->cbMaxTimeBetweenDP->setCurrentIndex(7);
+                m_mdlDP.clear();
+                ui->tvPrograms->selectionModel()->clearSelection();
+
+                static_cast<AAnalyserApplication*>(QApplication::instance())->savePersonalProgramList(m_mdlPP);
+                static_cast<AAnalyserApplication*>(QApplication::instance())->clearListDailyProgramsForPersonal(uidPP);
+            }
+        }
+    }
+    else
+        QMessageBox::information(nullptr, tr("Предупреждение"), tr("Не выбрана индивидуальная программа"));
 }
 
 void PersonalProgramsEditor::on_selectPP(QModelIndex index)
@@ -189,6 +247,16 @@ void PersonalProgramsEditor::on_selectPP(QModelIndex index)
         auto dps = static_cast<AAnalyserApplication*>(QApplication::instance())->getListDailyProgramsForPersonal(uid);
         static_cast<AAnalyserApplication*>(QApplication::instance())->readDailyProgramList(m_mdlDP, dps);
     }
+}
+
+void PersonalProgramsEditor::on_changeMinTime(int idx)
+{
+
+}
+
+void PersonalProgramsEditor::on_changeMaxTime(int idx)
+{
+
 }
 
 void PersonalProgramsEditor::prepareParams()

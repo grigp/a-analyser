@@ -130,7 +130,11 @@
            </property>
            <layout class="QHBoxLayout" name="horizontalLayout_4">
             <item>
-             <widget class="QTableView" name="tvSchedule"/>
+             <widget class="QTableView" name="tvSchedule">
+              <attribute name="horizontalHeaderDefaultSectionSize">
+               <number>300</number>
+              </attribute>
+             </widget>
             </item>
             <item>
              <widget class="QFrame" name="frScheduleButtons">
@@ -487,6 +491,38 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>cbMinTimeBetweenDP</sender>
+   <signal>currentIndexChanged(int)</signal>
+   <receiver>PersonalProgramsEditor</receiver>
+   <slot>on_changeMinTime(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>314</x>
+     <y>131</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>631</x>
+     <y>72</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>cbMaxTimeBetweenDP</sender>
+   <signal>currentIndexChanged(int)</signal>
+   <receiver>PersonalProgramsEditor</receiver>
+   <slot>on_changeMaxTime(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>353</x>
+     <y>182</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>626</x>
+     <y>146</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>on_addDP()</slot>
@@ -497,5 +533,7 @@
   <slot>on_ppEdit()</slot>
   <slot>on_ppDel()</slot>
   <slot>on_selectPP(QModelIndex)</slot>
+  <slot>on_changeMinTime(int)</slot>
+  <slot>on_changeMaxTime(int)</slot>
  </slots>
 </ui>

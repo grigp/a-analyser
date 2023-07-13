@@ -203,7 +203,39 @@ void PersonalProgramManager::editDailyProgramsForPersonal(QString &uidPP, QStrin
 
 void PersonalProgramManager::clearListDailyProgramsForPersonal(QString &uidPP)
 {
+    //! Создание папки
+    QString dirName = createDir();
 
+    QJsonObject objPPDPs;
+
+    //! Чтение файла
+    QFile fPPDP(dirName + "ppdp.json");
+    if (fPPDP.open(QIODevice::ReadOnly | QIODevice::Text))
+    {
+        QByteArray ba = fPPDP.readAll();
+        QJsonDocument loadDoc(QJsonDocument::fromJson(ba));
+        objPPDPs = loadDoc.object();
+        fPPDP.close();
+    }
+
+    //! Создание json массива
+    auto arrPPDP = objPPDPs["ppdp_list"].toArray();
+    QJsonArray arrPPDPNew;
+    for (int i = 0; i < arrPPDP.size(); ++i)
+    {
+        auto objPPDP = arrPPDP.at(i).toObject();
+        if (objPPDP["pp_uid"] != uidPP)
+            arrPPDPNew << objPPDP;
+    }
+    objPPDPs["ppdp_list"] = arrPPDPNew;
+
+    //! Запись в файл
+    if (fPPDP.open(QIODevice::WriteOnly | QIODevice::Text))
+    {
+        QJsonDocument doc(objPPDPs);
+        QByteArray ba = doc.toJson();
+        fPPDP.write(ba);
+    }
 }
 
 QStringList PersonalProgramManager::getListDailyProgramsForPersonal(QString &uidPP)

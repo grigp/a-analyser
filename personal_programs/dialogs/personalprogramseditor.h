@@ -19,7 +19,7 @@ class PersonalProgramsEditor : public QDialog
 
 public:
     explicit PersonalProgramsEditor(QWidget *parent = nullptr);
-    ~PersonalProgramsEditor();
+    ~PersonalProgramsEditor() override;
 
 public slots:
     int exec() override;
@@ -35,6 +35,8 @@ private slots:
     void on_ppDel();
 
     void on_selectPP(QModelIndex index);
+    void on_changeMinTime(int idx);
+    void on_changeMaxTime(int idx);
 
 private:
     Ui::PersonalProgramsEditor *ui;
