@@ -196,8 +196,10 @@ void PersonalProgramsEditor::prepareParams()
     ui->cbMinTimeBetweenDP->clear();
     foreach (auto v, PersonalProgramDefines::MinTimeBetweenDPList)
         ui->cbMinTimeBetweenDP->addItem(PersonalProgramDefines::MinTimeBetweenDPNames.value(v), v);
+    ui->cbMinTimeBetweenDP->setCurrentIndex(0);
 
     ui->cbMaxTimeBetweenDP->clear();
     foreach (auto v, PersonalProgramDefines::MaxTimeBetweenDPList)
         ui->cbMaxTimeBetweenDP->addItem(PersonalProgramDefines::MaxTimeBetweenDPNames.value(v), v);
+    ui->cbMaxTimeBetweenDP->setCurrentIndex(7);
 }
