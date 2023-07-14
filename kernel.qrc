@@ -240,5 +240,9 @@
         <file>images/pulse_types/05_lost_qrs.png</file>
         <file>images/pulse_types/06_rigid_rythm.png</file>
         <file>images/Edit.png</file>
+        <file>images/Plus_Easy.png</file>
+        <file>images/Down_Easy.png</file>
+        <file>images/Up_Easy.png</file>
+        <file>images/Edit_Easy.png</file>
     </qresource>
 </RCC>

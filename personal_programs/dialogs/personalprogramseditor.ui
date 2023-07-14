@@ -161,7 +161,7 @@
                  </property>
                  <property name="icon">
                   <iconset resource="../../kernel.qrc">
-                   <normaloff>:/images/Plus.png</normaloff>:/images/Plus.png</iconset>
+                   <normaloff>:/images/Plus_Easy.png</normaloff>:/images/Plus_Easy.png</iconset>
                  </property>
                  <property name="iconSize">
                   <size>
@@ -181,7 +181,7 @@
                  </property>
                  <property name="icon">
                   <iconset resource="../../kernel.qrc">
-                   <normaloff>:/images/delete22.png</normaloff>:/images/delete22.png</iconset>
+                   <normaloff>:/images/Close.png</normaloff>:/images/Close.png</iconset>
                  </property>
                  <property name="iconSize">
                   <size>
@@ -201,7 +201,7 @@
                  </property>
                  <property name="icon">
                   <iconset resource="../../kernel.qrc">
-                   <normaloff>:/images/Connects/Up.png</normaloff>:/images/Connects/Up.png</iconset>
+                   <normaloff>:/images/Up_Easy.png</normaloff>:/images/Up_Easy.png</iconset>
                  </property>
                  <property name="iconSize">
                   <size>
@@ -221,7 +221,7 @@
                  </property>
                  <property name="icon">
                   <iconset resource="../../kernel.qrc">
-                   <normaloff>:/images/Connects/Down.png</normaloff>:/images/Connects/Down.png</iconset>
+                   <normaloff>:/images/Down_Easy.png</normaloff>:/images/Down_Easy.png</iconset>
                  </property>
                  <property name="iconSize">
                   <size>
