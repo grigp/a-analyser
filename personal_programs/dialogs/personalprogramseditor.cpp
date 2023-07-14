@@ -131,33 +131,38 @@ void PersonalProgramsEditor::on_ppAdd()
     {
         if (m_mdlDP.rowCount() > 0)
         {
-            QJsonObject objPP;
-            QString uidPP = QUuid::createUuid().toString();
-            objPP["uid"] =  uidPP;
-            objPP["name"] = ui->edName->text();
-            objPP["min_time_between_dp"] = ui->cbMinTimeBetweenDP->currentIndex();
-            objPP["max_time_between_dp"] = ui->cbMaxTimeBetweenDP->currentIndex();
-
-            auto *item = new QStandardItem(objPP["name"].toString());
-            item->setEditable(false);
-            item->setData(objPP, PersonalProgramDefines::TablePPRoles::PPRole);
-            m_mdlPP.appendRow(item);
-
-            //! Выделить добавленный итем
-            QModelIndex lastIdx = m_mdlPP.index(m_mdlPP.rowCount() - 1, 0);
-            ui->tvPrograms->selectionModel()->clearSelection();
-            ui->tvPrograms->selectionModel()->select(lastIdx, QItemSelectionModel::Select);
-
-            //! Внести изменения на диск
-            static_cast<AAnalyserApplication*>(QApplication::instance())->savePersonalProgramList(m_mdlPP);
-            QStringList uidDPs;
-            for (int i = 0; i < m_mdlDP.rowCount(); ++i)
+            if (ui->cbMinTimeBetweenDP->currentData().toInt() <= ui->cbMaxTimeBetweenDP->currentData().toInt())
             {
-                auto objDP = m_mdlDP.item(i)->data(PersonalProgramDefines::TableDPRoles::DPRole).toJsonObject();
-                uidDPs << objDP["uid"].toString();
+                QJsonObject objPP;
+                QString uidPP = QUuid::createUuid().toString();
+                objPP["uid"] =  uidPP;
+                objPP["name"] = ui->edName->text();
+                objPP["min_time_between_dp"] = ui->cbMinTimeBetweenDP->currentIndex();
+                objPP["max_time_between_dp"] = ui->cbMaxTimeBetweenDP->currentIndex();
 
+                auto *item = new QStandardItem(objPP["name"].toString());
+                item->setEditable(false);
+                item->setData(objPP, PersonalProgramDefines::TablePPRoles::PPRole);
+                m_mdlPP.appendRow(item);
+
+                //! Выделить добавленный итем
+                QModelIndex lastIdx = m_mdlPP.index(m_mdlPP.rowCount() - 1, 0);
+                ui->tvPrograms->selectionModel()->clearSelection();
+                ui->tvPrograms->selectionModel()->select(lastIdx, QItemSelectionModel::Select);
+
+                //! Внести изменения на диск
+                static_cast<AAnalyserApplication*>(QApplication::instance())->savePersonalProgramList(m_mdlPP);
+                QStringList uidDPs;
+                for (int i = 0; i < m_mdlDP.rowCount(); ++i)
+                {
+                    auto objDP = m_mdlDP.item(i)->data(PersonalProgramDefines::TableDPRoles::DPRole).toJsonObject();
+                    uidDPs << objDP["uid"].toString();
+
+                }
+                static_cast<AAnalyserApplication*>(QApplication::instance())->assignDailyProgramsForPersonal(uidPP, uidDPs);
             }
-            static_cast<AAnalyserApplication*>(QApplication::instance())->assignDailyProgramsForPersonal(uidPP, uidDPs);
+            else
+                QMessageBox::information(nullptr, tr("Предупреждение"), tr("Минимальное время между дневными программми больше максимального"));
         }
         else
             QMessageBox::information(nullptr, tr("Предупреждение"), tr("Необходимо добавить дневные программы в индивидуальную программу"));
@@ -174,29 +179,34 @@ void PersonalProgramsEditor::on_ppEdit()
         auto index = selIdxs.at(0);
         if (index.isValid())
         {
-            auto item = m_mdlPP.itemFromIndex(index);
-
-            auto objPP = item->data(PersonalProgramDefines::TablePPRoles::PPRole).toJsonObject();
-            auto uidPP = objPP["uid"].toString();
-            objPP["name"] = ui->edName->text();
-            objPP["min_time_between_dp"] = ui->cbMinTimeBetweenDP->currentIndex();
-            objPP["max_time_between_dp"] = ui->cbMaxTimeBetweenDP->currentIndex();
-
-            QString pn = item->text();
-            auto mr = QMessageBox::question(nullptr, tr("Запрос"), tr("Внести изменения в программу") + " \"" + pn + "\"?");
-            if (mr == QMessageBox::Yes)
+            if (ui->cbMinTimeBetweenDP->currentData().toInt() <= ui->cbMaxTimeBetweenDP->currentData().toInt())
             {
-                item->setData(objPP, PersonalProgramDefines::TablePPRoles::PPRole);
-                item->setText(objPP["name"].toString());
-                static_cast<AAnalyserApplication*>(QApplication::instance())->savePersonalProgramList(m_mdlPP);
-                QStringList uidDPs;
-                for (int i = 0; i < m_mdlDP.rowCount(); ++i)
+                auto item = m_mdlPP.itemFromIndex(index);
+
+                auto objPP = item->data(PersonalProgramDefines::TablePPRoles::PPRole).toJsonObject();
+                auto uidPP = objPP["uid"].toString();
+                objPP["name"] = ui->edName->text();
+                objPP["min_time_between_dp"] = ui->cbMinTimeBetweenDP->currentIndex();
+                objPP["max_time_between_dp"] = ui->cbMaxTimeBetweenDP->currentIndex();
+
+                QString pn = item->text();
+                auto mr = QMessageBox::question(nullptr, tr("Запрос"), tr("Внести изменения в программу") + " \"" + pn + "\"?");
+                if (mr == QMessageBox::Yes)
                 {
-                    auto objDP = m_mdlDP.item(i)->data(PersonalProgramDefines::TableDPRoles::DPRole).toJsonObject();
-                    uidDPs << objDP["uid"].toString();
+                    item->setData(objPP, PersonalProgramDefines::TablePPRoles::PPRole);
+                    item->setText(objPP["name"].toString());
+                    static_cast<AAnalyserApplication*>(QApplication::instance())->savePersonalProgramList(m_mdlPP);
+                    QStringList uidDPs;
+                    for (int i = 0; i < m_mdlDP.rowCount(); ++i)
+                    {
+                        auto objDP = m_mdlDP.item(i)->data(PersonalProgramDefines::TableDPRoles::DPRole).toJsonObject();
+                        uidDPs << objDP["uid"].toString();
+                    }
+                    static_cast<AAnalyserApplication*>(QApplication::instance())->editDailyProgramsForPersonal(uidPP, uidDPs);
                 }
-                static_cast<AAnalyserApplication*>(QApplication::instance())->editDailyProgramsForPersonal(uidPP, uidDPs);
             }
+            else
+                QMessageBox::information(nullptr, tr("Предупреждение"), tr("Минимальное время между дневными программми больше максимального"));
         }
     }
     else
@@ -251,12 +261,40 @@ void PersonalProgramsEditor::on_selectPP(QModelIndex index)
 
 void PersonalProgramsEditor::on_changeMinTime(int idx)
 {
-
+    Q_UNUSED(idx);
+    auto valMin = ui->cbMinTimeBetweenDP->currentData().toInt();
+    auto valMax = ui->cbMaxTimeBetweenDP->currentData().toInt();
+    if (valMin > valMax)
+    {
+        while (valMin > valMax)
+        {
+            int idx = ui->cbMaxTimeBetweenDP->currentIndex();
+            if (idx < ui->cbMaxTimeBetweenDP->count() - 1)
+                ui->cbMaxTimeBetweenDP->setCurrentIndex(idx + 1);
+            else
+                break;
+            valMax = ui->cbMaxTimeBetweenDP->currentData().toInt();
+        }
+    }
 }
 
 void PersonalProgramsEditor::on_changeMaxTime(int idx)
 {
-
+    Q_UNUSED(idx);
+    auto valMin = ui->cbMinTimeBetweenDP->currentData().toInt();
+    auto valMax = ui->cbMaxTimeBetweenDP->currentData().toInt();
+    if (valMax < valMin)
+    {
+        while (valMax < valMin)
+        {
+            int idx = ui->cbMinTimeBetweenDP->currentIndex();
+            if (idx > 0)
+                ui->cbMinTimeBetweenDP->setCurrentIndex(idx - 1);
+            else
+                break;
+            valMin = ui->cbMinTimeBetweenDP->currentData().toInt();
+        }
+    }
 }
 
 void PersonalProgramsEditor::prepareParams()
