@@ -332,6 +332,18 @@ public:
     QStringList getListDailyProgramsForPersonal(QString& uidPP);
 
     /*!
+     * \brief Назначает индивидуальную программу для пациента, вызывая диалог выбора программы
+     * \return true, если назначили, false, если отменили
+     */
+    bool assignPPForPatient();
+
+    /*!
+     * \brief Отменяет индивидуальную программу для пациента
+     * \return true, если отменили, false, если отменили отмену
+     */
+    bool cancelPPForPatient();
+
+    /*!
      * \brief Изменение данных канала в БД
      * Вызывается тем, кто изменяет данные в БД
      * \param probeUid - uid пробы

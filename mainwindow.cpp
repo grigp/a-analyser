@@ -357,6 +357,16 @@ void MainWindow::on_editDailyPrograms()
     dlg.exec();
 }
 
+void MainWindow::on_PPAssign()
+{
+    static_cast<AAnalyserApplication*>(QApplication::instance())->assignPPForPatient();
+}
+
+void MainWindow::on_PPCancel()
+{
+    static_cast<AAnalyserApplication*>(QApplication::instance())->cancelPPForPatient();
+}
+
 void MainWindow::initUi(const QString& colorSheme)
 {
     QFile style(colorSheme);
@@ -384,6 +394,10 @@ void MainWindow::initMenu()
     menuDatabase->addSeparator();
 
     menuDatabase->addAction(ui->acExit);
+
+    QMenu *menuPP = menuBar()->addMenu(tr("Индивидуальные программы"));
+    menuPP->addAction(ui->acPPAssign);
+    menuPP->addAction(ui->acPPCancel);
 
     QMenu *menuView = menuBar()->addMenu(tr("Вид"));
     m_agViewsMain = new QActionGroup(this);

@@ -96,6 +96,8 @@ private slots:
 
     void on_editPersonalPrograms();
     void on_editDailyPrograms();
+    void on_PPAssign();
+    void on_PPCancel();
 
 private:
     Ui::MainWindow *ui;

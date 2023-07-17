@@ -277,6 +277,22 @@
     <string>Редактирование дневных программ</string>
    </property>
   </action>
+  <action name="acPPAssign">
+   <property name="text">
+    <string>Назначить...</string>
+   </property>
+   <property name="toolTip">
+    <string>Назначить индивидуальную программу для пациента...</string>
+   </property>
+  </action>
+  <action name="acPPCancel">
+   <property name="text">
+    <string>Отменить...</string>
+   </property>
+   <property name="toolTip">
+    <string>Отменить индивидуальную программу для пациента...</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources/>
@@ -544,8 +560,8 @@
    <slot>on_editPersonalPrograms()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>581</x>
-     <y>317</y>
+     <x>-1</x>
+     <y>-1</y>
     </hint>
     <hint type="destinationlabel">
      <x>581</x>
@@ -558,6 +574,38 @@
    <signal>triggered()</signal>
    <receiver>MainWindow</receiver>
    <slot>on_editDailyPrograms()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>581</x>
+     <y>317</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>acPPAssign</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>on_PPAssign()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>581</x>
+     <y>317</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>acPPCancel</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>on_PPCancel()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>-1</x>
@@ -588,5 +636,7 @@
   <slot>on_viewPersonalProgram()</slot>
   <slot>on_editPersonalPrograms()</slot>
   <slot>on_editDailyPrograms()</slot>
+  <slot>on_PPAssign()</slot>
+  <slot>on_PPCancel()</slot>
  </slots>
 </ui>

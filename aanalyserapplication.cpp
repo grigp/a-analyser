@@ -31,6 +31,7 @@
 #include "dataprovider.h"
 #include "signaltransformerparamswidget.h"
 #include "personalprogrammanager.h"
+#include "selectpersonalprogramdialog.h"
 
 AAnalyserApplication::AAnalyserApplication(int &argc, char **argv)
     : QApplication(argc, argv)
@@ -497,6 +498,29 @@ QStringList AAnalyserApplication::getListDailyProgramsForPersonal(QString &uidPP
     if (m_ppManager)
         return m_ppManager->getListDailyProgramsForPersonal(uidPP);
     return QStringList();
+}
+
+bool AAnalyserApplication::assignPPForPatient()
+{
+    auto pi = getCurrentPatient();
+    if (pi.uid != "")
+    {
+        SelectPersonalProgramDialog dlg(nullptr);
+        if (dlg.exec() == QDialog::Accepted)
+        {
+            qDebug() << getCurrentPatient().fio;
+            return true;
+        }
+    }
+    else
+        QMessageBox::information(nullptr, tr("Предупреждение"), tr("Не выбран пациент"));
+
+    return false;
+}
+
+bool AAnalyserApplication::cancelPPForPatient()
+{
+
 }
 
 void AAnalyserApplication::doChannelChanged(const QString &probeUid, const QString &channelId)
