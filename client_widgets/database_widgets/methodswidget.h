@@ -29,6 +29,12 @@ public:
      */
     QString methodic() const;
 
+    /*!
+     * \brief Устанавливает видимость панели заголовка
+     * \param isVisible - ключ видимости
+     */
+    void setTitleVisible(const bool isVisible);
+
 //protected:
 //    bool eventFilter(QObject *watched, QEvent *event);
 

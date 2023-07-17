@@ -11,6 +11,7 @@ SelectMethodicDialog::SelectMethodicDialog(QWidget *parent) :
     ui->wgtMethods->onDbConnect(false);
     auto btnOK = ui->buttonBox->button(QDialogButtonBox::Ok);
     btnOK->setEnabled(false);
+    ui->wgtMethods->setTitleVisible(false);
 
     connect(ui->wgtMethods, &MethodsWidget::selectMethod, this, &SelectMethodicDialog::on_selectMethod);
 }

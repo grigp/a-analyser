@@ -69,6 +69,11 @@ QString MethodsWidget::methodic() const
     return QUuid().toString();
 }
 
+void MethodsWidget::setTitleVisible(const bool isVisible)
+{
+    ui->frTitle->setVisible(isVisible);
+}
+
 //bool MethodsWidget::eventFilter(QObject *watched, QEvent *event)
 //{
 //    if (watched == ui->tvMetods->viewport() && event->type() == QEvent::MouseButtonRelease)
