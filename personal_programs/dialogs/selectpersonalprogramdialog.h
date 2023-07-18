@@ -25,6 +25,11 @@ public:
      */
     QString personalProgramUid() const;
 
+    /*!
+     * \brief Возвращает индивидуальную программу в виде json объекта
+     */
+    QJsonObject personalProgram() const;
+
 //    /*!
 //     * \brief Возвращает индивидуальную программу в виде json объекта
 //     */

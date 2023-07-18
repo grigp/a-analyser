@@ -23,11 +23,31 @@ SelectPersonalProgramDialog::~SelectPersonalProgramDialog()
 
 QString SelectPersonalProgramDialog::personalProgramUid() const
 {
+    auto objPP = personalProgram();
+    if (objPP != QJsonObject())
+        return objPP["uid"].toString();
+    return QUuid().toString();
+}
 
+QJsonObject SelectPersonalProgramDialog::personalProgram() const
+{
+    QModelIndexList selIdxs = ui->tvListPP->selectionModel()->selectedIndexes();
+    if (selIdxs.size() > 0)
+    {
+        auto index = selIdxs.at(0);
+        if (index.isValid())
+        {
+            auto item = m_mdlPrograms.itemFromIndex(index);
+            return item->data(PersonalProgramDefines::TablePPRoles::PPRole).toJsonObject();
+        }
+    }
+    return QJsonObject();
 }
 
 int SelectPersonalProgramDialog::exec()
 {
+    setStyleSheet(static_cast<AAnalyserApplication*>(QApplication::instance())->mainWindow()->styleSheet());
+
     ui->tvListPP->header()->setVisible(false);
     static_cast<AAnalyserApplication*>(QApplication::instance())->readPersonalProgramList(m_mdlPrograms);
     ui->tvListPP->setModel(&m_mdlPrograms);

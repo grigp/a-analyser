@@ -50,6 +50,7 @@ bool DataBase::getPatient(const QString &uid, DataDefines::PatientKard &patient)
         patient.sex = static_cast<DataDefines::Sex>(patObj["sex"].toInt());
         patient.massa = patObj["massa"].toInt();
         patient.height = patObj["height"].toInt();
+        patient.pp_uid = patObj["personal_program"].toString();
         return true;
     }
     return false;
@@ -909,6 +910,19 @@ void DataBase::setTestNormContained(const QString &testUid, const bool isNormCon
     }
 }
 
+void DataBase::assignPersonalProgramForPatient(const QString &uidPPAssigned, const QJsonObject &pp)
+{
+    DataDefines::PatientKard pi;
+
+    if (getPatient(pp["patient_uid"].toString(), pi))
+    {
+        pi.pp_uid = uidPPAssigned;
+        updatePatient(pi);
+
+
+    }
+}
+
 void DataBase::clear()
 {
     disconnected();
@@ -1113,6 +1127,7 @@ QString DataBase::createPatientRec(const DataDefines::PatientKard patient)
         root["sex"] = patient.sex;
         root["massa"] = patient.massa;
         root["height"] = patient.height;
+        root["personal_program"] = patient.pp_uid;
         QJsonDocument doc(root);
         QByteArray ba = doc.toJson();
         fPatientRec.write(ba);
@@ -1190,6 +1205,7 @@ void DataBase::updatePatientRec(const DataDefines::PatientKard &patient)
         patObj["sex"] = patient.sex;
         patObj["massa"] = patient.massa;
         patObj["height"] = patient.height;
+        patObj["personal_program"] = patient.pp_uid;
 
         writeTableRec(dir.absoluteFilePath(patient.uid), patObj);
     }

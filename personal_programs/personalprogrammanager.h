@@ -67,6 +67,15 @@ public:
      */
     QStringList getListDailyProgramsForPersonal(QString& uidPP);
 
+    /*!
+     * \brief Связывает индивидуальную программу с пациентом и возвращает ее в виде json объекта
+     * \param patientUid - uid пациента
+     * \param ppUid - uid индивидуальной программы
+     * \param ppUidAssigned - uid назначенной индивидуальной программы
+     * \return объект программы для пациента
+     */
+    QJsonObject assignPersonalProgramForPatient(const QString& patientUid, const QString& ppUid, QString& ppUidAssigned);
+
 private:
     QString createDir();
 };

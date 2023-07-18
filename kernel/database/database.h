@@ -442,6 +442,12 @@ public:
      */
     void setTestNormContained(const QString &testUid, const bool isNormContained);
 
+    /*!
+     * \brief Назначает индивидуальную программу для пациента
+     * \param uidPPAssigned - uid индивидуальной программы, назначенной для пациента
+     * \param pp - собранная индивидуальная программа
+     */
+    void assignPersonalProgramForPatient(const QString& uidPPAssigned, const QJsonObject& pp);
 
     /*!
      * \brief Очищает всю БД

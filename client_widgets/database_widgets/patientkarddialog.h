@@ -32,6 +32,8 @@ public:
     int height() const;
     void setHeight(const int h);
 
+    void setPersonalProgram(const QString& ppName, QPixmap& pic);
+
 private:
     Ui::PatientKardDialog *ui;
 };

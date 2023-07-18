@@ -43,6 +43,7 @@ struct PatientKard
     Sex sex;
     int massa;
     int height;
+    QString pp_uid;
     PatientKard() {}
 };
 

@@ -5,6 +5,7 @@
 #include <QJsonDocument>
 #include <QFile>
 #include <QDir>
+#include <QUuid>
 #include <QDebug>
 
 #include "datadefines.h"
@@ -122,8 +123,9 @@ void PersonalProgramManager::readPersonalProgramList(QStandardItemModel &model)
         {
             auto objPP = arrPPs.at(i).toObject();
             QString name = objPP["name"].toString();
+            auto logoFileName = objPP["logo_file_name"].toString();
 
-            auto *item = new QStandardItem(name);
+            auto *item = new QStandardItem(QIcon(logoFileName), name);
             item->setEditable(false);
             item->setData(objPP, PersonalProgramDefines::TablePPRoles::PPRole);
             model.appendRow(item);
@@ -284,6 +286,18 @@ QStringList PersonalProgramManager::getListDailyProgramsForPersonal(QString &uid
     QStringList retval;
     for (int i = 0; i < values.size(); ++i)
         retval << values.at(i).uid;
+    return retval;
+}
+
+QJsonObject PersonalProgramManager::assignPersonalProgramForPatient(const QString &patientUid,
+                                                                    const QString &ppUid,
+                                                                    QString& ppUidAssigned)
+{
+    QJsonObject retval;
+    ppUidAssigned = QUuid::createUuid().toString();
+    retval["pp_uid"] = ppUid;
+    retval["patient_uid"] = patientUid;
+
     return retval;
 }
 

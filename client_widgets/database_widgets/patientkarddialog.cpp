@@ -67,3 +67,9 @@ void PatientKardDialog::setHeight(const int h)
 {
     ui->edHeight->setValue(h);
 }
+
+void PatientKardDialog::setPersonalProgram(const QString &ppName, QPixmap& pic)
+{
+    ui->lblPP->setText(ppName);
+    ui->lblPPPic->setPixmap(pic);
+}

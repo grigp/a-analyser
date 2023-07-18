@@ -3,6 +3,7 @@
 
 #include <QMessageBox>
 #include <QUuid>
+#include <QFileDialog>
 #include <QDebug>
 
 #include "aanalyserapplication.h"
@@ -139,6 +140,7 @@ void PersonalProgramsEditor::on_ppAdd()
                 objPP["name"] = ui->edName->text();
                 objPP["min_time_between_dp"] = ui->cbMinTimeBetweenDP->currentIndex();
                 objPP["max_time_between_dp"] = ui->cbMaxTimeBetweenDP->currentIndex();
+                objPP["logo_file_name"] = m_logoFileName;
 
                 auto *item = new QStandardItem(objPP["name"].toString());
                 item->setEditable(false);
@@ -188,6 +190,7 @@ void PersonalProgramsEditor::on_ppEdit()
                 objPP["name"] = ui->edName->text();
                 objPP["min_time_between_dp"] = ui->cbMinTimeBetweenDP->currentIndex();
                 objPP["max_time_between_dp"] = ui->cbMaxTimeBetweenDP->currentIndex();
+                objPP["logo_file_name"] = m_logoFileName;
 
                 QString pn = item->text();
                 auto mr = QMessageBox::question(nullptr, tr("Запрос"), tr("Внести изменения в программу") + " \"" + pn + "\"?");
@@ -253,6 +256,9 @@ void PersonalProgramsEditor::on_selectPP(QModelIndex index)
         ui->cbMinTimeBetweenDP->setCurrentIndex(objPP["min_time_between_dp"].toInt());
         ui->cbMaxTimeBetweenDP->setCurrentIndex(objPP["max_time_between_dp"].toInt());
 
+        m_logoFileName = objPP["logo_file_name"].toString();
+        ui->lblLogo->setPixmap(QPixmap(m_logoFileName));
+
         auto uid = objPP["uid"].toString();
         auto dps = static_cast<AAnalyserApplication*>(QApplication::instance())->getListDailyProgramsForPersonal(uid);
         static_cast<AAnalyserApplication*>(QApplication::instance())->readDailyProgramList(m_mdlDP, dps);
@@ -295,6 +301,16 @@ void PersonalProgramsEditor::on_changeMaxTime(int idx)
             valMin = ui->cbMinTimeBetweenDP->currentData().toInt();
         }
     }
+}
+
+void PersonalProgramsEditor::on_selectLogo()
+{
+    m_logoFileName = QFileDialog::getOpenFileName(this,
+                                                  tr("Выберите картинку логотипа"),
+                                                  "pictures/personal_programs/",
+                                                  tr("Файлы картинок (*.png)"));
+    if (m_logoFileName != "")
+        ui->lblLogo->setPixmap(QPixmap(m_logoFileName));
 }
 
 void PersonalProgramsEditor::prepareParams()

@@ -156,6 +156,9 @@ void PatientsWidget::editPatient()
         dialog->setMassa(pi.massa);
         dialog->setHeight(pi.height);
 
+
+        //dialog->setPersonalProgram(pi.pp_uid);
+
         connect(dialog, &PatientKardDialog::accepted, this, [=]()
         {
             DataDefines::PatientKard patient;

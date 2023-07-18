@@ -38,6 +38,8 @@ private slots:
     void on_changeMinTime(int idx);
     void on_changeMaxTime(int idx);
 
+    void on_selectLogo();
+
 private:
     Ui::PersonalProgramsEditor *ui;
 
@@ -46,6 +48,7 @@ private:
     SelectDailyProgramDialog* m_dlgSelDP {nullptr};
     QStandardItemModel m_mdlDP;
     QStandardItemModel m_mdlPP;
+    QString m_logoFileName {""};
 };
 
 #endif // PERSONALPROGRAMSEDITOR_H

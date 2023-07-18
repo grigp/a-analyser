@@ -279,6 +279,11 @@ void DataProvider::setTestNormContained(const QString &testUid, const bool isNor
             setTestNormContained(testUid, isNormContained);
 }
 
+void DataProvider::assignPersonalProgramForPatient(const QString& uidPPAssigned, const QJsonObject& pp)
+{
+    static_cast<AAnalyserApplication*>(QApplication::instance())->getDB()->assignPersonalProgramForPatient(uidPPAssigned, pp);
+}
+
 void DataProvider::clear()
 {
     static_cast<AAnalyserApplication*>(QApplication::instance())->getDB()->clear();
