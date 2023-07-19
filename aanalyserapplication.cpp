@@ -505,14 +505,21 @@ bool AAnalyserApplication::assignPPForPatient()
     auto pi = getCurrentPatient();
     if (pi.uid != "")
     {
-        SelectPersonalProgramDialog dlg(nullptr);
-        if (dlg.exec() == QDialog::Accepted)
+        if (DataProvider::getActivePersonalProgramForPatient(pi.uid) == QJsonObject())
         {
-            QString uidPPAssigned = "";
-            auto ppObj = m_ppManager->assignPersonalProgramForPatient(getCurrentPatient().uid, dlg.personalProgramUid(), uidPPAssigned);
-            DataProvider::assignPersonalProgramForPatient(uidPPAssigned, ppObj);
-            return true;
+            SelectPersonalProgramDialog dlg(nullptr);
+            if (dlg.exec() == QDialog::Accepted)
+            {
+                QString uidPPAssigned = "";
+                auto ppObj = m_ppManager->assignPersonalProgramForPatient(getCurrentPatient().uid, dlg.personalProgramUid(), uidPPAssigned);
+                DataProvider::assignPersonalProgramForPatient(uidPPAssigned, ppObj);
+                return true;
+            }
         }
+        else
+            QMessageBox::information(nullptr,
+                                     tr("Предупреждение"),
+                                     tr("Для пациента уже назначена индивидуальная программа") + " - " + pi.fio );
     }
     else
         QMessageBox::information(nullptr, tr("Предупреждение"), tr("Не выбран пациент"));
