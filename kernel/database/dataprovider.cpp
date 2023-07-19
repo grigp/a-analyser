@@ -284,6 +284,16 @@ void DataProvider::assignPersonalProgramForPatient(const QString& uidPPAssigned,
     static_cast<AAnalyserApplication*>(QApplication::instance())->getDB()->assignPersonalProgramForPatient(uidPPAssigned, pp);
 }
 
+QJsonObject DataProvider::getActivePersonalProgramForPatient(const QString &patientUid)
+{
+    return static_cast<AAnalyserApplication*>(QApplication::instance())->getDB()->getActivePersonalProgramForPatient(patientUid);
+}
+
+QJsonArray DataProvider::getPersonalProgramListForPatient(const QString &patientUid)
+{
+    return static_cast<AAnalyserApplication*>(QApplication::instance())->getDB()->getPersonalProgramListForPatient(patientUid);
+}
+
 void DataProvider::clear()
 {
     static_cast<AAnalyserApplication*>(QApplication::instance())->getDB()->clear();
@@ -303,5 +313,4 @@ void DataProvider::importBD(const QString &fileName)
 {
     static_cast<AAnalyserApplication*>(QApplication::instance())->getDB()->importBD(fileName);
 }
-
 

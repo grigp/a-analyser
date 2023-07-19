@@ -156,8 +156,16 @@ void PatientsWidget::editPatient()
         dialog->setMassa(pi.massa);
         dialog->setHeight(pi.height);
 
-
-        //dialog->setPersonalProgram(pi.pp_uid);
+        auto objPP = DataProvider::getActivePersonalProgramForPatient(pi.uid);
+        QPixmap ppPic("");
+        if (objPP != QJsonObject())
+        {
+            auto ppName = objPP["pp"].toObject()["name"].toString();
+            ppPic = QPixmap(objPP["pp"].toObject()["logo_file_name"].toString());
+            dialog->setPersonalProgram(ppName, ppPic);
+        }
+        else
+            dialog->setPersonalProgram(tr("Не задана"), ppPic);
 
         connect(dialog, &PatientKardDialog::accepted, this, [=]()
         {

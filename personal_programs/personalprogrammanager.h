@@ -21,6 +21,13 @@ public:
     void readDailyProgramList(QStandardItemModel& model, QStringList uids = QStringList());
 
     /*!
+     * \brief Читает файл списка дневных программ и возвращает их в виде массива json
+     * \param uids - uid-ы дневных программ
+     * \return массив дневных программ
+     */
+    QJsonArray readDailyProgramList(QStringList uids = QStringList());
+
+    /*!
      * \brief Сохраняет список дневных программ из модели данных
      * \param model - модель данных с дневными программами
      */

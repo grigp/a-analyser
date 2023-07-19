@@ -75,6 +75,68 @@ void PersonalProgramManager::readDailyProgramList(QStandardItemModel &model, QSt
     }
 }
 
+QJsonArray PersonalProgramManager::readDailyProgramList(QStringList uids)
+{
+    QJsonArray retval;
+
+    //! Создание папки
+    QString dirName = createDir();
+
+    //! Заполнение модели
+    QFile fDP(dirName + "dp.json");
+    if (fDP.open(QIODevice::ReadOnly | QIODevice::Text))
+    {
+        //! Чтение файла
+        QByteArray ba = fDP.readAll();
+        QJsonDocument loadDoc(QJsonDocument::fromJson(ba));
+        auto objDPs = loadDoc.object();
+        fDP.close();
+
+//        //! Функция создания итема
+//        auto addItem = [&](QJsonObject& objDP)
+//        {
+//            QString name = objDP["name"].toString();
+
+//            auto *item = new QStandardItem(name);
+//            item->setEditable(false);
+//            item->setData(objDP, PersonalProgramDefines::TableDPRoles::DPRole);
+//            model.appendRow(item);
+//        };
+
+        //! Чтение массива
+        auto arrDPs = objDPs["dp_list"].toArray();
+        //! Если нужен весь файл
+        if (uids == QStringList())
+        {
+            for (int i = 0; i < arrDPs.size(); ++i)
+            {
+                auto objDP = arrDPs.at(i).toObject();
+                retval << objDP;
+//                addItem(objDP);
+            }
+        }
+        else
+        //! Если нужны только указанные DP
+        {
+            foreach (auto uidDP, uids)
+            {
+                for (int i = 0; i < arrDPs.size(); ++i)
+                {
+                    auto objDP = arrDPs.at(i).toObject();
+                    QString uid = objDP["uid"].toString();
+                    if (uid == uidDP)
+                    {
+                        retval << objDP;
+//                        addItem(objDP);
+                    }
+                }
+            }
+        }
+    }
+
+    return retval;
+}
+
 void PersonalProgramManager::saveDailyProgramList(const QStandardItemModel &model)
 {
     //! Создание json массива на основании модели
@@ -293,10 +355,49 @@ QJsonObject PersonalProgramManager::assignPersonalProgramForPatient(const QStrin
                                                                     const QString &ppUid,
                                                                     QString& ppUidAssigned)
 {
-    QJsonObject retval;
+    //! uid назначенной PP
     ppUidAssigned = QUuid::createUuid().toString();
-    retval["pp_uid"] = ppUid;
+
+    //! Сборка PP в один json
+    QJsonObject retval;
+    retval["pp_uid"] = ppUid;  //! uid исходной PP
     retval["patient_uid"] = patientUid;
+    retval["active"] = true;
+    retval["date_begin"] = QDate::currentDate().toString("dd.MM.yyyy");
+
+    //! Создание папки
+    QString dirName = createDir();
+
+    //! Чтение индивидуальной программы
+    QFile fPP(dirName + "pp.json");
+    if (fPP.open(QIODevice::ReadOnly | QIODevice::Text))
+    {
+        //! Чтение файла
+        QByteArray ba = fPP.readAll();
+        QJsonDocument loadDoc(QJsonDocument::fromJson(ba));
+        auto objPPs = loadDoc.object();
+        fPP.close();
+
+        //! Чтение массива
+        auto arrPPs = objPPs["pp_list"].toArray();
+        for (int i = 0; i < arrPPs.size(); ++i)
+        {
+            auto objPP = arrPPs.at(i).toObject();
+            QString uid = objPP["uid"].toString();
+
+            //! Выделяем PP с заданным uid (ppUid)
+            if (uid == ppUid)
+            {
+                //! Получим список дневных программ для индивидуальной
+                auto dpList = getListDailyProgramsForPersonal(uid);
+                //! Создадим список в виде массива реальных дневных программ
+                auto arrDP = readDailyProgramList(dpList);
+                //! Соберем все в выходной объект
+                objPP["dp_list"] = arrDP;
+                retval["pp"] = objPP;
+            }
+        }
+    }
 
     return retval;
 }

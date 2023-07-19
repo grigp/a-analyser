@@ -919,8 +919,33 @@ void DataBase::assignPersonalProgramForPatient(const QString &uidPPAssigned, con
         pi.pp_uid = uidPPAssigned;
         updatePatient(pi);
 
-
+        //! Запись ИП в таблицу ИП. Проверка, не назначена ли активная ИП для этого пациента
+        QDir dir = personalProgramsDir();
+        QString pnfn = uidPPAssigned;
+        writeTableRec(dir.absoluteFilePath(pnfn), pp);
     }
+}
+
+QJsonObject DataBase::getActivePersonalProgramForPatient(const QString &patientUid)
+{
+    QDir dir = personalProgramsDir();
+    QFileInfoList list = dir.entryInfoList(QDir::Files | QDir::NoDotAndDotDot);
+    foreach (auto fileInfo, list)
+    {
+        QJsonObject retval;
+        if (readTableRec(dir.absoluteFilePath(fileInfo.fileName()), retval))
+        {
+            if (retval["patient_uid"].toString() == patientUid &&
+                retval["active"].toBool() == true)
+                return retval;
+        }
+    }
+    return QJsonObject();
+}
+
+QJsonArray DataBase::getPersonalProgramListForPatient(const QString &patientUid)
+{
+
 }
 
 void DataBase::clear()
@@ -1095,6 +1120,11 @@ QDir DataBase::channelsDir() const
 QDir DataBase::personalNormDir() const
 {
     return localDir("personal_norms");
+}
+
+QDir DataBase::personalProgramsDir() const
+{
+    return localDir("personal_programs");
 }
 
 QDir DataBase::localDir(const QString &dirName) const

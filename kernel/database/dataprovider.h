@@ -418,6 +418,19 @@ void setTestNormContained(const QString &testUid, const bool isNormContained);
  */
 void assignPersonalProgramForPatient(const QString& uidPPAssigned, const QJsonObject& pp);
 
+/*!
+ * \brief Возвращает активную, назначенную индивидуальную программу для пациента
+ * \param patientUid - uid пациента
+ */
+QJsonObject getActivePersonalProgramForPatient(const QString& patientUid);
+
+/*!
+ * \brief Возвращает список индивидуальных программ, когда либо выполнявшихся пациентом
+ * В том числе и активную
+ * \param patientUid - uid пациента
+ */
+QJsonArray getPersonalProgramListForPatient(const QString& patientUid);
+
 
 //! ------------------- Общие и сервисные операции -------------------
 /*!

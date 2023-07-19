@@ -450,6 +450,19 @@ public:
     void assignPersonalProgramForPatient(const QString& uidPPAssigned, const QJsonObject& pp);
 
     /*!
+     * \brief Возвращает активную, назначенную индивидуальную программу для пациента
+     * \param patientUid - uid пациента
+     */
+    QJsonObject getActivePersonalProgramForPatient(const QString& patientUid);
+
+    /*!
+     * \brief Возвращает список индивидуальных программ, когда либо выполнявшихся пациентом
+     * В том числе и активную
+     * \param patientUid - uid пациента
+     */
+    QJsonArray getPersonalProgramListForPatient(const QString& patientUid);
+
+    /*!
      * \brief Очищает всю БД
      */
     void clear();
@@ -522,6 +535,7 @@ private:
     QDir probesDir() const;
     QDir channelsDir() const;
     QDir personalNormDir() const;
+    QDir personalProgramsDir() const;
     QDir localDir(const QString &dirName) const;
 
     QString personalNormFileName(const QString &patientUid, const QString &methodicUid, const QString &conditionUid) const;

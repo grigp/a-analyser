@@ -509,22 +509,9 @@ bool AAnalyserApplication::assignPPForPatient()
         if (dlg.exec() == QDialog::Accepted)
         {
             QString uidPPAssigned = "";
-            auto ppObj = m_ppManager->assignPersonalProgramForPatient(getCurrentPatient().uid, pi.pp_uid, uidPPAssigned);
+            auto ppObj = m_ppManager->assignPersonalProgramForPatient(getCurrentPatient().uid, dlg.personalProgramUid(), uidPPAssigned);
             DataProvider::assignPersonalProgramForPatient(uidPPAssigned, ppObj);
             return true;
-
-//            DataDefines::PatientKard pi;
-//            if (DataProvider::getPatient(getCurrentPatient().uid, pi))
-//            {
-//                pi.pp_uid = dlg.personalProgramUid();
-//                DataProvider::updatePatient(pi);
-//                if (m_ppManager)
-//                {
-//                    auto ppObj = m_ppManager->assignPersonalProgramForPatient(getCurrentPatient().uid, pi.pp_uid);
-//                    DataProvider::;
-//                }
-//                return true;
-//            }
         }
     }
     else
