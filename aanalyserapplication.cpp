@@ -32,6 +32,7 @@
 #include "signaltransformerparamswidget.h"
 #include "personalprogrammanager.h"
 #include "selectpersonalprogramdialog.h"
+#include "openpersonalprogramdialog.h"
 
 AAnalyserApplication::AAnalyserApplication(int &argc, char **argv)
     : QApplication(argc, argv)
@@ -513,6 +514,21 @@ bool AAnalyserApplication::assignPPForPatient()
                 QString uidPPAssigned = "";
                 auto ppObj = m_ppManager->assignPersonalProgramForPatient(getCurrentPatient().uid, dlg.personalProgramUid(), uidPPAssigned);
                 DataProvider::assignPersonalProgramForPatient(uidPPAssigned, ppObj);
+
+                //! Сообщение о назначении индивидуальной программы пациенту с запросом на открытие
+                OpenPersonalProgramDialog dlgOpen(nullptr);
+                dlgOpen.setPatientFio(pi.fio);
+                auto ppName = ppObj["pp"].toObject()["name"].toString();
+                auto ppPic = QPixmap(ppObj["pp"].toObject()["logo_file_name"].toString());
+                dlgOpen.setPersonalProgram(ppName, ppPic);
+
+                //! Открытие индивидуальной программы
+                if (dlgOpen.exec() == QDialog::Accepted)
+                {
+                    showClientPage(ClientWidgets::uidPersonalProgramWidgetUid);
+                    SettingsProvider::setValueToRegAppCopy("MainWindow", "MainClientWidget", ClientWidgets::uidPersonalProgramWidgetUid);
+                }
+
                 return true;
             }
         }

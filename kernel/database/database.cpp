@@ -945,7 +945,19 @@ QJsonObject DataBase::getActivePersonalProgramForPatient(const QString &patientU
 
 QJsonArray DataBase::getPersonalProgramListForPatient(const QString &patientUid)
 {
-
+    QJsonArray retval;
+    QDir dir = personalProgramsDir();
+    QFileInfoList list = dir.entryInfoList(QDir::Files | QDir::NoDotAndDotDot);
+    foreach (auto fileInfo, list)
+    {
+        QJsonObject obj;
+        if (readTableRec(dir.absoluteFilePath(fileInfo.fileName()), obj))
+        {
+            if (obj["patient_uid"].toString() == patientUid)
+                retval << obj;
+        }
+    }
+    return retval;
 }
 
 void DataBase::clear()
