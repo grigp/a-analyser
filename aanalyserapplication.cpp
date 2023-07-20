@@ -535,7 +535,8 @@ bool AAnalyserApplication::assignPPForPatient()
         else
             QMessageBox::information(nullptr,
                                      tr("Предупреждение"),
-                                     tr("Для пациента уже назначена индивидуальная программа") + " - " + pi.fio );
+                                     tr("Для пациента уже назначена индивидуальная программа")+
+                                     "\n" + tr("Пациент") + ": " + pi.fio );
     }
     else
         QMessageBox::information(nullptr, tr("Предупреждение"), tr("Не выбран пациент"));
@@ -545,7 +546,29 @@ bool AAnalyserApplication::assignPPForPatient()
 
 bool AAnalyserApplication::cancelPPForPatient()
 {
+    auto pi = getCurrentPatient();
+    if (pi.uid != "")
+    {
+        if (DataProvider::getActivePersonalProgramForPatient(pi.uid) != QJsonObject())
+        {
+            auto mr = QMessageBox::question(nullptr,
+                                            tr("Запрос"),
+                                            tr("Отменить индивидуальную программу для пациента?") +
+                                               "\n" + tr("Пациент") + ": " + pi.fio);
+            if (mr == QMessageBox::Yes)
+            {
 
+            }
+        }
+        else
+            QMessageBox::information(nullptr,
+                                     tr("Предупреждение"),
+                                     tr("Для пациента не назначена индивидуальная программа") + " - " + pi.fio);
+    }
+    else
+        QMessageBox::information(nullptr, tr("Предупреждение"), tr("Не выбран пациент"));
+
+    return false;
 }
 
 void AAnalyserApplication::doChannelChanged(const QString &probeUid, const QString &channelId)
