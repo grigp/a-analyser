@@ -960,6 +960,27 @@ QJsonArray DataBase::getPersonalProgramListForPatient(const QString &patientUid)
     return retval;
 }
 
+void DataBase::deletePersonalProgramForPatient(const QString &ppUid)
+{
+    QDir dir = personalProgramsDir();
+    if (QFile::exists(dir.absoluteFilePath(ppUid)))
+        QFile::remove(dir.absoluteFilePath(ppUid));
+}
+
+void DataBase::deactivatePersonalProgramForPatient(const QString &ppUid)
+{
+    QDir dir = personalProgramsDir();
+    if (QFile::exists(dir.absoluteFilePath(ppUid)))
+    {
+        QJsonObject objPP;
+        if (readTableRec(dir.absoluteFilePath(ppUid), objPP))
+        {
+            objPP["active"] = false;
+           writeTableRec(dir.absoluteFilePath(ppUid), objPP);
+        }
+    }
+}
+
 void DataBase::clear()
 {
     disconnected();

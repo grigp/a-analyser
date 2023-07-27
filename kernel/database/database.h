@@ -463,6 +463,22 @@ public:
     QJsonArray getPersonalProgramListForPatient(const QString& patientUid);
 
     /*!
+     * \brief Удаляет индивидуальную программу, назначенную для пациента
+     * При удалении по индивидуальной программе не должно быть проведено тестов.
+     * Функция этого не прооверяет, но логически это неверно
+     * \param ppUid - uid индивидуальной программы, назначенной для пациента
+     */
+    void deletePersonalProgramForPatient(const QString& ppUid);
+
+    /*!
+     * \brief Отменяет индивидуальную программу для пациента
+     * При отмене по индивидуальной программе должен быть проведен хотя бы один тест.
+     * Функция этого не прооверяет, но логически это неверно
+     * \param ppUid - uid индивидуальной программы, назначенной для пациента
+     */
+    void deactivatePersonalProgramForPatient(const QString& ppUid);
+
+    /*!
      * \brief Очищает всю БД
      */
     void clear();

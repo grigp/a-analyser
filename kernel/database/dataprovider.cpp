@@ -294,6 +294,16 @@ QJsonArray DataProvider::getPersonalProgramListForPatient(const QString &patient
     return static_cast<AAnalyserApplication*>(QApplication::instance())->getDB()->getPersonalProgramListForPatient(patientUid);
 }
 
+void DataProvider::deletePersonalProgramForPatient(const QString &ppUid)
+{
+    static_cast<AAnalyserApplication*>(QApplication::instance())->getDB()->deletePersonalProgramForPatient(ppUid);
+}
+
+void DataProvider::deactivatePersonalProgramForPatient(const QString &ppUid)
+{
+    static_cast<AAnalyserApplication*>(QApplication::instance())->getDB()->deactivatePersonalProgramForPatient(ppUid);
+}
+
 void DataProvider::clear()
 {
     static_cast<AAnalyserApplication*>(QApplication::instance())->getDB()->clear();
