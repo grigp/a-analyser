@@ -18,8 +18,15 @@ bool PatientsProxyModel::filterAcceptsRow(int source_row, const QModelIndex &sou
     auto fio = idxFio.data().toString();
     auto ppUid = idxFio.data(PatientsModel::PatientPPUidRole).toString();
 
+    bool isSPPMode = true;
+    if (m_sppMode == sppFree)
+        isSPPMode = (ppUid == "");
+    else
+    if (m_sppMode == sppActive)
+        isSPPMode = (ppUid != "");
+
     return ((m_filerValue == "") || fio.contains(m_filerValue, Qt::CaseInsensitive)) &&
-            (ppUid == "");
+            isSPPMode;
 }
 
 bool PatientsProxyModel::lessThan(const QModelIndex &source_left, const QModelIndex &source_right) const
@@ -38,5 +45,11 @@ bool PatientsProxyModel::lessThan(const QModelIndex &source_left, const QModelIn
 void PatientsProxyModel::setFilterValue(const QString &value)
 {
     m_filerValue = value;
+    invalidate();
+}
+
+void PatientsProxyModel::setShowPPMode(PatientsProxyModel::ShowByPersonalProgram sppMode)
+{
+    m_sppMode = sppMode;
     invalidate();
 }
