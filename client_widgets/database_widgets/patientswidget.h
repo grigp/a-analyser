@@ -48,6 +48,19 @@ private slots:
 
     void on_applicationParamChanged(const QString &group, const QString &param, const QVariant &value);
 
+    /*!
+     * \brief Обработка сигналов о назначении индивидуальной программы для пациента
+     * \param patientUid - uid пациента
+     * \param ppUid - uid индивидуальной программы
+     */
+    void on_assignPPForPatient(const QString& patientUid, const QString& ppUid);
+
+    /*!
+     * \brief Обработка сигналов о снятии индивидуальной программы для пациента
+     * \param patientUid - uid пациента
+     */
+    void on_cancelPPForPatient(const QString& patientUid);
+
 //protected:
 //    bool eventFilter(QObject *watched, QEvent *event);
 

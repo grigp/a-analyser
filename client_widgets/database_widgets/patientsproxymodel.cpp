@@ -16,7 +16,10 @@ bool PatientsProxyModel::filterAcceptsRow(int source_row, const QModelIndex &sou
                                               PatientsModel::ColFio,
                                               source_parent);
     auto fio = idxFio.data().toString();
-    return (m_filerValue == "") || fio.contains(m_filerValue, Qt::CaseInsensitive);
+    auto ppUid = idxFio.data(PatientsModel::PatientPPUidRole).toString();
+
+    return ((m_filerValue == "") || fio.contains(m_filerValue, Qt::CaseInsensitive)) &&
+            (ppUid == "");
 }
 
 bool PatientsProxyModel::lessThan(const QModelIndex &source_left, const QModelIndex &source_right) const

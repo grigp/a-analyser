@@ -34,6 +34,11 @@ PatientsWidget::PatientsWidget(QWidget *parent) :
 
     connect(static_cast<AAnalyserApplication*>(QApplication::instance()), &AAnalyserApplication::applicationParamChanged,
             this, &PatientsWidget::on_applicationParamChanged);
+
+    connect(static_cast<AAnalyserApplication*>(QApplication::instance()), &AAnalyserApplication::assignedPPForPatient,
+            this, &PatientsWidget::on_assignPPForPatient);
+    connect(static_cast<AAnalyserApplication*>(QApplication::instance()), &AAnalyserApplication::canceledPPForPatient,
+            this, &PatientsWidget::on_cancelPPForPatient);
 }
 
 PatientsWidget::~PatientsWidget()
@@ -226,6 +231,26 @@ void PatientsWidget::on_applicationParamChanged(const QString &group, const QStr
     {
         m_onePatientFIO = value.toString();
         onePatientHandle();
+    }
+}
+
+void PatientsWidget::on_assignPPForPatient(const QString &patientUid, const QString& ppUid)
+{
+    for (int i = 0; i < m_mdlPatients->rowCount(); ++i)
+    {
+        auto item = m_mdlPatients->item(i);
+        if (item->data(PatientsModel::PatientUidRole).toString() == patientUid)
+            item->setData(ppUid, PatientsModel::PatientPPUidRole);
+    }
+}
+
+void PatientsWidget::on_cancelPPForPatient(const QString &patientUid)
+{
+    for (int i = 0; i < m_mdlPatients->rowCount(); ++i)
+    {
+        auto item = m_mdlPatients->item(i);
+        if (item->data(PatientsModel::PatientUidRole).toString() == patientUid)
+            item->setData("", PatientsModel::PatientPPUidRole);
     }
 }
 

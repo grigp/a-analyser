@@ -522,6 +522,9 @@ bool AAnalyserApplication::assignPPForPatient()
                 auto ppPic = QPixmap(ppObj["pp"].toObject()["logo_file_name"].toString());
                 dlgOpen.setPersonalProgram(ppName, ppPic);
 
+                //! Извещаем мир о назначении индивидуальной программы для пациента
+                emit assignedPPForPatient(pi.uid, uidPPAssigned);
+
                 //! Открытие индивидуальной программы
                 if (dlgOpen.exec() == QDialog::Accepted)
                 {
@@ -585,6 +588,9 @@ bool AAnalyserApplication::cancelPPForPatient()
                 //! Удалить программу у пациента
                 pi.pp_uid = "";
                 DataProvider::updatePatient(pi);
+
+                //! Извещаем мир об отмене индивидуальной программы для пациента
+                emit canceledPPForPatient(pi.uid);
             }
         }
         else

@@ -44,6 +44,7 @@ void PatientsModel::addPatientInModel(DataDefines::PatientKard &patient)
 {
     QStandardItem *itemFIO = new QStandardItem(patient.fio);
     itemFIO->setData(patient.uid, PatientUidRole);
+    itemFIO->setData(patient.pp_uid, PatientPPUidRole);
     itemFIO->setEditable(false);
     QStandardItem *itemBorn = new QStandardItem(patient.born.toString("dd.MM.yyyy"));
     itemBorn->setEditable(false);

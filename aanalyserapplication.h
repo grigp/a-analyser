@@ -707,6 +707,19 @@ signals:
      */
     void channelChanged(const QString &probeUid, const QString &channelId);
 
+    /*!
+     * \brief Сигнал о назначении индивидуальной программы для пациента
+     * \param patientUid - uid пациента
+     * \param ppUid - uid индивидуальной программы
+     */
+    void assignedPPForPatient(const QString& patientUid, const QString& ppUid);
+
+    /*!
+     * \brief Сигнал о снятии индивидуальной программы для пациента
+     * \param patientUid - uid пациента
+     */
+    void canceledPPForPatient(const QString& patientUid);
+
 protected:
     //! Обработка исключений основного цикла программы
     bool notify(QObject *, QEvent *) override;
