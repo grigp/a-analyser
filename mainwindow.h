@@ -56,6 +56,11 @@ public:
      */
     void doneProgress();
 
+    /*!
+     * \brief Возвращает uid текущую показываемого клиентского виджета
+     */
+    QString currentClientPage() const {return m_currentClientPage;}
+
 signals:
     void dataBaseChange(const QString &dataBaseFolder);
     void dataBaseClear();

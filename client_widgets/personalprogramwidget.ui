@@ -321,11 +321,28 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>tvPatients</sender>
+   <signal>clicked(QModelIndex)</signal>
+   <receiver>PersonalProgramWidget</receiver>
+   <slot>selectPatient(QModelIndex)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>57</x>
+     <y>277</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1031</x>
+     <y>170</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>on_splitterMoved(int,int)</slot>
   <slot>on_run()</slot>
   <slot>on_delete()</slot>
   <slot>on_params()</slot>
+  <slot>selectPatient(QModelIndex)</slot>
  </slots>
 </ui>

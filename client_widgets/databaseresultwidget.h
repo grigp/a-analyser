@@ -36,6 +36,15 @@ public:
     void onDBDisconnect() override;
 
     /*!
+     * \brief Вызывается после показа виджета
+     */
+    void onShow() override;
+    /*!
+     * \brief Вызывается перед прятанием виджета
+     */
+    void onHide() override;
+
+    /*!
      * \brief Виртуальный метод, возвращающий true, если допустимы внешние элементы управления (глобальное меню и т.д.)
      */
     bool isExternalControl() override {return true;}

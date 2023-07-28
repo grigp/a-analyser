@@ -2,6 +2,8 @@
 #define PERSONALPROGRAMWIDGET_H
 
 #include <QWidget>
+#include <QModelIndex>
+#include <QItemSelectionModel>
 
 #include "clientwidget.h"
 #include "metodicdefines.h"
@@ -14,6 +16,9 @@ namespace ClientWidgets
 {
     static const QString uidPersonalProgramWidgetUid = "CW_PersonalProgram";
 }
+
+class PatientsModel;
+class PatientsProxyModel;
 
 
 class PersonalProgramWidget : public ClientWidget
@@ -63,11 +68,18 @@ private slots:
     void on_delete();
     void on_params();
 
+    void on_selectionChanged(const QItemSelection &selected, const QItemSelection &deselected);
+
+    void selectPatient(const QModelIndex index);
+
 private:
     Ui::PersonalProgramWidget *ui;
 
     void saveSplitterPosition();
     void restoreSplitterPosition();
+
+    PatientsModel* patientsModel() const;
+    PatientsProxyModel* patientsProxyModel() const;
 };
 
 #endif // PERSONALPROGRAMWIDGET_H

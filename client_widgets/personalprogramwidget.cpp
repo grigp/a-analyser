@@ -16,7 +16,7 @@ PersonalProgramWidget::PersonalProgramWidget(QWidget *parent) :
     ui->setupUi(this);
 
     restoreSplitterPosition();
-    ui->tvPatients->setModel(static_cast<AAnalyserApplication*>(QApplication::instance())->patientsPPProxyModel());
+    ui->tvPatients->setModel(patientsProxyModel());
 }
 
 PersonalProgramWidget::~PersonalProgramWidget()
@@ -42,7 +42,8 @@ void PersonalProgramWidget::onDBConnect()
 
 void PersonalProgramWidget::onShow()
 {
-
+    ui->tvPatients->selectionModel()->clearSelection();
+    static_cast<AAnalyserApplication*>(QApplication::instance())->doSelectPatient("");
 }
 
 void PersonalProgramWidget::onHide()
@@ -69,6 +70,24 @@ void PersonalProgramWidget::on_params()
 
 }
 
+void PersonalProgramWidget::on_selectionChanged(const QItemSelection &selected, const QItemSelection &deselected)
+{
+    Q_UNUSED(selected);
+    Q_UNUSED(deselected);
+    selectPatient(ui->tvPatients->selectionModel()->currentIndex());
+}
+
+void PersonalProgramWidget::selectPatient(const QModelIndex index)
+{
+    if (index.isValid())
+    {
+         auto srcIndex = patientsProxyModel()->mapToSource(index);
+         auto uid = patientsModel()->index(srcIndex.row(), PatientsModel::ColFio, srcIndex.parent()).
+                    data(PatientsModel::PatientUidRole).toString();
+        static_cast<AAnalyserApplication*>(QApplication::instance())->doSelectPatient(uid);
+    }
+}
+
 void PersonalProgramWidget::saveSplitterPosition()
 {
     SettingsProvider::setValueToRegAppCopy("PersonalProgramWidget", "SplitterPosition", ui->splitter->saveState());
@@ -80,4 +99,14 @@ void PersonalProgramWidget::restoreSplitterPosition()
 //    if (val == "")
 //        val = QByteArray::fromRawData("\x00\x00\x00\xFF\x00\x00\x00\x01\x00\x00\x00\x02\x00\x00\x01\x1B\x00\x00\x03""b\x01\xFF\xFF\xFF\xFF\x01\x00\x00\x00\x01\x00", 31);
     ui->splitter->restoreState(val);
+}
+
+PatientsModel *PersonalProgramWidget::patientsModel() const
+{
+    return static_cast<AAnalyserApplication*>(QApplication::instance())->patientsModel();
+}
+
+PatientsProxyModel *PersonalProgramWidget::patientsProxyModel() const
+{
+    return static_cast<AAnalyserApplication*>(QApplication::instance())->patientsPPProxyModel();
 }

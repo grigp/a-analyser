@@ -22,6 +22,9 @@ public:
 
     void onDbConnect();
 
+    void onShow();
+    void onHide();
+
 private slots:
     void on_selectionChanged(const QItemSelection &selected, const QItemSelection &deselected);
 

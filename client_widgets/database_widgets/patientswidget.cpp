@@ -18,13 +18,9 @@
 PatientsWidget::PatientsWidget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::PatientsWidget)
-//  , m_mdlPatients(new PatientsModel(this))
-//  , m_pmdlPatients(new PatientsProxyModel(this))
 {
     ui->setupUi(this);
 
-//    m_pmdlPatients->setSourceModel(m_mdlPatients);
-//    ui->tvPatients->setModel(m_pmdlPatients);
     ui->tvPatients->setModel(patientsProxyModel());
     ui->tvPatients->sortByColumn(PatientsModel::ColFio, Qt::AscendingOrder);
 
@@ -49,8 +45,6 @@ PatientsWidget::~PatientsWidget()
 
 void PatientsWidget::onDbConnect()
 {
-//    if (m_mdlPatients)
-//        m_mdlPatients->load();
     ui->tvPatients->header()->resizeSections(QHeaderView::ResizeToContents);
 //    ui->tvPatients->header()->resizeSection(PatientsModel::ColFio, 200);
 //    ui->tvPatients->header()->resizeSection(PatientsModel::ColBorn, 120);
@@ -62,6 +56,17 @@ void PatientsWidget::onDbConnect()
         m_onePatientFIO = SettingsProvider::valueFromRegAppCopy("", AAnalyserSettingsParams::pn_onePatientFIO, static_cast<QVariant>(false)).toString();
         onePatientHandle();
     });
+
+}
+
+void PatientsWidget::onShow()
+{
+    ui->tvPatients->selectionModel()->clearSelection();
+    static_cast<AAnalyserApplication*>(QApplication::instance())->doSelectPatient("");
+}
+
+void PatientsWidget::onHide()
+{
 
 }
 
@@ -79,9 +84,6 @@ void PatientsWidget::selectPatient(const QModelIndex index)
          auto srcIndex = patientsProxyModel()->mapToSource(index);
          auto uid = patientsModel()->index(srcIndex.row(), PatientsModel::ColFio, srcIndex.parent()).
                     data(PatientsModel::PatientUidRole).toString();
-//        auto srcIndex = m_pmdlPatients->mapToSource(index);
-//        auto uid = m_mdlPatients->index(srcIndex.row(), PatientsModel::ColFio, srcIndex.parent()).
-//                data(PatientsModel::PatientUidRole).toString();
         static_cast<AAnalyserApplication*>(QApplication::instance())->doSelectPatient(uid);
     }
 }
@@ -110,15 +112,11 @@ void PatientsWidget::addPatient()
         patient.massa = dialog->massa();
         patient.height = dialog->height();
         auto uidNew = patientsModel()->addPatient(patient);
-//        auto uidNew = m_mdlPatients->addPatient(patient);
         ui->tvPatients->header()->resizeSections(QHeaderView::ResizeToContents);
 
         //! Выделение добавленной записи
-//        for (int i = 0; i < m_mdlPatients->rowCount(); ++i)
         for (int i = 0; i < patientsModel()->rowCount(); ++i)
         {
-//            auto index = m_mdlPatients->index(i, 0);
-//            auto idx = m_pmdlPatients->mapFromSource(index);
             auto index = patientsModel()->index(i, 0);
             auto idx = patientsProxyModel()->mapFromSource(index);
             if (idx.isValid())
@@ -190,7 +188,6 @@ void PatientsWidget::editPatient()
             patient.massa = dialog->massa();
             patient.height = dialog->height();
             patientsModel()->addPatient(patient);
-//            m_mdlPatients->addPatient(patient);
             ui->tvPatients->header()->resizeSections(QHeaderView::ResizeToContents);
         });
         dialog->show();
@@ -214,7 +211,6 @@ void PatientsWidget::removePatient()
             == QMessageBox::Yes)
     {
         patientsModel()->removePatient(uid);
-//        m_mdlPatients->removePatient(uid);
         ui->tvPatients->header()->resizeSections(QHeaderView::ResizeToContents);
     }
 }
@@ -228,7 +224,6 @@ void PatientsWidget::unselect()
 void PatientsWidget::on_editSearchString(const QString &value)
 {
     patientsProxyModel()->setFilterValue(value);
-//    m_pmdlPatients->setFilterValue(value);
 }
 
 void PatientsWidget::on_applicationParamChanged(const QString &group, const QString &param, const QVariant &value)
@@ -248,9 +243,7 @@ void PatientsWidget::on_applicationParamChanged(const QString &group, const QStr
 void PatientsWidget::on_assignPPForPatient(const QString &patientUid, const QString& ppUid)
 {
     for (int i = 0; i < patientsModel()->rowCount(); ++i)
-//        for (int i = 0; i < m_mdlPatients->rowCount(); ++i)
     {
-//        auto item = m_mdlPatients->item(i);
         auto item = patientsModel()->item(i);
         if (item->data(PatientsModel::PatientUidRole).toString() == patientUid)
             item->setData(ppUid, PatientsModel::PatientPPUidRole);
@@ -259,10 +252,8 @@ void PatientsWidget::on_assignPPForPatient(const QString &patientUid, const QStr
 
 void PatientsWidget::on_cancelPPForPatient(const QString &patientUid)
 {
-//    for (int i = 0; i < m_mdlPatients->rowCount(); ++i)
     for (int i = 0; i < patientsModel()->rowCount(); ++i)
     {
-//        auto item = m_mdlPatients->item(i);
         auto item = patientsModel()->item(i);
         if (item->data(PatientsModel::PatientUidRole).toString() == patientUid)
             item->setData("", PatientsModel::PatientPPUidRole);
@@ -284,11 +275,9 @@ void PatientsWidget::onePatientHandle()
             patient.massa = 80;
             patient.height = 170;
             patientsModel()->addPatient(patient);
-//            m_mdlPatients->addPatient(patient);
         }
         else
         {
-//            auto idx = m_pmdlPatients->index(0, 0);
             auto idx = patientsProxyModel()->index(0, 0);
             auto uid = idx.data(PatientsModel::PatientUidRole).toString();
             auto fio = idx.data().toString();
@@ -298,7 +287,6 @@ void PatientsWidget::onePatientHandle()
             {
                 patient.fio = m_onePatientFIO;
                 patientsModel()->addPatient(patient);
-//                m_mdlPatients->addPatient(patient);
             }
         }
         selectPatient(patientsProxyModel()->index(0, 0));

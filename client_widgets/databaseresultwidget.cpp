@@ -52,6 +52,16 @@ void DataBaseResultWidget::onDBDisconnect()
     ui->wgtTests->onDbDisconnect();
 }
 
+void DataBaseResultWidget::onShow()
+{
+    ui->wgtPatients->onShow();
+}
+
+void DataBaseResultWidget::onHide()
+{
+    ui->wgtPatients->onHide();
+}
+
 void DataBaseResultWidget::onSelectTest(const QString &testUid)
 {
     Q_UNUSED(testUid);
