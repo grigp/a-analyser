@@ -17,7 +17,7 @@ class PatientsWidget : public QWidget
     Q_OBJECT
 
 public:
-    explicit PatientsWidget(QWidget *parent = 0);
+    explicit PatientsWidget(QWidget *parent = nullptr);
     ~PatientsWidget();
 
     void onDbConnect();
@@ -69,11 +69,14 @@ private:
 
     void onePatientHandle();
 
+    PatientsModel* patientsModel() const;
+    PatientsProxyModel* patientsProxyModel() const;
+
     bool m_isOnePatientMode {false};
     QString m_onePatientFIO {""};
 
-    PatientsModel *m_mdlPatients;
-    PatientsProxyModel *m_pmdlPatients;
+//    PatientsModel *m_mdlPatients;
+//    PatientsProxyModel *m_pmdlPatients;
 };
 
 #endif // PATIENTSWIDGET_H

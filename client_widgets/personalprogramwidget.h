@@ -34,6 +34,8 @@ public:
      */
     QString name() override;
 
+    void onDBConnect() override;
+
     /*!
      * \brief Виртуальный метод, возвращающий true, если допустимы внешние элементы управления (глобальное меню и т.д.)
      */

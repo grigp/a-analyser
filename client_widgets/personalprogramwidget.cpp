@@ -5,6 +5,8 @@
 #include <QDebug>
 
 #include "aanalyserapplication.h"
+#include "patientsmodel.h"
+#include "patientsproxymodel.h"
 #include "settingsprovider.h"
 
 PersonalProgramWidget::PersonalProgramWidget(QWidget *parent) :
@@ -14,6 +16,7 @@ PersonalProgramWidget::PersonalProgramWidget(QWidget *parent) :
     ui->setupUi(this);
 
     restoreSplitterPosition();
+    ui->tvPatients->setModel(static_cast<AAnalyserApplication*>(QApplication::instance())->patientsPPProxyModel());
 }
 
 PersonalProgramWidget::~PersonalProgramWidget()
@@ -29,6 +32,12 @@ QString PersonalProgramWidget::uid()
 QString PersonalProgramWidget::name()
 {
     return tr("Индивидуальные программы");
+}
+
+void PersonalProgramWidget::onDBConnect()
+{
+    ui->tvPatients->header()->resizeSections(QHeaderView::ResizeToContents);
+
 }
 
 void PersonalProgramWidget::onShow()

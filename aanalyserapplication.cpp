@@ -33,6 +33,8 @@
 #include "personalprogrammanager.h"
 #include "selectpersonalprogramdialog.h"
 #include "openpersonalprogramdialog.h"
+#include "patientsmodel.h"
+#include "patientsproxymodel.h"
 
 AAnalyserApplication::AAnalyserApplication(int &argc, char **argv)
     : QApplication(argc, argv)
@@ -43,6 +45,9 @@ AAnalyserApplication::AAnalyserApplication(int &argc, char **argv)
     , m_normsManager(new NormsManager(this))
     , m_visualsFactory(new VisualsFactory(this))
     , m_ppManager(new PersonalProgramManager(this))
+    , m_mdlPatients(new PatientsModel(this))
+    , m_pmdlPatients(new PatientsProxyModel(this))
+    , m_pmdlPatientsPP(new PatientsProxyModel(this))
 {
     setApplicationName("a-analyzer");
 //    setApplicationDisplayName(tr("Исследования А-Мед")); Не переводится
@@ -56,6 +61,7 @@ AAnalyserApplication::AAnalyserApplication(int &argc, char **argv)
     QTimer::singleShot(100, [=]()
     {
         m_database = new DataBase(this);
+        connect(m_database, &DataBase::connected, this, &AAnalyserApplication::on_dbConnected);
         connect(m_database, &DataBase::connected, this, &AAnalyserApplication::dbConnected);
         connect(m_database, &DataBase::disconnected, this, &AAnalyserApplication::dbDisconnected);
         connect(m_database, &DataBase::newTest, this, &AAnalyserApplication::newTest);
@@ -72,6 +78,9 @@ AAnalyserApplication::AAnalyserApplication(int &argc, char **argv)
                 this, &AAnalyserApplication::personalNormContainedChange);
         connect(m_database, &DataBase::changeTestCondition,
                 this, &AAnalyserApplication::changeTestCondition);
+
+        m_pmdlPatients->setSourceModel(m_mdlPatients);
+        m_pmdlPatientsPP->setSourceModel(m_mdlPatients);
     });
 
     m_asi.uidMethodic = "";
@@ -880,6 +889,13 @@ bool AAnalyserApplication::notify(QObject *re, QEvent *ev)
         });
     }
     return false;
+}
+
+void AAnalyserApplication::on_dbConnected()
+{
+    if (m_mdlPatients)
+        m_mdlPatients->load();
+    m_pmdlPatientsPP->setShowPPMode(PatientsProxyModel::sppActive);
 }
 
 void AAnalyserApplication::on_AddTestToSummaryAccepted()

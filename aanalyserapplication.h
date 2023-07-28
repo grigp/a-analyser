@@ -32,6 +32,8 @@ class MultiFactorDescriptor;
 class AddTestToSummaryDialog;
 class SignalTransformerParamsWidget;
 class PersonalProgramManager;
+class PatientsModel;
+class PatientsProxyModel;
 
 class AAnalyserApplication : public QApplication
 {
@@ -350,6 +352,21 @@ public:
      * \param channelId - id канала
      */
     void doChannelChanged(const QString &probeUid, const QString &channelId);
+
+    /*!
+     * \brief Возвращает указатель на модель списка пациентов
+     */
+    PatientsModel* patientsModel() const {return m_mdlPatients;}
+
+    /*!
+     * \brief Возвращает указатель на прокси-модель списка пациентов
+     */
+    PatientsProxyModel* patientsProxyModel() const {return m_pmdlPatients;}
+
+    /*!
+     * \brief Возвращает указатель на прокси-модель списка пациентов с актвной индивидуальной программой
+     */
+    PatientsProxyModel* patientsPPProxyModel() const {return m_pmdlPatientsPP;}
 
     ///<-----------------------------------------------------------------------------
     ///< Показатели
@@ -724,6 +741,9 @@ protected:
     //! Обработка исключений основного цикла программы
     bool notify(QObject *, QEvent *) override;
 
+private slots:
+    void on_dbConnected();
+
 private:
     void on_AddTestToSummaryAccepted();
 
@@ -740,6 +760,10 @@ private:
     NormsManager *m_normsManager {nullptr};
     VisualsFactory *m_visualsFactory {nullptr};
     PersonalProgramManager *m_ppManager {nullptr};
+
+    PatientsModel *m_mdlPatients {nullptr};
+    PatientsProxyModel *m_pmdlPatients {nullptr};   ///< Пациенты без индивидуальной программы
+    PatientsProxyModel *m_pmdlPatientsPP {nullptr}; ///< Пациенты с индивидуальной программой
 
     QString m_patientUid = "";    ///< uid выбранного пациента
     QString m_metodicUid = "";    ///< uid выбранной методики
