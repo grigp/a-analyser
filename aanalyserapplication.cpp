@@ -539,6 +539,7 @@ bool AAnalyserApplication::assignPPForPatient()
                 {
                     showClientPage(ClientWidgets::uidPersonalProgramWidgetUid);
                     SettingsProvider::setValueToRegAppCopy("MainWindow", "MainClientWidget", ClientWidgets::uidPersonalProgramWidgetUid);
+                    doSelectPatient(pi.uid);
                 }
 
                 return true;

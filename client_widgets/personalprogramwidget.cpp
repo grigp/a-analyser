@@ -37,7 +37,8 @@ QString PersonalProgramWidget::name()
 void PersonalProgramWidget::onDBConnect()
 {
     ui->tvPatients->header()->resizeSections(QHeaderView::ResizeToContents);
-
+    connect(static_cast<AAnalyserApplication*>(QApplication::instance()), &AAnalyserApplication::selectPatient,
+            this, &PersonalProgramWidget::on_selectPatient);
 }
 
 void PersonalProgramWidget::onShow()
@@ -85,6 +86,42 @@ void PersonalProgramWidget::selectPatient(const QModelIndex index)
          auto uid = patientsModel()->index(srcIndex.row(), PatientsModel::ColFio, srcIndex.parent()).
                     data(PatientsModel::PatientUidRole).toString();
         static_cast<AAnalyserApplication*>(QApplication::instance())->doSelectPatient(uid);
+    }
+}
+
+void PersonalProgramWidget::on_selectPatient(const QString &patientUid)
+{
+    //! uid выбранного в настоящий момент пациента
+    QString curSelPatientUid = "";
+    auto selIdxs = ui->tvPatients->selectionModel()->selectedIndexes();
+    if (selIdxs.size() > 0)
+        foreach (auto idx, selIdxs)
+            if (idx.column() == 0)
+                curSelPatientUid = idx.data(PatientsModel::PatientUidRole).toString();
+
+    //! Поиск выделенного пациента patientUid
+    if (patientUid != "")
+    {
+        auto pmdl = patientsProxyModel();
+        for (int i = 0; i < pmdl->rowCount(); ++i)
+        {
+            auto pindex = pmdl->index(i, 0);
+            auto uid = pindex.data(PatientsModel::PatientUidRole).toString();
+
+            //! Нашли и он не выбран
+            if (uid == patientUid && uid != curSelPatientUid)
+            {
+                //! Выделить
+                for (int i = 0; i < pmdl->columnCount(); ++i)
+                {
+                    auto idx = pmdl->index(pindex.row(), i);
+                    ui->tvPatients->selectionModel()->select(idx, QItemSelectionModel::Select);
+
+                    //! TODO: Здесь написать действия по показу индивидуальной программы
+                }
+            }
+        }
+
     }
 }
 

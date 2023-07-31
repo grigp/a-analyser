@@ -72,6 +72,8 @@ private slots:
 
     void selectPatient(const QModelIndex index);
 
+    void on_selectPatient(const QString &patientUid);
+
 private:
     Ui::PersonalProgramWidget *ui;
 
