@@ -112,6 +112,12 @@ void MainWindow::showClientPage(const QString &uidPage)
             m_currentClientPage = uidPage;
             static_cast<ClientWidget*>(wgt)->onShow();
             ui->menuBar->setVisible(static_cast<ClientWidget*>(wgt)->isExternalControl());
+
+            if (uidPage == ClientWidgets::uidDatabaseResultWidgetUid)
+                ui->acViewDataBase->setChecked(true);
+            else
+            if (uidPage == ClientWidgets::uidPersonalProgramWidgetUid)
+                ui->acViewPersonalProgram->setChecked(true);
         }
     }
 }
