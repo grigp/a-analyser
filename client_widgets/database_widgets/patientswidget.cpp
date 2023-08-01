@@ -9,6 +9,7 @@
 #include "dataprovider.h"
 #include "aanalysersettings.h"
 #include "settingsprovider.h"
+#include "databasewigetdefines.h"
 
 #include <QApplication>
 #include <QMessageBox>
@@ -22,7 +23,7 @@ PatientsWidget::PatientsWidget(QWidget *parent) :
     ui->setupUi(this);
 
     ui->tvPatients->setModel(patientsProxyModel());
-    ui->tvPatients->sortByColumn(PatientsModel::ColFio, Qt::AscendingOrder);
+    ui->tvPatients->sortByColumn(DatabaseWidgetDefines::PatientsModel::ColFio, Qt::AscendingOrder);
 
 //    ui->tvPatients->viewport()->installEventFilter(this);
 
@@ -82,8 +83,8 @@ void PatientsWidget::selectPatient(const QModelIndex index)
     if (index.isValid())
     {
          auto srcIndex = patientsProxyModel()->mapToSource(index);
-         auto uid = patientsModel()->index(srcIndex.row(), PatientsModel::ColFio, srcIndex.parent()).
-                    data(PatientsModel::PatientUidRole).toString();
+         auto uid = patientsModel()->index(srcIndex.row(), DatabaseWidgetDefines::PatientsModel::ColFio, srcIndex.parent()).
+                    data(DatabaseWidgetDefines::PatientsModel::PatientUidRole).toString();
         static_cast<AAnalyserApplication*>(QApplication::instance())->doSelectPatient(uid);
     }
 }
@@ -121,7 +122,7 @@ void PatientsWidget::addPatient()
             auto idx = patientsProxyModel()->mapFromSource(index);
             if (idx.isValid())
             {
-                QString uid = idx.data(PatientsModel::PatientsModelRoles::PatientUidRole).toString();
+                QString uid = idx.data(DatabaseWidgetDefines::PatientsModel::PatientsModelRoles::PatientUidRole).toString();
                 if (uid == uidNew)
                 {
                     ui->tvPatients->selectionModel()->select(idx, QItemSelectionModel::Select);
@@ -144,17 +145,17 @@ void PatientsWidget::editPatient()
     QModelIndexList selIdxs = ui->tvPatients->selectionModel()->selectedIndexes();
     foreach (auto idx, selIdxs)
     {
-        if (idx.column() == PatientsModel::ColFio)
+        if (idx.column() == DatabaseWidgetDefines::PatientsModel::ColFio)
         {
-            uid = idx.data(PatientsModel::PatientUidRole).toString();
+            uid = idx.data(DatabaseWidgetDefines::PatientsModel::PatientUidRole).toString();
             fio = idx.data().toString();
         }
         else
-        if (idx.column() == PatientsModel::ColBorn)
+        if (idx.column() == DatabaseWidgetDefines::PatientsModel::ColBorn)
             born = QDate::fromString(idx.data().toString(), "dd.MM.yyyy");
         else
-        if (idx.column() == PatientsModel::colSex)
-            sex = static_cast<DataDefines::Sex>(idx.data(PatientsModel::PatientSexRole).toInt());
+        if (idx.column() == DatabaseWidgetDefines::PatientsModel::colSex)
+            sex = static_cast<DataDefines::Sex>(idx.data(DatabaseWidgetDefines::PatientsModel::PatientSexRole).toInt());
     }
 
     DataDefines::PatientKard pi;
@@ -200,9 +201,9 @@ void PatientsWidget::removePatient()
     QString fio = "";
     QModelIndexList selIdxs = ui->tvPatients->selectionModel()->selectedIndexes();
     foreach (auto idx, selIdxs)
-        if (idx.column() == PatientsModel::ColFio)
+        if (idx.column() == DatabaseWidgetDefines::PatientsModel::ColFio)
         {
-            uid = idx.data(PatientsModel::PatientUidRole).toString();
+            uid = idx.data(DatabaseWidgetDefines::PatientsModel::PatientUidRole).toString();
             fio = idx.data().toString();
         }
 
@@ -245,8 +246,8 @@ void PatientsWidget::on_assignPPForPatient(const QString &patientUid, const QStr
     for (int i = 0; i < patientsModel()->rowCount(); ++i)
     {
         auto item = patientsModel()->item(i);
-        if (item->data(PatientsModel::PatientUidRole).toString() == patientUid)
-            item->setData(ppUid, PatientsModel::PatientPPUidRole);
+        if (item->data(DatabaseWidgetDefines::PatientsModel::PatientUidRole).toString() == patientUid)
+            item->setData(ppUid, DatabaseWidgetDefines::PatientsModel::PatientPPUidRole);
     }
 }
 
@@ -255,8 +256,8 @@ void PatientsWidget::on_cancelPPForPatient(const QString &patientUid)
     for (int i = 0; i < patientsModel()->rowCount(); ++i)
     {
         auto item = patientsModel()->item(i);
-        if (item->data(PatientsModel::PatientUidRole).toString() == patientUid)
-            item->setData("", PatientsModel::PatientPPUidRole);
+        if (item->data(DatabaseWidgetDefines::PatientsModel::PatientUidRole).toString() == patientUid)
+            item->setData("", DatabaseWidgetDefines::PatientsModel::PatientPPUidRole);
     }
 }
 
@@ -279,7 +280,7 @@ void PatientsWidget::onePatientHandle()
         else
         {
             auto idx = patientsProxyModel()->index(0, 0);
-            auto uid = idx.data(PatientsModel::PatientUidRole).toString();
+            auto uid = idx.data(DatabaseWidgetDefines::PatientsModel::PatientUidRole).toString();
             auto fio = idx.data().toString();
 
             DataDefines::PatientKard patient;

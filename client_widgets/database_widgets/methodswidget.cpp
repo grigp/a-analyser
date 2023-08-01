@@ -9,6 +9,7 @@
 
 #include "channelsdefines.h"
 #include "channelsutils.h"
+#include "databasewigetdefines.h"
 
 #include <QApplication>
 #include <QSpacerItem>
@@ -65,7 +66,7 @@ QString MethodsWidget::methodic() const
 {
     auto index = m_pmdlMethodics->mapToSource(ui->tvMetods->selectionModel()->currentIndex());
     if (index.isValid())
-        return index.data(MetodicsModel::MetodicUidRole).toString();
+        return index.data(DatabaseWidgetDefines::MetodicsModel::MetodicUidRole).toString();
     return QUuid().toString();
 }
 
@@ -105,7 +106,7 @@ void MethodsWidget::selectMetodic(const QModelIndex index)
 {
     if (index.isValid())
     {
-        auto uid = index.data(MetodicsModel::MetodicUidRole).toString();
+        auto uid = index.data(DatabaseWidgetDefines::MetodicsModel::MetodicUidRole).toString();
         emit selectMethod(uid);
         if (m_isAppEvent)
             static_cast<AAnalyserApplication*>(QApplication::instance())->doSelectMetodic(uid);
@@ -163,7 +164,7 @@ void MethodsWidget::on_doubleClicked(const QModelIndex &index)
 {
     if (index.isValid())
     {
-        auto uid = index.data(MetodicsModel::MetodicUidRole).toString();
+        auto uid = index.data(DatabaseWidgetDefines::MetodicsModel::MetodicUidRole).toString();
         emit selectMethod(uid, true);
     }
 }

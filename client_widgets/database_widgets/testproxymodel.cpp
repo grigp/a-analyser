@@ -2,6 +2,7 @@
 
 #include "testsmodel.h"
 #include "aanalyserapplication.h"
+#include "databasewigetdefines.h"
 
 #include <QTimer>
 #include <QDateTime>
@@ -29,14 +30,14 @@ TestProxyModel::TestProxyModel(QObject *parent)
 bool TestProxyModel::filterAcceptsRow(int source_row, const QModelIndex &source_parent) const
 {
     QModelIndex idxPat = sourceModel()->index(source_row,
-                                              TestsModel::ColPatient,
+                                              DatabaseWidgetDefines::TestsModel::ColPatient,
                                               source_parent);
-    auto patUid = idxPat.data(TestsModel::PatientUidRole).toString();
+    auto patUid = idxPat.data(DatabaseWidgetDefines::TestsModel::PatientUidRole).toString();
 
     QModelIndex idxMet = sourceModel()->index(source_row,
-                                              TestsModel::ColMetodic,
+                                              DatabaseWidgetDefines::TestsModel::ColMetodic,
                                               source_parent);
-    auto metUid = idxMet.data(TestsModel::MetodicUidRole).toString();
+    auto metUid = idxMet.data(DatabaseWidgetDefines::TestsModel::MetodicUidRole).toString();
 
     bool patientOk = ((m_selectPatientUid != "") && (m_selectPatientUid == patUid)) || (m_selectPatientUid == "");
     bool metodicOk = ((m_selectMetodicUid != "") && (m_selectMetodicUid == metUid)) || (m_selectMetodicUid == "");
@@ -46,17 +47,18 @@ bool TestProxyModel::filterAcceptsRow(int source_row, const QModelIndex &source_
 bool TestProxyModel::filterAcceptsColumn(int source_column, const QModelIndex &source_parent) const
 {
     Q_UNUSED(source_parent);
-    if (source_column == TestsModel::ColPatient)
+    if (source_column == DatabaseWidgetDefines::TestsModel::ColPatient)
         return m_selectPatientUid == "";
     else
-    if (source_column == TestsModel::ColMetodic)
+    if (source_column == DatabaseWidgetDefines::TestsModel::ColMetodic)
         return m_selectMetodicUid == "";
     return true;
 }
 
 bool TestProxyModel::lessThan(const QModelIndex &source_left, const QModelIndex &source_right) const
 {
-    if (source_left.column() == TestsModel::ColDateTime && source_right.column() == TestsModel::ColDateTime)
+    if (source_left.column() == DatabaseWidgetDefines::TestsModel::ColDateTime &&
+        source_right.column() == DatabaseWidgetDefines::TestsModel::ColDateTime)
     {
         auto sLeft = sourceModel()->data(source_left).toString();
         auto sRight = sourceModel()->data(source_right).toString();

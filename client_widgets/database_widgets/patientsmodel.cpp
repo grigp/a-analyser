@@ -2,6 +2,7 @@
 
 #include "dataprovider.h"
 #include "datadefines.h"
+#include "databasewigetdefines.h"
 
 #include <QDebug>
 
@@ -43,14 +44,14 @@ void PatientsModel::removePatient(const QString &uid)
 void PatientsModel::addPatientInModel(DataDefines::PatientKard &patient)
 {
     QStandardItem *itemFIO = new QStandardItem(patient.fio);
-    itemFIO->setData(patient.uid, PatientUidRole);
-    itemFIO->setData(patient.pp_uid, PatientPPUidRole);
+    itemFIO->setData(patient.uid, DatabaseWidgetDefines::PatientsModel::PatientUidRole);
+    itemFIO->setData(patient.pp_uid, DatabaseWidgetDefines::PatientsModel::PatientPPUidRole);
     itemFIO->setEditable(false);
     QStandardItem *itemBorn = new QStandardItem(patient.born.toString("dd.MM.yyyy"));
     itemBorn->setEditable(false);
     QStandardItem *itemSex = new QStandardItem(DataDefines::SexToText.value(
                                                    static_cast<DataDefines::Sex>(patient.sex)));
-    itemSex->setData(patient.sex, PatientSexRole);
+    itemSex->setData(patient.sex, DatabaseWidgetDefines::PatientsModel::PatientSexRole);
     itemSex->setEditable(false);
 
     QList<QStandardItem*> retval;

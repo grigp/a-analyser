@@ -244,5 +244,7 @@
         <file>images/Down_Easy.png</file>
         <file>images/Up_Easy.png</file>
         <file>images/Edit_Easy.png</file>
+        <file>images/background01.png</file>
+        <file>images/background02.png</file>
     </qresource>
 </RCC>

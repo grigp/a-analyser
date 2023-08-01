@@ -19,7 +19,7 @@ namespace ClientWidgets
 
 class PatientsModel;
 class PatientsProxyModel;
-
+class PatientProgramWidget;
 
 class PersonalProgramWidget : public ClientWidget
 {
@@ -77,11 +77,16 @@ private slots:
 private:
     Ui::PersonalProgramWidget *ui;
 
+    void showPersonalProgram(const QString& patientUid);
+    void hideAllWidgets();
+
     void saveSplitterPosition();
     void restoreSplitterPosition();
 
     PatientsModel* patientsModel() const;
     PatientsProxyModel* patientsProxyModel() const;
+
+    QMap<QString, PatientProgramWidget*> m_wgts; ///< Виджеты ИП, назначенных для пациентов
 };
 
 #endif // PERSONALPROGRAMWIDGET_H

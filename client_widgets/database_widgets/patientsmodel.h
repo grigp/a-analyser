@@ -15,22 +15,6 @@ class PatientsModel : public QStandardItemModel
 public:
     explicit PatientsModel(QObject *parent = nullptr);
 
-    ///< Номера колонок
-    enum Columns
-    {
-          ColFio = 0
-        , ColBorn
-        , colSex
-    };
-
-    ///< Роли для доступа к данным
-    enum PatientsModelRoles
-    {
-          PatientUidRole = Qt::UserRole + 1  ///< uid пациента. QString в итеме ФИО ColFio
-        , PatientSexRole                     ///< пол пациента. int. 0 - male, 1 - female
-        , PatientPPUidRole                   ///< uid назначенной пациенту индивидуальной программы. QString в итеме ФИО ColFio "" - не назначена
-    };
-
     void load();
 
     /*!

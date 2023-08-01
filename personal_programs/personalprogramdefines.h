@@ -4,6 +4,9 @@
 #include <QObject>
 #include <QApplication>
 
+#include "databasewigetdefines.h"
+
+
 namespace PersonalProgramDefines
 {
 
@@ -116,6 +119,15 @@ static QList<MinTimeBetweenDP> MinTimeBetweenDPList
 static QList<MaxTimeBetweenDP> MaxTimeBetweenDPList
 {
     maxUndefined, maxOneHour, maxTwoHours, maxFiveHours, maxTwelveHours, maxOneDay, maxTwoDays, maxThreeDays, maxWeek, maxMonth
+};
+
+//! Дополнительные роли
+enum PatientTableAdvancedRoles
+{
+    //! Роль для доступа к виджету индивидуальной программы из виджета индивидуальных программ
+    //! Хранится указатель на виджет
+    //! Применимо к колонке DatabaseWidgetDefines::PatientsModel::ColFio
+    PersonalProgramWidgetRole = DatabaseWidgetDefines::PatientsModel::PatientTableUserRole + 1
 };
 
 }

@@ -10,21 +10,6 @@ class TestsModel : public QStandardItemModel
 public:
     explicit TestsModel(QObject *parent = nullptr);
 
-    ///< Номера колонок
-    enum Columns
-    {
-          ColPatient = 0
-        , ColMetodic
-        , ColDateTime
-    };
-
-    ///< Роли для доступа к данным
-    enum TestsModelRoles
-    {
-          TestUidRole = Qt::UserRole + 1     ///< uid теста. QString в итеме ColPatient
-        , PatientUidRole                     ///< uid пациента. QString в итеме ColPatient
-        , MetodicUidRole                     ///< uid методики. QString в итеме ColMetodic
-    };
 
     void load();
 

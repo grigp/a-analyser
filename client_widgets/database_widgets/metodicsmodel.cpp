@@ -1,6 +1,7 @@
 #include "metodicsmodel.h"
 
 #include "dataprovider.h"
+#include "databasewigetdefines.h"
 
 #include <QJsonDocument>
 #include <QUuid>
@@ -14,10 +15,10 @@ MetodicsModel::MetodicsModel(QObject *parent)
 
 void MetodicsModel::editMetodicParams(QWidget *parent, const int rowNum)
 {
-    if (index(rowNum, ColName).isValid())
+    if (index(rowNum, DatabaseWidgetDefines::MetodicsModel::ColName).isValid())
     {
-        auto idx = index(rowNum, ColName);
-        QString uid = idx.data(MetodicUidRole).toString();
+        auto idx = index(rowNum, DatabaseWidgetDefines::MetodicsModel::ColName);
+        QString uid = idx.data(DatabaseWidgetDefines::MetodicsModel::MetodicUidRole).toString();
 
         if (uid != "")
             if (DataProvider::editMetodicParams(parent, uid))
@@ -32,7 +33,7 @@ void MetodicsModel::load()
     foreach (auto met, list)
     {
         QStandardItem *itemName = new QStandardItem(met.name);
-        itemName->setData(met.uid, MetodicUidRole);
+        itemName->setData(met.uid, DatabaseWidgetDefines::MetodicsModel::MetodicUidRole);
         itemName->setIcon(QIcon(":/images/Methodics/" + met.imageName));
         itemName->setEditable(false);
         appendRow(itemName);

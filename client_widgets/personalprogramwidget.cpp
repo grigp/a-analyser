@@ -8,6 +8,10 @@
 #include "patientsmodel.h"
 #include "patientsproxymodel.h"
 #include "settingsprovider.h"
+#include "dataprovider.h"
+#include "personalprogram.h"
+#include "databasewigetdefines.h"
+#include "patientprogramwidget.h"
 
 PersonalProgramWidget::PersonalProgramWidget(QWidget *parent) :
     ClientWidget(parent),
@@ -17,6 +21,7 @@ PersonalProgramWidget::PersonalProgramWidget(QWidget *parent) :
 
     restoreSplitterPosition();
     ui->tvPatients->setModel(patientsProxyModel());
+    m_wgts.clear();
 }
 
 PersonalProgramWidget::~PersonalProgramWidget()
@@ -83,9 +88,12 @@ void PersonalProgramWidget::selectPatient(const QModelIndex index)
     if (index.isValid())
     {
          auto srcIndex = patientsProxyModel()->mapToSource(index);
-         auto uid = patientsModel()->index(srcIndex.row(), PatientsModel::ColFio, srcIndex.parent()).
-                    data(PatientsModel::PatientUidRole).toString();
-        static_cast<AAnalyserApplication*>(QApplication::instance())->doSelectPatient(uid);
+         auto idx = patientsModel()->index(srcIndex.row(), DatabaseWidgetDefines::PatientsModel::ColFio, srcIndex.parent());
+         auto uid = idx.data(DatabaseWidgetDefines::PatientsModel::PatientUidRole).toString();
+         static_cast<AAnalyserApplication*>(QApplication::instance())->doSelectPatient(uid);
+
+         //! Показать индивидуальную программу
+         showPersonalProgram(uid);
     }
 }
 
@@ -97,7 +105,7 @@ void PersonalProgramWidget::on_selectPatient(const QString &patientUid)
     if (selIdxs.size() > 0)
         foreach (auto idx, selIdxs)
             if (idx.column() == 0)
-                curSelPatientUid = idx.data(PatientsModel::PatientUidRole).toString();
+                curSelPatientUid = idx.data(DatabaseWidgetDefines::PatientsModel::PatientUidRole).toString();
 
     //! Поиск выделенного пациента patientUid
     if (patientUid != "")
@@ -106,7 +114,7 @@ void PersonalProgramWidget::on_selectPatient(const QString &patientUid)
         for (int i = 0; i < pmdl->rowCount(); ++i)
         {
             auto pindex = pmdl->index(i, 0);
-            auto uid = pindex.data(PatientsModel::PatientUidRole).toString();
+            auto uid = pindex.data(DatabaseWidgetDefines::PatientsModel::PatientUidRole).toString();
 
             //! Нашли и он не выбран
             if (uid == patientUid && uid != curSelPatientUid)
@@ -117,13 +125,37 @@ void PersonalProgramWidget::on_selectPatient(const QString &patientUid)
                     auto idx = pmdl->index(pindex.row(), i);
                     ui->tvPatients->selectionModel()->select(idx, QItemSelectionModel::Select);
 
-                    //! TODO: Здесь написать действия по показу индивидуальной программы
                 }
+                //! Показать индивидуальную программу
+                showPersonalProgram(patientUid);
             }
         }
 
     }
 }
+
+void PersonalProgramWidget::showPersonalProgram(const QString &patientUid)
+{
+    hideAllWidgets();
+    if (m_wgts.contains(patientUid))
+        m_wgts.value(patientUid)->setVisible(true);
+    else
+    {
+        auto ppw = new PatientProgramWidget(ui->frPrograms);
+        ppw->assignPersonalProgram(patientUid);
+        ui->frPrograms->layout()->addWidget(ppw);
+        m_wgts.insert(patientUid, ppw);
+    }
+}
+
+void PersonalProgramWidget::hideAllWidgets()
+{
+    QObjectList children = ui->frPrograms->children();
+    foreach(QObject * child, children)
+        if (child->isWidgetType())
+            static_cast<QWidget*>(child)->setVisible(false);
+}
+
 
 void PersonalProgramWidget::saveSplitterPosition()
 {

@@ -45,6 +45,12 @@ public:
      */
     void load(const QString& fileName);
 
+    /*!
+     * \brief Загружает модель данными из модели индивидуальной программы
+     * \param objPPAll - модель индивидуальной программы
+     */
+    void load(const QJsonObject& objPPAll);
+
     QString uid() const {return m_uid;}
     QString name() const {return m_name;}
     QString logoFileName() const {return m_logoFileName;}

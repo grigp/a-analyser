@@ -2,6 +2,7 @@
 
 #include "dataprovider.h"
 #include "aanalyserapplication.h"
+#include "databasewigetdefines.h"
 
 #include <QApplication>
 #include <QTimer>
@@ -50,7 +51,7 @@ void TestsModel::onRemoveTest(const QString &testUid)
     int line = -1;
     for (int i = 0; i < rowCount(); ++i)
     {
-        auto uid = index(i, ColPatient).data(TestUidRole).toString();
+        auto uid = index(i, DatabaseWidgetDefines::TestsModel::ColPatient).data(DatabaseWidgetDefines::TestsModel::TestUidRole).toString();
         if (uid == testUid)
         {
             line = i;
@@ -84,13 +85,13 @@ void TestsModel::addTest(const QString &testUid)
 
 //        QStandardItem* itemPatient = new QStandardItem(patient.fio);
         QStandardItem* itemPatient = new QStandardItem(patient.fio + "\n" + metName); // + "\n" + ti.dateTime.toString("dd.MM.yyyy hh:mm"));
-        itemPatient->setData(testUid, TestUidRole);
-        itemPatient->setData(ti.patientUid, PatientUidRole);
+        itemPatient->setData(testUid, DatabaseWidgetDefines::TestsModel::TestUidRole);
+        itemPatient->setData(ti.patientUid, DatabaseWidgetDefines::TestsModel::PatientUidRole);
         itemPatient->setEditable(false);
 
         QStandardItem* itemMetod = new QStandardItem(metName);
         itemMetod->setIcon(QIcon(":/images/Methodics/" + metImageName));
-        itemMetod->setData(ti.metodUid, MetodicUidRole);
+        itemMetod->setData(ti.metodUid, DatabaseWidgetDefines::TestsModel::MetodicUidRole);
         itemMetod->setEditable(false);
 
         QStandardItem* itemDT = new QStandardItem(ti.dateTime.toString("dd.MM.yyyy hh:mm"));

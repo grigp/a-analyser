@@ -1,6 +1,7 @@
 #include "patientsproxymodel.h"
 
 #include "patientsmodel.h"
+#include "databasewigetdefines.h"
 
 #include <QDebug>
 
@@ -13,10 +14,10 @@ PatientsProxyModel::PatientsProxyModel(QObject *parent)
 bool PatientsProxyModel::filterAcceptsRow(int source_row, const QModelIndex &source_parent) const
 {
     QModelIndex idxFio = sourceModel()->index(source_row,
-                                              PatientsModel::ColFio,
+                                              DatabaseWidgetDefines::PatientsModel::ColFio,
                                               source_parent);
     auto fio = idxFio.data().toString();
-    auto ppUid = idxFio.data(PatientsModel::PatientPPUidRole).toString();
+    auto ppUid = idxFio.data(DatabaseWidgetDefines::PatientsModel::PatientPPUidRole).toString();
 
     bool isSPPMode = true;
     if (m_sppMode == sppFree)
@@ -31,7 +32,8 @@ bool PatientsProxyModel::filterAcceptsRow(int source_row, const QModelIndex &sou
 
 bool PatientsProxyModel::lessThan(const QModelIndex &source_left, const QModelIndex &source_right) const
 {
-    if (source_left.column() == PatientsModel::ColBorn && source_right.column() == PatientsModel::ColBorn)
+    if (source_left.column() == DatabaseWidgetDefines::PatientsModel::ColBorn &&
+        source_right.column() == DatabaseWidgetDefines::PatientsModel::ColBorn)
     {
         auto sLeft = sourceModel()->data(source_left).toString();
         auto sRight = sourceModel()->data(source_right).toString();

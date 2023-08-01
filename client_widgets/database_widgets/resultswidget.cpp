@@ -7,6 +7,7 @@
 #include "metodicsfactory.h"
 #include "settingsprovider.h"
 #include "dataprovider.h"
+#include "databasewigetdefines.h"
 
 #include <QPainter>
 #include <QException>
@@ -63,7 +64,7 @@ void ResultsWidget::onDbConnect()
     ui->tvTests->header()->resizeSections(QHeaderView::ResizeToContents);
     ui->tvTests->header()->resizeSection(0, WidthColumn0);
     ui->tvTests->header()->resizeSection(1, WidthColumn1);
-    ui->tvTests->sortByColumn(TestsModel::ColDateTime, Qt::DescendingOrder);
+    ui->tvTests->sortByColumn(DatabaseWidgetDefines::TestsModel::ColDateTime, Qt::DescendingOrder);
 
     connect(m_mdlTest, &TestsModel::rowsInserted, this, &ResultsWidget::onNewTests);
     connect(m_mdlTest, &TestsModel::rowsRemoved, this, &ResultsWidget::onRemoveTests);
@@ -116,8 +117,8 @@ void ResultsWidget::selectTest(const QModelIndex &index)
 //        qDebug() << v;
         if (index.isValid())
         {
-            auto uid = m_mdlTest->index(index.row(), TestsModel::ColPatient, index.parent()).
-                    data(TestsModel::TestUidRole).toString();
+            auto uid = m_mdlTest->index(index.row(), DatabaseWidgetDefines::TestsModel::ColPatient, index.parent()).
+                    data(DatabaseWidgetDefines::TestsModel::TestUidRole).toString();
             openTest(uid);
         }
     }
@@ -148,9 +149,9 @@ void ResultsWidget::splitterMoved(int pos, int index)
 void ResultsWidget::onNewTests(const QModelIndex &parent, int first, int last)
 {
     Q_UNUSED(last);
-    auto index = m_mdlTest->index(first, TestsModel::ColPatient, parent);
+    auto index = m_mdlTest->index(first, DatabaseWidgetDefines::TestsModel::ColPatient, parent);
     selectTest(index);
-    auto indexDT = m_mdlTest->index(index.row(), TestsModel::ColDateTime, index.parent());
+    auto indexDT = m_mdlTest->index(index.row(), DatabaseWidgetDefines::TestsModel::ColDateTime, index.parent());
     auto proxyIdx = m_pmdlTest->mapFromSource(indexDT);
     ui->tvTests->selectionModel()->select(proxyIdx, QItemSelectionModel::ClearAndSelect | QItemSelectionModel::Rows);
 }
@@ -194,8 +195,12 @@ void ResultsWidget::onEntered(QModelIndex index)
 {
     if (index.isValid())
     {
-        auto idx = m_pmdlTest->mapToSource(ui->tvTests->model()->index(index.row(), TestsModel::ColPatient, index.parent()));
-        auto uid = m_mdlTest->index(idx.row(), TestsModel::ColPatient, idx.parent()).data(TestsModel::TestUidRole).toString();
+        auto idx = m_pmdlTest->mapToSource(ui->tvTests->model()->index(index.row(),
+                                                                       DatabaseWidgetDefines::TestsModel::ColPatient,
+                                                                       index.parent()));
+        auto uid = m_mdlTest->index(idx.row(),
+                                    DatabaseWidgetDefines::TestsModel::ColPatient,
+                                    idx.parent()).data(DatabaseWidgetDefines::TestsModel::TestUidRole).toString();
 
         DataDefines::TestInfo ti;
         if (DataProvider::getTestInfo(uid, ti))
@@ -284,8 +289,8 @@ void ResultsWidget::calculateSelected()
         auto idx = m_pmdlTest->mapToSource(index);
         if (idx.column() == 0)
         {
-            auto uid = m_mdlTest->index(idx.row(), TestsModel::ColPatient, idx.parent()).
-                    data(TestsModel::TestUidRole).toString();
+            auto uid = m_mdlTest->index(idx.row(), DatabaseWidgetDefines::TestsModel::ColPatient, idx.parent()).
+                    data(DatabaseWidgetDefines::TestsModel::TestUidRole).toString();
             tests << uid;
             DataDefines::TestInfo ti;
             DataProvider::getTestInfo(uid, ti);

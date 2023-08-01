@@ -15,7 +15,8 @@ HEADERS += \
     $$PWD/dynamicdatamodel.h \
     $$PWD/testpropertydialog.h \
     $$PWD/emptywidget.h \
-    $$PWD/methodicproxymodel.h
+    $$PWD/methodicproxymodel.h \
+    $$PWD/databasewigetdefines.h
 
 SOURCES += \
     $$PWD/patientswidget.cpp \
