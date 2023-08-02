@@ -121,6 +121,37 @@ static QList<MaxTimeBetweenDP> MaxTimeBetweenDPList
     maxUndefined, maxOneHour, maxTwoHours, maxFiveHours, maxTwelveHours, maxOneDay, maxTwoDays, maxThreeDays, maxWeek, maxMonth
 };
 
+namespace PersonalProgram
+{
+
+/*!
+ * \brief Колонки модели The Columns enum
+ */
+enum Columns
+{
+      ColDailyProgram = 0  ///< Колонка заголовка дневной программы Показывает дату и время проведения
+    , ColTest0             ///< Колонка первого теста
+};
+
+/*!
+ * \brief Роли для доступа к данным модели The Roles enum
+ */
+enum Roles
+{
+      DateTimeRole = Qt::UserRole + 1  ///< Дата и время начала проведения дневной программы. Колонка ColDailyProgram. Тип QString
+    , DPUidRole                        ///< uid дневной программы. Колонка ColDailyProgram. Тип QString
+    , DPNameRole                       ///< Название дневной программы. Колонка ColDailyProgram. Тип QString
+    , DPDateTimeRole                   ///< Дата и время начала дневной программы. Колонка ColDailyProgram. Тип QString. Формат dd.MM.yyyy hh:mm
+    , MethodUidRole                    ///< uid методики. Колонки ColTest0, ... Тип QString
+    , TestUidRole                      ///< uid проведенного теста. Колонки ColTest0, ... Тип QString.
+                                                                  ///< По наличию значения можно определить, проведен ли тест
+    , ParamsRole                       ///< Параметры методики для проведения теста. Колонки ColTest0, ... Тип QJsonObject
+};
+
+}
+
+
+
 //! Дополнительные роли
 enum PatientTableAdvancedRoles
 {

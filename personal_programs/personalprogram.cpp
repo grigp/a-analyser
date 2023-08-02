@@ -5,6 +5,8 @@
 #include <QJsonDocument>
 #include <QFile>
 
+#include "personalprogramdefines.h"
+
 PersonalProgram::PersonalProgram(QObject *parent)
     : QStandardItemModel (parent)
 {
@@ -56,8 +58,9 @@ void PersonalProgram::load(const QJsonObject &objPPAll)
 
         //! Создаем итем дневной программы
         auto itemDP = new QStandardItem(dpTitle);
-        itemDP->setData(objDP["uid"].toString(), DPUidRole);
-        itemDP->setData(objDP["name"].toString(), DPNameRole);
+        itemDP->setData(objDP["uid"].toString(), PersonalProgramDefines::PersonalProgram::DPUidRole);
+        itemDP->setData(objDP["name"].toString(), PersonalProgramDefines::PersonalProgram::DPNameRole);
+        itemDP->setData(dt, PersonalProgramDefines::PersonalProgram::DPDateTimeRole);
         QList<QStandardItem*> items;
         items << itemDP;
 
@@ -70,9 +73,9 @@ void PersonalProgram::load(const QJsonObject &objPPAll)
 
             //! Итем теста
             auto itemTest = new QStandardItem("");
-            itemTest->setData(objTest["uid"].toString(), MethodUidRole);
-            itemTest->setData(objTest["test_uid"].toString(), TestUidRole);
-            itemTest->setData(objTest["params"].toObject(), ParamsRole);
+            itemTest->setData(objTest["uid"].toString(), PersonalProgramDefines::PersonalProgram::MethodUidRole);
+            itemTest->setData(objTest["test_uid"].toString(), PersonalProgramDefines::PersonalProgram::TestUidRole);
+            itemTest->setData(objTest["params"].toObject(), PersonalProgramDefines::PersonalProgram::ParamsRole);
 
             items << itemTest;
         }

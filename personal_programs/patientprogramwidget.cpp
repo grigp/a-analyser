@@ -3,6 +3,8 @@
 
 #include "personalprogram.h"
 #include "dataprovider.h"
+#include "dailyprograminfodelegate.h"
+#include "testinfodelegate.h"
 
 PatientProgramWidget::PatientProgramWidget(QWidget *parent) :
     QWidget(parent),
@@ -22,4 +24,8 @@ void PatientProgramWidget::assignPersonalProgram(const QString &patientUid)
     auto pp = new PersonalProgram(this);
     pp->load(objPP);
     ui->tvProgram->setModel(pp);
+    ui->tvProgram->setItemDelegateForColumn(0, new DailyProgramInfoDelegate(ui->tvProgram));
+
+    for (int i = 1; i < pp->columnCount(); ++i)
+        ui->tvProgram->setItemDelegateForColumn(i, new TestInfoDelegate(ui->tvProgram));
 }

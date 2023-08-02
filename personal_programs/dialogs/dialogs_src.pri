@@ -7,7 +7,9 @@ HEADERS += \
     $$PWD/selectdailyprogramdialog.h \
     $$PWD/personalprogramseditor.h \
     $$PWD/selectpersonalprogramdialog.h \
-    $$PWD/openpersonalprogramdialog.h
+    $$PWD/openpersonalprogramdialog.h \
+    $$PWD/dailyprograminfodelegate.h \
+    $$PWD/testinfodelegate.h
 
 SOURCES += \
     $$PWD/selectmethodicdialog.cpp \
@@ -15,7 +17,9 @@ SOURCES += \
     $$PWD/selectdailyprogramdialog.cpp \
     $$PWD/personalprogramseditor.cpp \
     $$PWD/selectpersonalprogramdialog.cpp \
-    $$PWD/openpersonalprogramdialog.cpp
+    $$PWD/openpersonalprogramdialog.cpp \
+    $$PWD/dailyprograminfodelegate.cpp \
+    $$PWD/testinfodelegate.cpp
 
 FORMS += \
     $$PWD/selectmethodicdialog.ui \

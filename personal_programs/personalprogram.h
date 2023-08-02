@@ -17,29 +17,6 @@ public:
     explicit PersonalProgram(QObject *parent = Q_NULLPTR);
 
     /*!
-     * \brief Колонки модели The Columns enum
-     */
-    enum Columns
-    {
-          ColDailyProgram = 0  ///< Колонка заголовка дневной программы Показывает дату и время проведения
-        , ColTest0             ///< Колонка первого теста
-    };
-
-    /*!
-     * \brief Роли для доступа к данным модели The Roles enum
-     */
-    enum Roles
-    {
-          DateTimeRole = Qt::UserRole + 1  ///< Дата и время начала проведения дневной программы. Колонка ColDailyProgram. Тип QString
-        , DPUidRole                        ///< uid дневной программы. Колонка ColDailyProgram. Тип QString
-        , DPNameRole                       ///< Название дневной программы. Колонка ColDailyProgram. Тип QString
-        , MethodUidRole                    ///< uid методики. Колонки ColTest0, ... Тип QString
-        , TestUidRole                      ///< uid проведенного теста. Колонки ColTest0, ... Тип QString.
-                                                                      ///< По наличию значения можно определить, проведен ли тест
-        , ParamsRole                       ///< Параметры методики для проведения теста. Колонки ColTest0, ... Тип QJsonObject
-    };
-
-    /*!
      * \brief Загружает модель данными из файла индивидуальной программы
      * \param fileName - имя файла
      */
