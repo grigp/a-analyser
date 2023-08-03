@@ -2,6 +2,7 @@
 #define PERSONALPROGRAMWIDGET_H
 
 #include <QWidget>
+#include <QStandardItemModel>
 #include <QModelIndex>
 #include <QItemSelectionModel>
 
@@ -77,14 +78,19 @@ private slots:
 private:
     Ui::PersonalProgramWidget *ui;
 
+    QStandardItem* appendLine(const QString uidPat, const QJsonObject& objPP = QJsonObject(), QStandardItem* root = nullptr);
+    void load();
+
     void showPersonalProgram(const QString& patientUid);
     void hideAllWidgets();
 
     void saveSplitterPosition();
     void restoreSplitterPosition();
 
-    PatientsModel* patientsModel() const;
-    PatientsProxyModel* patientsProxyModel() const;
+//    PatientsModel* patientsModel() const;
+//    PatientsProxyModel* patientsProxyModel() const;
+
+    QStandardItemModel* m_model {nullptr};
 
     QMap<QString, PatientProgramWidget*> m_wgts; ///< Виджеты ИП, назначенных для пациентов
 };

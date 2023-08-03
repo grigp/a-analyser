@@ -20,7 +20,9 @@ PersonalProgramWidget::PersonalProgramWidget(QWidget *parent) :
     ui->setupUi(this);
 
     restoreSplitterPosition();
-    ui->tvPatients->setModel(patientsProxyModel());
+    load();
+    ui->tvPatients->setModel(m_model);
+//    ui->tvPatients->setModel(patientsProxyModel());
     m_wgts.clear();
 }
 
@@ -87,8 +89,10 @@ void PersonalProgramWidget::selectPatient(const QModelIndex index)
 {
     if (index.isValid())
     {
-         auto srcIndex = patientsProxyModel()->mapToSource(index);
-         auto idx = patientsModel()->index(srcIndex.row(), DatabaseWidgetDefines::PatientsModel::ColFio, srcIndex.parent());
+//         auto srcIndex = patientsProxyModel()->mapToSource(index);
+//         auto idx = patientsModel()->index(srcIndex.row(), DatabaseWidgetDefines::PatientsModel::ColFio, srcIndex.parent());
+//        auto uid = idx.data(DatabaseWidgetDefines::PatientsModel::PatientUidRole).toString();
+         auto idx = index.model()->index(index.row(), 0);
          auto uid = idx.data(DatabaseWidgetDefines::PatientsModel::PatientUidRole).toString();
          static_cast<AAnalyserApplication*>(QApplication::instance())->doSelectPatient(uid);
 
@@ -110,7 +114,8 @@ void PersonalProgramWidget::on_selectPatient(const QString &patientUid)
     //! Поиск выделенного пациента patientUid
     if (patientUid != "")
     {
-        auto pmdl = patientsProxyModel();
+//        auto pmdl = patientsProxyModel();
+        auto pmdl = m_model;
         for (int i = 0; i < pmdl->rowCount(); ++i)
         {
             auto pindex = pmdl->index(i, 0);
@@ -132,6 +137,81 @@ void PersonalProgramWidget::on_selectPatient(const QString &patientUid)
         }
 
     }
+}
+
+QStandardItem* PersonalProgramWidget::appendLine(const QString uidPat, const QJsonObject& objPP, QStandardItem* root)
+{
+    DataDefines::PatientKard pi;
+    if (DataProvider::getPatient(uidPat, pi))
+    {
+        QString title = pi.fio;
+        if (root)
+        {
+            auto db = objPP["date_begin"].toString();
+            auto de = objPP["date_end"].toString();
+            title = db + " - " + de;
+        }
+        QStandardItem *itemFIO = new QStandardItem(title);
+        itemFIO->setData(pi.uid, DatabaseWidgetDefines::PatientsModel::PatientUidRole);
+        itemFIO->setData(pi.pp_uid, DatabaseWidgetDefines::PatientsModel::PatientPPUidRole);
+        itemFIO->setEditable(false);
+        QStandardItem *itemBorn = new QStandardItem(pi.born.toString("dd.MM.yyyy"));
+        itemBorn->setEditable(false);
+        QStandardItem *itemSex = new QStandardItem(DataDefines::SexToText.value(
+                                                       static_cast<DataDefines::Sex>(pi.sex)));
+        itemSex->setData(pi.sex, DatabaseWidgetDefines::PatientsModel::PatientSexRole);
+        itemSex->setEditable(false);
+
+        QList<QStandardItem*> line;
+        line << itemFIO << itemBorn << itemSex;
+        if (!root)
+            m_model->appendRow(line);
+        else
+            root->appendRow(line);
+        return itemFIO;
+    }
+    return nullptr;
+}
+
+void PersonalProgramWidget::load()
+{
+    auto arrPP = DataProvider::getPersonalProgramList();
+    m_model = new QStandardItemModel(ui->tvPatients);
+
+    QMap<QString, QStandardItem*> patients;  ///< Запоминаем пациентов, уже добавленных в модель
+    patients.clear();
+
+    //! Сначала активные - они всегда в руте
+    for (int i = 0; i < arrPP.size(); ++i)
+    {
+        auto objPP = arrPP.at(i).toObject();
+        auto uidPat = objPP["patient_uid"].toString();
+        auto active = objPP["active"].toBool();
+        if (active && !patients.contains(uidPat))
+        {
+            auto item = appendLine(uidPat);
+            patients.insert(uidPat, item);
+        }
+    }
+
+    for (int i = 0; i < arrPP.size(); ++i)
+    {
+        auto objPP = arrPP.at(i).toObject();
+        auto uidPat = objPP["patient_uid"].toString();
+        auto active = objPP["active"].toBool();
+        if (!active)
+        {
+            if (patients.contains(uidPat))
+                appendLine(uidPat, objPP, patients.value(uidPat));
+            else
+            {
+                auto item = appendLine(uidPat);
+                patients.insert(uidPat, item);
+            }
+        }
+    }
+    m_model->setHorizontalHeaderLabels(QStringList() << tr("ФИО") << tr("Дата рождения") << tr("Пол"));
+
 }
 
 void PersonalProgramWidget::showPersonalProgram(const QString &patientUid)
@@ -170,12 +250,12 @@ void PersonalProgramWidget::restoreSplitterPosition()
     ui->splitter->restoreState(val);
 }
 
-PatientsModel *PersonalProgramWidget::patientsModel() const
-{
-    return static_cast<AAnalyserApplication*>(QApplication::instance())->patientsModel();
-}
+//PatientsModel *PersonalProgramWidget::patientsModel() const
+//{
+//    return static_cast<AAnalyserApplication*>(QApplication::instance())->patientsModel();
+//}
 
-PatientsProxyModel *PersonalProgramWidget::patientsProxyModel() const
-{
-    return static_cast<AAnalyserApplication*>(QApplication::instance())->patientsPPProxyModel();
-}
+//PatientsProxyModel *PersonalProgramWidget::patientsProxyModel() const
+//{
+//    return static_cast<AAnalyserApplication*>(QApplication::instance())->patientsPPProxyModel();
+//}

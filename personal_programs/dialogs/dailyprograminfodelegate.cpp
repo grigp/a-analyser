@@ -16,8 +16,8 @@ void DailyProgramInfoDelegate::paint(QPainter *painter, const QStyleOptionViewIt
 
     auto name = index.data(PersonalProgramDefines::PersonalProgram::DPNameRole).toString();
     auto dt = index.data(PersonalProgramDefines::PersonalProgram::DPDateTimeRole).toString();
-    if (index.row() == 0)         //TODO: Убрать!!!
-        dt = "23.08.2023 15:29";
+//    if (index.row() == 0)         //TODO: Убрать!!!
+//        dt = "23.08.2023 15:29";
 
     painter->save();
 

@@ -294,6 +294,14 @@ QJsonArray DataProvider::getPersonalProgramListForPatient(const QString &patient
     return static_cast<AAnalyserApplication*>(QApplication::instance())->getDB()->getPersonalProgramListForPatient(patientUid);
 }
 
+/*!
+ * \brief Возвращает полный список индивидуальных программ, когда либо выполнявшихся
+ */
+QJsonArray DataProvider::getPersonalProgramList()
+{
+    return static_cast<AAnalyserApplication*>(QApplication::instance())->getDB()->getPersonalProgramList();
+}
+
 void DataProvider::deletePersonalProgramForPatient(const QString &ppUid)
 {
     static_cast<AAnalyserApplication*>(QApplication::instance())->getDB()->deletePersonalProgramForPatient(ppUid);

@@ -432,6 +432,11 @@ QJsonObject getActivePersonalProgramForPatient(const QString& patientUid);
 QJsonArray getPersonalProgramListForPatient(const QString& patientUid);
 
 /*!
+ * \brief Возвращает полный список индивидуальных программ, когда либо выполнявшихся
+ */
+QJsonArray getPersonalProgramList();
+
+/*!
  * \brief Удаляет индивидуальную программу, назначенную для пациента
  * При удалении по индивидуальной программе не должно быть проведено тестов.
  * Функция этого не прооверяет, но логически это неверно

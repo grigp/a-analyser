@@ -960,6 +960,20 @@ QJsonArray DataBase::getPersonalProgramListForPatient(const QString &patientUid)
     return retval;
 }
 
+QJsonArray DataBase::getPersonalProgramList()
+{
+    QJsonArray retval;
+    QDir dir = personalProgramsDir();
+    QFileInfoList list = dir.entryInfoList(QDir::Files | QDir::NoDotAndDotDot);
+    foreach (auto fileInfo, list)
+    {
+        QJsonObject obj;
+        if (readTableRec(dir.absoluteFilePath(fileInfo.fileName()), obj))
+            retval << obj;
+    }
+    return retval;
+}
+
 void DataBase::deletePersonalProgramForPatient(const QString &ppUid)
 {
     QDir dir = personalProgramsDir();
