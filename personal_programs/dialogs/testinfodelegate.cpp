@@ -42,6 +42,7 @@ void TestInfoDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opti
 
         painter->drawText(rn, Qt::AlignTop | Qt::AlignHCenter, mi.name);
 
+        //! Выделение итема
         if (QAbstractItemView* tableView = qobject_cast<QAbstractItemView*>(this->parent()))
         {
             QModelIndex hover = tableView->indexAt(tableView->viewport()->mapFromGlobal(QCursor::pos()));

@@ -34,11 +34,17 @@
      <property name="gridStyle">
       <enum>Qt::NoPen</enum>
      </property>
+     <attribute name="horizontalHeaderVisible">
+      <bool>false</bool>
+     </attribute>
      <attribute name="horizontalHeaderDefaultSectionSize">
       <number>150</number>
      </attribute>
      <attribute name="horizontalHeaderMinimumSectionSize">
       <number>140</number>
+     </attribute>
+     <attribute name="verticalHeaderVisible">
+      <bool>false</bool>
      </attribute>
      <attribute name="verticalHeaderDefaultSectionSize">
       <number>60</number>
