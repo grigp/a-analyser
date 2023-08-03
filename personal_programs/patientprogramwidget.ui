@@ -140,5 +140,41 @@
   </layout>
  </widget>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>tvProgram</sender>
+   <signal>activated(QModelIndex)</signal>
+   <receiver>PatientProgramWidget</receiver>
+   <slot>on_selectItem(QModelIndex)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>151</x>
+     <y>113</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>728</x>
+     <y>138</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>tvProgram</sender>
+   <signal>clicked(QModelIndex)</signal>
+   <receiver>PatientProgramWidget</receiver>
+   <slot>on_selectItem(QModelIndex)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>616</x>
+     <y>52</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>726</x>
+     <y>67</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>on_selectItem(QModelIndex)</slot>
+ </slots>
 </ui>

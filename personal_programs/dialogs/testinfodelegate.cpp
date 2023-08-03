@@ -1,9 +1,13 @@
 #include "testinfodelegate.h"
 
 #include <QPainter>
+#include <QAbstractItemView>
 #include <QDebug>
 
+#include "aanalyserapplication.h"
+#include "metodicsfactory.h"
 #include "personalprogramdefines.h"
+#include "baseutils.h"
 
 
 TestInfoDelegate::TestInfoDelegate(QObject *parent)
@@ -18,6 +22,9 @@ void TestInfoDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opti
 
     if (uidMethod != "")
     {
+        MetodicDefines::MetodicInfo mi =
+                static_cast<AAnalyserApplication*>(QApplication::instance())->
+                getMetodics()->metodic(uidMethod);
         painter->save();
 
         QColor colBackground = QColor(250, 250, 250);
@@ -32,9 +39,20 @@ void TestInfoDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opti
         rn.setWidth(rn.width() - 2);
         rn.setLeft(rn.left() + 1);
         painter->drawRoundRect(rn, 15, 25);
-        painter->setPen(colText);
-    //    painter->drawText(rn, Qt::AlignCenter, index.data().toString() + "\n" + name + "\n" + dt);
 
+        painter->drawText(rn, Qt::AlignTop | Qt::AlignHCenter, mi.name);
+
+        if (QAbstractItemView* tableView = qobject_cast<QAbstractItemView*>(this->parent()))
+        {
+            QModelIndex hover = tableView->indexAt(tableView->viewport()->mapFromGlobal(QCursor::pos()));
+            if (hover.row() == index.row() && hover.column() == index.column())
+            {
+                painter->setBrush(QBrush(Qt::NoBrush));
+                painter->setPen(Qt::red);
+                painter->drawRect(rn);
+            }
+        }
         painter->restore();
     }
 }
+

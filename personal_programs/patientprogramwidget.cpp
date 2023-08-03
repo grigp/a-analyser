@@ -1,7 +1,10 @@
 #include "patientprogramwidget.h"
 #include "ui_patientprogramwidget.h"
 
+#include <QDebug>
+
 #include "personalprogram.h"
+#include "personalprogramdefines.h"
 #include "dataprovider.h"
 #include "dailyprograminfodelegate.h"
 #include "testinfodelegate.h"
@@ -28,4 +31,15 @@ void PatientProgramWidget::assignPersonalProgram(const QString &patientUid)
 
     for (int i = 1; i < pp->columnCount(); ++i)
         ui->tvProgram->setItemDelegateForColumn(i, new TestInfoDelegate(ui->tvProgram));
+}
+
+void PatientProgramWidget::on_selectItem(QModelIndex idx)
+{
+    if (idx.column() > 0)
+    {
+        auto uidMethod = idx.data(PersonalProgramDefines::PersonalProgram::MethodUidRole).toString();
+
+        if (uidMethod != "")
+            m_selectedItem = idx;
+    }
 }

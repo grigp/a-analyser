@@ -16,28 +16,33 @@ void DailyProgramInfoDelegate::paint(QPainter *painter, const QStyleOptionViewIt
 
     auto name = index.data(PersonalProgramDefines::PersonalProgram::DPNameRole).toString();
     auto dt = index.data(PersonalProgramDefines::PersonalProgram::DPDateTimeRole).toString();
-    if (index.row() == 0)
+    if (index.row() == 0)         //TODO: Убрать!!!
         dt = "23.08.2023 15:29";
 
     painter->save();
 
-    QColor colBackground = QColor(230, 230, 230);
+    QColor colBackground = QColor(200, 200, 200);
     QColor colText = Qt::black;
     if (dt != "")
     {
-        colBackground = QColor(255, 255, 220);
+        colBackground = QColor(230, 230, 130);
         colText = QColor(70, 70, 0);
     }
 
-    QRadialGradient radialGrad(QPointF(100, 100), 100);
-    radialGrad.setColorAt(0, Qt::red);
-    radialGrad.setColorAt(0.5, Qt::blue);
-    radialGrad.setColorAt(1, Qt::green);
-    painter->setBrush(radialGrad);
-//    painter->setBrush(QBrush(colBackground));
-//    painter->setPen(colBackground);
-    painter->setPen(colText);
+    QColor colBackgroundLt = QColor(colBackground.red() + (255 - colBackground.red()) / 2,
+                                    colBackground.green() + (255 - colBackground.green()) / 2,
+                                    colBackground.blue() + (255 - colBackground.blue()) / 2);
+
     auto rn = option.rect;
+
+    QLinearGradient gradient(QPointF(rn.left() + rn.width() / 2, rn.top()), QPointF(rn.left() + rn.width() / 2, rn.top() + rn.height()));
+    gradient.setColorAt(0, Qt::white);
+    gradient.setColorAt(0.1, colBackgroundLt);
+    gradient.setColorAt(0.5, colBackground);
+    gradient.setColorAt(0.9, colBackgroundLt);
+    gradient.setColorAt(1, Qt::white);
+    painter->setBrush(gradient);
+    painter->setPen(Qt::white); //(colText);
     rn.setHeight(rn.height() - 2);
     rn.setTop(rn.top() + 1);
     rn.setWidth(rn.width() - 2);
@@ -48,36 +53,4 @@ void DailyProgramInfoDelegate::paint(QPainter *painter, const QStyleOptionViewIt
 
     painter->restore();
 
-//    if (index.row() <= 1 && nv != DataDefines::nsvMissing)
-//    {
-//        QColor bColor = Qt::gray;
-//        QColor fColor = Qt::darkGray;
-//        if (nv == DataDefines::nsvNorm)
-//        {
-//            bColor = QColor(150, 255, 150); // Qt::green;
-//            fColor = QColor(0, 100, 50); // Qt::darkGreen;
-//        }
-//        else
-//        if (nv == DataDefines::nsvBelow)
-//        {
-//            bColor = QColor(255, 255, 150); //Qt::yellow;
-//            fColor = QColor(100, 100, 0); // Qt::darkYellow;
-//        }
-//        else
-//        if (nv == DataDefines::nsvAbove)
-//        {
-//            bColor = QColor(255, 100, 150); //Qt::red;
-//            fColor = QColor(100, 0, 0); //Qt::darkRed;
-//        }
-
-//        painter->setBrush(QBrush(bColor));
-//        painter->setPen(fColor);
-//        auto rn = option.rect;
-//        painter->drawRect(rn);
-//        painter->drawText(rn, Qt::AlignLeft, "  " + index.data().toString());
-//    }
-//    else
-//        painter->drawText(rv, Qt::AlignLeft, index.data().toString());
-
-//    painter->restore();
 }
