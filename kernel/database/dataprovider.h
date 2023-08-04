@@ -425,6 +425,12 @@ void assignPersonalProgramForPatient(const QString& uidPPAssigned, const QJsonOb
 QJsonObject getActivePersonalProgramForPatient(const QString& patientUid);
 
 /*!
+ * \brief Возвращает индивидуальную программу, когда либо выполнявшуюся по uid
+ * \param uidPP - uid индивидуальной программы
+ */
+QJsonObject getPersonalProgramByUid(const QString& uidPP);
+
+/*!
  * \brief Возвращает список индивидуальных программ, когда либо выполнявшихся пациентом
  * В том числе и активную
  * \param patientUid - uid пациента

@@ -78,10 +78,14 @@ private slots:
 private:
     Ui::PersonalProgramWidget *ui;
 
-    QStandardItem* appendLine(const QString uidPat, const QJsonObject& objPP = QJsonObject(), QStandardItem* root = nullptr);
+    QStandardItem* appendLine(const QString uidPat,
+                              const QString uidPPAssigned,
+                              const QJsonObject& objPP = QJsonObject(),
+                              QStandardItem* root = nullptr);
     void load();
 
-    void showPersonalProgram(const QString& patientUid);
+//    void showPersonalProgram(const QString& patientUid);
+    void showPersonalProgram(const QString& uidPPAssigned);
     void hideAllWidgets();
 
     void saveSplitterPosition();

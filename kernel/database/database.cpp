@@ -943,6 +943,21 @@ QJsonObject DataBase::getActivePersonalProgramForPatient(const QString &patientU
     return QJsonObject();
 }
 
+QJsonObject DataBase::getPersonalProgramByUid(const QString &uidPP)
+{
+    QDir dir = personalProgramsDir();
+    if (QFile::exists(dir.absoluteFilePath(uidPP)))
+    {
+        QJsonObject retval;
+        if (readTableRec(dir.absoluteFilePath(uidPP), retval))
+        {
+            retval["assigned_uid"] = uidPP;
+            return retval;
+        }
+    }
+    return QJsonObject();
+}
+
 QJsonArray DataBase::getPersonalProgramListForPatient(const QString &patientUid)
 {
     QJsonArray retval;
@@ -969,7 +984,10 @@ QJsonArray DataBase::getPersonalProgramList()
     {
         QJsonObject obj;
         if (readTableRec(dir.absoluteFilePath(fileInfo.fileName()), obj))
+        {
+            obj["assigned_uid"] = fileInfo.fileName();  //! Добавляем uid назначенной ИП, ибо иначе данные о нем тут теряются
             retval << obj;
+        }
     }
     return retval;
 }

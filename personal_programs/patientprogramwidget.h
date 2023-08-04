@@ -22,10 +22,10 @@ public:
     ~PatientProgramWidget();
 
     /*!
-     * \brief Загружает индивидуальную программу для пациента
-     * \param patientUid - uid пациента
+     * \brief Загружает индивидуальную программу по ее uid
+     * \param patientUid - uid индивидуальной программы
      */
-    void assignPersonalProgram(const QString& patientUid);
+    void assignPersonalProgram(const QString& uidPP);
 
     /*!
      * \brief Возвращает индекс выбранного итема

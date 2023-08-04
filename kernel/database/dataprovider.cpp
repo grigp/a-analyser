@@ -289,6 +289,11 @@ QJsonObject DataProvider::getActivePersonalProgramForPatient(const QString &pati
     return static_cast<AAnalyserApplication*>(QApplication::instance())->getDB()->getActivePersonalProgramForPatient(patientUid);
 }
 
+QJsonObject DataProvider::getPersonalProgramByUid(const QString& uidPP)
+{
+    return static_cast<AAnalyserApplication*>(QApplication::instance())->getDB()->getPersonalProgramByUid(uidPP);
+}
+
 QJsonArray DataProvider::getPersonalProgramListForPatient(const QString &patientUid)
 {
     return static_cast<AAnalyserApplication*>(QApplication::instance())->getDB()->getPersonalProgramListForPatient(patientUid);

@@ -21,9 +21,9 @@ PatientProgramWidget::~PatientProgramWidget()
     delete ui;
 }
 
-void PatientProgramWidget::assignPersonalProgram(const QString &patientUid)
+void PatientProgramWidget::assignPersonalProgram(const QString &uidPP)
 {
-    auto objPP = DataProvider::getActivePersonalProgramForPatient(patientUid);
+    auto objPP = DataProvider::getPersonalProgramByUid(uidPP);
     auto pp = new PersonalProgram(this);
     pp->load(objPP);
     ui->tvProgram->setModel(pp);

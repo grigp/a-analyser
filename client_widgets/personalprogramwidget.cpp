@@ -92,12 +92,14 @@ void PersonalProgramWidget::selectPatient(const QModelIndex index)
 //         auto srcIndex = patientsProxyModel()->mapToSource(index);
 //         auto idx = patientsModel()->index(srcIndex.row(), DatabaseWidgetDefines::PatientsModel::ColFio, srcIndex.parent());
 //        auto uid = idx.data(DatabaseWidgetDefines::PatientsModel::PatientUidRole).toString();
-         auto idx = index.model()->index(index.row(), 0);
+         auto idx = index.model()->index(index.row(), 0, index.parent());
          auto uid = idx.data(DatabaseWidgetDefines::PatientsModel::PatientUidRole).toString();
          static_cast<AAnalyserApplication*>(QApplication::instance())->doSelectPatient(uid);
 
+         auto uidPP = idx.data(DatabaseWidgetDefines::PatientsModel::PatientPPUidRole).toString();
+
          //! Показать индивидуальную программу
-         showPersonalProgram(uid);
+         showPersonalProgram(uidPP);
     }
 }
 
@@ -120,6 +122,7 @@ void PersonalProgramWidget::on_selectPatient(const QString &patientUid)
         {
             auto pindex = pmdl->index(i, 0);
             auto uid = pindex.data(DatabaseWidgetDefines::PatientsModel::PatientUidRole).toString();
+            auto uidPP = pindex.data(DatabaseWidgetDefines::PatientsModel::PatientPPUidRole).toString();
 
             //! Нашли и он не выбран
             if (uid == patientUid && uid != curSelPatientUid)
@@ -132,14 +135,17 @@ void PersonalProgramWidget::on_selectPatient(const QString &patientUid)
 
                 }
                 //! Показать индивидуальную программу
-                showPersonalProgram(patientUid);
+                showPersonalProgram(uidPP);
             }
         }
 
     }
 }
 
-QStandardItem* PersonalProgramWidget::appendLine(const QString uidPat, const QJsonObject& objPP, QStandardItem* root)
+QStandardItem* PersonalProgramWidget::appendLine(const QString uidPat,
+                                                 const QString uidPPAssigned,
+                                                 const QJsonObject& objPP,
+                                                 QStandardItem* root)
 {
     DataDefines::PatientKard pi;
     if (DataProvider::getPatient(uidPat, pi))
@@ -153,7 +159,7 @@ QStandardItem* PersonalProgramWidget::appendLine(const QString uidPat, const QJs
         }
         QStandardItem *itemFIO = new QStandardItem(title);
         itemFIO->setData(pi.uid, DatabaseWidgetDefines::PatientsModel::PatientUidRole);
-        itemFIO->setData(pi.pp_uid, DatabaseWidgetDefines::PatientsModel::PatientPPUidRole);
+        itemFIO->setData(uidPPAssigned, DatabaseWidgetDefines::PatientsModel::PatientPPUidRole);
         itemFIO->setEditable(false);
         QStandardItem *itemBorn = new QStandardItem(pi.born.toString("dd.MM.yyyy"));
         itemBorn->setEditable(false);
@@ -186,10 +192,11 @@ void PersonalProgramWidget::load()
     {
         auto objPP = arrPP.at(i).toObject();
         auto uidPat = objPP["patient_uid"].toString();
+        auto uidPPAssigned = objPP["assigned_uid"].toString();
         auto active = objPP["active"].toBool();
         if (active && !patients.contains(uidPat))
         {
-            auto item = appendLine(uidPat);
+            auto item = appendLine(uidPat, uidPPAssigned);
             patients.insert(uidPat, item);
         }
     }
@@ -198,14 +205,17 @@ void PersonalProgramWidget::load()
     {
         auto objPP = arrPP.at(i).toObject();
         auto uidPat = objPP["patient_uid"].toString();
+        auto uidPPAssigned = objPP["assigned_uid"].toString();
         auto active = objPP["active"].toBool();
         if (!active)
         {
             if (patients.contains(uidPat))
-                appendLine(uidPat, objPP, patients.value(uidPat));
+            {
+                appendLine(uidPat, uidPPAssigned, objPP, patients.value(uidPat));
+            }
             else
             {
-                auto item = appendLine(uidPat);
+                auto item = appendLine(uidPat, uidPPAssigned);
                 patients.insert(uidPat, item);
             }
         }
@@ -214,19 +224,20 @@ void PersonalProgramWidget::load()
 
 }
 
-void PersonalProgramWidget::showPersonalProgram(const QString &patientUid)
+void PersonalProgramWidget::showPersonalProgram(const QString& uidPPAssigned)
 {
     hideAllWidgets();
-    if (m_wgts.contains(patientUid))
-        m_wgts.value(patientUid)->setVisible(true);
+    if (m_wgts.contains(uidPPAssigned))
+        m_wgts.value(uidPPAssigned)->setVisible(true);
     else
     {
         auto ppw = new PatientProgramWidget(ui->frPrograms);
-        ppw->assignPersonalProgram(patientUid);
+        ppw->assignPersonalProgram(uidPPAssigned);
         ui->frPrograms->layout()->addWidget(ppw);
-        m_wgts.insert(patientUid, ppw);
+        m_wgts.insert(uidPPAssigned, ppw);
     }
 }
+
 
 void PersonalProgramWidget::hideAllWidgets()
 {
