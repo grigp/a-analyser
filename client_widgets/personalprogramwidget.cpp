@@ -12,6 +12,7 @@
 #include "personalprogram.h"
 #include "databasewigetdefines.h"
 #include "patientprogramwidget.h"
+#include "activepersonalprogrameditor.h"
 
 PersonalProgramWidget::PersonalProgramWidget(QWidget *parent) :
     ClientWidget(parent),
@@ -22,7 +23,6 @@ PersonalProgramWidget::PersonalProgramWidget(QWidget *parent) :
     restoreSplitterPosition();
     load();
     ui->tvPatients->setModel(m_model);
-//    ui->tvPatients->setModel(patientsProxyModel());
     m_wgts.clear();
 }
 
@@ -75,7 +75,19 @@ void PersonalProgramWidget::on_delete()
 
 void PersonalProgramWidget::on_params()
 {
-
+    auto index = selectedIndex();
+    if (index != QModelIndex() && index.isValid())
+    {
+        auto uidPP = index.data(DatabaseWidgetDefines::PatientsModel::PatientPPUidRole).toString();
+        auto dialog = new ActivePersonalProgramEditor(this);
+        auto pp = DataProvider::getPersonalProgramByUid(uidPP);
+        dialog->setPersonalProgram(pp);
+        if (dialog->exec() == QDialog::Accepted)
+        {
+            auto pp = dialog->personalProgram();
+            //DataProvider::setPersonalProgramByUid(uidPP, pp); Записать измененную индивидуальную программу в БД
+        }
+    }
 }
 
 void PersonalProgramWidget::on_selectionChanged(const QItemSelection &selected, const QItemSelection &deselected)
@@ -89,9 +101,6 @@ void PersonalProgramWidget::selectPatient(const QModelIndex index)
 {
     if (index.isValid())
     {
-//         auto srcIndex = patientsProxyModel()->mapToSource(index);
-//         auto idx = patientsModel()->index(srcIndex.row(), DatabaseWidgetDefines::PatientsModel::ColFio, srcIndex.parent());
-//        auto uid = idx.data(DatabaseWidgetDefines::PatientsModel::PatientUidRole).toString();
          auto idx = index.model()->index(index.row(), 0, index.parent());
          auto uid = idx.data(DatabaseWidgetDefines::PatientsModel::PatientUidRole).toString();
          static_cast<AAnalyserApplication*>(QApplication::instance())->doSelectPatient(uid);
@@ -116,7 +125,6 @@ void PersonalProgramWidget::on_selectPatient(const QString &patientUid)
     //! Поиск выделенного пациента patientUid
     if (patientUid != "")
     {
-//        auto pmdl = patientsProxyModel();
         auto pmdl = m_model;
         for (int i = 0; i < pmdl->rowCount(); ++i)
         {
@@ -261,12 +269,14 @@ void PersonalProgramWidget::restoreSplitterPosition()
     ui->splitter->restoreState(val);
 }
 
-//PatientsModel *PersonalProgramWidget::patientsModel() const
-//{
-//    return static_cast<AAnalyserApplication*>(QApplication::instance())->patientsModel();
-//}
+QModelIndex PersonalProgramWidget::selectedIndex() const
+{
+    auto selIdxs = ui->tvPatients->selectionModel()->selectedIndexes();
+    for (int i = 0; i < selIdxs.size(); ++i)
+    {
+        if (selIdxs.at(i).column() == 0)
+            return selIdxs.at(i);
+    }
+    return QModelIndex();
+}
 
-//PatientsProxyModel *PersonalProgramWidget::patientsProxyModel() const
-//{
-//    return static_cast<AAnalyserApplication*>(QApplication::instance())->patientsPPProxyModel();
-//}

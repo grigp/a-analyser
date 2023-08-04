@@ -91,8 +91,7 @@ private:
     void saveSplitterPosition();
     void restoreSplitterPosition();
 
-//    PatientsModel* patientsModel() const;
-//    PatientsProxyModel* patientsProxyModel() const;
+    QModelIndex selectedIndex() const;
 
     QStandardItemModel* m_model {nullptr};
 
