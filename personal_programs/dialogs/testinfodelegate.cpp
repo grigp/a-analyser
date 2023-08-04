@@ -25,10 +25,16 @@ void TestInfoDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opti
         MetodicDefines::MetodicInfo mi =
                 static_cast<AAnalyserApplication*>(QApplication::instance())->
                 getMetodics()->metodic(uidMethod);
+        auto uidTest = index.data(PersonalProgramDefines::PersonalProgram::TestUidRole).toString();
         painter->save();
 
         QColor colBackground = QColor(250, 250, 250);
         QColor colText = Qt::gray;
+        if (uidTest != "")
+        {
+            colBackground = QColor(200, 255, 200);
+            colText = QColor(0, 100, 0);
+        }
 
         painter->setBrush(QBrush(colBackground));
     //    painter->setPen(colBackground);
