@@ -28,6 +28,7 @@ void ActivePersonalProgramEditor::setPersonalProgram(const QJsonObject &objPPAll
         auto objPP = objPPAll["pp"].toObject();
         ui->edName->setText(objPP["name"].toString());
 
+
     }
 }
 
