@@ -51,37 +51,43 @@ void PersonalProgram::load(const QJsonObject &objPPAll)
     {
         //! Объект дневной программы
         auto objDP = arrDP.at(i).toObject();
-        //! Заголовок дневной программы
-        auto dt = objDP["date_time"].toString();
-        QString dpTitle = tr("Занятие") + " " + QString::number(i + 1);
-        if (dt != "")
-            dpTitle += ("\n" + dt);
-
-        //! Создаем итем дневной программы
-        auto itemDP = new QStandardItem(dpTitle);
-        itemDP->setData(objDP["uid"].toString(), PersonalProgramDefines::PersonalProgram::DPUidRole);
-        itemDP->setData(objDP["name"].toString(), PersonalProgramDefines::PersonalProgram::DPNameRole);
-        itemDP->setData(dt, PersonalProgramDefines::PersonalProgram::DPDateTimeRole);
-        QList<QStandardItem*> items;
-        items << itemDP;
-
-        //! Тесты в дневной программе
-        auto arrTests = objDP["test_list"].toArray();
-        for (int j = 0; j < arrTests.size(); ++j)
-        {
-            //! Объект теста
-            auto objTest = arrTests.at(j).toObject();
-
-            //! Итем теста
-            auto itemTest = new QStandardItem("");
-            itemTest->setData(objTest["uid"].toString(), PersonalProgramDefines::PersonalProgram::MethodUidRole);
-            itemTest->setData(objTest["test_uid"].toString(), PersonalProgramDefines::PersonalProgram::TestUidRole);
-            itemTest->setData(objTest["params"].toObject(), PersonalProgramDefines::PersonalProgram::ParamsRole);
-
-            items << itemTest;
-        }
-
-        //! Строка дневной программы
-        appendRow(items);
+        addDailyProgram(objDP);
     }
+}
+
+void PersonalProgram::addDailyProgram(const QJsonObject &objDP)
+{
+    //! Заголовок дневной программы
+    auto dt = objDP["date_time"].toString();
+
+    QString dpTitle = tr("Занятие") + " " + QString::number(rowCount() + 1);//(i + 1);
+    if (dt != "")
+        dpTitle += ("\n" + dt);
+
+    //! Создаем итем дневной программы
+    auto itemDP = new QStandardItem(dpTitle);
+    itemDP->setData(objDP["uid"].toString(), PersonalProgramDefines::PersonalProgram::DPUidRole);
+    itemDP->setData(objDP["name"].toString(), PersonalProgramDefines::PersonalProgram::DPNameRole);
+    itemDP->setData(dt, PersonalProgramDefines::PersonalProgram::DPDateTimeRole);
+    QList<QStandardItem*> items;
+    items << itemDP;
+
+    //! Тесты в дневной программе
+    auto arrTests = objDP["test_list"].toArray();
+    for (int j = 0; j < arrTests.size(); ++j)
+    {
+        //! Объект теста
+        auto objTest = arrTests.at(j).toObject();
+
+        //! Итем теста
+        auto itemTest = new QStandardItem("");
+        itemTest->setData(objTest["uid"].toString(), PersonalProgramDefines::PersonalProgram::MethodUidRole);
+        itemTest->setData(objTest["test_uid"].toString(), PersonalProgramDefines::PersonalProgram::TestUidRole);
+        itemTest->setData(objTest["params"].toObject(), PersonalProgramDefines::PersonalProgram::ParamsRole);
+
+        items << itemTest;
+    }
+
+    //! Строка дневной программы
+    appendRow(items);
 }

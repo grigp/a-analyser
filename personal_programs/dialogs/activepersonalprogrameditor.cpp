@@ -1,9 +1,16 @@
 #include "activepersonalprogrameditor.h"
 #include "ui_activepersonalprogrameditor.h"
 
+#include <QMessageBox>
+#include <QDebug>
+
+#include "aanalyserapplication.h"
 #include "datadefines.h"
 #include "dataprovider.h"
 #include "personalprogramdefines.h"
+#include "personalprogram.h"
+#include "metodicsfactory.h"
+#include "selectdailyprogramdialog.h"
 
 ActivePersonalProgramEditor::ActivePersonalProgramEditor(QWidget *parent) :
     QDialog(parent),
@@ -11,30 +18,191 @@ ActivePersonalProgramEditor::ActivePersonalProgramEditor(QWidget *parent) :
 {
     ui->setupUi(this);
     prepareParams();
+
+    ui->tvSchedule->setModel(&m_mdlDP);
+    ui->tvTests->setModel(&m_mdlT);
 }
 
 ActivePersonalProgramEditor::~ActivePersonalProgramEditor()
 {
+    if (m_mdlPP)
+        delete m_mdlPP;
     delete ui;
 }
 
 void ActivePersonalProgramEditor::setPersonalProgram(const QJsonObject &objPPAll)
 {
-    auto uidPatient = objPPAll["patient_uid"].toString();
+    m_mdlPP = new PersonalProgram(this);
+    m_mdlPP->load(objPPAll);
+
     DataDefines::PatientKard pi;
-    if (DataProvider::getPatient(uidPatient, pi))
+    if (DataProvider::getPatient(m_mdlPP->uidPatient(), pi))
     {
         ui->edPatient->setText(pi.fio);
-        auto objPP = objPPAll["pp"].toObject();
-        ui->edName->setText(objPP["name"].toString());
-
-
+        ui->edName->setText(m_mdlPP->name());
+        ui->cbMinTimeBetweenDP->setCurrentIndex(m_mdlPP->minTimeBetweenDP());
+        ui->cbMaxTimeBetweenDP->setCurrentIndex(m_mdlPP->maxTimeBetweenDP());
+        ui->lblLogotip->setPixmap(QPixmap(m_mdlPP->logoFileName()));
     }
+
+    initListDP();
+    m_mdlT.clear();
+
+    QString sSheet = QString("QTableView") +
+    "{" +
+        "background-color: rgb(240, 240, 245);" +
+        "font-size: 11pt;" +
+        "color: rgb(32,88,103);" +
+    "}" +
+            QString("QHeaderView::section") +
+    "{" +
+            "background-color: rgb(240, 240, 245);" +
+            "font-size: 11pt;" +
+            "color: rgb(32,88,103);" +
+    "}";
+    setStyleSheet(sSheet);
+
 }
 
 QJsonObject ActivePersonalProgramEditor::personalProgram() const
 {
 
+}
+
+void ActivePersonalProgramEditor::on_selectDP(QModelIndex index)
+{
+    if (index.isValid())
+        viewDP(index.row());
+}
+
+void ActivePersonalProgramEditor::on_selectT(QModelIndex index)
+{
+
+}
+
+void ActivePersonalProgramEditor::on_dpAdd()
+{
+    if (!m_dlgSelDP)
+        m_dlgSelDP = new SelectDailyProgramDialog(this);
+
+    if (m_dlgSelDP->exec() == QDialog::Accepted)
+    {
+        auto dp = m_dlgSelDP->dailyProgram();
+        m_mdlPP->addDailyProgram(dp);
+
+        auto *item = new QStandardItem(dp["name"].toString());
+        item->setEditable(false);
+        item->setData(dp["uid"].toString(), PersonalProgramDefines::PersonalProgram::DPUidRole);
+        item->setData(dp["name"].toString(), PersonalProgramDefines::PersonalProgram::DPNameRole);
+        m_mdlDP.appendRow(item);
+    }
+}
+
+void ActivePersonalProgramEditor::on_dpDel()
+{
+    auto selIdx = selectedDPIndex();
+    if (selIdx != QModelIndex() && selIdx.isValid())
+    {
+        QString name = selIdx.data().toString();
+        int num = selIdx.row();
+        auto mr = QMessageBox::question(nullptr,
+                                        tr("Запрос"),
+                                        tr("Удалить дневную программу?") + "\n" +
+                                        tr("Программа №") + QString::number(num + 1) + " : " + name);
+        if (mr == QMessageBox::Yes)
+        {
+            m_mdlPP->removeRow(num);
+            m_mdlDP.removeRow(num);
+        }
+    }
+}
+
+void ActivePersonalProgramEditor::on_dpMoveUp()
+{
+    auto selIdx = selectedDPIndex();
+    int num = selIdx.row();
+    if (selIdx != QModelIndex() && selIdx.isValid() && num > 0)
+    {
+        //! Перемещаем в модели DP
+        auto row = m_mdlDP.takeRow(num);
+        m_mdlDP.insertRow(num - 1, row);
+        //! Играем с выделением
+        ui->tvSchedule->selectionModel()->clearSelection();
+        ui->tvSchedule->selectionModel()->select(row.at(0)->index(), QItemSelectionModel::Select);
+
+        //! Перемещаем в модели общейы
+        row = m_mdlPP->takeRow(num);
+        m_mdlPP->insertRow(num - 1, row);
+    }
+}
+
+void ActivePersonalProgramEditor::on_dpMoveDown()
+{
+    auto selIdx = selectedDPIndex();
+    int num = selIdx.row();
+    if (selIdx != QModelIndex() && selIdx.isValid() && num < m_mdlDP.rowCount() - 1)
+    {
+        //! Перемещаем в модели DP
+        auto row = m_mdlDP.takeRow(num);
+        m_mdlDP.insertRow(num + 1, row);
+        //! Играем с выделением
+        ui->tvSchedule->selectionModel()->clearSelection();
+        ui->tvSchedule->selectionModel()->select(row.at(0)->index(), QItemSelectionModel::Select);
+
+        //! Перемещаем в модели общейы
+        row = m_mdlPP->takeRow(num);
+        m_mdlPP->insertRow(num + 1, row);
+    }
+}
+
+void ActivePersonalProgramEditor::initListDP()
+{
+    m_mdlDP.clear();
+
+    for (int i = 0; i < m_mdlPP->rowCount(); ++i)
+    {
+        auto dpName = m_mdlPP->index(i, 0).data(PersonalProgramDefines::PersonalProgram::DPNameRole).toString();
+        auto dpUid = m_mdlPP->index(i, 0).data(PersonalProgramDefines::PersonalProgram::DPUidRole).toString();
+        auto dpDT = m_mdlPP->index(i, 0).data(PersonalProgramDefines::PersonalProgram::DPDateTimeRole).toString();
+
+        auto item = new QStandardItem(dpName);
+        item->setData(dpUid, PersonalProgramDefines::PersonalProgram::DPUidRole);
+        item->setData(dpDT, PersonalProgramDefines::PersonalProgram::DPDateTimeRole);
+
+        m_mdlDP.appendRow(item);
+    }
+}
+
+void ActivePersonalProgramEditor::viewDP(const int numDP)
+{
+    m_mdlT.clear();
+
+    if (numDP >= 0 && numDP < m_mdlPP->rowCount())
+    {
+        for (int i = 0; i < m_mdlPP->columnCount(); ++i)
+        {
+            auto index = m_mdlPP->index(numDP, i);
+            if (index.isValid())
+            {
+                auto uidMethod = index.data(PersonalProgramDefines::PersonalProgram::MethodUidRole).toString();
+                if (uidMethod != "")
+                {
+                    MetodicsFactory *metFactory = static_cast<AAnalyserApplication*>(QApplication::instance())->getMetodics();
+                    auto mi = metFactory->metodic(uidMethod);
+
+                    auto uidTest = index.data(PersonalProgramDefines::PersonalProgram::TestUidRole).toString();
+                    auto params = index.data(PersonalProgramDefines::PersonalProgram::ParamsRole).toJsonObject();
+
+                    auto item = new QStandardItem(mi.name);
+                    item->setData(uidTest, PersonalProgramDefines::PersonalProgram::TestUidRole);
+                    item->setData(params, PersonalProgramDefines::PersonalProgram::ParamsRole);
+                    item->setIcon(QIcon(":/images/Methodics/" + mi.imageName));
+
+                    m_mdlT.appendRow(item);
+                }
+            }
+        }
+    }
 }
 
 void ActivePersonalProgramEditor::prepareParams()
@@ -48,4 +216,13 @@ void ActivePersonalProgramEditor::prepareParams()
     foreach (auto v, PersonalProgramDefines::MaxTimeBetweenDPList)
         ui->cbMaxTimeBetweenDP->addItem(PersonalProgramDefines::MaxTimeBetweenDPNames.value(v), v);
     ui->cbMaxTimeBetweenDP->setCurrentIndex(7);
+}
+
+QModelIndex ActivePersonalProgramEditor::selectedDPIndex()
+{
+    auto selIdxs = ui->tvSchedule->selectionModel()->selectedIndexes();
+    for (int i = 0; i < selIdxs.size(); ++i)
+        if (selIdxs.at(i).column() == 0)
+            return selIdxs.at(i);
+    return QModelIndex();
 }

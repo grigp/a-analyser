@@ -24,93 +24,160 @@
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_2">
       <item>
-       <widget class="QFrame" name="frName">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
+       <widget class="QFrame" name="frProgramTitle">
         <property name="frameShape">
          <enum>QFrame::StyledPanel</enum>
         </property>
         <property name="frameShadow">
          <enum>QFrame::Raised</enum>
         </property>
-        <layout class="QHBoxLayout" name="horizontalLayout">
+        <layout class="QHBoxLayout" name="horizontalLayout_8">
          <property name="spacing">
-          <number>2</number>
+          <number>0</number>
+         </property>
+         <property name="leftMargin">
+          <number>0</number>
          </property>
          <property name="topMargin">
-          <number>1</number>
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
          </property>
          <property name="bottomMargin">
-          <number>1</number>
+          <number>0</number>
          </property>
          <item>
-          <widget class="QLabel" name="lblName">
-           <property name="minimumSize">
-            <size>
-             <width>80</width>
-             <height>0</height>
-            </size>
+          <widget class="QFrame" name="frTitleNames">
+           <property name="frameShape">
+            <enum>QFrame::StyledPanel</enum>
+           </property>
+           <property name="frameShadow">
+            <enum>QFrame::Raised</enum>
+           </property>
+           <layout class="QVBoxLayout" name="verticalLayout_6">
+            <property name="spacing">
+             <number>0</number>
+            </property>
+            <property name="leftMargin">
+             <number>0</number>
+            </property>
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
+             <number>0</number>
+            </property>
+            <item>
+             <widget class="QFrame" name="frName">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="frameShape">
+               <enum>QFrame::StyledPanel</enum>
+              </property>
+              <property name="frameShadow">
+               <enum>QFrame::Raised</enum>
+              </property>
+              <layout class="QHBoxLayout" name="horizontalLayout">
+               <property name="spacing">
+                <number>2</number>
+               </property>
+               <property name="topMargin">
+                <number>1</number>
+               </property>
+               <property name="bottomMargin">
+                <number>1</number>
+               </property>
+               <item>
+                <widget class="QLabel" name="lblName">
+                 <property name="minimumSize">
+                  <size>
+                   <width>80</width>
+                   <height>0</height>
+                  </size>
+                 </property>
+                 <property name="text">
+                  <string>Название</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLineEdit" name="edName">
+                 <property name="readOnly">
+                  <bool>true</bool>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </item>
+            <item>
+             <widget class="QFrame" name="frPatient">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="frameShape">
+               <enum>QFrame::StyledPanel</enum>
+              </property>
+              <property name="frameShadow">
+               <enum>QFrame::Raised</enum>
+              </property>
+              <layout class="QHBoxLayout" name="horizontalLayout_2">
+               <property name="spacing">
+                <number>2</number>
+               </property>
+               <property name="topMargin">
+                <number>1</number>
+               </property>
+               <property name="bottomMargin">
+                <number>1</number>
+               </property>
+               <item>
+                <widget class="QLabel" name="lblPatient">
+                 <property name="minimumSize">
+                  <size>
+                   <width>80</width>
+                   <height>0</height>
+                  </size>
+                 </property>
+                 <property name="text">
+                  <string>Пациент</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLineEdit" name="edPatient">
+                 <property name="readOnly">
+                  <bool>true</bool>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="lblLogotip">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
            </property>
            <property name="text">
-            <string>Название</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLineEdit" name="edName">
-           <property name="readOnly">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </widget>
-      </item>
-      <item>
-       <widget class="QFrame" name="frPatient">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="frameShape">
-         <enum>QFrame::StyledPanel</enum>
-        </property>
-        <property name="frameShadow">
-         <enum>QFrame::Raised</enum>
-        </property>
-        <layout class="QHBoxLayout" name="horizontalLayout_2">
-         <property name="spacing">
-          <number>2</number>
-         </property>
-         <property name="topMargin">
-          <number>1</number>
-         </property>
-         <property name="bottomMargin">
-          <number>1</number>
-         </property>
-         <item>
-          <widget class="QLabel" name="lblPatient">
-           <property name="minimumSize">
-            <size>
-             <width>80</width>
-             <height>0</height>
-            </size>
-           </property>
-           <property name="text">
-            <string>Пациент</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLineEdit" name="edPatient">
-           <property name="readOnly">
-            <bool>true</bool>
+            <string>         </string>
            </property>
           </widget>
          </item>
@@ -261,6 +328,9 @@
            <layout class="QHBoxLayout" name="horizontalLayout_5">
             <item>
              <widget class="QTableView" name="tvSchedule">
+              <attribute name="horizontalHeaderVisible">
+               <bool>false</bool>
+              </attribute>
               <attribute name="horizontalHeaderDefaultSectionSize">
                <number>300</number>
               </attribute>
@@ -403,7 +473,11 @@
            </property>
            <layout class="QHBoxLayout" name="horizontalLayout_6">
             <item>
-             <widget class="QTreeView" name="tvTests"/>
+             <widget class="QTreeView" name="tvTests">
+              <attribute name="headerVisible">
+               <bool>false</bool>
+              </attribute>
+             </widget>
             </item>
             <item>
              <widget class="QFrame" name="frTestsButtons">
@@ -568,8 +642,8 @@
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>248</x>
-     <y>254</y>
+     <x>257</x>
+     <y>575</y>
     </hint>
     <hint type="destinationlabel">
      <x>157</x>
@@ -584,8 +658,8 @@
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>316</x>
-     <y>260</y>
+     <x>325</x>
+     <y>575</y>
     </hint>
     <hint type="destinationlabel">
      <x>286</x>
@@ -593,5 +667,141 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>tvSchedule</sender>
+   <signal>activated(QModelIndex)</signal>
+   <receiver>ActivePersonalProgramEditor</receiver>
+   <slot>on_selectDP(QModelIndex)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>102</x>
+     <y>197</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>-1</x>
+     <y>204</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>tvSchedule</sender>
+   <signal>clicked(QModelIndex)</signal>
+   <receiver>ActivePersonalProgramEditor</receiver>
+   <slot>on_selectDP(QModelIndex)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>57</x>
+     <y>227</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>-5</x>
+     <y>230</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>tvTests</sender>
+   <signal>activated(QModelIndex)</signal>
+   <receiver>ActivePersonalProgramEditor</receiver>
+   <slot>on_selectT(QModelIndex)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>451</x>
+     <y>258</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>752</x>
+     <y>153</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>tvTests</sender>
+   <signal>clicked(QModelIndex)</signal>
+   <receiver>ActivePersonalProgramEditor</receiver>
+   <slot>on_selectT(QModelIndex)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>501</x>
+     <y>212</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>754</x>
+     <y>129</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btnPPAddDP</sender>
+   <signal>clicked()</signal>
+   <receiver>ActivePersonalProgramEditor</receiver>
+   <slot>on_dpAdd()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>306</x>
+     <y>215</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>-1</x>
+     <y>258</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btnPPDelDP</sender>
+   <signal>clicked()</signal>
+   <receiver>ActivePersonalProgramEditor</receiver>
+   <slot>on_dpDel()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>321</x>
+     <y>259</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>-4</x>
+     <y>286</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btnPPDPUp</sender>
+   <signal>clicked()</signal>
+   <receiver>ActivePersonalProgramEditor</receiver>
+   <slot>on_dpMoveUp()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>320</x>
+     <y>307</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>0</x>
+     <y>314</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btnPPDPDn</sender>
+   <signal>clicked()</signal>
+   <receiver>ActivePersonalProgramEditor</receiver>
+   <slot>on_dpMoveDown()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>311</x>
+     <y>352</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>-4</x>
+     <y>348</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
+ <slots>
+  <slot>on_selectDP(QModelIndex)</slot>
+  <slot>on_selectT(QModelIndex)</slot>
+  <slot>on_dpAdd()</slot>
+  <slot>on_dpDel()</slot>
+  <slot>on_dpMoveUp()</slot>
+  <slot>on_dpMoveDown()</slot>
+ </slots>
 </ui>

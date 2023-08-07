@@ -28,6 +28,18 @@ public:
      */
     void load(const QJsonObject& objPPAll);
 
+    /*!
+     * \brief Добавляет объект дневной программы к модели
+     * \param objDP - объект дневной программы
+     */
+    void addDailyProgram(const QJsonObject& objDP);
+
+//    /*!
+//     * \brief Добавляет объект теста к дневной программы к модели
+//     * \param objTest - объект теста
+//     */
+//    void addTest(const QJsonObject& objTest);
+
     QString uid() const {return m_uid;}
     QString name() const {return m_name;}
     QString logoFileName() const {return m_logoFileName;}
