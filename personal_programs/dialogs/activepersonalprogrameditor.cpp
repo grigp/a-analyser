@@ -67,7 +67,7 @@ void ActivePersonalProgramEditor::setPersonalProgram(const QJsonObject &objPPAll
 
 QJsonObject ActivePersonalProgramEditor::personalProgram() const
 {
-
+    return m_mdlPP->save();
 }
 
 void ActivePersonalProgramEditor::on_selectDP(QModelIndex index)
@@ -78,7 +78,7 @@ void ActivePersonalProgramEditor::on_selectDP(QModelIndex index)
 
 void ActivePersonalProgramEditor::on_selectT(QModelIndex index)
 {
-
+    Q_UNUSED(index);
 }
 
 void ActivePersonalProgramEditor::on_dpAdd()

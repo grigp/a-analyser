@@ -29,6 +29,13 @@ public:
     void load(const QJsonObject& objPPAll);
 
     /*!
+     * \brief Создает объект, содержащий программу.
+     * Противовес load(...)
+     * \return
+     */
+    QJsonObject save();
+
+    /*!
      * \brief Добавляет объект дневной программы к модели
      * \param objDP - объект дневной программы
      */

@@ -55,6 +55,11 @@ void PersonalProgram::load(const QJsonObject &objPPAll)
     }
 }
 
+QJsonObject PersonalProgram::save()
+{
+
+}
+
 void PersonalProgram::addDailyProgram(const QJsonObject &objDP)
 {
     //! Заголовок дневной программы
