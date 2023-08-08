@@ -31,7 +31,7 @@ public:
     /*!
      * \brief Создает объект, содержащий программу.
      * Противовес load(...)
-     * \return
+     * \return созданный объект
      */
     QJsonObject save();
 
