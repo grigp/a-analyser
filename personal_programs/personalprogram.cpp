@@ -91,3 +91,24 @@ void PersonalProgram::addDailyProgram(const QJsonObject &objDP)
     //! Строка дневной программы
     appendRow(items);
 }
+
+void PersonalProgram::addTest(int numDP, QString &metUid, QJsonObject &params)
+{
+    //! Кол-во тестов в дневной программе
+    int tc = 0;
+    for (int i = 1; i < columnCount(); ++i)
+    {
+        auto idx = index(numDP, i);
+        if (idx.isValid() && idx.data(PersonalProgramDefines::PersonalProgram::MethodUidRole).toString() != "")
+            tc = i;
+        else
+            break;
+    }
+
+    //! Итем теста
+    auto itemTest = new QStandardItem("");
+    itemTest->setData(metUid, PersonalProgramDefines::PersonalProgram::MethodUidRole);
+    itemTest->setData(params, PersonalProgramDefines::PersonalProgram::ParamsRole);
+
+    setItem(numDP, tc + 1, itemTest);
+}

@@ -11,6 +11,7 @@ class ActivePersonalProgramEditor;
 
 class PersonalProgram;
 class SelectDailyProgramDialog;
+class SelectMethodicDialog;
 
 class ActivePersonalProgramEditor : public QDialog
 {
@@ -40,6 +41,12 @@ private slots:
     void on_dpMoveUp();
     void on_dpMoveDown();
 
+    void on_testAdd();
+    void on_testEdit();
+    void on_testDel();
+    void on_testMoveUp();
+    void on_testMoveDown();
+
 private:
     Ui::ActivePersonalProgramEditor *ui;
 
@@ -56,12 +63,14 @@ private:
     void prepareParams();
 
     QModelIndex selectedDPIndex();
+    QModelIndex selectedTestIndex();
 
     PersonalProgram* m_mdlPP {nullptr};  ///< Модель, хранящая данные индивидуальной программмы
     QStandardItemModel m_mdlDP;          ///< Отдельная модель для отображения списка дневных программ
     QStandardItemModel m_mdlT;           ///< Отдельная модель для отображения списка тестов
 
     SelectDailyProgramDialog* m_dlgSelDP {nullptr};
+    SelectMethodicDialog* m_dlgSelMethod {nullptr};
 };
 
 #endif // ACTIVEPERSONALPROGRAMEDITOR_H

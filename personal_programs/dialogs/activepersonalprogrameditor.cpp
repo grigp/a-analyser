@@ -11,6 +11,7 @@
 #include "personalprogram.h"
 #include "metodicsfactory.h"
 #include "selectdailyprogramdialog.h"
+#include "selectmethodicdialog.h"
 
 ActivePersonalProgramEditor::ActivePersonalProgramEditor(QWidget *parent) :
     QDialog(parent),
@@ -50,7 +51,7 @@ void ActivePersonalProgramEditor::setPersonalProgram(const QJsonObject &objPPAll
 
     QString sSheet = QString("QTableView") +
     "{" +
-        "background-color: rgb(240, 240, 245);" +
+//!        "background-color: rgb(240, 240, 245);" +
         "font-size: 11pt;" +
         "color: rgb(32,88,103);" +
     "}" +
@@ -155,6 +156,140 @@ void ActivePersonalProgramEditor::on_dpMoveDown()
     }
 }
 
+void ActivePersonalProgramEditor::on_testAdd()
+{
+    auto dpIdx = selectedDPIndex();
+    if (dpIdx != QModelIndex())
+    {
+        if (!m_dlgSelMethod)
+            m_dlgSelMethod = new SelectMethodicDialog(this);
+
+        if (m_dlgSelMethod->exec() == QDialog::Accepted)
+        {
+            auto metUid = m_dlgSelMethod->methodic();
+            if (metUid != QUuid().toString())
+            {
+                MetodicsFactory *metFactory = static_cast<AAnalyserApplication*>(QApplication::instance())->getMetodics();
+                auto mi = metFactory->metodic(metUid);
+
+                auto *item = new QStandardItem(mi.name);
+                item->setEditable(false);
+                item->setData(metUid, PersonalProgramDefines::PersonalProgram::MethodUidRole);
+                item->setData(mi.params, PersonalProgramDefines::PersonalProgram::ParamsRole);
+                item->setIcon(QIcon(":/images/Methodics/" + mi.imageName));
+                m_mdlT.appendRow(item);
+
+                m_mdlPP->addTest(dpIdx.row(), metUid, mi.params);
+            }
+            else
+                QMessageBox::information(nullptr, tr("Сообщение"), tr("Методика не выбрана"));
+        }
+    }
+    else
+        QMessageBox::information(nullptr, tr("Сообщение"), tr("Не выбрана дневная программа"));
+}
+
+void ActivePersonalProgramEditor::on_testEdit()
+{
+    auto dpIdx = selectedDPIndex();
+    if (dpIdx != QModelIndex())
+    {
+        auto testIdx = selectedTestIndex();
+        if (testIdx.isValid())
+        {
+            auto metUid = testIdx.data(PersonalProgramDefines::PersonalProgram::MethodUidRole).toString();
+            auto params = testIdx.data(PersonalProgramDefines::PersonalProgram::ParamsRole).toJsonObject();
+            if (DataProvider::editMetodicParams(this, metUid, params))
+            {
+                m_mdlT.itemFromIndex(testIdx)->setData(params, PersonalProgramDefines::PersonalProgram::ParamsRole);
+                m_mdlPP->item(dpIdx.row(), testIdx.row() + 1)->setData(params, PersonalProgramDefines::PersonalProgram::ParamsRole);
+            }
+        }
+        else
+            QMessageBox::information(nullptr, tr("Предупреждение"), tr("Не выбран тест"));
+    }
+    else
+        QMessageBox::information(nullptr, tr("Сообщение"), tr("Не выбрана дневная программа"));
+}
+
+void ActivePersonalProgramEditor::on_testDel()
+{
+    auto dpIdx = selectedDPIndex();
+    if (dpIdx != QModelIndex())
+    {
+        auto testIdx = selectedTestIndex();
+        if (testIdx.isValid())
+        {
+            auto metName = testIdx.data().toString();
+            auto mr = QMessageBox::question(nullptr,
+                                            tr("Запрос"),
+                                            tr("Удалить тест из дневной программы?") + "\n" +
+                                            tr("Тест") + " : " + metName);
+            if (mr == QMessageBox::Yes)
+            {
+                m_mdlT.removeRow(testIdx.row());
+                delete m_mdlPP->item(dpIdx.row(), testIdx.row() + 1);
+            }
+        }
+        else
+            QMessageBox::information(nullptr, tr("Предупреждение"), tr("Не выбран тест"));
+    }
+    else
+        QMessageBox::information(nullptr, tr("Сообщение"), tr("Не выбрана дневная программа"));
+}
+
+void ActivePersonalProgramEditor::on_testMoveUp()
+{
+    auto dpIdx = selectedDPIndex();
+    if (dpIdx != QModelIndex())
+    {
+        auto testIdx = selectedTestIndex();
+        if (testIdx.isValid())
+        {
+            if (testIdx.row() > 0)
+            {
+                auto row = m_mdlT.takeRow(testIdx.row());
+                m_mdlT.insertRow(testIdx.row() - 1, row);
+                ui->tvTests->selectionModel()->clearSelection();
+                ui->tvTests->selectionModel()->select(row.at(0)->index(), QItemSelectionModel::Select);
+                row = m_mdlPP->takeRow(dpIdx.row());
+                row.move(testIdx.row() + 1, testIdx.row());
+                m_mdlPP->insertRow(dpIdx.row(), row);
+            }
+        }
+        else
+            QMessageBox::information(nullptr, tr("Предупреждение"), tr("Не выбран тест"));
+    }
+    else
+        QMessageBox::information(nullptr, tr("Сообщение"), tr("Не выбрана дневная программа"));
+}
+
+void ActivePersonalProgramEditor::on_testMoveDown()
+{
+    auto dpIdx = selectedDPIndex();
+    if (dpIdx != QModelIndex())
+    {
+        auto testIdx = selectedTestIndex();
+        if (testIdx.isValid())
+        {
+            if (testIdx.row() < m_mdlT.rowCount() - 1)
+            {
+                auto row = m_mdlT.takeRow(testIdx.row());
+                m_mdlT.insertRow(testIdx.row() + 1, row);
+                ui->tvTests->selectionModel()->clearSelection();
+                ui->tvTests->selectionModel()->select(row.at(0)->index(), QItemSelectionModel::Select);
+                row = m_mdlPP->takeRow(dpIdx.row());
+                row.move(testIdx.row() + 1, testIdx.row() + 2);
+                m_mdlPP->insertRow(dpIdx.row(), row);
+            }
+        }
+        else
+            QMessageBox::information(nullptr, tr("Предупреждение"), tr("Не выбран тест"));
+    }
+    else
+        QMessageBox::information(nullptr, tr("Сообщение"), tr("Не выбрана дневная программа"));
+}
+
 void ActivePersonalProgramEditor::initListDP()
 {
     m_mdlDP.clear();
@@ -194,6 +329,7 @@ void ActivePersonalProgramEditor::viewDP(const int numDP)
                     auto params = index.data(PersonalProgramDefines::PersonalProgram::ParamsRole).toJsonObject();
 
                     auto item = new QStandardItem(mi.name);
+                    item->setData(uidMethod, PersonalProgramDefines::PersonalProgram::MethodUidRole);
                     item->setData(uidTest, PersonalProgramDefines::PersonalProgram::TestUidRole);
                     item->setData(params, PersonalProgramDefines::PersonalProgram::ParamsRole);
                     item->setIcon(QIcon(":/images/Methodics/" + mi.imageName));
@@ -221,6 +357,15 @@ void ActivePersonalProgramEditor::prepareParams()
 QModelIndex ActivePersonalProgramEditor::selectedDPIndex()
 {
     auto selIdxs = ui->tvSchedule->selectionModel()->selectedIndexes();
+    for (int i = 0; i < selIdxs.size(); ++i)
+        if (selIdxs.at(i).column() == 0)
+            return selIdxs.at(i);
+    return QModelIndex();
+}
+
+QModelIndex ActivePersonalProgramEditor::selectedTestIndex()
+{
+    auto selIdxs = ui->tvTests->selectionModel()->selectedIndexes();
     for (int i = 0; i < selIdxs.size(); ++i)
         if (selIdxs.at(i).column() == 0)
             return selIdxs.at(i);

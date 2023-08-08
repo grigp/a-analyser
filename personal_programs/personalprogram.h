@@ -34,11 +34,13 @@ public:
      */
     void addDailyProgram(const QJsonObject& objDP);
 
-//    /*!
-//     * \brief Добавляет объект теста к дневной программы к модели
-//     * \param objTest - объект теста
-//     */
-//    void addTest(const QJsonObject& objTest);
+    /*!
+     * \brief Добавляет объект теста к дневной программы к модели
+     * \param numDP - номер дневной программы
+     * \param metUid - uid методики
+     * \param params - параметры методики
+     */
+    void addTest(int numDP, QString& metUid, QJsonObject& params);
 
     QString uid() const {return m_uid;}
     QString name() const {return m_name;}

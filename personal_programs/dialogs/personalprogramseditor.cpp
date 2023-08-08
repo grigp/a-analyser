@@ -34,7 +34,7 @@ int PersonalProgramsEditor::exec()
 
     QString sSheet = QString("QTableView") +
     "{" +
-        "background-color: rgb(240, 240, 245);" +
+//!        "background-color: rgb(240, 240, 245);" +
         "font-size: 11pt;" +
         "color: rgb(32,88,103);" +
     "}" +

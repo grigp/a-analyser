@@ -177,7 +177,7 @@
             </sizepolicy>
            </property>
            <property name="text">
-            <string>         </string>
+            <string/>
            </property>
           </widget>
          </item>
@@ -328,6 +328,15 @@
            <layout class="QHBoxLayout" name="horizontalLayout_5">
             <item>
              <widget class="QTableView" name="tvSchedule">
+              <property name="selectionMode">
+               <enum>QAbstractItemView::SingleSelection</enum>
+              </property>
+              <property name="selectionBehavior">
+               <enum>QAbstractItemView::SelectRows</enum>
+              </property>
+              <property name="showGrid">
+               <bool>true</bool>
+              </property>
               <attribute name="horizontalHeaderVisible">
                <bool>false</bool>
               </attribute>
@@ -795,6 +804,86 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>btnDPAddTest</sender>
+   <signal>clicked()</signal>
+   <receiver>ActivePersonalProgramEditor</receiver>
+   <slot>on_testAdd()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>678</x>
+     <y>216</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>753</x>
+     <y>183</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btnDPEditTestParams</sender>
+   <signal>clicked()</signal>
+   <receiver>ActivePersonalProgramEditor</receiver>
+   <slot>on_testEdit()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>689</x>
+     <y>263</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>754</x>
+     <y>209</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btnDPDelTest</sender>
+   <signal>clicked()</signal>
+   <receiver>ActivePersonalProgramEditor</receiver>
+   <slot>on_testDel()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>694</x>
+     <y>307</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>752</x>
+     <y>237</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btnDPTestUp</sender>
+   <signal>clicked()</signal>
+   <receiver>ActivePersonalProgramEditor</receiver>
+   <slot>on_testMoveUp()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>679</x>
+     <y>357</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>752</x>
+     <y>270</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btnDPTestDn</sender>
+   <signal>clicked()</signal>
+   <receiver>ActivePersonalProgramEditor</receiver>
+   <slot>on_testMoveDown()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>686</x>
+     <y>403</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>755</x>
+     <y>305</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>on_selectDP(QModelIndex)</slot>
@@ -803,5 +892,10 @@
   <slot>on_dpDel()</slot>
   <slot>on_dpMoveUp()</slot>
   <slot>on_dpMoveDown()</slot>
+  <slot>on_testAdd()</slot>
+  <slot>on_testEdit()</slot>
+  <slot>on_testDel()</slot>
+  <slot>on_testMoveUp()</slot>
+  <slot>on_testMoveDown()</slot>
  </slots>
 </ui>
