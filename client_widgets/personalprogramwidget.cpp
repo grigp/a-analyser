@@ -84,8 +84,13 @@ void PersonalProgramWidget::on_params()
         dialog->setPersonalProgram(pp);
         if (dialog->exec() == QDialog::Accepted)
         {
+            //! Получить от диалога новую индивидуальную программу
             auto pp = dialog->personalProgram();
-            //DataProvider::setPersonalProgramByUid(uidPP, pp); Записать измененную индивидуальную программу в БД
+            //!Записать измененную индивидуальную программу в БД
+            DataProvider::savePersonalProgramByUid(uidPP, pp);
+            //! Обновить ее на странице
+            if (m_wgts.contains(uidPP))
+                m_wgts.value(uidPP)->assignPersonalProgram(uidPP);
         }
     }
 }

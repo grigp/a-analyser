@@ -958,6 +958,13 @@ QJsonObject DataBase::getPersonalProgramByUid(const QString &uidPP)
     return QJsonObject();
 }
 
+void DataBase::savePersonalProgramByUid(const QString &uidPP, const QJsonObject &objPP)
+{
+    QDir dir = personalProgramsDir();
+    QString pnfn = uidPP;
+    writeTableRec(dir.absoluteFilePath(pnfn), objPP);
+}
+
 QJsonArray DataBase::getPersonalProgramListForPatient(const QString &patientUid)
 {
     QJsonArray retval;

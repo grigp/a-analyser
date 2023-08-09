@@ -37,7 +37,7 @@ void PersonalProgram::load(const QJsonObject &objPPAll)
     m_dateBegin = QDate::fromString(objPPAll["date_begin"].toString(), "dd.MM.yyyy");
     m_dateEnd = QDate::fromString(objPPAll["date_end"].toString(), "dd.MM.yyyy");
     m_uidPatient = objPPAll["patient_uid"].toString();
-    m_uid = objPPAll["uid"].toString();
+    m_uid = objPPAll["pp_uid"].toString();
 
     auto objPP = objPPAll["pp"].toObject();
     m_name = objPP["name"].toString();
@@ -57,7 +57,58 @@ void PersonalProgram::load(const QJsonObject &objPPAll)
 
 QJsonObject PersonalProgram::save()
 {
+    QJsonObject retval;
 
+    retval["patient_uid"] = m_uidPatient;
+    retval["pp_uid"] = m_uid;
+    retval["active"] = m_isActive;
+    retval["date_begin"] = m_dateBegin.toString("dd.MM.yyyy");
+    if (m_dateEnd != QDate())
+        retval["date_end"] = m_dateEnd.toString("dd.MM.yyyy");
+
+    QJsonObject objPP;
+    objPP["logo_file_name"] = m_logoFileName;
+    objPP["min_time_between_dp"] = m_minTimeBetweenDP;
+    objPP["max_time_between_dp"] = m_maxTimeBetweenDP;
+    objPP["name"] = m_name;
+    objPP["uid"] = m_uid;
+
+    QJsonArray arrDP;
+    for (int i = 0; i < rowCount(); ++i)
+    {
+        auto idxRootDP = index(i, 0);
+        QJsonObject objDP;
+        objDP["uid"] = idxRootDP.data(PersonalProgramDefines::PersonalProgram::DPUidRole).toString();
+        objDP["name"] = idxRootDP.data(PersonalProgramDefines::PersonalProgram::DPNameRole).toString();
+        QString dt = idxRootDP.data(PersonalProgramDefines::PersonalProgram::DPDateTimeRole).toString();
+        if (dt != "")
+            objDP["date_time"] = dt;
+
+        QJsonArray arrTests;
+        for (int j = 1; j < columnCount(); ++j)
+        {
+            auto idxTest = index(i, j);
+            auto uidMethod = idxTest.data(PersonalProgramDefines::PersonalProgram::MethodUidRole).toString();
+            if (uidMethod != "")
+            {
+                QJsonObject objTest;
+                objTest["uid"] = uidMethod;
+                objTest["params"] = idxTest.data(PersonalProgramDefines::PersonalProgram::ParamsRole).toJsonObject();
+                auto uidTest = idxTest.data(PersonalProgramDefines::PersonalProgram::TestUidRole).toString();
+                if (uidTest != "")
+                    objTest["test_uid"] = uidTest;
+
+                arrTests << objTest;
+            }
+        }
+        objDP["test_list"] = arrTests;
+        arrDP << objDP;
+    }
+
+    objPP["dp_list"] = arrDP;
+    retval["pp"] = objPP;
+
+    return retval;
 }
 
 void PersonalProgram::addDailyProgram(const QJsonObject &objDP)

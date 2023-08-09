@@ -294,6 +294,11 @@ QJsonObject DataProvider::getPersonalProgramByUid(const QString& uidPP)
     return static_cast<AAnalyserApplication*>(QApplication::instance())->getDB()->getPersonalProgramByUid(uidPP);
 }
 
+void DataProvider::savePersonalProgramByUid(const QString& uidPP, const QJsonObject& objPP)
+{
+    static_cast<AAnalyserApplication*>(QApplication::instance())->getDB()->savePersonalProgramByUid(uidPP, objPP);
+}
+
 QJsonArray DataProvider::getPersonalProgramListForPatient(const QString &patientUid)
 {
     return static_cast<AAnalyserApplication*>(QApplication::instance())->getDB()->getPersonalProgramListForPatient(patientUid);

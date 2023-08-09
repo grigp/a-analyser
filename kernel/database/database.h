@@ -462,6 +462,13 @@ public:
     QJsonObject getPersonalProgramByUid(const QString& uidPP);
 
     /*!
+     * \brief Записать измененную индивидуальную программу в БД
+     * \param uidPP - uid индивидуальной программы
+     * \param objPP - объект индивидуальной программы
+     */
+    void savePersonalProgramByUid(const QString& uidPP, const QJsonObject& objPP);
+
+    /*!
      * \brief Возвращает список индивидуальных программ, когда либо выполнявшихся пациентом
      * В том числе и активную
      * \param patientUid - uid пациента
