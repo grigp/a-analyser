@@ -47,6 +47,9 @@ private slots:
     void on_testMoveUp();
     void on_testMoveDown();
 
+    void on_minTimeChanged(int idx);
+    void on_maxTimeChanged(int idx);
+
 private:
     Ui::ActivePersonalProgramEditor *ui;
 

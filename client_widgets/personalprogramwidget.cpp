@@ -2,6 +2,7 @@
 #include "ui_personalprogramwidget.h"
 
 #include <QUuid>
+#include <QMessageBox>
 #include <QDebug>
 
 #include "aanalyserapplication.h"
@@ -76,23 +77,31 @@ void PersonalProgramWidget::on_delete()
 void PersonalProgramWidget::on_params()
 {
     auto index = selectedIndex();
-    if (index != QModelIndex() && index.isValid())
+    if (index.parent() == QModelIndex())
     {
-        auto uidPP = index.data(DatabaseWidgetDefines::PatientsModel::PatientPPUidRole).toString();
-        auto dialog = new ActivePersonalProgramEditor(this);
-        auto pp = DataProvider::getPersonalProgramByUid(uidPP);
-        dialog->setPersonalProgram(pp);
-        if (dialog->exec() == QDialog::Accepted)
+        //! Проверка ИП на завершенность.
+        //! Завершенные всегда находятся в выпадающем списке у пациента, а активные в корне
+        //! То есть, просто проверяем, имеется ли корневой узел
+        if (index != QModelIndex() && index.isValid())
         {
-            //! Получить от диалога новую индивидуальную программу
-            auto pp = dialog->personalProgram();
-            //!Записать измененную индивидуальную программу в БД
-            DataProvider::savePersonalProgramByUid(uidPP, pp);
-            //! Обновить ее на странице
-            if (m_wgts.contains(uidPP))
-                m_wgts.value(uidPP)->assignPersonalProgram(uidPP);
+            auto uidPP = index.data(DatabaseWidgetDefines::PatientsModel::PatientPPUidRole).toString();
+            auto dialog = new ActivePersonalProgramEditor(this);
+            auto pp = DataProvider::getPersonalProgramByUid(uidPP);
+            dialog->setPersonalProgram(pp);
+            if (dialog->exec() == QDialog::Accepted)
+            {
+                //! Получить от диалога новую индивидуальную программу
+                auto pp = dialog->personalProgram();
+                //!Записать измененную индивидуальную программу в БД
+                DataProvider::savePersonalProgramByUid(uidPP, pp);
+                //! Обновить ее на странице
+                if (m_wgts.contains(uidPP))
+                    m_wgts.value(uidPP)->assignPersonalProgram(uidPP);
+            }
         }
     }
+    else
+        QMessageBox::information(nullptr, tr("Предупреждение"), tr("Нельзя редактировать завершенные индивидуальные программы"));
 }
 
 void PersonalProgramWidget::on_selectionChanged(const QItemSelection &selected, const QItemSelection &deselected)

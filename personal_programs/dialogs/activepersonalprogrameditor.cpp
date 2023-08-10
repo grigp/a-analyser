@@ -13,6 +13,9 @@
 #include "selectdailyprogramdialog.h"
 #include "selectmethodicdialog.h"
 
+//TODO:
+//2. пройденные ДП надо помечать и нельзя редактировать
+
 ActivePersonalProgramEditor::ActivePersonalProgramEditor(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::ActivePersonalProgramEditor)
@@ -288,6 +291,44 @@ void ActivePersonalProgramEditor::on_testMoveDown()
     }
     else
         QMessageBox::information(nullptr, tr("Сообщение"), tr("Не выбрана дневная программа"));
+}
+
+void ActivePersonalProgramEditor::on_minTimeChanged(int idx)
+{
+    Q_UNUSED(idx);
+    auto valMin = ui->cbMinTimeBetweenDP->currentData().toInt();
+    auto valMax = ui->cbMaxTimeBetweenDP->currentData().toInt();
+    if (valMin > valMax)
+    {
+        while (valMin > valMax)
+        {
+            int idx = ui->cbMaxTimeBetweenDP->currentIndex();
+            if (idx < ui->cbMaxTimeBetweenDP->count() - 1)
+                ui->cbMaxTimeBetweenDP->setCurrentIndex(idx + 1);
+            else
+                break;
+            valMax = ui->cbMaxTimeBetweenDP->currentData().toInt();
+        }
+    }
+}
+
+void ActivePersonalProgramEditor::on_maxTimeChanged(int idx)
+{
+    Q_UNUSED(idx);
+    auto valMin = ui->cbMinTimeBetweenDP->currentData().toInt();
+    auto valMax = ui->cbMaxTimeBetweenDP->currentData().toInt();
+    if (valMax < valMin)
+    {
+        while (valMax < valMin)
+        {
+            int idx = ui->cbMinTimeBetweenDP->currentIndex();
+            if (idx > 0)
+                ui->cbMinTimeBetweenDP->setCurrentIndex(idx - 1);
+            else
+                break;
+            valMin = ui->cbMinTimeBetweenDP->currentData().toInt();
+        }
+    }
 }
 
 void ActivePersonalProgramEditor::initListDP()

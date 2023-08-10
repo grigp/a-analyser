@@ -884,6 +884,38 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>cbMinTimeBetweenDP</sender>
+   <signal>currentIndexChanged(int)</signal>
+   <receiver>ActivePersonalProgramEditor</receiver>
+   <slot>on_minTimeChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>672</x>
+     <y>106</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>755</x>
+     <y>51</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>cbMaxTimeBetweenDP</sender>
+   <signal>currentIndexChanged(int)</signal>
+   <receiver>ActivePersonalProgramEditor</receiver>
+   <slot>on_maxTimeChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>688</x>
+     <y>131</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>755</x>
+     <y>77</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>on_selectDP(QModelIndex)</slot>
@@ -897,5 +929,7 @@
   <slot>on_testDel()</slot>
   <slot>on_testMoveUp()</slot>
   <slot>on_testMoveDown()</slot>
+  <slot>on_minTimeChanged(int)</slot>
+  <slot>on_maxTimeChanged(int)</slot>
  </slots>
 </ui>
