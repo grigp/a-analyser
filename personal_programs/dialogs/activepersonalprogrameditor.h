@@ -5,6 +5,8 @@
 #include <QJsonObject>
 #include <QStandardItemModel>
 
+#include "personalprogramdefines.h"
+
 namespace Ui {
 class ActivePersonalProgramEditor;
 }
@@ -20,6 +22,11 @@ class ActivePersonalProgramEditor : public QDialog
 public:
     explicit ActivePersonalProgramEditor(QWidget *parent = nullptr);
     ~ActivePersonalProgramEditor();
+
+    enum DPAdvancedRoles
+    {
+        DPCompletedRole = PersonalProgramDefines::PersonalProgram::PersonalProgramUserRole + 1
+    };
 
     /*!
      * \brief Отображает данные индивидуальной программы
