@@ -51,8 +51,8 @@ void TestInfoDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opti
         //! Выделение итема
         if (QAbstractItemView* tableView = qobject_cast<QAbstractItemView*>(this->parent()))
         {
-            QModelIndex hover = tableView->indexAt(tableView->viewport()->mapFromGlobal(QCursor::pos()));
-            if (hover.row() == index.row() && hover.column() == index.column())
+            auto selIdxs = tableView->selectionModel()->selectedIndexes();
+            if (selIdxs.contains(index))
             {
                 painter->setBrush(QBrush(Qt::NoBrush));
                 painter->setPen(Qt::red);
