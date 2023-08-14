@@ -12,6 +12,7 @@ namespace AAnalyserSettingsParams
     static const QString pn_country = "Country";
     static const QString pn_sity = "Sity";
     static const QString pn_g = "g";
+    static const QString pn_runningMode = "RunningMode";
 
     static const QString pc_userLocalize = "UserLocalize";
 
@@ -52,7 +53,7 @@ private:
     void save();
 
     void fillListMonitors();
-
+    void fillRunningMode();
     void fillSities(const QString& country, const QString& sity);
 
     QStandardItemModel m_mdlSities;

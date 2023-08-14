@@ -3,6 +3,7 @@
 
 #include "aanalyserapplication.h"
 #include "settingsprovider.h"
+#include "basedefines.h"
 
 #include <QApplication>
 #include <QDesktopWidget>
@@ -19,6 +20,7 @@ AAnalyserSettings::AAnalyserSettings(QWidget *parent) :
     ui->setupUi(this);
     ui->twTabs->setCurrentIndex(0);
     fillListMonitors();
+    fillRunningMode();
 }
 
 AAnalyserSettings::~AAnalyserSettings()
@@ -70,6 +72,9 @@ void AAnalyserSettings::load()
         ui->tvUserLocalize->selectionModel()->select(m_idxSity, QItemSelectionModel::Select);
         ui->tvUserLocalize->scrollTo(m_idxSity);
     }
+
+    auto rm = SettingsProvider::valueFromRegAppCopy("", AAnalyserSettingsParams::pn_runningMode, BaseDefines::rmOperator).toInt();
+    ui->cbRunningMode->setCurrentIndex(rm);
 }
 
 void AAnalyserSettings::save()
@@ -101,6 +106,9 @@ void AAnalyserSettings::save()
         SettingsProvider::setValueToRegAppCopy(AAnalyserSettingsParams::pc_userLocalize, AAnalyserSettingsParams::pn_sity, sity);
         SettingsProvider::setValueToRegAppCopy(AAnalyserSettingsParams::pc_userLocalize, AAnalyserSettingsParams::pn_g, g);
     }
+
+    auto rm = ui->cbRunningMode->currentIndex();
+    SettingsProvider::setValueToRegAppCopy("", AAnalyserSettingsParams::pn_runningMode, rm);
 }
 
 void AAnalyserSettings::fillListMonitors()
@@ -111,6 +119,13 @@ void AAnalyserSettings::fillListMonitors()
         if (!app->desktop()->availableGeometry(i).contains(app->mainWindow()->geometry().center()))
             ui->cbPatientWindowNumber->addItem(QString::number(i + 1), i);
     }
+}
+
+void AAnalyserSettings::fillRunningMode()
+{
+    ui->cbRunningMode->clear();
+    ui->cbRunningMode->addItem(tr("с оператором"), BaseDefines::rmOperator);
+    ui->cbRunningMode->addItem(tr("автоматический"), BaseDefines::rmAutomatic);
 }
 
 void AAnalyserSettings::fillSities(const QString& country, const QString& sity)

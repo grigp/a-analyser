@@ -197,6 +197,15 @@ enum TestLevel
     , tlFragment    ///< Фрагмента сигнала (на будущее)
 };
 
+/*!
+ * \brief режимы проведения тестов The RunningMode enum
+ */
+enum RunningMode
+{
+      rmOperator = 0  ///< С оператором
+    , rmAutomatic     ///< Автоматический
+};
+
 
 }
 
