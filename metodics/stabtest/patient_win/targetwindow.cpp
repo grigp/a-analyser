@@ -33,6 +33,11 @@ void TargetWindow::stop()
 
 }
 
+void TargetWindow::setFrontComment(const QString &comment)
+{
+
+}
+
 QVariant TargetWindow::result()
 {
     return QVariant();

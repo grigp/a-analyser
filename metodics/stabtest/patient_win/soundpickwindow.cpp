@@ -8,6 +8,8 @@ SoundPickWindow::SoundPickWindow(QWidget *parent) :
     ui->setupUi(this);
 
     m_player.setMedia(QUrl("qrc:/sound/03.wav"));
+    ui->lblFrontComment->setStyleSheet("font-size: 44pt; color: rgb(180, 0, 0);");
+    setFrontComment("");
 }
 
 SoundPickWindow::~SoundPickWindow()
@@ -37,6 +39,12 @@ void SoundPickWindow::stop()
     killTimer(m_tm);
 }
 
+void SoundPickWindow::setFrontComment(const QString &comment)
+{
+    ui->lblFrontComment->setText(comment);
+    ui->lblFrontComment->setVisible(comment != "");
+}
+
 QVariant SoundPickWindow::result()
 {
     return m_soundCount;
@@ -47,4 +55,10 @@ void SoundPickWindow::timerEvent(QTimerEvent *event)
     m_player.play();
     ++m_soundCount;
     PatientWindow::timerEvent(event);
+}
+
+void SoundPickWindow::resizeEvent(QResizeEvent *event)
+{
+    ui->lblFrontComment->setGeometry(geometry());
+    PatientWindow::resizeEvent(event);
 }

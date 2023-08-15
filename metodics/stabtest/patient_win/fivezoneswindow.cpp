@@ -35,6 +35,11 @@ void FiveZonesWindow::stop()
 
 }
 
+void FiveZonesWindow::setFrontComment(const QString &comment)
+{
+
+}
+
 QVariant FiveZonesWindow::result()
 {
     return QVariant();

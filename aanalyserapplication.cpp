@@ -35,6 +35,7 @@
 #include "openpersonalprogramdialog.h"
 #include "patientsmodel.h"
 #include "patientsproxymodel.h"
+#include "aanalysersettings.h"
 
 AAnalyserApplication::AAnalyserApplication(int &argc, char **argv)
     : QApplication(argc, argv)
@@ -81,6 +82,9 @@ AAnalyserApplication::AAnalyserApplication(int &argc, char **argv)
 
         m_pmdlPatients->setSourceModel(m_mdlPatients);
         m_pmdlPatientsPP->setSourceModel(m_mdlPatients);
+
+        auto rm = SettingsProvider::valueFromRegAppCopy("", AAnalyserSettingsParams::pn_runningMode, BaseDefines::rmOperator).toInt();
+        m_runningMode = static_cast<BaseDefines::RunningMode>(rm);
     });
 
     m_asi.uidMethodic = "";
@@ -861,6 +865,12 @@ QWidget *AAnalyserApplication::getOpenedTest(const QString &testUid)
     if (m_openedTests.contains(testUid))
         return m_openedTests.value(testUid, nullptr);
     return nullptr;
+}
+
+void AAnalyserApplication::doSettingsChanged()
+{
+    auto rm = SettingsProvider::valueFromRegAppCopy("", AAnalyserSettingsParams::pn_runningMode, BaseDefines::rmOperator).toInt();
+    m_runningMode = static_cast<BaseDefines::RunningMode>(rm);
 }
 
 bool AAnalyserApplication::notify(QObject *re, QEvent *ev)

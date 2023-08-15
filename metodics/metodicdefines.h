@@ -2,6 +2,7 @@
 #define METODICDEFINES_H
 
 #include <QString>
+#include <QList>
 #include <QJsonObject>
 
 namespace MetodicDefines
@@ -82,6 +83,22 @@ namespace MetodicDefines
         }
     };
 
+    /*!
+     * \brief Этапы статической пробы для автоматического режима The AutoModeStaticStages enum
+     */
+    enum AutoModeStaticStages
+    {
+          amssLatent0 = 0    ///< Латентный период от старта до начала центровки
+        , amssZeroingWait    ///< Ожидание центровки
+        , amssLatent1        ///< Латентный период от начала центровки до начала записи
+        , amssRecordingWait  ///< Ожидание записи
+        , amssRecording      ///< Запись
+    };
+
+    ///< Список этапов для статической пробы основной
+    const QList<AutoModeStaticStages> AutoStagesBase {amssLatent0, amssZeroingWait, amssLatent1, amssRecordingWait, amssRecording};
+    ///< Список этапов для статической пробы без центровки
+    const QList<AutoModeStaticStages> AutoStagesWithoutZeroing {amssLatent0, amssRecordingWait, amssRecording};
 }
 
 #endif // METODICDEFINES_H

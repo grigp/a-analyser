@@ -1,6 +1,9 @@
 #include "coloredcirclewindow.h"
 #include "ui_coloredcirclewindow.h"
 
+#include <QResizeEvent>
+#include <QDebug>
+
 namespace  {
 
 static QList<QColor> colors {Qt::white, Qt::red, Qt::green, Qt::blue, Qt::darkYellow, Qt::lightGray};
@@ -14,6 +17,9 @@ ColoredCircleWindow::ColoredCircleWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     nextColor();
+
+    ui->lblFrontComment->setStyleSheet("font-size: 44pt; color: rgb(180, 0, 0);");
+    setFrontComment("");
 }
 
 ColoredCircleWindow::~ColoredCircleWindow()
@@ -43,6 +49,12 @@ void ColoredCircleWindow::stop()
     killTimer(m_tm);
 }
 
+void ColoredCircleWindow::setFrontComment(const QString &comment)
+{
+    ui->lblFrontComment->setText(comment);
+    ui->lblFrontComment->setVisible(comment != "");
+}
+
 QVariant ColoredCircleWindow::result()
 {
     return m_targetColorCount;
@@ -52,6 +64,12 @@ void ColoredCircleWindow::timerEvent(QTimerEvent *event)
 {
     if (event->timerId() == m_tm)
         nextColor();
+}
+
+void ColoredCircleWindow::resizeEvent(QResizeEvent *event)
+{
+    ui->lblFrontComment->setGeometry(ui->wgtCircle->geometry());
+    PatientWindow::resizeEvent(event);
 }
 
 void ColoredCircleWindow::nextColor()

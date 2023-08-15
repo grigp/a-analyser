@@ -98,23 +98,101 @@
         </widget>
        </item>
        <item>
-        <widget class="QFrame" name="frRunningMode">
-         <property name="frameShape">
-          <enum>QFrame::StyledPanel</enum>
+        <widget class="QGroupBox" name="gbRunningMode">
+         <property name="title">
+          <string>Режим проведения тестов</string>
          </property>
-         <property name="frameShadow">
-          <enum>QFrame::Raised</enum>
-         </property>
-         <layout class="QHBoxLayout" name="horizontalLayout_4">
+         <layout class="QVBoxLayout" name="verticalLayout_6">
           <item>
-           <widget class="QLabel" name="lblRunningMode">
-            <property name="text">
-             <string>Режим проведения тестов</string>
+           <widget class="QComboBox" name="cbRunningMode"/>
+          </item>
+          <item>
+           <widget class="QFrame" name="frTimeCounter">
+            <property name="frameShape">
+             <enum>QFrame::StyledPanel</enum>
             </property>
+            <property name="frameShadow">
+             <enum>QFrame::Raised</enum>
+            </property>
+            <layout class="QHBoxLayout" name="horizontalLayout_4">
+             <item>
+              <widget class="QLabel" name="lblTimeCounter">
+               <property name="text">
+                <string>Отсчитывать время, секунд</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QSpinBox" name="edTimeCounter">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>70</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="minimum">
+                <number>1</number>
+               </property>
+               <property name="maximum">
+                <number>10</number>
+               </property>
+               <property name="value">
+                <number>5</number>
+               </property>
+              </widget>
+             </item>
+            </layout>
            </widget>
           </item>
           <item>
-           <widget class="QComboBox" name="cbRunningMode"/>
+           <widget class="QFrame" name="frTimeLatent">
+            <property name="frameShape">
+             <enum>QFrame::StyledPanel</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Raised</enum>
+            </property>
+            <layout class="QHBoxLayout" name="horizontalLayout_5">
+             <item>
+              <widget class="QLabel" name="lblTimeLatent">
+               <property name="text">
+                <string>Латентный период, секунд</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QSpinBox" name="edTimeLatent">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>70</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="minimum">
+                <number>1</number>
+               </property>
+               <property name="maximum">
+                <number>10</number>
+               </property>
+               <property name="value">
+                <number>2</number>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
           </item>
          </layout>
         </widget>
@@ -286,8 +364,8 @@
    <slot>cbOnePatientClicked(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>127</x>
-     <y>116</y>
+     <x>148</x>
+     <y>112</y>
     </hint>
     <hint type="destinationlabel">
      <x>522</x>
@@ -295,8 +373,25 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>cbRunningMode</sender>
+   <signal>currentIndexChanged(int)</signal>
+   <receiver>AAnalyserSettings</receiver>
+   <slot>on_runningModeChange(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>326</x>
+     <y>203</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>525</x>
+     <y>181</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>cbOnePatientClicked(bool)</slot>
+  <slot>on_runningModeChange(int)</slot>
  </slots>
 </ui>

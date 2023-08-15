@@ -62,8 +62,9 @@ void PatientsWidget::onDbConnect()
 
 void PatientsWidget::onShow()
 {
-    ui->tvPatients->selectionModel()->clearSelection();
-    static_cast<AAnalyserApplication*>(QApplication::instance())->doSelectPatient("");
+    //TODO: При переключении к ИП надо забывать это выделение, а при вызове других окон - нет
+//    ui->tvPatients->selectionModel()->clearSelection();
+//    static_cast<AAnalyserApplication*>(QApplication::instance())->doSelectPatient("");
 }
 
 void PatientsWidget::onHide()

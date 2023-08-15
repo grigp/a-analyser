@@ -25,6 +25,12 @@ public:
     virtual void stop() = 0;
 
     /*!
+     * \brief Виртуальная функция, помещающая комментарий поверх окна
+     * \param comment - текст комментария
+     */
+    virtual void setFrontComment(const QString& comment) = 0;
+
+    /*!
      * \brief Возвращает результат работы окна пациента
      */
     virtual QVariant result() = 0;

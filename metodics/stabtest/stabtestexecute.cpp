@@ -20,6 +20,7 @@
 #include "targetwindow.h"
 #include "fivezoneswindow.h"
 #include "driverdefines.h"
+#include "aanalysersettings.h"
 
 #include <QJsonObject>
 #include <QJsonArray>
@@ -62,6 +63,7 @@ StabTestExecute::~StabTestExecute()
 void StabTestExecute::setParams(const QJsonObject &params)
 {
     m_params.clear();
+    m_stages.clear();
     auto prbsArr = params["probes"].toArray();
     for (int i = 0; i < prbsArr.size(); ++i)
     {
@@ -77,6 +79,10 @@ void StabTestExecute::setParams(const QJsonObject &params)
         pp.scale = obj["scale"].toInt();
 
         m_params << pp;
+        if (pp.zeroingEnabled)
+            m_stages << MetodicDefines::AutoStagesBase;
+        else
+            m_stages << MetodicDefines::AutoStagesWithoutZeroing;
     }
 
     ui->lblProbeTitle->setText(probeParams().name + " - " + m_kard.fio);
@@ -92,6 +98,69 @@ void StabTestExecute::closeEvent(QCloseEvent *event)
         m_driver->deleteLater();
     }
     QWidget::closeEvent(event);
+}
+
+void StabTestExecute::timerEvent(QTimerEvent *event)
+{
+    if (event->timerId() == m_autoModeTimerId)
+    {
+        ++m_autoModeSecCounter;
+        if (m_stage == MetodicDefines::amssLatent0)
+        {
+            if (m_autoModeSecCounter == m_autoTimeLatent)
+            {
+                if (m_patientWin)
+                    m_patientWin->setFrontComment(msgWaitEvent(tr("Центровка"), m_autoTimeRun));
+                ++m_stageNum;
+                m_stage = m_stages.at(m_probe).at(m_stageNum);
+                m_autoModeSecCounter = 0;
+            }
+        }
+        else
+        if (m_stage == MetodicDefines::amssZeroingWait)
+        {
+            if (m_patientWin)
+                m_patientWin->setFrontComment(msgWaitEvent(tr("Центровка"), m_autoTimeRun - m_autoModeSecCounter));
+            if (m_autoModeSecCounter == m_autoTimeRun)
+            {
+                if (m_patientWin)
+                    m_patientWin->setFrontComment("");
+                zeroing();
+                ++m_stageNum;
+                m_stage = m_stages.at(m_probe).at(m_stageNum);
+                m_autoModeSecCounter = 0;
+            }
+        }
+        else
+        if (m_stage == MetodicDefines::amssLatent1)
+        {
+            if (m_autoModeSecCounter == m_autoTimeLatent)
+            {
+                if (m_patientWin)
+                    m_patientWin->setFrontComment(msgWaitEvent(tr("Запись"), m_autoTimeRun));
+                ++m_stageNum;
+                m_stage = m_stages.at(m_probe).at(m_stageNum);
+                m_autoModeSecCounter = 0;
+            }
+        }
+        else
+        if (m_stage == MetodicDefines::amssRecordingWait)
+        {
+            if (m_patientWin)
+                m_patientWin->setFrontComment(msgWaitEvent(tr("Запись"), m_autoTimeRun - m_autoModeSecCounter));
+            if (m_autoModeSecCounter == m_autoTimeRun)
+            {
+                if (m_patientWin)
+                    m_patientWin->setFrontComment("");
+                recording();
+                ++m_stageNum;
+                m_stage = m_stages.at(m_probe).at(m_stageNum);
+                m_autoModeSecCounter = 0;
+            }
+        }
+    }
+
+    QWidget::timerEvent(event);
 }
 
 void StabTestExecute::start()
@@ -152,6 +221,13 @@ void StabTestExecute::start()
         ui->splitter->restoreState(val);
 
         m_driver->start();
+
+        //! Запуск таймера в режиме автоматики
+        auto rm = static_cast<AAnalyserApplication*>(QApplication::instance())->runningMode();
+        m_autoTimeRun = SettingsProvider::valueFromRegAppCopy("", AAnalyserSettingsParams::pn_timeCounter, 5).toInt();
+        m_autoTimeLatent = SettingsProvider::valueFromRegAppCopy("", AAnalyserSettingsParams::pn_timeLatent, 2).toInt();
+        if (rm == BaseDefines::rmAutomatic)
+            m_autoModeTimerId = startTimer(1000);
     }
     else
     {
@@ -430,11 +506,16 @@ void StabTestExecute::nextProbe()
         ui->wgtAdvChannels->enabledControls(!m_isRecording);
 
         scaleChange(ui->cbScale->currentIndex());
+        m_stage = MetodicDefines::amssLatent0;
+        m_stageNum = 0;
+        m_autoModeSecCounter = 0;
     }
 }
 
 void StabTestExecute::finishTest()
 {
+    killTimer(m_autoModeTimerId);
+
     hidePatientWindow();
     m_isRecording = false;
     m_trd->saveTest();
@@ -489,5 +570,10 @@ void StabTestExecute::hidePatientWindow()
         delete m_patientWin;
         m_patientWin = nullptr;
     }
+}
+
+QString StabTestExecute::msgWaitEvent(const QString &eventName, const int sec) const
+{
+    return eventName + " " + QString::number(sec) +  " " + tr("сек");
 }
 

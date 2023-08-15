@@ -13,6 +13,8 @@ namespace AAnalyserSettingsParams
     static const QString pn_sity = "Sity";
     static const QString pn_g = "g";
     static const QString pn_runningMode = "RunningMode";
+    static const QString pn_timeCounter = "TimeCounter";
+    static const QString pn_timeLatent = "TimeLatent";
 
     static const QString pc_userLocalize = "UserLocalize";
 
@@ -39,6 +41,9 @@ public slots:
     void accept() override;
 
     void cbOnePatientClicked(bool checked);
+
+private slots:
+    void on_runningModeChange(int idx);
 
 private:
     Ui::AAnalyserSettings *ui;

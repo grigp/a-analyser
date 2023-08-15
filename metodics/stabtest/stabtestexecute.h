@@ -4,6 +4,7 @@
 #include "stabtestparams.h"
 #include "datadefines.h"
 #include "deviceprotocols.h"
+#include "metodicdefines.h"
 
 #include <QWidget>
 
@@ -33,6 +34,7 @@ public:
 
 protected:
     void closeEvent(QCloseEvent *event);
+    void timerEvent(QTimerEvent *event);
 
 private slots:
     void start();
@@ -106,6 +108,13 @@ private:
      */
     void hidePatientWindow();
 
+    /*!
+     * \brief Возвращает строку с текстом ожидания события
+     * \param eventName - название события
+     * \param sec - время до центро
+     */
+    QString msgWaitEvent(const QString& eventName, const int sec) const;
+
     int m_freqStab {50};        ///< Частота дискретизации стабилограммы
     int m_freqZ {50};           ///< Частота дискретизации баллистограммы
     int m_maxDiap {128};        ///< Максимальный диапазон
@@ -128,6 +137,14 @@ private:
     DeviceProtocols::MultiPlatformControl* m_bilatControl {nullptr};   ///< Управление билатаральным режимом в драйвере
     QRect m_platform1 {QRect(0, 0, 0, 0)};   ///< Платформы в билатеральном режиме
     QRect m_platform2 {QRect(0, 0, 0, 0)};
+
+    int m_autoModeTimerId {-1};   ///< id таймера для режима автономной работы
+    int m_stageNum {0};           ///< Номер этапа
+    MetodicDefines::AutoModeStaticStages m_stage {MetodicDefines::amssLatent0};  ///< Этап в автоматическом режиме
+    int m_autoModeSecCounter {0};  ///< Счетчик секунд в автоматическом режиме
+    int m_autoTimeRun {5};         ///< Время задержки до операции
+    int m_autoTimeLatent {2};      ///< Длительность латентного периода
+    QList<QList<MetodicDefines::AutoModeStaticStages>> m_stages;  ///< Списсок этапов для автоматического режима для каждой пробы
 };
 
 #endif // STABTESTEXECUTE_H

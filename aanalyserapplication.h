@@ -634,6 +634,25 @@ public:
      */
     QWidget* getOpenedTest(const QString& testUid);
 
+    ///<-----------------------------------------------------------------------------
+    /// Управление режимом проведения тестов: с оператором или автоматический
+    /*!
+     * \brief Возвращает режим проведения тестов: с оператором или автоматический
+     */
+    BaseDefines::RunningMode runningMode() const {return m_runningMode;}
+
+    /*!
+     * \brief Устанавливает режим проведения тестов: с оператором или автоматический, но не запоминает его
+     * \param rm
+     */
+    void setRunningMode(const BaseDefines::RunningMode rm) {m_runningMode = rm;}
+
+    ///<-----------------------------------------------------------------------------
+    /*!
+     * \brief Вызывается при изменении настроек приложения
+     */
+    void doSettingsChanged();
+
 signals:
     void dbConnected();
 
@@ -774,6 +793,8 @@ private:
     SummaryDefines::ActiveSummaryInfo m_asi;
 
     QMap<QString, QWidget*> m_openedTests;   ///< Указатели на виджет визуализатора открытого теста
+
+    BaseDefines::RunningMode m_runningMode {BaseDefines::rmOperator};  ///< Режим запуска тестов: с оператором
 };
 
 #endif // AANALYSERAPPLICATION_H

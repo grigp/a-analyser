@@ -46,6 +46,11 @@ void AAnalyserSettings::cbOnePatientClicked(bool checked)
     ui->lblOnePatientFIO->setEnabled(checked);
 }
 
+void AAnalyserSettings::on_runningModeChange(int idx)
+{
+    ui->frTimeCounter->setEnabled(static_cast<BaseDefines::RunningMode>(idx) == BaseDefines::rmAutomatic);
+    ui->frTimeLatent->setEnabled(static_cast<BaseDefines::RunningMode>(idx) == BaseDefines::rmAutomatic);
+}
 
 void AAnalyserSettings::load()
 {
@@ -75,6 +80,13 @@ void AAnalyserSettings::load()
 
     auto rm = SettingsProvider::valueFromRegAppCopy("", AAnalyserSettingsParams::pn_runningMode, BaseDefines::rmOperator).toInt();
     ui->cbRunningMode->setCurrentIndex(rm);
+    on_runningModeChange(rm);
+
+    auto tm = SettingsProvider::valueFromRegAppCopy("", AAnalyserSettingsParams::pn_timeCounter, 5).toInt();
+    ui->edTimeCounter->setValue(tm);
+
+    auto l = SettingsProvider::valueFromRegAppCopy("", AAnalyserSettingsParams::pn_timeLatent, 2).toInt();
+    ui->edTimeLatent->setValue(l);
 }
 
 void AAnalyserSettings::save()
@@ -109,6 +121,12 @@ void AAnalyserSettings::save()
 
     auto rm = ui->cbRunningMode->currentIndex();
     SettingsProvider::setValueToRegAppCopy("", AAnalyserSettingsParams::pn_runningMode, rm);
+
+    auto tm = ui->edTimeCounter->value();
+    SettingsProvider::setValueToRegAppCopy("", AAnalyserSettingsParams::pn_timeCounter, tm);
+
+    auto l = ui->edTimeLatent->value();
+    SettingsProvider::setValueToRegAppCopy("", AAnalyserSettingsParams::pn_timeLatent, l);
 }
 
 void AAnalyserSettings::fillListMonitors()

@@ -227,7 +227,8 @@ void MainWindow::onDeviceControl()
 void MainWindow::onSettings()
 {
     AAnalyserSettings dlg(this);
-    dlg.exec();
+    if (dlg.exec() == QDialog::Accepted)
+        static_cast<AAnalyserApplication*>(QApplication::instance())->doSettingsChanged();
 }
 
 void MainWindow::onAbout()

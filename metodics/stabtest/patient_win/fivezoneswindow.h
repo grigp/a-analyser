@@ -17,14 +17,20 @@ class FiveZonesWindow : public PatientWindow
     Q_OBJECT
 
 public:
-    explicit FiveZonesWindow(QWidget *parent = 0);
-    ~FiveZonesWindow();
+    explicit FiveZonesWindow(QWidget *parent = nullptr);
+    ~FiveZonesWindow() override;
 
     void setDiap(const int diap) override;
     void setMarker(const double x, const double y) override;
 
     void run() override;
     void stop() override;
+
+    /*!
+     * \brief Функция, помещающая комментарий поверх окна
+     * \param comment - текст комментария
+     */
+    void setFrontComment(const QString& comment) override;
 
     /*!
      * \brief Возвращает результат работы окна пациента
