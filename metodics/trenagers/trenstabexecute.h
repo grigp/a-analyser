@@ -47,6 +47,11 @@ protected:
      */
     int scale();
 
+    /*!
+     * \brief Принуждает к центровке
+     */
+    void doZeroing() override;
+
 private slots:
     void on_zeroing();
     void on_scaleChange(int scaleIdx);

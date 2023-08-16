@@ -520,7 +520,7 @@ void TrenTakePutExecute::elementsTimeLimitWorking()
     {
         auto* item = items[i];
         auto ke = item->data(edKindElement);
-        if (ke != ekMarker && ke != ekBackground && ke != ekIrriant)
+        if (ke != ekMarker && ke != ekBackground && ke != ekIrriant && ke != ekFrontComment)
         {
             auto* ge = static_cast<GraphicCommon::GameElement*>(item);
             if (ge && ge->presentTime() > 0)
@@ -557,7 +557,7 @@ void TrenTakePutExecute::elementsMobileWorking()
     {
         auto* item = items[i];
         auto ke = item->data(edKindElement);
-        if (ke != ekMarker && ke != ekBackground && ke != ekIrriant)
+        if (ke != ekMarker && ke != ekBackground && ke != ekIrriant && ke != ekFrontComment)
         {
             auto* ge = static_cast<GraphicCommon::GameElement*>(item);
             if (ge && !ge->isProcessed() && ge->elementInfo()->isMobile)
@@ -979,7 +979,7 @@ GraphicCommon::GameElement *TrenTakePutExecute::markerOnGameElement()
         {
             auto* item = items[i];
             auto ke = item->data(edKindElement);
-            if (ke != ekMarker && ke != ekBackground && ke != ekIrriant)
+            if (ke != ekMarker && ke != ekBackground && ke != ekIrriant && ke != ekFrontComment)
             {
                 auto* ge = static_cast<GraphicCommon::GameElement*>(item);
                 if (ge && !ge->isProcessed())

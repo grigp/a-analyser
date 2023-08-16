@@ -62,6 +62,7 @@ void SKGPainter::setMarkerSize(const int size)
 
 void SKGPainter::showTrace(const bool trace)
 {
+    Q_UNUSED(trace);
 
 }
 

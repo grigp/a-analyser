@@ -10,6 +10,7 @@
 #include "datadefines.h"
 #include "deviceprotocols.h"
 #include "graphiccommon.h"
+#include "metodicdefines.h"
 
 namespace Ui {
 class TrenExecute;
@@ -19,6 +20,7 @@ class TestResultData;
 class TrenagerPatientWindow;
 class SettingsValue;
 class VideoIrritant;
+class FrontCommentItem;
 class ChannelData;
 class BilateralResultData;
 
@@ -39,6 +41,7 @@ protected:
     void closeEvent(QCloseEvent *event) override;
 
     void resizeEvent(QResizeEvent* event) override;
+    void timerEvent(QTimerEvent *event) override;
 
 protected slots:
     virtual void start();
@@ -64,6 +67,7 @@ protected:
     {
           zlvlBackground = 1        ///< Слой фона. Всегда внизу
         , zlvlVideoIrritant = 100   ///< Слой видеораздражителя. Оптокинетическая стимуляция
+        , zlvlFrontComment = 101    ///< Слой фронтального комментария.
     };
 
     ///< Данные, хранящиеся в элементах
@@ -78,6 +82,7 @@ protected:
           ekBackground = 0   ///< Фон
         , ekMarker           ///< Маркер
         , ekIrriant          ///< Возмущение
+        , ekFrontComment     ///< Комментарий
         , ekUser = 100       ///< Первая позиция элементов, определяемых в подклассах
     };
 
@@ -127,6 +132,8 @@ protected:
      * \brief Устанавливает объект - раздражитель на сцену
      */
     virtual void setVideoIrritant();
+
+    virtual void setFrontCommentItem();
 
     virtual void finishTest();
 
@@ -268,6 +275,11 @@ protected:
 
     void addChannel(ChannelData *channel);
 
+    /*!
+     * \brief Принуждает к центровке
+     */
+    virtual void doZeroing();
+
 private slots:
     void getData(DeviceProtocols::DeviceData *data);
 
@@ -275,6 +287,19 @@ private slots:
 
 private:
     Ui::TrenExecute *ui;
+
+    /*!
+     * \brief Возвращает строку с текстом ожидания события
+     * \param eventName - название события
+     * \param sec - время до центро
+     */
+    QString msgWaitEvent(const QString& eventName, const int sec) const;
+
+    /*!
+     * \brief Функция, помещающая комментарий поверх окна
+     * \param comment - текст комментария
+     */
+    void setFrontComment(const QString& comment);
 
     QGraphicsScene* m_scene {nullptr};
     double m_prop = 1;   ///< Пропорция для пересчета базовой сцены 2000 x 2000 в реальные размеры игровой сцены
@@ -298,6 +323,7 @@ private:
     GraphicCommon::BackgroundElement *m_background {nullptr};
 
     VideoIrritant* m_videoIrritant {nullptr};   ///< Слой видеораздражителя (оптокинетической стимуляции)
+    FrontCommentItem* m_frontComment {nullptr}; ///< Слой комментария
 
     ///< Границы зоны рамки
     int m_bndLeft {0};
@@ -328,6 +354,13 @@ private:
     QRect m_platform1 {QRect(0, 0, 0, 0)};   ///< Платформы в билатеральном режиме
     QRect m_platform2 {QRect(0, 0, 0, 0)};
     BilateralResultData* m_rdBilat {nullptr};
+
+    int m_autoModeTimerId {-1};   ///< id таймера для режима автономной работы
+    int m_stageNum {0};           ///< Номер этапа в автоматическом режиме
+    int m_autoModeSecCounter {0};  ///< Счетчик секунд в автоматическом режиме
+    int m_autoTimeRun {5};         ///< Время задержки до операции
+    int m_autoTimeLatent {2};      ///< Длительность латентного периода
+    QList<MetodicDefines::AutoModeStaticStages> m_stages {MetodicDefines::AutoStagesBase};  ///< Список этапов для автоматического режима
 };
 
 #endif // TRENEXECUTE_H

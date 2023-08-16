@@ -19,7 +19,9 @@
 #include "trenagerpatientwindow.h"
 #include "settingsprovider.h"
 #include "videoirritant.h"
+#include "frontcommentitem.h"
 #include "bilateralresultdata.h"
+#include "aanalysersettings.h"
 
 TrenExecute::TrenExecute(QWidget *parent) :
     QWidget(parent),
@@ -78,6 +80,51 @@ void TrenExecute::resizeEvent(QResizeEvent *event)
     setSceneSize(size);
 }
 
+void TrenExecute::timerEvent(QTimerEvent *event)
+{
+    if (event->timerId() == m_autoModeTimerId)
+    {
+        if (m_stageNum < m_stages.size())
+        {
+            ++m_autoModeSecCounter;
+            auto stage = m_stages.at(m_stageNum);
+            auto stageTitle = MetodicDefines::AutoModeStageTitle.value(stage);
+
+            if (stageTitle == "")
+            {
+                if (m_autoModeSecCounter == m_autoTimeLatent)
+                {
+                    ++m_stageNum;
+                    if (m_stageNum < m_stages.size())
+                    {
+                        auto stage = m_stages.at(m_stageNum);
+                        auto stageTitle = MetodicDefines::AutoModeStageTitle.value(stage);
+                        setFrontComment(msgWaitEvent(stageTitle, m_autoTimeRun));
+                    }
+                    m_autoModeSecCounter = 0;
+                }
+            }
+            else
+            {
+                setFrontComment(msgWaitEvent(stageTitle, m_autoTimeRun - m_autoModeSecCounter));
+                if (m_autoModeSecCounter == m_autoTimeRun)
+                {
+                    setFrontComment("");
+                    if (stage == MetodicDefines::amssZeroingWait)
+                        doZeroing();
+                    else
+                    if (stage == MetodicDefines::amssRecordingWait)
+                        on_recording();
+                    ++m_stageNum;
+                    m_autoModeSecCounter = 0;
+                }
+            }
+        }
+    }
+
+    QWidget::timerEvent(event);
+}
+
 void TrenExecute::start()
 {
     m_driver = static_cast<AAnalyserApplication*>(QApplication::instance())->
@@ -125,6 +172,13 @@ void TrenExecute::start()
         {
             generateNewScene();
         });
+
+        //! Запуск таймера в режиме автоматики
+        auto rm = static_cast<AAnalyserApplication*>(QApplication::instance())->runningMode();
+        m_autoTimeRun = SettingsProvider::valueFromRegAppCopy("", AAnalyserSettingsParams::pn_timeCounter, 5).toInt();
+        m_autoTimeLatent = SettingsProvider::valueFromRegAppCopy("", AAnalyserSettingsParams::pn_timeLatent, 2).toInt();
+        if (rm == BaseDefines::rmAutomatic)
+            m_autoModeTimerId = startTimer(1000);
     }
     else
     {
@@ -190,6 +244,16 @@ void TrenExecute::getData(DeviceProtocols::DeviceData *data)
 void TrenExecute::on_started()
 {
     ui->wgtAdvChannels->newProbe();
+}
+
+QString TrenExecute::msgWaitEvent(const QString &eventName, const int sec) const
+{
+    return eventName + "\n" + QString::number(sec) +  "\n" + tr("секунд");
+}
+
+void TrenExecute::setFrontComment(const QString &comment)
+{
+    m_frontComment->setText(comment);
 }
 
 void TrenExecute::on_communicationError(const QString &drvName, const QString &port, const int errorCode)
@@ -314,13 +378,19 @@ void TrenExecute::setSceneSize(QSize &size)
 void TrenExecute::generateNewScene()
 {
     m_scene->clear();
+
     setBackground(m_backgroundObj);
     m_background->setData(edKindElement, ekBackground);
     m_scene->addItem(m_background);
+
     setVideoIrritant();
     m_videoIrritant->setData(edKindElement, ekIrriant);
     m_scene->addItem(m_videoIrritant);
 
+    setFrontCommentItem();
+    m_frontComment->setText("");
+    m_frontComment->setData(edKindElement, ekFrontComment);
+    m_scene->addItem(m_frontComment);
 }
 
 void TrenExecute::elementsInteraction(DeviceProtocols::DeviceData *data)
@@ -481,6 +551,13 @@ void TrenExecute::setVideoIrritant()
     {
         ui->cbIrriants->addItem(m_videoIrritant->irriant(i)->name());
     }
+}
+
+void TrenExecute::setFrontCommentItem()
+{
+    m_frontComment = new FrontCommentItem(m_scene->sceneRect());
+    m_frontComment->setZValue(zlvlFrontComment);
+
 }
 
 void TrenExecute::finishTest()
@@ -666,4 +743,9 @@ void TrenExecute::addChannel(ChannelData *channel)
 {
     if (m_trd)
         m_trd->addChannel(channel);
+}
+
+void TrenExecute::doZeroing()
+{
+
 }

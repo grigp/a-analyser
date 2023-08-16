@@ -67,6 +67,11 @@ int TrenStabExecute::scale()
     return m_cbScale->currentIndex();
 }
 
+void TrenStabExecute::doZeroing()
+{
+    on_zeroing();
+}
+
 void TrenStabExecute::on_zeroing()
 {
     auto chanUid = currentChannelUID();

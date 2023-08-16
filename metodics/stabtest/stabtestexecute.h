@@ -147,11 +147,10 @@ private:
 
     int m_autoModeTimerId {-1};   ///< id таймера для режима автономной работы
     int m_stageNum {0};           ///< Номер этапа в автоматическом режиме
-//    MetodicDefines::AutoModeStaticStages m_stage {MetodicDefines::amssLatent0};  ///< Этап в автоматическом режиме
     int m_autoModeSecCounter {0};  ///< Счетчик секунд в автоматическом режиме
     int m_autoTimeRun {5};         ///< Время задержки до операции
     int m_autoTimeLatent {2};      ///< Длительность латентного периода
-    QList<QList<MetodicDefines::AutoModeStaticStages>> m_stages;  ///< Списсок этапов для автоматического режима для каждой пробы
+    QList<QList<MetodicDefines::AutoModeStaticStages>> m_stages;  ///< Список этапов для автоматического режима для каждой пробы
 };
 
 #endif // STABTESTEXECUTE_H
