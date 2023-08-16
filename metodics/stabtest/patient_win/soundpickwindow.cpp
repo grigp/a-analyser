@@ -59,6 +59,6 @@ void SoundPickWindow::timerEvent(QTimerEvent *event)
 
 void SoundPickWindow::resizeEvent(QResizeEvent *event)
 {
-    ui->lblFrontComment->setGeometry(geometry());
+    ui->lblFrontComment->setGeometry(ui->frMain->geometry());
     PatientWindow::resizeEvent(event);
 }

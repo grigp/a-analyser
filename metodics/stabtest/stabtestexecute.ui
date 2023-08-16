@@ -176,7 +176,31 @@
               <number>1</number>
              </property>
              <item>
-              <widget class="SKGWidget" name="wgtSKG" native="true"/>
+              <widget class="SKGWidget" name="wgtSKG" native="true">
+               <widget class="QLabel" name="lblFrontComment">
+                <property name="geometry">
+                 <rect>
+                  <x>30</x>
+                  <y>180</y>
+                  <width>341</width>
+                  <height>71</height>
+                 </rect>
+                </property>
+                <property name="font">
+                 <font>
+                  <pointsize>22</pointsize>
+                  <weight>75</weight>
+                  <bold>true</bold>
+                 </font>
+                </property>
+                <property name="text">
+                 <string>TextLabel</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignCenter</set>
+                </property>
+               </widget>
+              </widget>
              </item>
             </layout>
            </widget>

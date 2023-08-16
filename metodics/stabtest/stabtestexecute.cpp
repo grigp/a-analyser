@@ -53,6 +53,9 @@ StabTestExecute::StabTestExecute(QWidget *parent) :
 
     ui->wgtAdvChannels->setVisible(false);
     ui->btnCalibrate->setVisible(false);
+
+    ui->lblFrontComment->setStyleSheet("font-size: 44pt; color: rgb(180, 0, 0);");
+    setFrontComment("");
 }
 
 StabTestExecute::~StabTestExecute()
@@ -104,63 +107,57 @@ void StabTestExecute::timerEvent(QTimerEvent *event)
 {
     if (event->timerId() == m_autoModeTimerId)
     {
-        ++m_autoModeSecCounter;
-        if (m_stage == MetodicDefines::amssLatent0)
+        if (m_stageNum < m_stages.at(m_probe).size())
         {
-            if (m_autoModeSecCounter == m_autoTimeLatent)
+            ++m_autoModeSecCounter;
+            auto stage = m_stages.at(m_probe).at(m_stageNum);
+            auto stageTitle = MetodicDefines::AutoModeStageTitle.value(stage);
+
+            if (stageTitle == "")
             {
-                if (m_patientWin)
-                    m_patientWin->setFrontComment(msgWaitEvent(tr("Центровка"), m_autoTimeRun));
-                ++m_stageNum;
-                m_stage = m_stages.at(m_probe).at(m_stageNum);
-                m_autoModeSecCounter = 0;
+                if (m_autoModeSecCounter == m_autoTimeLatent)
+                {
+                    ++m_stageNum;
+                    if (m_stageNum < m_stages.at(m_probe).size())
+                    {
+                        auto stage = m_stages.at(m_probe).at(m_stageNum);
+                        auto stageTitle = MetodicDefines::AutoModeStageTitle.value(stage);
+                        setFrontComment(msgWaitEvent(stageTitle, m_autoTimeRun));
+                        if (m_patientWin)
+                            m_patientWin->setFrontComment(msgWaitEvent(stageTitle, m_autoTimeRun));
+                    }
+                    m_autoModeSecCounter = 0;
+                }
             }
-        }
-        else
-        if (m_stage == MetodicDefines::amssZeroingWait)
-        {
-            if (m_patientWin)
-                m_patientWin->setFrontComment(msgWaitEvent(tr("Центровка"), m_autoTimeRun - m_autoModeSecCounter));
-            if (m_autoModeSecCounter == m_autoTimeRun)
+            else
             {
+                setFrontComment(msgWaitEvent(stageTitle, m_autoTimeRun - m_autoModeSecCounter));
                 if (m_patientWin)
-                    m_patientWin->setFrontComment("");
-                zeroing();
-                ++m_stageNum;
-                m_stage = m_stages.at(m_probe).at(m_stageNum);
-                m_autoModeSecCounter = 0;
-            }
-        }
-        else
-        if (m_stage == MetodicDefines::amssLatent1)
-        {
-            if (m_autoModeSecCounter == m_autoTimeLatent)
-            {
-                if (m_patientWin)
-                    m_patientWin->setFrontComment(msgWaitEvent(tr("Запись"), m_autoTimeRun));
-                ++m_stageNum;
-                m_stage = m_stages.at(m_probe).at(m_stageNum);
-                m_autoModeSecCounter = 0;
-            }
-        }
-        else
-        if (m_stage == MetodicDefines::amssRecordingWait)
-        {
-            if (m_patientWin)
-                m_patientWin->setFrontComment(msgWaitEvent(tr("Запись"), m_autoTimeRun - m_autoModeSecCounter));
-            if (m_autoModeSecCounter == m_autoTimeRun)
-            {
-                if (m_patientWin)
-                    m_patientWin->setFrontComment("");
-                recording();
-                ++m_stageNum;
-                m_stage = m_stages.at(m_probe).at(m_stageNum);
-                m_autoModeSecCounter = 0;
+                    m_patientWin->setFrontComment(msgWaitEvent(stageTitle, m_autoTimeRun - m_autoModeSecCounter));
+                if (m_autoModeSecCounter == m_autoTimeRun)
+                {
+                    setFrontComment("");
+                    if (m_patientWin)
+                        m_patientWin->setFrontComment("");
+                    if (stage == MetodicDefines::amssZeroingWait)
+                        zeroing();
+                    else
+                    if (stage == MetodicDefines::amssRecordingWait)
+                        recording();
+                    ++m_stageNum;
+                    m_autoModeSecCounter = 0;
+                }
             }
         }
     }
 
     QWidget::timerEvent(event);
+}
+
+void StabTestExecute::resizeEvent(QResizeEvent *event)
+{
+    ui->lblFrontComment->setGeometry(ui->wgtSKG->geometry());
+    QWidget::resizeEvent(event);
 }
 
 void StabTestExecute::start()
@@ -506,7 +503,6 @@ void StabTestExecute::nextProbe()
         ui->wgtAdvChannels->enabledControls(!m_isRecording);
 
         scaleChange(ui->cbScale->currentIndex());
-        m_stage = MetodicDefines::amssLatent0;
         m_stageNum = 0;
         m_autoModeSecCounter = 0;
     }
@@ -575,5 +571,11 @@ void StabTestExecute::hidePatientWindow()
 QString StabTestExecute::msgWaitEvent(const QString &eventName, const int sec) const
 {
     return eventName + " " + QString::number(sec) +  " " + tr("сек");
+}
+
+void StabTestExecute::setFrontComment(const QString &comment)
+{
+    ui->lblFrontComment->setText(comment);
+    ui->lblFrontComment->setVisible(comment != "");
 }
 

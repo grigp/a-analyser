@@ -27,14 +27,15 @@ class StabTestExecute : public QWidget
     Q_OBJECT
 
 public:
-    explicit StabTestExecute(QWidget *parent = 0);
-    ~StabTestExecute();
+    explicit StabTestExecute(QWidget *parent = nullptr);
+    ~StabTestExecute() override;
 
     void setParams(const QJsonObject &probeParams);
 
 protected:
-    void closeEvent(QCloseEvent *event);
-    void timerEvent(QTimerEvent *event);
+    void closeEvent(QCloseEvent *event) override;
+    void timerEvent(QTimerEvent *event) override;
+    void resizeEvent(QResizeEvent *event) override;
 
 private slots:
     void start();
@@ -115,6 +116,12 @@ private:
      */
     QString msgWaitEvent(const QString& eventName, const int sec) const;
 
+    /*!
+     * \brief Функция, помещающая комментарий поверх окна
+     * \param comment - текст комментария
+     */
+    void setFrontComment(const QString& comment);
+
     int m_freqStab {50};        ///< Частота дискретизации стабилограммы
     int m_freqZ {50};           ///< Частота дискретизации баллистограммы
     int m_maxDiap {128};        ///< Максимальный диапазон
@@ -139,8 +146,8 @@ private:
     QRect m_platform2 {QRect(0, 0, 0, 0)};
 
     int m_autoModeTimerId {-1};   ///< id таймера для режима автономной работы
-    int m_stageNum {0};           ///< Номер этапа
-    MetodicDefines::AutoModeStaticStages m_stage {MetodicDefines::amssLatent0};  ///< Этап в автоматическом режиме
+    int m_stageNum {0};           ///< Номер этапа в автоматическом режиме
+//    MetodicDefines::AutoModeStaticStages m_stage {MetodicDefines::amssLatent0};  ///< Этап в автоматическом режиме
     int m_autoModeSecCounter {0};  ///< Счетчик секунд в автоматическом режиме
     int m_autoTimeRun {5};         ///< Время задержки до операции
     int m_autoTimeLatent {2};      ///< Длительность латентного периода
