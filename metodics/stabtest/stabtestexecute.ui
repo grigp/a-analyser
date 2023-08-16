@@ -188,13 +188,15 @@
                 </property>
                 <property name="font">
                  <font>
-                  <pointsize>22</pointsize>
+                  <family>Bookman Old Style</family>
+                  <pointsize>36</pointsize>
                   <weight>75</weight>
+                  <italic>true</italic>
                   <bold>true</bold>
                  </font>
                 </property>
                 <property name="text">
-                 <string>TextLabel</string>
+                 <string>Центровка</string>
                 </property>
                 <property name="alignment">
                  <set>Qt::AlignCenter</set>

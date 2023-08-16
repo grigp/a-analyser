@@ -111,6 +111,9 @@ namespace MetodicDefines
     const QList<AutoModeStaticStages> AutoStagesBase {amssLatent0, amssZeroingWait, amssLatent1, amssRecordingWait, amssRecording};
     ///< Список этапов для статической пробы без центровки
     const QList<AutoModeStaticStages> AutoStagesWithoutZeroing {amssLatent0, amssRecordingWait, amssRecording};
+
+    static const QString AutoModeMessageStyleMain = "font-size: 60pt; color: rgb(180, 0, 0);";
+    static const QString AutoModeMessageStylePatient = "font-size: 68pt; color: rgb(180, 0, 0);";
 }
 
 #endif // METODICDEFINES_H

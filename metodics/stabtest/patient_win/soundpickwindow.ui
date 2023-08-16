@@ -40,16 +40,18 @@
      <widget class="QLabel" name="lblFrontComment">
       <property name="geometry">
        <rect>
-        <x>-70</x>
-        <y>0</y>
+        <x>90</x>
+        <y>130</y>
         <width>341</width>
         <height>71</height>
        </rect>
       </property>
       <property name="font">
        <font>
+        <family>Bookman Old Style</family>
         <pointsize>22</pointsize>
         <weight>75</weight>
+        <italic>true</italic>
         <bold>true</bold>
        </font>
       </property>

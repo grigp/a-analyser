@@ -4,6 +4,8 @@
 #include <QResizeEvent>
 #include <QDebug>
 
+#include "metodicdefines.h"
+
 namespace  {
 
 static QList<QColor> colors {Qt::white, Qt::red, Qt::green, Qt::blue, Qt::darkYellow, Qt::lightGray};
@@ -18,7 +20,7 @@ ColoredCircleWindow::ColoredCircleWindow(QWidget *parent) :
     ui->setupUi(this);
     nextColor();
 
-    ui->lblFrontComment->setStyleSheet("font-size: 44pt; color: rgb(180, 0, 0);");
+    ui->lblFrontComment->setStyleSheet(MetodicDefines::AutoModeMessageStylePatient);
     setFrontComment("");
 }
 

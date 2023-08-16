@@ -42,8 +42,10 @@
       </property>
       <property name="font">
        <font>
+        <family>Bookman Old Style</family>
         <pointsize>22</pointsize>
         <weight>75</weight>
+        <italic>true</italic>
         <bold>true</bold>
        </font>
       </property>

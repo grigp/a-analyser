@@ -37,6 +37,8 @@ public:
      */
     QVariant result() override;
 
+protected:
+    void resizeEvent(QResizeEvent *event) override;
 
 private:
     Ui::FiveZonesWindow *ui;

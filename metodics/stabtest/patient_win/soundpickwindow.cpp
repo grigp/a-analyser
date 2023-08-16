@@ -1,6 +1,8 @@
 #include "soundpickwindow.h"
 #include "ui_soundpickwindow.h"
 
+#include "metodicdefines.h"
+
 SoundPickWindow::SoundPickWindow(QWidget *parent) :
     PatientWindow(parent),
     ui(new Ui::SoundPickWindow)
@@ -8,7 +10,7 @@ SoundPickWindow::SoundPickWindow(QWidget *parent) :
     ui->setupUi(this);
 
     m_player.setMedia(QUrl("qrc:/sound/03.wav"));
-    ui->lblFrontComment->setStyleSheet("font-size: 44pt; color: rgb(180, 0, 0);");
+    ui->lblFrontComment->setStyleSheet(MetodicDefines::AutoModeMessageStylePatient);
     setFrontComment("");
 }
 

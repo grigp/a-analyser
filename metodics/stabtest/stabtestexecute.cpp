@@ -54,7 +54,7 @@ StabTestExecute::StabTestExecute(QWidget *parent) :
     ui->wgtAdvChannels->setVisible(false);
     ui->btnCalibrate->setVisible(false);
 
-    ui->lblFrontComment->setStyleSheet("font-size: 44pt; color: rgb(180, 0, 0);");
+    ui->lblFrontComment->setStyleSheet(MetodicDefines::AutoModeMessageStyleMain);
     setFrontComment("");
 }
 
@@ -570,7 +570,7 @@ void StabTestExecute::hidePatientWindow()
 
 QString StabTestExecute::msgWaitEvent(const QString &eventName, const int sec) const
 {
-    return eventName + " " + QString::number(sec) +  " " + tr("сек");
+    return eventName + "\n" + QString::number(sec) +  "\n" + tr("секунд");
 }
 
 void StabTestExecute::setFrontComment(const QString &comment)
