@@ -3,6 +3,10 @@
 
 #include <QDebug>
 
+#include "aanalyserapplication.h"
+#include "aanalysersettings.h"
+#include "settingsprovider.h"
+
 SetMaxForceDialog::SetMaxForceDialog(SetMaxForceDialog::Mode mode, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::SetMaxForceDialog)
@@ -14,6 +18,9 @@ SetMaxForceDialog::SetMaxForceDialog(SetMaxForceDialog::Mode mode, QWidget *pare
         ui->wgtDiagCross->setDiap(128);
     ui->wgtDiagCross->setVisible(m_mode == SetMaxForceDialog::CrossOneLine);
     ui->wgtDiagTriangle->setVisible(m_mode == SetMaxForceDialog::Triangle);
+
+    m_runningMode = static_cast<AAnalyserApplication*>(QApplication::instance())->runningMode();
+    m_autoTimeLatent = SettingsProvider::valueFromRegAppCopy("", AAnalyserSettingsParams::pn_timeLatent, 2).toInt();
 }
 
 
@@ -118,6 +125,15 @@ void SetMaxForceDialog::resizeEvent(QResizeEvent *event)
     QDialog::resizeEvent(event);
 }
 
+void SetMaxForceDialog::timerEvent(QTimerEvent *event)
+{
+    if (event->timerId() == m_autoModeTimerId)
+    {
+        killTimer(m_autoModeTimerId);
+        accept();
+    }
+}
+
 void SetMaxForceDialog::resetValue()
 {
     if (m_mode == SetMaxForceDialog::CrossOneLine)
@@ -145,7 +161,14 @@ void SetMaxForceDialog::getDataCrossOneLine(const int x, const int y)
         {
             ui->wgtDiagCross->setValueUp(y);
             if (y > m_minValueOffset)
-                ui->btnOK->setEnabled(true);
+            {
+                if (!ui->btnOK->isEnabled())
+                {
+                    ui->btnOK->setEnabled(true);
+                    if (m_runningMode == BaseDefines::rmAutomatic)
+                        m_autoModeTimerId = startTimer(m_autoTimeLatent * 1000);
+                }
+            }
         }
     }
     else
@@ -155,7 +178,14 @@ void SetMaxForceDialog::getDataCrossOneLine(const int x, const int y)
         {
             ui->wgtDiagCross->setValueDown(abs(y));
             if (abs(y) > m_minValueOffset)
-                ui->btnOK->setEnabled(true);
+            {
+                if (!ui->btnOK->isEnabled())
+                {
+                    ui->btnOK->setEnabled(true);
+                    if (m_runningMode == BaseDefines::rmAutomatic)
+                        m_autoModeTimerId = startTimer(m_autoTimeLatent * 1000);
+                }
+            }
         }
     }
     else
@@ -165,7 +195,14 @@ void SetMaxForceDialog::getDataCrossOneLine(const int x, const int y)
         {
             ui->wgtDiagCross->setValueRight(x);
             if (x > m_minValueOffset)
-                ui->btnOK->setEnabled(true);
+            {
+                if (!ui->btnOK->isEnabled())
+                {
+                    ui->btnOK->setEnabled(true);
+                    if (m_runningMode == BaseDefines::rmAutomatic)
+                        m_autoModeTimerId = startTimer(m_autoTimeLatent * 1000);
+                }
+            }
         }
     }
     else
@@ -175,7 +212,14 @@ void SetMaxForceDialog::getDataCrossOneLine(const int x, const int y)
         {
             ui->wgtDiagCross->setValueLeft(abs(x));
             if (abs(x) > m_minValueOffset)
-                ui->btnOK->setEnabled(true);
+            {
+                if (!ui->btnOK->isEnabled())
+                {
+                    ui->btnOK->setEnabled(true);
+                    if (m_runningMode == BaseDefines::rmAutomatic)
+                        m_autoModeTimerId = startTimer(m_autoTimeLatent * 1000);
+                }
+            }
         }
     }
 }
@@ -205,6 +249,12 @@ void SetMaxForceDialog::getDataTriangle(const int x, const int y)
     if (ui->wgtDiagTriangle->valueUp() > m_minValueOffset &&
             ui->wgtDiagTriangle->valueLeftDown() > m_minValueOffset &&
             ui->wgtDiagTriangle->valueRightDown() > m_minValueOffset)
-        ui->btnOK->setEnabled(true);
-
+    {
+        if (!ui->btnOK->isEnabled())
+        {
+            ui->btnOK->setEnabled(true);
+            if (m_runningMode == BaseDefines::rmAutomatic)
+                m_autoModeTimerId = startTimer(m_autoTimeLatent * 1000);
+        }
+    }
 }

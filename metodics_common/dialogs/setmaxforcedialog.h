@@ -64,6 +64,7 @@ public slots:
 protected:
     void showEvent(QShowEvent *event) override;
     void resizeEvent(QResizeEvent *event) override;
+    void timerEvent(QTimerEvent *event) override;
 
 private:
     Ui::SetMaxForceDialog *ui;
@@ -76,6 +77,10 @@ private:
     int m_minValueOffset {50};
 
     Mode m_mode {CrossOneLine};
+
+    BaseDefines::RunningMode m_runningMode {BaseDefines::rmOperator};
+    int m_autoTimeLatent {2};
+    int m_autoModeTimerId {-1};   ///< id таймера для автозавершения в режиме автономной работы
 };
 
 #endif // SETMAXFORCEDIALOG_H
