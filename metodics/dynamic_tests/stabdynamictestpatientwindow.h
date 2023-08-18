@@ -89,6 +89,15 @@ public:
      */
     QLayout *getWidgetLayout();
 
+    /*!
+     * \brief Виртуальная функция, помещающая комментарий поверх окна
+     * \param comment - текст комментария
+     */
+    virtual void setFrontComment(const QString& comment);
+
+protected:
+    void resizeEvent(QResizeEvent *event) override;
+
 private:
     Ui::StabDynamicTestPatientWindow *ui;
 

@@ -10,7 +10,7 @@ StepDeviationPatientWindow::StepDeviationPatientWindow(BaseDefines::Directions d
     setVisibleMarker(false);
     setWindowTitle("Тест со ступенчатым отклонением");
 
-    setInfoLabel();
+//    setInfoLabel();
 }
 
 StepDeviationPatientWindow::~StepDeviationPatientWindow()
@@ -21,6 +21,7 @@ StepDeviationPatientWindow::~StepDeviationPatientWindow()
 void StepDeviationPatientWindow::run()
 {
     StabDynamicTestPatientWindow::run();
+    setInfoLabel();
     m_info->setVisible(true);
     m_infoDir->setVisible(true);
 }

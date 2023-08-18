@@ -2,6 +2,7 @@
 #include "ui_stabdynamictestpatientwindow.h"
 
 #include "dynamicteststimul.h"
+#include "metodicdefines.h"
 
 StabDynamicTestPatientWindow::StabDynamicTestPatientWindow(QWidget *parent) :
     QDialog(parent),
@@ -15,6 +16,9 @@ StabDynamicTestPatientWindow::StabDynamicTestPatientWindow(QWidget *parent) :
     pal.setColor(QPalette::Background, Qt::darkGray);
     setAutoFillBackground(true);
     setPalette(pal);
+
+    ui->lblFrontComment->setStyleSheet(MetodicDefines::AutoModeMessageStylePatient);
+    setFrontComment("");
 }
 
 StabDynamicTestPatientWindow::~StabDynamicTestPatientWindow()
@@ -83,5 +87,17 @@ void StabDynamicTestPatientWindow::clearTargets()
 QLayout *StabDynamicTestPatientWindow::getWidgetLayout()
 {
     return ui->wgtStimul->layout();
+}
+
+void StabDynamicTestPatientWindow::setFrontComment(const QString &comment)
+{
+    ui->lblFrontComment->setText(comment);
+    ui->lblFrontComment->setVisible(comment != "");
+}
+
+void StabDynamicTestPatientWindow::resizeEvent(QResizeEvent *event)
+{
+//    ui->lblFrontComment->setGeometry(ui->wgtStimul->geometry());
+    QDialog::resizeEvent(event);
 }
 

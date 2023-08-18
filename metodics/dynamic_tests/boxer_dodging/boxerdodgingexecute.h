@@ -40,6 +40,11 @@ protected:
      */
     void fillSpecific(QFrame *frSpecific) override;
 
+    /*!
+     * \brief Функция, помещающая комментарий поверх окна
+     * \param comment - текст комментария
+     */
+    void setFrontComment(const QString& comment) override;
 
 protected slots:
     void start() override;

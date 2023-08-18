@@ -37,6 +37,8 @@ public:
 
 protected:
     void closeEvent(QCloseEvent *event) override;
+    void timerEvent(QTimerEvent *event) override;
+    void resizeEvent(QResizeEvent *event) override;
 
     double x() {return m_x;}
     double y() {return m_y;}
@@ -142,6 +144,11 @@ protected:
      */
     virtual void fillSpecific(QFrame *frSpecific);
 
+    /*!
+     * \brief Возвращает список этапов для режима автоматичекого проведения
+     * Перекрывать, если отличаются от MetodicDefines::AutoStagesBase
+     */
+    virtual QList<MetodicDefines::AutoModeStaticStages> getAutoModeStaticStages();
 
 protected slots:
     virtual void start();
@@ -159,6 +166,12 @@ protected slots:
      * \param diap - значение диапазона
      */
     virtual void setPatientWinDiap(const int diap);
+
+    /*!
+     * \brief Функция, помещающая комментарий поверх окна
+     * \param comment - текст комментария
+     */
+    virtual void setFrontComment(const QString& comment);
 
 private slots:
     void on_started();
@@ -199,6 +212,13 @@ private:
      */
     void hidePatientWindow();
 
+    /*!
+     * \brief Возвращает строку с текстом ожидания события
+     * \param eventName - название события
+     * \param sec - время до центро
+     */
+    QString msgWaitEvent(const QString& eventName, const int sec) const;
+
     ///< Координаты маркера
     double m_x {0};
     double m_y {0};
@@ -227,6 +247,13 @@ private:
     QRect m_platform1 {QRect(0, 0, 0, 0)};   ///< Платформы в билатеральном режиме
     QRect m_platform2 {QRect(0, 0, 0, 0)};
     BilateralResultData* m_rdBilat {nullptr};
+
+    int m_autoModeTimerId {-1};   ///< id таймера для режима автономной работы
+    int m_stageNum {0};           ///< Номер этапа в автоматическом режиме
+    int m_autoModeSecCounter {0};  ///< Счетчик секунд в автоматическом режиме
+    int m_autoTimeRun {5};         ///< Время задержки до операции
+    int m_autoTimeLatent {2};      ///< Длительность латентного периода
+    QList<MetodicDefines::AutoModeStaticStages> m_stages;  ///< Список этапов для автоматического режима
 };
 
 #endif // STABDYNAMICTESTEXECUTE_H

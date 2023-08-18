@@ -27,6 +27,15 @@ public:
      */
     void setVisibleStage(const BoxerDodgingDefines::Stages stage, const bool visible);
 
+    /*!
+     * \brief Виртуальная функция, помещающая комментарий поверх окна
+     * \param comment - текст комментария
+     */
+    virtual void setFrontComment(const QString& comment);
+
+protected:
+    void resizeEvent(QResizeEvent *event) override;
+
 private:
     Ui::BoxerDodgingPatientWindow *ui;
 };

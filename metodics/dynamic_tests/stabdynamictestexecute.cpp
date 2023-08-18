@@ -10,6 +10,7 @@
 #include "stabdynamictestpatientwindow.h"
 #include "baseutils.h"
 #include "bilateralresultdata.h"
+#include "aanalysersettings.h"
 
 #include <QTimer>
 #include <QMessageBox>
@@ -43,6 +44,10 @@ StabDynamicTestExecute::StabDynamicTestExecute(QWidget *parent) :
     ui->wgtAdvChannels->setVisible(false);
     ui->btnCalibrate->setVisible(false);
     ui->btnRecord->setEnabled(false);
+
+    ui->lblFrontComment->setStyleSheet(MetodicDefines::AutoModeMessageStyleMain);
+    setFrontComment("");
+    m_stages = getAutoModeStaticStages();
 }
 
 StabDynamicTestExecute::~StabDynamicTestExecute()
@@ -65,6 +70,63 @@ void StabDynamicTestExecute::closeEvent(QCloseEvent *event)
         m_driver->deleteLater();
     }
     QWidget::closeEvent(event);
+}
+
+void StabDynamicTestExecute::timerEvent(QTimerEvent *event)
+{
+    if (event->timerId() == m_autoModeTimerId)
+    {
+        if (m_stageNum < m_stages.size())
+        {
+            ++m_autoModeSecCounter;
+            auto stage = m_stages.at(m_stageNum);
+            auto stageTitle = MetodicDefines::AutoModeStageTitle.value(stage);
+
+            if (stageTitle == "")
+            {
+                if (m_autoModeSecCounter == m_autoTimeLatent)
+                {
+                    ++m_stageNum;
+                    if (m_stageNum < m_stages.size())
+                    {
+                        auto stage = m_stages.at(m_stageNum);
+                        auto stageTitle = MetodicDefines::AutoModeStageTitle.value(stage);
+                        setFrontComment(msgWaitEvent(stageTitle, m_autoTimeRun));
+                        if (m_patientWin)
+                            m_patientWin->setFrontComment(msgWaitEvent(stageTitle, m_autoTimeRun));
+                    }
+                    m_autoModeSecCounter = 0;
+                }
+            }
+            else
+            {
+                setFrontComment(msgWaitEvent(stageTitle, m_autoTimeRun - m_autoModeSecCounter));
+                if (m_patientWin)
+                    m_patientWin->setFrontComment(msgWaitEvent(stageTitle, m_autoTimeRun - m_autoModeSecCounter));
+                if (m_autoModeSecCounter == m_autoTimeRun)
+                {
+                    setFrontComment("");
+                    if (m_patientWin)
+                        m_patientWin->setFrontComment("");
+                    if (stage == MetodicDefines::amssZeroingWait)
+                        zeroing();
+                    else
+                    if (stage == MetodicDefines::amssRecordingWait)
+                        recording();
+                    ++m_stageNum;
+                    m_autoModeSecCounter = 0;
+                }
+            }
+        }
+    }
+
+    QWidget::timerEvent(event);
+}
+
+void StabDynamicTestExecute::resizeEvent(QResizeEvent *event)
+{
+    ui->lblFrontComment->setGeometry(ui->wgtSKG->geometry());
+    QWidget::resizeEvent(event);
 }
 
 void StabDynamicTestExecute::setTitle(const QString &title)
@@ -180,6 +242,11 @@ void StabDynamicTestExecute::fillSpecific(QFrame *frSpecific)
     Q_UNUSED(frSpecific);
 }
 
+QList<MetodicDefines::AutoModeStaticStages> StabDynamicTestExecute::getAutoModeStaticStages()
+{
+    return MetodicDefines::AutoStagesBase;
+}
+
 void StabDynamicTestExecute::start()
 {
     fillSpecific(ui->frSpecific);
@@ -234,6 +301,13 @@ void StabDynamicTestExecute::start()
         ui->splitter->restoreState(val);
 
         m_driver->start();
+
+        //! Запуск таймера в режиме автоматики
+        auto rm = static_cast<AAnalyserApplication*>(QApplication::instance())->runningMode();
+        m_autoTimeRun = SettingsProvider::valueFromRegAppCopy("", AAnalyserSettingsParams::pn_timeCounter, 5).toInt();
+        m_autoTimeLatent = SettingsProvider::valueFromRegAppCopy("", AAnalyserSettingsParams::pn_timeLatent, 2).toInt();
+        if (rm == BaseDefines::rmAutomatic)
+            m_autoModeTimerId = startTimer(1000);
     }
     else
     {
@@ -382,6 +456,12 @@ void StabDynamicTestExecute::setPatientWinDiap(const int diap)
         m_patientWin->setDiap(diap);
 }
 
+void StabDynamicTestExecute::setFrontComment(const QString &comment)
+{
+    ui->lblFrontComment->setText(comment);
+    ui->lblFrontComment->setVisible(comment != "");
+}
+
 void StabDynamicTestExecute::on_started()
 {
     ui->wgtAdvChannels->newProbe();
@@ -459,4 +539,10 @@ void StabDynamicTestExecute::hidePatientWindow()
         delete pw;
     }
 }
+
+QString StabDynamicTestExecute::msgWaitEvent(const QString &eventName, const int sec) const
+{
+    return eventName + "\n" + QString::number(sec) +  "\n" + tr("секунд");
+}
+
 

@@ -60,6 +60,13 @@ void BoxerDodgingExecute::fillSpecific(QFrame *frSpecific)
     StabDynamicTestExecute::fillSpecific(frSpecific);
 }
 
+void BoxerDodgingExecute::setFrontComment(const QString &comment)
+{
+    StabDynamicTestExecute::setFrontComment(comment);
+    if (m_patientWin)
+        m_patientWin->setFrontComment(comment);
+}
+
 void BoxerDodgingExecute::start()
 {
     StabDynamicTestExecute::start();

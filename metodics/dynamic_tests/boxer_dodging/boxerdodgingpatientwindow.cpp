@@ -3,6 +3,8 @@
 
 #include <QTimer>
 
+#include "metodicdefines.h"
+
 BoxerDodgingPatientWindow::BoxerDodgingPatientWindow(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::BoxerDodgingPatientWindow)
@@ -36,6 +38,9 @@ BoxerDodgingPatientWindow::BoxerDodgingPatientWindow(QWidget *parent) :
                                          ui->wgtBoxing->geometry().height() - 700, 700, 700),
                                   false);
     });
+
+    ui->lblFrontComment->setStyleSheet(MetodicDefines::AutoModeMessageStylePatient);
+    setFrontComment("");
 }
 
 BoxerDodgingPatientWindow::~BoxerDodgingPatientWindow()
@@ -46,4 +51,16 @@ BoxerDodgingPatientWindow::~BoxerDodgingPatientWindow()
 void BoxerDodgingPatientWindow::setVisibleStage(const BoxerDodgingDefines::Stages stage, const bool visible)
 {
     ui->wgtBoxing->setIsVisible(stage, visible);
+}
+
+void BoxerDodgingPatientWindow::setFrontComment(const QString &comment)
+{
+    ui->lblFrontComment->setText(comment);
+    ui->lblFrontComment->setVisible(comment != "");
+}
+
+void BoxerDodgingPatientWindow::resizeEvent(QResizeEvent *event)
+{
+    ui->lblFrontComment->setGeometry(ui->wgtBoxing->geometry());
+    QWidget::resizeEvent(event);
 }
