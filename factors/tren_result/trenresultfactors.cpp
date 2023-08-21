@@ -141,6 +141,12 @@ void TrenResultFactors::registerFactors()
             registerFactor(TrenResultFactorsDefines::FaultsUid, TrenResultFactorsDefines::GroupUid,
                            tr("Количество ошибок"), tr("Ошибки"), tr(""), 0, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
+            registerFactor(FactorsDefines::CommonFactors::SuccessUid,
+                           TrenResultFactorsDefines::GroupUid,
+                           FactorsDefines::CommonFactors::SuccessName,
+                           FactorsDefines::CommonFactors::SuccessShortName,
+                           FactorsDefines::CommonFactors::SuccessMeasure, 0, 3, FactorsDefines::nsDual, 12);
+    static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(TrenResultFactorsDefines::TimeUid, TrenResultFactorsDefines::GroupUid,
                            tr("Время игры"), tr("Время"), tr("сек"), 0, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->

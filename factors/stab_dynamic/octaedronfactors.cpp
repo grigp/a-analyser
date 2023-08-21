@@ -50,7 +50,7 @@ void OctaedronFactors::calculate()
         va = va + m_values[i];
     va = va / 8;
 
-    addFactor(OctaedronFactorsDefines::QualityAverageUid, va);
+    addFactor(FactorsDefines::CommonFactors::SuccessUid, va);
     addFactor(OctaedronFactorsDefines::QualityUUid, m_values[0]);
     addFactor(OctaedronFactorsDefines::QualityULUid, m_values[1]);
     addFactor(OctaedronFactorsDefines::QualityLUid, m_values[2]);
@@ -67,8 +67,11 @@ void OctaedronFactors::registerFactors()
             registerGroup(OctaedronFactorsDefines::GroupUid, OctaedronFactorsDefines::GroupName);
 
     static_cast<AAnalyserApplication*>(QApplication::instance())->
-            registerFactor(OctaedronFactorsDefines::QualityAverageUid, OctaedronFactorsDefines::GroupUid,
-                           tr("Среднее отклонение"), tr("QA"), tr("%"), 0, 3, FactorsDefines::nsDual, 12);
+            registerFactor(FactorsDefines::CommonFactors::SuccessUid,
+                           OctaedronFactorsDefines::GroupUid,
+                           FactorsDefines::CommonFactors::SuccessName,
+                           FactorsDefines::CommonFactors::SuccessShortName,
+                           FactorsDefines::CommonFactors::SuccessMeasure, 0, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(OctaedronFactorsDefines::QualityUUid, OctaedronFactorsDefines::GroupUid,
                            tr("Отклонение вперед"), tr("QU"), tr("%"), 0, 3, FactorsDefines::nsDual, 12);

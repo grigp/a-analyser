@@ -333,6 +333,7 @@ private:
 
     QLabel* m_lblGameScore {nullptr};    ///< Индикатор очков игры
     int m_gameScore {0};                 ///< Значние кол-ва очков
+    int m_scoresPerMinute {50};          ///< Кол-во очков в минуту для данного тренажера
     QList<GameFactors> m_gameFactors;    ///< Список показателей тренажера. Заполняется подклассами через addFactorValue
 
     bool m_isClosed {false};

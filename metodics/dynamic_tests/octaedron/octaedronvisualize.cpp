@@ -39,7 +39,7 @@ void OctaedronVisualize::setTest(const QString &testUid)
 
         ui->wgtDiag->doUpdate();
 
-        m_sAverageQuality = tr("Среднее качество выполнения задания") + " " +
+        m_sAverageQuality = tr("Успешность выполнения задания") + " " +
                 QString::number(m_calculator->getAverageValue(), 'f', 0) + " " + tr("%");
         ui->lblAverageQuality->setText(m_sAverageQuality);
         ui->lblAverageQuality->setStyleSheet("font-size: 18pt;");

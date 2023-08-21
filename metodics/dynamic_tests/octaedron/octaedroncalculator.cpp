@@ -57,7 +57,7 @@ double OctaedronCalculator::getValue(const int idx) const
 double OctaedronCalculator::getAverageValue() const
 {
     if (m_factors)
-        return m_factors->factorValue(OctaedronFactorsDefines::QualityAverageUid);
+        return m_factors->factorValue(FactorsDefines::CommonFactors::SuccessUid);
     return 0;
 }
 

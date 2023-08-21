@@ -47,6 +47,8 @@ void PersonalProgramWidget::onDBConnect()
     ui->tvPatients->header()->resizeSections(QHeaderView::ResizeToContents);
     connect(static_cast<AAnalyserApplication*>(QApplication::instance()), &AAnalyserApplication::selectPatient,
             this, &PersonalProgramWidget::on_selectPatient);
+    connect(static_cast<AAnalyserApplication*>(QApplication::instance()), &AAnalyserApplication::newTest,
+            this, &PersonalProgramWidget::on_newTest);
 }
 
 void PersonalProgramWidget::onShow()
@@ -162,6 +164,10 @@ void PersonalProgramWidget::on_selectPatient(const QString &patientUid)
         }
 
     }
+}
+
+void PersonalProgramWidget::on_newTest(const QString &testUid)
+{
 }
 
 QStandardItem* PersonalProgramWidget::appendLine(const QString uidPat,

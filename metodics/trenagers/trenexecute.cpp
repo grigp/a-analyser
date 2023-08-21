@@ -58,6 +58,8 @@ void TrenExecute::setParams(const QJsonObject &params)
     m_boundForce = objPhisioChan["force"].toInt(10);
     m_boundMyogram = objPhisioChan["myogram"].toInt(200);
 
+    m_scoresPerMinute = params["scores_per_min"].toInt();
+
     QTimer::singleShot(0, this, &TrenExecute::start);
 }
 
@@ -568,6 +570,12 @@ void TrenExecute::finishTest()
     doneDriver();
     auto trenRes = new TrenResultData(ChannelsDefines::chanTrenResult);
     trenRes->addFactor(TrenResultFactorsDefines::ScoreUid, m_gameScore);
+    double sf = (static_cast<double>(m_gameScore) / static_cast<double>(m_recLength) * 60.0) / static_cast<int>(m_scoresPerMinute) * 100;
+    if (sf > 100)
+        sf = 100;
+    if (sf < 0)
+        sf = 0;
+    trenRes->addFactor(FactorsDefines::CommonFactors::SuccessUid, sf);
     foreach (auto fct, m_gameFactors)
         trenRes->addFactor(fct.uid, fct.value);
     m_trd->addChannel(trenRes);

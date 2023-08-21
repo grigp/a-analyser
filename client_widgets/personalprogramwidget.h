@@ -75,6 +75,8 @@ private slots:
 
     void on_selectPatient(const QString &patientUid);
 
+    void on_newTest(const QString &testUid);
+
 private:
     Ui::PersonalProgramWidget *ui;
 
