@@ -14,6 +14,9 @@
 #include "databasewigetdefines.h"
 #include "patientprogramwidget.h"
 #include "activepersonalprogrameditor.h"
+#include "metodicsfactory.h"
+#include "mainwindow.h"
+#include "executewidget.h"
 
 PersonalProgramWidget::PersonalProgramWidget(QWidget *parent) :
     ClientWidget(parent),
@@ -55,6 +58,14 @@ void PersonalProgramWidget::onShow()
 {
     ui->tvPatients->selectionModel()->clearSelection();
     static_cast<AAnalyserApplication*>(QApplication::instance())->doSelectPatient("");
+
+    if (m_finishedTestUid != "")
+    {
+        //! Записать в ИП uid теста и времени начала ДП
+
+        //! Запустить следующий тест
+        doRunTest();
+    }
 }
 
 void PersonalProgramWidget::onHide()
@@ -69,41 +80,86 @@ void PersonalProgramWidget::on_splitterMoved(int, int)
 
 void PersonalProgramWidget::on_run()
 {
+    auto index = selectedIndex();
+    if (index != QModelIndex())
+    {
+        if (index.parent() == QModelIndex())
+        {
+            //! Проверка ИП на завершенность.
+            //! Завершенные всегда находятся в выпадающем списке у пациента, а активные в корне
+            //! То есть, просто проверяем, имеется ли корневой узел
+            if (index != QModelIndex() && index.isValid())
+            {
+                auto uidPP = index.data(DatabaseWidgetDefines::PatientsModel::PatientPPUidRole).toString();
+                m_activePatientUid = index.data(DatabaseWidgetDefines::PatientsModel::PatientUidRole).toString();
+                m_objPPExecuted = DataProvider::getPersonalProgramByUid(uidPP);
+                doRunTest();
+            }
+        }
+        else
+            QMessageBox::information(nullptr, tr("Предупреждение"), tr("Выбранная индивидуальная программа завершена"));
+    }
+    else
+        QMessageBox::information(nullptr, tr("Предупреждение"), tr("Индивидуальная программа не выбрана"));
 }
 
 void PersonalProgramWidget::on_delete()
 {
-
+    auto index = selectedIndex();
+    if (index != QModelIndex())
+    {
+        if (index.parent() == QModelIndex())
+        {
+            //! Проверка ИП на завершенность.
+            //! Завершенные всегда находятся в выпадающем списке у пациента, а активные в корне
+            //! То есть, просто проверяем, имеется ли корневой узел
+            if (index != QModelIndex() && index.isValid())
+            {
+                auto uidPP = index.data(DatabaseWidgetDefines::PatientsModel::PatientPPUidRole).toString();
+                auto pp = DataProvider::getPersonalProgramByUid(uidPP);
+                //TODO: прерывание ИП
+            }
+        }
+        else
+            QMessageBox::information(nullptr, tr("Предупреждение"), tr("Выбранная индивидуальная программа уже завершена"));
+    }
+    else
+        QMessageBox::information(nullptr, tr("Предупреждение"), tr("Индивидуальная программа не выбрана"));
 }
 
 void PersonalProgramWidget::on_params()
 {
     auto index = selectedIndex();
-    if (index.parent() == QModelIndex())
+    if (index != QModelIndex())
     {
-        //! Проверка ИП на завершенность.
-        //! Завершенные всегда находятся в выпадающем списке у пациента, а активные в корне
-        //! То есть, просто проверяем, имеется ли корневой узел
-        if (index != QModelIndex() && index.isValid())
+        if (index.parent() == QModelIndex())
         {
-            auto uidPP = index.data(DatabaseWidgetDefines::PatientsModel::PatientPPUidRole).toString();
-            auto dialog = new ActivePersonalProgramEditor(this);
-            auto pp = DataProvider::getPersonalProgramByUid(uidPP);
-            dialog->setPersonalProgram(pp);
-            if (dialog->exec() == QDialog::Accepted)
+            //! Проверка ИП на завершенность.
+            //! Завершенные всегда находятся в выпадающем списке у пациента, а активные в корне
+            //! То есть, просто проверяем, имеется ли корневой узел
+            if (index != QModelIndex() && index.isValid())
             {
-                //! Получить от диалога новую индивидуальную программу
-                auto pp = dialog->personalProgram();
-                //!Записать измененную индивидуальную программу в БД
-                DataProvider::savePersonalProgramByUid(uidPP, pp);
-                //! Обновить ее на странице
-                if (m_wgts.contains(uidPP))
-                    m_wgts.value(uidPP)->assignPersonalProgram(uidPP);
+                auto uidPP = index.data(DatabaseWidgetDefines::PatientsModel::PatientPPUidRole).toString();
+                auto dialog = new ActivePersonalProgramEditor(this);
+                auto pp = DataProvider::getPersonalProgramByUid(uidPP);
+                dialog->setPersonalProgram(pp);
+                if (dialog->exec() == QDialog::Accepted)
+                {
+                    //! Получить от диалога новую индивидуальную программу
+                    auto pp = dialog->personalProgram();
+                    //!Записать измененную индивидуальную программу в БД
+                    DataProvider::savePersonalProgramByUid(uidPP, pp);
+                    //! Обновить ее на странице
+                    if (m_wgts.contains(uidPP))
+                        m_wgts.value(uidPP)->assignPersonalProgram(uidPP);
+                }
             }
         }
+        else
+            QMessageBox::information(nullptr, tr("Предупреждение"), tr("Нельзя редактировать завершенные индивидуальные программы"));
     }
     else
-        QMessageBox::information(nullptr, tr("Предупреждение"), tr("Нельзя редактировать завершенные индивидуальные программы"));
+        QMessageBox::information(nullptr, tr("Предупреждение"), tr("Индивидуальная программа не выбрана"));
 }
 
 void PersonalProgramWidget::on_selectionChanged(const QItemSelection &selected, const QItemSelection &deselected)
@@ -168,6 +224,15 @@ void PersonalProgramWidget::on_selectPatient(const QString &patientUid)
 
 void PersonalProgramWidget::on_newTest(const QString &testUid)
 {
+    m_finishedTestUid = "";
+    DataDefines::TestInfo ti;
+    if (DataProvider::getTestInfo(testUid, ti))
+    {
+        if (ti.patientUid == m_activePatientUid && ti.metodUid == m_activeMethodicUid)
+        {
+            m_finishedTestUid = testUid;
+        }
+    }
 }
 
 QStandardItem* PersonalProgramWidget::appendLine(const QString uidPat,
@@ -298,5 +363,132 @@ QModelIndex PersonalProgramWidget::selectedIndex() const
             return selIdxs.at(i);
     }
     return QModelIndex();
+}
+
+void PersonalProgramWidget::doRunTest()
+{
+    QJsonObject objTest = QJsonObject();
+    if (getNextTestInfo(m_objPPExecuted, objTest))
+    {
+        if (objTest != QJsonObject())
+            runTest(objTest);
+    }
+    else
+    {
+        // TODO: Завершить ИП
+    }
+}
+
+QDateTime PersonalProgramWidget::getDateTimeByString(const QString &s) const
+{
+    if (s != "")
+        return QDateTime::fromString(s, "dd.MM.yyyy hh:mm");
+    return QDateTime();
+}
+
+QJsonObject PersonalProgramWidget::findEmptyTestInfo(const QJsonArray &arr) const
+{
+    for (int i = 0; i < arr.size(); ++i)
+    {
+        auto obj = arr.at(i).toObject();
+        auto uidT = obj["test_uid"].toString("");
+        if (uidT == "")
+            return obj;
+    }
+    return QJsonObject();
+}
+
+bool PersonalProgramWidget::getNextTestInfo(const QJsonObject &objPPAll, QJsonObject& objTest) const
+{
+    auto objPP = objPPAll["pp"].toObject();
+
+    auto minTimeDP = objPP["min_time_between_dp"].toInt();                   ///< В индексах 0, 1, 2, ...
+    minTimeDP = PersonalProgramDefines::MinTimeBetweenDPList.at(minTimeDP);  ///< В часах
+    auto minTimeDPSec = minTimeDP * 3600;                                    ///< В секундах
+    auto maxTimeDP = objPP["max_time_between_dp"].toInt();                   ///< В индексах 0, 1, 2, ...
+    maxTimeDP = PersonalProgramDefines::MaxTimeBetweenDPList.at(maxTimeDP);  ///< В часах
+    auto maxTimeDPSec = maxTimeDP * 3600;                                    ///< В секундах
+
+    QDateTime dtLast = QDateTime();
+    auto arrDP = objPP["dp_list"].toArray();
+    for (int i = 0; i < arrDP.size(); ++i)
+    {
+        auto objDP = arrDP.at(i).toObject();
+        auto dtDP = getDateTimeByString(objDP["date_time"].toString(""));
+        if (dtDP != QDateTime())
+            dtLast = dtDP;
+
+        auto arrTests = objDP["test_list"].toArray();
+        auto objT = findEmptyTestInfo(arrTests);
+
+        //! Варианты:
+        //! 1. dtLast != QDateTime() && QDateTime::currentDateTime() - dtLast > maxTimeDPSec Превысили максимальное время - завершаем ИП
+        //! 2. objTest != QJsonObject() В ДП есть непроведенный тест
+        //!    2.1. dtDP == QDateTime() ДП не проводилась вообще. тест должен быть первый. Вернуть objTest
+        //!    2.2. dtDP != QDateTime() ДП проводилась, но была прервана
+        //!       2.2.1. QDateTime::currentDateTime() - dtDP < minTimeDPSec Прошло меньше минимума. Вернуть objTest
+        //!       2.2.2. QDateTime::currentDateTime() - dtDP > minTimeDPSec Прошло больше минимума. Следующая ДП
+        //! 3. objTest == QJsonObject() В ДП нет непроведенных тестов. Следующая ДП
+
+        //! Превысили максимальное время - завершаем ИП
+        if (maxTimeDPSec > 0 &&
+            dtLast != QDateTime() &&
+            QDateTime::currentDateTime().secsTo(dtLast) > maxTimeDPSec)
+        {
+            objTest = QJsonObject();
+            return false;
+        }
+
+        //! В ДП есть непроведенный тест
+        if (objT != QJsonObject())
+        {
+            //! ДП не проводилась вообще
+            if (dtDP == QDateTime())
+            {
+                objTest = objT;
+                return true;
+            }
+            else
+            //! ДП проводилась, но была прервана
+            {
+                //! Прошло меньше минимума
+                if (QDateTime::currentDateTime().secsTo(dtDP) > minTimeDPSec)
+                {
+                    objTest = objT;
+                    return true;
+                }
+            }
+        }
+    }
+
+    objTest = QJsonObject();
+    return false;
+}
+
+void PersonalProgramWidget::runTest(const QJsonObject& objTest)
+{
+    //! uid методики и параметры проведения
+    auto uidM = objTest["uid"].toString();
+    auto params = objTest["params"].toObject();
+
+    //! Виджет выполнения
+    auto widget = static_cast<MainWindow*>(static_cast<AAnalyserApplication*>(QApplication::instance())->mainWindow())->getExecuteWidget();
+    if (widget)
+    {
+        //! Удаляем предыдущее, если есть...
+        while (QLayoutItem* item = widget->layout()->takeAt(0))
+        {
+            delete item->widget();
+            delete item;
+        }
+        //! Вызываем методику
+        m_activeMethodicUid = uidM;
+        m_finishedTestUid = "";
+        MetodicsFactory *metFactory = static_cast<AAnalyserApplication*>(QApplication::instance())->getMetodics();
+        metFactory->execute(widget, uidM, params);
+        //! И показываем страницу
+        static_cast<AAnalyserApplication*>(QApplication::instance())->showClientPage(ClientWidgets::uidExecuteWidgetUid);
+    }
+
 }
 

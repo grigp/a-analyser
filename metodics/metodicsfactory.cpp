@@ -117,6 +117,19 @@ void MetodicsFactory::execute(QWidget *parent, const QString &metUid) const
     }
 }
 
+void MetodicsFactory::execute(QWidget *parent, const QString &metUid, const QJsonObject &params) const
+{
+    auto *mt = getMetodicTemplate(metUid);
+    if (mt)
+    {
+        auto mi = getMetodicIndexByUid(metUid);
+        if (mi > -1)
+        {
+            mt->execute(parent, params);
+        }
+    }
+}
+
 QWidget *MetodicsFactory::visualize(QWidget *parent, const QString &testUid) const
 {
     DataDefines::TestInfo ti;

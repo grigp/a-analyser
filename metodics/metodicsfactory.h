@@ -70,11 +70,19 @@ public:
     bool editMetodicParams(QWidget *parent, const QString &metUid, QJsonObject &params);
 
     /*!
-     * \brief выполнение методики
+     * \brief Выполнение методики
      * \param parent - родительский виджет для размещения виджета выплнения пробы
      * \param metUid - uid методики
      */
     void execute(QWidget *parent, const QString &metUid) const;
+
+    /*!
+     * \brief Выполнение методики
+     * \param parent - родительский виджет для размещения виджета выплнения пробы
+     * \param metUid - uid методики
+     * \param params - параметры методики
+     */
+    void execute(QWidget *parent, const QString &metUid, const QJsonObject& params) const;
 
     /*!
      * \brief Визуализация результатов теста

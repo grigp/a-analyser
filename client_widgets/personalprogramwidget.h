@@ -95,9 +95,34 @@ private:
 
     QModelIndex selectedIndex() const;
 
+    void doRunTest();
+
+    QDateTime getDateTimeByString(const QString& s) const;
+
+    QJsonObject findEmptyTestInfo(const QJsonArray& arr) const;
+
+    /*!
+     * \brief Возвращает объект - описатель следующего теста по ИП
+     * \param objPPAll - описание индивидуальной программы
+     * \param objTest - JSonObject с описанием теста, если тест есть и его можно сейчас выполнить. QJsonObject(), если теста нет или его нельзя выполнить
+     * \return true, если программа еще работает, false, если должна быть завершена
+     */
+    bool getNextTestInfo(const QJsonObject& objPPAll, QJsonObject& objTest) const;
+
+    /*!
+     * \brief Запускает следующий тест по индивидуальной программе
+     * \param objTest - объект с описанием теста, который необходимо выполнить
+     */
+    void runTest(const QJsonObject& objTest);
+
     QStandardItemModel* m_model {nullptr};
 
     QMap<QString, PatientProgramWidget*> m_wgts; ///< Виджеты ИП, назначенных для пациентов
+
+    QJsonObject m_objPPExecuted {QJsonObject()};  ///< Выполняемая в настоящий момент индивидуальная программа
+    QString m_activePatientUid {""};              ///< uid пациента, для которого запущена на выполнение ДП
+    QString m_activeMethodicUid {""};             ///< uid текущей методики из запущеной на выполнение ДП
+    QString m_finishedTestUid {""};               ///< uid теста, только что проведенного в рамках ДП
 };
 
 #endif // PERSONALPROGRAMWIDGET_H
