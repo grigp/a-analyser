@@ -609,6 +609,7 @@
                 "stage": "take_put",
                 "delay_after_stage": 0,
                 "scale": 1,
+                "scores_per_min" : 52,
                 "time": 120
             }
         },
@@ -753,6 +754,7 @@
                 "stage": "all_elements",
                 "delay_after_stage": 0,
                 "scale": 1,
+                "scores_per_min" : 72,
                 "time": 120
             }
         },
@@ -889,6 +891,7 @@
                 "stage": "take_put",
                 "delay_after_stage": 0,
                 "scale": 1,
+                "scores_per_min" : 168,
                 "time": 120
             }
         },
@@ -1018,6 +1021,7 @@
                 "stage": "take_put",
                 "delay_after_stage": 0,
                 "scale": 1,
+                "scores_per_min" : 272,
                 "time": 120
             }
         },
@@ -1146,6 +1150,7 @@
                 "stage": "all_elements",
                 "delay_after_stage": 500,
                 "scale": 1,
+                "scores_per_min" : 44,
                 "time": 300
             }
         },
@@ -1272,6 +1277,7 @@
                 "stage": "all_elements",
                 "delay_after_stage": 0,
                 "scale": 1,
+                "scores_per_min" : 34,
                 "time": 120
             }
         },
@@ -1342,6 +1348,7 @@
                 "stage": "all_elements",
                 "delay_after_stage": 0,
                 "scale": 1,
+                "scores_per_min" : 34,
                 "time": 120
             }
         },
@@ -1413,6 +1420,7 @@
                 "stage": "all_elements",
                 "delay_after_stage": 0,
                 "scale": 1,
+                "scores_per_min" : 44,
                 "time": 120
             }
         },
@@ -1510,6 +1518,7 @@
                 "stage": "all_elements",
                 "delay_after_stage": 0,
                 "scale": 1,
+                "scores_per_min" : 56,
                 "time": 120
             }
         },
@@ -1583,6 +1592,7 @@
                 "stage": "all_elements",
                 "delay_after_stage": 0,
                 "scale": 1,
+                "scores_per_min" : 45,
                 "time": 120
             }
         },
@@ -1659,6 +1669,7 @@
                 "stage": "all_elements",
                 "delay_after_stage": 500,
                 "scale": 1,
+                "scores_per_min" : 38,
                 "time": 120
             }
         },
@@ -1747,6 +1758,7 @@
                     "delete": "05.wav"
                 },
                 "scale": 2,
+                "scores_per_min" : 205,
                 "time": 240
             }
         },
@@ -1835,6 +1847,7 @@
                     "delete": "05.wav"
                 },
                 "scale": 2,
+                "scores_per_min" : 126,
                 "time": 240
             }
         },
@@ -1923,6 +1936,7 @@
                     "delete": "05.wav"
                 },
                 "scale": 2,
+                "scores_per_min" : 100,
                 "time": 240
             }
         },
@@ -2011,6 +2025,7 @@
                     "delete": "05.wav"
                 },
                 "scale": 2,
+                "scores_per_min" : 74,
                 "time": 240
             }
         },
@@ -2099,6 +2114,7 @@
                     "delete": "05.wav"
                 },
                 "scale": 2,
+                "scores_per_min" : 103,
                 "time": 120
             }
         },
@@ -2187,6 +2203,7 @@
                     "delete": "05.wav"
                 },
                 "scale": 2,
+                "scores_per_min" : 113,
                 "time": 120
             }
         },
@@ -2275,6 +2292,7 @@
                     "delete": "05.wav"
                 },
                 "scale": 2,
+                "scores_per_min" : 41,
                 "time": 120
             }
         },
@@ -2363,6 +2381,7 @@
                     "delete": "05.wav"
                 },
                 "scale": 2,
+                "scores_per_min" : 31,
                 "time": 120
             }
         },
