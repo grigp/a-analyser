@@ -52,6 +52,10 @@ void PersonalProgramWidget::onDBConnect()
             this, &PersonalProgramWidget::on_selectPatient);
     connect(static_cast<AAnalyserApplication*>(QApplication::instance()), &AAnalyserApplication::newTest,
             this, &PersonalProgramWidget::on_newTest);
+    connect(static_cast<AAnalyserApplication*>(QApplication::instance()), &AAnalyserApplication::assignedPPForPatient,
+            this, &PersonalProgramWidget::on_assignPPForPatient);
+    connect(static_cast<AAnalyserApplication*>(QApplication::instance()), &AAnalyserApplication::canceledPPForPatient,
+            this, &PersonalProgramWidget::on_cancelPPForPatient);
 }
 
 void PersonalProgramWidget::onShow()
@@ -83,21 +87,26 @@ void PersonalProgramWidget::on_run()
     auto index = selectedIndex();
     if (index != QModelIndex())
     {
-        if (index.parent() == QModelIndex())
+        auto uidPP = index.data(DatabaseWidgetDefines::PatientsModel::PatientPPUidRole).toString();
+        if (uidPP != "")
         {
-            //! Проверка ИП на завершенность.
-            //! Завершенные всегда находятся в выпадающем списке у пациента, а активные в корне
-            //! То есть, просто проверяем, имеется ли корневой узел
-            if (index != QModelIndex() && index.isValid())
+            if (index.parent() == QModelIndex())
             {
-                auto uidPP = index.data(DatabaseWidgetDefines::PatientsModel::PatientPPUidRole).toString();
-                m_activePatientUid = index.data(DatabaseWidgetDefines::PatientsModel::PatientUidRole).toString();
-                m_objPPExecuted = DataProvider::getPersonalProgramByUid(uidPP);
-                doRunTest();
+                //! Проверка ИП на завершенность.
+                //! Завершенные всегда находятся в выпадающем списке у пациента, а активные в корне
+                //! То есть, просто проверяем, имеется ли корневой узел
+                if (index != QModelIndex() && index.isValid())
+                {
+                    m_activePatientUid = index.data(DatabaseWidgetDefines::PatientsModel::PatientUidRole).toString();
+                    m_objPPExecuted = DataProvider::getPersonalProgramByUid(uidPP);
+                    doRunTest();
+                }
             }
+            else
+                QMessageBox::information(nullptr, tr("Предупреждение"), tr("Выбранная индивидуальная программа завершена"));
         }
         else
-            QMessageBox::information(nullptr, tr("Предупреждение"), tr("Выбранная индивидуальная программа завершена"));
+            QMessageBox::information(nullptr, tr("Предупреждение"), tr("Пациенту не назначена индивидуальная программа"));
     }
     else
         QMessageBox::information(nullptr, tr("Предупреждение"), tr("Индивидуальная программа не выбрана"));
@@ -108,20 +117,25 @@ void PersonalProgramWidget::on_delete()
     auto index = selectedIndex();
     if (index != QModelIndex())
     {
-        if (index.parent() == QModelIndex())
+        auto uidPP = index.data(DatabaseWidgetDefines::PatientsModel::PatientPPUidRole).toString();
+        if (uidPP != "")
         {
-            //! Проверка ИП на завершенность.
-            //! Завершенные всегда находятся в выпадающем списке у пациента, а активные в корне
-            //! То есть, просто проверяем, имеется ли корневой узел
-            if (index != QModelIndex() && index.isValid())
+            if (index.parent() == QModelIndex())
             {
-                auto uidPP = index.data(DatabaseWidgetDefines::PatientsModel::PatientPPUidRole).toString();
-                auto pp = DataProvider::getPersonalProgramByUid(uidPP);
-                //TODO: прерывание ИП
+                //! Проверка ИП на завершенность.
+                //! Завершенные всегда находятся в выпадающем списке у пациента, а активные в корне
+                //! То есть, просто проверяем, имеется ли корневой узел
+                if (index != QModelIndex() && index.isValid())
+                {
+                    auto pp = DataProvider::getPersonalProgramByUid(uidPP);
+                    //TODO: прерывание ИП
+                }
             }
+            else
+                QMessageBox::information(nullptr, tr("Предупреждение"), tr("Выбранная индивидуальная программа уже завершена"));
         }
         else
-            QMessageBox::information(nullptr, tr("Предупреждение"), tr("Выбранная индивидуальная программа уже завершена"));
+            QMessageBox::information(nullptr, tr("Предупреждение"), tr("Пациенту не назначена индивидуальная программа"));
     }
     else
         QMessageBox::information(nullptr, tr("Предупреждение"), tr("Индивидуальная программа не выбрана"));
@@ -132,31 +146,37 @@ void PersonalProgramWidget::on_params()
     auto index = selectedIndex();
     if (index != QModelIndex())
     {
-        if (index.parent() == QModelIndex())
+        auto uidPP = index.data(DatabaseWidgetDefines::PatientsModel::PatientPPUidRole).toString();
+        if (uidPP != "")
         {
-            //! Проверка ИП на завершенность.
-            //! Завершенные всегда находятся в выпадающем списке у пациента, а активные в корне
-            //! То есть, просто проверяем, имеется ли корневой узел
-            if (index != QModelIndex() && index.isValid())
+            if (index.parent() == QModelIndex())
             {
-                auto uidPP = index.data(DatabaseWidgetDefines::PatientsModel::PatientPPUidRole).toString();
-                auto dialog = new ActivePersonalProgramEditor(this);
-                auto pp = DataProvider::getPersonalProgramByUid(uidPP);
-                dialog->setPersonalProgram(pp);
-                if (dialog->exec() == QDialog::Accepted)
+                //! Проверка ИП на завершенность.
+                //! Завершенные всегда находятся в выпадающем списке у пациента, а активные в корне
+                //! То есть, просто проверяем, имеется ли корневой узел
+                if (index != QModelIndex() && index.isValid())
                 {
-                    //! Получить от диалога новую индивидуальную программу
-                    auto pp = dialog->personalProgram();
-                    //!Записать измененную индивидуальную программу в БД
-                    DataProvider::savePersonalProgramByUid(uidPP, pp);
-                    //! Обновить ее на странице
-                    if (m_wgts.contains(uidPP))
-                        m_wgts.value(uidPP)->assignPersonalProgram(uidPP);
+                    auto uidPP = index.data(DatabaseWidgetDefines::PatientsModel::PatientPPUidRole).toString();
+                    auto dialog = new ActivePersonalProgramEditor(this);
+                    auto pp = DataProvider::getPersonalProgramByUid(uidPP);
+                    dialog->setPersonalProgram(pp);
+                    if (dialog->exec() == QDialog::Accepted)
+                    {
+                        //! Получить от диалога новую индивидуальную программу
+                        auto pp = dialog->personalProgram();
+                        //!Записать измененную индивидуальную программу в БД
+                        DataProvider::savePersonalProgramByUid(uidPP, pp);
+                        //! Обновить ее на странице
+                        if (m_wgts.contains(uidPP))
+                            m_wgts.value(uidPP)->assignPersonalProgram(uidPP);
+                    }
                 }
             }
+            else
+                QMessageBox::information(nullptr, tr("Предупреждение"), tr("Нельзя редактировать завершенные индивидуальные программы"));
         }
         else
-            QMessageBox::information(nullptr, tr("Предупреждение"), tr("Нельзя редактировать завершенные индивидуальные программы"));
+            QMessageBox::information(nullptr, tr("Предупреждение"), tr("Пациенту не назначена индивидуальная программа"));
     }
     else
         QMessageBox::information(nullptr, tr("Предупреждение"), tr("Индивидуальная программа не выбрана"));
@@ -235,6 +255,63 @@ void PersonalProgramWidget::on_newTest(const QString &testUid)
     }
 }
 
+void PersonalProgramWidget::on_assignPPForPatient(const QString &patientUid, const QString &ppUid)
+{
+    //! Ищем в модели. Для пациента уже были программы
+    for (int i = 0; i < m_model->rowCount(); ++i)
+    {
+        auto idx = m_model->index(i, 0);
+        auto uidP = idx.data(DatabaseWidgetDefines::PatientsModel::PatientUidRole).toString();
+        if (uidP == patientUid)
+        {
+            m_model->itemFromIndex(idx)->setData(ppUid, DatabaseWidgetDefines::PatientsModel::PatientPPUidRole);
+            return;
+        }
+    }
+
+    //! Не нашли, у пациента не было завершенных программ
+    appendLine(patientUid, ppUid);
+}
+
+void PersonalProgramWidget::on_cancelPPForPatient(const QString &patientUid)
+{
+    for (int i = 0; i < m_model->rowCount(); ++i)
+    {
+        auto idx = m_model->index(i, 0);
+        auto uidP = idx.data(DatabaseWidgetDefines::PatientsModel::PatientUidRole).toString();
+        auto uidPP = idx.data(DatabaseWidgetDefines::PatientsModel::PatientPPUidRole).toString();
+        auto pp = DataProvider::getPersonalProgramByUid(uidPP);
+
+        if (uidP == patientUid)
+        {
+            //! У пациента не было ранее проведенных программ
+            if (m_model->rowCount(idx) == 0)
+            {
+                //! Тесты были по этой программе
+                if (PersonalProgram::isTestByPPExists(pp))
+                {
+                    appendLine(patientUid, uidPP, pp, m_model->itemFromIndex(idx));
+                    m_model->itemFromIndex(idx)->setData("", DatabaseWidgetDefines::PatientsModel::PatientPPUidRole);
+                }
+                else
+                    //! Тестов не было
+                    m_model->removeRow(i);
+            }
+            else
+            {
+                //! Тесты были по этой программе - добавить строку во вложенный список
+                if (PersonalProgram::isTestByPPExists(pp))
+                    appendLine(patientUid, uidPP, pp, m_model->itemFromIndex(idx));
+                //! Тестов не было - просто снять пометку
+                m_model->itemFromIndex(idx)->setData("", DatabaseWidgetDefines::PatientsModel::PatientPPUidRole);
+            }
+
+            hideAllWidgets();
+            m_wgts.remove(uidPP);
+        }
+    }
+}
+
 QStandardItem* PersonalProgramWidget::appendLine(const QString uidPat,
                                                  const QString uidPPAssigned,
                                                  const QJsonObject& objPP,
@@ -243,6 +320,8 @@ QStandardItem* PersonalProgramWidget::appendLine(const QString uidPat,
     DataDefines::PatientKard pi;
     if (DataProvider::getPatient(uidPat, pi))
     {
+        QList<QStandardItem*> line;
+
         QString title = pi.fio;
         if (root)
         {
@@ -254,15 +333,19 @@ QStandardItem* PersonalProgramWidget::appendLine(const QString uidPat,
         itemFIO->setData(pi.uid, DatabaseWidgetDefines::PatientsModel::PatientUidRole);
         itemFIO->setData(uidPPAssigned, DatabaseWidgetDefines::PatientsModel::PatientPPUidRole);
         itemFIO->setEditable(false);
-        QStandardItem *itemBorn = new QStandardItem(pi.born.toString("dd.MM.yyyy"));
-        itemBorn->setEditable(false);
-        QStandardItem *itemSex = new QStandardItem(DataDefines::SexToText.value(
-                                                       static_cast<DataDefines::Sex>(pi.sex)));
-        itemSex->setData(pi.sex, DatabaseWidgetDefines::PatientsModel::PatientSexRole);
-        itemSex->setEditable(false);
+        if (!root)
+        {
+            QStandardItem *itemBorn = new QStandardItem(pi.born.toString("dd.MM.yyyy"));
+            itemBorn->setEditable(false);
+            QStandardItem *itemSex = new QStandardItem(DataDefines::SexToText.value(
+                                                           static_cast<DataDefines::Sex>(pi.sex)));
+            itemSex->setData(pi.sex, DatabaseWidgetDefines::PatientsModel::PatientSexRole);
+            itemSex->setEditable(false);
+            line << itemFIO << itemBorn << itemSex;
+        }
+        else
+            line << itemFIO;
 
-        QList<QStandardItem*> line;
-        line << itemFIO << itemBorn << itemSex;
         if (!root)
             m_model->appendRow(line);
         else
@@ -308,8 +391,9 @@ void PersonalProgramWidget::load()
             }
             else
             {
-                auto item = appendLine(uidPat, uidPPAssigned);
+                auto item = appendLine(uidPat, ""); // uidPPAssigned);
                 patients.insert(uidPat, item);
+                appendLine(uidPat, uidPPAssigned, objPP, patients.value(uidPat));
             }
         }
     }
@@ -400,6 +484,7 @@ QJsonObject PersonalProgramWidget::findEmptyTestInfo(const QJsonArray &arr) cons
 
 bool PersonalProgramWidget::getNextTestInfo(const QJsonObject &objPPAll, QJsonObject& objTest) const
 {
+    qDebug() << objPPAll;
     auto objPP = objPPAll["pp"].toObject();
 
     auto minTimeDP = objPP["min_time_between_dp"].toInt();                   ///< В индексах 0, 1, 2, ...

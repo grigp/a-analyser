@@ -36,6 +36,7 @@
 #include "patientsmodel.h"
 #include "patientsproxymodel.h"
 #include "aanalysersettings.h"
+#include "personalprogram.h"
 
 AAnalyserApplication::AAnalyserApplication(int &argc, char **argv)
     : QApplication(argc, argv)
@@ -561,24 +562,6 @@ bool AAnalyserApplication::assignPPForPatient()
     return false;
 }
 
-bool isTestByPPExists(QJsonObject& pp)
-{
-    auto objPp = pp["pp"].toObject();
-    auto arrDpList = objPp["dp_list"].toArray();
-    if (arrDpList.size() > 0)
-    {
-        auto objDp = arrDpList.at(0).toObject();
-        auto arrTList = objDp["test_list"].toArray();
-        if (arrTList.size() > 0)
-        {
-            auto objT = arrTList.at(0).toObject();
-            auto testUid = objT["test_uid"].toString("");
-            return testUid != "";
-        }
-    }
-    return false;
-}
-
 bool AAnalyserApplication::cancelPPForPatient()
 {
     auto pi = getCurrentPatient();
@@ -594,7 +577,7 @@ bool AAnalyserApplication::cancelPPForPatient()
             if (mr == QMessageBox::Yes)
             {
                 //! Если не проведены тесты, то удалить программу из БД, иначе пометить ее неактивной
-                if (isTestByPPExists(pp))
+                if (PersonalProgram::isTestByPPExists(pp))
                     DataProvider::deactivatePersonalProgramForPatient(pi.pp_uid);
                 else
                     DataProvider::deletePersonalProgramForPatient(pi.pp_uid);

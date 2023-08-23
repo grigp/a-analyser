@@ -168,3 +168,26 @@ void PersonalProgram::addTest(int numDP, QString &metUid, QJsonObject &params)
 
     setItem(numDP, tc + 1, itemTest);
 }
+
+bool PersonalProgram::isTestByPPExists(QJsonObject &pp)
+{
+    auto objPp = pp["pp"].toObject();
+    auto arrDpList = objPp["dp_list"].toArray();
+    if (arrDpList.size() > 0)
+    {
+        auto objDp = arrDpList.at(0).toObject();
+        auto arrTList = objDp["test_list"].toArray();
+        if (arrTList.size() > 0)
+        {
+            auto objT = arrTList.at(0).toObject();
+            auto testUid = objT["test_uid"].toString("");
+            return testUid != "";
+        }
+    }
+    return false;
+}
+
+bool PersonalProgram::isTestByPPExists()
+{
+//TODO: написатьs
+}

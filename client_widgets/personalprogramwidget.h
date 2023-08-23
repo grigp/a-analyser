@@ -77,6 +77,19 @@ private slots:
 
     void on_newTest(const QString &testUid);
 
+    /*!
+     * \brief Обработка сигналов о назначении индивидуальной программы для пациента
+     * \param patientUid - uid пациента
+     * \param ppUid - uid индивидуальной программы
+     */
+    void on_assignPPForPatient(const QString& patientUid, const QString& ppUid);
+
+    /*!
+     * \brief Обработка сигналов о снятии индивидуальной программы для пациента
+     * \param patientUid - uid пациента
+     */
+    void on_cancelPPForPatient(const QString& patientUid);
+
 private:
     Ui::PersonalProgramWidget *ui;
 

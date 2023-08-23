@@ -951,7 +951,7 @@ QJsonObject DataBase::getPersonalProgramByUid(const QString &uidPP)
         QJsonObject retval;
         if (readTableRec(dir.absoluteFilePath(uidPP), retval))
         {
-            retval["assigned_uid"] = uidPP;
+//            retval["assigned_uid"] = uidPP;
             return retval;
         }
     }
@@ -992,7 +992,7 @@ QJsonArray DataBase::getPersonalProgramList()
         QJsonObject obj;
         if (readTableRec(dir.absoluteFilePath(fileInfo.fileName()), obj))
         {
-            obj["assigned_uid"] = fileInfo.fileName();  //! Добавляем uid назначенной ИП, ибо иначе данные о нем тут теряются
+            //obj["assigned_uid"] = fileInfo.fileName();  //! Добавляем uid назначенной ИП, ибо иначе данные о нем тут теряются
             retval << obj;
         }
     }
@@ -1015,7 +1015,8 @@ void DataBase::deactivatePersonalProgramForPatient(const QString &ppUid)
         if (readTableRec(dir.absoluteFilePath(ppUid), objPP))
         {
             objPP["active"] = false;
-           writeTableRec(dir.absoluteFilePath(ppUid), objPP);
+            objPP["date_end"] = QDateTime::currentDateTime().toString("dd.MM.yyyy");
+            writeTableRec(dir.absoluteFilePath(ppUid), objPP);
         }
     }
 }

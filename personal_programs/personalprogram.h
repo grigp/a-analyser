@@ -60,6 +60,18 @@ public:
     QDate dateEnd() const {return m_dateEnd;}
     bool isActive() const {return m_isActive;}
 
+    /*!
+     * \brief Проверяет, проведены ли тесты в индивидуальной программе
+     * \param pp - индивидуальная программа
+     * \return true, если есть хотя бы один тест
+     */
+    static bool isTestByPPExists(QJsonObject& pp);
+
+    /*!
+     * \brief Проверяет, проведены ли тесты в индивидуальной программе
+     * \return true, если есть хотя бы один тест
+     */
+    bool isTestByPPExists();
 
 private:
     //!--- Параметры индивидуальной программы ---------------

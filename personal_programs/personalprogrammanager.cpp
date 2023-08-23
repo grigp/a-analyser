@@ -360,8 +360,9 @@ QJsonObject PersonalProgramManager::assignPersonalProgramForPatient(const QStrin
 
     //! Сборка PP в один json
     QJsonObject retval;
-    retval["pp_uid"] = ppUid;  //! uid исходной PP
-    retval["patient_uid"] = patientUid;
+    retval["pp_uid"] = ppUid;                //! uid исходной PP
+    retval["patient_uid"] = patientUid;      //! uid пациента
+    retval["assigned_uid"] = ppUidAssigned;  //! uid назначенной PP
     retval["active"] = true;
     retval["date_begin"] = QDate::currentDate().toString("dd.MM.yyyy");
 
