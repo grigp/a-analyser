@@ -3,6 +3,7 @@
 
 #include <QUuid>
 #include <QMessageBox>
+#include <QThread>
 #include <QDebug>
 
 #include "aanalyserapplication.h"
@@ -60,21 +61,49 @@ void PersonalProgramWidget::onDBConnect()
 
 void PersonalProgramWidget::onShow()
 {
-    ui->tvPatients->selectionModel()->clearSelection();
-    static_cast<AAnalyserApplication*>(QApplication::instance())->doSelectPatient("");
+    static_cast<AAnalyserApplication*>(QApplication::instance())->doSelectMetodic("");
 
     if (m_finishedTestUid != "")
     {
         //! Записать в ИП uid теста и времени начала ДП
+        if (m_currentDP != -1 && m_currentTest != -1)
+        {
+            appendTestCompletionInfoToPP();
+            auto uidPP = m_objPPExecuted["assigned_uid"].toString();
+            DataProvider::savePersonalProgramByUid(uidPP, m_objPPExecuted);
 
-        //! Запустить следующий тест
-        doRunTest();
+            //! Обновить ее на странице
+            if (m_wgts.contains(uidPP))
+                m_wgts.value(uidPP)->assignPersonalProgram(uidPP);
+        }
+
+        m_tmNextStep = startTimer(1000);
+
+//        //! Запустить следующий тест
+//        doRunTest();
+    }
+    else
+    {
+        ui->tvPatients->selectionModel()->clearSelection();
+        static_cast<AAnalyserApplication*>(QApplication::instance())->doSelectPatient("");
     }
 }
 
 void PersonalProgramWidget::onHide()
 {
 
+}
+
+void PersonalProgramWidget::timerEvent(QTimerEvent *event)
+{
+    if (event->timerId() == m_tmNextStep)
+    {
+        //! Запустить следующий тест
+        doRunTest();
+
+        killTimer(m_tmNextStep);
+    }
+    ClientWidget::timerEvent(event);
 }
 
 void PersonalProgramWidget::on_splitterMoved(int, int)
@@ -470,22 +499,27 @@ QDateTime PersonalProgramWidget::getDateTimeByString(const QString &s) const
     return QDateTime();
 }
 
-QJsonObject PersonalProgramWidget::findEmptyTestInfo(const QJsonArray &arr) const
+QJsonObject PersonalProgramWidget::findEmptyTestInfo(const QJsonArray &arr)
 {
     for (int i = 0; i < arr.size(); ++i)
     {
         auto obj = arr.at(i).toObject();
         auto uidT = obj["test_uid"].toString("");
         if (uidT == "")
+        {
+            m_currentTest = i;
             return obj;
+        }
     }
     return QJsonObject();
 }
 
-bool PersonalProgramWidget::getNextTestInfo(const QJsonObject &objPPAll, QJsonObject& objTest) const
+bool PersonalProgramWidget::getNextTestInfo(const QJsonObject &objPPAll, QJsonObject& objTest)
 {
-    qDebug() << objPPAll;
     auto objPP = objPPAll["pp"].toObject();
+
+    m_currentDP = -1;
+    m_currentTest = -1;
 
     auto minTimeDP = objPP["min_time_between_dp"].toInt();                   ///< В индексах 0, 1, 2, ...
     minTimeDP = PersonalProgramDefines::MinTimeBetweenDPList.at(minTimeDP);  ///< В часах
@@ -521,6 +555,7 @@ bool PersonalProgramWidget::getNextTestInfo(const QJsonObject &objPPAll, QJsonOb
             QDateTime::currentDateTime().secsTo(dtLast) > maxTimeDPSec)
         {
             objTest = QJsonObject();
+            m_currentDP = i;
             return false;
         }
 
@@ -531,6 +566,7 @@ bool PersonalProgramWidget::getNextTestInfo(const QJsonObject &objPPAll, QJsonOb
             if (dtDP == QDateTime())
             {
                 objTest = objT;
+                m_currentDP = i;
                 return true;
             }
             else
@@ -540,6 +576,7 @@ bool PersonalProgramWidget::getNextTestInfo(const QJsonObject &objPPAll, QJsonOb
                 if (QDateTime::currentDateTime().secsTo(dtDP) > minTimeDPSec)
                 {
                     objTest = objT;
+                    m_currentDP = i;
                     return true;
                 }
             }
@@ -566,6 +603,9 @@ void PersonalProgramWidget::runTest(const QJsonObject& objTest)
             delete item->widget();
             delete item;
         }
+
+        static_cast<AAnalyserApplication*>(QApplication::instance())->doSelectMetodic(uidM);
+
         //! Вызываем методику
         m_activeMethodicUid = uidM;
         m_finishedTestUid = "";
@@ -575,5 +615,35 @@ void PersonalProgramWidget::runTest(const QJsonObject& objTest)
         static_cast<AAnalyserApplication*>(QApplication::instance())->showClientPage(ClientWidgets::uidExecuteWidgetUid);
     }
 
+}
+
+void PersonalProgramWidget::appendTestCompletionInfoToPP()
+{
+    auto objPP = m_objPPExecuted["pp"].toObject();
+    auto arrDP = objPP["dp_list"].toArray();
+
+    if (m_currentDP < arrDP.size())
+    {
+        auto objDP = arrDP.at(m_currentDP).toObject();
+
+        //! Если тест первый в DP, то записать дату и время проведения
+        if (m_currentTest == 0)
+            objDP["date_time"] = QDateTime::currentDateTime().toString("dd.MM.yyyy hh:mm");
+
+        auto arrTests = objDP["test_list"].toArray();
+
+        if (m_currentTest < arrTests.size())
+        {
+            auto objTest = arrTests.at(m_currentTest).toObject();
+            objTest["test_uid"] = m_finishedTestUid;
+            arrTests.replace(m_currentTest, objTest);
+        }
+        objDP["test_list"] = arrTests;
+
+        arrDP.replace(m_currentDP, objDP);
+    }
+
+    objPP["dp_list"] = arrDP;
+    m_objPPExecuted["pp"] = objPP;
 }
 

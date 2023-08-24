@@ -62,6 +62,9 @@ public:
      */
     void onHide() override;
 
+protected:
+    void timerEvent(QTimerEvent *event) override;
+
 private slots:
     void on_splitterMoved(int,int);
 
@@ -112,7 +115,7 @@ private:
 
     QDateTime getDateTimeByString(const QString& s) const;
 
-    QJsonObject findEmptyTestInfo(const QJsonArray& arr) const;
+    QJsonObject findEmptyTestInfo(const QJsonArray& arr);
 
     /*!
      * \brief Возвращает объект - описатель следующего теста по ИП
@@ -120,13 +123,18 @@ private:
      * \param objTest - JSonObject с описанием теста, если тест есть и его можно сейчас выполнить. QJsonObject(), если теста нет или его нельзя выполнить
      * \return true, если программа еще работает, false, если должна быть завершена
      */
-    bool getNextTestInfo(const QJsonObject& objPPAll, QJsonObject& objTest) const;
+    bool getNextTestInfo(const QJsonObject& objPPAll, QJsonObject& objTest);
 
     /*!
      * \brief Запускает следующий тест по индивидуальной программе
      * \param objTest - объект с описанием теста, который необходимо выполнить
      */
     void runTest(const QJsonObject& objTest);
+
+    /*!
+     * \brief Записывает в индивидуальную программу данные о проведенном тесте
+     */
+    void appendTestCompletionInfoToPP();
 
     QStandardItemModel* m_model {nullptr};
 
@@ -136,6 +144,9 @@ private:
     QString m_activePatientUid {""};              ///< uid пациента, для которого запущена на выполнение ДП
     QString m_activeMethodicUid {""};             ///< uid текущей методики из запущеной на выполнение ДП
     QString m_finishedTestUid {""};               ///< uid теста, только что проведенного в рамках ДП
+    int m_currentDP {-1};                         ///< Номер текущей дневной программы на время выполнения теста
+    int m_currentTest {-1};                       ///< Номер текущего теста на время выполнения теста
+    int m_tmNextStep {-1};                        ///< таймер задержки перед запуском следующей методики
 };
 
 #endif // PERSONALPROGRAMWIDGET_H

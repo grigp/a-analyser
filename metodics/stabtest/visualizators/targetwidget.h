@@ -36,6 +36,9 @@ public:
      */
     static void print(QPrinter *printer, const QString &testUid);
 
+protected:
+    void timerEvent(QTimerEvent *event) override;
+
 private:
     Ui::TargetWidget *ui;
 
@@ -47,6 +50,9 @@ private:
     QString m_sScore {""};
     QString m_sTotalScore {""};
     TargetCalculator *m_calculator {nullptr};
+
+    int m_tmSetDiap {-1};
+    double m_maxValue {0};
 };
 
 #endif // TARGETWIDGET_H

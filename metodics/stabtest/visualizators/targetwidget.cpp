@@ -134,6 +134,20 @@ void TargetWidget::print(QPrinter *printer, const QString &testUid)
     painter->end();
 }
 
+void TargetWidget::timerEvent(QTimerEvent *event)
+{
+    int diap = 1;
+    int step = 0;
+    while (diap < m_maxValue)
+    {
+        diap = diap * 2;
+        ++step;
+    }
+    ui->wgtSKG->setDiap(diap);
+
+    QWidget::timerEvent(event);
+}
+
 void TargetWidget::showSKG(TargetCalculator *calculator, const QString &testUid)
 {
     Q_UNUSED(calculator);
@@ -145,21 +159,10 @@ void TargetWidget::showSKG(TargetCalculator *calculator, const QString &testUid)
 
     auto *sig = probe->signal(ChannelsDefines::chanStab);
     ui->wgtSKG->setSignal(sig);
-    auto max = sig->absMaxValue();
+    m_maxValue = sig->absMaxValue();
     ui->wgtSKG->setVisibleMarker(false);
 
-    QTimer::singleShot(30, [=]()
-    {
-        int diap = 1;
-        int step = 0;
-        while (diap < max)
-        {
-            diap = diap * 2;
-            ++step;
-        }
-        ui->wgtSKG->setDiap(diap);
-    });
-
+    m_tmSetDiap = startTimer(30);
     m_wgtSKG = ui->wgtSKG;
 
 //    auto angle = calculator->factors()->ellipse().angle;
