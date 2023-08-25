@@ -81,7 +81,7 @@ static QMap<MinTimeBetweenDP, QString> MinTimeBetweenDPNames
     , std::pair<MinTimeBetweenDP, QString> (minUndefined, QApplication::tr("Нет"))
     , std::pair<MinTimeBetweenDP, QString> (minOneHour, QApplication::tr("Один час"))
     , std::pair<MinTimeBetweenDP, QString> (minTwoHours, QApplication::tr("Два часа"))
-    , std::pair<MinTimeBetweenDP, QString> (minFiveHours, QApplication::tr("Три часа"))
+    , std::pair<MinTimeBetweenDP, QString> (minFiveHours, QApplication::tr("Пять часов"))
     , std::pair<MinTimeBetweenDP, QString> (minTwelveHours, QApplication::tr("Двенадцать часов"))
     , std::pair<MinTimeBetweenDP, QString> (minDay, QApplication::tr("Одни сутки"))
     , std::pair<MinTimeBetweenDP, QString> (minTwoDays, QApplication::tr("Двое суток"))

@@ -133,8 +133,9 @@ private:
 
     /*!
      * \brief Записывает в индивидуальную программу данные о проведенном тесте
+     * \return true, если достигли конца ДП и серию тестов необходимо завершить и false в противном случае.
      */
-    void appendTestCompletionInfoToPP();
+    bool appendTestCompletionInfoToPP();
 
     QStandardItemModel* m_model {nullptr};
 

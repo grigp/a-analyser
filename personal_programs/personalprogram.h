@@ -53,8 +53,12 @@ public:
     QString name() const {return m_name;}
     QString logoFileName() const {return m_logoFileName;}
     QString uidPatient() const {return m_uidPatient;}
+
     int minTimeBetweenDP() const {return m_minTimeBetweenDP;}
+    void setMinTimeBetweenDP(const int minTime) {m_minTimeBetweenDP = minTime;}
+
     int maxTimeBetweenDP() const {return m_maxTimeBetweenDP;}
+    void setMaxTimeBetweenDP(const int maxTime) {m_maxTimeBetweenDP = maxTime;}
 
     QDate dateBegin() const {return m_dateBegin;}
     QDate dateEnd() const {return m_dateEnd;}
@@ -76,6 +80,7 @@ public:
 private:
     //!--- Параметры индивидуальной программы ---------------
     QString m_uid {QUuid().toString()};          ///< uid
+    QString m_uidAssigned {""};                  ///< uid назначенной ИП
     QString m_name {""};                         ///< Название
     QString m_logoFileName {""};                 ///< Имя файла с логотипом
     QString m_uidPatient {QUuid().toString()};   ///< uid пациента

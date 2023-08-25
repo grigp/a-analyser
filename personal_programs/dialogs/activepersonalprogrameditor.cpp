@@ -345,39 +345,47 @@ void ActivePersonalProgramEditor::on_testMoveDown()
 
 void ActivePersonalProgramEditor::on_minTimeChanged(int idx)
 {
-    Q_UNUSED(idx);
-    auto valMin = ui->cbMinTimeBetweenDP->currentData().toInt();
-    auto valMax = ui->cbMaxTimeBetweenDP->currentData().toInt();
-    if (valMin > valMax)
+    if (m_mdlPP)
     {
-        while (valMin > valMax)
+        Q_UNUSED(idx);
+        auto valMin = ui->cbMinTimeBetweenDP->currentData().toInt();
+        auto valMax = ui->cbMaxTimeBetweenDP->currentData().toInt();
+        if (valMin > valMax)
         {
-            int idx = ui->cbMaxTimeBetweenDP->currentIndex();
-            if (idx < ui->cbMaxTimeBetweenDP->count() - 1)
-                ui->cbMaxTimeBetweenDP->setCurrentIndex(idx + 1);
-            else
-                break;
-            valMax = ui->cbMaxTimeBetweenDP->currentData().toInt();
+            while (valMin > valMax)
+            {
+                int idx = ui->cbMaxTimeBetweenDP->currentIndex();
+                if (idx < ui->cbMaxTimeBetweenDP->count() - 1)
+                    ui->cbMaxTimeBetweenDP->setCurrentIndex(idx + 1);
+                else
+                    break;
+                valMax = ui->cbMaxTimeBetweenDP->currentData().toInt();
+            }
         }
+        m_mdlPP->setMinTimeBetweenDP(idx);
     }
 }
 
 void ActivePersonalProgramEditor::on_maxTimeChanged(int idx)
 {
-    Q_UNUSED(idx);
-    auto valMin = ui->cbMinTimeBetweenDP->currentData().toInt();
-    auto valMax = ui->cbMaxTimeBetweenDP->currentData().toInt();
-    if (valMax < valMin)
+    if (m_mdlPP)
     {
-        while (valMax < valMin)
+        Q_UNUSED(idx);
+        auto valMin = ui->cbMinTimeBetweenDP->currentData().toInt();
+        auto valMax = ui->cbMaxTimeBetweenDP->currentData().toInt();
+        if (valMax < valMin)
         {
-            int idx = ui->cbMinTimeBetweenDP->currentIndex();
-            if (idx > 0)
-                ui->cbMinTimeBetweenDP->setCurrentIndex(idx - 1);
-            else
-                break;
-            valMin = ui->cbMinTimeBetweenDP->currentData().toInt();
+            while (valMax < valMin)
+            {
+                int idx = ui->cbMinTimeBetweenDP->currentIndex();
+                if (idx > 0)
+                    ui->cbMinTimeBetweenDP->setCurrentIndex(idx - 1);
+                else
+                    break;
+                valMin = ui->cbMinTimeBetweenDP->currentData().toInt();
+            }
         }
+        m_mdlPP->setMaxTimeBetweenDP(idx);
     }
 }
 

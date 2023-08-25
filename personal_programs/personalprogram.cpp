@@ -38,6 +38,7 @@ void PersonalProgram::load(const QJsonObject &objPPAll)
     m_dateEnd = QDate::fromString(objPPAll["date_end"].toString(), "dd.MM.yyyy");
     m_uidPatient = objPPAll["patient_uid"].toString();
     m_uid = objPPAll["pp_uid"].toString();
+    m_uidAssigned = objPPAll["assigned_uid"].toString("");
 
     auto objPP = objPPAll["pp"].toObject();
     m_name = objPP["name"].toString();
@@ -61,6 +62,7 @@ QJsonObject PersonalProgram::save()
 
     retval["patient_uid"] = m_uidPatient;
     retval["pp_uid"] = m_uid;
+    retval["assigned_uid"] = m_uidAssigned;
     retval["active"] = m_isActive;
     retval["date_begin"] = m_dateBegin.toString("dd.MM.yyyy");
     if (m_dateEnd != QDate())
