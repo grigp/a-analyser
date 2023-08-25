@@ -105,7 +105,7 @@ void StabTestExecute::closeEvent(QCloseEvent *event)
 
 void StabTestExecute::timerEvent(QTimerEvent *event)
 {
-    if (event->timerId() == m_autoModeTimerId)
+    if (!ui->lblCommunicationError->isVisible() && event->timerId() == m_autoModeTimerId)
     {
         if (m_stageNum < m_stages.at(m_probe).size())
         {
@@ -223,7 +223,7 @@ void StabTestExecute::start()
         auto rm = static_cast<AAnalyserApplication*>(QApplication::instance())->runningMode();
         m_autoTimeRun = SettingsProvider::valueFromRegAppCopy("", AAnalyserSettingsParams::pn_timeCounter, 5).toInt();
         m_autoTimeLatent = SettingsProvider::valueFromRegAppCopy("", AAnalyserSettingsParams::pn_timeLatent, 2).toInt();
-        if (rm == BaseDefines::rmAutomatic)
+        if (!ui->lblCommunicationError->isVisible() && rm == BaseDefines::rmAutomatic)
             m_autoModeTimerId = startTimer(1000);
     }
     else
@@ -510,7 +510,8 @@ void StabTestExecute::nextProbe()
 
 void StabTestExecute::finishTest()
 {
-    killTimer(m_autoModeTimerId);
+    if (!ui->lblCommunicationError->isVisible())
+        killTimer(m_autoModeTimerId);
 
     hidePatientWindow();
     m_isRecording = false;

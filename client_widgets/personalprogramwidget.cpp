@@ -100,7 +100,7 @@ void PersonalProgramWidget::timerEvent(QTimerEvent *event)
     if (event->timerId() == m_tmNextStep)
     {
         //! Запустить следующий тест
-        doRunTest();
+        doRunTest(false);
 
         killTimer(m_tmNextStep);
     }
@@ -129,7 +129,7 @@ void PersonalProgramWidget::on_run()
                 {
                     m_activePatientUid = index.data(DatabaseWidgetDefines::PatientsModel::PatientUidRole).toString();
                     m_objPPExecuted = DataProvider::getPersonalProgramByUid(uidPP);
-                    doRunTest();
+                    doRunTest(true);
                 }
             }
             else
@@ -139,7 +139,7 @@ void PersonalProgramWidget::on_run()
             QMessageBox::information(nullptr, tr("Предупреждение"), tr("Пациенту не назначена индивидуальная программа"));
     }
     else
-        QMessageBox::information(nullptr, tr("Предупреждение"), tr("Индивидуальная программа не выбрана"));
+        QMessageBox::information(nullptr, tr("Предупреждение"), tr("Не выбран пациент с назначенной индивидуальной программой"));
 }
 
 void PersonalProgramWidget::on_delete()
@@ -479,10 +479,10 @@ QModelIndex PersonalProgramWidget::selectedIndex() const
     return QModelIndex();
 }
 
-void PersonalProgramWidget::doRunTest()
+void PersonalProgramWidget::doRunTest(bool isFirstRun)
 {
     QJsonObject objTest = QJsonObject();
-    if (getNextTestInfo(m_objPPExecuted, objTest))
+    if (getNextTestInfo(m_objPPExecuted, objTest, isFirstRun))
     {
         if (objTest != QJsonObject())
             runTest(objTest);
@@ -520,7 +520,7 @@ QJsonObject PersonalProgramWidget::findEmptyTestInfo(const QJsonArray &arr)
     return QJsonObject();
 }
 
-bool PersonalProgramWidget::getNextTestInfo(const QJsonObject &objPPAll, QJsonObject& objTest)
+bool PersonalProgramWidget::getNextTestInfo(const QJsonObject &objPPAll, QJsonObject& objTest, bool isFirstRun)
 {
     auto objPP = objPPAll["pp"].toObject();
 
@@ -556,7 +556,8 @@ bool PersonalProgramWidget::getNextTestInfo(const QJsonObject &objPPAll, QJsonOb
         //! 3. objTest == QJsonObject() В ДП нет непроведенных тестов. Следующая ДП
 
         //! Превысили максимальное время - завершаем ИП
-        if (maxTimeDPSec > 0 &&
+        if (isFirstRun &&
+            maxTimeDPSec > 0 &&
             dtLast != QDateTime() &&
             dtLast.secsTo(QDateTime::currentDateTime()) > maxTimeDPSec)
         {
@@ -566,11 +567,12 @@ bool PersonalProgramWidget::getNextTestInfo(const QJsonObject &objPPAll, QJsonOb
         }
 
         //! Меньше минимального времени - запускать нельзя
-        if ((minTimeDPSec > 0 &&
+        if (isFirstRun &&
+            ((minTimeDPSec > 0 &&
              dtLast != QDateTime() &&
              dtLast.secsTo(QDateTime::currentDateTime()) < minTimeDPSec)
                 ||
-             (minTimeDPSec < 0 && (QDateTime::currentDateTime().date().day() == dtLast.date().day()))) //isDayChanged(dtLast)))
+             (minTimeDPSec < 0 && (QDateTime::currentDateTime().date().day() == dtLast.date().day()))))
         {
             objTest = QJsonObject();
             m_currentDP = -1;
@@ -591,7 +593,9 @@ bool PersonalProgramWidget::getNextTestInfo(const QJsonObject &objPPAll, QJsonOb
             //! ДП проводилась, но была прервана
             {
                 //! Прошло меньше минимума
-                if (dtDP.secsTo(QDateTime::currentDateTime()) > minTimeDPSec)
+                if ((isFirstRun && dtDP.secsTo(QDateTime::currentDateTime()) < minTimeDPSec)
+                        ||
+                     !isFirstRun)
                 {
                     objTest = objT;
                     m_currentDP = i;
@@ -669,11 +673,5 @@ bool PersonalProgramWidget::appendTestCompletionInfoToPP()
     m_objPPExecuted["pp"] = objPP;
 
     return isDPComplete;
-}
-
-bool PersonalProgramWidget::isDayChanged(const QDateTime dtLastRun) const
-{
-    auto now = QDateTime::currentDateTime();
-    return (now.date().day() != dtLastRun.date().day());
 }
 

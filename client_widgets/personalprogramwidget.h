@@ -111,7 +111,7 @@ private:
 
     QModelIndex selectedIndex() const;
 
-    void doRunTest();
+    void doRunTest(bool isFirstRun);
 
     QDateTime getDateTimeByString(const QString& s) const;
 
@@ -121,9 +121,10 @@ private:
      * \brief Возвращает объект - описатель следующего теста по ИП
      * \param objPPAll - описание индивидуальной программы
      * \param objTest - JSonObject с описанием теста, если тест есть и его можно сейчас выполнить. QJsonObject(), если теста нет или его нельзя выполнить
+     * \param isFirstRun - первый запуск, а не последовательный автоматический
      * \return true, если программа еще работает, false, если должна быть завершена
      */
-    bool getNextTestInfo(const QJsonObject& objPPAll, QJsonObject& objTest);
+    bool getNextTestInfo(const QJsonObject& objPPAll, QJsonObject& objTest, bool isFirstRun);
 
     /*!
      * \brief Запускает следующий тест по индивидуальной программе
