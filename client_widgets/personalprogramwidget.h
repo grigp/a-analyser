@@ -115,7 +115,13 @@ private:
 
     QDateTime getDateTimeByString(const QString& s) const;
 
-    QJsonObject findEmptyTestInfo(const QJsonArray& arr);
+    /*!
+     * \brief Ищет пустой тест в массиве дневной программы
+     * \param arr - массив дневной программы
+     * \param objTest - найденный тест
+     * \return индекс найденного теста в массиве
+     */
+    int findEmptyTestInfo(const QJsonArray& arr, QJsonObject& objTest);
 
     /*!
      * \brief Возвращает объект - описатель следующего теста по ИП
@@ -147,7 +153,7 @@ private:
     QString m_activeMethodicUid {""};             ///< uid текущей методики из запущеной на выполнение ДП
     QString m_finishedTestUid {""};               ///< uid теста, только что проведенного в рамках ДП
     int m_currentDP {-1};                         ///< Номер текущей дневной программы на время выполнения теста
-    int m_currentTest {-1};                       ///< Номер текущего теста на время выполнения теста
+    int m_curTestNumber {-1};                     ///< Номер текущего теста на время выполнения теста
     int m_tmNextStep {-1};                        ///< таймер задержки перед запуском следующей методики
 };
 

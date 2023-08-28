@@ -68,7 +68,7 @@ void PersonalProgramWidget::onShow()
         bool isDPComplette = false;
 
         //! Записать в ИП uid теста и времени начала ДП
-        if (m_currentDP != -1 && m_currentTest != -1)
+        if (m_currentDP != -1 && m_curTestNumber != -1)
         {
             isDPComplette = appendTestCompletionInfoToPP();
             auto uidPP = m_objPPExecuted["assigned_uid"].toString();
@@ -505,7 +505,7 @@ QDateTime PersonalProgramWidget::getDateTimeByString(const QString &s) const
     return QDateTime();
 }
 
-QJsonObject PersonalProgramWidget::findEmptyTestInfo(const QJsonArray &arr)
+int PersonalProgramWidget::findEmptyTestInfo(const QJsonArray &arr, QJsonObject &objTest)
 {
     for (int i = 0; i < arr.size(); ++i)
     {
@@ -513,11 +513,44 @@ QJsonObject PersonalProgramWidget::findEmptyTestInfo(const QJsonArray &arr)
         auto uidT = obj["test_uid"].toString("");
         if (uidT == "")
         {
-            m_currentTest = i;
-            return obj;
+            objTest = obj;
+            return i;
         }
     }
-    return QJsonObject();
+    objTest = QJsonObject();
+    return -1;
+}
+
+bool isNowLessMin(const QDateTime& dtLast, const int minTimeDPSec)
+{
+    return (((minTimeDPSec > 0 &&
+              dtLast != QDateTime() &&
+              dtLast.secsTo(QDateTime::currentDateTime()) < minTimeDPSec)
+                 ||
+              (minTimeDPSec < 0 && (QDateTime::currentDateTime().date().day() == dtLast.date().day()))));
+}
+
+bool isNowAboveMax(const QDateTime& dtLast, const int maxTimeDPSec)
+{
+    return (maxTimeDPSec > 0 &&
+            dtLast != QDateTime() &&
+            dtLast.secsTo(QDateTime::currentDateTime()) > maxTimeDPSec);
+}
+
+bool isNowInBounds(const QDateTime& dtLast, const int minTimeDPSec, const int maxTimeDPSec)
+{
+    if (dtLast == QDateTime())
+        return true;
+    else
+        return ((((minTimeDPSec > 0 &&
+                   dtLast != QDateTime() &&
+                   dtLast.secsTo(QDateTime::currentDateTime()) > minTimeDPSec)
+                      ||
+                   (minTimeDPSec < 0 && (QDateTime::currentDateTime().date().day() != dtLast.date().day()))))
+                  &&
+                (maxTimeDPSec > 0 &&
+                 dtLast != QDateTime() &&
+                 dtLast.secsTo(QDateTime::currentDateTime()) < maxTimeDPSec));
 }
 
 bool PersonalProgramWidget::getNextTestInfo(const QJsonObject &objPPAll, QJsonObject& objTest, bool isFirstRun)
@@ -525,7 +558,7 @@ bool PersonalProgramWidget::getNextTestInfo(const QJsonObject &objPPAll, QJsonOb
     auto objPP = objPPAll["pp"].toObject();
 
     m_currentDP = -1;
-    m_currentTest = -1;
+    m_curTestNumber = -1;
 
     auto minTimeDP = objPP["min_time_between_dp"].toInt();                   ///< В индексах 0, 1, 2, ...
     minTimeDP = PersonalProgramDefines::MinTimeBetweenDPList.at(minTimeDP);  ///< В часах
@@ -544,58 +577,44 @@ bool PersonalProgramWidget::getNextTestInfo(const QJsonObject &objPPAll, QJsonOb
             dtLast = dtDP;
 
         auto arrTests = objDP["test_list"].toArray();
-        auto objT = findEmptyTestInfo(arrTests);
+        QJsonObject objT = QJsonObject();
+        m_curTestNumber = findEmptyTestInfo(arrTests, objT);
 
-        //! Варианты:
-        //! 1. dtLast != QDateTime() && QDateTime::currentDateTime() - dtLast > maxTimeDPSec Превысили максимальное время - завершаем ИП
-        //! 2. objTest != QJsonObject() В ДП есть непроведенный тест
-        //!    2.1. dtDP == QDateTime() ДП не проводилась вообще. тест должен быть первый. Вернуть objTest
-        //!    2.2. dtDP != QDateTime() ДП проводилась, но была прервана
-        //!       2.2.1. QDateTime::currentDateTime() - dtDP < minTimeDPSec Прошло меньше минимума. Вернуть objTest
-        //!       2.2.2. QDateTime::currentDateTime() - dtDP > minTimeDPSec Прошло больше минимума. Следующая ДП
-        //! 3. objTest == QJsonObject() В ДП нет непроведенных тестов. Следующая ДП
-
-        //! Превысили максимальное время - завершаем ИП
-        if (isFirstRun &&
-            maxTimeDPSec > 0 &&
-            dtLast != QDateTime() &&
-            dtLast.secsTo(QDateTime::currentDateTime()) > maxTimeDPSec)
+        //! Первый тест в серии
+        if (isFirstRun)
         {
-            objTest = QJsonObject();
-            m_currentDP = i;
-            return false;
-        }
-
-        //! Меньше минимального времени - запускать нельзя
-        if (isFirstRun &&
-            ((minTimeDPSec > 0 &&
-             dtLast != QDateTime() &&
-             dtLast.secsTo(QDateTime::currentDateTime()) < minTimeDPSec)
-                ||
-             (minTimeDPSec < 0 && (QDateTime::currentDateTime().date().day() == dtLast.date().day()))))
-        {
-            objTest = QJsonObject();
-            m_currentDP = -1;
-            return true;
-        }
-
-        //! В ДП есть непроведенный тест
-        if (objT != QJsonObject())
-        {
-            //! ДП не проводилась вообще
-            if (dtDP == QDateTime())
+            //! Первый тест в дневной программе
+            if (m_curTestNumber == 0)
             {
-                objTest = objT;
-                m_currentDP = i;
-                return true;
+                //! Превысили максимальное время - завершаем ИП
+                if (isNowAboveMax(dtLast, maxTimeDPSec))
+                {
+                    objTest = QJsonObject();
+                    m_currentDP = i;
+                    return false;
+                }
+                else
+                //! Меньше минимального времени - запускать нельзя
+                if (isNowLessMin(dtLast, minTimeDPSec))
+                {
+                    objTest = QJsonObject();
+                    m_currentDP = -1;
+                    return true;
+                }
+                else
+                //! В допустимом временном диапазоне - проводим
+                if (isNowInBounds(dtLast, minTimeDPSec, maxTimeDPSec))
+                {
+                    objTest = objT;
+                    m_currentDP = i;
+                    return true;
+                }
             }
             else
-            //! ДП проводилась, но была прервана
+            //! Не первый тест в дневной программе
             {
-                //! Прошло меньше минимума
-                if ((isFirstRun && dtDP.secsTo(QDateTime::currentDateTime()) < minTimeDPSec)
-                        ||
-                     !isFirstRun)
+                //! Меньше минимального времени - проводим, иначе - следующая ДП
+                if (isNowLessMin(dtLast, minTimeDPSec))
                 {
                     objTest = objT;
                     m_currentDP = i;
@@ -603,11 +622,119 @@ bool PersonalProgramWidget::getNextTestInfo(const QJsonObject &objPPAll, QJsonOb
                 }
             }
         }
+        else
+        //! Не первый тест в серии
+        {
+            //! Первый тест в дневной программе - завершаем, проводить нельзя
+            if (m_curTestNumber == 0)
+            {
+                objTest = QJsonObject();
+                m_currentDP = -1;
+                return true;
+            }
+            else
+            //! Не первый тест в дневной программе - проводим
+            {
+                objTest = objT;
+                m_currentDP = i;
+                return true;
+            }
+        }
     }
 
     objTest = QJsonObject();
     return false;
 }
+
+//bool PersonalProgramWidget::getNextTestInfo(const QJsonObject &objPPAll, QJsonObject& objTest, bool isFirstRun)
+//{
+//    auto objPP = objPPAll["pp"].toObject();
+
+//    m_currentDP = -1;
+//    m_curTestNumber = -1;
+
+//    auto minTimeDP = objPP["min_time_between_dp"].toInt();                   ///< В индексах 0, 1, 2, ...
+//    minTimeDP = PersonalProgramDefines::MinTimeBetweenDPList.at(minTimeDP);  ///< В часах
+//    auto minTimeDPSec = minTimeDP * 3600;                                    ///< В секундах
+//    auto maxTimeDP = objPP["max_time_between_dp"].toInt();                   ///< В индексах 0, 1, 2, ...
+//    maxTimeDP = PersonalProgramDefines::MaxTimeBetweenDPList.at(maxTimeDP);  ///< В часах
+//    auto maxTimeDPSec = maxTimeDP * 3600;                                    ///< В секундах
+
+//    QDateTime dtLast = QDateTime();
+//    auto arrDP = objPP["dp_list"].toArray();
+//    for (int i = 0; i < arrDP.size(); ++i)
+//    {
+//        auto objDP = arrDP.at(i).toObject();
+//        auto dtDP = getDateTimeByString(objDP["date_time"].toString(""));
+//        if (dtDP != QDateTime())
+//            dtLast = dtDP;
+
+//        auto arrTests = objDP["test_list"].toArray();
+//        QJsonObject objT = QJsonObject();
+//        m_curTestNumber = findEmptyTestInfo(arrTests, objT);
+
+//        //! Варианты:
+//        //! 1. dtLast != QDateTime() && QDateTime::currentDateTime() - dtLast > maxTimeDPSec Превысили максимальное время - завершаем ИП
+//        //! 2. objTest != QJsonObject() В ДП есть непроведенный тест
+//        //!    2.1. dtDP == QDateTime() ДП не проводилась вообще. тест должен быть первый. Вернуть objTest
+//        //!    2.2. dtDP != QDateTime() ДП проводилась, но была прервана
+//        //!       2.2.1. QDateTime::currentDateTime() - dtDP < minTimeDPSec Прошло меньше минимума. Вернуть objTest
+//        //!       2.2.2. QDateTime::currentDateTime() - dtDP > minTimeDPSec Прошло больше минимума. Следующая ДП
+//        //! 3. objTest == QJsonObject() В ДП нет непроведенных тестов. Следующая ДП
+
+//        //! Превысили максимальное время - завершаем ИП
+//        if (isFirstRun &&
+//            maxTimeDPSec > 0 &&
+//            dtLast != QDateTime() &&
+//            dtLast.secsTo(QDateTime::currentDateTime()) > maxTimeDPSec)
+//        {
+//            objTest = QJsonObject();
+//            m_currentDP = i;
+//            return false;
+//        }
+
+//        //! Меньше минимального времени - запускать нельзя
+//        if (isFirstRun &&
+//            ((minTimeDPSec > 0 &&
+//             dtLast != QDateTime() &&
+//             dtLast.secsTo(QDateTime::currentDateTime()) < minTimeDPSec)
+//                ||
+//             (minTimeDPSec < 0 && (QDateTime::currentDateTime().date().day() == dtLast.date().day()))))
+//        {
+//            objTest = QJsonObject();
+//            m_currentDP = -1;
+//            return true;
+//        }
+
+//        //! В ДП есть непроведенный тест
+//        if (objT != QJsonObject())
+//        {
+//            //! ДП не проводилась вообще
+//            if (dtDP == QDateTime())
+//            {
+//                objTest = objT;
+//                m_currentDP = i;
+//                return true;
+//            }
+//            else
+//            //! ДП проводилась, но была прервана
+//            {
+//                //! Прошло меньше минимума
+//                if ((isFirstRun && dtDP.secsTo(QDateTime::currentDateTime()) < minTimeDPSec)
+//                        ||
+//                     !isFirstRun)
+//                {
+//                    objTest = objT;
+//                    m_currentDP = i;
+//                    return true;
+//                }
+//            }
+//        }
+//    }
+
+//    objTest = QJsonObject();
+//    return false;
+//}
 
 void PersonalProgramWidget::runTest(const QJsonObject& objTest)
 {
@@ -651,19 +778,19 @@ bool PersonalProgramWidget::appendTestCompletionInfoToPP()
         auto objDP = arrDP.at(m_currentDP).toObject();
 
         //! Если тест первый в DP, то записать дату и время проведения
-        if (m_currentTest == 0)
+        if (m_curTestNumber == 0)
             objDP["date_time"] = QDateTime::currentDateTime().toString("dd.MM.yyyy hh:mm");
 
         auto arrTests = objDP["test_list"].toArray();
 
-        if (m_currentTest < arrTests.size())
+        if (m_curTestNumber < arrTests.size())
         {
-            auto objTest = arrTests.at(m_currentTest).toObject();
+            auto objTest = arrTests.at(m_curTestNumber).toObject();
             objTest["test_uid"] = m_finishedTestUid;
-            arrTests.replace(m_currentTest, objTest);
+            arrTests.replace(m_curTestNumber, objTest);
         }
         objDP["test_list"] = arrTests;
-        if (m_currentTest == (arrTests.size() - 1))
+        if (m_curTestNumber == (arrTests.size() - 1))
             isDPComplete = true;
 
         arrDP.replace(m_currentDP, objDP);
