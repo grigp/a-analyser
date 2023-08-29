@@ -66,11 +66,12 @@ void PersonalProgramWidget::onShow()
     if (m_finishedTestUid != "")
     {
         bool isDPComplette = false;
+        bool isLastDP = false;
 
         //! Записать в ИП uid теста и времени начала ДП
         if (m_currentDP != -1 && m_curTestNumber != -1)
         {
-            isDPComplette = appendTestCompletionInfoToPP();
+            isDPComplette = appendTestCompletionInfoToPP(isLastDP);
             auto uidPP = m_objPPExecuted["assigned_uid"].toString();
             DataProvider::savePersonalProgramByUid(uidPP, m_objPPExecuted);
 
@@ -82,6 +83,14 @@ void PersonalProgramWidget::onShow()
         //! Запустить следующий тест через одну секунду
         if (!isDPComplette)
             m_tmNextStep = startTimer(1000);
+        else
+        {
+            if (isLastDP)
+            {
+                QMessageBox::information(nullptr, tr("Сообщение"), tr("Индивидуальная программа завершена 2"));
+                doFinishPP();
+            }
+        }
     }
     else
     {
@@ -99,10 +108,9 @@ void PersonalProgramWidget::timerEvent(QTimerEvent *event)
 {
     if (event->timerId() == m_tmNextStep)
     {
+        killTimer(m_tmNextStep);
         //! Запустить следующий тест
         doRunTest(false);
-
-        killTimer(m_tmNextStep);
     }
     ClientWidget::timerEvent(event);
 }
@@ -488,13 +496,44 @@ void PersonalProgramWidget::doRunTest(bool isFirstRun)
             runTest(objTest);
         else
             QMessageBox::information(nullptr,
-                                     tr("Предупреждение"),
+                                     tr("Сообщение"),
                                      tr("Запуск теста по индивидуальной программе в настоящий момент невозможен") + "\n" +
                                      tr("Прошло мало времени с момента окончания предыдущего теста"));
     }
     else
     {
-        // TODO: Завершить ИП
+        if (m_currentDP == -1)
+            QMessageBox::information(nullptr, tr("Сообщение"), tr("Индивидуальная программа завершена 1"));
+        else
+            QMessageBox::information(nullptr,
+                                     tr("Сообщение"),
+                                     tr("Превышено максимальное время между дневными программами. Индивидуальная программа завершена"));
+//            QMessageBox::information(nullptr,
+//                                     tr("Сообщение"),
+//                                     tr("Превышено максимальное время между дневными программами.") + "\n" +
+//                                     tr("Индивидуальная программа завершена"));
+
+        //! Завершить ИП
+        doFinishPP();
+    }
+}
+
+void PersonalProgramWidget::doFinishPP()
+{
+    auto pi = static_cast<AAnalyserApplication*>(QApplication::instance())->getCurrentPatient();
+    if (pi.uid != "")
+    {
+        auto pp = DataProvider::getActivePersonalProgramForPatient(pi.uid);
+        if (pp != QJsonObject())
+        {
+            DataProvider::deactivatePersonalProgramForPatient(pi.pp_uid);
+            //! Удалить программу у пациента
+            pi.pp_uid = "";
+            DataProvider::updatePatient(pi);
+
+            //! Извещаем мир об отмене индивидуальной программы для пациента
+            emit static_cast<AAnalyserApplication*>(QApplication::instance())->canceledPPForPatient(pi.uid);
+        }
     }
 }
 
@@ -580,69 +619,73 @@ bool PersonalProgramWidget::getNextTestInfo(const QJsonObject &objPPAll, QJsonOb
         QJsonObject objT = QJsonObject();
         m_curTestNumber = findEmptyTestInfo(arrTests, objT);
 
-        //! Первый тест в серии
-        if (isFirstRun)
+        if (m_curTestNumber > -1 && objT != QJsonObject())
         {
-            //! Первый тест в дневной программе
-            if (m_curTestNumber == 0)
+            //! Первый тест в серии
+            if (isFirstRun)
             {
-                //! Превысили максимальное время - завершаем ИП
-                if (isNowAboveMax(dtLast, maxTimeDPSec))
+                //! Первый тест в дневной программе
+                if (m_curTestNumber == 0)
                 {
-                    objTest = QJsonObject();
-                    m_currentDP = i;
-                    return false;
+                    //! Превысили максимальное время - завершаем ИП
+                    if (isNowAboveMax(dtLast, maxTimeDPSec))
+                    {
+                        objTest = QJsonObject();
+                        m_currentDP = i;
+                        return false;
+                    }
+                    else
+                    //! Меньше минимального времени - запускать нельзя
+                    if (isNowLessMin(dtLast, minTimeDPSec))
+                    {
+                        objTest = QJsonObject();
+                        m_currentDP = -1;
+                        return true;
+                    }
+                    else
+                    //! В допустимом временном диапазоне - проводим
+                    if (isNowInBounds(dtLast, minTimeDPSec, maxTimeDPSec))
+                    {
+                        objTest = objT;
+                        m_currentDP = i;
+                        return true;
+                    }
                 }
                 else
-                //! Меньше минимального времени - запускать нельзя
-                if (isNowLessMin(dtLast, minTimeDPSec))
+                //! Не первый тест в дневной программе
+                {
+                    //! Меньше минимального времени - проводим, иначе - следующая ДП
+                    if (isNowLessMin(dtLast, minTimeDPSec))
+                    {
+                        objTest = objT;
+                        m_currentDP = i;
+                        return true;
+                    }
+                }
+            }
+            else
+            //! Не первый тест в серии
+            {
+                //! Первый тест в дневной программе - завершаем, проводить нельзя
+                if (m_curTestNumber == 0)
                 {
                     objTest = QJsonObject();
                     m_currentDP = -1;
                     return true;
                 }
                 else
-                //! В допустимом временном диапазоне - проводим
-                if (isNowInBounds(dtLast, minTimeDPSec, maxTimeDPSec))
+                //! Не первый тест в дневной программе - проводим
                 {
                     objTest = objT;
                     m_currentDP = i;
                     return true;
                 }
-            }
-            else
-            //! Не первый тест в дневной программе
-            {
-                //! Меньше минимального времени - проводим, иначе - следующая ДП
-                if (isNowLessMin(dtLast, minTimeDPSec))
-                {
-                    objTest = objT;
-                    m_currentDP = i;
-                    return true;
-                }
-            }
-        }
-        else
-        //! Не первый тест в серии
-        {
-            //! Первый тест в дневной программе - завершаем, проводить нельзя
-            if (m_curTestNumber == 0)
-            {
-                objTest = QJsonObject();
-                m_currentDP = -1;
-                return true;
-            }
-            else
-            //! Не первый тест в дневной программе - проводим
-            {
-                objTest = objT;
-                m_currentDP = i;
-                return true;
             }
         }
     }
 
     objTest = QJsonObject();
+    m_currentDP = -1;
     return false;
 }
 
@@ -766,7 +809,7 @@ void PersonalProgramWidget::runTest(const QJsonObject& objTest)
 
 }
 
-bool PersonalProgramWidget::appendTestCompletionInfoToPP()
+bool PersonalProgramWidget::appendTestCompletionInfoToPP(bool& isLastDP)
 {
     bool isDPComplete = false;
 
@@ -798,6 +841,8 @@ bool PersonalProgramWidget::appendTestCompletionInfoToPP()
 
     objPP["dp_list"] = arrDP;
     m_objPPExecuted["pp"] = objPP;
+
+    isLastDP = (m_currentDP == (arrDP.size() - 1));
 
     return isDPComplete;
 }

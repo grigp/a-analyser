@@ -113,6 +113,11 @@ private:
 
     void doRunTest(bool isFirstRun);
 
+    /*!
+     * \brief Завершить ИП
+     */
+    void doFinishPP();
+
     QDateTime getDateTimeByString(const QString& s) const;
 
     /*!
@@ -140,9 +145,10 @@ private:
 
     /*!
      * \brief Записывает в индивидуальную программу данные о проведенном тесте
+     * \param isLastDP - возвращает true, если DP последняя в PP
      * \return true, если достигли конца ДП и серию тестов необходимо завершить и false в противном случае.
      */
-    bool appendTestCompletionInfoToPP();
+    bool appendTestCompletionInfoToPP(bool& isLastDP);
 
     QStandardItemModel* m_model {nullptr};
 
