@@ -87,7 +87,7 @@ void PersonalProgramWidget::onShow()
         {
             if (isLastDP)
             {
-                QMessageBox::information(nullptr, tr("Сообщение"), tr("Индивидуальная программа завершена 2"));
+                QMessageBox::information(nullptr, tr("Сообщение"), tr("Индивидуальная программа завершена"));
                 doFinishPP();
             }
         }
@@ -152,6 +152,7 @@ void PersonalProgramWidget::on_run()
 
 void PersonalProgramWidget::on_delete()
 {
+    qDebug() << Q_FUNC_INFO;
     auto index = selectedIndex();
     if (index != QModelIndex())
     {
@@ -503,15 +504,11 @@ void PersonalProgramWidget::doRunTest(bool isFirstRun)
     else
     {
         if (m_currentDP == -1)
-            QMessageBox::information(nullptr, tr("Сообщение"), tr("Индивидуальная программа завершена 1"));
+            QMessageBox::information(nullptr, tr("Сообщение"), tr("Индивидуальная программа завершена"));
         else
             QMessageBox::information(nullptr,
                                      tr("Сообщение"),
                                      tr("Превышено максимальное время между дневными программами. Индивидуальная программа завершена"));
-//            QMessageBox::information(nullptr,
-//                                     tr("Сообщение"),
-//                                     tr("Превышено максимальное время между дневными программами.") + "\n" +
-//                                     tr("Индивидуальная программа завершена"));
 
         //! Завершить ИП
         doFinishPP();

@@ -211,6 +211,23 @@
               </widget>
              </item>
              <item>
+              <widget class="QPushButton" name="btnPPAdd">
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset resource="../kernel.qrc">
+                 <normaloff>:/images/Plus.png</normaloff>:/images/Plus.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>32</width>
+                 <height>32</height>
+                </size>
+               </property>
+              </widget>
+             </item>
+             <item>
               <widget class="QPushButton" name="btnPPStop">
                <property name="toolTip">
                 <string>Завершить выполнение индивидуальной программы...</string>
