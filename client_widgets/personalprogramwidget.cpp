@@ -150,9 +150,36 @@ void PersonalProgramWidget::on_run()
         QMessageBox::information(nullptr, tr("Предупреждение"), tr("Не выбран пациент с назначенной индивидуальной программой"));
 }
 
+void PersonalProgramWidget::on_append()
+{
+    auto index = selectedIndex();
+    if (index != QModelIndex())
+    {
+        if (index.parent() == QModelIndex())
+        {
+            auto uidPP = index.data(DatabaseWidgetDefines::PatientsModel::PatientPPUidRole).toString();
+            if (uidPP == "")
+            {
+                //! Проверка ИП на завершенность.
+                //! Завершенные всегда находятся в выпадающем списке у пациента, а активные в корне
+                //! То есть, просто проверяем, имеется ли корневой узел
+                if (index != QModelIndex() && index.isValid())
+                {
+                    static_cast<AAnalyserApplication*>(QApplication::instance())->assignPPForPatient();
+                }
+            }
+            else
+                QMessageBox::information(nullptr, tr("Предупреждение"), tr("Пациенту уже назначена индивидуальная программа"));
+        }
+        else
+            QMessageBox::information(nullptr, tr("Предупреждение"), tr("Выберите запись пациента"));
+    }
+    else
+        QMessageBox::information(nullptr, tr("Предупреждение"), tr("Пациент не выбран"));
+}
+
 void PersonalProgramWidget::on_delete()
 {
-    qDebug() << Q_FUNC_INFO;
     auto index = selectedIndex();
     if (index != QModelIndex())
     {
@@ -166,8 +193,7 @@ void PersonalProgramWidget::on_delete()
                 //! То есть, просто проверяем, имеется ли корневой узел
                 if (index != QModelIndex() && index.isValid())
                 {
-                    auto pp = DataProvider::getPersonalProgramByUid(uidPP);
-                    //TODO: прерывание ИП
+                    static_cast<AAnalyserApplication*>(QApplication::instance())->cancelPPForPatient();
                 }
             }
             else

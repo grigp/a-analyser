@@ -286,6 +286,7 @@ QPushButton#btnSignalExport,
 QPushButton#btnExportSignal,
 QPushButton#btnCloseTest,
 QPushButton#btnPPRun,
+QPushButton#btnPPAdd,
 QPushButton#btnPPStop,
 QPushButton#btnPPParams
 {
@@ -312,6 +313,7 @@ QPushButton#btnSignalExport:hover,
 QPushButton#btnExportSignal:hover,
 QPushButton#btnCloseTest:hover,
 QPushButton#btnPPRun:hover,
+QPushButton#btnPPAdd:hover,
 QPushButton#btnPPStop:hover,
 QPushButton#btnPPParams:hover
 {
@@ -335,6 +337,7 @@ QPushButton#btnSignalExport:pressed,
 QPushButton#btnExportSignal:pressed,
 QPushButton#btnCloseTest:pressed,
 QPushButton#btnPPRun:pressed,
+QPushButton#btnPPAdd:pressed,
 QPushButton#btnPPStop:pressed,
 QPushButton#btnPPParams:pressed
 {

@@ -193,7 +193,7 @@
              <item>
               <widget class="QPushButton" name="btnPPRun">
                <property name="toolTip">
-                <string>Запустить дневную программу...</string>
+                <string>Запустить дневную программу</string>
                </property>
                <property name="text">
                 <string/>
@@ -212,6 +212,9 @@
              </item>
              <item>
               <widget class="QPushButton" name="btnPPAdd">
+               <property name="toolTip">
+                <string>Назначить индивидуальную программу...</string>
+               </property>
                <property name="text">
                 <string/>
                </property>
@@ -230,7 +233,7 @@
              <item>
               <widget class="QPushButton" name="btnPPStop">
                <property name="toolTip">
-                <string>Завершить выполнение индивидуальной программы...</string>
+                <string>Отменить выполнение индивидуальной программы...</string>
                </property>
                <property name="text">
                 <string/>
@@ -355,8 +358,8 @@
    <slot>on_run()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>887</x>
-     <y>16</y>
+     <x>867</x>
+     <y>20</y>
     </hint>
     <hint type="destinationlabel">
      <x>1031</x>
@@ -412,6 +415,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>btnPPAdd</sender>
+   <signal>clicked()</signal>
+   <receiver>PersonalProgramWidget</receiver>
+   <slot>on_append()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>887</x>
+     <y>21</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1033</x>
+     <y>115</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>on_splitterMoved(int,int)</slot>
@@ -419,5 +438,6 @@
   <slot>on_delete()</slot>
   <slot>on_params()</slot>
   <slot>selectPatient(QModelIndex)</slot>
+  <slot>on_append()</slot>
  </slots>
 </ui>

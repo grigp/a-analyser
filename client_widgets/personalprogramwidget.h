@@ -69,6 +69,7 @@ private slots:
     void on_splitterMoved(int,int);
 
     void on_run();
+    void on_append();
     void on_delete();
     void on_params();
 
