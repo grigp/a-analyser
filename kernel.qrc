@@ -246,5 +246,8 @@
         <file>images/Edit_Easy.png</file>
         <file>images/background01.png</file>
         <file>images/background02.png</file>
+        <file>images/PP_assign.png</file>
+        <file>images/PP_cancel.png</file>
+        <file>images/PP_params.png</file>
     </qresource>
 </RCC>

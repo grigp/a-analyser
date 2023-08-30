@@ -220,7 +220,7 @@
                </property>
                <property name="icon">
                 <iconset resource="../kernel.qrc">
-                 <normaloff>:/images/Plus.png</normaloff>:/images/Plus.png</iconset>
+                 <normaloff>:/images/PP_assign.png</normaloff>:/images/PP_assign.png</iconset>
                </property>
                <property name="iconSize">
                 <size>
@@ -240,7 +240,7 @@
                </property>
                <property name="icon">
                 <iconset resource="../kernel.qrc">
-                 <normaloff>:/images/Close.png</normaloff>:/images/Close.png</iconset>
+                 <normaloff>:/images/PP_cancel.png</normaloff>:/images/PP_cancel.png</iconset>
                </property>
                <property name="iconSize">
                 <size>
@@ -260,7 +260,7 @@
                </property>
                <property name="icon">
                 <iconset resource="../kernel.qrc">
-                 <normaloff>:/images/MethodsEdit.png</normaloff>:/images/MethodsEdit.png</iconset>
+                 <normaloff>:/images/PP_params.png</normaloff>:/images/PP_params.png</iconset>
                </property>
                <property name="iconSize">
                 <size>
