@@ -1148,6 +1148,7 @@ void DataBase::createDatabase()
 QString DataBase::currentDataBase() const
 {
     auto path = SettingsProvider::valueFromRegAppCopy("Database", "path", QString("")).toString();
+
     if (path != "")
         return path;
     else

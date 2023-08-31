@@ -26,9 +26,9 @@ PersonalProgramWidget::PersonalProgramWidget(QWidget *parent) :
     ui->setupUi(this);
 
     restoreSplitterPosition();
-    load();
-    ui->tvPatients->setModel(m_model);
-    m_wgts.clear();
+//    load();
+//    ui->tvPatients->setModel(m_model);
+//    m_wgts.clear();
 }
 
 PersonalProgramWidget::~PersonalProgramWidget()
@@ -48,6 +48,10 @@ QString PersonalProgramWidget::name()
 
 void PersonalProgramWidget::onDBConnect()
 {
+    load();
+    ui->tvPatients->setModel(m_model);
+    m_wgts.clear();
+
     ui->tvPatients->header()->resizeSections(QHeaderView::ResizeToContents);
     connect(static_cast<AAnalyserApplication*>(QApplication::instance()), &AAnalyserApplication::selectPatient,
             this, &PersonalProgramWidget::on_selectPatient);
@@ -94,9 +98,12 @@ void PersonalProgramWidget::onShow()
     }
     else
     {
-        ui->tvPatients->selectionModel()->clearSelection();
-        static_cast<AAnalyserApplication*>(QApplication::instance())->doSelectPatient("");
-    }
+        if (m_model)
+        {
+            ui->tvPatients->selectionModel()->clearSelection();
+            static_cast<AAnalyserApplication*>(QApplication::instance())->doSelectPatient("");
+        }
+   }
 }
 
 void PersonalProgramWidget::onHide()
@@ -463,7 +470,6 @@ void PersonalProgramWidget::load()
         }
     }
     m_model->setHorizontalHeaderLabels(QStringList() << tr("ФИО") << tr("Дата рождения") << tr("Пол"));
-
 }
 
 void PersonalProgramWidget::showPersonalProgram(const QString& uidPPAssigned)

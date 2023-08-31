@@ -12,7 +12,6 @@
 int main(int argc, char *argv[])
 {
     qsrand(QDateTime::currentMSecsSinceEpoch());
-
     AAnalyserApplication a(argc, argv);
 
     QString fn = "";

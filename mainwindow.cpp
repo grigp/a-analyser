@@ -504,6 +504,7 @@ void MainWindow::createClientWidgets()
 
     auto cwv = SettingsProvider::valueFromRegAppCopy("MainWindow", "MainClientWidget", ClientWidgets::uidDatabaseResultWidgetUid).toString();
     showClientPage(cwv);
+
 //    showClientPage(ClientWidgets::uidDatabaseResultWidgetUid);
 }
 
