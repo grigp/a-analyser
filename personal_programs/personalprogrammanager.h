@@ -83,6 +83,23 @@ public:
      */
     QJsonObject assignPersonalProgramForPatient(const QString& patientUid, const QString& ppUid, QString& ppUidAssigned);
 
+    /*!
+     * \brief Возвращает более светлый цвет для базового
+     * \param color - базовый цвет
+     * \param divider - коэффициен освеления
+     */
+    static QColor lightColor(const QColor& color, const int divider);
+
+    /*!
+     * \brief Возвращает цвет по значению показателя от 0 до 100 схеме:
+     * 0 - красный
+     * 50 - желтый
+     * 100 - зеленый
+     * \param valSuccess - значение показателя от 0 до 100
+     */
+    static QColor successColor(const double valSuccess);
+
+
 private:
     QString createDir();
 };

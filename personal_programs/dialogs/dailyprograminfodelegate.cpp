@@ -4,6 +4,7 @@
 #include <QDebug>
 
 #include "personalprogramdefines.h"
+#include "personalprogrammanager.h"
 
 DailyProgramInfoDelegate::DailyProgramInfoDelegate(QObject *parent)
     : QStyledItemDelegate (parent)
@@ -29,20 +30,18 @@ void DailyProgramInfoDelegate::paint(QPainter *painter, const QStyleOptionViewIt
         colText = QColor(70, 70, 0);
     }
 
-    QColor colBackgroundLt = QColor(colBackground.red() + (255 - colBackground.red()) / 2,
-                                    colBackground.green() + (255 - colBackground.green()) / 2,
-                                    colBackground.blue() + (255 - colBackground.blue()) / 2);
+    QColor colBackgroundLt = PersonalProgramManager::lightColor(colBackground, 2);
 
     auto rn = option.rect;
 
     QLinearGradient gradient(QPointF(rn.left() + rn.width() / 2, rn.top()), QPointF(rn.left() + rn.width() / 2, rn.top() + rn.height()));
     gradient.setColorAt(0, Qt::white);
-    gradient.setColorAt(0.1, colBackgroundLt);
+    gradient.setColorAt(0.2, colBackgroundLt);
     gradient.setColorAt(0.5, colBackground);
-    gradient.setColorAt(0.9, colBackgroundLt);
+    gradient.setColorAt(0.8, colBackgroundLt);
     gradient.setColorAt(1, Qt::white);
     painter->setBrush(gradient);
-    painter->setPen(Qt::white); //(colText);
+    painter->setPen(colText);
     rn.setHeight(rn.height() - 2);
     rn.setTop(rn.top() + 1);
     rn.setWidth(rn.width() - 2);

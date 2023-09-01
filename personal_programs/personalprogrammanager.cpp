@@ -403,6 +403,21 @@ QJsonObject PersonalProgramManager::assignPersonalProgramForPatient(const QStrin
     return retval;
 }
 
+QColor PersonalProgramManager::lightColor(const QColor &color, const int divider)
+{
+    return QColor(color.red() + (255 - color.red()) / divider,
+                  color.green() + (255 - color.green()) / divider,
+                  color.blue() + (255 - color.blue()) / divider);
+}
+
+QColor PersonalProgramManager::successColor(const double valSuccess)
+{
+    if (valSuccess >= 50)
+        return QColor((50 - (static_cast<int>(valSuccess) - 50)) * 255 / 50, 255, 0);
+    else
+        return QColor(255, static_cast<int>(valSuccess) * 255 / 50, 0);
+}
+
 QString PersonalProgramManager::createDir()
 {
     QString dirName = DataDefines::appCopyPath() + "personal_programs/";

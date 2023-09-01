@@ -7,6 +7,7 @@
 #include "aanalyserapplication.h"
 #include "metodicsfactory.h"
 #include "personalprogramdefines.h"
+#include "personalprogrammanager.h"
 #include "baseutils.h"
 #include "dataprovider.h"
 
@@ -35,21 +36,37 @@ void TestInfoDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opti
         QColor colText = Qt::gray;
         if (uidTest != "")
         {
-            colBackground = QColor(200, 255, 200);
+            colBackground = QColor(0, 200, 255);
             colText = QColor(0, 100, 0);
-        }
 
-        painter->setBrush(QBrush(colBackground));
-    //    painter->setPen(colBackground);
-        painter->setPen(colText);
+            if (valSuccess > -1)
+                colBackground = PersonalProgramManager::successColor(valSuccess);
+        }
+        QColor colBackgroundLt = PersonalProgramManager::lightColor(colBackground, 2);
+
         auto rn = option.rect;
         rn.setHeight(rn.height() - 2);
         rn.setTop(rn.top() + 1);
         rn.setWidth(rn.width() - 2);
         rn.setLeft(rn.left() + 1);
+
+        QLinearGradient gradient(QPointF(rn.left() + rn.width() / 2, rn.top()), QPointF(rn.left() + rn.width() / 2, rn.top() + rn.height()));
+        gradient.setColorAt(0, Qt::white);
+        gradient.setColorAt(0.2, colBackgroundLt);
+        gradient.setColorAt(0.5, colBackground);
+        gradient.setColorAt(0.8, colBackgroundLt);
+        gradient.setColorAt(1, Qt::white);
+        painter->setBrush(gradient);  //QBrush(colBackground));
+        painter->setPen(colText);
+
         painter->drawRoundRect(rn, 15, 25);
 
-        painter->drawText(rn, Qt::AlignTop | Qt::AlignHCenter, mi.name);
+        painter->drawText(rn, Qt::AlignTop | Qt::AlignHCenter, mi.name.remove(tr("Тренажер"), Qt::CaseInsensitive));
+        if (valSuccess > -1)
+        {
+            painter->setFont(QFont("Sans", 12, QFont::Bold, false));
+            painter->drawText(rn, Qt::AlignVCenter| Qt::AlignHCenter, QString::number(static_cast<int>(valSuccess)) + " %");
+        }
 
         //! Выделение итема
         if (QAbstractItemView* tableView = qobject_cast<QAbstractItemView*>(this->parent()))

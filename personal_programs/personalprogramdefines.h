@@ -2,6 +2,7 @@
 #define PERSONALPROGRAMDEFINES_H
 
 #include <QObject>
+#include <QColor>
 #include <QApplication>
 
 #include "databasewigetdefines.h"
