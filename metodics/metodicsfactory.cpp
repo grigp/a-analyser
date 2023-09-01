@@ -207,6 +207,7 @@ void MetodicsFactory::assignMetodics()
             MetodicDefines::MetodicInfo mi;
             mi.uid = met["uid"].toString();
             mi.name = met["name"].toString();
+            mi.shortName = met["short_name"].toString();
             mi.imageName = met["image"].toString();
             mi.templateId = met["template"].toString();
             mi.kindUid = met["kind"].toString();

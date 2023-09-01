@@ -43,6 +43,7 @@ void TestInfoDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opti
                 colBackground = PersonalProgramManager::successColor(valSuccess);
         }
         QColor colBackgroundLt = PersonalProgramManager::lightColor(colBackground, 2);
+        QColor colBackgroundDk = PersonalProgramManager::darkColor(colBackground, 2);
 
         auto rn = option.rect;
         rn.setHeight(rn.height() - 2);
@@ -57,14 +58,14 @@ void TestInfoDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opti
         gradient.setColorAt(0.8, colBackgroundLt);
         gradient.setColorAt(1, Qt::white);
         painter->setBrush(gradient);  //QBrush(colBackground));
-        painter->setPen(colText);
+        painter->setPen(colBackgroundDk);
 
         painter->drawRoundRect(rn, 15, 25);
 
-        painter->drawText(rn, Qt::AlignTop | Qt::AlignHCenter, mi.name.remove(tr("Тренажер"), Qt::CaseInsensitive));
+        painter->drawText(rn, Qt::AlignTop | Qt::AlignHCenter, mi.shortName);
         if (valSuccess > -1)
         {
-            painter->setFont(QFont("Sans", 12, QFont::Bold, false));
+            painter->setFont(QFont("Sans", 18, QFont::Bold, false));
             painter->drawText(rn, Qt::AlignVCenter| Qt::AlignHCenter, QString::number(static_cast<int>(valSuccess)) + " %");
         }
 

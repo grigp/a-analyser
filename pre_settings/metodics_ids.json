@@ -3,6 +3,7 @@
         {
             "uid": "{A100CF38-D2E6-4E71-A485-53845E3F116C}",
             "name": "Уровень здоровья по ИДС",
+            "short_name": "ИДС",
             "image": "IDS_Stab.png",
             "template": "met_stabtest_uid",
             "build_norms": false,
@@ -27,6 +28,7 @@
         {
             "uid": "{15265537-77D4-4CF8-B2A3-1A7A7EE580EF}",
             "name": "Уровень здоровья по ИДС на базе теста Ромберга",
+            "short_name": "ИДС Ромберг",
             "image": "IDS_Romberg.png",
             "template": "met_stabtest_uid",
             "build_norms": false,

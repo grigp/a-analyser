@@ -3,6 +3,7 @@
         {
             "uid": "{EA27C3B7-9D67-45CC-A80D-F07E22DC2ADB}",
             "name": "Stabilometric test",
+            "short_name": "Stabilometry",
             "image": "Stab.png",
             "template": "met_stabtest_uid",
             "build_norms": false,
@@ -47,6 +48,7 @@
         {
             "uid": "{8ABFB226-D4AC-486D-97C3-201F5E598531}",
             "name": "Jump height analysis",
+            "short_name": "Jump height",
             "image": "JumpHeight_multi.png",
             "template": "met_jumpheighttest_uid",
             "build_norms": false,
@@ -63,6 +65,7 @@
         {
             "uid": "{11F009F2-F39F-4037-84D7-5EA3C79E6F5F}",
             "name": "Plyometric test",
+            "short_name": "Plyometry",
             "image": "Polymetric.png",
             "template": "met_jumpheighttest_uid",
             "build_norms": false,
@@ -79,6 +82,7 @@
         {
             "uid": "{1815B7EA-D022-4E08-A726-A0C4E8AD7DE8}",
             "name": "Tapping test",
+            "short_name": "Tapping test",
             "image": "Tepping.png",
             "template": "met_teppingtest_uid",
             "build_norms": false,
@@ -93,6 +97,7 @@
         {
             "uid": "{8F8673D1-44B1-4213-87D5-BAB2B732E67A}",
             "name": "Drop jumping test",
+            "short_name": "Drop jumping",
             "image": "Drop_multi.png",
             "template": "met_droptest_uid",
             "build_norms": false,
@@ -108,6 +113,7 @@
         {
             "uid": "{ACFA62A1-7F52-477E-B9C9-A7FF14B3E098}",
             "name": "Jump height single analysis",
+            "short_name": "Jump single",
             "image": "JumpHeight.png",
             "template": "met_jumptest_uid",
             "build_norms": false,
@@ -120,6 +126,7 @@
         {
             "uid": "{6855943F-E7C1-477E-B68E-EBC7DAE30E2B}",
             "name": "Drop jumping test single",
+            "short_name": "Drop single",
             "image": "Drop_one.png",
             "template": "met_jumptest_uid",
             "build_norms": false,

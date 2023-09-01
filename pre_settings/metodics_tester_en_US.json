@@ -3,6 +3,7 @@
         {
             "uid": "{8BFC7928-8DAF-429B-8AB5-C689C63BECC9}",
             "name": "Stabilo test",
+            "short_name": "Stabilometry",
             "image": "Stab.png",
             "template": "met_stabtest_uid",
             "build_norms": false,

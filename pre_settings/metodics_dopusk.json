@@ -3,6 +3,7 @@
         {
             "uid": "{EBEA57B4-A791-4F35-87C2-BEDEC6406D2D}",
             "name": "Допусковый контроль",
+            "short_name": "Допусковый контроль",
             "image": "Dopusk.png",
             "template": "met_stabtest_uid",
             "build_norms": true,

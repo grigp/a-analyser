@@ -53,6 +53,7 @@ namespace MetodicDefines
     {
         QString uid;            ///< uid
         QString name;           ///< Название
+        QString shortName;      ///< Короткое название
         QString imageName;      ///< Название ресурса картинки
         QString templateId;     ///< id шаблона методики
         QString kindUid;        ///< uid типа методики
@@ -63,6 +64,7 @@ namespace MetodicDefines
         {
             uid = "";
             name = "";
+            shortName = "";
             templateId = "";
             kindUid = "";
             params = QJsonObject();

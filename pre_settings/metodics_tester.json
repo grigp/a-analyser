@@ -3,6 +3,7 @@
         {
             "uid": "{8BFC7928-8DAF-429B-8AB5-C689C63BECC9}",
             "name": "Стабилографический тест",
+            "short_name": "Стабилометрия",
             "image": "Stab.png",
             "template": "met_stabtest_uid",
             "build_norms": false,
