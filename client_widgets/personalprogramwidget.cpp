@@ -25,7 +25,8 @@ PersonalProgramWidget::PersonalProgramWidget(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    restoreSplitterPosition();
+    ui->frPPOpenTest->setVisible(false);
+    restoreMainSplitterPosition();
 //    load();
 //    ui->tvPatients->setModel(m_model);
 //    m_wgts.clear();
@@ -124,7 +125,12 @@ void PersonalProgramWidget::timerEvent(QTimerEvent *event)
 
 void PersonalProgramWidget::on_splitterMoved(int, int)
 {
-    saveSplitterPosition();
+    saveMainSplitterPosition();
+}
+
+void PersonalProgramWidget::on_splTestMoved(int, int)
+{
+    SettingsProvider::setValueToRegAppCopy("PersonalProgramWidget", "SplitterTestPosition", ui->splTableTest->saveState());
 }
 
 void PersonalProgramWidget::on_run()
@@ -252,6 +258,49 @@ void PersonalProgramWidget::on_params()
     }
     else
         QMessageBox::information(nullptr, tr("Предупреждение"), tr("Индивидуальная программа не выбрана"));
+}
+
+void PersonalProgramWidget::on_openTest()
+{
+    if (m_wgtResult)
+        delete m_wgtResult;
+    m_wgtResult = nullptr;
+
+    auto index = selectedIndex();
+    if (index != QModelIndex())
+    {
+        auto uidPP = index.data(DatabaseWidgetDefines::PatientsModel::PatientPPUidRole).toString();
+        if (uidPP != "")
+        {
+            if (m_wgts.contains(uidPP))
+            {
+                auto idx = m_wgts.value(uidPP)->selectedIndex();
+                if (idx != QModelIndex())
+                {
+                    auto uidTest = idx.data(PersonalProgramDefines::PersonalProgram::TestUidRole).toString();
+                    if (uidTest != "")
+                    {
+                        ui->splTableTest->setSizes(QList<int>()
+                                                   << static_cast<int>(ui->frPPTable->geometry().width()/2)
+                                                   << static_cast<int>(ui->frPPTable->geometry().width()/2));
+                        auto splPos = SettingsProvider::valueFromRegAppCopy("PersonalProgramWidget", "SplitterTestPosition").toByteArray();
+                        ui->splTableTest->restoreState(splPos);
+                        ui->frPPOpenTest->setVisible(true);
+
+                        auto methodics = static_cast<AAnalyserApplication*>(QApplication::instance())->getMetodics();
+                        m_wgtResult = methodics->visualize(ui->wgtPPTest, uidTest);
+
+                        return;
+                    }
+                }
+            }
+        }
+    }
+}
+
+void PersonalProgramWidget::on_closeTest()
+{
+    ui->frPPOpenTest->setVisible(false);
 }
 
 void PersonalProgramWidget::on_selectionChanged(const QItemSelection &selected, const QItemSelection &deselected)
@@ -496,12 +545,12 @@ void PersonalProgramWidget::hideAllWidgets()
 }
 
 
-void PersonalProgramWidget::saveSplitterPosition()
+void PersonalProgramWidget::saveMainSplitterPosition()
 {
     SettingsProvider::setValueToRegAppCopy("PersonalProgramWidget", "SplitterPosition", ui->splitter->saveState());
 }
 
-void PersonalProgramWidget::restoreSplitterPosition()
+void PersonalProgramWidget::restoreMainSplitterPosition()
 {
     auto val = SettingsProvider::valueFromRegAppCopy("PersonalProgramWidget", "SplitterPosition").toByteArray();
 //    if (val == "")

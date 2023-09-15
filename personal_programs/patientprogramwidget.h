@@ -30,7 +30,7 @@ public:
     /*!
      * \brief Возвращает индекс выбранного итема
      */
-    QModelIndex selectedItem() const {return m_selectedItem;}
+    QModelIndex selectedIndex() const {return m_selectedIndex;}
 
 private slots:
     void on_selectItem(QModelIndex idx);
@@ -39,7 +39,7 @@ private:
     Ui::PatientProgramWidget *ui;
 
     PersonalProgram* m_pp {nullptr};
-    QModelIndex m_selectedItem {QModelIndex()};
+    QModelIndex m_selectedIndex {QModelIndex()};
 };
 
 #endif // PATIENTPROGRAMWIDGET_H

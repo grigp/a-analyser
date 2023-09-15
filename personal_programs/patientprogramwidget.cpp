@@ -35,11 +35,14 @@ void PatientProgramWidget::assignPersonalProgram(const QString &uidPP)
 
 void PatientProgramWidget::on_selectItem(QModelIndex idx)
 {
+    m_selectedIndex = QModelIndex();
     if (idx.column() > 0)
     {
         auto uidMethod = idx.data(PersonalProgramDefines::PersonalProgram::MethodUidRole).toString();
 
         if (uidMethod != "")
-            m_selectedItem = idx;
+        {
+            m_selectedIndex = idx;
+        }
     }
 }
