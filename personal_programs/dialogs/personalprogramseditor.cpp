@@ -9,6 +9,7 @@
 #include "aanalyserapplication.h"
 #include "selectdailyprogramdialog.h"
 #include "personalprogramdefines.h"
+#include "settingsprovider.h"
 
 PersonalProgramsEditor::PersonalProgramsEditor(QWidget *parent) :
     QDialog(parent),
@@ -16,6 +17,17 @@ PersonalProgramsEditor::PersonalProgramsEditor(QWidget *parent) :
 {
     ui->setupUi(this);
     prepareParams();
+
+    auto val = SettingsProvider::valueFromRegAppCopy("PersonalProgramsEditor", "Geometry").toRect();
+    if (val != QRect())
+    {
+        setGeometry(val);
+
+        auto valSpl = SettingsProvider::valueFromRegAppCopy("PersonalProgramsEditor", "SplitterPosition").toByteArray();
+        ui->splitter->restoreState(valSpl);
+
+        ui->tvSchedule->horizontalHeader()->resizeSection(0, ui->tvSchedule->geometry().width());
+    }
 }
 
 PersonalProgramsEditor::~PersonalProgramsEditor()
@@ -47,6 +59,13 @@ int PersonalProgramsEditor::exec()
     setStyleSheet(sSheet);
 
     return QDialog::exec();
+}
+
+void PersonalProgramsEditor::resizeEvent(QResizeEvent *event)
+{
+    SettingsProvider::setValueToRegAppCopy("PersonalProgramsEditor", "Geometry", geometry());
+    ui->tvSchedule->horizontalHeader()->resizeSection(0, ui->tvSchedule->geometry().width());
+    QDialog::resizeEvent(event);
 }
 
 void PersonalProgramsEditor::on_addDP()
@@ -262,6 +281,7 @@ void PersonalProgramsEditor::on_selectPP(QModelIndex index)
         auto uid = objPP["uid"].toString();
         auto dps = static_cast<AAnalyserApplication*>(QApplication::instance())->getListDailyProgramsForPersonal(uid);
         static_cast<AAnalyserApplication*>(QApplication::instance())->readDailyProgramList(m_mdlDP, dps);
+        ui->tvSchedule->horizontalHeader()->resizeSection(0, ui->tvSchedule->geometry().width());
     }
 }
 
@@ -311,6 +331,13 @@ void PersonalProgramsEditor::on_selectLogo()
                                                   tr("Файлы картинок (*.png)"));
     if (m_logoFileName != "")
         ui->lblLogo->setPixmap(QPixmap(m_logoFileName));
+}
+
+void PersonalProgramsEditor::on_splitterMoved(int, int)
+{
+    SettingsProvider::setValueToRegAppCopy("PersonalProgramsEditor", "SplitterPosition", ui->splitter->saveState());
+    ui->tvSchedule->horizontalHeader()->resizeSection(0, ui->tvSchedule->geometry().width());
+
 }
 
 void PersonalProgramsEditor::prepareParams()

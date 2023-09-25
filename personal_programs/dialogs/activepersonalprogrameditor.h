@@ -39,6 +39,10 @@ public:
      */
     QJsonObject personalProgram() const;
 
+protected:
+    void showEvent(QShowEvent *event) override;
+    void resizeEvent(QResizeEvent *event) override;
+
 private slots:
     void on_selectDP(QModelIndex index);
     void on_selectT(QModelIndex index);

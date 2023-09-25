@@ -10,6 +10,7 @@
 #include "metodicsfactory.h"
 #include "dataprovider.h"
 #include "personalprogramdefines.h"
+#include "settingsprovider.h"
 
 DailyProgramsEditor::DailyProgramsEditor(QWidget *parent) :
     QDialog(parent),
@@ -17,6 +18,14 @@ DailyProgramsEditor::DailyProgramsEditor(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    auto val = SettingsProvider::valueFromRegAppCopy("DailyProgramsEditor", "Geometry").toRect();
+    if (val != QRect())
+    {
+        setGeometry(val);
+
+        auto valSpl = SettingsProvider::valueFromRegAppCopy("DailyProgramsEditor", "SplitterPosition").toByteArray();
+        ui->splitter->restoreState(valSpl);
+    }
 }
 
 DailyProgramsEditor::~DailyProgramsEditor()
@@ -37,6 +46,12 @@ int DailyProgramsEditor::exec()
     ui->tvTests->setModel(&m_mdlTests);
 
     return QDialog::exec();
+}
+
+void DailyProgramsEditor::resizeEvent(QResizeEvent *event)
+{
+    SettingsProvider::setValueToRegAppCopy("DailyProgramsEditor", "Geometry", geometry());
+    QDialog::resizeEvent(event);
 }
 
 void DailyProgramsEditor::on_addTest()
@@ -234,6 +249,11 @@ void DailyProgramsEditor::on_selectDP(QModelIndex index)
         auto objDP = index.data(PersonalProgramDefines::TableDPRoles::DPRole).toJsonObject();
         viewDP(objDP);
     }
+}
+
+void DailyProgramsEditor::on_splitterMoved(int, int)
+{
+    SettingsProvider::setValueToRegAppCopy("DailyProgramsEditor", "SplitterPosition", ui->splitter->saveState());
 }
 
 QJsonObject DailyProgramsEditor::compileDP()
