@@ -109,6 +109,12 @@ public:
 
 private:
     QString createDir();
+    void assignDefaultPP();
+    QJsonArray getElements(const QString& path, const QString& name);
+    void saveElements(const QString& path, const QString& name, QJsonArray& elements);
+    QList<QJsonObject> getElementsFromArray(QJsonArray& list, const QString& name, const QString& value);
+
+    void assignDefaultPPFile(const QString& gn, const QString& fn, const QString& name);
 };
 
 #endif // PERSONALPROGRAMMANAGER_H

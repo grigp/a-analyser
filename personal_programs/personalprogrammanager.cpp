@@ -6,15 +6,17 @@
 #include <QFile>
 #include <QDir>
 #include <QUuid>
+#include <QVariant>
 #include <QDebug>
 
 #include "datadefines.h"
 #include "personalprogramdefines.h"
+#include "aanalyserbuild.h"
 
 PersonalProgramManager::PersonalProgramManager(QObject *parent)
     : QObject (parent)
 {
-
+    assignDefaultPP();
 }
 
 void PersonalProgramManager::readDailyProgramList(QStandardItemModel &model, QStringList uids)
@@ -432,4 +434,135 @@ QString PersonalProgramManager::createDir()
     if (!dir.exists())
         dir.mkpath(dirName);
     return dirName;
+}
+
+void PersonalProgramManager::assignDefaultPP()
+{
+    auto groupsPP = AAnalyserBuild::getDefaultPPList();
+
+    //! Создание папки
+    QString dirName = createDir();
+
+    foreach (auto groupPP, groupsPP)
+    {
+        auto arrPPSrc = getElements(":/pre_settings/personal_programs/" + groupPP + "/pp.json", "pp_list");
+        auto arrDPSrc = getElements(":/pre_settings/personal_programs/" + groupPP + "/dp.json", "dp_list");
+        auto arrPPDPSrc = getElements(":/pre_settings/personal_programs/" + groupPP + "/ppdp.json", "ppdp_list");
+
+        auto arrPPDst = getElements(dirName + "/pp.json", "pp_list");
+        auto arrDPDst = getElements(dirName + "/dp.json", "dp_list");
+        auto arrPPDPDst = getElements(dirName + "/ppdp.json", "ppdp_list");
+
+        //! Проходим по предустановленному списку ИП
+        for (int i = 0; i < arrPPSrc.size(); ++i)
+        {
+            auto objSrc = arrPPSrc.at(i).toObject();
+            //! Ищем ИП в рабочем списке. Если не нашли, то добавляем
+            if (getElementsFromArray(arrPPDst, "uid", objSrc["uid"].toString()).size() == 0)
+            {
+                arrPPDst << objSrc;
+
+                //! Ищем список дневных программ для этой ИП
+                auto listPPDP =  getElementsFromArray(arrPPDPSrc, "pp_uid", objSrc["uid"].toString());
+                foreach (auto ppdp, listPPDP)
+                {
+                    //! Добавляем в список ppdp
+                    arrPPDPDst << ppdp;
+
+                    //! Ищем ДП в рабочем списке. Если не нашли, то добавляем
+                    if (getElementsFromArray(arrDPDst, "uid", ppdp["dp_uid"].toString()).size() == 0)
+                    {
+                        //! Берем из предустановленных
+                        auto dpList = getElementsFromArray(arrDPSrc, "uid", ppdp["dp_uid"].toString());
+                        if (dpList.size() == 1)
+                            arrDPDst << dpList.at(0);
+                    }
+                }
+            }
+        }
+
+        saveElements(dirName + "/pp.json", "pp_list", arrPPDst);
+        saveElements(dirName + "/dp.json", "dp_list", arrDPDst);
+        saveElements(dirName + "/ppdp.json", "ppdp_list", arrPPDPDst);
+
+
+//        assignDefaultPPFile(groupPP, "pp.json", "pp_list");
+//        assignDefaultPPFile(groupPP, "dp.json", "dp_list");
+//        assignDefaultPPFile(groupPP, "ppdp.json", "ppdp_list");
+    }
+}
+
+QJsonArray PersonalProgramManager::getElements(const QString &path, const QString &name)
+{
+    QFile file(path);
+    if (file.open(QIODevice::ReadOnly | QIODevice::Text))
+    {
+        QByteArray ba = file.readAll();
+        QJsonDocument loadDoc(QJsonDocument::fromJson(ba));
+        auto objs = loadDoc.object();
+        file.close();
+        return objs[name].toArray();
+    }
+    return QJsonArray();
+}
+
+void PersonalProgramManager::saveElements(const QString &path, const QString &name, QJsonArray &elements)
+{
+    QFile file(path);
+    if (file.open(QIODevice::WriteOnly | QIODevice::Text))
+    {
+        QJsonObject obj;
+        obj[name] = elements;
+        QJsonDocument doc(obj);
+        QByteArray ba = doc.toJson();
+        file.write(ba);
+        file.close();
+    }
+}
+
+QList<QJsonObject> PersonalProgramManager::getElementsFromArray(QJsonArray &list,
+                                                                const QString &name,
+                                                                const QString &value)
+{
+    QList<QJsonObject> retval;
+    for (int i = 0; i < list.size(); ++i)
+    {
+        auto obj = list.at(i).toObject();
+        if (obj[name].toString() == value)
+            retval << obj;
+    }
+    return retval;
+}
+
+void PersonalProgramManager::assignDefaultPPFile(const QString& gn, const QString &fn, const QString& name)
+{
+    QFile fSrc(":/pre_settings/personal_programs/" + gn + "/" + fn);
+    if (fSrc.open(QIODevice::ReadOnly | QIODevice::Text))
+    {
+        QByteArray ba = fSrc.readAll();
+        QJsonDocument loadDoc(QJsonDocument::fromJson(ba));
+        auto objsSrc = loadDoc.object();
+        fSrc.close();
+
+        //! Создание папки
+        QString dirName = createDir();
+
+        //! Заполнение модели
+        QFile fDst(dirName + fn);
+        if (fDst.open(QIODevice::ReadOnly | QIODevice::Text))
+        {
+            //! Чтение файла
+            QByteArray ba = fDst.readAll();
+            QJsonDocument loadDoc(QJsonDocument::fromJson(ba));
+            auto objsDst = loadDoc.object();
+            fDst.close();
+        }
+
+        auto arrSrc = objsSrc[name].toArray();
+        for (int i = 0; i < arrSrc.size(); ++i)
+        {
+            auto objSrc = arrSrc.at(i).toObject();
+
+        }
+    }
 }
