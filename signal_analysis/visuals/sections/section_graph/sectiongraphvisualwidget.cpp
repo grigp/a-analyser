@@ -4,6 +4,7 @@
 #include <QMessageBox>
 #include <QFileDialog>
 #include <QJsonDocument>
+#include <QAction>
 #include <QDebug>
 
 #include "aanalyserapplication.h"
