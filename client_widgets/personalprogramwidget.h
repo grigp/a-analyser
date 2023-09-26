@@ -67,11 +67,14 @@ protected:
 
 private slots:
     void on_splitterMoved(int,int);
+    void on_splTestMoved(int,int);
 
     void on_run();
     void on_append();
     void on_delete();
     void on_params();
+    void on_openTest();
+    void on_closeTest();
 
     void on_selectionChanged(const QItemSelection &selected, const QItemSelection &deselected);
 
@@ -107,8 +110,8 @@ private:
     void showPersonalProgram(const QString& uidPPAssigned);
     void hideAllWidgets();
 
-    void saveSplitterPosition();
-    void restoreSplitterPosition();
+    void saveMainSplitterPosition();
+    void restoreMainSplitterPosition();
 
     QModelIndex selectedIndex() const;
 
@@ -162,6 +165,8 @@ private:
     int m_currentDP {-1};                         ///< Номер текущей дневной программы на время выполнения теста
     int m_curTestNumber {-1};                     ///< Номер текущего теста на время выполнения теста
     int m_tmNextStep {-1};                        ///< таймер задержки перед запуском следующей методики
+
+    QWidget *m_wgtResult {nullptr};  ///< Текущий виджет для показа результатов теста
 };
 
 #endif // PERSONALPROGRAMWIDGET_H

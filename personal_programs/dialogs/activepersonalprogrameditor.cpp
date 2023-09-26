@@ -13,6 +13,7 @@
 #include "selectdailyprogramdialog.h"
 #include "selectmethodicdialog.h"
 #include "dailyprogramcompleteddelegate.h"
+#include "settingsprovider.h"
 
 
 ActivePersonalProgramEditor::ActivePersonalProgramEditor(QWidget *parent) :
@@ -25,6 +26,12 @@ ActivePersonalProgramEditor::ActivePersonalProgramEditor(QWidget *parent) :
     ui->tvSchedule->setModel(&m_mdlDP);
     ui->tvTests->setModel(&m_mdlT);
     ui->tvSchedule->setItemDelegateForColumn(0, new DailyProgramCompletedDelegate(ui->tvSchedule));
+
+    auto val = SettingsProvider::valueFromRegAppCopy("ActivePersonalProgramEditor", "Geometry").toRect();
+    if (val != QRect())
+    {
+        setGeometry(val);
+    }
 }
 
 ActivePersonalProgramEditor::~ActivePersonalProgramEditor()
@@ -65,12 +72,24 @@ void ActivePersonalProgramEditor::setPersonalProgram(const QJsonObject &objPPAll
             "color: rgb(32,88,103);" +
     "}";
     setStyleSheet(sSheet);
-
 }
 
 QJsonObject ActivePersonalProgramEditor::personalProgram() const
 {
     return m_mdlPP->save();
+}
+
+void ActivePersonalProgramEditor::showEvent(QShowEvent *event)
+{
+    ui->tvSchedule->horizontalHeader()->resizeSection(0, ui->tvSchedule->geometry().width());
+    QDialog::showEvent(event);
+}
+
+void ActivePersonalProgramEditor::resizeEvent(QResizeEvent *event)
+{
+    SettingsProvider::setValueToRegAppCopy("ActivePersonalProgramEditor", "Geometry", geometry());
+    ui->tvSchedule->horizontalHeader()->resizeSection(0, ui->tvSchedule->geometry().width());
+    QDialog::resizeEvent(event);
 }
 
 void ActivePersonalProgramEditor::on_selectDP(QModelIndex index)

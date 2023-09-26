@@ -76,7 +76,7 @@ void TestInfoDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opti
             if (selIdxs.contains(index))
             {
                 painter->setBrush(QBrush(Qt::NoBrush));
-                painter->setPen(Qt::red);
+                painter->setPen(QPen(Qt::red, 2, Qt::SolidLine));
                 painter->drawRect(rn);
             }
         }

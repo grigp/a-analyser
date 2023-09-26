@@ -127,6 +127,7 @@ void PersonalProgram::addDailyProgram(const QJsonObject &objDP)
     itemDP->setData(objDP["uid"].toString(), PersonalProgramDefines::PersonalProgram::DPUidRole);
     itemDP->setData(objDP["name"].toString(), PersonalProgramDefines::PersonalProgram::DPNameRole);
     itemDP->setData(dt, PersonalProgramDefines::PersonalProgram::DPDateTimeRole);
+    itemDP->setEditable(false);
     QList<QStandardItem*> items;
     items << itemDP;
 
@@ -142,6 +143,7 @@ void PersonalProgram::addDailyProgram(const QJsonObject &objDP)
         itemTest->setData(objTest["uid"].toString(), PersonalProgramDefines::PersonalProgram::MethodUidRole);
         itemTest->setData(objTest["test_uid"].toString(), PersonalProgramDefines::PersonalProgram::TestUidRole);
         itemTest->setData(objTest["params"].toObject(), PersonalProgramDefines::PersonalProgram::ParamsRole);
+        itemTest->setEditable(false);
 
         items << itemTest;
     }

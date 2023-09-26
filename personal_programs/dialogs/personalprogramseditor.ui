@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>627</width>
-    <height>626</height>
+    <height>648</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -15,359 +15,362 @@
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout">
    <item>
-    <widget class="QTreeView" name="tvPrograms">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-       <horstretch>3</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
+    <widget class="QSplitter" name="splitter">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
      </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QFrame" name="frProgramParams">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-       <horstretch>5</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="frameShape">
-      <enum>QFrame::StyledPanel</enum>
-     </property>
-     <property name="frameShadow">
-      <enum>QFrame::Raised</enum>
-     </property>
-     <layout class="QVBoxLayout" name="verticalLayout_2">
-      <item>
-       <widget class="QGroupBox" name="gbPP">
-        <property name="title">
-         <string>Параметры индивидуальной программы</string>
-        </property>
-        <layout class="QVBoxLayout" name="verticalLayout_3">
-         <item>
-          <widget class="QLabel" name="lblName">
-           <property name="text">
-            <string>Название</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLineEdit" name="edName"/>
-         </item>
-         <item>
-          <spacer name="verticalSpacer_2">
-           <property name="orientation">
-            <enum>Qt::Vertical</enum>
-           </property>
-           <property name="sizeType">
-            <enum>QSizePolicy::Fixed</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>20</width>
-             <height>5</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-         <item>
-          <widget class="QGroupBox" name="gbIcon">
-           <property name="minimumSize">
-            <size>
-             <width>0</width>
-             <height>100</height>
-            </size>
-           </property>
-           <property name="title">
-            <string>Логотип</string>
-           </property>
-           <layout class="QHBoxLayout" name="horizontalLayout_3">
-            <item>
-             <widget class="QLabel" name="lblLogo">
-              <property name="text">
-               <string/>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QPushButton" name="btnLogoSelect">
-              <property name="text">
-               <string>Выбрать...</string>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLabel" name="lblMinTimeBetweenDP">
-           <property name="text">
-            <string>Минимальное время между дневными программми</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QComboBox" name="cbMinTimeBetweenDP"/>
-         </item>
-         <item>
-          <spacer name="verticalSpacer_3">
-           <property name="orientation">
-            <enum>Qt::Vertical</enum>
-           </property>
-           <property name="sizeType">
-            <enum>QSizePolicy::Fixed</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>20</width>
-             <height>5</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-         <item>
-          <widget class="QLabel" name="lblMaxTimeBetweenDP">
-           <property name="text">
-            <string>Максимальное время между дневными программми</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QComboBox" name="cbMaxTimeBetweenDP"/>
-         </item>
-         <item>
-          <spacer name="verticalSpacer_4">
-           <property name="orientation">
-            <enum>Qt::Vertical</enum>
-           </property>
-           <property name="sizeType">
-            <enum>QSizePolicy::Fixed</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>20</width>
-             <height>5</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-         <item>
-          <widget class="QGroupBox" name="gbSchedule">
-           <property name="title">
-            <string>Расписание</string>
-           </property>
-           <layout class="QHBoxLayout" name="horizontalLayout_4">
-            <item>
-             <widget class="QTableView" name="tvSchedule">
-              <attribute name="horizontalHeaderDefaultSectionSize">
-               <number>300</number>
-              </attribute>
-             </widget>
-            </item>
-            <item>
-             <widget class="QFrame" name="frScheduleButtons">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="frameShape">
-               <enum>QFrame::StyledPanel</enum>
-              </property>
-              <property name="frameShadow">
-               <enum>QFrame::Raised</enum>
-              </property>
-              <layout class="QVBoxLayout" name="verticalLayout">
-               <item>
-                <widget class="QPushButton" name="btnPPAddDP">
-                 <property name="toolTip">
-                  <string>Добавить тест в дневную программу...</string>
-                 </property>
-                 <property name="text">
-                  <string/>
-                 </property>
-                 <property name="icon">
-                  <iconset resource="../../kernel.qrc">
-                   <normaloff>:/images/Plus_Easy.png</normaloff>:/images/Plus_Easy.png</iconset>
-                 </property>
-                 <property name="iconSize">
-                  <size>
-                   <width>32</width>
-                   <height>32</height>
-                  </size>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QPushButton" name="btnPPDelDP">
-                 <property name="toolTip">
-                  <string>Удалить тест из дневной программе...</string>
-                 </property>
-                 <property name="text">
-                  <string/>
-                 </property>
-                 <property name="icon">
-                  <iconset resource="../../kernel.qrc">
-                   <normaloff>:/images/Close.png</normaloff>:/images/Close.png</iconset>
-                 </property>
-                 <property name="iconSize">
-                  <size>
-                   <width>32</width>
-                   <height>32</height>
-                  </size>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QPushButton" name="btnPPDPUp">
-                 <property name="toolTip">
-                  <string>Переместить тест на один шак к началу программы</string>
-                 </property>
-                 <property name="text">
-                  <string/>
-                 </property>
-                 <property name="icon">
-                  <iconset resource="../../kernel.qrc">
-                   <normaloff>:/images/Up_Easy.png</normaloff>:/images/Up_Easy.png</iconset>
-                 </property>
-                 <property name="iconSize">
-                  <size>
-                   <width>32</width>
-                   <height>32</height>
-                  </size>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QPushButton" name="btnPPDPDn">
-                 <property name="toolTip">
-                  <string>Переместить тест на один шак к концу программы</string>
-                 </property>
-                 <property name="text">
-                  <string/>
-                 </property>
-                 <property name="icon">
-                  <iconset resource="../../kernel.qrc">
-                   <normaloff>:/images/Down_Easy.png</normaloff>:/images/Down_Easy.png</iconset>
-                 </property>
-                 <property name="iconSize">
-                  <size>
-                   <width>32</width>
-                   <height>32</height>
-                  </size>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <spacer name="verticalSpacer">
-                 <property name="orientation">
-                  <enum>Qt::Vertical</enum>
-                 </property>
-                 <property name="sizeHint" stdset="0">
-                  <size>
-                   <width>20</width>
-                   <height>40</height>
-                  </size>
-                 </property>
-                </spacer>
-               </item>
-              </layout>
-             </widget>
-            </item>
-           </layout>
-          </widget>
-         </item>
-        </layout>
-       </widget>
-      </item>
-      <item>
-       <widget class="QFrame" name="frMainButtons">
-        <property name="frameShape">
-         <enum>QFrame::StyledPanel</enum>
-        </property>
-        <property name="frameShadow">
-         <enum>QFrame::Raised</enum>
-        </property>
-        <layout class="QHBoxLayout" name="horizontalLayout_2">
-         <item>
-          <widget class="QPushButton" name="btnAddDP">
-           <property name="toolTip">
-            <string>Добавить дневную программу</string>
-           </property>
-           <property name="text">
-            <string/>
-           </property>
-           <property name="icon">
-            <iconset resource="../../kernel.qrc">
-             <normaloff>:/images/add.png</normaloff>:/images/add.png</iconset>
-           </property>
-           <property name="iconSize">
-            <size>
-             <width>32</width>
-             <height>32</height>
-            </size>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QPushButton" name="btnEditDP">
-           <property name="toolTip">
-            <string>Изменить дневную программу</string>
-           </property>
-           <property name="text">
-            <string/>
-           </property>
-           <property name="icon">
-            <iconset resource="../../kernel.qrc">
-             <normaloff>:/images/MethodsEdit.png</normaloff>:/images/MethodsEdit.png</iconset>
-           </property>
-           <property name="iconSize">
-            <size>
-             <width>32</width>
-             <height>32</height>
-            </size>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QPushButton" name="btnDelDP">
-           <property name="toolTip">
-            <string>Удалить дневную программу...</string>
-           </property>
-           <property name="text">
-            <string/>
-           </property>
-           <property name="icon">
-            <iconset resource="../../kernel.qrc">
-             <normaloff>:/images/delete.png</normaloff>:/images/delete.png</iconset>
-           </property>
-           <property name="iconSize">
-            <size>
-             <width>32</width>
-             <height>32</height>
-            </size>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <spacer name="horizontalSpacer">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>40</width>
-             <height>20</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-        </layout>
-       </widget>
-      </item>
-     </layout>
+     <widget class="QTreeView" name="tvPrograms">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+        <horstretch>3</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+     </widget>
+     <widget class="QFrame" name="frProgramParams">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+        <horstretch>5</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::StyledPanel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout_2">
+       <item>
+        <widget class="QGroupBox" name="gbPP">
+         <property name="title">
+          <string>Параметры индивидуальной программы</string>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_3">
+          <item>
+           <widget class="QLabel" name="lblName">
+            <property name="text">
+             <string>Название</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="edName"/>
+          </item>
+          <item>
+           <spacer name="verticalSpacer_2">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::Fixed</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>5</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QGroupBox" name="gbIcon">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>100</height>
+             </size>
+            </property>
+            <property name="title">
+             <string>Логотип</string>
+            </property>
+            <layout class="QHBoxLayout" name="horizontalLayout_3">
+             <item>
+              <widget class="QLabel" name="lblLogo">
+               <property name="text">
+                <string/>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="btnLogoSelect">
+               <property name="text">
+                <string>Выбрать...</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="lblMinTimeBetweenDP">
+            <property name="text">
+             <string>Минимальное время между дневными программми</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QComboBox" name="cbMinTimeBetweenDP"/>
+          </item>
+          <item>
+           <spacer name="verticalSpacer_3">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::Fixed</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>5</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QLabel" name="lblMaxTimeBetweenDP">
+            <property name="text">
+             <string>Максимальное время между дневными программми</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QComboBox" name="cbMaxTimeBetweenDP"/>
+          </item>
+          <item>
+           <spacer name="verticalSpacer_4">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::Fixed</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>5</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QGroupBox" name="gbSchedule">
+            <property name="title">
+             <string>Расписание</string>
+            </property>
+            <layout class="QHBoxLayout" name="horizontalLayout_4">
+             <item>
+              <widget class="QTableView" name="tvSchedule">
+               <attribute name="horizontalHeaderDefaultSectionSize">
+                <number>300</number>
+               </attribute>
+              </widget>
+             </item>
+             <item>
+              <widget class="QFrame" name="frScheduleButtons">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="frameShape">
+                <enum>QFrame::StyledPanel</enum>
+               </property>
+               <property name="frameShadow">
+                <enum>QFrame::Raised</enum>
+               </property>
+               <layout class="QVBoxLayout" name="verticalLayout">
+                <item>
+                 <widget class="QPushButton" name="btnPPAddDP">
+                  <property name="toolTip">
+                   <string>Добавить тест в дневную программу...</string>
+                  </property>
+                  <property name="text">
+                   <string/>
+                  </property>
+                  <property name="icon">
+                   <iconset resource="../../kernel.qrc">
+                    <normaloff>:/images/Plus_Easy.png</normaloff>:/images/Plus_Easy.png</iconset>
+                  </property>
+                  <property name="iconSize">
+                   <size>
+                    <width>32</width>
+                    <height>32</height>
+                   </size>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="btnPPDelDP">
+                  <property name="toolTip">
+                   <string>Удалить тест из дневной программе...</string>
+                  </property>
+                  <property name="text">
+                   <string/>
+                  </property>
+                  <property name="icon">
+                   <iconset resource="../../kernel.qrc">
+                    <normaloff>:/images/Close.png</normaloff>:/images/Close.png</iconset>
+                  </property>
+                  <property name="iconSize">
+                   <size>
+                    <width>32</width>
+                    <height>32</height>
+                   </size>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="btnPPDPUp">
+                  <property name="toolTip">
+                   <string>Переместить тест на один шак к началу программы</string>
+                  </property>
+                  <property name="text">
+                   <string/>
+                  </property>
+                  <property name="icon">
+                   <iconset resource="../../kernel.qrc">
+                    <normaloff>:/images/Up_Easy.png</normaloff>:/images/Up_Easy.png</iconset>
+                  </property>
+                  <property name="iconSize">
+                   <size>
+                    <width>32</width>
+                    <height>32</height>
+                   </size>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="btnPPDPDn">
+                  <property name="toolTip">
+                   <string>Переместить тест на один шак к концу программы</string>
+                  </property>
+                  <property name="text">
+                   <string/>
+                  </property>
+                  <property name="icon">
+                   <iconset resource="../../kernel.qrc">
+                    <normaloff>:/images/Down_Easy.png</normaloff>:/images/Down_Easy.png</iconset>
+                  </property>
+                  <property name="iconSize">
+                   <size>
+                    <width>32</width>
+                    <height>32</height>
+                   </size>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <spacer name="verticalSpacer">
+                  <property name="orientation">
+                   <enum>Qt::Vertical</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>20</width>
+                    <height>40</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+               </layout>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QFrame" name="frMainButtons">
+         <property name="frameShape">
+          <enum>QFrame::StyledPanel</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Raised</enum>
+         </property>
+         <layout class="QHBoxLayout" name="horizontalLayout_2">
+          <item>
+           <widget class="QPushButton" name="btnAddDP">
+            <property name="toolTip">
+             <string>Добавить дневную программу</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="../../kernel.qrc">
+              <normaloff>:/images/add.png</normaloff>:/images/add.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>32</width>
+              <height>32</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="btnEditDP">
+            <property name="toolTip">
+             <string>Изменить дневную программу</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="../../kernel.qrc">
+              <normaloff>:/images/MethodsEdit.png</normaloff>:/images/MethodsEdit.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>32</width>
+              <height>32</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="btnDelDP">
+            <property name="toolTip">
+             <string>Удалить дневную программу...</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="../../kernel.qrc">
+              <normaloff>:/images/delete.png</normaloff>:/images/delete.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>32</width>
+              <height>32</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </widget>
+       </item>
+      </layout>
+     </widget>
     </widget>
    </item>
   </layout>
@@ -384,7 +387,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>577</x>
-     <y>344</y>
+     <y>388</y>
     </hint>
     <hint type="destinationlabel">
      <x>626</x>
@@ -400,10 +403,10 @@
    <hints>
     <hint type="sourcelabel">
      <x>577</x>
-     <y>390</y>
+     <y>434</y>
     </hint>
     <hint type="destinationlabel">
-     <x>627</x>
+     <x>626</x>
      <y>160</y>
     </hint>
    </hints>
@@ -416,10 +419,10 @@
    <hints>
     <hint type="sourcelabel">
      <x>577</x>
-     <y>436</y>
+     <y>480</y>
     </hint>
     <hint type="destinationlabel">
-     <x>631</x>
+     <x>626</x>
      <y>206</y>
     </hint>
    </hints>
@@ -432,10 +435,10 @@
    <hints>
     <hint type="sourcelabel">
      <x>577</x>
-     <y>482</y>
+     <y>526</y>
     </hint>
     <hint type="destinationlabel">
-     <x>627</x>
+     <x>626</x>
      <y>247</y>
     </hint>
    </hints>
@@ -447,11 +450,11 @@
    <slot>on_ppAdd()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>283</x>
-     <y>578</y>
+     <x>249</x>
+     <y>618</y>
     </hint>
     <hint type="destinationlabel">
-     <x>628</x>
+     <x>626</x>
      <y>293</y>
     </hint>
    </hints>
@@ -463,11 +466,11 @@
    <slot>on_ppEdit()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>326</x>
-     <y>567</y>
+     <x>299</x>
+     <y>618</y>
     </hint>
     <hint type="destinationlabel">
-     <x>630</x>
+     <x>626</x>
      <y>330</y>
     </hint>
    </hints>
@@ -479,11 +482,11 @@
    <slot>on_ppDel()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>388</x>
-     <y>575</y>
+     <x>349</x>
+     <y>618</y>
     </hint>
     <hint type="destinationlabel">
-     <x>628</x>
+     <x>626</x>
      <y>358</y>
     </hint>
    </hints>
@@ -499,7 +502,7 @@
      <y>34</y>
     </hint>
     <hint type="destinationlabel">
-     <x>629</x>
+     <x>626</x>
      <y>20</y>
     </hint>
    </hints>
@@ -511,11 +514,11 @@
    <slot>on_selectPP(QModelIndex)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>201</x>
-     <y>58</y>
+     <x>180</x>
+     <y>67</y>
     </hint>
     <hint type="destinationlabel">
-     <x>630</x>
+     <x>626</x>
      <y>47</y>
     </hint>
    </hints>
@@ -527,11 +530,11 @@
    <slot>on_changeMinTime(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>575</x>
-     <y>198</y>
+     <x>597</x>
+     <y>242</y>
     </hint>
     <hint type="destinationlabel">
-     <x>631</x>
+     <x>626</x>
      <y>72</y>
     </hint>
    </hints>
@@ -544,7 +547,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>597</x>
-     <y>254</y>
+     <y>298</y>
     </hint>
     <hint type="destinationlabel">
      <x>626</x>
@@ -559,12 +562,28 @@
    <slot>on_selectLogo()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>496</x>
-     <y>130</y>
+     <x>587</x>
+     <y>165</y>
     </hint>
     <hint type="destinationlabel">
-     <x>630</x>
+     <x>626</x>
      <y>97</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>splitter</sender>
+   <signal>splitterMoved(int,int)</signal>
+   <receiver>PersonalProgramsEditor</receiver>
+   <slot>on_splitterMoved(int,int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>184</x>
+     <y>97</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>628</x>
+     <y>1</y>
     </hint>
    </hints>
   </connection>
@@ -581,5 +600,6 @@
   <slot>on_changeMinTime(int)</slot>
   <slot>on_changeMaxTime(int)</slot>
   <slot>on_selectLogo()</slot>
+  <slot>on_splitterMoved(int,int)</slot>
  </slots>
 </ui>

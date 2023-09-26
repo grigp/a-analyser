@@ -26,6 +26,9 @@ public:
 public slots:
     int exec() override;
 
+protected:
+    void resizeEvent(QResizeEvent *event) override;
+
 private slots:
     void on_addTest();
     void on_editTest();
@@ -38,6 +41,8 @@ private slots:
     void on_dpDel();
 
     void on_selectDP(QModelIndex index);
+
+    void on_splitterMoved(int,int);
 
 private:
     Ui::DailyProgramsEditor *ui;

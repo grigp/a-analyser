@@ -249,5 +249,7 @@
         <file>images/PP_assign.png</file>
         <file>images/PP_cancel.png</file>
         <file>images/PP_params.png</file>
+        <file>images/PP_open_test.png</file>
+        <file>images/Close16.png</file>
     </qresource>
 </RCC>

@@ -1,0 +1,18 @@
+{
+    "pp_list": [
+        {
+            "logo_file_name": "D:/a-analyser/out/a-analyser-debug/bin/pictures/personal_programs/pp01.png",
+            "max_time_between_dp": 7,
+            "min_time_between_dp": 0,
+            "name": "Спастический гемипарез без нарушения чувствительности",
+            "uid": "{b189293e-71c3-40ce-8a49-3e98cc7d34df}"
+        },
+        {
+            "logo_file_name": "D:/a-analyser/out/a-analyser-debug/bin/pictures/personal_programs/pp03.png",
+            "max_time_between_dp": 7,
+            "min_time_between_dp": 0,
+            "name": "Гемипарез в сочетании с нарушением глубокой чувствительности",
+            "uid": "{38f2f44e-b2d3-45fe-8a4d-38c2f8f2c02c}"
+        }
+    ]
+}

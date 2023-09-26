@@ -290,7 +290,8 @@ QPushButton#btnCloseTest,
 QPushButton#btnPPRun,
 QPushButton#btnPPAdd,
 QPushButton#btnPPStop,
-QPushButton#btnPPParams
+QPushButton#btnPPParams,
+QPushButton#btnPPOpenTest
 {
     border: 2px solid #8f8f91;
     border-radius: 6px;
@@ -317,7 +318,8 @@ QPushButton#btnCloseTest:hover,
 QPushButton#btnPPRun:hover,
 QPushButton#btnPPAdd:hover,
 QPushButton#btnPPStop:hover,
-QPushButton#btnPPParams:hover
+QPushButton#btnPPParams:hover,
+QPushButton#btnPPOpenTest:hover
 {
     background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 rgb(100, 200, 120), stop: 0.5 rgb(120, 220, 120), stop: 1 rgb(100, 200, 120));
 }
@@ -341,7 +343,8 @@ QPushButton#btnCloseTest:pressed,
 QPushButton#btnPPRun:pressed,
 QPushButton#btnPPAdd:pressed,
 QPushButton#btnPPStop:pressed,
-QPushButton#btnPPParams:pressed
+QPushButton#btnPPParams:pressed,
+QPushButton#btnPPOpenTest:pressed
 {
     background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 rgb(70, 110, 100), stop: 0.5 rgb(90, 140, 80), stop: 1 rgb(70, 110, 100));
 }

@@ -10,6 +10,12 @@
     <height>639</height>
    </rect>
   </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
@@ -111,7 +117,7 @@
           </item>
          </layout>
         </widget>
-        <widget class="QFrame" name="frPPTable">
+        <widget class="QFrame" name="frPP">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
            <horstretch>4</horstretch>
@@ -270,53 +276,219 @@
                </property>
               </widget>
              </item>
+             <item>
+              <widget class="QPushButton" name="btnPPOpenTest">
+               <property name="toolTip">
+                <string>Показать результаты теста</string>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset resource="../kernel.qrc">
+                 <normaloff>:/images/PP_open_test.png</normaloff>:/images/PP_open_test.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>32</width>
+                 <height>32</height>
+                </size>
+               </property>
+              </widget>
+             </item>
             </layout>
            </widget>
           </item>
           <item>
-           <widget class="QFrame" name="frPrograms">
+           <widget class="QFrame" name="frPPTable">
             <property name="frameShape">
              <enum>QFrame::StyledPanel</enum>
             </property>
             <property name="frameShadow">
              <enum>QFrame::Raised</enum>
             </property>
-            <layout class="QVBoxLayout" name="verticalLayout_4">
+            <layout class="QHBoxLayout" name="horizontalLayout_4">
              <property name="spacing">
-              <number>0</number>
+              <number>3</number>
              </property>
              <property name="leftMargin">
-              <number>0</number>
+              <number>1</number>
              </property>
              <property name="topMargin">
-              <number>0</number>
+              <number>1</number>
              </property>
              <property name="rightMargin">
-              <number>0</number>
+              <number>1</number>
              </property>
              <property name="bottomMargin">
-              <number>0</number>
+              <number>1</number>
              </property>
              <item>
-              <widget class="QLabel" name="lblPicture">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
+              <widget class="QSplitter" name="splTableTest">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
                </property>
-               <property name="text">
-                <string/>
-               </property>
-               <property name="pixmap">
-                <pixmap resource="../kernel.qrc">:/images/background01.png</pixmap>
-               </property>
-               <property name="scaledContents">
-                <bool>true</bool>
-               </property>
-               <property name="alignment">
-                <set>Qt::AlignCenter</set>
-               </property>
+               <widget class="QFrame" name="frPrograms">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                  <horstretch>2</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="frameShape">
+                 <enum>QFrame::StyledPanel</enum>
+                </property>
+                <property name="frameShadow">
+                 <enum>QFrame::Raised</enum>
+                </property>
+                <layout class="QVBoxLayout" name="verticalLayout_4">
+                 <property name="spacing">
+                  <number>0</number>
+                 </property>
+                 <property name="leftMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="topMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="rightMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="bottomMargin">
+                  <number>0</number>
+                 </property>
+                 <item>
+                  <widget class="QLabel" name="lblPicture">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="text">
+                    <string/>
+                   </property>
+                   <property name="pixmap">
+                    <pixmap resource="../kernel.qrc">:/images/background01.png</pixmap>
+                   </property>
+                   <property name="scaledContents">
+                    <bool>true</bool>
+                   </property>
+                   <property name="alignment">
+                    <set>Qt::AlignCenter</set>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </widget>
+               <widget class="QFrame" name="frPPOpenTest">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                  <horstretch>1</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>200</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="frameShape">
+                 <enum>QFrame::StyledPanel</enum>
+                </property>
+                <property name="frameShadow">
+                 <enum>QFrame::Raised</enum>
+                </property>
+                <layout class="QVBoxLayout" name="verticalLayout_5">
+                 <property name="spacing">
+                  <number>1</number>
+                 </property>
+                 <property name="leftMargin">
+                  <number>1</number>
+                 </property>
+                 <property name="topMargin">
+                  <number>1</number>
+                 </property>
+                 <property name="rightMargin">
+                  <number>1</number>
+                 </property>
+                 <property name="bottomMargin">
+                  <number>1</number>
+                 </property>
+                 <item>
+                  <widget class="QFrame" name="frPPOpenTestTitle">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="frameShape">
+                    <enum>QFrame::StyledPanel</enum>
+                   </property>
+                   <property name="frameShadow">
+                    <enum>QFrame::Raised</enum>
+                   </property>
+                   <layout class="QHBoxLayout" name="horizontalLayout_5">
+                    <property name="leftMargin">
+                     <number>0</number>
+                    </property>
+                    <property name="topMargin">
+                     <number>3</number>
+                    </property>
+                    <property name="rightMargin">
+                     <number>3</number>
+                    </property>
+                    <property name="bottomMargin">
+                     <number>0</number>
+                    </property>
+                    <item>
+                     <spacer name="horizontalSpacer_2">
+                      <property name="orientation">
+                       <enum>Qt::Horizontal</enum>
+                      </property>
+                      <property name="sizeHint" stdset="0">
+                       <size>
+                        <width>40</width>
+                        <height>20</height>
+                       </size>
+                      </property>
+                     </spacer>
+                    </item>
+                    <item>
+                     <widget class="QPushButton" name="btnCloseOpenTestPanel">
+                      <property name="toolTip">
+                       <string>Скрыть результаты теста</string>
+                      </property>
+                      <property name="text">
+                       <string/>
+                      </property>
+                      <property name="icon">
+                       <iconset resource="../kernel.qrc">
+                        <normaloff>:/images/Close16.png</normaloff>:/images/Close16.png</iconset>
+                      </property>
+                      <property name="iconSize">
+                       <size>
+                        <width>16</width>
+                        <height>16</height>
+                       </size>
+                      </property>
+                      <property name="flat">
+                       <bool>true</bool>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QWidget" name="wgtPPTest" native="true">
+                   <layout class="QVBoxLayout" name="verticalLayout_6"/>
+                  </widget>
+                 </item>
+                </layout>
+               </widget>
               </widget>
              </item>
             </layout>
@@ -358,8 +530,8 @@
    <slot>on_run()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>867</x>
-     <y>20</y>
+     <x>817</x>
+     <y>24</y>
     </hint>
     <hint type="destinationlabel">
      <x>1031</x>
@@ -374,8 +546,8 @@
    <slot>on_delete()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>945</x>
-     <y>7</y>
+     <x>917</x>
+     <y>11</y>
     </hint>
     <hint type="destinationlabel">
      <x>1032</x>
@@ -390,8 +562,8 @@
    <slot>on_params()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>996</x>
-     <y>42</y>
+     <x>967</x>
+     <y>43</y>
     </hint>
     <hint type="destinationlabel">
      <x>1034</x>
@@ -422,12 +594,60 @@
    <slot>on_append()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>887</x>
-     <y>21</y>
+     <x>867</x>
+     <y>25</y>
     </hint>
     <hint type="destinationlabel">
      <x>1033</x>
      <y>115</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btnPPOpenTest</sender>
+   <signal>clicked()</signal>
+   <receiver>PersonalProgramWidget</receiver>
+   <slot>on_openTest()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1007</x>
+     <y>10</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1030</x>
+     <y>141</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btnCloseOpenTestPanel</sender>
+   <signal>clicked()</signal>
+   <receiver>PersonalProgramWidget</receiver>
+   <slot>on_closeTest()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1008</x>
+     <y>62</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1034</x>
+     <y>232</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>splTableTest</sender>
+   <signal>splitterMoved(int,int)</signal>
+   <receiver>PersonalProgramWidget</receiver>
+   <slot>on_splTestMoved(int,int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>824</x>
+     <y>200</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1032</x>
+     <y>267</y>
     </hint>
    </hints>
   </connection>
@@ -439,5 +659,8 @@
   <slot>on_params()</slot>
   <slot>selectPatient(QModelIndex)</slot>
   <slot>on_append()</slot>
+  <slot>on_openTest()</slot>
+  <slot>on_closeTest()</slot>
+  <slot>on_splTestMoved(int,int)</slot>
  </slots>
 </ui>
