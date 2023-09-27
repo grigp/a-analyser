@@ -106,6 +106,7 @@ public:
      */
     static QColor successColor(const double valSuccess);
 
+    void on_dbConnected();
 
 private:
     QString createDir();
@@ -114,7 +115,6 @@ private:
     void saveElements(const QString& path, const QString& name, QJsonArray& elements);
     QList<QJsonObject> getElementsFromArray(QJsonArray& list, const QString& name, const QString& value);
 
-    void assignDefaultPPFile(const QString& gn, const QString& fn, const QString& name);
 };
 
 #endif // PERSONALPROGRAMMANAGER_H

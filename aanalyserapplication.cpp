@@ -890,6 +890,7 @@ void AAnalyserApplication::on_dbConnected()
     if (m_mdlPatients)
         m_mdlPatients->load();
     m_pmdlPatientsPP->setShowPPMode(PatientsProxyModel::sppActive);
+    m_ppManager->on_dbConnected();
 }
 
 void AAnalyserApplication::on_AddTestToSummaryAccepted()

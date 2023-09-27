@@ -16,7 +16,6 @@
 PersonalProgramManager::PersonalProgramManager(QObject *parent)
     : QObject (parent)
 {
-    assignDefaultPP();
 }
 
 void PersonalProgramManager::readDailyProgramList(QStandardItemModel &model, QStringList uids)
@@ -427,6 +426,11 @@ QColor PersonalProgramManager::successColor(const double valSuccess)
         return QColor(255, static_cast<int>(valSuccess) * 255 / 50, 0);
 }
 
+void PersonalProgramManager::on_dbConnected()
+{
+    assignDefaultPP();
+}
+
 QString PersonalProgramManager::createDir()
 {
     QString dirName = DataDefines::appCopyPath() + "personal_programs/";
@@ -481,14 +485,19 @@ void PersonalProgramManager::assignDefaultPP()
             }
         }
 
+        //! Добавить ДП, не подключенные ни к какой ИП.
+        //! Проходим по предустановленному списку ДП
+        for (int i = 0; i < arrDPSrc.size(); ++i)
+        {
+            auto objSrc = arrDPSrc.at(i).toObject();
+            //! Ищем ДП в рабочем списке. Если не нашли, то добавляем
+            if (getElementsFromArray(arrDPDst, "uid", objSrc["uid"].toString()).size() == 0)
+                arrDPDst << objSrc;
+        }
+
         saveElements(dirName + "/pp.json", "pp_list", arrPPDst);
         saveElements(dirName + "/dp.json", "dp_list", arrDPDst);
         saveElements(dirName + "/ppdp.json", "ppdp_list", arrPPDPDst);
-
-
-//        assignDefaultPPFile(groupPP, "pp.json", "pp_list");
-//        assignDefaultPPFile(groupPP, "dp.json", "dp_list");
-//        assignDefaultPPFile(groupPP, "ppdp.json", "ppdp_list");
     }
 }
 
@@ -534,35 +543,3 @@ QList<QJsonObject> PersonalProgramManager::getElementsFromArray(QJsonArray &list
     return retval;
 }
 
-void PersonalProgramManager::assignDefaultPPFile(const QString& gn, const QString &fn, const QString& name)
-{
-    QFile fSrc(":/pre_settings/personal_programs/" + gn + "/" + fn);
-    if (fSrc.open(QIODevice::ReadOnly | QIODevice::Text))
-    {
-        QByteArray ba = fSrc.readAll();
-        QJsonDocument loadDoc(QJsonDocument::fromJson(ba));
-        auto objsSrc = loadDoc.object();
-        fSrc.close();
-
-        //! Создание папки
-        QString dirName = createDir();
-
-        //! Заполнение модели
-        QFile fDst(dirName + fn);
-        if (fDst.open(QIODevice::ReadOnly | QIODevice::Text))
-        {
-            //! Чтение файла
-            QByteArray ba = fDst.readAll();
-            QJsonDocument loadDoc(QJsonDocument::fromJson(ba));
-            auto objsDst = loadDoc.object();
-            fDst.close();
-        }
-
-        auto arrSrc = objsSrc[name].toArray();
-        for (int i = 0; i < arrSrc.size(); ++i)
-        {
-            auto objSrc = arrSrc.at(i).toObject();
-
-        }
-    }
-}
