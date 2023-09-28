@@ -1279,7 +1279,16 @@
                         "circe_round_rule_mode": "radial",
                         "direction_mode": "counter_clockwise",
                         "radius": 50,
-                        "stage_time": 5
+                        "stage_time": 6
+                    },
+                    "uid": "{005ADEA5-EF51-4BFD-9E8D-F5CF41EE0B9D}"
+                },
+                {
+                    "params": {
+                        "circe_round_rule_mode": "circle",
+                        "direction_mode": "counter_clockwise",
+                        "radius": 50,
+                        "stage_time": 6
                     },
                     "uid": "{005ADEA5-EF51-4BFD-9E8D-F5CF41EE0B9D}"
                 },
@@ -1517,7 +1526,16 @@
                         "circe_round_rule_mode": "radial",
                         "direction_mode": "counter_clockwise",
                         "radius": 50,
-                        "stage_time": 5
+                        "stage_time": 6
+                    },
+                    "uid": "{005ADEA5-EF51-4BFD-9E8D-F5CF41EE0B9D}"
+                },
+                {
+                    "params": {
+                        "circe_round_rule_mode": "circle",
+                        "direction_mode": "counter_clockwise",
+                        "radius": 50,
+                        "stage_time": 6
                     },
                     "uid": "{005ADEA5-EF51-4BFD-9E8D-F5CF41EE0B9D}"
                 },
@@ -2193,41 +2211,6 @@
                 }
             ],
             "uid": "{7dfd3cb3-fee3-4d66-99fd-24cfc4becb20}"
-        },
-        {
-            "name": "Тестирование 2",
-            "test_list": [
-                {
-                    "params": {
-                        "condition": 4,
-                        "probes": [
-                            {
-                                "autoend": 1,
-                                "kind": 3,
-                                "latent_time": 5,
-                                "name": "Проба \"Мишень\"",
-                                "scale": 3,
-                                "stimul": 3,
-                                "time": 20,
-                                "zeroing": 1
-                            }
-                        ]
-                    },
-                    "uid": "{271DB867-0297-4DBD-BD7D-E1BC5675BC2A}"
-                },
-                {
-                    "params": {
-                        "center_size": 15,
-                        "change_stage_mode": "return",
-                        "delay_time": 5,
-                        "direction_mode": "random",
-                        "repeat_count": 1,
-                        "stage_time": 15
-                    },
-                    "uid": "{60164BDD-78E1-4A0D-8B9E-F1485D268227}"
-                }
-            ],
-            "uid": "{cd0057cd-e832-47c6-a954-7c45ed91cea9}"
         },
         {
             "name": "Этап 1. Гемипарез в сочетании с рекурвацией коленного сустава",
@@ -5115,7 +5098,16 @@
                         "circe_round_rule_mode": "radial",
                         "direction_mode": "counter_clockwise",
                         "radius": 50,
-                        "stage_time": 5
+                        "stage_time": 4
+                    },
+                    "uid": "{005ADEA5-EF51-4BFD-9E8D-F5CF41EE0B9D}"
+                },
+                {
+                    "params": {
+                        "circe_round_rule_mode": "circle",
+                        "direction_mode": "counter_clockwise",
+                        "radius": 50,
+                        "stage_time": 4
                     },
                     "uid": "{005ADEA5-EF51-4BFD-9E8D-F5CF41EE0B9D}"
                 },
@@ -5900,15 +5892,50 @@
                 },
                 {
                     "params": {
-                        "circe_round_rule_mode": "radial",
+                        "circe_round_rule_mode": "circle",
                         "direction_mode": "counter_clockwise",
                         "radius": 50,
-                        "stage_time": 5
+                        "stage_time": 4
                     },
                     "uid": "{005ADEA5-EF51-4BFD-9E8D-F5CF41EE0B9D}"
                 }
             ],
             "uid": "{8562cf6a-09aa-456a-802f-72d6d4a256d6}"
+        },
+        {
+            "name": "Тестирование 2",
+            "test_list": [
+                {
+                    "params": {
+                        "condition": 4,
+                        "probes": [
+                            {
+                                "autoend": 1,
+                                "kind": 3,
+                                "latent_time": 5,
+                                "name": "Проба \"Мишень\"",
+                                "scale": 3,
+                                "stimul": 3,
+                                "time": 20,
+                                "zeroing": 1
+                            }
+                        ]
+                    },
+                    "uid": "{271DB867-0297-4DBD-BD7D-E1BC5675BC2A}"
+                },
+                {
+                    "params": {
+                        "center_size": 15,
+                        "change_stage_mode": "return",
+                        "delay_time": 5,
+                        "direction_mode": "random",
+                        "repeat_count": 1,
+                        "stage_time": 15
+                    },
+                    "uid": "{60164BDD-78E1-4A0D-8B9E-F1485D268227}"
+                }
+            ],
+            "uid": "{cd0057cd-e832-47c6-a954-7c45ed91cea9}"
         }
     ]
 }

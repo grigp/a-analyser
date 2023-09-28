@@ -284,6 +284,7 @@ void DailyProgramsEditor::viewDP(const QJsonObject &objDP)
     {
         auto objTest = arTests.at(i).toObject();
         auto metUid = objTest["uid"].toString();
+        auto params = objTest["params"].toObject();
 
         MetodicsFactory *metFactory = static_cast<AAnalyserApplication*>(QApplication::instance())->getMetodics();
         auto mi = metFactory->metodic(metUid);
@@ -291,7 +292,7 @@ void DailyProgramsEditor::viewDP(const QJsonObject &objDP)
         auto *item = new QStandardItem(mi.name);
         item->setEditable(false);
         item->setData(metUid, PersonalProgramDefines::TableTestsRoles::MethodUidRole);
-        item->setData(mi.params, PersonalProgramDefines::TableTestsRoles::MethodParamsRole);
+        item->setData(params, PersonalProgramDefines::TableTestsRoles::MethodParamsRole);
         item->setIcon(QIcon(":/images/Methodics/" + mi.imageName));
         m_mdlTests.appendRow(item);
     }
