@@ -176,3 +176,8 @@ void AAnalyserBuild::assignDrivers(QMap<QString, QString> &drivers)
     drivers.insert(Stabilan01::uid(), Stabilan01::name());
     drivers.insert(Bilateral::uid(), Bilateral::name());
 }
+
+QStringList AAnalyserBuild::getDefaultPPList()
+{
+    return QStringList() << "neurology";
+}

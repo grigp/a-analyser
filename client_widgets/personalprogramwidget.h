@@ -142,6 +142,14 @@ private:
     bool getNextTestInfo(const QJsonObject& objPPAll, QJsonObject& objTest, bool isFirstRun);
 
     /*!
+     * \brief Поиск первой ДП, имеющей проведенные тесты или не имеющей их вообще
+     * \param arrDP - массив DP
+     * \param dtLast - время последнего теста
+     * \return индекс DP, с которого нужно начинать
+     */
+    int findStartDP(QJsonArray arrDP, QDateTime& dtLast);
+
+    /*!
      * \brief Запускает следующий тест по индивидуальной программе
      * \param objTest - объект с описанием теста, который необходимо выполнить
      */

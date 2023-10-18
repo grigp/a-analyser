@@ -65,6 +65,11 @@ Driver* createDriver(const QString &drvUid);
  */
 void assignDrivers(QMap<QString, QString> &drivers);
 
+/*!
+ * \brief Возвращает список индивидуальных программ по умолчанию (папок программ)
+ */
+QStringList getDefaultPPList();
+
 }
 
 

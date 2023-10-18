@@ -686,7 +686,11 @@ bool PersonalProgramWidget::getNextTestInfo(const QJsonObject &objPPAll, QJsonOb
 
     QDateTime dtLast = QDateTime();
     auto arrDP = objPP["dp_list"].toArray();
-    for (int i = 0; i < arrDP.size(); ++i)
+
+    //! Поиск первой ДП, имеющей проведенные тесты или не имеющей их вообще
+    int startDPIdx = findStartDP(arrDP, dtLast);
+
+    for (int i = startDPIdx; i < arrDP.size(); ++i)
     {
         auto objDP = arrDP.at(i).toObject();
         auto dtDP = getDateTimeByString(objDP["date_time"].toString(""));
@@ -765,6 +769,26 @@ bool PersonalProgramWidget::getNextTestInfo(const QJsonObject &objPPAll, QJsonOb
     objTest = QJsonObject();
     m_currentDP = -1;
     return false;
+}
+
+int PersonalProgramWidget::findStartDP(QJsonArray arrDP, QDateTime& dtLast)
+{
+    for (int i = arrDP.size() - 1; i >= 0; --i)
+    {
+        auto objDP = arrDP.at(i).toObject();
+        auto dtDP = getDateTimeByString(objDP["date_time"].toString(""));
+        if (dtDP != QDateTime() && dtLast == QDateTime())
+            dtLast = dtDP;
+
+        auto arrTests = objDP["test_list"].toArray();
+        QJsonObject objT = QJsonObject();
+        int emptyTestIdx = findEmptyTestInfo(arrTests, objT);
+        if (emptyTestIdx == -1)
+            return i + 1;
+        if (emptyTestIdx > 0)
+            return i;
+    }
+    return 0;
 }
 
 //bool PersonalProgramWidget::getNextTestInfo(const QJsonObject &objPPAll, QJsonObject& objTest, bool isFirstRun)

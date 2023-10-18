@@ -84,3 +84,8 @@ void AAnalyserBuild::assignDrivers(QMap<QString, QString> &drivers)
 }
 
 
+
+QStringList AAnalyserBuild::getDefaultPPList()
+{
+    return QStringList();
+}
