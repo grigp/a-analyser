@@ -286,8 +286,24 @@ void ActivePersonalProgramEditor::on_testDel()
                                                 tr("Тест") + " : " + metName);
                 if (mr == QMessageBox::Yes)
                 {
+                    //! Удаляем из виджета
                     m_mdlT.removeRow(testIdx.row());
-                    delete m_mdlPP->item(dpIdx.row(), testIdx.row() + 1);
+
+                    //! Удаляем из модели
+                    //! Поскольку надо удалить итем из строки, сформируем новую строку без этого итема и заменим ею существующую
+                    QList<QStandardItem*> items;
+                    for (int i = 0; i < m_mdlPP->columnCount(); ++i)
+                    {
+                        auto item = m_mdlPP->item(dpIdx.row(), i);
+                        if (item)
+                        {
+                            auto uidMethod = item->data(PersonalProgramDefines::PersonalProgram::MethodUidRole).toString();
+                            if ((i == 0) || (i > 0 && uidMethod != "" && i != testIdx.row() + 1))
+                                items << item->clone();
+                        }
+                    }
+                    m_mdlPP->removeRow(dpIdx.row());
+                    m_mdlPP->insertRow(dpIdx.row(), items);
                 }
             }
             else

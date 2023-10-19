@@ -21,7 +21,7 @@ class ActivePersonalProgramEditor : public QDialog
 
 public:
     explicit ActivePersonalProgramEditor(QWidget *parent = nullptr);
-    ~ActivePersonalProgramEditor();
+    ~ActivePersonalProgramEditor() override;
 
     enum DPAdvancedRoles
     {

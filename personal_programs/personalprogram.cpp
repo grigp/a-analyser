@@ -91,6 +91,9 @@ QJsonObject PersonalProgram::save()
         {
             auto idxTest = index(i, j);
             auto uidMethod = idxTest.data(PersonalProgramDefines::PersonalProgram::MethodUidRole).toString();
+
+            qDebug() << Q_FUNC_INFO << i << j << idxTest.isValid() << uidMethod;
+
             if (uidMethod != "")
             {
                 QJsonObject objTest;
