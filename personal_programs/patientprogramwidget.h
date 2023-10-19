@@ -32,6 +32,11 @@ public:
      */
     QModelIndex selectedIndex() const {return m_selectedIndex;}
 
+    /*!
+     * \brief Возвращает название индивидуальной программы
+     */
+    QString namePP() const;
+
 private slots:
     void on_selectItem(QModelIndex idx);
 

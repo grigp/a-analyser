@@ -33,6 +33,11 @@ void PatientProgramWidget::assignPersonalProgram(const QString &uidPP)
         ui->tvProgram->setItemDelegateForColumn(i, new TestInfoDelegate(ui->tvProgram));
 }
 
+QString PatientProgramWidget::namePP() const
+{
+    return static_cast<PersonalProgram*>(ui->tvProgram->model())->name();
+}
+
 void PatientProgramWidget::on_selectItem(QModelIndex idx)
 {
     m_selectedIndex = QModelIndex();

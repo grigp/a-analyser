@@ -525,11 +525,15 @@ void PersonalProgramWidget::showPersonalProgram(const QString& uidPPAssigned)
 {
     hideAllWidgets();
     if (m_wgts.contains(uidPPAssigned))
+    {
         m_wgts.value(uidPPAssigned)->setVisible(true);
+        ui->lblPPTitle->setText("Индивидуальная программа: \"" + m_wgts.value(uidPPAssigned)->namePP() + "\"");
+    }
     else
     {
         auto ppw = new PatientProgramWidget(ui->frPrograms);
         ppw->assignPersonalProgram(uidPPAssigned);
+        ui->lblPPTitle->setText("Индивидуальная программа: \"" + ppw->namePP() + "\"");
         ui->frPrograms->layout()->addWidget(ppw);
         m_wgts.insert(uidPPAssigned, ppw);
     }
