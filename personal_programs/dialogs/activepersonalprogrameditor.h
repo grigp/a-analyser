@@ -23,11 +23,6 @@ public:
     explicit ActivePersonalProgramEditor(QWidget *parent = nullptr);
     ~ActivePersonalProgramEditor() override;
 
-    enum DPAdvancedRoles
-    {
-        DPCompletedRole = PersonalProgramDefines::PersonalProgram::PersonalProgramUserRole + 1
-    };
-
     /*!
      * \brief Отображает данные индивидуальной программы
      * \param objPPAll - индивидуальная программа

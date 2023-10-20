@@ -125,7 +125,7 @@ void ActivePersonalProgramEditor::on_dpDel()
 {
     auto selIdx = selectedDPIndex();
 
-    if (!selIdx.data(DPCompletedRole).toBool())
+    if (!selIdx.data(PersonalProgramDefines::DPCompletedRole).toBool())
     {
         if (selIdx != QModelIndex() && selIdx.isValid())
         {
@@ -149,7 +149,7 @@ void ActivePersonalProgramEditor::on_dpDel()
 void ActivePersonalProgramEditor::on_dpMoveUp()
 {
     auto selIdx = selectedDPIndex();
-    if (!selIdx.data(DPCompletedRole).toBool())
+    if (!selIdx.data(PersonalProgramDefines::DPCompletedRole).toBool())
     {
         int num = selIdx.row();
 
@@ -158,7 +158,7 @@ void ActivePersonalProgramEditor::on_dpMoveUp()
         if (num > 0)
         {
             auto upIdx = m_mdlDP.index(num - 1, 0);
-            upCompleted = upIdx.data(DPCompletedRole).toBool();
+            upCompleted = upIdx.data(PersonalProgramDefines::DPCompletedRole).toBool();
         }
 
         if (selIdx != QModelIndex() && selIdx.isValid() && num > 0 && !upCompleted)
@@ -182,7 +182,7 @@ void ActivePersonalProgramEditor::on_dpMoveUp()
 void ActivePersonalProgramEditor::on_dpMoveDown()
 {
     auto selIdx = selectedDPIndex();
-    if (!selIdx.data(DPCompletedRole).toBool())
+    if (!selIdx.data(PersonalProgramDefines::DPCompletedRole).toBool())
     {
         int num = selIdx.row();
         if (selIdx != QModelIndex() && selIdx.isValid() && num < m_mdlDP.rowCount() - 1)
@@ -208,7 +208,7 @@ void ActivePersonalProgramEditor::on_testAdd()
     auto dpIdx = selectedDPIndex();
     if (dpIdx != QModelIndex())
     {
-        if (!dpIdx.data(DPCompletedRole).toBool())
+        if (!dpIdx.data(PersonalProgramDefines::DPCompletedRole).toBool())
         {
             if (!m_dlgSelMethod)
                 m_dlgSelMethod = new SelectMethodicDialog(this);
@@ -246,7 +246,7 @@ void ActivePersonalProgramEditor::on_testEdit()
     auto dpIdx = selectedDPIndex();
     if (dpIdx != QModelIndex())
     {
-        if (!dpIdx.data(DPCompletedRole).toBool())
+        if (!dpIdx.data(PersonalProgramDefines::DPCompletedRole).toBool())
         {
             auto testIdx = selectedTestIndex();
             if (testIdx.isValid())
@@ -274,7 +274,7 @@ void ActivePersonalProgramEditor::on_testDel()
     auto dpIdx = selectedDPIndex();
     if (dpIdx != QModelIndex())
     {
-        if (!dpIdx.data(DPCompletedRole).toBool())
+        if (!dpIdx.data(PersonalProgramDefines::DPCompletedRole).toBool())
         {
             auto testIdx = selectedTestIndex();
             if (testIdx.isValid())
@@ -321,7 +321,7 @@ void ActivePersonalProgramEditor::on_testMoveUp()
     auto dpIdx = selectedDPIndex();
     if (dpIdx != QModelIndex())
     {
-        if (!dpIdx.data(DPCompletedRole).toBool())
+        if (!dpIdx.data(PersonalProgramDefines::DPCompletedRole).toBool())
         {
             auto testIdx = selectedTestIndex();
             if (testIdx.isValid())
@@ -352,7 +352,7 @@ void ActivePersonalProgramEditor::on_testMoveDown()
     auto dpIdx = selectedDPIndex();
     if (dpIdx != QModelIndex())
     {
-        if (!dpIdx.data(DPCompletedRole).toBool())
+        if (!dpIdx.data(PersonalProgramDefines::DPCompletedRole).toBool())
         {
             auto testIdx = selectedTestIndex();
             if (testIdx.isValid())
@@ -434,15 +434,27 @@ void ActivePersonalProgramEditor::initListDP()
         auto dpUid = m_mdlPP->index(i, 0).data(PersonalProgramDefines::PersonalProgram::DPUidRole).toString();
         auto dpDT = m_mdlPP->index(i, 0).data(PersonalProgramDefines::PersonalProgram::DPDateTimeRole).toString();
 
-        bool dpCompleted = false;
-        auto idxFT = m_mdlPP->index(i, 1);  //! idxFirstTest
-        if (idxFT.isValid() && idxFT.data(PersonalProgramDefines::PersonalProgram::TestUidRole).toString() != "")
-            dpCompleted = true;
+        PersonalProgramDefines::DPCompletedValue dpCompleted = PersonalProgramDefines::dpcvNotStarted;
+        bool isCompleted = true;
+        for (int j = 1; j < m_mdlPP->columnCount(); ++j)
+        {
+            auto idxTest = m_mdlPP->index(i, j);
+            if (idxTest.isValid() &&
+                idxTest.data(PersonalProgramDefines::PersonalProgram::MethodUidRole).toString() != "")
+            {
+                if (idxTest.data(PersonalProgramDefines::PersonalProgram::TestUidRole).toString() != "")
+                    dpCompleted = PersonalProgramDefines::dpcvInterrupted;
+                else
+                    isCompleted = false;
+            }
+        }
+        if (isCompleted)
+                dpCompleted = PersonalProgramDefines::dpcvCompleted;
 
         auto item = new QStandardItem(dpName);
         item->setData(dpUid, PersonalProgramDefines::PersonalProgram::DPUidRole);
         item->setData(dpDT, PersonalProgramDefines::PersonalProgram::DPDateTimeRole);
-        item->setData(dpCompleted, DPCompletedRole);
+        item->setData(dpCompleted, PersonalProgramDefines::DPCompletedRole);
 
         m_mdlDP.appendRow(item);
     }

@@ -3,7 +3,7 @@
 #include <QPainter>
 #include <QTableView>
 
-#include "activepersonalprogrameditor.h"
+#include "personalprogramdefines.h"
 
 DailyProgramCompletedDelegate::DailyProgramCompletedDelegate(QObject *parent)
     : QStyledItemDelegate (parent)
@@ -13,7 +13,7 @@ DailyProgramCompletedDelegate::DailyProgramCompletedDelegate(QObject *parent)
 
 void DailyProgramCompletedDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
-    auto isCompleted = index.data(ActivePersonalProgramEditor::DPCompletedRole).toBool();
+    auto completed = index.data(PersonalProgramDefines::DPCompletedRole).toInt();
 
     painter->save();
     auto rn = option.rect;
@@ -31,10 +31,11 @@ void DailyProgramCompletedDelegate::paint(QPainter *painter, const QStyleOptionV
     }
 
     QColor colText = Qt::black;
-    if (isCompleted)
-    {
+    if (completed == PersonalProgramDefines::dpcvCompleted)
         colText = Qt::lightGray;
-    }
+    else
+    if (completed == PersonalProgramDefines::dpcvInterrupted)
+        colText = Qt::darkRed;
 
     painter->setPen(colText);
     painter->drawText(rn, Qt::AlignLeft | Qt::AlignVCenter, index.data().toString());

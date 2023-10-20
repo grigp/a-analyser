@@ -164,6 +164,25 @@ enum PatientTableAdvancedRoles
     PersonalProgramWidgetRole = DatabaseWidgetDefines::PatientsModel::PatientTableUserRole + 1
 };
 
+/*!
+ * \brief Значение параметра выполненности ДП
+ */
+enum DPCompletedValue
+{
+      dpcvNotStarted = 0  ///< Не начата
+    , dpcvInterrupted     ///< Прервана
+    , dpcvCompleted       ///< Завершена
+};
+
+/*!
+ * \brief Роли для доступа к данным в диалоге редактора назначенных программ
+ */
+enum DPAdvancedRoles
+{
+    DPCompletedRole = PersonalProgramDefines::PersonalProgram::PersonalProgramUserRole + 1  ///< Значение типа DPCompletedValue
+};
+
+
 }
 
 
