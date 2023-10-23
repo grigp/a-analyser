@@ -13,6 +13,7 @@
 #include "selectdailyprogramdialog.h"
 #include "selectmethodicdialog.h"
 #include "dailyprogramcompleteddelegate.h"
+#include "testcompleteddelegate.h"
 #include "settingsprovider.h"
 
 
@@ -26,6 +27,7 @@ ActivePersonalProgramEditor::ActivePersonalProgramEditor(QWidget *parent) :
     ui->tvSchedule->setModel(&m_mdlDP);
     ui->tvTests->setModel(&m_mdlT);
     ui->tvSchedule->setItemDelegateForColumn(0, new DailyProgramCompletedDelegate(ui->tvSchedule));
+    ui->tvTests->setItemDelegateForColumn(0, new TestCompletedDelegate(ui->tvTests));
 
     auto val = SettingsProvider::valueFromRegAppCopy("ActivePersonalProgramEditor", "Geometry").toRect();
     if (val != QRect())
@@ -125,7 +127,7 @@ void ActivePersonalProgramEditor::on_dpDel()
 {
     auto selIdx = selectedDPIndex();
 
-    if (!selIdx.data(PersonalProgramDefines::DPCompletedRole).toBool())
+    if (selIdx.data(PersonalProgramDefines::DPCompletedRole).toInt() == PersonalProgramDefines::dpcvNotStarted)
     {
         if (selIdx != QModelIndex() && selIdx.isValid())
         {
@@ -149,7 +151,7 @@ void ActivePersonalProgramEditor::on_dpDel()
 void ActivePersonalProgramEditor::on_dpMoveUp()
 {
     auto selIdx = selectedDPIndex();
-    if (!selIdx.data(PersonalProgramDefines::DPCompletedRole).toBool())
+    if (selIdx.data(PersonalProgramDefines::DPCompletedRole).toInt() == PersonalProgramDefines::dpcvNotStarted)
     {
         int num = selIdx.row();
 
@@ -182,7 +184,7 @@ void ActivePersonalProgramEditor::on_dpMoveUp()
 void ActivePersonalProgramEditor::on_dpMoveDown()
 {
     auto selIdx = selectedDPIndex();
-    if (!selIdx.data(PersonalProgramDefines::DPCompletedRole).toBool())
+    if (selIdx.data(PersonalProgramDefines::DPCompletedRole).toInt() == PersonalProgramDefines::dpcvNotStarted)
     {
         int num = selIdx.row();
         if (selIdx != QModelIndex() && selIdx.isValid() && num < m_mdlDP.rowCount() - 1)
@@ -208,7 +210,7 @@ void ActivePersonalProgramEditor::on_testAdd()
     auto dpIdx = selectedDPIndex();
     if (dpIdx != QModelIndex())
     {
-        if (!dpIdx.data(PersonalProgramDefines::DPCompletedRole).toBool())
+        if (dpIdx.data(PersonalProgramDefines::DPCompletedRole).toInt() != PersonalProgramDefines::dpcvCompleted)
         {
             if (!m_dlgSelMethod)
                 m_dlgSelMethod = new SelectMethodicDialog(this);
@@ -246,18 +248,24 @@ void ActivePersonalProgramEditor::on_testEdit()
     auto dpIdx = selectedDPIndex();
     if (dpIdx != QModelIndex())
     {
-        if (!dpIdx.data(PersonalProgramDefines::DPCompletedRole).toBool())
+        if (dpIdx.data(PersonalProgramDefines::DPCompletedRole).toInt() != PersonalProgramDefines::dpcvCompleted)
         {
             auto testIdx = selectedTestIndex();
             if (testIdx.isValid())
             {
-                auto metUid = testIdx.data(PersonalProgramDefines::PersonalProgram::MethodUidRole).toString();
-                auto params = testIdx.data(PersonalProgramDefines::PersonalProgram::ParamsRole).toJsonObject();
-                if (DataProvider::editMetodicParams(this, metUid, params))
+                auto testUid = testIdx.data(PersonalProgramDefines::PersonalProgram::TestUidRole).toString();
+                if (testUid == "")
                 {
-                    m_mdlT.itemFromIndex(testIdx)->setData(params, PersonalProgramDefines::PersonalProgram::ParamsRole);
-                    m_mdlPP->item(dpIdx.row(), testIdx.row() + 1)->setData(params, PersonalProgramDefines::PersonalProgram::ParamsRole);
+                    auto metUid = testIdx.data(PersonalProgramDefines::PersonalProgram::MethodUidRole).toString();
+                    auto params = testIdx.data(PersonalProgramDefines::PersonalProgram::ParamsRole).toJsonObject();
+                    if (DataProvider::editMetodicParams(this, metUid, params))
+                    {
+                        m_mdlT.itemFromIndex(testIdx)->setData(params, PersonalProgramDefines::PersonalProgram::ParamsRole);
+                        m_mdlPP->item(dpIdx.row(), testIdx.row() + 1)->setData(params, PersonalProgramDefines::PersonalProgram::ParamsRole);
+                    }
                 }
+                else
+                    QMessageBox::information(nullptr, tr("Предупреждение"), tr("Нельзя редактировать проведенный тест"));
             }
             else
                 QMessageBox::information(nullptr, tr("Предупреждение"), tr("Не выбран тест"));
@@ -274,37 +282,43 @@ void ActivePersonalProgramEditor::on_testDel()
     auto dpIdx = selectedDPIndex();
     if (dpIdx != QModelIndex())
     {
-        if (!dpIdx.data(PersonalProgramDefines::DPCompletedRole).toBool())
+        if (dpIdx.data(PersonalProgramDefines::DPCompletedRole).toInt() != PersonalProgramDefines::dpcvCompleted)
         {
             auto testIdx = selectedTestIndex();
             if (testIdx.isValid())
             {
-                auto metName = testIdx.data().toString();
-                auto mr = QMessageBox::question(nullptr,
-                                                tr("Запрос"),
-                                                tr("Удалить тест из дневной программы?") + "\n" +
-                                                tr("Тест") + " : " + metName);
-                if (mr == QMessageBox::Yes)
+                auto testUid = testIdx.data(PersonalProgramDefines::PersonalProgram::TestUidRole).toString();
+                if (testUid == "")
                 {
-                    //! Удаляем из виджета
-                    m_mdlT.removeRow(testIdx.row());
-
-                    //! Удаляем из модели
-                    //! Поскольку надо удалить итем из строки, сформируем новую строку без этого итема и заменим ею существующую
-                    QList<QStandardItem*> items;
-                    for (int i = 0; i < m_mdlPP->columnCount(); ++i)
+                    auto metName = testIdx.data().toString();
+                    auto mr = QMessageBox::question(nullptr,
+                                                    tr("Запрос"),
+                                                    tr("Удалить тест из дневной программы?") + "\n" +
+                                                    tr("Тест") + " : " + metName);
+                    if (mr == QMessageBox::Yes)
                     {
-                        auto item = m_mdlPP->item(dpIdx.row(), i);
-                        if (item)
+                        //! Удаляем из виджета
+                        m_mdlT.removeRow(testIdx.row());
+
+                        //! Удаляем из модели
+                        //! Поскольку надо удалить итем из строки, сформируем новую строку без этого итема и заменим ею существующую
+                        QList<QStandardItem*> items;
+                        for (int i = 0; i < m_mdlPP->columnCount(); ++i)
                         {
-                            auto uidMethod = item->data(PersonalProgramDefines::PersonalProgram::MethodUidRole).toString();
-                            if ((i == 0) || (i > 0 && uidMethod != "" && i != testIdx.row() + 1))
-                                items << item->clone();
+                            auto item = m_mdlPP->item(dpIdx.row(), i);
+                            if (item)
+                            {
+                                auto uidMethod = item->data(PersonalProgramDefines::PersonalProgram::MethodUidRole).toString();
+                                if ((i == 0) || (i > 0 && uidMethod != "" && i != testIdx.row() + 1))
+                                    items << item->clone();
+                            }
                         }
+                        m_mdlPP->removeRow(dpIdx.row());
+                        m_mdlPP->insertRow(dpIdx.row(), items);
                     }
-                    m_mdlPP->removeRow(dpIdx.row());
-                    m_mdlPP->insertRow(dpIdx.row(), items);
                 }
+                else
+                    QMessageBox::information(nullptr, tr("Предупреждение"), tr("Нельзя удалять проведенный тест"));
             }
             else
                 QMessageBox::information(nullptr, tr("Предупреждение"), tr("Не выбран тест"));
@@ -321,21 +335,27 @@ void ActivePersonalProgramEditor::on_testMoveUp()
     auto dpIdx = selectedDPIndex();
     if (dpIdx != QModelIndex())
     {
-        if (!dpIdx.data(PersonalProgramDefines::DPCompletedRole).toBool())
+        if (dpIdx.data(PersonalProgramDefines::DPCompletedRole).toInt() != PersonalProgramDefines::dpcvCompleted)
         {
             auto testIdx = selectedTestIndex();
             if (testIdx.isValid())
             {
-                if (testIdx.row() > 0)
+                auto testUid = testIdx.data(PersonalProgramDefines::PersonalProgram::TestUidRole).toString();
+                if (testUid == "")
                 {
-                    auto row = m_mdlT.takeRow(testIdx.row());
-                    m_mdlT.insertRow(testIdx.row() - 1, row);
-                    ui->tvTests->selectionModel()->clearSelection();
-                    ui->tvTests->selectionModel()->select(row.at(0)->index(), QItemSelectionModel::Select);
-                    row = m_mdlPP->takeRow(dpIdx.row());
-                    row.move(testIdx.row() + 1, testIdx.row());
-                    m_mdlPP->insertRow(dpIdx.row(), row);
+                    if (testIdx.row() > 0)
+                    {
+                        auto row = m_mdlT.takeRow(testIdx.row());
+                        m_mdlT.insertRow(testIdx.row() - 1, row);
+                        ui->tvTests->selectionModel()->clearSelection();
+                        ui->tvTests->selectionModel()->select(row.at(0)->index(), QItemSelectionModel::Select);
+                        row = m_mdlPP->takeRow(dpIdx.row());
+                        row.move(testIdx.row() + 1, testIdx.row());
+                        m_mdlPP->insertRow(dpIdx.row(), row);
+                    }
                 }
+                else
+                    QMessageBox::information(nullptr, tr("Предупреждение"), tr("Нельзя перемещать проведенный тест"));
             }
             else
                 QMessageBox::information(nullptr, tr("Предупреждение"), tr("Не выбран тест"));
@@ -352,21 +372,27 @@ void ActivePersonalProgramEditor::on_testMoveDown()
     auto dpIdx = selectedDPIndex();
     if (dpIdx != QModelIndex())
     {
-        if (!dpIdx.data(PersonalProgramDefines::DPCompletedRole).toBool())
+        if (dpIdx.data(PersonalProgramDefines::DPCompletedRole).toInt() != PersonalProgramDefines::dpcvCompleted)
         {
             auto testIdx = selectedTestIndex();
             if (testIdx.isValid())
             {
-                if (testIdx.row() < m_mdlT.rowCount() - 1)
+                auto testUid = testIdx.data(PersonalProgramDefines::PersonalProgram::TestUidRole).toString();
+                if (testUid == "")
                 {
-                    auto row = m_mdlT.takeRow(testIdx.row());
-                    m_mdlT.insertRow(testIdx.row() + 1, row);
-                    ui->tvTests->selectionModel()->clearSelection();
-                    ui->tvTests->selectionModel()->select(row.at(0)->index(), QItemSelectionModel::Select);
-                    row = m_mdlPP->takeRow(dpIdx.row());
-                    row.move(testIdx.row() + 1, testIdx.row() + 2);
-                    m_mdlPP->insertRow(dpIdx.row(), row);
+                    if (testIdx.row() < m_mdlT.rowCount() - 1)
+                    {
+                        auto row = m_mdlT.takeRow(testIdx.row());
+                        m_mdlT.insertRow(testIdx.row() + 1, row);
+                        ui->tvTests->selectionModel()->clearSelection();
+                        ui->tvTests->selectionModel()->select(row.at(0)->index(), QItemSelectionModel::Select);
+                        row = m_mdlPP->takeRow(dpIdx.row());
+                        row.move(testIdx.row() + 1, testIdx.row() + 2);
+                        m_mdlPP->insertRow(dpIdx.row(), row);
+                    }
                 }
+                else
+                    QMessageBox::information(nullptr, tr("Предупреждение"), tr("Нельзя перемещать проведенный тест"));
             }
             else
                 QMessageBox::information(nullptr, tr("Предупреждение"), tr("Не выбран тест"));
