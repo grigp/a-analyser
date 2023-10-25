@@ -20,7 +20,8 @@ QFrame#frTestKindButtons
 
 QFrame#frTitle,
 QFrame#frPatientTitle,
-QFrame#frPPTitle
+QFrame#frPPTitle,
+QFrame#frSummaryToolbar
 {
     font-size: 11pt;
     background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 rgb(1, 59, 86), stop: 0.5 rgb(2, 112, 164), stop: 1 rgb(1, 59, 86));
@@ -291,7 +292,14 @@ QPushButton#btnPPRun,
 QPushButton#btnPPAdd,
 QPushButton#btnPPStop,
 QPushButton#btnPPParams,
-QPushButton#btnPPOpenTest
+QPushButton#btnPPOpenTest,
+QPushButton#btnOpenSummary,
+QPushButton#btnSaveSummary,
+QPushButton#btnCloseSummary,
+QPushButton#btnDelTestFromSummary,
+QPushButton#btnExportSummary,
+QPushButton#btnImportSummary,
+QPushButton#btnOpenSummaryInExcel
 {
     border: 2px solid #8f8f91;
     border-radius: 6px;
@@ -319,7 +327,14 @@ QPushButton#btnPPRun:hover,
 QPushButton#btnPPAdd:hover,
 QPushButton#btnPPStop:hover,
 QPushButton#btnPPParams:hover,
-QPushButton#btnPPOpenTest:hover
+QPushButton#btnPPOpenTest:hover,
+QPushButton#btnOpenSummary:hover,
+QPushButton#btnSaveSummary:hover,
+QPushButton#btnCloseSummary:hover,
+QPushButton#btnDelTestFromSummary:hover,
+QPushButton#btnExportSummary:hover,
+QPushButton#btnImportSummary:hover,
+QPushButton#btnOpenSummaryInExcel:hover
 {
     background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 rgb(103, 156, 200), stop: 0.5 rgb(163, 199, 239), stop: 1 rgb(103, 156, 200));
 }
@@ -344,7 +359,14 @@ QPushButton#btnPPRun:pressed,
 QPushButton#btnPPAdd:pressed,
 QPushButton#btnPPStop:pressed,
 QPushButton#btnPPParams:pressed,
-QPushButton#btnPPOpenTest:pressed
+QPushButton#btnPPOpenTest:pressed,
+QPushButton#btnOpenSummary:pressed,
+QPushButton#btnSaveSummary:pressed,
+QPushButton#btnCloseSummary:pressed,
+QPushButton#btnDelTestFromSummary:pressed,
+QPushButton#btnExportSummary:pressed,
+QPushButton#btnImportSummary:pressed,
+QPushButton#btnOpenSummaryInExcel:pressed
 {
     background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 rgb(63, 116, 160), stop: 0.5 rgb(123, 159, 199), stop: 1 rgb(63, 116, 160));
 }
