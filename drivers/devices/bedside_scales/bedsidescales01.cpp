@@ -37,6 +37,7 @@ void BedsideScales01::setParams(const DeviceProtocols::Ports port, const QJsonOb
     m_rkpSensor[1] = params["rkp2"].toDouble(1.9);
     m_rkpSensor[2] = params["rkp3"].toDouble(1.9);
     m_rkpSensor[3] = params["rkp4"].toDouble(1.9);
+    m_pn = params["pn"].toInt(100);
 }
 
 bool BedsideScales01::editParams(QJsonObject &params)
@@ -48,6 +49,7 @@ bool BedsideScales01::editParams(QJsonObject &params)
     dlg.setRkpSensor2(params["rkp2"].toDouble(1.9));
     dlg.setRkpSensor3(params["rkp3"].toDouble(1.9));
     dlg.setRkpSensor4(params["rkp4"].toDouble(1.9));
+    dlg.setPn(params["pn"].toInt(100));
 
     if (dlg.exec() == QDialog::Accepted)
     {
@@ -55,6 +57,7 @@ bool BedsideScales01::editParams(QJsonObject &params)
         params["rkp2"] = dlg.rkpSensor2();
         params["rkp3"] = dlg.rkpSensor3();
         params["rkp4"] = dlg.rkpSensor4();
+        params["pn"] = dlg.pn();
 
         return true;
     }
@@ -152,14 +155,14 @@ void BedsideScales01::getTensoValueDiapasone(const int chanNumber, double &min, 
 {
     Q_UNUSED(chanNumber);
     min = 0;
-    max = 50;
+    max = m_pn;
 }
 
 void BedsideScales01::getTensoValueDiapasone(const QString channelId, double &min, double &max)
 {
     Q_UNUSED(channelId);
     min = 0;
-    max = 50;
+    max = m_pn;
 }
 
 void BedsideScales01::setTensoValueDiapasone(const int chanNumber, const double min, const double max)
@@ -257,13 +260,13 @@ void BedsideScales01::assignByteFromDevice(quint8 b)
                 m_adcValues[m_dataByteCount / 2] = b * 256 + m_lo;
                 if (!m_isCalibrating)
                 {
-                    m_values[m_dataByteCount / 2] = (50 * static_cast<double>(m_adcValues[m_dataByteCount / 2])) /
+                    m_values[m_dataByteCount / 2] = (m_pn * static_cast<double>(m_adcValues[m_dataByteCount / 2])) /
                                                     (static_cast<double>(65535) * m_rkpSensor[m_dataByteCount / 2] / 2)
                                                     - m_offset[m_dataByteCount / 2];
                 }
                 else
                 {
-                    m_values[m_dataByteCount / 2] = (50 * static_cast<double>(m_adcValues[m_dataByteCount / 2])) /
+                    m_values[m_dataByteCount / 2] = (m_pn * static_cast<double>(m_adcValues[m_dataByteCount / 2])) /
                                                     (static_cast<double>(65535) * m_rkpSensor[m_dataByteCount / 2] / 2);
                 }
             }

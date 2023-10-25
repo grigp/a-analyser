@@ -178,6 +178,7 @@ private:
     int m_calibrCount {0};        ///< Счетчик калибровки
 
     double m_rkpSensor[4] {1.9};
+    int m_pn {100};
 };
 
 #endif // BEDSIDESCALES01_H

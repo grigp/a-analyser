@@ -31,6 +31,9 @@ public:
     double rkpSensor4() const;
     void setRkpSensor4(const double rkp);
 
+    int pn() const;
+    void setPn(const int pn);
+
 private:
     Ui::BedsideScales01ParamsDialog *ui;
 

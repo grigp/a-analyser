@@ -52,3 +52,13 @@ void BedsideScales01ParamsDialog::setRkpSensor4(const double rkp)
 {
     ui->edSensor4RKP->setValue(rkp);
 }
+
+int BedsideScales01ParamsDialog::pn() const
+{
+    return ui->edPN->value();
+}
+
+void BedsideScales01ParamsDialog::setPn(const int pn)
+{
+    ui->edPN->setValue(pn);
+}
