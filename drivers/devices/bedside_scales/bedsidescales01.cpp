@@ -263,6 +263,8 @@ void BedsideScales01::assignByteFromDevice(quint8 b)
                     m_values[m_dataByteCount / 2] = (m_pn * static_cast<double>(m_adcValues[m_dataByteCount / 2])) /
                                                     (static_cast<double>(65535) * m_rkpSensor[m_dataByteCount / 2] / 2)
                                                     - m_offset[m_dataByteCount / 2];
+//                    if (m_dataByteCount / 2 == 3)
+//                        qDebug() << b << m_lo << "  " << m_pn << m_rkpSensor[m_dataByteCount / 2] << m_adcValues[m_dataByteCount / 2];
                 }
                 else
                 {
