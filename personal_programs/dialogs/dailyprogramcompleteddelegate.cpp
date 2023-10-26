@@ -13,7 +13,17 @@ DailyProgramCompletedDelegate::DailyProgramCompletedDelegate(QObject *parent)
 
 void DailyProgramCompletedDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
+    //! Состояние проведенности текущей ДП
     auto completed = index.data(PersonalProgramDefines::DPCompletedRole).toInt();
+
+    //! Состояние проведенности следующей ДП
+    PersonalProgramDefines::DPCompletedValue complNext = PersonalProgramDefines::dpcvNotStarted;
+    auto idxNext = index.model()->index(index.row() + 1, index.column());
+    if  (idxNext.isValid())
+        complNext = static_cast<PersonalProgramDefines::DPCompletedValue>(idxNext.data(PersonalProgramDefines::DPCompletedRole).toInt());
+    //! Если следующая ДП была начата, то эта будет помечена, как завершенная
+    if (complNext != PersonalProgramDefines::dpcvNotStarted)
+        completed = PersonalProgramDefines::dpcvCompleted;
 
     painter->save();
     auto rn = option.rect;

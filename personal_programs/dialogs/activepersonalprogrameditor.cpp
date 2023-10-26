@@ -97,7 +97,13 @@ void ActivePersonalProgramEditor::resizeEvent(QResizeEvent *event)
 void ActivePersonalProgramEditor::on_selectDP(QModelIndex index)
 {
     if (index.isValid())
-        viewDP(index.row());
+    {
+        PersonalProgramDefines::DPCompletedValue complNext = PersonalProgramDefines::dpcvNotStarted;
+        auto idxNext = m_mdlDP.index(index.row() + 1, index.column());
+        if  (idxNext.isValid())
+            complNext = static_cast<PersonalProgramDefines::DPCompletedValue>(idxNext.data(PersonalProgramDefines::DPCompletedRole).toInt());
+        viewDP(index.row(), complNext);
+    }
 }
 
 void ActivePersonalProgramEditor::on_selectT(QModelIndex index)
@@ -486,7 +492,7 @@ void ActivePersonalProgramEditor::initListDP()
     }
 }
 
-void ActivePersonalProgramEditor::viewDP(const int numDP)
+void ActivePersonalProgramEditor::viewDP(const int numDP, const PersonalProgramDefines::DPCompletedValue complNext)
 {
     m_mdlT.clear();
 
@@ -504,6 +510,9 @@ void ActivePersonalProgramEditor::viewDP(const int numDP)
                     auto mi = metFactory->metodic(uidMethod);
 
                     auto uidTest = index.data(PersonalProgramDefines::PersonalProgram::TestUidRole).toString();
+                    //! Если следующая ДП начата, то все тесты пометить проведенными вне зависимости от реального статуса
+                    if (complNext != PersonalProgramDefines::dpcvNotStarted)
+                        uidTest = "completed";
                     auto params = index.data(PersonalProgramDefines::PersonalProgram::ParamsRole).toJsonObject();
 
                     auto item = new QStandardItem(mi.name);

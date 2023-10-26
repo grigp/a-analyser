@@ -67,7 +67,7 @@ private:
      * \brief Отображает дневную программу в виджетах формы
      * \param numDP - номер DP
      */
-    void viewDP(const int numDP);
+    void viewDP(const int numDP, const PersonalProgramDefines::DPCompletedValue complNext);
 
     void prepareParams();
 
