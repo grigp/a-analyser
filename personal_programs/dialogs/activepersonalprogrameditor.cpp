@@ -484,6 +484,7 @@ void ActivePersonalProgramEditor::initListDP()
                 dpCompleted = PersonalProgramDefines::dpcvCompleted;
 
         auto item = new QStandardItem(dpName);
+        item->setEditable(false);
         item->setData(dpUid, PersonalProgramDefines::PersonalProgram::DPUidRole);
         item->setData(dpDT, PersonalProgramDefines::PersonalProgram::DPDateTimeRole);
         item->setData(dpCompleted, PersonalProgramDefines::DPCompletedRole);
@@ -516,6 +517,7 @@ void ActivePersonalProgramEditor::viewDP(const int numDP, const PersonalProgramD
                     auto params = index.data(PersonalProgramDefines::PersonalProgram::ParamsRole).toJsonObject();
 
                     auto item = new QStandardItem(mi.name);
+                    item->setEditable(false);
                     item->setData(uidMethod, PersonalProgramDefines::PersonalProgram::MethodUidRole);
                     item->setData(uidTest, PersonalProgramDefines::PersonalProgram::TestUidRole);
                     item->setData(params, PersonalProgramDefines::PersonalProgram::ParamsRole);
