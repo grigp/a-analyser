@@ -254,5 +254,7 @@
         <file>pre_settings/personal_programs/neurology/dp.json</file>
         <file>pre_settings/personal_programs/neurology/pp.json</file>
         <file>pre_settings/personal_programs/neurology/ppdp.json</file>
+        <file>images/SignError.png</file>
+        <file>images/SignSussec.png</file>
     </qresource>
 </RCC>

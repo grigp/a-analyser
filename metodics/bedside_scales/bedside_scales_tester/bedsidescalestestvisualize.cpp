@@ -8,11 +8,13 @@
 #include <QHttpMultiPart>
 #include <QDebug>
 
+#include "aanalyserapplication.h"
 #include "bedsidescalestestcalculator.h"
 #include "baseutils.h"
 #include "datadefines.h"
 #include "dataprovider.h"
 #include "authorizationdialog.h"
+#include "websendresultmessage.h"
 
 namespace
 {
@@ -29,6 +31,7 @@ static const QString DevicePublicKey = "04f4c453191f38cf67c8c32472fc36196848bc1d
 BedsideScalesTestVisualize::BedsideScalesTestVisualize(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::BedsideScalesTestVisualize)
+  , m_msgResult(new WebSendResultMessage(this))
 {
     ui->setupUi(this);
 
@@ -37,6 +40,7 @@ BedsideScalesTestVisualize::BedsideScalesTestVisualize(QWidget *parent) :
 
 BedsideScalesTestVisualize::~BedsideScalesTestVisualize()
 {
+    delete m_msgResult;
     delete ui;
 }
 
@@ -95,13 +99,12 @@ void BedsideScalesTestVisualize::on_weighingResults3D(bool is3D)
         ui->wgtWeighingResults->setVolume(DynamicDiagramDefines::Volume2D);
 }
 
-int n {0};
-
 void BedsideScalesTestVisualize::networkRequest(QNetworkAccessManager *mgr, const QUrl url, QJsonObject obj)
 {
-    qDebug() << ++n << ") ------";
-    qDebug() << "Запрос :" << url;
-    qDebug() << "Данные формы :" << obj;
+    m_msgResult->addCommentString(QString::number(++m_numReq) + ") ------");
+    m_msgResult->addCommentString("Запрос : " + url.toString());
+    QJsonDocument docObj(obj);
+    m_msgResult->addCommentString("Данные формы : " + docObj.toVariant().toString());
 
     //! Создание запроса
     QNetworkRequest request(url);
@@ -129,9 +132,10 @@ void BedsideScalesTestVisualize::networkAnswer()
         else
         {       //! Была ошибка
             m_answer = m_reply->errorString();
-            qDebug() << "---- error ----" << QString::fromUtf8(m_reply->readAll());
+            m_msgResult->addCommentString("---- error ----   " + QString::fromUtf8(m_reply->readAll()));
+            static_cast<AAnalyserApplication*>(QApplication::instance())->doneProgress();
         }
-        qDebug() << "Ответ :" << m_answer;
+        m_msgResult->addCommentString("Ответ : " + m_answer);
         m_reply->deleteLater();
 
         //! При отсутствии ошибки следующий запрос
@@ -140,6 +144,8 @@ void BedsideScalesTestVisualize::networkAnswer()
             //! Зарегистрировали пациента - получим список устройств
             if (m_netWebSendStage == nwsRegUser)
             {
+                static_cast<AAnalyserApplication*>(QApplication::instance())->
+                        setProgressPosition(1, QCoreApplication::tr("Регистрация устройства"));
                 m_userId = m_answer;
                 networkGetListDevice();
             }
@@ -147,6 +153,8 @@ void BedsideScalesTestVisualize::networkAnswer()
             //! Получили список устройств - если нашего устройства нет, зарегистрируем его, иначе получим TimrMarker
             if (m_netWebSendStage == nwsGetListDevice)
             {
+                static_cast<AAnalyserApplication*>(QApplication::instance())->
+                        setProgressPosition(2, QCoreApplication::tr("Добавление устройства"));
                 if (!isDeviceOnList(m_answer))
                     networkAddDevice(m_userId);
                 else
@@ -156,19 +164,30 @@ void BedsideScalesTestVisualize::networkAnswer()
             //! Добавили устройство - получим TimrMarker
             if (m_netWebSendStage == nwsAddDevice)
             {
+                static_cast<AAnalyserApplication*>(QApplication::instance())->
+                        setProgressPosition(3, QCoreApplication::tr("Запрос метки времени"));
                 m_deviceId = m_answer;
                 networkGetTimeMarker();
             }
             else
-            //! Получили TimrMarker - запросим данные
+            //! Получили TimeMarker - запросим данные
             if (m_netWebSendStage == nwsTimeMarker)
             {
+                static_cast<AAnalyserApplication*>(QApplication::instance())->
+                        setProgressPosition(4, QCoreApplication::tr("Передача данных"));
                 m_timeMarker = m_answer;
                 //! Разберем TimeMarker - выделим значение
                 QJsonDocument doc(QJsonDocument::fromJson(m_timeMarker.toUtf8()));
                 auto obj = doc.object();
                 m_timeMarkerValue = obj["value"].toString();
                 networkSendData();
+            }
+            else
+                //! Передали данные - сообщим об успешном окончании
+            if (m_netWebSendStage == nwsSendData)
+            {
+                static_cast<AAnalyserApplication*>(QApplication::instance())->doneProgress();
+                m_msgResult->exec(WebSendResultMessage::ResultSucces);
             }
         }
     }
@@ -259,9 +278,9 @@ void BedsideScalesTestVisualize::networkSendData()
     QHttpPart tpUser;
     tpUser.setHeader(QNetworkRequest::ContentDispositionHeader, QVariant(header));
     tpUser.setBody(body.toUtf8());
-    qDebug() << "------  Данные для передачи данных ------------";
-    qDebug() << "header :" << header;
-    qDebug() << "body :" << body.toUtf8();
+    m_msgResult->addCommentString("------  Данные для передачи данных ------------");
+    m_msgResult->addCommentString("header : " + header);
+    m_msgResult->addCommentString("body : " + body.toUtf8());
 
     //! Добавим идентификатор устройства по id от сервера
     body = m_deviceId;
@@ -269,8 +288,8 @@ void BedsideScalesTestVisualize::networkSendData()
     QHttpPart tpDvcAddr;
     tpDvcAddr.setHeader(QNetworkRequest::ContentDispositionHeader, QVariant(header));
     tpDvcAddr.setBody(body.toUtf8());
-    qDebug() << "header :" << header;
-    qDebug() << "body :" << body.toUtf8();
+    m_msgResult->addCommentString("header : " + header);
+    m_msgResult->addCommentString("body : " + body.toUtf8());
 
     //! Добавим тип данных
     body = DeviceDataType;
@@ -278,8 +297,8 @@ void BedsideScalesTestVisualize::networkSendData()
     QHttpPart tpDvcType;
     tpDvcType.setHeader(QNetworkRequest::ContentDispositionHeader, QVariant(header));
     tpDvcType.setBody(body.toUtf8());
-    qDebug() << "header :" << header;
-    qDebug() << "body :" << body.toUtf8();
+    m_msgResult->addCommentString("header : " + header);
+    m_msgResult->addCommentString("body : " + body.toUtf8());
 
     //! Добавим TimeMarker
     body = m_timeMarkerValue;
@@ -287,8 +306,8 @@ void BedsideScalesTestVisualize::networkSendData()
     QHttpPart tpTimeMarker;
     tpTimeMarker.setHeader(QNetworkRequest::ContentDispositionHeader, QVariant(header));
     tpTimeMarker.setBody(body.toUtf8());
-    qDebug() << "header :" << header;
-    qDebug() << "body :" << body.toUtf8();
+    m_msgResult->addCommentString("header : " + header);
+    m_msgResult->addCommentString("body : " + body.toUtf8());
 
     //! Разделим TimeMarker на две части, передавать для сигнатуры только вторую
     auto tmv_sep = m_timeMarkerValue.split(':');
@@ -306,8 +325,8 @@ void BedsideScalesTestVisualize::networkSendData()
     header = "form-data; name=\"Signature\"";
     tpSignature.setHeader(QNetworkRequest::ContentDispositionHeader, QVariant(header));
     tpSignature.setBody(body.toUtf8());
-    qDebug() << "header :" << header;
-    qDebug() << "body :" << body.toUtf8();
+    m_msgResult->addCommentString("header : " + header);
+    m_msgResult->addCommentString("body : " + body.toUtf8());
 
     //! Добавим данные
     QHttpPart tpData;
@@ -315,8 +334,8 @@ void BedsideScalesTestVisualize::networkSendData()
     tpData.setHeader(QNetworkRequest::ContentTypeHeader, QVariant("application/octet-stream"));
     tpData.setHeader(QNetworkRequest::ContentDispositionHeader, QVariant(header));
     tpData.setBody(baData);
-    qDebug() << "header :" << header;
-    qDebug() << "body :" << baData;
+    m_msgResult->addCommentString("header : " + header);
+    m_msgResult->addCommentString("body : " + baData);
 
     //! Собираем все в кучу
     multiPart->append(tpUser);
@@ -326,8 +345,8 @@ void BedsideScalesTestVisualize::networkSendData()
     multiPart->append(tpSignature);
     multiPart->append(tpData);
 
-    qDebug() << ++n << ") ------";
-    qDebug() << "Запрос :" << QUrl(QStringLiteral("https://med-api.nordavind.ru/api/protocol/request"));
+    m_msgResult->addCommentString(QString::number(++m_numReq) + ") ------");
+    m_msgResult->addCommentString("Запрос : " + QUrl(QStringLiteral("https://med-api.nordavind.ru/api/protocol/request")).toString());
     //! И передаем запрос
     QNetworkRequest request(QUrl(QStringLiteral("https://med-api.nordavind.ru/api/protocol/request")));
     m_reply = m_netManager->post(request, multiPart);
@@ -430,6 +449,9 @@ void BedsideScalesTestVisualize::on_selectItem(const int idx)
 
 void BedsideScalesTestVisualize::sendToWeb()
 {
+    static_cast<AAnalyserApplication*>(QApplication::instance())->initProgress(QCoreApplication::tr("Передача данных на сервер Health Line"),
+                                                                               0, 5,
+                                                                               QCoreApplication::tr("Регистрация пользователя"));
     //! Получение uid пациента для данного теста
     DataDefines::TestInfo ti;
     if (DataProvider::getTestInfo(m_testUid, ti))
@@ -437,8 +459,9 @@ void BedsideScalesTestVisualize::sendToWeb()
         DataDefines::PatientKard patient;
         if (DataProvider::getPatient(ti.patientUid, patient))
         {
-            n = 0;
+            m_numReq = 0;
             m_netManager = new QNetworkAccessManager(this);
+
             //! Первым этапом - регистрация пациента
             networkRegisterUser(BaseUtils::removeSignesFromUuid(ti.patientUid));
         }

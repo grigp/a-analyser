@@ -11,6 +11,7 @@ class BedsideScalesTestVisualize;
 }
 
 class BedsideScalesTestCalculator;
+class WebSendResultMessage;
 
 /*!
  * \brief Класс фрейма визуализации результатов для прикроватных весов The BedsideScalesTestVisualize class
@@ -120,6 +121,8 @@ private:
     BedsideScalesTestCalculator* m_calculator {nullptr};
     QString m_testUid {""};
 
+    int m_numReq {0};
+
     QString m_email {""};
     QString m_password {""};
     QNetworkAccessManager *m_netManager {nullptr};
@@ -130,6 +133,7 @@ private:
     QString m_timeMarker {""};
     QString m_timeMarkerValue {""};
     NWStage m_netWebSendStage {nwsNone};
+    WebSendResultMessage* m_msgResult {nullptr};
 };
 
 #endif // BEDSIDESCALESTESTVISUALIZE_H
