@@ -44,19 +44,40 @@ void ApnoeFactors::calculate()
         int iPrevTop = -1;
         foreach (auto sw, m_semiWaves)
         {
-            if (sw.amplitude / (sw.end - sw.begin) > 0.04) //0.05)
+            bool isDchSW = (sw.amplitude / (sw.end - sw.begin) > 0.025); // && ((sw.end - sw.begin) < (7.0 * m_frequency / 2.0));
+            QString s = "";
+            if (!isDchSW)
+                s = "*";
+            qDebug() << s << sw.kind << "   "
+                              << sw.begin << sw.end << "   "
+                              << (sw.end - sw.begin) << (7.0 * m_frequency / 2.0) << ((sw.end - sw.begin) < (7.0 * m_frequency / 2.0)) << "      "
+                              << BaseUtils::getTimeBySecCount(static_cast<int>(static_cast<double>(sw.begin / m_frequency)))
+                              << BaseUtils::getTimeBySecCount(static_cast<int>(static_cast<double>(sw.end / m_frequency))) << "   "
+                              << (sw.amplitude / (sw.end - sw.begin)) << "   "
+                              << isDchSW << isDelay;
+
+            //! Участок "пологий" и длительность полуволны меньше 3,5 секунд
+            if (isDchSW)
 //            if (sw.amplitude >= m_midAmpl - m_qAmpl)
             {
+//                if (isDelay && (sw.end - sw.begin) / m_frequency > 10)
                 if (isDelay)
                 {
-//                    qDebug() << BaseUtils::getTimeBySecCount(static_cast<int>(static_cast<double>(begin + m_begin) / m_frequency))
-//                             << BaseUtils::getTimeBySecCount(static_cast<int>(static_cast<double>(sw.end + m_begin) / m_frequency))
-//                             << d << "  " << sw.end - begin << m_frequency << "  " << ws;
-                    ++m_apnoeFactsCount;
+                    //! Общая длительность обнаруженного участка с "пологой" волной должна быть не меньше 8 секунд
                     double t = static_cast<double>(sw.end) / m_frequency - static_cast<double>(begin) / m_frequency;
-                    m_apnoeFactTimeAverage += t;
-                    if (t > m_apnoeFactTimeMax)
-                        m_apnoeFactTimeMax = t;
+                    if (t > 8)
+                    {
+//                        qDebug() << "-------" << static_cast<double>(begin) / m_frequency << static_cast<double>(sw.end) / m_frequency << "    " << t;
+                        qDebug() << "-------"
+                                 << BaseUtils::getTimeBySecCount(static_cast<int>(static_cast<double>(begin + m_begin) / m_frequency))
+                                 << BaseUtils::getTimeBySecCount(static_cast<int>(static_cast<double>(sw.end + m_begin) / m_frequency))
+                                 << t;
+                                 //<< d << "  " << sw.end - begin << m_frequency << "  " << ws;
+                        ++m_apnoeFactsCount;
+                        m_apnoeFactTimeAverage += t;
+                        if (t > m_apnoeFactTimeMax)
+                            m_apnoeFactTimeMax = t;
+                    }
 
                     isDelay = false;
                 }
@@ -101,6 +122,7 @@ void ApnoeFactors::computeSemiWavesParams()
     for (int i = 1; i < m_signal.size(); ++i)
     {
         double v = m_signal.at(i);
+        //qDebug() << v;
 
         ExtremumKind kind = ekUndefined;
         if (v - ov > 0 && dir != 1)
@@ -112,7 +134,11 @@ void ApnoeFactors::computeSemiWavesParams()
         if (kind == ekMaximum || kind == ekMinimum)
         {
             if (prevI > -1)
+            {
                 m_semiWaves << SemiWave(prevI, i, fabs(v - prevV), v, prevK);
+//                qDebug() << static_cast<double>(i) << kind << v;
+//                qDebug() << static_cast<double>(i) / m_frequency << kind << v;
+            }
 
             prevI = i;
             prevV = v;
@@ -142,7 +168,7 @@ void ApnoeFactors::computeAmplitudes()
 //    qDebug() << "-----" << m_semiWaves.size();
 //    foreach (auto sw, m_semiWaves)
 //    {
-//        qDebug() << sw.amplitude / (sw.end - sw.begin)
+//        qDebug() << sw.amplitude << (sw.end - sw.begin) << "     " << sw.amplitude / (sw.end - sw.begin) << "     "
 //                 << BaseUtils::getTimeBySecCount(static_cast<int>(static_cast<double>(sw.begin) / m_frequency));
 //    }
 //    qDebug() << "-----";
@@ -165,5 +191,7 @@ void ApnoeFactors::computeAmplitudes()
     foreach (auto sw, m_semiWaves)
         m_qAmpl += pow(fabs(sw.amplitude - m_midAmpl), 2) / (m_semiWaves.size() - 1);
     m_qAmpl = sqrt(m_qAmpl);
+
+//    qDebug() << m_minAmpl << m_maxAmpl << m_midAmpl << m_qAmpl;
 }
 
