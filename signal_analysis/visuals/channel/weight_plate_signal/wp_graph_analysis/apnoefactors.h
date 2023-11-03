@@ -62,6 +62,17 @@ public:
      */
     double apnoeFactTimeMax() {return m_apnoeFactTimeMax;}
 
+    /*!
+     * \brief Доступ к спсику строк, содержащих список приступов апноэ
+     */
+    int apnoeListCount() const;
+    QString apnoeListLine(const int idx) const;
+
+    /*!
+     * \brief Доступ к спсику строк, содержащих лог распознавания приступов апноэ
+     */
+    int logCount() const;
+    QString logLine(const int idx) const;
 
 signals:
 
@@ -84,6 +95,9 @@ private:
     int m_apnoeFactsCount {0};          ///< Кол-во приступов апноэ
     double m_apnoeFactTimeAverage {0};  ///< Средняя продолжительность приступа апноэ
     double m_apnoeFactTimeMax {0};      ///< Максимальная продолжительность приступа апноэ
+
+    QStringList m_apnoeList;            ///< Список приступов апноэ
+    QStringList m_log;                  ///< Лог распознавания приступов апноэ
 };
 
 #endif // APNOEFACTORS_H

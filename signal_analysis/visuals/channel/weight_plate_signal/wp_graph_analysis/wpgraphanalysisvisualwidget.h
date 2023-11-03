@@ -12,6 +12,7 @@ class WPGraphAnalysisVisualWidget;
 class WeightPlateSignal;
 class DecartCoordinatesSignal;
 class AreaGraph;
+class ApnoeFactorsValueDisplay;
 
 class WPGraphAnalysisVisualWidget : public ChannelVisual
 {
@@ -62,6 +63,10 @@ private:
     int m_apnoeFactsCount {0};          ///< Кол-во приступов апноэ
     double m_apnoeFactTimeAverage {0};  ///< Средняя продолжительность приступа апноэ
     double m_apnoeFactTimeMax {0};      ///< Максимальная продолжительность приступа апноэ
+    QStringList m_apnoeList;            ///< Список приступов апноэ
+    QStringList m_log;                  ///< Лог распознавания приступов апноэ
+
+    ApnoeFactorsValueDisplay *m_dlgAFVD {nullptr};
 };
 
 #endif // WPGRAPHANALYSISVISUALWIDGET_H

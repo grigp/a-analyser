@@ -25,14 +25,71 @@ ApnoeFactors::SemiWave ApnoeFactors::semiWave(const int idx) const
     return m_semiWaves.at(idx);
 }
 
+int ApnoeFactors::apnoeListCount() const
+{
+    return m_apnoeList.size();
+}
+
+QString ApnoeFactors::apnoeListLine(const int idx) const
+{
+    Q_ASSERT(idx >= 0 && idx < m_apnoeList.size());
+    return m_apnoeList.at(idx);
+}
+
+int ApnoeFactors::logCount() const
+{
+    return m_log.size();
+}
+
+QString ApnoeFactors::logLine(const int idx) const
+{
+    Q_ASSERT(idx >= 0 && idx < m_log.size());
+    return m_log.at(idx);
+}
+
+QString boolToStr(const bool value)
+{
+    if (value)
+        return "true";
+    return "false";
+}
+
+void appendString(QString &str, const QString &s, const int spaceCnt)
+{
+    str = str + s;
+    if (s.length() < spaceCnt)
+        for (int i = s.length(); i < spaceCnt; ++i)
+            str = str + " ";
+}
+
 void ApnoeFactors::calculate()
 {
+    m_apnoeList.clear();
+    m_log.clear();
+
     if (m_signal.size() > 10)
     {
         computeSemiWavesParams();
         computeAmplitudes();
 //        qDebug() << "----------------";
 //        qDebug() << "ampl :" << m_minAmpl << m_midAmpl << m_maxAmpl << "  " << m_qAmpl;
+
+        QString msgLog = QString("!   ");
+        appendString(msgLog, "tExtr", 10);
+        appendString(msgLog, "pointB", 8);
+        appendString(msgLog, "pointE", 10);
+        appendString(msgLog, "pointDiap", 10);
+        appendString(msgLog, "pointBnd", 9);
+        appendString(msgLog, "cond", 12);
+        appendString(msgLog, "timeB", 8);
+        appendString(msgLog, "timeE", 10);
+        appendString(msgLog, "angle", 12);
+        appendString(msgLog, "isDchSW", 8);
+        appendString(msgLog, "isDelay", 8);
+
+        qDebug() << msgLog;
+        m_log << msgLog;
+
 
         int begin = 0;
         bool isDelay = false;
@@ -45,16 +102,30 @@ void ApnoeFactors::calculate()
         foreach (auto sw, m_semiWaves)
         {
             bool isDchSW = (sw.amplitude / (sw.end - sw.begin) > 0.025); // && ((sw.end - sw.begin) < (7.0 * m_frequency / 2.0));
-            QString s = "";
+
+            msgLog = "    ";
             if (!isDchSW)
-                s = "*";
-            qDebug() << s << sw.kind << "   "
-                              << sw.begin << sw.end << "   "
-                              << (sw.end - sw.begin) << (7.0 * m_frequency / 2.0) << ((sw.end - sw.begin) < (7.0 * m_frequency / 2.0)) << "      "
-                              << BaseUtils::getTimeBySecCount(static_cast<int>(static_cast<double>(sw.begin / m_frequency)))
-                              << BaseUtils::getTimeBySecCount(static_cast<int>(static_cast<double>(sw.end / m_frequency))) << "   "
-                              << (sw.amplitude / (sw.end - sw.begin)) << "   "
-                              << isDchSW << isDelay;
+                msgLog = "*   ";
+            appendString(msgLog, QString::number(sw.kind), 10);
+            appendString(msgLog, QString::number(sw.begin), 8);
+            appendString(msgLog, QString::number(sw.end), 10);
+            appendString(msgLog, QString::number(sw.end - sw.begin), 10);
+            appendString(msgLog, QString::number(7.0 * m_frequency / 2.0), 9);
+            appendString(msgLog, boolToStr((sw.end - sw.begin) < (7.0 * m_frequency / 2.0)), 12);
+            appendString(msgLog, BaseUtils::getTimeBySecCount(static_cast<int>(static_cast<double>(sw.begin / m_frequency))), 8);
+            appendString(msgLog, BaseUtils::getTimeBySecCount(static_cast<int>(static_cast<double>(sw.end / m_frequency))), 10);
+            appendString(msgLog, QString::number(sw.amplitude / (sw.end - sw.begin)), 12);
+            appendString(msgLog, boolToStr(isDchSW), 8);
+            appendString(msgLog, boolToStr(isDelay), 8);
+            qDebug() << msgLog;
+            m_log << msgLog;
+//            qDebug() << s << sw.kind << "   "
+//                              << sw.begin << sw.end << "   "
+//                              << (sw.end - sw.begin) << (7.0 * m_frequency / 2.0) << ((sw.end - sw.begin) < (7.0 * m_frequency / 2.0)) << "      "
+//                              << BaseUtils::getTimeBySecCount(static_cast<int>(static_cast<double>(sw.begin / m_frequency)))
+//                              << BaseUtils::getTimeBySecCount(static_cast<int>(static_cast<double>(sw.end / m_frequency))) << "   "
+//                              << (sw.amplitude / (sw.end - sw.begin)) << "   "
+//                              << isDchSW << isDelay;
 
             //! Участок "пологий" и длительность полуволны меньше 3,5 секунд
             if (isDchSW)
@@ -67,12 +138,15 @@ void ApnoeFactors::calculate()
                     double t = static_cast<double>(sw.end) / m_frequency - static_cast<double>(begin) / m_frequency;
                     if (t > 8)
                     {
-//                        qDebug() << "-------" << static_cast<double>(begin) / m_frequency << static_cast<double>(sw.end) / m_frequency << "    " << t;
-                        qDebug() << "-------"
-                                 << BaseUtils::getTimeBySecCount(static_cast<int>(static_cast<double>(begin + m_begin) / m_frequency))
-                                 << BaseUtils::getTimeBySecCount(static_cast<int>(static_cast<double>(sw.end + m_begin) / m_frequency))
-                                 << t;
-                                 //<< d << "  " << sw.end - begin << m_frequency << "  " << ws;
+                        QString msgApnoe = "";
+                        appendString(msgApnoe, BaseUtils::getTimeBySecCount(static_cast<int>(static_cast<double>(begin + m_begin) / m_frequency)), 10);
+                        appendString(msgApnoe, BaseUtils::getTimeBySecCount(static_cast<int>(static_cast<double>(sw.end + m_begin) / m_frequency)), 10);
+                        appendString(msgApnoe, QString::number(t), 10);
+
+                        qDebug() << "------- " + msgApnoe;
+                        m_log << "------- " + msgApnoe;
+                        m_apnoeList << msgApnoe;
+
                         ++m_apnoeFactsCount;
                         m_apnoeFactTimeAverage += t;
                         if (t > m_apnoeFactTimeMax)

@@ -23,6 +23,21 @@ public:
      */
     void assignValues(const int count, const double timeAverage, const double timeMax);
 
+    /*!
+     * \brief Задает список приступов апноэ
+     * \param list - список
+     */
+    void setApnoeList(const QStringList &list);
+    /*!
+     * \brief Задает лог распознавания приступов апноэ
+     * \param log - лог
+     */
+    void setLog(const QStringList &log);
+
+private slots:
+    void on_showDetail();
+    void on_writeToFile();
+
 private:
     Ui::ApnoeFactorsValueDisplay *ui;
 };

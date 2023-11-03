@@ -31,6 +31,12 @@ WPGraphAnalysisVisualWidget::WPGraphAnalysisVisualWidget(VisualDescriptor* visua
 
 WPGraphAnalysisVisualWidget::~WPGraphAnalysisVisualWidget()
 {
+    if (!m_dlgAFVD)
+    {
+        m_dlgAFVD->close();
+        delete m_dlgAFVD;
+    }
+
     delete ui;
 }
 
@@ -156,6 +162,8 @@ void WPGraphAnalysisVisualWidget::on_apnoeFactorsCalculate()
     m_apnoeFactsCount = 0;
     m_apnoeFactTimeAverage = 0;
     m_apnoeFactTimeMax = 0;
+    m_apnoeList.clear();
+    m_log.clear();
     for (int i = 0; i < m_fragments.size(); ++i)
     {
         auto factors = new ApnoeFactors(m_fragments.at(i), m_begFragments.at(i), m_signal->frequency());
@@ -163,15 +171,34 @@ void WPGraphAnalysisVisualWidget::on_apnoeFactorsCalculate()
         m_apnoeFactTimeAverage += factors->apnoeFactTimeAverage();
         if (factors->apnoeFactTimeMax() > m_apnoeFactTimeMax)
             m_apnoeFactTimeMax = factors->apnoeFactTimeMax();
+
+        for (int i = 0; i < factors->apnoeListCount(); ++i)
+            m_apnoeList << factors->apnoeListLine(i);
+        for (int i = 0; i < factors->logCount(); ++i)
+            m_log << factors->logLine(i);
+
         delete factors;
     }
     if (m_fragments.size() > 0)
         m_apnoeFactTimeAverage /= m_fragments.size();
 
-    ApnoeFactorsValueDisplay dlg;
-    dlg.setStyleSheet(static_cast<AAnalyserApplication*>(QApplication::instance())->mainWindow()->styleSheet());
-    dlg.assignValues(m_apnoeFactsCount, m_apnoeFactTimeAverage, m_apnoeFactTimeMax);
-    dlg.exec();
+    if (!m_dlgAFVD)
+    {
+        m_dlgAFVD = new ApnoeFactorsValueDisplay(nullptr);
+//        connect(m_dlgAFVD, &ApnoeFactorsValueDisplay::a)
+    }
+    m_dlgAFVD->setStyleSheet(static_cast<AAnalyserApplication*>(QApplication::instance())->mainWindow()->styleSheet());
+    m_dlgAFVD->assignValues(m_apnoeFactsCount, m_apnoeFactTimeAverage, m_apnoeFactTimeMax);
+    m_dlgAFVD->setApnoeList(m_apnoeList);
+    m_dlgAFVD->setLog(m_log);
+    m_dlgAFVD->raise();
+    m_dlgAFVD->activateWindow();
+    m_dlgAFVD->show();
+
+//    ApnoeFactorsValueDisplay dlg;
+//    dlg.setStyleSheet(static_cast<AAnalyserApplication*>(QApplication::instance())->mainWindow()->styleSheet());
+//    dlg.assignValues(m_apnoeFactsCount, m_apnoeFactTimeAverage, m_apnoeFactTimeMax);
+//    dlg.exec();
 }
 
 void WPGraphAnalysisVisualWidget::getSignal()
