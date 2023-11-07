@@ -70,6 +70,11 @@ void assignDrivers(QMap<QString, QString> &drivers);
  */
 QStringList getDefaultPPList();
 
+/*!
+ * \brief Возвращает true, если приложение будет работать с индивидуальными программми и false в противном случае
+ */
+bool isPPEnabled();
+
 }
 
 

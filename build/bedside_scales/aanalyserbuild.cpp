@@ -89,3 +89,8 @@ QStringList AAnalyserBuild::getDefaultPPList()
 {
     return QStringList();
 }
+
+bool AAnalyserBuild::isPPEnabled()
+{
+    return false;
+}

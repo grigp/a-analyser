@@ -56,6 +56,7 @@ include(summaries/summaries_src.pri)
 include(signal_export/signal_export_src.pri)
 include(painters/painters_ids_src.pri)
 include(visual_widgets/visual_widgets_ids_src.pri)
+include(personal_programs/personal_programs_src.pri)
 
 SOURCES += \
         main.cpp \

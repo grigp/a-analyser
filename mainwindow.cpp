@@ -15,6 +15,7 @@
 #include "dataprovider.h"
 #include "aanalysersettings.h"
 #include "aanalyserdefines.h"
+#include "aanalyserbuild.h"
 #include "aboutdialog.h"
 #include "dailyprogramseditor.h"
 #include "personalprogramseditor.h"
@@ -401,20 +402,26 @@ void MainWindow::initMenu()
 
     menuDatabase->addAction(ui->acExit);
 
-    QMenu *menuPP = menuBar()->addMenu(tr("Индивидуальные программы"));
-    menuPP->addAction(ui->acPPAssign);
-    menuPP->addAction(ui->acPPCancel);
+    if (AAnalyserBuild::isPPEnabled())
+    {
+        QMenu *menuPP = menuBar()->addMenu(tr("Индивидуальные программы"));
+        menuPP->addAction(ui->acPPAssign);
+        menuPP->addAction(ui->acPPCancel);
 
-    QMenu *menuView = menuBar()->addMenu(tr("Вид"));
-    m_agViewsMain = new QActionGroup(this);
-    menuView->addAction(ui->acViewDataBase);
-    m_agViewsMain->addAction(ui->acViewDataBase);
-    menuView->addAction(ui->acViewPersonalProgram);
-    m_agViewsMain->addAction(ui->acViewPersonalProgram);
-    ui->acViewDataBase->setCheckable(true);
-    ui->acViewPersonalProgram->setCheckable(true);
+        QMenu *menuView = menuBar()->addMenu(tr("Вид"));
+        m_agViewsMain = new QActionGroup(this);
+        menuView->addAction(ui->acViewDataBase);
+        m_agViewsMain->addAction(ui->acViewDataBase);
+        menuView->addAction(ui->acViewPersonalProgram);
+        m_agViewsMain->addAction(ui->acViewPersonalProgram);
+        ui->acViewDataBase->setCheckable(true);
+        ui->acViewPersonalProgram->setCheckable(true);
+    }
 
     auto cwv = SettingsProvider::valueFromRegAppCopy("MainWindow", "MainClientWidget", ClientWidgets::uidDatabaseResultWidgetUid).toString();
+    if (!AAnalyserBuild::isPPEnabled() && cwv == ClientWidgets::uidPersonalProgramWidgetUid)
+        cwv = ClientWidgets::uidDatabaseResultWidgetUid;
+
     if (cwv == ClientWidgets::uidDatabaseResultWidgetUid)
         ui->acViewDataBase->setChecked(true);
     else
@@ -432,9 +439,12 @@ void MainWindow::initMenu()
 ////    menuSummaries->addAction(ui->acSummariesBrowse);
 
     QMenu *menuSettings = menuBar()->addMenu(tr("Настройки"));
-    menuSettings->addAction(ui->acEditPersonalPrograms);
-    menuSettings->addAction(ui->acEditDailyPrograms);
-    menuSettings->addSeparator();
+    if (AAnalyserBuild::isPPEnabled())
+    {
+        menuSettings->addAction(ui->acEditPersonalPrograms);
+        menuSettings->addAction(ui->acEditDailyPrograms);
+        menuSettings->addSeparator();
+    }
     menuSettings->addAction(ui->acDeviceControl);
     menuSettings->addAction(ui->acSettings);
 
@@ -503,6 +513,8 @@ void MainWindow::createClientWidgets()
         ui->wgtClient->layout()->addWidget(wgt);
 
     auto cwv = SettingsProvider::valueFromRegAppCopy("MainWindow", "MainClientWidget", ClientWidgets::uidDatabaseResultWidgetUid).toString();
+    if (!AAnalyserBuild::isPPEnabled() && cwv == ClientWidgets::uidPersonalProgramWidgetUid)
+        cwv = ClientWidgets::uidDatabaseResultWidgetUid;
     showClientPage(cwv);
 
 //    showClientPage(ClientWidgets::uidDatabaseResultWidgetUid);

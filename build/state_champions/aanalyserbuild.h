@@ -64,6 +64,16 @@ Driver* createDriver(const QString &drvUid);
  */
 void assignDrivers(QMap<QString, QString> &drivers);
 
+/*!
+ * \brief Возвращает список индивидуальных программ по умолчанию (папок программ)
+ */
+QStringList getDefaultPPList();
+
+/*!
+ * \brief Возвращает true, если приложение будет работать с индивидуальными программми и false в противном случае
+ */
+bool isPPEnabled();
+
 }
 
 

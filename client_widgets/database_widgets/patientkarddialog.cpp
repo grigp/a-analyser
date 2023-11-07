@@ -3,6 +3,8 @@
 
 #include <QComboBox>
 
+#include "aanalyserbuild.h"
+
 PatientKardDialog::PatientKardDialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::PatientKardDialog)
@@ -11,6 +13,8 @@ PatientKardDialog::PatientKardDialog(QWidget *parent) :
 
     ui->cbSex->addItem(DataDefines::SexToText.value(DataDefines::male));
     ui->cbSex->addItem(DataDefines::SexToText.value(DataDefines::female));
+
+    ui->gbPP->setVisible(AAnalyserBuild::isPPEnabled());
 }
 
 PatientKardDialog::~PatientKardDialog()

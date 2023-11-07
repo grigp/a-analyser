@@ -226,3 +226,8 @@ QStringList AAnalyserBuild::getDefaultPPList()
 {
     return QStringList() << "neurology";
 }
+
+bool AAnalyserBuild::isPPEnabled()
+{
+    return true;
+}

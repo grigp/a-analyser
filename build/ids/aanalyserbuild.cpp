@@ -98,3 +98,13 @@ void AAnalyserBuild::assignDrivers(QMap<QString, QString> &drivers)
     //! Надо хардкодить все драйвера
     drivers.insert(Stabilan01::uid(), Stabilan01::name());
 }
+
+QStringList AAnalyserBuild::getDefaultPPList()
+{
+    return QStringList();
+}
+
+bool AAnalyserBuild::isPPEnabled()
+{
+    return false;
+}

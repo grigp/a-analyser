@@ -130,3 +130,13 @@ void AAnalyserBuild::assignDrivers(QMap<QString, QString> &drivers)
     drivers.insert(Stabilan01::uid(), Stabilan01::name());
     drivers.insert(JumpPlate::uid(), JumpPlate::name());
 }
+
+QStringList AAnalyserBuild::getDefaultPPList()
+{
+    return QStringList();
+}
+
+bool AAnalyserBuild::isPPEnabled()
+{
+    return false;
+}
