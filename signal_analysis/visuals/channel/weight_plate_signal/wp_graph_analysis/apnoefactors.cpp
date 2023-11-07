@@ -87,7 +87,7 @@ void ApnoeFactors::calculate()
         appendString(msgLog, "isDchSW", 8);
         appendString(msgLog, "isDelay", 8);
 
-        qDebug() << msgLog;
+//        qDebug() << msgLog;
         m_log << msgLog;
 
 
@@ -117,21 +117,12 @@ void ApnoeFactors::calculate()
             appendString(msgLog, QString::number(sw.amplitude / (sw.end - sw.begin)), 12);
             appendString(msgLog, boolToStr(isDchSW), 8);
             appendString(msgLog, boolToStr(isDelay), 8);
-            qDebug() << msgLog;
+//            qDebug() << msgLog;
             m_log << msgLog;
-//            qDebug() << s << sw.kind << "   "
-//                              << sw.begin << sw.end << "   "
-//                              << (sw.end - sw.begin) << (7.0 * m_frequency / 2.0) << ((sw.end - sw.begin) < (7.0 * m_frequency / 2.0)) << "      "
-//                              << BaseUtils::getTimeBySecCount(static_cast<int>(static_cast<double>(sw.begin / m_frequency)))
-//                              << BaseUtils::getTimeBySecCount(static_cast<int>(static_cast<double>(sw.end / m_frequency))) << "   "
-//                              << (sw.amplitude / (sw.end - sw.begin)) << "   "
-//                              << isDchSW << isDelay;
 
             //! Участок "пологий" и длительность полуволны меньше 3,5 секунд
             if (isDchSW)
-//            if (sw.amplitude >= m_midAmpl - m_qAmpl)
             {
-//                if (isDelay && (sw.end - sw.begin) / m_frequency > 10)
                 if (isDelay)
                 {
                     //! Общая длительность обнаруженного участка с "пологой" волной должна быть не меньше 8 секунд
@@ -143,7 +134,7 @@ void ApnoeFactors::calculate()
                         appendString(msgApnoe, BaseUtils::getTimeBySecCount(static_cast<int>(static_cast<double>(sw.end + m_begin) / m_frequency)), 10);
                         appendString(msgApnoe, QString::number(t), 10);
 
-                        qDebug() << "------- " + msgApnoe;
+//                        qDebug() << "------- " + msgApnoe;
                         m_log << "------- " + msgApnoe;
                         m_apnoeList << msgApnoe;
 
@@ -167,9 +158,6 @@ void ApnoeFactors::calculate()
                     ws = begin - iPrevTop;
                 iPrevTop = begin;
             }
-
-//            qDebug() << BaseUtils::getTimeBySecCount(static_cast<int>(static_cast<double>(begin) / m_frequency))
-//                     << sw.kind << sw.value << sw.amplitude;
         }
 
         if (m_apnoeFactsCount > 0)

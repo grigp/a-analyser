@@ -1,6 +1,12 @@
 #include "apnoefactorsvaluedisplay.h"
 #include "ui_apnoefactorsvaluedisplay.h"
 
+#include <QMenu>
+#include <QFileDialog>
+#include <QTextStream>
+
+#include "datadefines.h"
+
 ApnoeFactorsValueDisplay::ApnoeFactorsValueDisplay(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::ApnoeFactorsValueDisplay)
@@ -10,6 +16,15 @@ ApnoeFactorsValueDisplay::ApnoeFactorsValueDisplay(QWidget *parent) :
     ui->frDetail->setVisible(false);
     adjustSize();
     setFixedSize(size());
+
+    auto mnWriteToFile = new QMenu(ui->btnWriteToFile);
+    auto acWTFApnoe = new QAction(tr("Приступы апноэ..."), ui->btnWriteToFile);
+    auto acWTFLog = new QAction(tr("Лог..."), ui->btnWriteToFile);
+    connect(acWTFApnoe, &QAction::triggered, this, &ApnoeFactorsValueDisplay::on_wtfApnoe);
+    connect(acWTFLog, &QAction::triggered, this, &ApnoeFactorsValueDisplay::on_wtfLog);
+    mnWriteToFile->addAction(acWTFApnoe);
+    mnWriteToFile->addAction(acWTFLog);
+    ui->btnWriteToFile->setMenu(mnWriteToFile);
 }
 
 ApnoeFactorsValueDisplay::~ApnoeFactorsValueDisplay()
@@ -46,7 +61,31 @@ void ApnoeFactorsValueDisplay::on_showDetail()
         setFixedSize(QSize(QWIDGETSIZE_MAX, QWIDGETSIZE_MAX));
 }
 
-void ApnoeFactorsValueDisplay::on_writeToFile()
+void ApnoeFactorsValueDisplay::on_wtfApnoe()
 {
+    writeToFile(ui->teApnoeList, tr("списка приступов апноэ"));
+}
+
+void ApnoeFactorsValueDisplay::on_wtfLog()
+{
+    writeToFile(ui->teLog, tr("лога"));
 
 }
+
+void ApnoeFactorsValueDisplay::writeToFile(QTextEdit* text, const QString &subjName)
+{
+    auto fn = QFileDialog::getSaveFileName(this,
+                                           tr("Выберите файл для сохранения") + " " + subjName,
+                                           DataDefines::aanalyserDocumentsPath(),
+                                           tr("Текстовые файлы (*.txt)"));
+    if (fn != "")
+    {
+        QFile file(fn);
+        if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
+                 return;
+        QTextStream out(&file);
+        out << text->toPlainText();
+        file.close();
+    }
+}
+

@@ -2,6 +2,7 @@
 #define APNOEFACTORSVALUEDISPLAY_H
 
 #include <QDialog>
+#include <QTextEdit>
 
 namespace Ui {
 class ApnoeFactorsValueDisplay;
@@ -36,10 +37,14 @@ public:
 
 private slots:
     void on_showDetail();
-    void on_writeToFile();
+    void on_wtfApnoe();
+    void on_wtfLog();
+
 
 private:
     Ui::ApnoeFactorsValueDisplay *ui;
+
+    void writeToFile(QTextEdit* text, const QString& subjName);
 };
 
 #endif // APNOEFACTORSVALUEDISPLAY_H
