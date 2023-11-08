@@ -62,11 +62,32 @@ void MethodsWidget::onDbConnect(const bool isAppEvent)
     }
 }
 
+void MethodsWidget::onShow()
+{
+    //! uid выбранной в приложении методики
+    auto mi = static_cast<AAnalyserApplication*>(QApplication::instance())->getCurrentMetodic();
+    if (mi.uid == "")
+        mi.uid = QUuid().toString();
+
+    //! uid выбранной в таблице методики
+    auto metUid = methodic();
+
+    if (mi.uid != metUid)
+    {
+        ui->tvMetods->selectionModel()->clearSelection();
+        static_cast<AAnalyserApplication*>(QApplication::instance())->doSelectMetodic("");
+    }
+}
+
 QString MethodsWidget::methodic() const
 {
-    auto index = m_pmdlMethodics->mapToSource(ui->tvMetods->selectionModel()->currentIndex());
-    if (index.isValid())
-        return index.data(DatabaseWidgetDefines::MetodicsModel::MetodicUidRole).toString();
+    auto selMdl = ui->tvMetods->selectionModel();
+    if (selMdl)
+    {
+        auto index = m_pmdlMethodics->mapToSource(selMdl->currentIndex());
+        if (index.isValid())
+            return index.data(DatabaseWidgetDefines::MetodicsModel::MetodicUidRole).toString();
+    }
     return QUuid().toString();
 }
 

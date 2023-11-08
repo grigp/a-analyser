@@ -55,6 +55,7 @@ void DataBaseResultWidget::onDBDisconnect()
 void DataBaseResultWidget::onShow()
 {
     ui->wgtPatients->onShow();
+    ui->wgtMetods->onShow();
 }
 
 void DataBaseResultWidget::onHide()

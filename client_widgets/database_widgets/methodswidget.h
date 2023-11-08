@@ -24,6 +24,8 @@ public:
 
     void onDbConnect(const bool isEvent = true);
 
+    void onShow();
+
     /*!
      * \brief Возвращает uid выбранной методики
      */

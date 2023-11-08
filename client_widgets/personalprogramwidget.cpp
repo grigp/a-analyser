@@ -101,8 +101,18 @@ void PersonalProgramWidget::onShow()
     {
         if (m_model)
         {
-            ui->tvPatients->selectionModel()->clearSelection();
-            static_cast<AAnalyserApplication*>(QApplication::instance())->doSelectPatient("");
+            auto pk = static_cast<AAnalyserApplication*>(QApplication::instance())->getCurrentPatient();
+            auto index = selectedIndex();
+            if (index != QModelIndex())
+            {
+                auto uidPat = index.data(DatabaseWidgetDefines::PatientsModel::PatientUidRole).toString();
+                if (pk.uid != uidPat)
+                {
+                    ui->tvPatients->selectionModel()->clearSelection();
+                    static_cast<AAnalyserApplication*>(QApplication::instance())->doSelectPatient("");
+                    hideAllWidgets();
+                }
+            }
         }
    }
 }
@@ -564,11 +574,15 @@ void PersonalProgramWidget::restoreMainSplitterPosition()
 
 QModelIndex PersonalProgramWidget::selectedIndex() const
 {
-    auto selIdxs = ui->tvPatients->selectionModel()->selectedIndexes();
-    for (int i = 0; i < selIdxs.size(); ++i)
+    auto selModel = ui->tvPatients->selectionModel();
+    if (selModel)
     {
-        if (selIdxs.at(i).column() == 0)
-            return selIdxs.at(i);
+        auto selIdxs = selModel->selectedIndexes();
+        for (int i = 0; i < selIdxs.size(); ++i)
+        {
+            if (selIdxs.at(i).column() == 0)
+                return selIdxs.at(i);
+        }
     }
     return QModelIndex();
 }

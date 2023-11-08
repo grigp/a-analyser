@@ -14,6 +14,7 @@
 #include <QApplication>
 #include <QMessageBox>
 #include <QTimer>
+#include <QUuid>
 #include <QDebug>
 
 PatientsWidget::PatientsWidget(QWidget *parent) :
@@ -62,9 +63,31 @@ void PatientsWidget::onDbConnect()
 
 void PatientsWidget::onShow()
 {
-    //TODO: При переключении к ИП надо забывать это выделение, а при вызове других окон - нет
-//    ui->tvPatients->selectionModel()->clearSelection();
-//    static_cast<AAnalyserApplication*>(QApplication::instance())->doSelectPatient("");
+    //! uid выбранного в приложении пациента
+    auto pk = static_cast<AAnalyserApplication*>(QApplication::instance())->getCurrentPatient();
+
+    //! uid выбранного в таблице пациента
+    QString patUid = QUuid().toString();
+    auto selMod = ui->tvPatients->selectionModel();
+    if (selMod)
+    {
+        QModelIndexList selIdxs = selMod->selectedIndexes();
+        foreach (auto idx, selIdxs)
+        {
+            if (idx.column() == DatabaseWidgetDefines::PatientsModel::ColFio)
+            {
+                patUid = idx.data(DatabaseWidgetDefines::PatientsModel::PatientUidRole).toString();
+            }
+        }
+    }
+
+    //! Если в приложении выбран другой
+    if (pk.uid != patUid)
+    {
+        //! При переключении к ИП надо забывать это выделение, а при вызове других окон - нет
+        ui->tvPatients->selectionModel()->clearSelection();
+        static_cast<AAnalyserApplication*>(QApplication::instance())->doSelectPatient("");
+    }
 }
 
 void PatientsWidget::onHide()
