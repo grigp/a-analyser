@@ -51,6 +51,8 @@ protected slots:
     void on_recording() override;
 
 protected:
+    void timerEvent(QTimerEvent *event) override;
+
     /*!
      * \brief Формирует список дополнительных каналов для выбора управления
      * По формату получаем список каналов этого формата, которые передает драйвер, заносим их в список для выбора
@@ -188,6 +190,16 @@ private:
      */
     QVector<QVector<QColor>> newFigure();
 
+    /*!
+     * \brief Отложенное по таймеру удаление строк
+     */
+    void doDelRows();
+
+    /*!
+     * \brief Отложенное по таймеру удаление болков одного цвета
+     */
+    void doDelOneColor();
+
     TrenTetrisDefines::MovingMode m_movingMode {TrenTetrisDefines::mmTake};
     TrenTetrisDefines::ComplexityMode m_complexityMode {TrenTetrisDefines::cmFigures};
     TrenTetrisDefines::DeletingMode m_deletingMode {TrenTetrisDefines::dmRows};
@@ -231,6 +243,11 @@ private:
     QMediaPlayer m_player;
     SoundSheme m_soundSheme;
     TakePutResultData* m_takePutResData {nullptr};
+
+    QList<int> m_fullRows;
+    QList<QPoint> m_oneColorCubes;
+    int m_tmDelRows {-1};     ///< id таймера удаления строк
+    int m_tmDelOneCol {-1};   ///< id таймера удаления блоков одного цвета
 };
 
 #endif // TRENTETRISEXECUTE_H

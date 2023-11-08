@@ -128,6 +128,18 @@ void TrenTetrisExecute::on_recording()
     changeRowsDeleted(0);
 }
 
+void TrenTetrisExecute::timerEvent(QTimerEvent *event)
+{
+    TrenStabExecute::timerEvent(event);
+
+    if (event->timerId() == m_tmDelRows)
+        doDelRows();
+    else
+    if (event->timerId() == m_tmDelOneCol)
+        doDelOneColor();
+
+}
+
 void TrenTetrisExecute::setAdvancedChannels()
 {
     TrenStabExecute::setAdvancedChannels();
@@ -486,8 +498,8 @@ void TrenTetrisExecute::clearLastColor()
 void TrenTetrisExecute::deleteRows()
 {
     //! Анализ и составление списка строк
-    QList<int> fullRows;
-    fullRows.clear();
+    m_fullRows.clear();
+    m_fullRows.clear();
     for (int j = 0; j < m_glassVCount - 1; ++j)
     {
         bool full = true;
@@ -500,36 +512,19 @@ void TrenTetrisExecute::deleteRows()
             }
         }
         if (full)
-            fullRows << j;
+            m_fullRows << j;
     }
 
     //! Удаление строк
-    if (fullRows.size() > 0)
+    if (m_fullRows.size() > 0)
     {
         //! Пометить кубики, как удаляемые
-        foreach (auto row, fullRows)
+        foreach (auto row, m_fullRows)
             for (int i = 0; i < m_glassHCount; ++i)
                 m_glass->setDeletingCube(i, row);
 
         //! Отложенное удаление, чтоб видеть, что удаляем
-        QTimer::singleShot(1000, [=]
-        {
-            m_glass->clearDeletingCubes();
-
-            if (fullRows.size() > 0 && m_soundSheme.deleteRow != "")
-            {
-                m_player.setMedia(QUrl("qrc:/sound/" + m_soundSheme.deleteRow));
-                m_player.play();
-            }
-
-            //! Удаляем, начиная с верхней строчки, ибо, если наоборот, то номера последующих удаляемых строчек меняются
-            for (int i = fullRows.size() - 1; i >= 0; --i)
-            {
-                deleteRow(fullRows.at(i));
-                changeRowsDeleted(1);
-                changeGameScore(m_glassHCount * 3);
-            }
-        });
+        m_tmDelRows = startTimer(1000);
     }
 }
 
@@ -551,35 +546,17 @@ void TrenTetrisExecute::deleteOneColorCubes(const QList<QPoint> lastFigCubes)
     {
         if (m_glass->value(pos.x(), pos.y()) != Qt::black)
         {
-            QList<QPoint> oneColorCubes;
-            oneColorCubes.clear();
-            fillOneColorCubesList(oneColorCubes, pos, m_glass->value(pos.x(), pos.y()));
+            m_oneColorCubes.clear();
+            fillOneColorCubesList(m_oneColorCubes, pos, m_glass->value(pos.x(), pos.y()));
 
-            if (oneColorCubes.size() >= m_deletingCubeCount)
+            if (m_oneColorCubes.size() >= m_deletingCubeCount)
             {
-//                qDebug() << oneColorCubes;
                 //! Пометить кубики, как удаляемые
-                foreach (auto cube, oneColorCubes)
+                foreach (auto cube, m_oneColorCubes)
                     m_glass->setDeletingCube(cube.x(), cube.y());
 
                 //! Отложенное удаление, чтоб видеть, что удаляем
-                QTimer::singleShot(1000, [=]
-                {
-                    m_glass->clearDeletingCubes();
-
-                    if (oneColorCubes.size() > 0 && m_soundSheme.deleteRow != "")
-                    {
-                        m_player.setMedia(QUrl("qrc:/sound/" + m_soundSheme.deleteRow));
-                        m_player.play();
-                    }
-
-                    foreach (auto cube, oneColorCubes)
-                        m_glass->setValue(cube.x(), cube.y(), Qt::black);
-                    foreach (auto cube, oneColorCubes)
-                        shiftCol(cube.x(), cube.y());
-                    changeRowsDeleted(1);
-                    changeGameScore(oneColorCubes.size() * 3);
-                });
+                m_tmDelOneCol = startTimer(1000);
             };
         }
     }
@@ -683,5 +660,46 @@ QVector<QVector<QColor>> TrenTetrisExecute::newFigure()
     static_cast<TetrisFigure*>(m_wgtNextFigurePW)->setFigure(retval);
 
     return retval;
+}
+
+void TrenTetrisExecute::doDelRows()
+{
+    m_glass->clearDeletingCubes();
+
+    if (m_fullRows.size() > 0 && m_soundSheme.deleteRow != "")
+    {
+        m_player.setMedia(QUrl("qrc:/sound/" + m_soundSheme.deleteRow));
+        m_player.play();
+    }
+
+    //! Удаляем, начиная с верхней строчки, ибо, если наоборот, то номера последующих удаляемых строчек меняются
+    for (int i = m_fullRows.size() - 1; i >= 0; --i)
+    {
+        deleteRow(m_fullRows.at(i));
+        changeRowsDeleted(1);
+        changeGameScore(m_glassHCount * 3);
+    }
+
+    killTimer(m_tmDelRows);
+}
+
+void TrenTetrisExecute::doDelOneColor()
+{
+    m_glass->clearDeletingCubes();
+
+    if (m_oneColorCubes.size() > 0 && m_soundSheme.deleteRow != "")
+    {
+        m_player.setMedia(QUrl("qrc:/sound/" + m_soundSheme.deleteRow));
+        m_player.play();
+    }
+
+    foreach (auto cube, m_oneColorCubes)
+        m_glass->setValue(cube.x(), cube.y(), Qt::black);
+    foreach (auto cube, m_oneColorCubes)
+        shiftCol(cube.x(), cube.y());
+    changeRowsDeleted(1);
+    changeGameScore(m_oneColorCubes.size() * 3);
+
+    killTimer(m_tmDelOneCol);
 }
 
