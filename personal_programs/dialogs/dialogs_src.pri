@@ -12,7 +12,8 @@ HEADERS += \
     $$PWD/testinfodelegate.h \
     $$PWD/activepersonalprogrameditor.h \
     $$PWD/dailyprogramcompleteddelegate.h \
-    $$PWD/testcompleteddelegate.h
+    $$PWD/testcompleteddelegate.h \
+    $$PWD/runningmodedialog.h
 
 SOURCES += \
     $$PWD/selectmethodicdialog.cpp \
@@ -25,7 +26,8 @@ SOURCES += \
     $$PWD/testinfodelegate.cpp \
     $$PWD/activepersonalprogrameditor.cpp \
     $$PWD/dailyprogramcompleteddelegate.cpp \
-    $$PWD/testcompleteddelegate.cpp
+    $$PWD/testcompleteddelegate.cpp \
+    $$PWD/runningmodedialog.cpp
 
 FORMS += \
     $$PWD/selectmethodicdialog.ui \
@@ -34,5 +36,6 @@ FORMS += \
     $$PWD/personalprogramseditor.ui \
     $$PWD/selectpersonalprogramdialog.ui \
     $$PWD/openpersonalprogramdialog.ui \
-    $$PWD/activepersonalprogrameditor.ui
+    $$PWD/activepersonalprogrameditor.ui \
+    $$PWD/runningmodedialog.ui
 

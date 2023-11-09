@@ -18,6 +18,7 @@
 #include "metodicsfactory.h"
 #include "mainwindow.h"
 #include "executewidget.h"
+#include "runningmodedialog.h"
 
 PersonalProgramWidget::PersonalProgramWidget(QWidget *parent) :
     ClientWidget(parent),
@@ -90,6 +91,9 @@ void PersonalProgramWidget::onShow()
             m_tmNextStep = startTimer(1000);
         else
         {
+            //! Восстановим режим проведения проб из параметров
+            static_cast<AAnalyserApplication*>(QApplication::instance())->setRunningMode();
+
             if (isLastDP)
             {
                 QMessageBox::information(nullptr, tr("Сообщение"), tr("Индивидуальная программа завершена"));
@@ -99,8 +103,13 @@ void PersonalProgramWidget::onShow()
     }
     else
     {
+        //! Восстановим режим проведения проб из параметров
+        static_cast<AAnalyserApplication*>(QApplication::instance())->setRunningMode();
+
         if (m_model)
         {
+            //! Если uid текущего пациента не совпадает с uid пациента, выбранного в дереве назначенных ИП,
+            //! то снимем выделение и покажем исходную панель
             auto pk = static_cast<AAnalyserApplication*>(QApplication::instance())->getCurrentPatient();
             auto index = selectedIndex();
             if (index != QModelIndex())
@@ -111,6 +120,7 @@ void PersonalProgramWidget::onShow()
                     ui->tvPatients->selectionModel()->clearSelection();
                     static_cast<AAnalyserApplication*>(QApplication::instance())->doSelectPatient("");
                     hideAllWidgets();
+                    ui->lblPicture->setVisible(true);
                 }
             }
         }
@@ -158,9 +168,27 @@ void PersonalProgramWidget::on_run()
                 //! То есть, просто проверяем, имеется ли корневой узел
                 if (index != QModelIndex() && index.isValid())
                 {
-                    m_activePatientUid = index.data(DatabaseWidgetDefines::PatientsModel::PatientUidRole).toString();
-                    m_objPPExecuted = DataProvider::getPersonalProgramByUid(uidPP);
-                    doRunTest(true);
+                    bool isRun = true;
+                    auto rm = static_cast<AAnalyserApplication*>(QApplication::instance())->runningMode();
+                    if (rm == BaseDefines::rmOperator)
+                    {
+                        RunningModeDialog dlg(this);
+                        dlg.setRunningMode(rm);
+                        if (dlg.exec() == QDialog::Accepted)
+                        {
+                            static_cast<AAnalyserApplication*>(QApplication::instance())->setRunningMode(dlg.runningMode());
+                        }
+                        else
+                            isRun = false;
+
+                    }
+
+                    if (isRun)
+                    {
+                        m_activePatientUid = index.data(DatabaseWidgetDefines::PatientsModel::PatientUidRole).toString();
+                        m_objPPExecuted = DataProvider::getPersonalProgramByUid(uidPP);
+                        doRunTest(true);
+                    }
                 }
             }
             else

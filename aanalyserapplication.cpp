@@ -850,10 +850,15 @@ QWidget *AAnalyserApplication::getOpenedTest(const QString &testUid)
     return nullptr;
 }
 
-void AAnalyserApplication::doSettingsChanged()
+void AAnalyserApplication::setRunningMode()
 {
     auto rm = SettingsProvider::valueFromRegAppCopy("", AAnalyserSettingsParams::pn_runningMode, BaseDefines::rmOperator).toInt();
     m_runningMode = static_cast<BaseDefines::RunningMode>(rm);
+}
+
+void AAnalyserApplication::doSettingsChanged()
+{
+    setRunningMode();
 }
 
 bool AAnalyserApplication::notify(QObject *re, QEvent *ev)
