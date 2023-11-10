@@ -227,6 +227,11 @@ void DopuskWidget::print(QPrinter *printer, const QString &testUid)
     painter->end();
 }
 
+void DopuskWidget::paintPreview(QPainter *painter, QRect &rect, const QString &testUid, TestCalculator *calculator)
+{
+
+}
+
 void DopuskWidget::on_changePersonalNorm(const QString &patientUid,
                                          const QString &methodUid,
                                          const QString &conditionUid)

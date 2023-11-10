@@ -40,6 +40,13 @@ QWidget *CrossTemplate::visualize(QWidget *parent, const QString &testUid)
     return retval;
 }
 
+void CrossTemplate::paintPreview(QPainter *painter, QRect &rect, const QString &testUid)
+{
+    Q_UNUSED(painter);
+    Q_UNUSED(rect);
+    Q_UNUSED(testUid);
+}
+
 void CrossTemplate::print(QPrinter *printer, const QString &testUid)
 {
     CrossVisualize::print(printer, testUid);

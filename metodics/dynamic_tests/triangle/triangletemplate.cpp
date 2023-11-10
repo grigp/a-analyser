@@ -39,6 +39,13 @@ QWidget *TriangleTemplate::visualize(QWidget *parent, const QString &testUid)
     return retval;
 }
 
+void TriangleTemplate::paintPreview(QPainter *painter, QRect &rect, const QString &testUid)
+{
+    Q_UNUSED(painter);
+    Q_UNUSED(rect);
+    Q_UNUSED(testUid);
+}
+
 void TriangleTemplate::print(QPrinter *printer, const QString &testUid)
 {
     TriangleVisualize::print(printer, testUid);

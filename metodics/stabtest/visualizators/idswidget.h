@@ -19,6 +19,7 @@ class TestResultData;
 class AnySignal;
 class SKGWidget;
 class AreaGraph;
+class TestCalculator;
 
 /*!
  * \brief Класс виджета визуализатора динамической стабилизации в рамках стабилографического теста IDSWidget class
@@ -50,6 +51,14 @@ public:
      * \param testUid - uid теста
      */
     static void print(QPrinter *printer, const QString &testUid);
+
+    /*!
+     * \brief Прорисовывает предварительные результаты с помощью заданного рисователя
+     * \param painter - рисователь
+     * \param rect - зона прорисовки
+     * \param testUid - uid теста
+     */
+    static void paintPreview(QPainter* painter, QRect& rect, const QString& testUid, TestCalculator* calculator);
 
 protected:
     void timerEvent(QTimerEvent *event) override;

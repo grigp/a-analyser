@@ -129,3 +129,8 @@ void StressStrategyWidget::print(QPrinter *printer, const QString &testUid)
     painter->end();
 }
 
+void StressStrategyWidget::paintPreview(QPainter *painter, QRect &rect, const QString &testUid, TestCalculator *calculator)
+{
+
+}
+

@@ -153,6 +153,24 @@ void StabSignalsTestWidget::print(QPrinter *printer, const QString &testUid)
     painter->end();
 }
 
+void StabSignalsTestWidget::paintPreview(QPainter *painter, QRect &rect, const QString &testUid, TestCalculator *calculator)
+{
+    DataDefines::TestInfo ti;
+    if (DataProvider::getTestInfo(testUid, ti))
+    {
+        bool itr = isRombergTest(ti);
+        if (itr)
+        {
+            painter->setBrush(QBrush(Qt::red));
+            painter->setPen(QPen(Qt::red, 1, Qt::SolidLine, Qt::FlatCap));
+            painter->drawEllipse(rect);
+        }
+    }
+
+
+//    painter->setFont(QFont("Bookman Old Style", 68, QFont::Bold, true));
+}
+
 void StabSignalsTestWidget::setVisible(bool visible)
 {
     QWidget::setVisible(visible);

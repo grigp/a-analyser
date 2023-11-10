@@ -48,6 +48,13 @@ QWidget *StabTestTemplate::visualize(QWidget *parent, const QString &testUid)
     return retval;
 }
 
+void StabTestTemplate::paintPreview(QPainter *painter, QRect &rect, const QString &testUid)
+{
+    auto calculator = StabTestTemplate::calculator(testUid);
+    StabTestVisualize::paintPreview(painter, rect, testUid, calculator);
+    delete calculator;
+}
+
 void StabTestTemplate::print(QPrinter *printer, const QString &testUid)
 {
     StabTestVisualize::print(printer, testUid);

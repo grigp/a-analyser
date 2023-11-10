@@ -42,6 +42,13 @@ QWidget *Extend3DGamesTemplate::visualize(QWidget *parent, const QString &testUi
     return retval;
 }
 
+void Extend3DGamesTemplate::paintPreview(QPainter *painter, QRect &rect, const QString &testUid)
+{
+    Q_UNUSED(painter);
+    Q_UNUSED(rect);
+    Q_UNUSED(testUid);
+}
+
 void Extend3DGamesTemplate::print(QPrinter *printer, const QString &testUid)
 {
     TrenVisualize::print(printer, testUid);

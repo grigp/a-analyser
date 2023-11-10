@@ -46,6 +46,13 @@ QWidget *DropTestTemplate::visualize(QWidget *parent, const QString &testUid)
     return retval;
 }
 
+void DropTestTemplate::paintPreview(QPainter *painter, QRect &rect, const QString &testUid)
+{
+    Q_UNUSED(painter);
+    Q_UNUSED(rect);
+    Q_UNUSED(testUid);
+}
+
 bool DropTestTemplate::editParams(QWidget *parent, QJsonObject &params)
 {
     auto dialog = new DropTestParamsDialog(parent);

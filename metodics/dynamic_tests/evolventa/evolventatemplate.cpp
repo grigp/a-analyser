@@ -39,6 +39,13 @@ QWidget *EvolventaTemplate::visualize(QWidget *parent, const QString &testUid)
     return retval;
 }
 
+void EvolventaTemplate::paintPreview(QPainter *painter, QRect &rect, const QString &testUid)
+{
+    Q_UNUSED(painter);
+    Q_UNUSED(rect);
+    Q_UNUSED(testUid);
+}
+
 void EvolventaTemplate::print(QPrinter *printer, const QString &testUid)
 {
     EvolventaVisualize::print(printer, testUid);

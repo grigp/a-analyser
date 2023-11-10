@@ -99,6 +99,14 @@ public:
      */
     void print(QPrinter *printer, const QString &testUid) const;
 
+    /*!
+     * \brief Прорисовывает предварительные результаты с помощью заданного рисователя
+     * \param painter - рисователь
+     * \param rect - зона прорисовки
+     * \param testUid - uid теста
+     */
+    void paintPreview(QPainter* painter, QRect& rect, const QString& testUid) const;
+
 signals:
 
 public slots:

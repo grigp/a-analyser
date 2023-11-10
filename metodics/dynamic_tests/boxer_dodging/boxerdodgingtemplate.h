@@ -37,6 +37,14 @@ public:
     QWidget *visualize(QWidget *parent, const QString &testUid)  override;
 
     /*!
+     * \brief Прорисовывает предварительные результаты с помощью заданного рисователя
+     * \param painter - рисователь
+     * \param rect - зона прорисовки
+     * \param testUid - uid теста
+     */
+    void paintPreview(QPainter* painter, QRect& rect, const QString& testUid) override;
+
+    /*!
      * \brief Печать результатов теста
      * \param printer - принтер
      * \param testUid - uid теста

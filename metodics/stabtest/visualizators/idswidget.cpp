@@ -212,6 +212,11 @@ void IDSWidget::print(QPrinter *printer, const QString &testUid)
     painter->end();
 }
 
+void IDSWidget::paintPreview(QPainter *painter, QRect &rect, const QString &testUid, TestCalculator *calculator)
+{
+
+}
+
 void IDSWidget::timerEvent(QTimerEvent *event)
 {
     QWidget::timerEvent(event);

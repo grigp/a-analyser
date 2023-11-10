@@ -152,3 +152,8 @@ void StateChampionsWidget::print(QPrinter *printer, const QString &testUid)
 
     painter->end();
 }
+
+void StateChampionsWidget::paintPreview(QPainter *painter, QRect &rect, const QString &testUid, TestCalculator *calculator)
+{
+
+}

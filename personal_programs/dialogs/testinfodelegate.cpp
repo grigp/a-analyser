@@ -24,9 +24,8 @@ void TestInfoDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opti
 
     if (uidMethod != "")
     {
-        MetodicDefines::MetodicInfo mi =
-                static_cast<AAnalyserApplication*>(QApplication::instance())->
-                getMetodics()->metodic(uidMethod);
+        MetodicsFactory *metFactory = static_cast<AAnalyserApplication*>(QApplication::instance())->getMetodics();
+        MetodicDefines::MetodicInfo mi = metFactory->metodic(uidMethod);
         auto uidTest = index.data(PersonalProgramDefines::PersonalProgram::TestUidRole).toString();
         auto valSuccess = getSuccessFactorValue(uidTest);
 
@@ -67,6 +66,11 @@ void TestInfoDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opti
         {
             painter->setFont(QFont("Sans", 18, QFont::Bold, false));
             painter->drawText(rn, Qt::AlignVCenter| Qt::AlignHCenter, QString::number(static_cast<int>(valSuccess)) + " %");
+        }
+        else
+        {
+            auto rp = QRect(rn.left(), rn.top() + 15, rn.width(), rn.height() - 15);
+            metFactory->paintPreview(painter, rp, uidTest);
         }
 
         //! Выделение итема

@@ -39,6 +39,13 @@ QWidget *JumpHeightTestTemplate::visualize(QWidget *parent, const QString &testU
     return retval;
 }
 
+void JumpHeightTestTemplate::paintPreview(QPainter *painter, QRect &rect, const QString &testUid)
+{
+    Q_UNUSED(painter);
+    Q_UNUSED(rect);
+    Q_UNUSED(testUid);
+}
+
 void JumpHeightTestTemplate::print(QPrinter *printer, const QString &testUid)
 {
     Q_UNUSED(printer);

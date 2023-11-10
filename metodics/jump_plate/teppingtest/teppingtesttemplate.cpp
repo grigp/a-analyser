@@ -39,6 +39,13 @@ QWidget *TeppingTestTemplate::visualize(QWidget *parent, const QString &testUid)
     return retval;
 }
 
+void TeppingTestTemplate::paintPreview(QPainter *painter, QRect &rect, const QString &testUid)
+{
+    Q_UNUSED(painter);
+    Q_UNUSED(rect);
+    Q_UNUSED(testUid);
+}
+
 void TeppingTestTemplate::print(QPrinter *printer, const QString &testUid)
 {
     Q_UNUSED(printer);

@@ -39,6 +39,13 @@ QWidget *JumpTestTemplate::visualize(QWidget *parent, const QString &testUid)
     return retval;
 }
 
+void JumpTestTemplate::paintPreview(QPainter *painter, QRect &rect, const QString &testUid)
+{
+    Q_UNUSED(painter);
+    Q_UNUSED(rect);
+    Q_UNUSED(testUid);
+}
+
 void JumpTestTemplate::print(QPrinter *printer, const QString &testUid)
 {
     Q_UNUSED(printer);

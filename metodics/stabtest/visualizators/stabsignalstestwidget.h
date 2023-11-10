@@ -11,6 +11,7 @@
 class TestResultData;
 class SKGWidget;
 class AreaGraph;
+class TestCalculator;
 
 namespace Ui {
 class StabSignalsTestWidget;
@@ -40,6 +41,14 @@ public:
      * \param testUid - uid теста
      */
     static void print(QPrinter *printer, const QString &testUid);
+
+    /*!
+     * \brief Прорисовывает предварительные результаты с помощью заданного рисователя
+     * \param painter - рисователь
+     * \param rect - зона прорисовки
+     * \param testUid - uid теста
+     */
+    static void paintPreview(QPainter* painter, QRect& rect, const QString& testUid, TestCalculator* calculator);
 
     /*!
      * \brief Роли для модели таблицы нормативов для теста Ромберга

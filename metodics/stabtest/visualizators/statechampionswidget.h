@@ -9,6 +9,7 @@ class StateChampionsWidget;
 }
 
 class StateChampionsTestCalculator;
+class TestCalculator;
 
 /*!
  * \brief Класс виджета визуализатора теста по методике "Стань чемпионом" в рамках стабилографического теста StateChampionsWidget class
@@ -33,6 +34,14 @@ public:
      * \param testUid - uid теста
      */
     static void print(QPrinter *printer, const QString &testUid);
+
+    /*!
+     * \brief Прорисовывает предварительные результаты с помощью заданного рисователя
+     * \param painter - рисователь
+     * \param rect - зона прорисовки
+     * \param testUid - uid теста
+     */
+    static void paintPreview(QPainter* painter, QRect& rect, const QString& testUid, TestCalculator* calculator);
 
 private:
     Ui::StateChampionsWidget *ui;

@@ -182,3 +182,30 @@ void StabTestVisualize::print(QPrinter *printer, const QString &testUid)
     }
 }
 
+void StabTestVisualize::paintPreview(QPainter *painter, QRect &rect, const QString &testUid, TestCalculator* calculator)
+{
+    DataDefines::TestInfo ti;
+    if (DataProvider::getTestInfo(testUid, ti))
+    {
+        auto params = ti.params;
+        auto cnd = params["condition"].toInt();
+        if (cnd == 0)
+            StabSignalsTestWidget::paintPreview(painter, rect, testUid, calculator);
+        else
+        if (cnd == 1)
+            StateChampionsWidget::paintPreview(painter, rect, testUid, calculator);
+        else
+        if (cnd == 2)
+            DopuskWidget::paintPreview(painter, rect, testUid, calculator);
+        else
+        if (cnd == 3)
+            IDSWidget::paintPreview(painter, rect, testUid, calculator);
+        else
+        if (cnd == 4)
+            TargetWidget::paintPreview(painter, rect, testUid, calculator);
+        else
+        if (cnd == 5)
+            StressStrategyWidget::paintPreview(painter, rect, testUid, calculator);
+    }
+}
+

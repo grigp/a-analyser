@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QJsonObject>
+#include <QPainter>
 #include <QPrinter>
 
 /*!
@@ -35,6 +36,14 @@ public:
      *  \param testUid - uid теста
      */
     virtual QWidget *visualize(QWidget *parent, const QString &testUid) = 0;
+
+    /*!
+     * \brief Прорисовывает предварительные результаты с помощью заданного рисователя
+     * \param painter - рисователь
+     * \param rect - зона прорисовки
+     * \param testUid - uid теста
+     */
+    virtual void paintPreview(QPainter* painter, QRect& rect, const QString& testUid) = 0;
 
     /*!
      * \brief Печать результатов теста

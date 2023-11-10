@@ -165,6 +165,23 @@ void MetodicsFactory::print(QPrinter *printer, const QString &testUid) const
     }
 }
 
+void MetodicsFactory::paintPreview(QPainter *painter, QRect &rect, const QString &testUid) const
+{
+    DataDefines::TestInfo ti;
+    if (DataProvider::getTestInfo(testUid, ti))
+    {
+        auto *mt = getMetodicTemplate(ti.metodUid);
+        if (mt)
+        {
+            auto mi = getMetodicIndexByUid(ti.metodUid);
+            if (mi > -1)
+            {
+                mt->paintPreview(painter, rect, testUid);
+            }
+        }
+    }
+}
+
 void MetodicsFactory::assignTemplates()
 {
     m_templates << AAnalyserBuild::getBuildTemplates(this);

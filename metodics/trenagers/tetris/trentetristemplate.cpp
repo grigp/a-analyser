@@ -39,6 +39,13 @@ QWidget *TrenTetrisTemplate::visualize(QWidget *parent, const QString &testUid)
     return retval;
 }
 
+void TrenTetrisTemplate::paintPreview(QPainter *painter, QRect &rect, const QString &testUid)
+{
+    Q_UNUSED(painter);
+    Q_UNUSED(rect);
+    Q_UNUSED(testUid);
+}
+
 void TrenTetrisTemplate::print(QPrinter *printer, const QString &testUid)
 {
     TrenVisualize::print(printer, testUid);

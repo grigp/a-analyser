@@ -39,6 +39,13 @@ QWidget *StepOffsetTemplate::visualize(QWidget *parent, const QString &testUid)
     return retval;
 }
 
+void StepOffsetTemplate::paintPreview(QPainter *painter, QRect &rect, const QString &testUid)
+{
+    Q_UNUSED(painter);
+    Q_UNUSED(rect);
+    Q_UNUSED(testUid);
+}
+
 void StepOffsetTemplate::print(QPrinter *printer, const QString &testUid)
 {
     StepOffsetVisualize::print(printer, testUid);

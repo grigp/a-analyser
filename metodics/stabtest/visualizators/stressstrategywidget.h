@@ -10,6 +10,7 @@ class StressStrategyWidget;
 
 class StressStrategyCalculator;
 class DynamicDiagram;
+class TestCalculator;
 
 /*!
  * \brief Класс виджета визуализатора оценки стрессовой стратегии в рамках стабилографического теста StressStrategyWidget class
@@ -34,6 +35,14 @@ public:
      * \param testUid - uid теста
      */
     static void print(QPrinter *printer, const QString &testUid);
+
+    /*!
+     * \brief Прорисовывает предварительные результаты с помощью заданного рисователя
+     * \param painter - рисователь
+     * \param rect - зона прорисовки
+     * \param testUid - uid теста
+     */
+    static void paintPreview(QPainter* painter, QRect& rect, const QString& testUid, TestCalculator* calculator);
 
 private:
     Ui::StressStrategyWidget *ui;

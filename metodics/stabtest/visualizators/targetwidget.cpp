@@ -134,6 +134,11 @@ void TargetWidget::print(QPrinter *printer, const QString &testUid)
     painter->end();
 }
 
+void TargetWidget::paintPreview(QPainter *painter, QRect &rect, const QString &testUid, TestCalculator *calculator)
+{
+
+}
+
 void TargetWidget::timerEvent(QTimerEvent *event)
 {
     int diap = 1;
