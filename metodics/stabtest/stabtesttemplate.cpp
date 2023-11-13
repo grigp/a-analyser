@@ -1,5 +1,6 @@
 #include "stabtesttemplate.h"
 
+#include "aanalyserapplication.h"
 #include "dataprovider.h"
 #include "metodicdefines.h"
 #include "stabtestexecute.h"
@@ -12,6 +13,7 @@
 #include "idscalculator.h"
 #include "targetcalculator.h"
 #include "stressstrategycalculator.h"
+#include "metodicsfactory.h"
 
 #include <QLayout>
 #include <QDebug>
@@ -50,9 +52,17 @@ QWidget *StabTestTemplate::visualize(QWidget *parent, const QString &testUid)
 
 void StabTestTemplate::paintPreview(QPainter *painter, QRect &rect, const QString &testUid)
 {
-    auto calculator = StabTestTemplate::calculator(testUid);
+    MetodicsFactory *metFactory = static_cast<AAnalyserApplication*>(QApplication::instance())->getMetodics();
+    auto calculator = metFactory->getCalculator(testUid);
+    if (!calculator)
+    {
+        calculator = StabTestTemplate::calculator(testUid);
+        calculator->calculate();
+        metFactory->storeCalculator(testUid, calculator);
+    }
+
     StabTestVisualize::paintPreview(painter, rect, testUid, calculator);
-    delete calculator;
+//    delete calculator;
 }
 
 void StabTestTemplate::print(QPrinter *printer, const QString &testUid)

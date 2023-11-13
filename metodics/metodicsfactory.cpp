@@ -6,6 +6,7 @@
 #include "aanalyserbuild.h"
 #include "datadefines.h"
 #include "dataprovider.h"
+#include "testcalculator.h"
 
 #include <QFile>
 #include <QDir>
@@ -28,6 +29,7 @@ MetodicsFactory::MetodicsFactory(QObject *parent) : QObject(parent)
 MetodicsFactory::~MetodicsFactory()
 {
     m_templates.clear();
+    m_calculators.clear();
 }
 
 int MetodicsFactory::metodicKindsCount() const
@@ -180,6 +182,18 @@ void MetodicsFactory::paintPreview(QPainter *painter, QRect &rect, const QString
             }
         }
     }
+}
+
+void MetodicsFactory::storeCalculator(const QString &uidTest, TestCalculator *calculator)
+{
+    m_calculators.insert(uidTest, calculator);
+}
+
+TestCalculator *MetodicsFactory::getCalculator(const QString &uidTest)
+{
+    if (m_calculators.contains(uidTest))
+        return m_calculators.value(uidTest);
+    return nullptr;
 }
 
 void MetodicsFactory::assignTemplates()

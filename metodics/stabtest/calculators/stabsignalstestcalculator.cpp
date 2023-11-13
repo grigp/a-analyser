@@ -1,5 +1,7 @@
 #include "stabsignalstestcalculator.h"
 
+#include <QDebug>
+
 #include "channelsdefines.h"
 #include "dataprovider.h"
 #include "classicfactors.h"

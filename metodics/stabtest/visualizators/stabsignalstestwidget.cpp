@@ -159,16 +159,50 @@ void StabSignalsTestWidget::paintPreview(QPainter *painter, QRect &rect, const Q
     if (DataProvider::getTestInfo(testUid, ti))
     {
         bool itr = isRombergTest(ti);
-        if (itr)
+        if (itr && static_cast<StabSignalsTestCalculator*>(calculator)->probesCount() == 2)
         {
-            painter->setBrush(QBrush(Qt::red));
-            painter->setPen(QPen(Qt::red, 1, Qt::SolidLine, Qt::FlatCap));
-            painter->drawEllipse(rect);
+            auto fc1 = static_cast<StabSignalsTestCalculator*>(calculator)->classicFactors(0);
+            auto fc2 = static_cast<StabSignalsTestCalculator*>(calculator)->classicFactors(1);
+            auto fv1 = static_cast<StabSignalsTestCalculator*>(calculator)->vectorFactors(0);
+            auto fv2 = static_cast<StabSignalsTestCalculator*>(calculator)->vectorFactors(1);
+            auto EllS1Val = fc1->factorValue(ClassicFactorsDefines::SquareUid);
+            auto EllS2Val = fc2->factorValue(ClassicFactorsDefines::SquareUid);
+            auto KFR1Val = fv1->factorValue(VectorFactorsDefines::KFRUid);
+            auto KFR2Val = fv2->factorValue(VectorFactorsDefines::KFRUid);
+            double krs = EllS2Val / EllS1Val * 100;
+            double krkfr = KFR2Val / KFR1Val * 100;
+            QString sKRS = QString::number(krs, 'f', 0);
+            QString sKRKFR = QString::number(krkfr, 'f', 0);
+
+            painter->save();
+
+            painter->setPen(QPen(Qt::black, 1, Qt::SolidLine, Qt::FlatCap));
+            painter->setFont(QFont("Sans", 6, QFont::Bold, false));
+            painter->drawText(rect.x() + 5, rect.y() + 10, tr("Коэф Ромберга"));
+            painter->setFont(QFont("Sans", 7, QFont::Bold, false));
+
+            QColor col = Qt::darkGreen;
+            auto setPenColor = [&](const double value)
+            {
+                col = Qt::darkGreen;
+                if (value < 100)
+                    col = Qt::darkYellow;
+                else
+                if (value > 250)
+                    col = Qt::darkRed;
+                painter->setPen(QPen(col, 1, Qt::SolidLine, Qt::FlatCap));
+            };
+
+            setPenColor(krs);
+            painter->drawText(rect.x() + 5, rect.y() + 22, tr("S") + " (" + sKRS + "%)");
+            setPenColor(krkfr);
+            painter->drawText(rect.x() + 5, rect.y() + 34, tr("KFR") + " (" + sKRKFR + "%)");
+
+//            painter->setBrush(QBrush(Qt::black));
+
+            painter->restore();
         }
     }
-
-
-//    painter->setFont(QFont("Bookman Old Style", 68, QFont::Bold, true));
 }
 
 void StabSignalsTestWidget::setVisible(bool visible)

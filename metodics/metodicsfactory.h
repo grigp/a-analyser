@@ -7,6 +7,7 @@
 #include "metodicdefines.h"
 
 class MetodicTemplate;
+class TestCalculator;
 
 /*!
  * \brief Класс фабрики классов методик MetodicsFactory class
@@ -107,6 +108,19 @@ public:
      */
     void paintPreview(QPainter* painter, QRect& rect, const QString& testUid) const;
 
+    /*!
+     * \brief запоминает указатель на созданный модуль расчета для теста по uid
+     * \param uidTest - uid теста
+     * \param calculator - указатель на модуль расчета
+     */
+    void storeCalculator(const QString& uidTest, TestCalculator* calculator);
+
+    /*!
+     * \brief Возвращает указатель на запомненный модуль расчета по uid теста или nulptr, если не запомнен ранее
+     * \param uidTest - uid теста
+     */
+    TestCalculator* getCalculator(const QString& uidTest);
+
 signals:
 
 public slots:
@@ -150,6 +164,8 @@ private:
     QList<MetodicTemplate*> m_templates;
     QList<MetodicDefines::MetodicInfo> m_metodics;
     QList<MetodicDefines::MetodicKindInfo> m_metodicKinds;
+
+    QMap<QString, TestCalculator*> m_calculators;  ///! Перечень заполненных модулей расчета по uid тестов
 };
 
 #endif // METODICSFACTORY_H
