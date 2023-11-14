@@ -84,20 +84,6 @@ public:
     QJsonObject assignPersonalProgramForPatient(const QString& patientUid, const QString& ppUid, QString& ppUidAssigned);
 
     /*!
-     * \brief Возвращает более светлый цвет для базового
-     * \param color - базовый цвет
-     * \param divider - коэффициент освеления
-     */
-    static QColor lightColor(const QColor& color, const int divider);
-
-    /*!
-     * \brief Возвращает более темный цвет для базового
-     * \param color - базовый цвет
-     * \param divider - коэффициент затемнения
-     */
-    static QColor darkColor(const QColor& color, const int divider);
-
-    /*!
      * \brief Возвращает цвет по значению показателя от 0 до 100 схеме:
      * 0 - красный
      * 50 - желтый

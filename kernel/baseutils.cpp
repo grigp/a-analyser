@@ -605,3 +605,18 @@ QString BaseUtils::stringDecrypt(const QString &str)
     return QString::fromUtf8(ba);
 }
 
+
+QColor BaseUtils::lightColor(const QColor &color, const int divider)
+{
+    return QColor(color.red() + (255 - color.red()) / divider,
+                  color.green() + (255 - color.green()) / divider,
+                  color.blue() + (255 - color.blue()) / divider);
+}
+
+QColor BaseUtils::darkColor(const QColor &color, const int divider)
+{
+    return QColor(color.red() - color.red() / divider,
+                  color.green() - color.green() / divider,
+                  color.blue() - color.blue() / divider);
+}
+

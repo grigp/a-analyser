@@ -41,8 +41,8 @@ void TestInfoDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opti
             if (valSuccess > -1)
                 colBackground = PersonalProgramManager::successColor(valSuccess);
         }
-        QColor colBackgroundLt = PersonalProgramManager::lightColor(colBackground, 2);
-        QColor colBackgroundDk = PersonalProgramManager::darkColor(colBackground, 2);
+        QColor colBackgroundLt = BaseUtils::lightColor(colBackground, 2);
+        QColor colBackgroundDk = BaseUtils::darkColor(colBackground, 2);
 
         auto rn = option.rect;
         rn.setHeight(rn.height() - 2);

@@ -249,9 +249,23 @@ QString stringEncrypt(const QString& str);
 /*!
  * \brief Расшифровка строки
  * \param str - строка
- * \return Разшифрованная строка
+ * \return Раcшифрованная строка
  */
 QString stringDecrypt(const QString& str);
+
+/*!
+ * \brief Возвращает более светлый цвет для базового
+ * \param color - базовый цвет
+ * \param divider - коэффициент освеления
+ */
+QColor lightColor(const QColor& color, const int divider);
+
+/*!
+ * \brief Возвращает более темный цвет для базового
+ * \param color - базовый цвет
+ * \param divider - коэффициент затемнения
+ */
+QColor darkColor(const QColor& color, const int divider);
 
 /*!
  * \brief Класс, рассчитывающий математическое ожидание и стандартное отклонение с итеративным добавлением MidAndStandardDeviation class

@@ -404,20 +404,6 @@ QJsonObject PersonalProgramManager::assignPersonalProgramForPatient(const QStrin
     return retval;
 }
 
-QColor PersonalProgramManager::lightColor(const QColor &color, const int divider)
-{
-    return QColor(color.red() + (255 - color.red()) / divider,
-                  color.green() + (255 - color.green()) / divider,
-                  color.blue() + (255 - color.blue()) / divider);
-}
-
-QColor PersonalProgramManager::darkColor(const QColor &color, const int divider)
-{
-    return QColor(color.red() - color.red() / divider,
-                  color.green() - color.green() / divider,
-                  color.blue() - color.blue() / divider);
-}
-
 QColor PersonalProgramManager::successColor(const double valSuccess)
 {
     if (valSuccess >= 50)

@@ -97,7 +97,7 @@ private:
 
     void showRombergNorms(StabSignalsTestCalculator *calculator, const QString &testUid);
 
-    DataDefines::NormValue getRombergNorm(const int probeNum, const QString &factorUid, const double value) const;
+    static DataDefines::NormValue getRombergNorm(const int probeNum, const QString &factorUid, const double value);
 
     QStandardItem* createItemRationalFactors(StabSignalsTestCalculator *calculator,
                                              const int numProbe,

@@ -3,6 +3,7 @@
 #include <QPainter>
 #include <QDebug>
 
+#include "baseutils.h"
 #include "personalprogramdefines.h"
 #include "personalprogrammanager.h"
 
@@ -30,7 +31,7 @@ void DailyProgramInfoDelegate::paint(QPainter *painter, const QStyleOptionViewIt
         colText = QColor(70, 70, 0);
     }
 
-    QColor colBackgroundLt = PersonalProgramManager::lightColor(colBackground, 2);
+    QColor colBackgroundLt = BaseUtils::lightColor(colBackground, 2);
 
     auto rn = option.rect;
 

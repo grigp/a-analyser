@@ -159,12 +159,13 @@ void StabSignalsTestWidget::paintPreview(QPainter *painter, QRect &rect, const Q
     if (DataProvider::getTestInfo(testUid, ti))
     {
         bool itr = isRombergTest(ti);
-        if (itr && static_cast<StabSignalsTestCalculator*>(calculator)->probesCount() == 2)
+        StabSignalsTestCalculator* calc = static_cast<StabSignalsTestCalculator*>(calculator);
+        if (itr && calc->probesCount() == 2)
         {
-            auto fc1 = static_cast<StabSignalsTestCalculator*>(calculator)->classicFactors(0);
-            auto fc2 = static_cast<StabSignalsTestCalculator*>(calculator)->classicFactors(1);
-            auto fv1 = static_cast<StabSignalsTestCalculator*>(calculator)->vectorFactors(0);
-            auto fv2 = static_cast<StabSignalsTestCalculator*>(calculator)->vectorFactors(1);
+            auto fc1 = calc->classicFactors(0);
+            auto fc2 = calc->classicFactors(1);
+            auto fv1 = calc->vectorFactors(0);
+            auto fv2 = calc->vectorFactors(1);
             auto EllS1Val = fc1->factorValue(ClassicFactorsDefines::SquareUid);
             auto EllS2Val = fc2->factorValue(ClassicFactorsDefines::SquareUid);
             auto KFR1Val = fv1->factorValue(VectorFactorsDefines::KFRUid);
@@ -181,10 +182,9 @@ void StabSignalsTestWidget::paintPreview(QPainter *painter, QRect &rect, const Q
             painter->drawText(rect.x() + 5, rect.y() + 10, tr("Коэф Ромберга"));
             painter->setFont(QFont("Sans", 7, QFont::Bold, false));
 
-            QColor col = Qt::darkGreen;
             auto setPenColor = [&](const double value)
             {
-                col = Qt::darkGreen;
+                QColor col = Qt::darkGreen;
                 if (value < 100)
                     col = Qt::darkYellow;
                 else
@@ -198,7 +198,38 @@ void StabSignalsTestWidget::paintPreview(QPainter *painter, QRect &rect, const Q
             setPenColor(krkfr);
             painter->drawText(rect.x() + 5, rect.y() + 34, tr("KFR") + " (" + sKRKFR + "%)");
 
-//            painter->setBrush(QBrush(Qt::black));
+            for (int i = 0; i < calc->probesCount(); ++i)
+            {
+
+                auto drawNormPic = [&](const QString &factorUid, const int h)
+                {
+                    double value = calc->classicFactors(i)->factorValue(factorUid);
+                    auto nv = getRombergNorm(i, factorUid, value);
+
+                    QColor col = Qt::gray;
+                    if (nv == DataDefines::NotNormal)
+                        col = Qt::red;
+                    else
+                    if (nv == DataDefines::ConditionNormal)
+                        col = Qt::darkYellow;
+                    else
+                    if (nv == DataDefines::Normal)
+                        col = Qt::green;
+
+                    painter->setPen(QPen(BaseUtils::darkColor(col, 2), 1, Qt::SolidLine, Qt::FlatCap));
+                    QRadialGradient gradient(QPointF(rect.center().x() + 25 + 30 * i, h), 12, QPointF(rect.center().x() + 25 + 30 * i, h));
+                    gradient.setColorAt(0, col);
+                    gradient.setColorAt(1, BaseUtils::lightColor(col, 2));
+                    painter->setBrush(gradient);
+                    painter->drawEllipse(QPoint(rect.center().x() + 25 + 30 * i, h), 12, 3);
+                };
+
+                drawNormPic(ClassicFactorsDefines::QXUid, rect.y() + 8);
+                drawNormPic(ClassicFactorsDefines::QYUid, rect.y() + 16);
+                drawNormPic(ClassicFactorsDefines::LUid, rect.y() + 24);
+                drawNormPic(ClassicFactorsDefines::SquareUid, rect.y() + 32);
+            }
+
 
             painter->restore();
         }
@@ -499,7 +530,7 @@ void StabSignalsTestWidget::showRombergNorms(StabSignalsTestCalculator *calculat
 
 DataDefines::NormValue StabSignalsTestWidget::getRombergNorm(const int probeNum,
                                                              const QString &factorUid,
-                                                             const double value) const
+                                                             const double value)
 {
     NormRomberg norm;
     if (probeNum == 0)
