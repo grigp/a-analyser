@@ -1,9 +1,12 @@
 #include "crosstemplate.h"
 
+#include "aanalyserapplication.h"
 #include "metodicdefines.h"
 #include "crossparamsdialog.h"
 #include "crossexecute.h"
 #include "crossvisualize.h"
+#include "crosscalculator.h"
+#include "metodicsfactory.h"
 
 #include <QLayout>
 #include <QDebug>
@@ -45,6 +48,18 @@ void CrossTemplate::paintPreview(QPainter *painter, QRect &rect, const QString &
     Q_UNUSED(painter);
     Q_UNUSED(rect);
     Q_UNUSED(testUid);
+
+    MetodicsFactory *metFactory = static_cast<AAnalyserApplication*>(QApplication::instance())->getMetodics();
+    auto calculator = metFactory->getCalculator(testUid);
+    if (!calculator)
+    {
+        calculator = new CrossCalculator(testUid, nullptr);
+        calculator->calculate();
+        metFactory->storeCalculator(testUid, calculator);
+    }
+
+    CrossVisualize::paintPreview(painter, rect, testUid, static_cast<CrossCalculator*>(calculator));
+
 }
 
 void CrossTemplate::print(QPrinter *printer, const QString &testUid)

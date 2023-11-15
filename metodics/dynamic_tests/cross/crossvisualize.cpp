@@ -133,3 +133,60 @@ void CrossVisualize::print(QPrinter *printer, const QString &testUid)
 
     painter->end();
 }
+
+void CrossVisualize::paintPreview(QPainter *painter, QRect &rect, const QString &testUid, CrossCalculator *calculator)
+{
+    Q_UNUSED(testUid);
+
+    painter->save();
+
+    int size = 0;
+    int z = 6;
+    if (rect.width() > rect.height())
+        size = (rect.height() - z) / 2;
+    else
+        size = (rect.width() - z) / 2;
+
+    //! Значения показателей
+    double diap = calculator->diap();
+    double vUp = calculator->valueUp();
+    double vDn = calculator->valueDown();
+    double vLf = calculator->valueLeft();
+    double vRt = calculator->valueRight();
+
+    //! Фон
+    painter->setPen(QPen(Qt::black, 1, Qt::SolidLine, Qt::FlatCap));
+    painter->setBrush(QBrush(Qt::white));
+    painter->drawRect(rect.center().x() - z/2, rect.center().y() - z/2 - size, z, size);
+    painter->drawRect(rect.center().x() - z/2, rect.center().y() + z/2, z, size);
+    painter->drawRect(rect.center().x() - z/2 - size, rect.center().y() - z/2, size, z);
+    painter->drawRect(rect.center().x() + z/2, rect.center().y() - z/2, size, z);
+
+    //! Значения диаграммы
+    painter->setPen(QPen(Qt::green, 1, Qt::SolidLine, Qt::FlatCap));
+    painter->setBrush(QBrush(Qt::green));
+    int sz = static_cast<int>(vUp / diap * size);
+    painter->drawRect(rect.center().x() - z/2, rect.center().y() - z/2 - sz, z, sz);
+    sz = static_cast<int>(vDn / diap * size);
+    painter->drawRect(rect.center().x() - z/2, rect.center().y() + z/2, z, sz);
+    sz = static_cast<int>(vLf / diap * size);
+    painter->drawRect(rect.center().x() - z/2 - sz, rect.center().y() - z/2, sz, z);
+    sz = static_cast<int>(vRt / diap * size);
+    painter->drawRect(rect.center().x() + z/2, rect.center().y() - z/2, sz, z);
+
+    //! Рамка
+    painter->setPen(QPen(Qt::black, 1, Qt::SolidLine, Qt::FlatCap));
+    painter->setBrush(QBrush());
+    painter->drawRect(rect.center().x() - z/2, rect.center().y() - z/2 - size, z, size);
+    painter->drawRect(rect.center().x() - z/2, rect.center().y() + z/2, z, size);
+    painter->drawRect(rect.center().x() - z/2 - size, rect.center().y() - z/2, size, z);
+    painter->drawRect(rect.center().x() + z/2, rect.center().y() - z/2, size, z);
+
+    painter->setFont(QFont("Sans", 6, QFont::Bold, false));
+    painter->drawText(rect.center().x() + z/2 + 3, rect.center().y() - z/2 - size + 6, QString::number(vUp, 'f', 0));
+    painter->drawText(rect.center().x() + z/2 + 3, rect.center().y() + z/2 + size, QString::number(vDn, 'f', 0));
+    painter->drawText(rect.center().x() - z/2 - size, rect.center().y() + z/2 + 8, QString::number(vLf, 'f', 0));
+    painter->drawText(rect.center().x() + z/2 + size - 10, rect.center().y() + z/2 + 8, QString::number(vRt, 'f', 0));
+
+    painter->restore();
+}
