@@ -160,79 +160,14 @@ void StabSignalsTestWidget::paintPreview(QPainter *painter, QRect &rect, const Q
     {
         bool itr = isRombergTest(ti);
         StabSignalsTestCalculator* calc = static_cast<StabSignalsTestCalculator*>(calculator);
-        if (itr && calc->probesCount() == 2)
-        {
-            auto fc1 = calc->classicFactors(0);
-            auto fc2 = calc->classicFactors(1);
-            auto fv1 = calc->vectorFactors(0);
-            auto fv2 = calc->vectorFactors(1);
-            auto EllS1Val = fc1->factorValue(ClassicFactorsDefines::SquareUid);
-            auto EllS2Val = fc2->factorValue(ClassicFactorsDefines::SquareUid);
-            auto KFR1Val = fv1->factorValue(VectorFactorsDefines::KFRUid);
-            auto KFR2Val = fv2->factorValue(VectorFactorsDefines::KFRUid);
-            double krs = EllS2Val / EllS1Val * 100;
-            double krkfr = KFR2Val / KFR1Val * 100;
-            QString sKRS = QString::number(krs, 'f', 0);
-            QString sKRKFR = QString::number(krkfr, 'f', 0);
-
-            painter->save();
-
-            painter->setPen(QPen(Qt::black, 1, Qt::SolidLine, Qt::FlatCap));
-            painter->setFont(QFont("Sans", 6, QFont::Bold, false));
-            painter->drawText(rect.x() + 5, rect.y() + 10, tr("Коэф Ромберга"));
-            painter->setFont(QFont("Sans", 7, QFont::Bold, false));
-
-            auto setPenColor = [&](const double value)
-            {
-                QColor col = Qt::darkGreen;
-                if (value < 100)
-                    col = Qt::darkYellow;
-                else
-                if (value > 250)
-                    col = Qt::darkRed;
-                painter->setPen(QPen(col, 1, Qt::SolidLine, Qt::FlatCap));
-            };
-
-            setPenColor(krs);
-            painter->drawText(rect.x() + 5, rect.y() + 22, tr("S") + " (" + sKRS + "%)");
-            setPenColor(krkfr);
-            painter->drawText(rect.x() + 5, rect.y() + 34, tr("KFR") + " (" + sKRKFR + "%)");
-
-            for (int i = 0; i < calc->probesCount(); ++i)
-            {
-
-                auto drawNormPic = [&](const QString &factorUid, const int h)
-                {
-                    double value = calc->classicFactors(i)->factorValue(factorUid);
-                    auto nv = getRombergNorm(i, factorUid, value);
-
-                    QColor col = Qt::gray;
-                    if (nv == DataDefines::NotNormal)
-                        col = Qt::red;
-                    else
-                    if (nv == DataDefines::ConditionNormal)
-                        col = Qt::darkYellow;
-                    else
-                    if (nv == DataDefines::Normal)
-                        col = Qt::green;
-
-                    painter->setPen(QPen(BaseUtils::darkColor(col, 2), 1, Qt::SolidLine, Qt::FlatCap));
-                    QRadialGradient gradient(QPointF(rect.center().x() + 25 + 30 * i, h), 12, QPointF(rect.center().x() + 25 + 30 * i, h));
-                    gradient.setColorAt(0, col);
-                    gradient.setColorAt(1, BaseUtils::lightColor(col, 2));
-                    painter->setBrush(gradient);
-                    painter->drawEllipse(QPoint(rect.center().x() + 25 + 30 * i, h), 12, 3);
-                };
-
-                drawNormPic(ClassicFactorsDefines::QXUid, rect.y() + 8);
-                drawNormPic(ClassicFactorsDefines::QYUid, rect.y() + 16);
-                drawNormPic(ClassicFactorsDefines::LUid, rect.y() + 24);
-                drawNormPic(ClassicFactorsDefines::SquareUid, rect.y() + 32);
-            }
-
-
-            painter->restore();
-        }
+        if (itr && calc->probesCount() == 2)   //! Тест Ромберга
+            paintPreviewRomberg(painter, rect, testUid, calc);
+        else
+        if (calc->probesCount() == 3)          //! Тест с тремя пробами, например, поворот головы
+            paintPreviewThree(painter, rect, testUid, calc);
+        else
+        if (calc->probesCount() == 5)          //! Тест с пятью пробами, например, наклон головы, ОКП
+            paintPreviewFive(painter, rect, testUid, calc);
     }
 }
 
@@ -1368,6 +1303,170 @@ void StabSignalsTestWidget::printGraphFive(QPainter *painter, const QString &tes
                       static_cast<int>(paper.y() + paper.height() * 0.745),
                       static_cast<int>(paper.width() * 0.9), static_cast<int>(paper.height() * 0.16));
     ReportElements::drawGraph(painter, rectGraph, testUid, 4, ratio);
+}
+
+void StabSignalsTestWidget::paintPreviewRomberg(QPainter *painter, QRect &rect, const QString &testUid, StabSignalsTestCalculator *calculator)
+{
+    Q_UNUSED(testUid);
+    auto fc1 = calculator->classicFactors(0);
+    auto fc2 = calculator->classicFactors(1);
+    auto fv1 = calculator->vectorFactors(0);
+    auto fv2 = calculator->vectorFactors(1);
+    auto EllS1Val = fc1->factorValue(ClassicFactorsDefines::SquareUid);
+    auto EllS2Val = fc2->factorValue(ClassicFactorsDefines::SquareUid);
+    auto KFR1Val = fv1->factorValue(VectorFactorsDefines::KFRUid);
+    auto KFR2Val = fv2->factorValue(VectorFactorsDefines::KFRUid);
+    double krs = EllS2Val / EllS1Val * 100;
+    double krkfr = KFR2Val / KFR1Val * 100;
+    QString sKRS = QString::number(krs, 'f', 0);
+    QString sKRKFR = QString::number(krkfr, 'f', 0);
+
+    painter->save();
+
+    painter->setPen(QPen(Qt::black, 1, Qt::SolidLine, Qt::FlatCap));
+    painter->setFont(QFont("Sans", 6, QFont::Bold, false));
+    painter->drawText(rect.x() + 5, rect.y() + 10, tr("Коэф Ромберга"));
+    painter->setFont(QFont("Sans", 7, QFont::Bold, false));
+
+    auto setPenColor = [&](const double value)
+    {
+        QColor col = Qt::darkGreen;
+        if (value < 100)
+            col = Qt::darkYellow;
+        else
+        if (value > 250)
+            col = Qt::darkRed;
+        painter->setPen(QPen(col, 1, Qt::SolidLine, Qt::FlatCap));
+    };
+
+    setPenColor(krs);
+    painter->drawText(rect.x() + 5, rect.y() + 22, tr("S") + " (" + sKRS + "%)");
+    setPenColor(krkfr);
+    painter->drawText(rect.x() + 5, rect.y() + 34, tr("KFR") + " (" + sKRKFR + "%)");
+
+    for (int i = 0; i < calculator->probesCount(); ++i)
+    {
+
+        auto drawNormPic = [&](const QString &factorUid, const int h)
+        {
+            double value = calculator->classicFactors(i)->factorValue(factorUid);
+            auto nv = getRombergNorm(i, factorUid, value);
+
+            QColor col = Qt::gray;
+            if (nv == DataDefines::NotNormal)
+                col = Qt::red;
+            else
+            if (nv == DataDefines::ConditionNormal)
+                col = Qt::darkYellow;
+            else
+            if (nv == DataDefines::Normal)
+                col = Qt::green;
+
+            painter->setPen(QPen(BaseUtils::darkColor(col, 2), 1, Qt::SolidLine, Qt::FlatCap));
+            QRadialGradient gradient(QPointF(rect.center().x() + 25 + 30 * i, h), 12, QPointF(rect.center().x() + 25 + 30 * i, h));
+            gradient.setColorAt(0, col);
+            gradient.setColorAt(1, BaseUtils::lightColor(col, 2));
+            painter->setBrush(gradient);
+            painter->drawEllipse(QPoint(rect.center().x() + 25 + 30 * i, h), 12, 3);
+        };
+
+        drawNormPic(ClassicFactorsDefines::QXUid, rect.y() + 8);
+        drawNormPic(ClassicFactorsDefines::QYUid, rect.y() + 16);
+        drawNormPic(ClassicFactorsDefines::LUid, rect.y() + 24);
+        drawNormPic(ClassicFactorsDefines::SquareUid, rect.y() + 32);
+    }
+
+    painter->restore();
+}
+
+void StabSignalsTestWidget::paintPreviewThree(QPainter *painter, QRect &rect, const QString &testUid, StabSignalsTestCalculator *calculator)
+{
+    Q_UNUSED(testUid);
+    painter->save();
+
+    auto fc1 = calculator->classicFactors(0);
+    auto fc2 = calculator->classicFactors(1);
+    auto fc3 = calculator->classicFactors(2);
+    auto fv1 = calculator->vectorFactors(0);
+    auto fv2 = calculator->vectorFactors(1);
+    auto fv3 = calculator->vectorFactors(2);
+    auto EllS1Val = fc1->factorValueFormatted(ClassicFactorsDefines::SquareUid);
+    auto EllS2Val = fc2->factorValueFormatted(ClassicFactorsDefines::SquareUid);
+    auto EllS3Val = fc3->factorValueFormatted(ClassicFactorsDefines::SquareUid);
+    auto KFR1Val = fv1->factorValueFormatted(VectorFactorsDefines::KFRUid);
+    auto KFR2Val = fv2->factorValueFormatted(VectorFactorsDefines::KFRUid);
+    auto KFR3Val = fv3->factorValueFormatted(VectorFactorsDefines::KFRUid);
+
+    painter->setPen(QPen(Qt::black, 1, Qt::SolidLine, Qt::FlatCap));
+    painter->setFont(QFont("Sans", 7, QFont::Bold, false));
+
+    painter->drawText(rect.x() + 30, rect.y() + 9, "(1)");
+    painter->drawText(rect.x() + 70, rect.y() + 9, "(2)");
+    painter->drawText(rect.x() + 110, rect.y() + 9, "(3)");
+
+    painter->drawText(rect.x() + 2, rect.y() + 22, tr("S"));
+    painter->drawText(rect.x() + 30, rect.y() + 22, EllS1Val);
+    painter->drawText(rect.x() + 70, rect.y() + 22, EllS2Val);
+    painter->drawText(rect.x() + 110, rect.y() + 22, EllS3Val);
+
+    painter->drawText(rect.x() + 2, rect.y() + 35, tr("КФР"));
+    painter->drawText(rect.x() + 30, rect.y() + 35, KFR1Val);
+    painter->drawText(rect.x() + 70, rect.y() + 35, KFR2Val);
+    painter->drawText(rect.x() + 110, rect.y() + 35, KFR3Val);
+
+    painter->restore();
+}
+
+void StabSignalsTestWidget::paintPreviewFive(QPainter *painter, QRect &rect, const QString &testUid, StabSignalsTestCalculator *calculator)
+{
+    Q_UNUSED(testUid);
+    painter->save();
+
+    auto fc1 = calculator->classicFactors(0);
+    auto fc2 = calculator->classicFactors(1);
+    auto fc3 = calculator->classicFactors(2);
+    auto fc4 = calculator->classicFactors(3);
+    auto fc5 = calculator->classicFactors(4);
+    auto fv1 = calculator->vectorFactors(0);
+    auto fv2 = calculator->vectorFactors(1);
+    auto fv3 = calculator->vectorFactors(2);
+    auto fv4 = calculator->vectorFactors(3);
+    auto fv5 = calculator->vectorFactors(4);
+    auto EllS1Val = fc1->factorValueFormatted(ClassicFactorsDefines::SquareUid);
+    auto EllS2Val = fc2->factorValueFormatted(ClassicFactorsDefines::SquareUid);
+    auto EllS3Val = fc3->factorValueFormatted(ClassicFactorsDefines::SquareUid);
+    auto EllS4Val = fc3->factorValueFormatted(ClassicFactorsDefines::SquareUid);
+    auto EllS5Val = fc4->factorValueFormatted(ClassicFactorsDefines::SquareUid);
+    auto KFR1Val = fv1->factorValueFormatted(VectorFactorsDefines::KFRUid);
+    auto KFR2Val = fv2->factorValueFormatted(VectorFactorsDefines::KFRUid);
+    auto KFR3Val = fv3->factorValueFormatted(VectorFactorsDefines::KFRUid);
+    auto KFR4Val = fv4->factorValueFormatted(VectorFactorsDefines::KFRUid);
+    auto KFR5Val = fv5->factorValueFormatted(VectorFactorsDefines::KFRUid);
+
+    painter->setPen(QPen(Qt::black, 1, Qt::SolidLine, Qt::FlatCap));
+    painter->setFont(QFont("Sans", 6, QFont::Bold, false));
+
+    painter->drawText(rect.x() + 25, rect.y() + 9, "(1)");
+    painter->drawText(rect.x() + 50, rect.y() + 9, "(2)");
+    painter->drawText(rect.x() + 75, rect.y() + 9, "(3)");
+    painter->drawText(rect.x() + 100, rect.y() + 9, "(4)");
+    painter->drawText(rect.x() + 125, rect.y() + 9, "(5)");
+
+    painter->drawText(rect.x() + 2, rect.y() + 22, tr("S"));
+    painter->drawText(rect.x() + 25, rect.y() + 22, EllS1Val);
+    painter->drawText(rect.x() + 50, rect.y() + 22, EllS2Val);
+    painter->drawText(rect.x() + 75, rect.y() + 22, EllS3Val);
+    painter->drawText(rect.x() + 100, rect.y() + 22, EllS4Val);
+    painter->drawText(rect.x() + 125, rect.y() + 22, EllS5Val);
+
+    painter->drawText(rect.x() + 2, rect.y() + 35, tr("КФР"));
+    painter->drawText(rect.x() + 25, rect.y() + 35, KFR1Val);
+    painter->drawText(rect.x() + 50, rect.y() + 35, KFR2Val);
+    painter->drawText(rect.x() + 75, rect.y() + 35, KFR3Val);
+    painter->drawText(rect.x() + 100, rect.y() + 35, KFR4Val);
+    painter->drawText(rect.x() + 125, rect.y() + 35, KFR5Val);
+
+    painter->restore();
 }
 
 QStringList StabSignalsTestWidget::getProbesNameList(const QString &testUid, const int count)

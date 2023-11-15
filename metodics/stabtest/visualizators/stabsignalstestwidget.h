@@ -182,6 +182,30 @@ private:
     static void printGraphFive(QPainter *painter, const QString &testUid, const QRect paper, StabSignalsTestWidget* visual);
 
     /*!
+     * \brief Прорисовывает предварительные результаты для теста Ромберга с помощью заданного рисователя
+     * \param painter - рисователь
+     * \param rect - зона прорисовки
+     * \param testUid - uid теста
+     */
+    static void paintPreviewRomberg(QPainter* painter, QRect& rect, const QString& testUid, StabSignalsTestCalculator* calculator);
+
+    /*!
+     * \brief Прорисовывает предварительные результаты для теста с тремя пробами с помощью заданного рисователя
+     * \param painter - рисователь
+     * \param rect - зона прорисовки
+     * \param testUid - uid теста
+     */
+    static void paintPreviewThree(QPainter* painter, QRect& rect, const QString& testUid, StabSignalsTestCalculator* calculator);
+
+    /*!
+     * \brief Прорисовывает предварительные результаты для теста с пятью пробами с помощью заданного рисователя
+     * \param painter - рисователь
+     * \param rect - зона прорисовки
+     * \param testUid - uid теста
+     */
+    static void paintPreviewFive(QPainter* painter, QRect& rect, const QString& testUid, StabSignalsTestCalculator* calculator);
+
+    /*!
      * \brief Возвращает список названий проб
      * \param testUid - uid теста
      * \param count - кол-во проб в выходном списке

@@ -292,6 +292,7 @@ void MetodicsFactory::saveMetodics()
             QJsonObject obj;
             obj["uid"] = met.uid;
             obj["name"] = met.name;
+            obj["short_name"] = met.shortName;
             obj["image"] = met.imageName;
             obj["template"] = met.templateId;
             obj["kind"] = met.kindUid;
