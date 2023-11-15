@@ -136,7 +136,21 @@ void TargetWidget::print(QPrinter *printer, const QString &testUid)
 
 void TargetWidget::paintPreview(QPainter *painter, QRect &rect, const QString &testUid, TestCalculator *calculator)
 {
+    TargetCalculator* calc = static_cast<TargetCalculator*>(calculator);
+    auto val = calc->factors()->factorValue(TargetFactorsDefines::TargetScoreUid);
+    auto valT = calc->factors()->factorValue(TargetFactorsDefines::TargetTotalScoreUid);
+    auto sScore = QString(tr("Количество очков") + " %1").arg(QString::number(val, 'f', 0));
+    auto sTotalScore = QString(tr("Суммарный балл") + " %1").arg(QString::number(valT, 'f', 0));
 
+    painter->save();
+
+    painter->setPen(QPen(Qt::black, 1, Qt::SolidLine, Qt::FlatCap));
+    painter->setFont(QFont("Sans", 7, QFont::Bold, false));
+
+    painter->drawText(rect.x() + 5, rect.y() + 5, sScore);
+    painter->drawText(rect.x() + 5, rect.y() + 15, sTotalScore);
+
+    painter->restore();
 }
 
 void TargetWidget::timerEvent(QTimerEvent *event)
