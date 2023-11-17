@@ -97,6 +97,12 @@ private slots:
      */
     void on_cancelPPForPatient(const QString& patientUid);
 
+    /*!
+     * \brief Выбор теста в таблице
+     * \param idx - итем с записью о тесте
+     */
+    void on_selectTest(QModelIndex idx);
+
 private:
     Ui::PersonalProgramWidget *ui;
 

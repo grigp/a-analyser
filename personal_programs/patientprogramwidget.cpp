@@ -3,11 +3,13 @@
 
 #include <QDebug>
 
+#include "aanalyserapplication.h"
 #include "personalprogram.h"
 #include "personalprogramdefines.h"
 #include "dataprovider.h"
 #include "dailyprograminfodelegate.h"
 #include "testinfodelegate.h"
+#include "metodicsfactory.h"
 
 PatientProgramWidget::PatientProgramWidget(QWidget *parent) :
     QWidget(parent),
@@ -43,11 +45,22 @@ void PatientProgramWidget::on_selectItem(QModelIndex idx)
     m_selectedIndex = QModelIndex();
     if (idx.column() > 0)
     {
+        //! Название методики в статусе
         auto uidMethod = idx.data(PersonalProgramDefines::PersonalProgram::MethodUidRole).toString();
+        MetodicsFactory *metFactory = static_cast<AAnalyserApplication*>(QApplication::instance())->getMetodics();
+        auto mi = metFactory->metodic(uidMethod);
+        ui->lblMethodName->setText(tr("Методика") + " - " + mi.name);
+
+        //! Дата и время проведения теста в статусе
+        auto uidTest = idx.data(PersonalProgramDefines::PersonalProgram::TestUidRole).toString();
+        DataDefines::TestInfo ti;
+        if (DataProvider::getTestInfo(uidTest, ti))
+            ui->lblDateTime->setText(tr("Проведен") + " - " + ti.dateTime.toString("dd:MM:yyyy hh:mm"));
 
         if (uidMethod != "")
         {
             m_selectedIndex = idx;
+            emit selectItem(idx);
         }
     }
 }

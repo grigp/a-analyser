@@ -471,6 +471,16 @@ void PersonalProgramWidget::on_cancelPPForPatient(const QString &patientUid)
     }
 }
 
+void PersonalProgramWidget::on_selectTest(QModelIndex idx)
+{
+    if (idx.isValid())
+    {
+        //! Если результаты открыты, покажем новые
+        if (ui->frPPOpenTest->isVisible())
+            on_openTest();
+    }
+}
+
 QStandardItem* PersonalProgramWidget::appendLine(const QString uidPat,
                                                  const QString uidPPAssigned,
                                                  const QJsonObject& objPP,
@@ -571,6 +581,7 @@ void PersonalProgramWidget::showPersonalProgram(const QString& uidPPAssigned)
     {
         auto ppw = new PatientProgramWidget(ui->frPrograms);
         ppw->assignPersonalProgram(uidPPAssigned);
+        connect(ppw, &PatientProgramWidget::selectItem, this, &PersonalProgramWidget::on_selectTest);
         ui->lblPPTitle->setText("Индивидуальная программа: \"" + ppw->namePP() + "\"");
         ui->frPrograms->layout()->addWidget(ppw);
         m_wgts.insert(uidPPAssigned, ppw);

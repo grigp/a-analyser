@@ -37,6 +37,9 @@ public:
      */
     QString namePP() const;
 
+signals:
+    void selectItem(QModelIndex idx);
+
 private slots:
     void on_selectItem(QModelIndex idx);
 
