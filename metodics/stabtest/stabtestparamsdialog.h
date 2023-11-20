@@ -19,7 +19,7 @@ class StabTestParamsDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit StabTestParamsDialog(QWidget *parent = 0);
+    explicit StabTestParamsDialog(QWidget *parent = nullptr);
     ~StabTestParamsDialog();
 
     /*!
@@ -51,6 +51,8 @@ private slots:
     void changeZeroing(const bool zeroing);
     void changeScale(const int scale);
 
+    void on_editStimulParams();
+
 private:
     Ui::StabTestParamsDialog *ui;
 
@@ -67,6 +69,7 @@ private:
 
     int m_curProbe = -1;
     QStandardItemModel *m_mdlProbes {nullptr};
+    QMap<int, QDialog*> m_stimulParamsEditors;
 };
 
 #endif // STABTESTPARAMSDIALOG_H

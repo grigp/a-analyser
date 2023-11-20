@@ -5,6 +5,7 @@
 #include "stabtesttemplate.h"
 #include "datadefines.h"
 #include "settingsprovider.h"
+#include "linesparamsdialog.h"
 
 #include <QJsonArray>
 #include <QMessageBox>
@@ -24,6 +25,7 @@ struct MetodicParams
 MetodicParams metParams;
 
 
+
 }
 
 StabTestParamsDialog::StabTestParamsDialog(QWidget *parent) :
@@ -41,7 +43,12 @@ StabTestParamsDialog::StabTestParamsDialog(QWidget *parent) :
                            << tr("Цветные круги")
                            << tr("Звуковые сигналы")
                            << tr("Мишень")
-                           << tr("С выделенной зоной"));
+                           << tr("С выделенной зоной")
+                           << tr("Движение полос"));
+//                           << tr("Полосы вправо")
+//                           << tr("Полосы влево")
+//                           << tr("Полосы вверх")
+//                           << tr("Полосы вниз"));
     ui->cbScale->addItems(QStringList() << "1" << "2" << "4" << "8" << "16" << "32" << "64" << "128");
     ui->cbConditions->addItems(QStringList()
                                << tr("Анализ сигналов")             ///< Код 0
@@ -51,6 +58,13 @@ StabTestParamsDialog::StabTestParamsDialog(QWidget *parent) :
                                << tr("Мишень")                      ///< Код 4
                                << tr("Стрессовая стратегия"));      ///< Код 5
     fillProbeKinds();
+
+    m_stimulParamsEditors.insert(0, nullptr);
+    m_stimulParamsEditors.insert(1, nullptr);
+    m_stimulParamsEditors.insert(2, nullptr);
+    m_stimulParamsEditors.insert(3, nullptr);
+    m_stimulParamsEditors.insert(4, nullptr);
+    m_stimulParamsEditors.insert(5, new LinesParamsDialog(this));
 
     //! Редактирование названия пробы
     connect(m_mdlProbes, &QStandardItemModel::itemChanged, [=](QStandardItem *item)
@@ -233,10 +247,13 @@ void StabTestParamsDialog::changeStimulIndex(const int stimul)
 {
     if (m_curProbe >= 0 && m_curProbe < metParams.probes.size())
     {
+        ui->btnStimulSettings->setEnabled(m_stimulParamsEditors.value(stimul));
         auto pp = metParams.probes.at(m_curProbe);
         pp.stimulCode = stimul;
         metParams.probes.replace(m_curProbe, pp);
     }
+    else
+        ui->btnStimulSettings->setEnabled(false);
 }
 
 void StabTestParamsDialog::changeZeroing(const bool zeroing)
@@ -257,6 +274,19 @@ void StabTestParamsDialog::changeScale(const int scale)
         pp.scale = scale;
         metParams.probes.replace(m_curProbe, pp);
     }
+}
+
+void StabTestParamsDialog::on_editStimulParams()
+{
+    if (m_curProbe >= 0 && m_curProbe < metParams.probes.size())
+    {
+        QDialog* dlg = m_stimulParamsEditors.value(ui->cbStimul->currentIndex());
+        if (dlg->exec() == QDialog::Accepted)
+        {
+
+        }
+    }
+
 }
 
 void StabTestParamsDialog::showProbeParam()
@@ -302,3 +332,4 @@ void StabTestParamsDialog::fillProbeKinds()
     foreach (auto pki, pkl)
         ui->cbProbeKind->addItem(StabTestTemplate::getProbeKindName(pki));
 }
+

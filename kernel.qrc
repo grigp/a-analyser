@@ -258,5 +258,6 @@
         <file>images/SignSussec.png</file>
         <file>images/rmAuto.png</file>
         <file>images/rmOperator.png</file>
+        <file>images/Methodics/OKT.png</file>
     </qresource>
 </RCC>

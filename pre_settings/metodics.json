@@ -111,6 +111,30 @@
             }
         },
         {
+            "uid": "{B048623F-7A30-46A1-95A3-C2F480B6E697}",
+            "name": "Оптокинетический тест",
+            "short_name": "ОКТ",
+            "image": "OKT.png",
+            "template": "met_stabtest_uid",
+            "build_norms": false,
+            "kind": "{03FFE24D-56ED-4138-9FC7-A125A020C190}",
+            "params":
+            {
+                "condition": 0,
+                "probes": [
+                    {
+                        "name": "Фоновая",
+                        "kind": 1,
+                        "autoend": 0,
+                        "time": 20,
+                        "latent_time": 0,
+                        "stimul": 0,
+                        "zeroing": 1,
+                        "scale": 0
+                    }
+                ]
+            }
+        },        {
             "uid": "{EBEA57B4-A791-4F35-87C2-BEDEC6406D2D}",
             "name": "Допусковый контроль",
             "short_name": "Допусковый контроль",

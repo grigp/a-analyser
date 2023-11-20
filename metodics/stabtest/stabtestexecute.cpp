@@ -19,6 +19,7 @@
 #include "soundpickwindow.h"
 #include "targetwindow.h"
 #include "fivezoneswindow.h"
+#include "lineswindow.h"
 #include "driverdefines.h"
 #include "aanalysersettings.h"
 
@@ -544,6 +545,9 @@ void StabTestExecute::showPatientWindow(const int winCode)
         break;
     case 4:
         m_patientWin = new FiveZonesWindow(this);
+        break;
+    case 5:
+        m_patientWin = new LinesWindow(this);
         break;
     default:
         m_patientWin = nullptr;

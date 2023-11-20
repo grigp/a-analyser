@@ -245,40 +245,6 @@
           </widget>
          </item>
          <item>
-          <widget class="QFrame" name="frStimul">
-           <property name="frameShape">
-            <enum>QFrame::StyledPanel</enum>
-           </property>
-           <property name="frameShadow">
-            <enum>QFrame::Raised</enum>
-           </property>
-           <layout class="QHBoxLayout" name="horizontalLayout_4">
-            <property name="leftMargin">
-             <number>1</number>
-            </property>
-            <property name="topMargin">
-             <number>1</number>
-            </property>
-            <property name="rightMargin">
-             <number>1</number>
-            </property>
-            <property name="bottomMargin">
-             <number>1</number>
-            </property>
-            <item>
-             <widget class="QLabel" name="lblStimul">
-              <property name="text">
-               <string>Видеостимуляция</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QComboBox" name="cbStimul"/>
-            </item>
-           </layout>
-          </widget>
-         </item>
-         <item>
           <widget class="QFrame" name="frAutoEnd">
            <property name="frameShape">
             <enum>QFrame::StyledPanel</enum>
@@ -511,6 +477,63 @@
           </widget>
          </item>
          <item>
+          <widget class="QFrame" name="frStimul">
+           <property name="frameShape">
+            <enum>QFrame::StyledPanel</enum>
+           </property>
+           <property name="frameShadow">
+            <enum>QFrame::Raised</enum>
+           </property>
+           <layout class="QHBoxLayout" name="horizontalLayout_4">
+            <property name="leftMargin">
+             <number>1</number>
+            </property>
+            <property name="topMargin">
+             <number>1</number>
+            </property>
+            <property name="rightMargin">
+             <number>1</number>
+            </property>
+            <property name="bottomMargin">
+             <number>1</number>
+            </property>
+            <item>
+             <widget class="QLabel" name="lblStimul">
+              <property name="text">
+               <string>Видеостимуляция</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QComboBox" name="cbStimul"/>
+            </item>
+            <item>
+             <widget class="QPushButton" name="btnStimulSettings">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+              <property name="icon">
+               <iconset resource="../../kernel.qrc">
+                <normaloff>:/images/Edit.png</normaloff>:/images/Edit.png</iconset>
+              </property>
+              <property name="iconSize">
+               <size>
+                <width>20</width>
+                <height>20</height>
+               </size>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </item>
+         <item>
           <spacer name="verticalSpacer">
            <property name="orientation">
             <enum>Qt::Vertical</enum>
@@ -570,8 +593,8 @@
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>266</x>
-     <y>418</y>
+     <x>275</x>
+     <y>397</y>
     </hint>
     <hint type="destinationlabel">
      <x>157</x>
@@ -586,8 +609,8 @@
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>334</x>
-     <y>418</y>
+     <x>343</x>
+     <y>397</y>
     </hint>
     <hint type="destinationlabel">
      <x>286</x>
@@ -603,7 +626,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>184</x>
-     <y>46</y>
+     <y>37</y>
     </hint>
     <hint type="destinationlabel">
      <x>430</x>
@@ -619,7 +642,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>222</x>
-     <y>46</y>
+     <y>37</y>
     </hint>
     <hint type="destinationlabel">
      <x>432</x>
@@ -650,8 +673,8 @@
    <slot>changeTime(QTime)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>625</x>
-     <y>169</y>
+     <x>677</x>
+     <y>142</y>
     </hint>
     <hint type="destinationlabel">
      <x>655</x>
@@ -666,8 +689,8 @@
    <slot>changeLatentTime(QTime)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>625</x>
-     <y>203</y>
+     <x>677</x>
+     <y>176</y>
     </hint>
     <hint type="destinationlabel">
      <x>655</x>
@@ -682,8 +705,8 @@
    <slot>changeStimulIndex(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>625</x>
-     <y>237</y>
+     <x>639</x>
+     <y>274</y>
     </hint>
     <hint type="destinationlabel">
      <x>655</x>
@@ -698,8 +721,8 @@
    <slot>changeZeroing(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>625</x>
-     <y>262</y>
+     <x>677</x>
+     <y>201</y>
     </hint>
     <hint type="destinationlabel">
      <x>655</x>
@@ -714,8 +737,8 @@
    <slot>changeScale(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>625</x>
-     <y>299</y>
+     <x>677</x>
+     <y>238</y>
     </hint>
     <hint type="destinationlabel">
      <x>655</x>
@@ -730,8 +753,8 @@
    <slot>changeAutoEnd(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>625</x>
-     <y>132</y>
+     <x>677</x>
+     <y>105</y>
     </hint>
     <hint type="destinationlabel">
      <x>655</x>
@@ -762,12 +785,28 @@
    <slot>changeProbeKind(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>530</x>
-     <y>93</y>
+     <x>677</x>
+     <y>80</y>
     </hint>
     <hint type="destinationlabel">
      <x>659</x>
      <y>141</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btnStimulSettings</sender>
+   <signal>clicked()</signal>
+   <receiver>StabTestParamsDialog</receiver>
+   <slot>on_editStimulParams()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>658</x>
+     <y>258</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>708</x>
+     <y>223</y>
     </hint>
    </hints>
   </connection>
@@ -785,5 +824,6 @@
   <slot>changeAutoEnd(bool)</slot>
   <slot>changeCondition(int)</slot>
   <slot>changeProbeKind(int)</slot>
+  <slot>on_editStimulParams()</slot>
  </slots>
 </ui>
