@@ -5,6 +5,9 @@
 #include <QList>
 #include <QJsonArray>
 #include <QJsonObject>
+#include <QColor>
+
+#include "basedefines.h"
 
 namespace StabTestParams
 {
@@ -36,6 +39,26 @@ enum ProbeKinds
 };
 
 /*!
+ * \brief Параметры оптокинетической стимуляции The StimulLinesParams struct
+ */
+struct StimulLinesParams
+{
+    BaseDefines::Directions direction;
+    int width;
+    int speed;
+    int dutyCycle;
+    QColor color;
+    StimulLinesParams()
+    {
+        direction = BaseDefines::dirRight;
+        width = 120;
+        speed = 200;
+        dutyCycle = 1;
+        color = Qt::black;
+    }
+};
+
+/*!
  * \brief Параметры пробы в тесте ProbeParams struct
  */
 struct ProbeParams
@@ -48,6 +71,9 @@ struct ProbeParams
     int stimulCode;        ///< Код видеостимуляции 0 - нет, 1 - цветные круги, 2 - звуковые сигналы, 3 - мишень
     bool zeroingEnabled;   ///< Разрешена ли центровка
     int scale;             ///< Номер масштаба 0 - 1, 1 - 2, 2 - 4, 3 - 8, 4 - 16, 5 - 32, 6 - 64, 7 -128
+
+    StimulLinesParams stimLines; ///< Параметры оптокинетической стимуляции
+
     ProbeParams()
     {
         name = "";

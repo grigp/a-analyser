@@ -1,6 +1,7 @@
 #include "stabtestparamsdialog.h"
 #include "ui_stabtestparamsdialog.h"
 
+#include "baseutils.h"
 #include "stabtestparams.h"
 #include "stabtesttemplate.h"
 #include "datadefines.h"
@@ -24,7 +25,30 @@ struct MetodicParams
 
 MetodicParams metParams;
 
+/*!
+ * \brief Перечисление окон пациента The PatientWindows enum
+ */
+enum PatientWindows
+{
+      pwNone = 0
+    , pwColors
+    , pwSound
+    , pwTarget
+    , pwZones
+    , pwLines
+};
 
+/*!
+ * \brief Названия окон пациента The PatientWindowsName
+ */
+static QMap<PatientWindows, QString> PatientWindowsName {
+      std::pair<PatientWindows, QString> (pwNone, QCoreApplication::tr("нет"))
+    , std::pair<PatientWindows, QString> (pwColors, QCoreApplication::tr("Цветные круги"))
+    , std::pair<PatientWindows, QString> (pwSound, QCoreApplication::tr("Звуковые сигналы"))
+    , std::pair<PatientWindows, QString> (pwTarget, QCoreApplication::tr("Мишень"))
+    , std::pair<PatientWindows, QString> (pwZones, QCoreApplication::tr("С выделенной зоной"))
+    , std::pair<PatientWindows, QString> (pwLines, QCoreApplication::tr("Движение полос"))
+};
 
 }
 
@@ -39,16 +63,12 @@ StabTestParamsDialog::StabTestParamsDialog(QWidget *parent) :
 
     ui->lvProbes->setModel(m_mdlProbes);
     ui->cbStimul->addItems(QStringList()
-                           << tr("нет")
-                           << tr("Цветные круги")
-                           << tr("Звуковые сигналы")
-                           << tr("Мишень")
-                           << tr("С выделенной зоной")
-                           << tr("Движение полос"));
-//                           << tr("Полосы вправо")
-//                           << tr("Полосы влево")
-//                           << tr("Полосы вверх")
-//                           << tr("Полосы вниз"));
+                           << PatientWindowsName.value(pwNone)
+                           << PatientWindowsName.value(pwColors)
+                           << PatientWindowsName.value(pwSound)
+                           << PatientWindowsName.value(pwTarget)
+                           << PatientWindowsName.value(pwZones)
+                           << PatientWindowsName.value(pwLines));
     ui->cbScale->addItems(QStringList() << "1" << "2" << "4" << "8" << "16" << "32" << "64" << "128");
     ui->cbConditions->addItems(QStringList()
                                << tr("Анализ сигналов")             ///< Код 0
@@ -59,12 +79,12 @@ StabTestParamsDialog::StabTestParamsDialog(QWidget *parent) :
                                << tr("Стрессовая стратегия"));      ///< Код 5
     fillProbeKinds();
 
-    m_stimulParamsEditors.insert(0, nullptr);
-    m_stimulParamsEditors.insert(1, nullptr);
-    m_stimulParamsEditors.insert(2, nullptr);
-    m_stimulParamsEditors.insert(3, nullptr);
-    m_stimulParamsEditors.insert(4, nullptr);
-    m_stimulParamsEditors.insert(5, new LinesParamsDialog(this));
+    m_stimulParamsEditors.insert(pwNone, nullptr);
+    m_stimulParamsEditors.insert(pwColors, nullptr);
+    m_stimulParamsEditors.insert(pwSound, nullptr);
+    m_stimulParamsEditors.insert(pwTarget, nullptr);
+    m_stimulParamsEditors.insert(pwZones, nullptr);
+    m_stimulParamsEditors.insert(pwLines, new LinesParamsDialog(this));
 
     //! Редактирование названия пробы
     connect(m_mdlProbes, &QStandardItemModel::itemChanged, [=](QStandardItem *item)
@@ -106,6 +126,13 @@ void StabTestParamsDialog::setParams(const QJsonObject &params)
         pp.zeroingEnabled = obj["zeroing"].toInt() == 1;
         pp.scale = obj["scale"].toInt();
 
+        auto objSL = obj["stimul_lines"].toObject();
+        pp.stimLines.direction = static_cast<BaseDefines::Directions>(objSL["direction"].toInt(BaseDefines::dirRight));
+        pp.stimLines.width = objSL["width"].toInt(120);
+        pp.stimLines.speed = objSL["speed"].toInt(200);
+        pp.stimLines.dutyCycle = objSL["duty_cycle"].toInt(1);
+        pp.stimLines.color = BaseUtils::strRGBAToColor(objSL["color"].toString("00000000"));
+
         metParams.probes << pp;
         m_mdlProbes->appendRow(new QStandardItem(pp.name));
     }
@@ -137,6 +164,15 @@ QJsonObject StabTestParamsDialog::getParams()
         objP["stimul"] = pp.stimulCode;
         objP["zeroing"] = static_cast<int>(pp.zeroingEnabled);
         objP["scale"] = pp.scale;
+
+        QJsonObject objSL;
+        objSL["direction"] = pp.stimLines.direction;
+        objSL["width"] = pp.stimLines.width;
+        objSL["speed"] = pp.stimLines.speed;
+        objSL["duty_cycle"] = pp.stimLines.dutyCycle;
+        objSL["color"] = BaseUtils::colorToRGBAStr(pp.stimLines.color);
+        objP["stimul_lines"] = objSL;
+
         prbArray.append(objP);
     }
     retval["probes"] = prbArray;
@@ -280,10 +316,28 @@ void StabTestParamsDialog::on_editStimulParams()
 {
     if (m_curProbe >= 0 && m_curProbe < metParams.probes.size())
     {
+        auto pp = metParams.probes.at(m_curProbe);
+
         QDialog* dlg = m_stimulParamsEditors.value(ui->cbStimul->currentIndex());
+
+        if (ui->cbStimul->currentIndex() == pwLines)
+        {
+            static_cast<LinesParamsDialog*>(dlg)->setDirection(pp.stimLines.direction);
+            static_cast<LinesParamsDialog*>(dlg)->setWidth(pp.stimLines.width);
+            static_cast<LinesParamsDialog*>(dlg)->setSpeed(pp.stimLines.speed);
+            static_cast<LinesParamsDialog*>(dlg)->setDutyCycle(pp.stimLines.dutyCycle);
+            static_cast<LinesParamsDialog*>(dlg)->setColor(pp.stimLines.color);
+        }
+
         if (dlg->exec() == QDialog::Accepted)
         {
+            pp.stimLines.direction = static_cast<LinesParamsDialog*>(dlg)->direction();
+            pp.stimLines.width = static_cast<LinesParamsDialog*>(dlg)->width();
+            pp.stimLines.speed = static_cast<LinesParamsDialog*>(dlg)->speed();
+            pp.stimLines.dutyCycle = static_cast<LinesParamsDialog*>(dlg)->dutyCycle();
+            pp.stimLines.color = static_cast<LinesParamsDialog*>(dlg)->color();
 
+            metParams.probes.replace(m_curProbe, pp);
         }
     }
 
