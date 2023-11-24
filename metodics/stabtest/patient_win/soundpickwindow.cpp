@@ -19,6 +19,11 @@ SoundPickWindow::~SoundPickWindow()
     delete ui;
 }
 
+void SoundPickWindow::setParams(const QJsonObject &params)
+{
+    Q_UNUSED(params);
+}
+
 void SoundPickWindow::setDiap(const int diap)
 {
     Q_UNUSED(diap);

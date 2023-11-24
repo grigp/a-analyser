@@ -72,6 +72,7 @@ struct ProbeParams
     bool zeroingEnabled;   ///< Разрешена ли центровка
     int scale;             ///< Номер масштаба 0 - 1, 1 - 2, 2 - 4, 3 - 8, 4 - 16, 5 - 32, 6 - 64, 7 -128
 
+    QJsonObject stimParams {QJsonObject()};      ///< Параметры окна пациента, если они есть
     StimulLinesParams stimLines; ///< Параметры оптокинетической стимуляции
 
     ProbeParams()

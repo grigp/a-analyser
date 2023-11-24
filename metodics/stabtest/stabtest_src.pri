@@ -10,7 +10,8 @@ HEADERS += \
     $$PWD/stabtestvisualize.h \
     $$PWD/stabtestparamsdialog.h \
     $$PWD/stabtestparams.h \
-    $$PWD/linesparamsdialog.h
+    $$PWD/linesparamsdialog.h \
+    $$PWD/stabtestdefines.h
 
 SOURCES += \
     $$PWD/stabtesttemplate.cpp \

@@ -22,6 +22,7 @@
 #include "lineswindow.h"
 #include "driverdefines.h"
 #include "aanalysersettings.h"
+#include "stabtestdefines.h"
 
 #include <QJsonObject>
 #include <QJsonArray>
@@ -81,6 +82,16 @@ void StabTestExecute::setParams(const QJsonObject &params)
         pp.stimulCode = obj["stimul"].toInt();
         pp.zeroingEnabled = obj["zeroing"].toInt() == 1;
         pp.scale = obj["scale"].toInt();
+        if (pp.stimulCode == StabTestDefines::pwLines)
+        {
+            auto objSL = obj["stimul_lines"].toObject();
+            pp.stimParams = objSL;
+            pp.stimLines.direction = static_cast<BaseDefines::Directions>(objSL["direction"].toInt(BaseDefines::dirRight));
+            pp.stimLines.width = objSL["width"].toInt(120);
+            pp.stimLines.speed = objSL["speed"].toInt(200);
+            pp.stimLines.dutyCycle = objSL["duty_cycle"].toInt(1);
+            pp.stimLines.color = BaseUtils::strRGBAToColor(objSL["color"].toString("00000000"));
+        }
 
         m_params << pp;
         if (pp.zeroingEnabled)
@@ -560,6 +571,7 @@ void StabTestExecute::showPatientWindow(const int winCode)
         m_patientWin->resize(rect.size());
         m_patientWin->move(rect.x(), rect.y());
 
+        m_patientWin->setParams(m_params.at(m_probe).stimParams);
         m_patientWin->show();
     }
 }

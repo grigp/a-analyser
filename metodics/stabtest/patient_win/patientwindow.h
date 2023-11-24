@@ -18,6 +18,11 @@ public:
     explicit PatientWindow(QWidget *parent = 0);
     ~PatientWindow();
 
+    /*!
+     * \brief Задает параметры стимуляции
+     */
+    virtual void setParams(const QJsonObject& params) = 0;
+
     virtual void setDiap(const int diap) = 0;
     virtual void setMarker(const double x, const double y) = 0;
 

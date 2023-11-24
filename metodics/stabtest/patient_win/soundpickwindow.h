@@ -21,6 +21,11 @@ public:
     explicit SoundPickWindow(QWidget *parent = nullptr);
     ~SoundPickWindow() override;
 
+    /*!
+     * \brief Задает параметры стимуляции
+     */
+    void setParams(const QJsonObject& params) override;
+
     void setDiap(const int diap) override;
     void setMarker(const double x, const double y) override;
 

@@ -29,6 +29,11 @@ ColoredCircleWindow::~ColoredCircleWindow()
     delete ui;
 }
 
+void ColoredCircleWindow::setParams(const QJsonObject &params)
+{
+    Q_UNUSED(params);
+}
+
 void ColoredCircleWindow::setDiap(const int diap)
 {
     Q_UNUSED(diap);

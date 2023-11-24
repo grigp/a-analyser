@@ -19,6 +19,11 @@ FiveZonesWindow::~FiveZonesWindow()
     delete ui;
 }
 
+void FiveZonesWindow::setParams(const QJsonObject &params)
+{
+    Q_UNUSED(params);
+}
+
 void FiveZonesWindow::setDiap(const int diap)
 {
     ui->wgtFiveZones->setDiap(diap);

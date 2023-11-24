@@ -18,6 +18,11 @@ TargetWindow::~TargetWindow()
     delete ui;
 }
 
+void TargetWindow::setParams(const QJsonObject &params)
+{
+    Q_UNUSED(params);
+}
+
 void TargetWindow::setDiap(const int diap)
 {
     ui->wgtTarget->setDiap(diap);

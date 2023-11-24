@@ -2,7 +2,10 @@
 #define LINESWINDOW_H
 
 #include <QDialog>
+#include <QGraphicsScene>
 #include "patientwindow.h"
+
+class VideoIrritant;
 
 namespace Ui {
 class LinesWindow;
@@ -18,6 +21,11 @@ class LinesWindow : public PatientWindow
 public:
     explicit LinesWindow(QWidget *parent = nullptr);
     ~LinesWindow() override;
+
+    /*!
+     * \brief Задает параметры стимуляции
+     */
+    void setParams(const QJsonObject& params) override;
 
     void setDiap(const int diap) override;
     void setMarker(const double x, const double y) override;
@@ -38,6 +46,11 @@ public:
 
 private:
     Ui::LinesWindow *ui;
+
+    void initLines();
+
+    QGraphicsScene* m_scene {nullptr};
+    VideoIrritant* m_videoIrritant {nullptr};   ///< Слой видеораздражителя (оптокинетической стимуляции)
 };
 
 #endif // LINESWINDOW_H

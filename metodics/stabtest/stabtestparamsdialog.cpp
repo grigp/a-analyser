@@ -7,6 +7,7 @@
 #include "datadefines.h"
 #include "settingsprovider.h"
 #include "linesparamsdialog.h"
+#include "stabtestdefines.h"
 
 #include <QJsonArray>
 #include <QMessageBox>
@@ -25,30 +26,6 @@ struct MetodicParams
 
 MetodicParams metParams;
 
-/*!
- * \brief Перечисление окон пациента The PatientWindows enum
- */
-enum PatientWindows
-{
-      pwNone = 0
-    , pwColors
-    , pwSound
-    , pwTarget
-    , pwZones
-    , pwLines
-};
-
-/*!
- * \brief Названия окон пациента The PatientWindowsName
- */
-static QMap<PatientWindows, QString> PatientWindowsName {
-      std::pair<PatientWindows, QString> (pwNone, QCoreApplication::tr("нет"))
-    , std::pair<PatientWindows, QString> (pwColors, QCoreApplication::tr("Цветные круги"))
-    , std::pair<PatientWindows, QString> (pwSound, QCoreApplication::tr("Звуковые сигналы"))
-    , std::pair<PatientWindows, QString> (pwTarget, QCoreApplication::tr("Мишень"))
-    , std::pair<PatientWindows, QString> (pwZones, QCoreApplication::tr("С выделенной зоной"))
-    , std::pair<PatientWindows, QString> (pwLines, QCoreApplication::tr("Движение полос"))
-};
 
 }
 
@@ -63,12 +40,12 @@ StabTestParamsDialog::StabTestParamsDialog(QWidget *parent) :
 
     ui->lvProbes->setModel(m_mdlProbes);
     ui->cbStimul->addItems(QStringList()
-                           << PatientWindowsName.value(pwNone)
-                           << PatientWindowsName.value(pwColors)
-                           << PatientWindowsName.value(pwSound)
-                           << PatientWindowsName.value(pwTarget)
-                           << PatientWindowsName.value(pwZones)
-                           << PatientWindowsName.value(pwLines));
+                           << StabTestDefines::PatientWindowsName.value(StabTestDefines::pwNone)
+                           << StabTestDefines::PatientWindowsName.value(StabTestDefines::pwColors)
+                           << StabTestDefines::PatientWindowsName.value(StabTestDefines::pwSound)
+                           << StabTestDefines::PatientWindowsName.value(StabTestDefines::pwTarget)
+                           << StabTestDefines::PatientWindowsName.value(StabTestDefines::pwZones)
+                           << StabTestDefines::PatientWindowsName.value(StabTestDefines::pwLines));
     ui->cbScale->addItems(QStringList() << "1" << "2" << "4" << "8" << "16" << "32" << "64" << "128");
     ui->cbConditions->addItems(QStringList()
                                << tr("Анализ сигналов")             ///< Код 0
@@ -79,12 +56,12 @@ StabTestParamsDialog::StabTestParamsDialog(QWidget *parent) :
                                << tr("Стрессовая стратегия"));      ///< Код 5
     fillProbeKinds();
 
-    m_stimulParamsEditors.insert(pwNone, nullptr);
-    m_stimulParamsEditors.insert(pwColors, nullptr);
-    m_stimulParamsEditors.insert(pwSound, nullptr);
-    m_stimulParamsEditors.insert(pwTarget, nullptr);
-    m_stimulParamsEditors.insert(pwZones, nullptr);
-    m_stimulParamsEditors.insert(pwLines, new LinesParamsDialog(this));
+    m_stimulParamsEditors.insert(StabTestDefines::pwNone, nullptr);
+    m_stimulParamsEditors.insert(StabTestDefines::pwColors, nullptr);
+    m_stimulParamsEditors.insert(StabTestDefines::pwSound, nullptr);
+    m_stimulParamsEditors.insert(StabTestDefines::pwTarget, nullptr);
+    m_stimulParamsEditors.insert(StabTestDefines::pwZones, nullptr);
+    m_stimulParamsEditors.insert(StabTestDefines::pwLines, new LinesParamsDialog(this));
 
     //! Редактирование названия пробы
     connect(m_mdlProbes, &QStandardItemModel::itemChanged, [=](QStandardItem *item)
@@ -320,7 +297,7 @@ void StabTestParamsDialog::on_editStimulParams()
 
         QDialog* dlg = m_stimulParamsEditors.value(ui->cbStimul->currentIndex());
 
-        if (ui->cbStimul->currentIndex() == pwLines)
+        if (ui->cbStimul->currentIndex() == StabTestDefines::pwLines)
         {
             static_cast<LinesParamsDialog*>(dlg)->setDirection(pp.stimLines.direction);
             static_cast<LinesParamsDialog*>(dlg)->setWidth(pp.stimLines.width);
