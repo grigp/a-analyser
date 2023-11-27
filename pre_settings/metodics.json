@@ -118,23 +118,98 @@
             "template": "met_stabtest_uid",
             "build_norms": false,
             "kind": "{03FFE24D-56ED-4138-9FC7-A125A020C190}",
-            "params":
-            {
+            "params": {
                 "condition": 0,
                 "probes": [
                     {
-                        "name": "Фоновая",
+                        "autoend": 1,
                         "kind": 1,
-                        "autoend": 0,
-                        "time": 20,
                         "latent_time": 0,
-                        "stimul": 0,
-                        "zeroing": 1,
-                        "scale": 0
+                        "name": "Фоновая",
+                        "scale": 1,
+                        "stimul": 1,
+                        "stimul_lines": {
+                            "color": "ff000000",
+                            "direction": 1,
+                            "duty_cycle": 1,
+                            "speed": 200,
+                            "width": 120
+                        },
+                        "time": 20,
+                        "zeroing": 1
+                    },
+                    {
+                        "autoend": 1,
+                        "kind": 13,
+                        "latent_time": 0,
+                        "name": "Полосы вправо",
+                        "scale": 1,
+                        "stimul": 5,
+                        "stimul_lines": {
+                            "color": "ff000000",
+                            "direction": 1,
+                            "duty_cycle": 1,
+                            "speed": 200,
+                            "width": 120
+                        },
+                        "time": 20,
+                        "zeroing": 0
+                    },
+                    {
+                        "autoend": 1,
+                        "kind": 14,
+                        "latent_time": 0,
+                        "name": "Полосы влево",
+                        "scale": 1,
+                        "stimul": 5,
+                        "stimul_lines": {
+                            "color": "ff000000",
+                            "direction": 3,
+                            "duty_cycle": 1,
+                            "speed": 200,
+                            "width": 120
+                        },
+                        "time": 20,
+                        "zeroing": 0
+                    },
+                    {
+                        "autoend": 1,
+                        "kind": 15,
+                        "latent_time": 0,
+                        "name": "Полосы вверх",
+                        "scale": 1,
+                        "stimul": 5,
+                        "stimul_lines": {
+                            "color": "ff000000",
+                            "direction": 0,
+                            "duty_cycle": 1,
+                            "speed": 200,
+                            "width": 120
+                        },
+                        "time": 20,
+                        "zeroing": 0
+                    },
+                    {
+                        "autoend": 1,
+                        "kind": 16,
+                        "latent_time": 0,
+                        "name": "Полосы вниз",
+                        "scale": 1,
+                        "stimul": 5,
+                        "stimul_lines": {
+                            "color": "ff000000",
+                            "direction": 2,
+                            "duty_cycle": 1,
+                            "speed": 200,
+                            "width": 120
+                        },
+                        "time": 20,
+                        "zeroing": 0
                     }
                 ]
             }
-        },        {
+        },
+        {
             "uid": "{EBEA57B4-A791-4F35-87C2-BEDEC6406D2D}",
             "name": "Допусковый контроль",
             "short_name": "Допусковый контроль",
