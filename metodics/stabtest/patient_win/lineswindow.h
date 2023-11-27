@@ -6,6 +6,7 @@
 #include "patientwindow.h"
 
 class VideoIrritant;
+class FrontCommentItem;
 
 namespace Ui {
 class LinesWindow;
@@ -51,6 +52,7 @@ private:
 
     QGraphicsScene* m_scene {nullptr};
     VideoIrritant* m_videoIrritant {nullptr};   ///< Слой видеораздражителя (оптокинетической стимуляции)
+    FrontCommentItem* m_frontComment {nullptr}; ///< Слой комментария
 };
 
 #endif // LINESWINDOW_H

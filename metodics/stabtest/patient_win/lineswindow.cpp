@@ -8,6 +8,7 @@
 #include "baseutils.h"
 #include "videoirritant.h"
 #include "linesirriant.h"
+#include "frontcommentitem.h"
 
 LinesWindow::LinesWindow(QWidget *parent) :
     PatientWindow(parent),
@@ -60,7 +61,7 @@ void LinesWindow::stop()
 
 void LinesWindow::setFrontComment(const QString &comment)
 {
-
+    m_frontComment->setText(comment);
 }
 
 QVariant LinesWindow::result()
@@ -73,9 +74,15 @@ void LinesWindow::initLines()
     m_scene->clear();
 
     m_videoIrritant = new VideoIrritant(m_scene->sceneRect());
+    m_videoIrritant->setZValue(100);
     m_scene->addItem(m_videoIrritant);
     m_videoIrritant->setCurrentIrriant(0);
     m_videoIrritant->setTransparent(255);
+
+    m_frontComment = new FrontCommentItem(m_scene->sceneRect());
+    m_frontComment->setZValue(101);
+    m_frontComment->setText("");
+    m_scene->addItem(m_frontComment);
 
     ui->gvLines->setScene(m_scene);
 }
