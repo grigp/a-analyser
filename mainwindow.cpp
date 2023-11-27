@@ -85,6 +85,7 @@ MainWindow::MainWindow(QWidget *parent) :
     restoreGeometry(val);
 
     ui->frProgress->setVisible(false);
+    ui->wgtMode->setVisible(false);
 
     connect(ui->acSettings, &QAction::triggered, this, &MainWindow::onSettings);
 }
@@ -120,6 +121,9 @@ void MainWindow::showClientPage(const QString &uidPage)
                 ui->acViewPersonalProgram->setChecked(true);
         }
     }
+
+    ui->acViewDataBase->setEnabled(uidPage == ClientWidgets::uidPersonalProgramWidgetUid);
+    ui->acViewPersonalProgram->setEnabled(uidPage == ClientWidgets::uidDatabaseResultWidgetUid);
 }
 
 bool MainWindow::restoreClientPage()
@@ -185,21 +189,18 @@ void MainWindow::closeEvent(QCloseEvent *event)
                                         QMessageBox::Yes | QMessageBox::No);
         if (mr == QMessageBox::Yes)
             restoreClientPage();
-//            showClientPage(ClientWidgets::uidDatabaseResultWidgetUid);
         event->ignore();
     }
     else
     if (m_currentClientPage == ClientWidgets::uidSignalAnalysisWidgetUid)
     {
         restoreClientPage();
-//        showClientPage(ClientWidgets::uidDatabaseResultWidgetUid);
         event->ignore();
     }
     else
     if (m_currentClientPage == ClientWidgets::uidSummariesWidgetUid)
     {
         restoreClientPage();
-//        showClientPage(ClientWidgets::uidDatabaseResultWidgetUid);
         event->ignore();
     }
     else
@@ -385,6 +386,11 @@ void MainWindow::initUi(const QString& colorSheme)
 void MainWindow::initMenu()
 {
     QMenu *menuDatabase = menuBar()->addMenu(tr("База данных"));
+    if (AAnalyserBuild::isPPEnabled())
+    {
+        menuDatabase->addAction(ui->acViewDataBase);
+        menuDatabase->addSeparator();
+    }
     menuDatabase->addAction(ui->acDataBaseProperty);
     initSelectDatabaseMenu();
     menuDatabase->addMenu(&m_menuSelectDatabase);
@@ -402,31 +408,40 @@ void MainWindow::initMenu()
 
     menuDatabase->addAction(ui->acExit);
 
+
+
     if (AAnalyserBuild::isPPEnabled())
     {
         QMenu *menuPP = menuBar()->addMenu(tr("Индивидуальные программы"));
+        menuPP->addAction(ui->acViewPersonalProgram);
+        menuPP->addSeparator();
         menuPP->addAction(ui->acPPAssign);
         menuPP->addAction(ui->acPPCancel);
-
-        QMenu *menuView = menuBar()->addMenu(tr("Вид"));
-        m_agViewsMain = new QActionGroup(this);
-        menuView->addAction(ui->acViewDataBase);
-        m_agViewsMain->addAction(ui->acViewDataBase);
-        menuView->addAction(ui->acViewPersonalProgram);
-        m_agViewsMain->addAction(ui->acViewPersonalProgram);
-        ui->acViewDataBase->setCheckable(true);
-        ui->acViewPersonalProgram->setCheckable(true);
     }
 
-    auto cwv = SettingsProvider::valueFromRegAppCopy("MainWindow", "MainClientWidget", ClientWidgets::uidDatabaseResultWidgetUid).toString();
-    if (!AAnalyserBuild::isPPEnabled() && cwv == ClientWidgets::uidPersonalProgramWidgetUid)
-        cwv = ClientWidgets::uidDatabaseResultWidgetUid;
+    //--------------------------------------------------------
+//    if (AAnalyserBuild::isPPEnabled())
+//    {
+//        QMenu *menuView = menuBar()->addMenu(tr("Вид"));
+//        m_agViewsMain = new QActionGroup(this);
+//        menuView->addAction(ui->acViewDataBase);
+//        m_agViewsMain->addAction(ui->acViewDataBase);
+//        menuView->addAction(ui->acViewPersonalProgram);
+//        m_agViewsMain->addAction(ui->acViewPersonalProgram);
+//        ui->acViewDataBase->setCheckable(true);
+//        ui->acViewPersonalProgram->setCheckable(true);
+//    }
 
-    if (cwv == ClientWidgets::uidDatabaseResultWidgetUid)
-        ui->acViewDataBase->setChecked(true);
-    else
-    if (cwv == ClientWidgets::uidPersonalProgramWidgetUid)
-        ui->acViewPersonalProgram->setChecked(true);
+//    auto cwv = SettingsProvider::valueFromRegAppCopy("MainWindow", "MainClientWidget", ClientWidgets::uidDatabaseResultWidgetUid).toString();
+//    if (!AAnalyserBuild::isPPEnabled() && cwv == ClientWidgets::uidPersonalProgramWidgetUid)
+//        cwv = ClientWidgets::uidDatabaseResultWidgetUid;
+
+//    if (cwv == ClientWidgets::uidDatabaseResultWidgetUid)
+//        ui->acViewDataBase->setChecked(true);
+//    else
+//    if (cwv == ClientWidgets::uidPersonalProgramWidgetUid)
+//        ui->acViewPersonalProgram->setChecked(true);
+//--------------------------------------------------------
 
 //    QMenu *menuSummaries = menuBar()->addMenu(tr("Сводки"));
 //    ui->acSummariesShow->setIcon(QIcon(":/images/Summaries.png"));
@@ -516,8 +531,6 @@ void MainWindow::createClientWidgets()
     if (!AAnalyserBuild::isPPEnabled() && cwv == ClientWidgets::uidPersonalProgramWidgetUid)
         cwv = ClientWidgets::uidDatabaseResultWidgetUid;
     showClientPage(cwv);
-
-//    showClientPage(ClientWidgets::uidDatabaseResultWidgetUid);
 }
 
 

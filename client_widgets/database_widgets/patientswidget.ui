@@ -18,19 +18,37 @@
     <number>1</number>
    </property>
    <property name="leftMargin">
-    <number>1</number>
+    <number>0</number>
    </property>
    <property name="topMargin">
-    <number>1</number>
+    <number>0</number>
    </property>
    <property name="rightMargin">
-    <number>1</number>
+    <number>0</number>
    </property>
    <property name="bottomMargin">
-    <number>1</number>
+    <number>0</number>
    </property>
    <item>
     <widget class="QFrame" name="frTitle">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>45</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>45</height>
+      </size>
+     </property>
      <property name="frameShape">
       <enum>QFrame::StyledPanel</enum>
      </property>
@@ -39,17 +57,45 @@
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout">
       <property name="leftMargin">
-       <number>3</number>
+       <number>1</number>
       </property>
       <property name="topMargin">
-       <number>3</number>
+       <number>0</number>
       </property>
       <property name="rightMargin">
-       <number>3</number>
+       <number>1</number>
       </property>
       <property name="bottomMargin">
-       <number>3</number>
+       <number>0</number>
       </property>
+      <item>
+       <widget class="QPushButton" name="btnViewModePersonalProgram">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>40</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>20</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="toolTip">
+         <string>Режим индивидуальных программ</string>
+        </property>
+        <property name="text">
+         <string>&lt;</string>
+        </property>
+       </widget>
+      </item>
       <item>
        <widget class="QLabel" name="lblTitle">
         <property name="text">
@@ -288,7 +334,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>358</x>
-     <y>81</y>
+     <y>75</y>
     </hint>
     <hint type="destinationlabel">
      <x>369</x>
@@ -312,6 +358,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>btnViewModePersonalProgram</sender>
+   <signal>clicked()</signal>
+   <receiver>PatientsWidget</receiver>
+   <slot>on_viewModePP()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>14</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>376</x>
+     <y>18</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>addPatient()</slot>
@@ -320,5 +382,6 @@
   <slot>selectPatient(QModelIndex)</slot>
   <slot>unselect()</slot>
   <slot>on_editSearchString(QString)</slot>
+  <slot>on_viewModePP()</slot>
  </slots>
 </ui>

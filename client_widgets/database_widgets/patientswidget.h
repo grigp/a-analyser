@@ -64,6 +64,8 @@ private slots:
      */
     void on_cancelPPForPatient(const QString& patientUid);
 
+    void on_viewModePP();
+
 //protected:
 //    bool eventFilter(QObject *watched, QEvent *event);
 

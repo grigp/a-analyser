@@ -102,6 +102,46 @@
              <enum>QFrame::Raised</enum>
             </property>
             <layout class="QHBoxLayout" name="horizontalLayout_2">
+             <property name="leftMargin">
+              <number>1</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>1</number>
+             </property>
+             <property name="bottomMargin">
+              <number>0</number>
+             </property>
+             <item>
+              <widget class="QPushButton" name="btnViewModeDatabase">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>40</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>20</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="toolTip">
+                <string>Режим базы данных</string>
+               </property>
+               <property name="text">
+                <string>&lt;</string>
+               </property>
+              </widget>
+             </item>
              <item>
               <widget class="QLabel" name="lblPatientsTitle">
                <property name="text">
@@ -651,6 +691,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>btnViewModeDatabase</sender>
+   <signal>clicked()</signal>
+   <receiver>PersonalProgramWidget</receiver>
+   <slot>on_viewModeDatabase()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>14</x>
+     <y>31</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1031</x>
+     <y>482</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>on_splitterMoved(int,int)</slot>
@@ -662,5 +718,6 @@
   <slot>on_openTest()</slot>
   <slot>on_closeTest()</slot>
   <slot>on_splTestMoved(int,int)</slot>
+  <slot>on_viewModeDatabase()</slot>
  </slots>
 </ui>

@@ -103,6 +103,8 @@ private slots:
      */
     void on_selectTest(QModelIndex idx);
 
+    void on_viewModeDatabase();
+
 private:
     Ui::PersonalProgramWidget *ui;
 

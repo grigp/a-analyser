@@ -10,6 +10,7 @@
 #include "aanalysersettings.h"
 #include "settingsprovider.h"
 #include "databasewigetdefines.h"
+#include "personalprogramwidget.h"
 
 #include <QApplication>
 #include <QMessageBox>
@@ -283,6 +284,12 @@ void PatientsWidget::on_cancelPPForPatient(const QString &patientUid)
         if (item->data(DatabaseWidgetDefines::PatientsModel::PatientUidRole).toString() == patientUid)
             item->setData("", DatabaseWidgetDefines::PatientsModel::PatientPPUidRole);
     }
+}
+
+void PatientsWidget::on_viewModePP()
+{
+    static_cast<AAnalyserApplication*>(QApplication::instance())->showClientPage(ClientWidgets::uidPersonalProgramWidgetUid);
+    SettingsProvider::setValueToRegAppCopy("MainWindow", "MainClientWidget", ClientWidgets::uidPersonalProgramWidgetUid);
 }
 
 void PatientsWidget::onePatientHandle()

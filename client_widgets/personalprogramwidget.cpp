@@ -19,6 +19,7 @@
 #include "mainwindow.h"
 #include "executewidget.h"
 #include "runningmodedialog.h"
+#include "databaseresultwidget.h"
 
 PersonalProgramWidget::PersonalProgramWidget(QWidget *parent) :
     ClientWidget(parent),
@@ -479,6 +480,12 @@ void PersonalProgramWidget::on_selectTest(QModelIndex idx)
         if (ui->frPPOpenTest->isVisible())
             on_openTest();
     }
+}
+
+void PersonalProgramWidget::on_viewModeDatabase()
+{
+    static_cast<AAnalyserApplication*>(QApplication::instance())->showClientPage(ClientWidgets::uidDatabaseResultWidgetUid);
+    SettingsProvider::setValueToRegAppCopy("MainWindow", "MainClientWidget", ClientWidgets::uidDatabaseResultWidgetUid);
 }
 
 QStandardItem* PersonalProgramWidget::appendLine(const QString uidPat,

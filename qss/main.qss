@@ -271,6 +271,11 @@ QPushButton
     font-size: 12pt;
 }
 
+QPushButton#btnViewModePersonalProgram,
+QPushButton#btnViewModeDatabase
+{
+    font-size: 8pt;
+}
 
 QPushButton#btnParams,
 QPushButton#btnNewTest,
