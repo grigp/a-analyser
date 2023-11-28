@@ -149,6 +149,32 @@
                </property>
               </widget>
              </item>
+             <item>
+              <widget class="QPushButton" name="btnCard">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="toolTip">
+                <string>Карточка пациента...</string>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset resource="../kernel.qrc">
+                 <normaloff>:/images/PatientsCard.png</normaloff>:/images/PatientsCard.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>32</width>
+                 <height>32</height>
+                </size>
+               </property>
+              </widget>
+             </item>
             </layout>
            </widget>
           </item>
@@ -707,6 +733,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>btnCard</sender>
+   <signal>clicked()</signal>
+   <receiver>PersonalProgramWidget</receiver>
+   <slot>on_editPatientCard()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>105</x>
+     <y>18</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1032</x>
+     <y>217</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>on_splitterMoved(int,int)</slot>
@@ -719,5 +761,6 @@
   <slot>on_closeTest()</slot>
   <slot>on_splTestMoved(int,int)</slot>
   <slot>on_viewModeDatabase()</slot>
+  <slot>on_editPatientCard()</slot>
  </slots>
 </ui>

@@ -103,6 +103,8 @@ private slots:
      */
     void on_selectTest(QModelIndex idx);
 
+    void on_editPatientCard();
+
     void on_viewModeDatabase();
 
 private:

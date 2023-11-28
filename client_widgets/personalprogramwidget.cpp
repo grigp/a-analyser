@@ -20,6 +20,7 @@
 #include "executewidget.h"
 #include "runningmodedialog.h"
 #include "databaseresultwidget.h"
+#include "patientkarddialog.h"
 
 PersonalProgramWidget::PersonalProgramWidget(QWidget *parent) :
     ClientWidget(parent),
@@ -480,6 +481,52 @@ void PersonalProgramWidget::on_selectTest(QModelIndex idx)
         if (ui->frPPOpenTest->isVisible())
             on_openTest();
     }
+}
+
+void PersonalProgramWidget::on_editPatientCard()
+{
+    auto index = selectedIndex();
+    if (index != QModelIndex())
+    {
+        auto uid = index.data(DatabaseWidgetDefines::PatientsModel::PatientUidRole).toString();
+
+        DataDefines::PatientKard pi;
+        if (uid != "" && DataProvider::getPatient(uid, pi))
+        {
+            auto *dialog = new PatientKardDialog(this);
+            dialog->setFio(pi.fio);
+            dialog->setBorn(pi.born);
+            dialog->setSex(pi.sex);
+            dialog->setMassa(pi.massa);
+            dialog->setHeight(pi.height);
+
+            auto objPP = DataProvider::getActivePersonalProgramForPatient(pi.uid);
+            QPixmap ppPic("");
+            if (objPP != QJsonObject())
+            {
+                auto ppName = objPP["pp"].toObject()["name"].toString();
+                ppPic = QPixmap(objPP["pp"].toObject()["logo_file_name"].toString());
+                dialog->setPersonalProgram(ppName, ppPic);
+            }
+            else
+                dialog->setPersonalProgram(tr("Не задана"), ppPic);
+
+            connect(dialog, &PatientKardDialog::accepted, this, [=]()
+            {
+                DataDefines::PatientKard patient;
+                patient.uid = uid;
+                patient.fio = dialog->fio();
+                patient.born = dialog->born();
+                patient.sex = dialog->sex();
+                patient.massa = dialog->massa();
+                patient.height = dialog->height();
+                DataProvider::updatePatient(patient);
+            });
+            dialog->show();
+        }
+    }
+    else
+        QMessageBox::information(nullptr, tr("Предупреждение"), tr("Необходимо выбрать пациента"));
 }
 
 void PersonalProgramWidget::on_viewModeDatabase()
