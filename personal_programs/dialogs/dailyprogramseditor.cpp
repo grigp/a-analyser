@@ -48,6 +48,11 @@ int DailyProgramsEditor::exec()
     return QDialog::exec();
 }
 
+void DailyProgramsEditor::closeEvent(QCloseEvent *)
+{
+    SettingsProvider::setValueToRegAppCopy("DailyProgramsEditor", "Geometry", geometry());
+}
+
 void DailyProgramsEditor::resizeEvent(QResizeEvent *event)
 {
     SettingsProvider::setValueToRegAppCopy("DailyProgramsEditor", "Geometry", geometry());

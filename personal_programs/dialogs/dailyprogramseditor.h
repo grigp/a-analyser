@@ -27,6 +27,7 @@ public slots:
     int exec() override;
 
 protected:
+    void closeEvent(QCloseEvent *) override;
     void resizeEvent(QResizeEvent *event) override;
 
 private slots:

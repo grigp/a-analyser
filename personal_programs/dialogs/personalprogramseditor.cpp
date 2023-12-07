@@ -61,10 +61,14 @@ int PersonalProgramsEditor::exec()
     return QDialog::exec();
 }
 
+void PersonalProgramsEditor::closeEvent(QCloseEvent *)
+{
+    saveGeometry();
+}
+
 void PersonalProgramsEditor::resizeEvent(QResizeEvent *event)
 {
-    SettingsProvider::setValueToRegAppCopy("PersonalProgramsEditor", "Geometry", geometry());
-    ui->tvSchedule->horizontalHeader()->resizeSection(0, ui->tvSchedule->geometry().width());
+    saveGeometry();
     QDialog::resizeEvent(event);
 }
 
@@ -351,4 +355,10 @@ void PersonalProgramsEditor::prepareParams()
     foreach (auto v, PersonalProgramDefines::MaxTimeBetweenDPList)
         ui->cbMaxTimeBetweenDP->addItem(PersonalProgramDefines::MaxTimeBetweenDPNames.value(v), v);
     ui->cbMaxTimeBetweenDP->setCurrentIndex(7);
+}
+
+void PersonalProgramsEditor::saveGeometry()
+{
+    SettingsProvider::setValueToRegAppCopy("PersonalProgramsEditor", "Geometry", geometry());
+    ui->tvSchedule->horizontalHeader()->resizeSection(0, ui->tvSchedule->geometry().width());
 }

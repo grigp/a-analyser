@@ -36,6 +36,7 @@ public:
 
 protected:
     void showEvent(QShowEvent *event) override;
+    void closeEvent(QCloseEvent *) override;
     void resizeEvent(QResizeEvent *event) override;
 
 private slots:
@@ -70,6 +71,8 @@ private:
     void viewDP(const int numDP, const PersonalProgramDefines::DPCompletedValue complNext);
 
     void prepareParams();
+
+    void saveGeometry();
 
     QModelIndex selectedDPIndex();
     QModelIndex selectedTestIndex();

@@ -770,7 +770,7 @@ bool isNowInBounds(const QDateTime& dtLast, const int minTimeDPSec, const int ma
     if (dtLast == QDateTime())
         return true;
     else
-        return ((((minTimeDPSec > 0 &&
+        return ((((minTimeDPSec >= 0 &&
                    dtLast != QDateTime() &&
                    dtLast.secsTo(QDateTime::currentDateTime()) > minTimeDPSec)
                       ||
