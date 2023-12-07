@@ -24,6 +24,9 @@ public:
     Stabilan01Defines::ZeroingType zeroingType() const;
     void setZeroingType(const Stabilan01Defines::ZeroingType zt);
 
+    Stabilan01Defines::SKGSource skgSource() const;
+    void setSKGSource(const Stabilan01Defines::SKGSource src);
+
     void setRecording(const QMap<QString,  bool>& recMap);
     QMap<QString, bool> getRecording() const;
 

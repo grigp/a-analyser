@@ -158,6 +158,8 @@ void Stabilan01::setParams(const DeviceProtocols::Ports port, const QJsonObject 
     setPortName(port);
     m_model = static_cast<Stabilan01Defines::Model>(params["model"].toInt());
     m_zt = static_cast<Stabilan01Defines::ZeroingType>(params["zeroing_type"].toInt());
+    m_skgSource = static_cast<Stabilan01Defines::SKGSource>(params["skg_source"].toInt(0));
+
     m_chanRecordingDefault = Stabilan01::getChanRecordingDefault(params["chan_recording_default"].toObject());
 
     m_tenso1.device = static_cast<DeviceProtocols::TensoDevice>(params["tenso1"].toInt(0));
@@ -181,6 +183,8 @@ bool Stabilan01::editParams(QJsonObject &params)
     Stabilan01ParamsDialog dlg(static_cast<AAnalyserApplication*>(QApplication::instance())->mainWindow());
     dlg.setModel(static_cast<Stabilan01Defines::Model>(model));
     dlg.setZeroingType(static_cast<Stabilan01Defines::ZeroingType>(zt));
+    dlg.setSKGSource(static_cast<Stabilan01Defines::SKGSource>(params["skg_source"].toInt()));
+
     dlg.setRecording(getChanRecordingDefault(params["chan_recording_default"].toObject()));
 
     dlg.setKindTenso1(static_cast<DeviceProtocols::TensoDevice>(params["tenso1"].toInt(0)));
@@ -197,6 +201,8 @@ bool Stabilan01::editParams(QJsonObject &params)
     {
         params["model"] = static_cast<int>(dlg.model());
         params["zeroing_type"] = static_cast<int>(dlg.zeroingType());
+        params["skg_source"] = dlg.skgSource();
+
         params["chan_recording_default"] = setChanRecordingDefault(dlg.getRecording());
 
         params["tenso1"] = dlg.kindTenso1();
@@ -802,6 +808,21 @@ void Stabilan01::assignByteFromDevice(quint8 b)
             //! Окончание разбора пакета
             if (m_countBytePack == m_countChannels * 2){  //! Достигли заданного кол-ва каналов
                 m_Z = m_A + m_B + m_C + m_D;                     //! Расчет баллистограммы
+
+                //! Считаем стабилограмму, если должны
+                if (m_skgSource == Stabilan01Defines::ssSelf)
+                {
+                    if (m_Z > 0.5)
+                    {
+                        m_X = (-m_A + m_B + m_C - m_D) / m_Z * 220;
+                        m_Y = (m_A + m_B - m_C - m_D) / m_Z * 220;
+                    }
+                    else
+                    {
+                        m_X = 0;
+                        m_Y = 0;
+                    }
+                }
 
                 incBlockCount();
                 sendDataBlock();

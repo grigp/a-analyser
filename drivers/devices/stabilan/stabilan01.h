@@ -223,6 +223,7 @@ private:
 
     Stabilan01Defines::Model m_model;
     Stabilan01Defines::ZeroingType m_zt;
+    Stabilan01Defines::SKGSource m_skgSource;
 
     DeviceProtocols::TensoChannel m_tenso1 {DeviceProtocols::TensoChannel(DeviceProtocols::tdDynHand, 1.7, 100)};
     DeviceProtocols::TensoChannel m_tenso2 {DeviceProtocols::TensoChannel(DeviceProtocols::tdDynStand, 1.7, 500)};

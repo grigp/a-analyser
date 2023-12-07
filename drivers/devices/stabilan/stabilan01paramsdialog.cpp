@@ -17,6 +17,9 @@ Stabilan01ParamsDialog::Stabilan01ParamsDialog(QWidget *parent) :
     foreach (auto ztCode, Stabilan01::zeroingTypes())
         ui->cbZeroingType->addItem(Stabilan01::zeroingTypeName(ztCode), ztCode);
 
+    ui->cbSKGSource->addItem(tr("В стабилонализаторе"), Stabilan01Defines::ssStabilan);
+    ui->cbSKGSource->addItem(tr("На основе реакций опор"), Stabilan01Defines::ssSelf);
+
     foreach (auto tdKey, DeviceProtocols::tensoDevices.keys())
     {
         ui->cbTensoChan1->addItem(DeviceProtocols::tensoDevices.value(tdKey), tdKey);
@@ -48,6 +51,25 @@ Stabilan01Defines::ZeroingType Stabilan01ParamsDialog::zeroingType() const
 void Stabilan01ParamsDialog::setZeroingType(const Stabilan01Defines::ZeroingType zt)
 {
     ui->cbZeroingType->setCurrentText(Stabilan01::zeroingTypeName(zt));
+}
+
+Stabilan01Defines::SKGSource Stabilan01ParamsDialog::skgSource() const
+{
+    return static_cast<Stabilan01Defines::SKGSource>(ui->cbSKGSource->currentData().toInt());
+}
+
+void Stabilan01ParamsDialog::setSKGSource(const Stabilan01Defines::SKGSource src)
+{
+    int idx = -1;
+    for (int i = 0; i < ui->cbSKGSource->count(); ++i)
+        if (ui->cbSKGSource->itemData(i).toInt() == src)
+        {
+            idx = i;
+            break;
+        }
+
+    if (idx > -1)
+        ui->cbSKGSource->setCurrentIndex(idx);
 }
 
 void Stabilan01ParamsDialog::setRecording(const QMap<QString, bool> &recMap)

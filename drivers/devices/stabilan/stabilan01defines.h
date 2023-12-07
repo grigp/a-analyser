@@ -111,6 +111,14 @@ static QSet<Model> ModelsWithMyo =
     smcStabilan01_05NG,
 };
 
+/*!
+ * \brief источник расчета координат ЦД The SKGSource enum
+ */
+enum SKGSource
+{
+      ssStabilan = 0  ///< Считать будет стабилан
+    , ssSelf          ///< Считать самостоятельно
+};
 
 }
 
