@@ -382,13 +382,13 @@ QPushButton#btnDynamic
 QPushButton#btnResults:checked,
 QPushButton#btnDynamic:checked
 {
-    background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 rgb(130, 130, 0), stop: 0.5 rgb(190, 190, 0), stop: 1 rgb(130, 130, 0));
+    background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 rgb(50, 50, 0), stop: 0.5 rgb(110, 110, 0), stop: 1 rgb(50, 50, 0));
 }
 
 QPushButton#btnResults:hover,
 QPushButton#btnDynamic:hover
 {
-    background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 rgb(110, 110, 0), stop: 0.5 rgb(170, 170, 0), stop: 1 rgb(110, 110, 0));
+    background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 rgb(60, 60, 0), stop: 0.5 rgb(120, 120, 0), stop: 1 rgb(60, 60, 0));
 }
 
 QPushButton#btnResults:pressed,

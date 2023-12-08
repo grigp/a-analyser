@@ -259,5 +259,6 @@
         <file>images/rmAuto.png</file>
         <file>images/rmOperator.png</file>
         <file>images/Methodics/OKT.png</file>
+        <file>images/tree/man.png</file>
     </qresource>
 </RCC>

@@ -546,15 +546,18 @@ QStandardItem* PersonalProgramWidget::appendLine(const QString uidPat,
         QList<QStandardItem*> line;
 
         QString title = pi.fio;
+        QString imgName = ":/images/tree/man.png";
         if (root)
         {
             auto db = objPP["date_begin"].toString();
             auto de = objPP["date_end"].toString();
             title = db + " - " + de;
+            imgName = ":/images/tree/probe.png";
         }
         QStandardItem *itemFIO = new QStandardItem(title);
         itemFIO->setData(pi.uid, DatabaseWidgetDefines::PatientsModel::PatientUidRole);
         itemFIO->setData(uidPPAssigned, DatabaseWidgetDefines::PatientsModel::PatientPPUidRole);
+        itemFIO->setIcon(QIcon(imgName));
         itemFIO->setEditable(false);
         if (!root)
         {

@@ -376,7 +376,7 @@ QPushButton#btnDynamic
 {
     border: 2px solid rgb(55, 55, 55);
     border-radius: 6px;
-    background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 rgb(100, 0, 0), stop: 0.5 rgb(150, 0, 0), stop: 1 rgb(100, 0, 0));
+    background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 rgb(140, 0, 0), stop: 0.5 rgb(220, 0, 0), stop: 1 rgb(140, 0, 0));
     color: rgb(255, 255, 255);
     min-width: 60px;
 }
@@ -384,13 +384,13 @@ QPushButton#btnDynamic
 QPushButton#btnResults:checked,
 QPushButton#btnDynamic:checked
 {
-    background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 rgb(180, 0, 0), stop: 0.5 rgb(250, 80, 80), stop: 1 rgb(180, 0, 0));
+    background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 rgb(80, 0, 0), stop: 0.5 rgb(150, 0, 0), stop: 1 rgb(80, 0, 0));
 }
 
 QPushButton#btnResults:hover,
 QPushButton#btnDynamic:hover
 {
-    background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 rgb(210, 0, 0), stop: 0.5 rgb(250, 0, 0), stop: 1 rgb(210, 0, 0));
+    background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 rgb(90, 0, 0), stop: 0.5 rgb(160, 0, 0), stop: 1 rgb(90, 0, 0));
 }
 
 QPushButton#btnResults:pressed,
