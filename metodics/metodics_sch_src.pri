@@ -2,6 +2,7 @@ INCLUDEPATH += $$PWD
 
 include(stabtest/stabtest_src.pri)
 include(jump_plate/jump_plate_src.pri)
+include(graphics_utils/graphics_utils_src.pri)
 
 HEADERS += \
     $$PWD/metodictemplate.h \

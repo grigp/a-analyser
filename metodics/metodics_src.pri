@@ -5,6 +5,7 @@ include(jump_plate/jump_plate_src.pri)
 include(trenagers/trenagers_src.pri)
 include(extendtest/extendtest_src.pri)
 include(dynamic_tests/dynamic_tests_src.pri)
+include(graphics_utils/graphics_utils_src.pri)
 
 HEADERS += \
     $$PWD/metodictemplate.h \

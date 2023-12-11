@@ -1,6 +1,7 @@
 INCLUDEPATH += $$PWD
 
 include(bedside_scales/bedside_scales_src.pri)
+include(graphics_utils/graphics_utils_src.pri)
 
 HEADERS += \
     $$PWD/metodictemplate.h \

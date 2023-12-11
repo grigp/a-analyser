@@ -41,6 +41,13 @@ QWidget *BedsideScalesTesterTemplate::visualize(QWidget *parent, const QString &
     return retval;
 }
 
+void BedsideScalesTesterTemplate::paintPreview(QPainter *painter, QRect &rect, const QString &testUid)
+{
+    Q_UNUSED(painter);
+    Q_UNUSED(rect);
+    Q_UNUSED(testUid);
+}
+
 void BedsideScalesTesterTemplate::print(QPrinter *printer, const QString &testUid)
 {
     BedsideScalesTestVisualize::print(printer, testUid);
