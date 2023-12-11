@@ -52,6 +52,7 @@ AAnalyserApplication::AAnalyserApplication(int &argc, char **argv)
     , m_pmdlPatientsPP(new PatientsProxyModel(this))
 {
     setApplicationName("a-analyzer");
+//    setApplicationVersion("1.0");
 //    setApplicationDisplayName(tr("Исследования А-Мед")); Не переводится
     setOrganizationName("A-Med");
 //    setWindowIcon(QIcon(":/images/MainIcon2.ico"));

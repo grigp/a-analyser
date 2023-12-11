@@ -85,9 +85,11 @@ void ReportElements::drawFooter(QPainter *painter, const QString &testUid, QRect
 
     painter->drawText(rect.x(), rect.y() + rect.height() / 2,
                       enterprice->value().toString() + "    " +
-                      "a-analyser 1.0   " +
                       email->value().toString() + "    " +
                       website->value().toString());
+    QString s = QApplication::applicationName() + " " + QApplication::applicationVersion();
+    auto size = BaseUtils::getTextSize(painter, s);
+    painter->drawText(rect.x() + rect.width() - size.width(), rect.y() + rect.height() / 2, s);
 }
 
 void ReportElements::drawWidget(QPainter *painter, QWidget *widget, const int w, const int h, const int x, const int y)
