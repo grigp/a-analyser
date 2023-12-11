@@ -414,26 +414,23 @@ QPushButton#MethodicKind
 {
     border: 2px solid #8f8f91;
     border-radius: 6px;
-/*    background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 rgb(83, 136, 180), stop: 0.5 rgb(143, 179, 219), stop: 1 rgb(83, 136, 180));*/
     background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 rgb(150, 150, 150), stop: 0.5 rgb(200, 200, 200), stop: 1 rgb(150, 150, 150));
     min-width: 50px;
 }
 
 QPushButton#MethodicKind:checked
 {
-    background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 rgb(80, 80, 80), stop: 0.5 rgb(150, 150, 150), stop: 1 rgb(80, 80, 80));
+    background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 rgb(80, 80, 80), stop: 0.5 rgb(140, 140, 140), stop: 1 rgb(80, 80, 80));
 }
 
 QPushButton#MethodicKind:hover
 {
-/*    background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 rgb(103, 156, 200), stop: 0.5 rgb(163, 199, 239), stop: 1 rgb(103, 156, 200));*/
-    background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 rgb(180, 180, 180), stop: 0.5 rgb(220, 220, 220), stop: 1 rgb(180, 180, 180));
+    background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 rgb(90, 90, 90), stop: 0.5 rgb(150, 150, 150), stop: 1 rgb(90, 90, 90));
 }
 
 QPushButton#MethodicKind:pressed
 {
-/*    background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 rgb(63, 116, 160), stop: 0.5 rgb(123, 159, 199), stop: 1 rgb(63, 116, 160));*/
-    background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 rgb(120, 120, 120), stop: 0.5 rgb(160, 160, 160), stop: 1 rgb(120, 120, 120));
+    background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 rgb(100, 100, 100), stop: 0.5 rgb(160, 160, 160), stop: 1 rgb(100, 100, 100));
 }
 
 
