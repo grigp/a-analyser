@@ -54,13 +54,18 @@ void DataBaseResultWidget::onDBDisconnect()
 
 void DataBaseResultWidget::onShow()
 {
-    ui->wgtPatients->onShow();
-    ui->wgtMetods->onShow();
+    auto iop = SettingsProvider::valueFromRegAppCopy("", AAnalyserSettingsParams::pn_onePatientMode, static_cast<QVariant>(false)).toBool();
+    if (!iop)
+        ui->wgtPatients->onShow();
+    if (m_metCnt > 1)
+        ui->wgtMetods->onShow();
 }
 
 void DataBaseResultWidget::onHide()
 {
-    ui->wgtPatients->onHide();
+    auto iop = SettingsProvider::valueFromRegAppCopy("", AAnalyserSettingsParams::pn_onePatientMode, static_cast<QVariant>(false)).toBool();
+    if (!iop)
+        ui->wgtPatients->onHide();
 }
 
 void DataBaseResultWidget::onSelectTest(const QString &testUid)
