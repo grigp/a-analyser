@@ -431,6 +431,11 @@ void StabTestExecute::showTrace(bool trace)
     ui->wgtSKG->showTrace(trace);
 }
 
+void StabTestExecute::on_clearTrace()
+{
+    ui->wgtSKG->clearTrace();
+}
+
 void StabTestExecute::on_advChannelsClicked(bool checked)
 {
     ui->wgtAdvChannels->setVisible(checked);

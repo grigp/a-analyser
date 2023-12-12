@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>701</width>
-    <height>524</height>
+    <width>734</width>
+    <height>565</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -436,6 +436,13 @@
               </widget>
              </item>
              <item>
+              <widget class="QCheckBox" name="cbAdvChannels">
+               <property name="text">
+                <string>Каналы</string>
+               </property>
+              </widget>
+             </item>
+             <item>
               <widget class="QCheckBox" name="cbShowTrace">
                <property name="text">
                 <string>Рисовать след</string>
@@ -443,9 +450,9 @@
               </widget>
              </item>
              <item>
-              <widget class="QCheckBox" name="cbAdvChannels">
+              <widget class="QPushButton" name="btnClearTrace">
                <property name="text">
-                <string>Каналы</string>
+                <string>Очистить след</string>
                </property>
               </widget>
              </item>
@@ -754,8 +761,8 @@
    <slot>calibrate()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>677</x>
-     <y>452</y>
+     <x>710</x>
+     <y>480</y>
     </hint>
     <hint type="destinationlabel">
      <x>702</x>
@@ -770,8 +777,8 @@
    <slot>showTrace(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>677</x>
-     <y>328</y>
+     <x>710</x>
+     <y>416</y>
     </hint>
     <hint type="destinationlabel">
      <x>703</x>
@@ -802,8 +809,8 @@
    <slot>on_advChannelsClicked(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>476</x>
-     <y>343</y>
+     <x>710</x>
+     <y>393</y>
     </hint>
     <hint type="destinationlabel">
      <x>701</x>
@@ -827,6 +834,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>btnClearTrace</sender>
+   <signal>clicked()</signal>
+   <receiver>StabTestExecute</receiver>
+   <slot>on_clearTrace()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>618</x>
+     <y>428</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>734</x>
+     <y>426</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>showDataBase()</slot>
@@ -838,5 +861,6 @@
   <slot>showTrace(bool)</slot>
   <slot>on_advChannelsClicked(bool)</slot>
   <slot>splitterMoved(int,int)</slot>
+  <slot>on_clearTrace()</slot>
  </slots>
 </ui>

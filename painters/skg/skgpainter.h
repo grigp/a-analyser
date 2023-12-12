@@ -61,6 +61,17 @@ public:
     void showTrace(const bool trace);
 
     /*!
+     * \brief Очищет след
+     */
+    void clearTrace();
+
+    /*!
+     * \brief Устанавливает цвет следа
+     * \param color - цвет следа
+     */
+    void setTraceColor(const QColor color) {m_traceColor = color;}
+
+    /*!
      * \brief Задает сигнал для отображения в виджете при использовании в визуале
      * \param signal
      * \param num - номер СКГ
@@ -204,6 +215,11 @@ private:
     void drawBrokenLines(const double ratio);
 
     /*!
+     * \brief Прорисовывает след за маркером
+     */
+    void drawTrace();
+
+    /*!
      * \brief Прорисовывает маркер
      */
     void drawMarker();
@@ -244,17 +260,16 @@ private:
         void assignSignal(SignalAccess* sig = nullptr);
     };
 
-//    TraceSKG* m_traceSKG {nullptr};
-//    QList<TargetInfo> m_targets;
-
     QColor m_markerColor {Qt::red};
+    QColor m_traceColor {Qt::darkCyan};
     QColor m_markerBorderColor {Qt::darkRed};
     QColor m_platformsColor {QColor(235, 235, 235)};
     QColor m_ellipseColor {Qt::darkBlue};
 
     int m_diap {128};
-    bool m_isShowTrace {false};
     bool m_isVisibleMarker {true};
+    bool m_isShowTrace {false};
+    QList<QPointF> m_trace;
 
     double m_prop {1};
     int m_width {0};

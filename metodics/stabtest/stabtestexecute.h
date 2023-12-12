@@ -63,6 +63,8 @@ private slots:
 
     void showTrace(bool trace);
 
+    void on_clearTrace();
+
     void on_advChannelsClicked(bool checked);
 
     void splitterMoved(int pos,int index);

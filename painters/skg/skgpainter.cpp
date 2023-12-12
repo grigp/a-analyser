@@ -46,6 +46,8 @@ void SKGPainter::setMarker(const double x, const double y)
 {
     m_mx = x;
     m_my = y;
+    if (m_isShowTrace)
+        m_trace << QPointF(x, y);
     doUpdate();
 }
 
@@ -63,7 +65,12 @@ void SKGPainter::setMarkerSize(const int size)
 void SKGPainter::showTrace(const bool trace)
 {
     Q_UNUSED(trace);
+    m_isShowTrace = trace;
+}
 
+void SKGPainter::clearTrace()
+{
+    m_trace.clear();
 }
 
 void SKGPainter::setSignal(SignalAccess *signal, const int num, const int begin, const int end)
@@ -249,6 +256,7 @@ void SKGPainter::doPaint(const double ratio)
     drawSKG();
     drawBrokenLines(ratio);
     drawTargets();
+    drawTrace();
     drawMarker();
 }
 
@@ -512,6 +520,31 @@ void SKGPainter::drawBrokenLines(const double ratio)
         m_painter->drawPolyline(plgn);
     }
     m_painter->restore();
+}
+
+void SKGPainter::drawTrace()
+{
+    if (m_trace.size() > 1)
+    {
+        double ox = 0;
+        double oy = 0;
+        for (int i = 0; i < m_trace.size(); ++i)
+        {
+            double x = m_midX + m_trace.at(i).x() * m_prop;
+            double y = m_midY - m_trace.at(i).y() * m_prop;
+
+            if (i > 0)
+            {
+                m_painter->save();
+                m_painter->setPen(QPen(m_traceColor, 1, Qt::SolidLine, Qt::FlatCap));
+                m_painter->drawLine(static_cast<int>(ox), static_cast<int>(oy), static_cast<int>(x), static_cast<int>(y));
+                m_painter->restore();
+            }
+
+            ox = x;
+            oy = y;
+        }
+    }
 }
 
 void SKGPainter::drawMarker()

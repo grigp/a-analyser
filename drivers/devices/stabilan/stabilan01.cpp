@@ -143,9 +143,12 @@ namespace  {
 Stabilan01::Stabilan01(QObject *parent)
     : Driver(parent)
 {
-    m_offsetX = SettingsProvider::valueFromRegAppCopy("StabilanDriver", "zeroing_x").toDouble();
-    m_offsetY = SettingsProvider::valueFromRegAppCopy("StabilanDriver", "zeroing_y").toDouble();
-
+    auto v = SettingsProvider::valueFromRegAppCopy("StabilanDriver", "zeroing_x").toDouble();
+    if (v >= -200 && v <= 200)
+        m_offsetX = v;
+    v = SettingsProvider::valueFromRegAppCopy("StabilanDriver", "zeroing_y").toDouble();
+    if (v >= -200 && v < 200)
+        m_offsetY = v;
 }
 
 Stabilan01::~Stabilan01()
