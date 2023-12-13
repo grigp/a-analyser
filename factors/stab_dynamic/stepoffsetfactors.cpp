@@ -137,10 +137,10 @@ void StepOffsetFactors::registerFactors()
                            tr("Скорость броска"), tr("KompSpurtV"), tr("мм/сек"), 1, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(StepOffsetFactorsDefines::Compensation::StatismUid, StepOffsetFactorsDefines::GroupUid,
-                           tr("Статизм"), tr("KompStatism"), tr("%"), 2, 3, FactorsDefines::nsDual, 12);
+                           tr("Статизм"), tr("Статизм (K)"), tr("%"), 2, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(StepOffsetFactorsDefines::Compensation::ReactionTimeUid, StepOffsetFactorsDefines::GroupUid,
-                           tr("Время реакции"), tr("KompReactT"), tr("сек"), 2, 3, FactorsDefines::nsDual, 12);
+                           tr("Время реакции"), tr("t реакции(K)"), tr("сек"), 2, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(StepOffsetFactorsDefines::Compensation::OvershootAmplUid, StepOffsetFactorsDefines::GroupUid,
                            tr("Амплитуда перерегулирования"), tr("KompOvershoot"), tr("%"), 0, 3, FactorsDefines::nsDual, 12);
@@ -152,7 +152,7 @@ void StepOffsetFactors::registerFactors()
                            tr("Разброс на этапе удержания"), tr("KompRetentD"), tr("мм"), 2, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(StepOffsetFactorsDefines::Compensation::ProcessKindUid, StepOffsetFactorsDefines::GroupUid,
-                           tr("Тип переходного процесса"), tr("KompKind"), tr(""), 0, 3, FactorsDefines::nsDual, 12);
+                           tr("Тип переходного процесса"), tr("Тип процесса (К)"), tr(""), 0, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(StepOffsetFactorsDefines::Compensation::CorrectMotorTimeUid, StepOffsetFactorsDefines::GroupUid,
                            tr("Средняя длительность моторных коррекций"), tr("KompCorrMT"), tr("сек"), 2, 3, FactorsDefines::nsDual, 12);

@@ -13,6 +13,9 @@ class StepDeviationCalculator;
 class AreaGraph;
 class DynamicDiagram;
 
+/*!
+ * \brief Класс виджета показа результатов теста со ступенчатым отклонением The StepDeviationVisualize class
+ */
 class StepDeviationVisualize : public QWidget
 {
     Q_OBJECT
@@ -30,6 +33,13 @@ public:
      */
     static void print(QPrinter *printer, const QString &testUid);
 
+    /*!
+     * \brief Прорисовывает предварительные результаты с помощью заданного рисователя
+     * \param painter - рисователь
+     * \param rect - зона прорисовки
+     * \param testUid - uid теста
+     */
+    static void paintPreview(QPainter* painter, QRect& rect, const QString& testUid, StepDeviationCalculator* calculator);
 
 private:
     Ui::StepDeviationVisualize *ui;

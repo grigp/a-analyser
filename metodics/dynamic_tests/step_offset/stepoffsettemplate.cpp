@@ -1,9 +1,12 @@
 #include "stepoffsettemplate.h"
 
+#include "aanalyserapplication.h"
 #include "metodicdefines.h"
 #include "stepoffsetparamsdialog.h"
 #include "stepoffsetexecute.h"
 #include "stepoffsetvisualize.h"
+#include "stepoffsetcalculator.h"
+#include "metodicsfactory.h"
 
 #include <QLayout>
 
@@ -44,6 +47,17 @@ void StepOffsetTemplate::paintPreview(QPainter *painter, QRect &rect, const QStr
     Q_UNUSED(painter);
     Q_UNUSED(rect);
     Q_UNUSED(testUid);
+
+    MetodicsFactory *metFactory = static_cast<AAnalyserApplication*>(QApplication::instance())->getMetodics();
+    auto calculator = metFactory->getCalculator(testUid);
+    if (!calculator)
+    {
+        calculator = new StepOffsetCalculator(testUid, nullptr);
+        calculator->calculate();
+        metFactory->storeCalculator(testUid, calculator);
+    }
+
+    StepOffsetVisualize::paintPreview(painter, rect, testUid, static_cast<StepOffsetCalculator*>(calculator));
 }
 
 void StepOffsetTemplate::print(QPrinter *printer, const QString &testUid)

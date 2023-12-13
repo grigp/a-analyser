@@ -224,6 +224,39 @@ void StepOffsetVisualize::print(QPrinter *printer, const QString &testUid)
     painter->end();
 }
 
+void StepOffsetVisualize::paintPreview(QPainter *painter, QRect &rect, const QString &testUid, StepOffsetCalculator *calculator)
+{
+    Q_UNUSED(testUid);
+
+    painter->save();
+
+    int size = 0;
+    int z = 6;
+    if (rect.width() > rect.height())
+        size = (rect.height() - z) / 2;
+    else
+        size = (rect.width() - z) / 2;
+
+    //! Значения показателей
+    painter->setFont(QFont("Sans", 7, QFont::Bold, false));
+    painter->setPen(QPen(Qt::black, 1, Qt::SolidLine, Qt::FlatCap));
+
+    auto fi = static_cast<AAnalyserApplication*>(QApplication::instance())->getFactorInfo(StepOffsetFactorsDefines::Compensation::ReactionTimeUid);
+    double v = calculator->factorValue(StepOffsetFactorsDefines::Compensation::ReactionTimeUid);
+    painter->drawText(rect.x() + 4, rect.y() + 7, fi.shortName() + ", " + fi.measure());
+    painter->drawText(rect.x() + 100, rect.y() + 7, QString::number(v, 'f', fi.format()));
+
+    fi = static_cast<AAnalyserApplication*>(QApplication::instance())->getFactorInfo(StepOffsetFactorsDefines::Compensation::StatismUid);
+    v = calculator->factorValue(StepOffsetFactorsDefines::Compensation::StatismUid);
+    painter->drawText(rect.x() + 4, rect.y() + 17, fi.shortName() + ", " + fi.measure());
+    painter->drawText(rect.x() + 100, rect.y() + 17, QString::number(v, 'f', fi.format()));
+
+    fi = static_cast<AAnalyserApplication*>(QApplication::instance())->getFactorInfo(StepOffsetFactorsDefines::Compensation::ProcessKindUid);
+    v = calculator->factorValue(StepOffsetFactorsDefines::Compensation::ProcessKindUid);
+    painter->drawText(rect.x() + 4, rect.y() + 27, fi.shortName() + ", " + fi.measure());
+    painter->drawText(rect.x() + 100, rect.y() + 27, QString::number(v, 'f', fi.format()));
+}
+
 void StepOffsetVisualize::curPageChanged(int pageIdx)
 {
     SettingsProvider::setValueToRegAppCopy("StepOffsetTestWidget", "CurrentPage", pageIdx);

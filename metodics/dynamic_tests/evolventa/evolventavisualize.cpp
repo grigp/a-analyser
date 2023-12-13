@@ -299,6 +299,39 @@ void EvolventaVisualize::printGraph(QPainter *painter,
     gp.doPaint(ratio);
 }
 
+void EvolventaVisualize::paintPreview(QPainter *painter, QRect &rect, const QString &testUid, EvolventaCalculator *calculator)
+{
+    Q_UNUSED(testUid);
+
+    painter->save();
+
+    int size = 0;
+    int z = 6;
+    if (rect.width() > rect.height())
+        size = (rect.height() - z) / 2;
+    else
+        size = (rect.width() - z) / 2;
+
+    //! Значения показателей
+    painter->setFont(QFont("Sans", 7, QFont::Bold, false));
+    painter->setPen(QPen(Qt::black, 1, Qt::SolidLine, Qt::FlatCap));
+
+    auto fi = static_cast<AAnalyserApplication*>(QApplication::instance())->getFactorInfo(EvolventaFactorsDefines::CommonErrorsFrontal::MidErr);
+    auto sv = calculator->factorValueFormatted(EvolventaFactorsDefines::CommonErrorsFrontal::MidErr);
+    painter->drawText(rect.x() + 4, rect.y() + 7, fi.shortName() + ", " + fi.measure());
+    painter->drawText(rect.x() + 110, rect.y() + 7, sv);
+
+    fi = static_cast<AAnalyserApplication*>(QApplication::instance())->getFactorInfo(EvolventaFactorsDefines::CommonErrorsSagittal::MidErr);
+    sv = calculator->factorValueFormatted(EvolventaFactorsDefines::CommonErrorsSagittal::MidErr);
+    painter->drawText(rect.x() + 4, rect.y() + 17, fi.shortName() + ", " + fi.measure());
+    painter->drawText(rect.x() + 110, rect.y() + 17, sv);
+
+    fi = static_cast<AAnalyserApplication*>(QApplication::instance())->getFactorInfo(EvolventaFactorsDefines::DAPercent);
+    sv = calculator->factorValueFormatted(EvolventaFactorsDefines::DAPercent);
+    painter->drawText(rect.x() + 4, rect.y() + 27, fi.shortName() + ", " + fi.measure());
+    painter->drawText(rect.x() + 110, rect.y() + 27, sv);
+}
+
 void EvolventaVisualize::saveFactorsCorrections()
 {
     QString path = DataDefines::aanalyserDocumentsPath();

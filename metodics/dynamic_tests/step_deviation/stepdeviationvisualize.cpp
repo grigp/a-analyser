@@ -8,6 +8,7 @@
 #include "reportelements.h"
 #include "decartcoordinatessignal.h"
 #include "dynamicdiagrampainter.h"
+#include "stepdeviationfactors.h"
 
 #include <QPainter>
 #include <QDebug>
@@ -161,6 +162,46 @@ void StepDeviationVisualize::print(QPrinter *printer, const QString &testUid)
     ReportElements::drawFooter(painter, testUid, rectFooter);
 
     painter->end();
+}
+
+void StepDeviationVisualize::paintPreview(QPainter *painter, QRect &rect, const QString &testUid, StepDeviationCalculator *calculator)
+{
+    Q_UNUSED(testUid);
+
+    const QStringList DisplayFactors = QStringList() << StepDeviationFactorsDefines::TimeUid
+                                                     << StepDeviationFactorsDefines::StepCountUid
+                                                     << StepDeviationFactorsDefines::ErrorCountUid
+                                                     << StepDeviationFactorsDefines::GrowthAvrgUid;
+
+    painter->save();
+
+    int size = 0;
+    int z = 6;
+    if (rect.width() > rect.height())
+        size = (rect.height() - z) / 2;
+    else
+        size = (rect.width() - z) / 2;
+
+    //! Значения показателей
+    int n = 0;
+    painter->setFont(QFont("Sans", 7, QFont::Bold, false));
+    painter->setPen(QPen(Qt::black, 1, Qt::SolidLine, Qt::FlatCap));
+    for (int i = 0; i < calculator->primaryFactorsCount(); ++i)
+    {
+        auto factor = calculator->primaryFactor(i);
+        if (DisplayFactors.contains(factor->uid()))
+        {
+            auto fi = static_cast<AAnalyserApplication*>(QApplication::instance())->getFactorInfo(factor->uid());
+            QString fn = fi.shortName();
+            if (fi.measure() != "")
+                fn = fn + ", " + fi.measure();
+            painter->drawText(rect.x() + 4, rect.y() + 7 + n * 10, fn);
+            painter->drawText(rect.x() + 75, rect.y() + 7 + n * 10, QString::number(factor->value(), 'f', fi.format()));
+
+            ++n;
+        }
+    }
+
 }
 
 void StepDeviationVisualize::printGraph(QPainter *painter, const QRect &rect, StepDeviationVisualize *visual, double ratio)

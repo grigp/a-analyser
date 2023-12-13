@@ -75,16 +75,16 @@ void StepDeviationFactors::registerFactors()
 
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(StepDeviationFactorsDefines::TimeUid, StepDeviationFactorsDefines::GroupUid,
-                           tr("Длительность пробы"), tr("Time"), tr("сек"), 1, 3, FactorsDefines::nsDual, 12);
+                           tr("Длительность пробы"), tr("Длит"), tr("сек"), 1, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(StepDeviationFactorsDefines::StepCountUid, StepDeviationFactorsDefines::GroupUid,
-                           tr("Количество шагов"), tr("Steps"), tr(""), 0, 3, FactorsDefines::nsDual, 12);
+                           tr("Количество шагов"), tr("Шаги"), tr(""), 0, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(StepDeviationFactorsDefines::ErrorCountUid, StepDeviationFactorsDefines::GroupUid,
-                           tr("Количество ошибок"), tr("Errors"), tr(""), 0, 3, FactorsDefines::nsDual, 12);
+                           tr("Количество ошибок"), tr("Ошибки"), tr(""), 0, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(StepDeviationFactorsDefines::GrowthAvrgUid, StepDeviationFactorsDefines::GroupUid,
-                           tr("Средняя величина пророста"), tr("Growth"), tr("мм"), 2, 3, FactorsDefines::nsDual, 12);
+                           tr("Средняя величина пророста"), tr("Прирост"), tr("мм"), 2, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(StepDeviationFactorsDefines::TimeAvrgUid, StepDeviationFactorsDefines::GroupUid,
                            tr("Среднее время отклонений"), tr("TimeAvrg"), tr("сек"), 2, 3, FactorsDefines::nsDual, 12);

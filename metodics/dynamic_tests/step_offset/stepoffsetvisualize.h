@@ -35,6 +35,14 @@ public:
      */
     static void print(QPrinter *printer, const QString &testUid);
 
+    /*!
+     * \brief Прорисовывает предварительные результаты с помощью заданного рисователя
+     * \param painter - рисователь
+     * \param rect - зона прорисовки
+     * \param testUid - uid теста
+     */
+    static void paintPreview(QPainter* painter, QRect& rect, const QString& testUid, StepOffsetCalculator* calculator);
+
 private slots:
     void curPageChanged(int pageIdx);
     void splitterMoved(int pos,int index);

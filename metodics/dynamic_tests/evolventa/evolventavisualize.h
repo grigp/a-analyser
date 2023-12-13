@@ -39,6 +39,14 @@ public:
                            EvolventaVisualize* visual, double ratio,
                            QRect rect, DecartCoordinatesSignal *signal);
 
+    /*!
+     * \brief Прорисовывает предварительные результаты с помощью заданного рисователя
+     * \param painter - рисователь
+     * \param rect - зона прорисовки
+     * \param testUid - uid теста
+     */
+    static void paintPreview(QPainter* painter, QRect& rect, const QString& testUid, EvolventaCalculator* calculator);
+
 private slots:
     /*!
      * \brief Сохраняет таблицу показателей коррекций

@@ -160,7 +160,7 @@ void EvolventaFactors::registerFactors()
                            tr("Суммарная ошибка"), tr("SummErr"), tr("мм"), 0, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(EvolventaFactorsDefines::CommonErrorsFrontal::MidErr, EvolventaFactorsDefines::GroupUid,
-                           tr("Средняя ошибка"), tr("MidErr"), tr("мм"), 2, 3, FactorsDefines::nsDual, 12);
+                           tr("Средняя ошибка"), tr("Ср.ошибка(X)"), tr("мм"), 2, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(EvolventaFactorsDefines::FragmentExtremumFrontal::MidErr, EvolventaFactorsDefines::GroupUid,
                            tr("Средняя ошибка на экстремуме"), tr("MidErrExtr"), tr("мм"), 2, 3, FactorsDefines::nsDual, 12);
@@ -222,7 +222,7 @@ void EvolventaFactors::registerFactors()
                            tr("Суммарная ошибка"), tr("SummErr"), tr("мм"), 0, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(EvolventaFactorsDefines::CommonErrorsSagittal::MidErr, EvolventaFactorsDefines::GroupUid,
-                           tr("Средняя ошибка"), tr("MidErr"), tr("мм"), 2, 3, FactorsDefines::nsDual, 12);
+                           tr("Средняя ошибка"), tr("Ср.ошибка(Y)"), tr("мм"), 2, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(EvolventaFactorsDefines::FragmentExtremumSagittal::MidErr, EvolventaFactorsDefines::GroupUid,
                            tr("Средняя ошибка на экстремуме"), tr("MidErrExtr"), tr("мм"), 2, 3, FactorsDefines::nsDual, 12);
@@ -281,7 +281,7 @@ void EvolventaFactors::registerFactors()
     ///< Общие показатели коррекций
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(EvolventaFactorsDefines::DAPercent, EvolventaFactorsDefines::GroupUid,
-                           tr("Опережение маркера цели"), tr("DAPercent"), tr("%"), 0, 3, FactorsDefines::nsDual, 12);
+                           tr("Опережение маркера цели"), tr("Опережение"), tr("%"), 0, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(EvolventaFactorsDefines::DAhead, EvolventaFactorsDefines::GroupUid,
                            tr("Суммарное опережение маркера цели"), tr("DAhead"), tr("сек"), 4, 3, FactorsDefines::nsDual, 12);

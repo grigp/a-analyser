@@ -1,9 +1,12 @@
 #include "stepdeviationtemplate.h"
 
+#include "aanalyserapplication.h"
 #include "metodicdefines.h"
 #include "stepdeviationparamsdialog.h"
 #include "stepdeviationtestexecute.h"
+#include "stepdeviationcalculator.h"
 #include "stepdeviationvisualize.h"
+#include "metodicsfactory.h"
 
 #include <QLayout>
 #include <QDebug>
@@ -45,6 +48,17 @@ void StepDeviationTemplate::paintPreview(QPainter *painter, QRect &rect, const Q
     Q_UNUSED(painter);
     Q_UNUSED(rect);
     Q_UNUSED(testUid);
+
+    MetodicsFactory *metFactory = static_cast<AAnalyserApplication*>(QApplication::instance())->getMetodics();
+    auto calculator = metFactory->getCalculator(testUid);
+    if (!calculator)
+    {
+        calculator = new StepDeviationCalculator(testUid, nullptr);
+        calculator->calculate();
+        metFactory->storeCalculator(testUid, calculator);
+    }
+
+    StepDeviationVisualize::paintPreview(painter, rect, testUid, static_cast<StepDeviationCalculator*>(calculator));
 }
 
 void StepDeviationTemplate::print(QPrinter *printer, const QString &testUid)
