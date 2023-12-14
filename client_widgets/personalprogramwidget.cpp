@@ -30,6 +30,7 @@ PersonalProgramWidget::PersonalProgramWidget(QWidget *parent) :
 
     ui->frPPOpenTest->setVisible(false);
     restoreMainSplitterPosition();
+    ui->btnPPOpenTest->setVisible(false);
 //    load();
 //    ui->tvPatients->setModel(m_model);
 //    m_wgts.clear();
@@ -143,6 +144,13 @@ void PersonalProgramWidget::timerEvent(QTimerEvent *event)
         doRunTest(false);
     }
     ClientWidget::timerEvent(event);
+}
+
+void PersonalProgramWidget::keyPressEvent(QKeyEvent *event)
+{
+    if (event->key() == Qt::Key_Escape)
+        on_closeTest();
+    ClientWidget::keyPressEvent(event);
 }
 
 void PersonalProgramWidget::on_splitterMoved(int, int)
@@ -478,7 +486,7 @@ void PersonalProgramWidget::on_selectTest(QModelIndex idx)
     if (idx.isValid())
     {
         //! Если результаты открыты, покажем новые
-        if (ui->frPPOpenTest->isVisible())
+//        if (ui->frPPOpenTest->isVisible())
             on_openTest();
     }
 }

@@ -330,6 +330,8 @@ void EvolventaVisualize::paintPreview(QPainter *painter, QRect &rect, const QStr
     sv = calculator->factorValueFormatted(EvolventaFactorsDefines::DAPercent);
     painter->drawText(rect.x() + 4, rect.y() + 27, fi.shortName() + ", " + fi.measure());
     painter->drawText(rect.x() + 110, rect.y() + 27, sv);
+
+    painter->restore();
 }
 
 void EvolventaVisualize::saveFactorsCorrections()

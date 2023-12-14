@@ -402,6 +402,8 @@ void TriangleVisualize::paintPreview(QPainter *painter, QRect &rect, const QStri
     sv = calculator->factorConslutionValueFormatted(TriangleConslutionFactorsDefines::AccMidYUid);
     painter->drawText(rect.x() + 4, rect.y() + 37, fi.shortName() + ", " + fi.measure());
     painter->drawText(rect.x() + 100, rect.y() + 37, sv);
+
+    painter->restore();
 }
 
 void TriangleVisualize::curPageChanged(int pageIdx)

@@ -39,9 +39,11 @@ public:
 
 signals:
     void selectItem(QModelIndex idx);
+    void doubleClicked(QModelIndex idx);
 
 private slots:
     void on_selectItem(QModelIndex idx);
+    void on_doubleClicked(QModelIndex idx);
 
 private:
     Ui::PatientProgramWidget *ui;

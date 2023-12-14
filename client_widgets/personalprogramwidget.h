@@ -64,6 +64,7 @@ public:
 
 protected:
     void timerEvent(QTimerEvent *event) override;
+    void keyPressEvent(QKeyEvent *event) override;
 
 private slots:
     void on_splitterMoved(int,int);

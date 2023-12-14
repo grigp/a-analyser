@@ -255,6 +255,8 @@ void StepOffsetVisualize::paintPreview(QPainter *painter, QRect &rect, const QSt
     v = calculator->factorValue(StepOffsetFactorsDefines::Compensation::ProcessKindUid);
     painter->drawText(rect.x() + 4, rect.y() + 27, fi.shortName() + ", " + fi.measure());
     painter->drawText(rect.x() + 100, rect.y() + 27, QString::number(v, 'f', fi.format()));
+
+    painter->restore();
 }
 
 void StepOffsetVisualize::curPageChanged(int pageIdx)

@@ -16,6 +16,7 @@ PatientProgramWidget::PatientProgramWidget(QWidget *parent) :
     ui(new Ui::PatientProgramWidget)
 {
     ui->setupUi(this);
+    connect(ui->tvProgram, &QTableView::doubleClicked, this, &PatientProgramWidget::on_doubleClicked);
 }
 
 PatientProgramWidget::~PatientProgramWidget()
@@ -63,4 +64,9 @@ void PatientProgramWidget::on_selectItem(QModelIndex idx)
             emit selectItem(idx);
         }
     }
+}
+
+void PatientProgramWidget::on_doubleClicked(QModelIndex idx)
+{
+    emit doubleClicked(idx);
 }

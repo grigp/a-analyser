@@ -202,6 +202,7 @@ void StepDeviationVisualize::paintPreview(QPainter *painter, QRect &rect, const 
         }
     }
 
+    painter->restore();
 }
 
 void StepDeviationVisualize::printGraph(QPainter *painter, const QRect &rect, StepDeviationVisualize *visual, double ratio)
