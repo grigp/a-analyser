@@ -897,6 +897,8 @@ void AAnalyserApplication::on_dbConnected()
         m_mdlPatients->load();
     m_pmdlPatientsPP->setShowPPMode(PatientsProxyModel::sppActive);
     m_ppManager->on_dbConnected();
+    qDebug() << Q_FUNC_INFO;
+
 }
 
 void AAnalyserApplication::on_AddTestToSummaryAccepted()

@@ -366,6 +366,44 @@ void TriangleVisualize::print(QPrinter *printer, const QString &testUid)
     painter->end();
 }
 
+void TriangleVisualize::paintPreview(QPainter *painter, QRect &rect, const QString &testUid, TriangleCalculator *calculator)
+{
+    Q_UNUSED(testUid);
+
+    painter->save();
+
+    int size = 0;
+    int z = 6;
+    if (rect.width() > rect.height())
+        size = (rect.height() - z) / 2;
+    else
+        size = (rect.width() - z) / 2;
+
+    //! Значения показателей
+    painter->setFont(QFont("Sans", 7, QFont::Bold, false));
+    painter->setPen(QPen(Qt::black, 1, Qt::SolidLine, Qt::FlatCap));
+
+    auto fi = static_cast<AAnalyserApplication*>(QApplication::instance())->getFactorInfo(TriangleConslutionFactorsDefines::AccRepeatUid);
+    auto sv = calculator->factorConslutionValueFormatted(TriangleConslutionFactorsDefines::AccRepeatUid);
+    painter->drawText(rect.x() + 4, rect.y() + 7, fi.shortName() + ", " + fi.measure());
+    painter->drawText(rect.x() + 100, rect.y() + 7, sv);
+
+    fi = static_cast<AAnalyserApplication*>(QApplication::instance())->getFactorInfo(TriangleConslutionFactorsDefines::AccFormUid);
+    sv = calculator->factorConslutionValueFormatted(TriangleConslutionFactorsDefines::AccFormUid);
+    painter->drawText(rect.x() + 4, rect.y() + 17, fi.shortName() + ", " + fi.measure());
+    painter->drawText(rect.x() + 100, rect.y() + 17, sv);
+
+    fi = static_cast<AAnalyserApplication*>(QApplication::instance())->getFactorInfo(TriangleConslutionFactorsDefines::AccMidXUid);
+    sv = calculator->factorConslutionValueFormatted(TriangleConslutionFactorsDefines::AccMidXUid);
+    painter->drawText(rect.x() + 4, rect.y() + 27, fi.shortName() + ", " + fi.measure());
+    painter->drawText(rect.x() + 100, rect.y() + 27, sv);
+
+    fi = static_cast<AAnalyserApplication*>(QApplication::instance())->getFactorInfo(TriangleConslutionFactorsDefines::AccMidYUid);
+    sv = calculator->factorConslutionValueFormatted(TriangleConslutionFactorsDefines::AccMidYUid);
+    painter->drawText(rect.x() + 4, rect.y() + 37, fi.shortName() + ", " + fi.measure());
+    painter->drawText(rect.x() + 100, rect.y() + 37, sv);
+}
+
 void TriangleVisualize::curPageChanged(int pageIdx)
 {
     SettingsProvider::setValueToRegAppCopy("TriangleResultWidget", "CurrentPage", pageIdx);

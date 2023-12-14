@@ -220,6 +220,12 @@ void MainWindow::closeEvent(QCloseEvent *event)
     }
 }
 
+void MainWindow::showEvent(QShowEvent *event)
+{
+    QMainWindow::showEvent(event);
+    qDebug() << Q_FUNC_INFO;
+}
+
 void MainWindow::onDeviceControl()
 {
     DeviceControlDialog dlg(this);

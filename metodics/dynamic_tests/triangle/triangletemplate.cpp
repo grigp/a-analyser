@@ -1,9 +1,12 @@
 #include "triangletemplate.h"
 
+#include "aanalyserapplication.h"
 #include "metodicdefines.h"
+#include "metodicsfactory.h"
 #include "triangleparamsdialog.h"
 #include "triangleexecute.h"
 #include "trianglevisualize.h"
+#include "trianglecalculator.h"
 
 #include <QLayout>
 
@@ -44,6 +47,17 @@ void TriangleTemplate::paintPreview(QPainter *painter, QRect &rect, const QStrin
     Q_UNUSED(painter);
     Q_UNUSED(rect);
     Q_UNUSED(testUid);
+
+    MetodicsFactory *metFactory = static_cast<AAnalyserApplication*>(QApplication::instance())->getMetodics();
+    auto calculator = metFactory->getCalculator(testUid);
+    if (!calculator)
+    {
+        calculator = new TriangleCalculator(testUid, nullptr);
+        calculator->calculate();
+        metFactory->storeCalculator(testUid, calculator);
+    }
+
+    TriangleVisualize::paintPreview(painter, rect, testUid, static_cast<TriangleCalculator*>(calculator));
 }
 
 void TriangleTemplate::print(QPrinter *printer, const QString &testUid)

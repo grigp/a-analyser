@@ -73,16 +73,16 @@ void TriangleConslutionFactors::registerFactors()
 
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(TriangleConslutionFactorsDefines::AccRepeatUid, TriangleConslutionFactorsDefines::GroupUid,
-                           tr("Точность повторения"), tr("AccRep"), tr("%"), 1, 3, FactorsDefines::nsDual, 12);
+                           tr("Точность повторения"), tr("Повторение"), tr("%"), 1, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(TriangleConslutionFactorsDefines::AccMidXUid, TriangleConslutionFactorsDefines::GroupUid,
-                           tr("Точность позиции (фронталь)"), tr(""), tr(""), 1, 3, FactorsDefines::nsDual, 12);
+                           tr("Точность позиции (фронталь)"), tr("Позиция X"), tr("%"), 1, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(TriangleConslutionFactorsDefines::AccMidYUid, TriangleConslutionFactorsDefines::GroupUid,
-                           tr("Точность позиции (сагитталь)"), tr(""), tr(""), 1, 3, FactorsDefines::nsDual, 12);
+                           tr("Точность позиции (сагитталь)"), tr("Позиция Y"), tr("%"), 1, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(TriangleConslutionFactorsDefines::AccFormUid, TriangleConslutionFactorsDefines::GroupUid,
-                           tr("Точность формы"), tr(""), tr(""), 1, 3, FactorsDefines::nsDual, 12);
+                           tr("Точность формы"), tr("Форма"), tr("%"), 1, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(TriangleConslutionFactorsDefines::KorrMotorTstCntUid, TriangleConslutionFactorsDefines::GroupUid,
                            tr("Кол-во моторных коррекций (обучение)"), tr(""), tr(""), 1, 3, FactorsDefines::nsDual, 12);

@@ -11,6 +11,8 @@
 
 int main(int argc, char *argv[])
 {
+    qDebug() << Q_FUNC_INFO;
+
     qsrand(QDateTime::currentMSecsSinceEpoch());
     AAnalyserApplication a(argc, argv);
 
