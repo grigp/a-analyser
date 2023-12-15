@@ -644,6 +644,8 @@ void PersonalProgramWidget::showPersonalProgram(const QString& uidPPAssigned)
     }
     else
     {
+        qDebug() << Q_FUNC_INFO << "----------" << static_cast<AAnalyserApplication*>(QApplication::instance())->ppVisualCount();
+
         auto ppw = new PatientProgramWidget(ui->frPrograms);
         ppw->assignPersonalProgram(uidPPAssigned);
         connect(ppw, &PatientProgramWidget::selectItem, this, &PersonalProgramWidget::on_selectTest);

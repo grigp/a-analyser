@@ -1,6 +1,7 @@
 INCLUDEPATH += $$PWD
 
 include(dialogs/dialogs_src.pri)
+include(visuals/visuals_src.pri)
 
 HEADERS += \
     $$PWD/personalprogrammanager.h \

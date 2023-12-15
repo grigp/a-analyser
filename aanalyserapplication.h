@@ -24,7 +24,9 @@ class SignalTransformer;
 class Driver;
 class NormsManager;
 class VisualsFactory;
+class PPVisualsFactory;
 class VisualDescriptor;
+class PPVisualDescriptor;
 class TestVisual;
 class ProbeVisual;
 class ChannelVisual;
@@ -278,9 +280,12 @@ public:
 
 
     void registerVisual(VisualDescriptor* visual);
-
     int visualCount(const BaseDefines::TestLevel level);
     VisualDescriptor* getVisual(const BaseDefines::TestLevel level, const int idx);
+
+    void registerPPVisual(PPVisualDescriptor* visual);
+    int ppVisualCount();
+    PPVisualDescriptor* getPPVisual(const int idx);
 
     /*!
      * \brief Читает файл списка дневных программ и заполняет модель данных
@@ -783,6 +788,8 @@ private:
     SignalTransformFactory *m_transformers {nullptr};
     NormsManager *m_normsManager {nullptr};
     VisualsFactory *m_visualsFactory {nullptr};
+    PPVisualsFactory *m_ppVisualsFactory {nullptr};
+
     PersonalProgramManager *m_ppManager {nullptr};
 
     PatientsModel *m_mdlPatients {nullptr};

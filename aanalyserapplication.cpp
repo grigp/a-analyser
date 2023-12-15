@@ -25,6 +25,7 @@
 #include "exitcodes.h"
 #include "settingsprovider.h"
 #include "visualsfactory.h"
+#include "ppvisualsfactory.h"
 #include "visualdescriptor.h"
 #include "log.h"
 #include "addtesttosummarydialog.h"
@@ -46,6 +47,7 @@ AAnalyserApplication::AAnalyserApplication(int &argc, char **argv)
     , m_transformers(new SignalTransformFactory(this))
     , m_normsManager(new NormsManager(this))
     , m_visualsFactory(new VisualsFactory(this))
+    , m_ppVisualsFactory(new PPVisualsFactory(this))
     , m_ppManager(new PersonalProgramManager(this))
     , m_mdlPatients(new PatientsModel(this))
     , m_pmdlPatients(new PatientsProxyModel(this))
@@ -464,6 +466,26 @@ VisualDescriptor *AAnalyserApplication::getVisual(const BaseDefines::TestLevel l
 {
     if (m_visualsFactory)
         return m_visualsFactory->getVisual(level, idx);
+    return nullptr;
+}
+
+void AAnalyserApplication::registerPPVisual(PPVisualDescriptor *visual)
+{
+    if (m_ppVisualsFactory)
+        m_ppVisualsFactory->registerVisual(visual);
+}
+
+int AAnalyserApplication::ppVisualCount()
+{
+    if (m_ppVisualsFactory)
+        return m_ppVisualsFactory->visualCount();
+    return 0;
+}
+
+PPVisualDescriptor *AAnalyserApplication::getPPVisual(const int idx)
+{
+    if (m_ppVisualsFactory)
+        return m_ppVisualsFactory->getVisual(idx);
     return nullptr;
 }
 
