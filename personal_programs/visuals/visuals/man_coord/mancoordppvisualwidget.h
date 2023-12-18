@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <QJsonObject>
+#include <QUuid>
 
 #include "ppvisual.h"
 
@@ -27,7 +28,10 @@ public:
 private:
     Ui::ManCoordPPVisualWidget *ui;
 
-    QJsonObject m_objPP {QJsonObject()};
+    QString m_stepDevTestUid {QUuid().toString()};    ///< uid теста "Прирост" (ступ. отклонение)
+    QString m_stepOffsTestUid {QUuid().toString()};   ///< uid теста "Ступени" (ступ. воздействие)
+    QString m_evolventaTestUid {QUuid().toString()};  ///< uid теста "Эвольвента"
+    QString m_triangleTestUid {QUuid().toString()};   ///< uid теста "Треугольник"
 };
 
 #endif // MANCOORDPPVISUALWIDGET_H

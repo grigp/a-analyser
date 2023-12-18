@@ -14,14 +14,18 @@ class PPVisual : public QWidget
     Q_OBJECT
 
 public:
-    explicit PPVisual(PPVisualDescriptor* visual, QWidget *parent = nullptr);
+    explicit PPVisual(PPVisualDescriptor* visual, QJsonObject &objPP, QWidget *parent = nullptr);
     ~PPVisual() override;
 
     virtual bool isValid() = 0;
     virtual void calculate() = 0;
 
+protected:
+    QJsonObject objectPP() {return m_objPP;}
+
 private:
     PPVisualDescriptor* m_visual {nullptr};
+    QJsonObject m_objPP {QJsonObject()};
 };
 
 #endif // PPVISUAL_H

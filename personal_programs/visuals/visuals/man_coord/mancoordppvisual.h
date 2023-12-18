@@ -12,6 +12,9 @@ static const QString Name_ManCoord = "Оценка координационны�
 }
 
 
+/*!
+ * \brief Класс описателя визуализатора ИП - оценка координационных способностей человека The ManCoordPPVisual class
+ */
 class ManCoordPPVisual : public PPVisualDescriptor
 {
 public:

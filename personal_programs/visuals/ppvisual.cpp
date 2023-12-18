@@ -2,10 +2,10 @@
 
 #include "ppvisualdescriptor.h"
 
-PPVisual::PPVisual(PPVisualDescriptor* visual, QWidget *parent) :
+PPVisual::PPVisual(PPVisualDescriptor* visual, QJsonObject &objPP, QWidget *parent) :
     QWidget(parent)
   , m_visual(visual)
-
+  , m_objPP(objPP)
 {
 }
 

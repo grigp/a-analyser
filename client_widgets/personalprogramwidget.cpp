@@ -21,6 +21,9 @@
 #include "runningmodedialog.h"
 #include "databaseresultwidget.h"
 #include "patientkarddialog.h"
+#include "ppvisualdescriptor.h"
+#include "dataprovider.h"
+#include "ppvisual.h"
 
 PersonalProgramWidget::PersonalProgramWidget(QWidget *parent) :
     ClientWidget(parent),
@@ -644,14 +647,25 @@ void PersonalProgramWidget::showPersonalProgram(const QString& uidPPAssigned)
     }
     else
     {
-        qDebug() << Q_FUNC_INFO << "----------" << static_cast<AAnalyserApplication*>(QApplication::instance())->ppVisualCount();
-
         auto ppw = new PatientProgramWidget(ui->frPrograms);
         ppw->assignPersonalProgram(uidPPAssigned);
         connect(ppw, &PatientProgramWidget::selectItem, this, &PersonalProgramWidget::on_selectTest);
         ui->lblPPTitle->setText("Индивидуальная программа: \"" + ppw->namePP() + "\"");
         ui->frPrograms->layout()->addWidget(ppw);
         m_wgts.insert(uidPPAssigned, ppw);
+
+        //! Пример получения списка визуализаторов ИП
+        auto objPP = DataProvider::getPersonalProgramByUid(uidPPAssigned);
+        int n = static_cast<AAnalyserApplication*>(QApplication::instance())->ppVisualCount();
+        qDebug() << Q_FUNC_INFO << "----------" << n;
+        for (int i = 0; i < n; ++i)
+        {
+            auto vd = static_cast<AAnalyserApplication*>(QApplication::instance())->getPPVisual(i);
+
+            auto wgtVD = vd->getVisualWidget(objPP, nullptr);
+            qDebug() << Q_FUNC_INFO << "----------" << i << vd->name() << wgtVD->isValid();
+            delete wgtVD;
+        }
     }
 }
 
