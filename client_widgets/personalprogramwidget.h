@@ -21,6 +21,8 @@ namespace ClientWidgets
 class PatientsModel;
 class PatientsProxyModel;
 class PatientProgramWidget;
+class PatientProgramVisualsWidget;
+class PPVisual;
 
 class PersonalProgramWidget : public ClientWidget
 {
@@ -121,6 +123,8 @@ private:
     void showPersonalProgram(const QString& uidPPAssigned);
     void hideAllWidgets();
 
+    QList<PPVisual*> getPPVisuals(const QString& uidPP) const;
+
     void saveMainSplitterPosition();
     void restoreMainSplitterPosition();
 
@@ -175,7 +179,7 @@ private:
 
     QStandardItemModel* m_model {nullptr};
 
-    QMap<QString, PatientProgramWidget*> m_wgts; ///< Виджеты ИП, назначенных для пациентов
+    QMap<QString, PatientProgramVisualsWidget*> m_wgts; ///< Виджеты ИП, назначенных для пациентов
 
     QJsonObject m_objPPExecuted {QJsonObject()};  ///< Выполняемая в настоящий момент индивидуальная программа
     QString m_activePatientUid {""};              ///< uid пациента, для которого запущена на выполнение ДП

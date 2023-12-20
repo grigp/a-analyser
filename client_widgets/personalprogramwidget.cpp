@@ -14,6 +14,7 @@
 #include "personalprogram.h"
 #include "databasewigetdefines.h"
 #include "patientprogramwidget.h"
+#include "patientprogramvisualswidget.h"
 #include "activepersonalprogrameditor.h"
 #include "metodicsfactory.h"
 #include "mainwindow.h"
@@ -89,7 +90,7 @@ void PersonalProgramWidget::onShow()
 
             //! Обновить ее на странице
             if (m_wgts.contains(uidPP))
-                m_wgts.value(uidPP)->assignPersonalProgram(uidPP);
+                m_wgts.value(uidPP) ->assignPersonalProgram(uidPP);
         }
 
         //! Запустить следующий тест через одну секунду
@@ -639,33 +640,31 @@ void PersonalProgramWidget::load()
 
 void PersonalProgramWidget::showPersonalProgram(const QString& uidPPAssigned)
 {
+    //! Спрячем все виджеты
     hideAllWidgets();
+    //! Если есть виджет с uidPPAssigned
     if (m_wgts.contains(uidPPAssigned))
     {
+        //! Покажем его
         m_wgts.value(uidPPAssigned)->setVisible(true);
         ui->lblPPTitle->setText("Индивидуальная программа: \"" + m_wgts.value(uidPPAssigned)->namePP() + "\"");
     }
     else
+    //! Если виджета с uidPPAssigned нет
     {
-        auto ppw = new PatientProgramWidget(ui->frPrograms);
+        //! Создадим виджет индивидуальной программы
+        auto ppw = new PatientProgramWidget(nullptr);
         ppw->assignPersonalProgram(uidPPAssigned);
         connect(ppw, &PatientProgramWidget::selectItem, this, &PersonalProgramWidget::on_selectTest);
         ui->lblPPTitle->setText("Индивидуальная программа: \"" + ppw->namePP() + "\"");
-        ui->frPrograms->layout()->addWidget(ppw);
-        m_wgts.insert(uidPPAssigned, ppw);
 
-        //! Пример получения списка визуализаторов ИП
-        auto objPP = DataProvider::getPersonalProgramByUid(uidPPAssigned);
-        int n = static_cast<AAnalyserApplication*>(QApplication::instance())->ppVisualCount();
-        qDebug() << Q_FUNC_INFO << "----------" << n;
-        for (int i = 0; i < n; ++i)
-        {
-            auto vd = static_cast<AAnalyserApplication*>(QApplication::instance())->getPPVisual(i);
+        //! Получим список визуализаторов
+        auto vl = getPPVisuals(uidPPAssigned);
 
-            auto wgtVD = vd->getVisualWidget(objPP, nullptr);
-            qDebug() << Q_FUNC_INFO << "----------" << i << vd->name() << wgtVD->isValid();
-            delete wgtVD;
-        }
+        //! Создадим виджет, на котором будут визуализаторы
+        auto ppvw = new PatientProgramVisualsWidget(ppw, vl, ui->frPrograms);
+        m_wgts.insert(uidPPAssigned, ppvw);
+        ui->frPrograms->layout()->addWidget(ppvw);
     }
 }
 
@@ -676,6 +675,28 @@ void PersonalProgramWidget::hideAllWidgets()
     foreach(QObject * child, children)
         if (child->isWidgetType())
             static_cast<QWidget*>(child)->setVisible(false);
+}
+
+QList<PPVisual *> PersonalProgramWidget::getPPVisuals(const QString &uidPP) const
+{
+    QList<PPVisual*> retval;
+    retval.clear();
+
+    auto objPP = DataProvider::getPersonalProgramByUid(uidPP);
+    int n = static_cast<AAnalyserApplication*>(QApplication::instance())->ppVisualCount();
+//    qDebug() << Q_FUNC_INFO << "----------" << n;
+    for (int i = 0; i < n; ++i)
+    {
+        auto vd = static_cast<AAnalyserApplication*>(QApplication::instance())->getPPVisual(i);
+        auto wgtVD = vd->getVisualWidget(objPP, nullptr);
+//        qDebug() << Q_FUNC_INFO << "----------" << i << vd->name() << wgtVD->isValid();
+        if (wgtVD->isValid())
+            retval << wgtVD;
+        else
+            delete wgtVD;
+    }
+
+    return retval;
 }
 
 

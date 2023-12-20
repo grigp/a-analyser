@@ -12,3 +12,10 @@ PPVisual::PPVisual(PPVisualDescriptor* visual, QJsonObject &objPP, QWidget *pare
 PPVisual::~PPVisual()
 {
 }
+
+QString PPVisual::name()
+{
+    if (m_visual)
+        return m_visual->name();
+    return "";
+}

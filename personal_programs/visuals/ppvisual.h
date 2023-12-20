@@ -17,6 +17,8 @@ public:
     explicit PPVisual(PPVisualDescriptor* visual, QJsonObject &objPP, QWidget *parent = nullptr);
     ~PPVisual() override;
 
+    virtual QString name();
+
     virtual bool isValid() = 0;
     virtual void calculate() = 0;
 

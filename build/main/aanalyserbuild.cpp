@@ -142,7 +142,7 @@ void AAnalyserBuild::registerPPVisuals()
 {
     auto* app = static_cast<AAnalyserApplication*>(QApplication::instance());
     app->registerPPVisual(new ManCoordPPVisual());
-    app->registerPPVisual(new CommonPPVisual());
+//    app->registerPPVisual(new CommonPPVisual());
 }
 
 void AAnalyserBuild::registerSignalTransformers()
