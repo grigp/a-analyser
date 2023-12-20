@@ -308,7 +308,7 @@ void AAnalyserApplication::deleteTest()
         }
     }
     else
-        QMessageBox::information(nullptr, tr("Предупрежение"), tr("Не выбран тест"));
+        QMessageBox::information(nullptr, tr("Предупреждение"), tr("Не выбран тест"));
 }
 
 void AAnalyserApplication::deleteTest(const QString &testUid)

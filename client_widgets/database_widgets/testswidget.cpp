@@ -86,7 +86,7 @@ void TestsWidget::editTestProperty()
         }
     }
     else
-        QMessageBox::information(nullptr, tr("Предупрежение"), tr("Не выбран тест"));
+        QMessageBox::information(nullptr, tr("Предупреждение"), tr("Не выбран тест"));
 }
 
 void TestsWidget::printReport()
@@ -103,7 +103,7 @@ void TestsWidget::printReport()
         preview.exec();
     }
     else
-        QMessageBox::information(nullptr, tr("Предупрежение"), tr("Не выбран тест"));
+        QMessageBox::information(nullptr, tr("Предупреждение"), tr("Не выбран тест"));
 }
 
 void TestsWidget::signalsAnalysis()
@@ -123,7 +123,7 @@ void TestsWidget::summaryAddTest()
         static_cast<AAnalyserApplication*>(QApplication::instance())->summaryAddTest();
     }
     else
-        QMessageBox::information(nullptr, tr("Предупрежение"), tr("Не выбран тест"));
+        QMessageBox::information(nullptr, tr("Предупреждение"), tr("Не выбран тест"));
 }
 
 void TestsWidget::on_selectAllTests()
@@ -177,7 +177,7 @@ void TestsWidget::signalExport()
         delete exp;
     }
     else
-        QMessageBox::information(nullptr, tr("Предупрежение"), tr("Не выбран тест"));
+        QMessageBox::information(nullptr, tr("Предупреждение"), tr("Не выбран тест"));
 }
 
 void TestsWidget::restoreVisibleWidget()
