@@ -260,5 +260,7 @@
         <file>images/rmOperator.png</file>
         <file>images/Methodics/OKT.png</file>
         <file>images/tree/man.png</file>
+        <file>images/Collapse.png</file>
+        <file>images/Expand.png</file>
     </qresource>
 </RCC>

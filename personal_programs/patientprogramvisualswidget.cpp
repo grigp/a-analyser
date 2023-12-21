@@ -63,7 +63,10 @@ void PatientProgramVisualsWidget::assign()
         tw->addTab(m_wgtPP, tr("Индивидуальная программа"));
         //! И все виджеты визуализатором
         foreach (auto visual, m_visuals)
+        {
             tw->addTab(visual, visual->name());
+            visual->calculate();
+        }
         //! И покажем первый визуализатор
         tw->setCurrentIndex(1);
     }

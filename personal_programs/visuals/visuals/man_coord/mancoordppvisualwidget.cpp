@@ -2,7 +2,10 @@
 #include "ui_mancoordppvisualwidget.h"
 
 #include <QJsonArray>
+#include <QSpacerItem>
 #include <QDebug>
+
+#include "coordfactorwidget.h"
 
 namespace
 {
@@ -18,6 +21,8 @@ ManCoordPPVisualWidget::ManCoordPPVisualWidget(PPVisualDescriptor* visual, QJson
     ui(new Ui::ManCoordPPVisualWidget)
 {
     ui->setupUi(this);
+
+    ui->lblGeneralCoordFactor->setStyleSheet("font-size: 20pt; color: rgb(0, 100, 100);");
 }
 
 ManCoordPPVisualWidget::~ManCoordPPVisualWidget()
@@ -74,5 +79,37 @@ bool ManCoordPPVisualWidget::isValid()
 
 void ManCoordPPVisualWidget::calculate()
 {
+    auto fw = new CoordFactorWidget(ui->frFactors);
+    fw->setFactor(1, tr("Способность занимать определенную позу после смещения тела"), 0);
+    ui->frFactors->layout()->addWidget(fw);
 
+    fw = new CoordFactorWidget(ui->frFactors);
+    fw->setFactor(2, tr("Способность к ритмичному движению"), 0);
+    ui->frFactors->layout()->addWidget(fw);
+
+    fw = new CoordFactorWidget(ui->frFactors);
+    fw->setFactor(3, tr("Точность вступления в сложное движение"), 0);
+    ui->frFactors->layout()->addWidget(fw);
+
+    fw = new CoordFactorWidget(ui->frFactors);
+    fw->setFactor(4, tr("Точность при финальном требовании"), 0);
+    ui->frFactors->layout()->addWidget(fw);
+
+    fw = new CoordFactorWidget(ui->frFactors);
+    fw->setFactor(5, tr("Точность выполнения процесса"), 0);
+    ui->frFactors->layout()->addWidget(fw);
+
+    fw = new CoordFactorWidget(ui->frFactors);
+    fw->setFactor(6, tr("Точность воспроизводства требуемой амплитуды"), 0);
+    ui->frFactors->layout()->addWidget(fw);
+
+    fw = new CoordFactorWidget(ui->frFactors);
+    fw->setFactor(7, tr("Ориентация в пространстве"), 0);
+    ui->frFactors->layout()->addWidget(fw);
+
+    fw = new CoordFactorWidget(ui->frFactors);
+    fw->setFactor(8, tr("Способность воспринимать заданное движение (обучаемость)"), 0);
+    ui->frFactors->layout()->addWidget(fw);
+
+    static_cast<QBoxLayout*>(ui->frFactors->layout())->insertSpacerItem(9, new QSpacerItem(20, 20, QSizePolicy::Minimum, QSizePolicy::Expanding));
 }
