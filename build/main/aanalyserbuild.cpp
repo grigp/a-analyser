@@ -43,6 +43,8 @@
 #include "pulsefactorsdescriptor.h"
 #include "pulsespectrfactorsdescriptor.h"
 
+#include "generalcoordfactorsdescriptor.h"
+
 #include "skgvisual.h"
 #include "stabilogramvisual.h"
 #include "histogramvisual.h"
@@ -110,6 +112,8 @@ void AAnalyserBuild::registerFactors()
 
     app->registerGroup(new PulseFactorsDescriptor(BaseDefines::tlChannel));
     app->registerGroup(new PulseSpectrFactorsDescriptor(BaseDefines::tlChannel));
+
+    app->registerGroup(new GeneralCoordFactorsDescriptor(BaseDefines::tlBase));
 
     app->registerGroup(new DropTestFactorsDescriptor(BaseDefines::tlChannel));
     app->registerGroup(new HoppingFactorsDescriptor(BaseDefines::tlChannel));

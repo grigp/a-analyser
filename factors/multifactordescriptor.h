@@ -22,7 +22,7 @@ public:
     /*!
      * \brief Возвращает true, если показатели можно рассчитать для теста с заданным uid
      */
-    virtual bool isValid(const QString &testUid, const QString &probeUid = "", const QString &channelId = "") = 0;
+    virtual bool isValid(const QString &testUid = "", const QString &probeUid = "", const QString &channelId = "") = 0;
 
     virtual MultiFactor* caclulate(const QString& testUid = "",
                                    const QString& probeUid = "",

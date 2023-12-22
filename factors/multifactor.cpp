@@ -53,6 +53,11 @@ void MultiFactor::addFactor(const QString &uid, const double value)
     m_factors.append(new FactorsDefines::FactorValue(uid, value));
 }
 
+BaseMultifactor::BaseMultifactor(const QStringList &testUids, QObject *parent)
+{
+
+}
+
 TestMultifactor::TestMultifactor(const QString &testUid, QObject *parent)
     : MultiFactor(parent)
     , m_testUid(testUid)
@@ -80,3 +85,4 @@ ChannelMultifactor::ChannelMultifactor(const QString &testUid,
 {
 
 }
+

@@ -88,6 +88,24 @@ private:
     QList<FactorsDefines::FactorValue*> m_factors;
 };
 
+///<---------------------------------------------------------------------------
+/*!
+ * \brief Группа показателей, обрабатывающая несколько тестов The BaseMultifactor class
+ */
+class BaseMultifactor : public MultiFactor
+{
+public:
+    explicit BaseMultifactor(const QStringList &testUids, QObject *parent = nullptr);
+
+protected:
+    /*!
+     * \brief Возвращает список uid тестов, участвующих в расчете
+     */
+    QStringList testUids() const {return m_testUids;}
+
+private:
+    QStringList m_testUids;
+};
 
 ///<---------------------------------------------------------------------------
 /*!

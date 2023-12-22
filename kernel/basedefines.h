@@ -197,6 +197,7 @@ static const double ZoneKognHi = 0.28;   ///< dZone200280Max
 enum TestLevel
 {
       tlNone = 0    ///< Не задан
+    , tlBase        ///< Нескольких тестов
     , tlTest        ///< Теста
     , tlProbe       ///< Пробы
     , tlChannel     ///< Канала
