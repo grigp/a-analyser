@@ -5,16 +5,9 @@
 #include <QSpacerItem>
 #include <QDebug>
 
+#include "generalcoorddefines.h"
 #include "coordfactorwidget.h"
 
-namespace
-{
-static const QString StepDeviationTestUid = "{74B5B3BD-A29A-4F29-9404-F56568051949}";
-static const QString StepOffsetTestUid = "{3664D67C-8D21-4AC8-B2DD-D5DECA43360D}";
-static const QString EvolventaTestUid = "{94021282-6B50-432F-A715-D34B3FEC4FD7}";
-static const QString TriangleTestUid = "{F13585D9-32C3-47CE-9C37-2B8BB7560A7D}";
-
-}
 
 ManCoordPPVisualWidget::ManCoordPPVisualWidget(PPVisualDescriptor* visual, QJsonObject &objPP, QWidget *parent) :
     PPVisual (visual, objPP, parent),
@@ -45,25 +38,25 @@ bool ManCoordPPVisualWidget::isValid()
             auto objT = arrTests.at(j).toObject();
             auto uidMet = objT["uid"].toString();
             auto uidTest = objT["test_uid"].toString();
-            if (uidMet == StepDeviationTestUid)
+            if (uidMet == GeneralCoordDefines::StepDeviationTestUid)
             {
                 if (m_stepDevTestUid == QUuid().toString())
                     m_stepDevTestUid = uidTest;
             }
             else
-            if (uidMet == StepOffsetTestUid)
+            if (uidMet == GeneralCoordDefines::StepOffsetTestUid)
             {
                 if (m_stepOffsTestUid == QUuid().toString())
                     m_stepOffsTestUid = uidTest;
             }
             else
-            if (uidMet == EvolventaTestUid)
+            if (uidMet == GeneralCoordDefines::EvolventaTestUid)
             {
                 if (m_evolventaTestUid == QUuid().toString())
                     m_evolventaTestUid = uidTest;
             }
             else
-            if (uidMet == TriangleTestUid)
+            if (uidMet == GeneralCoordDefines::TriangleTestUid)
             {
                 if (m_triangleTestUid == QUuid().toString())
                     m_triangleTestUid = uidTest;
