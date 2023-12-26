@@ -11,6 +11,8 @@ namespace Ui {
 class ManCoordPPVisualWidget;
 }
 
+class GeneralCoordFactors;
+
 /*!
  * \brief Класс виджета визуализатора ИП - оценка координационных способностей человека The ManCoordPPVisualWidget class
  */
@@ -32,6 +34,8 @@ private:
     QString m_stepOffsTestUid {QUuid().toString()};   ///< uid теста "Ступени" (ступ. воздействие)
     QString m_evolventaTestUid {QUuid().toString()};  ///< uid теста "Эвольвента"
     QString m_triangleTestUid {QUuid().toString()};   ///< uid теста "Треугольник"
+
+    GeneralCoordFactors *m_factors {nullptr};
 };
 
 #endif // MANCOORDPPVISUALWIDGET_H

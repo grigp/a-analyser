@@ -55,7 +55,7 @@ static const QString AccFormUid = GeneralCoordCalculatorDefines::AccFormUid; //"
  * \brief Класс расчета показателей оценки координационных способностей The GeneralCoordFactors class
  * На основе нескольких тестов
  */
-class GeneralCoordFactors : public BaseMultifactor, GeneralCoordCalculator
+class GeneralCoordFactors : public BaseMultifactor, public GeneralCoordCalculator
 {
     Q_OBJECT
 public:

@@ -43,7 +43,7 @@ public:
     void setComponent(const QString& name, const QString& value, const QString& percent, const QString& min, const QString& max);
 
 private slots:
-    void on_expand_collapse();
+    void on_expanding();
 
 private:
     Ui::CoordFactorWidget *ui;

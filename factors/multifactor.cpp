@@ -54,6 +54,8 @@ void MultiFactor::addFactor(const QString &uid, const double value)
 }
 
 BaseMultifactor::BaseMultifactor(const QStringList &testUids, QObject *parent)
+    : MultiFactor (parent)
+    , m_testUids(testUids)
 {
 
 }

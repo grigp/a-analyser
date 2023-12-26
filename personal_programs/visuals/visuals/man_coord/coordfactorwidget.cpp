@@ -44,7 +44,7 @@ void CoordFactorWidget::setComponent(const QString &name, const QString &value, 
     ui->tvComponents->resizeColumnToContents(0);
 }
 
-void CoordFactorWidget::on_expand_collapse()
+void CoordFactorWidget::on_expanding()
 {
     ui->tvComponents->setVisible(! ui->tvComponents->isVisible());
     if (ui->tvComponents->isVisible())

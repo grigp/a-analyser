@@ -2,8 +2,9 @@
 #define GENERALCOORDCALCULATOR_H
 
 #include <QObject>
-
 #include <QCoreApplication>
+
+#include "generalcoorddefines.h"
 
 namespace GeneralCoordCalculatorDefines
 {
@@ -70,7 +71,7 @@ public:
      */
     static void registerFactors();
 
-protected:
+
     double valGeneralCoord() const {return m_valGeneralCoord;}
     void setValGeneralCoord(const double val) {m_valGeneralCoord = val;}
 
@@ -99,50 +100,51 @@ protected:
     void setValCapacityRepeatMoving(const double val) {m_valCapacityRepeatMoving = val;}
 
     //! Для 1
-    double valDifference() const {return m_valDifference;}
-    void setValDifference(const double val) {m_valDifference = val;}
+    GeneralCoordDefines::DiapValue valDifference() const;
+    //void setValDifference(const GeneralCoordDefines::DiapValue val);
     //! Для 2
-    double valRitm() const {return m_valRitm;}
-    void setValRitm(const double val) {m_valRitm = val;}
-    double valRitmStab() const {return m_valRitmStab;}
-    void setValRitmStab(const double val) {m_valRitmStab = val;}
+    GeneralCoordDefines::DiapValue valRitm() const;
+//    void setValRitm(const double val) {m_valRitm.setValue(val);}
+    GeneralCoordDefines::DiapValue valRitmStab() const;
+//    void setValRitmStab(const double val) {m_valRitmStab.setValue(val);}
     //! Для 3
-    double valFirstStep() const {return m_valFirstStep;}
-    void setValFirstStep(const double val) {m_valFirstStep = val;}
-    double valDAPercent() const {return m_valDAPercent;}
-    void setValDAPercent(const double val) {m_valDAPercent = val;}
-    double valLatent() const {return m_valLatent;}
-    void setValLatent(const double val) {m_valLatent = val;}
-    double valLatentMoving() {return m_valLatentMoving;}
-    void setValLatentMoving(const double val) {m_valLatentMoving = val;}
+    GeneralCoordDefines::DiapValue valFirstStep() const;
+//    void setValFirstStep(const double val) {m_valFirstStep.setValue(val);}
+    GeneralCoordDefines::DiapValue valDAPercent() const;
+//    void setValDAPercent(const double val) {m_valDAPercent.setValue(val);}
+    GeneralCoordDefines::DiapValue valLatent() const;
+//    void setValLatent(const double val) {m_valLatent.setValue(val);}
+    GeneralCoordDefines::DiapValue valLatentMoving();
+//    void setValLatentMoving(const double val) {m_valLatentMoving.setValue(val);}
     //! Для 4
-    double valSprA() const {return m_valSprA;}
-    void setValSprA(const double val) {m_valSprA = val;}
-    double valMidPosErrAnl() const {return m_valMidPosErrAnl;}
-    void setValMidPosErrAnl(const double val) {m_valMidPosErrAnl = val;}
+    GeneralCoordDefines::DiapValue valSprA() const;
+//    void setValSprA(const double val) {m_valSprA.setValue(val);}
+    GeneralCoordDefines::DiapValue valMidPosErrAnl() const;
+//    void setValMidPosErrAnl(const double val) {m_valMidPosErrAnl.setValue(val);}
     //! Для 5
-    double valEvlErrX() const {return m_valEvlErrX;}
-    void setValEvlErrX(const double val) {m_valEvlErrX = val;}
-    double valEvlErrY() const {return m_valEvlErrY;}
-    void setValEvlErrY(const double val) {m_valEvlErrY = val;}
-    double valMidSquareErrTst() const {return m_valMidSquareErrTst;}
-    void setValMidSquareErrTst(const double val) {m_valMidSquareErrTst = val;}
+    GeneralCoordDefines::DiapValue valEvlErrX() const;
+//    void setValEvlErrX(const double val) {m_valEvlErrX.setValue(val);}
+    GeneralCoordDefines::DiapValue valEvlErrY() const;
+//    void setValEvlErrY(const double val) {m_valEvlErrY.setValue(val);}
+    GeneralCoordDefines::DiapValue valMidSquareErrTst() const;
+//    void setValMidSquareErrTst(const double val) {m_valMidSquareErrTst.setValue(val);}
     //! Для 6
-    double valSprA1() const {return m_valSprA1;}
-    void setValSprA1(const double val) {m_valSprA1 = val;}
-    double valMidAmplErrTst() const {return m_valMidAmplErrTst;}
-    void setValMidAmplErrTst(const double val) {m_valMidAmplErrTst = val;}
+    GeneralCoordDefines::DiapValue valSprA1() const;
+//    void setValSprA1(const double val) {m_valSprA1.setValue(val);}
+    GeneralCoordDefines::DiapValue valMidAmplErrTst() const;
+//    void setValMidAmplErrTst(const double val) {m_valMidAmplErrTst.setValue(val);}
     //! Для 7
-    double valMidAccMidX() const {return m_valMidAccMidX;}
-    void setValMidAccMidX(const double val) {m_valMidAccMidX = val;}
-    double valMidAccMidY() {return m_valMidAccMidY;}
-    void setValMidAccMidY(const double val) {m_valMidAccMidY = val;}
+    GeneralCoordDefines::DiapValue valMidAccMidX() const;
+//    void setValMidAccMidX(const double val) {m_valMidAccMidX.setValue(val);}
+    GeneralCoordDefines::DiapValue valMidAccMidY();
+//    void setValMidAccMidY(const double val) {m_valMidAccMidY.setValue(val);}
     //! Для 8
-    double valAccRepeat() const {return m_valAccRepeat;}
-    void setValAccRepeat(const double val) {m_valAccRepeat = val;}
-    double valAccForm() const {return m_valAccForm;}
-    void setValAccForm(const double val) {m_valAccForm = val;}
+    GeneralCoordDefines::DiapValue valAccRepeat() const;
+//    void setValAccRepeat(const double val) {m_valAccRepeat.setValue(val);}
+    GeneralCoordDefines::DiapValue valAccForm() const;
+//    void setValAccForm(const double val) {m_valAccForm.setValue(val);}
 
+protected:
     virtual void addFactors();
 
     virtual void addFct(const QString &uid, const double value);
@@ -172,31 +174,31 @@ private:
     double m_valCapacityRepeatMoving {0};
 
     //! Для 1
-    double m_valDifference {0};
+    GeneralCoordDefines::DiapValue m_valDifference = GeneralCoordDefines::DiapValue(2, 20);
     //! Для 2
-    double m_valRitm {0};
-    double m_valRitmStab {0};
+    GeneralCoordDefines::DiapValue m_valRitm = GeneralCoordDefines::DiapValue(0.55, 3);
+    GeneralCoordDefines::DiapValue m_valRitmStab = GeneralCoordDefines::DiapValue(0, 600);
     //! Для 3
-    double m_valFirstStep {0};
-    double m_valDAPercent {0};
-    double m_valLatent {0};
-    double m_valLatentMoving {0};
+    GeneralCoordDefines::DiapValue m_valFirstStep = GeneralCoordDefines::DiapValue(4, 60);
+    GeneralCoordDefines::DiapValue m_valDAPercent = GeneralCoordDefines::DiapValue(-100, 100);
+    GeneralCoordDefines::DiapValue m_valLatent = GeneralCoordDefines::DiapValue(0.15, 0.5);
+    GeneralCoordDefines::DiapValue m_valLatentMoving = GeneralCoordDefines::DiapValue(0.2, 1);
     //! Для 4
-    double m_valSprA {0};
-    double m_valMidPosErrAnl {0};
+    GeneralCoordDefines::DiapValue m_valSprA = GeneralCoordDefines::DiapValue(75, 150);
+    GeneralCoordDefines::DiapValue m_valMidPosErrAnl = GeneralCoordDefines::DiapValue(1, 25);
     //! Для 5
-    double m_valEvlErrX {0};
-    double m_valEvlErrY {0};
-    double m_valMidSquareErrTst {0};
+    GeneralCoordDefines::DiapValue m_valEvlErrX = GeneralCoordDefines::DiapValue(3, 15);
+    GeneralCoordDefines::DiapValue m_valEvlErrY = GeneralCoordDefines::DiapValue(3, 15);
+    GeneralCoordDefines::DiapValue m_valMidSquareErrTst = GeneralCoordDefines::DiapValue(-50, 50);
     //! Для 6
-    double m_valSprA1 {0};
-    double m_valMidAmplErrTst {0};
+    GeneralCoordDefines::DiapValue m_valSprA1 = GeneralCoordDefines::DiapValue(75, 150);
+    GeneralCoordDefines::DiapValue m_valMidAmplErrTst = GeneralCoordDefines::DiapValue(3, 50);
     //! Для 7
-    double m_valMidAccMidX {0};
-    double m_valMidAccMidY {0};
+    GeneralCoordDefines::DiapValue m_valMidAccMidX = GeneralCoordDefines::DiapValue(-30, 30);
+    GeneralCoordDefines::DiapValue m_valMidAccMidY = GeneralCoordDefines::DiapValue(-30, 30);
     //! Для 8
-    double m_valAccRepeat {0};
-    double m_valAccForm {0};
+    GeneralCoordDefines::DiapValue m_valAccRepeat = GeneralCoordDefines::DiapValue(-30, 30);
+    GeneralCoordDefines::DiapValue m_valAccForm = GeneralCoordDefines::DiapValue(-30, 30);
 
     EvolventaFactors *m_fgEvl {nullptr};
     StepDeviationFactors *m_fgSD {nullptr};

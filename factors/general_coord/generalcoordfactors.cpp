@@ -1,5 +1,7 @@
 #include "generalcoordfactors.h"
 
+#include <QDebug>
+
 #include "datadefines.h"
 #include "dataprovider.h"
 
@@ -13,6 +15,8 @@
 GeneralCoordFactors::GeneralCoordFactors(const QStringList &testUids, QObject *parent)
     : BaseMultifactor (testUids, parent)
 {
+    if (isValid())
+        calculate();
 }
 
 QString GeneralCoordFactors::uid() const
@@ -43,7 +47,6 @@ bool GeneralCoordFactors::isValid(const QStringList &testUids)
         {
             if (ti.probes.size() == 1 )
             {
-                auto uidProbe = ti.probes.at(0);
                 if (ti.metodUid == GeneralCoordDefines::StepDeviationTestUid)
                 {
                     if (!isStepDeviationFactors)
@@ -64,7 +67,7 @@ bool GeneralCoordFactors::isValid(const QStringList &testUids)
                 else
                 if (ti.metodUid == GeneralCoordDefines::TriangleTestUid)
                 {
-                    if (isTriangleFactors)
+                    if (!isTriangleFactors)
                         isTriangleFactors = true;
                 }
             }

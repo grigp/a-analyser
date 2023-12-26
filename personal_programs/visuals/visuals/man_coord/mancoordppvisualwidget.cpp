@@ -7,6 +7,7 @@
 
 #include "generalcoorddefines.h"
 #include "coordfactorwidget.h"
+#include "generalcoordfactors.h"
 
 
 ManCoordPPVisualWidget::ManCoordPPVisualWidget(PPVisualDescriptor* visual, QJsonObject &objPP, QWidget *parent) :
@@ -20,6 +21,8 @@ ManCoordPPVisualWidget::ManCoordPPVisualWidget(PPVisualDescriptor* visual, QJson
 
 ManCoordPPVisualWidget::~ManCoordPPVisualWidget()
 {
+    if (m_factors)
+        delete m_factors;
     delete ui;
 }
 
@@ -72,9 +75,14 @@ bool ManCoordPPVisualWidget::isValid()
 
 void ManCoordPPVisualWidget::calculate()
 {
+    m_factors = new GeneralCoordFactors(QStringList() << m_stepDevTestUid << m_stepOffsTestUid << m_evolventaTestUid << m_triangleTestUid);
+
     auto fw = new CoordFactorWidget(ui->frFactors);
     fw->setFactor(1, tr("Способность занимать определенную позу после смещения тела"), 0);
-    fw->setComponent(tr("Дифференциация"), "0", "0 %", "0", "0");
+    //m_factors->factorValueFormatted(GeneralCoordFactorsDefines::DifferenceUid);
+    auto val = m_factors->valDifference();
+    fw->setComponent(tr("Дифференциация"),
+                     QString::number(val.value), QString::number(val.percent) + " %", QString::number(val.min), QString::number(val.max));
     ui->frFactors->layout()->addWidget(fw);
 
     fw = new CoordFactorWidget(ui->frFactors);

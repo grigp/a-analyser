@@ -142,20 +142,20 @@
    <sender>btnExpand</sender>
    <signal>clicked()</signal>
    <receiver>CoordFactorWidget</receiver>
-   <slot>on_expand_collapse()</slot>
+   <slot>on_expanding()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>750</x>
-     <y>15</y>
+     <x>753</x>
+     <y>13</y>
     </hint>
     <hint type="destinationlabel">
-     <x>784</x>
-     <y>26</y>
+     <x>782</x>
+     <y>15</y>
     </hint>
    </hints>
   </connection>
  </connections>
  <slots>
-  <slot>on_expand_collapse()</slot>
+  <slot>on_expanding()</slot>
  </slots>
 </ui>

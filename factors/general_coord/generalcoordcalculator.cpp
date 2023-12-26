@@ -1,5 +1,7 @@
 #include "generalcoordcalculator.h"
 
+#include <QDebug>
+
 #include "aanalyserapplication.h"
 #include "evolventafactors.h"
 #include "stepdeviationfactors.h"
@@ -21,7 +23,32 @@ void GeneralCoordCalculator::doCalculate()
 {
     if (m_fgEvl && m_fgSO && m_fgSD && m_fgTrngl)
     {
-
+        //! Для 1
+        m_valDifference.setValue(m_fgSD->factorValue(StepDeviationFactorsDefines::DifferenceUid));
+//        //! Для 2
+//        m_valRitm.setValue(m_fgSD->factorValue(StepDeviationFactorsDefines:));
+//        m_valRitmStab.setValue();
+//        //! Для 3
+//        m_valFirstStep.setValue();
+//        m_valDAPercent.setValue();
+//        m_valLatent.setValue();
+//        m_valLatentMoving.setValue();
+//        //! Для 4
+//        m_valSprA.setValue();
+//        m_valMidPosErrAnl.setValue();
+//        //! Для 5
+//        m_valEvlErrX.setValue();
+//        m_valEvlErrY.setValue();
+//        m_valMidSquareErrTst.setValue();
+//        //! Для 6
+//        m_valSprA1.setValue();
+//        m_valMidAmplErrTst.setValue();
+//        //! Для 7
+//        m_valMidAccMidX.setValue();
+//        m_valMidAccMidY.setValue();
+//        //! Для 8
+//        m_valAccRepeat.setValue();
+//        m_valAccForm.setValue();
     }
 }
 
@@ -150,6 +177,101 @@ void GeneralCoordCalculator::registerFactors()
                            QCoreApplication::tr("Точн.формы"), QCoreApplication::tr("%"), 0, 2, FactorsDefines::nsDual, 12);
 }
 
+GeneralCoordDefines::DiapValue GeneralCoordCalculator::valDifference() const
+{
+    return m_valDifference;
+}
+
+GeneralCoordDefines::DiapValue GeneralCoordCalculator::valRitm() const
+{
+    return m_valRitm;
+}
+
+GeneralCoordDefines::DiapValue GeneralCoordCalculator::valRitmStab() const
+{
+    return m_valRitmStab;
+}
+
+GeneralCoordDefines::DiapValue GeneralCoordCalculator::valFirstStep() const
+{
+    return m_valFirstStep;
+}
+
+GeneralCoordDefines::DiapValue GeneralCoordCalculator::valDAPercent() const
+{
+    return m_valDAPercent;
+}
+
+GeneralCoordDefines::DiapValue GeneralCoordCalculator::valLatent() const
+{
+    return m_valLatent;
+}
+
+GeneralCoordDefines::DiapValue GeneralCoordCalculator::valLatentMoving()
+{
+    return m_valLatentMoving;
+}
+
+GeneralCoordDefines::DiapValue GeneralCoordCalculator::valSprA() const
+{
+    return m_valSprA;
+}
+
+GeneralCoordDefines::DiapValue GeneralCoordCalculator::valMidPosErrAnl() const
+{
+    return m_valMidPosErrAnl;
+}
+
+GeneralCoordDefines::DiapValue GeneralCoordCalculator::valEvlErrX() const
+{
+    return m_valEvlErrX;
+}
+
+GeneralCoordDefines::DiapValue GeneralCoordCalculator::valEvlErrY() const
+{
+    return m_valEvlErrY;
+}
+
+GeneralCoordDefines::DiapValue GeneralCoordCalculator::valMidSquareErrTst() const
+{
+    return m_valMidSquareErrTst;
+}
+
+GeneralCoordDefines::DiapValue GeneralCoordCalculator::valSprA1() const
+{
+    return m_valSprA1;
+}
+
+GeneralCoordDefines::DiapValue GeneralCoordCalculator::valMidAmplErrTst() const
+{
+    return m_valMidAmplErrTst;
+}
+
+GeneralCoordDefines::DiapValue GeneralCoordCalculator::valMidAccMidX() const
+{
+    return m_valMidAccMidX;
+}
+
+GeneralCoordDefines::DiapValue GeneralCoordCalculator::valMidAccMidY()
+{
+    return m_valMidAccMidY;
+}
+
+GeneralCoordDefines::DiapValue GeneralCoordCalculator::valAccRepeat() const
+{
+    return m_valAccRepeat;
+}
+
+GeneralCoordDefines::DiapValue GeneralCoordCalculator::valAccForm() const
+{
+    return m_valAccForm;
+}
+
+//void GeneralCoordCalculator::setValDifference(const double val)
+//{
+//    m_valDifference.setValue(val);
+//}
+
 void GeneralCoordCalculator::addFactors()
 {
     addFct(GeneralCoordCalculatorDefines::GeneralCoordUid, m_valGeneralCoord);
@@ -164,31 +286,31 @@ void GeneralCoordCalculator::addFactors()
     addFct(GeneralCoordCalculatorDefines::CapacityRepeatMovingUid, m_valCapacityRepeatMoving);
 
     //! Для 1
-    addFct(GeneralCoordCalculatorDefines::DifferenceUid, m_valDifference);
+    addFct(GeneralCoordCalculatorDefines::DifferenceUid, m_valDifference.value);
     //! Для 2
-    addFct(GeneralCoordCalculatorDefines::RitmUid, m_valRitm);
-    addFct(GeneralCoordCalculatorDefines::RitmStabUid, m_valRitmStab);
+    addFct(GeneralCoordCalculatorDefines::RitmUid, m_valRitm.value);
+    addFct(GeneralCoordCalculatorDefines::RitmStabUid, m_valRitmStab.value);
     //! Для 3
-    addFct(GeneralCoordCalculatorDefines::FirstStepUid, m_valFirstStep);
-    addFct(GeneralCoordCalculatorDefines::DAPercentUid, m_valDAPercent);
-    addFct(GeneralCoordCalculatorDefines::LatentUid, m_valLatent);
-    addFct(GeneralCoordCalculatorDefines::LatentMovingUid, m_valLatentMoving);
+    addFct(GeneralCoordCalculatorDefines::FirstStepUid, m_valFirstStep.value);
+    addFct(GeneralCoordCalculatorDefines::DAPercentUid, m_valDAPercent.value);
+    addFct(GeneralCoordCalculatorDefines::LatentUid, m_valLatent.value);
+    addFct(GeneralCoordCalculatorDefines::LatentMovingUid, m_valLatentMoving.value);
     //! Для 4
-    addFct(GeneralCoordCalculatorDefines::SprAUid, m_valSprA);
-    addFct(GeneralCoordCalculatorDefines::MidPosErrAnlUid, m_valMidPosErrAnl);
+    addFct(GeneralCoordCalculatorDefines::SprAUid, m_valSprA.value);
+    addFct(GeneralCoordCalculatorDefines::MidPosErrAnlUid, m_valMidPosErrAnl.value);
     //! Для 5
-    addFct(GeneralCoordCalculatorDefines::EvlErrXUid, m_valEvlErrX);
-    addFct(GeneralCoordCalculatorDefines::EvlErrYUid, m_valEvlErrY);
-    addFct(GeneralCoordCalculatorDefines::MidSquareErrTstUid, m_valMidSquareErrTst);
+    addFct(GeneralCoordCalculatorDefines::EvlErrXUid, m_valEvlErrX.value);
+    addFct(GeneralCoordCalculatorDefines::EvlErrYUid, m_valEvlErrY.value);
+    addFct(GeneralCoordCalculatorDefines::MidSquareErrTstUid, m_valMidSquareErrTst.value);
     //! Для 6
-    addFct(GeneralCoordCalculatorDefines::SprA1Uid, m_valSprA1);
-    addFct(GeneralCoordCalculatorDefines::MidAmplErrTstUid, m_valMidAmplErrTst);
+    addFct(GeneralCoordCalculatorDefines::SprA1Uid, m_valSprA1.value);
+    addFct(GeneralCoordCalculatorDefines::MidAmplErrTstUid, m_valMidAmplErrTst.value);
     //! Для 7
-    addFct(GeneralCoordCalculatorDefines::MidAccMidXUid, m_valMidAccMidX);
-    addFct(GeneralCoordCalculatorDefines::MidAccMidYUid, m_valMidAccMidY);
+    addFct(GeneralCoordCalculatorDefines::MidAccMidXUid, m_valMidAccMidX.value);
+    addFct(GeneralCoordCalculatorDefines::MidAccMidYUid, m_valMidAccMidY.value);
     //! Для 8
-    addFct(GeneralCoordCalculatorDefines::AccRepeatUid, m_valAccRepeat);
-    addFct(GeneralCoordCalculatorDefines::AccFormUid, m_valAccForm);
+    addFct(GeneralCoordCalculatorDefines::AccRepeatUid, m_valAccRepeat.value);
+    addFct(GeneralCoordCalculatorDefines::AccFormUid, m_valAccForm.value);
 }
 
 void GeneralCoordCalculator::addFct(const QString &uid, const double value)
