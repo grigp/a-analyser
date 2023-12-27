@@ -48,6 +48,9 @@ void FactorsFactory::registerGroup(const QString &uid, const QString &name)
 
 void FactorsFactory::registerGroup(MultiFactorDescriptor *group)
 {
+    if (group->level() == BaseDefines::tlBase)
+        m_groupsBase << group;
+    else
     if (group->level() == BaseDefines::tlTest)
         m_groupsTest << group;
     else
@@ -62,6 +65,7 @@ int FactorsFactory::multiFactorCount(const BaseDefines::TestLevel level)
 {
     switch (level)
     {
+    case BaseDefines::tlBase: return m_groupsBase.size();
     case BaseDefines::tlTest: return m_groupsTest.size();
     case BaseDefines::tlProbe: return m_groupsProbe.size();
     case BaseDefines::tlChannel: return m_groupsChannel.size();
@@ -76,6 +80,11 @@ MultiFactorDescriptor *FactorsFactory::getMultiFactor(const BaseDefines::TestLev
 {
     switch (level)
     {
+    case BaseDefines::tlBase:
+    {
+        Q_ASSERT(idx >= 0 && idx < m_groupsBase.size());
+        return m_groupsBase.at(idx);
+    }
     case BaseDefines::tlTest:
     {
         Q_ASSERT(idx >= 0 && idx < m_groupsTest.size());

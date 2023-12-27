@@ -6,12 +6,14 @@
 #include <QUuid>
 
 #include "ppvisual.h"
+#include "generalcoorddefines.h"
 
 namespace Ui {
 class ManCoordPPVisualWidget;
 }
 
 class GeneralCoordFactors;
+class CoordFactorWidget;
 
 /*!
  * \brief Класс виджета визуализатора ИП - оценка координационных способностей человека The ManCoordPPVisualWidget class
@@ -29,6 +31,22 @@ public:
 
 private:
     Ui::ManCoordPPVisualWidget *ui;
+
+    /*!
+     * \brief Группа функций добавляет виджеты показателей на главный.
+     * Введены для рефакторинга
+     */
+    void addWgtCapacitySetPosAfterShiftUid();
+    void addWgtCapacityRitmMovingUid();
+    void addWgtMotionAccuracyBeginUid();
+    void addWgtFctFinalAccuracyUid();
+    void addWgtProcessPerformAccuracyUid();
+    void addWgtAmplitudePerformAccuracyUid();
+    void addWgtOrientInSpaceUid();
+    void addWgtCapacityRepeatMovingUid();
+
+    void addComponent(CoordFactorWidget* wgt, const GeneralCoordDefines::DiapValue value, const QString& name);
+
 
     QString m_stepDevTestUid {QUuid().toString()};    ///< uid теста "Прирост" (ступ. отклонение)
     QString m_stepOffsTestUid {QUuid().toString()};   ///< uid теста "Ступени" (ступ. воздействие)

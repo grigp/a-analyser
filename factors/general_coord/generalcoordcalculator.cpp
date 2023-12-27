@@ -25,15 +25,27 @@ void GeneralCoordCalculator::doCalculate()
     {
         //! Для 1
         m_valDifference.setValue(m_fgSD->factorValue(StepDeviationFactorsDefines::DifferenceUid));
-//        //! Для 2
-//        m_valRitm.setValue(m_fgSD->factorValue(StepDeviationFactorsDefines:));
-//        m_valRitmStab.setValue();
-//        //! Для 3
-//        m_valFirstStep.setValue();
-//        m_valDAPercent.setValue();
-//        m_valLatent.setValue();
-//        m_valLatentMoving.setValue();
-//        //! Для 4
+
+        //! Для 2
+        auto v = m_fgSD->factorValue(StepDeviationFactorsDefines::RitmUid);
+        m_valRitm.setValue(v);
+        if (v >= 1)
+            m_valRitm.setPercent((1 - (v - 1) / (m_valRitm.max - 1)) * 100);
+        else
+            m_valRitm.setPercent((v - m_valRitm.min) / (1 - m_valRitm.min) * 100);
+        m_valRitmStab.setValue(m_fgSD->factorValue(StepDeviationFactorsDefines::RitmStabUid));
+
+        //! Для 3
+        m_valFirstStep.setValue(m_fgSD->factorValue(StepDeviationFactorsDefines::SensitivityUid));
+        v = m_fgEvl->factorValue(EvolventaFactorsDefines::DAPercent);
+        m_valDAPercent.setValue(v);
+        if (v >= -20)
+            m_valDAPercent.percent = (1 - (v - (-20)) / (m_valDAPercent.max - (-20))) * 100;
+        else
+            m_valDAPercent.percent = (v - m_valDAPercent.min) / (100 - m_valDAPercent.min) * 100;
+        m_valLatent.setValue(m_fgSO->factorValue(StepOffsetFactorsDefines::Compensation::LatentUid));
+        m_valLatentMoving.setValue(m_fgTrngl->factorValue(TriangleFactorsDefines::LatentMovingUid));
+        //! Для 4
 //        m_valSprA.setValue();
 //        m_valMidPosErrAnl.setValue();
 //        //! Для 5
@@ -99,82 +111,82 @@ void GeneralCoordCalculator::registerFactors()
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(GeneralCoordCalculatorDefines::DifferenceUid, GeneralCoordCalculatorDefines::GroupUid,
                            QCoreApplication::tr("Дифференциация"),
-                           QCoreApplication::tr("Дифференц."), QCoreApplication::tr("%"), 0, 2, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Дифференц."), QCoreApplication::tr("%"), 2, 2, FactorsDefines::nsDual, 12);
     //! Для 2
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(GeneralCoordCalculatorDefines::RitmUid, GeneralCoordCalculatorDefines::GroupUid,
                            QCoreApplication::tr("Ритм"),
-                           QCoreApplication::tr("Ритм"), QCoreApplication::tr("%"), 0, 2, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Ритм"), QCoreApplication::tr("%"), 2, 2, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(GeneralCoordCalculatorDefines::RitmStabUid, GeneralCoordCalculatorDefines::GroupUid,
                            QCoreApplication::tr("Стабильность ритма"),
-                           QCoreApplication::tr("Стаб.ритм"), QCoreApplication::tr("%"), 0, 2, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Стаб.ритм"), QCoreApplication::tr("%"), 2, 2, FactorsDefines::nsDual, 12);
     //! Для 3
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(GeneralCoordCalculatorDefines::FirstStepUid, GeneralCoordCalculatorDefines::GroupUid,
                            QCoreApplication::tr("Порог чувствительности"),
-                           QCoreApplication::tr("Чувств."), QCoreApplication::tr("%"), 0, 2, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Чувств."), QCoreApplication::tr("%"), 2, 2, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(GeneralCoordCalculatorDefines::DAPercentUid, GeneralCoordCalculatorDefines::GroupUid,
                            QCoreApplication::tr("Опережение маркера цели"),
-                           QCoreApplication::tr("Опереж.цели"), QCoreApplication::tr("%"), 0, 2, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Опереж.цели"), QCoreApplication::tr("%"), 2, 2, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(GeneralCoordCalculatorDefines::LatentUid, GeneralCoordCalculatorDefines::GroupUid,
                            QCoreApplication::tr("Латентный период"),
-                           QCoreApplication::tr("Лат.период"), QCoreApplication::tr("%"), 0, 2, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Лат.период"), QCoreApplication::tr("%"), 2, 2, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(GeneralCoordCalculatorDefines::LatentMovingUid, GeneralCoordCalculatorDefines::GroupUid,
                            QCoreApplication::tr("Время начала движения после появления сигнала"),
-                           QCoreApplication::tr("Время НД"), QCoreApplication::tr("%"), 0, 2, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Время НД"), QCoreApplication::tr("%"), 2, 2, FactorsDefines::nsDual, 12);
     //! Для 4
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(GeneralCoordCalculatorDefines::SprAUid, GeneralCoordCalculatorDefines::GroupUid,
                            QCoreApplication::tr("Амплитуда броска"),
-                           QCoreApplication::tr("Ампл."), QCoreApplication::tr("%"), 0, 2, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Ампл."), QCoreApplication::tr("%"), 2, 2, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(GeneralCoordCalculatorDefines::MidPosErrAnlUid, GeneralCoordCalculatorDefines::GroupUid,
                            QCoreApplication::tr("Изменение позиции треугольника"),
-                           QCoreApplication::tr("Изм.поз"), QCoreApplication::tr("%"), 0, 2, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Изм.поз"), QCoreApplication::tr("%"), 2, 2, FactorsDefines::nsDual, 12);
     //! Для 5
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(GeneralCoordCalculatorDefines::EvlErrXUid, GeneralCoordCalculatorDefines::GroupUid,
                            QCoreApplication::tr("Средняя ошибка по фронтали"),
-                           QCoreApplication::tr("Ошибка X"), QCoreApplication::tr("%"), 0, 2, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Ошибка X"), QCoreApplication::tr("%"), 2, 2, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(GeneralCoordCalculatorDefines::EvlErrYUid, GeneralCoordCalculatorDefines::GroupUid,
                            QCoreApplication::tr("Средняя ошибка по сагиттали"),
-                           QCoreApplication::tr("Ошибка Y"), QCoreApplication::tr("%"), 0, 2, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Ошибка Y"), QCoreApplication::tr("%"), 2, 2, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(GeneralCoordCalculatorDefines::MidSquareErrTstUid, GeneralCoordCalculatorDefines::GroupUid,
                            QCoreApplication::tr("Средняя ошибка площади (обучение)"),
-                           QCoreApplication::tr("Ошибка S"), QCoreApplication::tr("%"), 0, 2, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Ошибка S"), QCoreApplication::tr("%"), 2, 2, FactorsDefines::nsDual, 12);
     //! Для 6
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(GeneralCoordCalculatorDefines::SprA1Uid, GeneralCoordCalculatorDefines::GroupUid,
                            QCoreApplication::tr("Амплитуда броска"),
-                           QCoreApplication::tr("Ампл."), QCoreApplication::tr("%"), 0, 2, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Ампл."), QCoreApplication::tr("%"), 2, 2, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(GeneralCoordCalculatorDefines::MidAmplErrTstUid, GeneralCoordCalculatorDefines::GroupUid,
                            QCoreApplication::tr("Среднее изменение амплитуды тр-ка (обучение)"),
-                           QCoreApplication::tr("Изм.ампл"), QCoreApplication::tr("%"), 0, 2, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Изм.ампл"), QCoreApplication::tr("%"), 2, 2, FactorsDefines::nsDual, 12);
     //! Для 7
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(GeneralCoordCalculatorDefines::MidAccMidXUid, GeneralCoordCalculatorDefines::GroupUid,
                            QCoreApplication::tr("Точность позиции (фронталь)"),
-                           QCoreApplication::tr("Точность X"), QCoreApplication::tr("%"), 0, 2, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Точность X"), QCoreApplication::tr("%"), 2, 2, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(GeneralCoordCalculatorDefines::MidAccMidYUid, GeneralCoordCalculatorDefines::GroupUid,
                            QCoreApplication::tr("Точность позиции (сагитталь)"),
-                           QCoreApplication::tr("Точность Y"), QCoreApplication::tr("%"), 0, 2, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Точность Y"), QCoreApplication::tr("%"), 2, 2, FactorsDefines::nsDual, 12);
     //! Для 8
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(GeneralCoordCalculatorDefines::AccRepeatUid, GeneralCoordCalculatorDefines::GroupUid,
                            QCoreApplication::tr("Точность повторения"),
-                           QCoreApplication::tr("Точн.повт"), QCoreApplication::tr("%"), 0, 2, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Точн.повт"), QCoreApplication::tr("%"), 2, 2, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(GeneralCoordCalculatorDefines::AccFormUid, GeneralCoordCalculatorDefines::GroupUid,
                            QCoreApplication::tr("Точность формы"),
-                           QCoreApplication::tr("Точн.формы"), QCoreApplication::tr("%"), 0, 2, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Точн.формы"), QCoreApplication::tr("%"), 2, 2, FactorsDefines::nsDual, 12);
 }
 
 GeneralCoordDefines::DiapValue GeneralCoordCalculator::valDifference() const

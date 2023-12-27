@@ -75,6 +75,7 @@ private:
     QMap<QString, FactorsDefines::FactorInfo> m_factors;
 
     QMap<QString, QString> m_groups;
+    QList<MultiFactorDescriptor*> m_groupsBase;
     QList<MultiFactorDescriptor*> m_groupsTest;
     QList<MultiFactorDescriptor*> m_groupsProbe;
     QList<MultiFactorDescriptor*> m_groupsChannel;

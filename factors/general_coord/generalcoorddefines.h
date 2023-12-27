@@ -15,11 +15,12 @@ static const QString TriangleTestUid = "{F13585D9-32C3-47CE-9C37-2B8BB7560A7D}";
  */
 struct DiapValue
 {
+    QString uid;
     double min;
     double max;
     double value;
     double percent;
-    DiapValue(const double mn, const double mx) : min(mn), max(mx) {}
+    DiapValue(const QString id, const double mn, const double mx) : uid(id), min(mn), max(mx) {}
 
     /*!
      * \brief Устанавливает значение показателя и рассчитывает процент совпадения норме

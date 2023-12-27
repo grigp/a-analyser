@@ -30,6 +30,8 @@ static const QString MinPickCountUid = "{3C306236-A022-48EF-8C11-9B5286D178E9}";
 static const QString ExtrPickCountUid = "{6B185805-E0C4-45D4-8C49-1AFF7710F136}";
 static const QString AmplSemiWaveUid = "{5A27ACFC-C52C-45A1-B880-8CFE2D9B14C5}";
 static const QString TimeSemiWaveUid = "{6C831AB6-561A-45F4-99C6-597284F28FA6}";
+static const QString RitmUid = "{0659388D-9780-4161-B9B3-19331B912651}";
+static const QString RitmStabUid = "{69E11637-C684-4FAA-A652-1117697A7F03}";
 }
 
 /*!

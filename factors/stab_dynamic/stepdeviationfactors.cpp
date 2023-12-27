@@ -130,6 +130,12 @@ void StepDeviationFactors::registerFactors()
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(StepDeviationFactorsDefines::TimeSemiWaveUid, StepDeviationFactorsDefines::GroupUid,
                            tr("Длительность полуволны на экстремуме"), tr("ExtWaveTm"), tr("сек"), 3, 3, FactorsDefines::nsDual, 12);
+    static_cast<AAnalyserApplication*>(QApplication::instance())->
+            registerFactor(StepDeviationFactorsDefines::RitmUid, StepDeviationFactorsDefines::GroupUid,
+                           tr("Ритм"), tr("Ритм"), tr(""), 2, 3, FactorsDefines::nsDual, 12);
+    static_cast<AAnalyserApplication*>(QApplication::instance())->
+            registerFactor(StepDeviationFactorsDefines::RitmStabUid, StepDeviationFactorsDefines::GroupUid,
+                           tr("Стабильность ритма"), tr("Стаб.ритм"), tr("сек"), 2, 3, FactorsDefines::nsDual, 12);
 }
 
 int StepDeviationFactors::signalSize() const
@@ -476,6 +482,13 @@ void StepDeviationFactors::addFactors()
     addFactor(StepDeviationFactorsDefines::ExtrPickCountUid, m_extrPickCount);
     addFactor(StepDeviationFactorsDefines::AmplSemiWaveUid, m_amplSemiWave);
     addFactor(StepDeviationFactorsDefines::TimeSemiWaveUid, m_timeSemiWave);
-
+    if (m_timeReturnAwrg > 0)
+        addFactor(StepDeviationFactorsDefines::RitmUid, m_timeIncreaseAwrg / m_timeReturnAwrg);
+    else
+        addFactor(StepDeviationFactorsDefines::RitmUid, 0);
+    if (m_maxExtrTime > m_minExtrTime)
+        addFactor(StepDeviationFactorsDefines::RitmStabUid, m_maxExtrTime - m_minExtrTime);
+    else
+        addFactor(StepDeviationFactorsDefines::RitmStabUid, 0);
 }
 

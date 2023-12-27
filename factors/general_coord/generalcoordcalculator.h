@@ -174,31 +174,31 @@ private:
     double m_valCapacityRepeatMoving {0};
 
     //! Для 1
-    GeneralCoordDefines::DiapValue m_valDifference = GeneralCoordDefines::DiapValue(2, 20);
+    GeneralCoordDefines::DiapValue m_valDifference = GeneralCoordDefines::DiapValue(GeneralCoordCalculatorDefines::DifferenceUid, 2, 20);
     //! Для 2
-    GeneralCoordDefines::DiapValue m_valRitm = GeneralCoordDefines::DiapValue(0.55, 3);
-    GeneralCoordDefines::DiapValue m_valRitmStab = GeneralCoordDefines::DiapValue(0, 600);
+    GeneralCoordDefines::DiapValue m_valRitm = GeneralCoordDefines::DiapValue(GeneralCoordCalculatorDefines::RitmUid, 0.55, 3);
+    GeneralCoordDefines::DiapValue m_valRitmStab = GeneralCoordDefines::DiapValue(GeneralCoordCalculatorDefines::RitmStabUid, 0, 600);
     //! Для 3
-    GeneralCoordDefines::DiapValue m_valFirstStep = GeneralCoordDefines::DiapValue(4, 60);
-    GeneralCoordDefines::DiapValue m_valDAPercent = GeneralCoordDefines::DiapValue(-100, 100);
-    GeneralCoordDefines::DiapValue m_valLatent = GeneralCoordDefines::DiapValue(0.15, 0.5);
-    GeneralCoordDefines::DiapValue m_valLatentMoving = GeneralCoordDefines::DiapValue(0.2, 1);
+    GeneralCoordDefines::DiapValue m_valFirstStep = GeneralCoordDefines::DiapValue(GeneralCoordCalculatorDefines::FirstStepUid, 4, 60);
+    GeneralCoordDefines::DiapValue m_valDAPercent = GeneralCoordDefines::DiapValue(GeneralCoordCalculatorDefines::DAPercentUid, -100, 100);
+    GeneralCoordDefines::DiapValue m_valLatent = GeneralCoordDefines::DiapValue(GeneralCoordCalculatorDefines::LatentUid, 0.15, 0.5);
+    GeneralCoordDefines::DiapValue m_valLatentMoving = GeneralCoordDefines::DiapValue(GeneralCoordCalculatorDefines::LatentMovingUid, 0.2, 1);
     //! Для 4
-    GeneralCoordDefines::DiapValue m_valSprA = GeneralCoordDefines::DiapValue(75, 150);
-    GeneralCoordDefines::DiapValue m_valMidPosErrAnl = GeneralCoordDefines::DiapValue(1, 25);
+    GeneralCoordDefines::DiapValue m_valSprA = GeneralCoordDefines::DiapValue(GeneralCoordCalculatorDefines::SprAUid, 75, 150);
+    GeneralCoordDefines::DiapValue m_valMidPosErrAnl = GeneralCoordDefines::DiapValue(GeneralCoordCalculatorDefines::MidPosErrAnlUid, 1, 25);
     //! Для 5
-    GeneralCoordDefines::DiapValue m_valEvlErrX = GeneralCoordDefines::DiapValue(3, 15);
-    GeneralCoordDefines::DiapValue m_valEvlErrY = GeneralCoordDefines::DiapValue(3, 15);
-    GeneralCoordDefines::DiapValue m_valMidSquareErrTst = GeneralCoordDefines::DiapValue(-50, 50);
+    GeneralCoordDefines::DiapValue m_valEvlErrX = GeneralCoordDefines::DiapValue(GeneralCoordCalculatorDefines::EvlErrXUid, 3, 15);
+    GeneralCoordDefines::DiapValue m_valEvlErrY = GeneralCoordDefines::DiapValue(GeneralCoordCalculatorDefines::EvlErrYUid, 3, 15);
+    GeneralCoordDefines::DiapValue m_valMidSquareErrTst = GeneralCoordDefines::DiapValue(GeneralCoordCalculatorDefines::MidSquareErrTstUid, -50, 50);
     //! Для 6
-    GeneralCoordDefines::DiapValue m_valSprA1 = GeneralCoordDefines::DiapValue(75, 150);
-    GeneralCoordDefines::DiapValue m_valMidAmplErrTst = GeneralCoordDefines::DiapValue(3, 50);
+    GeneralCoordDefines::DiapValue m_valSprA1 = GeneralCoordDefines::DiapValue(GeneralCoordCalculatorDefines::SprA1Uid, 75, 150);
+    GeneralCoordDefines::DiapValue m_valMidAmplErrTst = GeneralCoordDefines::DiapValue(GeneralCoordCalculatorDefines::MidAmplErrTstUid, 3, 50);
     //! Для 7
-    GeneralCoordDefines::DiapValue m_valMidAccMidX = GeneralCoordDefines::DiapValue(-30, 30);
-    GeneralCoordDefines::DiapValue m_valMidAccMidY = GeneralCoordDefines::DiapValue(-30, 30);
+    GeneralCoordDefines::DiapValue m_valMidAccMidX = GeneralCoordDefines::DiapValue(GeneralCoordCalculatorDefines::MidAccMidXUid, -30, 30);
+    GeneralCoordDefines::DiapValue m_valMidAccMidY = GeneralCoordDefines::DiapValue(GeneralCoordCalculatorDefines::MidAccMidYUid, -30, 30);
     //! Для 8
-    GeneralCoordDefines::DiapValue m_valAccRepeat = GeneralCoordDefines::DiapValue(-30, 30);
-    GeneralCoordDefines::DiapValue m_valAccForm = GeneralCoordDefines::DiapValue(-30, 30);
+    GeneralCoordDefines::DiapValue m_valAccRepeat = GeneralCoordDefines::DiapValue(GeneralCoordCalculatorDefines::AccRepeatUid, -30, 30);
+    GeneralCoordDefines::DiapValue m_valAccForm = GeneralCoordDefines::DiapValue(GeneralCoordCalculatorDefines::AccFormUid, -30, 30);
 
     EvolventaFactors *m_fgEvl {nullptr};
     StepDeviationFactors *m_fgSD {nullptr};
