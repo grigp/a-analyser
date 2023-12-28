@@ -87,12 +87,14 @@ void ManCoordPPVisualWidget::calculate()
     addWgtCapacityRepeatMovingUid();
 
     static_cast<QBoxLayout*>(ui->frFactors->layout())->insertSpacerItem(9, new QSpacerItem(20, 20, QSizePolicy::Minimum, QSizePolicy::Expanding));
+
+    ui->lblGeneralCoordFactor->setText(tr("Общий показатель координированности") + " - " + QString::number(m_factors->valGeneralCoord(), 'f', 0) + " %");
 }
 
 void ManCoordPPVisualWidget::addWgtCapacitySetPosAfterShiftUid()
 {
     auto fw = new CoordFactorWidget(ui->frFactors);
-    fw->setFactor(1, tr("Способность занимать определенную позу после смещения тела"), 0);
+    fw->setFactor(1, tr("Способность занимать определенную позу после смещения тела"), m_factors->valCapacitySetPosAfterShift());
     addComponent(fw, m_factors->valDifference(), tr("Дифференциация"));
     ui->frFactors->layout()->addWidget(fw);
 
@@ -101,7 +103,7 @@ void ManCoordPPVisualWidget::addWgtCapacitySetPosAfterShiftUid()
 void ManCoordPPVisualWidget::addWgtCapacityRitmMovingUid()
 {
     auto fw = new CoordFactorWidget(ui->frFactors);
-    fw->setFactor(2, tr("Способность к ритмичному движению"), 0);
+    fw->setFactor(2, tr("Способность к ритмичному движению"), m_factors->valCapacityRitmMoving());
     addComponent(fw, m_factors->valRitm(), tr("Ритм"));
     addComponent(fw, m_factors->valRitmStab(), tr("Стабильность ритма"));
     ui->frFactors->layout()->addWidget(fw);
@@ -110,7 +112,7 @@ void ManCoordPPVisualWidget::addWgtCapacityRitmMovingUid()
 void ManCoordPPVisualWidget::addWgtMotionAccuracyBeginUid()
 {
     auto fw = new CoordFactorWidget(ui->frFactors);
-    fw->setFactor(3, tr("Точность вступления в сложное движение"), 0);
+    fw->setFactor(3, tr("Точность вступления в сложное движение"), m_factors->valMotionAccuracyBegin());
     addComponent(fw, m_factors->valFirstStep(), tr("Порог чувствительности"));
     addComponent(fw, m_factors->valDAPercent(), tr("Опережение маркера цели"));
     addComponent(fw, m_factors->valLatent(), tr("Латентный период"));
@@ -121,46 +123,46 @@ void ManCoordPPVisualWidget::addWgtMotionAccuracyBeginUid()
 void ManCoordPPVisualWidget::addWgtFctFinalAccuracyUid()
 {
     auto fw = new CoordFactorWidget(ui->frFactors);
-    fw->setFactor(4, tr("Точность при финальном требовании"), 0);
-    fw->setComponent(tr("Амплитуда броска"), "0", "0 %", "0", "0");
-    fw->setComponent(tr("Изменение позиции треугольника"), "0", "0 %", "0", "0");
+    fw->setFactor(4, tr("Точность при финальном требовании"), m_factors->valFctFinalAccuracy());
+    addComponent(fw, m_factors->valSprA(), tr("Амплитуда броска"));
+    addComponent(fw, m_factors->valMidPosErrAnl(), tr("Изменение позиции треугольника"));
     ui->frFactors->layout()->addWidget(fw);
 }
 
 void ManCoordPPVisualWidget::addWgtProcessPerformAccuracyUid()
 {
     auto fw = new CoordFactorWidget(ui->frFactors);
-    fw->setFactor(5, tr("Точность выполнения процесса"), 0);
-    fw->setComponent(tr("Средняя ошибка по фронтали"), "0", "0 %", "0", "0");
-    fw->setComponent(tr("Средняя ошибка по сагиттали"), "0", "0 %", "0", "0");
-    fw->setComponent(tr("Средняя ошибка по площади (обучение)"), "0", "0 %", "0", "0");
+    fw->setFactor(5, tr("Точность выполнения процесса"), m_factors->valProcessPerformAccuracy());
+    addComponent(fw, m_factors->valEvlErrX(), tr("Средняя ошибка по фронтали"));
+    addComponent(fw, m_factors->valEvlErrY(), tr("Средняя ошибка по сагиттали"));
+    addComponent(fw, m_factors->valMidSquareErrTst(), tr("Средняя ошибка по площади (обучение)"));
     ui->frFactors->layout()->addWidget(fw);
 }
 
 void ManCoordPPVisualWidget::addWgtAmplitudePerformAccuracyUid()
 {
     auto fw = new CoordFactorWidget(ui->frFactors);
-    fw->setFactor(6, tr("Точность воспроизводства требуемой амплитуды"), 0);
-    fw->setComponent(tr("Амплитуда броска"), "0", "0 %", "0", "0");
-    fw->setComponent(tr("Среднее изменение амплитуды треугольника (обучение)"), "0", "0 %", "0", "0");
+    fw->setFactor(6, tr("Точность воспроизводства требуемой амплитуды"), m_factors->valAmplitudePerformAccuracy());
+    addComponent(fw, m_factors->valSprA1(), tr("Амплитуда броска"));
+    addComponent(fw, m_factors->valMidAmplErrTst(), tr("Среднее изменение амплитуды треугольника (обучение)"));
     ui->frFactors->layout()->addWidget(fw);
 }
 
 void ManCoordPPVisualWidget::addWgtOrientInSpaceUid()
 {
     auto fw = new CoordFactorWidget(ui->frFactors);
-    fw->setFactor(7, tr("Ориентация в пространстве"), 0);
-    fw->setComponent(tr("Точность позиции по фронтали"), "0", "0 %", "0", "0");
-    fw->setComponent(tr("Точность позиции по сагиттали"), "0", "0 %", "0", "0");
+    fw->setFactor(7, tr("Ориентация в пространстве"), m_factors->valOrientInSpace());
+    addComponent(fw, m_factors->valMidAccMidX(), tr("Точность позиции по фронтали"));
+    addComponent(fw, m_factors->valMidAccMidY(), tr("Точность позиции по сагиттали"));
     ui->frFactors->layout()->addWidget(fw);
 }
 
 void ManCoordPPVisualWidget::addWgtCapacityRepeatMovingUid()
 {
     auto fw = new CoordFactorWidget(ui->frFactors);
-    fw->setFactor(8, tr("Способность воспринимать заданное движение (обучаемость)"), 0);
-    fw->setComponent(tr("Точность повторения"), "0", "0 %", "0", "0");
-    fw->setComponent(tr("Точность формы"), "0", "0 %", "0", "0");
+    fw->setFactor(8, tr("Способность воспринимать заданное движение (обучаемость)"), m_factors->valCapacityRepeatMoving());
+    addComponent(fw, m_factors->valAccRepeat(), tr("Точность повторения"));
+    addComponent(fw, m_factors->valAccForm(), tr("Точность формы"));
     ui->frFactors->layout()->addWidget(fw);
 }
 

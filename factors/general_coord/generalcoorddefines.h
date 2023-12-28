@@ -38,7 +38,12 @@ struct DiapValue
         if (percent > 100) percent = 100;
     }
 
-    void setPercent(const double perc) {percent = perc;}
+    void setPercent(const double perc)
+    {
+        percent = perc;
+        if (percent < 0) percent = 0;
+        if (percent > 100) percent = 100;
+    }
 };
 
 }

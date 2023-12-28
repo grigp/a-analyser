@@ -11,6 +11,7 @@
 #include "stepdeviationfactors.h"
 #include "stepoffsetfactors.h"
 #include "trianglefactors.h"
+#include "triangleconslutionfactors.h"
 
 GeneralCoordFactors::GeneralCoordFactors(const QStringList &testUids, QObject *parent)
     : BaseMultifactor (testUids, parent)
@@ -36,10 +37,10 @@ bool GeneralCoordFactors::isValid() const
 
 bool GeneralCoordFactors::isValid(const QStringList &testUids)
 {
-    bool isStepDeviationFactors = false;
-    bool isStepOffsetFactors = false;
-    bool isEvolventaFactors = false;
-    bool isTriangleFactors = false;
+    bool isStepDeviation = false;
+    bool isStepOffset = false;
+    bool isEvolventa = false;
+    bool isTriangle = false;
     foreach (auto uid, testUids)
     {
         DataDefines::TestInfo ti;
@@ -49,32 +50,32 @@ bool GeneralCoordFactors::isValid(const QStringList &testUids)
             {
                 if (ti.metodUid == GeneralCoordDefines::StepDeviationTestUid)
                 {
-                    if (!isStepDeviationFactors)
-                        isStepDeviationFactors = true;
+                    if (!isStepDeviation)
+                        isStepDeviation = true;
                 }
                 else
                 if (ti.metodUid == GeneralCoordDefines::StepOffsetTestUid)
                 {
-                    if (!isStepOffsetFactors)
-                        isStepOffsetFactors = true;
+                    if (!isStepOffset)
+                        isStepOffset = true;
                 }
                 else
                 if (ti.metodUid == GeneralCoordDefines::EvolventaTestUid)
                 {
-                    if (!isEvolventaFactors)
-                        isEvolventaFactors = true;
+                    if (!isEvolventa)
+                        isEvolventa = true;
                 }
                 else
                 if (ti.metodUid == GeneralCoordDefines::TriangleTestUid)
                 {
-                    if (!isTriangleFactors)
-                        isTriangleFactors = true;
+                    if (!isTriangle)
+                        isTriangle = true;
                 }
             }
         }
     }
 
-    return isStepDeviationFactors && isStepOffsetFactors && isEvolventaFactors && isTriangleFactors;
+    return isStepDeviation && isStepOffset && isEvolventa && isTriangle;
 }
 
 void GeneralCoordFactors::calculate()
@@ -126,6 +127,8 @@ void GeneralCoordFactors::assignMultifactors(const QStringList &testUids)
                 {
                     if (!triangleFactors())
                         setFGTriangle(new TriangleFactors(uid, uidProbe));
+                    if (!triangleConslFactors())
+                        setFGTriangleConsl(new TriangleConslutionFactors(uid, uidProbe));
                 }
             }
         }

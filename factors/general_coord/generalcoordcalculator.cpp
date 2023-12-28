@@ -7,6 +7,7 @@
 #include "stepdeviationfactors.h"
 #include "stepoffsetfactors.h"
 #include "trianglefactors.h"
+#include "triangleconslutionfactors.h"
 
 
 GeneralCoordCalculator::GeneralCoordCalculator()
@@ -21,10 +22,11 @@ GeneralCoordCalculator::~GeneralCoordCalculator()
 
 void GeneralCoordCalculator::doCalculate()
 {
-    if (m_fgEvl && m_fgSO && m_fgSD && m_fgTrngl)
+    if (m_fgEvl && m_fgSO && m_fgSD && m_fgTrngl && m_fgTrnglConsl)
     {
         //! Для 1
         m_valDifference.setValue(m_fgSD->factorValue(StepDeviationFactorsDefines::DifferenceUid));
+        m_valCapacitySetPosAfterShift = m_valDifference.percent;
 
         //! Для 2
         auto v = m_fgSD->factorValue(StepDeviationFactorsDefines::RitmUid);
@@ -34,33 +36,74 @@ void GeneralCoordCalculator::doCalculate()
         else
             m_valRitm.setPercent((v - m_valRitm.min) / (1 - m_valRitm.min) * 100);
         m_valRitmStab.setValue(m_fgSD->factorValue(StepDeviationFactorsDefines::RitmStabUid));
+        m_valCapacityRitmMoving = (m_valRitm.percent + m_valRitmStab.percent) / 2;
 
         //! Для 3
         m_valFirstStep.setValue(m_fgSD->factorValue(StepDeviationFactorsDefines::SensitivityUid));
         v = m_fgEvl->factorValue(EvolventaFactorsDefines::DAPercent);
         m_valDAPercent.setValue(v);
         if (v >= -20)
-            m_valDAPercent.percent = (1 - (v - (-20)) / (m_valDAPercent.max - (-20))) * 100;
+            m_valDAPercent.setPercent((1 - (v - (-20)) / (m_valDAPercent.max - (-20))) * 100);
         else
-            m_valDAPercent.percent = (v - m_valDAPercent.min) / (100 - m_valDAPercent.min) * 100;
+            m_valDAPercent.setPercent((v - m_valDAPercent.min) / (100 - m_valDAPercent.min) * 100);
         m_valLatent.setValue(m_fgSO->factorValue(StepOffsetFactorsDefines::Compensation::LatentUid));
         m_valLatentMoving.setValue(m_fgTrngl->factorValue(TriangleFactorsDefines::LatentMovingUid));
+        m_valMotionAccuracyBegin = (m_valFirstStep.percent + m_valDAPercent.percent + m_valLatent.percent + m_valLatentMoving.percent) / 4;
+
         //! Для 4
-//        m_valSprA.setValue();
-//        m_valMidPosErrAnl.setValue();
-//        //! Для 5
-//        m_valEvlErrX.setValue();
-//        m_valEvlErrY.setValue();
-//        m_valMidSquareErrTst.setValue();
-//        //! Для 6
-//        m_valSprA1.setValue();
-//        m_valMidAmplErrTst.setValue();
-//        //! Для 7
-//        m_valMidAccMidX.setValue();
-//        m_valMidAccMidY.setValue();
-//        //! Для 8
-//        m_valAccRepeat.setValue();
-//        m_valAccForm.setValue();
+        v = m_fgSO->factorValue(StepOffsetFactorsDefines::Compensation::SpurtAmplUid);
+        m_valSprA.setValue(v);
+        if (v <= 125)
+            m_valSprA.setPercent((1 - (fabs(125 - v))/(125 - m_valSprA.min)) * 100);
+        else
+            m_valSprA.setPercent((1 - (fabs(v - 125))/(m_valSprA.max - 125)) * 100);
+        m_valMidPosErrAnl.setValue(m_fgTrnglConsl->factorValue(TriangleConslutionFactorsDefines::MidPosErrAnlUid));
+        m_valFctFinalAccuracy = (m_valSprA.percent + m_valMidPosErrAnl.percent) / 2;
+
+        //! Для 5
+        m_valEvlErrX.setValue(m_fgEvl->factorValue(EvolventaFactorsDefines::CommonErrorsFrontal::MidErr));
+        m_valEvlErrY.setValue(m_fgEvl->factorValue(EvolventaFactorsDefines::CommonErrorsSagittal::MidErr));
+        v = m_fgTrnglConsl->factorValue(TriangleConslutionFactorsDefines::MidSquareErrTstUid);
+        m_valMidSquareErrTst.setValue(v);
+        m_valMidSquareErrTst.setPercent((1 - fabs(v) / ((m_valMidSquareErrTst.max - m_valMidSquareErrTst.min) / 2)) * 100);
+        m_valProcessPerformAccuracy = (m_valEvlErrX.percent + m_valEvlErrY.percent + m_valMidSquareErrTst.percent) / 3;
+
+        //! Для 6
+        v = m_fgSO->factorValue(StepOffsetFactorsDefines::Compensation::SpurtAmplUid);
+        m_valSprA1.setValue(v);
+        if (v <= 125)
+            m_valSprA1.setPercent((1 - (fabs(125 - v))/(125 - m_valSprA1.min)) * 100);
+        else
+            m_valSprA1.setPercent((1 - (fabs(v - 125))/(m_valSprA1.max - 125)) * 100);
+        m_valMidAmplErrTst.setValue(m_fgTrnglConsl->factorValue(TriangleConslutionFactorsDefines::MidSideErrTstUid));
+        m_valAmplitudePerformAccuracy = (m_valSprA1.percent + m_valMidAmplErrTst.percent) / 2;
+
+        //! Для 7
+        v = m_fgTrnglConsl->factorValue(TriangleConslutionFactorsDefines::AccMidXUid);
+        m_valMidAccMidX.setValue(v);
+        if ( v > 0)
+            m_valMidAccMidX.setPercent((1 - fabs(v) / m_valMidAccMidX.max) * 100);
+        else
+            m_valMidAccMidX.setPercent((1 - fabs(v) / fabs(m_valMidAccMidX.min)) * 100);
+        v = m_fgTrnglConsl->factorValue(TriangleConslutionFactorsDefines::AccMidYUid);
+        m_valMidAccMidY.setValue(v);
+        if ( v > 0)
+            m_valMidAccMidY.setPercent((1 - fabs(v) / m_valMidAccMidY.max) * 100);
+        else
+            m_valMidAccMidY.setPercent((1 - fabs(v) / fabs(m_valMidAccMidY.min)) * 100);
+        m_valOrientInSpace = (m_valMidAccMidX.percent + m_valMidAccMidY.percent) / 2;
+
+        //! Для 8
+        v = m_fgTrnglConsl->factorValue(TriangleConslutionFactorsDefines::AccRepeatUid);
+        m_valAccRepeat.setValue(v);
+        m_valAccRepeat.setPercent((1 - fabs(v) / ((m_valAccRepeat.max - m_valAccRepeat.min) / 2)) * 100);
+        v = m_fgTrnglConsl->factorValue(TriangleConslutionFactorsDefines::AccFormUid);
+        m_valAccForm.setValue(v);
+        m_valAccForm.setPercent((1 - fabs(v) / ((m_valAccForm.max - m_valAccForm.min) / 2)) * 100);
+        m_valCapacityRepeatMoving = (m_valAccRepeat.percent + m_valAccForm.percent) / 2;
+
+        m_valGeneralCoord = (m_valCapacitySetPosAfterShift + m_valCapacityRitmMoving + m_valMotionAccuracyBegin + m_valFctFinalAccuracy +
+                             m_valProcessPerformAccuracy + m_valAmplitudePerformAccuracy + m_valOrientInSpace + m_valCapacityRepeatMoving) / 8;
     }
 }
 

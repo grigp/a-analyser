@@ -54,6 +54,7 @@ class EvolventaFactors;
 class StepDeviationFactors;
 class StepOffsetFactors;
 class TriangleFactors;
+class TriangleConslutionFactors;
 
 /*!
  * \brief Базовый класс, осуществляющий расчет показателей оценки координационных способностей The GeneralCoordCalculator class
@@ -161,6 +162,9 @@ protected:
     TriangleFactors *triangleFactors() const {return m_fgTrngl;}
     void setFGTriangle(TriangleFactors *fgTrngl) {m_fgTrngl = fgTrngl;}
 
+    TriangleConslutionFactors *triangleConslFactors() const {return m_fgTrnglConsl;}
+    void setFGTriangleConsl(TriangleConslutionFactors *fgTrnglConsl) {m_fgTrnglConsl = fgTrnglConsl;}
+
 private:
     double m_valGeneralCoord {0};
 
@@ -177,7 +181,7 @@ private:
     GeneralCoordDefines::DiapValue m_valDifference = GeneralCoordDefines::DiapValue(GeneralCoordCalculatorDefines::DifferenceUid, 2, 20);
     //! Для 2
     GeneralCoordDefines::DiapValue m_valRitm = GeneralCoordDefines::DiapValue(GeneralCoordCalculatorDefines::RitmUid, 0.55, 3);
-    GeneralCoordDefines::DiapValue m_valRitmStab = GeneralCoordDefines::DiapValue(GeneralCoordCalculatorDefines::RitmStabUid, 0, 600);
+    GeneralCoordDefines::DiapValue m_valRitmStab = GeneralCoordDefines::DiapValue(GeneralCoordCalculatorDefines::RitmStabUid, 0, 6);
     //! Для 3
     GeneralCoordDefines::DiapValue m_valFirstStep = GeneralCoordDefines::DiapValue(GeneralCoordCalculatorDefines::FirstStepUid, 4, 60);
     GeneralCoordDefines::DiapValue m_valDAPercent = GeneralCoordDefines::DiapValue(GeneralCoordCalculatorDefines::DAPercentUid, -100, 100);
@@ -204,6 +208,7 @@ private:
     StepDeviationFactors *m_fgSD {nullptr};
     StepOffsetFactors *m_fgSO {nullptr};
     TriangleFactors *m_fgTrngl {nullptr};
+    TriangleConslutionFactors *m_fgTrnglConsl {nullptr};
 };
 
 #endif // GENERALCOORDCALCULATOR_H
