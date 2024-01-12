@@ -109,6 +109,7 @@ void ManCoordPPVisualWidget::addWgtCapacitySetPosAfterShiftUid()
     addComponent(fw, m_factors->valDifference(), tr("Дифференциация"));
     ui->frFactors->layout()->addWidget(fw);
     ui->wgtWRFDiag->addFactor(m_factors->valCapacitySetPosAfterShift());
+    ui->wgtPieDiag->addFactor(m_factors->valCapacitySetPosAfterShift(), Qt::red);
 }
 
 void ManCoordPPVisualWidget::addWgtCapacityRitmMovingUid()
@@ -119,6 +120,7 @@ void ManCoordPPVisualWidget::addWgtCapacityRitmMovingUid()
     addComponent(fw, m_factors->valRitmStab(), tr("Стабильность ритма"));
     ui->frFactors->layout()->addWidget(fw);
     ui->wgtWRFDiag->addFactor(m_factors->valCapacityRitmMoving());
+    ui->wgtPieDiag->addFactor(m_factors->valCapacityRitmMoving(), Qt::yellow);
 }
 
 void ManCoordPPVisualWidget::addWgtMotionAccuracyBeginUid()
@@ -131,6 +133,7 @@ void ManCoordPPVisualWidget::addWgtMotionAccuracyBeginUid()
     addComponent(fw, m_factors->valLatentMoving(), tr("Время начала движения после появления сигнала"));
     ui->frFactors->layout()->addWidget(fw);
     ui->wgtWRFDiag->addFactor(m_factors->valMotionAccuracyBegin());
+    ui->wgtPieDiag->addFactor(m_factors->valMotionAccuracyBegin(), Qt::cyan);
 }
 
 void ManCoordPPVisualWidget::addWgtFctFinalAccuracyUid()
@@ -141,6 +144,7 @@ void ManCoordPPVisualWidget::addWgtFctFinalAccuracyUid()
     addComponent(fw, m_factors->valMidPosErrAnl(), tr("Изменение позиции треугольника"));
     ui->frFactors->layout()->addWidget(fw);
     ui->wgtWRFDiag->addFactor(m_factors->valFctFinalAccuracy());
+    ui->wgtPieDiag->addFactor(m_factors->valFctFinalAccuracy(), Qt::darkGreen);
 }
 
 void ManCoordPPVisualWidget::addWgtProcessPerformAccuracyUid()
@@ -152,6 +156,7 @@ void ManCoordPPVisualWidget::addWgtProcessPerformAccuracyUid()
     addComponent(fw, m_factors->valMidSquareErrTst(), tr("Средняя ошибка по площади (обучение)"));
     ui->frFactors->layout()->addWidget(fw);
     ui->wgtWRFDiag->addFactor(m_factors->valProcessPerformAccuracy());
+    ui->wgtPieDiag->addFactor(m_factors->valProcessPerformAccuracy(), Qt::darkRed);
 }
 
 void ManCoordPPVisualWidget::addWgtAmplitudePerformAccuracyUid()
@@ -162,6 +167,7 @@ void ManCoordPPVisualWidget::addWgtAmplitudePerformAccuracyUid()
     addComponent(fw, m_factors->valMidAmplErrTst(), tr("Среднее изменение амплитуды треугольника (обучение)"));
     ui->frFactors->layout()->addWidget(fw);
     ui->wgtWRFDiag->addFactor(m_factors->valAmplitudePerformAccuracy());
+    ui->wgtPieDiag->addFactor(m_factors->valAmplitudePerformAccuracy(), Qt::blue);
 }
 
 void ManCoordPPVisualWidget::addWgtOrientInSpaceUid()
@@ -172,6 +178,7 @@ void ManCoordPPVisualWidget::addWgtOrientInSpaceUid()
     addComponent(fw, m_factors->valMidAccMidY(), tr("Точность позиции по сагиттали"));
     ui->frFactors->layout()->addWidget(fw);
     ui->wgtWRFDiag->addFactor(m_factors->valOrientInSpace());
+    ui->wgtPieDiag->addFactor(m_factors->valOrientInSpace(), Qt::green);
 }
 
 void ManCoordPPVisualWidget::addWgtCapacityRepeatMovingUid()
@@ -182,6 +189,7 @@ void ManCoordPPVisualWidget::addWgtCapacityRepeatMovingUid()
     addComponent(fw, m_factors->valAccForm(), tr("Точность формы"));
     ui->frFactors->layout()->addWidget(fw);
     ui->wgtWRFDiag->addFactor(m_factors->valCapacityRepeatMoving());
+    ui->wgtPieDiag->addFactor(m_factors->valCapacityRepeatMoving(), Qt::darkMagenta);
 }
 
 void ManCoordPPVisualWidget::addComponent(CoordFactorWidget* wgt, const GeneralCoordDefines::DiapValue value, const QString& name)

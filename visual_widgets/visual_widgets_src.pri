@@ -25,6 +25,7 @@ include(plates_positioning/plates_positioning_src.pri)
 include(diag_spectr/diag_spectr_src.pri)
 include(krg_widget/krg_widget_src.pri)
 include(windrose_factors/windrose_factors_src.pri)
+include(pie_diag/pie_diag_src.pri)
 
 HEADERS += \
 
