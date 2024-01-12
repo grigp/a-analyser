@@ -4,12 +4,14 @@
 #include <QPainter>
 #include <QDebug>
 
+#include "baseutils.h"
+
 namespace  {
 ///< Отступы от краев виджета
-static const int LeftSpace = 10;
-static const int RightSpace = 10;
-static const int TopSpace = 10;
-static const int BottomSpace = 10;
+static const int LeftSpace = 8;
+static const int RightSpace = 8;
+static const int TopSpace = 8;
+static const int BottomSpace = 8;
 }
 
 
@@ -124,9 +126,20 @@ void WindRoseFactorsDiag::paintEvent(QPaintEvent *event)
             diag.setY(diagRect.center().y() + static_cast<int>(value * cos(angle - M_PI)));
         }
 
+        //! Линия показателя из центра
         painter.setPen(QPen(m_axisColor, 1, Qt::SolidLine, Qt::FlatCap));
         painter.drawLine(diagRect.center(), end);
 
+        //! Номер показателя
+        QString s = QString::number(i + 1);
+        auto ts = BaseUtils::getTextSize(&painter, s);
+        painter.setBrush(QBrush(backColor, Qt::SolidPattern));
+        painter.setPen(QPen(m_axisColor, 1, Qt::SolidLine, Qt::FlatCap));
+        int rd = qMax(ts.width(), ts.height());
+        painter.drawEllipse(end.x() - rd / 2 - 1, end.y() - rd / 2 + 1, rd, rd);
+        painter.drawText(end.x() - ts.width() / 2, end.y() + ts.height() / 2, s);
+
+        //! Линия между значениями показателей
         painter.setPen(QPen(m_lineColor, 2, Qt::SolidLine, Qt::FlatCap));
         if (i > 0)
             painter.drawLine(diagPrev, diag);
