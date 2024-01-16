@@ -2,6 +2,9 @@
 #include "ui_piediagram.h"
 
 #include <QPainter>
+#include <QDebug>
+
+#include "baseutils.h"
 
 namespace  {
 ///< Отступы от краев виджета
@@ -76,8 +79,9 @@ void PieDiagram::paintEvent(QPaintEvent *event)
     int startAngle = 90 * 16;
     for (int i = 0; i < m_factors.size(); ++i)
     {
-        painter.setBrush(QBrush(m_factors.at(i).color, Qt::SolidPattern));
-        painter.setPen(QPen(m_factors.at(i).color, 1, Qt::SolidLine, Qt::FlatCap));
+        QColor col = m_factors.at(i).color;
+        painter.setBrush(QBrush(col, Qt::SolidPattern));
+        painter.setPen(QPen(col, 1, Qt::SolidLine, Qt::FlatCap));
 
         int spanAngle = static_cast<int>(m_factors.at(i).percent / 100 * 5760);
         painter.drawPie(diagRect, startAngle, spanAngle);
@@ -85,8 +89,60 @@ void PieDiagram::paintEvent(QPaintEvent *event)
         startAngle += spanAngle;
     }
 
+    //! Внутренний круг
     painter.setBrush(QBrush(backColor, Qt::SolidPattern));
     painter.setPen(QPen(backColor, 1, Qt::SolidLine, Qt::FlatCap));
     painter.drawEllipse(diagRect.center().x() - size / 2, diagRect.center().y() - size / 2, size, size);
 
+    //! Метки
+    startAngle = 90 * 16;
+    for (int i = 0; i < m_factors.size(); ++i)
+    {
+        int spanAngle = static_cast<int>(m_factors.at(i).percent / 100 * 5760);
+
+        QColor col = m_factors.at(i).color;
+        auto midAngle = startAngle + spanAngle / 2;
+
+        QColor colNeg = QColor(255 - col.red(), 255 - col.green(), 255 - col.blue());
+        painter.setPen(QPen(colNeg, 1, Qt::SolidLine, Qt::FlatCap));
+
+        QString text = "(" + QString::number(i + 1) + ")" + QString::number(static_cast<int>(m_factors.at(i).percent)) + "%";
+        auto ts = BaseUtils::getTextSize(&painter, text);
+
+        if(midAngle - 90 * 16 < 90 * 16)
+        {
+            double midAR = ((midAngle - (90 * 16)) / 16) * M_PI / 180;
+            painter.drawText(diagRect.center().x() - static_cast<int>(3 * size / 4 * sin(midAR)) - ts.width() / 2,
+                             diagRect.center().y() - static_cast<int>(3 * size / 4 * cos(midAR)),
+                             text);
+        }
+        else
+        if(midAngle - 90 * 16 < 180 * 16)
+        {
+            double midAR = ((midAngle - (180 * 16)) / 16) * M_PI / 180;
+            painter.drawText(diagRect.center().x() - static_cast<int>(3 * size / 4 * cos(midAR)) - ts.width() / 2,
+                             diagRect.center().y() + static_cast<int>(3 * size / 4 * sin(midAR)),
+                             text);
+        }
+        else
+        if(midAngle - 90 * 16 < 270 * 16)
+        {
+            double midAR = ((midAngle - (270 * 16)) / 16) * M_PI / 180;
+            painter.drawText(diagRect.center().x() + static_cast<int>(3 * size / 4 * sin(midAR)) - ts.width() / 2,
+                             diagRect.center().y() + static_cast<int>(3 * size / 4 * cos(midAR)),
+                             text);
+        }
+        else
+        if(midAngle - 90 * 16 < 360 * 16)
+        {
+            double midAR = ((midAngle - (360 * 16)) / 16) * M_PI / 180;
+            painter.drawText(diagRect.center().x() + static_cast<int>(3 * size / 4 * cos(midAR)) - ts.width() / 2,
+                             diagRect.center().y() - static_cast<int>(3 * size / 4 * sin(midAR)),
+                             text);
+        }
+
+        startAngle += spanAngle;
+    }
+
+    painter.restore();
 }
