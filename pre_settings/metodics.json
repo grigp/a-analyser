@@ -1320,28 +1320,28 @@
                     {
                         "position": "fixed",
                         "x": -750,
-                        "y": -750,
+                        "y": -600,
                         "width": 500,
                         "height": 500
                     },
                     {
                         "position": "fixed",
                         "x": -250,
-                        "y": -750,
+                        "y": -600,
                         "width": 500,
                         "height": 500
                     },
                     {
                         "position": "fixed",
                         "x": 250,
-                        "y": -750,
+                        "y": -600,
                         "width": 500,
                         "height": 500
                     },
                     {
                         "position": "fixed",
                         "x": 750,
-                        "y": -750,
+                        "y": -600,
                         "width": 500,
                         "height": 500
                     }
@@ -1362,29 +1362,29 @@
                 "put_zones": [
                     {
                         "position": "fixed",
-                        "x": -750,
-                        "y": 600,
+                        "x": -900,
+                        "y": 550,
                         "width": 500,
                         "height": 500
                     },
                     {
                         "position": "fixed",
-                        "x": -250,
-                        "y": 600,
+                        "x": -300,
+                        "y": 550,
                         "width": 500,
                         "height": 500
                     },
                     {
                         "position": "fixed",
-                        "x": 250,
-                        "y": 600,
+                        "x": 300,
+                        "y": 550,
                         "width": 500,
                         "height": 500
                     },
                     {
                         "position": "fixed",
-                        "x": 750,
-                        "y": 600,
+                        "x": 900,
+                        "y": 550,
                         "width": 500,
                         "height": 500
                     }
