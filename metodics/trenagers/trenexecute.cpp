@@ -100,6 +100,7 @@ void TrenExecute::timerEvent(QTimerEvent *event)
                     if (m_stageNum < m_stages.size())
                     {
                         auto stage = m_stages.at(m_stageNum);
+                        autoModeStageChanged(stage);
                         auto stageTitle = MetodicDefines::AutoModeStageTitle.value(stage);
                         setFrontComment(msgWaitEvent(stageTitle, m_autoTimeRun));
                     }
@@ -118,6 +119,7 @@ void TrenExecute::timerEvent(QTimerEvent *event)
                     if (stage == MetodicDefines::amssRecordingWait)
                         on_recording();
                     ++m_stageNum;
+                    autoModeStageChanged(m_stages.at(m_stageNum));
                     m_autoModeSecCounter = 0;
                 }
             }
@@ -173,6 +175,7 @@ void TrenExecute::start()
         QTimer::singleShot(0, [=]   // Без singleShot другие размеры
         {
             generateNewScene();
+            autoModeStageChanged(MetodicDefines::amssLatent0); //m_stages.at(m_stageNum));
         });
 
         //! Запуск таймера в режиме автоматики
@@ -363,6 +366,11 @@ void TrenExecute::on_selectIrriant(int idx)
 void TrenExecute::on_changeTransparent(int value)
 {
     m_videoIrritant->setTransparent(static_cast<double>(value) / static_cast<double>(100));
+}
+
+void TrenExecute::autoModeStageChanged(const MetodicDefines::AutoModeStaticStages stage)
+{
+    Q_UNUSED(stage);
 }
 
 void TrenExecute::setSceneSize(QSize &size)

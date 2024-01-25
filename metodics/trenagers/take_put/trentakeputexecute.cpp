@@ -96,6 +96,24 @@ void TrenTakePutExecute::setParams(const QJsonObject &params)
     m_soundSheme.onTarget = objSS["on_target"].toString();
 }
 
+void TrenTakePutExecute::autoModeStageChanged(const MetodicDefines::AutoModeStaticStages stage)
+{
+    auto rm = static_cast<AAnalyserApplication*>(QApplication::instance())->runningMode();
+    if (rm == BaseDefines::rmAutomatic)
+    {
+        if (stage == MetodicDefines::amssLatent0 || stage == MetodicDefines::amssZeroingWait)
+        {
+            if (m_marker)
+                m_marker->setVisible(false);
+        }
+        else
+        {
+            if (m_marker)
+                m_marker->setVisible(true);
+        }
+    }
+}
+
 void TrenTakePutExecute::setAdvancedChannels()
 {
     TrenStabExecute::setAdvancedChannels();

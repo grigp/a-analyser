@@ -87,6 +87,12 @@ protected:
     };
 
 
+    /*!
+     * \brief информирует от смене этапа для автоматического режима
+     * \param stage - новый этап
+     */
+    virtual void autoModeStageChanged(const MetodicDefines::AutoModeStaticStages stage);
+
     virtual void setSceneSize(QSize &size);
 
     virtual void generateNewScene();
