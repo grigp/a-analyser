@@ -1,6 +1,7 @@
 #include "patientswidget.h"
 #include "ui_patientswidget.h"
 
+#include "aanalyserbuild.h"
 #include "datadefines.h"
 #include "patientsmodel.h"
 #include "patientsproxymodel.h"
@@ -58,6 +59,11 @@ void PatientsWidget::onDbConnect()
         m_isOnePatientMode = SettingsProvider::valueFromRegAppCopy("", AAnalyserSettingsParams::pn_onePatientMode, static_cast<QVariant>(false)).toBool();
         m_onePatientFIO = SettingsProvider::valueFromRegAppCopy("", AAnalyserSettingsParams::pn_onePatientFIO, static_cast<QVariant>(false)).toString();
         onePatientHandle();
+
+        if (!AAnalyserBuild::isPPEnabled())
+        {
+            ui->btnViewModePersonalProgram->setVisible(false);
+        }
     });
 
 }

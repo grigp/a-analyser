@@ -39,6 +39,8 @@ BedsideScalesTesterExecute::BedsideScalesTesterExecute(QWidget *parent) :
     for (int i = 0; i < m_N; ++i)
         m_fa[i] = 0.0;
     ui->lblMassa1->setVisible(false);
+
+    ui->lblLenTime->setText(BaseUtils::getTimeBySecCount(0, true));
 }
 
 BedsideScalesTesterExecute::~BedsideScalesTesterExecute()
@@ -337,7 +339,7 @@ void BedsideScalesTesterExecute::calibrate()
 
 void BedsideScalesTesterExecute::recording()
 {
-    ui->lblLenTime->setText(BaseUtils::getTimeBySecCount(0));
+    ui->lblLenTime->setText(BaseUtils::getTimeBySecCount(0, true));
     if (m_isCalibrated)
     {
         m_isRecording = ! m_isRecording;
@@ -504,7 +506,7 @@ void BedsideScalesTesterExecute::getDataWeight(DeviceProtocols::DeviceData *data
     {
         int secCount =  abs(m_startTime.secsTo(QTime(0, 0))) -
                 m_counter / m_driver->frequency(ChannelsDefines::chanWeightPlate);
-        ui->lblLenTime->setText(BaseUtils::getTimeBySecCount(secCount));
+        ui->lblLenTime->setText(BaseUtils::getTimeBySecCount(secCount, true));
 
         if (m_counter >= abs(m_startTime.secsTo(QTime(0, 0)) * m_driver->frequency(ChannelsDefines::chanWeightPlate)))
         {
@@ -528,7 +530,7 @@ void BedsideScalesTesterExecute::getDataWeight(DeviceProtocols::DeviceData *data
     if (m_isRecording)
     {
         ++m_recCounter;
-        ui->lblLenTime->setText(BaseUtils::getTimeBySecCount(m_recCounter / m_driver->frequency(ChannelsDefines::chanWeightPlate)));
+        ui->lblLenTime->setText(BaseUtils::getTimeBySecCount(m_recCounter / m_driver->frequency(ChannelsDefines::chanWeightPlate), true));
     }
 
     if (m_isRecording)

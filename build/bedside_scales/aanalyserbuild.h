@@ -27,6 +27,11 @@ void registerFactors();
 void registerVisuals();
 
 /*!
+ * \brief Регистрирует визуализаторы индивдуальных программ, вызывая метод PPVisualsFactory::registerVisual для каждого визуализатора
+ */
+void registerPPVisuals();
+
+/*!
  * \brief Регистрирует преобразователи сигналов, вызывая метод SignalTransformFactory::registerTransformer для преобразователя
  */
 void registerSignalTransformers();
