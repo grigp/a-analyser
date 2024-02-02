@@ -143,7 +143,7 @@
             <item>
              <widget class="QLabel" name="lblRecLength">
               <property name="text">
-               <string>Длителность записи</string>
+               <string>Длительность записи</string>
               </property>
              </widget>
             </item>
@@ -214,7 +214,7 @@
             <item>
              <widget class="QLabel" name="lblScalingInterval">
               <property name="text">
-               <string>Время начала записи</string>
+               <string>Временной интервал</string>
               </property>
              </widget>
             </item>
