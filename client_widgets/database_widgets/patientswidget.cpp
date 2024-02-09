@@ -72,6 +72,8 @@ void PatientsWidget::onShow()
 {
     //! uid выбранного в приложении пациента
     auto pk = static_cast<AAnalyserApplication*>(QApplication::instance())->getCurrentPatient();
+    if (pk.uid == "")
+        pk.uid = QUuid().toString();
 
     //! uid выбранного в таблице пациента
     QString patUid = QUuid().toString();
