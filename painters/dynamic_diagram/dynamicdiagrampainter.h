@@ -80,7 +80,7 @@ public:
     void appendItem(DiagItem* item);
     void insertItem(const int idx, DiagItem* item);
 
-    int size() const {return m_items.size();}
+    int itemCount() const {return m_items.size();}
 
     double value(const int idx) const;
     QString itemName(const int idx) const;

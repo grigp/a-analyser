@@ -60,6 +60,11 @@ void BoxerDodgingVisualize::setTest(const QString &testUid)
         m_wgtDiagTime = ui->wgtDiagTime;
         m_wgtDiagAmpl = ui->wgtDiagAmpl;
         m_wgtDiagErrors = ui->wgtDiagErrors;
+
+        connect(ui->wgtDiagLatent, &DynamicDiagram::selectItem, this, &BoxerDodgingVisualize::on_selectItemLatent);
+        connect(ui->wgtDiagTime, &DynamicDiagram::selectItem, this, &BoxerDodgingVisualize::on_selectItemTime);
+        connect(ui->wgtDiagAmpl, &DynamicDiagram::selectItem, this, &BoxerDodgingVisualize::on_selectItemAmpl);
+        connect(ui->wgtDiagErrors, &DynamicDiagram::selectItem, this, &BoxerDodgingVisualize::on_selectItemErrors);
     }
 }
 
@@ -200,6 +205,42 @@ void BoxerDodgingVisualize::print(QPrinter *printer, const QString &testUid)
     ReportElements::drawFooter(painter, testUid, rectFooter);
 
     painter->end();
+}
+
+void BoxerDodgingVisualize::on_selectItemLatent(const int idx)
+{
+    if (idx >= 0 && idx < ui->wgtDiagLatent->itemCount())
+    {
+        double v = ui->wgtDiagLatent->value(idx);
+        ui->wgtDiagLatent->setBottomText(QString::number(v, 'f', 2) + " мм");
+    }
+}
+
+void BoxerDodgingVisualize::on_selectItemTime(const int idx)
+{
+    if (idx >= 0 && idx < ui->wgtDiagTime->itemCount())
+    {
+        double v = ui->wgtDiagTime->value(idx);
+        ui->wgtDiagTime->setBottomText(QString::number(v, 'f', 2) + " сек");
+    }
+}
+
+void BoxerDodgingVisualize::on_selectItemAmpl(const int idx)
+{
+    if (idx >= 0 && idx < ui->wgtDiagAmpl->itemCount())
+    {
+        double v = ui->wgtDiagAmpl->value(idx);
+        ui->wgtDiagAmpl->setBottomText(QString::number(v, 'f', 1) + " мм");
+    }
+}
+
+void BoxerDodgingVisualize::on_selectItemErrors(const int idx)
+{
+    if (idx >= 0 && idx < ui->wgtDiagErrors->itemCount())
+    {
+        int v = static_cast<int>(ui->wgtDiagErrors->value(idx));
+        ui->wgtDiagErrors->setBottomText(QString::number(v));
+    }
 }
 
 

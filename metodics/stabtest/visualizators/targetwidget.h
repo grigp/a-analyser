@@ -48,6 +48,13 @@ public:
 protected:
     void timerEvent(QTimerEvent *event) override;
 
+private slots:
+    /*!
+     * \brief Выбор итема мышкой
+     * \param idx - индекс выбранного итема
+     */
+    void on_selectItem(const int idx);
+
 private:
     Ui::TargetWidget *ui;
 

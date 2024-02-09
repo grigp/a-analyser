@@ -44,6 +44,14 @@ public:
      */
     static void paintPreview(QPainter* painter, QRect& rect, const QString& testUid, TestCalculator* calculator);
 
+private slots:
+    /*!
+     * \brief Выбор итема мышкой
+     * \param idx - индекс выбранного итема
+     */
+    void on_selectItem(const int idx);
+
+
 private:
     Ui::StressStrategyWidget *ui;
 

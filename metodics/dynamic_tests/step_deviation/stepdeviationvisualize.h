@@ -41,6 +41,14 @@ public:
      */
     static void paintPreview(QPainter* painter, QRect& rect, const QString& testUid, StepDeviationCalculator* calculator);
 
+private slots:
+    /*!
+     * \brief Выбор итема мышкой
+     * \param idx - индекс выбранного итема
+     */
+    void on_selectItemGrowth(const int idx);
+    void on_selectItemLength(const int idx);
+
 private:
     Ui::StepDeviationVisualize *ui;
 

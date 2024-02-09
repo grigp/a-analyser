@@ -20,8 +20,8 @@ class DynamicAutoWidget : public QWidget
     Q_OBJECT
 
 public:
-    explicit DynamicAutoWidget(QWidget *parent = 0);
-    ~DynamicAutoWidget();
+    explicit DynamicAutoWidget(QWidget *parent = nullptr);
+    ~DynamicAutoWidget() ;
 
     void onDbConnect();
     void onDbDisconnect();

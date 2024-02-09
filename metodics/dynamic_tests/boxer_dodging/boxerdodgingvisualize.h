@@ -35,6 +35,16 @@ public:
      */
     static void print(QPrinter *printer, const QString &testUid);
 
+private slots:
+    /*!
+     * \brief Выбор итема мышкой
+     * \param idx - индекс выбранного итема
+     */
+    void on_selectItemLatent(const int idx);
+    void on_selectItemTime(const int idx);
+    void on_selectItemAmpl(const int idx);
+    void on_selectItemErrors(const int idx);
+
 private:
     Ui::BoxerDodgingVisualize *ui;
 

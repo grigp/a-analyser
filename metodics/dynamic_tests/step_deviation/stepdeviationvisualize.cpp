@@ -36,6 +36,9 @@ void StepDeviationVisualize::setTest(const QString &testUid)
         showTable();
         showDiags();
         showDirection();
+
+        connect(ui->wgtGrowth, &DynamicDiagram::selectItem, this, &StepDeviationVisualize::on_selectItemGrowth);
+        connect(ui->wgtLength, &DynamicDiagram::selectItem, this, &StepDeviationVisualize::on_selectItemLength);
     }
 }
 
@@ -203,6 +206,24 @@ void StepDeviationVisualize::paintPreview(QPainter *painter, QRect &rect, const 
     }
 
     painter->restore();
+}
+
+void StepDeviationVisualize::on_selectItemGrowth(const int idx)
+{
+    if (idx >= 0 && idx < ui->wgtGrowth->itemCount())
+    {
+        double v = m_calculator->growthDynValue(idx);
+        ui->wgtGrowth->setTitle(tr("Динамика прироста, мм") + " (" + QString::number(v, 'f', 2) + " мм)");
+    }
+}
+
+void StepDeviationVisualize::on_selectItemLength(const int idx)
+{
+    if (idx >= 0 && idx < ui->wgtLength->itemCount())
+    {
+        double v = m_calculator->lengthDynValue(idx);
+        ui->wgtLength->setTitle(tr("Динамика длительности отклонений, сек") + " (" + QString::number(v) + " сек)");
+    }
 }
 
 void StepDeviationVisualize::printGraph(QPainter *painter, const QRect &rect, StepDeviationVisualize *visual, double ratio)

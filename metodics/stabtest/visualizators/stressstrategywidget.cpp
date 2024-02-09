@@ -51,6 +51,7 @@ void StressStrategyWidget::calculate(StressStrategyCalculator *calculator, const
     ui->wgtDiag->appendItem(itemZones);
 
     m_wgtDiag = ui->wgtDiag;
+    connect(ui->wgtDiag, &DynamicDiagram::selectItem, this, &StressStrategyWidget::on_selectItem);
 }
 
 void StressStrategyWidget::print(QPrinter *printer, const QString &testUid)
@@ -131,6 +132,21 @@ void StressStrategyWidget::print(QPrinter *printer, const QString &testUid)
 
 void StressStrategyWidget::paintPreview(QPainter *painter, QRect &rect, const QString &testUid, TestCalculator *calculator)
 {
+    Q_UNUSED(painter);
+    Q_UNUSED(rect);
+    Q_UNUSED(testUid);
+    Q_UNUSED(calculator);
 
+}
+
+void StressStrategyWidget::on_selectItem(const int idx)
+{
+    if (idx >= 0 && idx < ui->wgtDiag->itemCount())
+    {
+        int v = static_cast<int>(m_valTarget);
+        if (idx > 0)
+            v = static_cast<int>(m_valZones);
+        ui->wgtDiag->setBottomText(QString::number(v) + " %");
+    }
 }
 

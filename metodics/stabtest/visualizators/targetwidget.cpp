@@ -42,6 +42,8 @@ void TargetWidget::calculate(TargetCalculator *calculator, const QString &testUi
 
     showSKG(calculator, testUid);
     showDiagram(calculator, testUid);
+
+    connect(ui->wgtDiagram, &DynamicDiagram::selectItem, this, &TargetWidget::on_selectItem);
 }
 
 void TargetWidget::print(QPrinter *printer, const QString &testUid)
@@ -136,6 +138,7 @@ void TargetWidget::print(QPrinter *printer, const QString &testUid)
 
 void TargetWidget::paintPreview(QPainter *painter, QRect &rect, const QString &testUid, TestCalculator *calculator)
 {
+    Q_UNUSED(testUid);
     TargetCalculator* calc = static_cast<TargetCalculator*>(calculator);
     auto val = calc->factors()->factorValue(TargetFactorsDefines::TargetScoreUid);
     auto valT = calc->factors()->factorValue(TargetFactorsDefines::TargetTotalScoreUid);
@@ -167,6 +170,15 @@ void TargetWidget::timerEvent(QTimerEvent *event)
     QWidget::timerEvent(event);
 }
 
+void TargetWidget::on_selectItem(const int idx)
+{
+    if (idx >= 0 && idx < ui->wgtDiagram->itemCount() - 1)
+    {
+        int v = m_calculator->factors()->histogram(9 - idx);
+        ui->wgtDiagram->setTitle(tr("Процент времени пребывания в зонах") + " (" + QString::number(v) + " %)");
+    }
+}
+
 void TargetWidget::showSKG(TargetCalculator *calculator, const QString &testUid)
 {
     Q_UNUSED(calculator);
@@ -196,6 +208,7 @@ void TargetWidget::showDiagram(TargetCalculator *calculator, const QString &test
     ui->wgtDiagram->setKind(DynamicDiagramDefines::KindBar);
     ui->wgtDiagram->setVolume(DynamicDiagramDefines::Volume3D);
     ui->wgtDiagram->setTitle(tr("Процент времени пребывания в зонах"));
+    ui->wgtDiagram->setBottomText(tr("Зоны"));
     for (int i = 9; i >= 0; --i)
     {
         auto item = new DiagItem(calculator->factors()->histogram(i), QString::number(i + 1));
