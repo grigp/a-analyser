@@ -53,6 +53,8 @@ AAnalyserApplication::AAnalyserApplication(int &argc, char **argv)
     , m_pmdlPatients(new PatientsProxyModel(this))
     , m_pmdlPatientsPP(new PatientsProxyModel(this))
 {
+    assignApplicationVersion();
+
     setApplicationName("a-analyzer");
 //    setApplicationVersion("1.0");
 //    setApplicationDisplayName(tr("Исследования А-Мед")); Не переводится
@@ -1004,6 +1006,25 @@ bool AAnalyserApplication::isOneMethodicOnAddTests()
         }
     }
     return retval;
+}
+
+void AAnalyserApplication::assignApplicationVersion()
+{
+    //! Нумерация версий 1.01.02.356:
+    //! j.n.r.b
+    //! j - major number
+    //! n - minor number
+    //! r - release 00 - alfa, 01 - betta, 02 - pre release, 03 - release
+    //! b - build - number of buils (number of days between 1.01.2024 and build day)
+    QFileInfo fi(applicationDirPath() + "/" + applicationName() + ".exe");
+    auto dt = fi.lastModified();
+    auto dtb = QDateTime(QDate(2024, 1, 1));
+    qint64 d = dtb.daysTo(dt);
+    auto avl = applicationVersion().split(".");
+    if (avl.size() >= 3)
+        setApplicationVersion(avl.at(0) + "." + avl.at(1) + "." + avl.at(2) + "." + QString::number(d));
+    else
+        setApplicationVersion("1.0.0." + QString::number(d));
 }
 
 //void AAnalyserApplication::on_AddTestToSummaryAccepted()

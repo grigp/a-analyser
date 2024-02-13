@@ -368,7 +368,7 @@ void BedsideScalesTesterExecute::recording()
 
 void BedsideScalesTesterExecute::on_selectItem(const int idx)
 {
-    if (idx >= 0 && idx < static_cast<DynamicDiagramPainter*>(ui->wgtParticalWeighting)->size())
+    if (idx >= 0 && idx < static_cast<DynamicDiagramPainter*>(ui->wgtParticalWeighting)->itemCount())
     {
         auto value = ui->wgtParticalWeighting->value(idx);
         ui->wgtParticalWeighting->setBottomText(tr("Измерение") + (" (") + QString::number(idx + 1) + ") : " +

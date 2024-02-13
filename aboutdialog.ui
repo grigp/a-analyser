@@ -44,7 +44,7 @@
             </font>
            </property>
            <property name="text">
-            <string>a-analyzser</string>
+            <string>a-analyzer</string>
            </property>
            <property name="alignment">
             <set>Qt::AlignCenter</set>
@@ -229,7 +229,7 @@
             </font>
            </property>
            <property name="text">
-            <string>(c) Copyright  2019 - 2022</string>
+            <string>(c) Copyright  2019 - 2024</string>
            </property>
            <property name="alignment">
             <set>Qt::AlignCenter</set>

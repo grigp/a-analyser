@@ -778,6 +778,14 @@ private:
 
     bool isOneMethodicOnAddTests();
 
+    //! Нумерация версий 1.01.02.356:
+    //! j.n.r.b
+    //! j - major number
+    //! n - minor number
+    //! r - release 00 - alfa, 01 - betta, 02 - pre release, 03 - release
+    //! b - build - number of buils (number of days between 1.01.2024 and build day)
+    void assignApplicationVersion();
+
     QMainWindow *m_mw;
     QString m_languargeCode = DataDefines::LANG_CODE_RUS;
 

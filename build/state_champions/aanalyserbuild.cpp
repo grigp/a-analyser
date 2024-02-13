@@ -72,6 +72,13 @@ void AAnalyserBuild::registerVisuals()
     app->registerVisual(new SectionGraphVisual(BaseDefines::tlSection));
 }
 
+void AAnalyserBuild::registerPPVisuals()
+{
+//    auto* app = static_cast<AAnalyserApplication*>(QApplication::instance());
+//    app->registerPPVisual(new ManCoordPPVisual());
+//    app->registerPPVisual(new CommonPPVisual());
+}
+
 void AAnalyserBuild::registerSignalTransformers()
 {
     auto* app = static_cast<AAnalyserApplication*>(QApplication::instance());

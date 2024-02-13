@@ -9,6 +9,7 @@ include(ratio_prb/ratio_prb_src.pri)
 include(tren_result/tren_result_src.pri)
 include(stab_dynamic/stab_dynamic_src.pri)
 include(pulse/pulse_src.pri)
+include(general_coord/general_coord_src.pri)
 
 
 HEADERS += \

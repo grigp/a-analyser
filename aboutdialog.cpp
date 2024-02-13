@@ -15,6 +15,7 @@ AboutDialog::AboutDialog(QWidget *parent) :
 
     ui->lblUrl->setText("<a href=\"http://a-med.tech/\">" + tr("Посетить сайт разработчика") + "</a>");
     ui->lblAppName->setStyleSheet("font-size: 24pt; color: rgb(0, 0, 255);");
+    ui->lblVersion->setText(tr("Версия") + " " + QApplication::instance()->applicationVersion());
 }
 
 AboutDialog::~AboutDialog()
