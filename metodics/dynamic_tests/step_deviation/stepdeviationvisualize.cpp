@@ -262,7 +262,7 @@ void StepDeviationVisualize::showGraph()
 
     double max = signal->maxValue();
     double min = signal->minValue();
-    ui->wgtGraph->appendSignal(signal, tr("Прирост"));
+    ui->wgtGraph->appendSignal(signal, tr("Прирост, мм"));
     ui->wgtGraph->setDiapazone(0, min, max);
 
     m_wgtGraph = ui->wgtGraph;
@@ -299,7 +299,7 @@ void StepDeviationVisualize::showDiags()
 
     ui->wgtGrowth->setKind(DynamicDiagramDefines::KindBar);
     ui->wgtGrowth->setVolume(DynamicDiagramDefines::Volume3D);
-    ui->wgtGrowth->setTitle(tr("Динамика прироста"));
+    ui->wgtGrowth->setTitle(tr("Динамика прироста, мм"));
     ui->wgtGrowth->setAxisSpaceLeft(30);
     ui->wgtGrowth->setAxisSpaceBottom(10);
     m_wgtGrowth = ui->wgtGrowth;
@@ -312,7 +312,7 @@ void StepDeviationVisualize::showDiags()
 
     ui->wgtLength->setKind(DynamicDiagramDefines::KindBar);
     ui->wgtLength->setVolume(DynamicDiagramDefines::Volume3D);
-    ui->wgtLength->setTitle(tr("Динамика длительности отклонений"));
+    ui->wgtLength->setTitle(tr("Динамика длительности отклонений, сек"));
     ui->wgtLength->setAxisSpaceLeft(30);
     ui->wgtLength->setAxisSpaceBottom(10);
     m_wgtLength = ui->wgtLength;
