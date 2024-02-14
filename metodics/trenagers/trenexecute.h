@@ -6,6 +6,7 @@
 #include <QWidget>
 #include <QJsonObject>
 #include <QGraphicsScene>
+#include <QMediaPlayer>
 
 #include "datadefines.h"
 #include "deviceprotocols.h"
@@ -368,6 +369,8 @@ private:
     int m_autoTimeRun {5};         ///< Время задержки до операции
     int m_autoTimeLatent {2};      ///< Длительность латентного периода
     QList<MetodicDefines::AutoModeStaticStages> m_stages {MetodicDefines::AutoStagesBase};  ///< Список этапов для автоматического режима
+
+    QMediaPlayer m_player;
 };
 
 #endif // TRENEXECUTE_H

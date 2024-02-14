@@ -262,5 +262,6 @@
         <file>images/tree/man.png</file>
         <file>images/Collapse.png</file>
         <file>images/Expand.png</file>
+        <file>sound/com_error.wav</file>
     </qresource>
 </RCC>

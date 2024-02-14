@@ -349,6 +349,13 @@ void StabTestExecute::on_communicationError(const QString &drvName, const QStrin
     ui->lblCommunicationError->setText(QString(tr("Ошибка связи с устройством") + ": %1 (" + tr("порт") + ": %2)").
                                        arg(drvName).arg(port));
     ui->lblCommunicationError->setVisible(true);
+
+    //! Озвучка
+    if (m_player.state() != QMediaPlayer::PlayingState)
+    {
+        m_player.setMedia(QUrl("qrc:/sound/com_error.wav"));
+        m_player.play();
+    }
 }
 
 void StabTestExecute::on_error(const int errorCode)

@@ -4,6 +4,7 @@
 #include <QWidget>
 #include <QFrame>
 #include <QJsonObject>
+#include <QMediaPlayer>
 
 #include "datadefines.h"
 #include "crossdefines.h"
@@ -254,6 +255,8 @@ private:
     int m_autoTimeRun {5};         ///< Время задержки до операции
     int m_autoTimeLatent {2};      ///< Длительность латентного периода
     QList<MetodicDefines::AutoModeStaticStages> m_stages;  ///< Список этапов для автоматического режима
+
+    QMediaPlayer m_player;
 };
 
 #endif // STABDYNAMICTESTEXECUTE_H

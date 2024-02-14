@@ -7,6 +7,7 @@
 #include "metodicdefines.h"
 
 #include <QWidget>
+#include <QMediaPlayer>
 
 namespace Ui {
 class StabTestExecute;
@@ -153,6 +154,8 @@ private:
     int m_autoTimeRun {5};         ///< Время задержки до операции
     int m_autoTimeLatent {2};      ///< Длительность латентного периода
     QList<QList<MetodicDefines::AutoModeStaticStages>> m_stages;  ///< Список этапов для автоматического режима для каждой пробы
+
+    QMediaPlayer m_player;
 };
 
 #endif // STABTESTEXECUTE_H
