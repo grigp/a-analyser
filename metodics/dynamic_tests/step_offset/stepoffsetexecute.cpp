@@ -80,8 +80,12 @@ void StepOffsetExecute::recording()
             m_mfd->setDirection(m_direction);
             m_mfd->setMinValueOffset(StepOffsetDefines::MinValueOffset);
             connect(m_mfd, &SetMaxForceDialog::accepted, this, &StepOffsetExecute::setMaxForceDialogAccepted);
+            connect(m_mfd, &SetMaxForceDialog::rejected, this, &StepOffsetExecute::setMaxForceDialogRejected);
         }
         m_mfd->showFullScreen();
+        auto sDir = BaseDefines::DirectionValueFBName.value(m_direction);
+        setFrontComment(tr("Отклонитесь") + " " + sDir + ",\n" + tr("не отрывая пяток,") + "\n" +
+                        tr("и вернитесь")  + "\n" + tr("в исходное положение") + "\n", true);
     }
     else
     {
@@ -162,6 +166,7 @@ void StepOffsetExecute::setMaxForceDialogAccepted()
 {
     if (m_mfd)
     {
+        setFrontComment("");
         m_force = m_mfd->value() * m_forcePercent / 100;
         StabDynamicTestExecute::recording();
 
@@ -185,6 +190,11 @@ void StepOffsetExecute::setMaxForceDialogAccepted()
             setTarget(m_tx, m_ty);
         }
     }
+}
+
+void StepOffsetExecute::setMaxForceDialogRejected()
+{
+    setFrontComment("");
 }
 
 void StepOffsetExecute::setTargetCoordinates()

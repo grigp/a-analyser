@@ -6,7 +6,7 @@
 #include "metodictemplate.h"
 
 /*!
- * \brief Класс шаблона теста со ступенчатым отклонением StepDeviationTemplate class
+ * \brief Класс шаблона теста прироста (со ступенчатым отклонением) StepDeviationTemplate class
  */
 class StepDeviationTemplate : public MetodicTemplate
 {

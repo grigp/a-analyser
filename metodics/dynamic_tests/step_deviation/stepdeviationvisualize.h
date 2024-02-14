@@ -14,7 +14,7 @@ class AreaGraph;
 class DynamicDiagram;
 
 /*!
- * \brief Класс виджета показа результатов теста со ступенчатым отклонением The StepDeviationVisualize class
+ * \brief Класс виджета показа результатов теста прироста (со ступенчатым отклонением) The StepDeviationVisualize class
  */
 class StepDeviationVisualize : public QWidget
 {

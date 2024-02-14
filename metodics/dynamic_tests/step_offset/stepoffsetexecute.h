@@ -16,6 +16,9 @@ class SetMaxForceDialog;
 class StepOffsetResultData;
 class StepOffsettPatientWindow;
 
+/*!
+ * \brief Класс проведения теста "Ступени" (со ступенчатым воздействием) The StepOffsetExecute class
+ */
 class StepOffsetExecute : public StabDynamicTestExecute
 {
     Q_OBJECT
@@ -57,6 +60,7 @@ protected slots:
 
 private slots:
     void setMaxForceDialogAccepted();
+    void setMaxForceDialogRejected();
 
 private:
     Ui::StepOffsetExecute *ui;

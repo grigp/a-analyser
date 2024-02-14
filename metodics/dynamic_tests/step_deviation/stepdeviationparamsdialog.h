@@ -9,7 +9,7 @@ class StepDeviationParamsDialog;
 }
 
 /*!
- * \brief Класс диалога редактирования параметров теста со ступенчатым отклонением StepDeviationParamsDialog class
+ * \brief Класс диалога редактирования параметров теста прироста (со ступенчатым отклонением) StepDeviationParamsDialog class
  */
 class StepDeviationParamsDialog : public QDialog
 {

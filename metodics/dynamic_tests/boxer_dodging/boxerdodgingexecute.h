@@ -44,7 +44,7 @@ protected:
      * \brief Функция, помещающая комментарий поверх окна
      * \param comment - текст комментария
      */
-    void setFrontComment(const QString& comment) override;
+    void setFrontComment(const QString& comment, const bool isPatientOnly = false) override;
 
 protected slots:
     void start() override;

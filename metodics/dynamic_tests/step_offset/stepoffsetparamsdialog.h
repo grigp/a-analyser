@@ -8,6 +8,9 @@ namespace Ui {
 class StepOffsetParamsDialog;
 }
 
+/*!
+ * \brief Класс диалога редактирования параметров теста "Ступени" (со ступенчатым воздействием) The StepOffsetParamsDialog class
+ */
 class StepOffsetParamsDialog : public QDialog
 {
     Q_OBJECT

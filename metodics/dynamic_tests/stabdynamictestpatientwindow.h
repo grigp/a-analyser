@@ -13,7 +13,7 @@ class StabDynamicTestPatientWindow : public QDialog
 
 public:
     explicit StabDynamicTestPatientWindow(QWidget *parent = nullptr);
-    ~StabDynamicTestPatientWindow();
+    ~StabDynamicTestPatientWindow() override;
 
     /*!
      * \brief Действия при начале записи

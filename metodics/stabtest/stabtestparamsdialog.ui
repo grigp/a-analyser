@@ -365,7 +365,7 @@
             <item>
              <widget class="QLabel" name="lblTimeLatent">
               <property name="text">
-               <string>задержка привыкания, мм:сс</string>
+               <string>Задержка привыкания, мм:сс</string>
               </property>
              </widget>
             </item>

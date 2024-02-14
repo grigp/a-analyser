@@ -92,8 +92,6 @@ void StabDynamicTestExecute::timerEvent(QTimerEvent *event)
                         auto stage = m_stages.at(m_stageNum);
                         auto stageTitle = MetodicDefines::AutoModeStageTitle.value(stage);
                         setFrontComment(msgWaitEvent(stageTitle, m_autoTimeRun));
-                        if (m_patientWin)
-                            m_patientWin->setFrontComment(msgWaitEvent(stageTitle, m_autoTimeRun));
                     }
                     m_autoModeSecCounter = 0;
                 }
@@ -101,13 +99,9 @@ void StabDynamicTestExecute::timerEvent(QTimerEvent *event)
             else
             {
                 setFrontComment(msgWaitEvent(stageTitle, m_autoTimeRun - m_autoModeSecCounter));
-                if (m_patientWin)
-                    m_patientWin->setFrontComment(msgWaitEvent(stageTitle, m_autoTimeRun - m_autoModeSecCounter));
                 if (m_autoModeSecCounter == m_autoTimeRun)
                 {
                     setFrontComment("");
-                    if (m_patientWin)
-                        m_patientWin->setFrontComment("");
                     if (stage == MetodicDefines::amssZeroingWait)
                         zeroing();
                     else
@@ -463,10 +457,15 @@ void StabDynamicTestExecute::setPatientWinDiap(const int diap)
         m_patientWin->setDiap(diap);
 }
 
-void StabDynamicTestExecute::setFrontComment(const QString &comment)
+void StabDynamicTestExecute::setFrontComment(const QString &comment, const bool isPatientOnly)
 {
-    ui->lblFrontComment->setText(comment);
-    ui->lblFrontComment->setVisible(comment != "");
+    if (!isPatientOnly)
+    {
+        ui->lblFrontComment->setText(comment);
+        ui->lblFrontComment->setVisible(comment != "");
+    }
+    if (m_patientWin)
+        m_patientWin->setFrontComment(comment);
 }
 
 void StabDynamicTestExecute::on_started()

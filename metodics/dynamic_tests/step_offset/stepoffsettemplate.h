@@ -5,6 +5,9 @@
 
 #include "metodictemplate.h"
 
+/*!
+ * \brief Класс шаблона теста "Ступени" (со ступенчатым воздействием) The StepOffsetTemplate class
+ */
 class StepOffsetTemplate : public MetodicTemplate
 {
     Q_OBJECT

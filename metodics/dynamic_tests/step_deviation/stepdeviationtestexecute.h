@@ -8,7 +8,7 @@
 #include <QWidget>
 
 /*!
- * \brief Класс проведения теста со ступенчатым отклонением StepDeviationTestExecute class
+ * \brief Класс проведения теста прироста (со ступенчатым отклонением) StepDeviationTestExecute class
  */
 class StepDeviationTestExecute : public StabDynamicTestExecute
 {

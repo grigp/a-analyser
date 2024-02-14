@@ -9,6 +9,9 @@
 
 class StepOffsetFactors;
 
+/*!
+ * \brief Класс расчета результатов теста "Ступени" (со ступенчатым воздействием) The StepOffsetCalculator class
+ */
 class StepOffsetCalculator : public TestCalculator
 {
     Q_OBJECT

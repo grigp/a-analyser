@@ -60,9 +60,10 @@ void BoxerDodgingExecute::fillSpecific(QFrame *frSpecific)
     StabDynamicTestExecute::fillSpecific(frSpecific);
 }
 
-void BoxerDodgingExecute::setFrontComment(const QString &comment)
+void BoxerDodgingExecute::setFrontComment(const QString &comment, const bool isPatientOnly)
 {
-    StabDynamicTestExecute::setFrontComment(comment);
+    if (! isPatientOnly)
+        StabDynamicTestExecute::setFrontComment(comment);
     if (m_patientWin)
         m_patientWin->setFrontComment(comment);
 }

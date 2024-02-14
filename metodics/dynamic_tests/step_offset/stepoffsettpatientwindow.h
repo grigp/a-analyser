@@ -8,6 +8,9 @@ namespace Ui {
 class StepOffsettPatientWindow;
 }
 
+/*!
+ * \brief Класс окна пациента теста "Ступени" (со ступенчатым воздействием) The StepOffsettPatientWindow class
+ */
 class StepOffsettPatientWindow : public StabDynamicTestPatientWindow
 {
     Q_OBJECT
