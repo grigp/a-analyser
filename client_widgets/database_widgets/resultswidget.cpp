@@ -287,14 +287,11 @@ void ResultsWidget::calculateSelected()
     foreach (auto index, indexes)
     {
         auto idx = m_pmdlTest->mapToSource(index);
-        if (idx.column() == 0)
-        {
-            auto uid = m_mdlTest->index(idx.row(), DatabaseWidgetDefines::TestsModel::ColPatient, idx.parent()).
-                    data(DatabaseWidgetDefines::TestsModel::TestUidRole).toString();
-            tests << uid;
-            DataDefines::TestInfo ti;
-            DataProvider::getTestInfo(uid, ti);
-        }
+        auto uid = m_mdlTest->index(idx.row(), DatabaseWidgetDefines::TestsModel::ColPatient, idx.parent()).
+                data(DatabaseWidgetDefines::TestsModel::TestUidRole).toString();
+        tests << uid;
+        DataDefines::TestInfo ti;
+        DataProvider::getTestInfo(uid, ti);
     }
     static_cast<AAnalyserApplication*>(QApplication::instance())->setSelectedTests(tests);
 }
