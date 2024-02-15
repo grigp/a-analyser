@@ -36,6 +36,12 @@ public:
     void setDirection(const BaseDefines::Directions direction);
 
     /*!
+     * \brief Устанавливает заголовочный текст
+     * \param text - текст
+     */
+    void setText(const QString text);
+
+    /*!
      * \brief получение и отображение данных
      * \param x, y - координаты ЦД
      */

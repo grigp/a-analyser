@@ -43,6 +43,11 @@ void SetMaxForceDialog::setDirection(const BaseDefines::Directions direction)
     ui->lblComment->setText(tr("Отклонитесь") + " " + sDir + tr(", не отрывая пяток, и вернитесь в исходное положение"));
 }
 
+void SetMaxForceDialog::setText(const QString text)
+{
+    ui->lblComment->setText(text);
+}
+
 void SetMaxForceDialog::getData(const double x, const double y)
 {
     int ix = static_cast<int>(x);

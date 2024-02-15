@@ -67,6 +67,7 @@ protected slots:
 
 private slots:
     void setMaxForceDialogAccepted();
+    void setMaxForceDialogRejected();
 
 private:
     /*!

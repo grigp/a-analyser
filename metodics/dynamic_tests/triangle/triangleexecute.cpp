@@ -76,10 +76,20 @@ void TriangleExecute::recording()
         {
             m_mfd = new SetMaxForceDialog(SetMaxForceDialog::Triangle);
             m_mfd->setMinValueOffset(m_minDeviation);
+            m_mfd->setText(tr("Отклонитесь вперед, вправо-назад и влево-назад к вершинам треугольника, не отрывая пяток"));
             connect(m_mfd, &SetMaxForceDialog::accepted, this, &TriangleExecute::setMaxForceDialogAccepted);
+            connect(m_mfd, &SetMaxForceDialog::rejected, this, &TriangleExecute::setMaxForceDialogRejected);
         }
         m_mfd->resetValue();
         m_mfd->showFullScreen();
+        if (m_patientWin)
+        {
+            m_patientWin->addTarget(0, 5, Qt::green, 30);
+            m_patientWin->addTarget(-5 * cos(M_PI/6), -5 * sin(M_PI/6), Qt::green, 30);
+            m_patientWin->addTarget(5 * cos(M_PI/6), -5 * sin(M_PI/6), Qt::green, 30);
+            setFrontComment(tr("Отклонитесь вперед, вправо-назад и влево-назад") + "\n" + tr("к вершинам треугольника, не отрывая пяток"),
+                            true, "font-size: 40pt; color: rgb(180, 0, 0);");
+        }
     }
     else
     {
@@ -100,7 +110,20 @@ void TriangleExecute::getData(DeviceProtocols::DeviceData *data)
     if (selectedChannel() == data->channelId())
     {
         if (m_mfd)
+        {
             m_mfd->getData(x(), y());
+            if (m_mfd->isVisible())
+            {
+                if ( m_patientWin)
+                {
+                    m_patientWin->setTarget(0, m_mfd->value(BaseDefines::tcTop), 0);
+                    auto vld = m_mfd->value(BaseDefines::tcLeftDown);
+                    m_patientWin->setTarget(-vld * cos(M_PI/6), -vld * sin(M_PI/6), 1);
+                    auto vrd = m_mfd->value(BaseDefines::tcRightDown);
+                    m_patientWin->setTarget(vrd * cos(M_PI/6), -vrd * sin(M_PI/6), 2);
+                }
+            }
+        }
 
         ++m_stageCounter;
         if (m_stageCounter == m_stageTime * freqStab())
@@ -197,6 +220,7 @@ void TriangleExecute::setMaxForceDialogAccepted()
             m_stage = TriangleDefines::stgTraining;
             setRecordLengthTitle(tr("Этап обучения"));
 
+            setFrontComment("");
 //            if (m_patientWin)
 //                m_patientWin->setDiapSpecific(static_cast<int>(m_forcePercent * 1.2));
         }
@@ -207,6 +231,12 @@ void TriangleExecute::setMaxForceDialogAccepted()
 //            setTarget(m_tx, m_ty);
         }
     }
+}
+
+void TriangleExecute::setMaxForceDialogRejected()
+{
+    setFrontComment("");
+    clearTargets();
 }
 
 void TriangleExecute::showCurrentCorner()

@@ -93,7 +93,7 @@ public:
      * \brief Виртуальная функция, помещающая комментарий поверх окна
      * \param comment - текст комментария
      */
-    virtual void setFrontComment(const QString& comment);
+    virtual void setFrontComment(const QString& comment, const QString& styleSheet = "");
 
 protected:
     void resizeEvent(QResizeEvent *event) override;

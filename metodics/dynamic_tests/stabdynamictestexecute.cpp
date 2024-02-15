@@ -457,15 +457,17 @@ void StabDynamicTestExecute::setPatientWinDiap(const int diap)
         m_patientWin->setDiap(diap);
 }
 
-void StabDynamicTestExecute::setFrontComment(const QString &comment, const bool isPatientOnly)
+void StabDynamicTestExecute::setFrontComment(const QString &comment, const bool isPatientOnly, const QString& styleSheet)
 {
     if (!isPatientOnly)
     {
+        if (styleSheet != "")
+            ui->lblFrontComment->setStyleSheet(styleSheet);
         ui->lblFrontComment->setText(comment);
         ui->lblFrontComment->setVisible(comment != "");
     }
     if (m_patientWin)
-        m_patientWin->setFrontComment(comment);
+        m_patientWin->setFrontComment(comment, styleSheet);
 }
 
 void StabDynamicTestExecute::on_started()

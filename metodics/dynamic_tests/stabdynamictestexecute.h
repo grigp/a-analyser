@@ -172,7 +172,7 @@ protected slots:
      * \brief Функция, помещающая комментарий поверх окна
      * \param comment - текст комментария
      */
-    virtual void setFrontComment(const QString& comment, const bool isPatientOnly = false);
+    virtual void setFrontComment(const QString& comment, const bool isPatientOnly = false, const QString& styleSheet = "");
 
 private slots:
     void on_started();

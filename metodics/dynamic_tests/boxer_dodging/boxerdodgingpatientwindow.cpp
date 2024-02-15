@@ -53,10 +53,11 @@ void BoxerDodgingPatientWindow::setVisibleStage(const BoxerDodgingDefines::Stage
     ui->wgtBoxing->setIsVisible(stage, visible);
 }
 
-void BoxerDodgingPatientWindow::setFrontComment(const QString &comment)
+void BoxerDodgingPatientWindow::setFrontComment(const QString &comment, const QString& styleSheet)
 {
     ui->lblFrontComment->setText(comment);
     ui->lblFrontComment->setVisible(comment != "");
+    ui->lblFrontComment->setStyleSheet(styleSheet);
 }
 
 void BoxerDodgingPatientWindow::resizeEvent(QResizeEvent *event)

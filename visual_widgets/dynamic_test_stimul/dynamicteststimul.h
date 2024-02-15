@@ -28,7 +28,7 @@ class DynamicTestStimul : public QWidget
 
 public:
     explicit DynamicTestStimul(QWidget *parent = nullptr);
-    ~DynamicTestStimul();
+    ~DynamicTestStimul() override;
 
     void setDiap(const int diap) {m_diap = diap;}
     int diap() const {return m_diap;}

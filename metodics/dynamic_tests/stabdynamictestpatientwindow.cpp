@@ -89,8 +89,13 @@ QLayout *StabDynamicTestPatientWindow::getWidgetLayout()
     return ui->wgtStimul->layout();
 }
 
-void StabDynamicTestPatientWindow::setFrontComment(const QString &comment)
+void StabDynamicTestPatientWindow::setFrontComment(const QString &comment, const QString& styleSheet)
 {
+    if (styleSheet != "")
+    {
+        ui->lblFrontComment->setStyleSheet(styleSheet);
+        ui->lblFrontComment->setAlignment(Qt::AlignTop | Qt::AlignHCenter);
+    }
     ui->lblFrontComment->setText(comment);
     ui->lblFrontComment->setVisible(comment != "");
 }
