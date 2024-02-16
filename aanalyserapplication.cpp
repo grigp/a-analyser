@@ -1017,9 +1017,9 @@ void AAnalyserApplication::assignApplicationVersion()
     //! r - release 00 - alfa, 01 - betta, 02 - pre release, 03 - release
     //! b - build - number of buils (number of days between 1.01.2024 and build day)
     QFileInfo fi(applicationDirPath() + "/" + applicationName() + ".exe");
-    auto dt = fi.lastModified();
+    m_buildDate = fi.lastModified();
     auto dtb = QDateTime(QDate(2024, 1, 1));
-    qint64 d = dtb.daysTo(dt);
+    qint64 d = dtb.daysTo(m_buildDate);
     auto avl = applicationVersion().split(".");
     if (avl.size() >= 3)
         setApplicationVersion(avl.at(0) + "." + avl.at(1) + "." + avl.at(2) + "." + QString::number(d));

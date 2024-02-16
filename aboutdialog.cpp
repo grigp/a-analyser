@@ -1,6 +1,7 @@
 #include "aboutdialog.h"
 #include "ui_aboutdialog.h"
 
+#include "aanalyserapplication.h"
 #include "userinfodialog.h"
 #include "settingsprovider.h"
 
@@ -16,6 +17,10 @@ AboutDialog::AboutDialog(QWidget *parent) :
     ui->lblUrl->setText("<a href=\"http://a-med.tech/\">" + tr("Посетить сайт разработчика") + "</a>");
     ui->lblAppName->setStyleSheet("font-size: 24pt; color: rgb(0, 0, 255);");
     ui->lblVersion->setText(tr("Версия") + " " + QApplication::instance()->applicationVersion());
+    auto bd = static_cast<AAnalyserApplication*>(QApplication::instance())->buildDate();
+    ui->lblBuildDate->setText(tr("Дата сборки") + " - " + bd.toString("dd.MM.yyyy"));
+    ui->lblCopyright->setText("(c) Copyright  2019 - " + bd.toString("yyyy"));
+
 }
 
 AboutDialog::~AboutDialog()

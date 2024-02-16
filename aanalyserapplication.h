@@ -663,6 +663,11 @@ public:
      */
     void doSettingsChanged();
 
+    /*!
+     * \brief Возвращает дату сборки дистрибутива
+     */
+    QDateTime buildDate() {return m_buildDate;}
+
 signals:
     void dbConnected();
 
@@ -815,6 +820,8 @@ private:
     QMap<QString, QWidget*> m_openedTests;   ///< Указатели на виджет визуализатора открытого теста
 
     BaseDefines::RunningMode m_runningMode {BaseDefines::rmOperator};  ///< Режим запуска тестов: с оператором
+
+    QDateTime m_buildDate;   ///< Дата сборки дистрибутива
 };
 
 #endif // AANALYSERAPPLICATION_H

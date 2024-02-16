@@ -207,6 +207,16 @@
           </widget>
          </item>
          <item>
+          <widget class="QLabel" name="lblBuildDate">
+           <property name="text">
+            <string>Дата сборки</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item>
           <spacer name="verticalSpacer_3">
            <property name="orientation">
             <enum>Qt::Vertical</enum>
@@ -229,7 +239,7 @@
             </font>
            </property>
            <property name="text">
-            <string>(c) Copyright  2019 - 2024</string>
+            <string>(c) Copyright  2019 - </string>
            </property>
            <property name="alignment">
             <set>Qt::AlignCenter</set>
