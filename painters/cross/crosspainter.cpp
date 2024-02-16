@@ -66,6 +66,8 @@ void CrossPainter::doPaint(const double ratio)
     int thick = static_cast<int>(qMin(m_geometry.width() - m_geometry.left(),
                                       m_geometry.height() - m_geometry.top())
                                  * 0.06);  //! 6% от ширины
+    if (thick < 10)
+        thick = 10;
 
     m_painter->setFont(QFont("Arial", static_cast<int>(22 / (ratio / 2)), 0, false));
     QString sVL = QString::number(m_valueLeft);

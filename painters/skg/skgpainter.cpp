@@ -219,6 +219,7 @@ void SKGPainter::setVisibleSKG(const bool isVisible, const int num)
         auto sd = m_signals.at(num);
         sd.visible = isVisible;
         m_signals.replace(num, sd);
+        doUpdate();
     }
 }
 

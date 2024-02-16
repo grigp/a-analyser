@@ -21,7 +21,16 @@ void DiagCross::paintEvent(QPaintEvent *event)
     QWidget::paintEvent(event);
 
     //! Собственно, определяем границы и канву
-    QRect geo = QRect(0, 0, geometry().width(), geometry().height());
+    int size = geometry().width();
+    int l = 0;
+    int t = geometry().height() / 2 - size / 2;
+    if (geometry().height() < geometry().width())
+    {
+        size = geometry().height();
+        l = geometry().width() / 2 - size / 2;
+        t = 0;
+    }
+    QRect geo = QRect(l, t, size, size);
     QPainter painter(this);
 
     //! И рисуем

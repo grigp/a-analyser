@@ -428,12 +428,14 @@ void TriangleVisualize::btnAllTrainingClicked(bool pressed)
     {
         ui->wgtSKGTraining->setSection(0, m_calculator->trainingLength());
         m_triangleDiagIdxTraining = addTriangleDiag(ui->wgtSKGTraining, m_calculator->triangleTraining(), Qt::darkCyan);
+        ui->tbShowAllTraining->setToolTip(tr("Показать треугольники по отдельности"));
     }
     else
     {
         ui->wgtSKGTraining->setSection(m_calculator->triangleSection(m_curTriangleTraining).begin,
                                        m_calculator->triangleSection(m_curTriangleTraining).end);
         m_triangleDiagIdxTraining = addTriangleDiag(ui->wgtSKGTraining, m_calculator->triangle(m_curTriangleTraining), Qt::darkCyan);
+        ui->tbShowAllTraining->setToolTip(tr("Показать усредненный треугольник"));
     }
     setBtnPNTrainingEnabled();
 }
@@ -447,12 +449,14 @@ void TriangleVisualize::btnAllAnalysisClicked(bool pressed)
     {
         ui->wgtSKGAnalysis->setSection(m_calculator->trainingLength(), m_calculator->signalLength());
         m_triangleDiagIdxAnalysis = addTriangleDiag(ui->wgtSKGAnalysis, m_calculator->triangleAnalysis(), Qt::darkCyan);
+        ui->tbShowAllAnalysis->setToolTip(tr("Показать треугольники по отдельности"));
     }
     else
     {
         ui->wgtSKGAnalysis->setSection(m_calculator->triangleSection(m_curTriangleAnalysis).begin,
                                        m_calculator->triangleSection(m_curTriangleAnalysis).end);
         m_triangleDiagIdxAnalysis = addTriangleDiag(ui->wgtSKGAnalysis, m_calculator->triangle(m_curTriangleAnalysis), Qt::darkCyan);
+        ui->tbShowAllAnalysis->setToolTip(tr("Показать усредненный треугольник"));
     }
     setBtnPNAnalysisEnabled();
 }
