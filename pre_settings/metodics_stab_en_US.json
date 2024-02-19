@@ -283,7 +283,7 @@
                         "time": 20,
                         "latent_time": 5,
                         "stimul": 3,
-                        "zeroing": 0,
+                        "zeroing": 1,
                         "scale": 3
                     }
                 ]

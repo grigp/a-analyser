@@ -112,7 +112,14 @@ void MainWindow::showClientPage(const QString &uidPage)
         {
             m_currentClientPage = uidPage;
             static_cast<ClientWidget*>(wgt)->onShow();
-            ui->menuBar->setVisible(static_cast<ClientWidget*>(wgt)->isExternalControl());
+            auto mv = static_cast<ClientWidget*>(wgt)->isExternalControl();
+            ui->menuBar->setVisible(mv);
+
+            if (mv)
+                setWindowFlags(Qt::Window | Qt::WindowTitleHint | Qt::WindowSystemMenuHint | Qt::WindowCloseButtonHint | Qt::WindowFullscreenButtonHint | Qt::WindowMinMaxButtonsHint);
+            else
+                setWindowFlags(Qt::Window | Qt::WindowTitleHint | Qt::WindowSystemMenuHint | Qt::WindowCloseButtonHint | Qt::WindowFullscreenButtonHint);
+            show();
 
             if (uidPage == ClientWidgets::uidDatabaseResultWidgetUid)
                 ui->acViewDataBase->setChecked(true);

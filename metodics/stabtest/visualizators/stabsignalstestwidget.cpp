@@ -177,7 +177,7 @@ void StabSignalsTestWidget::setVisible(bool visible)
 
     if (visible)
     {
-        resizeColumnsTable(m_mdlRF, ui->tvRationalFactors, true);
+        resizeColumnsTable(m_mdlRF, ui->tvRationalFactors, false);// true);
         resizeColumnsTable(m_mdlNorms, ui->tvRombergNorms, false);
         setDiapazones();
     }
@@ -186,13 +186,14 @@ void StabSignalsTestWidget::setVisible(bool visible)
 void StabSignalsTestWidget::resizeEvent(QResizeEvent *event)
 {
     resizeColumnsTable(m_mdlNorms, ui->tvRombergNorms, false);
-    resizeColumnsTable(m_mdlRF, ui->tvRationalFactors, true);
+    resizeColumnsTable(m_mdlRF, ui->tvRationalFactors, false);//true);
     QWidget::resizeEvent(event);
 }
 
 void StabSignalsTestWidget::showEvent(QShowEvent *event)
 {
     resizeColumnsTable(m_mdlNorms, ui->tvRombergNorms, false);
+    resizeColumnsTable(m_mdlRF, ui->tvRationalFactors, false);//true);
     QWidget::showEvent(event);
 }
 
@@ -400,6 +401,7 @@ void StabSignalsTestWidget::showRationalTable(StabSignalsTestCalculator *calcula
 
         ui->tvRationalFactors->setModel(m_mdlRF);
         ui->tvRationalFactors->resizeColumnToContents(0);
+        ui->tvRationalFactors->header()->setDefaultAlignment(Qt::AlignHCenter);
 //        ui->tvRationalFactors->setItemDelegateForColumn(1, new RombergKoefValueDelegate(ui->tvRationalFactors));
     }
 }
@@ -458,6 +460,7 @@ void StabSignalsTestWidget::showRombergNorms(StabSignalsTestCalculator *calculat
             ui->tvRombergNorms->setItemDelegateForColumn(1, new RombergNormValueDelegate(ui->tvRombergNorms));
             ui->tvRombergNorms->setItemDelegateForColumn(2, new RombergNormValueDelegate(ui->tvRombergNorms));
             ui->tvRombergNorms->resizeColumnToContents(0);
+            ui->tvRombergNorms->header()->setDefaultAlignment(Qt::AlignHCenter);
         }
     }
     m_tvRombergNorms = ui->tvRombergNorms;
@@ -760,7 +763,8 @@ void StabSignalsTestWidget::resizeColumnsTable(QStandardItemModel *mdl, QTreeVie
 {
     if (mdl && mdl->columnCount() > 1)
     {
-        int w = (tv->geometry().width() - tv->header()->sectionSize(0)) / (mdl->columnCount() - 1);
+        int w = static_cast<int>(static_cast<double>(tv->geometry().width() - tv->header()->sectionSize(0)) /
+                                 static_cast<double>(mdl->columnCount() - 1)) - 1;
         for (int i = 1; i < mdl->columnCount(); ++i)
             if (toContens)
                 tv->resizeColumnToContents(i);
