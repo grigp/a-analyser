@@ -98,7 +98,8 @@ MainWindow::~MainWindow()
 void MainWindow::showClientPage(const QString &uidPage)
 {
     //! Запомнить показываемую страницу
-    m_lastPages << uidPage;
+    if (uidPage != m_currentClientPage)
+        m_lastPages << uidPage;
 
     foreach (auto *wgt, m_clientWidgets)
         if (static_cast<ClientWidget*>(wgt)->uid() == m_currentClientPage)
