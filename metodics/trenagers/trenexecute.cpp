@@ -629,7 +629,7 @@ void TrenExecute::fillGameHints(QFrame *frame)
 void TrenExecute::fillGameParams(QFrame *frame)
 {
     QString style = "font-size: 18pt; font-weight: 900; color: rgb(0,150,0);";
-    QString name = tr("Очки");
+    QString name = tr("Баллы");
     m_lblGameScore = new QLabel(frame);
     m_lblGameScore->setText(name);
     m_lblGameScore->setStyleSheet(style);
@@ -664,7 +664,7 @@ void TrenExecute::changeGameScore(const int value)
     m_gameScore += value;
     if (m_gameScore < 0)
         m_gameScore = 0;
-    QString text = tr("Очки") + " - " + QString::number(m_gameScore);
+    QString text = tr("Баллы") + " - " + QString::number(m_gameScore);
     m_lblGameScore->setText(text);
 
     if (m_patientWindow && QApplication::desktop()->screenCount() > 1)

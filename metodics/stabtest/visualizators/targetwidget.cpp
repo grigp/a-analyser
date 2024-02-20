@@ -34,7 +34,7 @@ void TargetWidget::calculate(TargetCalculator *calculator, const QString &testUi
 {
     auto val = calculator->factors()->factorValue(TargetFactorsDefines::TargetScoreUid);
     auto valT = calculator->factors()->factorValue(TargetFactorsDefines::TargetTotalScoreUid);
-    m_sScore = QString(tr("Количество очков") + " %1").arg(QString::number(val, 'f', 0));
+    m_sScore = QString(tr("Количество баллов") + " %1").arg(QString::number(val, 'f', 0));
     m_sTotalScore = QString(tr("Суммарный балл") + " %1").arg(QString::number(valT, 'f', 0));
     ui->lblScore->setText(m_sScore);
     ui->lblTotalScore->setText(m_sTotalScore);
@@ -142,7 +142,7 @@ void TargetWidget::paintPreview(QPainter *painter, QRect &rect, const QString &t
     TargetCalculator* calc = static_cast<TargetCalculator*>(calculator);
     auto val = calc->factors()->factorValue(TargetFactorsDefines::TargetScoreUid);
     auto valT = calc->factors()->factorValue(TargetFactorsDefines::TargetTotalScoreUid);
-    auto sScore = QString(tr("Количество очков") + " %1").arg(QString::number(val, 'f', 0));
+    auto sScore = QString(tr("Количество баллов") + " %1").arg(QString::number(val, 'f', 0));
     auto sTotalScore = QString(tr("Суммарный балл") + " %1").arg(QString::number(valT, 'f', 0));
 
     painter->save();

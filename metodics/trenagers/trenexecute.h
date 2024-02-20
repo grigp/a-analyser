@@ -199,8 +199,8 @@ protected:
     int pwGetFrameParamsWidth();
 
     /*!
-     * \brief Изменяет значение числа очков
-     * Значение кол-ва очков не может быть отрицательным
+     * \brief Изменяет значение числа баллов
+     * Значение кол-ва баллов не может быть отрицательным
      * \param value - значение, на которое меняем. Если +, то увеличиваем, если -, уменьшаем
      */
     void changeGameScore(const int value);
@@ -338,9 +338,9 @@ private:
     int m_bndRight {0};
     int m_bndBottom {0};
 
-    QLabel* m_lblGameScore {nullptr};    ///< Индикатор очков игры
-    int m_gameScore {0};                 ///< Значние кол-ва очков
-    int m_scoresPerMinute {50};          ///< Кол-во очков в минуту для данного тренажера
+    QLabel* m_lblGameScore {nullptr};    ///< Индикатор баллов игры
+    int m_gameScore {0};                 ///< Значние кол-ва баллов
+    int m_scoresPerMinute {50};          ///< Кол-во баллов в минуту для данного тренажера
     QList<GameFactors> m_gameFactors;    ///< Список показателей тренажера. Заполняется подклассами через addFactorValue
 
     bool m_isClosed {false};

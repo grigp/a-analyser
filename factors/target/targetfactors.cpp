@@ -100,7 +100,7 @@ void TargetFactors::calculate()
                 max = m_hist[i];
         }
 
-        //! Расчет кол-ва очков
+        //! Расчет кол-ва баллов
         m_score = 0;
         for (int i = 0; i < 10; ++i)
             m_score = m_score + m_hist[i] * 0.1 * (i + 1);
@@ -117,7 +117,7 @@ void TargetFactors::registerFactors()
 
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(TargetFactorsDefines::TargetScoreUid, TargetFactorsDefines::GroupUid,
-                           tr("Количество набранных очков"), tr("Очки"), tr(""), 0, 3, FactorsDefines::nsDual, 12);
+                           tr("Количество набранных баллов"), tr("Баллы"), tr(""), 0, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(TargetFactorsDefines::TargetTotalScoreUid, TargetFactorsDefines::GroupUid,
                            tr("Суммарный балл"), tr("Сумм. балл"), tr(""), 0, 3, FactorsDefines::nsDual, 12);
