@@ -13,6 +13,9 @@ public:
 
     void load();
 
+public slots:
+    void on_updatePatientData(const QString &patientUid);
+
 private slots:
     void onNewTest(const QString &testUid);
     void onRemoveTest(const QString &testUid);

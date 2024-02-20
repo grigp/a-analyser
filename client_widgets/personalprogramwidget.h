@@ -110,6 +110,8 @@ private slots:
 
     void on_viewModeDatabase();
 
+    void on_updatePatientData(const QString &patientUid);
+
 private:
     Ui::PersonalProgramWidget *ui;
 

@@ -41,6 +41,24 @@ void TestsModel::load()
     setHorizontalHeaderLabels(QStringList() << tr("Пациент") << tr("Методика") << tr("Проведено"));
 }
 
+void TestsModel::on_updatePatientData(const QString &patientUid)
+{
+    DataDefines::PatientKard kard;
+    if (DataProvider::getPatient(patientUid, kard))
+    {
+        for (int i = 0; i < rowCount(); ++i)
+        {
+            auto itm = item(i);
+            auto uidPat = itm->data(DatabaseWidgetDefines::TestsModel::PatientUidRole).toString();
+            if (patientUid == uidPat)
+            {
+                auto metName = itm->data(DatabaseWidgetDefines::TestsModel::MetodicNameRole).toString();
+                itm->setData(kard.fio + "\n" + metName, Qt::DisplayRole);
+            }
+        }
+    }
+}
+
 void TestsModel::onNewTest(const QString &testUid)
 {
     addTest(testUid);
@@ -87,11 +105,13 @@ void TestsModel::addTest(const QString &testUid)
         QStandardItem* itemPatient = new QStandardItem(patient.fio + "\n" + metName); // + "\n" + ti.dateTime.toString("dd.MM.yyyy hh:mm"));
         itemPatient->setData(testUid, DatabaseWidgetDefines::TestsModel::TestUidRole);
         itemPatient->setData(ti.patientUid, DatabaseWidgetDefines::TestsModel::PatientUidRole);
+        itemPatient->setData(metName, DatabaseWidgetDefines::TestsModel::MetodicNameRole);
         itemPatient->setEditable(false);
 
         QStandardItem* itemMetod = new QStandardItem(metName);
         itemMetod->setIcon(QIcon(":/images/Methodics/" + metImageName));
         itemMetod->setData(ti.metodUid, DatabaseWidgetDefines::TestsModel::MetodicUidRole);
+        itemMetod->setData(metName, DatabaseWidgetDefines::TestsModel::MetodicNameRole);
         itemMetod->setEditable(false);
 
         QStandardItem* itemDT = new QStandardItem(ti.dateTime.toString("dd.MM.yyyy hh:mm"));

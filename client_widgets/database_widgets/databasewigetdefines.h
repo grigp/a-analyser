@@ -65,6 +65,7 @@ enum TestsModelRoles
       TestUidRole = Qt::UserRole + 1     ///< uid теста. QString в итеме ColPatient
     , PatientUidRole                     ///< uid пациента. QString в итеме ColPatient
     , MetodicUidRole                     ///< uid методики. QString в итеме ColMetodic
+    , MetodicNameRole                    ///< название методики. QString в итеме ColPatient
 };
 
 }

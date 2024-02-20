@@ -122,6 +122,12 @@ public:
     void doSelectPatient(const QString &uid);
 
     /*!
+     * \brief Обновление данных о пациенте
+     * \param patientUid - uid пациента
+     */
+    void doUpdatePatientData(const QString& patientUid);
+
+    /*!
      * \brief Получение информации о выбранной методике
      * \param uid - uid выбранной методики
      */
@@ -687,6 +693,12 @@ signals:
     void selectPatient(const QString &patientUid);
     void selectMetodic(const QString &metodicUid);
     void selectTest(const QString &testUid);
+
+    /*!
+     * \brief Сигнал обновления данных о пациенте
+     * \param patientUid - uid пациента
+     */
+    void updatePatientData(const QString& patientUid);
 
     void methodicCount(const int count);
 

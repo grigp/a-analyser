@@ -70,6 +70,8 @@ void PersonalProgramWidget::onDBConnect()
             this, &PersonalProgramWidget::on_assignPPForPatient);
     connect(static_cast<AAnalyserApplication*>(QApplication::instance()), &AAnalyserApplication::canceledPPForPatient,
             this, &PersonalProgramWidget::on_cancelPPForPatient);
+    connect(static_cast<AAnalyserApplication*>(QApplication::instance()), &AAnalyserApplication::updatePatientData,
+            this, &PersonalProgramWidget::on_updatePatientData);
 }
 
 void PersonalProgramWidget::onShow()
@@ -533,6 +535,7 @@ void PersonalProgramWidget::on_editPatientCard()
                 patient.massa = dialog->massa();
                 patient.height = dialog->height();
                 DataProvider::updatePatient(patient);
+                static_cast<AAnalyserApplication*>(QApplication::instance())->doUpdatePatientData(uid);
             });
             dialog->show();
         }
@@ -545,6 +548,22 @@ void PersonalProgramWidget::on_viewModeDatabase()
 {
     static_cast<AAnalyserApplication*>(QApplication::instance())->showClientPage(ClientWidgets::uidDatabaseResultWidgetUid);
     SettingsProvider::setValueToRegAppCopy("MainWindow", "MainClientWidget", ClientWidgets::uidDatabaseResultWidgetUid);
+}
+
+void PersonalProgramWidget::on_updatePatientData(const QString &patientUid)
+{
+    DataDefines::PatientKard kard;
+    if (DataProvider::getPatient(patientUid, kard))
+    {
+        for (int i = 0; i < m_model->rowCount(); ++i)
+        {
+            auto uidPat = m_model->item(i)->data(DatabaseWidgetDefines::PatientsModel::PatientUidRole).toString();
+            if (patientUid == uidPat)
+            {
+                m_model->item(i)->setData(kard.fio, Qt::DisplayRole);
+            }
+        }
+    }
 }
 
 QStandardItem* PersonalProgramWidget::appendLine(const QString uidPat,

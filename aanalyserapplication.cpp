@@ -38,6 +38,7 @@
 #include "patientsproxymodel.h"
 #include "aanalysersettings.h"
 #include "personalprogram.h"
+#include "databasewigetdefines.h"
 
 AAnalyserApplication::AAnalyserApplication(int &argc, char **argv)
     : QApplication(argc, argv)
@@ -222,6 +223,24 @@ void AAnalyserApplication::doSelectPatient(const QString &uid)
 {
     m_patientUid = uid;
     emit selectPatient(m_patientUid);
+}
+
+void AAnalyserApplication::doUpdatePatientData(const QString &patientUid)
+{
+    DataDefines::PatientKard kard;
+    if (DataProvider::getPatient(patientUid, kard))
+    {
+        for (int i = 0; i < m_mdlPatients->rowCount(); ++i)
+        {
+            auto uidPat = m_mdlPatients->item(i)->data(DatabaseWidgetDefines::PatientsModel::PatientUidRole).toString();
+            if (patientUid == uidPat)
+            {
+                m_mdlPatients->item(i)->setData(kard.fio, Qt::DisplayRole);
+            }
+        }
+    }
+
+    emit updatePatientData(patientUid);
 }
 
 void AAnalyserApplication::doSelectMetodic(const QString &uid)

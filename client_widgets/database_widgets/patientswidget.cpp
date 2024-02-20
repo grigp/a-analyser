@@ -222,6 +222,7 @@ void PatientsWidget::editPatient()
             patient.massa = dialog->massa();
             patient.height = dialog->height();
             patientsModel()->addPatient(patient);
+            static_cast<AAnalyserApplication*>(QApplication::instance())->doUpdatePatientData(uid);
             ui->tvPatients->header()->resizeSections(QHeaderView::ResizeToContents);
         });
         dialog->show();

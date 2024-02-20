@@ -38,6 +38,8 @@ ResultsWidget::ResultsWidget(QWidget *parent) :
             &AAnalyserApplication::selectPatient, this, &ResultsWidget::on_selectPatient);
     connect(static_cast<AAnalyserApplication*>(QApplication::instance()),
             &AAnalyserApplication::selectMetodic, this, &ResultsWidget::on_selectMetodic);
+    connect(static_cast<AAnalyserApplication*>(QApplication::instance()),
+            &AAnalyserApplication::updatePatientData, m_mdlTest, &TestsModel::on_updatePatientData);
 
     restoreSplitterPosition();
     ui->wgtBugTest->setVisible(false);
