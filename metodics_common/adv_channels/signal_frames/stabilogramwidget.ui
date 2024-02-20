@@ -189,6 +189,9 @@
               </item>
               <item>
                <widget class="QPushButton" name="btnStabRecord">
+                <property name="toolTip">
+                 <string>Сигнал будет записан</string>
+                </property>
                 <property name="text">
                  <string/>
                 </property>
@@ -390,6 +393,9 @@
               </item>
               <item>
                <widget class="QPushButton" name="btnZRecord">
+                <property name="toolTip">
+                 <string>Сигнал будет записан</string>
+                </property>
                 <property name="text">
                  <string/>
                 </property>
@@ -1100,8 +1106,8 @@
    <slot>on_calibrate()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>156</x>
-     <y>342</y>
+     <x>111</x>
+     <y>41</y>
     </hint>
     <hint type="destinationlabel">
      <x>758</x>

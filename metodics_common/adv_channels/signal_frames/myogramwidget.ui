@@ -127,6 +127,9 @@
       </item>
       <item>
        <widget class="QPushButton" name="btnMyoRecord">
+        <property name="toolTip">
+         <string>Сигнал будет записан</string>
+        </property>
         <property name="text">
          <string/>
         </property>

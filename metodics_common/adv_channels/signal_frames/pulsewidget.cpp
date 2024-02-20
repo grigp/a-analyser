@@ -187,9 +187,15 @@ void PulseWidget::setRecordedChannels()
 void PulseWidget::setRecButton(QPushButton *btn, const bool checked)
 {
     if (checked)
+    {
         btn->setIcon(QIcon(":/images/SaveOK.png"));
+        btn->setToolTip(tr("Сигнал будет записан"));
+    }
     else
+    {
         btn->setIcon(QIcon(":/images/SaveNO.png"));
+        btn->setToolTip(tr("Сигнал не будет записан"));
+    }
 }
 
 void PulseWidget::setDelAtf(const bool isDelete)

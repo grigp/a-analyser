@@ -20,8 +20,8 @@ class DynamoWidget : public SignalWidget
     Q_OBJECT
 
 public:
-    explicit DynamoWidget(Driver *drv, const QString channelId, QWidget *parent = 0);
-    ~DynamoWidget();
+    explicit DynamoWidget(Driver *drv, const QString channelId, QWidget *parent = nullptr);
+    ~DynamoWidget() override;
 
     /*!
      * \brief Начало новой пробы
