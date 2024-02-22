@@ -43,7 +43,7 @@ class CircleNormIndicator : public QWidget
     Q_OBJECT
 
 public:
-    explicit CircleNormIndicator(QWidget *parent = 0);
+    explicit CircleNormIndicator(QWidget *parent = nullptr);
     ~CircleNormIndicator();
 
     //! Тип нормы
