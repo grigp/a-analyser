@@ -25,7 +25,7 @@ public:
      * \param painter - рисователь
      * \param geometry - размер области прорисовки
      */
-    void setCanvas(QPainter* painter, QRect geometry);
+    void setCanvas(QPainter* painter, QRect geometry, QWidget *wgt = nullptr);
 
     int diap() const;
     void setDiap(const int diap);
@@ -176,6 +176,12 @@ public:
     void addPlatform(QRect platform);
 
     /*!
+     * \brief Доступ к m_title
+     */
+    QString title() const {return m_title;}
+    void setTitle(const QString& title) {m_title = title;}
+
+    /*!
      * \brief Процедура прорисовки на рисователе m_painter  в рамках m_geometry
      */
     void doPaint(const double ratio);
@@ -186,6 +192,7 @@ protected:
 private:
     QPainter* m_painter {nullptr};
     QRect m_geometry {QRect(0, 0, 0, 0)};
+    QWidget* m_widget {nullptr};
 
     /*!
      * \brief Прорисовка сетки
@@ -230,6 +237,11 @@ private:
     void drawTargets();
 
     /*!
+     * \brief Прорисовывает заголовок
+     */
+    void drawTitle();
+
+    /*!
      * \brief Структура данных, содержащая данные цели The TargetInfo struct
      */
     struct TargetInfo
@@ -270,6 +282,8 @@ private:
     bool m_isVisibleMarker {true};
     bool m_isShowTrace {false};
     QList<QPointF> m_trace;
+
+    QString m_title {""};
 
     double m_prop {1};
     int m_width {0};

@@ -695,6 +695,7 @@ void StabSignalsTestWidget::showSKG(StabSignalsTestCalculator *calculator, const
                 auto *skg = new SKGWidget(ui->wgtSKGAreases);
                 m_areasesSKG << skg;
                 skg->setVisibleMarker(false);
+                skg->setTitle(pi.name);
 
                 auto *sig = probe->signal(ChannelsDefines::chanStab);
                 if (sig && sig->size() > 0)

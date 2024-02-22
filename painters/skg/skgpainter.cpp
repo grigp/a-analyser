@@ -20,10 +20,11 @@ SKGPainter::~SKGPainter()
 
 }
 
-void SKGPainter::setCanvas(QPainter *painter, QRect geometry)
+void SKGPainter::setCanvas(QPainter *painter, QRect geometry, QWidget *wgt)
 {
     m_painter = painter;
     m_geometry = geometry;
+    m_widget = wgt;
 }
 
 int SKGPainter::diap() const
@@ -259,6 +260,7 @@ void SKGPainter::doPaint(const double ratio)
     drawTargets();
     drawTrace();
     drawMarker();
+    drawTitle();
 }
 
 void SKGPainter::doUpdate()
@@ -577,6 +579,24 @@ void SKGPainter::drawTargets()
         m_painter->setPen(QPen(ti.colorBorder, 1, Qt::SolidLine, Qt::FlatCap));
         m_painter->drawRect(static_cast<int>(x - w / 2), static_cast<int>(y - h / 2), w, h);
     }
+    m_painter->restore();
+}
+
+void SKGPainter::drawTitle()
+{
+    m_painter->save();
+
+    QColor backColor = Qt::white;
+    if (m_widget)
+        backColor = m_widget->palette().background().color();
+    m_painter->setBrush(QBrush(backColor, Qt::SolidPattern));
+    m_painter->setPen(QPen(backColor, 1, Qt::SolidLine, Qt::FlatCap));
+    m_painter->drawRect(m_geometry.left(), m_geometry.top(), m_geometry.width(), 20);
+
+    m_painter->setPen(QPen(Qt::black, 1, Qt::SolidLine, Qt::FlatCap));
+    m_painter->setFont(QFont("Sans", 10, QFont::Bold, false));
+    m_painter->drawText(m_geometry.left(), m_geometry.top(), m_geometry.width(), 20, Qt::AlignHCenter | Qt::AlignVCenter, m_title);
+
     m_painter->restore();
 }
 
