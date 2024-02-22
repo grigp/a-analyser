@@ -149,6 +149,16 @@ void CircleNormIndicator::draw()
     p.setBrush(glassBrush);
     p.drawEllipse(QPoint(m_centerX, m_centerY), m_innerBorderRadius, m_innerBorderRadius);
 
+    //! Метки 0 и 100
+    p.setBrush(QBrush(Qt::NoBrush));
+    p.setPen(QPen(m_shadowColor, 1, Qt::SolidLine));
+    QRect r(m_centerX - m_outerBorderRadius, m_centerY - m_outerBorderRadius, (m_outerBorderRadius) * 2, (m_outerBorderRadius) * 2);
+    int u = valueToDegrees(100);
+    int d = valueToDegrees(0);
+    d = getDistanceDegrees(u, d);
+    p.drawPie(r, u * 16, d * 16);
+    p.setPen(QPen(Qt::NoPen));
+
     //! Зона групповой нормы
     if (m_isGroupNorm)
         drawNorm(nkGroup, p);
