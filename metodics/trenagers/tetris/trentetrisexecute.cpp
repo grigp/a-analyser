@@ -175,10 +175,14 @@ void TrenTetrisExecute::elementsInteraction(DeviceProtocols::DeviceData *data)
 
             if (isGlassFull())
             {
-                if (!isRecording())
-                    m_glass->clear();
-                else
-                    finishTest();
+                m_glass->clear();
+                changeGameScore(-m_glassHCount * 3);
+//                if (!isRecording())
+//                    m_glass->clear();
+//                else
+//                {
+//                    finishTest();    Приводит к сбою
+//                }
             }
         }
     }

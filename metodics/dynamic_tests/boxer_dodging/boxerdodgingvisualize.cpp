@@ -311,7 +311,7 @@ void BoxerDodgingVisualize::showTable()
                                                    << tr("Попытки")
                                                    << tr("Ошибки"));
     ui->tvTable->setModel(model);
-    ui->tvTable->header()->resizeSections(QHeaderView::ResizeToContents);
+    ui->tvTable->header()->setSectionResizeMode(QHeaderView::Stretch);
     ui->tvTable->header()->resizeSection(0, 250);
 
     m_mdlFactors = static_cast<QStandardItemModel*>(ui->tvTable->model());
