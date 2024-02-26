@@ -546,24 +546,31 @@ void TrenTetrisExecute::deleteRow(const int row)
 
 void TrenTetrisExecute::deleteOneColorCubes(const QList<QPoint> lastFigCubes)
 {
+    qDebug() << Q_FUNC_INFO << "lastFigCubes" << lastFigCubes;
+    m_oneColorCubes.clear();
     foreach (auto pos, lastFigCubes)
     {
         if (m_glass->value(pos.x(), pos.y()) != Qt::black)
         {
-            m_oneColorCubes.clear();
-            fillOneColorCubesList(m_oneColorCubes, pos, m_glass->value(pos.x(), pos.y()));
+            QList<QPoint> oneColorCubes;
+            fillOneColorCubesList(oneColorCubes, pos, m_glass->value(pos.x(), pos.y()));
+            qDebug() << "oneColorCubes" << pos << ":" << oneColorCubes;
 
-            if (m_oneColorCubes.size() >= m_deletingCubeCount)
+            if (oneColorCubes.size() >= m_deletingCubeCount)
             {
-                //! Пометить кубики, как удаляемые
-                foreach (auto cube, m_oneColorCubes)
-                    m_glass->setDeletingCube(cube.x(), cube.y());
-
-                //! Отложенное удаление, чтоб видеть, что удаляем
-                m_tmDelOneCol = startTimer(1000);
+                foreach (auto cube, oneColorCubes)
+                    if (!m_oneColorCubes.contains(cube))
+                        m_oneColorCubes << cube;
             };
         }
     }
+
+    //! Пометить кубики, как удаляемые
+    foreach (auto cube, m_oneColorCubes)
+        m_glass->setDeletingCube(cube.x(), cube.y());
+
+    //! Отложенное удаление, чтоб видеть, что удаляем
+    m_tmDelOneCol = startTimer(1000);
 }
 
 void TrenTetrisExecute::fillOneColorCubesList(QList<QPoint> &oneColorCubes, const QPoint pos, const QColor color) const
@@ -697,6 +704,7 @@ void TrenTetrisExecute::doDelOneColor()
         m_player.play();
     }
 
+    qDebug() << Q_FUNC_INFO << "m_oneColorCubes" << ":" << m_oneColorCubes;
     foreach (auto cube, m_oneColorCubes)
         m_glass->setValue(cube.x(), cube.y(), Qt::black);
     foreach (auto cube, m_oneColorCubes)
