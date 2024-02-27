@@ -546,7 +546,6 @@ void TrenTetrisExecute::deleteRow(const int row)
 
 void TrenTetrisExecute::deleteOneColorCubes(const QList<QPoint> lastFigCubes)
 {
-    qDebug() << Q_FUNC_INFO << "lastFigCubes" << lastFigCubes;
     m_oneColorCubes.clear();
     foreach (auto pos, lastFigCubes)
     {
@@ -554,7 +553,6 @@ void TrenTetrisExecute::deleteOneColorCubes(const QList<QPoint> lastFigCubes)
         {
             QList<QPoint> oneColorCubes;
             fillOneColorCubesList(oneColorCubes, pos, m_glass->value(pos.x(), pos.y()));
-            qDebug() << "oneColorCubes" << pos << ":" << oneColorCubes;
 
             if (oneColorCubes.size() >= m_deletingCubeCount)
             {
@@ -704,7 +702,6 @@ void TrenTetrisExecute::doDelOneColor()
         m_player.play();
     }
 
-    qDebug() << Q_FUNC_INFO << "m_oneColorCubes" << ":" << m_oneColorCubes;
     foreach (auto cube, m_oneColorCubes)
         m_glass->setValue(cube.x(), cube.y(), Qt::black);
     foreach (auto cube, m_oneColorCubes)
