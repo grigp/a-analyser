@@ -220,7 +220,12 @@ void TrenExecute::getData(DeviceProtocols::DeviceData *data)
                 ++m_recCount;
                 ui->lblRecLen->setText(BaseUtils::getTimeBySecCount(m_recCount / m_frequency));
                 ui->pbRec->setValue(100 * m_recCount / (m_recLength * m_frequency));
-                if (m_recCount >= m_recLength * m_frequency)
+                if (m_recCount == m_recLength * m_frequency)
+                {
+                    initFinishTest();
+                    return;
+                }
+                if (m_isFinishTest)
                 {
                     finishTest();
                     return;
@@ -605,6 +610,16 @@ void TrenExecute::finishTest()
     m_isRecording = false;
     m_trd->saveTest();
     static_cast<ExecuteWidget*>(parent())->closeExecutePage(); //showDB();
+}
+
+void TrenExecute::initFinishTest()
+{
+    finishTest();
+}
+
+void TrenExecute::doneFinishTest()
+{
+    m_isFinishTest = true;
 }
 
 void TrenExecute::doneDriver()

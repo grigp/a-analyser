@@ -714,6 +714,8 @@ void TrenTakePutExecute::fixingStage()
     {
         setTemporaryElements();
         addScoreNewScene();
+        if (m_isRecordingTimeOut)
+            doneFinishTest();
     }
     else
     if (m_stageMode == TrenTakePutDefines::smAllElements)
@@ -724,6 +726,8 @@ void TrenTakePutExecute::fixingStage()
             delayScene();
             setTemporaryElements();
             addScoreNewScene();
+            if (m_isRecordingTimeOut)
+                doneFinishTest();
         }
         else
         {
@@ -1031,6 +1035,13 @@ void TrenTakePutExecute::finishTest()
     TrenStabExecute::finishTest();
 }
 
+void TrenTakePutExecute::initFinishTest()
+{
+    m_isRecordingTimeOut = true;
+    //! Таймер для того, чтобы если играющий так и не соберет сцену, сеанс тренинга все-таки завершился
+    m_tmFinishTest = startTimer(7000);
+}
+
 void TrenTakePutExecute::changeErrors(const int value)
 {
     m_errorsCount += value;
@@ -1104,6 +1115,15 @@ void TrenTakePutExecute::setTemporaryElements()
         m_marker->setPos(0 - m_marker->boundingRect().width() / 2,
                          0 - m_marker->boundingRect().height() / 2);
         m_putElementCount = 0;
+    }
+}
+
+void TrenTakePutExecute::timerEvent(QTimerEvent *event)
+{
+    if (event->timerId() == m_tmFinishTest)
+    {
+        doneFinishTest();
+        killTimer(m_tmFinishTest);
     }
 }
 

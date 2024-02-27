@@ -205,6 +205,8 @@ private:
 
     void finishTest() override;
 
+    void initFinishTest() override;
+
     /*!
      * \brief Изменяет значение кол-ва ошибок
      * \param value - значение, на которое меняем.
@@ -216,6 +218,7 @@ private:
      */
     void setTemporaryElements();
 
+    void timerEvent(QTimerEvent *event) override;
 
     GraphicCommon::MarkerElement *m_marker {nullptr};
     QJsonObject m_markerObj;
@@ -257,6 +260,9 @@ private:
     QList<QGraphicsItem*> m_tempElements;
 
     TakePutResultData* m_takePutResData {nullptr};
+
+    bool m_isRecordingTimeOut {false};
+    int m_tmFinishTest {-1};
 };
 
 

@@ -142,7 +142,23 @@ protected:
 
     virtual void setFrontCommentItem();
 
+    /*!
+     * \brief Виртуальная функция завершения теста
+     */
     virtual void finishTest();
+
+    /*!
+     * \brief Виртуальная функция инициализации завершения теста.
+     * В простейшем случае вызывает finishTest();, но подклассы могут и реализовать отложенное завершение,
+     * после чего вызвать doneFinishTest
+     */
+    virtual void initFinishTest();
+
+    /*!
+     * \brief Финиш процесса завершения теста.
+     * Подкласс должен ее вызвать, когда считает, что тренажер наконец надо завершить
+     */
+    void doneFinishTest();
 
     virtual void doneDriver();
 
@@ -204,6 +220,11 @@ protected:
      * \param value - значение, на которое меняем. Если +, то увеличиваем, если -, уменьшаем
      */
     void changeGameScore(const int value);
+
+    /*!
+     * \brief Возвращает кол-во баллов
+     */
+    int gameScore() const {return m_gameScore;}
 
     /*!
      * \brief Добавляет метку для отображения игрового параметра на окне пациента
@@ -371,6 +392,8 @@ private:
     QList<MetodicDefines::AutoModeStaticStages> m_stages {MetodicDefines::AutoStagesBase};  ///< Список этапов для автоматического режима
 
     QMediaPlayer m_player;
+
+    bool m_isFinishTest {false};
 };
 
 #endif // TRENEXECUTE_H
