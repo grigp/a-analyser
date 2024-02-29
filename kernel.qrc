@@ -263,5 +263,7 @@
         <file>images/Collapse.png</file>
         <file>images/Expand.png</file>
         <file>sound/com_error.wav</file>
+        <file>images/DataBase.png</file>
+        <file>images/PersonalProgramMode.png</file>
     </qresource>
 </RCC>

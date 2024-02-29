@@ -84,7 +84,7 @@
         </property>
         <property name="maximumSize">
          <size>
-          <width>20</width>
+          <width>35</width>
           <height>16777215</height>
          </size>
         </property>
@@ -92,7 +92,17 @@
          <string>Режим индивидуальных программ</string>
         </property>
         <property name="text">
-         <string>&lt;</string>
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset resource="../../kernel.qrc">
+          <normaloff>:/images/PersonalProgramMode.png</normaloff>:/images/PersonalProgramMode.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>35</width>
+          <height>35</height>
+         </size>
         </property>
        </widget>
       </item>
