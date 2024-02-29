@@ -54,6 +54,12 @@ protected:
     void timerEvent(QTimerEvent *event) override;
 
     /*!
+     * \brief информирует от смене этапа для автоматического режима
+     * \param stage - новый этап
+     */
+    void autoModeStageChanged(const MetodicDefines::AutoModeStaticStages stage) override;
+
+    /*!
      * \brief Формирует список дополнительных каналов для выбора управления
      * По формату получаем список каналов этого формата, которые передает драйвер, заносим их в список для выбора
      */

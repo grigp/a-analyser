@@ -145,6 +145,24 @@ void TrenTetrisExecute::timerEvent(QTimerEvent *event)
     }
 }
 
+void TrenTetrisExecute::autoModeStageChanged(const MetodicDefines::AutoModeStaticStages stage)
+{
+    auto rm = static_cast<AAnalyserApplication*>(QApplication::instance())->runningMode();
+    if (rm == BaseDefines::rmAutomatic)
+    {
+        if (stage == MetodicDefines::amssLatent0 || stage == MetodicDefines::amssZeroingWait)
+        {
+            if (m_marker)
+                m_marker->setVisible(false);
+        }
+        else
+        {
+            if (m_marker)
+                m_marker->setVisible(true);
+        }
+    }
+}
+
 void TrenTetrisExecute::setAdvancedChannels()
 {
     TrenStabExecute::setAdvancedChannels();

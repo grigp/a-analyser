@@ -58,6 +58,8 @@ public:
     void setParams(const QJsonObject &probeParams) override;
 
 protected:
+    void timerEvent(QTimerEvent *event) override;
+
     /*!
      * \brief информирует от смене этапа для автоматического режима
      * \param stage - новый этап
@@ -217,8 +219,6 @@ private:
      * \brief Пересоздает временные элементы при генерации новой сцены
      */
     void setTemporaryElements();
-
-    void timerEvent(QTimerEvent *event) override;
 
     GraphicCommon::MarkerElement *m_marker {nullptr};
     QJsonObject m_markerObj;

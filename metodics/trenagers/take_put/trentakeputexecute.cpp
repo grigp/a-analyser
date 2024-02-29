@@ -96,6 +96,17 @@ void TrenTakePutExecute::setParams(const QJsonObject &params)
     m_soundSheme.onTarget = objSS["on_target"].toString();
 }
 
+void TrenTakePutExecute::timerEvent(QTimerEvent *event)
+{
+    if (event->timerId() == m_tmFinishTest)
+    {
+        doneFinishTest();
+        killTimer(m_tmFinishTest);
+    }
+
+    TrenStabExecute::timerEvent(event);
+}
+
 void TrenTakePutExecute::autoModeStageChanged(const MetodicDefines::AutoModeStaticStages stage)
 {
     auto rm = static_cast<AAnalyserApplication*>(QApplication::instance())->runningMode();
@@ -1122,15 +1133,6 @@ void TrenTakePutExecute::setTemporaryElements()
         m_marker->setPos(0 - m_marker->boundingRect().width() / 2,
                          0 - m_marker->boundingRect().height() / 2);
         m_putElementCount = 0;
-    }
-}
-
-void TrenTakePutExecute::timerEvent(QTimerEvent *event)
-{
-    if (event->timerId() == m_tmFinishTest)
-    {
-        doneFinishTest();
-        killTimer(m_tmFinishTest);
     }
 }
 
