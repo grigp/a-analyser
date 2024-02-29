@@ -263,6 +263,7 @@ private:
 
     bool m_isRecordingTimeOut {false};
     int m_tmFinishTest {-1};
+    int m_scoreNewScene {0};  ///< Кол-во баллов при генерации новой сцены
 };
 
 

@@ -106,6 +106,8 @@ protected:
 
     void finishTest() override;
 
+    void initFinishTest() override;
+
     QString getAutoSaveParamsSectionName() const override {return "TrenagerType2";}
 
 private:
@@ -248,6 +250,9 @@ private:
     QList<QPoint> m_oneColorCubes;
     int m_tmDelRows {-1};     ///< id таймера удаления строк
     int m_tmDelOneCol {-1};   ///< id таймера удаления блоков одного цвета
+
+    bool m_isRecordingTimeOut {false};
+    int m_tmFinishTest {-1};
 };
 
 #endif // TRENTETRISEXECUTE_H

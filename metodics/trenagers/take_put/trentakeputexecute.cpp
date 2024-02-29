@@ -714,6 +714,7 @@ void TrenTakePutExecute::fixingStage()
     {
         setTemporaryElements();
         addScoreNewScene();
+        m_scoreNewScene = gameScore();
         if (m_isRecordingTimeOut)
             doneFinishTest();
     }
@@ -726,6 +727,7 @@ void TrenTakePutExecute::fixingStage()
             delayScene();
             setTemporaryElements();
             addScoreNewScene();
+            m_scoreNewScene = gameScore();
             if (m_isRecordingTimeOut)
                 doneFinishTest();
         }
@@ -1037,9 +1039,14 @@ void TrenTakePutExecute::finishTest()
 
 void TrenTakePutExecute::initFinishTest()
 {
-    m_isRecordingTimeOut = true;
-    //! Таймер для того, чтобы если играющий так и не соберет сцену, сеанс тренинга все-таки завершился
-    m_tmFinishTest = startTimer(7000);
+    if (gameScore() != m_scoreNewScene || m_gameStage != TrenTakePutDefines::gsTake)
+    {
+        m_isRecordingTimeOut = true;
+        //! Таймер для того, чтобы если играющий так и не соберет сцену, сеанс тренинга все-таки завершился
+        m_tmFinishTest = startTimer(7000);
+    }
+    else
+        doneFinishTest();
 }
 
 void TrenTakePutExecute::changeErrors(const int value)

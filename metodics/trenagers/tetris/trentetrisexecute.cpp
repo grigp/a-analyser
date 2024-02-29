@@ -137,7 +137,12 @@ void TrenTetrisExecute::timerEvent(QTimerEvent *event)
     else
     if (event->timerId() == m_tmDelOneCol)
         doDelOneColor();
-
+    else
+    if (event->timerId() == m_tmFinishTest)
+    {
+        doneFinishTest();
+        killTimer(m_tmFinishTest);
+    }
 }
 
 void TrenTetrisExecute::setAdvancedChannels()
@@ -334,6 +339,10 @@ void TrenTetrisExecute::putFigure()
     }
     changeGameScore(1);
 
+    //! При отложенном завершении сеанса до укладки фигуры - скомандовать завершение
+    if (m_isRecordingTimeOut)
+        doneFinishTest();
+
     //! Анализ и удаление кубиков
     if (m_deletingMode == TrenTetrisDefines::dmColored)
         deleteOneColorCubes(lastFigCubes);
@@ -429,6 +438,18 @@ void TrenTetrisExecute::finishTest()
     addFactorValue(TrenResultFactorsDefines::RowsDeletedUid, m_rowsDeleted);
 
     TrenStabExecute::finishTest();
+}
+
+void TrenTetrisExecute::initFinishTest()
+{
+    if (TrenTetrisDefines::tmsTake != m_tmStage)
+    {
+        m_isRecordingTimeOut = true;
+        //! Таймер для того, чтобы если играющий так и не соберет сцену, сеанс тренинга все-таки завершился
+        m_tmFinishTest = startTimer(7000);
+    }
+    else
+        doneFinishTest();
 }
 
 void TrenTetrisExecute::assignParams()
