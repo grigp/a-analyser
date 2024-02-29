@@ -427,6 +427,9 @@
              </item>
              <item>
               <widget class="QSlider" name="sldTransparent">
+               <property name="toolTip">
+                <string>Прозрачность</string>
+               </property>
                <property name="minimum">
                 <number>5</number>
                </property>

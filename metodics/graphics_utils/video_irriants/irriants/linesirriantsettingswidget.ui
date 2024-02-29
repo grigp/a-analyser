@@ -100,7 +100,7 @@
       <item>
        <widget class="QLabel" name="lblWidth">
         <property name="text">
-         <string>Ширина полос, pix</string>
+         <string>Ширина полос, пкс</string>
         </property>
        </widget>
       </item>
@@ -166,7 +166,7 @@
       <item>
        <widget class="QLabel" name="lblSpeed">
         <property name="text">
-         <string>Скорость, pix/сек</string>
+         <string>Скорость, пкс/сек</string>
         </property>
        </widget>
       </item>

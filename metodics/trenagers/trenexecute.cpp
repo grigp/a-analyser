@@ -373,6 +373,7 @@ void TrenExecute::on_selectIrriant(int idx)
             ui->wgtIrriantsParams->layout()->addWidget(widget);
         }
     }
+    ui->sldTransparent->setEnabled(idx > 0);
 }
 
 void TrenExecute::on_changeTransparent(int value)

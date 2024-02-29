@@ -119,7 +119,7 @@
       <item>
        <widget class="QLabel" name="lblMaxSize">
         <property name="text">
-         <string>Максимальный размер</string>
+         <string>Максимальный размер, пкс</string>
         </property>
        </widget>
       </item>
