@@ -44,11 +44,13 @@ private slots:
     void on_selectT(QModelIndex index);
 
     void on_dpAdd();
+    void on_dpDouble();
     void on_dpDel();
     void on_dpMoveUp();
     void on_dpMoveDown();
 
     void on_testAdd();
+    void on_testDouble();
     void on_testEdit();
     void on_testDel();
     void on_testMoveUp();

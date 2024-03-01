@@ -265,5 +265,6 @@
         <file>sound/com_error.wav</file>
         <file>images/DataBase.png</file>
         <file>images/PersonalProgramMode.png</file>
+        <file>images/Double.png</file>
     </qresource>
 </RCC>

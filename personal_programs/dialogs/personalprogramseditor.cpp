@@ -87,6 +87,31 @@ void PersonalProgramsEditor::on_addDP()
     }
 }
 
+void PersonalProgramsEditor::on_doubleDP()
+{
+    QModelIndexList selIdxs = ui->tvSchedule->selectionModel()->selectedIndexes();
+    if (selIdxs.size() > 0)
+    {
+        auto index = selIdxs.at(0);
+        if (index.isValid())
+        {
+            QString text = tr("Дублировать дневную программу \"") + index.data().toString() + tr("\"?");
+            auto mr = QMessageBox::question(nullptr, tr("Запрос"), text);
+            if (mr == QMessageBox::Yes)
+            {
+                auto dp = index.data(PersonalProgramDefines::TableDPRoles::DPRole).toJsonObject();
+
+                auto *item = new QStandardItem(dp["name"].toString());
+                item->setEditable(false);
+                item->setData(dp, PersonalProgramDefines::TableDPRoles::DPRole);
+                m_mdlDP.insertRow(index.row() + 1, item);
+            }
+        }
+    }
+    else
+        QMessageBox::information(nullptr, tr("Предупреждение"), tr("Не выбрана дневная программа"));
+}
+
 void PersonalProgramsEditor::on_delDP()
 {
     QModelIndexList selIdxs = ui->tvSchedule->selectionModel()->selectedIndexes();

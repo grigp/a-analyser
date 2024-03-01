@@ -30,6 +30,7 @@ protected:
 
 private slots:
     void on_addDP();
+    void on_doubleDP();
     void on_delDP();
     void on_moveDPUp();
     void on_moveDPDown();

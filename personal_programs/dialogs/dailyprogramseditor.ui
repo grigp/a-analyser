@@ -108,6 +108,26 @@
                  </widget>
                 </item>
                 <item>
+                 <widget class="QPushButton" name="btnDPDoubleTest">
+                  <property name="toolTip">
+                   <string>Дублировать тест в дневной программе</string>
+                  </property>
+                  <property name="text">
+                   <string/>
+                  </property>
+                  <property name="icon">
+                   <iconset resource="../../kernel.qrc">
+                    <normaloff>:/images/Double.png</normaloff>:/images/Double.png</iconset>
+                  </property>
+                  <property name="iconSize">
+                   <size>
+                    <width>32</width>
+                    <height>32</height>
+                   </size>
+                  </property>
+                 </widget>
+                </item>
+                <item>
                  <widget class="QPushButton" name="btnDPEditTestParams">
                   <property name="toolTip">
                    <string>Редактировать параметры теста в дневной программе...</string>
@@ -130,7 +150,7 @@
                 <item>
                  <widget class="QPushButton" name="btnDPDelTest">
                   <property name="toolTip">
-                   <string>Удалить тест из дневной программе...</string>
+                   <string>Удалить тест из дневной программы...</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -150,7 +170,7 @@
                 <item>
                  <widget class="QPushButton" name="btnDPTestUp">
                   <property name="toolTip">
-                   <string>Переместить тест на один шак к началу программы</string>
+                   <string>Переместить тест на один шаг к началу программы</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -170,7 +190,7 @@
                 <item>
                  <widget class="QPushButton" name="btnDPTestDn">
                   <property name="toolTip">
-                   <string>Переместить тест на один шак к концу программы</string>
+                   <string>Переместить тест на один шаг к концу программы</string>
                   </property>
                   <property name="text">
                    <string/>

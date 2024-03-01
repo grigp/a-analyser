@@ -133,6 +133,39 @@ void ActivePersonalProgramEditor::on_dpAdd()
     }
 }
 
+void ActivePersonalProgramEditor::on_dpDouble()
+{
+    auto selIdx = selectedDPIndex();
+
+    if (selIdx.data(PersonalProgramDefines::DPCompletedRole).toInt() == PersonalProgramDefines::dpcvNotStarted)
+    {
+        if (selIdx != QModelIndex() && selIdx.isValid())
+        {
+            QString name = selIdx.data().toString();
+            int num = selIdx.row();
+            auto mr = QMessageBox::question(nullptr,
+                                            tr("Запрос"),
+                                            tr("Дублировать дневную программу?") + "\n" +
+                                            tr("Программа №") + QString::number(num + 1) + " : " + name);
+            if (mr == QMessageBox::Yes)
+            {
+                m_mdlPP->doubleDailyProgram(num);
+
+                auto dp_uid = selIdx.data(PersonalProgramDefines::PersonalProgram::DPUidRole).toString();
+                auto dp_name = selIdx.data(PersonalProgramDefines::PersonalProgram::DPNameRole).toString();
+
+                auto *item = new QStandardItem(dp_name);
+                item->setEditable(false);
+                item->setData(dp_uid, PersonalProgramDefines::PersonalProgram::DPUidRole);
+                item->setData(dp_name, PersonalProgramDefines::PersonalProgram::DPNameRole);
+                m_mdlDP.appendRow(item);
+            }
+        }
+    }
+    else
+        QMessageBox::information(nullptr, tr("Предупреждение"), tr("Нельзя дублировать выполненную дневную программу"));
+}
+
 void ActivePersonalProgramEditor::on_dpDel()
 {
     auto selIdx = selectedDPIndex();
@@ -251,6 +284,11 @@ void ActivePersonalProgramEditor::on_testAdd()
     }
     else
         QMessageBox::information(nullptr, tr("Сообщение"), tr("Не выбрана дневная программа"));
+}
+
+void ActivePersonalProgramEditor::on_testDouble()
+{
+
 }
 
 void ActivePersonalProgramEditor::on_testEdit()
@@ -490,6 +528,7 @@ void ActivePersonalProgramEditor::initListDP()
         auto item = new QStandardItem(dpName);
         item->setEditable(false);
         item->setData(dpUid, PersonalProgramDefines::PersonalProgram::DPUidRole);
+        item->setData(dpName, PersonalProgramDefines::PersonalProgram::DPNameRole);
         item->setData(dpDT, PersonalProgramDefines::PersonalProgram::DPDateTimeRole);
         item->setData(dpCompleted, PersonalProgramDefines::DPCompletedRole);
 

@@ -363,7 +363,7 @@
                <item>
                 <widget class="QPushButton" name="btnPPAddDP">
                  <property name="toolTip">
-                  <string>Добавить тест в дневную программу...</string>
+                  <string>Добавить дневную программу в расписание...</string>
                  </property>
                  <property name="text">
                   <string/>
@@ -381,9 +381,29 @@
                 </widget>
                </item>
                <item>
+                <widget class="QPushButton" name="btnPPDoubleDP">
+                 <property name="toolTip">
+                  <string>Дублировать дневную программу в расписании</string>
+                 </property>
+                 <property name="text">
+                  <string/>
+                 </property>
+                 <property name="icon">
+                  <iconset resource="../../kernel.qrc">
+                   <normaloff>:/images/Double.png</normaloff>:/images/Double.png</iconset>
+                 </property>
+                 <property name="iconSize">
+                  <size>
+                   <width>32</width>
+                   <height>32</height>
+                  </size>
+                 </property>
+                </widget>
+               </item>
+               <item>
                 <widget class="QPushButton" name="btnPPDelDP">
                  <property name="toolTip">
-                  <string>Удалить тест из дневной программе...</string>
+                  <string>Удалить дневную программу из расписания...</string>
                  </property>
                  <property name="text">
                   <string/>
@@ -403,7 +423,7 @@
                <item>
                 <widget class="QPushButton" name="btnPPDPUp">
                  <property name="toolTip">
-                  <string>Переместить тест на один шак к началу программы</string>
+                  <string>Переместить дневную программу на один шаг к началу расписания</string>
                  </property>
                  <property name="text">
                   <string/>
@@ -423,7 +443,7 @@
                <item>
                 <widget class="QPushButton" name="btnPPDPDn">
                  <property name="toolTip">
-                  <string>Переместить тест на один шак к концу программы</string>
+                  <string>Переместить дневную программу на один шаг к концу расписания</string>
                  </property>
                  <property name="text">
                   <string/>
@@ -524,6 +544,26 @@
                 </widget>
                </item>
                <item>
+                <widget class="QPushButton" name="btnDPDoubleTest">
+                 <property name="toolTip">
+                  <string>Дублировать тест в дневной программе</string>
+                 </property>
+                 <property name="text">
+                  <string/>
+                 </property>
+                 <property name="icon">
+                  <iconset resource="../../kernel.qrc">
+                   <normaloff>:/images/Double.png</normaloff>:/images/Double.png</iconset>
+                 </property>
+                 <property name="iconSize">
+                  <size>
+                   <width>32</width>
+                   <height>32</height>
+                  </size>
+                 </property>
+                </widget>
+               </item>
+               <item>
                 <widget class="QPushButton" name="btnDPEditTestParams">
                  <property name="toolTip">
                   <string>Редактировать параметры теста в дневной программе...</string>
@@ -566,7 +606,7 @@
                <item>
                 <widget class="QPushButton" name="btnDPTestUp">
                  <property name="toolTip">
-                  <string>Переместить тест на один шак к началу программы</string>
+                  <string>Переместить тест на один шаг к началу программы</string>
                  </property>
                  <property name="text">
                   <string/>
@@ -586,7 +626,7 @@
                <item>
                 <widget class="QPushButton" name="btnDPTestDn">
                  <property name="toolTip">
-                  <string>Переместить тест на один шак к концу программы</string>
+                  <string>Переместить тест на один шаг к концу программы</string>
                  </property>
                  <property name="text">
                   <string/>
@@ -763,8 +803,8 @@
    <slot>on_dpDel()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>321</x>
-     <y>259</y>
+     <x>344</x>
+     <y>329</y>
     </hint>
     <hint type="destinationlabel">
      <x>-4</x>
@@ -779,8 +819,8 @@
    <slot>on_dpMoveUp()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>320</x>
-     <y>307</y>
+     <x>344</x>
+     <y>375</y>
     </hint>
     <hint type="destinationlabel">
      <x>0</x>
@@ -795,8 +835,8 @@
    <slot>on_dpMoveDown()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>311</x>
-     <y>352</y>
+     <x>344</x>
+     <y>421</y>
     </hint>
     <hint type="destinationlabel">
      <x>-4</x>
@@ -827,8 +867,8 @@
    <slot>on_testEdit()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>689</x>
-     <y>263</y>
+     <x>702</x>
+     <y>329</y>
     </hint>
     <hint type="destinationlabel">
      <x>754</x>
@@ -843,8 +883,8 @@
    <slot>on_testDel()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>694</x>
-     <y>307</y>
+     <x>702</x>
+     <y>375</y>
     </hint>
     <hint type="destinationlabel">
      <x>752</x>
@@ -859,8 +899,8 @@
    <slot>on_testMoveUp()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>679</x>
-     <y>357</y>
+     <x>702</x>
+     <y>421</y>
     </hint>
     <hint type="destinationlabel">
      <x>752</x>
@@ -875,8 +915,8 @@
    <slot>on_testMoveDown()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>686</x>
-     <y>403</y>
+     <x>702</x>
+     <y>467</y>
     </hint>
     <hint type="destinationlabel">
      <x>755</x>
@@ -916,6 +956,38 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>btnPPDoubleDP</sender>
+   <signal>clicked()</signal>
+   <receiver>ActivePersonalProgramEditor</receiver>
+   <slot>on_dpDouble()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>341</x>
+     <y>255</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>-8</x>
+     <y>176</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btnDPDoubleTest</sender>
+   <signal>clicked()</signal>
+   <receiver>ActivePersonalProgramEditor</receiver>
+   <slot>on_testDouble()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>681</x>
+     <y>262</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>753</x>
+     <y>340</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>on_selectDP(QModelIndex)</slot>
@@ -931,5 +1003,7 @@
   <slot>on_testMoveDown()</slot>
   <slot>on_minTimeChanged(int)</slot>
   <slot>on_maxTimeChanged(int)</slot>
+  <slot>on_dpDouble()</slot>
+  <slot>on_testDouble()</slot>
  </slots>
 </ui>

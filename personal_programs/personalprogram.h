@@ -42,6 +42,12 @@ public:
     void addDailyProgram(const QJsonObject& objDP);
 
     /*!
+     * \brief Дублирует дневную программу
+     * \param number - номер дублируемой программы
+     */
+    void doubleDailyProgram(const int number);
+
+    /*!
      * \brief Добавляет объект теста к дневной программы к модели
      * \param numDP - номер дневной программы
      * \param metUid - uid методики

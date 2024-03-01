@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>627</width>
-    <height>648</height>
+    <width>645</width>
+    <height>694</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -185,7 +185,7 @@
                 <item>
                  <widget class="QPushButton" name="btnPPAddDP">
                   <property name="toolTip">
-                   <string>Добавить тест в дневную программу...</string>
+                   <string>Добавить дневную программу в расписание...</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -203,9 +203,29 @@
                  </widget>
                 </item>
                 <item>
+                 <widget class="QPushButton" name="btnPPDoubleDP">
+                  <property name="toolTip">
+                   <string>Дублировать дневную программу</string>
+                  </property>
+                  <property name="text">
+                   <string/>
+                  </property>
+                  <property name="icon">
+                   <iconset resource="../../kernel.qrc">
+                    <normaloff>:/images/Double.png</normaloff>:/images/Double.png</iconset>
+                  </property>
+                  <property name="iconSize">
+                   <size>
+                    <width>32</width>
+                    <height>32</height>
+                   </size>
+                  </property>
+                 </widget>
+                </item>
+                <item>
                  <widget class="QPushButton" name="btnPPDelDP">
                   <property name="toolTip">
-                   <string>Удалить тест из дневной программе...</string>
+                   <string>Удалить дневную программу из расписания...</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -225,7 +245,7 @@
                 <item>
                  <widget class="QPushButton" name="btnPPDPUp">
                   <property name="toolTip">
-                   <string>Переместить тест на один шак к началу программы</string>
+                   <string>Переместить дневную программу на один шаг к началу расписания</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -245,7 +265,7 @@
                 <item>
                  <widget class="QPushButton" name="btnPPDPDn">
                   <property name="toolTip">
-                   <string>Переместить тест на один шак к концу программы</string>
+                   <string>Переместить дневную программу на один шаг к концу расписания</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -296,7 +316,7 @@
           <item>
            <widget class="QPushButton" name="btnAddDP">
             <property name="toolTip">
-             <string>Добавить дневную программу</string>
+             <string>Добавить индивидуальную программу</string>
             </property>
             <property name="text">
              <string/>
@@ -316,7 +336,7 @@
           <item>
            <widget class="QPushButton" name="btnEditDP">
             <property name="toolTip">
-             <string>Изменить дневную программу</string>
+             <string>Изменить индивидуальную программу</string>
             </property>
             <property name="text">
              <string/>
@@ -336,7 +356,7 @@
           <item>
            <widget class="QPushButton" name="btnDelDP">
             <property name="toolTip">
-             <string>Удалить дневную программу...</string>
+             <string>Удалить индивидуальную программу...</string>
             </property>
             <property name="text">
              <string/>
@@ -402,8 +422,8 @@
    <slot>on_delDP()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>577</x>
-     <y>434</y>
+     <x>595</x>
+     <y>480</y>
     </hint>
     <hint type="destinationlabel">
      <x>626</x>
@@ -418,8 +438,8 @@
    <slot>on_moveDPUp()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>577</x>
-     <y>480</y>
+     <x>595</x>
+     <y>526</y>
     </hint>
     <hint type="destinationlabel">
      <x>626</x>
@@ -434,8 +454,8 @@
    <slot>on_moveDPDown()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>577</x>
-     <y>526</y>
+     <x>595</x>
+     <y>572</y>
     </hint>
     <hint type="destinationlabel">
      <x>626</x>
@@ -450,8 +470,8 @@
    <slot>on_ppAdd()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>249</x>
-     <y>618</y>
+     <x>254</x>
+     <y>664</y>
     </hint>
     <hint type="destinationlabel">
      <x>626</x>
@@ -466,8 +486,8 @@
    <slot>on_ppEdit()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>299</x>
-     <y>618</y>
+     <x>304</x>
+     <y>664</y>
     </hint>
     <hint type="destinationlabel">
      <x>626</x>
@@ -482,8 +502,8 @@
    <slot>on_ppDel()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>349</x>
-     <y>618</y>
+     <x>354</x>
+     <y>664</y>
     </hint>
     <hint type="destinationlabel">
      <x>626</x>
@@ -587,6 +607,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>btnPPDoubleDP</sender>
+   <signal>clicked()</signal>
+   <receiver>PersonalProgramsEditor</receiver>
+   <slot>on_doubleDP()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>573</x>
+     <y>420</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>647</x>
+     <y>405</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>on_addDP()</slot>
@@ -601,5 +637,6 @@
   <slot>on_changeMaxTime(int)</slot>
   <slot>on_selectLogo()</slot>
   <slot>on_splitterMoved(int,int)</slot>
+  <slot>on_doubleDP()</slot>
  </slots>
 </ui>

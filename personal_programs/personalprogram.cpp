@@ -153,6 +153,49 @@ void PersonalProgram::addDailyProgram(const QJsonObject &objDP)
     appendRow(items);
 }
 
+void PersonalProgram::doubleDailyProgram(const int number)
+{
+    //! Строка существует
+    if (0 <= number && rowCount() > number)
+    {
+        //! Создаем итем дневной программы
+        auto itemDP = new QStandardItem(index(number, 0).data().toString());
+        auto uidDP = index(number, 0).data(PersonalProgramDefines::PersonalProgram::DPUidRole).toString();
+        auto nameDP = index(number, 0).data(PersonalProgramDefines::PersonalProgram::DPNameRole).toString();
+        auto dt = index(number, 0).data(PersonalProgramDefines::PersonalProgram::DPDateTimeRole).toString();
+
+        itemDP->setData(uidDP, PersonalProgramDefines::PersonalProgram::DPUidRole);
+        itemDP->setData(nameDP, PersonalProgramDefines::PersonalProgram::DPNameRole);
+        itemDP->setData(dt, PersonalProgramDefines::PersonalProgram::DPDateTimeRole);
+        itemDP->setEditable(false);
+        QList<QStandardItem*> items;
+        items << itemDP;
+
+        //! Тесты в дневной программе
+        for (int j = 1; j < columnCount(); ++j)
+        {
+            //! Индекс элемента
+            auto idx = index(number, j);
+
+            //! Итем теста
+            auto itemTest = new QStandardItem("");
+            auto uidMet = idx.data(PersonalProgramDefines::PersonalProgram::MethodUidRole).toString();
+            auto uidTest = idx.data(PersonalProgramDefines::PersonalProgram::TestUidRole).toString();
+            auto params = idx.data(PersonalProgramDefines::PersonalProgram::ParamsRole);
+
+            itemTest->setData(uidMet, PersonalProgramDefines::PersonalProgram::MethodUidRole);
+            itemTest->setData(uidTest, PersonalProgramDefines::PersonalProgram::TestUidRole);
+            itemTest->setData(params, PersonalProgramDefines::PersonalProgram::ParamsRole);
+            itemTest->setEditable(false);
+
+            items << itemTest;
+        }
+
+        //! Строка дневной программы
+        insertRow(number + 1, items);
+    }
+}
+
 void PersonalProgram::addTest(int numDP, QString &metUid, QJsonObject &params)
 {
     //! Кол-во тестов в дневной программе
