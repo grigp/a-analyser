@@ -217,6 +217,36 @@ void PersonalProgram::addTest(int numDP, QString &metUid, QJsonObject &params)
     setItem(numDP, tc + 1, itemTest);
 }
 
+void PersonalProgram::doubleTest(const int numDP, const int numTest)
+{
+    //! Кол-во тестов в дневной программе
+    int tc = 0;
+    for (int i = 1; i < columnCount(); ++i)
+    {
+        auto idx = index(numDP, i);
+        if (idx.isValid() && idx.data(PersonalProgramDefines::PersonalProgram::MethodUidRole).toString() != "")
+            tc = i;
+        else
+            break;
+    }
+
+    if (numTest >= 0 && numTest < tc)
+    {
+        auto metUid = index(numDP, numTest + 1).data(PersonalProgramDefines::PersonalProgram::MethodUidRole);
+        auto params = index(numDP, numTest + 1).data(PersonalProgramDefines::PersonalProgram::ParamsRole);
+
+        //! Итем теста
+        auto itemTest = new QStandardItem("");
+        itemTest->setData(metUid, PersonalProgramDefines::PersonalProgram::MethodUidRole);
+        itemTest->setData(params, PersonalProgramDefines::PersonalProgram::ParamsRole);
+
+        //! Вставка итема через получение строки с удалением, вставку итема в список и добавление строки
+        auto lines = takeRow(numDP);
+        lines.insert(numTest + 2, itemTest);
+        insertRow(numDP, lines);
+    }
+}
+
 bool PersonalProgram::isTestByPPExists(QJsonObject &pp)
 {
     auto objPp = pp["pp"].toObject();

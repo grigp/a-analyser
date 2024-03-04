@@ -55,6 +55,13 @@ public:
      */
     void addTest(int numDP, QString& metUid, QJsonObject& params);
 
+    /*!
+     * \brief Дублирует тест в дневной программе
+     * \param numDP - номер дневной программы
+     * \param numTest - номер теста
+     */
+    void doubleTest(const int numDP, const int numTest);
+
     QString uid() const {return m_uid;}
     QString name() const {return m_name;}
     QString logoFileName() const {return m_logoFileName;}

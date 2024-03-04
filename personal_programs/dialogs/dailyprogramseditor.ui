@@ -347,8 +347,8 @@
    <slot>on_editTest()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>513</x>
-     <y>185</y>
+     <x>521</x>
+     <y>251</y>
     </hint>
     <hint type="destinationlabel">
      <x>562</x>
@@ -363,8 +363,8 @@
    <slot>on_delTest()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>502</x>
-     <y>228</y>
+     <x>521</x>
+     <y>297</y>
     </hint>
     <hint type="destinationlabel">
      <x>564</x>
@@ -379,8 +379,8 @@
    <slot>on_moveTestUp()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>502</x>
-     <y>282</y>
+     <x>521</x>
+     <y>343</y>
     </hint>
     <hint type="destinationlabel">
      <x>568</x>
@@ -395,8 +395,8 @@
    <slot>on_moveTestDown()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>503</x>
-     <y>328</y>
+     <x>521</x>
+     <y>389</y>
     </hint>
     <hint type="destinationlabel">
      <x>561</x>
@@ -500,6 +500,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>btnDPDoubleTest</sender>
+   <signal>clicked()</signal>
+   <receiver>DailyProgramsEditor</receiver>
+   <slot>on_doubleTest()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>509</x>
+     <y>195</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>561</x>
+     <y>170</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>on_addTest()</slot>
@@ -512,5 +528,6 @@
   <slot>on_dpDel()</slot>
   <slot>on_selectDP(QModelIndex)</slot>
   <slot>on_splitterMoved(int,int)</slot>
+  <slot>on_doubleTest()</slot>
  </slots>
 </ui>

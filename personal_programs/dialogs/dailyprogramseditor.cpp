@@ -84,6 +84,33 @@ void DailyProgramsEditor::on_addTest()
     }
 }
 
+void DailyProgramsEditor::on_doubleTest()
+{
+    QModelIndexList selIdxs = ui->tvTests->selectionModel()->selectedIndexes();
+    if (selIdxs.size() > 0)
+    {
+        auto index = selIdxs.at(0);
+        if (index.isValid())
+        {
+            auto mr = QMessageBox::question(nullptr, tr("Запрос"), tr("Дублировать тест \"") + index.data().toString() + tr("\"?"));
+            if (mr == QMessageBox::Yes)
+            {
+                auto metUid = index.data(PersonalProgramDefines::TableTestsRoles::MethodUidRole).toString();
+                auto params = index.data(PersonalProgramDefines::TableTestsRoles::MethodParamsRole).toJsonObject();
+
+                auto *item = new QStandardItem(index.data().toString());
+                item->setEditable(false);
+                item->setData(metUid, PersonalProgramDefines::TableTestsRoles::MethodUidRole);
+                item->setData(params, PersonalProgramDefines::TableTestsRoles::MethodParamsRole);
+                item->setIcon(m_mdlTests.itemFromIndex(index)->icon());
+                m_mdlTests.insertRow(index.row() + 1, item);
+            }
+        }
+    }
+    else
+        QMessageBox::information(nullptr, tr("Предупреждение"), tr("Не выбран тест"));
+}
+
 void DailyProgramsEditor::on_editTest()
 {
     QModelIndexList selIdxs = ui->tvTests->selectionModel()->selectedIndexes();

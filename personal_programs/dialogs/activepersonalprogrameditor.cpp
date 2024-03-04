@@ -288,7 +288,51 @@ void ActivePersonalProgramEditor::on_testAdd()
 
 void ActivePersonalProgramEditor::on_testDouble()
 {
+    auto dpIdx = selectedDPIndex();
+    if (dpIdx != QModelIndex())
+    {
+        if (dpIdx.data(PersonalProgramDefines::DPCompletedRole).toInt() != PersonalProgramDefines::dpcvCompleted)
+        {
+            auto testIdx = selectedTestIndex();
+            if (testIdx.isValid())
+            {
+                auto testUid = testIdx.data(PersonalProgramDefines::PersonalProgram::TestUidRole).toString();
+                if (testUid == "")
+                {
+                    auto metName = testIdx.data().toString();
+                    auto mr = QMessageBox::question(nullptr,
+                                                    tr("Запрос"),
+                                                    tr("Дублировать тест в дневной программе?") + "\n" +
+                                                    tr("Тест") + " : " + metName);
+                    if (mr == QMessageBox::Yes)
+                    {
+                        //! uid и параметры методики
+                        auto metUid = testIdx.data(PersonalProgramDefines::PersonalProgram::MethodUidRole).toString();
+                        auto params = testIdx.data(PersonalProgramDefines::PersonalProgram::ParamsRole).toJsonObject();
 
+                        //! Создание итема в списке
+                        auto *item = new QStandardItem(metName);
+                        item->setEditable(false);
+                        item->setData(metUid, PersonalProgramDefines::PersonalProgram::MethodUidRole);
+                        item->setData(params, PersonalProgramDefines::PersonalProgram::ParamsRole);
+                        item->setIcon(m_mdlT.itemFromIndex(testIdx)->icon());
+                        m_mdlT.insertRow(testIdx.row()+ 1, item);
+
+                        //! Дублирование методики в модели данных
+                        m_mdlPP->doubleTest(dpIdx.row(), testIdx.row());
+                    }
+                }
+                else
+                    QMessageBox::information(nullptr, tr("Предупреждение"), tr("Нельзя дублировать проведенный тест"));
+            }
+            else
+                QMessageBox::information(nullptr, tr("Предупреждение"), tr("Не выбран тест"));
+        }
+        else
+            QMessageBox::information(nullptr, tr("Предупреждение"), tr("Нельзя дублировать тест из выполненной дневной программы"));
+    }
+    else
+        QMessageBox::information(nullptr, tr("Сообщение"), tr("Не выбрана дневная программа"));
 }
 
 void ActivePersonalProgramEditor::on_testEdit()

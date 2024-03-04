@@ -32,6 +32,7 @@ protected:
 
 private slots:
     void on_addTest();
+    void on_doubleTest();
     void on_editTest();
     void on_delTest();
     void on_moveTestUp();
