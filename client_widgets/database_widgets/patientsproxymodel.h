@@ -20,6 +20,7 @@ public:
     {
           sppActive = 0 ///< Показывать только пациентов с назначенными программами
         , sppFree = 1   ///< Показывать только пациентов без назначенных программ
+        , sppAll = 2    ///< Показывать всех пациентов
     };
 
     bool filterAcceptsRow(int source_row, const QModelIndex &source_parent) const override;
@@ -32,7 +33,7 @@ public:
 
 private:
     QString m_filerValue {""};
-    ShowByPersonalProgram m_sppMode {sppFree};
+    ShowByPersonalProgram m_sppMode {sppAll}; //{sppFree};
 };
 
 #endif // PATIENTSPROXYMODEL_H
