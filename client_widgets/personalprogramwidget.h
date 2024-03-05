@@ -112,6 +112,8 @@ private slots:
 
     void on_updatePatientData(const QString &patientUid);
 
+    void on_removePatient(const QString &patientUid);
+
 private:
     Ui::PersonalProgramWidget *ui;
 

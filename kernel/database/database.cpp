@@ -133,6 +133,9 @@ void DataBase::removePatient(const QString &uid)
 {
     if (patientExists(uid))
     {
+        //! При удалении пациента всегда удаляются его индивидуальные программы
+        deletePersonalProgramsListForPatient(uid);
+
         auto tests = getTests();
         foreach (auto testUid, tests)
         {
@@ -145,6 +148,9 @@ void DataBase::removePatient(const QString &uid)
         QDir dir = patientsDir();
         QFile fPatientRec(dir.absoluteFilePath(uid));
         fPatientRec.remove();
+
+        //! Сообщает миру об удалении пациента
+        static_cast<AAnalyserApplication*>(QApplication::instance())->doRemovePatient(uid);
     }
 }
 
@@ -980,6 +986,35 @@ QJsonArray DataBase::getPersonalProgramListForPatient(const QString &patientUid)
         }
     }
     return retval;
+}
+
+void DataBase::deletePersonalProgramsListForPatient(const QString &patientUid)
+{
+    //! Список файлов для удаления
+    QStringList ppDel;
+    ppDel.clear();
+
+    //! Составление списка файлов для удаления
+    QDir dir = personalProgramsDir();
+    QFileInfoList list = dir.entryInfoList(QDir::Files | QDir::NoDotAndDotDot);
+    foreach (auto fileInfo, list)
+    {
+        QJsonObject obj;
+        QString fn = dir.absoluteFilePath(fileInfo.fileName());
+        if (readTableRec(fn, obj))
+        {
+            if (obj["patient_uid"].toString() == patientUid)
+                ppDel << fn;
+        }
+    }
+
+    //! Удаление файлов ИП
+    foreach (auto fnPP, ppDel)
+    {
+        if (QFile::exists(fnPP))
+            QFile::remove(fnPP);
+
+    }
 }
 
 QJsonArray DataBase::getPersonalProgramList()

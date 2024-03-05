@@ -72,6 +72,8 @@ void PersonalProgramWidget::onDBConnect()
             this, &PersonalProgramWidget::on_cancelPPForPatient);
     connect(static_cast<AAnalyserApplication*>(QApplication::instance()), &AAnalyserApplication::updatePatientData,
             this, &PersonalProgramWidget::on_updatePatientData);
+    connect(static_cast<AAnalyserApplication*>(QApplication::instance()), &AAnalyserApplication::removePatient,
+            this, &PersonalProgramWidget::on_removePatient);
 }
 
 void PersonalProgramWidget::onShow()
@@ -562,6 +564,18 @@ void PersonalProgramWidget::on_updatePatientData(const QString &patientUid)
             {
                 m_model->item(i)->setData(kard.fio, Qt::DisplayRole);
             }
+        }
+    }
+}
+
+void PersonalProgramWidget::on_removePatient(const QString &patientUid)
+{
+    for (int i = 0; i < m_model->rowCount(); ++i)
+    {
+        auto uidPat = m_model->item(i)->data(DatabaseWidgetDefines::PatientsModel::PatientUidRole).toString();
+        if (patientUid == uidPat)
+        {
+            m_model->removeRow(i);
         }
     }
 }

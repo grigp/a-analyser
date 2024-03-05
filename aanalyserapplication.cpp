@@ -243,6 +243,12 @@ void AAnalyserApplication::doUpdatePatientData(const QString &patientUid)
     emit updatePatientData(patientUid);
 }
 
+void AAnalyserApplication::doRemovePatient(const QString &patientUid)
+{
+    //! Просто сообщает миру об удалении пациента
+    emit removePatient(patientUid);
+}
+
 void AAnalyserApplication::doSelectMetodic(const QString &uid)
 {
     m_metodicUid = uid;

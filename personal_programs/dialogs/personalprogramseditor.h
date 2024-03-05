@@ -44,6 +44,7 @@ private slots:
     void on_changeMaxTime(int idx);
 
     void on_selectLogo();
+    void on_clearLogo();
 
     void on_splitterMoved(int,int);
 

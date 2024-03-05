@@ -93,10 +93,29 @@
               </widget>
              </item>
              <item>
-              <widget class="QPushButton" name="btnLogoSelect">
-               <property name="text">
-                <string>Выбрать...</string>
+              <widget class="QFrame" name="frIconButtons">
+               <property name="frameShape">
+                <enum>QFrame::StyledPanel</enum>
                </property>
+               <property name="frameShadow">
+                <enum>QFrame::Raised</enum>
+               </property>
+               <layout class="QVBoxLayout" name="verticalLayout_4">
+                <item>
+                 <widget class="QPushButton" name="btnLogoSelect">
+                  <property name="text">
+                   <string>Выбрать...</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="btnLogoClear">
+                  <property name="text">
+                   <string>Очистить...</string>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
               </widget>
              </item>
             </layout>
@@ -582,8 +601,8 @@
    <slot>on_selectLogo()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>587</x>
-     <y>165</y>
+     <x>595</x>
+     <y>151</y>
     </hint>
     <hint type="destinationlabel">
      <x>626</x>
@@ -623,6 +642,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>btnLogoClear</sender>
+   <signal>clicked()</signal>
+   <receiver>PersonalProgramsEditor</receiver>
+   <slot>on_clearLogo()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>521</x>
+     <y>167</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>644</x>
+     <y>175</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>on_addDP()</slot>
@@ -638,5 +673,6 @@
   <slot>on_selectLogo()</slot>
   <slot>on_splitterMoved(int,int)</slot>
   <slot>on_doubleDP()</slot>
+  <slot>on_clearLogo()</slot>
  </slots>
 </ui>

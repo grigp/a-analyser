@@ -190,7 +190,7 @@ void PersonalProgramsEditor::on_ppAdd()
                 objPP["max_time_between_dp"] = ui->cbMaxTimeBetweenDP->currentIndex();
                 objPP["logo_file_name"] = m_logoFileName;
 
-                auto *item = new QStandardItem(objPP["name"].toString());
+                auto *item = new QStandardItem(QIcon(m_logoFileName), objPP["name"].toString());
                 item->setEditable(false);
                 item->setData(objPP, PersonalProgramDefines::TablePPRoles::PPRole);
                 m_mdlPP.appendRow(item);
@@ -244,6 +244,7 @@ void PersonalProgramsEditor::on_ppEdit()
                 auto mr = QMessageBox::question(nullptr, tr("Запрос"), tr("Внести изменения в программу") + " \"" + pn + "\"?");
                 if (mr == QMessageBox::Yes)
                 {
+                    item->setIcon(QIcon(m_logoFileName));
                     item->setData(objPP, PersonalProgramDefines::TablePPRoles::PPRole);
                     item->setText(objPP["name"].toString());
                     static_cast<AAnalyserApplication*>(QApplication::instance())->savePersonalProgramList(m_mdlPP);
@@ -360,6 +361,16 @@ void PersonalProgramsEditor::on_selectLogo()
                                                   tr("Файлы картинок (*.png)"));
     if (m_logoFileName != "")
         ui->lblLogo->setPixmap(QPixmap(m_logoFileName));
+}
+
+void PersonalProgramsEditor::on_clearLogo()
+{
+    auto mr = QMessageBox::question(nullptr, tr("запрос"), tr("Очистить логотип?"));
+    if (mr == QMessageBox::Yes)
+    {
+        m_logoFileName = "";
+        ui->lblLogo->setPixmap(QPixmap());
+    }
 }
 
 void PersonalProgramsEditor::on_splitterMoved(int, int)

@@ -128,6 +128,12 @@ public:
     void doUpdatePatientData(const QString& patientUid);
 
     /*!
+     * \brief Удаление данных о пациенте
+     * \param patientUid - uid пациента
+     */
+    void doRemovePatient(const QString& patientUid);
+
+    /*!
      * \brief Получение информации о выбранной методике
      * \param uid - uid выбранной методики
      */
@@ -699,6 +705,12 @@ signals:
      * \param patientUid - uid пациента
      */
     void updatePatientData(const QString& patientUid);
+
+    /*!
+     * \brief Сигнал удаления данных о пациенте
+     * \param patientUid - uid пациента
+     */
+    void removePatient(const QString& patientUid);
 
     void methodicCount(const int count);
 

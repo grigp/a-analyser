@@ -476,6 +476,12 @@ public:
     QJsonArray getPersonalProgramListForPatient(const QString& patientUid);
 
     /*!
+     * \brief Удаляет все индивидуальные программы, когда-либо выполнявшиеся пациентом, в том числе и текущую
+     * \param patientUid - uid пациента
+     */
+    void deletePersonalProgramsListForPatient(const QString& patientUid);
+
+    /*!
      * \brief Возвращает полный список индивидуальных программ, когда либо выполнявшихся
      */
     QJsonArray getPersonalProgramList();
