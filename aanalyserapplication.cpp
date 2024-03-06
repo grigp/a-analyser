@@ -581,20 +581,29 @@ bool AAnalyserApplication::assignPPForPatient()
 
                 //! Сообщение о назначении индивидуальной программы пациенту с запросом на открытие
                 OpenPersonalProgramDialog dlgOpen(nullptr);
-                dlgOpen.setPatientFio(pi.fio);
-                auto ppName = ppObj["pp"].toObject()["name"].toString();
-                auto ppPic = QPixmap(ppObj["pp"].toObject()["logo_file_name"].toString());
-                dlgOpen.setPersonalProgram(ppName, ppPic);
+                //! Появляется только, если не открыт виджет индивидуальных программ
+                bool isShowDialog = ClientWidgets::uidPersonalProgramWidgetUid != static_cast<MainWindow*>(m_mw)->currentClientPage();
+                if (isShowDialog)
+                {
+                    dlgOpen.setPatientFio(pi.fio);
+                    auto ppName = ppObj["pp"].toObject()["name"].toString();
+                    auto ppPic = QPixmap(ppObj["pp"].toObject()["logo_file_name"].toString());
+                    dlgOpen.setPersonalProgram(ppName, ppPic);
+                }
+
 
                 //! Извещаем мир о назначении индивидуальной программы для пациента
                 emit assignedPPForPatient(pi.uid, uidPPAssigned);
 
                 //! Открытие индивидуальной программы
-                if (dlgOpen.exec() == QDialog::Accepted)
+                if (isShowDialog)
                 {
-                    showClientPage(ClientWidgets::uidPersonalProgramWidgetUid);
-                    SettingsProvider::setValueToRegAppCopy("MainWindow", "MainClientWidget", ClientWidgets::uidPersonalProgramWidgetUid);
-                    doSelectPatient(pi.uid);
+                    if (dlgOpen.exec() == QDialog::Accepted)
+                    {
+                        showClientPage(ClientWidgets::uidPersonalProgramWidgetUid);
+                        SettingsProvider::setValueToRegAppCopy("MainWindow", "MainClientWidget", ClientWidgets::uidPersonalProgramWidgetUid);
+                        doSelectPatient(pi.uid);
+                    }
                 }
 
                 return true;

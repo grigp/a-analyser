@@ -442,6 +442,8 @@ void PersonalProgramWidget::on_assignPPForPatient(const QString &patientUid, con
         if (uidP == patientUid)
         {
             m_model->itemFromIndex(idx)->setData(ppUid, DatabaseWidgetDefines::PatientsModel::PatientPPUidRole);
+            //! Показать индивидуальную программу
+            showPersonalProgram(ppUid);
             return;
         }
     }

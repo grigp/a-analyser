@@ -146,6 +146,13 @@ bool MainWindow::restoreClientPage()
     return false;
 }
 
+QString MainWindow::currentClientPage()
+{
+    if (m_lastPages.count() > 0)
+        return m_lastPages.top();
+    return QUuid().toString();
+}
+
 QWidget *MainWindow::getExecuteWidget()
 {
     foreach (auto *wgt, m_clientWidgets)

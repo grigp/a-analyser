@@ -33,6 +33,12 @@ public:
      */
     bool restoreClientPage();
 
+    /*!
+     * \brief Возвращает uid текущей страницы
+     * Если нет, то возвращает QUuid().toString(), но такого не должно быть
+     */
+    QString currentClientPage();
+
     QWidget *getExecuteWidget();
 
     /*!
