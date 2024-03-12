@@ -31,7 +31,7 @@ WPGraphAnalysisVisualWidget::WPGraphAnalysisVisualWidget(VisualDescriptor* visua
 
 WPGraphAnalysisVisualWidget::~WPGraphAnalysisVisualWidget()
 {
-    if (!m_dlgAFVD)
+    if (m_dlgAFVD)
     {
         m_dlgAFVD->close();
         delete m_dlgAFVD;

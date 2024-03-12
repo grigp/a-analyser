@@ -141,6 +141,8 @@ void MotionRecognition::transform(QVector<double> &buffer, const QJsonObject &pa
                 m_partsNoMotions << Part(aie, part.begin);
             aie = part.end;
         }
+        if (aie == -1)
+            aie = 0;
         if (aie < m_sko.size() - 1)
             m_partsNoMotions << Part(aie, m_sko.size() + freqSample - 1);
     }  //Переяcлов Григорий 20.07.2022 14:44 Участок 13 начало > конца
