@@ -106,6 +106,42 @@ bool MetodicsFactory::editMetodicParams(QWidget *parent, const QString &metUid, 
     return false;
 }
 
+QJsonObject MetodicsFactory::setMetodicParamsDefault(const QString &uidMet)
+{
+    //! Имя файла дефолтных методик
+    QString resName = ":/pre_settings/" + AAnalyserDefines::PresetsMetodicsFileName + ".json";
+    if (static_cast<AAnalyserApplication*>(QApplication::instance())->languargeCode() == DataDefines::LANG_CODE_ENGUSA)
+        resName = ":/pre_settings/" + AAnalyserDefines::PresetsMetodicsFileName + "_en_US.json";
+
+    //! Чтение тестов из файла
+    auto metPD = readMetodicsFile(resName, "tests");
+    for (int i = 0; i < metPD.size(); ++i)
+    {
+        auto objTest = metPD.at(i).toObject();
+        //! Нужная методика
+        if (uidMet == objTest["uid"].toString())
+        {
+            auto defParams = objTest["params"].toObject();
+
+//            //! Методика во внутреннем списке
+//            auto mi = getMetodicIndexByUid(uidMet);
+//            if (mi > -1)
+//            {
+//                //! Заменить параметры
+//                auto met = m_metodics.at(mi);
+//                met.params = defParams;
+//                m_metodics.replace(mi, met);
+//                //! Сохранить на диске
+//                saveMetodics();
+//            }
+
+            //! Вернуть параметры
+            return defParams;
+        }
+    }
+    return QJsonObject();
+}
+
 void MetodicsFactory::execute(QWidget *parent, const QString &metUid) const
 {
     auto *mt = getMetodicTemplate(metUid);

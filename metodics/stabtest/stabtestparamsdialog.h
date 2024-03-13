@@ -53,6 +53,10 @@ private slots:
 
     void on_editStimulParams();
 
+    void on_ok();
+    void on_cancel();
+    void on_default();
+
 private:
     Ui::StabTestParamsDialog *ui;
 

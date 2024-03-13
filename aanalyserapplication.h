@@ -170,6 +170,13 @@ public:
     void executeMetodic();
 
     /*!
+     * \brief Устанавливает для методики параметры по умолчанию, записанные в программу
+     * \param uidMet - uid методики
+     * \return параметры по умолчанию
+     */
+    QJsonObject setMetodicParamsDefault(const QString& uidMet);
+
+    /*!
      * \brief Выбор теста и открытие его результатов
      * \param uid - uid теста
      */

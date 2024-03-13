@@ -306,6 +306,13 @@ void AAnalyserApplication::executeMetodic()
     }
 }
 
+QJsonObject AAnalyserApplication::setMetodicParamsDefault(const QString &uidMet)
+{
+    if (m_metodics)
+        return m_metodics->setMetodicParamsDefault(uidMet);
+    return QJsonObject();
+}
+
 void AAnalyserApplication::openTest(const QString &uid)
 {
     Q_UNUSED(uid);

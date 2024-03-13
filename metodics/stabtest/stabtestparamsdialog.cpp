@@ -1,6 +1,7 @@
 #include "stabtestparamsdialog.h"
 #include "ui_stabtestparamsdialog.h"
 
+#include "aanalyserapplication.h"
 #include "baseutils.h"
 #include "stabtestparams.h"
 #include "stabtesttemplate.h"
@@ -318,6 +319,27 @@ void StabTestParamsDialog::on_editStimulParams()
         }
     }
 
+}
+
+void StabTestParamsDialog::on_ok()
+{
+    accept();
+}
+
+void StabTestParamsDialog::on_cancel()
+{
+    reject();
+}
+
+void StabTestParamsDialog::on_default()
+{
+    auto mr = QMessageBox::question(nullptr, tr("Запрос"), tr("Сбросить настройки к настройкам методики по умолчанию?"));
+    if (QMessageBox::Yes == mr)
+    {
+        auto mi = static_cast<AAnalyserApplication*>(QApplication::instance())->getCurrentMetodic();
+        auto params = static_cast<AAnalyserApplication*>(QApplication::instance())->setMetodicParamsDefault(mi.uid);
+        setParams(params);
+    }
 }
 
 void StabTestParamsDialog::showProbeParam()

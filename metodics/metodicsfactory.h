@@ -71,6 +71,13 @@ public:
     bool editMetodicParams(QWidget *parent, const QString &metUid, QJsonObject &params);
 
     /*!
+     * \brief Устанавливает для методики параметры по умолчанию, записанные в программу
+     * \param uidMet - uid методики
+     * \return параметры по умолчанию
+     */
+    QJsonObject setMetodicParamsDefault(const QString& uidMet);
+
+    /*!
      * \brief Выполнение методики
      * \param parent - родительский виджет для размещения виджета выплнения пробы
      * \param metUid - uid методики
