@@ -1,9 +1,11 @@
 #include "teppingtestparamsdialog.h"
 #include "ui_teppingtestparamsdialog.h"
 
+#include "aanalyserapplication.h"
 #include "jumpplatedefines.h"
 
 #include <QFile>
+#include <QMessageBox>
 
 TeppingTestParamsDialog::TeppingTestParamsDialog(QWidget *parent) :
     QDialog(parent),
@@ -44,6 +46,27 @@ void TeppingTestParamsDialog::on_finishKindChanged(int idx)
 {
     ui->frStepsCount->setVisible(idx == 0);
     ui->frTestTime->setVisible(idx == 1);
+}
+
+void TeppingTestParamsDialog::on_ok()
+{
+    accept();
+}
+
+void TeppingTestParamsDialog::on_cancel()
+{
+    reject();
+}
+
+void TeppingTestParamsDialog::on_default()
+{
+    auto mr = QMessageBox::question(nullptr, tr("Запрос"), tr("Сбросить настройки к настройкам методики по умолчанию?"));
+    if (QMessageBox::Yes == mr)
+    {
+        auto mi = static_cast<AAnalyserApplication*>(QApplication::instance())->getCurrentMetodic();
+        auto params = static_cast<AAnalyserApplication*>(QApplication::instance())->setMetodicParamsDefault(mi.uid);
+        setParams(params);
+    }
 }
 
 void TeppingTestParamsDialog::initUi()

@@ -13,7 +13,7 @@ class JumpTestParamsDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit JumpTestParamsDialog(QWidget *parent = 0);
+    explicit JumpTestParamsDialog(QWidget *parent = nullptr);
     ~JumpTestParamsDialog();
 
     /*!
@@ -26,6 +26,11 @@ public:
      * \brief Возвращает отредактированные параметры
      */
     QJsonObject getParams();
+
+private slots:
+    void on_ok();
+    void on_cancel();
+    void on_default();
 
 private:
     Ui::JumpTestParamsDialog *ui;

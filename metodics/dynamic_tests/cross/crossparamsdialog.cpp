@@ -1,9 +1,11 @@
 #include "crossparamsdialog.h"
 #include "ui_crossparamsdialog.h"
 
+#include "aanalyserapplication.h"
 #include "crossdefines.h"
 #include "basedefines.h"
 
+#include <QMessageBox>
 #include <QDebug>
 
 CrossParamsDialog::CrossParamsDialog(QWidget *parent) :
@@ -59,4 +61,25 @@ void CrossParamsDialog::onChangeStateMode(int index)
 {
     ui->frCenterSize->setVisible(index == 0);
     ui->frDelayTime->setVisible(index == 1);
+}
+
+void CrossParamsDialog::on_ok()
+{
+    accept();
+}
+
+void CrossParamsDialog::on_cancel()
+{
+    reject();
+}
+
+void CrossParamsDialog::on_default()
+{
+    auto mr = QMessageBox::question(nullptr, tr("Запрос"), tr("Сбросить настройки к настройкам методики по умолчанию?"));
+    if (QMessageBox::Yes == mr)
+    {
+        auto mi = static_cast<AAnalyserApplication*>(QApplication::instance())->getCurrentMetodic();
+        auto params = static_cast<AAnalyserApplication*>(QApplication::instance())->setMetodicParamsDefault(mi.uid);
+        setParams(params);
+    }
 }

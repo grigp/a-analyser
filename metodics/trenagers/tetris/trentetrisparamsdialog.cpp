@@ -1,8 +1,10 @@
 #include "trentetrisparamsdialog.h"
 #include "ui_trentetrisparamsdialog.h"
 
+#include "aanalyserapplication.h"
 #include "trentetrisdefines.h"
 
+#include <QMessageBox>
 #include <QDebug>
 
 TrenTetrisParamsDialog::TrenTetrisParamsDialog(QWidget *parent) :
@@ -73,5 +75,26 @@ void TrenTetrisParamsDialog::onPhisioChanEnabledChange(bool enabled)
 {
     Q_UNUSED(enabled);
 //    ui->frForce->setEnabled(enabled);
-//    ui->frMyogram->setEnabled(enabled);
+    //    ui->frMyogram->setEnabled(enabled);
+}
+
+void TrenTetrisParamsDialog::on_ok()
+{
+    accept();
+}
+
+void TrenTetrisParamsDialog::on_cancel()
+{
+    reject();
+}
+
+void TrenTetrisParamsDialog::on_default()
+{
+    auto mr = QMessageBox::question(nullptr, tr("Запрос"), tr("Сбросить настройки к настройкам методики по умолчанию?"));
+    if (QMessageBox::Yes == mr)
+    {
+        auto mi = static_cast<AAnalyserApplication*>(QApplication::instance())->getCurrentMetodic();
+        auto params = static_cast<AAnalyserApplication*>(QApplication::instance())->setMetodicParamsDefault(mi.uid);
+        setParams(params);
+    }
 }

@@ -1,9 +1,11 @@
 #include "jumpheighttestparamsdialog.h"
 #include "ui_jumpheighttestparamsdialog.h"
 
+#include "aanalyserapplication.h"
 #include "jumpplatedefines.h"
 #include "jumpheighttestdefines.h"
 
+#include <QMessageBox>
 #include <QDebug>
 #include <QFile>
 
@@ -59,6 +61,27 @@ void JumpHeightTestParamsDialog::on_finishKindChanged(int idx)
 void JumpHeightTestParamsDialog::on_strategyChanged(int idx)
 {
     ui->frContactTimeBound->setVisible(idx == 1);
+}
+
+void JumpHeightTestParamsDialog::on_ok()
+{
+    accept();
+}
+
+void JumpHeightTestParamsDialog::on_cancel()
+{
+    reject();
+}
+
+void JumpHeightTestParamsDialog::on_default()
+{
+    auto mr = QMessageBox::question(nullptr, tr("Запрос"), tr("Сбросить настройки к настройкам методики по умолчанию?"));
+    if (QMessageBox::Yes == mr)
+    {
+        auto mi = static_cast<AAnalyserApplication*>(QApplication::instance())->getCurrentMetodic();
+        auto params = static_cast<AAnalyserApplication*>(QApplication::instance())->setMetodicParamsDefault(mi.uid);
+        setParams(params);
+    }
 }
 
 void JumpHeightTestParamsDialog::initUi()

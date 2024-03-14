@@ -30,6 +30,11 @@ public:
      */
     QJsonObject getParams();
 
+private slots:
+    void on_ok();
+    void on_cancel();
+    void on_default();
+
 private:
     Ui::StepOffsetParamsDialog *ui;
 };

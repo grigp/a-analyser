@@ -33,6 +33,10 @@ public:
 private slots:
     void on_finishKindChanged(int idx);
 
+    void on_ok();
+    void on_cancel();
+    void on_default();
+
 private:
     Ui::DropTestParamsDialog *ui;
 

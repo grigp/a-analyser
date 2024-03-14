@@ -1,8 +1,10 @@
 #include "triangleparamsdialog.h"
 #include "ui_triangleparamsdialog.h"
 
+#include "aanalyserapplication.h"
 #include "basedefines.h"
 
+#include <QMessageBox>
 #include <QDebug>
 
 TriangleParamsDialog::TriangleParamsDialog(QWidget *parent) :
@@ -52,4 +54,25 @@ QJsonObject TriangleParamsDialog::getParams()
     retval["show_marker_anal"] = ui->cbShowMarkerAnal->isChecked();
 
     return retval;
+}
+
+void TriangleParamsDialog::on_ok()
+{
+    accept();
+}
+
+void TriangleParamsDialog::on_cancel()
+{
+    reject();
+}
+
+void TriangleParamsDialog::on_default()
+{
+    auto mr = QMessageBox::question(nullptr, tr("Запрос"), tr("Сбросить настройки к настройкам методики по умолчанию?"));
+    if (QMessageBox::Yes == mr)
+    {
+        auto mi = static_cast<AAnalyserApplication*>(QApplication::instance())->getCurrentMetodic();
+        auto params = static_cast<AAnalyserApplication*>(QApplication::instance())->setMetodicParamsDefault(mi.uid);
+        setParams(params);
+    }
 }

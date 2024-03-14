@@ -30,6 +30,10 @@ public:
 private slots:
     void onChangeStateMode(int index);
 
+    void on_ok();
+    void on_cancel();
+    void on_default();
+
 private:
     Ui::CrossParamsDialog *ui;
 };

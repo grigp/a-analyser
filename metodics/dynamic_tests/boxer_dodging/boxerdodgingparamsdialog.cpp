@@ -1,6 +1,10 @@
 #include "boxerdodgingparamsdialog.h"
 #include "ui_boxerdodgingparamsdialog.h"
 
+#include "aanalyserapplication.h"
+
+#include <QMessageBox>
+
 BoxerDodgingParamsDialog::BoxerDodgingParamsDialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::BoxerDodgingParamsDialog)
@@ -33,4 +37,25 @@ QJsonObject BoxerDodgingParamsDialog::getParams()
     retval["max_len"] = ui->edStimulTimeMax->value();
 
     return retval;
+}
+
+void BoxerDodgingParamsDialog::on_ok()
+{
+    accept();
+}
+
+void BoxerDodgingParamsDialog::on_cancel()
+{
+    reject();
+}
+
+void BoxerDodgingParamsDialog::on_default()
+{
+    auto mr = QMessageBox::question(nullptr, tr("Запрос"), tr("Сбросить настройки к настройкам методики по умолчанию?"));
+    if (QMessageBox::Yes == mr)
+    {
+        auto mi = static_cast<AAnalyserApplication*>(QApplication::instance())->getCurrentMetodic();
+        auto params = static_cast<AAnalyserApplication*>(QApplication::instance())->setMetodicParamsDefault(mi.uid);
+        setParams(params);
+    }
 }

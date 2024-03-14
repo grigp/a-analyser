@@ -1,9 +1,11 @@
 #include "droptestparamsdialog.h"
 #include "ui_droptestparamsdialog.h"
 
+#include "aanalyserapplication.h"
 #include "jumpplatedefines.h"
 
 #include <QFile>
+#include <QMessageBox>
 
 DropTestParamsDialog::DropTestParamsDialog(QWidget *parent) :
     QDialog(parent),
@@ -45,6 +47,27 @@ void DropTestParamsDialog::on_finishKindChanged(int idx)
 {
     ui->frJumpsCount->setVisible(idx == 0);
     ui->frTestTime->setVisible(idx == 1);
+}
+
+void DropTestParamsDialog::on_ok()
+{
+    accept();
+}
+
+void DropTestParamsDialog::on_cancel()
+{
+    reject();
+}
+
+void DropTestParamsDialog::on_default()
+{
+    auto mr = QMessageBox::question(nullptr, tr("Запрос"), tr("Сбросить настройки к настройкам методики по умолчанию?"));
+    if (QMessageBox::Yes == mr)
+    {
+        auto mi = static_cast<AAnalyserApplication*>(QApplication::instance())->getCurrentMetodic();
+        auto params = static_cast<AAnalyserApplication*>(QApplication::instance())->setMetodicParamsDefault(mi.uid);
+        setParams(params);
+    }
 }
 
 void DropTestParamsDialog::initUi()

@@ -13,7 +13,7 @@ class TrenTakePutParamsDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit TrenTakePutParamsDialog(QWidget *parent = 0);
+    explicit TrenTakePutParamsDialog(QWidget *parent = nullptr);
     ~TrenTakePutParamsDialog();
 
     /*!
@@ -29,6 +29,10 @@ public:
 
 private slots:
     void onPhisioChanEnabledChange(bool enabled);
+
+    void on_ok();
+    void on_cancel();
+    void on_default();
 
 private:
     Ui::TrenTakePutParamsDialog *ui;

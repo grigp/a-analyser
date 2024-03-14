@@ -3,6 +3,9 @@
 
 #include <QTime>
 #include <QFile>
+#include <QMessageBox>
+
+#include "aanalyserapplication.h"
 
 TrenTakePutParamsDialog::TrenTakePutParamsDialog(QWidget *parent) :
     QDialog(parent),
@@ -54,6 +57,27 @@ void TrenTakePutParamsDialog::onPhisioChanEnabledChange(bool enabled)
 {
     ui->frForce->setEnabled(enabled);
     ui->frMyogram->setEnabled(enabled);
+}
+
+void TrenTakePutParamsDialog::on_ok()
+{
+    accept();
+}
+
+void TrenTakePutParamsDialog::on_cancel()
+{
+    reject();
+}
+
+void TrenTakePutParamsDialog::on_default()
+{
+    auto mr = QMessageBox::question(nullptr, tr("Запрос"), tr("Сбросить настройки к настройкам методики по умолчанию?"));
+    if (QMessageBox::Yes == mr)
+    {
+        auto mi = static_cast<AAnalyserApplication*>(QApplication::instance())->getCurrentMetodic();
+        auto params = static_cast<AAnalyserApplication*>(QApplication::instance())->setMetodicParamsDefault(mi.uid);
+        setParams(params);
+    }
 }
 
 void TrenTakePutParamsDialog::initUi()

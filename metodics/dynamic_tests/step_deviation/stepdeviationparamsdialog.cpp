@@ -1,7 +1,10 @@
 #include "stepdeviationparamsdialog.h"
 #include "ui_stepdeviationparamsdialog.h"
 
+#include "aanalyserapplication.h"
 #include "basedefines.h"
+
+#include <QMessageBox>
 
 StepDeviationParamsDialog::StepDeviationParamsDialog(QWidget *parent) :
     QDialog(parent),
@@ -38,4 +41,25 @@ QJsonObject StepDeviationParamsDialog::getParams()
     retval["direction"] = BaseDefines::DirectionValueUIDName.value(valD);
 
     return retval;
+}
+
+void StepDeviationParamsDialog::on_ok()
+{
+    accept();
+}
+
+void StepDeviationParamsDialog::on_cancel()
+{
+    reject();
+}
+
+void StepDeviationParamsDialog::on_default()
+{
+    auto mr = QMessageBox::question(nullptr, tr("Запрос"), tr("Сбросить настройки к настройкам методики по умолчанию?"));
+    if (QMessageBox::Yes == mr)
+    {
+        auto mi = static_cast<AAnalyserApplication*>(QApplication::instance())->getCurrentMetodic();
+        auto params = static_cast<AAnalyserApplication*>(QApplication::instance())->setMetodicParamsDefault(mi.uid);
+        setParams(params);
+    }
 }

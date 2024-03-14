@@ -333,13 +333,49 @@
     </widget>
    </item>
    <item>
-    <widget class="QDialogButtonBox" name="buttonBox">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
+    <widget class="QFrame" name="frame_3">
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
      </property>
-     <property name="standardButtons">
-      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
      </property>
+     <layout class="QHBoxLayout" name="horizontalLayout_11">
+      <item>
+       <widget class="QPushButton" name="btnDefault">
+        <property name="text">
+         <string>Сброс к настройкам по умолчанию...</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <spacer name="horizontalSpacer_7">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btnOK">
+        <property name="text">
+         <string>OK</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btnCancel">
+        <property name="text">
+         <string>Отмена</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
     </widget>
    </item>
   </layout>
@@ -347,46 +383,14 @@
  <resources/>
  <connections>
   <connection>
-   <sender>buttonBox</sender>
-   <signal>accepted()</signal>
-   <receiver>CrossParamsDialog</receiver>
-   <slot>accept()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>259</x>
-     <y>338</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>157</x>
-     <y>274</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>buttonBox</sender>
-   <signal>rejected()</signal>
-   <receiver>CrossParamsDialog</receiver>
-   <slot>reject()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>327</x>
-     <y>338</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>286</x>
-     <y>274</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>cbChangeStateMode</sender>
    <signal>currentIndexChanged(int)</signal>
    <receiver>CrossParamsDialog</receiver>
    <slot>onChangeStateMode(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>407</x>
-     <y>183</y>
+     <x>528</x>
+     <y>166</y>
     </hint>
     <hint type="destinationlabel">
      <x>553</x>
@@ -394,8 +398,59 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>btnOK</sender>
+   <signal>clicked()</signal>
+   <receiver>CrossParamsDialog</receiver>
+   <slot>on_ok()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>408</x>
+     <y>280</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>554</x>
+     <y>260</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btnCancel</sender>
+   <signal>clicked()</signal>
+   <receiver>CrossParamsDialog</receiver>
+   <slot>on_cancel()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>486</x>
+     <y>287</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>543</x>
+     <y>271</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btnDefault</sender>
+   <signal>clicked()</signal>
+   <receiver>CrossParamsDialog</receiver>
+   <slot>on_default()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>130</x>
+     <y>291</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>549</x>
+     <y>252</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>onChangeStateMode(int)</slot>
+  <slot>on_ok()</slot>
+  <slot>on_cancel()</slot>
+  <slot>on_default()</slot>
  </slots>
 </ui>

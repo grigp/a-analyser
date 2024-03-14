@@ -1,7 +1,10 @@
 #include "stepoffsetparamsdialog.h"
 #include "ui_stepoffsetparamsdialog.h"
 
+#include "aanalyserapplication.h"
 #include "basedefines.h"
+
+#include <QMessageBox>
 
 StepOffsetParamsDialog::StepOffsetParamsDialog(QWidget *parent) :
     QDialog(parent),
@@ -42,4 +45,25 @@ QJsonObject StepOffsetParamsDialog::getParams()
     retval["direction"] = BaseDefines::DirectionValueUIDName.value(valD);
 
     return retval;
+}
+
+void StepOffsetParamsDialog::on_ok()
+{
+    accept();
+}
+
+void StepOffsetParamsDialog::on_cancel()
+{
+    reject();
+}
+
+void StepOffsetParamsDialog::on_default()
+{
+    auto mr = QMessageBox::question(nullptr, tr("Запрос"), tr("Сбросить настройки к настройкам методики по умолчанию?"));
+    if (QMessageBox::Yes == mr)
+    {
+        auto mi = static_cast<AAnalyserApplication*>(QApplication::instance())->getCurrentMetodic();
+        auto params = static_cast<AAnalyserApplication*>(QApplication::instance())->setMetodicParamsDefault(mi.uid);
+        setParams(params);
+    }
 }

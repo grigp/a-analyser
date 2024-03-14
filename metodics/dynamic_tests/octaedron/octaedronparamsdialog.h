@@ -34,6 +34,10 @@ private slots:
     void onCirceRoundRuleMode(int idx);
     void onDirectionModeChange(int idx);
 
+    void on_ok();
+    void on_cancel();
+    void on_default();
+
 private:
     Ui::OctaedronParamsDialog *ui;
 };

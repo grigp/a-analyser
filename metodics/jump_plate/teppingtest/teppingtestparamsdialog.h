@@ -17,7 +17,7 @@ class TeppingTestParamsDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit TeppingTestParamsDialog(QWidget *parent = 0);
+    explicit TeppingTestParamsDialog(QWidget *parent = nullptr);
     ~TeppingTestParamsDialog();
 
     /*!
@@ -33,6 +33,10 @@ public:
 
 private slots:
     void on_finishKindChanged(int idx);
+
+    void on_ok();
+    void on_cancel();
+    void on_default();
 
 private:
     Ui::TeppingTestParamsDialog *ui;

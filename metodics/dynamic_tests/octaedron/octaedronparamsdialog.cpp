@@ -1,7 +1,10 @@
 #include "octaedronparamsdialog.h"
 #include "ui_octaedronparamsdialog.h"
 
+#include "aanalyserapplication.h"
 #include "basedefines.h"
+
+#include <QMessageBox>
 
 OctaedronParamsDialog::OctaedronParamsDialog(QWidget *parent) :
     QDialog(parent),
@@ -60,4 +63,25 @@ void OctaedronParamsDialog::onDirectionModeChange(int idx)
     if (idx == BaseDefines::dmRandom)
         if (ui->cbCirceRoundRuleMode->currentIndex() == BaseDefines::crmCircle)
             ui->cbCirceRoundRuleMode->setCurrentIndex(BaseDefines::crmRadial);
+}
+
+void OctaedronParamsDialog::on_ok()
+{
+    accept();
+}
+
+void OctaedronParamsDialog::on_cancel()
+{
+    reject();
+}
+
+void OctaedronParamsDialog::on_default()
+{
+    auto mr = QMessageBox::question(nullptr, tr("Запрос"), tr("Сбросить настройки к настройкам методики по умолчанию?"));
+    if (QMessageBox::Yes == mr)
+    {
+        auto mi = static_cast<AAnalyserApplication*>(QApplication::instance())->getCurrentMetodic();
+        auto params = static_cast<AAnalyserApplication*>(QApplication::instance())->setMetodicParamsDefault(mi.uid);
+        setParams(params);
+    }
 }

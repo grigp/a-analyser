@@ -1,7 +1,10 @@
 #include "evolventaparamsdialog.h"
 #include "ui_evolventaparamsdialog.h"
 
+#include "aanalyserapplication.h"
 #include "basedefines.h"
+
+#include <QMessageBox>
 
 EvolventaParamsDialog::EvolventaParamsDialog(QWidget *parent) :
     QDialog(parent),
@@ -40,4 +43,25 @@ QJsonObject EvolventaParamsDialog::getParams()
     retval["direction_mode"] = BaseDefines::DirectionModeValueName.value(valDM);
 
     return retval;
+}
+
+void EvolventaParamsDialog::on_ok()
+{
+    accept();
+}
+
+void EvolventaParamsDialog::on_cancel()
+{
+    reject();
+}
+
+void EvolventaParamsDialog::on_default()
+{
+    auto mr = QMessageBox::question(nullptr, tr("Запрос"), tr("Сбросить настройки к настройкам методики по умолчанию?"));
+    if (QMessageBox::Yes == mr)
+    {
+        auto mi = static_cast<AAnalyserApplication*>(QApplication::instance())->getCurrentMetodic();
+        auto params = static_cast<AAnalyserApplication*>(QApplication::instance())->setMetodicParamsDefault(mi.uid);
+        setParams(params);
+    }
 }

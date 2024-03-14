@@ -31,6 +31,10 @@ public:
 private slots:
     void onPhisioChanEnabledChange(bool enabled);
 
+    void on_ok();
+    void on_cancel();
+    void on_default();
+
 private:
     Ui::TrenTetrisParamsDialog *ui;
 
