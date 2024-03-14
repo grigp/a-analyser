@@ -371,7 +371,7 @@ void MetodicsFactory::appendNewMetodic(const QString &fnPreDefMetodics, const QS
 bool MetodicsFactory::appendInArray(QJsonArray &arr, QJsonArray &arrPD, const MethodicSubject ms)
 {
     QList<int> newIdxList;
-    bool retval = false;
+    bool retval = true; //false; Раньше перезаписывали только для новой методики, а теперь для всех с учетом того, что и другие параметры могут поменяться
 
     for (int i = 0; i < arrPD.size(); ++i)
     {
@@ -392,6 +392,24 @@ bool MetodicsFactory::appendInArray(QJsonArray &arr, QJsonArray &arrPD, const Me
                 auto objMet = arr.at(j).toObject();
                 if (objMet["uid"].toString() == objMetPD["uid"].toString())
                 {
+                    //! Для совпадающих методик обновим все поля, кроме параметров, ибо,
+                    //! если внесли изменения или добавилось что-то, оно должно присутствовать
+                    if (msMethodic == ms)  //! Методики
+                    {
+                        objMet["build_norms"] = objMetPD["build_norms"].toBool();
+                        objMet["image"] = objMetPD["image"].toString();
+                        objMet["kind"] = objMetPD["kind"].toString();
+                        objMet["name"] = objMetPD["name"].toString();
+                        objMet["short_name"] = objMetPD["short_name"].toString();
+                        objMet["template"] = objMetPD["template"].toString();
+                    }
+                    else
+                    if (msMethodicKind == ms)  //! Типы методик
+                    {
+                        objMet["image"] = objMetPD["image"].toString();
+                        objMet["name"] = objMetPD["name"].toString();
+                    }
+                    arr.replace(j, objMet);
                     fnd = true;
                     break;
                 }
