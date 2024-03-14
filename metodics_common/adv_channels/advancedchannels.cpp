@@ -66,7 +66,7 @@ void AdvancedChannels::assignDriver(Driver *driver, TestResultData *trd)
 
     connect(ui->tvDrvChannels->selectionModel(), &QItemSelectionModel::selectionChanged,
             this, &AdvancedChannels::on_selectionChanged);
-    auto val = SettingsProvider::valueFromRegAppCopy("AdvancedChannelsWidget", "SplitterTreePosition").toByteArray();
+    auto val = SettingsProvider::valueFromRegAppCopy("Geometry/AdvancedChannelsWidget", "SplitterTreePosition").toByteArray();
     ui->splitter->restoreState(val);
 
     selectFirstChannel();
@@ -215,7 +215,7 @@ void AdvancedChannels::splitterMoved(int pos, int index)
 {
     Q_UNUSED(pos);
     Q_UNUSED(index);
-    SettingsProvider::setValueToRegAppCopy("AdvancedChannelsWidget", "SplitterTreePosition", ui->splitter->saveState());
+    SettingsProvider::setValueToRegAppCopy("Geometry/AdvancedChannelsWidget", "SplitterTreePosition", ui->splitter->saveState());
 }
 
 SignalWidget *AdvancedChannels::createWidget(Driver* driver, const QString channelId)

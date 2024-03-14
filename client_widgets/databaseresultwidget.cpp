@@ -104,14 +104,14 @@ void DataBaseResultWidget::on_methodicCount(const int count)
 
 void DataBaseResultWidget::saveSplittersPosition()
 {
-    SettingsProvider::setValueToRegAppCopy("DataBaseResultWidget", "SplitterVPosition", ui->splitter->saveState());
-    SettingsProvider::setValueToRegAppCopy("DataBaseResultWidget", "SplitterHPosition", ui->splitter_2->saveState());
+    SettingsProvider::setValueToRegAppCopy("Geometry/DataBaseResultWidget", "SplitterVPosition", ui->splitter->saveState());
+    SettingsProvider::setValueToRegAppCopy("Geometry/DataBaseResultWidget", "SplitterHPosition", ui->splitter_2->saveState());
 }
 
 void DataBaseResultWidget::restoreSplittersPosition()
 {
-    auto valV = SettingsProvider::valueFromRegAppCopy("DataBaseResultWidget", "SplitterVPosition").toByteArray();
-    auto valH = SettingsProvider::valueFromRegAppCopy("DataBaseResultWidget", "SplitterHPosition").toByteArray();
+    auto valV = SettingsProvider::valueFromRegAppCopy("Geometry/DataBaseResultWidget", "SplitterVPosition").toByteArray();
+    auto valH = SettingsProvider::valueFromRegAppCopy("Geometry/DataBaseResultWidget", "SplitterHPosition").toByteArray();
     ui->splitter->restoreState(valV);
     ui->splitter_2->restoreState(valH);
 }

@@ -18,12 +18,12 @@ PersonalProgramsEditor::PersonalProgramsEditor(QWidget *parent) :
     ui->setupUi(this);
     prepareParams();
 
-    auto val = SettingsProvider::valueFromRegAppCopy("PersonalProgramsEditor", "Geometry").toRect();
+    auto val = SettingsProvider::valueFromRegAppCopy("Geometry/PersonalProgramsEditor", "Geometry").toRect();
     if (val != QRect())
     {
         setGeometry(val);
 
-        auto valSpl = SettingsProvider::valueFromRegAppCopy("PersonalProgramsEditor", "SplitterPosition").toByteArray();
+        auto valSpl = SettingsProvider::valueFromRegAppCopy("Geometry/PersonalProgramsEditor", "SplitterPosition").toByteArray();
         ui->splitter->restoreState(valSpl);
 
         ui->tvSchedule->horizontalHeader()->resizeSection(0, ui->tvSchedule->geometry().width());
@@ -375,7 +375,7 @@ void PersonalProgramsEditor::on_clearLogo()
 
 void PersonalProgramsEditor::on_splitterMoved(int, int)
 {
-    SettingsProvider::setValueToRegAppCopy("PersonalProgramsEditor", "SplitterPosition", ui->splitter->saveState());
+    SettingsProvider::setValueToRegAppCopy("Geometry/PersonalProgramsEditor", "SplitterPosition", ui->splitter->saveState());
     ui->tvSchedule->horizontalHeader()->resizeSection(0, ui->tvSchedule->geometry().width());
 
 }
@@ -395,6 +395,6 @@ void PersonalProgramsEditor::prepareParams()
 
 void PersonalProgramsEditor::saveGeometry()
 {
-    SettingsProvider::setValueToRegAppCopy("PersonalProgramsEditor", "Geometry", geometry());
+    SettingsProvider::setValueToRegAppCopy("Geometry/PersonalProgramsEditor", "Geometry", geometry());
     ui->tvSchedule->horizontalHeader()->resizeSection(0, ui->tvSchedule->geometry().width());
 }

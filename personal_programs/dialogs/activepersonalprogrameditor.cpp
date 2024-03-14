@@ -29,7 +29,7 @@ ActivePersonalProgramEditor::ActivePersonalProgramEditor(QWidget *parent) :
     ui->tvSchedule->setItemDelegateForColumn(0, new DailyProgramCompletedDelegate(ui->tvSchedule));
     ui->tvTests->setItemDelegateForColumn(0, new TestCompletedDelegate(ui->tvTests));
 
-    auto val = SettingsProvider::valueFromRegAppCopy("ActivePersonalProgramEditor", "Geometry").toRect();
+    auto val = SettingsProvider::valueFromRegAppCopy("Geometry/ActivePersonalProgramEditor", "Geometry").toRect();
     if (val != QRect())
     {
         setGeometry(val);
@@ -632,7 +632,7 @@ void ActivePersonalProgramEditor::prepareParams()
 
 void ActivePersonalProgramEditor::saveGeometry()
 {
-    SettingsProvider::setValueToRegAppCopy("ActivePersonalProgramEditor", "Geometry", geometry());
+    SettingsProvider::setValueToRegAppCopy("Geometry/ActivePersonalProgramEditor", "Geometry", geometry());
     ui->tvSchedule->horizontalHeader()->resizeSection(0, ui->tvSchedule->geometry().width());
 }
 

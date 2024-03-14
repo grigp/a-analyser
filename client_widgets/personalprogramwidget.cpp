@@ -168,7 +168,7 @@ void PersonalProgramWidget::on_splitterMoved(int, int)
 
 void PersonalProgramWidget::on_splTestMoved(int, int)
 {
-    SettingsProvider::setValueToRegAppCopy("PersonalProgramWidget", "SplitterTestPosition", ui->splTableTest->saveState());
+    SettingsProvider::setValueToRegAppCopy("Geometry/PersonalProgramWidget", "SplitterTestPosition", ui->splTableTest->saveState());
 }
 
 void PersonalProgramWidget::on_run()
@@ -339,7 +339,7 @@ void PersonalProgramWidget::on_openTest()
                         ui->splTableTest->setSizes(QList<int>()
                                                    << static_cast<int>(ui->frPPTable->geometry().width()/2)
                                                    << static_cast<int>(ui->frPPTable->geometry().width()/2));
-                        auto splPos = SettingsProvider::valueFromRegAppCopy("PersonalProgramWidget", "SplitterTestPosition").toByteArray();
+                        auto splPos = SettingsProvider::valueFromRegAppCopy("Geometry/PersonalProgramWidget", "SplitterTestPosition").toByteArray();
                         ui->splTableTest->restoreState(splPos);
                         ui->frPPOpenTest->setVisible(true);
 
@@ -737,12 +737,12 @@ QList<PPVisual *> PersonalProgramWidget::getPPVisuals(const QString &uidPP) cons
 
 void PersonalProgramWidget::saveMainSplitterPosition()
 {
-    SettingsProvider::setValueToRegAppCopy("PersonalProgramWidget", "SplitterPosition", ui->splitter->saveState());
+    SettingsProvider::setValueToRegAppCopy("Geometry/PersonalProgramWidget", "SplitterPosition", ui->splitter->saveState());
 }
 
 void PersonalProgramWidget::restoreMainSplitterPosition()
 {
-    auto val = SettingsProvider::valueFromRegAppCopy("PersonalProgramWidget", "SplitterPosition").toByteArray();
+    auto val = SettingsProvider::valueFromRegAppCopy("Geometry/PersonalProgramWidget", "SplitterPosition").toByteArray();
 //    if (val == "")
 //        val = QByteArray::fromRawData("\x00\x00\x00\xFF\x00\x00\x00\x01\x00\x00\x00\x02\x00\x00\x01\x1B\x00\x00\x03""b\x01\xFF\xFF\xFF\xFF\x01\x00\x00\x00\x01\x00", 31);
     ui->splitter->restoreState(val);

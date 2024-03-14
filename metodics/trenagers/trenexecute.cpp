@@ -166,7 +166,7 @@ void TrenExecute::start()
             ui->wgtAdvChannels->setAllwaysRecordingChannel(ChannelsDefines::chanStabLeft);
             ui->wgtAdvChannels->setAllwaysRecordingChannel(ChannelsDefines::chanStabRight);
         }
-        auto val = SettingsProvider::valueFromRegAppCopy("AdvancedChannelsWidget", "SplitterProbePosition").toByteArray();
+        auto val = SettingsProvider::valueFromRegAppCopy("Geometry/AdvancedChannelsWidget", "SplitterProbePosition").toByteArray();
         ui->splitter->restoreState(val);
 
         m_driver->start();

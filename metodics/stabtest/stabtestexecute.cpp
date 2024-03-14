@@ -226,7 +226,7 @@ void StabTestExecute::start()
             ui->wgtAdvChannels->setAllwaysRecordingChannel(ChannelsDefines::chanStabLeft);
             ui->wgtAdvChannels->setAllwaysRecordingChannel(ChannelsDefines::chanStabRight);
         }
-        auto val = SettingsProvider::valueFromRegAppCopy("AdvancedChannelsWidget", "SplitterProbePosition").toByteArray();
+        auto val = SettingsProvider::valueFromRegAppCopy("Geometry/AdvancedChannelsWidget", "SplitterProbePosition").toByteArray();
         ui->splitter->restoreState(val);
 
         m_driver->start();
@@ -452,7 +452,7 @@ void StabTestExecute::splitterMoved(int pos, int index)
 {
     Q_UNUSED(pos);
     Q_UNUSED(index);
-    SettingsProvider::setValueToRegAppCopy("AdvancedChannelsWidget", "SplitterProbePosition", ui->splitter->saveState());
+    SettingsProvider::setValueToRegAppCopy("Geometry/AdvancedChannelsWidget", "SplitterProbePosition", ui->splitter->saveState());
 }
 
 StabTestParams::ProbeParams StabTestExecute::probeParams()

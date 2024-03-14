@@ -18,12 +18,12 @@ DailyProgramsEditor::DailyProgramsEditor(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    auto val = SettingsProvider::valueFromRegAppCopy("DailyProgramsEditor", "Geometry").toRect();
+    auto val = SettingsProvider::valueFromRegAppCopy("Geometry/DailyProgramsEditor", "Geometry").toRect();
     if (val != QRect())
     {
         setGeometry(val);
 
-        auto valSpl = SettingsProvider::valueFromRegAppCopy("DailyProgramsEditor", "SplitterPosition").toByteArray();
+        auto valSpl = SettingsProvider::valueFromRegAppCopy("Geometry/DailyProgramsEditor", "SplitterPosition").toByteArray();
         ui->splitter->restoreState(valSpl);
     }
 }
@@ -50,12 +50,12 @@ int DailyProgramsEditor::exec()
 
 void DailyProgramsEditor::closeEvent(QCloseEvent *)
 {
-    SettingsProvider::setValueToRegAppCopy("DailyProgramsEditor", "Geometry", geometry());
+    SettingsProvider::setValueToRegAppCopy("Geometry/DailyProgramsEditor", "Geometry", geometry());
 }
 
 void DailyProgramsEditor::resizeEvent(QResizeEvent *event)
 {
-    SettingsProvider::setValueToRegAppCopy("DailyProgramsEditor", "Geometry", geometry());
+    SettingsProvider::setValueToRegAppCopy("Geometry/DailyProgramsEditor", "Geometry", geometry());
     QDialog::resizeEvent(event);
 }
 
@@ -285,7 +285,7 @@ void DailyProgramsEditor::on_selectDP(QModelIndex index)
 
 void DailyProgramsEditor::on_splitterMoved(int, int)
 {
-    SettingsProvider::setValueToRegAppCopy("DailyProgramsEditor", "SplitterPosition", ui->splitter->saveState());
+    SettingsProvider::setValueToRegAppCopy("Geometry/DailyProgramsEditor", "SplitterPosition", ui->splitter->saveState());
 }
 
 QJsonObject DailyProgramsEditor::compileDP()
