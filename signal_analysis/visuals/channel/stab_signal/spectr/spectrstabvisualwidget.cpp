@@ -165,15 +165,15 @@ void SpectrStabVisualWidget::showSpectrs()
 
 void SpectrStabVisualWidget::saveSplitterPosition()
 {
-    SettingsProvider::setValueToRegAppCopy("SpectrStabVisualWidget", "HSplitterPosition", ui->splHorizontal->saveState());
-    SettingsProvider::setValueToRegAppCopy("SpectrStabVisualWidget", "VSplitterPosition", ui->splVertical->saveState());
+    SettingsProvider::setValueToRegAppCopy("Geometry/SpectrStabVisualWidget", "HSplitterPosition", ui->splHorizontal->saveState());
+    SettingsProvider::setValueToRegAppCopy("Geometry/SpectrStabVisualWidget", "VSplitterPosition", ui->splVertical->saveState());
 }
 
 void SpectrStabVisualWidget::restoreSplitterPosition()
 {
-    auto val = SettingsProvider::valueFromRegAppCopy("SpectrStabVisualWidget", "HSplitterPosition").toByteArray();
+    auto val = SettingsProvider::valueFromRegAppCopy("Geometry/SpectrStabVisualWidget", "HSplitterPosition").toByteArray();
     ui->splHorizontal->restoreState(val);
-    val = SettingsProvider::valueFromRegAppCopy("SpectrStabVisualWidget", "VSplitterPosition").toByteArray();
+    val = SettingsProvider::valueFromRegAppCopy("Geometry/SpectrStabVisualWidget", "VSplitterPosition").toByteArray();
     ui->splVertical->restoreState(val);
 }
 

@@ -747,15 +747,15 @@ void StabSignalsTestWidget::setDiapazones()
 
 void StabSignalsTestWidget::saveSplitterPosition()
 {
-//    SettingsProvider::setValueToRegAppCopy("StabSignalsTestWidget", "SplitterPosition", ui->splitter->saveState());
-    QString sSecName = "StabSignalsTestWidget_" + QString::number(m_mdlTable.columnCount());
+//    SettingsProvider::setValueToRegAppCopy("Geometry/StabSignalsTestWidget", "SplitterPosition", ui->splitter->saveState());
+    QString sSecName = "Geometry/StabSignalsTestWidget_" + QString::number(m_mdlTable.columnCount());
     SettingsProvider::setValueToRegAppCopy(sSecName, "AreaSKGSplitterPosition", ui->splAreaSKG->saveState());
 }
 
 void StabSignalsTestWidget::restoreSplitterPosition()
 {
-//    auto val = SettingsProvider::valueFromRegAppCopy("StabSignalsTestWidget", "SplitterPosition").toByteArray();
-    QString sSecName = "StabSignalsTestWidget_" + QString::number(m_mdlTable.columnCount());
+//    auto val = SettingsProvider::valueFromRegAppCopy("Geometry/StabSignalsTestWidget", "SplitterPosition").toByteArray();
+    QString sSecName = "Geometry/StabSignalsTestWidget_" + QString::number(m_mdlTable.columnCount());
     auto val = SettingsProvider::valueFromRegAppCopy(sSecName, "AreaSKGSplitterPosition").toByteArray();
     ui->splAreaSKG->restoreState(val);
 }

@@ -271,12 +271,12 @@ void ResultsWidget::closeTestIfNotSelection()
 
 void ResultsWidget::saveSplitterPosition()
 {
-    SettingsProvider::setValueToRegAppCopy("ResultWidget", "SplitterPosition", ui->splitter->saveState());
+    SettingsProvider::setValueToRegAppCopy("Geometry/ResultWidget", "SplitterPosition", ui->splitter->saveState());
 }
 
 void ResultsWidget::restoreSplitterPosition()
 {
-    auto val = SettingsProvider::valueFromRegAppCopy("ResultWidget", "SplitterPosition").toByteArray();
+    auto val = SettingsProvider::valueFromRegAppCopy("Geometry/ResultWidget", "SplitterPosition").toByteArray();
     if (val == "")
         val = QByteArray::fromRawData("\x00\x00\x00\xFF\x00\x00\x00\x01\x00\x00\x00\x02\x00\x00\x01\x17\x00\x00\x01\xEB\x01\xFF\xFF\xFF\xFF\x01\x00\x00\x00\x01\x00", 31);
     ui->splitter->restoreState(val);

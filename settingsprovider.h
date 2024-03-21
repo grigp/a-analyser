@@ -22,6 +22,12 @@ namespace SettingsProvider
      */
     void setValueToRegAppCopy(const QString &group, const QString &param, const QVariant &value);
 
+    /*!
+     * \brief Очищает группу в хранилище от параметров
+     * \param group - название группы
+     */
+    void clearGroup(const QString &group);
+
 }
 
 /*!

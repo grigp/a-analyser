@@ -36,7 +36,19 @@
        <number>1</number>
       </property>
       <item>
-       <widget class="QPushButton" name="btnOpenSummary">
+       <widget class="QPushButton" name="btnDoOpenSummary">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>150</width>
+          <height>0</height>
+         </size>
+        </property>
         <property name="text">
          <string>Открыть сводку</string>
         </property>
@@ -53,7 +65,19 @@
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="btnDeleteSummary">
+       <widget class="QPushButton" name="btnDoDeleteSummary">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>150</width>
+          <height>0</height>
+         </size>
+        </property>
         <property name="text">
          <string>Удалить сводку</string>
         </property>
@@ -290,8 +314,8 @@
    <slot>on_kindChanged()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>75</x>
-     <y>506</y>
+     <x>96</x>
+     <y>531</y>
     </hint>
     <hint type="destinationlabel">
      <x>940</x>
@@ -306,8 +330,8 @@
    <slot>on_kindChanged()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>106</x>
-     <y>537</y>
+     <x>127</x>
+     <y>554</y>
     </hint>
     <hint type="destinationlabel">
      <x>939</x>
@@ -348,7 +372,7 @@
    </hints>
   </connection>
   <connection>
-   <sender>btnOpenSummary</sender>
+   <sender>btnDoOpenSummary</sender>
    <signal>clicked()</signal>
    <receiver>OpenSummaryDialog</receiver>
    <slot>on_openSummary()</slot>
@@ -364,7 +388,7 @@
    </hints>
   </connection>
   <connection>
-   <sender>btnDeleteSummary</sender>
+   <sender>btnDoDeleteSummary</sender>
    <signal>clicked()</signal>
    <receiver>OpenSummaryDialog</receiver>
    <slot>on_deleteSummary()</slot>

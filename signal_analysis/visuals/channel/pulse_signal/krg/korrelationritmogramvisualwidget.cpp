@@ -59,13 +59,13 @@ void KorrelationRitmogramVisualWidget::on_channelChanged(const QString &probeUid
 
 void KorrelationRitmogramVisualWidget::saveSplitterPosition()
 {
-    SettingsProvider::setValueToRegAppCopy("KRGVisualWidget", "VSplitterPosition", ui->splitter->saveState());
+    SettingsProvider::setValueToRegAppCopy("Geometry/KRGVisualWidget", "VSplitterPosition", ui->splitter->saveState());
 
 }
 
 void KorrelationRitmogramVisualWidget::restoreSplitterPosition()
 {
-    auto val = SettingsProvider::valueFromRegAppCopy("KRGVisualWidget", "VSplitterPosition").toByteArray();
+    auto val = SettingsProvider::valueFromRegAppCopy("Geometry/KRGVisualWidget", "VSplitterPosition").toByteArray();
     ui->splitter->restoreState(val);
 }
 

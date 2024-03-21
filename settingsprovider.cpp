@@ -45,3 +45,15 @@ void SettingsValue::set(const QVariant &value)
     m_value = value;
     SettingsProvider::setValueToRegAppCopy(m_group, m_param, value);
 }
+
+void SettingsProvider::clearGroup(const QString &group)
+{
+    QSettings set(QApplication::instance()->organizationName(),
+                  QApplication::instance()->applicationName());
+    if (group != "")
+        set.beginGroup(DataDefines::appCopyUid() + "/" + group);
+    else
+        set.beginGroup(DataDefines::appCopyUid());
+    set.remove("");
+    set.endGroup();
+}

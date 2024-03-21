@@ -22,7 +22,7 @@ OpenSummaryDialog::OpenSummaryDialog(QWidget *parent) :
     load();
     setStyleSheet(static_cast<AAnalyserApplication*>(QApplication::instance())->mainWindow()->styleSheet());
 
-    auto val = SettingsProvider::valueFromRegAppCopy("OpenSummaryDialog", "Geometry").toByteArray();
+    auto val = SettingsProvider::valueFromRegAppCopy("Geometry/OpenSummaryDialog", "Geometry").toByteArray();
     restoreGeometry(val);
     restoreSplitterPosition();
 }
@@ -46,7 +46,7 @@ QString OpenSummaryDialog::summaryFileName() const
 
 void OpenSummaryDialog::resizeEvent(QResizeEvent *)
 {
-    SettingsProvider::setValueToRegAppCopy("OpenSummaryDialog", "Geometry", saveGeometry());
+    SettingsProvider::setValueToRegAppCopy("Geometry/OpenSummaryDialog", "Geometry", saveGeometry());
 }
 
 void OpenSummaryDialog::on_selectMethodic(QModelIndex index)
@@ -202,12 +202,12 @@ void OpenSummaryDialog::load()
 
 void OpenSummaryDialog::saveSplitterPosition()
 {
-    SettingsProvider::setValueToRegAppCopy("OpenSummaryDialog", "SplitterPosition", ui->splitter->saveState());
+    SettingsProvider::setValueToRegAppCopy("Geometry/OpenSummaryDialog", "SplitterPosition", ui->splitter->saveState());
 }
 
 void OpenSummaryDialog::restoreSplitterPosition()
 {
-    auto val = SettingsProvider::valueFromRegAppCopy("OpenSummaryDialog", "SplitterPosition").toByteArray();
+    auto val = SettingsProvider::valueFromRegAppCopy("Geometry/OpenSummaryDialog", "SplitterPosition").toByteArray();
     if (val == "")
         val = QByteArray::fromRawData("\x00\x00\x00\xFF\x00\x00\x00\x01\x00\x00\x00\x02\x00\x00\x01\x1B\x00\x00\x03""b\x01\xFF\xFF\xFF\xFF\x01\x00\x00\x00\x01\x00", 31);
     ui->splitter->restoreState(val);

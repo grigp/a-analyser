@@ -145,14 +145,14 @@ void SpectrPulseVisualWidget::showFactors()
 
 void SpectrPulseVisualWidget::saveSplitterPosition()
 {
-    SettingsProvider::setValueToRegAppCopy("SpectrPulseVisualWidget", "HSplitterPosition", ui->splHor->saveState());
-    SettingsProvider::setValueToRegAppCopy("SpectrPulseVisualWidget", "VSplitterPosition", ui->splVert->saveState());
+    SettingsProvider::setValueToRegAppCopy("Geometry/SpectrPulseVisualWidget", "HSplitterPosition", ui->splHor->saveState());
+    SettingsProvider::setValueToRegAppCopy("Geometry/SpectrPulseVisualWidget", "VSplitterPosition", ui->splVert->saveState());
 }
 
 void SpectrPulseVisualWidget::restoreSplitterPosition()
 {
-    auto val = SettingsProvider::valueFromRegAppCopy("SpectrPulseVisualWidget", "HSplitterPosition").toByteArray();
+    auto val = SettingsProvider::valueFromRegAppCopy("Geometry/SpectrPulseVisualWidget", "HSplitterPosition").toByteArray();
     ui->splHor->restoreState(val);
-    val = SettingsProvider::valueFromRegAppCopy("SpectrPulseVisualWidget", "VSplitterPosition").toByteArray();
+    val = SettingsProvider::valueFromRegAppCopy("Geometry/SpectrPulseVisualWidget", "VSplitterPosition").toByteArray();
     ui->splVert->restoreState(val);
 }

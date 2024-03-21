@@ -114,14 +114,14 @@ void VectorAnalysisVisualWidget::showVectorCloud()
 
 void VectorAnalysisVisualWidget::saveSplitterPosition()
 {
-    SettingsProvider::setValueToRegAppCopy("VectorAnalysisVisualWidget", "HSplitterPosition", ui->splHorizontal->saveState());
-    SettingsProvider::setValueToRegAppCopy("VectorAnalysisVisualWidget", "VSplitterPosition", ui->splVertical->saveState());
+    SettingsProvider::setValueToRegAppCopy("Geometry/VectorAnalysisVisualWidget", "HSplitterPosition", ui->splHorizontal->saveState());
+    SettingsProvider::setValueToRegAppCopy("Geometry/VectorAnalysisVisualWidget", "VSplitterPosition", ui->splVertical->saveState());
 }
 
 void VectorAnalysisVisualWidget::restoreSplitterPosition()
 {
-    auto val = SettingsProvider::valueFromRegAppCopy("VectorAnalysisVisualWidget", "HSplitterPosition").toByteArray();
+    auto val = SettingsProvider::valueFromRegAppCopy("Geometry/VectorAnalysisVisualWidget", "HSplitterPosition").toByteArray();
     ui->splHorizontal->restoreState(val);
-    val = SettingsProvider::valueFromRegAppCopy("VectorAnalysisVisualWidget", "VSplitterPosition").toByteArray();
+    val = SettingsProvider::valueFromRegAppCopy("Geometry/VectorAnalysisVisualWidget", "VSplitterPosition").toByteArray();
     ui->splVertical->restoreState(val);
 }

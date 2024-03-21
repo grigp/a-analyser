@@ -396,6 +396,13 @@ void MainWindow::on_PPCancel()
     static_cast<AAnalyserApplication*>(QApplication::instance())->cancelPPForPatient();
 }
 
+void MainWindow::on_clearGeometry()
+{
+    auto mr = QMessageBox::question(nullptr, tr("Запрос"), tr("Удалить данные о расположении и размере окон, а также о расположении разделителей?"));
+    if (QMessageBox::Yes == mr)
+        SettingsProvider::clearGroup("Geometry");
+}
+
 void MainWindow::initUi(const QString& colorSheme)
 {
     QFile style(colorSheme);
@@ -483,6 +490,7 @@ void MainWindow::initMenu()
     }
     menuSettings->addAction(ui->acDeviceControl);
     menuSettings->addAction(ui->acSettings);
+    menuSettings->addAction(ui->acClearGeometry);
 
     QMenu *menuColorShemes = menuSettings->addMenu(tr("Цветовые схемы"));
     m_agColorShemes = new QActionGroup(this);

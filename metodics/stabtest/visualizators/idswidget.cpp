@@ -408,15 +408,15 @@ void IDSWidget::addFactorsFromMultifactor(IDSCalculator *calculator)
 
 void IDSWidget::saveSplitterPosition()
 {
-    SettingsProvider::setValueToRegAppCopy("IDSTestWidget", "SplitterDiagramPosition", ui->splDiagrams->saveState());
-    SettingsProvider::setValueToRegAppCopy("IDSTestWidget", "SplitterTableDiagPosition", ui->splTblDiag->saveState());
+    SettingsProvider::setValueToRegAppCopy("Geometry/IDSTestWidget", "SplitterDiagramPosition", ui->splDiagrams->saveState());
+    SettingsProvider::setValueToRegAppCopy("Geometry/IDSTestWidget", "SplitterTableDiagPosition", ui->splTblDiag->saveState());
 }
 
 void IDSWidget::restoreSplitterPosition()
 {
-    auto valDiag = SettingsProvider::valueFromRegAppCopy("IDSTestWidget", "SplitterDiagramPosition").toByteArray();
+    auto valDiag = SettingsProvider::valueFromRegAppCopy("Geometry/IDSTestWidget", "SplitterDiagramPosition").toByteArray();
     ui->splDiagrams->restoreState(valDiag);
-    auto valTblDiag = SettingsProvider::valueFromRegAppCopy("IDSTestWidget", "SplitterTableDiagPosition").toByteArray();
+    auto valTblDiag = SettingsProvider::valueFromRegAppCopy("Geometry/IDSTestWidget", "SplitterTableDiagPosition").toByteArray();
     ui->splTblDiag->restoreState(valTblDiag);
 }
 

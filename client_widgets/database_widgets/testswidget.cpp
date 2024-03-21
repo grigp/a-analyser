@@ -182,7 +182,7 @@ void TestsWidget::signalExport()
 
 void TestsWidget::restoreVisibleWidget()
 {
-    auto val = SettingsProvider::valueFromRegAppCopy("ResultWidget", "SelectionWidget", ui->wgtResult->widgetName()).toString();
+    auto val = SettingsProvider::valueFromRegAppCopy("Geometry/ResultWidget", "SelectionWidget", ui->wgtResult->widgetName()).toString();
     if (val == ui->wgtResult->widgetName())
         ui->wgtDynamic->setVisible(false);
     else
@@ -193,6 +193,6 @@ void TestsWidget::restoreVisibleWidget()
 
 void TestsWidget::saveVisibleWidget(const QString &value)
 {
-    SettingsProvider::setValueToRegAppCopy("ResultWidget", "SelectionWidget", value);
+    SettingsProvider::setValueToRegAppCopy("Geometry/ResultWidget", "SelectionWidget", value);
 }
 

@@ -111,6 +111,8 @@ private slots:
     void on_PPAssign();
     void on_PPCancel();
 
+    void on_clearGeometry();
+
 private:
     Ui::MainWindow *ui;
 

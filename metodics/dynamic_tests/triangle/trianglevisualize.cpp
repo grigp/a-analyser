@@ -87,7 +87,7 @@ TriangleVisualize::~TriangleVisualize()
 
 void TriangleVisualize::setTest(const QString &testUid)
 {
-    auto val = SettingsProvider::valueFromRegAppCopy("TriangleResultWidget", "CurrentPage").toInt();
+    auto val = SettingsProvider::valueFromRegAppCopy("Geometry/TriangleResultWidget", "CurrentPage").toInt();
     ui->twPages->setCurrentIndex(val);
     m_twPages = ui->twPages;
 
@@ -408,7 +408,7 @@ void TriangleVisualize::paintPreview(QPainter *painter, QRect &rect, const QStri
 
 void TriangleVisualize::curPageChanged(int pageIdx)
 {
-    SettingsProvider::setValueToRegAppCopy("TriangleResultWidget", "CurrentPage", pageIdx);
+    SettingsProvider::setValueToRegAppCopy("Geometry/TriangleResultWidget", "CurrentPage", pageIdx);
 }
 
 void TriangleVisualize::splitterDiagMoved(int pos, int index)
@@ -889,15 +889,15 @@ void TriangleVisualize::showConslutionStrategy()
 
 void TriangleVisualize::saveSplitterPositionDiag()
 {
-    SettingsProvider::setValueToRegAppCopy("TriangleResultWidget", "SplitterDiagramPosition", ui->splDiag->saveState());
-    SettingsProvider::setValueToRegAppCopy("TriangleResultWidget", "SplitterDiagramAreasesPosition", ui->splDiagAreases->saveState());
+    SettingsProvider::setValueToRegAppCopy("Geometry/TriangleResultWidget", "SplitterDiagramPosition", ui->splDiag->saveState());
+    SettingsProvider::setValueToRegAppCopy("Geometry/TriangleResultWidget", "SplitterDiagramAreasesPosition", ui->splDiagAreases->saveState());
 }
 
 void TriangleVisualize::restoreSplitterPositionDiag()
 {
-    auto valDiag = SettingsProvider::valueFromRegAppCopy("TriangleResultWidget", "SplitterDiagramPosition").toByteArray();
+    auto valDiag = SettingsProvider::valueFromRegAppCopy("Geometry/TriangleResultWidget", "SplitterDiagramPosition").toByteArray();
     ui->splDiag->restoreState(valDiag);
-    auto valDiagAreases = SettingsProvider::valueFromRegAppCopy("TriangleResultWidget", "SplitterDiagramAreasesPosition").toByteArray();
+    auto valDiagAreases = SettingsProvider::valueFromRegAppCopy("Geometry/TriangleResultWidget", "SplitterDiagramAreasesPosition").toByteArray();
     ui->splDiagAreases->restoreState(valDiagAreases);
 }
 

@@ -111,11 +111,11 @@ void VariationPulsogramVisualWidget::showFactors()
 
 void VariationPulsogramVisualWidget::saveSplitterPosition()
 {
-    SettingsProvider::setValueToRegAppCopy("VPGVisualWidget", "HSplitterPosition", ui->splitter->saveState());
+    SettingsProvider::setValueToRegAppCopy("Geometry/VPGVisualWidget", "HSplitterPosition", ui->splitter->saveState());
 }
 
 void VariationPulsogramVisualWidget::restoreSplitterPosition()
 {
-    auto val = SettingsProvider::valueFromRegAppCopy("VPGVisualWidget", "HSplitterPosition").toByteArray();
+    auto val = SettingsProvider::valueFromRegAppCopy("Geometry/VPGVisualWidget", "HSplitterPosition").toByteArray();
     ui->splitter->restoreState(val);
 }
