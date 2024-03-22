@@ -490,7 +490,6 @@ void MainWindow::initMenu()
     }
     menuSettings->addAction(ui->acDeviceControl);
     menuSettings->addAction(ui->acSettings);
-    menuSettings->addAction(ui->acClearGeometry);
 
     QMenu *menuColorShemes = menuSettings->addMenu(tr("Цветовые схемы"));
     m_agColorShemes = new QActionGroup(this);
@@ -505,6 +504,8 @@ void MainWindow::initMenu()
             ac->setChecked(true);
         connect(ac, &QAction::triggered, this, &MainWindow::on_selectColorSheme);
     }
+
+    menuSettings->addAction(ui->acClearGeometry);
 
     QMenu *menuHelp = menuBar()->addMenu(tr("Помощь"));
     menuHelp->addAction(ui->acAbout);

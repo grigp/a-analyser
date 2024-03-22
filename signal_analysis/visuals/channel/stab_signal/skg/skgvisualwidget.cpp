@@ -12,6 +12,7 @@
 #include "dataprovider.h"
 #include "stabilogram.h"
 #include "classicfactors.h"
+#include "settingsprovider.h"
 
 SKGVisualWidget::SKGVisualWidget(VisualDescriptor* visual,
                                  const QString& testUid, const QString& probeUid, const QString& channelId,
@@ -20,6 +21,8 @@ SKGVisualWidget::SKGVisualWidget(VisualDescriptor* visual,
     ui(new Ui::SKGVisualWidget)
 {
     ui->setupUi(this);
+
+    restoreSplitterPosition();
 }
 
 SKGVisualWidget::~SKGVisualWidget()
@@ -42,6 +45,7 @@ void SKGVisualWidget::splitterMoved(int pos, int index)
 {
     Q_UNUSED(pos);
     Q_UNUSED(index);
+    saveSplitterPosition();
 }
 
 void SKGVisualWidget::on_btnPlusClicked()
@@ -122,5 +126,18 @@ void SKGVisualWidget::showFactors()
         ui->tvFactors->header()->resizeSections(QHeaderView::ResizeToContents);
         ui->tvFactors->header()->resizeSection(0, 500);
     }
+}
+
+void SKGVisualWidget::saveSplitterPosition()
+{
+    SettingsProvider::setValueToRegAppCopy("Geometry/SKGVisualWidget", "SplitterPosition", ui->splitter->saveState());
+}
+
+void SKGVisualWidget::restoreSplitterPosition()
+{
+    ui->splitter->setSizes(QList<int>() << geometry().height() / 20 * 11 << geometry().height() / 20 * 9);
+
+    auto val = SettingsProvider::valueFromRegAppCopy("Geometry/SKGVisualWidget", "HSplitterPosition").toByteArray();
+    ui->splitter->restoreState(val);
 }
 

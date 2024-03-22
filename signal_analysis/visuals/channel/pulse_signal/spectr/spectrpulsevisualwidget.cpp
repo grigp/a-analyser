@@ -30,7 +30,7 @@ SpectrPulseVisualWidget::SpectrPulseVisualWidget(VisualDescriptor* visual,
 {
     ui->setupUi(this);
 
-    restoreSplitterPosition();
+//    restoreSplitterPosition();
     connect(static_cast<AAnalyserApplication*>(QApplication::instance()), &AAnalyserApplication::channelChanged,
             this, &SpectrPulseVisualWidget::on_channelChanged);
 }
@@ -59,6 +59,8 @@ void SpectrPulseVisualWidget::calculate()
         showDiag();
         showFactors();
     }
+
+    restoreSplitterPosition();
 }
 
 void SpectrPulseVisualWidget::splitterMoved(int pos, int index)
@@ -151,6 +153,9 @@ void SpectrPulseVisualWidget::saveSplitterPosition()
 
 void SpectrPulseVisualWidget::restoreSplitterPosition()
 {
+    ui->splVert->setSizes(QList<int>() << geometry().width() / 2 << geometry().width() / 2);
+    ui->splHor->setSizes(QList<int>() << geometry().height() / 2 << geometry().height() / 2);
+
     auto val = SettingsProvider::valueFromRegAppCopy("Geometry/SpectrPulseVisualWidget", "HSplitterPosition").toByteArray();
     ui->splHor->restoreState(val);
     val = SettingsProvider::valueFromRegAppCopy("Geometry/SpectrPulseVisualWidget", "VSplitterPosition").toByteArray();

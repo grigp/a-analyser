@@ -382,7 +382,7 @@
   </action>
   <action name="acClearGeometry">
    <property name="text">
-    <string>Сброс геометрии</string>
+    <string>Сброс положения и размеров окон</string>
    </property>
    <property name="toolTip">
     <string>Очистить параметры расположения и размеров окон программы</string>

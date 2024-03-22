@@ -35,9 +35,11 @@ private slots:
 private:
     Ui::SKGVisualWidget *ui;
 
-
     void showSKG();
     void showFactors();
+
+    void saveSplitterPosition();
+    void restoreSplitterPosition();
 
     Stabilogram* m_stab {nullptr};
     ClassicFactors* m_factors {nullptr};

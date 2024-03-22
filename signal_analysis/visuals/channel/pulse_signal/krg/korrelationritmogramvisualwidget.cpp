@@ -1,6 +1,8 @@
 #include "korrelationritmogramvisualwidget.h"
 #include "ui_korrelationritmogramvisualwidget.h"
 
+#include <QDebug>
+
 #include "aanalyserapplication.h"
 #include "dataprovider.h"
 #include "channelsdefines.h"
@@ -38,6 +40,7 @@ void KorrelationRitmogramVisualWidget::calculate()
 
     ui->wgtKRG->setNameHorizontal(tr("ЧСС (i), уд/мин"));
     ui->wgtKRG->setNameVertical(tr("ЧСС (i-1), уд/мин"));
+
 }
 
 void KorrelationRitmogramVisualWidget::on_splitterMoved(int, int)
@@ -65,6 +68,8 @@ void KorrelationRitmogramVisualWidget::saveSplitterPosition()
 
 void KorrelationRitmogramVisualWidget::restoreSplitterPosition()
 {
+    ui->splitter->setSizes(QList<int>() << geometry().width() / 4 * 3 << geometry().width() / 4);
+
     auto val = SettingsProvider::valueFromRegAppCopy("Geometry/KRGVisualWidget", "VSplitterPosition").toByteArray();
     ui->splitter->restoreState(val);
 }

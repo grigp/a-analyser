@@ -171,6 +171,8 @@ void SpectrStabVisualWidget::saveSplitterPosition()
 
 void SpectrStabVisualWidget::restoreSplitterPosition()
 {
+    ui->splVertical->setSizes(QList<int>() << geometry().height() / 10 * 7 << geometry().height() / 10 * 3);
+
     auto val = SettingsProvider::valueFromRegAppCopy("Geometry/SpectrStabVisualWidget", "HSplitterPosition").toByteArray();
     ui->splHorizontal->restoreState(val);
     val = SettingsProvider::valueFromRegAppCopy("Geometry/SpectrStabVisualWidget", "VSplitterPosition").toByteArray();
