@@ -372,6 +372,62 @@
                </property>
               </widget>
              </item>
+             <item>
+              <spacer name="horizontalSpacer_3">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeType">
+                <enum>QSizePolicy::Fixed</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>20</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item>
+              <widget class="QPushButton" name="btnPPRepeat">
+               <property name="toolTip">
+                <string>Назначить эту индивидуальную программу для пациента повторно...</string>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset resource="../kernel.qrc">
+                 <normaloff>:/images/PP_repeat.png</normaloff>:/images/PP_repeat.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>32</width>
+                 <height>32</height>
+                </size>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="btnPPSaveAs">
+               <property name="toolTip">
+                <string>Сохранить индивидуальную программу...</string>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset resource="../kernel.qrc">
+                 <normaloff>:/images/PP_save.png</normaloff>:/images/PP_save.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>32</width>
+                 <height>32</height>
+                </size>
+               </property>
+              </widget>
+             </item>
             </layout>
            </widget>
           </item>
@@ -606,8 +662,8 @@
    <slot>on_run()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>817</x>
-     <y>24</y>
+     <x>691</x>
+     <y>28</y>
     </hint>
     <hint type="destinationlabel">
      <x>1031</x>
@@ -622,8 +678,8 @@
    <slot>on_delete()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>917</x>
-     <y>11</y>
+     <x>791</x>
+     <y>15</y>
     </hint>
     <hint type="destinationlabel">
      <x>1032</x>
@@ -638,7 +694,7 @@
    <slot>on_params()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>967</x>
+     <x>841</x>
      <y>43</y>
     </hint>
     <hint type="destinationlabel">
@@ -670,8 +726,8 @@
    <slot>on_append()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>867</x>
-     <y>25</y>
+     <x>741</x>
+     <y>29</y>
     </hint>
     <hint type="destinationlabel">
      <x>1033</x>
@@ -686,8 +742,8 @@
    <slot>on_openTest()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1007</x>
-     <y>10</y>
+     <x>891</x>
+     <y>14</y>
     </hint>
     <hint type="destinationlabel">
      <x>1030</x>
@@ -759,6 +815,38 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>btnPPRepeat</sender>
+   <signal>clicked()</signal>
+   <receiver>PersonalProgramWidget</receiver>
+   <slot>on_repeat()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>948</x>
+     <y>8</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1033</x>
+     <y>294</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btnPPSaveAs</sender>
+   <signal>clicked()</signal>
+   <receiver>PersonalProgramWidget</receiver>
+   <slot>on_saveAs()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>995</x>
+     <y>11</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1030</x>
+     <y>324</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>on_splitterMoved(int,int)</slot>
@@ -772,5 +860,7 @@
   <slot>on_splTestMoved(int,int)</slot>
   <slot>on_viewModeDatabase()</slot>
   <slot>on_editPatientCard()</slot>
+  <slot>on_repeat()</slot>
+  <slot>on_saveAs()</slot>
  </slots>
 </ui>

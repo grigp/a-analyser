@@ -359,6 +359,65 @@ void PersonalProgramWidget::on_closeTest()
     ui->frPPOpenTest->setVisible(false);
 }
 
+void PersonalProgramWidget::on_repeat()
+{
+    auto index = selectedIndex();
+    //! Взят ли индекс, выбра ли элемент на дереве
+    if (index != QModelIndex())
+    {
+        QModelIndex idxPatient = index.parent();
+        //! Выбран корневой узел - запускать нельзя
+        if (idxPatient == QModelIndex())
+        {
+            //! Сообщение в зависимости от того, назначена ли ИП
+            auto uidPP = index.data(DatabaseWidgetDefines::PatientsModel::PatientPPUidRole).toString();
+            //! Не назначена - предлагаем выбрать запись ранее проведенной программы, назначена, сообщаем об этом
+            if (uidPP == "")
+                QMessageBox::information(nullptr, tr("Предупреждение"), tr("Выберите запись ранее проведенной индивидуальной программы"));
+            else
+                QMessageBox::information(nullptr, tr("Предупреждение"), tr("Пациенту уже назначена индивидуальная программа"));
+        }
+        else
+        //! Выбран не корневой узел - запускать можно, проверив назначена ли ИП
+        {
+            auto uidPP = idxPatient.data(DatabaseWidgetDefines::PatientsModel::PatientPPUidRole).toString();
+            if (uidPP == "")
+            {
+                auto uidPP = index.data(DatabaseWidgetDefines::PatientsModel::PatientPPUidRole).toString();
+                if (uidPP != "")
+                {
+                    static_cast<AAnalyserApplication*>(QApplication::instance())->assignPPForPatient(uidPP);
+                }
+            }
+            else
+                QMessageBox::information(nullptr, tr("Предупреждение"), tr("Пациенту уже назначена индивидуальная программа"));
+        }
+//            auto uidPP = index.data(DatabaseWidgetDefines::PatientsModel::PatientPPUidRole).toString();
+//            if (uidPP == "")
+//            {
+//                //! Проверка ИП на завершенность.
+//                //! Завершенные всегда находятся в выпадающем списке у пациента, а активные в корне
+//                //! То есть, просто проверяем, имеется ли корневой узел
+//                if (index != QModelIndex() && index.isValid())
+//                {
+////                    static_cast<AAnalyserApplication*>(QApplication::instance())->assignPPForPatient();
+//                }
+//            }
+//            else
+//                QMessageBox::information(nullptr, tr("Предупреждение"), tr("Пациенту уже назначена индивидуальная программа"));
+//        }
+//        else
+//            QMessageBox::information(nullptr, tr("Предупреждение"), tr("Выберите запись ранее проведенной индивидуальной программы"));
+    }
+    else
+        QMessageBox::information(nullptr, tr("Предупреждение"), tr("Пациент не выбран"));
+}
+
+void PersonalProgramWidget::on_saveAs()
+{
+
+}
+
 void PersonalProgramWidget::on_selectionChanged(const QItemSelection &selected, const QItemSelection &deselected)
 {
     Q_UNUSED(selected);

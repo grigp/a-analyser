@@ -372,13 +372,6 @@ void TriangleVisualize::paintPreview(QPainter *painter, QRect &rect, const QStri
 
     painter->save();
 
-    int size = 0;
-    int z = 6;
-    if (rect.width() > rect.height())
-        size = (rect.height() - z) / 2;
-    else
-        size = (rect.width() - z) / 2;
-
     //! Значения показателей
     painter->setFont(QFont("Sans", 7, QFont::Bold, false));
     painter->setPen(QPen(Qt::black, 1, Qt::SolidLine, Qt::FlatCap));

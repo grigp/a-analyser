@@ -46,6 +46,7 @@ void VisualsFactory::registerVisual(VisualDescriptor *visual)
 int VisualsFactory::visualCount(const BaseDefines::TestLevel level)
 {
     switch (level) {
+    case BaseDefines::tlBase: return 0;
     case BaseDefines::tlTest: return m_visTest.size();
     case BaseDefines::tlProbe: return m_visProbe.size();
     case BaseDefines::tlChannel: return m_visChannel.size();
@@ -59,6 +60,7 @@ int VisualsFactory::visualCount(const BaseDefines::TestLevel level)
 VisualDescriptor *VisualsFactory::getVisual(const BaseDefines::TestLevel level, const int idx)
 {
     switch (level) {
+    case BaseDefines::tlBase: return nullptr;
     case BaseDefines::tlTest:
     {
         Q_ASSERT(idx >= 0 && idx < m_visTest.size());

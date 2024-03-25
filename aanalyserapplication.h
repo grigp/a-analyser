@@ -364,6 +364,13 @@ public:
     bool assignPPForPatient();
 
     /*!
+     * \brief Назначает индивидуальную программу для пациента. используя ранее проведенную ИП из базы
+     * \param uidPP - uid ранее проведенной ИП
+     * \return true, если назначили успешно
+     */
+    bool assignPPForPatient(const QString& uidPP);
+
+    /*!
      * \brief Отменяет индивидуальную программу для пациента
      * \return true, если отменили, false, если отменили отмену
      */

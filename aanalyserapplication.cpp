@@ -628,6 +628,24 @@ bool AAnalyserApplication::assignPPForPatient()
     return false;
 }
 
+bool AAnalyserApplication::assignPPForPatient(const QString &uidPP)
+{
+    auto pi = getCurrentPatient();
+    if (pi.uid != "")
+    {
+        auto objPP = DataProvider::getPersonalProgramByUid(uidPP);
+
+//        1. убрать datetime и testid
+//        2. назначить
+
+        return true;
+    }
+    else
+        QMessageBox::information(nullptr, tr("Предупреждение"), tr("Не выбран пациент"));
+
+    return false;
+}
+
 bool AAnalyserApplication::cancelPPForPatient()
 {
     auto pi = getCurrentPatient();

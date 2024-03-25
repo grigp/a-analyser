@@ -266,5 +266,8 @@
         <file>images/DataBase.png</file>
         <file>images/PersonalProgramMode.png</file>
         <file>images/Double.png</file>
+        <file>images/PP_open.png</file>
+        <file>images/PP_repeat.png</file>
+        <file>images/PP_save.png</file>
     </qresource>
 </RCC>

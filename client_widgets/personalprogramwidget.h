@@ -79,6 +79,9 @@ private slots:
     void on_openTest();
     void on_closeTest();
 
+    void on_repeat();
+    void on_saveAs();
+
     void on_selectionChanged(const QItemSelection &selected, const QItemSelection &deselected);
 
     void selectPatient(const QModelIndex index);

@@ -267,5 +267,6 @@ bool PersonalProgram::isTestByPPExists(QJsonObject &pp)
 
 bool PersonalProgram::isTestByPPExists()
 {
-//TODO: написатьs
+    return false;
+//TODO: написать
 }

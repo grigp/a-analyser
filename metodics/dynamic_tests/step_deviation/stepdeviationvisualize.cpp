@@ -175,15 +175,7 @@ void StepDeviationVisualize::paintPreview(QPainter *painter, QRect &rect, const 
                                                      << StepDeviationFactorsDefines::StepCountUid
                                                      << StepDeviationFactorsDefines::ErrorCountUid
                                                      << StepDeviationFactorsDefines::GrowthAvrgUid;
-
     painter->save();
-
-    int size = 0;
-    int z = 6;
-    if (rect.width() > rect.height())
-        size = (rect.height() - z) / 2;
-    else
-        size = (rect.width() - z) / 2;
 
     //! Значения показателей
     int n = 0;

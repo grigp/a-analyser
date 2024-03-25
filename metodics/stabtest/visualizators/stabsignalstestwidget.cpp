@@ -1431,7 +1431,7 @@ void StabSignalsTestWidget::paintPreviewFive(QPainter *painter, QRect &rect, con
     auto fc2 = calculator->classicFactors(1);
     auto fc3 = calculator->classicFactors(2);
     auto fc4 = calculator->classicFactors(3);
-    auto fc5 = calculator->classicFactors(4);
+//    auto fc5 = calculator->classicFactors(4);
     auto fv1 = calculator->vectorFactors(0);
     auto fv2 = calculator->vectorFactors(1);
     auto fv3 = calculator->vectorFactors(2);

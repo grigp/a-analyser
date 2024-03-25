@@ -23,6 +23,7 @@ bool GeneralCoordFactorsDescriptor::isValid(const QString &testUid, const QStrin
     Q_UNUSED(testUid);
     Q_UNUSED(probeUid);
     Q_UNUSED(channelId);
+    return false;
 }
 
 MultiFactor *GeneralCoordFactorsDescriptor::caclulate(const QString &testUid, const QString &probeUid, const QString &channelUid, const int begin, const int end)
@@ -32,4 +33,5 @@ MultiFactor *GeneralCoordFactorsDescriptor::caclulate(const QString &testUid, co
     Q_UNUSED(channelUid);
     Q_UNUSED(begin);
     Q_UNUSED(end);
+    return nullptr;
 }
