@@ -584,20 +584,23 @@ void SKGPainter::drawTargets()
 
 void SKGPainter::drawTitle()
 {
-    m_painter->save();
+    if (m_title != "")
+    {
+        m_painter->save();
 
-    QColor backColor = Qt::white;
-    if (m_widget)
-        backColor = m_widget->palette().background().color();
-    m_painter->setBrush(QBrush(backColor, Qt::SolidPattern));
-    m_painter->setPen(QPen(backColor, 1, Qt::SolidLine, Qt::FlatCap));
-    m_painter->drawRect(m_geometry.left(), m_geometry.top(), m_geometry.width(), 20);
+        QColor backColor = Qt::white;
+        if (m_widget)
+            backColor = m_widget->palette().background().color();
+        m_painter->setBrush(QBrush(backColor, Qt::SolidPattern));
+        m_painter->setPen(QPen(backColor, 1, Qt::SolidLine, Qt::FlatCap));
+        m_painter->drawRect(m_geometry.left(), m_geometry.top(), m_geometry.width(), 20);
 
-    m_painter->setPen(QPen(Qt::black, 1, Qt::SolidLine, Qt::FlatCap));
-    m_painter->setFont(QFont("Sans", 10, QFont::Bold, false));
-    m_painter->drawText(m_geometry.left(), m_geometry.top(), m_geometry.width(), 20, Qt::AlignHCenter | Qt::AlignVCenter, m_title);
+        m_painter->setPen(QPen(Qt::black, 1, Qt::SolidLine, Qt::FlatCap));
+        m_painter->setFont(QFont("Sans", 10, QFont::Bold, false));
+        m_painter->drawText(m_geometry.left(), m_geometry.top(), m_geometry.width(), 20, Qt::AlignHCenter | Qt::AlignVCenter, m_title);
 
-    m_painter->restore();
+        m_painter->restore();
+    }
 }
 
 SKGPainter::SignalData::SignalData(SignalAccess *sig, const QColor col, const int b, const int e)
