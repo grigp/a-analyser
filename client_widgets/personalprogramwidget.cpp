@@ -386,7 +386,13 @@ void PersonalProgramWidget::on_repeat()
                 auto uidPP = index.data(DatabaseWidgetDefines::PatientsModel::PatientPPUidRole).toString();
                 if (uidPP != "")
                 {
-                    static_cast<AAnalyserApplication*>(QApplication::instance())->assignPPForPatient(uidPP);
+                    auto mr = QMessageBox::question(nullptr, tr("Запрос"), tr("Назначить индивидуальную программу этому пациенту заново?"));
+                    if (QMessageBox::Yes == mr)
+                        if (static_cast<AAnalyserApplication*>(QApplication::instance())->assignPPForPatient(uidPP))
+                        {
+                            ui->tvPatients->selectionModel()->clearSelection();
+                            ui->tvPatients->selectionModel()->select(idxPatient, QItemSelectionModel::Select);
+                        }
                 }
             }
             else

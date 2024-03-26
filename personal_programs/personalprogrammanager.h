@@ -78,10 +78,18 @@ public:
      * \brief Связывает индивидуальную программу с пациентом и возвращает ее в виде json объекта
      * \param patientUid - uid пациента
      * \param ppUid - uid индивидуальной программы
-     * \param ppUidAssigned - uid назначенной индивидуальной программы
+     * \param ppUidAssigned - uid назначенной индивидуальной программы (возвращает)
      * \return объект программы для пациента
      */
     QJsonObject assignPersonalProgramForPatient(const QString& patientUid, const QString& ppUid, QString& ppUidAssigned);
+
+    /*!
+     * \brief Очищает индивидуальную программу от данных, свзязянных с проведением тестирования
+     * \param objPPAll - адрес объекта ИП, который очищается
+     * \param uidPatient - uid пациента
+     * \param ppUidAssigned - uid назначенной индивидуальной программы (возвращает)
+     */
+    void clearPersonalProgramForPatient(QJsonObject& objPPAll, const QString& uidPatient, QString& ppUidAssigned);
 
     /*!
      * \brief Возвращает цвет по значению показателя от 0 до 100 схеме:

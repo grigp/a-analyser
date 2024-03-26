@@ -635,8 +635,37 @@ bool AAnalyserApplication::assignPPForPatient(const QString &uidPP)
     {
         auto objPP = DataProvider::getPersonalProgramByUid(uidPP);
 
-//        1. убрать datetime и testid
-//        2. назначить
+        QString uidPPAssigned = "";
+        //! Убираем данные, свзязанные с прохождением ИП: date_time, testid и т.д.
+        m_ppManager->clearPersonalProgramForPatient(objPP, pi.uid, uidPPAssigned);
+        DataProvider::assignPersonalProgramForPatient(uidPPAssigned, objPP);
+
+        //! Сообщение о назначении индивидуальной программы пациенту с запросом на открытие
+        OpenPersonalProgramDialog dlgOpen(nullptr);
+        //! Появляется только, если не открыт виджет индивидуальных программ
+        bool isShowDialog = ClientWidgets::uidPersonalProgramWidgetUid != static_cast<MainWindow*>(m_mw)->currentClientPage();
+        if (isShowDialog)
+        {
+            dlgOpen.setPatientFio(pi.fio);
+            auto ppName = objPP["pp"].toObject()["name"].toString();
+            auto ppPic = QPixmap(objPP["pp"].toObject()["logo_file_name"].toString());
+            dlgOpen.setPersonalProgram(ppName, ppPic);
+        }
+
+
+        //! Извещаем мир о назначении индивидуальной программы для пациента
+        emit assignedPPForPatient(pi.uid, uidPPAssigned);
+
+        //! Открытие индивидуальной программы
+        if (isShowDialog)
+        {
+            if (dlgOpen.exec() == QDialog::Accepted)
+            {
+                showClientPage(ClientWidgets::uidPersonalProgramWidgetUid);
+                SettingsProvider::setValueToRegAppCopy("MainWindow", "MainClientWidget", ClientWidgets::uidPersonalProgramWidgetUid);
+                doSelectPatient(pi.uid);
+            }
+        }
 
         return true;
     }

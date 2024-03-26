@@ -404,6 +404,52 @@ QJsonObject PersonalProgramManager::assignPersonalProgramForPatient(const QStrin
     return retval;
 }
 
+void PersonalProgramManager::clearPersonalProgramForPatient(QJsonObject &objPPAll,
+                                                            const QString& uidPatient,
+                                                            QString& ppUidAssigned)
+{
+    //! Новый uid для назначенной ИП
+    ppUidAssigned = QUuid::createUuid().toString();
+    objPPAll["assigned_uid"] = ppUidAssigned;
+    objPPAll.remove("date_begin");          //! Удаляем дату начала проведения
+    objPPAll["patient_uid"] = uidPatient;   //! Переназначаем пациента
+    objPPAll["active"] = true;              //! Назначаем ИП активной
+
+    //! Получаем объект ИП
+    auto objPP = objPPAll["pp"].toObject();
+    //! Получаем массив ДП в ИП
+    auto arrDP = objPP["dp_list"].toArray();
+    for (int i = 0; i < arrDP.size(); ++i)
+    {
+        //! Получаем объект ДП в массиве
+        auto objDP = arrDP.at(i).toObject();
+        objDP.remove("date_time");            //! Удаляем параметр дата и время начала ДП
+
+        //! Получаем массив тестов в ДП
+        auto arrT = objDP["test_list"].toArray();
+        for (int j = 0; j < arrT.size(); ++j)
+        {
+            //! Получаем объект теста в массиве
+            auto objT = arrT.at(j).toObject();
+            objT.remove("test_uid");              //! Удаляем параметр uid теста
+            //! Заменяем тест
+            arrT.replace(j, objT);
+        }
+
+        //! Заменяем массив тестов
+        objDP["test_list"] = arrT;
+
+        //! Заменяем ДП
+        arrDP.replace(i, objDP);
+    }
+
+    //! Заменяем массив DP
+    objPP["dp_list"] = arrDP;
+
+    //! Заменяем объект ИП
+    objPPAll["pp"] = objPP;
+}
+
 QColor PersonalProgramManager::successColor(const double valSuccess)
 {
     if (valSuccess >= 50)
