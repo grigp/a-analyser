@@ -6,6 +6,7 @@
 #include <QLayout>
 #include <QDesktopWidget>
 #include <QUuid>
+#include <QJsonDocument>
 #include <QDebug>
 
 #include "mainwindow.h"
@@ -635,9 +636,12 @@ bool AAnalyserApplication::assignPPForPatient(const QString &uidPP)
     {
         auto objPP = DataProvider::getPersonalProgramByUid(uidPP);
 
-        QString uidPPAssigned = "";
         //! Убираем данные, свзязанные с прохождением ИП: date_time, testid и т.д.
-        m_ppManager->clearPersonalProgramForPatient(objPP, pi.uid, uidPPAssigned);
+        m_ppManager->clearPersonalProgramForPatient(objPP);
+        //! Новый uid для назначенной ИП
+        QString uidPPAssigned = QUuid::createUuid().toString();
+        objPP["assigned_uid"] = uidPPAssigned;
+        objPP["patient_uid"] = pi.uid;   //! Переназначаем пациента
         DataProvider::assignPersonalProgramForPatient(uidPPAssigned, objPP);
 
         //! Сообщение о назначении индивидуальной программы пациенту с запросом на открытие
@@ -672,6 +676,27 @@ bool AAnalyserApplication::assignPPForPatient(const QString &uidPP)
     else
         QMessageBox::information(nullptr, tr("Предупреждение"), tr("Не выбран пациент"));
 
+    return false;
+}
+
+bool AAnalyserApplication::savePersonalProgram(const QString &uidPP, const QString &fileName)
+{
+    auto objPP = DataProvider::getPersonalProgramByUid(uidPP);
+
+    QString uidPPAssigned = "";
+    //! Убираем данные, свзязанные с прохождением ИП: date_time, testid и т.д.
+    m_ppManager->clearPersonalProgramForPatient(objPP);
+
+    QFile file(fileName);
+    if (file.open(QIODevice::WriteOnly | QIODevice::Text))
+    {
+        QJsonDocument doc(objPP);
+        QByteArray ba = doc.toJson();
+        file.write(ba);
+
+        file.close();
+        return true;
+    }
     return false;
 }
 

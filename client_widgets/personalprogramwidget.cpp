@@ -4,6 +4,7 @@
 #include <QUuid>
 #include <QMessageBox>
 #include <QThread>
+#include <QFileDialog>
 #include <QDebug>
 
 #include "aanalyserapplication.h"
@@ -398,22 +399,6 @@ void PersonalProgramWidget::on_repeat()
             else
                 QMessageBox::information(nullptr, tr("Предупреждение"), tr("Пациенту уже назначена индивидуальная программа"));
         }
-//            auto uidPP = index.data(DatabaseWidgetDefines::PatientsModel::PatientPPUidRole).toString();
-//            if (uidPP == "")
-//            {
-//                //! Проверка ИП на завершенность.
-//                //! Завершенные всегда находятся в выпадающем списке у пациента, а активные в корне
-//                //! То есть, просто проверяем, имеется ли корневой узел
-//                if (index != QModelIndex() && index.isValid())
-//                {
-////                    static_cast<AAnalyserApplication*>(QApplication::instance())->assignPPForPatient();
-//                }
-//            }
-//            else
-//                QMessageBox::information(nullptr, tr("Предупреждение"), tr("Пациенту уже назначена индивидуальная программа"));
-//        }
-//        else
-//            QMessageBox::information(nullptr, tr("Предупреждение"), tr("Выберите запись ранее проведенной индивидуальной программы"));
     }
     else
         QMessageBox::information(nullptr, tr("Предупреждение"), tr("Пациент не выбран"));
@@ -421,7 +406,27 @@ void PersonalProgramWidget::on_repeat()
 
 void PersonalProgramWidget::on_saveAs()
 {
-
+    auto index = selectedIndex();
+    //! Взят ли индекс, выбра ли элемент на дереве
+    if (index != QModelIndex())
+    {
+        //! Сообщение в зависимости от того, назначена ли ИП
+        auto uidPP = index.data(DatabaseWidgetDefines::PatientsModel::PatientPPUidRole).toString();
+        if ("" != uidPP)
+        {
+            QString path = DataDefines::aanalyserDocumentsPath();
+            auto fileName = QFileDialog::getSaveFileName(this, tr("Файл индивидуальной программы"), path, tr("Файлы индивидуальных программ (*.pp)"));
+            if (fileName != "")
+            {
+                if (!static_cast<AAnalyserApplication*>(QApplication::instance())->savePersonalProgram(uidPP, fileName))
+                    QMessageBox::warning(nullptr, tr("Предупреждение"), tr("Не удалось сохранить индивидуальную программу"));
+            }
+        }
+        else
+            QMessageBox::information(nullptr, tr("Предупреждение"), tr("Индивидуальная программа не назначена"));
+    }
+    else
+        QMessageBox::information(nullptr, tr("Предупреждение"), tr("Пациент не выбран"));
 }
 
 void PersonalProgramWidget::on_selectionChanged(const QItemSelection &selected, const QItemSelection &deselected)

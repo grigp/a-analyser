@@ -371,6 +371,14 @@ public:
     bool assignPPForPatient(const QString& uidPP);
 
     /*!
+     * \brief Сохраняет ранее проведенную и собранную индивидуальную программу на диск
+     * \param uidPP - uid индивидуальной программы
+     * \param fileName - имя файла
+     * \return true, если успешно
+     */
+    bool savePersonalProgram(const QString& uidPP, const QString& fileName);
+
+    /*!
      * \brief Отменяет индивидуальную программу для пациента
      * \return true, если отменили, false, если отменили отмену
      */

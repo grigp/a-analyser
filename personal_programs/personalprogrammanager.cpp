@@ -404,15 +404,12 @@ QJsonObject PersonalProgramManager::assignPersonalProgramForPatient(const QStrin
     return retval;
 }
 
-void PersonalProgramManager::clearPersonalProgramForPatient(QJsonObject &objPPAll,
-                                                            const QString& uidPatient,
-                                                            QString& ppUidAssigned)
+void PersonalProgramManager::clearPersonalProgramForPatient(QJsonObject &objPPAll)
 {
-    //! Новый uid для назначенной ИП
-    ppUidAssigned = QUuid::createUuid().toString();
-    objPPAll["assigned_uid"] = ppUidAssigned;
+    objPPAll.remove("patient_uid");         //! Удаляем пациента
+    objPPAll.remove("assigned_uid");        //! Удаляем uid назначенной
     objPPAll.remove("date_begin");          //! Удаляем дату начала проведения
-    objPPAll["patient_uid"] = uidPatient;   //! Переназначаем пациента
+    objPPAll.remove("date_end");            //! Удаляем дату окончания проведения
     objPPAll["active"] = true;              //! Назначаем ИП активной
 
     //! Получаем объект ИП

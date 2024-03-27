@@ -86,10 +86,8 @@ public:
     /*!
      * \brief Очищает индивидуальную программу от данных, свзязянных с проведением тестирования
      * \param objPPAll - адрес объекта ИП, который очищается
-     * \param uidPatient - uid пациента
-     * \param ppUidAssigned - uid назначенной индивидуальной программы (возвращает)
      */
-    void clearPersonalProgramForPatient(QJsonObject& objPPAll, const QString& uidPatient, QString& ppUidAssigned);
+    void clearPersonalProgramForPatient(QJsonObject& objPPAll);
 
     /*!
      * \brief Возвращает цвет по значению показателя от 0 до 100 схеме:
