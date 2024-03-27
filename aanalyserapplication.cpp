@@ -40,6 +40,7 @@
 #include "aanalysersettings.h"
 #include "personalprogram.h"
 #include "databasewigetdefines.h"
+#include "baseutils.h"
 
 AAnalyserApplication::AAnalyserApplication(int &argc, char **argv)
     : QApplication(argc, argv)
@@ -584,7 +585,19 @@ bool AAnalyserApplication::assignPPForPatient()
             if (dlg.exec() == QDialog::Accepted)
             {
                 QString uidPPAssigned = "";
-                auto ppObj = m_ppManager->assignPersonalProgramForPatient(getCurrentPatient().uid, dlg.personalProgramUid(), uidPPAssigned);
+                QJsonObject ppObj {QJsonObject()};
+                if (SelectPersonalProgramDialog::smDefault == dlg.mode())
+                {
+                    ppObj = m_ppManager->assignPersonalProgramForPatient(getCurrentPatient().uid, dlg.personalProgramUid(), uidPPAssigned);
+                }
+                else
+                if (SelectPersonalProgramDialog::smFromFile == dlg.mode())
+                {
+                    auto fn = dlg.fileName();
+                    if (!BaseUtils::readObjFromFile(fn, ppObj))
+                        return false;
+                }
+
                 DataProvider::assignPersonalProgramForPatient(uidPPAssigned, ppObj);
 
                 //! Сообщение о назначении индивидуальной программы пациенту с запросом на открытие
@@ -688,16 +701,8 @@ bool AAnalyserApplication::savePersonalProgram(const QString &uidPP, const QStri
     //! Убираем данные, свзязанные с прохождением ИП: date_time, testid и т.д.
     m_ppManager->clearPersonalProgramForPatient(objPP);
 
-    QFile file(fileName);
-    if (file.open(QIODevice::WriteOnly | QIODevice::Text))
-    {
-        QJsonDocument doc(objPP);
-        QByteArray ba = doc.toJson();
-        file.write(ba);
-
-        file.close();
+    if (BaseUtils::writeObjToFile(fileName, objPP))
         return true;
-    }
     return false;
 }
 

@@ -268,6 +268,23 @@ QColor lightColor(const QColor& color, const int divider);
 QColor darkColor(const QColor& color, const int divider);
 
 /*!
+ * \brief Читает json объект из файла
+ * \param fullFileName - имя файла
+ * \param obj - прочитанный объект
+ * \return - true, если успешно и false, если нет
+ */
+bool readObjFromFile(const QString &fullFileName, QJsonObject &obj);
+
+/*!
+ * \brief записывает json объект в файл.
+ * \param fullFileName - имя файла
+ * \param obj - записываемый объект
+ * \return - true, если успешно и false, если нет
+ */
+bool writeObjToFile(const QString &fullFileName, const QJsonObject &obj);
+
+
+/*!
  * \brief Класс, рассчитывающий математическое ожидание и стандартное отклонение с итеративным добавлением MidAndStandardDeviation class
  */
 class MidAndStandardDeviation

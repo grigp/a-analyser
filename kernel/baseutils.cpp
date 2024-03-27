@@ -5,6 +5,8 @@
 #include <QDebug>
 #include <QDir>
 #include <QtMath>
+#include <QJsonDocument>
+#include <QJsonObject>
 
 #include "basedefines.h"
 
@@ -619,4 +621,38 @@ QColor BaseUtils::darkColor(const QColor &color, const int divider)
                   color.green() - color.green() / divider,
                   color.blue() - color.blue() / divider);
 }
+
+
+
+bool BaseUtils::readObjFromFile(const QString &fullFileName, QJsonObject &obj)
+{
+    QFile fileRec(fullFileName);
+    if (fileRec.open(QIODevice::ReadOnly | QIODevice::Text))
+    {
+        QByteArray ba = fileRec.readAll();
+        QJsonDocument loadDoc(QJsonDocument::fromJson(ba));
+        obj = loadDoc.object();
+        fileRec.close();
+        return true;
+    }
+    return false;
+}
+
+bool BaseUtils::writeObjToFile(const QString &fullFileName, const QJsonObject &obj)
+{
+    QFile fileRec(fullFileName);
+    fileRec.remove();
+    if (fileRec.open(QIODevice::WriteOnly | QIODevice::Text))
+    {
+        QJsonDocument doc(obj);
+        QByteArray ba = doc.toJson();
+        fileRec.write(ba);
+
+        fileRec.close();
+        return true;
+    }
+    return false;
+}
+
+
 
