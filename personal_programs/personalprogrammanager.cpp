@@ -410,7 +410,7 @@ void PersonalProgramManager::clearPersonalProgramForPatient(QJsonObject &objPPAl
     objPPAll.remove("assigned_uid");        //! Удаляем uid назначенной
     objPPAll.remove("date_begin");          //! Удаляем дату начала проведения
     objPPAll.remove("date_end");            //! Удаляем дату окончания проведения
-    objPPAll["active"] = true;              //! Назначаем ИП активной
+    objPPAll.remove("active");              //! Удаляем признак активности
 
     //! Получаем объект ИП
     auto objPP = objPPAll["pp"].toObject();
