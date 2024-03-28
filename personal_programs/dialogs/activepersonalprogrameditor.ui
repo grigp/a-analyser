@@ -669,13 +669,42 @@
     </widget>
    </item>
    <item>
-    <widget class="QDialogButtonBox" name="buttonBox">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
+    <widget class="QFrame" name="frModalButtons">
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
      </property>
-     <property name="standardButtons">
-      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
      </property>
+     <layout class="QHBoxLayout" name="horizontalLayout_10">
+      <item>
+       <spacer name="horizontalSpacer_4">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btnOK">
+        <property name="text">
+         <string>OK</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btnCancel">
+        <property name="text">
+         <string>Отмена</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
     </widget>
    </item>
   </layout>
@@ -684,38 +713,6 @@
   <include location="../../kernel.qrc"/>
  </resources>
  <connections>
-  <connection>
-   <sender>buttonBox</sender>
-   <signal>accepted()</signal>
-   <receiver>ActivePersonalProgramEditor</receiver>
-   <slot>accept()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>257</x>
-     <y>575</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>157</x>
-     <y>274</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>buttonBox</sender>
-   <signal>rejected()</signal>
-   <receiver>ActivePersonalProgramEditor</receiver>
-   <slot>reject()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>325</x>
-     <y>575</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>286</x>
-     <y>274</y>
-    </hint>
-   </hints>
-  </connection>
   <connection>
    <sender>tvSchedule</sender>
    <signal>activated(QModelIndex)</signal>
@@ -868,7 +865,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>702</x>
-     <y>329</y>
+     <y>321</y>
     </hint>
     <hint type="destinationlabel">
      <x>754</x>
@@ -884,7 +881,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>702</x>
-     <y>375</y>
+     <y>365</y>
     </hint>
     <hint type="destinationlabel">
      <x>752</x>
@@ -900,7 +897,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>702</x>
-     <y>421</y>
+     <y>408</y>
     </hint>
     <hint type="destinationlabel">
      <x>752</x>
@@ -916,7 +913,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>702</x>
-     <y>467</y>
+     <y>451</y>
     </hint>
     <hint type="destinationlabel">
      <x>755</x>
@@ -985,6 +982,38 @@
     <hint type="destinationlabel">
      <x>753</x>
      <y>340</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btnOK</sender>
+   <signal>clicked()</signal>
+   <receiver>ActivePersonalProgramEditor</receiver>
+   <slot>accept()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>634</x>
+     <y>549</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>761</x>
+     <y>472</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btnCancel</sender>
+   <signal>clicked()</signal>
+   <receiver>ActivePersonalProgramEditor</receiver>
+   <slot>reject()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>682</x>
+     <y>551</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>749</x>
+     <y>485</y>
     </hint>
    </hints>
   </connection>
