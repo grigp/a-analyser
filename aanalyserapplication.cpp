@@ -664,6 +664,7 @@ bool AAnalyserApplication::assignPPForPatient(const QString &uidPP)
         objPP["assigned_uid"] = uidPPAssigned;
         objPP["patient_uid"] = pi.uid;   //! Переназначаем пациента
         objPP["active"] = true;          //! Назначаем ИП активной
+        objPP["date_begin"] = QDate::currentDate().toString("dd.MM.yyyy");
         DataProvider::assignPersonalProgramForPatient(uidPPAssigned, objPP);
 
         //! Сообщение о назначении индивидуальной программы пациенту с запросом на открытие
