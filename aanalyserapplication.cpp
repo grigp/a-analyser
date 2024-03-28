@@ -594,7 +594,15 @@ bool AAnalyserApplication::assignPPForPatient()
                 if (SelectPersonalProgramDialog::smFromFile == dlg.mode())
                 {
                     auto fn = dlg.fileName();
-                    if (!BaseUtils::readObjFromFile(fn, ppObj))
+                    if (BaseUtils::readObjFromFile(fn, ppObj))
+                    {
+                        uidPPAssigned = QUuid::createUuid().toString();
+                        ppObj["patient_uid"] = getCurrentPatient().uid;   //! uid пациента
+                        ppObj["assigned_uid"] = uidPPAssigned;            //! uid назначенной PP
+                        ppObj["active"] = true;
+                        ppObj["date_begin"] = QDate::currentDate().toString("dd.MM.yyyy");
+                    }
+                    else
                         return false;
                 }
 
