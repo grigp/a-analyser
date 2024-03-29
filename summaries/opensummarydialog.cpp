@@ -18,7 +18,7 @@ OpenSummaryDialog::OpenSummaryDialog(QWidget *parent) :
     ui(new Ui::OpenSummaryDialog)
 {
     ui->setupUi(this);
-    ui->buttonBox->setVisible(false);
+    ui->frModalButtons->setVisible(false);
     load();
     setStyleSheet(static_cast<AAnalyserApplication*>(QApplication::instance())->mainWindow()->styleSheet());
 

@@ -9,8 +9,7 @@ SelectMethodicDialog::SelectMethodicDialog(QWidget *parent) :
 {
     ui->setupUi(this);
     ui->wgtMethods->onDbConnect(false);
-    auto btnOK = ui->buttonBox->button(QDialogButtonBox::Ok);
-    btnOK->setEnabled(false);
+    ui->btnOK->setEnabled(false);
     ui->wgtMethods->setTitleVisible(false);
 
     connect(ui->wgtMethods, &MethodsWidget::selectMethod, this, &SelectMethodicDialog::on_selectMethod);
@@ -28,8 +27,7 @@ QString SelectMethodicDialog::methodic() const
 
 void SelectMethodicDialog::on_selectMethod(const QString &uid, const bool isAccept)
 {
-    auto btnOK = ui->buttonBox->button(QDialogButtonBox::Ok);
-    btnOK->setEnabled((uid != "" && uid != QUuid().toString()));
+    ui->btnOK->setEnabled((uid != "" && uid != QUuid().toString()));
     if (isAccept)
         accept();
 }

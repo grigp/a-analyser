@@ -67,8 +67,7 @@ int SelectDailyProgramDialog::exec()
     connect(ui->tvListDP->selectionModel(), &QItemSelectionModel::selectionChanged,
             this, &SelectDailyProgramDialog::on_selectMetodicChanged);
 
-    auto btnOK = ui->buttonBox->button(QDialogButtonBox::Ok);
-    btnOK->setEnabled(false);
+    ui->btnOK->setEnabled(false);
 
     return QDialog::exec();
 }
@@ -84,6 +83,5 @@ void SelectDailyProgramDialog::on_selectMetodicChanged(const QItemSelection &sel
     Q_UNUSED(selected);
     Q_UNUSED(deselected);
     auto idx = ui->tvListDP->selectionModel()->currentIndex();
-    auto btnOK = ui->buttonBox->button(QDialogButtonBox::Ok);
-    btnOK->setEnabled(idx.isValid());
+    ui->btnOK->setEnabled(idx.isValid());
 }
