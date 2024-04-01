@@ -197,11 +197,11 @@ void SignalAnalysisWidget::on_signalExport()
                 if (puid != "" && cuid != "")
                     signalExport(idx);
                 else
-                    QMessageBox::information(nullptr, tr("Предупреждение"), tr("Экспортировать можно только сигналы"));
+                    QMessageBox::information(nullptr, tr("Предупреждение"), tr("Для экспорта необходимо выбрать элемент сигнала"));
             }
     }
     else
-        QMessageBox::information(nullptr, tr("Предупреждение"), tr("Экспортировать можно только сигналы"));
+        QMessageBox::information(nullptr, tr("Предупреждение"), tr("Для экспорта необходимо выбрать элемент сигнала"));
 }
 
 //void SignalAnalysisWidget::on_signalExport()
