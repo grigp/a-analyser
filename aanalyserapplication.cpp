@@ -1014,6 +1014,19 @@ void AAnalyserApplication::doSettingsChanged()
     setRunningMode();
 }
 
+void AAnalyserApplication::saOpenTest(const QString &uidTest)
+{
+    Q_UNUSED(uidTest);
+    ++m_saOpenedTestCount;
+}
+
+void AAnalyserApplication::saCloseTest(const QString &uidTest)
+{
+    Q_UNUSED(uidTest);
+    if (m_saOpenedTestCount > 0)
+        --m_saOpenedTestCount;
+}
+
 bool AAnalyserApplication::notify(QObject *re, QEvent *ev)
 {
     try

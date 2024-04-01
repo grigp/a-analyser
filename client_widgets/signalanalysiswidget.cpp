@@ -342,6 +342,7 @@ void SignalAnalysisWidget::openTest(const QString testUid)
         }
 
         ui->tvTests->expand(itemTest->index());
+        static_cast<AAnalyserApplication*>(QApplication::instance())->saOpenTest(testUid);
     }
 
     if (itemWithVisuals)
@@ -422,6 +423,8 @@ void SignalAnalysisWidget::closeTest(QModelIndex& index)
     {
         closeVisuals(idxRoot);
         m_mdlTests->removeRow(idxRoot.row(), idxRoot.parent());
+        auto uidTest = index.data(UidRole).toString();
+        static_cast<AAnalyserApplication*>(QApplication::instance())->saCloseTest(uidTest);
         if (m_mdlTests->rowCount() == 0)
             static_cast<AAnalyserApplication*>(QApplication::instance())->restoreClientPage(); //->showClientPage(ClientWidgets::uidDatabaseResultWidgetUid);
     }

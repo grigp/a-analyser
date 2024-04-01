@@ -108,7 +108,10 @@ void TestsWidget::printReport()
 
 void TestsWidget::signalsAnalysis()
 {
-    static_cast<AAnalyserApplication*>(QApplication::instance())->signalsAnalysis();
+    if (!("" == m_selectedTestUid && 0 == static_cast<AAnalyserApplication*>(QApplication::instance())->saOpenedTestCount()))
+        static_cast<AAnalyserApplication*>(QApplication::instance())->signalsAnalysis();
+    else
+        QMessageBox::information(nullptr, tr("Предупреждение"), tr("Не выбран тест и в окне анализа сигналов отсутствуют ранее открытые тесты"));
 }
 
 void TestsWidget::summaries()

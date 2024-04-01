@@ -702,6 +702,23 @@ public:
      */
     QDateTime buildDate() {return m_buildDate;}
 
+
+    ///<-----------------------------------------------------------------------------
+    /*!
+     * \brief Возвращает кол-во открытых тестов в окне анализа сигналов
+     */
+    int saOpenedTestCount() {return m_saOpenedTestCount;}
+    /*!
+     * \brief Регистрирует открытие теста в окне анализа сигналов
+     * \param uidTest - uid открытого теста
+     */
+    void saOpenTest(const QString& uidTest);
+    /*!
+     * \brief Регистрирует закрытие теста в окне анализа сигналов
+     * \param uidTest - uid закрытого теста
+     */
+    void saCloseTest(const QString& uidTest);
+
 signals:
     void dbConnected();
 
@@ -866,6 +883,7 @@ private:
     QMap<QString, QWidget*> m_openedTests;   ///< Указатели на виджет визуализатора открытого теста
 
     BaseDefines::RunningMode m_runningMode {BaseDefines::rmOperator};  ///< Режим запуска тестов: с оператором
+    int m_saOpenedTestCount {0};  ///< Кол-во открытых тестов в окне анализа сигналов
 
     QDateTime m_buildDate;   ///< Дата сборки дистрибутива
 };
