@@ -22,6 +22,8 @@ TARGET = a-med_stab
 CONFIG += c++11
 TEMPLATE = app
 
+CONFIG += resources_big
+
 # каталог, в котором будет располагаться результирующий исполняемый файл
 DESTDIR = $$OUT_PWD/bin
 
