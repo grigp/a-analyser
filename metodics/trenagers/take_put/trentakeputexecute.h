@@ -232,6 +232,8 @@ private:
     int m_timeFixPut {0};
     TrenTakePutDefines::StageMode m_stageMode {TrenTakePutDefines::smTakePut};
     int m_delayAfterStage {0};
+    bool m_isVisibleLabelFaults {true};
+
 
     ///< Зоны игры и элементы
     QList<TrenTakePutDefines::GameZoneInfo> m_zonesTake;

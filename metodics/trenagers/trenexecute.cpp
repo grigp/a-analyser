@@ -59,6 +59,7 @@ void TrenExecute::setParams(const QJsonObject &params)
     m_boundMyogram = objPhisioChan["myogram"].toInt(200);
 
     m_scoresPerMinute = params["scores_per_min"].toInt();
+    m_isVisibleLabelScores = params["label_scores_visible"].toBool(true);
 
     QTimer::singleShot(0, this, &TrenExecute::start);
 }
@@ -651,7 +652,8 @@ void TrenExecute::fillGameParams(QFrame *frame)
     m_lblGameScore->setStyleSheet(style);
     frame->layout()->addWidget(m_lblGameScore);
     if (m_patientWindow && QApplication::desktop()->screenCount() > 1)
-        m_patientWindow->setGameParamLabel(name, style);
+        m_patientWindow->setGameParamLabel(name, style, m_isVisibleLabelScores);
+    m_lblGameScore->setVisible(m_isVisibleLabelScores);
 
     changeGameScore(0);
 }
@@ -687,10 +689,10 @@ void TrenExecute::changeGameScore(const int value)
         m_patientWindow->setGameParamLabelValue(0, text);
 }
 
-void TrenExecute::pwSetGameParamLabel(const QString text, const QString styleSheet)
+void TrenExecute::pwSetGameParamLabel(const QString text, const QString styleSheet, const bool isVisible)
 {
     if (m_patientWindow && QApplication::desktop()->screenCount() > 1)
-        m_patientWindow->setGameParamLabel(text, styleSheet);
+        m_patientWindow->setGameParamLabel(text, styleSheet, isVisible);
 }
 
 void TrenExecute::pwSetGameParamLabelValue(const int idxParam, const QString value)

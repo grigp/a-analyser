@@ -94,6 +94,8 @@ void TrenTakePutExecute::setParams(const QJsonObject &params)
     m_soundSheme.error = objSS["error"].toString();
     m_soundSheme.scene = objSS["scene"].toString();
     m_soundSheme.onTarget = objSS["on_target"].toString();
+
+    m_isVisibleLabelFaults = params["label_faults_visible"].toBool(true);
 }
 
 void TrenTakePutExecute::timerEvent(QTimerEvent *event)
@@ -344,7 +346,8 @@ void TrenTakePutExecute::fillGameParams(QFrame *frame)
     m_lblErrors->setText(name);
     m_lblErrors->setStyleSheet(style);
     frame->layout()->addWidget(m_lblErrors);
-    pwSetGameParamLabel(name, style);
+    pwSetGameParamLabel(name, style, m_isVisibleLabelFaults);
+    m_lblErrors->setVisible(m_isVisibleLabelFaults);
 
     changeErrors(0);
 }
@@ -1040,10 +1043,12 @@ GraphicCommon::GameElement *TrenTakePutExecute::markerOnGameElement()
 void TrenTakePutExecute::finishTest()
 {
     m_takePutResData->setIsEnabledPut(!(m_zonesPut.size() == 0 && m_elementsPut.size() == 0));
+    m_takePutResData->setIsEnabledErrors(m_isVisibleLabelFaults);
     addChannel(m_takePutResData);
 
     //! Добавляем значение специфического показателя для подкласса TrenTakePutExecute: количество ошибок
-    addFactorValue(TrenResultFactorsDefines::FaultsUid, m_errorsCount);
+    if (m_isVisibleLabelFaults)
+        addFactorValue(TrenResultFactorsDefines::FaultsUid, m_errorsCount);
 
     TrenStabExecute::finishTest();
 }

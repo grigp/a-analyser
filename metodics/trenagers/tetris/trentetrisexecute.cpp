@@ -418,7 +418,7 @@ void TrenTetrisExecute::fillGameParams(QFrame *frame)
     m_lblRowsDel->setText(name);
     m_lblRowsDel->setStyleSheet(style);
     frame->layout()->addWidget(m_lblRowsDel);
-    pwSetGameParamLabel(name, style);
+    pwSetGameParamLabel(name, style, true);
 
     changeRowsDeleted(0);
 }

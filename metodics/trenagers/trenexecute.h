@@ -231,7 +231,7 @@ protected:
      * \param text - имя метки
      * \param styleSheet - визуальный стиль
      */
-    void pwSetGameParamLabel(const QString text, const QString styleSheet);
+    void pwSetGameParamLabel(const QString text, const QString styleSheet, const bool isVisible);
     /*!
      * \brief Изменяет значение текста метки игрового параметра по индексу параметра на окне пациента
      * \param idxParam - индекс параметра
@@ -308,6 +308,11 @@ protected:
      */
     virtual void doZeroing();
 
+    /*!
+     * \brief Возвращает, видима ли надпись "Баллы"
+     */
+    bool isVisibleLabelScores() {return m_isVisibleLabelScores;}
+
 private slots:
     void getData(DeviceProtocols::DeviceData *data);
 
@@ -362,6 +367,7 @@ private:
     QLabel* m_lblGameScore {nullptr};    ///< Индикатор баллов игры
     int m_gameScore {0};                 ///< Значние кол-ва баллов
     int m_scoresPerMinute {50};          ///< Кол-во баллов в минуту для данного тренажера
+    bool m_isVisibleLabelScores {true};  ///< Показывать ли значение очков
     QList<GameFactors> m_gameFactors;    ///< Список показателей тренажера. Заполняется подклассами через addFactorValue
 
     bool m_isClosed {false};

@@ -731,6 +731,8 @@
                 "delay_after_stage": 0,
                 "scale": 1,
                 "scores_per_min" : 52,
+                "label_scores_visible" : true,
+                "label_faults_visible" : true,
                 "time": 120
             }
         },
@@ -877,6 +879,8 @@
                 "delay_after_stage": 0,
                 "scale": 1,
                 "scores_per_min" : 72,
+                "label_scores_visible" : true,
+                "label_faults_visible" : true,
                 "time": 120
             }
         },
@@ -1015,6 +1019,8 @@
                 "delay_after_stage": 0,
                 "scale": 1,
                 "scores_per_min" : 168,
+                "label_scores_visible" : true,
+                "label_faults_visible" : true,
                 "time": 120
             }
         },
@@ -1146,6 +1152,8 @@
                 "delay_after_stage": 0,
                 "scale": 1,
                 "scores_per_min" : 272,
+                "label_scores_visible" : true,
+                "label_faults_visible" : true,
                 "time": 120
             }
         },
@@ -1276,6 +1284,8 @@
                 "delay_after_stage": 500,
                 "scale": 1,
                 "scores_per_min" : 44,
+                "label_scores_visible" : true,
+                "label_faults_visible" : true,
                 "time": 300
             }
         },
@@ -1404,6 +1414,8 @@
                 "delay_after_stage": 0,
                 "scale": 1,
                 "scores_per_min" : 34,
+                "label_scores_visible" : true,
+                "label_faults_visible" : true,
                 "time": 120
             }
         },
@@ -1476,6 +1488,8 @@
                 "delay_after_stage": 0,
                 "scale": 1,
                 "scores_per_min" : 34,
+                "label_scores_visible" : true,
+                "label_faults_visible" : false,
                 "time": 120
             }
         },
@@ -1549,6 +1563,8 @@
                 "delay_after_stage": 0,
                 "scale": 1,
                 "scores_per_min" : 44,
+                "label_scores_visible" : true,
+                "label_faults_visible" : true,
                 "time": 120
             }
         },
@@ -1648,6 +1664,8 @@
                 "delay_after_stage": 0,
                 "scale": 1,
                 "scores_per_min" : 56,
+                "label_scores_visible" : true,
+                "label_faults_visible" : true,
                 "time": 120
             }
         },
@@ -1723,6 +1741,8 @@
                 "delay_after_stage": 0,
                 "scale": 1,
                 "scores_per_min" : 45,
+                "label_scores_visible" : true,
+                "label_faults_visible" : true,
                 "time": 120
             }
         },
@@ -1801,6 +1821,8 @@
                 "delay_after_stage": 500,
                 "scale": 1,
                 "scores_per_min" : 38,
+                "label_scores_visible" : true,
+                "label_faults_visible" : true,
                 "time": 120
             }
         },

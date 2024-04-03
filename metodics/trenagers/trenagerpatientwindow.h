@@ -31,7 +31,7 @@ public:
      * \param text - имя метки
      * \param styleSheet - визуальный стиль
      */
-    void setGameParamLabel(const QString text, const QString styleSheet);
+    void setGameParamLabel(const QString text, const QString styleSheet, const bool isVisible);
     /*!
      * \brief Изменяет значение текста метки игрового параметра по индексу параметра
      * \param idxParam - индекс параметра

@@ -41,13 +41,14 @@ QSize TrenagerPatientWindow::sceneSize() const
     return ui->gvGame->geometry().size();
 }
 
-void TrenagerPatientWindow::setGameParamLabel(const QString text, const QString styleSheet)
+void TrenagerPatientWindow::setGameParamLabel(const QString text, const QString styleSheet, const bool isVisible)
 {
     auto* label = new QLabel(ui->frGameParams);
     label->setText(text);
     label->setStyleSheet(styleSheet);
     ui->frGameParams->layout()->addWidget(label);
     m_gameParamLabels << label;
+    label->setVisible(isVisible);
 }
 
 void TrenagerPatientWindow::setGameParamLabelValue(const int idxParam, const QString value)
