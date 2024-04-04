@@ -51,6 +51,12 @@ QTimeEdit
     color: rgb(32,88,103);
 }
 
+QTabWidget
+{
+    font-size: 11pt;
+    color: rgb(32,88,103);
+}
+
 QLabel
 {
     font-size: 11pt;
