@@ -6,7 +6,8 @@ HEADERS += \
     $$PWD/statechampionstestcalculator.h \
     $$PWD/idscalculator.h \
     $$PWD/targetcalculator.h \
-    $$PWD/stressstrategycalculator.h
+    $$PWD/stressstrategycalculator.h \
+    $$PWD/babyposturecalculator.h
 
 SOURCES += \
     $$PWD/stabsignalstestcalculator.cpp \
@@ -14,7 +15,8 @@ SOURCES += \
     $$PWD/statechampionstestcalculator.cpp \
     $$PWD/idscalculator.cpp \
     $$PWD/targetcalculator.cpp \
-    $$PWD/stressstrategycalculator.cpp
+    $$PWD/stressstrategycalculator.cpp \
+    $$PWD/babyposturecalculator.cpp
 
 FORMS += \
 

@@ -16,6 +16,7 @@
 #include "idscalculator.h"
 #include "targetcalculator.h"
 #include "stressstrategycalculator.h"
+#include "babyposturecalculator.h"
 
 #include "stabsignalstestwidget.h"
 #include "dopuskwidget.h"
@@ -23,6 +24,7 @@
 #include "idswidget.h"
 #include "targetwidget.h"
 #include "stressstrategywidget.h"
+#include "babyposturewidget.h"
 
 #include <QDebug>
 
@@ -101,6 +103,13 @@ void StabTestVisualize::setTest(const QString &testUid)
                         calculate(static_cast<StressStrategyCalculator*>(m_calculator), testUid);
                     m_widget = widget;
                 }
+                else
+                if (cnd == 6 && widget->objectName() == "wgtBabyPosture")
+                {
+                    static_cast<BabyPostureWidget*>(widget)->
+                        calculate(static_cast<BabyPostureCalculator*>(m_calculator), testUid);
+                    m_widget = widget;
+                }
 
                 widget->setVisible(
                             (cnd == 0 && widget->objectName() == "wgtSignals")
@@ -109,6 +118,7 @@ void StabTestVisualize::setTest(const QString &testUid)
                          || (cnd == 3 && widget->objectName() == "wgtIDSAnalysis")
                          || (cnd == 4 && widget->objectName() == "wgtTarget")
                          || (cnd == 5 && widget->objectName() == "wgtStressStrategy")
+                         || (cnd == 6 && widget->objectName() == "wgtBabyPosture")
                                 );
             }
         }

@@ -269,5 +269,6 @@
         <file>images/PP_open.png</file>
         <file>images/PP_repeat.png</file>
         <file>images/PP_save.png</file>
+        <file>images/Methodics/BabyPosture.png</file>
     </qresource>
 </RCC>

@@ -49,12 +49,13 @@ StabTestParamsDialog::StabTestParamsDialog(QWidget *parent) :
                            << StabTestDefines::PatientWindowsName.value(StabTestDefines::pwLines));
     ui->cbScale->addItems(QStringList() << "1" << "2" << "4" << "8" << "16" << "32" << "64" << "128");
     ui->cbConditions->addItems(QStringList()
-                               << tr("Анализ сигналов")             ///< Код 0
-                               << tr("Стань чемпионом")             ///< Код 1
-                               << tr("Допусковый контроль")         ///< Код 2
-                               << tr("Уровень здоровья по ИДС")     ///< Код 3
-                               << tr("Мишень")                      ///< Код 4
-                               << tr("Стрессовая стратегия"));      ///< Код 5
+                               << tr("Анализ сигналов")                ///< Код 0
+                               << tr("Стань чемпионом")                ///< Код 1
+                               << tr("Допусковый контроль")            ///< Код 2
+                               << tr("Уровень здоровья по ИДС")        ///< Код 3
+                               << tr("Мишень")                         ///< Код 4
+                               << tr("Стрессовая стратегия")           ///< Код 5
+                               << tr("Постуральный контроль детей"));  ///< Код 6
     fillProbeKinds();
 
     m_stimulParamsEditors.insert(StabTestDefines::pwNone, nullptr);

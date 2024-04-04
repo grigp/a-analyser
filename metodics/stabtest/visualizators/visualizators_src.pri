@@ -9,7 +9,8 @@ HEADERS += \
     $$PWD/rombergnormvaluedelegate.h \
     $$PWD/targetwidget.h \
     $$PWD/stressstrategywidget.h \
-    $$PWD/rombergkoefvaluedelegate.h
+    $$PWD/rombergkoefvaluedelegate.h \
+    $$PWD/babyposturewidget.h
 
 SOURCES += \
     $$PWD/stabsignalstestwidget.cpp \
@@ -19,7 +20,8 @@ SOURCES += \
     $$PWD/rombergnormvaluedelegate.cpp \
     $$PWD/targetwidget.cpp \
     $$PWD/stressstrategywidget.cpp \
-    $$PWD/rombergkoefvaluedelegate.cpp
+    $$PWD/rombergkoefvaluedelegate.cpp \
+    $$PWD/babyposturewidget.cpp
 
 FORMS += \
     $$PWD/stabsignalstestwidget.ui \
@@ -27,5 +29,6 @@ FORMS += \
     $$PWD/statechampionswidget.ui \
     $$PWD/idswidget.ui \
     $$PWD/targetwidget.ui \
-    $$PWD/stressstrategywidget.ui
+    $$PWD/stressstrategywidget.ui \
+    $$PWD/babyposturewidget.ui
 

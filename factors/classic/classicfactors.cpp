@@ -85,6 +85,9 @@ void ClassicFactors::calculate()
 
             //! Эллипс
             computeParamsEllipse(&stab);
+
+            //! LFS после эллипса
+            m_lfs = m_l / m_square;
         }
     }
 
@@ -97,6 +100,9 @@ void ClassicFactors::calculate()
     addFactor(ClassicFactorsDefines::AngleUid, m_angle);
     addFactor(ClassicFactorsDefines::SquareUid, m_square);
     addFactor(ClassicFactorsDefines::ComprRatioUid, m_comprRatio);
+    addFactor(ClassicFactorsDefines::EllLengthUid, m_ellLength);
+    addFactor(ClassicFactorsDefines::EllWidthUid, m_ellWidth);
+    addFactor(ClassicFactorsDefines::LFSUid, m_lfs);
 }
 
 void ClassicFactors::registerFactors()
@@ -132,6 +138,16 @@ void ClassicFactors::registerFactors()
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(ClassicFactorsDefines::ComprRatioUid, ClassicFactorsDefines::GroupUid,
                            tr("Коэффициент сжатия"), tr("EllE"), tr(""), 2, 2, FactorsDefines::nsDual, 12);
+    static_cast<AAnalyserApplication*>(QApplication::instance())->
+            registerFactor(ClassicFactorsDefines::EllLengthUid, ClassicFactorsDefines::GroupUid,
+                           tr("Длина эллипса"), tr("EllL"), tr("мм"), 1, 2, FactorsDefines::nsDual, 12);
+    static_cast<AAnalyserApplication*>(QApplication::instance())->
+            registerFactor(ClassicFactorsDefines::EllWidthUid, ClassicFactorsDefines::GroupUid,
+                           tr("Ширина эллипса"), tr("EllW"), tr("мм"), 1, 2, FactorsDefines::nsDual, 12);
+    static_cast<AAnalyserApplication*>(QApplication::instance())->
+            registerFactor(ClassicFactorsDefines::LFSUid, ClassicFactorsDefines::GroupUid,
+                           tr("Длина в зависимости от площади"), tr("LFS"), tr("1/мм"), 1, 2, FactorsDefines::nsDual, 12);
+
 }
 
 void ClassicFactors::computeParamsEllipse(Stabilogram *stab)
@@ -208,6 +224,8 @@ void ClassicFactors::computeParamsEllipse(Stabilogram *stab)
     m_angle = m_ellipse.angle;
     m_square = m_ellipse.ellS;
     m_comprRatio = m_ellipse.ellE;
+    m_ellLength = m_ellipse.sizeA * 2;
+    m_ellWidth = m_ellipse.sizeB * 2;
 }
 
 void ClassicFactors::meanAndStdDev(QVector<double> &data, double &mean, double &stdDev)

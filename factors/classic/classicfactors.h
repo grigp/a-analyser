@@ -21,6 +21,10 @@ static const QString LUid = "{FC3117F1-7C50-406B-997D-78683E09FF93}";
 static const QString AngleUid = "{4580E0C5-9DBF-4261-8024-687C61B5016E}";
 static const QString SquareUid = "{B256BAC6-DC9E-4C28-BC7F-D6C3E37BF1B5}";
 static const QString ComprRatioUid = "{F7BECEAD-B402-4AE2-895D-6D9F07018455}";
+static const QString EllLengthUid = "{CDE2BF99-C4BB-4A4E-87B7-758546F88861}";
+static const QString EllWidthUid = "{A5474E08-2605-4D1E-AC7B-3C6199CDCDDC}";
+static const QString LFSUid = "{771A4330-E586-48E3-929B-140B18C95C8F}";
+
 
 /*!
  * \brief Структура параметров эллипса Ellipse struct
@@ -116,6 +120,9 @@ private:
     double m_angle {0};
     double m_square {0};
     double m_comprRatio {0};
+    double m_ellLength {0};
+    double m_ellWidth {0};
+    double m_lfs {0};
 
     ///< Параметры эллипса
     ClassicFactorsDefines::Ellipse m_ellipse;

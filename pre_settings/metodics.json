@@ -326,6 +326,31 @@
             }
         },
         {
+            "uid": "{ACDDA9E0-C3E8-4EE7-A33E-4832ACB13A94}",
+            "name": "Постуральный контроль детей первого года жизни",
+            "short_name": "Младенцы",
+            "image": "BabyPosture.png",
+            "template": "met_stabtest_uid",
+            "build_norms": false,
+            "kind": "{03FFE24D-56ED-4138-9FC7-A125A020C190}",
+            "params":
+            {
+                "condition": 6,
+                "probes": [
+                    {
+                        "name": "Запись сигнала",
+                        "kind": 1,
+                        "autoend": 0,
+                        "time": 20,
+                        "latent_time": 0,
+                        "stimul": 0,
+                        "zeroing": 1,
+                        "scale": 0
+                    }
+                ]
+            }
+        },
+        {
             "uid": "{271DB867-0297-4DBD-BD7D-E1BC5675BC2A}",
             "name": "Тест \"Мишень\"",
             "short_name": "Мишень",

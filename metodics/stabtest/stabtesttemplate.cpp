@@ -13,6 +13,7 @@
 #include "idscalculator.h"
 #include "targetcalculator.h"
 #include "stressstrategycalculator.h"
+#include "babyposturecalculator.h"
 #include "metodicsfactory.h"
 
 #include <QLayout>
@@ -108,6 +109,9 @@ TestCalculator *StabTestTemplate::calculator(const QString &testUid)
         else
         if (cnd == 5)
             return new StressStrategyCalculator(testUid);
+        else
+        if (cnd == 6)
+            return new BabyPostureCalculator(testUid);
     }
     return nullptr;
 }

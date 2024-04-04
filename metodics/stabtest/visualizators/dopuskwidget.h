@@ -33,7 +33,7 @@ class DopuskWidget : public QWidget
     Q_OBJECT
 
 public:
-    explicit DopuskWidget(QWidget *parent = 0);
+    explicit DopuskWidget(QWidget *parent = nullptr);
     ~DopuskWidget();
 
     /*!
