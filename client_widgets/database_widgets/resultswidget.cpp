@@ -291,7 +291,8 @@ void ResultsWidget::calculateSelected()
         auto idx = m_pmdlTest->mapToSource(index);
         auto uid = m_mdlTest->index(idx.row(), DatabaseWidgetDefines::TestsModel::ColPatient, idx.parent()).
                 data(DatabaseWidgetDefines::TestsModel::TestUidRole).toString();
-        tests << uid;
+        if (!tests.contains(uid))
+            tests << uid;
         DataDefines::TestInfo ti;
         DataProvider::getTestInfo(uid, ti);
     }

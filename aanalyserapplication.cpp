@@ -283,6 +283,7 @@ void AAnalyserApplication::setSelectedTests(QStringList &tests)
 {
     m_selectedTests.clear();
     m_selectedTests << tests;
+
 }
 
 void AAnalyserApplication::executeMetodic()

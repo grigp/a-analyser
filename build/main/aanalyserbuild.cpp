@@ -29,6 +29,7 @@
 #include "hoppingfactorsdescriptor.h"
 #include "idsfactorsdescriptor.h"
 #include "spectrstabfactorsdescriptor.h"
+#include "spectrsinglesignalfactorsdescriptor.h"
 #include "targetfactorsdescriptor.h"
 #include "trenresultfactorsdescriptor.h"
 #include "crossfactorsdescriptor.h"
@@ -98,6 +99,7 @@ void AAnalyserBuild::registerFactors()
     app->registerGroup(new VectorFactorsDescriptor(BaseDefines::tlChannel));
     app->registerGroup(new IDSFactorsDescriptor(BaseDefines::tlChannel));
     app->registerGroup(new SpectrStabFactorsDescriptor(BaseDefines::tlChannel));
+    app->registerGroup(new SpectrSingleSignalFactorsDescriptor(BaseDefines::tlChannel));
     app->registerGroup(new RatioProbesFactorsDescriptor(BaseDefines::tlTest));
     app->registerGroup(new TargetFactorsDescriptor(BaseDefines::tlProbe));
     app->registerGroup(new TrenResultFactorsDescriptor(BaseDefines::tlProbe));
