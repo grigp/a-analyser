@@ -279,7 +279,7 @@
       <item>
        <widget class="QPushButton" name="btnSummaryAddTest">
         <property name="toolTip">
-         <string>Добавить показателей теста в сводку...</string>
+         <string>Добавить показатели теста в сводку...</string>
         </property>
         <property name="text">
          <string/>
