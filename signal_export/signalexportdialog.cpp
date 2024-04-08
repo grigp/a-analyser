@@ -136,12 +136,17 @@ void SignalExportDialog::accept()
         QMessageBox::information(nullptr, tr("Предупреждение"), tr("Заданы повторяющиеся имена файлов"));
 
     QDir dir(fileName(0));
+    if (m_mode == SignalExportDefines::mdBatch && !dir.exists())
+    {
+        QMessageBox::information(nullptr, tr("Предупреждение"), tr("Папки для пакетного экспорта не существует"));
+    }
+    else
     if (m_mode == SignalExportDefines::mdBatch && !dir.isEmpty())
         QMessageBox::information(nullptr, tr("Предупреждение"), tr("Папка для пакетного экспорта не пуста"));
 
     if (m_mode == SignalExportDefines::mdBatch)
     {
-        if (m_filterUid != "" && isNamesPresent && !isNamesRepeat && dir.isEmpty())
+        if (m_filterUid != "" && isNamesPresent && !isNamesRepeat && dir.isEmpty() && dir.exists())
             QDialog::accept();
     }
     if (m_mode == SignalExportDefines::mdOnce)
