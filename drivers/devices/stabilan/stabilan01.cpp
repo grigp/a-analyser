@@ -826,6 +826,15 @@ void Stabilan01::assignByteFromDevice(quint8 b)
                         m_Y = 0;
                     }
                 }
+                else
+                if (m_skgSource == Stabilan01Defines::ssStabilan) //! Ограничиваем массу для расчета стабилограммы
+                {
+                    if (m_Z < 0.5)
+                    {
+                        m_X = 0;
+                        m_Y = 0;
+                    }
+                }
 
                 incBlockCount();
                 sendDataBlock();
