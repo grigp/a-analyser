@@ -128,8 +128,8 @@ private:
     void createClientWidgets();
 
     QList<QWidget*> m_clientWidgets;
-    QString m_currentClientPage = ""; ///< Текущая страница с данными
-    QMenu m_menuSelectDatabase;       ///< Меню выбора БД
+    QString m_currentClientPage = "";       ///< Текущая страница с данными
+    QMenu* m_menuSelectDatabase {nullptr};  ///< Меню выбора БД
 
     QActionGroup* m_agColorShemes {nullptr};
     QActionGroup* m_agViewsMain {nullptr};

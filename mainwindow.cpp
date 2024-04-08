@@ -420,8 +420,9 @@ void MainWindow::initMenu()
         menuDatabase->addSeparator();
     }
     menuDatabase->addAction(ui->acDataBaseProperty);
+    m_menuSelectDatabase = new QMenu();
     initSelectDatabaseMenu();
-    menuDatabase->addMenu(&m_menuSelectDatabase);
+    menuDatabase->addMenu(m_menuSelectDatabase);
     menuDatabase->addSeparator();
 
     menuDatabase->addAction(ui->acDataBaseExport);
@@ -527,8 +528,8 @@ void MainWindow::initSelectDatabaseMenu()
     if (folders.size() > 2)
         curNameBD = folders.at(folders.size() - 2);
 
-    m_menuSelectDatabase.setTitle(tr("Выбрать"));
-    m_menuSelectDatabase.clear();
+    m_menuSelectDatabase->setTitle(tr("Выбрать"));
+    m_menuSelectDatabase->clear();
     auto dbInfos = DataDefines::getDatabases();
     foreach (auto dbInfo, dbInfos)
     {
@@ -539,7 +540,7 @@ void MainWindow::initSelectDatabaseMenu()
                 title = dbInfo.name;
             QAction *acSelDB = new QAction(title);
             acSelDB->setData(dbInfo.name);
-            m_menuSelectDatabase.addAction(acSelDB);
+            m_menuSelectDatabase->addAction(acSelDB);
             connect(acSelDB, &QAction::triggered, this, &MainWindow::on_selectDatabase);
         }
     }

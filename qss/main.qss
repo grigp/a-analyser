@@ -57,6 +57,13 @@ QTabWidget
     color: rgb(32,88,103);
 }
 
+QMenu,
+QMenuBar
+{
+    font-size: 11pt;
+    color: rgb(32,88,103);
+}
+
 QLabel
 {
     font-size: 11pt;
