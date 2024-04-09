@@ -10,6 +10,7 @@
 #include "channelsdefines.h"
 #include "channelsutils.h"
 #include "databasewigetdefines.h"
+#include "aanalysersettings.h"
 
 #include <QApplication>
 #include <QSpacerItem>
@@ -26,6 +27,11 @@ MethodsWidget::MethodsWidget(QWidget *parent) :
 
     ui->btnUnselect->setVisible(false);
 //    ui->tvMetods->viewport()->installEventFilter(this);
+
+    ui->tvMetods->setContextMenuPolicy(Qt::CustomContextMenu);
+    connect(ui->tvMetods, &QListView::customContextMenuRequested, this, &MethodsWidget::on_popupMenuRequested);
+    connect(ui->tvMetods, &QListView::doubleClicked, this, &MethodsWidget::on_doubleClickedTable);
+
 }
 
 MethodsWidget::~MethodsWidget()
@@ -188,6 +194,45 @@ void MethodsWidget::on_doubleClicked(const QModelIndex &index)
         auto uid = index.data(DatabaseWidgetDefines::MetodicsModel::MetodicUidRole).toString();
         emit selectMethod(uid, true);
     }
+}
+
+void MethodsWidget::on_popupMenuRequested(QPoint pos)
+{
+    if (!m_menu)
+    {
+        m_menu = new QMenu(this);
+
+        QAction *editParams = new QAction(tr("Редактировать параметры методики..."), this);
+        connect(editParams, &QAction::triggered, this, &MethodsWidget::editMetodParams);
+        m_menu->addAction(editParams);
+
+        QAction *runTest = new QAction(tr("Провести тест по методике"), this);
+        connect(runTest, &QAction::triggered, this, &MethodsWidget::runTest);
+        m_menu->addAction(runTest);
+
+    }
+    m_menu->popup(ui->tvMetods->mapToGlobal(pos));
+}
+
+void MethodsWidget::on_doubleClickedTable(QModelIndex index)
+{
+    Q_UNUSED(index);
+    auto tdcm = SettingsProvider::valueFromRegAppCopy("", AAnalyserSettingsParams::pn_testDoubleClickMode, BaseDefines::tdcmEditParams).toInt();
+    if (BaseDefines::tdcmEditParams == tdcm)
+    {
+        editMetodParams();
+    }
+    else
+    if (BaseDefines::tdcmRunTest == tdcm)
+    {
+        runTest();
+    }
+
+}
+
+void MethodsWidget::runTest()
+{
+    static_cast<AAnalyserApplication*>(QApplication::instance())->executeMetodic();
 }
 
 void MethodsWidget::setMethodicKindsButtons()

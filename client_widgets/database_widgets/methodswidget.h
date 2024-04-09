@@ -5,6 +5,7 @@
 #include <QModelIndex>
 #include <QPushButton>
 #include <QItemSelectionModel>
+#include <QMenu>
 
 namespace Ui {
 class MethodsWidget;
@@ -49,6 +50,12 @@ private slots:
     void on_btnKindPressed();
     void on_doubleClicked(const QModelIndex &index);
 
+    void on_popupMenuRequested(QPoint pos);
+
+    void on_doubleClickedTable(QModelIndex index);
+
+    void runTest();
+
 signals:
     void selectMethod(const QString& uid, const bool isAccept = false);
 
@@ -64,6 +71,7 @@ private:
     QMap<QPushButton*, QString> m_btnToKindUid;
 
     bool m_isAppEvent {true};
+    QMenu* m_menu {nullptr};
 };
 
 #endif // METHODSWIDGET_H

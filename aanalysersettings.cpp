@@ -21,6 +21,7 @@ AAnalyserSettings::AAnalyserSettings(QWidget *parent) :
     ui->twTabs->setCurrentIndex(0);
     fillListMonitors();
     fillRunningMode();
+    fillTestDoubleClickMode();
 }
 
 AAnalyserSettings::~AAnalyserSettings()
@@ -82,6 +83,9 @@ void AAnalyserSettings::load()
     ui->cbRunningMode->setCurrentIndex(rm);
     on_runningModeChange(rm);
 
+    auto tdcm = SettingsProvider::valueFromRegAppCopy("", AAnalyserSettingsParams::pn_testDoubleClickMode, BaseDefines::tdcmEditParams).toInt();
+    ui->cbTestDoubleClickMode->setCurrentIndex(tdcm);
+
     auto tm = SettingsProvider::valueFromRegAppCopy("", AAnalyserSettingsParams::pn_timeCounter, 5).toInt();
     ui->edTimeCounter->setValue(tm);
 
@@ -122,6 +126,9 @@ void AAnalyserSettings::save()
     auto rm = ui->cbRunningMode->currentIndex();
     SettingsProvider::setValueToRegAppCopy("", AAnalyserSettingsParams::pn_runningMode, rm);
 
+    auto tdcm = ui->cbTestDoubleClickMode->currentIndex();
+    SettingsProvider::setValueToRegAppCopy("", AAnalyserSettingsParams::pn_testDoubleClickMode, tdcm);
+
     auto tm = ui->edTimeCounter->value();
     SettingsProvider::setValueToRegAppCopy("", AAnalyserSettingsParams::pn_timeCounter, tm);
 
@@ -144,6 +151,13 @@ void AAnalyserSettings::fillRunningMode()
     ui->cbRunningMode->clear();
     ui->cbRunningMode->addItem(tr("с оператором"), BaseDefines::rmOperator);
     ui->cbRunningMode->addItem(tr("автоматический"), BaseDefines::rmAutomatic);
+}
+
+void AAnalyserSettings::fillTestDoubleClickMode()
+{
+    ui->cbTestDoubleClickMode->clear();
+    ui->cbTestDoubleClickMode->addItem(tr("редактировать параметры"), BaseDefines::tdcmEditParams);
+    ui->cbTestDoubleClickMode->addItem(tr("запускать тест"), BaseDefines::tdcmRunTest);
 }
 
 void AAnalyserSettings::fillSities(const QString& country, const QString& sity)

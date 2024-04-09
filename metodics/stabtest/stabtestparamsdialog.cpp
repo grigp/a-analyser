@@ -378,6 +378,7 @@ void StabTestParamsDialog::assignAccessMode()
     ui->frScale->setVisible(rootMode);
     ui->cbConditions->setVisible(rootMode);
     ui->lblCondition->setVisible(rootMode);
+    ui->frProbeKind->setVisible(rootMode);
 }
 
 void StabTestParamsDialog::fillProbeKinds()

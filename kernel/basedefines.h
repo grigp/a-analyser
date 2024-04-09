@@ -214,6 +214,14 @@ enum RunningMode
     , rmAutomatic     ///< Автоматический
 };
 
+/*!
+ * \brief Что делать при двойном нажатии на запись теста The TestDoubleClickMode enum
+ */
+enum TestDoubleClickMode
+{
+      tdcmEditParams = 0   ///< Редактировать параметры
+    , tdcmRunTest          ///< Запустить тест
+};
 
 }
 

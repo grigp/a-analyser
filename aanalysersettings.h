@@ -15,6 +15,7 @@ namespace AAnalyserSettingsParams
     static const QString pn_runningMode = "RunningMode";
     static const QString pn_timeCounter = "TimeCounter";
     static const QString pn_timeLatent = "TimeLatent";
+    static const QString pn_testDoubleClickMode = "TestDoubleClickMode";
 
     static const QString pc_userLocalize = "UserLocalize";
 
@@ -59,6 +60,7 @@ private:
 
     void fillListMonitors();
     void fillRunningMode();
+    void fillTestDoubleClickMode();
     void fillSities(const QString& country, const QString& sity);
 
     QStandardItemModel m_mdlSities;
