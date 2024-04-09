@@ -40,6 +40,10 @@ PatientsWidget::PatientsWidget(QWidget *parent) :
             this, &PatientsWidget::on_assignPPForPatient);
     connect(static_cast<AAnalyserApplication*>(QApplication::instance()), &AAnalyserApplication::canceledPPForPatient,
             this, &PatientsWidget::on_cancelPPForPatient);
+
+    ui->tvPatients->setContextMenuPolicy(Qt::CustomContextMenu);
+    connect(ui->tvPatients, &QTreeView::customContextMenuRequested, this, &PatientsWidget::on_popupMenuRequested);
+    connect(ui->tvPatients, &QTreeView::doubleClicked, this, &PatientsWidget::on_doubleClickedTable);
 }
 
 PatientsWidget::~PatientsWidget()
@@ -299,6 +303,35 @@ void PatientsWidget::on_viewModePP()
 {
     static_cast<AAnalyserApplication*>(QApplication::instance())->showClientPage(ClientWidgets::uidPersonalProgramWidgetUid);
     SettingsProvider::setValueToRegAppCopy("MainWindow", "MainClientWidget", ClientWidgets::uidPersonalProgramWidgetUid);
+}
+
+void PatientsWidget::on_popupMenuRequested(QPoint pos)
+{
+    if (!m_menu)
+    {
+        m_menu = new QMenu(this);
+
+        QAction *addPatient = new QAction(tr("Новый пациент..."), this);
+        connect(addPatient, &QAction::triggered, this, &PatientsWidget::addPatient);
+        m_menu->addAction(addPatient);
+
+        QAction *editPatient = new QAction(tr("Карточка пациента..."), this);
+        connect(editPatient, &QAction::triggered, this, &PatientsWidget::editPatient);
+        m_menu->addAction(editPatient);
+
+        QAction *delPatient = new QAction(tr("Удалить запись о пациенте..."), this);
+        connect(delPatient, &QAction::triggered, this, &PatientsWidget::removePatient);
+        m_menu->addAction(delPatient);
+
+    }
+    m_menu->popup(ui->tvPatients->mapToGlobal(pos));
+}
+
+void PatientsWidget::on_doubleClickedTable(QModelIndex index)
+{
+
+    Q_UNUSED(index);
+    editPatient();
 }
 
 void PatientsWidget::onePatientHandle()

@@ -4,6 +4,7 @@
 #include <QWidget>
 #include <QModelIndex>
 #include <QItemSelectionModel>
+#include <QMenu>
 
 class PatientsModel;
 class PatientsProxyModel;
@@ -66,6 +67,11 @@ private slots:
 
     void on_viewModePP();
 
+    void on_popupMenuRequested(QPoint pos);
+
+    void on_doubleClickedTable(QModelIndex index);
+
+
 //protected:
 //    bool eventFilter(QObject *watched, QEvent *event);
 
@@ -79,6 +85,8 @@ private:
 
     bool m_isOnePatientMode {false};
     QString m_onePatientFIO {""};
+
+    QMenu *m_menu {nullptr};
 
 //    PatientsModel *m_mdlPatients;
 //    PatientsProxyModel *m_pmdlPatients;

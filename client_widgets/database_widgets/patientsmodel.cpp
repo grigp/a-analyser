@@ -24,7 +24,7 @@ void PatientsModel::load()
 
         addPatientInModel(patient);
     }
-    setHorizontalHeaderLabels(QStringList() << tr("ФИО") << tr("Дата рождения") << tr("Пол"));
+    setHorizontalHeaderLabels(QStringList() << tr("ФИО") << tr("Дата рождения")); // << tr("Пол"));
 
 }
 
@@ -49,12 +49,12 @@ void PatientsModel::addPatientInModel(DataDefines::PatientKard &patient)
     itemFIO->setEditable(false);
     QStandardItem *itemBorn = new QStandardItem(patient.born.toString("dd.MM.yyyy"));
     itemBorn->setEditable(false);
-    QStandardItem *itemSex = new QStandardItem(DataDefines::SexToText.value(
-                                                   static_cast<DataDefines::Sex>(patient.sex)));
-    itemSex->setData(patient.sex, DatabaseWidgetDefines::PatientsModel::PatientSexRole);
-    itemSex->setEditable(false);
+//    QStandardItem *itemSex = new QStandardItem(DataDefines::SexToText.value(
+//                                                   static_cast<DataDefines::Sex>(patient.sex)));
+//    itemSex->setData(patient.sex, DatabaseWidgetDefines::PatientsModel::PatientSexRole);
+//    itemSex->setEditable(false);
 
     QList<QStandardItem*> retval;
-    retval << itemFIO << itemBorn << itemSex;
+    retval << itemFIO << itemBorn; // << itemSex;
     appendRow(retval);
 }
