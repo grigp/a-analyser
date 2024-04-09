@@ -1,0 +1,2457 @@
+{
+    "tests": [
+        {
+            "uid": "{ACDDA9E0-C3E8-4EE7-A33E-4832ACB13A94}",
+            "name": "Постуральный контроль детей первого года жизни",
+            "short_name": "Младенцы",
+            "image": "BabyPosture.png",
+            "template": "met_stabtest_uid",
+            "build_norms": false,
+            "kind": "{03FFE24D-56ED-4138-9FC7-A125A020C190}",
+            "params":
+            {
+                "condition": 6,
+                "probes": [
+                    {
+                        "name": "Запись сигнала",
+                        "kind": 1,
+                        "autoend": 0,
+                        "time": 20,
+                        "latent_time": 0,
+                        "stimul": 0,
+                        "zeroing": 1,
+                        "scale": 0
+                    }
+                ]
+            }
+        },
+        {
+            "uid": "{02D4EC93-C0C2-42BD-979C-D9F472A3CCEE}",
+            "name": "Тест Ромберга",
+            "short_name": "Тест Ромберга",
+            "image": "Romberg.png",
+            "template": "met_stabtest_uid",
+            "build_norms": false,
+            "kind": "{03FFE24D-56ED-4138-9FC7-A125A020C190}",
+            "params":
+            {
+                "condition": 0,
+                "probes": [
+                    {
+                        "name": "Открытые глаза",
+                        "kind": 1,
+                        "autoend": 1,
+                        "time": 20,
+                        "latent_time": 0,
+                        "stimul": 1,
+                        "zeroing": 1,
+                        "scale": 1
+                    },
+                    {
+                        "name": "Закрытые глаза",
+                        "kind": 2,
+                        "autoend": 1,
+                        "time": 20,
+                        "latent_time": 0,
+                        "stimul": 2,
+                        "zeroing": 0,
+                        "scale": 1
+                    }
+                ]
+            }
+        },
+        {
+            "uid": "{140441C1-C1BB-42D0-8858-2A18976166E1}",
+            "name": "Тест с поворотом головы",
+            "short_name": "Поворот головы",
+            "image": "HeadRotate.png",
+            "template": "met_stabtest_uid",
+            "build_norms": false,
+            "kind": "{03FFE24D-56ED-4138-9FC7-A125A020C190}",
+            "params":
+            {
+                "condition": 0,
+                "probes": [
+                    {
+                        "name": "Фоновая",
+                        "kind": 1,
+                        "autoend": 1,
+                        "time": 20,
+                        "latent_time": 0,
+                        "stimul": 1,
+                        "zeroing": 1,
+                        "scale": 1
+                    },
+                    {
+                        "name": "Голова направо",
+                        "kind": 7,
+                        "autoend": 1,
+                        "time": 20,
+                        "latent_time": 0,
+                        "stimul": 2,
+                        "zeroing": 0,
+                        "scale": 1
+                    },
+                    {
+                        "name": "Голова налево",
+                        "kind": 8,
+                        "autoend": 1,
+                        "time": 20,
+                        "latent_time": 0,
+                        "stimul": 2,
+                        "zeroing": 0,
+                        "scale": 1
+                    }
+                ]
+            }
+        },
+        {
+            "uid": "{E4140AE9-C6AE-4173-96D4-CE0B632FF340}",
+            "name": "Тест с наклоном головы",
+            "short_name": "Наклон головы",
+            "image": "HeadTilt.png",
+            "template": "met_stabtest_uid",
+            "build_norms": false,
+            "kind": "{03FFE24D-56ED-4138-9FC7-A125A020C190}",
+            "params":
+            {
+                "condition": 0,
+                "probes": [
+                    {
+                        "name": "Фоновая",
+                        "kind": 1,
+                        "autoend": 1,
+                        "time": 20,
+                        "latent_time": 0,
+                        "stimul": 1,
+                        "zeroing": 1,
+                        "scale": 1
+                    },
+                    {
+                        "name": "Наклон головы вправо",
+                        "kind": 9,
+                        "autoend": 1,
+                        "time": 20,
+                        "latent_time": 0,
+                        "stimul": 2,
+                        "zeroing": 0,
+                        "scale": 1
+                    },
+                    {
+                        "name": "Наклон головы влево",
+                        "kind": 10,
+                        "autoend": 1,
+                        "time": 20,
+                        "latent_time": 0,
+                        "stimul": 2,
+                        "zeroing": 0,
+                        "scale": 1
+                    },
+                    {
+                        "name": "Наклон головы вперед",
+                        "kind": 11,
+                        "autoend": 1,
+                        "time": 20,
+                        "latent_time": 0,
+                        "stimul": 2,
+                        "zeroing": 0,
+                        "scale": 1
+                    },
+                    {
+                        "name": "Наклон головы назад",
+                        "kind": 12,
+                        "autoend": 1,
+                        "time": 20,
+                        "latent_time": 0,
+                        "stimul": 2,
+                        "zeroing": 0,
+                        "scale": 1
+                    }
+                ]
+            }
+        },
+        {
+            "uid": "{B048623F-7A30-46A1-95A3-C2F480B6E697}",
+            "name": "Оптокинетический тест",
+            "short_name": "ОКТ",
+            "image": "OKT.png",
+            "template": "met_stabtest_uid",
+            "build_norms": false,
+            "kind": "{03FFE24D-56ED-4138-9FC7-A125A020C190}",
+            "params": {
+                "condition": 0,
+                "probes": [
+                    {
+                        "autoend": 1,
+                        "kind": 1,
+                        "latent_time": 0,
+                        "name": "Фоновая",
+                        "scale": 1,
+                        "stimul": 1,
+                        "stimul_lines": {
+                            "color": "ff000000",
+                            "direction": 1,
+                            "duty_cycle": 1,
+                            "speed": 200,
+                            "width": 120
+                        },
+                        "time": 20,
+                        "zeroing": 1
+                    },
+                    {
+                        "autoend": 1,
+                        "kind": 13,
+                        "latent_time": 0,
+                        "name": "Полосы вправо",
+                        "scale": 1,
+                        "stimul": 5,
+                        "stimul_lines": {
+                            "color": "ff000000",
+                            "direction": 1,
+                            "duty_cycle": 1,
+                            "speed": 200,
+                            "width": 120
+                        },
+                        "time": 20,
+                        "zeroing": 0
+                    },
+                    {
+                        "autoend": 1,
+                        "kind": 14,
+                        "latent_time": 0,
+                        "name": "Полосы влево",
+                        "scale": 1,
+                        "stimul": 5,
+                        "stimul_lines": {
+                            "color": "ff000000",
+                            "direction": 3,
+                            "duty_cycle": 1,
+                            "speed": 200,
+                            "width": 120
+                        },
+                        "time": 20,
+                        "zeroing": 0
+                    },
+                    {
+                        "autoend": 1,
+                        "kind": 15,
+                        "latent_time": 0,
+                        "name": "Полосы вверх",
+                        "scale": 1,
+                        "stimul": 5,
+                        "stimul_lines": {
+                            "color": "ff000000",
+                            "direction": 0,
+                            "duty_cycle": 1,
+                            "speed": 200,
+                            "width": 120
+                        },
+                        "time": 20,
+                        "zeroing": 0
+                    },
+                    {
+                        "autoend": 1,
+                        "kind": 16,
+                        "latent_time": 0,
+                        "name": "Полосы вниз",
+                        "scale": 1,
+                        "stimul": 5,
+                        "stimul_lines": {
+                            "color": "ff000000",
+                            "direction": 2,
+                            "duty_cycle": 1,
+                            "speed": 200,
+                            "width": 120
+                        },
+                        "time": 20,
+                        "zeroing": 0
+                    }
+                ]
+            }
+        },
+        {
+            "uid": "{EBEA57B4-A791-4F35-87C2-BEDEC6406D2D}",
+            "name": "Допусковый контроль",
+            "short_name": "Допусковый контроль",
+            "image": "Dopusk.png",
+            "template": "met_stabtest_uid",
+            "build_norms": true,
+            "kind": "{03FFE24D-56ED-4138-9FC7-A125A020C190}",
+            "params":
+            {
+                "condition": 2,
+                "probes": [
+                    {
+                        "name": "Открытые глаза",
+                        "kind": 1,
+                        "autoend": 1,
+                        "time": 20,
+                        "latent_time": 0,
+                        "stimul": 1,
+                        "zeroing": 1,
+                        "scale": 1
+                    },
+                    {
+                        "name": "Закрытые глаза",
+                        "kind": 2,
+                        "autoend": 1,
+                        "time": 20,
+                        "latent_time": 0,
+                        "stimul": 2,
+                        "zeroing": 0,
+                        "scale": 1
+                    },
+                    {
+                        "name": "Мишень",
+                        "kind": 3,
+                        "autoend": 1,
+                        "time": 20,
+                        "latent_time": 5,
+                        "stimul": 3,
+                        "zeroing": 1,
+                        "scale": 3
+                    }
+                ]
+            }
+        },
+        {
+            "uid": "{8BFC7928-8DAF-429B-8AB5-C689C63BECC9}",
+            "name": "Стабилографический тест",
+            "short_name": "Стабилометрия",
+            "image": "Stab.png",
+            "template": "met_stabtest_uid",
+            "build_norms": false,
+            "kind": "{03FFE24D-56ED-4138-9FC7-A125A020C190}",
+            "params":
+            {
+                "condition": 0,
+                "probes": [
+                    {
+                        "name": "Стабилографическая проба",
+                        "kind": 1,
+                        "autoend": 0,
+                        "time": 20,
+                        "latent_time": 0,
+                        "stimul": 0,
+                        "zeroing": 1,
+                        "scale": 0
+                    }
+                ]
+            }
+        },
+        {
+            "uid": "{271DB867-0297-4DBD-BD7D-E1BC5675BC2A}",
+            "name": "Тест \"Мишень\"",
+            "short_name": "Мишень",
+            "image": "Target.png",
+            "template": "met_stabtest_uid",
+            "build_norms": false,
+            "kind": "{03FFE24D-56ED-4138-9FC7-A125A020C190}",
+            "params":
+            {
+                "condition": 4,
+                "probes": [
+                    {
+                        "name": "Проба \"Мишень\"",
+                        "kind": 3,
+                        "autoend": 1,
+                        "time": 20,
+                        "latent_time": 5,
+                        "stimul": 3,
+                        "zeroing": 1,
+                        "scale": 3
+                    }
+                ]
+            }
+        },
+        {
+            "uid": "{07D48174-C325-4300-97A0-34E7BD640949}",
+            "name": "Оценка стратегии при стрессовом тестировании",
+            "short_name": "Стресс стратегия",
+            "image": "LateralAsym.png",
+            "template": "met_stabtest_uid",
+            "build_norms": false,
+            "kind": "{03FFE24D-56ED-4138-9FC7-A125A020C190}",
+            "params":
+            {
+                "condition": 5,
+                "probes": [
+                    {
+                        "name": "Проба с видимым курсором",
+                        "kind": 3,
+                        "autoend": 1,
+                        "time": 20,
+                        "latent_time": 5,
+                        "stimul": 3,
+                        "zeroing": 1,
+                        "scale": 3
+                    },
+                    {
+                        "name": "Проба с выделенной зоной",
+                        "kind": 4,
+                        "autoend": 1,
+                        "time": 20,
+                        "latent_time": 5,
+                        "stimul": 4,
+                        "zeroing": 1,
+                        "scale": 3
+                    }
+                ]
+            }
+        },
+        {
+            "uid": "{60164BDD-78E1-4A0D-8B9E-F1485D268227}",
+            "name": "Тест на устойчивость",
+            "short_name": "Устойчивость",
+            "image": "Cross.png",
+            "template": "met_cross_uid",
+            "build_norms": false,
+            "kind": "{03FFE24D-56ED-4138-9FC7-A125A020C190}",
+            "params":
+            {
+                "stage_time": 15,
+                "direction_mode": "random",
+                "repeat_count": 1,
+                "change_stage_mode": "return",
+                "center_size": 15,
+                "delay_time": 5
+            }
+        },
+        {
+            "uid": "{3664D67C-8D21-4AC8-B2DD-D5DECA43360D}",
+            "name": "Тест \"Ступени\"",
+            "short_name": "Ступени",
+            "image": "StepOffset.png",
+            "template": "met_step_offset_uid",
+            "build_norms": false,
+            "kind": "{03FFE24D-56ED-4138-9FC7-A125A020C190}",
+            "params":
+            {
+                "stage_time": 8,
+                "direction": "up",
+                "repeat_count": 4,
+                "force": 50
+            }
+        },
+        {
+            "uid": "{74B5B3BD-A29A-4F29-9404-F56568051949}",
+            "name": "Тест прироста",
+            "short_name": "Прирост",
+            "image": "StepDeviation.png",
+            "template": "met_step_deviatoin_uid",
+            "build_norms": false,
+            "kind": "{03FFE24D-56ED-4138-9FC7-A125A020C190}",
+            "params":
+            {
+                "direction": "up",
+                "max_time": 40
+            }
+        },
+        {
+            "uid": "{94021282-6B50-432F-A715-D34B3FEC4FD7}",
+            "name": "Тест \"Эвольвента\"",
+            "short_name": "Эвольвента",
+            "image": "Evolventa.png",
+            "template": "met_evolventa_uid",
+            "build_norms": false,
+            "kind": "{03FFE24D-56ED-4138-9FC7-A125A020C190}",
+            "params":
+            {
+                "direction_mode": "clockwise",
+                "max_speed": 20,
+                "max_radius": 40,
+                "circles": 4
+            }
+        },
+        {
+            "uid": "{F13585D9-32C3-47CE-9C37-2B8BB7560A7D}",
+            "name": "Тест \"Треугольник\"",
+            "short_name": "Треугольник",
+            "image": "Triangle.png",
+            "template": "met_triangle_uid",
+            "build_norms": false,
+            "kind": "{03FFE24D-56ED-4138-9FC7-A125A020C190}",
+            "params":
+            {
+                "training_time": 60,
+                "analysis_time": 120,
+                "direction_mode": "clockwise",
+                "force": 75,
+                "stage_time": 2,
+                "min_deviation": 50,
+                "show_marker_anal": false
+            }
+        },
+        {
+            "uid": "{005ADEA5-EF51-4BFD-9E8D-F5CF41EE0B9D}",
+            "name": "Тренажер \"Октаэдр\"",
+            "short_name": "Октаэдр",
+            "image": "Octaedron.png",
+            "template": "met_octaedron_uid",
+            "build_norms": false,
+            "kind": "{848935A7-394E-42F9-9320-41ABD2ED5E5B}",
+            "params":
+            {
+                "circe_round_rule_mode": "radial",
+                "direction_mode": "counter_clockwise",
+                "radius": 50,
+                "stage_time": 5
+            }
+        },
+        {
+            "uid": "{3E45F4DE-F959-425E-8067-D2B91F8B8B1D}",
+            "name": "Тренажер с уклонением для боксеров",
+            "short_name": "Боксеры",
+            "image": "BoxingDodging.png",
+            "template": "met_boxer_dodging_uid",
+            "build_norms": false,
+            "kind": "{E7829C54-4F99-4870-A91C-404238B43E50}",
+            "params":
+            {
+                "deviation_threshold": 30,
+                "time": 180,
+                "min_len": 3,
+                "max_len": 10
+            }
+        },
+        {
+            "uid": "{CFCCCAA0-A520-49EF-9C04-EB57580E8CAD}",
+            "name": "Тренажер \"Мячики\"",
+            "short_name": "Мячики",
+            "image": "Balls.png",
+            "template": "met_trentakeput_uid",
+            "build_norms": false,
+            "kind": "{848935A7-394E-42F9-9320-41ABD2ED5E5B}",
+            "params":
+            {
+                "take_zones": [
+                    {
+                        "position": "random",
+                        "x_min": -700,
+                        "x_max": 700,
+                        "y_min": -700,
+                        "y_max": 0,
+                        "width": 50,
+                        "height": 50
+                    }
+                ],
+                "take_elements": [
+                    {
+                        "style": "picture_fixed",
+                        "images": "ball.png",
+                        "repaint": true,
+                        "color": "ffffff00",
+                        "enabled": true,
+                        "code": 1
+                    }
+                ],
+                "take_order": {
+                    "mode": "enabled_primary",
+                    "time": 0
+                },
+                "put_zones": [
+                    {
+                        "position": "fixed",
+                        "x": -670,
+                        "y": 600,
+                        "width": 200,
+                        "height": 200
+                    },
+                    {
+                        "position": "fixed",
+                        "x": 0,
+                        "y": 600,
+                        "width": 200,
+                        "height": 200
+                    },
+                    {
+                        "position": "fixed",
+                        "x": 670,
+                        "y": 600,
+                        "width": 200,
+                        "height": 200
+                    }
+                ],
+                "put_elements": [
+                    {
+                        "style": "picture_fixed",
+                        "images": "basket.png",
+                        "repaint": true,
+                        "color": "ffffff00",
+                        "enabled": true,
+                        "code": 1
+                    },
+                    {
+                        "style": "picture_fixed",
+                        "images": "basket.png",
+                        "repaint": true,
+                        "color": "ffffffff",
+                        "enabled": false,
+                        "code": 0
+                    }
+                ],
+                "put_order": {
+                    "mode": "enabled_primary",
+                    "time": 0
+                },
+                "marker":
+                {
+                    "style": "picture",
+                    "image": "Marker1.png",
+                    "repaint": true,
+                    "color": "ffff0000"
+                },
+                "background": {
+                    "borders": {
+                        "bottom": 130,
+                        "left": 160,
+                        "right": 160,
+                        "top": 130
+                    },
+                    "image": "background_01.png",
+                    "style": "picture"
+                },
+                "sounds":
+                {
+                    "ok": "03.wav",
+                    "error": "04.wav",
+                    "scene": "05.wav"
+                },
+                "stage": "take_put",
+                "delay_after_stage": 0,
+                "scale": 1,
+                "scores_per_min" : 52,
+                "label_scores_visible" : true,
+                "label_faults_visible" : true,
+                "time": 120
+            }
+        },
+        {
+            "uid": "{BE743459-AF91-428A-9862-E177D614ABD3}",
+            "name": "Тренажер \"Цветные мячики\"",
+            "short_name": "Цветные мячики",
+            "image": "BallsColor.png",
+            "template": "met_trentakeput_uid",
+            "build_norms": false,
+            "kind": "{848935A7-394E-42F9-9320-41ABD2ED5E5B}",
+            "params":
+            {
+                "take_zones": [
+                    {
+                        "position": "fixed",
+                        "x": -670,
+                        "y": -800,
+                        "width": 50,
+                        "height": 50
+                    },
+                    {
+                        "position": "fixed",
+                        "x": 0,
+                        "y": -800,
+                        "width": 50,
+                        "height": 50
+                    },
+                    {
+                        "position": "fixed",
+                        "x": 670,
+                        "y": -800,
+                        "width": 50,
+                        "height": 50
+                    }
+                ],
+                "take_elements": [
+                    {
+                        "style": "picture_fixed",
+                        "images": "ball.png",
+                        "repaint": true,
+                        "color": "ffffff00",
+                        "enabled": true,
+                        "code": 1
+                    },
+                    {
+                        "style": "picture_fixed",
+                        "images": "ball.png",
+                        "repaint": true,
+                        "color": "ffff0000",
+                        "enabled": true,
+                        "code": 2
+                    },
+                    {
+                        "style": "picture_fixed",
+                        "images": "ball.png",
+                        "repaint": true,
+                        "color": "ff00ff00",
+                        "enabled": true,
+                        "code": 3
+                    }
+                ],
+                "take_order": {
+                    "mode": "all_by_order",
+                    "time": 0
+                },
+                "put_zones": [
+                    {
+                        "position": "fixed",
+                        "x": -670,
+                        "y": 700,
+                        "width": 200,
+                        "height": 200
+                    },
+                    {
+                        "position": "fixed",
+                        "x": 0,
+                        "y": 700,
+                        "width": 200,
+                        "height": 200
+                    },
+                    {
+                        "position": "fixed",
+                        "x": 670,
+                        "y": 700,
+                        "width": 200,
+                        "height": 200
+                    }
+                ],
+                "put_elements": [
+                    {
+                        "style": "picture_fixed",
+                        "images": "basket.png",
+                        "repaint": true,
+                        "color": "ffffff00",
+                        "enabled": true,
+                        "code": 1
+                    },
+                    {
+                        "style": "picture_fixed",
+                        "images": "basket.png",
+                        "repaint": true,
+                        "color": "ffff0000",
+                        "enabled": true,
+                        "code": 2
+                    },
+                    {
+                        "style": "picture_fixed",
+                        "images": "basket.png",
+                        "repaint": true,
+                        "color": "ff00ff00",
+                        "enabled": true,
+                        "code": 3
+                    }
+                ],
+                "put_order": {
+                    "mode": "all_by_order",
+                    "time": 0
+                },
+                "marker":
+                {
+                    "style": "picture",
+                    "image": "Marker1.png",
+                    "repaint": true,
+                    "color": "ffff0000"
+                },
+                "background": {
+                    "borders": {
+                        "bottom": 50,
+                        "left": 40,
+                        "right": 40,
+                        "top": 50
+                    },
+                    "image": "background_04.png",
+                    "style": "picture"
+                },
+                "sounds":
+                {
+                    "ok": "03.wav",
+                    "error": "04.wav",
+                    "scene": "05.wav"
+                },
+                "stage": "all_elements",
+                "delay_after_stage": 0,
+                "scale": 1,
+                "scores_per_min" : 72,
+                "label_scores_visible" : true,
+                "label_faults_visible" : true,
+                "time": 120
+            }
+        },
+        {
+            "uid": "{24Bf2A64-064F-4264-85BD-F5F62AF7A804}",
+            "name": "Тренажер \"Фигурки\"",
+            "short_name": "Фигурки",
+            "image": "Figures.png",
+            "template": "met_trentakeput_uid",
+            "build_norms": false,
+            "kind": "{848935A7-394E-42F9-9320-41ABD2ED5E5B}",
+            "params":
+            {
+                "take_zones": [
+                    {
+                        "position": "fixed",
+                        "x": -670,
+                        "y": -700,
+                        "width": 50,
+                        "height": 50
+                    },
+                    {
+                        "position": "fixed",
+                        "x": 0,
+                        "y": -700,
+                        "width": 50,
+                        "height": 50
+                    },
+                    {
+                        "position": "fixed",
+                        "x": 670,
+                        "y": -700,
+                        "width": 50,
+                        "height": 50
+                    }
+                ],
+                "take_elements": [
+                    {
+                        "style": "picture_fixed",
+                        "images": "ball.png",
+                        "repaint": true,
+                        "color": "ffffff00",
+                        "enabled": true,
+                        "code": 1
+                    },
+                    {
+                        "style": "picture_fixed",
+                        "images": "cube.png",
+                        "repaint": true,
+                        "color": "ffffff00",
+                        "enabled": false,
+                        "code": 0
+                    },
+                    {
+                        "style": "picture_fixed",
+                        "images": "piramide.png",
+                        "repaint": true,
+                        "color": "ffffff00",
+                        "enabled": false,
+                        "code": 0
+                    }
+                ],
+                "take_order": {
+                    "mode": "enabled_primary",
+                    "time": 0
+                },
+                "put_zones": [
+                    {
+                        "position": "fixed",
+                        "x": -670,
+                        "y": 600,
+                        "width": 200,
+                        "height": 200
+                    },
+                    {
+                        "position": "fixed",
+                        "x": 0,
+                        "y": 600,
+                        "width": 200,
+                        "height": 200
+                    },
+                    {
+                        "position": "fixed",
+                        "x": 670,
+                        "y": 600,
+                        "width": 200,
+                        "height": 200
+                    }
+                ],
+                "put_elements": [
+                    {
+                        "style": "picture_fixed",
+                        "images": "basket.png",
+                        "repaint": true,
+                        "color": "ffffff00",
+                        "enabled": true,
+                        "code": 1
+                    },
+                    {
+                        "style": "picture_fixed",
+                        "images": "basket.png",
+                        "repaint": true,
+                        "color": "ffffffff",
+                        "enabled": false,
+                        "code": 0
+                    }
+                ],
+                "put_order": {
+                    "mode": "enabled_primary",
+                    "time": 0
+                },
+                "marker":
+                {
+                    "style": "picture",
+                    "image": "Marker1.png",
+                    "repaint": true,
+                    "color": "ffff0000"
+                },
+                "background": {
+                    "borders": {
+                        "bottom": 70,
+                        "left": 75,
+                        "right": 75,
+                        "top": 70
+                    },
+                    "image": "background_02.png",
+                    "style": "picture"
+                },
+                "sounds":
+                {
+                    "ok": "03.wav",
+                    "error": "04.wav",
+                    "scene": "05.wav"
+                },
+                "stage": "take_put",
+                "delay_after_stage": 0,
+                "scale": 1,
+                "scores_per_min" : 168,
+                "label_scores_visible" : true,
+                "label_faults_visible" : true,
+                "time": 120
+            }
+        },
+        {
+            "uid": "{D03ACE59-9144-42CB-B4BC-9970349906D9}",
+            "name": "Тренажер \"Фигурки по кресту\"",
+            "short_name": "Фигурки по кресту",
+            "image": "FiguresCross.png",
+            "template": "met_trentakeput_uid",
+            "build_norms": false,
+            "kind": "{848935A7-394E-42F9-9320-41ABD2ED5E5B}",
+            "params":
+            {
+                "take_zones": [
+                    {
+                        "position": "fixed",
+                        "x": 0,
+                        "y": 700,
+                        "width": 50,
+                        "height": 50
+                    },
+                    {
+                        "position": "fixed",
+                        "x": 700,
+                        "y": 0,
+                        "width": 50,
+                        "height": 50
+                    },
+                    {
+                        "position": "fixed",
+                        "x": 0,
+                        "y": -700,
+                        "width": 50,
+                        "height": 50
+                    },
+                    {
+                        "position": "fixed",
+                        "x": -700,
+                        "y": 0,
+                        "width": 50,
+                        "height": 50
+                    }
+                ],
+                "take_elements": [
+                    {
+                        "style": "picture_fixed",
+                        "images": "ball.png",
+                        "repaint": true,
+                        "color": "ffffff00",
+                        "enabled": true,
+                        "code": 1
+                    },
+                    {
+                        "style": "picture_fixed",
+                        "images": "cube.png",
+                        "repaint": true,
+                        "color": "ffffff00",
+                        "enabled": false,
+                        "code": 0
+                    },
+                    {
+                        "style": "picture_fixed",
+                        "images": "piramide.png",
+                        "repaint": true,
+                        "color": "ffffff00",
+                        "enabled": false,
+                        "code": 0
+                    },
+                    {
+                        "style": "picture_fixed",
+                        "images": "cone.png",
+                        "repaint": true,
+                        "color": "ffffff00",
+                        "enabled": false,
+                        "code": 0
+                    }
+                ],
+                "take_order": {
+                    "mode": "enabled_primary",
+                    "time": 0
+                },
+                "put_zones": [
+                    {
+                        "position": "fixed",
+                        "x": 0,
+                        "y": 0,
+                        "width": 200,
+                        "height": 200
+                    }
+                ],
+                "put_elements": [
+                    {
+                        "style": "picture_fixed",
+                        "images": "basket.png",
+                        "repaint": true,
+                        "color": "ffffff00",
+                        "enabled": true,
+                        "code": 1
+                    }
+                ],
+                "put_order": {
+                    "mode": "enabled_primary",
+                    "time": 0
+                },
+                "marker":
+                {
+                    "style": "picture",
+                    "image": "Marker1.png",
+                    "repaint": true,
+                    "color": "ffff0000"
+                },
+                "background": {
+                    "borders": {
+                        "bottom": 110,
+                        "left": 140,
+                        "right": 140,
+                        "top": 110
+                    },
+                    "image": "background_03.png",
+                    "style": "picture"
+                },
+                "sounds":
+                {
+                    "ok": "03.wav",
+                    "error": "04.wav",
+                    "scene": "05.wav"
+                },
+                "stage": "take_put",
+                "delay_after_stage": 0,
+                "scale": 1,
+                "scores_per_min" : 272,
+                "label_scores_visible" : true,
+                "label_faults_visible" : true,
+                "time": 120
+            }
+        },
+        {
+            "uid": "{BDE82084-9568-4A7C-BA11-33A20BB14072}",
+            "name": "Тренажер \"Построение картинок\"",
+            "short_name": "Построение картинок",
+            "image": "Puzzle.png",
+            "template": "met_trentakeput_uid",
+            "build_norms": false,
+            "kind": "{848935A7-394E-42F9-9320-41ABD2ED5E5B}",
+            "params":
+            {
+                "take_zones": [
+                    {
+                        "position": "fixed",
+                        "x": -750,
+                        "y": -750,
+                        "width": 500,
+                        "height": 500
+                    },
+                    {
+                        "position": "fixed",
+                        "x": -250,
+                        "y": -750,
+                        "width": 500,
+                        "height": 500
+                    },
+                    {
+                        "position": "fixed",
+                        "x": 250,
+                        "y": -750,
+                        "width": 500,
+                        "height": 500
+                    },
+                    {
+                        "position": "fixed",
+                        "x": 750,
+                        "y": -750,
+                        "width": 500,
+                        "height": 500
+                    }
+                ],
+                "take_elements": [
+                    {
+                        "style": "picture_split",
+                        "images": "pictures//puzzle//",
+                        "repaint": false,
+                        "enabled": true,
+                        "code": -1
+                    }
+                ],
+                "take_order": {
+                    "mode": "all_by_order",
+                    "time": 1
+                },
+                "put_zones": [
+                    {
+                        "position": "fixed",
+                        "x": -250,
+                        "y": 0,
+                        "width": 500,
+                        "height": 500,
+                        "positionCode": 101
+                    },
+                    {
+                        "position": "fixed",
+                        "x": 250,
+                        "y": 0,
+                        "width": 500,
+                        "height": 500,
+                        "positionCode": 102
+                    },
+                    {
+                        "position": "fixed",
+                        "x": -250,
+                        "y": 500,
+                        "width": 500,
+                        "height": 500,
+                        "positionCode": 201
+                    },
+                    {
+                        "position": "fixed",
+                        "x": 250,
+                        "y": 500,
+                        "width": 500,
+                        "height": 500,
+                        "positionCode": 202
+                    }
+                ],
+                "put_elements": [
+                    {
+                        "style": "drawing",
+                        "drawing": "rectangle",
+                        "color": "fff0f0f0",
+                        "enabled": true,
+                        "code": -1
+                    }
+                ],
+                "put_order": {
+                    "mode": "all_by_order",
+                    "time": 1
+                },
+                "marker":
+                {
+                    "style": "picture",
+                    "image": "Marker1.png",
+                    "repaint": true,
+                    "color": "ffff0000"
+                },
+                "background": {
+                    "borders": {
+                        "bottom": 0,
+                        "left": 0,
+                        "right": 0,
+                        "top": 0
+                    },
+                    "image": "01.png",
+                    "style": "plate"
+                },
+                "sounds":
+                {
+                    "ok": "03.wav",
+                    "error": "04.wav",
+                    "scene": "05.wav"
+                },
+                "stage": "all_elements",
+                "delay_after_stage": 500,
+                "scale": 1,
+                "scores_per_min" : 44,
+                "label_scores_visible" : true,
+                "label_faults_visible" : true,
+                "time": 300
+            }
+        },
+        {
+            "uid": "{72EF6357-B6B0-48FF-9206-7A5D56ABB788 }",
+            "name": "Тренажер \"Мировые столицы\"",
+            "short_name": "Мировые столицы",
+            "image": "Capitals.png",
+            "template": "met_trentakeput_uid",
+            "build_norms": false,
+            "kind": "{848935A7-394E-42F9-9320-41ABD2ED5E5B}",
+            "params":
+            {
+                "take_zones": [
+                    {
+                        "position": "fixed",
+                        "x": -750,
+                        "y": -600,
+                        "width": 500,
+                        "height": 500
+                    },
+                    {
+                        "position": "fixed",
+                        "x": -250,
+                        "y": -600,
+                        "width": 500,
+                        "height": 500
+                    },
+                    {
+                        "position": "fixed",
+                        "x": 250,
+                        "y": -600,
+                        "width": 500,
+                        "height": 500
+                    },
+                    {
+                        "position": "fixed",
+                        "x": 750,
+                        "y": -600,
+                        "width": 500,
+                        "height": 500
+                    }
+                ],
+                "take_elements": [
+                    {
+                        "style": "picture_pair",
+                        "images": "pictures//capitals//",
+                        "repaint": false,
+                        "enabled": true,
+                        "code": -1
+                    }
+                ],
+                "take_order": {
+                    "mode": "all_by_order",
+                    "time": 1
+                },
+                "put_zones": [
+                    {
+                        "position": "fixed",
+                        "x": -900,
+                        "y": 550,
+                        "width": 500,
+                        "height": 500
+                    },
+                    {
+                        "position": "fixed",
+                        "x": -300,
+                        "y": 550,
+                        "width": 500,
+                        "height": 500
+                    },
+                    {
+                        "position": "fixed",
+                        "x": 300,
+                        "y": 550,
+                        "width": 500,
+                        "height": 500
+                    },
+                    {
+                        "position": "fixed",
+                        "x": 900,
+                        "y": 550,
+                        "width": 500,
+                        "height": 500
+                    }
+                ],
+                "put_elements": [
+                    {
+                        "style": "picture_pair",
+                        "images": "pictures//capitals//",
+                        "repaint": false,
+                        "enabled": true,
+                        "code": -1
+                    }
+                ],
+                "put_order": {
+                    "mode": "all_by_order",
+                    "time": 1
+                },
+                "marker":
+                {
+                    "style": "picture",
+                    "image": "Marker1.png",
+                    "repaint": true,
+                    "color": "ffff0000"
+                },
+                "background":
+                {
+                     "style": "picture",
+                     "image": "background_01.png",
+                     "borders":
+                     {
+                        "bottom": 60,
+                        "left": 65,
+                        "right": 65,
+                        "top": 60
+                     }
+                },
+                "sounds":
+                {
+                    "ok": "03.wav",
+                    "error": "04.wav",
+                    "scene": "05.wav"
+                },
+                "stage": "all_elements",
+                "delay_after_stage": 0,
+                "scale": 1,
+                "scores_per_min" : 34,
+                "label_scores_visible" : true,
+                "label_faults_visible" : true,
+                "time": 120
+            }
+        },
+        {
+            "uid": "{1E383953-2062-43DA-9AE8-0D73F2258FC5}",
+            "name": "Тренажер \"Охота\"",
+            "short_name": "Охота",
+            "image": "Hunter.png",
+            "template": "met_trentakeput_uid",
+            "build_norms": false,
+            "kind": "{848935A7-394E-42F9-9320-41ABD2ED5E5B}",
+            "params":
+            {
+                "take_zones": [
+                    {
+                        "position": "random",
+                        "x_min": -700,
+                        "x_max": 700,
+                        "y_min": -700,
+                        "y_max": 700,
+                        "width": 500,
+                        "height": 500
+                    }
+                ],
+                "take_elements": [
+                    {
+                        "style": "picture_random",
+                        "images": "pictures//animals//",
+                        "repaint": false,
+                        "enabled": true,
+                        "code": 1
+                    }
+                ],
+                "take_order": {
+                    "mode": "enabled_primary",
+                    "time": 2
+                },
+                "put_zones": [
+                ],
+                "put_elements": [
+                ],
+                "put_order": {
+                    "mode": "enabled_primary",
+                    "time": 0
+                },
+                "marker":
+                {
+                    "style": "picture",
+                    "image": "Marker3.png",
+                    "repaint": true,
+                    "color": "ffff0000"
+                },
+                "background": {
+                    "borders": {
+                        "bottom": 0,
+                        "left": 0,
+                        "right": 0,
+                        "top": 0
+                    },
+                    "image": "03.png",
+                    "style": "plate"
+                },
+                "sounds":
+                {
+                    "ok": "02.wav",
+                    "error": "",
+                    "scene": ""
+                },
+                "stage": "all_elements",
+                "delay_after_stage": 0,
+                "scale": 1,
+                "scores_per_min" : 44,
+                "label_scores_visible" : true,
+                "label_faults_visible" : false,
+                "time": 120
+            }
+        },
+        {
+            "uid": "{951DD0E9-E535-4BBB-8F54-DA53859A43C2}",
+            "name": "Тренажер \"Охота с лимитом времени\"",
+            "short_name": "Охота на время",
+            "image": "HunterTime.png",
+            "template": "met_trentakeput_uid",
+            "build_norms": false,
+            "kind": "{848935A7-394E-42F9-9320-41ABD2ED5E5B}",
+            "params":
+            {
+                "take_zones": [
+                    {
+                        "position": "random",
+                        "x_min": -700,
+                        "x_max": 700,
+                        "y_min": -700,
+                        "y_max": 700,
+                        "width": 500,
+                        "height": 500
+                    }
+                ],
+                "take_elements": [
+                    {
+                        "style": "picture_random",
+                        "images": "pictures//animals//",
+                        "repaint": false,
+                        "enabled": true,
+                        "code": 1,
+                        "present_time": 5015
+                    }
+                ],
+                "take_order": {
+                    "mode": "enabled_primary",
+                    "time": 2
+                },
+                "put_zones": [
+                ],
+                "put_elements": [
+                ],
+                "put_order": {
+                    "mode": "enabled_primary",
+                    "time": 0
+                },
+                "marker":
+                {
+                    "style": "picture",
+                    "image": "Marker3.png",
+                    "repaint": true,
+                    "color": "ffff0000"
+                },
+                "background": {
+                    "borders": {
+                        "bottom": 0,
+                        "left": 0,
+                        "right": 0,
+                        "top": 0
+                    },
+                    "image": "03.png",
+                    "style": "plate"
+                },
+                "sounds":
+                {
+                    "ok": "02.wav",
+                    "error": "04.wav",
+                    "scene": ""
+                },
+                "stage": "all_elements",
+                "delay_after_stage": 0,
+                "scale": 1,
+                "scores_per_min" : 44,
+                "label_scores_visible" : true,
+                "label_faults_visible" : true,
+                "time": 120
+            }
+        },
+        {
+            "uid": "{7B3EBE0D-E670-4fC3-B4E4-DffC74857A21}",
+            "name": "Тренажер \"Тир\"",
+            "short_name": "Тир",
+            "image": "SootingRoom.png",
+            "template": "met_trentakeput_uid",
+            "build_norms": false,
+            "kind": "{848935A7-394E-42F9-9320-41ABD2ED5E5B}",
+            "params":
+            {
+                "take_zones": [
+                    {
+                        "position": "fixed",
+                        "x": -800,
+                        "y": -500,
+                        "width": 500,
+                        "height": 500
+                    },
+                    {
+                        "position": "fixed",
+                        "x": 0,
+                        "y": -500,
+                        "width": 500,
+                        "height": 500
+                    },
+                    {
+                        "position": "fixed",
+                        "x": 800,
+                        "y": -500,
+                        "width": 500,
+                        "height": 500
+                    },
+                    {
+                        "position": "fixed",
+                        "x": -800,
+                        "y": 300,
+                        "width": 500,
+                        "height": 500
+                    },
+                    {
+                        "position": "fixed",
+                        "x": 800,
+                        "y": 300,
+                        "width": 500,
+                        "height": 500
+                    }
+                ],
+                "take_elements": [
+                    {
+                        "style": "picture_random",
+                        "images": "pictures//animals//",
+                        "repaint": false,
+                        "enabled": true,
+                        "code": 1,
+                        "present_time": 10025
+                    }
+                ],
+                "take_order": {
+                    "mode": "all_by_order",
+                    "time": 2
+                },
+                "put_zones": [
+                ],
+                "put_elements": [
+                ],
+                "put_order": {
+                    "mode": "enabled_primary",
+                    "time": 0
+                },
+                "marker":
+                {
+                    "style": "picture",
+                    "image": "Marker3.png",
+                    "repaint": true,
+                    "color": "ffff0000"
+                },
+                "background": {
+                    "borders": {
+                        "bottom": 0,
+                        "left": 0,
+                        "right": 0,
+                        "top": 0
+                    },
+                    "image": "03.png",
+                    "style": "plate"
+                },
+                "sounds":
+                {
+                    "ok": "02.wav",
+                    "error": "04.wav",
+                    "scene": ""
+                },
+                "stage": "all_elements",
+                "delay_after_stage": 0,
+                "scale": 1,
+                "scores_per_min" : 56,
+                "label_scores_visible" : true,
+                "label_faults_visible" : true,
+                "time": 120
+            }
+        },
+        {
+            "uid": "{00B91519-842A-450D-93F1-1ADf104CDC0E}",
+            "name": "Тренажер \"Охота на птиц\"",
+            "short_name": "Охота на птиц",
+            "image": "HunterBird.png",
+            "template": "met_trentakeput_uid",
+            "build_norms": false,
+            "kind": "{848935A7-394E-42F9-9320-41ABD2ED5E5B}",
+            "params":
+            {
+                "take_zones": [
+                    {
+                        "position": "random",
+                        "x_min": -900,
+                        "x_max": -900,
+                        "y_min": -900,
+                        "y_max": 0,
+                        "width": 200,
+                        "height": 200
+                    }
+                ],
+                "take_elements": [
+                    {
+                        "style": "picture_random",
+                        "images": "pictures//birds//",
+                        "repaint": false,
+                        "enabled": true,
+                        "code": 1,
+                        "mobile": true,
+                        "moving_law": "left_to_right",
+                        "moving_max_speed": 7
+                    }
+                ],
+                "take_order": {
+                    "mode": "enabled_primary",
+                    "time": 1
+                },
+                "put_zones": [
+                ],
+                "put_elements": [
+                ],
+                "put_order": {
+                    "mode": "enabled_primary",
+                    "time": 0
+                },
+                "marker":
+                {
+                    "style": "picture",
+                    "image": "Marker3.png",
+                    "repaint": true,
+                    "color": "ffff0000"
+                },
+                "background": {
+                    "borders": {
+                        "bottom": 0,
+                        "left": 0,
+                        "right": 0,
+                        "top": 0
+                    },
+                    "image": "background_07.png",
+                    "style": "picture"
+                },
+                "sounds":
+                {
+                    "ok": "02.wav",
+                    "error": "04.wav",
+                    "scene": ""
+                },
+                "stage": "all_elements",
+                "delay_after_stage": 0,
+                "scale": 1,
+                "scores_per_min" : 45,
+                "label_scores_visible" : true,
+                "label_faults_visible" : true,
+                "time": 120
+            }
+        },
+        {
+            "uid": "{03B9C401-061C-4FA4-BA98-6054FE8AE6BC}",
+            "name": "Тренажер \"Воздушный бой\"",
+            "short_name": "Воздушный бой",
+            "image": "AirFight.png",
+            "template": "met_trentakeput_uid",
+            "build_norms": false,
+            "kind": "{848935A7-394E-42F9-9320-41ABD2ED5E5B}",
+            "params":
+            {
+                "take_zones": [
+                    {
+                        "position": "random",
+                        "x_min": -700,
+                        "x_max": 700,
+                        "y_min": -700,
+                        "y_max": 700,
+                        "width": 500,
+                        "height": 500
+                    }
+                ],
+                "take_elements": [
+                    {
+                        "style": "picture_random",
+                        "images": "pictures//aviation//",
+                        "repaint": false,
+                        "enabled": true,
+                        "code": 1,
+                        "done_process" : "bang",
+                        "mobile": true,
+                        "moving_law": "random_force",
+                        "moving_max_force": 25
+                    }
+                ],
+                "take_order": {
+                    "mode": "enabled_primary",
+                    "time": 2
+                },
+                "put_zones": [
+                ],
+                "put_elements": [
+                ],
+                "put_order": {
+                    "mode": "enabled_primary",
+                    "time": 0
+                },
+                "marker":
+                {
+                    "style": "picture",
+                    "image": "Marker3.png",
+                    "repaint": true,
+                    "color": "ffff0000",
+                    "advanced": "trace_on_target"
+                },
+                "background": {
+                    "borders": {
+                        "bottom": 0,
+                        "left": 0,
+                        "right": 0,
+                        "top": 0
+                    },
+                    "image": "background_06.png",
+                    "style": "picture"
+                },
+                "sounds":
+                {
+                    "ok": "06.wav",
+                    "error": "",
+                    "scene": "",
+                    "on_target": "01.wav"
+                },
+                "stage": "all_elements",
+                "delay_after_stage": 500,
+                "scale": 1,
+                "scores_per_min" : 38,
+                "label_scores_visible" : true,
+                "label_faults_visible" : true,
+                "time": 120
+            }
+        },
+        {
+            "uid": "{EBD6CB19-6B14-4E18-8171-1C9685DF56C0}",
+            "name": "Тренажер \"Тетрис с захватом\"",
+            "short_name": "Тетрис с захватом",
+            "image": "TetrisTake.png",
+            "template": "met_trentetris_uid",
+            "build_norms": false,
+            "kind": "{E7829C54-4F99-4870-A91C-404238B43E50}",
+            "params":
+            {
+                "moving_mode": "take",
+                "complexity": "figures",
+                "deleting": "rows",
+                "height": 21,
+                "width": 15,
+                "cube_image": "Cube1.png",
+                "rows_deleting_mode":
+                {
+                    "cube_color": "ffffff00",
+                    "glass_color": "ff00ffff",
+                    "last_color": "ffff00ff"
+                },
+                "colored_deleting_mode":
+                {
+                    "count": 3,
+                    "colors": [
+                        {
+                            "color": "ffff0000"
+                        },
+                        {
+                            "color": "ff00ff00"
+                        },
+                        {
+                            "color": "ff0000ff"
+                        },
+                        {
+                            "color": "ffffff00"
+                        },
+                        {
+                            "color": "ffff00ff"
+                        },
+                        {
+                            "color": "ff00ffff"
+                        }
+                    ]
+                },
+                "auto_moving_mode":
+                {
+                    "speed": 3
+                },
+                "marker": {
+                    "style": "picture",
+                    "image": "Marker3.png",
+                    "repaint": true,
+                    "color": "ffff0000",
+                    "advanced": "none"
+                },
+                "background": {
+                     "style": "plate",
+                     "image": "01.png",
+                     "borders": {
+                         "left": 0,
+                         "top": 0,
+                         "right": 0,
+                         "bottom": 0
+                     }
+                },
+                "glass": {
+                     "style": "plate",
+                     "image": "09.png",
+                     "color": "f8f8f8ff",
+                     "frames": {
+                        "bottom": "01_bottom.png",
+                        "corner_left": "01_corner_left.png",
+                        "corner_right": "01_corner_right.png",
+                        "left": "01_left.png",
+                        "right": "01_right.png",
+                        "color": "0000ffff"
+                    }
+                },
+                "sounds": {
+                    "take": "03.wav",
+                    "put": "04.wav",
+                    "delete": "05.wav"
+                },
+                "scale": 2,
+                "scores_per_min" : 205,
+                "time": 240
+            }
+        },
+        {
+            "uid": "{A172B635-136E-4602-B735-51391551A3A7}",
+            "name": "Тренажер \"Цветной тетрис с захватом\"",
+            "short_name": "Цветной тетрис с захватом",
+            "image": "TetrisColorTake.png",
+            "template": "met_trentetris_uid",
+            "build_norms": false,
+            "kind": "{E7829C54-4F99-4870-A91C-404238B43E50}",
+            "params":
+            {
+                "moving_mode": "take",
+                "complexity": "figures",
+                "deleting": "colored",
+                "height": 21,
+                "width": 15,
+                "cube_image": "Cube1.png",
+                "rows_deleting_mode":
+                {
+                    "cube_color": "ffffff00",
+                    "glass_color": "ff00ffff",
+                    "last_color": "ffff00ff"
+                },
+                "colored_deleting_mode":
+                {
+                    "count": 3,
+                    "colors": [
+                        {
+                            "color": "ffff0000"
+                        },
+                        {
+                            "color": "ff00ff00"
+                        },
+                        {
+                            "color": "ff0000ff"
+                        },
+                        {
+                            "color": "ffffff00"
+                        },
+                        {
+                            "color": "ffff00ff"
+                        },
+                        {
+                            "color": "ff00ffff"
+                        }
+                    ]
+                },
+                "auto_moving_mode":
+                {
+                    "speed": 3
+                },
+                "marker": {
+                    "style": "picture",
+                    "image": "Marker3.png",
+                    "repaint": true,
+                    "color": "ffff0000",
+                    "advanced": "none"
+                },
+                "background": {
+                     "style": "plate",
+                     "image": "01.png",
+                     "borders": {
+                         "left": 0,
+                         "top": 0,
+                         "right": 0,
+                         "bottom": 0
+                     }
+                },
+                "glass": {
+                     "style": "plate",
+                     "image": "09.png",
+                     "color": "f8f8f8ff",
+                     "frames": {
+                        "bottom": "01_bottom.png",
+                        "corner_left": "01_corner_left.png",
+                        "corner_right": "01_corner_right.png",
+                        "left": "01_left.png",
+                        "right": "01_right.png",
+                        "color": "0000ffff"
+                    }
+                },
+                "sounds": {
+                    "take": "03.wav",
+                    "put": "04.wav",
+                    "delete": "05.wav"
+                },
+                "scale": 2,
+                "scores_per_min" : 126,
+                "time": 240
+            }
+        },
+        {
+            "uid": "{B13FA83F-0447-4871-A238-FC0496A4D06C}",
+            "name": "Тренажер \"Тетрис\"",
+            "short_name": "Тетрис",
+            "image": "Tetris.png",
+            "template": "met_trentetris_uid",
+            "build_norms": false,
+            "kind": "{E7829C54-4F99-4870-A91C-404238B43E50}",
+            "params":
+            {
+                "moving_mode": "auto",
+                "complexity": "figures",
+                "deleting": "rows",
+                "height": 21,
+                "width": 15,
+                "cube_image": "Cube1.png",
+                "rows_deleting_mode":
+                {
+                    "cube_color": "ffffff00",
+                    "glass_color": "ff00ffff",
+                    "last_color": "ffff00ff"
+                },
+                "colored_deleting_mode":
+                {
+                    "count": 3,
+                    "colors": [
+                        {
+                            "color": "ffff0000"
+                        },
+                        {
+                            "color": "ff00ff00"
+                        },
+                        {
+                            "color": "ff0000ff"
+                        },
+                        {
+                            "color": "ffffff00"
+                        },
+                        {
+                            "color": "ffff00ff"
+                        },
+                        {
+                            "color": "ff00ffff"
+                        }
+                    ]
+                },
+                "auto_moving_mode":
+                {
+                    "speed": 3
+                },
+                "marker": {
+                    "style": "picture",
+                    "image": "Marker3.png",
+                    "repaint": true,
+                    "color": "ffff0000",
+                    "advanced": "none"
+                },
+                "background": {
+                     "style": "plate",
+                     "image": "01.png",
+                     "borders": {
+                         "left": 0,
+                         "top": 0,
+                         "right": 0,
+                         "bottom": 0
+                     }
+                },
+                "glass": {
+                     "style": "plate",
+                     "image": "09.png",
+                     "color": "f8f8f8ff",
+                     "frames": {
+                        "bottom": "01_bottom.png",
+                        "corner_left": "01_corner_left.png",
+                        "corner_right": "01_corner_right.png",
+                        "left": "01_left.png",
+                        "right": "01_right.png",
+                        "color": "0000ffff"
+                    }
+                },
+                "sounds": {
+                    "take": "03.wav",
+                    "put": "04.wav",
+                    "delete": "05.wav"
+                },
+                "scale": 2,
+                "scores_per_min" : 100,
+                "time": 240
+            }
+        },
+        {
+            "uid": "{021EF208-1339-4513-83D9-904BA06A1458}",
+            "name": "Тренажер \"Цветной тетрис\"",
+            "short_name": "Цветной тетрис",
+            "image": "TetrisColor.png",
+            "template": "met_trentetris_uid",
+            "build_norms": false,
+            "kind": "{E7829C54-4F99-4870-A91C-404238B43E50}",
+            "params":
+            {
+                "moving_mode": "auto",
+                "complexity": "figures",
+                "deleting": "colored",
+                "height": 21,
+                "width": 15,
+                "cube_image": "Cube1.png",
+                "rows_deleting_mode":
+                {
+                    "cube_color": "ffffff00",
+                    "glass_color": "ff00ffff",
+                    "last_color": "ffff00ff"
+                },
+                "colored_deleting_mode":
+                {
+                    "count": 3,
+                    "colors": [
+                        {
+                            "color": "ffff0000"
+                        },
+                        {
+                            "color": "ff00ff00"
+                        },
+                        {
+                            "color": "ff0000ff"
+                        },
+                        {
+                            "color": "ffffff00"
+                        },
+                        {
+                            "color": "ffff00ff"
+                        },
+                        {
+                            "color": "ff00ffff"
+                        }
+                    ]
+                },
+                "auto_moving_mode":
+                {
+                    "speed": 3
+                },
+                "marker": {
+                    "style": "picture",
+                    "image": "Marker3.png",
+                    "repaint": true,
+                    "color": "ffff0000",
+                    "advanced": "none"
+                },
+                "background": {
+                     "style": "plate",
+                     "image": "01.png",
+                     "borders": {
+                         "left": 0,
+                         "top": 0,
+                         "right": 0,
+                         "bottom": 0
+                     }
+                },
+                "glass": {
+                     "style": "plate",
+                     "image": "09.png",
+                     "color": "f8f8f8ff",
+                     "frames": {
+                        "bottom": "01_bottom.png",
+                        "corner_left": "01_corner_left.png",
+                        "corner_right": "01_corner_right.png",
+                        "left": "01_left.png",
+                        "right": "01_right.png",
+                        "color": "0000ffff"
+                    }
+                },
+                "sounds": {
+                    "take": "03.wav",
+                    "put": "04.wav",
+                    "delete": "05.wav"
+                },
+                "scale": 2,
+                "scores_per_min" : 74,
+                "time": 240
+            }
+        },
+        {
+            "uid": "{5130376D-623B-43E6-A15A-3FFF092C493B}",
+            "name": "Тренажер \"Кубики с захватом\"",
+            "short_name": "Кубики с захватом",
+            "image": "TetrisCubesTake.png",
+            "template": "met_trentetris_uid",
+            "build_norms": false,
+            "kind": "{848935A7-394E-42F9-9320-41ABD2ED5E5B}",
+            "params":
+            {
+                "moving_mode": "take",
+                "complexity": "cubes",
+                "deleting": "rows",
+                "height": 7,
+                "width": 5,
+                "cube_image": "Cube1.png",
+                "rows_deleting_mode":
+                {
+                    "cube_color": "ffffff00",
+                    "glass_color": "ff00ffff",
+                    "last_color": "ffff00ff"
+                },
+                "colored_deleting_mode":
+                {
+                    "count": 3,
+                    "colors": [
+                        {
+                            "color": "ffff0000"
+                        },
+                        {
+                            "color": "ff00ff00"
+                        },
+                        {
+                            "color": "ff0000ff"
+                        },
+                        {
+                            "color": "ffffff00"
+                        },
+                        {
+                            "color": "ffff00ff"
+                        },
+                        {
+                            "color": "ff00ffff"
+                        }
+                    ]
+                },
+                "auto_moving_mode":
+                {
+                    "speed": 3
+                },
+                "marker": {
+                    "style": "picture",
+                    "image": "Marker3.png",
+                    "repaint": true,
+                    "color": "ffff0000",
+                    "advanced": "none"
+                },
+                "background": {
+                     "style": "plate",
+                     "image": "01.png",
+                     "borders": {
+                         "left": 0,
+                         "top": 0,
+                         "right": 0,
+                         "bottom": 0
+                     }
+                },
+                "glass": {
+                     "style": "plate",
+                     "image": "09.png",
+                     "color": "f8f8f8ff",
+                     "frames": {
+                        "bottom": "01_bottom.png",
+                        "corner_left": "01_corner_left.png",
+                        "corner_right": "01_corner_right.png",
+                        "left": "01_left.png",
+                        "right": "01_right.png",
+                        "color": "0000ffff"
+                    }
+                },
+                "sounds": {
+                    "take": "03.wav",
+                    "put": "04.wav",
+                    "delete": "05.wav"
+                },
+                "scale": 2,
+                "scores_per_min" : 103,
+                "time": 120
+            }
+        },
+        {
+            "uid": "{F14869E1-BCAD-47B7-9E9B-6A82B3BA3F33}",
+            "name": "Тренажер \"Цветные кубики с захватом\"",
+            "short_name": "Цветные кубики с захватом",
+            "image": "TetrisCubesColorTake.png",
+            "template": "met_trentetris_uid",
+            "build_norms": false,
+            "kind": "{848935A7-394E-42F9-9320-41ABD2ED5E5B}",
+            "params":
+            {
+                "moving_mode": "take",
+                "complexity": "cubes",
+                "deleting": "colored",
+                "height": 7,
+                "width": 5,
+                "cube_image": "Cube1.png",
+                "rows_deleting_mode":
+                {
+                    "cube_color": "ffffff00",
+                    "glass_color": "ff00ffff",
+                    "last_color": "ffff00ff"
+                },
+                "colored_deleting_mode":
+                {
+                    "count": 3,
+                    "colors": [
+                        {
+                            "color": "ffff0000"
+                        },
+                        {
+                            "color": "ff00ff00"
+                        },
+                        {
+                            "color": "ff0000ff"
+                        },
+                        {
+                            "color": "ffffff00"
+                        },
+                        {
+                            "color": "ffff00ff"
+                        },
+                        {
+                            "color": "ff00ffff"
+                        }
+                    ]
+                },
+                "auto_moving_mode":
+                {
+                    "speed": 3
+                },
+                "marker": {
+                    "style": "picture",
+                    "image": "Marker3.png",
+                    "repaint": true,
+                    "color": "ffff0000",
+                    "advanced": "none"
+                },
+                "background": {
+                     "style": "plate",
+                     "image": "01.png",
+                     "borders": {
+                         "left": 0,
+                         "top": 0,
+                         "right": 0,
+                         "bottom": 0
+                     }
+                },
+                "glass": {
+                     "style": "plate",
+                     "image": "09.png",
+                     "color": "f8f8f8ff",
+                     "frames": {
+                        "bottom": "01_bottom.png",
+                        "corner_left": "01_corner_left.png",
+                        "corner_right": "01_corner_right.png",
+                        "left": "01_left.png",
+                        "right": "01_right.png",
+                        "color": "0000ffff"
+                    }
+                },
+                "sounds": {
+                    "take": "03.wav",
+                    "put": "04.wav",
+                    "delete": "05.wav"
+                },
+                "scale": 2,
+                "scores_per_min" : 113,
+                "time": 120
+            }
+        },
+        {
+            "uid": "{74BE1B57-EB41-49C1-BE23-7BD38426035E}",
+            "name": "Тренажер \"Кубики\"",
+            "short_name": "Кубики",
+            "image": "TetrisCubes.png",
+            "template": "met_trentetris_uid",
+            "build_norms": false,
+            "kind": "{848935A7-394E-42F9-9320-41ABD2ED5E5B}",
+            "params":
+            {
+                "moving_mode": "auto",
+                "complexity": "cubes",
+                "deleting": "rows",
+                "height": 7,
+                "width": 5,
+                "cube_image": "Cube1.png",
+                "rows_deleting_mode":
+                {
+                    "cube_color": "ffffff00",
+                    "glass_color": "ff00ffff",
+                    "last_color": "ffff00ff"
+                },
+                "colored_deleting_mode":
+                {
+                    "count": 3,
+                    "colors": [
+                        {
+                            "color": "ffff0000"
+                        },
+                        {
+                            "color": "ff00ff00"
+                        },
+                        {
+                            "color": "ff0000ff"
+                        },
+                        {
+                            "color": "ffffff00"
+                        },
+                        {
+                            "color": "ffff00ff"
+                        },
+                        {
+                            "color": "ff00ffff"
+                        }
+                    ]
+                },
+                "auto_moving_mode":
+                {
+                    "speed": 3
+                },
+                "marker": {
+                    "style": "picture",
+                    "image": "Marker3.png",
+                    "repaint": true,
+                    "color": "ffff0000",
+                    "advanced": "none"
+                },
+                "background": {
+                     "style": "plate",
+                     "image": "01.png",
+                     "borders": {
+                         "left": 0,
+                         "top": 0,
+                         "right": 0,
+                         "bottom": 0
+                     }
+                },
+                "glass": {
+                     "style": "plate",
+                     "image": "09.png",
+                     "color": "f8f8f8ff",
+                     "frames": {
+                        "bottom": "01_bottom.png",
+                        "corner_left": "01_corner_left.png",
+                        "corner_right": "01_corner_right.png",
+                        "left": "01_left.png",
+                        "right": "01_right.png",
+                        "color": "0000ffff"
+                    }
+                },
+                "sounds": {
+                    "take": "03.wav",
+                    "put": "04.wav",
+                    "delete": "05.wav"
+                },
+                "scale": 2,
+                "scores_per_min" : 41,
+                "time": 120
+            }
+        },
+        {
+            "uid": "{770851F5-980D-44B7-9C2F-A35703137CF2}",
+            "name": "Тренажер \"Цветные кубики\"",
+            "short_name": "Цветные кубики",
+            "image": "TetrisCubesColor.png",
+            "template": "met_trentetris_uid",
+            "build_norms": false,
+            "kind": "{848935A7-394E-42F9-9320-41ABD2ED5E5B}",
+            "params":
+            {
+                "moving_mode": "auto",
+                "complexity": "cubes",
+                "deleting": "colored",
+                "height": 7,
+                "width": 5,
+                "cube_image": "Cube1.png",
+                "rows_deleting_mode":
+                {
+                    "cube_color": "ffffff00",
+                    "glass_color": "ff00ffff",
+                    "last_color": "ffff00ff"
+                },
+                "colored_deleting_mode":
+                {
+                    "count": 3,
+                    "colors": [
+                        {
+                            "color": "ffff0000"
+                        },
+                        {
+                            "color": "ff00ff00"
+                        },
+                        {
+                            "color": "ff0000ff"
+                        },
+                        {
+                            "color": "ffffff00"
+                        },
+                        {
+                            "color": "ffff00ff"
+                        },
+                        {
+                            "color": "ff00ffff"
+                        }
+                    ]
+                },
+                "auto_moving_mode":
+                {
+                    "speed": 3
+                },
+                "marker": {
+                    "style": "picture",
+                    "image": "Marker3.png",
+                    "repaint": true,
+                    "color": "ffff0000",
+                    "advanced": "none"
+                },
+                "background": {
+                     "style": "plate",
+                     "image": "01.png",
+                     "borders": {
+                         "left": 0,
+                         "top": 0,
+                         "right": 0,
+                         "bottom": 0
+                     }
+                },
+                "glass": {
+                     "style": "plate",
+                     "image": "09.png",
+                     "color": "f8f8f8ff",
+                     "frames": {
+                        "bottom": "01_bottom.png",
+                        "corner_left": "01_corner_left.png",
+                        "corner_right": "01_corner_right.png",
+                        "left": "01_left.png",
+                        "right": "01_right.png",
+                        "color": "0000ffff"
+                    }
+                },
+                "sounds": {
+                    "take": "03.wav",
+                    "put": "04.wav",
+                    "delete": "05.wav"
+                },
+                "scale": 2,
+                "scores_per_min" : 31,
+                "time": 120
+            }
+        }
+    ],
+    "tests_kinds": [
+        {
+            "uid": "{03FFE24D-56ED-4138-9FC7-A125A020C190}",
+            "image": "Stab.png",
+            "name": "Стабилометрия"
+        },
+        {
+            "uid": "{848935A7-394E-42F9-9320-41ABD2ED5E5B}",
+            "image": "Games.png",
+            "name": "Реабилитационные тренажеры"
+        },
+        {
+            "uid": "{E7829C54-4F99-4870-A91C-404238B43E50}",
+            "image": "GamesHard1.png",
+            "name": "Развивающие тренажеры"
+        }
+    ]
+}

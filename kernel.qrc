@@ -270,5 +270,9 @@
         <file>images/PP_repeat.png</file>
         <file>images/PP_save.png</file>
         <file>images/Methodics/BabyPosture.png</file>
+        <file>pre_settings/connections_stab_baby.json</file>
+        <file>pre_settings/connections_stab_baby_en_US.json</file>
+        <file>pre_settings/metodics_stab_baby.json</file>
+        <file>pre_settings/metodics_stab_baby_en_US.json</file>
     </qresource>
 </RCC>

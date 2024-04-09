@@ -4,6 +4,7 @@
 #include <QWidget>
 #include <QPrinter>
 #include <QFileDialog>
+#include <QStandardItemModel>
 
 namespace Ui {
 class BabyPostureWidget;
@@ -47,6 +48,8 @@ public:
 
 private:
     Ui::BabyPostureWidget *ui;
+
+    QStandardItemModel m_mdlTable;
 };
 
 #endif // BABYPOSTUREWIDGET_H

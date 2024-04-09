@@ -1,0 +1,47 @@
+{
+    "connections": [
+        {
+            "driver_uid": "{CEAD1669-1531-4B8E-9220-590C49BB310D}",
+            "comment": "First platform",
+            "active": true,
+            "port": 1,
+            "params":
+            {
+                "model": 101,
+                "zeroing_type": 0,
+                "skg_source": 1,
+                "chan_recording_default":
+                {
+                    "stab": true,
+                    "z": true,
+                    "myo": false,
+                    "pulse": false,
+                    "t0": false,
+                    "t1": false,
+                    "t2": false
+                }
+            }
+        },
+        {
+            "driver_uid": "{CEAD1669-1531-4B8E-9220-590C49BB310D}",
+            "comment": "Second platform",
+            "active": false,
+            "port": 2,
+            "params":
+            {
+                "model": 116,
+                "zeroing_type": 0,
+                "chan_recording_default":
+                {
+                    "stab": true,
+                    "z": true,
+                    "myo": false,
+                    "pulse": false,
+                    "t0": false,
+                    "t1": false,
+                    "t2": false
+                }
+            }
+        }
+    ]
+}
