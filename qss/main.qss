@@ -64,6 +64,13 @@ QMenuBar
     color: rgb(32,88,103);
 }
 
+QTextEdit#teComment
+{
+    background-color: rgb(255, 255, 250);
+    font-size: 11pt;
+    color: rgb(32,88,103);
+}
+
 QLabel
 {
     font-size: 11pt;

@@ -47,6 +47,7 @@ ResultsWidget::ResultsWidget(QWidget *parent) :
     ui->tvTests->setContextMenuPolicy(Qt::CustomContextMenu);
     connect(ui->tvTests, &QTreeView::customContextMenuRequested, this, &ResultsWidget::on_popupMenuRequested);
 
+
     //    m_pmp = new ScaledPixmap(this);
     //    ui->wgtResults->layout()->addWidget(m_pmp);
     //    ui->wgtResults->layout()->setMargin(1);
@@ -214,8 +215,15 @@ void ResultsWidget::onEntered(QModelIndex index)
             DataDefines::TestConditionInfo ci;
             if (static_cast<AAnalyserApplication*>(QApplication::instance())->getTestConditionInfo(ti.condition, ci))
                 condition = ci.name;
+            auto mi = static_cast<AAnalyserApplication*>(QApplication::instance())->getMetodics()->metodic(ti.metodUid);
 
-            ui->tvTests->setToolTip(tr("Комментраий") + ":\n" + ti.comment + "\n\n" + tr("Условия проведения") + ": " + condition);
+            QString resume = tr("Комментарий") + ":\n" + ti.comment;
+            if (mi.buildNorms)
+                resume = resume + "\n\n" + tr("Условия проведения") + ": " + condition;
+
+            ui->teComment->clear();
+            ui->teComment->append(resume);
+//            ui->tvTests->setToolTip(tr("Комментарий") + ":\n" + ti.comment + "\n\n" + tr("Условия проведения") + ": " + condition);
         }
     }
 }
@@ -370,7 +378,8 @@ void ResultsWidget::closeTestIfNotSelection()
 
 void ResultsWidget::saveSplitterPosition()
 {
-    SettingsProvider::setValueToRegAppCopy("Geometry/ResultWidget", "SplitterPosition", ui->splitter->saveState());
+    SettingsProvider::setValueToRegAppCopy("Geometry/ResultWidget", "SplitterPosition", ui->splCommon->saveState());
+    SettingsProvider::setValueToRegAppCopy("Geometry/ResultWidget", "SplitterTestPosition", ui->splTest->saveState());
 }
 
 void ResultsWidget::restoreSplitterPosition()
@@ -378,7 +387,10 @@ void ResultsWidget::restoreSplitterPosition()
     auto val = SettingsProvider::valueFromRegAppCopy("Geometry/ResultWidget", "SplitterPosition").toByteArray();
     if (val == "")
         val = QByteArray::fromRawData("\x00\x00\x00\xFF\x00\x00\x00\x01\x00\x00\x00\x02\x00\x00\x01\x17\x00\x00\x01\xEB\x01\xFF\xFF\xFF\xFF\x01\x00\x00\x00\x01\x00", 31);
-    ui->splitter->restoreState(val);
+    ui->splCommon->restoreState(val);
+
+    auto valTst = SettingsProvider::valueFromRegAppCopy("Geometry/ResultWidget", "SplitterTestPosition").toByteArray();
+    ui->splTest->restoreState(valTst);
 }
 
 void ResultsWidget::calculateSelected()
