@@ -44,6 +44,9 @@ ResultsWidget::ResultsWidget(QWidget *parent) :
     restoreSplitterPosition();
     ui->wgtBugTest->setVisible(false);
 
+    ui->tvTests->setContextMenuPolicy(Qt::CustomContextMenu);
+    connect(ui->tvTests, &QTreeView::customContextMenuRequested, this, &ResultsWidget::on_popupMenuRequested);
+
     //    m_pmp = new ScaledPixmap(this);
     //    ui->wgtResults->layout()->addWidget(m_pmp);
     //    ui->wgtResults->layout()->setMargin(1);
@@ -226,6 +229,102 @@ void ResultsWidget::onPressButtonOpenTestAgain()
 void ResultsWidget::onPressButtonRemoveBadTest()
 {
     static_cast<AAnalyserApplication*>(QApplication::instance())->deleteTest();
+}
+
+void ResultsWidget::on_popupMenuRequested(QPoint pos)
+{
+    if (!m_menu)
+    {
+        m_menu = new QMenu(this);
+
+        QAction *newTest = new QAction(QIcon(":/images/ResultsRun.png"), tr("Провести тест"), this);
+        connect(newTest, &QAction::triggered, this, &ResultsWidget::runTest);
+        m_menu->addAction(newTest);
+
+        QAction *delTest = new QAction(QIcon(":/images/ResultDelete.png"), tr("Удалить тест..."), this);
+        connect(delTest, &QAction::triggered, this, &ResultsWidget::deleteTest);
+        m_menu->addAction(delTest);
+
+        QAction *editTestProperty = new QAction(QIcon(":/images/TestProperty.png"), tr("Свойства теста..."), this);
+        connect(editTestProperty, &QAction::triggered, this, &ResultsWidget::editTestProperty);
+        m_menu->addAction(editTestProperty);
+
+        m_menu->addSeparator();
+
+        QAction *printTest = new QAction(QIcon(":/images/Print.png"), tr("Печать результатов теста..."), this);
+        connect(printTest, &QAction::triggered, this, &ResultsWidget::printTest);
+        m_menu->addAction(printTest);
+
+        QAction *sigAnal = new QAction(QIcon(":/images/SignalAnalysis.png"), tr("Анализ сигналов теста..."), this);
+        connect(sigAnal, &QAction::triggered, this, &ResultsWidget::signalsAnalysis);
+        m_menu->addAction(sigAnal);
+
+        m_menu->addSeparator();
+
+        QAction *addToSummary = new QAction(QIcon(":/images/SummaryAddTest.png"), tr("Добавить показатели в сводку..."), this);
+        connect(addToSummary, &QAction::triggered, this, &ResultsWidget::addToSummary);
+        m_menu->addAction(addToSummary);
+
+        QAction *signalsExport = new QAction(QIcon(":/images/SignalExport.png"), tr("Экспорт сигналов..."), this);
+        connect(signalsExport, &QAction::triggered, this, &ResultsWidget::signalsExport);
+        m_menu->addAction(signalsExport);
+
+        m_menu->addSeparator();
+
+        QAction *selectAll = new QAction(QIcon(""), tr("Пометить все..."), this);
+        connect(selectAll, &QAction::triggered, this, &ResultsWidget::selectAll);
+        m_menu->addAction(selectAll);
+
+        QAction *unSelectAll = new QAction(QIcon(""), tr("Снять пометку со всех..."), this);
+        connect(unSelectAll, &QAction::triggered, this, &ResultsWidget::unSelectAll);
+        m_menu->addAction(unSelectAll);
+    }
+    m_menu->popup(ui->tvTests->mapToGlobal(pos));
+}
+
+void ResultsWidget::runTest()
+{
+    static_cast<AAnalyserApplication*>(QApplication::instance())->executeMetodic();
+}
+
+void ResultsWidget::deleteTest()
+{
+    static_cast<AAnalyserApplication*>(QApplication::instance())->deleteTest();
+}
+
+void ResultsWidget::editTestProperty()
+{
+    static_cast<AAnalyserApplication*>(QApplication::instance())->editTestProperty();
+}
+
+void ResultsWidget::printTest()
+{
+    static_cast<AAnalyserApplication*>(QApplication::instance())->printTestReport();
+}
+
+void ResultsWidget::signalsAnalysis()
+{
+    static_cast<AAnalyserApplication*>(QApplication::instance())->signalsTestAnalysis();
+}
+
+void ResultsWidget::addToSummary()
+{
+    static_cast<AAnalyserApplication*>(QApplication::instance())->summaryAddTest();
+}
+
+void ResultsWidget::signalsExport()
+{
+    static_cast<AAnalyserApplication*>(QApplication::instance())->signalExport();
+}
+
+void ResultsWidget::selectAll()
+{
+    selectAllTests();
+}
+
+void ResultsWidget::unSelectAll()
+{
+    unSelectAllTests();
 }
 
 void ResultsWidget::openTest(const QString testUid)

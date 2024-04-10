@@ -311,15 +311,15 @@ void PatientsWidget::on_popupMenuRequested(QPoint pos)
     {
         m_menu = new QMenu(this);
 
-        QAction *addPatient = new QAction(tr("Новый пациент..."), this);
+        QAction *addPatient = new QAction(QIcon(":/images/PatientAdd.png"), tr("Новый пациент..."), this);
         connect(addPatient, &QAction::triggered, this, &PatientsWidget::addPatient);
         m_menu->addAction(addPatient);
 
-        QAction *editPatient = new QAction(tr("Карточка пациента..."), this);
+        QAction *editPatient = new QAction(QIcon(":/images/PatientsCard.png"), tr("Карточка пациента..."), this);
         connect(editPatient, &QAction::triggered, this, &PatientsWidget::editPatient);
         m_menu->addAction(editPatient);
 
-        QAction *delPatient = new QAction(tr("Удалить запись о пациенте..."), this);
+        QAction *delPatient = new QAction(QIcon(":/images/PatientsDel.png"), tr("Удалить запись о пациенте..."), this);
         connect(delPatient, &QAction::triggered, this, &PatientsWidget::removePatient);
         m_menu->addAction(delPatient);
 

@@ -13,6 +13,7 @@
 #include <QObject>
 #include <QApplication>
 #include <QStandardItemModel>
+#include <QPrinter>
 
 
 class DataBase;
@@ -163,6 +164,21 @@ public:
     void setSelectedTests(QStringList &tests);
 
     /*!
+     * \brief Вызов диалога редактирования параметров выранного теста
+     */
+    void editTestProperty();
+
+    /*!
+     * \brief Печать результатов теста
+     */
+    void printTestReport();
+
+    /*!
+     * \brief Анализ сигналов теста
+     */
+    void signalsTestAnalysis();
+
+    /*!
      * \brief Выполнение методики
      * Должны быть выбраны предварительно пациент и методика
      * Если нет, то действие не будет выполнено
@@ -212,6 +228,11 @@ public:
      * \brief Добавление показателей теста в сводку
      */
     void summaryAddTest();
+
+    /*!
+     * \brief Экспорт сигналов
+     */
+    void signalExport();
 
     /*!
      * \brief Возвращает список uid подключенных драйверов
@@ -840,6 +861,7 @@ protected:
 
 private slots:
     void on_dbConnected();
+    void printReport(QPrinter* printer);
 
 private:
     void on_AddTestToSummaryAccepted();

@@ -7,6 +7,7 @@
 #include <QDesktopWidget>
 #include <QUuid>
 #include <QJsonDocument>
+#include <QPrintPreviewDialog>
 #include <QDebug>
 
 #include "mainwindow.h"
@@ -41,6 +42,8 @@
 #include "personalprogram.h"
 #include "databasewigetdefines.h"
 #include "baseutils.h"
+#include "testpropertydialog.h"
+#include "signalexporter.h"
 
 AAnalyserApplication::AAnalyserApplication(int &argc, char **argv)
     : QApplication(argc, argv)
@@ -286,6 +289,58 @@ void AAnalyserApplication::setSelectedTests(QStringList &tests)
 
 }
 
+void AAnalyserApplication::editTestProperty()
+{
+    if (m_testUid != "")
+    {
+        DataDefines::TestInfo ti;
+        if (DataProvider::getTestInfo(m_testUid, ti))
+        {
+            MetodicDefines::MetodicInfo metInfo = getMetodics()->metodic(ti.metodUid);
+
+            TestPropertyDialog dialog(nullptr);
+            dialog.setComment(ti.comment);
+            dialog.setCondition(ti.condition);
+            dialog.setNormContained(ti.isNormContained);
+            dialog.setNormVisible(metInfo.buildNorms);
+            if (dialog.exec() == QDialog::Accepted)
+            {
+                DataProvider::setTestProperty(m_testUid,
+                                              dialog.comment(),
+                                              dialog.condition(),
+                                              dialog.normContained());
+            }
+        }
+    }
+    else
+        QMessageBox::information(nullptr, tr("Предупреждение"), tr("Не выбран тест"));
+}
+
+void AAnalyserApplication::printTestReport()
+{
+    if (m_testUid != "")
+    {
+        QPrinter printer(QPrinter::HighResolution);
+        printer.setFullPage(true);
+        QPrintPreviewDialog preview(&printer, nullptr);
+        preview.setWindowTitle(tr("Печать результатов теста"));
+        preview.setWindowFlags(Qt::Window | Qt::WindowCloseButtonHint);
+        preview.setWindowState(Qt::WindowMaximized);
+        connect(&preview, &QPrintPreviewDialog::paintRequested, this, &AAnalyserApplication::printReport);
+        preview.exec();
+    }
+    else
+        QMessageBox::information(nullptr, tr("Предупреждение"), tr("Не выбран тест"));
+}
+
+void AAnalyserApplication::signalsTestAnalysis()
+{
+    if (!("" == m_testUid && 0 == saOpenedTestCount()))
+        signalsAnalysis();
+    else
+        QMessageBox::information(nullptr, tr("Предупреждение"), tr("Не выбран тест и в окне анализа сигналов отсутствуют ранее открытые тесты"));
+}
+
 void AAnalyserApplication::executeMetodic()
 {
     if (m_patientUid == "")
@@ -391,6 +446,20 @@ void AAnalyserApplication::summaryAddTest()
     }
     else
         QMessageBox::information(nullptr, tr("Предупреждение"), tr("Не выбран ни один тест"));
+}
+
+void AAnalyserApplication::signalExport()
+{
+    if (selectedTestsCount() > 0)
+    {
+        QStringList tests;
+        for (int i = 0; i < selectedTestsCount(); ++i)
+            tests << selectedTest(i);
+        auto exp = new SignalExporter(tests);
+        delete exp;
+    }
+    else
+        QMessageBox::information(nullptr, tr("Предупреждение"), tr("Не выбран тест"));
 }
 
 QStringList AAnalyserApplication::getDrivers() const
@@ -1065,6 +1134,12 @@ void AAnalyserApplication::on_dbConnected()
     m_ppManager->on_dbConnected();
     qDebug() << Q_FUNC_INFO;
 
+}
+
+void AAnalyserApplication::printReport(QPrinter *printer)
+{
+    if (m_metodics)
+        m_metodics->print(printer, m_testUid);
 }
 
 void AAnalyserApplication::on_AddTestToSummaryAccepted()

@@ -202,11 +202,11 @@ void MethodsWidget::on_popupMenuRequested(QPoint pos)
     {
         m_menu = new QMenu(this);
 
-        QAction *editParams = new QAction(tr("Редактировать параметры методики..."), this);
+        QAction *editParams = new QAction(QIcon(":/images/MethodsEdit.png"), tr("Редактировать параметры методики..."), this);
         connect(editParams, &QAction::triggered, this, &MethodsWidget::editMetodParams);
         m_menu->addAction(editParams);
 
-        QAction *runTest = new QAction(tr("Провести тест по методике"), this);
+        QAction *runTest = new QAction(QIcon(":/images/ResultsRun.png"), tr("Провести тест по методике"), this);
         connect(runTest, &QAction::triggered, this, &MethodsWidget::runTest);
         m_menu->addAction(runTest);
 

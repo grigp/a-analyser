@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <QItemSelectionModel>
+#include <QMenu>
 
 namespace Ui {
 class ResultsWidget;
@@ -80,6 +81,18 @@ private slots:
      */
     void onPressButtonRemoveBadTest();
 
+    void on_popupMenuRequested(QPoint pos);
+
+    void runTest();
+    void deleteTest();
+    void editTestProperty();
+    void printTest();
+    void signalsAnalysis();
+    void addToSummary();
+    void signalsExport();
+    void selectAll();
+    void unSelectAll();
+
 private:
     Ui::ResultsWidget *ui;
 
@@ -105,6 +118,7 @@ private:
     int m_selectedRow {-1};          ///< Номер выбранной строки в списке
     QString m_uidOpenedTest {""};    ///< uid открытого теста
 
+    QMenu *m_menu {nullptr};
 };
 
 #endif // RESULTSWIDGET_H

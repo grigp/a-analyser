@@ -62,56 +62,17 @@ void TestsWidget::deleteTest()
 
 void TestsWidget::editTestProperty()
 {
-    if (m_selectedTestUid != "")
-    {
-        DataDefines::TestInfo ti;
-        if (DataProvider::getTestInfo(m_selectedTestUid, ti))
-        {
-            MetodicDefines::MetodicInfo metInfo =
-                    static_cast<AAnalyserApplication*>(QApplication::instance())->
-                    getMetodics()->metodic(ti.metodUid);
-
-            TestPropertyDialog dialog(this);
-            dialog.setComment(ti.comment);
-            dialog.setCondition(ti.condition);
-            dialog.setNormContained(ti.isNormContained);
-            dialog.setNormVisible(metInfo.buildNorms);
-            if (dialog.exec() == QDialog::Accepted)
-            {
-                DataProvider::setTestProperty(m_selectedTestUid,
-                                              dialog.comment(),
-                                              dialog.condition(),
-                                              dialog.normContained());
-            }
-        }
-    }
-    else
-        QMessageBox::information(nullptr, tr("Предупреждение"), tr("Не выбран тест"));
+    static_cast<AAnalyserApplication*>(QApplication::instance())->editTestProperty();
 }
 
 void TestsWidget::printReport()
 {
-    if (m_selectedTestUid != "")
-    {
-        QPrinter printer(QPrinter::HighResolution);
-        printer.setFullPage(true);
-        QPrintPreviewDialog preview(&printer, this);
-        preview.setWindowTitle(tr("Печать результатов теста"));
-        preview.setWindowFlags(Qt::Window | Qt::WindowCloseButtonHint);
-        preview.setWindowState(Qt::WindowMaximized);
-        connect(&preview, &QPrintPreviewDialog::paintRequested, this, &TestsWidget::print);
-        preview.exec();
-    }
-    else
-        QMessageBox::information(nullptr, tr("Предупреждение"), tr("Не выбран тест"));
+    static_cast<AAnalyserApplication*>(QApplication::instance())->printTestReport();
 }
 
 void TestsWidget::signalsAnalysis()
 {
-    if (!("" == m_selectedTestUid && 0 == static_cast<AAnalyserApplication*>(QApplication::instance())->saOpenedTestCount()))
-        static_cast<AAnalyserApplication*>(QApplication::instance())->signalsAnalysis();
-    else
-        QMessageBox::information(nullptr, tr("Предупреждение"), tr("Не выбран тест и в окне анализа сигналов отсутствуют ранее открытые тесты"));
+    static_cast<AAnalyserApplication*>(QApplication::instance())->signalsTestAnalysis();
 }
 
 void TestsWidget::summaries()
@@ -121,12 +82,7 @@ void TestsWidget::summaries()
 
 void TestsWidget::summaryAddTest()
 {
-    if (static_cast<AAnalyserApplication*>(QApplication::instance())->selectedTestsCount() > 0)
-    {
-        static_cast<AAnalyserApplication*>(QApplication::instance())->summaryAddTest();
-    }
-    else
-        QMessageBox::information(nullptr, tr("Предупреждение"), tr("Не выбран тест"));
+    static_cast<AAnalyserApplication*>(QApplication::instance())->summaryAddTest();
 }
 
 void TestsWidget::on_selectAllTests()
@@ -137,12 +93,6 @@ void TestsWidget::on_selectAllTests()
 void TestsWidget::on_unselectAllTests()
 {
     ui->wgtResult->unSelectAllTests();
-}
-
-void TestsWidget::print(QPrinter* printer)
-{
-    MetodicsFactory *metFactory = static_cast<AAnalyserApplication*>(QApplication::instance())->getMetodics();
-    metFactory->print(printer, m_selectedTestUid);
 }
 
 void TestsWidget::setEnabledButtons(const bool isEnabled)
@@ -171,16 +121,7 @@ void TestsWidget::selectDynamic()
 
 void TestsWidget::signalExport()
 {
-    if (static_cast<AAnalyserApplication*>(QApplication::instance())->selectedTestsCount() > 0)
-    {
-        QStringList tests;
-        for (int i = 0; i < static_cast<AAnalyserApplication*>(QApplication::instance())->selectedTestsCount(); ++i)
-            tests << static_cast<AAnalyserApplication*>(QApplication::instance())->selectedTest(i);
-        auto exp = new SignalExporter(tests);
-        delete exp;
-    }
-    else
-        QMessageBox::information(nullptr, tr("Предупреждение"), tr("Не выбран тест"));
+    static_cast<AAnalyserApplication*>(QApplication::instance())->signalExport();
 }
 
 void TestsWidget::restoreVisibleWidget()

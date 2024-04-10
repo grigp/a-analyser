@@ -47,8 +47,6 @@ private slots:
 
     void signalExport();
 
-    void print(QPrinter* printer);
-
 private:
     Ui::TestsWidget *ui;
 
