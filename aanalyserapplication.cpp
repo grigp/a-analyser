@@ -303,6 +303,7 @@ void AAnalyserApplication::editTestProperty()
             dialog.setCondition(ti.condition);
             dialog.setNormContained(ti.isNormContained);
             dialog.setNormVisible(metInfo.buildNorms);
+            dialog.setConditionsVisible(metInfo.buildNorms);
             if (dialog.exec() == QDialog::Accepted)
             {
                 DataProvider::setTestProperty(m_testUid,

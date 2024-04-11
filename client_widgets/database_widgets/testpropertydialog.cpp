@@ -40,7 +40,13 @@ void TestPropertyDialog::setCondition(const QString &condition)
     {
         for (int i = 0; i < ui->cbConditions->count(); ++i)
             if (ui->cbConditions->itemData(i, UidRole).toString() == condition)
+            {
                 ui->cbConditions->setCurrentIndex(i);
+                QString description = ui->cbConditions->currentData(DescriptionRole).toString();
+                ui->edConditionComment->setText(description);
+                bool isNorm = ui->cbConditions->currentData(NormsEnabledRole).toBool();
+                ui->cbInNormContained->setEnabled(isNorm);
+            }
     }
     else
         if (ui->cbConditions->count() > 0)
@@ -63,6 +69,12 @@ void TestPropertyDialog::setNormContained(const bool nc)
 void TestPropertyDialog::setNormVisible(const bool visible)
 {
     ui->cbInNormContained->setVisible(visible);
+}
+
+void TestPropertyDialog::setConditionsVisible(const bool visible)
+{
+    ui->twCatgories->setTabEnabled(1, visible);
+    //ui->tabConditions //->setVisible(visible);
 }
 
 void TestPropertyDialog::conditionChanged(int idx)
