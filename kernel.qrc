@@ -274,5 +274,8 @@
         <file>pre_settings/connections_stab_baby_en_US.json</file>
         <file>pre_settings/metodics_stab_baby.json</file>
         <file>pre_settings/metodics_stab_baby_en_US.json</file>
+        <file>images/Critical32.png</file>
+        <file>images/Question32.png</file>
+        <file>images/Warning32.png</file>
     </qresource>
 </RCC>
