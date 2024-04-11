@@ -196,5 +196,5 @@ QStringList AAnalyserBuild::getDefaultPPList()
 
 bool AAnalyserBuild::isPPEnabled()
 {
-    return true;
+    return false;
 }
