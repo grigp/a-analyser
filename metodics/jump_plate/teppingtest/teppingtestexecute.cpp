@@ -8,9 +8,9 @@
 #include "jumpplatedata.h"
 #include "settingsprovider.h"
 #include "dynamicdiagram.h"
+#include "amessagebox.h"
 
 #include <QTimer>
-#include <QMessageBox>
 #include <QDebug>
 
 TeppingTestExecute::TeppingTestExecute(QWidget *parent) :
@@ -134,7 +134,7 @@ void TeppingTestExecute::start()
     }
     else
     {
-        QMessageBox::warning(this, tr("Предупреждение"), tr("Отсутствует необходимое подключение для работы теста"));
+        AMessageBox::warning(this, tr("Предупреждение"), tr("Отсутствует необходимое подключение для работы теста"));
         static_cast<ExecuteWidget*>(parent())->showDB();
     }
 }

@@ -3,9 +3,9 @@
 
 #include "aanalyserapplication.h"
 #include "jumpplatedefines.h"
+#include "amessagebox.h"
 
 #include <QFile>
-#include <QMessageBox>
 
 DropTestParamsDialog::DropTestParamsDialog(QWidget *parent) :
     QDialog(parent),
@@ -61,7 +61,7 @@ void DropTestParamsDialog::on_cancel()
 
 void DropTestParamsDialog::on_default()
 {
-    auto mr = QMessageBox::question(nullptr, tr("Запрос"), tr("Сбросить настройки к настройкам методики по умолчанию?"));
+    auto mr = AMessageBox::question(nullptr, tr("Запрос"), tr("Сбросить настройки к настройкам методики по умолчанию?"));
     if (QMessageBox::Yes == mr)
     {
         auto mi = static_cast<AAnalyserApplication*>(QApplication::instance())->getCurrentMetodic();

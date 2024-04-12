@@ -10,9 +10,9 @@
 #include "jumpplatedata.h"
 #include "channelsdefines.h"
 #include "settingsprovider.h"
+#include "amessagebox.h"
 
 #include <QTimer>
-#include <QMessageBox>
 #include <QDebug>
 
 JumpTestExecute::JumpTestExecute(QWidget *parent) :
@@ -90,7 +90,7 @@ void JumpTestExecute::start()
     }
     else
     {
-        QMessageBox::warning(this, tr("Предупреждение"), tr("Отсутствует необходимое подключение для работы теста"));
+        AMessageBox::warning(this, tr("Предупреждение"), tr("Отсутствует необходимое подключение для работы теста"));
         static_cast<ExecuteWidget*>(parent())->showDB();
     }
 }

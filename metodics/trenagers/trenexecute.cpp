@@ -4,7 +4,6 @@
 
 #include <QTimer>
 #include <QDesktopWidget>
-#include <QMessageBox>
 #include <QUuid>
 #include <QDebug>
 
@@ -22,6 +21,7 @@
 #include "frontcommentitem.h"
 #include "bilateralresultdata.h"
 #include "aanalysersettings.h"
+#include"amessagebox.h"
 
 TrenExecute::TrenExecute(QWidget *parent) :
     QWidget(parent),
@@ -188,7 +188,7 @@ void TrenExecute::start()
     }
     else
     {
-        QMessageBox::warning(this, tr("Предупреждение"), tr("Отсутствует необходимое подключение для работы теста"));
+        AMessageBox::warning(this, tr("Предупреждение"), tr("Отсутствует необходимое подключение для работы теста"));
         static_cast<ExecuteWidget*>(parent())->showDB();
     }
 

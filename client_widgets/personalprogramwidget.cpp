@@ -2,7 +2,6 @@
 #include "ui_personalprogramwidget.h"
 
 #include <QUuid>
-#include <QMessageBox>
 #include <QThread>
 #include <QFileDialog>
 #include <QDebug>
@@ -26,6 +25,7 @@
 #include "ppvisualdescriptor.h"
 #include "dataprovider.h"
 #include "ppvisual.h"
+#include "amessagebox.h"
 
 PersonalProgramWidget::PersonalProgramWidget(QWidget *parent) :
     ClientWidget(parent),
@@ -108,7 +108,7 @@ void PersonalProgramWidget::onShow()
 
             if (isLastDP)
             {
-                QMessageBox::information(nullptr, tr("Сообщение"), tr("Индивидуальная программа завершена"));
+                AMessageBox::information(nullptr, tr("Сообщение"), tr("Индивидуальная программа завершена"));
                 doFinishPP();
             }
         }
@@ -211,13 +211,13 @@ void PersonalProgramWidget::on_run()
                 }
             }
             else
-                QMessageBox::information(nullptr, tr("Предупреждение"), tr("Выбранная индивидуальная программа завершена"));
+                AMessageBox::information(nullptr, tr("Предупреждение"), tr("Выбранная индивидуальная программа завершена"));
         }
         else
-            QMessageBox::information(nullptr, tr("Предупреждение"), tr("Пациенту не назначена индивидуальная программа"));
+            AMessageBox::information(nullptr, tr("Предупреждение"), tr("Пациенту не назначена индивидуальная программа"));
     }
     else
-        QMessageBox::information(nullptr, tr("Предупреждение"), tr("Не выбран пациент с назначенной индивидуальной программой"));
+        AMessageBox::information(nullptr, tr("Предупреждение"), tr("Не выбран пациент с назначенной индивидуальной программой"));
 }
 
 void PersonalProgramWidget::on_append()
@@ -239,13 +239,13 @@ void PersonalProgramWidget::on_append()
                 }
             }
             else
-                QMessageBox::information(nullptr, tr("Предупреждение"), tr("Пациенту уже назначена индивидуальная программа"));
+                AMessageBox::information(nullptr, tr("Предупреждение"), tr("Пациенту уже назначена индивидуальная программа"));
         }
         else
-            QMessageBox::information(nullptr, tr("Предупреждение"), tr("Выберите запись пациента"));
+            AMessageBox::information(nullptr, tr("Предупреждение"), tr("Выберите запись пациента"));
     }
     else
-        QMessageBox::information(nullptr, tr("Предупреждение"), tr("Пациент не выбран"));
+        AMessageBox::information(nullptr, tr("Предупреждение"), tr("Пациент не выбран"));
 }
 
 void PersonalProgramWidget::on_delete()
@@ -267,13 +267,13 @@ void PersonalProgramWidget::on_delete()
                 }
             }
             else
-                QMessageBox::information(nullptr, tr("Предупреждение"), tr("Выбранная индивидуальная программа уже завершена"));
+                AMessageBox::information(nullptr, tr("Предупреждение"), tr("Выбранная индивидуальная программа уже завершена"));
         }
         else
-            QMessageBox::information(nullptr, tr("Предупреждение"), tr("Пациенту не назначена индивидуальная программа"));
+            AMessageBox::information(nullptr, tr("Предупреждение"), tr("Пациенту не назначена индивидуальная программа"));
     }
     else
-        QMessageBox::information(nullptr, tr("Предупреждение"), tr("Индивидуальная программа не выбрана"));
+        AMessageBox::information(nullptr, tr("Предупреждение"), tr("Индивидуальная программа не выбрана"));
 }
 
 void PersonalProgramWidget::on_params()
@@ -308,13 +308,13 @@ void PersonalProgramWidget::on_params()
                 }
             }
             else
-                QMessageBox::information(nullptr, tr("Предупреждение"), tr("Нельзя редактировать завершенные индивидуальные программы"));
+                AMessageBox::information(nullptr, tr("Предупреждение"), tr("Нельзя редактировать завершенные индивидуальные программы"));
         }
         else
-            QMessageBox::information(nullptr, tr("Предупреждение"), tr("Пациенту не назначена индивидуальная программа"));
+            AMessageBox::information(nullptr, tr("Предупреждение"), tr("Пациенту не назначена индивидуальная программа"));
     }
     else
-        QMessageBox::information(nullptr, tr("Предупреждение"), tr("Индивидуальная программа не выбрана"));
+        AMessageBox::information(nullptr, tr("Предупреждение"), tr("Индивидуальная программа не выбрана"));
 }
 
 void PersonalProgramWidget::on_openTest()
@@ -374,9 +374,9 @@ void PersonalProgramWidget::on_repeat()
             auto uidPP = index.data(DatabaseWidgetDefines::PatientsModel::PatientPPUidRole).toString();
             //! Не назначена - предлагаем выбрать запись ранее проведенной программы, назначена, сообщаем об этом
             if (uidPP == "")
-                QMessageBox::information(nullptr, tr("Предупреждение"), tr("Выберите запись ранее проведенной индивидуальной программы"));
+                AMessageBox::information(nullptr, tr("Предупреждение"), tr("Выберите запись ранее проведенной индивидуальной программы"));
             else
-                QMessageBox::information(nullptr, tr("Предупреждение"), tr("Пациенту уже назначена индивидуальная программа"));
+                AMessageBox::information(nullptr, tr("Предупреждение"), tr("Пациенту уже назначена индивидуальная программа"));
         }
         else
         //! Выбран не корневой узел - запускать можно, проверив назначена ли ИП
@@ -387,7 +387,7 @@ void PersonalProgramWidget::on_repeat()
                 auto uidPP = index.data(DatabaseWidgetDefines::PatientsModel::PatientPPUidRole).toString();
                 if (uidPP != "")
                 {
-                    auto mr = QMessageBox::question(nullptr, tr("Запрос"), tr("Назначить индивидуальную программу этому пациенту заново?"));
+                    auto mr = AMessageBox::question(nullptr, tr("Запрос"), tr("Назначить индивидуальную программу этому пациенту заново?"));
                     if (QMessageBox::Yes == mr)
                         if (static_cast<AAnalyserApplication*>(QApplication::instance())->assignPPForPatient(uidPP))
                         {
@@ -397,11 +397,11 @@ void PersonalProgramWidget::on_repeat()
                 }
             }
             else
-                QMessageBox::information(nullptr, tr("Предупреждение"), tr("Пациенту уже назначена индивидуальная программа"));
+                AMessageBox::information(nullptr, tr("Предупреждение"), tr("Пациенту уже назначена индивидуальная программа"));
         }
     }
     else
-        QMessageBox::information(nullptr, tr("Предупреждение"), tr("Пациент не выбран"));
+        AMessageBox::information(nullptr, tr("Предупреждение"), tr("Пациент не выбран"));
 }
 
 void PersonalProgramWidget::on_saveAs()
@@ -419,14 +419,14 @@ void PersonalProgramWidget::on_saveAs()
             if (fileName != "")
             {
                 if (!static_cast<AAnalyserApplication*>(QApplication::instance())->savePersonalProgram(uidPP, fileName))
-                    QMessageBox::warning(nullptr, tr("Предупреждение"), tr("Не удалось сохранить индивидуальную программу"));
+                    AMessageBox::warning(nullptr, tr("Предупреждение"), tr("Не удалось сохранить индивидуальную программу"));
             }
         }
         else
-            QMessageBox::information(nullptr, tr("Предупреждение"), tr("Индивидуальная программа не назначена"));
+            AMessageBox::information(nullptr, tr("Предупреждение"), tr("Индивидуальная программа не назначена"));
     }
     else
-        QMessageBox::information(nullptr, tr("Предупреждение"), tr("Пациент не выбран"));
+        AMessageBox::information(nullptr, tr("Предупреждение"), tr("Пациент не выбран"));
 }
 
 void PersonalProgramWidget::on_selectionChanged(const QItemSelection &selected, const QItemSelection &deselected)
@@ -615,7 +615,7 @@ void PersonalProgramWidget::on_editPatientCard()
         }
     }
     else
-        QMessageBox::information(nullptr, tr("Предупреждение"), tr("Необходимо выбрать пациента"));
+        AMessageBox::information(nullptr, tr("Предупреждение"), tr("Необходимо выбрать пациента"));
 }
 
 void PersonalProgramWidget::on_viewModeDatabase()
@@ -841,7 +841,7 @@ void PersonalProgramWidget::doRunTest(bool isFirstRun)
         if (objTest != QJsonObject())
             runTest(objTest);
         else
-            QMessageBox::information(nullptr,
+            AMessageBox::information(nullptr,
                                      tr("Сообщение"),
                                      tr("Запуск теста по индивидуальной программе в настоящий момент невозможен") + "\n" +
                                      tr("Прошло мало времени с момента окончания предыдущего теста"));
@@ -849,9 +849,9 @@ void PersonalProgramWidget::doRunTest(bool isFirstRun)
     else
     {
         if (m_currentDP == -1)
-            QMessageBox::information(nullptr, tr("Сообщение"), tr("Индивидуальная программа завершена"));
+            AMessageBox::information(nullptr, tr("Сообщение"), tr("Индивидуальная программа завершена"));
         else
-            QMessageBox::information(nullptr,
+            AMessageBox::information(nullptr,
                                      tr("Сообщение"),
                                      tr("Превышено максимальное время между дневными программами. Индивидуальная программа завершена"));
 

@@ -46,14 +46,29 @@ public:
          const QString &text, QMessageBox::StandardButtons buttons = QMessageBox::Ok,
          QMessageBox::StandardButton defaultButton = QMessageBox::NoButton);
 
+
+    QMessageBox::StandardButton result() {return m_result;}
+
+private slots:
+    void on_OKClicked();
+    void on_NoClicked();
+    void on_CancelClicked();
+
 private:
     Ui::AMessageBox *ui;
+
+    static QMessageBox::StandardButton message(KindMessage kind, QWidget *parent, const QString &title,
+         const QString &text, QMessageBox::StandardButtons buttons = QMessageBox::Ok,
+         QMessageBox::StandardButton defaultButton = QMessageBox::NoButton);
+
 
     void setTitle(const QString& title);
     void setText(const QString& text);
     void setButtons(QMessageBox::StandardButtons buttons);
 
     KindMessage m_kind;
+    QMessageBox::StandardButton m_result;
+    QMessageBox::StandardButtons m_buttons;
 };
 
 #endif // AMESSAGEBOX_H

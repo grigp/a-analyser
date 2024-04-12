@@ -12,9 +12,9 @@
 #include "settingsprovider.h"
 #include "databasewigetdefines.h"
 #include "personalprogramwidget.h"
+#include "amessagebox.h"
 
 #include <QApplication>
-#include <QMessageBox>
 #include <QTimer>
 #include <QUuid>
 #include <QDebug>
@@ -246,7 +246,7 @@ void PatientsWidget::removePatient()
         }
 
     if (uid != "" &&
-        QMessageBox::question(this, tr("Запрос"), QString(tr("Удалить запись о пациенте") + " %1?").arg(fio))
+        AMessageBox::question(this, tr("Запрос"), QString(tr("Удалить запись о пациенте") + " %1?").arg(fio))
             == QMessageBox::Yes)
     {
         patientsModel()->removePatient(uid);

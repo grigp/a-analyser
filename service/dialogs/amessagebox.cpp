@@ -3,6 +3,8 @@
 
 #include "aanalyserapplication.h"
 
+#include <QDebug>
+
 AMessageBox::AMessageBox(KindMessage kind, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::AMessageBox)
@@ -23,6 +25,7 @@ AMessageBox::AMessageBox(KindMessage kind, QWidget *parent) :
         ui->lblLogotip->setPixmap(QPixmap(":/images/Critical32.png"));
 
     setStyleSheet(static_cast<AAnalyserApplication*>(QApplication::instance())->mainWindow()->styleSheet());
+    setWindowFlags(Qt::Window | Qt::WindowTitleHint | Qt::WindowSystemMenuHint | Qt::WindowCloseButtonHint | Qt::WindowFullscreenButtonHint);// | Qt::MSWindowsFixedSizeDialogHint);
 }
 
 AMessageBox::~AMessageBox()
@@ -36,29 +39,7 @@ QMessageBox::StandardButton AMessageBox::information(QWidget *parent,
                                                      QMessageBox::StandardButtons buttons,
                                                      QMessageBox::StandardButton defaultButton)
 {
-    Q_UNUSED(defaultButton);
-
-    AMessageBox dlg(Information, parent);
-    dlg.setTitle(title);
-    dlg.setText(text);
-    auto mr = dlg.exec();
-    if (mr == QDialog::Accepted)
-    {
-        if ((buttons & QMessageBox::Ok) != 0)
-            return QMessageBox::Ok;
-        else
-        if ((buttons & QMessageBox::Yes) != 0)
-            return QMessageBox::Yes;
-    }
-    if (mr == QDialog::Rejected)
-    {
-        if ((buttons & QMessageBox::Cancel) != 0)
-            return QMessageBox::Cancel;
-        else
-        if ((buttons & QMessageBox::No) != 0)
-            return QMessageBox::No;
-    }
-    return QMessageBox::NoButton;
+    return message(Information, parent, title, text, buttons, defaultButton);
 }
 
 QMessageBox::StandardButton AMessageBox::question(QWidget *parent,
@@ -67,6 +48,7 @@ QMessageBox::StandardButton AMessageBox::question(QWidget *parent,
                                                   QMessageBox::StandardButtons buttons,
                                                   QMessageBox::StandardButton defaultButton)
 {
+    return message(Question, parent, title, text, buttons, defaultButton);
 }
 
 QMessageBox::StandardButton AMessageBox::warning(QWidget *parent,
@@ -75,7 +57,7 @@ QMessageBox::StandardButton AMessageBox::warning(QWidget *parent,
                                                  QMessageBox::StandardButtons buttons,
                                                  QMessageBox::StandardButton defaultButton)
 {
-
+    return message(Warning, parent, title, text, buttons, defaultButton);
 }
 
 QMessageBox::StandardButton AMessageBox::critical(QWidget *parent,
@@ -84,7 +66,57 @@ QMessageBox::StandardButton AMessageBox::critical(QWidget *parent,
                                                   QMessageBox::StandardButtons buttons,
                                                   QMessageBox::StandardButton defaultButton)
 {
+    return message(Critical, parent, title, text, buttons, defaultButton);
+}
 
+void AMessageBox::on_OKClicked()
+{
+    if ((m_buttons & QMessageBox::Ok) != 0)
+        m_result = QMessageBox::Ok;
+    else
+    if ((m_buttons & QMessageBox::Yes) != 0)
+        m_result = QMessageBox::Yes;
+    else
+        m_result = QMessageBox::NoButton;
+
+    accept();
+}
+
+void AMessageBox::on_NoClicked()
+{
+    if ((m_buttons & QMessageBox::No) != 0)
+        m_result = QMessageBox::No;
+    else
+        m_result = QMessageBox::NoButton;
+
+    reject();
+}
+
+void AMessageBox::on_CancelClicked()
+{
+    if ((m_buttons & QMessageBox::Cancel) != 0)
+        m_result = QMessageBox::Cancel;
+    else
+        m_result = QMessageBox::NoButton;
+
+    reject();
+}
+
+QMessageBox::StandardButton AMessageBox::message(AMessageBox::KindMessage kind,
+                                                 QWidget *parent,
+                                                 const QString &title,
+                                                 const QString &text,
+                                                 QMessageBox::StandardButtons buttons,
+                                                 QMessageBox::StandardButton defaultButton)
+{
+    Q_UNUSED(defaultButton);
+
+    AMessageBox dlg(kind, parent);
+    dlg.setTitle(title);
+    dlg.setText(text);
+    dlg.setButtons(buttons);
+    dlg.exec();
+    return dlg.result();
 }
 
 void AMessageBox::setTitle(const QString &title)
@@ -99,23 +131,26 @@ void AMessageBox::setText(const QString &text)
 
 void AMessageBox::setButtons(QMessageBox::StandardButtons buttons)
 {
+    m_buttons = buttons;
     if ((buttons & QMessageBox::Ok) != 0)
         ui->btnOK->setText("OK");
     else
     if ((buttons & QMessageBox::Yes) != 0)
         ui->btnOK->setText("Да");
 
+    if ((buttons & QMessageBox::No) != 0)
+        ui->btnNo->setText("Нет");
+
     if ((buttons & QMessageBox::Cancel) != 0)
         ui->btnCancel->setText("Отмена");
-    else
-    if ((buttons & QMessageBox::No) != 0)
-        ui->btnCancel->setText("Нет");
 
-    if (((buttons & QMessageBox::Cancel) == 0) &&
-        ((buttons & QMessageBox::No) == 0))
-    {
+    if (((buttons & QMessageBox::Ok) == 0) &&
+        ((buttons & QMessageBox::Yes) == 0))
+        ui->btnOK->setVisible(false);
+    if ((buttons & QMessageBox::No) == 0)
+        ui->btnNo->setVisible(false);
+    if ((buttons & QMessageBox::Cancel) == 0)
         ui->btnCancel->setVisible(false);
-    }
 }
 
 

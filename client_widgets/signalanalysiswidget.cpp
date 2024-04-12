@@ -2,7 +2,6 @@
 #include "ui_signalanalysiswidget.h"
 
 #include <QApplication>
-#include <QMessageBox>
 #include <QDebug>
 
 #include "aanalyserapplication.h"
@@ -15,6 +14,7 @@
 #include "visuals.h"
 #include "databaseresultwidget.h"
 #include "signalexporter.h"
+#include "amessagebox.h"
 
 SignalAnalysisWidget::SignalAnalysisWidget(QWidget *parent) :
     ClientWidget(parent)
@@ -197,11 +197,11 @@ void SignalAnalysisWidget::on_signalExport()
                 if (puid != "" && cuid != "")
                     signalExport(idx);
                 else
-                    QMessageBox::information(nullptr, tr("Предупреждение"), tr("Для экспорта необходимо выбрать элемент сигнала"));
+                    AMessageBox::information(nullptr, tr("Предупреждение"), tr("Для экспорта необходимо выбрать элемент сигнала"));
             }
     }
     else
-        QMessageBox::information(nullptr, tr("Предупреждение"), tr("Для экспорта необходимо выбрать элемент сигнала"));
+        AMessageBox::information(nullptr, tr("Предупреждение"), tr("Для экспорта необходимо выбрать элемент сигнала"));
 }
 
 //void SignalAnalysisWidget::on_signalExport()
@@ -217,11 +217,11 @@ void SignalAnalysisWidget::on_signalExport()
 //                if (puid != "" && cuid != "")
 //                    signalExport(idx);
 //                else
-//                    QMessageBox::information(nullptr, tr("Предупреждение"), tr("Экспортировать можно только сигналы"));
+//                    AMessageBox::information(nullptr, tr("Предупреждение"), tr("Экспортировать можно только сигналы"));
 //            }
 //    }
 //    else
-//        QMessageBox::information(nullptr, tr("Предупреждение"), tr("Экспортировать можно только сигналы"));
+//        AMessageBox::information(nullptr, tr("Предупреждение"), tr("Экспортировать можно только сигналы"));
 //}
 
 void SignalAnalysisWidget::on_deleteSection()
@@ -233,7 +233,7 @@ void SignalAnalysisWidget::on_deleteSection()
             if (idx.data(ChannelUidRole).toString() != "" && idx.data(SectionNumberRole).toString() != "")
                 deleteSection(idx);
             else
-                QMessageBox::information(nullptr, tr("Предупреждение"), tr("Необходимо выбрать секцию"));
+                AMessageBox::information(nullptr, tr("Предупреждение"), tr("Необходимо выбрать секцию"));
         }
 }
 
@@ -418,7 +418,7 @@ QModelIndex SignalAnalysisWidget::getFirstVisualLineIndex(QModelIndex &index)
 void SignalAnalysisWidget::closeTest(QModelIndex& index)
 {
     auto idxRoot = m_mdlTests->index(index.row(), ColElement, index.parent());
-    auto res = QMessageBox::question(nullptr, tr("Запрос"), tr("Закрыть тест ") + idxRoot.data().toString() + " ?");
+    auto res = AMessageBox::question(nullptr, tr("Запрос"), tr("Закрыть тест ") + idxRoot.data().toString() + " ?");
     if (res == QMessageBox::Yes)
     {
         closeVisuals(idxRoot);
@@ -470,7 +470,7 @@ void SignalAnalysisWidget::signalExport(QModelIndex &index)
 
 void SignalAnalysisWidget::deleteSection(QModelIndex &index)
 {
-    auto mr = QMessageBox::question(nullptr, tr("Запрос"), tr("Удалить секцию") + " \"" + index.data().toString() + "\"?");
+    auto mr = AMessageBox::question(nullptr, tr("Запрос"), tr("Удалить секцию") + " \"" + index.data().toString() + "\"?");
     if (mr == QMessageBox::Yes)
     {
         //! Удаление строки визуализаторов, связанных с элементом

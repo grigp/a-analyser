@@ -23,11 +23,11 @@
 #include "driverdefines.h"
 #include "aanalysersettings.h"
 #include "stabtestdefines.h"
+#include "amessagebox.h"
 
 #include <QJsonObject>
 #include <QJsonArray>
 #include <QTimer>
-#include <QMessageBox>
 #include <QDesktopWidget>
 #include <QComboBox>
 #include <QDebug>
@@ -240,7 +240,7 @@ void StabTestExecute::start()
     }
     else
     {
-        QMessageBox::warning(this, tr("Предупреждение"), tr("Отсутствует необходимое подключение для работы теста"));
+        AMessageBox::warning(this, tr("Предупреждение"), tr("Отсутствует необходимое подключение для работы теста"));
         static_cast<ExecuteWidget*>(parent())->closeExecutePage(); //showDB();
     }
 }

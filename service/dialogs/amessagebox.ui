@@ -6,12 +6,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>505</width>
-    <height>164</height>
+    <width>281</width>
+    <height>119</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Заголовок</string>
+  </property>
+  <property name="modal">
+   <bool>true</bool>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
@@ -101,6 +104,13 @@
        </widget>
       </item>
       <item>
+       <widget class="QPushButton" name="btnNo">
+        <property name="text">
+         <string>Нет</string>
+        </property>
+       </widget>
+      </item>
+      <item>
        <widget class="QPushButton" name="btnCancel">
         <property name="text">
          <string>Отмена</string>
@@ -120,15 +130,31 @@
    <sender>btnOK</sender>
    <signal>clicked()</signal>
    <receiver>AMessageBox</receiver>
-   <slot>accept()</slot>
+   <slot>on_OKClicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>271</x>
-     <y>262</y>
+     <x>74</x>
+     <y>87</y>
     </hint>
     <hint type="destinationlabel">
-     <x>398</x>
-     <y>171</y>
+     <x>284</x>
+     <y>15</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btnNo</sender>
+   <signal>clicked()</signal>
+   <receiver>AMessageBox</receiver>
+   <slot>on_NoClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>164</x>
+     <y>79</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>282</x>
+     <y>45</y>
     </hint>
    </hints>
   </connection>
@@ -136,17 +162,22 @@
    <sender>btnCancel</sender>
    <signal>clicked()</signal>
    <receiver>AMessageBox</receiver>
-   <slot>reject()</slot>
+   <slot>on_CancelClicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>345</x>
-     <y>268</y>
+     <x>209</x>
+     <y>83</y>
     </hint>
     <hint type="destinationlabel">
-     <x>397</x>
-     <y>199</y>
+     <x>280</x>
+     <y>75</y>
     </hint>
    </hints>
   </connection>
  </connections>
+ <slots>
+  <slot>on_OKClicked()</slot>
+  <slot>on_NoClicked()</slot>
+  <slot>on_CancelClicked()</slot>
+ </slots>
 </ui>

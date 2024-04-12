@@ -2,7 +2,6 @@
 
 #include <QStandardPaths>
 #include <QTimer>
-#include <QMessageBox>
 #include <QLayout>
 #include <QDesktopWidget>
 #include <QUuid>
@@ -44,6 +43,7 @@
 #include "baseutils.h"
 #include "testpropertydialog.h"
 #include "signalexporter.h"
+#include "amessagebox.h"
 
 AAnalyserApplication::AAnalyserApplication(int &argc, char **argv)
     : QApplication(argc, argv)
@@ -314,7 +314,7 @@ void AAnalyserApplication::editTestProperty()
         }
     }
     else
-        QMessageBox::information(nullptr, tr("Предупреждение"), tr("Не выбран тест"));
+        AMessageBox::information(nullptr, tr("Предупреждение"), tr("Не выбран тест"));
 }
 
 void AAnalyserApplication::printTestReport()
@@ -331,7 +331,7 @@ void AAnalyserApplication::printTestReport()
         preview.exec();
     }
     else
-        QMessageBox::information(nullptr, tr("Предупреждение"), tr("Не выбран тест"));
+        AMessageBox::information(nullptr, tr("Предупреждение"), tr("Не выбран тест"));
 }
 
 void AAnalyserApplication::signalsTestAnalysis()
@@ -339,16 +339,16 @@ void AAnalyserApplication::signalsTestAnalysis()
     if (!("" == m_testUid && 0 == saOpenedTestCount()))
         signalsAnalysis();
     else
-        QMessageBox::information(nullptr, tr("Предупреждение"), tr("Не выбран тест и в окне анализа сигналов отсутствуют ранее открытые тесты"));
+        AMessageBox::information(nullptr, tr("Предупреждение"), tr("Не выбран тест и в окне анализа сигналов отсутствуют ранее открытые тесты"));
 }
 
 void AAnalyserApplication::executeMetodic()
 {
     if (m_patientUid == "")
-        QMessageBox::information(m_mw, tr("Предупреждение"), tr("Должен быть выбран пациент"));
+        AMessageBox::information(m_mw, tr("Предупреждение"), tr("Должен быть выбран пациент"));
     else
     if (m_metodicUid == "")
-        QMessageBox::information(m_mw, tr("Предупреждение"), tr("Должна быть выбрана методика"));
+        AMessageBox::information(m_mw, tr("Предупреждение"), tr("Должна быть выбрана методика"));
     else
     {
         auto widget = static_cast<MainWindow*>(m_mw)->getExecuteWidget();
@@ -387,7 +387,7 @@ void AAnalyserApplication::deleteTest()
         DataDefines::PatientKard patient;
         m_database->getPatient(ti.patientUid, patient);
         auto mi = m_metodics->metodic(ti.metodUid);
-        auto mr = QMessageBox::question(nullptr, tr("Подтверждение"), QString(tr("Удалить запись о тесте?") + "\n" +
+        auto mr = AMessageBox::question(nullptr, tr("Подтверждение"), QString(tr("Удалить запись о тесте?") + "\n" +
                                                                               tr("Пациент") + ": %1\n" +
                                                                               tr("Методика") + ": %2\n" +
                                                                               tr("Дата и время проведения") + ": %3")
@@ -401,7 +401,7 @@ void AAnalyserApplication::deleteTest()
         }
     }
     else
-        QMessageBox::information(nullptr, tr("Предупреждение"), tr("Не выбран тест"));
+        AMessageBox::information(nullptr, tr("Предупреждение"), tr("Не выбран тест"));
 }
 
 void AAnalyserApplication::deleteTest(const QString &testUid)
@@ -446,7 +446,7 @@ void AAnalyserApplication::summaryAddTest()
         m_addTSDlg->show();
     }
     else
-        QMessageBox::information(nullptr, tr("Предупреждение"), tr("Не выбран ни один тест"));
+        AMessageBox::information(nullptr, tr("Предупреждение"), tr("Не выбран ни один тест"));
 }
 
 void AAnalyserApplication::signalExport()
@@ -460,7 +460,7 @@ void AAnalyserApplication::signalExport()
         delete exp;
     }
     else
-        QMessageBox::information(nullptr, tr("Предупреждение"), tr("Не выбран тест"));
+        AMessageBox::information(nullptr, tr("Предупреждение"), tr("Не выбран тест"));
 }
 
 QStringList AAnalyserApplication::getDrivers() const
@@ -710,13 +710,13 @@ bool AAnalyserApplication::assignPPForPatient()
             }
         }
         else
-            QMessageBox::information(nullptr,
+            AMessageBox::information(nullptr,
                                      tr("Предупреждение"),
                                      tr("Для пациента уже назначена индивидуальная программа")+
                                      "\n" + tr("Пациент") + ": " + pi.fio );
     }
     else
-        QMessageBox::information(nullptr, tr("Предупреждение"), tr("Не выбран пациент"));
+        AMessageBox::information(nullptr, tr("Предупреждение"), tr("Не выбран пациент"));
 
     return false;
 }
@@ -768,7 +768,7 @@ bool AAnalyserApplication::assignPPForPatient(const QString &uidPP)
         return true;
     }
     else
-        QMessageBox::information(nullptr, tr("Предупреждение"), tr("Не выбран пациент"));
+        AMessageBox::information(nullptr, tr("Предупреждение"), tr("Не выбран пациент"));
 
     return false;
 }
@@ -794,7 +794,7 @@ bool AAnalyserApplication::cancelPPForPatient()
         auto pp = DataProvider::getActivePersonalProgramForPatient(pi.uid);
         if (pp != QJsonObject())
         {
-            auto mr = QMessageBox::question(nullptr,
+            auto mr = AMessageBox::question(nullptr,
                                             tr("Запрос"),
                                             tr("Отменить индивидуальную программу для пациента?") +
                                                "\n" + tr("Пациент") + ": " + pi.fio);
@@ -815,12 +815,12 @@ bool AAnalyserApplication::cancelPPForPatient()
             }
         }
         else
-            QMessageBox::information(nullptr,
+            AMessageBox::information(nullptr,
                                      tr("Предупреждение"),
                                      tr("Для пациента не назначена индивидуальная программа") + " - " + pi.fio);
     }
     else
-        QMessageBox::information(nullptr, tr("Предупреждение"), tr("Не выбран пациент"));
+        AMessageBox::information(nullptr, tr("Предупреждение"), tr("Не выбран пациент"));
 
     return false;
 }
@@ -1157,7 +1157,7 @@ void AAnalyserApplication::on_AddTestToSummaryAccepted()
     if (m_addTSDlg->mode() == SummaryDefines::atmNew)
     {
         if (m_addTSDlg->summaryName() == "")
-            QMessageBox::information(nullptr, tr("Предупреждение"), tr("Не задано название сводки"));
+            AMessageBox::information(nullptr, tr("Предупреждение"), tr("Не задано название сводки"));
         else
         {
             if (isOneMethodicOnAddTests())
@@ -1179,7 +1179,7 @@ void AAnalyserApplication::on_AddTestToSummaryAccepted()
                 emit addTestToSummaryEnd();
             }
             else
-                QMessageBox::information(nullptr, tr("Предупреждение"), tr("Выбраны тесты по разным методикам"));
+                AMessageBox::information(nullptr, tr("Предупреждение"), tr("Выбраны тесты по разным методикам"));
         }
     }
     if (m_addTSDlg->mode() == SummaryDefines::atmActive)
@@ -1250,7 +1250,7 @@ void AAnalyserApplication::assignApplicationVersion()
 //    if (m_addTSDlg->mode() == SummaryDefines::atmNew)
 //    {
 //        if (m_addTSDlg->summaryName() == "")
-//            QMessageBox::warning(nullptr, tr("Предупреждение"), tr("Не задано название сводки"));
+//            AMessageBox::warning(nullptr, tr("Предупреждение"), tr("Не задано название сводки"));
 //        else
 //            emit addTestToSummary(m_testUid, m_addTSDlg->mode(), m_addTSDlg->summaryName(), m_addTSDlg->kind());
 //    }

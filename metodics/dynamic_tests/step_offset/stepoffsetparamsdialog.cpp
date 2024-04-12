@@ -3,8 +3,7 @@
 
 #include "aanalyserapplication.h"
 #include "basedefines.h"
-
-#include <QMessageBox>
+#include "amessagebox.h"
 
 StepOffsetParamsDialog::StepOffsetParamsDialog(QWidget *parent) :
     QDialog(parent),
@@ -59,7 +58,7 @@ void StepOffsetParamsDialog::on_cancel()
 
 void StepOffsetParamsDialog::on_default()
 {
-    auto mr = QMessageBox::question(nullptr, tr("Запрос"), tr("Сбросить настройки к настройкам методики по умолчанию?"));
+    auto mr = AMessageBox::question(nullptr, tr("Запрос"), tr("Сбросить настройки к настройкам методики по умолчанию?"));
     if (QMessageBox::Yes == mr)
     {
         auto mi = static_cast<AAnalyserApplication*>(QApplication::instance())->getCurrentMetodic();

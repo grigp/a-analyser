@@ -7,9 +7,9 @@
 #include "testresultdata.h"
 #include "jumpplatedata.h"
 #include "settingsprovider.h"
+#include "amessagebox.h"
 
 #include <QTimer>
-#include <QMessageBox>
 #include <QDebug>
 
 JumpHeightTestExecute::JumpHeightTestExecute(QWidget *parent) :
@@ -122,7 +122,7 @@ void JumpHeightTestExecute::start()
     }
     else
     {
-        QMessageBox::warning(this, tr("Предупреждение"), tr("Отсутствует необходимое подключение для работы теста"));
+        AMessageBox::warning(this, tr("Предупреждение"), tr("Отсутствует необходимое подключение для работы теста"));
         static_cast<ExecuteWidget*>(parent())->showDB();
     }
 }

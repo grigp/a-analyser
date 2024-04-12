@@ -2,8 +2,7 @@
 #include "ui_extend3dgamesparamsdialog.h"
 
 #include "aanalyserapplication.h"
-
-#include <QMessageBox>
+#include "amessagebox.h"
 
 Extend3DGamesParamsDialog::Extend3DGamesParamsDialog(QWidget *parent) :
     QDialog(parent),
@@ -39,7 +38,7 @@ void Extend3DGamesParamsDialog::on_cancel()
 
 void Extend3DGamesParamsDialog::on_default()
 {
-    auto mr = QMessageBox::question(nullptr, tr("Запрос"), tr("Сбросить настройки к настройкам методики по умолчанию?"));
+    auto mr = AMessageBox::question(nullptr, tr("Запрос"), tr("Сбросить настройки к настройкам методики по умолчанию?"));
     if (QMessageBox::Yes == mr)
     {
         auto mi = static_cast<AAnalyserApplication*>(QApplication::instance())->getCurrentMetodic();

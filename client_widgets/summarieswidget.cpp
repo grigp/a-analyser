@@ -3,7 +3,6 @@
 
 #include <QStandardItemModel>
 #include <QTableView>
-#include <QMessageBox>
 #include <QDir>
 #include <QFileDialog>
 #include <QDebug>
@@ -17,6 +16,7 @@
 #include "stringinputdialog.h"
 #include "opensummarydialog.h"
 #include "settingsprovider.h"
+#include "amessagebox.h"
 
 
 SummariesWidget::SummariesWidget(QWidget *parent) :
@@ -72,7 +72,7 @@ bool SummariesWidget::isCloseProgramQuery()
             {
                 if (wgt->model()->isModify())
                 {
-                    auto mr = QMessageBox::question(nullptr,
+                    auto mr = AMessageBox::question(nullptr,
                                                     tr("Предупреждение"),
                                                     tr("Сводка") + " \"" + wgt->model()->name() + "\" " + tr("изменена") + ". " +
                                                     tr("Сохранить изменения?"),
@@ -108,7 +108,7 @@ void SummariesWidget::addTestToSummaryBegin()
 void SummariesWidget::addTestToSummaryEnd()
 {
     if (!m_isActivePresent && m_cntAdded == 0)
-        QMessageBox::information(nullptr, tr("Сообщение"), tr("Отсутствует активная сводка"));
+        AMessageBox::information(nullptr, tr("Сообщение"), tr("Отсутствует активная сводка"));
     else
     {
 
@@ -116,7 +116,7 @@ void SummariesWidget::addTestToSummaryEnd()
         if (m_isAnotherMethod && m_cntAdded <= m_cntAll)
             sAnotherMethod = tr("Активная сводка создана для другой методики");
         if (m_cntAdded != m_cntAll)
-            QMessageBox::information(nullptr,
+            AMessageBox::information(nullptr,
                                      tr("Сообщение"),
                                      tr("В сводку добавлено") + " " + QString::number(m_cntAdded) + " " + tr("тестов") + " " +
                                      tr("из") + " " + QString::number(m_cntAll) + ".  " + sAnotherMethod);
@@ -208,7 +208,7 @@ void SummariesWidget::on_openSummary()
 
         }
         else
-            QMessageBox::information(nullptr, tr("Предупреждение"), tr("Сводка не выбрана"));
+            AMessageBox::information(nullptr, tr("Предупреждение"), tr("Сводка не выбрана"));
     }
     disconnect(dlg, &OpenSummaryDialog::deleteSummary, this, &SummariesWidget::on_deleteSummary);
     delete dlg;
@@ -226,12 +226,12 @@ void SummariesWidget::on_saveSummary()
             if (wgt)
             {
                 saveSummary(wgt);
-                QMessageBox::information(nullptr, tr("Информация"), tr("Сводка сохранена") + " : \"" + wgt->model()->name() + "\"");
+                AMessageBox::information(nullptr, tr("Информация"), tr("Сводка сохранена") + " : \"" + wgt->model()->name() + "\"");
             }
         }
     }
     else
-        QMessageBox::information(nullptr, tr("Предупреждение"), tr("Нет выбранной сводки"));
+        AMessageBox::information(nullptr, tr("Предупреждение"), tr("Нет выбранной сводки"));
 }
 
 void SummariesWidget::on_closeSummary()
@@ -247,7 +247,7 @@ void SummariesWidget::on_closeSummary()
             {
                 if (wgt->model()->isModify())
                 {
-                    auto mr = QMessageBox::question(nullptr, tr("Запрос"), tr("Сохранить сводку"),
+                    auto mr = AMessageBox::question(nullptr, tr("Запрос"), tr("Сохранить сводку"),
                                                     QMessageBox::StandardButtons(QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel));
                     if (mr == QMessageBox::Yes)
                         saveSummary(wgt);
@@ -260,7 +260,7 @@ void SummariesWidget::on_closeSummary()
         }
     }
     else
-        QMessageBox::information(nullptr, tr("Предупреждение"), tr("Сводка не выбрана"));
+        AMessageBox::information(nullptr, tr("Предупреждение"), tr("Сводка не выбрана"));
 }
 
 void SummariesWidget::on_deleteTest()
@@ -283,7 +283,7 @@ void SummariesWidget::on_deleteTest()
                         auto fio = wgt->model()->index(selIdx.row(), 0).data(Summary::PatientFioRole).toString();
                         auto dt =  wgt->model()->index(selIdx.row(), 0).data(Summary::TestDateTimeRole).toDateTime();
 
-                        auto mr = QMessageBox::question(nullptr,
+                        auto mr = AMessageBox::question(nullptr,
                                                         tr("Предупреждение"),
                                                         tr("Удалить тест из сводки") + " (" + fio + " - " +
                                                         dt.toString("dd.MM.yyyy hh:mm") + ")?");
@@ -292,12 +292,12 @@ void SummariesWidget::on_deleteTest()
                     }
                 }
                 else
-                    QMessageBox::information(nullptr, tr("Предупреждение"), tr("Тест не выбран"));
+                    AMessageBox::information(nullptr, tr("Предупреждение"), tr("Тест не выбран"));
             }
         }
     }
     else
-        QMessageBox::information(nullptr, tr("Предупреждение"), tr("Нет выбранной сводки"));
+        AMessageBox::information(nullptr, tr("Предупреждение"), tr("Нет выбранной сводки"));
 }
 
 void SummariesWidget::on_exportSummary()
@@ -328,7 +328,7 @@ void SummariesWidget::on_exportSummary()
         }
     }
     else
-        QMessageBox::information(nullptr, tr("Предупреждение"), tr("Нет выбранной сводки"));
+        AMessageBox::information(nullptr, tr("Предупреждение"), tr("Нет выбранной сводки"));
 }
 
 void SummariesWidget::on_importSummary()
@@ -366,7 +366,7 @@ void SummariesWidget::on_openInExcel()
         }
     }
     else
-        QMessageBox::information(nullptr, tr("Предупреждение"), tr("Нет выбранной сводки"));
+        AMessageBox::information(nullptr, tr("Предупреждение"), tr("Нет выбранной сводки"));
 #endif
 }
 
@@ -476,14 +476,14 @@ bool SummariesWidget::addTestToActiveSummary(const QString testUid, const Summar
                     }
                     else
                         m_isAnotherMethod = true;
-//                        QMessageBox::information(nullptr, tr("Предупреждение"), tr("Активная сводка создана для другой методики"));
+//                        AMessageBox::information(nullptr, tr("Предупреждение"), tr("Активная сводка создана для другой методики"));
                 }
             }
         }
     }
     else
         m_isActivePresent = false;
-//        QMessageBox::information(nullptr, tr("Предупреждение"), tr("Отсутствует активная сводка"));
+//        AMessageBox::information(nullptr, tr("Предупреждение"), tr("Отсутствует активная сводка"));
     return false;
 }
 

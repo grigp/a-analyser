@@ -11,9 +11,9 @@
 #include "baseutils.h"
 #include "bilateralresultdata.h"
 #include "aanalysersettings.h"
+#include "amessagebox.h"
 
 #include <QTimer>
-#include <QMessageBox>
 #include <QDesktopWidget>
 #include <QDebug>
 
@@ -305,7 +305,7 @@ void StabDynamicTestExecute::start()
     }
     else
     {
-        QMessageBox::warning(this, tr("Предупреждение"), tr("Отсутствует необходимое подключение для работы теста"));
+        AMessageBox::warning(this, tr("Предупреждение"), tr("Отсутствует необходимое подключение для работы теста"));
         static_cast<ExecuteWidget*>(parent())->showDB();
     }
 }

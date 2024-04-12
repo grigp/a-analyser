@@ -9,9 +9,9 @@
 #include "settingsprovider.h"
 #include "linesparamsdialog.h"
 #include "stabtestdefines.h"
+#include "amessagebox.h"
 
 #include <QJsonArray>
-#include <QMessageBox>
 #include <QFile>
 #include <QDebug>
 
@@ -200,7 +200,7 @@ void StabTestParamsDialog::addProbe()
 void StabTestParamsDialog::deleteProbe()
 {
 
-    if (QMessageBox::question(this, tr("Предупреждение"),
+    if (AMessageBox::question(this, tr("Предупреждение"),
                               QString(tr("Удалить запись о пробе '%1'?")).arg(metParams.probes.at(m_curProbe).name)) ==
             QMessageBox::Yes)
     {
@@ -334,7 +334,7 @@ void StabTestParamsDialog::on_cancel()
 
 void StabTestParamsDialog::on_default()
 {
-    auto mr = QMessageBox::question(nullptr, tr("Запрос"), tr("Сбросить настройки к настройкам методики по умолчанию?"));
+    auto mr = AMessageBox::question(nullptr, tr("Запрос"), tr("Сбросить настройки к настройкам методики по умолчанию?"));
     if (QMessageBox::Yes == mr)
     {
         auto mi = static_cast<AAnalyserApplication*>(QApplication::instance())->getCurrentMetodic();

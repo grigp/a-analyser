@@ -3,8 +3,8 @@
 
 #include <QTime>
 #include <QFile>
-#include <QMessageBox>
 
+#include "amessagebox.h"
 #include "aanalyserapplication.h"
 
 TrenTakePutParamsDialog::TrenTakePutParamsDialog(QWidget *parent) :
@@ -71,7 +71,7 @@ void TrenTakePutParamsDialog::on_cancel()
 
 void TrenTakePutParamsDialog::on_default()
 {
-    auto mr = QMessageBox::question(nullptr, tr("Запрос"), tr("Сбросить настройки к настройкам методики по умолчанию?"));
+    auto mr = AMessageBox::question(nullptr, tr("Запрос"), tr("Сбросить настройки к настройкам методики по умолчанию?"));
     if (QMessageBox::Yes == mr)
     {
         auto mi = static_cast<AAnalyserApplication*>(QApplication::instance())->getCurrentMetodic();

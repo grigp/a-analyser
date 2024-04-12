@@ -19,10 +19,10 @@
 #include "aboutdialog.h"
 #include "dailyprogramseditor.h"
 #include "personalprogramseditor.h"
+#include "amessagebox.h"
 
 #include <QFile>
 #include <QCloseEvent>
-#include <QMessageBox>
 #include <QFileDialog>
 #include <QAction>
 #include <QDebug>
@@ -200,7 +200,7 @@ void MainWindow::closeEvent(QCloseEvent *event)
 {
     if (m_currentClientPage == ClientWidgets::uidExecuteWidgetUid)
     {
-        auto mr = QMessageBox::question(this, tr("Предупреждение"), tr("Вы уверены, что хотите прервать проведение теста?"),
+        auto mr = AMessageBox::question(this, tr("Предупреждение"), tr("Вы уверены, что хотите прервать проведение теста?"),
                                         QMessageBox::Yes | QMessageBox::No);
         if (mr == QMessageBox::Yes)
             restoreClientPage();
@@ -302,21 +302,21 @@ void MainWindow::onDataBaseSelect()
 
 void MainWindow::onDataBaseClear()
 {
-    if (QMessageBox::question(this, tr("Запрос"), tr("Удалить всех пациентов со всеми обследованиями?")) ==
+    if (AMessageBox::question(this, tr("Запрос"), tr("Удалить всех пациентов со всеми обследованиями?")) ==
             QMessageBox::Yes)
         DataProvider::clear();
 }
 
 void MainWindow::onDataBaseDelTests()
 {
-    if (QMessageBox::question(this, tr("Запрос"), tr("Удалить все обследования?")) ==
+    if (AMessageBox::question(this, tr("Запрос"), tr("Удалить все обследования?")) ==
             QMessageBox::Yes)
         DataProvider::deleteTests();
 }
 
 void MainWindow::onDataBaseCreate()
 {
-    if (QMessageBox::question(this, tr("Запрос"), tr("Создать новую базу данных?")) ==
+    if (AMessageBox::question(this, tr("Запрос"), tr("Создать новую базу данных?")) ==
             QMessageBox::Yes)
     {
         emit dataBaseCreate();
@@ -398,7 +398,7 @@ void MainWindow::on_PPCancel()
 
 void MainWindow::on_clearGeometry()
 {
-    auto mr = QMessageBox::question(nullptr, tr("Запрос"), tr("Удалить данные о расположении и размере окон, а также о расположении разделителей?"));
+    auto mr = AMessageBox::question(nullptr, tr("Запрос"), tr("Удалить данные о расположении и размере окон, а также о расположении разделителей?"));
     if (QMessageBox::Yes == mr)
         SettingsProvider::clearGroup("Geometry");
 }

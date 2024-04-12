@@ -4,8 +4,8 @@
 #include "aanalyserapplication.h"
 #include "jumpplatedefines.h"
 #include "jumpheighttestdefines.h"
+#include "amessagebox.h"
 
-#include <QMessageBox>
 #include <QDebug>
 #include <QFile>
 
@@ -75,7 +75,7 @@ void JumpHeightTestParamsDialog::on_cancel()
 
 void JumpHeightTestParamsDialog::on_default()
 {
-    auto mr = QMessageBox::question(nullptr, tr("Запрос"), tr("Сбросить настройки к настройкам методики по умолчанию?"));
+    auto mr = AMessageBox::question(nullptr, tr("Запрос"), tr("Сбросить настройки к настройкам методики по умолчанию?"));
     if (QMessageBox::Yes == mr)
     {
         auto mi = static_cast<AAnalyserApplication*>(QApplication::instance())->getCurrentMetodic();

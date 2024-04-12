@@ -4,10 +4,10 @@
 #include "aanalyserapplication.h"
 #include "stringvaluedelegate.h"
 #include "addconnectiondialog.h"
+#include "amessagebox.h"
 
 #include <QApplication>
 #include <QComboBox>
-#include <QMessageBox>
 #include <QVariant>
 #include <QDebug>
 
@@ -81,7 +81,7 @@ void DeviceControlDialog::delConnect()
         const int rowIdx = selIdxs.at(0).row();
         auto driver = m_model->index(rowIdx, DeviceControlModel::ColDriver).data().toString();
         auto port = m_model->index(rowIdx, DeviceControlModel::ColPort).data().toString();
-        if (QMessageBox::question(this,
+        if (AMessageBox::question(this,
                                   tr("Предупреждение"),
                                   QString(tr("Удалить подключение") + " %1 (%2)?").arg(driver).arg(port))
                 ==

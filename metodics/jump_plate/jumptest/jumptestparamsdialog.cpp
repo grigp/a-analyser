@@ -2,9 +2,9 @@
 #include "ui_jumptestparamsdialog.h"
 
 #include "aanalyserapplication.h"
+#include "amessagebox.h"
 
 #include <QFile>
-#include <QMessageBox>
 
 JumpTestParamsDialog::JumpTestParamsDialog(QWidget *parent) :
     QDialog(parent),
@@ -46,7 +46,7 @@ void JumpTestParamsDialog::on_cancel()
 
 void JumpTestParamsDialog::on_default()
 {
-    auto mr = QMessageBox::question(nullptr, tr("Запрос"), tr("Сбросить настройки к настройкам методики по умолчанию?"));
+    auto mr = AMessageBox::question(nullptr, tr("Запрос"), tr("Сбросить настройки к настройкам методики по умолчанию?"));
     if (QMessageBox::Yes == mr)
     {
         auto mi = static_cast<AAnalyserApplication*>(QApplication::instance())->getCurrentMetodic();
