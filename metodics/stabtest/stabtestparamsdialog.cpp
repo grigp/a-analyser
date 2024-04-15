@@ -202,7 +202,7 @@ void StabTestParamsDialog::deleteProbe()
 
     if (AMessageBox::question(this, tr("Предупреждение"),
                               QString(tr("Удалить запись о пробе '%1'?")).arg(metParams.probes.at(m_curProbe).name)) ==
-            QMessageBox::Yes)
+            AMessageBox::Yes)
     {
         metParams.probes.removeAt(m_curProbe);
         m_mdlProbes->removeRow(m_curProbe);
@@ -335,7 +335,7 @@ void StabTestParamsDialog::on_cancel()
 void StabTestParamsDialog::on_default()
 {
     auto mr = AMessageBox::question(nullptr, tr("Запрос"), tr("Сбросить настройки к настройкам методики по умолчанию?"));
-    if (QMessageBox::Yes == mr)
+    if (AMessageBox::Yes == mr)
     {
         auto mi = static_cast<AAnalyserApplication*>(QApplication::instance())->getCurrentMetodic();
         auto params = static_cast<AAnalyserApplication*>(QApplication::instance())->setMetodicParamsDefault(mi.uid);

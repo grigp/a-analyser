@@ -76,10 +76,10 @@ bool SummariesWidget::isCloseProgramQuery()
                                                     tr("Предупреждение"),
                                                     tr("Сводка") + " \"" + wgt->model()->name() + "\" " + tr("изменена") + ". " +
                                                     tr("Сохранить изменения?"),
-                                                    QMessageBox::StandardButtons(QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel));
-                    if (mr == QMessageBox::Yes)
+                                                    AMessageBox::StandardButtons(AMessageBox::Yes | AMessageBox::No | AMessageBox::Cancel));
+                    if (mr == AMessageBox::Yes)
                         saveSummary(wgt);
-                    if (mr == QMessageBox::Cancel)
+                    if (mr == AMessageBox::Cancel)
                         return false;
                 }
             }
@@ -248,10 +248,10 @@ void SummariesWidget::on_closeSummary()
                 if (wgt->model()->isModify())
                 {
                     auto mr = AMessageBox::question(nullptr, tr("Запрос"), tr("Сохранить сводку"),
-                                                    QMessageBox::StandardButtons(QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel));
-                    if (mr == QMessageBox::Yes)
+                                                    AMessageBox::StandardButtons(AMessageBox::Yes | AMessageBox::No | AMessageBox::Cancel));
+                    if (mr == AMessageBox::Yes)
                         saveSummary(wgt);
-                    if (mr != QMessageBox::Cancel)
+                    if (mr != AMessageBox::Cancel)
                         closeSummary(wgt);
                 }
                 else
@@ -287,7 +287,7 @@ void SummariesWidget::on_deleteTest()
                                                         tr("Предупреждение"),
                                                         tr("Удалить тест из сводки") + " (" + fio + " - " +
                                                         dt.toString("dd.MM.yyyy hh:mm") + ")?");
-                        if (mr == QMessageBox::Yes)
+                        if (mr == AMessageBox::Yes)
                             wgt->model()->removeTest(selIdx.row());
                     }
                 }

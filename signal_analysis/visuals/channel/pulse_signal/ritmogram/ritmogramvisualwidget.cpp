@@ -1,7 +1,6 @@
 #include "ritmogramvisualwidget.h"
 #include "ui_ritmogramvisualwidget.h"
 
-#include <QMessageBox>
 #include <QDebug>
 
 #include "aanalyserapplication.h"
@@ -11,6 +10,7 @@
 #include "dataprovider.h"
 #include "ritmogram.h"
 #include "graphpainter.h"
+#include "amessagebox.h"
 
 RitmogramVisualWidget::RitmogramVisualWidget(VisualDescriptor* visual,
                                              const QString& testUid, const QString& probeUid, const QString& channelId,
@@ -106,18 +106,18 @@ void RitmogramVisualWidget::on_deleteArtifacts()
 {
     if ((m_abLower > -1) && (m_abUpper > -1) && (m_abLower < m_abUpper))
     {
-        auto mr = QMessageBox::question(nullptr, tr("Запрос"), tr("Удалить артефакты, выпадающие за пределы выделенной области?"));
-        if (mr == QMessageBox::Yes)
+        auto mr = AMessageBox::question(nullptr, tr("Запрос"), tr("Удалить артефакты, выпадающие за пределы выделенной области?"));
+        if (mr == AMessageBox::Yes)
                 deleteArtifacts(m_abLower, m_abUpper);
     }
     else
-        QMessageBox::information(nullptr, tr("Предупреждение"), tr("Не заданы границы зоны отсечения артефактов"));
+        AMessageBox::information(nullptr, tr("Предупреждение"), tr("Не заданы границы зоны отсечения артефактов"));
 }
 
 void RitmogramVisualWidget::on_rewriteSignal()
 {
-    auto mr = QMessageBox::question(nullptr, tr("Запрос"), tr("Перезаписать ритмограмму?"));
-    if (mr == QMessageBox::Yes)
+    auto mr = AMessageBox::question(nullptr, tr("Запрос"), tr("Перезаписать ритмограмму?"));
+    if (mr == AMessageBox::Yes)
     {
         if (m_signal)
         {

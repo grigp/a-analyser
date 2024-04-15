@@ -39,7 +39,7 @@ void Extend3DGamesParamsDialog::on_cancel()
 void Extend3DGamesParamsDialog::on_default()
 {
     auto mr = AMessageBox::question(nullptr, tr("Запрос"), tr("Сбросить настройки к настройкам методики по умолчанию?"));
-    if (QMessageBox::Yes == mr)
+    if (AMessageBox::Yes == mr)
     {
         auto mi = static_cast<AAnalyserApplication*>(QApplication::instance())->getCurrentMetodic();
         auto params = static_cast<AAnalyserApplication*>(QApplication::instance())->setMetodicParamsDefault(mi.uid);

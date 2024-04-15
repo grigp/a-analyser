@@ -388,7 +388,7 @@ void PersonalProgramWidget::on_repeat()
                 if (uidPP != "")
                 {
                     auto mr = AMessageBox::question(nullptr, tr("Запрос"), tr("Назначить индивидуальную программу этому пациенту заново?"));
-                    if (QMessageBox::Yes == mr)
+                    if (AMessageBox::Yes == mr)
                         if (static_cast<AAnalyserApplication*>(QApplication::instance())->assignPPForPatient(uidPP))
                         {
                             ui->tvPatients->selectionModel()->clearSelection();

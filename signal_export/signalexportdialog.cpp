@@ -1,12 +1,12 @@
 #include "signalexportdialog.h"
 #include "ui_signalexportdialog.h"
 
-#include <QMessageBox>
 #include <QDir>
 #include <QDebug>
 
 #include "aanalyserapplication.h"
 #include "filenamewidget.h"
+#include "amessagebox.h"
 
 SignalExportDialog::SignalExportDialog(QWidget *parent) :
     QDialog(parent),
@@ -106,7 +106,7 @@ void SignalExportDialog::accept()
 {
     //! Проверка, задан ли фильтр
     if (m_filterUid == "")
-        QMessageBox::information(nullptr, tr("Предупреждение"), tr("Не выбран фильтр экспорта"));
+        AMessageBox::information(nullptr, tr("Предупреждение"), tr("Не выбран фильтр экспорта"));
 
     //! Проверка, заданы ли имена файлов для экспорта
     bool isNamesPresent = true;
@@ -131,18 +131,18 @@ void SignalExportDialog::accept()
         }
     }
     if (!isNamesPresent)
-        QMessageBox::information(nullptr, tr("Предупреждение"), tr("Не задано имя файла для экспорта"));
+        AMessageBox::information(nullptr, tr("Предупреждение"), tr("Не задано имя файла для экспорта"));
     if (isNamesRepeat)
-        QMessageBox::information(nullptr, tr("Предупреждение"), tr("Заданы повторяющиеся имена файлов"));
+        AMessageBox::information(nullptr, tr("Предупреждение"), tr("Заданы повторяющиеся имена файлов"));
 
     QDir dir(fileName(0));
     if (m_mode == SignalExportDefines::mdBatch && !dir.exists())
     {
-        QMessageBox::information(nullptr, tr("Предупреждение"), tr("Папки для пакетного экспорта не существует"));
+        AMessageBox::information(nullptr, tr("Предупреждение"), tr("Папки для пакетного экспорта не существует"));
     }
     else
     if (m_mode == SignalExportDefines::mdBatch && !dir.isEmpty())
-        QMessageBox::information(nullptr, tr("Предупреждение"), tr("Папка для пакетного экспорта не пуста"));
+        AMessageBox::information(nullptr, tr("Предупреждение"), tr("Папка для пакетного экспорта не пуста"));
 
     if (m_mode == SignalExportDefines::mdBatch)
     {

@@ -1,7 +1,6 @@
 #include "stabilogramvisualwidget.h"
 #include "ui_stabilogramvisualwidget.h"
 
-#include <QMessageBox>
 #include <QDebug>
 
 #include "visualdescriptor.h"
@@ -12,6 +11,7 @@
 #include "baseutils.h"
 #include "createsectiondialog.h"
 #include "signalanalysisutils.h"
+#include "amessagebox.h"
 
 StabilogramVisualWidget::StabilogramVisualWidget(VisualDescriptor* visual,
                                                  const QString& testUid, const QString& probeUid, const QString& channelId,
@@ -137,9 +137,9 @@ void StabilogramVisualWidget::on_createSection()
     else
     {
         if (begin == -1 && end == -1)
-            QMessageBox::information(nullptr, tr("Сообщение"), tr("Не выделен участок сигнала"));
+            AMessageBox::information(nullptr, tr("Сообщение"), tr("Не выделен участок сигнала"));
         else
-            QMessageBox::information(nullptr, tr("Сообщение"), tr("Неправильно выделен участок сигнала"));
+            AMessageBox::information(nullptr, tr("Сообщение"), tr("Неправильно выделен участок сигнала"));
     }
 }
 

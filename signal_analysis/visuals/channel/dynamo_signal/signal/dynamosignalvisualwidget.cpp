@@ -1,8 +1,6 @@
 #include "dynamosignalvisualwidget.h"
 #include "ui_dynamosignalvisualwidget.h"
 
-#include <QMessageBox>
-
 #include "baseutils.h"
 #include "channelsdefines.h"
 #include "channelsutils.h"
@@ -10,6 +8,7 @@
 #include "dynamosignal.h"
 #include "createsectiondialog.h"
 #include "signalanalysisutils.h"
+#include "amessagebox.h"
 
 DynamoSignalVisualWidget::DynamoSignalVisualWidget(VisualDescriptor* visual,
                                                    const QString& testUid, const QString& probeUid, const QString& channelId,
@@ -149,9 +148,9 @@ void DynamoSignalVisualWidget::on_createSection()
     else
     {
         if (begin == -1 && end == -1)
-            QMessageBox::information(nullptr, tr("Сообщение"), tr("Не выделен участок сигнала"));
+            AMessageBox::information(nullptr, tr("Сообщение"), tr("Не выделен участок сигнала"));
         else
-            QMessageBox::information(nullptr, tr("Сообщение"), tr("Неправильно выделен участок сигнала"));
+            AMessageBox::information(nullptr, tr("Сообщение"), tr("Неправильно выделен участок сигнала"));
     }
 }
 

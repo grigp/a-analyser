@@ -2,9 +2,9 @@
 #include "ui_filenamewidget.h"
 
 #include <QFileDialog>
-#include <QMessageBox>
 
 #include "datadefines.h"
+#include "amessagebox.h"
 
 FileNameWidget::FileNameWidget(const Mode mode, QWidget *parent) :
     QWidget(parent),
@@ -59,7 +59,7 @@ void FileNameWidget::browseFile()
             }
         }
         else
-            QMessageBox::information(nullptr, tr("Информация"), tr("Не выбран фильтр экспорта"));
+            AMessageBox::information(nullptr, tr("Информация"), tr("Не выбран фильтр экспорта"));
     }
     else
     {

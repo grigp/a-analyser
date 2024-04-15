@@ -1,7 +1,6 @@
 #include "personalprogramseditor.h"
 #include "ui_personalprogramseditor.h"
 
-#include <QMessageBox>
 #include <QUuid>
 #include <QFileDialog>
 #include <QDebug>
@@ -10,6 +9,7 @@
 #include "selectdailyprogramdialog.h"
 #include "personalprogramdefines.h"
 #include "settingsprovider.h"
+#include "amessagebox.h"
 
 PersonalProgramsEditor::PersonalProgramsEditor(QWidget *parent) :
     QDialog(parent),
@@ -96,8 +96,8 @@ void PersonalProgramsEditor::on_doubleDP()
         if (index.isValid())
         {
             QString text = tr("Дублировать дневную программу \"") + index.data().toString() + tr("\"?");
-            auto mr = QMessageBox::question(nullptr, tr("Запрос"), text);
-            if (mr == QMessageBox::Yes)
+            auto mr = AMessageBox::question(nullptr, tr("Запрос"), text);
+            if (mr == AMessageBox::Yes)
             {
                 auto dp = index.data(PersonalProgramDefines::TableDPRoles::DPRole).toJsonObject();
 
@@ -109,7 +109,7 @@ void PersonalProgramsEditor::on_doubleDP()
         }
     }
     else
-        QMessageBox::information(nullptr, tr("Предупреждение"), tr("Не выбрана дневная программа"));
+        AMessageBox::information(nullptr, tr("Предупреждение"), tr("Не выбрана дневная программа"));
 }
 
 void PersonalProgramsEditor::on_delDP()
@@ -121,13 +121,13 @@ void PersonalProgramsEditor::on_delDP()
         if (index.isValid())
         {
             QString text = tr("Удалить дневную программу \"") + index.data().toString() + tr("\" из индивидуальной программы?");
-            auto mr = QMessageBox::question(nullptr, tr("Запрос"), text);
-            if (mr == QMessageBox::Yes)
+            auto mr = AMessageBox::question(nullptr, tr("Запрос"), text);
+            if (mr == AMessageBox::Yes)
                 m_mdlDP.removeRow(index.row());
         }
     }
     else
-        QMessageBox::information(nullptr, tr("Предупреждение"), tr("Не выбрана дневная программа"));
+        AMessageBox::information(nullptr, tr("Предупреждение"), tr("Не выбрана дневная программа"));
 }
 
 void PersonalProgramsEditor::on_moveDPUp()
@@ -149,7 +149,7 @@ void PersonalProgramsEditor::on_moveDPUp()
         }
     }
     else
-        QMessageBox::information(nullptr, tr("Предупреждение"), tr("Не выбрана дневная программа"));
+        AMessageBox::information(nullptr, tr("Предупреждение"), tr("Не выбрана дневная программа"));
 }
 
 void PersonalProgramsEditor::on_moveDPDown()
@@ -171,7 +171,7 @@ void PersonalProgramsEditor::on_moveDPDown()
         }
     }
     else
-        QMessageBox::information(nullptr, tr("Предупреждение"), tr("Не выбрана дневная программа"));
+        AMessageBox::information(nullptr, tr("Предупреждение"), tr("Не выбрана дневная программа"));
 }
 
 void PersonalProgramsEditor::on_ppAdd()
@@ -212,13 +212,13 @@ void PersonalProgramsEditor::on_ppAdd()
                 static_cast<AAnalyserApplication*>(QApplication::instance())->assignDailyProgramsForPersonal(uidPP, uidDPs);
             }
             else
-                QMessageBox::information(nullptr, tr("Предупреждение"), tr("Минимальное время между дневными программми больше максимального"));
+                AMessageBox::information(nullptr, tr("Предупреждение"), tr("Минимальное время между дневными программми больше максимального"));
         }
         else
-            QMessageBox::information(nullptr, tr("Предупреждение"), tr("Необходимо добавить дневные программы в индивидуальную программу"));
+            AMessageBox::information(nullptr, tr("Предупреждение"), tr("Необходимо добавить дневные программы в индивидуальную программу"));
     }
     else
-        QMessageBox::information(nullptr, tr("Предупреждение"), tr("Не задано название индивидуальной программы"));
+        AMessageBox::information(nullptr, tr("Предупреждение"), tr("Не задано название индивидуальной программы"));
 }
 
 void PersonalProgramsEditor::on_ppEdit()
@@ -241,8 +241,8 @@ void PersonalProgramsEditor::on_ppEdit()
                 objPP["logo_file_name"] = m_logoFileName;
 
                 QString pn = item->text();
-                auto mr = QMessageBox::question(nullptr, tr("Запрос"), tr("Внести изменения в программу") + " \"" + pn + "\"?");
-                if (mr == QMessageBox::Yes)
+                auto mr = AMessageBox::question(nullptr, tr("Запрос"), tr("Внести изменения в программу") + " \"" + pn + "\"?");
+                if (mr == AMessageBox::Yes)
                 {
                     item->setIcon(QIcon(m_logoFileName));
                     item->setData(objPP, PersonalProgramDefines::TablePPRoles::PPRole);
@@ -258,11 +258,11 @@ void PersonalProgramsEditor::on_ppEdit()
                 }
             }
             else
-                QMessageBox::information(nullptr, tr("Предупреждение"), tr("Минимальное время между дневными программми больше максимального"));
+                AMessageBox::information(nullptr, tr("Предупреждение"), tr("Минимальное время между дневными программми больше максимального"));
         }
     }
     else
-        QMessageBox::information(nullptr, tr("Предупреждение"), tr("Не выбрана индивидуальная программа"));
+        AMessageBox::information(nullptr, tr("Предупреждение"), tr("Не выбрана индивидуальная программа"));
 }
 
 void PersonalProgramsEditor::on_ppDel()
@@ -274,8 +274,8 @@ void PersonalProgramsEditor::on_ppDel()
         if (index.isValid())
         {
             QString name = index.data().toString();
-            auto mr = QMessageBox::question(nullptr, tr("Запрос"), tr("Удалить индивидуальную программу") + " \"" + name + "\"?");
-            if (mr == QMessageBox::Yes)
+            auto mr = AMessageBox::question(nullptr, tr("Запрос"), tr("Удалить индивидуальную программу") + " \"" + name + "\"?");
+            if (mr == AMessageBox::Yes)
             {
                 auto objPP = index.data(PersonalProgramDefines::TablePPRoles::PPRole).toJsonObject();
                 auto uidPP = objPP["uid"].toString();
@@ -293,7 +293,7 @@ void PersonalProgramsEditor::on_ppDel()
         }
     }
     else
-        QMessageBox::information(nullptr, tr("Предупреждение"), tr("Не выбрана индивидуальная программа"));
+        AMessageBox::information(nullptr, tr("Предупреждение"), tr("Не выбрана индивидуальная программа"));
 }
 
 void PersonalProgramsEditor::on_selectPP(QModelIndex index)
@@ -365,8 +365,8 @@ void PersonalProgramsEditor::on_selectLogo()
 
 void PersonalProgramsEditor::on_clearLogo()
 {
-    auto mr = QMessageBox::question(nullptr, tr("запрос"), tr("Очистить логотип?"));
-    if (mr == QMessageBox::Yes)
+    auto mr = AMessageBox::question(nullptr, tr("запрос"), tr("Очистить логотип?"));
+    if (mr == AMessageBox::Yes)
     {
         m_logoFileName = "";
         ui->lblLogo->setPixmap(QPixmap());

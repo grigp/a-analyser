@@ -13,7 +13,6 @@
 #include "trenresultfactors.h"
 
 #include <QTimer>
-#include <QMessageBox>
 #include <QPointF>
 #include <QDesktopWidget>
 #include <QDir>

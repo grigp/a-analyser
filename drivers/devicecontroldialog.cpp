@@ -85,7 +85,7 @@ void DeviceControlDialog::delConnect()
                                   tr("Предупреждение"),
                                   QString(tr("Удалить подключение") + " %1 (%2)?").arg(driver).arg(port))
                 ==
-                QMessageBox::Yes)
+                AMessageBox::Yes)
         {
             m_model->removeRow(rowIdx);
             static_cast<AAnalyserApplication*>(QApplication::instance())->deleteConnection(rowIdx);

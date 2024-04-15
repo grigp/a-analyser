@@ -1,7 +1,6 @@
 #include "activepersonalprogrameditor.h"
 #include "ui_activepersonalprogrameditor.h"
 
-#include <QMessageBox>
 #include <QDebug>
 
 #include "aanalyserapplication.h"
@@ -15,6 +14,7 @@
 #include "dailyprogramcompleteddelegate.h"
 #include "testcompleteddelegate.h"
 #include "settingsprovider.h"
+#include "amessagebox.h"
 
 
 ActivePersonalProgramEditor::ActivePersonalProgramEditor(QWidget *parent) :
@@ -143,11 +143,11 @@ void ActivePersonalProgramEditor::on_dpDouble()
         {
             QString name = selIdx.data().toString();
             int num = selIdx.row();
-            auto mr = QMessageBox::question(nullptr,
+            auto mr = AMessageBox::question(nullptr,
                                             tr("Запрос"),
                                             tr("Дублировать дневную программу?") + "\n" +
                                             tr("Программа №") + QString::number(num + 1) + " : " + name);
-            if (mr == QMessageBox::Yes)
+            if (mr == AMessageBox::Yes)
             {
                 m_mdlPP->doubleDailyProgram(num);
 
@@ -163,7 +163,7 @@ void ActivePersonalProgramEditor::on_dpDouble()
         }
     }
     else
-        QMessageBox::information(nullptr, tr("Предупреждение"), tr("Нельзя дублировать выполненную дневную программу"));
+        AMessageBox::information(nullptr, tr("Предупреждение"), tr("Нельзя дублировать выполненную дневную программу"));
 }
 
 void ActivePersonalProgramEditor::on_dpDel()
@@ -176,11 +176,11 @@ void ActivePersonalProgramEditor::on_dpDel()
         {
             QString name = selIdx.data().toString();
             int num = selIdx.row();
-            auto mr = QMessageBox::question(nullptr,
+            auto mr = AMessageBox::question(nullptr,
                                             tr("Запрос"),
                                             tr("Удалить дневную программу?") + "\n" +
                                             tr("Программа №") + QString::number(num + 1) + " : " + name);
-            if (mr == QMessageBox::Yes)
+            if (mr == AMessageBox::Yes)
             {
                 m_mdlPP->removeRow(num);
                 m_mdlDP.removeRow(num);
@@ -188,7 +188,7 @@ void ActivePersonalProgramEditor::on_dpDel()
         }
     }
     else
-        QMessageBox::information(nullptr, tr("Предупреждение"), tr("Нельзя удалять выполненную дневную программу"));
+        AMessageBox::information(nullptr, tr("Предупреждение"), tr("Нельзя удалять выполненную дневную программу"));
 }
 
 void ActivePersonalProgramEditor::on_dpMoveUp()
@@ -221,7 +221,7 @@ void ActivePersonalProgramEditor::on_dpMoveUp()
         }
     }
     else
-        QMessageBox::information(nullptr, tr("Предупреждение"), tr("Нельзя перемещать выполненную дневную программу"));
+        AMessageBox::information(nullptr, tr("Предупреждение"), tr("Нельзя перемещать выполненную дневную программу"));
 }
 
 void ActivePersonalProgramEditor::on_dpMoveDown()
@@ -245,7 +245,7 @@ void ActivePersonalProgramEditor::on_dpMoveDown()
         }
     }
     else
-        QMessageBox::information(nullptr, tr("Предупреждение"), tr("Нельзя перемещать выполненную дневную программу"));
+        AMessageBox::information(nullptr, tr("Предупреждение"), tr("Нельзя перемещать выполненную дневную программу"));
 }
 
 void ActivePersonalProgramEditor::on_testAdd()
@@ -276,14 +276,14 @@ void ActivePersonalProgramEditor::on_testAdd()
                     m_mdlPP->addTest(dpIdx.row(), metUid, mi.params);
                 }
                 else
-                    QMessageBox::information(nullptr, tr("Сообщение"), tr("Методика не выбрана"));
+                    AMessageBox::information(nullptr, tr("Сообщение"), tr("Методика не выбрана"));
             }
         }
         else
-            QMessageBox::information(nullptr, tr("Предупреждение"), tr("Нельзя добавлять тест в выполненную дневную программу"));
+            AMessageBox::information(nullptr, tr("Предупреждение"), tr("Нельзя добавлять тест в выполненную дневную программу"));
     }
     else
-        QMessageBox::information(nullptr, tr("Сообщение"), tr("Не выбрана дневная программа"));
+        AMessageBox::information(nullptr, tr("Сообщение"), tr("Не выбрана дневная программа"));
 }
 
 void ActivePersonalProgramEditor::on_testDouble()
@@ -300,11 +300,11 @@ void ActivePersonalProgramEditor::on_testDouble()
                 if (testUid == "")
                 {
                     auto metName = testIdx.data().toString();
-                    auto mr = QMessageBox::question(nullptr,
+                    auto mr = AMessageBox::question(nullptr,
                                                     tr("Запрос"),
                                                     tr("Дублировать тест в дневной программе?") + "\n" +
                                                     tr("Тест") + " : " + metName);
-                    if (mr == QMessageBox::Yes)
+                    if (mr == AMessageBox::Yes)
                     {
                         //! uid и параметры методики
                         auto metUid = testIdx.data(PersonalProgramDefines::PersonalProgram::MethodUidRole).toString();
@@ -323,16 +323,16 @@ void ActivePersonalProgramEditor::on_testDouble()
                     }
                 }
                 else
-                    QMessageBox::information(nullptr, tr("Предупреждение"), tr("Нельзя дублировать проведенный тест"));
+                    AMessageBox::information(nullptr, tr("Предупреждение"), tr("Нельзя дублировать проведенный тест"));
             }
             else
-                QMessageBox::information(nullptr, tr("Предупреждение"), tr("Не выбран тест"));
+                AMessageBox::information(nullptr, tr("Предупреждение"), tr("Не выбран тест"));
         }
         else
-            QMessageBox::information(nullptr, tr("Предупреждение"), tr("Нельзя дублировать тест из выполненной дневной программы"));
+            AMessageBox::information(nullptr, tr("Предупреждение"), tr("Нельзя дублировать тест из выполненной дневной программы"));
     }
     else
-        QMessageBox::information(nullptr, tr("Сообщение"), tr("Не выбрана дневная программа"));
+        AMessageBox::information(nullptr, tr("Сообщение"), tr("Не выбрана дневная программа"));
 }
 
 void ActivePersonalProgramEditor::on_testEdit()
@@ -357,16 +357,16 @@ void ActivePersonalProgramEditor::on_testEdit()
                     }
                 }
                 else
-                    QMessageBox::information(nullptr, tr("Предупреждение"), tr("Нельзя редактировать проведенный тест"));
+                    AMessageBox::information(nullptr, tr("Предупреждение"), tr("Нельзя редактировать проведенный тест"));
             }
             else
-                QMessageBox::information(nullptr, tr("Предупреждение"), tr("Не выбран тест"));
+                AMessageBox::information(nullptr, tr("Предупреждение"), tr("Не выбран тест"));
         }
         else
-            QMessageBox::information(nullptr, tr("Предупреждение"), tr("Нельзя редактировать тест в выполненной дневной программе"));
+            AMessageBox::information(nullptr, tr("Предупреждение"), tr("Нельзя редактировать тест в выполненной дневной программе"));
     }
     else
-        QMessageBox::information(nullptr, tr("Сообщение"), tr("Не выбрана дневная программа"));
+        AMessageBox::information(nullptr, tr("Сообщение"), tr("Не выбрана дневная программа"));
 }
 
 void ActivePersonalProgramEditor::on_testDel()
@@ -383,11 +383,11 @@ void ActivePersonalProgramEditor::on_testDel()
                 if (testUid == "")
                 {
                     auto metName = testIdx.data().toString();
-                    auto mr = QMessageBox::question(nullptr,
+                    auto mr = AMessageBox::question(nullptr,
                                                     tr("Запрос"),
                                                     tr("Удалить тест из дневной программы?") + "\n" +
                                                     tr("Тест") + " : " + metName);
-                    if (mr == QMessageBox::Yes)
+                    if (mr == AMessageBox::Yes)
                     {
                         //! Удаляем из виджета
                         m_mdlT.removeRow(testIdx.row());
@@ -410,16 +410,16 @@ void ActivePersonalProgramEditor::on_testDel()
                     }
                 }
                 else
-                    QMessageBox::information(nullptr, tr("Предупреждение"), tr("Нельзя удалять проведенный тест"));
+                    AMessageBox::information(nullptr, tr("Предупреждение"), tr("Нельзя удалять проведенный тест"));
             }
             else
-                QMessageBox::information(nullptr, tr("Предупреждение"), tr("Не выбран тест"));
+                AMessageBox::information(nullptr, tr("Предупреждение"), tr("Не выбран тест"));
         }
         else
-            QMessageBox::information(nullptr, tr("Предупреждение"), tr("Нельзя удалять тест из выполненной дневной программы"));
+            AMessageBox::information(nullptr, tr("Предупреждение"), tr("Нельзя удалять тест из выполненной дневной программы"));
     }
     else
-        QMessageBox::information(nullptr, tr("Сообщение"), tr("Не выбрана дневная программа"));
+        AMessageBox::information(nullptr, tr("Сообщение"), tr("Не выбрана дневная программа"));
 }
 
 void ActivePersonalProgramEditor::on_testMoveUp()
@@ -447,16 +447,16 @@ void ActivePersonalProgramEditor::on_testMoveUp()
                     }
                 }
                 else
-                    QMessageBox::information(nullptr, tr("Предупреждение"), tr("Нельзя перемещать проведенный тест"));
+                    AMessageBox::information(nullptr, tr("Предупреждение"), tr("Нельзя перемещать проведенный тест"));
             }
             else
-                QMessageBox::information(nullptr, tr("Предупреждение"), tr("Не выбран тест"));
+                AMessageBox::information(nullptr, tr("Предупреждение"), tr("Не выбран тест"));
         }
         else
-            QMessageBox::information(nullptr, tr("Предупреждение"), tr("Нельзя перемещать тест в выполненной дневной программе"));
+            AMessageBox::information(nullptr, tr("Предупреждение"), tr("Нельзя перемещать тест в выполненной дневной программе"));
     }
     else
-        QMessageBox::information(nullptr, tr("Сообщение"), tr("Не выбрана дневная программа"));
+        AMessageBox::information(nullptr, tr("Сообщение"), tr("Не выбрана дневная программа"));
 }
 
 void ActivePersonalProgramEditor::on_testMoveDown()
@@ -484,16 +484,16 @@ void ActivePersonalProgramEditor::on_testMoveDown()
                     }
                 }
                 else
-                    QMessageBox::information(nullptr, tr("Предупреждение"), tr("Нельзя перемещать проведенный тест"));
+                    AMessageBox::information(nullptr, tr("Предупреждение"), tr("Нельзя перемещать проведенный тест"));
             }
             else
-                QMessageBox::information(nullptr, tr("Предупреждение"), tr("Не выбран тест"));
+                AMessageBox::information(nullptr, tr("Предупреждение"), tr("Не выбран тест"));
         }
         else
-            QMessageBox::information(nullptr, tr("Предупреждение"), tr("Нельзя перемещать тест в выполненной дневной программе"));
+            AMessageBox::information(nullptr, tr("Предупреждение"), tr("Нельзя перемещать тест в выполненной дневной программе"));
     }
     else
-        QMessageBox::information(nullptr, tr("Сообщение"), tr("Не выбрана дневная программа"));
+        AMessageBox::information(nullptr, tr("Сообщение"), tr("Не выбрана дневная программа"));
 }
 
 void ActivePersonalProgramEditor::on_minTimeChanged(int idx)

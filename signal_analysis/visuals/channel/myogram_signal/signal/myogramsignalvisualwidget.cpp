@@ -2,7 +2,6 @@
 #include "ui_myogramsignalvisualwidget.h"
 
 #include <QDebug>
-#include <QMessageBox>
 
 #include "baseutils.h"
 #include "channelsdefines.h"
@@ -11,6 +10,7 @@
 #include "dataprovider.h"
 #include "createsectiondialog.h"
 #include "signalanalysisutils.h"
+#include "amessagebox.h"
 
 MyogramSignalVisualWidget::MyogramSignalVisualWidget(VisualDescriptor* visual,
                                                      const QString& testUid, const QString& probeUid, const QString& channelId,
@@ -144,9 +144,9 @@ void MyogramSignalVisualWidget::on_createSection()
     else
     {
         if (begin == -1 && end == -1)
-            QMessageBox::information(nullptr, tr("Сообщение"), tr("Не выделен участок сигнала"));
+            AMessageBox::information(nullptr, tr("Сообщение"), tr("Не выделен участок сигнала"));
         else
-            QMessageBox::information(nullptr, tr("Сообщение"), tr("Неправильно выделен участок сигнала"));
+            AMessageBox::information(nullptr, tr("Сообщение"), tr("Неправильно выделен участок сигнала"));
     }
 }
 

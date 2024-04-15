@@ -12,11 +12,11 @@
 #ifdef Q_OS_WIN32
 #include "msexcelexporter.h"
 #endif
+#include "amessagebox.h"
 
 #include <QUuid>
 #include <QJsonDocument>
 #include <QJsonArray>
-#include <QMessageBox>
 #include <QDebug>
 
 namespace  {
@@ -178,7 +178,7 @@ void Summary::openInMSExcel()
     }
     catch (const std::exception& e)
     {
-        QMessageBox::warning(nullptr, tr("Предупреждение"), tr("Произошла ошибка открытия сводки в MS Excel") + e.what());
+        AMessageBox::warning(nullptr, tr("Предупреждение"), tr("Произошла ошибка открытия сводки в MS Excel") + e.what());
     }
 }
 #endif

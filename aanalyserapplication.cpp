@@ -392,7 +392,7 @@ void AAnalyserApplication::deleteTest()
                                                                               tr("Методика") + ": %2\n" +
                                                                               tr("Дата и время проведения") + ": %3")
                                         .arg(patient.fio).arg(mi.name).arg(ti.dateTime.toString("dd.MM.yyyy hh:mm")));
-        if (mr == QMessageBox::Yes)
+        if (mr == AMessageBox::Yes)
         {
             deleteTest(m_testUid);
 //            if (m_database->deleteTest(m_testUid))
@@ -798,7 +798,7 @@ bool AAnalyserApplication::cancelPPForPatient()
                                             tr("Запрос"),
                                             tr("Отменить индивидуальную программу для пациента?") +
                                                "\n" + tr("Пациент") + ": " + pi.fio);
-            if (mr == QMessageBox::Yes)
+            if (mr == AMessageBox::Yes)
             {
                 //! Если не проведены тесты, то удалить программу из БД, иначе пометить ее неактивной
                 if (PersonalProgram::isTestByPPExists(pp))

@@ -1,8 +1,7 @@
 #include "createsectiondialog.h"
 #include "ui_createsectiondialog.h"
 
-#include <QMessageBox>
-
+#include "amessagebox.h"
 #include "signalaccess.h"
 
 CreateSectionDialog::CreateSectionDialog(QWidget *parent) :
@@ -48,5 +47,5 @@ void CreateSectionDialog::accept()
     if (ui->edSectionName->text() != "")
         QDialog::accept();
     else
-        QMessageBox::information(nullptr, tr("Предупреждение"), tr("Должно быть введено название секции"));
+        AMessageBox::information(nullptr, tr("Предупреждение"), tr("Должно быть введено название секции"));
 }

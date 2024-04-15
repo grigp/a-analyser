@@ -247,7 +247,7 @@ void PatientsWidget::removePatient()
 
     if (uid != "" &&
         AMessageBox::question(this, tr("Запрос"), QString(tr("Удалить запись о пациенте") + " %1?").arg(fio))
-            == QMessageBox::Yes)
+            == AMessageBox::Yes)
     {
         patientsModel()->removePatient(uid);
         ui->tvPatients->header()->resizeSections(QHeaderView::ResizeToContents);

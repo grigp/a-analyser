@@ -1,7 +1,6 @@
 #include "sectiongraphvisualwidget.h"
 #include "ui_sectiongraphvisualwidget.h"
 
-#include <QMessageBox>
 #include <QFileDialog>
 #include <QJsonDocument>
 #include <QAction>
@@ -16,6 +15,7 @@
 #include "spectrparamsdialog.h"
 #include "settingsprovider.h"
 #include "diagspectr.h"
+#include "amessagebox.h"
 
 namespace
 {
@@ -245,8 +245,8 @@ void SectionGraphVisualWidget::on_transformMemory()
 
 void SectionGraphVisualWidget::on_revert()
 {
-    auto id = QMessageBox::question(nullptr, tr("Запрос"), tr("Отменить все преобразования?"));
-    if (id == QMessageBox::Yes)
+    auto id = AMessageBox::question(nullptr, tr("Запрос"), tr("Отменить все преобразования?"));
+    if (id == AMessageBox::Yes)
     {
         int freq = m_signal->frequency();
         auto *signal = new AnySignal(freq, 2);
@@ -341,7 +341,7 @@ void SectionGraphVisualWidget::on_saveTransformToFile()
             }
         }
         else
-            QMessageBox::information(nullptr, tr("Предупреждение"), tr("Преобразований не было"));
+            AMessageBox::information(nullptr, tr("Сообщение"), tr("Преобразований не было"));
     }
 }
 
@@ -354,7 +354,7 @@ void SectionGraphVisualWidget::on_saveTransformToMemory()
         if (si.actions != QJsonArray())
             static_cast<AAnalyserApplication*>(QApplication::instance())->rememberTransformerScheme(si.actions);
         else
-            QMessageBox::information(nullptr, tr("Предупреждение"), tr("Преобразований не было"));
+            AMessageBox::information(nullptr, tr("Сообщение"), tr("Преобразований не было"));
     }
 }
 
@@ -396,7 +396,7 @@ void SectionGraphVisualWidget::transform(QJsonArray &sheme)
         updateSectionData();
     }
     else
-        QMessageBox::information(nullptr, tr("Предупреждение"), tr("Отсутствует схема преобразований"));
+        AMessageBox::information(nullptr, tr("Предупреждение"), tr("Отсутствует схема преобразований"));
 }
 
 void SectionGraphVisualWidget::computeSpectrAveraging(QVector<double> &dataSrc, QVector<double> &dataRes,

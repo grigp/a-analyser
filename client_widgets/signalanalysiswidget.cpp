@@ -419,7 +419,7 @@ void SignalAnalysisWidget::closeTest(QModelIndex& index)
 {
     auto idxRoot = m_mdlTests->index(index.row(), ColElement, index.parent());
     auto res = AMessageBox::question(nullptr, tr("Запрос"), tr("Закрыть тест ") + idxRoot.data().toString() + " ?");
-    if (res == QMessageBox::Yes)
+    if (res == AMessageBox::Yes)
     {
         closeVisuals(idxRoot);
         m_mdlTests->removeRow(idxRoot.row(), idxRoot.parent());
@@ -471,7 +471,7 @@ void SignalAnalysisWidget::signalExport(QModelIndex &index)
 void SignalAnalysisWidget::deleteSection(QModelIndex &index)
 {
     auto mr = AMessageBox::question(nullptr, tr("Запрос"), tr("Удалить секцию") + " \"" + index.data().toString() + "\"?");
-    if (mr == QMessageBox::Yes)
+    if (mr == AMessageBox::Yes)
     {
         //! Удаление строки визуализаторов, связанных с элементом
         QVariant var = index.data(TabWidgetRole);

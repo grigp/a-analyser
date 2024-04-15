@@ -3,7 +3,6 @@
 
 #include <QTimer>
 #include <QDesktopWidget>
-#include <QMessageBox>
 
 #include "aanalyserapplication.h"
 #include "executewidget.h"

@@ -200,9 +200,9 @@ void MainWindow::closeEvent(QCloseEvent *event)
 {
     if (m_currentClientPage == ClientWidgets::uidExecuteWidgetUid)
     {
-        auto mr = AMessageBox::question(this, tr("Предупреждение"), tr("Вы уверены, что хотите прервать проведение теста?"),
-                                        QMessageBox::Yes | QMessageBox::No);
-        if (mr == QMessageBox::Yes)
+        auto mr = AMessageBox::question(this, tr("Предупреждение"), tr("Вы уверены, что хотите прервать проведение теста?"));
+//                                        , AMessageBox::Yes | AMessageBox::No);
+        if (mr == AMessageBox::Yes)
             restoreClientPage();
         event->ignore();
     }
@@ -303,21 +303,21 @@ void MainWindow::onDataBaseSelect()
 void MainWindow::onDataBaseClear()
 {
     if (AMessageBox::question(this, tr("Запрос"), tr("Удалить всех пациентов со всеми обследованиями?")) ==
-            QMessageBox::Yes)
+            AMessageBox::Yes)
         DataProvider::clear();
 }
 
 void MainWindow::onDataBaseDelTests()
 {
     if (AMessageBox::question(this, tr("Запрос"), tr("Удалить все обследования?")) ==
-            QMessageBox::Yes)
+            AMessageBox::Yes)
         DataProvider::deleteTests();
 }
 
 void MainWindow::onDataBaseCreate()
 {
     if (AMessageBox::question(this, tr("Запрос"), tr("Создать новую базу данных?")) ==
-            QMessageBox::Yes)
+            AMessageBox::Yes)
     {
         emit dataBaseCreate();
         initSelectDatabaseMenu();
@@ -399,7 +399,7 @@ void MainWindow::on_PPCancel()
 void MainWindow::on_clearGeometry()
 {
     auto mr = AMessageBox::question(nullptr, tr("Запрос"), tr("Удалить данные о расположении и размере окон, а также о расположении разделителей?"));
-    if (QMessageBox::Yes == mr)
+    if (AMessageBox::Yes == mr)
         SettingsProvider::clearGroup("Geometry");
 }
 

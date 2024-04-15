@@ -2,7 +2,6 @@
 #include "ui_dailyprogramseditor.h"
 
 #include <QUuid>
-#include <QMessageBox>
 #include <QDebug>
 
 #include "aanalyserapplication.h"
@@ -11,6 +10,7 @@
 #include "dataprovider.h"
 #include "personalprogramdefines.h"
 #include "settingsprovider.h"
+#include "amessagebox.h"
 
 DailyProgramsEditor::DailyProgramsEditor(QWidget *parent) :
     QDialog(parent),
@@ -80,7 +80,7 @@ void DailyProgramsEditor::on_addTest()
             m_mdlTests.appendRow(item);
         }
         else
-            QMessageBox::information(nullptr, tr("Сообщение"), tr("Методика не выбрана"));
+            AMessageBox::information(nullptr, tr("Сообщение"), tr("Методика не выбрана"));
     }
 }
 
@@ -92,8 +92,8 @@ void DailyProgramsEditor::on_doubleTest()
         auto index = selIdxs.at(0);
         if (index.isValid())
         {
-            auto mr = QMessageBox::question(nullptr, tr("Запрос"), tr("Дублировать тест \"") + index.data().toString() + tr("\"?"));
-            if (mr == QMessageBox::Yes)
+            auto mr = AMessageBox::question(nullptr, tr("Запрос"), tr("Дублировать тест \"") + index.data().toString() + tr("\"?"));
+            if (mr == AMessageBox::Yes)
             {
                 auto metUid = index.data(PersonalProgramDefines::TableTestsRoles::MethodUidRole).toString();
                 auto params = index.data(PersonalProgramDefines::TableTestsRoles::MethodParamsRole).toJsonObject();
@@ -108,7 +108,7 @@ void DailyProgramsEditor::on_doubleTest()
         }
     }
     else
-        QMessageBox::information(nullptr, tr("Предупреждение"), tr("Не выбран тест"));
+        AMessageBox::information(nullptr, tr("Предупреждение"), tr("Не выбран тест"));
 }
 
 void DailyProgramsEditor::on_editTest()
@@ -128,7 +128,7 @@ void DailyProgramsEditor::on_editTest()
         }
     }
     else
-        QMessageBox::information(nullptr, tr("Предупреждение"), tr("Не выбран тест"));
+        AMessageBox::information(nullptr, tr("Предупреждение"), tr("Не выбран тест"));
 }
 
 void DailyProgramsEditor::on_delTest()
@@ -139,13 +139,13 @@ void DailyProgramsEditor::on_delTest()
         auto index = selIdxs.at(0);
         if (index.isValid())
         {
-            auto mr = QMessageBox::question(nullptr, tr("Запрос"), tr("Удалить тест \"") + index.data().toString() + tr("\" из дневной программы?"));
-            if (mr == QMessageBox::Yes)
+            auto mr = AMessageBox::question(nullptr, tr("Запрос"), tr("Удалить тест \"") + index.data().toString() + tr("\" из дневной программы?"));
+            if (mr == AMessageBox::Yes)
                 m_mdlTests.removeRow(index.row());
         }
     }
     else
-        QMessageBox::information(nullptr, tr("Предупреждение"), tr("Не выбран тест"));
+        AMessageBox::information(nullptr, tr("Предупреждение"), tr("Не выбран тест"));
 }
 
 void DailyProgramsEditor::on_moveTestUp()
@@ -167,7 +167,7 @@ void DailyProgramsEditor::on_moveTestUp()
         }
     }
     else
-        QMessageBox::information(nullptr, tr("Предупреждение"), tr("Не выбран тест"));
+        AMessageBox::information(nullptr, tr("Предупреждение"), tr("Не выбран тест"));
 }
 
 void DailyProgramsEditor::on_moveTestDown()
@@ -189,7 +189,7 @@ void DailyProgramsEditor::on_moveTestDown()
         }
     }
     else
-        QMessageBox::information(nullptr, tr("Предупреждение"), tr("Не выбран тест"));
+        AMessageBox::information(nullptr, tr("Предупреждение"), tr("Не выбран тест"));
 }
 
 void DailyProgramsEditor::on_dpAdd()
@@ -215,10 +215,10 @@ void DailyProgramsEditor::on_dpAdd()
             static_cast<AAnalyserApplication*>(QApplication::instance())->saveDailyProgramList(m_mdlPrograms);
         }
         else
-            QMessageBox::information(nullptr, tr("Предупреждение"), tr("Необходимо добавить тесты в дневную программу"));
+            AMessageBox::information(nullptr, tr("Предупреждение"), tr("Необходимо добавить тесты в дневную программу"));
     }
     else
-        QMessageBox::information(nullptr, tr("Предупреждение"), tr("Не задано название дневной программы"));
+        AMessageBox::information(nullptr, tr("Предупреждение"), tr("Не задано название дневной программы"));
 }
 
 void DailyProgramsEditor::on_dpEdit()
@@ -236,8 +236,8 @@ void DailyProgramsEditor::on_dpEdit()
             objDP["uid"] = item->data(PersonalProgramDefines::TableDPRoles::DPRole).toJsonObject()["uid"].toString();
 
             QString pn = item->text();
-            auto mr = QMessageBox::question(nullptr, tr("Запрос"), tr("Внести изменения в программу") + " \"" + pn + "\"?");
-            if (mr == QMessageBox::Yes)
+            auto mr = AMessageBox::question(nullptr, tr("Запрос"), tr("Внести изменения в программу") + " \"" + pn + "\"?");
+            if (mr == AMessageBox::Yes)
             {
                 item->setData(objDP, PersonalProgramDefines::TableDPRoles::DPRole);
                 item->setText(objDP["name"].toString());
@@ -246,7 +246,7 @@ void DailyProgramsEditor::on_dpEdit()
         }
     }
     else
-        QMessageBox::information(nullptr, tr("Предупреждение"), tr("Не выбрана дневная программа"));
+        AMessageBox::information(nullptr, tr("Предупреждение"), tr("Не выбрана дневная программа"));
 }
 
 void DailyProgramsEditor::on_dpDel()
@@ -258,8 +258,8 @@ void DailyProgramsEditor::on_dpDel()
         if (index.isValid())
         {
             QString name = index.data().toString();
-            auto mr = QMessageBox::question(nullptr, tr("Запрос"), tr("Удалить дневную программу") + " \"" + name + "\"?");
-            if (mr == QMessageBox::Yes)
+            auto mr = AMessageBox::question(nullptr, tr("Запрос"), tr("Удалить дневную программу") + " \"" + name + "\"?");
+            if (mr == AMessageBox::Yes)
             {
                 m_mdlPrograms.removeRow(index.row());
                 ui->edName->setText("");
@@ -271,7 +271,7 @@ void DailyProgramsEditor::on_dpDel()
         }
     }
     else
-        QMessageBox::information(nullptr, tr("Предупреждение"), tr("Не выбрана дневная программа"));
+        AMessageBox::information(nullptr, tr("Предупреждение"), tr("Не выбрана дневная программа"));
 }
 
 void DailyProgramsEditor::on_selectDP(QModelIndex index)

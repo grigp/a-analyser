@@ -33,21 +33,57 @@ public:
     explicit AMessageBox(KindMessage kind, QWidget *parent = nullptr);
     ~AMessageBox();
 
-    static QMessageBox::StandardButton information(QWidget *parent, const QString &title,
-         const QString &text, QMessageBox::StandardButtons buttons = QMessageBox::Ok,
-         QMessageBox::StandardButton defaultButton = QMessageBox::NoButton);
-    static QMessageBox::StandardButton question(QWidget *parent, const QString &title,
-         const QString &text, QMessageBox::StandardButtons buttons = QMessageBox::StandardButtons(QMessageBox::Yes | QMessageBox::No),
-         QMessageBox::StandardButton defaultButton = QMessageBox::NoButton);
-    static QMessageBox::StandardButton warning(QWidget *parent, const QString &title,
-         const QString &text, QMessageBox::StandardButtons buttons = QMessageBox::Ok,
-         QMessageBox::StandardButton defaultButton = QMessageBox::NoButton);
-    static QMessageBox::StandardButton critical(QWidget *parent, const QString &title,
-         const QString &text, QMessageBox::StandardButtons buttons = QMessageBox::Ok,
-         QMessageBox::StandardButton defaultButton = QMessageBox::NoButton);
+    enum StandardButton {
+        NoButton           = QMessageBox::NoButton,
+        Ok                 = QMessageBox::Ok,
+        Save               = QMessageBox::Save,
+        SaveAll            = QMessageBox::SaveAll,
+        Open               = QMessageBox::Open,
+        Yes                = QMessageBox::Yes,
+        YesToAll           = QMessageBox::YesToAll,
+        No                 = QMessageBox::No,
+        NoToAll            = QMessageBox::NoToAll,
+        Abort              = QMessageBox::Abort,
+        Retry              = QMessageBox::Retry,
+        Ignore             = QMessageBox::Ignore,
+        Close              = QMessageBox::Close,
+        Cancel             = QMessageBox::Cancel,
+        Discard            = QMessageBox::Discard,
+        Help               = QMessageBox::Help,
+        Apply              = QMessageBox::Apply,
+        Reset              = QMessageBox::Reset,
+        RestoreDefaults    = QMessageBox::RestoreDefaults,
+
+        FirstButton        = Ok,                // internal
+        LastButton         = RestoreDefaults,   // internal
+
+        YesAll             = YesToAll,          // obsolete
+        NoAll              = NoToAll,           // obsolete
+
+        Default            = QMessageBox::Default,        // obsolete
+        Escape             = QMessageBox::Escape,        // obsolete
+        FlagMask           = QMessageBox::FlagMask,        // obsolete
+        ButtonMask         = ~FlagMask          // obsolete
+    };
+    Q_DECLARE_FLAGS(StandardButtons, StandardButton)
+    Q_FLAG(StandardButtons)
 
 
-    QMessageBox::StandardButton result() {return m_result;}
+    static StandardButton information(QWidget *parent, const QString &title,
+         const QString &text, StandardButtons buttons = Ok,
+         StandardButton defaultButton = NoButton);
+    static StandardButton question(QWidget *parent, const QString &title,
+         const QString &text, StandardButtons buttons = StandardButtons(Yes | No),
+         StandardButton defaultButton = NoButton);
+    static StandardButton warning(QWidget *parent, const QString &title,
+         const QString &text, StandardButtons buttons = Ok,
+         StandardButton defaultButton = NoButton);
+    static StandardButton critical(QWidget *parent, const QString &title,
+         const QString &text, StandardButtons buttons = Ok,
+         StandardButton defaultButton = NoButton);
+
+
+    StandardButton result() {return m_result;}
 
 private slots:
     void on_OKClicked();
@@ -57,18 +93,18 @@ private slots:
 private:
     Ui::AMessageBox *ui;
 
-    static QMessageBox::StandardButton message(KindMessage kind, QWidget *parent, const QString &title,
-         const QString &text, QMessageBox::StandardButtons buttons = QMessageBox::Ok,
-         QMessageBox::StandardButton defaultButton = QMessageBox::NoButton);
+    static StandardButton message(KindMessage kind, QWidget *parent, const QString &title,
+         const QString &text, StandardButtons buttons = Ok,
+         StandardButton defaultButton = NoButton);
 
 
     void setTitle(const QString& title);
     void setText(const QString& text);
-    void setButtons(QMessageBox::StandardButtons buttons);
+    void setButtons(StandardButtons buttons);
 
     KindMessage m_kind;
-    QMessageBox::StandardButton m_result;
-    QMessageBox::StandardButtons m_buttons;
+    StandardButton m_result;
+    StandardButtons m_buttons;
 };
 
 #endif // AMESSAGEBOX_H

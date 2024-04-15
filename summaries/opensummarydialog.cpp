@@ -2,7 +2,6 @@
 #include "ui_opensummarydialog.h"
 
 #include <QDir>
-#include <QMessageBox>
 #include <QDebug>
 
 #include "aanalyserapplication.h"
@@ -12,6 +11,7 @@
 #include "listsummariesmodel.h"
 #include "listsummariesproxymodel.h"
 #include "settingsprovider.h"
+#include "amessagebox.h"
 
 OpenSummaryDialog::OpenSummaryDialog(QWidget *parent) :
     QDialog(parent),
@@ -86,7 +86,7 @@ void OpenSummaryDialog::on_deleteSummary()
         auto idx = index.model()->index(index.row(), 0);
         auto fn = idx.data(ListSummariesModel::FileNameRole).toString();
 
-        if (QMessageBox::question(nullptr, tr("Запрос"), tr("Удалить сводку") + " \"" + idx.data().toString() + "\"?") == QMessageBox::Yes)
+        if (AMessageBox::question(nullptr, tr("Запрос"), tr("Удалить сводку") + " \"" + idx.data().toString() + "\"?") == AMessageBox::Yes)
         {
             if (QFile::exists(fn))
                 QFile::remove(fn);

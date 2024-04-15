@@ -3,7 +3,6 @@
 
 #include <QApplication>
 #include <QFile>
-#include <QMessageBox>
 #include <QPrintPreviewDialog>
 #include <QPainter>
 #include <QDebug>
