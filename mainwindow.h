@@ -75,7 +75,6 @@ signals:
 
 public slots:
     void onDbConnected();
-
     void obDbDisconnected();
 
 protected:

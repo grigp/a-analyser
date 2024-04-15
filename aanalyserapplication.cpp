@@ -1,5 +1,10 @@
 #include "aanalyserapplication.h"
 
+#ifdef Q_OS_WIN32
+#include <windows.h>
+#include <winuser.h>
+#endif
+
 #include <QStandardPaths>
 #include <QTimer>
 #include <QLayout>
@@ -7,6 +12,7 @@
 #include <QUuid>
 #include <QJsonDocument>
 #include <QPrintPreviewDialog>
+#include <QScreen>
 #include <QDebug>
 
 #include "mainwindow.h"
@@ -97,6 +103,15 @@ AAnalyserApplication::AAnalyserApplication(int &argc, char **argv)
 
         auto rm = SettingsProvider::valueFromRegAppCopy("", AAnalyserSettingsParams::pn_runningMode, BaseDefines::rmOperator).toInt();
         m_runningMode = static_cast<BaseDefines::RunningMode>(rm);
+
+#ifdef Q_OS_WIN32
+        RECT rect;
+        rect.left = primaryScreen()->geometry().left();
+        rect.top = primaryScreen()->geometry().top();
+        rect.right = primaryScreen()->geometry().right();
+        rect.bottom = primaryScreen()->geometry().bottom();
+        ClipCursor(&rect);
+#endif
     });
 
     m_asi.uidMethodic = "";
