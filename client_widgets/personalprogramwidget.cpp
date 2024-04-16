@@ -36,6 +36,10 @@ PersonalProgramWidget::PersonalProgramWidget(QWidget *parent) :
     ui->frPPOpenTest->setVisible(false);
     restoreMainSplitterPosition();
     ui->btnPPOpenTest->setVisible(false);
+
+    ui->tvPatients->setContextMenuPolicy(Qt::CustomContextMenu);
+    connect(ui->tvPatients, &QTreeView::customContextMenuRequested, this, &PersonalProgramWidget::on_popupMenuRequested);
+
 //    load();
 //    ui->tvPatients->setModel(m_model);
 //    m_wgts.clear();
@@ -650,6 +654,47 @@ void PersonalProgramWidget::on_removePatient(const QString &patientUid)
             m_model->removeRow(i);
         }
     }
+}
+
+void PersonalProgramWidget::on_popupMenuRequested(QPoint pos)
+{
+    if (!m_menu)
+    {
+        m_menu = new QMenu(this);
+
+        QAction *editPatient = new QAction(QIcon(":/images/PatientsCard.png"), tr("Карточка пациента..."), this);
+        connect(editPatient, &QAction::triggered, this, &PersonalProgramWidget::on_editPatientCard);
+        m_menu->addAction(editPatient);
+
+        QAction *runDP = new QAction(QIcon(":/images/ResultsRun.png"), tr("Запустить дневную программу"), this);
+        connect(runDP, &QAction::triggered, this, &PersonalProgramWidget::on_run);
+        m_menu->addAction(runDP);
+
+        m_menu->addSeparator();
+
+        QAction *ppAssign = new QAction(QIcon(":/images/PP_assign.png"), tr("Назначить индивидуальную программу..."), this);
+        connect(ppAssign, &QAction::triggered, this, &PersonalProgramWidget::on_append);
+        m_menu->addAction(ppAssign);
+
+        QAction *ppCancel = new QAction(QIcon(":/images/PP_cancel.png"), tr("Отменить индивидуальную программу..."), this);
+        connect(ppCancel, &QAction::triggered, this, &PersonalProgramWidget::on_delete);
+        m_menu->addAction(ppCancel);
+
+        QAction *ppParams = new QAction(QIcon(":/images/PP_params.png"), tr("Параметры индивидуальной программы..."), this);
+        connect(ppParams, &QAction::triggered, this, &PersonalProgramWidget::on_params);
+        m_menu->addAction(ppParams);
+
+        m_menu->addSeparator();
+
+        QAction *ppRepeat = new QAction(QIcon(":/images/PP_repeat.png"), tr("Назначить индивидуальную программу повторно..."), this);
+        connect(ppRepeat, &QAction::triggered, this, &PersonalProgramWidget::on_repeat);
+        m_menu->addAction(ppRepeat);
+
+        QAction *ppSaveAs = new QAction(QIcon(":/images/PP_save.png"), tr("Сохранить индивидуальную программу..."), this);
+        connect(ppSaveAs, &QAction::triggered, this, &PersonalProgramWidget::on_saveAs);
+        m_menu->addAction(ppSaveAs);
+    }
+    m_menu->popup(ui->tvPatients->mapToGlobal(pos));
 }
 
 QStandardItem* PersonalProgramWidget::appendLine(const QString uidPat,

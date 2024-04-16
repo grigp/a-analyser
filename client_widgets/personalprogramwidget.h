@@ -5,6 +5,7 @@
 #include <QStandardItemModel>
 #include <QModelIndex>
 #include <QItemSelectionModel>
+#include <QMenu>
 
 #include "clientwidget.h"
 #include "metodicdefines.h"
@@ -117,6 +118,8 @@ private slots:
 
     void on_removePatient(const QString &patientUid);
 
+    void on_popupMenuRequested(QPoint pos);
+
 private:
     Ui::PersonalProgramWidget *ui;
 
@@ -197,6 +200,7 @@ private:
     int m_tmNextStep {-1};                        ///< таймер задержки перед запуском следующей методики
 
     QWidget *m_wgtResult {nullptr};  ///< Текущий виджет для показа результатов теста
+    QMenu *m_menu {nullptr};
 };
 
 #endif // PERSONALPROGRAMWIDGET_H
