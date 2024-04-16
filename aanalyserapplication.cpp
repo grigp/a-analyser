@@ -104,14 +104,7 @@ AAnalyserApplication::AAnalyserApplication(int &argc, char **argv)
         auto rm = SettingsProvider::valueFromRegAppCopy("", AAnalyserSettingsParams::pn_runningMode, BaseDefines::rmOperator).toInt();
         m_runningMode = static_cast<BaseDefines::RunningMode>(rm);
 
-#ifdef Q_OS_WIN32
-        RECT rect;
-        rect.left = primaryScreen()->geometry().left();
-        rect.top = primaryScreen()->geometry().top();
-        rect.right = primaryScreen()->geometry().right();
-        rect.bottom = primaryScreen()->geometry().bottom();
-        ClipCursor(&rect);
-#endif
+        setClipCursor();
     });
 
     m_asi.uidMethodic = "";
@@ -1111,6 +1104,45 @@ void AAnalyserApplication::saCloseTest(const QString &uidTest)
     Q_UNUSED(uidTest);
     if (m_saOpenedTestCount > 0)
         --m_saOpenedTestCount;
+}
+
+void AAnalyserApplication::setClipCursor()
+{
+    //! Если включена соответствующая настройка
+    auto isClip = SettingsProvider::valueFromRegAppCopy("", AAnalyserSettingsParams::pn_isClipCursor, static_cast<QVariant>(false)).toBool();
+    if (isClip)
+    {
+#ifdef Q_OS_WIN32
+        //! Получим реальные значения ограничения
+        RECT rectG;
+        GetClipCursor(&rectG);
+
+        //! Рассчитаем необходимый прямоугольник
+        RECT rect;
+        rect.left = -1;
+        rect.top = -1;
+        rect.right = -1;
+        rect.bottom = -1;
+        //! Найдем экран, внутри которого находится главное окно и им ограничим зону перемещения мыши
+        for (int i = 0; i < screens().size(); ++i)
+        {
+            if (screens().at(i)->geometry().contains(m_mw->geometry()))
+            {
+                auto geo = screens().at(i)->geometry();  //primaryScreen()->geometry();
+                rect.left = geo.left();
+                rect.top = geo.top();
+                rect.right = geo.right();
+                rect.bottom = geo.bottom();
+
+                //! Если отличаются, то ограничим
+                if (rect.left != rectG.left || rect.top != rectG.top || rect.right != rectG.right || rect.bottom != rectG.bottom)
+                {
+                    ClipCursor(&rect);
+                }
+            }
+        }
+#endif
+    }
 }
 
 bool AAnalyserApplication::notify(QObject *re, QEvent *ev)

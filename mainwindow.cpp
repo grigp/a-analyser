@@ -25,6 +25,7 @@
 #include <QCloseEvent>
 #include <QFileDialog>
 #include <QAction>
+#include <QScreen>
 #include <QDebug>
 
 namespace
@@ -238,7 +239,15 @@ void MainWindow::closeEvent(QCloseEvent *event)
 void MainWindow::showEvent(QShowEvent *event)
 {
     QMainWindow::showEvent(event);
-    qDebug() << Q_FUNC_INFO << "------------------";
+// Срабатывает крайне редко, не всегда, когда надо для ограничения хода курсора
+//    static_cast<AAnalyserApplication*>(QApplication::instance())->setClipCursor();
+}
+
+void MainWindow::paintEvent(QPaintEvent *event)
+{
+    QMainWindow::paintEvent(event);
+    // Срабатывает часто, но всегда, когда надо ограничивать курсор
+    static_cast<AAnalyserApplication*>(QApplication::instance())->setClipCursor();
 }
 
 void MainWindow::onDeviceControl()

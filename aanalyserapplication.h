@@ -740,6 +740,12 @@ public:
      */
     void saCloseTest(const QString& uidTest);
 
+    ///<-----------------------------------------------------------------------------
+    /*!
+     * \brief Устанавливает зону перемещения курсора
+     */
+    void setClipCursor();
+
 signals:
     void dbConnected();
 

@@ -86,6 +86,9 @@ void AAnalyserSettings::load()
     auto tdcm = SettingsProvider::valueFromRegAppCopy("", AAnalyserSettingsParams::pn_testDoubleClickMode, BaseDefines::tdcmEditParams).toInt();
     ui->cbTestDoubleClickMode->setCurrentIndex(tdcm);
 
+    auto isClip = SettingsProvider::valueFromRegAppCopy("", AAnalyserSettingsParams::pn_isClipCursor, static_cast<QVariant>(false)).toBool();
+    ui->cbClipCursor->setChecked(isClip);
+
     auto tm = SettingsProvider::valueFromRegAppCopy("", AAnalyserSettingsParams::pn_timeCounter, 5).toInt();
     ui->edTimeCounter->setValue(tm);
 
@@ -128,6 +131,9 @@ void AAnalyserSettings::save()
 
     auto tdcm = ui->cbTestDoubleClickMode->currentIndex();
     SettingsProvider::setValueToRegAppCopy("", AAnalyserSettingsParams::pn_testDoubleClickMode, tdcm);
+
+    auto isClip = ui->cbClipCursor->isChecked();
+    SettingsProvider::setValueToRegAppCopy("", AAnalyserSettingsParams::pn_isClipCursor, isClip);
 
     auto tm = ui->edTimeCounter->value();
     SettingsProvider::setValueToRegAppCopy("", AAnalyserSettingsParams::pn_timeCounter, tm);

@@ -80,6 +80,7 @@ public slots:
 protected:
     void closeEvent(QCloseEvent *event) override;
     void showEvent(QShowEvent *event) override;
+    void paintEvent(QPaintEvent *event) override;
 
 private slots:
     void onDeviceControl();
