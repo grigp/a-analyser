@@ -254,6 +254,16 @@ void PatientsWidget::removePatient()
     }
 }
 
+void PatientsWidget::assignPersonalProgram()
+{
+    static_cast<AAnalyserApplication*>(QApplication::instance())->assignPPForPatient();
+}
+
+void PatientsWidget::cancelPersonalProgram()
+{
+    static_cast<AAnalyserApplication*>(QApplication::instance())->cancelPPForPatient();
+}
+
 void PatientsWidget::unselect()
 {
     ui->tvPatients->clearSelection();
@@ -323,6 +333,18 @@ void PatientsWidget::on_popupMenuRequested(QPoint pos)
         connect(delPatient, &QAction::triggered, this, &PatientsWidget::removePatient);
         m_menu->addAction(delPatient);
 
+        if (AAnalyserBuild::isPPEnabled())
+        {
+            m_menu->addSeparator();
+
+            QAction *ppAssign = new QAction(QIcon(":/images/PP_assign.png"), tr("Назначить индивидуальную программу..."), this);
+            connect(ppAssign, &QAction::triggered, this, &PatientsWidget::assignPersonalProgram);
+            m_menu->addAction(ppAssign);
+
+            QAction *ppCancel = new QAction(QIcon(":/images/PP_cancel.png"), tr("Отменить индивидуальную программу..."), this);
+            connect(ppCancel, &QAction::triggered, this, &PatientsWidget::cancelPersonalProgram);
+            m_menu->addAction(ppCancel);
+        }
     }
     m_menu->popup(ui->tvPatients->mapToGlobal(pos));
 }

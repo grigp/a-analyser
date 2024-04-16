@@ -46,6 +46,16 @@ private slots:
      */
     void removePatient();
 
+    /*!
+     * \brief Назначить индивидуальную программу
+     */
+    void assignPersonalProgram();
+
+    /*!
+     * \brief Отменить индивидуальную программу
+     */
+    void cancelPersonalProgram();
+
     void unselect();
 
     void on_editSearchString(const QString &value);
