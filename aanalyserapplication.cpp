@@ -15,6 +15,7 @@
 #include <QScreen>
 #include <QDebug>
 
+#include "aanalyserbuild.h"
 #include "mainwindow.h"
 #include "metodicsfactory.h"
 #include "driversfactory.h"
@@ -105,6 +106,9 @@ AAnalyserApplication::AAnalyserApplication(int &argc, char **argv)
         m_runningMode = static_cast<BaseDefines::RunningMode>(rm);
 
         setClipCursor();
+
+        //! Начальная настройка подключенного оборудования
+        drvInitialSetup();
     });
 
     m_asi.uidMethodic = "";
@@ -1290,6 +1294,23 @@ void AAnalyserApplication::assignApplicationVersion()
         setApplicationVersion(avl.at(0) + "." + avl.at(1) + "." + avl.at(2) + "." + QString::number(d));
     else
         setApplicationVersion("1.0.0." + QString::number(d));
+}
+
+void AAnalyserApplication::drvInitialSetup()
+{
+    auto mr = AMessageBox::question(nullptr, tr("Запрос"), tr("Выполнить начальную настройку подключенного оборудования?"));
+    if (mr == AMessageBox::Yes)
+    {
+        auto connections = getConnections();
+        foreach (auto connect, connections)
+        {
+            if (connect.active())
+            {
+                auto params = connect.params();
+                AAnalyserBuild::drvInitialSetup(connect);
+            }
+        }
+    }
 }
 
 //void AAnalyserApplication::on_AddTestToSummaryAccepted()

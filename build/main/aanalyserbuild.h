@@ -6,6 +6,7 @@
 #include "deviceprotocols.h"
 
 class MetodicTemplate;
+class Connection;
 
 namespace AAnalyserBuild
 {
@@ -63,6 +64,12 @@ bool editDriverParams(const QString &drvUid, QJsonObject &params);
  * \return  указатель на созданный драйвер
  */
 Driver* createDriver(const QString &drvUid);
+
+/*!
+ * \brief Вызов функции начальной настройки устройства
+ * \param connection - данные подключения
+ */
+void drvInitialSetup(Connection &connection);
 
 /*!
  * \brief Создает список драйверов

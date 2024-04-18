@@ -18,6 +18,7 @@
 #include "evolventatemplate.h"
 #include "octaedrontemplate.h"
 #include "boxerdodgingtemplate.h"
+#include "connection.h"
 
 #include "classicfactorsdescriptor.h"
 #include "vectorfactorsdescriptor.h"
@@ -226,6 +227,11 @@ Driver *AAnalyserBuild::createDriver(const QString &drvUid)
     return nullptr;
 }
 
+void AAnalyserBuild::drvInitialSetup(Connection &connection)
+{
+    if (connection.driverUid() == Stabilan01::uid())
+        Stabilan01::initialSetup(connection);
+}
 
 void AAnalyserBuild::assignDrivers(QMap<QString, QString> &drivers)
 {
@@ -247,4 +253,5 @@ bool AAnalyserBuild::isPPEnabled()
 {
     return true;
 }
+
 

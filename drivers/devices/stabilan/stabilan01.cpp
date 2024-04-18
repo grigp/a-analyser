@@ -6,6 +6,8 @@
 #include "channelsutils.h"
 #include "settingsprovider.h"
 #include "driverdefines.h"
+#include "initialsetupstabilandialog.h"
+#include "connection.h"
 
 #include <QApplication>
 #include <QJsonObject>
@@ -221,6 +223,12 @@ bool Stabilan01::editParams(QJsonObject &params)
         return true;
     }
     return false;
+}
+
+void Stabilan01::initialSetup(Connection &connection)
+{
+    InitialSetupStabilanDialog dlg(connection.port(), connection.params(), connection.comment(), nullptr);
+    dlg.exec();
 }
 
 

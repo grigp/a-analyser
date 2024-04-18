@@ -14,7 +14,7 @@
 
 
 class SerialPort;
-
+class Connection;
 
 /*!
  * \brief Класс драйвера стабилоанализатора Стабилан - 01 Stabilan01 class
@@ -55,6 +55,12 @@ public:
      * \return true, если диалог закончился командой сохранить параметры
      */
     static bool editParams(QJsonObject &params);
+
+    /*!
+     * \brief Начальная настройка стабилана
+     * \param params - параметры драйвера стабилана из подключения
+     */
+    static void initialSetup(Connection &connection);
 
     /*!
      * \brief Запуск передачи данных

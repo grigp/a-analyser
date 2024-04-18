@@ -882,6 +882,11 @@ private:
     //! b - build - number of buils (number of days between 1.01.2024 and build day)
     void assignApplicationVersion();
 
+    /*!
+     * \brief Начальная настройка подключенного оборудования
+     */
+    void drvInitialSetup();
+
     QMainWindow *m_mw;
     QString m_languargeCode = DataDefines::LANG_CODE_RUS;
 

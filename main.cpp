@@ -13,7 +13,7 @@ int main(int argc, char *argv[])
 {
     qDebug() << Q_FUNC_INFO;
 
-    qsrand(QDateTime::currentMSecsSinceEpoch());
+    qsrand(static_cast<uint>(QDateTime::currentMSecsSinceEpoch()));
     AAnalyserApplication a(argc, argv);
 
     QString fn = "";

@@ -277,5 +277,6 @@
         <file>images/Critical32.png</file>
         <file>images/Question32.png</file>
         <file>images/Warning32.png</file>
+        <file>images/stabilan01_200.png</file>
     </qresource>
 </RCC>
