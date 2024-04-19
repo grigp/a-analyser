@@ -225,10 +225,11 @@ bool Stabilan01::editParams(QJsonObject &params)
     return false;
 }
 
-void Stabilan01::initialSetup(Connection &connection)
+bool Stabilan01::initialSetup(Connection &connection)
 {
     InitialSetupStabilanDialog dlg(connection.port(), connection.params(), connection.comment(), nullptr);
-    dlg.exec();
+    auto res = dlg.exec();
+    return res == QDialog::Accepted;
 }
 
 

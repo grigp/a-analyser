@@ -68,8 +68,15 @@ Driver* createDriver(const QString &drvUid);
 /*!
  * \brief Вызов функции начальной настройки устройства
  * \param connection - данные подключения
+ * \return true, если устройство настроено нормально
  */
-void drvInitialSetup(Connection &connection);
+bool drvInitialSetup(Connection &connection);
+
+/*!
+ * \brief Возвращает true, если драйвер требует начальную настройку устройства
+ * \param drvUid - uid драйвера
+ */
+bool isInitialSetup(const QString &drvUid);
 
 /*!
  * \brief Создает список драйверов

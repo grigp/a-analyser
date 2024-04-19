@@ -227,10 +227,16 @@ Driver *AAnalyserBuild::createDriver(const QString &drvUid)
     return nullptr;
 }
 
-void AAnalyserBuild::drvInitialSetup(Connection &connection)
+bool AAnalyserBuild::drvInitialSetup(Connection &connection)
 {
     if (connection.driverUid() == Stabilan01::uid())
-        Stabilan01::initialSetup(connection);
+        return Stabilan01::initialSetup(connection);
+    return true;  //! По умолчанию true, ибо, если устройства нет, то настраивать нечего, значит удачно
+}
+
+bool AAnalyserBuild::isInitialSetup(const QString &drvUid)
+{
+    return (drvUid == Stabilan01::uid()); // || (drvUid == .....::uid());
 }
 
 void AAnalyserBuild::assignDrivers(QMap<QString, QString> &drivers)
@@ -242,8 +248,6 @@ void AAnalyserBuild::assignDrivers(QMap<QString, QString> &drivers)
     drivers.insert(Bilateral::uid(), Bilateral::name());
 }
 
-
-
 QStringList AAnalyserBuild::getDefaultPPList()
 {
     return QStringList() << "neurology";
@@ -253,5 +257,4 @@ bool AAnalyserBuild::isPPEnabled()
 {
     return true;
 }
-
 

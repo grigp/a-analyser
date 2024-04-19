@@ -59,8 +59,9 @@ public:
     /*!
      * \brief Начальная настройка стабилана
      * \param params - параметры драйвера стабилана из подключения
+     * \return true, если устройство настроено нормально
      */
-    static void initialSetup(Connection &connection);
+    static bool initialSetup(Connection &connection);
 
     /*!
      * \brief Запуск передачи данных

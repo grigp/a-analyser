@@ -746,6 +746,11 @@ public:
      */
     void setClipCursor();
 
+    /*!
+     * \brief Начальная настройка подключенного оборудования
+     */
+    void drvInitialSetup();
+
 signals:
     void dbConnected();
 
@@ -881,11 +886,6 @@ private:
     //! r - release 00 - alfa, 01 - betta, 02 - pre release, 03 - release
     //! b - build - number of buils (number of days between 1.01.2024 and build day)
     void assignApplicationVersion();
-
-    /*!
-     * \brief Начальная настройка подключенного оборудования
-     */
-    void drvInitialSetup();
 
     QMainWindow *m_mw;
     QString m_languargeCode = DataDefines::LANG_CODE_RUS;

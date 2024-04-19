@@ -24,16 +24,46 @@ public:
                                         QWidget *parent = nullptr);
     ~InitialSetupStabilanDialog();
 
+    /*!
+     * \brief Этапы работы мастера The Stages enum
+     */
+    enum Stages
+    {
+          stgInvite = 0      ///< Приглашение включить устройство
+        , stgCalibrateUp     ///< Подъем устройства и калибровка на весу
+        , stgCalibrateDown   ///< Устройство на полу, подкручивание ножки до необходимого разброса сил и калибровка
+        , stgFinal           ///< Контроль нулевых значений после окончания калибровки
+    };
+
+
+protected:
+    void timerEvent(QTimerEvent *event) override;
+    void closeEvent(QCloseEvent *event) override;
+
 private slots:
     void on_settingsClicked();
     void on_nextClicked();
+    void on_backClicked();
+
+    void getData(DeviceProtocols::DeviceData *data);
+    void on_communicationError(const QString &drvName, const QString &port, const int errorCode);
+    void on_error(const int errorCode);
 
 private:
     Ui::InitialSetupStabilanDialog *ui;
 
+    void changeStage(const bool isNext);
+
+    void connectToDevice();
+
     DeviceProtocols::Ports m_port;
     QJsonObject m_params;
     QString m_comment;
+    Stages m_stage {stgInvite};
+    int m_tmCalibrDelay {-1};
+
+    Driver* m_driver {nullptr};     ///< Драйвер передающий данные
+    DeviceProtocols::StabControl* m_stabControl {nullptr};             ///< Управление стабилографией в драйвере
 };
 
 #endif // INITIALSETUPSTABILANDIALOG_H

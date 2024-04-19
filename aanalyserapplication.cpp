@@ -1149,6 +1149,39 @@ void AAnalyserApplication::setClipCursor()
     }
 }
 
+void AAnalyserApplication::drvInitialSetup()
+{
+    //! Расчет кол-ва подключений, для которых необходима начальная настройка
+    int drvSetupCount = 0;
+    auto connections = getConnections();
+    foreach (auto connect, connections)
+        if (connect.active() && AAnalyserBuild::isInitialSetup(connect.driverUid()))
+            ++drvSetupCount;
+
+    //! Если есть хоть одно, то выполняем настройку с запросом
+    if (drvSetupCount > 0)
+    {
+        auto mr = AMessageBox::question(nullptr, tr("Запрос"), tr("Выполнить начальную настройку подключенного оборудования?"));
+        if (mr == AMessageBox::Yes)
+        {
+            bool res {true};
+            foreach (auto connect, connections)
+            {
+                if (connect.active())
+                {
+                    auto params = connect.params();
+                    if (!AAnalyserBuild::drvInitialSetup(connect))
+                        res = false;
+                }
+            }
+            if (res)
+                AMessageBox::information(nullptr, tr("Сообщение"), tr("Начальная настройка подключенного оборудования выполнена"));
+            else
+                AMessageBox::information(nullptr, tr("Сообщение"), tr("Одно или несколько устройств не настроено"));
+        }
+    }
+}
+
 bool AAnalyserApplication::notify(QObject *re, QEvent *ev)
 {
     try
@@ -1294,23 +1327,6 @@ void AAnalyserApplication::assignApplicationVersion()
         setApplicationVersion(avl.at(0) + "." + avl.at(1) + "." + avl.at(2) + "." + QString::number(d));
     else
         setApplicationVersion("1.0.0." + QString::number(d));
-}
-
-void AAnalyserApplication::drvInitialSetup()
-{
-    auto mr = AMessageBox::question(nullptr, tr("Запрос"), tr("Выполнить начальную настройку подключенного оборудования?"));
-    if (mr == AMessageBox::Yes)
-    {
-        auto connections = getConnections();
-        foreach (auto connect, connections)
-        {
-            if (connect.active())
-            {
-                auto params = connect.params();
-                AAnalyserBuild::drvInitialSetup(connect);
-            }
-        }
-    }
 }
 
 //void AAnalyserApplication::on_AddTestToSummaryAccepted()
