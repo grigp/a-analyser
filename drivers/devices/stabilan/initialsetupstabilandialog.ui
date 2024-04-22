@@ -665,13 +665,128 @@
           </widget>
          </item>
          <item>
-          <widget class="QLabel" name="lblWizardInfo">
-           <property name="text">
-            <string>TextLabel</string>
+          <widget class="QFrame" name="frWizardInfo">
+           <property name="frameShape">
+            <enum>QFrame::StyledPanel</enum>
            </property>
-           <property name="alignment">
-            <set>Qt::AlignCenter</set>
+           <property name="frameShadow">
+            <enum>QFrame::Raised</enum>
            </property>
+           <layout class="QVBoxLayout" name="verticalLayout_4">
+            <item>
+             <widget class="QLabel" name="lblWizardInfo">
+              <property name="text">
+               <string>TextLabel</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QFrame" name="frWizardTimeBeforeCalibrate">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="frameShape">
+               <enum>QFrame::StyledPanel</enum>
+              </property>
+              <property name="frameShadow">
+               <enum>QFrame::Raised</enum>
+              </property>
+              <layout class="QHBoxLayout" name="horizontalLayout_10">
+               <item>
+                <spacer name="horizontalSpacer_3">
+                 <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>40</width>
+                   <height>20</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+               <item>
+                <widget class="QLabel" name="lblTimeBeforeCalibrate">
+                 <property name="text">
+                  <string>Время до калибровки, сек</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <spacer name="horizontalSpacer_4">
+                 <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
+                 </property>
+                 <property name="sizeType">
+                  <enum>QSizePolicy::Fixed</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>20</width>
+                   <height>20</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+               <item>
+                <widget class="QSpinBox" name="edTimeBeforeCalibrate">
+                 <property name="minimumSize">
+                  <size>
+                   <width>70</width>
+                   <height>0</height>
+                  </size>
+                 </property>
+                 <property name="minimum">
+                  <number>5</number>
+                 </property>
+                 <property name="maximum">
+                  <number>30</number>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </item>
+            <item>
+             <widget class="QFrame" name="frSetupSupportResult">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="frameShape">
+               <enum>QFrame::StyledPanel</enum>
+              </property>
+              <property name="frameShadow">
+               <enum>QFrame::Raised</enum>
+              </property>
+              <layout class="QHBoxLayout" name="horizontalLayout_11">
+               <item>
+                <widget class="QLabel" name="lblSetupSupportResult">
+                 <property name="font">
+                  <font>
+                   <pointsize>14</pointsize>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>Разница в значениях усилия больше 0,2 кг</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignCenter</set>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </item>
+           </layout>
           </widget>
          </item>
         </layout>
@@ -890,8 +1005,8 @@
    <slot>on_nextClicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>983</x>
-     <y>585</y>
+     <x>1049</x>
+     <y>564</y>
     </hint>
     <hint type="destinationlabel">
      <x>1080</x>
@@ -915,10 +1030,27 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>edTimeBeforeCalibrate</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>InitialSetupStabilanDialog</receiver>
+   <slot>on_timeBeforeCalibrateChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>987</x>
+     <y>485</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1071</x>
+     <y>447</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>on_settingsClicked()</slot>
   <slot>on_nextClicked()</slot>
   <slot>on_backClicked()</slot>
+  <slot>on_timeBeforeCalibrateChanged(int)</slot>
  </slots>
 </ui>

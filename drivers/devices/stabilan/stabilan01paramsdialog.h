@@ -10,6 +10,9 @@ namespace Ui {
 class Stabilan01ParamsDialog;
 }
 
+/*!
+ * \brief Класс диалога редактирования параметров стабилоанализатора Стабилан-01 The Stabilan01ParamsDialog class
+ */
 class Stabilan01ParamsDialog : public QDialog
 {
     Q_OBJECT
@@ -56,6 +59,12 @@ public:
 
     double pnTenso3() const;
     void setPnTenso3(const double pn);
+
+    double maxDifferent() const;
+    void setMaxDifferent(const double val);
+
+    double minWeight() const;
+    void setMinWeight(const double val);
 
 private slots:
     void on_selectModel(int modelIdx);

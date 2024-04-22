@@ -7,6 +7,7 @@
 #include "amessagebox.h"
 #include "stabilan01.h"
 #include "driverdefines.h"
+#include "settingsprovider.h"
 
 #include <QDebug>
 
@@ -14,13 +15,13 @@ namespace  {
 
 static QMap<InitialSetupStabilanDialog::Stages, QString> ButtonTexts =
 {
-      std::pair<InitialSetupStabilanDialog::Stages, QString> (InitialSetupStabilanDialog::stgCalibrateUp, QApplication::tr("Калибровка через 5 сек >>"))
+      std::pair<InitialSetupStabilanDialog::Stages, QString> (InitialSetupStabilanDialog::stgCalibrateUp, QApplication::tr("Калибровка через заданное время >>"))
     , std::pair<InitialSetupStabilanDialog::Stages, QString> (InitialSetupStabilanDialog::stgCalibrateDown, QApplication::tr("Калибровка >>"))
     , std::pair<InitialSetupStabilanDialog::Stages, QString> (InitialSetupStabilanDialog::stgFinal, QApplication::tr("Готово"))
 };
 
 static const QString StgCommentCalibrUp =
-        QApplication::tr("Нажмите кнопку [Калибровка через 5 сек >>] \nи поднимите стабилоплатформу над полом");
+        QApplication::tr("Нажмите кнопку [Калибровка через заданное время >>] \nи поднимите стабилоплатформу над полом");
 static const QString StgCommentCalibrDn =
         QApplication::tr("Отрегулируйте ножку до близких значений на реакциях опор \nи нажмите кнопку [Калибровка >>]");
 static const QString StgCommentFinal =
@@ -58,6 +59,13 @@ InitialSetupStabilanDialog::InitialSetupStabilanDialog(DeviceProtocols::Ports po
     ui->lblCommunicationError->setVisible(false);
     ui->lblErrorInDriver->setVisible(false);
     ui->btnBack->setVisible(false);
+
+    auto time = SettingsProvider::valueFromRegAppCopy("InitialSetupStabilanDialog", "TimeBeforeCalibrate", 5).toInt();
+    ui->edTimeBeforeCalibrate->setValue(time);
+    ui->frSetupSupportResult->setVisible(false);
+
+    m_maxDiff = m_params["min_weight"].toDouble(0.1);
+    m_minWeight = m_params["max_different"].toDouble(0.2);
 }
 
 InitialSetupStabilanDialog::~InitialSetupStabilanDialog()
@@ -70,6 +78,10 @@ void InitialSetupStabilanDialog::timerEvent(QTimerEvent *event)
     QDialog::timerEvent(event);
     if (event->timerId() == m_tmCalibrDelay)
     {
+        if (m_stage == stgCalibrateUp)
+            if (m_stabControl)
+                m_stabControl->calibrate(ChannelsDefines::chanStab);
+
         changeStage(true);
         ui->btnWizardNext->setEnabled(true);
         ui->btnBack->setEnabled(true);
@@ -115,12 +127,15 @@ void InitialSetupStabilanDialog::on_nextClicked()
     else
     if (m_stage == stgCalibrateUp)
     {
-        m_tmCalibrDelay = startTimer(5000);
+        m_tmCalibrDelay = startTimer(1000 * ui->edTimeBeforeCalibrate->value());
         ui->btnWizardNext->setEnabled(false);
         ui->btnBack->setEnabled(false);
     }
     else
     {
+        if (m_stage == stgCalibrateDown)
+            if (m_stabControl)
+                m_stabControl->calibrate(ChannelsDefines::chanStab);
         changeStage(true);
     }
 }
@@ -128,6 +143,11 @@ void InitialSetupStabilanDialog::on_nextClicked()
 void InitialSetupStabilanDialog::on_backClicked()
 {
     changeStage(false);
+}
+
+void InitialSetupStabilanDialog::on_timeBeforeCalibrateChanged(int value)
+{
+    SettingsProvider::setValueToRegAppCopy("InitialSetupStabilanDialog", "TimeBeforeCalibrate", value);
 }
 
 void InitialSetupStabilanDialog::getData(DeviceProtocols::DeviceData *data)
@@ -150,6 +170,53 @@ void InitialSetupStabilanDialog::getData(DeviceProtocols::DeviceData *data)
         ui->pbValueB->setValue(static_cast<int>(stabData->b() / 40.0 * ui->pbValueB->maximum()));
         ui->pbValueC->setValue(static_cast<int>(stabData->c() / 40.0 * ui->pbValueC->maximum()));
         ui->pbValueD->setValue(static_cast<int>(stabData->d() / 40.0 * ui->pbValueD->maximum()));
+
+        if (m_stage == stgCalibrateDown)
+        {
+            double max = 0;
+            double maxDiff = 0;
+            supportStat(stabData->a(), stabData->b(), stabData->c(), stabData->d(), max, maxDiff);
+            if (max > 5 && max < 15)
+            {
+                if (maxDiff < m_maxDiff)
+                {
+                    ui->lblSetupSupportResult->setText(tr("Разница в значениях усилия в пределах допустимого"));
+                    ui->lblSetupSupportResult->setStyleSheet("font-size: 18pt; color: rgb(0, 150, 0)");
+                    ui->btnWizardNext->setEnabled(true);
+                }
+                else
+                {
+                    ui->lblSetupSupportResult->setText(tr("Разница в значениях усилия больше 0,2 кг"));
+                    ui->lblSetupSupportResult->setStyleSheet("font-size: 18pt; color: rgb(200, 0, 0)");
+                    ui->btnWizardNext->setEnabled(false);
+                }
+            }
+            else
+            {
+                ui->lblSetupSupportResult->setText(tr("Масса стабилоплатформы некорректна"));
+                ui->lblSetupSupportResult->setStyleSheet("font-size: 18pt; color: rgb(200, 0, 0)");
+                ui->btnWizardNext->setEnabled(false);
+            }
+        }
+        else
+        if (m_stage == stgFinal)
+        {
+            double max = 0;
+            double maxDiff = 0;
+            supportStat(stabData->a(), stabData->b(), stabData->c(), stabData->d(), max, maxDiff);
+            if (max > -m_minWeight && max < m_minWeight)
+            {
+                ui->lblSetupSupportResult->setText(tr("Масса платформы в пределах допустимого"));
+                ui->lblSetupSupportResult->setStyleSheet("font-size: 18pt; color: rgb(0, 150, 0)");
+                ui->btnWizardNext->setEnabled(true);
+            }
+            else
+            {
+                ui->lblSetupSupportResult->setText(tr("Масса платформы недопустимо отличается от нуля"));
+                ui->lblSetupSupportResult->setStyleSheet("font-size: 18pt; color: rgb(200, 0, 0)");
+                ui->btnWizardNext->setEnabled(false);
+            }
+        }
     }
 }
 
@@ -169,6 +236,22 @@ void InitialSetupStabilanDialog::on_error(const int errorCode)
     ui->lblErrorInDriver->setVisible(true);
 }
 
+void InitialSetupStabilanDialog::supportStat(const double a, const double b, const double c, const double d, double &max, double &maxDiff)
+{
+    max = a + b + c + d;
+    maxDiff = fabs(b - a);
+    if (fabs(c - b) > maxDiff)
+        maxDiff = fabs(c - b);
+    if (fabs(d - c) > maxDiff)
+        maxDiff = fabs(d - c);
+    if (fabs(a - d) > maxDiff)
+        maxDiff = fabs(a - d);
+    if (fabs(a - c) > maxDiff)
+        maxDiff = fabs(a - c);
+    if (fabs(b - d) > maxDiff)
+        maxDiff = fabs(b - d);
+}
+
 void InitialSetupStabilanDialog::changeStage(const bool isNext)
 {
     int stg = static_cast<int>(m_stage);
@@ -180,7 +263,12 @@ void InitialSetupStabilanDialog::changeStage(const bool isNext)
     ui->btnWizardNext->setText(ButtonTexts.value(m_stage));
     ui->lblWizardInfo->setText(StageComment.value(m_stage));
 
+    ui->frWizardTimeBeforeCalibrate->setVisible(m_stage == stgCalibrateUp);
+    ui->frSetupSupportResult->setVisible(m_stage == stgCalibrateDown || m_stage == stgFinal);
+
     ui->btnBack->setVisible(stg > stgCalibrateUp);
+    ui->btnWizardNext->setEnabled(true);
+
 }
 
 void InitialSetupStabilanDialog::connectToDevice()

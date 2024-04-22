@@ -202,6 +202,9 @@ bool Stabilan01::editParams(QJsonObject &params)
     dlg.setPnTenso2(params["pn2"].toDouble(500));
     dlg.setPnTenso3(params["pn3"].toDouble(1));
 
+    dlg.setMaxDifferent(params["max_different"].toDouble(0.2));
+    dlg.setMinWeight(params["min_weight"].toDouble(0.1));
+
     if (dlg.exec() == QDialog::Accepted)
     {
         params["model"] = static_cast<int>(dlg.model());
@@ -219,6 +222,9 @@ bool Stabilan01::editParams(QJsonObject &params)
         params["pn1"] = dlg.pnTenso1();
         params["pn2"] = dlg.pnTenso2();
         params["pn3"] = dlg.pnTenso3();
+
+        params["max_different"] = dlg.maxDifferent();
+        params["min_weight"] = dlg.minWeight();
 
         return true;
     }

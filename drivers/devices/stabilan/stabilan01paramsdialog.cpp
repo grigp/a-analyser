@@ -199,6 +199,26 @@ void Stabilan01ParamsDialog::setPnTenso3(const double pn)
     ui->edPn3->setValue(static_cast<int>(pn));
 }
 
+double Stabilan01ParamsDialog::maxDifferent() const
+{
+    return ui->edMaxDifferent->value();
+}
+
+void Stabilan01ParamsDialog::setMaxDifferent(const double val)
+{
+    ui->edMaxDifferent->setValue(val);
+}
+
+double Stabilan01ParamsDialog::minWeight() const
+{
+    return ui->edMinWeight->value();
+}
+
+void Stabilan01ParamsDialog::setMinWeight(const double val)
+{
+    ui->edMinWeight->setValue(val);
+}
+
 void Stabilan01ParamsDialog::on_selectModel(int modelIdx)
 {
     Q_UNUSED(modelIdx);

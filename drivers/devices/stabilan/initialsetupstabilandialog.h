@@ -22,7 +22,7 @@ public:
                                         const QJsonObject &params,
                                         const QString &comment,
                                         QWidget *parent = nullptr);
-    ~InitialSetupStabilanDialog();
+    ~InitialSetupStabilanDialog() override;
 
     /*!
      * \brief Этапы работы мастера The Stages enum
@@ -44,6 +44,7 @@ private slots:
     void on_settingsClicked();
     void on_nextClicked();
     void on_backClicked();
+    void on_timeBeforeCalibrateChanged(int value);
 
     void getData(DeviceProtocols::DeviceData *data);
     void on_communicationError(const QString &drvName, const QString &port, const int errorCode);
@@ -51,6 +52,8 @@ private slots:
 
 private:
     Ui::InitialSetupStabilanDialog *ui;
+
+    void supportStat(const double a, const double b, const double c, const double d, double &max, double &maxDiff);
 
     void changeStage(const bool isNext);
 
@@ -61,6 +64,9 @@ private:
     QString m_comment;
     Stages m_stage {stgInvite};
     int m_tmCalibrDelay {-1};
+
+    double m_maxDiff {0.2};
+    double m_minWeight {0.1};
 
     Driver* m_driver {nullptr};     ///< Драйвер передающий данные
     DeviceProtocols::StabControl* m_stabControl {nullptr};             ///< Управление стабилографией в драйвере
