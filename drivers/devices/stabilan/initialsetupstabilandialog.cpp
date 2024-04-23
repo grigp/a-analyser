@@ -50,8 +50,8 @@ InitialSetupStabilanDialog::InitialSetupStabilanDialog(DeviceProtocols::Ports po
     ui->frWizard->setVisible(false);
     setStyleSheet(static_cast<AAnalyserApplication*>(QApplication::instance())->mainWindow()->styleSheet());
     ui->lblMainTitle->setStyleSheet("font-size: 18pt; color: rgb(0, 0, 0)");
-    ui->lblInvitationInfo->setStyleSheet("font-size: 14pt;");
-    ui->lblWizardInfo->setStyleSheet("font-size: 14pt;");
+    ui->lblInvitationInfo->setStyleSheet("font-size: 18pt;");
+    ui->lblWizardInfo->setStyleSheet("font-size: 18pt;");
 
     ui->lblMainTitle->setText(tr("Устройство: Стабилан-01.  Порт:") + DeviceProtocols::portName(m_port) + ".  " +
                               tr("Комментарий:") + " " + m_comment);

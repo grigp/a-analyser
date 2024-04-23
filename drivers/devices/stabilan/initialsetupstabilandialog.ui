@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>1071</width>
-    <height>623</height>
+    <height>700</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -45,6 +45,9 @@
      </property>
      <property name="text">
       <string>Устройство: Стабилан-01. Порт: . Комментарий:</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
      </property>
     </widget>
    </item>
@@ -164,6 +167,25 @@
          <property name="bottomMargin">
           <number>0</number>
          </property>
+         <item>
+          <widget class="QLabel" name="lblDevice_2">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="pixmap">
+            <pixmap resource="../../../kernel.qrc">:/images/stabilan01_200.png</pixmap>
+           </property>
+           <property name="scaledContents">
+            <bool>false</bool>
+           </property>
+          </widget>
+         </item>
          <item>
           <widget class="QFrame" name="frReactions">
            <property name="sizePolicy">
@@ -815,6 +837,9 @@
         <layout class="QHBoxLayout" name="horizontalLayout_3">
          <item>
           <widget class="QPushButton" name="btnBack">
+           <property name="toolTip">
+            <string>Назад к предыдущему этапу</string>
+           </property>
            <property name="text">
             <string/>
            </property>
