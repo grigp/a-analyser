@@ -256,6 +256,11 @@ void MainWindow::onDeviceControl()
     dlg.exec();
 }
 
+void MainWindow::onDeviceSetup()
+{
+    static_cast<AAnalyserApplication*>(QApplication::instance())->drvInitialSetup();
+}
+
 void MainWindow::onSettings()
 {
     AAnalyserSettings dlg(this);
@@ -499,6 +504,8 @@ void MainWindow::initMenu()
         menuSettings->addSeparator();
     }
     menuSettings->addAction(ui->acDeviceControl);
+    menuSettings->addAction(ui->acDeviceSetup);
+    menuSettings->addSeparator();
     menuSettings->addAction(ui->acSettings);
 
     QMenu *menuColorShemes = menuSettings->addMenu(tr("Цветовые схемы"));

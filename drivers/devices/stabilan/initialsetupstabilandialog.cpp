@@ -64,8 +64,8 @@ InitialSetupStabilanDialog::InitialSetupStabilanDialog(DeviceProtocols::Ports po
     ui->edTimeBeforeCalibrate->setValue(time);
     ui->frSetupSupportResult->setVisible(false);
 
-    m_maxDiff = m_params["min_weight"].toDouble(0.1);
-    m_minWeight = m_params["max_different"].toDouble(0.2);
+    m_maxDiff = m_params["max_different"].toDouble(0.2);
+    m_minWeight = m_params["min_weight"].toDouble(0.1);
 }
 
 InitialSetupStabilanDialog::~InitialSetupStabilanDialog()
@@ -186,7 +186,8 @@ void InitialSetupStabilanDialog::getData(DeviceProtocols::DeviceData *data)
                 }
                 else
                 {
-                    ui->lblSetupSupportResult->setText(tr("Разница в значениях усилия больше 0,2 кг"));
+
+                    ui->lblSetupSupportResult->setText(tr("Разница в значениях усилия больше") + " " + QString::number(m_maxDiff) + " " + tr("кг"));
                     ui->lblSetupSupportResult->setStyleSheet("font-size: 18pt; color: rgb(200, 0, 0)");
                     ui->btnWizardNext->setEnabled(false);
                 }

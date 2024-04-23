@@ -84,6 +84,7 @@ protected:
 
 private slots:
     void onDeviceControl();
+    void onDeviceSetup();
     void onSettings();
     void onAbout();
 
