@@ -1712,7 +1712,7 @@
                 "scale": 1,
                 "scores_per_min" : 38,
                 "label_scores_visible" : true,
-                "label_faults_visible" : true,
+                "label_faults_visible" : false,
                 "time": 120
             }
         },
