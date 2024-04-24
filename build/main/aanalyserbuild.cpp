@@ -239,6 +239,11 @@ bool AAnalyserBuild::isInitialSetup(const QString &drvUid)
     return (drvUid == Stabilan01::uid()); // || (drvUid == .....::uid());
 }
 
+bool AAnalyserBuild::isAutoRunInitialSetup()
+{
+    return true;
+}
+
 void AAnalyserBuild::assignDrivers(QMap<QString, QString> &drivers)
 {
     //! Надо хардкодить все драйвера

@@ -1,6 +1,7 @@
 #include "aanalyserbuild.h"
 
 #include "aanalyserapplication.h"
+#include "connection.h"
 
 #include "metodictemplate.h"
 #include "bedsidescalestestertemplate.h"
@@ -83,6 +84,20 @@ Driver *AAnalyserBuild::createDriver(const QString &drvUid)
     return nullptr;
 }
 
+bool AAnalyserBuild::drvInitialSetup(Connection &connection)
+{
+    return true;  //! По умолчанию true, ибо, если устройства нет, то настраивать нечего, значит удачно
+}
+
+bool AAnalyserBuild::isInitialSetup(const QString &drvUid)
+{
+    return false; // || (drvUid == .....::uid());
+}
+
+bool AAnalyserBuild::isAutoRunInitialSetup()
+{
+    return true;
+}
 
 void AAnalyserBuild::assignDrivers(QMap<QString, QString> &drivers)
 {

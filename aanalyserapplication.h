@@ -749,7 +749,7 @@ public:
     /*!
      * \brief Начальная настройка подключенного оборудования
      */
-    void drvInitialSetup();
+    void drvInitialSetup(const bool isMessageNotRequied);
 
 signals:
     void dbConnected();

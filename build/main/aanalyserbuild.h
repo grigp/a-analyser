@@ -79,6 +79,11 @@ bool drvInitialSetup(Connection &connection);
 bool isInitialSetup(const QString &drvUid);
 
 /*!
+ * \brief Возвращает true, если приложение будет автоматически запускать настройку подключенного оборудования при старте
+ */
+bool isAutoRunInitialSetup();
+
+/*!
  * \brief Создает список драйверов
  * \param drivers - сам список
  */

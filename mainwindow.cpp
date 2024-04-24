@@ -258,7 +258,7 @@ void MainWindow::onDeviceControl()
 
 void MainWindow::onDeviceSetup()
 {
-    static_cast<AAnalyserApplication*>(QApplication::instance())->drvInitialSetup();
+    static_cast<AAnalyserApplication*>(QApplication::instance())->drvInitialSetup(true);
 }
 
 void MainWindow::onSettings()

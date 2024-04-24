@@ -108,7 +108,11 @@ AAnalyserApplication::AAnalyserApplication(int &argc, char **argv)
         setClipCursor();
 
         //! Начальная настройка подключенного оборудования
-        drvInitialSetup();
+        //! Если в приложении это допустимо
+        if (AAnalyserBuild::isAutoRunInitialSetup())
+        {
+            drvInitialSetup(false);
+        }
     });
 
     m_asi.uidMethodic = "";
@@ -1149,7 +1153,7 @@ void AAnalyserApplication::setClipCursor()
     }
 }
 
-void AAnalyserApplication::drvInitialSetup()
+void AAnalyserApplication::drvInitialSetup(const bool isMessageNotRequied)
 {
     //! Расчет кол-ва подключений, для которых необходима начальная настройка
     int drvSetupCount = 0;
@@ -1179,6 +1183,11 @@ void AAnalyserApplication::drvInitialSetup()
             else
                 AMessageBox::information(nullptr, tr("Сообщение"), tr("Одно или несколько устройств не настроено"));
         }
+    }
+    else
+    {
+        if (isMessageNotRequied)
+            AMessageBox::information(nullptr, tr("Сообщение"), tr("Начальная настройка подключенного оборудования не требуется"));
     }
 }
 
