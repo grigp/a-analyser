@@ -93,7 +93,7 @@ void InitialSetupStabilanDialog::timerEvent(QTimerEvent *event)
 
 void InitialSetupStabilanDialog::closeEvent(QCloseEvent *event)
 {
-    auto mr = AMessageBox::question(this, tr("Предупреждение"), tr("Вы уверены, что хотите прервать начальную настройку Stabilan-01?"));
+    auto mr = AMessageBox::question(this, tr("Предупреждение"), tr("Вы уверены, что хотите прервать юстировку Stabilan-01?"));
     if (mr == AMessageBox::No)
     {
         event->ignore();

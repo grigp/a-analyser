@@ -13,6 +13,7 @@ namespace AAnalyserSettingsParams
     static const QString pn_sity = "Sity";
     static const QString pn_g = "g";
     static const QString pn_runningMode = "RunningMode";
+    static const QString pn_devicesSetuped = "DevicesSetuped";
     static const QString pn_timeCounter = "TimeCounter";
     static const QString pn_timeLatent = "TimeLatent";
     static const QString pn_testDoubleClickMode = "TestDoubleClickMode";

@@ -217,7 +217,7 @@
   <widget class="QStatusBar" name="statusBar"/>
   <action name="acDeviceControl">
    <property name="text">
-    <string>Управление оборудованием</string>
+    <string>Управление оборудованием...</string>
    </property>
    <property name="toolTip">
     <string>Управление оборудованием...</string>
@@ -396,10 +396,10 @@
   </action>
   <action name="acDeviceSetup">
    <property name="text">
-    <string>Настройка устройств...</string>
+    <string>Юстировка подключенного оборудования...</string>
    </property>
    <property name="toolTip">
-    <string>Начальная настройка подключенного оборудования...</string>
+    <string>Юстировка подключенного оборудования...</string>
    </property>
   </action>
  </widget>

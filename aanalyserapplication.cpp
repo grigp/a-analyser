@@ -50,6 +50,7 @@
 #include "baseutils.h"
 #include "testpropertydialog.h"
 #include "signalexporter.h"
+#include"devicecontroldialog.h"
 #include "amessagebox.h"
 
 AAnalyserApplication::AAnalyserApplication(int &argc, char **argv)
@@ -107,9 +108,24 @@ AAnalyserApplication::AAnalyserApplication(int &argc, char **argv)
 
         setClipCursor();
 
+        auto isDvcSetuped = SettingsProvider::valueFromRegAppCopy("", AAnalyserSettingsParams::pn_devicesSetuped, false).toBool();
+        if (!isDvcSetuped)
+        {
+            auto mr = AMessageBox::question(nullptr,
+                                            tr("Запрос"),
+                                            tr("Настройка подключенного оборудования не проводилась.") + "\n" +
+                                            tr("Провести настройку подключенного оборудования?"));
+            if (mr == AMessageBox::Yes)
+            {
+                DeviceControlDialog dlg(nullptr);
+                dlg.setStyleSheet(m_mw->styleSheet());
+                dlg.exec();
+            }
+        }
+
         //! Начальная настройка подключенного оборудования
         //! Если в приложении это допустимо
-        if (AAnalyserBuild::isAutoRunInitialSetup())
+        if (AAnalyserBuild::isAutoRunInitialSetup() && isDvcSetuped)
         {
             drvInitialSetup(false);
         }
@@ -1165,7 +1181,7 @@ void AAnalyserApplication::drvInitialSetup(const bool isMessageNotRequied)
     //! Если есть хоть одно, то выполняем настройку с запросом
     if (drvSetupCount > 0)
     {
-        auto mr = AMessageBox::question(nullptr, tr("Запрос"), tr("Выполнить начальную настройку подключенного оборудования?"));
+        auto mr = AMessageBox::question(nullptr, tr("Запрос"), tr("Выполнить юстировку подключенного оборудования?"));
         if (mr == AMessageBox::Yes)
         {
             bool res {true};
@@ -1179,15 +1195,15 @@ void AAnalyserApplication::drvInitialSetup(const bool isMessageNotRequied)
                 }
             }
             if (res)
-                AMessageBox::information(nullptr, tr("Сообщение"), tr("Начальная настройка подключенного оборудования выполнена"));
+                AMessageBox::information(nullptr, tr("Сообщение"), tr("Юстировка подключенного оборудования выполнена"));
             else
-                AMessageBox::information(nullptr, tr("Сообщение"), tr("Одно или несколько устройств не настроено"));
+                AMessageBox::information(nullptr, tr("Сообщение"), tr("Юстировка не выполнена для одного или нескольких устройств"));
         }
     }
     else
     {
         if (isMessageNotRequied)
-            AMessageBox::information(nullptr, tr("Сообщение"), tr("Начальная настройка подключенного оборудования не требуется"));
+            AMessageBox::information(nullptr, tr("Сообщение"), tr("Юстировка подключенного оборудования не требуется"));
     }
 }
 

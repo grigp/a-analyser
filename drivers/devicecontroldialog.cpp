@@ -5,6 +5,8 @@
 #include "stringvaluedelegate.h"
 #include "addconnectiondialog.h"
 #include "amessagebox.h"
+#include "settingsprovider.h"
+#include "aanalysersettings.h"
 
 #include <QApplication>
 #include <QComboBox>
@@ -68,8 +70,11 @@ void DeviceControlDialog::editConnect()
                 data(DeviceControlModel::ParamsRole).toJsonObject();
 
         if (static_cast<AAnalyserApplication*>(QApplication::instance())->editParamsConnecton(rowIdx, drvUid, params))
+        {
             m_model->setData(m_model->index(rowIdx, DeviceControlModel::ColDriver),
                              params, DeviceControlModel::ParamsRole);
+            SettingsProvider::setValueToRegAppCopy("", AAnalyserSettingsParams::pn_devicesSetuped, true);
+        }
     }
 }
 
@@ -140,8 +145,11 @@ void DeviceControlDialog::on_dataChanged(const QModelIndex &topLeft, const QMode
         value = topLeft.data(DeviceControlModel::ActiveRole);
         break;
     case 2:
+    {
         value = topLeft.data(DeviceControlModel::PortCodeRole);
+        SettingsProvider::setValueToRegAppCopy("", AAnalyserSettingsParams::pn_devicesSetuped, true);
         break;
+    }
     case 3:
         value = topLeft.data();
         break;

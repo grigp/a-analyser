@@ -98,8 +98,8 @@ class DeviceControlDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit DeviceControlDialog(QWidget *parent = 0);
-    ~DeviceControlDialog();
+    explicit DeviceControlDialog(QWidget *parent = nullptr);
+    ~DeviceControlDialog() override;
 
 private slots:
     void addConnect();

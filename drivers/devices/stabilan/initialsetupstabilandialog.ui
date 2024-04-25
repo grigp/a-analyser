@@ -14,7 +14,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Начальная настройка стабилоанализатора &quot;Стабилан-01&quot;</string>
+   <string>Юстировка установки стабилоанализатора &quot;Стабилан-01&quot;</string>
   </property>
   <property name="modal">
    <bool>true</bool>
@@ -91,8 +91,8 @@
          <item>
           <widget class="QLabel" name="lblInvitationInfo">
            <property name="text">
-            <string>Подключите стабилоанализатор Стабилан-01 , к компьютеру и включите его. 
-После этого нажмите на кнопку [Настройка &gt;&gt;]</string>
+            <string>Подключите стабилоанализатор Стабилан-01 к компьютеру и включите его. 
+После этого нажмите на кнопку [Дальше &gt;&gt;]</string>
            </property>
            <property name="alignment">
             <set>Qt::AlignCenter</set>
@@ -133,7 +133,7 @@
          <item>
           <widget class="QPushButton" name="btnInvitationNext">
            <property name="text">
-            <string>Настройка &gt;&gt;</string>
+            <string>Дальше &gt;&gt;</string>
            </property>
           </widget>
          </item>
