@@ -1190,7 +1190,7 @@ void AAnalyserApplication::drvInitialSetup(const bool isMessageNotRequied)
                 if (connect.active())
                 {
                     auto params = connect.params();
-                    if (!AAnalyserBuild::drvInitialSetup(connect))
+                    if (!AAnalyserBuild::drvInitialSetup(connect.driverUid(), connect.port(), connect.params(), connect.comment()))
                         res = false;
                 }
             }

@@ -58,10 +58,14 @@ public:
 
     /*!
      * \brief Начальная настройка стабилана
-     * \param params - параметры драйвера стабилана из подключения
+     * \param port - точка подключения устройства
+     * \param param - параметры драйвера стабилана из подключения
+     * \param comment - комментарий к подключению
      * \return true, если устройство настроено нормально
      */
-    static bool initialSetup(Connection &connection);
+    static bool initialSetup(DeviceProtocols::Ports port,
+                             const QJsonObject &params,
+                             const QString &comment);
 
     /*!
      * \brief Запуск передачи данных

@@ -7,6 +7,7 @@
 #include "amessagebox.h"
 #include "settingsprovider.h"
 #include "aanalysersettings.h"
+#include "aanalyserbuild.h"
 
 #include <QApplication>
 #include <QComboBox>
@@ -68,12 +69,25 @@ void DeviceControlDialog::editConnect()
                 data(DeviceControlModel::DriverUidRole).toString();
         auto params = m_model->index(rowIdx, DeviceControlModel::ColDriver).
                 data(DeviceControlModel::ParamsRole).toJsonObject();
+        auto drvPort = m_model->index(rowIdx, DeviceControlModel::ColPort).
+                data(DeviceControlModel::PortCodeRole);
+        auto comment = m_model->index(rowIdx, DeviceControlModel::ColComment).data().toString();
+        auto active = m_model->index(rowIdx, DeviceControlModel::ColActive).
+                data(DeviceControlModel::ActiveRole).toBool();
 
         if (static_cast<AAnalyserApplication*>(QApplication::instance())->editParamsConnecton(rowIdx, drvUid, params))
         {
             m_model->setData(m_model->index(rowIdx, DeviceControlModel::ColDriver),
                              params, DeviceControlModel::ParamsRole);
             SettingsProvider::setValueToRegAppCopy("", AAnalyserSettingsParams::pn_devicesSetuped, true);
+
+            qDebug() << active << AAnalyserBuild::isInitialSetup(drvUid);
+            if (active && AAnalyserBuild::isInitialSetup(drvUid))
+            {
+                auto mr = AMessageBox::question(nullptr, tr("Запрос"), tr("Выполнить юстировку устройства?"));
+                if (mr == AMessageBox::Yes)
+                    AAnalyserBuild::drvInitialSetup(drvUid, static_cast<DeviceProtocols::Ports>(drvPort.toInt()), params, comment);
+            }
         }
     }
 }
