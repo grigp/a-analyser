@@ -706,6 +706,16 @@
              </widget>
             </item>
             <item>
+             <widget class="QLabel" name="lblTimer">
+              <property name="text">
+               <string>Осталось 5 секунд</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item>
              <widget class="QFrame" name="frWizardTimeBeforeCalibrate">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Preferred" vsizetype="Fixed">

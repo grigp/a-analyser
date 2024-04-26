@@ -64,6 +64,7 @@ private:
     QString m_comment;
     Stages m_stage {stgInvite};
     int m_tmCalibrDelay {-1};
+    int m_timerCount {-1};
 
     double m_maxDiff {0.2};
     double m_minWeight {0.1};

@@ -64,6 +64,9 @@ InitialSetupStabilanDialog::InitialSetupStabilanDialog(DeviceProtocols::Ports po
     ui->edTimeBeforeCalibrate->setValue(time);
     ui->frSetupSupportResult->setVisible(false);
 
+    ui->lblTimer->setVisible(false);
+    ui->lblTimer->setStyleSheet("font-size: 30pt; color: rgb(255, 0, 0)");
+
     m_maxDiff = m_params["max_different"].toDouble(0.2);
     m_minWeight = m_params["min_weight"].toDouble(0.1);
 }
@@ -78,16 +81,27 @@ void InitialSetupStabilanDialog::timerEvent(QTimerEvent *event)
     QDialog::timerEvent(event);
     if (event->timerId() == m_tmCalibrDelay)
     {
-        if (m_stage == stgCalibrateUp)
-            if (m_stabControl)
-                m_stabControl->calibrate(ChannelsDefines::chanStab);
+        if (m_timerCount > 1)
+        {
+            --m_timerCount;
+            ui->lblTimer->setText(tr("Осталось") + " " + QString::number(m_timerCount) + " " + tr("секунд"));
+        }
+        else
+        {
+            if (m_stage == stgCalibrateUp)
+                if (m_stabControl)
+                    m_stabControl->calibrate(ChannelsDefines::chanStab);
 
-        changeStage(true);
-        ui->btnWizardNext->setEnabled(true);
-        ui->btnBack->setEnabled(true);
+            changeStage(true);
+            ui->btnWizardNext->setEnabled(true);
+            ui->btnBack->setEnabled(true);
 
-        killTimer(m_tmCalibrDelay);
-        m_tmCalibrDelay = -1;
+            killTimer(m_tmCalibrDelay);
+            m_tmCalibrDelay = -1;
+            ui->lblTimer->setVisible(false);
+            ui->lblWizardInfo->setVisible(true);
+            ui->frWizardTimeBeforeCalibrate->setVisible(true);
+        }
     }
 }
 
@@ -127,9 +141,15 @@ void InitialSetupStabilanDialog::on_nextClicked()
     else
     if (m_stage == stgCalibrateUp)
     {
-        m_tmCalibrDelay = startTimer(1000 * ui->edTimeBeforeCalibrate->value());
+//        m_tmCalibrDelay = startTimer(1000 * ui->edTimeBeforeCalibrate->value());
+        m_tmCalibrDelay = startTimer(1000);
+        m_timerCount = ui->edTimeBeforeCalibrate->value();
         ui->btnWizardNext->setEnabled(false);
         ui->btnBack->setEnabled(false);
+        ui->lblTimer->setVisible(true);
+        ui->lblTimer->setText(tr("Осталось") + " " + QString::number(m_timerCount) + " " + tr("секунд"));
+        ui->lblWizardInfo->setVisible(false);
+        ui->frWizardTimeBeforeCalibrate->setVisible(false);
     }
     else
     {
@@ -269,7 +289,6 @@ void InitialSetupStabilanDialog::changeStage(const bool isNext)
 
     ui->btnBack->setVisible(stg > stgCalibrateUp);
     ui->btnWizardNext->setEnabled(true);
-
 }
 
 void InitialSetupStabilanDialog::connectToDevice()
