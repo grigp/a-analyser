@@ -96,6 +96,26 @@
        </widget>
       </item>
       <item>
+       <widget class="QPushButton" name="btnSetup">
+        <property name="toolTip">
+         <string>Юстировка устройства...</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset resource="../kernel.qrc">
+          <normaloff>:/images/Connects/Setup.png</normaloff>:/images/Connects/Setup.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>25</width>
+          <height>25</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item>
        <spacer name="horizontalSpacer_2">
         <property name="orientation">
          <enum>Qt::Horizontal</enum>
@@ -235,8 +255,8 @@
    <slot>upPriority()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>172</x>
-     <y>33</y>
+     <x>236</x>
+     <y>44</y>
     </hint>
     <hint type="destinationlabel">
      <x>710</x>
@@ -251,8 +271,8 @@
    <slot>downPriority()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>217</x>
-     <y>18</y>
+     <x>279</x>
+     <y>30</y>
     </hint>
     <hint type="destinationlabel">
      <x>713</x>
@@ -276,6 +296,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>btnSetup</sender>
+   <signal>clicked()</signal>
+   <receiver>DeviceControlDialog</receiver>
+   <slot>on_setupConnect()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>154</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>711</x>
+     <y>28</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>addConnect()</slot>
@@ -284,5 +320,6 @@
   <slot>upPriority()</slot>
   <slot>downPriority()</slot>
   <slot>on_doubleClicked(QModelIndex)</slot>
+  <slot>on_setupConnect()</slot>
  </slots>
 </ui>

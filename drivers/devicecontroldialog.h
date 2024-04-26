@@ -105,6 +105,7 @@ private slots:
     void addConnect();
     void editConnect();
     void delConnect();
+    void on_setupConnect();
 
     void upPriority();
     void downPriority();
@@ -116,7 +117,10 @@ private slots:
 private:
     Ui::DeviceControlDialog *ui;
 
+    void runDeviceSetup(const int idxRow, const bool isBreakMessages) const;
+
     DeviceControlModel *m_model;
+    int m_lastPort {-1};
 };
 
 #endif // DEVICECONTROLDIALOG_H

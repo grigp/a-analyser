@@ -69,11 +69,6 @@ void DeviceControlDialog::editConnect()
                 data(DeviceControlModel::DriverUidRole).toString();
         auto params = m_model->index(rowIdx, DeviceControlModel::ColDriver).
                 data(DeviceControlModel::ParamsRole).toJsonObject();
-        auto drvPort = m_model->index(rowIdx, DeviceControlModel::ColPort).
-                data(DeviceControlModel::PortCodeRole);
-        auto comment = m_model->index(rowIdx, DeviceControlModel::ColComment).data().toString();
-        auto active = m_model->index(rowIdx, DeviceControlModel::ColActive).
-                data(DeviceControlModel::ActiveRole).toBool();
 
         if (static_cast<AAnalyserApplication*>(QApplication::instance())->editParamsConnecton(rowIdx, drvUid, params))
         {
@@ -81,13 +76,7 @@ void DeviceControlDialog::editConnect()
                              params, DeviceControlModel::ParamsRole);
             SettingsProvider::setValueToRegAppCopy("", AAnalyserSettingsParams::pn_devicesSetuped, true);
 
-            qDebug() << active << AAnalyserBuild::isInitialSetup(drvUid);
-            if (active && AAnalyserBuild::isInitialSetup(drvUid))
-            {
-                auto mr = AMessageBox::question(nullptr, tr("Запрос"), tr("Выполнить юстировку устройства?"));
-                if (mr == AMessageBox::Yes)
-                    AAnalyserBuild::drvInitialSetup(drvUid, static_cast<DeviceProtocols::Ports>(drvPort.toInt()), params, comment);
-            }
+            runDeviceSetup(rowIdx, false);
         }
     }
 }
@@ -109,6 +98,16 @@ void DeviceControlDialog::delConnect()
             m_model->removeRow(rowIdx);
             static_cast<AAnalyserApplication*>(QApplication::instance())->deleteConnection(rowIdx);
         }
+    }
+}
+
+void DeviceControlDialog::on_setupConnect()
+{
+    auto selIdxs = ui->tvConnections->selectionModel()->selectedIndexes();
+    if (selIdxs.size() > 0)
+    {
+        const int rowIdx = selIdxs.at(0).row();
+        runDeviceSetup(rowIdx, true);
     }
 }
 
@@ -162,6 +161,11 @@ void DeviceControlDialog::on_dataChanged(const QModelIndex &topLeft, const QMode
     {
         value = topLeft.data(DeviceControlModel::PortCodeRole);
         SettingsProvider::setValueToRegAppCopy("", AAnalyserSettingsParams::pn_devicesSetuped, true);
+//        if (value.toInt() != m_lastPort)    //TODO: Срабатывает два раза: с предыдущим значением и со следующим
+//        {
+//            runDeviceSetup(topLeft.row());
+//            m_lastPort = value.toInt();
+//        }
         break;
     }
     case 3:
@@ -173,6 +177,36 @@ void DeviceControlDialog::on_dataChanged(const QModelIndex &topLeft, const QMode
 
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             dataChangedConnection(topLeft.row(), topLeft.column(), value);
+}
+
+void DeviceControlDialog::runDeviceSetup(const int idxRow, const bool isBreakMessages) const
+{
+    auto drvUid = m_model->index(idxRow, DeviceControlModel::ColDriver).
+            data(DeviceControlModel::DriverUidRole).toString();
+    auto params = m_model->index(idxRow, DeviceControlModel::ColDriver).
+            data(DeviceControlModel::ParamsRole).toJsonObject();
+    auto drvPort = m_model->index(idxRow, DeviceControlModel::ColPort).
+            data(DeviceControlModel::PortCodeRole);
+    auto comment = m_model->index(idxRow, DeviceControlModel::ColComment).data().toString();
+    auto active = m_model->index(idxRow, DeviceControlModel::ColActive).
+            data(DeviceControlModel::ActiveRole).toBool();
+    if (active && AAnalyserBuild::isInitialSetup(drvUid))
+    {
+        auto mr = AMessageBox::question(nullptr, tr("Запрос"), tr("Выполнить юстировку устройства?"));
+        if (mr == AMessageBox::Yes)
+            AAnalyserBuild::drvInitialSetup(drvUid, static_cast<DeviceProtocols::Ports>(drvPort.toInt()), params, comment);
+    }
+    else
+    {
+        if (isBreakMessages)
+        {
+            if (!AAnalyserBuild::isInitialSetup(drvUid))
+                AMessageBox::information(nullptr, tr("Предупреждение"), tr("Устройство не предполагает юстировки"));
+            else
+            if (!active)
+                AMessageBox::information(nullptr, tr("Предупреждение"), tr("Подключение не активно"));
+        }
+    }
 }
 
 
