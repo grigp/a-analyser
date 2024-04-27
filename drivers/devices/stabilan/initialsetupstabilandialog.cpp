@@ -200,13 +200,28 @@ void InitialSetupStabilanDialog::getData(DeviceProtocols::DeviceData *data)
             {
                 if (maxDiff < m_maxDiff)
                 {
+                    if (!ui->btnWizardNext->isEnabled())
+                    {
+                        if (m_player.state() != QMediaPlayer::PlayingState)
+                        {
+                            m_player.setMedia(QUrl("qrc:/sound/ok.wav"));
+                            m_player.play();
+                        }
+                    }
                     ui->lblSetupSupportResult->setText(tr("Разница в значениях усилия в пределах допустимого"));
                     ui->lblSetupSupportResult->setStyleSheet("font-size: 18pt; color: rgb(0, 150, 0)");
                     ui->btnWizardNext->setEnabled(true);
                 }
                 else
                 {
-
+                    if (ui->btnWizardNext->isEnabled())
+                    {
+                        if (m_player.state() != QMediaPlayer::PlayingState)
+                        {
+                            m_player.setMedia(QUrl("qrc:/sound/error.wav"));
+                            m_player.play();
+                        }
+                    }
                     ui->lblSetupSupportResult->setText(tr("Разница в значениях усилия больше") + " " + QString::number(m_maxDiff) + " " + tr("кг"));
                     ui->lblSetupSupportResult->setStyleSheet("font-size: 18pt; color: rgb(200, 0, 0)");
                     ui->btnWizardNext->setEnabled(false);
@@ -227,12 +242,28 @@ void InitialSetupStabilanDialog::getData(DeviceProtocols::DeviceData *data)
             supportStat(stabData->a(), stabData->b(), stabData->c(), stabData->d(), max, maxDiff);
             if (max > -m_minWeight && max < m_minWeight)
             {
+                if (!ui->btnWizardNext->isEnabled())
+                {
+                    if (m_player.state() != QMediaPlayer::PlayingState)
+                    {
+                        m_player.setMedia(QUrl("qrc:/sound/ok.wav"));
+                        m_player.play();
+                    }
+                }
                 ui->lblSetupSupportResult->setText(tr("Масса платформы в пределах допустимого"));
                 ui->lblSetupSupportResult->setStyleSheet("font-size: 18pt; color: rgb(0, 150, 0)");
                 ui->btnWizardNext->setEnabled(true);
             }
             else
             {
+                if (ui->btnWizardNext->isEnabled())
+                {
+                    if (m_player.state() != QMediaPlayer::PlayingState)
+                    {
+                        m_player.setMedia(QUrl("qrc:/sound/error.wav"));
+                        m_player.play();
+                    }
+                }
                 ui->lblSetupSupportResult->setText(tr("Масса платформы недопустимо отличается от нуля"));
                 ui->lblSetupSupportResult->setStyleSheet("font-size: 18pt; color: rgb(200, 0, 0)");
                 ui->btnWizardNext->setEnabled(false);

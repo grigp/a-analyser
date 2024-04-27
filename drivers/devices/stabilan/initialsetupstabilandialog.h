@@ -3,6 +3,7 @@
 
 #include <QDialog>
 #include <QJsonObject>
+#include <QMediaPlayer>
 
 #include "deviceprotocols.h"
 
@@ -71,6 +72,7 @@ private:
 
     Driver* m_driver {nullptr};     ///< Драйвер передающий данные
     DeviceProtocols::StabControl* m_stabControl {nullptr};             ///< Управление стабилографией в драйвере
+    QMediaPlayer m_player;
 };
 
 #endif // INITIALSETUPSTABILANDIALOG_H

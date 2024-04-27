@@ -280,5 +280,7 @@
         <file>images/stabilan01_200.png</file>
         <file>images/Back.png</file>
         <file>images/Connects/Setup.png</file>
+        <file>sound/error.wav</file>
+        <file>sound/ok.wav</file>
     </qresource>
 </RCC>
