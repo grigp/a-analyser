@@ -100,7 +100,7 @@ void InitialSetupStabilanDialog::timerEvent(QTimerEvent *event)
             m_tmCalibrDelay = -1;
             ui->lblTimer->setVisible(false);
             ui->lblWizardInfo->setVisible(true);
-            ui->frWizardTimeBeforeCalibrate->setVisible(true);
+            ui->frWizardTimeBeforeCalibrate->setVisible(false);
         }
     }
 }
