@@ -60,7 +60,7 @@ void PatientProgramVisualsWidget::assign()
         ui->frContainer->layout()->addWidget(tw);
 
         //! Добавим в него виджет индивидуальной программы
-        tw->addTab(m_wgtPP, tr("Индивидуальная программа"));
+        tw->addTab(m_wgtPP, tr("Динамика выполнения"));
         //! И все виджеты визуализатором
         foreach (auto visual, m_visuals)
         {

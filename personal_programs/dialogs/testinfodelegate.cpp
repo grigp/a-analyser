@@ -10,6 +10,7 @@
 #include "personalprogrammanager.h"
 #include "baseutils.h"
 #include "dataprovider.h"
+#include "personalprogramservice.h"
 
 
 TestInfoDelegate::TestInfoDelegate(QObject *parent)
@@ -27,7 +28,7 @@ void TestInfoDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opti
         MetodicsFactory *metFactory = static_cast<AAnalyserApplication*>(QApplication::instance())->getMetodics();
         MetodicDefines::MetodicInfo mi = metFactory->metodic(uidMethod);
         auto uidTest = index.data(PersonalProgramDefines::PersonalProgram::TestUidRole).toString();
-        auto valSuccess = getSuccessFactorValue(uidTest);
+        auto valSuccess = PersonalProgramService::getSuccessFactorValue(uidTest);
 
         painter->save();
 
@@ -86,14 +87,5 @@ void TestInfoDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opti
         }
         painter->restore();
     }
-}
-
-double TestInfoDelegate::getSuccessFactorValue(const QString &uidTest) const
-{
-    auto factors = DataProvider::getPrimaryFactors(uidTest);
-    foreach (auto factor, factors)
-        if (factor.uid() == FactorsDefines::CommonFactors::SuccessUid)
-            return factor.value();
-    return -1;
 }
 

@@ -16,9 +16,6 @@ public:
     void paint(QPainter *painter,
                const QStyleOptionViewItem &option, const QModelIndex &index) const override;
 
-private:
-    double getSuccessFactorValue(const QString& uidTtest) const;
-
 };
 
 #endif // TESTINFODELEGATE_H

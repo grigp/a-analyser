@@ -64,6 +64,7 @@
 #include "sectiongraphvisual.h"
 
 #include "mancoordppvisual.h"
+#include "rehabreportppvisual.h"
 #include "commonppvisual.h"
 
 #include "filtersignal.h"
@@ -149,6 +150,7 @@ void AAnalyserBuild::registerPPVisuals()
 {
     auto* app = static_cast<AAnalyserApplication*>(QApplication::instance());
     app->registerPPVisual(new ManCoordPPVisual());
+    app->registerPPVisual(new RehabReportPPVisual());
 //    app->registerPPVisual(new CommonPPVisual());
 }
 
