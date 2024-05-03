@@ -2,12 +2,15 @@
 #define REHABREPORTPPVISUALWIDGET_H
 
 #include <QWidget>
+#include <QStandardItemModel>
 
 #include "ppvisual.h"
 
 namespace Ui {
 class RehabReportPPVisualWidget;
 }
+
+class MultiFactor;
 
 /*!
  * \brief Класс виджета визуализатора ИП - отчет по курсу реабилитации The RehabReportPPVisualWidget class
@@ -32,6 +35,9 @@ private:
     QString m_uidCross2 {""};   ///< uid теста на устойчивость перед окончанием процедур
     QVector<double> m_success;  ///< Динамика результативности по ДП
 
+    QStandardItemModel m_mdlRomb;
+    QStandardItemModel m_mdlCross;
+
     /*!
      * \brief Расчет вперед по ДП
      */
@@ -40,6 +46,14 @@ private:
      * \brief Расчет назад по ДП
      */
     void calculateReverse();
+
+    void showRombergResults();
+    void showCrossResults();
+
+    QString getTestTitle(const QString& uidTest) const;
+    void addFactorColumnToModel(const QString& uidFactor, MultiFactor* fg1, MultiFactor* fg2, QStandardItemModel* model, QStringList& header);
+    bool getProbesRomberg(const QString& uidTest, QString& uidProbe1, QString& uidProbe2) const;
+    bool getProbeCross(const QString& uidTest, QString& uidProbe) const;
 };
 
 #endif // REHABREPORTPPVISUALWIDGET_H
