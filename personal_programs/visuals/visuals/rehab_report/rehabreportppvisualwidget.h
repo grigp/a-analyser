@@ -29,11 +29,17 @@ public:
 private:
     Ui::RehabReportPPVisualWidget *ui;
 
+    struct DPSuccessInfo
+    {
+        QString dt {""};
+        double val {-1};
+    };
+
     QString m_uidRomb1 {""};    ///< uid теста Ромберга перед началом процедур
     QString m_uidRomb2 {""};    ///< uid теста Ромберга перед окончанием процедур
     QString m_uidCross1 {""};   ///< uid теста на устойчивость перед началом процедур
     QString m_uidCross2 {""};   ///< uid теста на устойчивость перед окончанием процедур
-    QVector<double> m_success;  ///< Динамика результативности по ДП
+    QVector<DPSuccessInfo> m_success;  ///< Динамика результативности по ДП
 
     QStandardItemModel m_mdlRomb;
     QStandardItemModel m_mdlCross;
@@ -49,9 +55,16 @@ private:
 
     void showRombergResults();
     void showCrossResults();
+    void showSuccess();
 
     QString getTestTitle(const QString& uidTest) const;
-    void addFactorColumnToModel(const QString& uidFactor, MultiFactor* fg1, MultiFactor* fg2, QStandardItemModel* model, QStringList& header);
+    void addFactorColumnToModel(const QString& uidFactor,
+                                MultiFactor* fg1,
+                                MultiFactor* fg2,
+                                QStandardItemModel* model,
+                                QStringList& header,
+                                const QString& fDetail,
+                                const QMap<QString, QString>* factorNames);
     bool getProbesRomberg(const QString& uidTest, QString& uidProbe1, QString& uidProbe2) const;
     bool getProbeCross(const QString& uidTest, QString& uidProbe) const;
 };

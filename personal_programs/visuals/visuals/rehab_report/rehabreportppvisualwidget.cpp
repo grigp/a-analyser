@@ -7,11 +7,30 @@
 #include "personalprogramservice.h"
 #include "ratioprobesfactors.h"
 #include "classicfactors.h"
+#include "crossfactors.h"
 #include "vectorfactors.h"
+
 #include "dataprovider.h"
 
 #include <QJsonArray>
 #include <QDebug>
+
+namespace
+{
+static QMap<QString, QString> RombergFactorName =
+{
+    std::pair<QString, QString> (RatioProbesFactorsDefines::Probe2SUid, QApplication::tr("КР S"))
+  , std::pair<QString, QString> (RatioProbesFactorsDefines::Probe2KFRUid, QApplication::tr("КР КФР"))
+  , std::pair<QString, QString> (ClassicFactorsDefines::SquareUid, QApplication::tr("S"))
+  , std::pair<QString, QString> (VectorFactorsDefines::KFRUid, QApplication::tr("КФР"))
+  , std::pair<QString, QString> (ClassicFactorsDefines::LUid, QApplication::tr("L"))
+  , std::pair<QString, QString> (ClassicFactorsDefines::QXUid, QApplication::tr("СКО X"))
+  , std::pair<QString, QString> (ClassicFactorsDefines::QYUid, QApplication::tr("СКО Y"))
+};
+
+
+}
+
 
 RehabReportPPVisualWidget::RehabReportPPVisualWidget(PPVisualDescriptor* visual, QJsonObject &objPP, QWidget *parent) :
     PPVisual(visual, objPP, parent),
@@ -67,10 +86,7 @@ void RehabReportPPVisualWidget::calculate()
 
     showRombergResults();
     showCrossResults();
-
-    qDebug() << m_success;
-    qDebug() << "romb" << m_uidRomb1 << m_uidRomb2;
-    qDebug() << "cross" << m_uidCross1 << m_uidCross2;
+    showSuccess();
 }
 
 void RehabReportPPVisualWidget::calculateStraight()
@@ -85,7 +101,8 @@ void RehabReportPPVisualWidget::calculateStraight()
         auto objDP = arrDP.at(i).toObject();
         auto arrTests = objDP["test_list"].toArray();
 
-        m_success[i] = 0;
+        m_success[i].val = -1;
+        m_success[i].dt = "";
         double midSucc {0};
         int nSucc {0};
 
@@ -115,6 +132,8 @@ void RehabReportPPVisualWidget::calculateStraight()
                 mi.kindUid == RehabReportDefines::TrenHardTestKindUid)
             {
                 auto value = PersonalProgramService::getSuccessFactorValue(uidTest);
+                if (value < 0)
+                    value = 0;
                 if (value > -1)
                 {
                     midSucc += value;
@@ -123,8 +142,9 @@ void RehabReportPPVisualWidget::calculateStraight()
             }
         }
 
+        m_success[i].dt = objDP["date_time"].toString();
         if (nSucc > 0)
-            m_success[i] = midSucc / nSucc;
+            m_success[i].val = midSucc / nSucc;
     }
 }
 
@@ -203,23 +223,23 @@ void RehabReportPPVisualWidget::showRombergResults()
         QStringList header = QStringList() << tr("Тест");
 
         auto item1 = new QStandardItem(getTestTitle(m_uidRomb1));
+        item1->setEditable(false);
         auto item2 = new QStandardItem(getTestTitle(m_uidRomb2));
+        item2->setEditable(false);
         m_mdlRomb.appendColumn(QList<QStandardItem*>() << item1 << item2);
 
-        addFactorColumnToModel(RatioProbesFactorsDefines::Probe2SUid, fctRatio1, fctRatio2, &m_mdlRomb, header);
-        addFactorColumnToModel(RatioProbesFactorsDefines::Probe2KFRUid, fctRatio1, fctRatio2, &m_mdlRomb, header);
-        addFactorColumnToModel(ClassicFactorsDefines::SquareUid, fctClass11, fctClass21, &m_mdlRomb, header);
-        addFactorColumnToModel(VectorFactorsDefines::KFRUid, fctVector11, fctVector21, &m_mdlRomb, header);
-        addFactorColumnToModel(ClassicFactorsDefines::SquareUid, fctClass11, fctClass21, &m_mdlRomb, header);
-        addFactorColumnToModel(ClassicFactorsDefines::LUid, fctClass11, fctClass21, &m_mdlRomb, header);
-        addFactorColumnToModel(ClassicFactorsDefines::QXUid, fctClass11, fctClass21, &m_mdlRomb, header);
-        addFactorColumnToModel(ClassicFactorsDefines::QYUid, fctClass11, fctClass21, &m_mdlRomb, header);
-        addFactorColumnToModel(ClassicFactorsDefines::SquareUid, fctClass12, fctClass22, &m_mdlRomb, header);
-        addFactorColumnToModel(VectorFactorsDefines::KFRUid, fctVector12, fctVector22, &m_mdlRomb, header);
-        addFactorColumnToModel(ClassicFactorsDefines::SquareUid, fctClass12, fctClass22, &m_mdlRomb, header);
-        addFactorColumnToModel(ClassicFactorsDefines::LUid, fctClass12, fctClass22, &m_mdlRomb, header);
-        addFactorColumnToModel(ClassicFactorsDefines::QXUid, fctClass12, fctClass22, &m_mdlRomb, header);
-        addFactorColumnToModel(ClassicFactorsDefines::QYUid, fctClass12, fctClass22, &m_mdlRomb, header);
+        addFactorColumnToModel(RatioProbesFactorsDefines::Probe2SUid, fctRatio1, fctRatio2, &m_mdlRomb, header, "", &RombergFactorName);
+        addFactorColumnToModel(RatioProbesFactorsDefines::Probe2KFRUid, fctRatio1, fctRatio2, &m_mdlRomb, header, "", &RombergFactorName);
+        addFactorColumnToModel(ClassicFactorsDefines::SquareUid, fctClass11, fctClass21, &m_mdlRomb, header, tr("Откр"), &RombergFactorName);
+        addFactorColumnToModel(VectorFactorsDefines::KFRUid, fctVector11, fctVector21, &m_mdlRomb, header, tr("Откр"), &RombergFactorName);
+        addFactorColumnToModel(ClassicFactorsDefines::LUid, fctClass11, fctClass21, &m_mdlRomb, header, tr("Откр"), &RombergFactorName);
+        addFactorColumnToModel(ClassicFactorsDefines::QXUid, fctClass11, fctClass21, &m_mdlRomb, header, tr("Откр"), &RombergFactorName);
+        addFactorColumnToModel(ClassicFactorsDefines::QYUid, fctClass11, fctClass21, &m_mdlRomb, header, tr("Откр"), &RombergFactorName);
+        addFactorColumnToModel(ClassicFactorsDefines::SquareUid, fctClass12, fctClass22, &m_mdlRomb, header, tr("Закр"), &RombergFactorName);
+        addFactorColumnToModel(VectorFactorsDefines::KFRUid, fctVector12, fctVector22, &m_mdlRomb, header, tr("Закр"), &RombergFactorName);
+        addFactorColumnToModel(ClassicFactorsDefines::LUid, fctClass12, fctClass22, &m_mdlRomb, header, tr("Закр"), &RombergFactorName);
+        addFactorColumnToModel(ClassicFactorsDefines::QXUid, fctClass12, fctClass22, &m_mdlRomb, header, tr("Закр"), &RombergFactorName);
+        addFactorColumnToModel(ClassicFactorsDefines::QYUid, fctClass12, fctClass22, &m_mdlRomb, header, tr("Закр"), &RombergFactorName);
 
         if (fctRatio1) delete fctRatio1;
         if (fctRatio2) delete fctRatio2;
@@ -234,7 +254,9 @@ void RehabReportPPVisualWidget::showRombergResults()
 
         m_mdlRomb.setHorizontalHeaderLabels(header);
         ui->tvRomb->setModel(&m_mdlRomb);
-        ui->tvRomb->header()->resizeSections(QHeaderView::ResizeToContents);
+        ui->tvRomb->header()->resizeSection(0, 200);
+        for (int i = 1; i < m_mdlRomb.columnCount(); ++i)
+            ui->tvRomb->header()->resizeSection(i, 100);
     }
     else
         ui->frRomb->setVisible(false);
@@ -244,10 +266,62 @@ void RehabReportPPVisualWidget::showCrossResults()
 {
     if (m_uidCross1 != "" || m_uidCross2 != "")
     {
+        CrossFactors *fctCross1 {nullptr};
+        if (m_uidRomb1 != "")
+        {
+            QString uidProbe {""};
+            getProbeCross(m_uidCross1, uidProbe);
+            fctCross1 = new CrossFactors(m_uidCross1, uidProbe);
+        }
+        CrossFactors *fctCross2 {nullptr};
+        if (m_uidCross2 != "")
+        {
+            QString uidProbe {""};
+            getProbeCross(m_uidCross2, uidProbe);
+            fctCross2 = new CrossFactors(m_uidCross2, uidProbe);
+        }
 
+        m_mdlCross.clear();
+        QStringList header = QStringList() << tr("Тест");
+
+        auto item1 = new QStandardItem(getTestTitle(m_uidCross1));
+        item1->setEditable(false);
+        auto item2 = new QStandardItem(getTestTitle(m_uidCross2));
+        item2->setEditable(false);
+        m_mdlCross.appendColumn(QList<QStandardItem*>() << item1 << item2);
+
+        for (int i = 0; i < fctCross1->size(); ++i)
+            addFactorColumnToModel(fctCross1->factorUid(i), fctCross1, fctCross2, &m_mdlCross, header, "", nullptr);
+
+        if (fctCross1) delete fctCross1;
+        if (fctCross2) delete fctCross2;
+
+        m_mdlCross.setHorizontalHeaderLabels(header);
+        ui->tvCross->setModel(&m_mdlCross);
+        ui->tvCross->header()->resizeSection(0, 200);
+        for (int i = 1; i < m_mdlCross.columnCount(); ++i)
+            ui->tvCross->header()->resizeSection(i, 150);
     }
     else
         ui->frCross->setVisible(false);
+}
+
+void RehabReportPPVisualWidget::showSuccess()
+{
+    ui->wgtSuccess->setKind(DynamicDiagramDefines::KindBar);
+    ui->wgtSuccess->setVolume(DynamicDiagramDefines::Volume3D);
+    ui->wgtSuccess->setBottomText(tr("Дневные программы"));
+
+    ui->wgtSuccess->setAxisSpaceLeft(30);
+
+    for (int i = 0; i < m_success.size(); ++i)
+    {
+        if (m_success[i].val > -1)
+        {
+            auto item = new DiagItem(m_success[i].val, m_success[i].dt);
+            ui->wgtSuccess->appendItem(item);
+        }
+    }
 }
 
 QString RehabReportPPVisualWidget::getTestTitle(const QString &uidTest) const
@@ -267,7 +341,9 @@ void RehabReportPPVisualWidget::addFactorColumnToModel(const QString &uidFactor,
                                                        MultiFactor *fg1,
                                                        MultiFactor *fg2,
                                                        QStandardItemModel *model,
-                                                       QStringList& header)
+                                                       QStringList& header,
+                                                       const QString& fDetail,
+                                                       const QMap<QString, QString>* factorNames)
 {
     QString fv1 = "-";
     if (fg1)
@@ -276,11 +352,24 @@ void RehabReportPPVisualWidget::addFactorColumnToModel(const QString &uidFactor,
     if (fg2)
         fv2 = fg2->factorValueFormatted(uidFactor);
     auto item1 = new QStandardItem(fv1);
+    item1->setEditable(false);
     auto item2 = new QStandardItem(fv2);
+    item2->setEditable(false);
     model->appendColumn(QList<QStandardItem*>() << item1 << item2);
 
-    auto fi = static_cast<AAnalyserApplication*>(QApplication::instance())->getFactorInfo(uidFactor);
-    header << fi.shortName();
+    QString fn = "";
+    if (factorNames)
+    {
+        fn = factorNames->value(uidFactor);
+        if (fDetail != "")
+            fn = fn + " " + fDetail;
+    }
+    else
+    {
+        auto fi = static_cast<AAnalyserApplication*>(QApplication::instance())->getFactorInfo(uidFactor);
+        fn = fi.shortName();
+    }
+    header << fn;
 }
 
 bool RehabReportPPVisualWidget::getProbesRomberg(const QString &uidTest, QString &uidProbe1, QString &uidProbe2) const

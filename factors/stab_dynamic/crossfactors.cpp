@@ -84,28 +84,28 @@ void CrossFactors::registerFactors()
 
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(CrossFactorsDefines::LUpUid, CrossFactorsDefines::GroupUid,
-                           tr("Отклонение вперед"), tr("LUp"), tr("мм"), 0, 3, FactorsDefines::nsDual, 12);
+                           tr("Отклонение вперед"), tr("Вперед"), tr("мм"), 0, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(CrossFactorsDefines::LDnUid, CrossFactorsDefines::GroupUid,
-                           tr("Отклонение назад"), tr("LDown"), tr("мм"), 0, 3, FactorsDefines::nsDual, 12);
+                           tr("Отклонение назад"), tr("Назад"), tr("мм"), 0, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(CrossFactorsDefines::LRtUid, CrossFactorsDefines::GroupUid,
-                           tr("Отклонение вправо"), tr("LRight"), tr("мм"), 0, 3, FactorsDefines::nsDual, 12);
+                           tr("Отклонение вправо"), tr("Вправо"), tr("мм"), 0, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(CrossFactorsDefines::LLfUid, CrossFactorsDefines::GroupUid,
-                           tr("Отклонение влево"), tr("LLeft"), tr("мм"), 0, 3, FactorsDefines::nsDual, 12);
+                           tr("Отклонение влево"), tr("Влево"), tr("мм"), 0, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(CrossFactorsDefines::SZoneUid, CrossFactorsDefines::GroupUid,
-                           tr("Площадь зоны перермещения"), tr("SZone"), tr("кв.мм"), 0, 3, FactorsDefines::nsDual, 12);
+                           tr("Площадь зоны перермещения"), tr("Площадь"), tr("кв.мм"), 0, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(CrossFactorsDefines::UDUid, CrossFactorsDefines::GroupUid,
-                           tr("Отношение вперед / назад"), tr("Up/Dn"), tr(""), 2, 3, FactorsDefines::nsDual, 12);
+                           tr("Отношение вперед / назад"), tr("Вперед / Назад"), tr(""), 2, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(CrossFactorsDefines::RLUid, CrossFactorsDefines::GroupUid,
-                           tr("Отношение вправо / влево"), tr("Rt/Lf"), tr(""), 2, 3, FactorsDefines::nsDual, 12);
+                           tr("Отношение вправо / влево"), tr("Вправо / Влево"), tr(""), 2, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(CrossFactorsDefines::SFUid, CrossFactorsDefines::GroupUid,
-                           tr("Отношение сагитталь / фронталь"), tr("Sg/Fr"), tr(""), 2, 3, FactorsDefines::nsDual, 12);
+                           tr("Отношение сагитталь / фронталь"), tr("Сагит / Фронт"), tr(""), 2, 3, FactorsDefines::nsDual, 12);
 }
 
 int CrossFactors::diap() const
