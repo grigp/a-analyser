@@ -364,6 +364,11 @@ void PersonalProgramWidget::on_closeTest()
     ui->frPPOpenTest->setVisible(false);
 }
 
+void PersonalProgramWidget::on_print()
+{
+
+}
+
 void PersonalProgramWidget::on_repeat()
 {
     auto index = selectedIndex();

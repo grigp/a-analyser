@@ -21,6 +21,7 @@ public:
 
     virtual bool isValid() = 0;
     virtual void calculate() = 0;
+    virtual void print() = 0;
 
 protected:
     QJsonObject objectPP() {return m_objPP;}

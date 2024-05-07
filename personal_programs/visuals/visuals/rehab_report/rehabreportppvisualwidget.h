@@ -26,6 +26,7 @@ public:
 
     bool isValid() override;
     void calculate() override;
+    void print() override;
 
 private:
     Ui::RehabReportPPVisualWidget *ui;

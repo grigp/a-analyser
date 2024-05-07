@@ -91,6 +91,11 @@ void RehabReportPPVisualWidget::calculate()
     showSuccess();
 }
 
+void RehabReportPPVisualWidget::print()
+{
+    qDebug() << "Печать";
+}
+
 void RehabReportPPVisualWidget::calculateStraight()
 {
     auto objPP = objectPP()["pp"].toObject();

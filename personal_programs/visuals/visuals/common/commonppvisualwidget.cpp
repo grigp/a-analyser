@@ -22,3 +22,8 @@ void CommonPPVisualWidget::calculate()
 {
 
 }
+
+void CommonPPVisualWidget::print()
+{
+
+}

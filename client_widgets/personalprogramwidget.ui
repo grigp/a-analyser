@@ -428,6 +428,23 @@
                </property>
               </widget>
              </item>
+             <item>
+              <widget class="QPushButton" name="btnPPPrint">
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset resource="../kernel.qrc">
+                 <normaloff>:/images/Print.png</normaloff>:/images/Print.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>32</width>
+                 <height>32</height>
+                </size>
+               </property>
+              </widget>
+             </item>
             </layout>
            </widget>
           </item>
@@ -662,8 +679,8 @@
    <slot>on_run()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>691</x>
-     <y>28</y>
+     <x>641</x>
+     <y>32</y>
     </hint>
     <hint type="destinationlabel">
      <x>1031</x>
@@ -678,8 +695,8 @@
    <slot>on_delete()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>791</x>
-     <y>15</y>
+     <x>741</x>
+     <y>19</y>
     </hint>
     <hint type="destinationlabel">
      <x>1032</x>
@@ -694,7 +711,7 @@
    <slot>on_params()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>841</x>
+     <x>791</x>
      <y>43</y>
     </hint>
     <hint type="destinationlabel">
@@ -726,8 +743,8 @@
    <slot>on_append()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>741</x>
-     <y>29</y>
+     <x>691</x>
+     <y>33</y>
     </hint>
     <hint type="destinationlabel">
      <x>1033</x>
@@ -742,8 +759,8 @@
    <slot>on_openTest()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>891</x>
-     <y>14</y>
+     <x>841</x>
+     <y>18</y>
     </hint>
     <hint type="destinationlabel">
      <x>1030</x>
@@ -822,8 +839,8 @@
    <slot>on_repeat()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>948</x>
-     <y>8</y>
+     <x>917</x>
+     <y>12</y>
     </hint>
     <hint type="destinationlabel">
      <x>1033</x>
@@ -838,12 +855,28 @@
    <slot>on_saveAs()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>995</x>
-     <y>11</y>
+     <x>967</x>
+     <y>15</y>
     </hint>
     <hint type="destinationlabel">
      <x>1030</x>
      <y>324</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btnPPPrint</sender>
+   <signal>clicked()</signal>
+   <receiver>PersonalProgramWidget</receiver>
+   <slot>on_print()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1011</x>
+     <y>17</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1030</x>
+     <y>386</y>
     </hint>
    </hints>
   </connection>
@@ -862,5 +895,6 @@
   <slot>on_editPatientCard()</slot>
   <slot>on_repeat()</slot>
   <slot>on_saveAs()</slot>
+  <slot>on_print()</slot>
  </slots>
 </ui>

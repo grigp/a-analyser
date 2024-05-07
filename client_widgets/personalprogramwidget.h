@@ -79,6 +79,7 @@ private slots:
     void on_params();
     void on_openTest();
     void on_closeTest();
+    void on_print();
 
     void on_repeat();
     void on_saveAs();

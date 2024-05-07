@@ -8,6 +8,7 @@
 #include "aanalyserapplication.h"
 #include "coordfactorwidget.h"
 #include "generalcoordfactors.h"
+#include "amessagebox.h"
 
 
 ManCoordPPVisualWidget::ManCoordPPVisualWidget(PPVisualDescriptor* visual, QJsonObject &objPP, QWidget *parent) :
@@ -100,6 +101,11 @@ void ManCoordPPVisualWidget::calculate()
     ui->lblGeneralCoordFactor->setText(tr("Общий показатель координированности") + " - " + QString::number(m_factors->valGeneralCoord(), 'f', 0) + " %");
     ui->pbGeneralCoordFactor->setValue(static_cast<int>(m_factors->valGeneralCoord()));
 
+}
+
+void ManCoordPPVisualWidget::print()
+{
+    AMessageBox::information(nullptr, tr("Предупреждение"), tr("Печать результатов по оценке координационных способностей не предусмотрена"));
 }
 
 void ManCoordPPVisualWidget::addWgtCapacitySetPosAfterShiftUid()

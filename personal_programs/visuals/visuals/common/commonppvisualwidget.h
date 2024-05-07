@@ -18,10 +18,11 @@ class CommonPPVisualWidget : public PPVisual
 
 public:
     explicit CommonPPVisualWidget(PPVisualDescriptor* visual, QJsonObject &objPP, QWidget *parent = nullptr);
-    ~CommonPPVisualWidget();
+    ~CommonPPVisualWidget() override;
 
     bool isValid() override;
     void calculate() override;
+    void print() override;
 
 private:
     Ui::CommonPPVisualWidget *ui;
