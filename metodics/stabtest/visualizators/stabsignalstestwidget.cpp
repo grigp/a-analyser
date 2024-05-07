@@ -20,6 +20,7 @@
 #include "rombergkoefvaluedelegate.h"
 #include "reportelements.h"
 #include "stabtestvisualize.h"
+#include "stabtestdefines.h"
 
 #include <QTimer>
 #include <QJsonArray>
@@ -355,9 +356,9 @@ void StabSignalsTestWidget::showRationalTable(StabSignalsTestCalculator *calcula
                     itemS = new QStandardItem(getKoefRombResume(rationalFactors->factorValue(i), fi.format(), nsv));
                 else
                     itemS = new QStandardItem(QString::number(rationalFactors->factorValue(i), 'f', fi.format()));
-                itemS->setData(nsv, NormRole);
-                itemS->setData(rationalFactors->factorValue(i), ValueRole);
-                itemS->setData(fi.format(), FormatRole);
+                itemS->setData(nsv, StabTestDefines::NormRole);
+                itemS->setData(rationalFactors->factorValue(i), StabTestDefines::ValueRole);
+                itemS->setData(fi.format(), StabTestDefines::FormatRole);
             }
             else
             if (i % 2 == 1)
@@ -368,9 +369,9 @@ void StabSignalsTestWidget::showRationalTable(StabSignalsTestCalculator *calcula
                     itemKFR = new QStandardItem(getKoefRombResume(rationalFactors->factorValue(i), fi.format(), nsv));
                 else
                     itemKFR = new QStandardItem(QString::number(rationalFactors->factorValue(i), 'f', fi.format()));
-                itemKFR->setData(nsv, NormRole);
-                itemKFR->setData(rationalFactors->factorValue(i), ValueRole);
-                itemKFR->setData(fi.format(), FormatRole);
+                itemKFR->setData(nsv, StabTestDefines::NormRole);
+                itemKFR->setData(rationalFactors->factorValue(i), StabTestDefines::ValueRole);
+                itemKFR->setData(fi.format(), StabTestDefines::FormatRole);
 
                 QStandardItem* itemMoX = createItemRationalFactors(calculator, i, ClassicFactorsDefines::MoXUid, 1, 'x');
                 QStandardItem* itemMoY = createItemRationalFactors(calculator, i, ClassicFactorsDefines::MoYUid, 1, 'y');
@@ -432,9 +433,9 @@ void StabSignalsTestWidget::showRombergNorms(StabSignalsTestCalculator *calculat
                     double value = calculator->classicFactors(i)->factorValue(factorUid);
                     auto nv = getRombergNorm(i, factorUid, value);
                     auto *item = new QStandardItem("");
-                    item->setData(nv, NormRole);
-                    item->setData(value, ValueRole);
-                    item->setData(fi.format(), FormatRole);
+                    item->setData(nv, StabTestDefines::NormRole);
+                    item->setData(value, StabTestDefines::ValueRole);
+                    item->setData(fi.format(), StabTestDefines::FormatRole);
                     return item;
                 };
 

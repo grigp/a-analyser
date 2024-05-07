@@ -9,7 +9,6 @@ HEADERS += \
     $$PWD/rombergnormvaluedelegate.h \
     $$PWD/targetwidget.h \
     $$PWD/stressstrategywidget.h \
-    $$PWD/rombergkoefvaluedelegate.h \
     $$PWD/babyposturewidget.h
 
 SOURCES += \
@@ -20,7 +19,6 @@ SOURCES += \
     $$PWD/rombergnormvaluedelegate.cpp \
     $$PWD/targetwidget.cpp \
     $$PWD/stressstrategywidget.cpp \
-    $$PWD/rombergkoefvaluedelegate.cpp \
     $$PWD/babyposturewidget.cpp
 
 FORMS += \

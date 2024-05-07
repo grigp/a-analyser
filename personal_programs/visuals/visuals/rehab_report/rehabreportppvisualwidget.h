@@ -5,6 +5,7 @@
 #include <QStandardItemModel>
 
 #include "ppvisual.h"
+#include "datadefines.h"
 
 namespace Ui {
 class RehabReportPPVisualWidget;
@@ -67,6 +68,8 @@ private:
                                 const QMap<QString, QString>* factorNames);
     bool getProbesRomberg(const QString& uidTest, QString& uidProbe1, QString& uidProbe2) const;
     bool getProbeCross(const QString& uidTest, QString& uidProbe) const;
+
+    DataDefines::NormSideValue getNormValue(const double value) const;
 };
 
 #endif // REHABREPORTPPVISUALWIDGET_H

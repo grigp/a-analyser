@@ -50,16 +50,6 @@ public:
      */
     static void paintPreview(QPainter* painter, QRect& rect, const QString& testUid, TestCalculator* calculator);
 
-    /*!
-     * \brief Роли для модели таблицы нормативов для теста Ромберга
-     */
-    enum RombergNormsTableRoles
-    {
-          NormRole = Qt::UserRole + 1   ///< Норма. int. В колонках значений
-        , ValueRole                     ///< Значение показателя. double. В колонках значений
-        , FormatRole                    ///< Формат значения, кол-во знаков после запятой. int. В колонках значений
-    };
-
 public slots:
     void setVisible(bool visible) override;
 

@@ -5,14 +5,16 @@ HEADERS += \
     $$PWD/checkboxdelegate.h \
     $$PWD/stringvaluedelegate.h \
     $$PWD/buttondelegate.h \
-    $$PWD/editcommanddelegate.h
+    $$PWD/editcommanddelegate.h \
+    $$PWD/rombergkoefvaluedelegate.h
 
 SOURCES += \
     $$PWD/comboboxdelegate.cpp \
     $$PWD/checkboxdelegate.cpp \
     $$PWD/stringvaluedelegate.cpp \
     $$PWD/buttondelegate.cpp \
-    $$PWD/editcommanddelegate.cpp
+    $$PWD/editcommanddelegate.cpp \
+    $$PWD/rombergkoefvaluedelegate.cpp
 
 FORMS += \
 

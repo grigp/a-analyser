@@ -9,6 +9,8 @@
 #include "classicfactors.h"
 #include "crossfactors.h"
 #include "vectorfactors.h"
+#include "rombergkoefvaluedelegate.h"
+#include "stabtestdefines.h"
 
 #include "dataprovider.h"
 
@@ -241,6 +243,9 @@ void RehabReportPPVisualWidget::showRombergResults()
         addFactorColumnToModel(ClassicFactorsDefines::QXUid, fctClass12, fctClass22, &m_mdlRomb, header, tr("Закр"), &RombergFactorName);
         addFactorColumnToModel(ClassicFactorsDefines::QYUid, fctClass12, fctClass22, &m_mdlRomb, header, tr("Закр"), &RombergFactorName);
 
+        ui->tvRomb->setItemDelegateForColumn(1, new RombergKoefValueDelegate(ui->tvRomb));
+        ui->tvRomb->setItemDelegateForColumn(2, new RombergKoefValueDelegate(ui->tvRomb));
+
         if (fctRatio1) delete fctRatio1;
         if (fctRatio2) delete fctRatio2;
         if (fctClass11) delete fctClass11;
@@ -257,6 +262,7 @@ void RehabReportPPVisualWidget::showRombergResults()
         ui->tvRomb->header()->resizeSection(0, 200);
         for (int i = 1; i < m_mdlRomb.columnCount(); ++i)
             ui->tvRomb->header()->resizeSection(i, 100);
+        ui->tvRomb->setSelectionMode(QAbstractItemView::NoSelection);
     }
     else
         ui->frRomb->setVisible(false);
@@ -301,6 +307,7 @@ void RehabReportPPVisualWidget::showCrossResults()
         ui->tvCross->header()->resizeSection(0, 200);
         for (int i = 1; i < m_mdlCross.columnCount(); ++i)
             ui->tvCross->header()->resizeSection(i, 150);
+        ui->tvCross->setSelectionMode(QAbstractItemView::NoSelection);
     }
     else
         ui->frCross->setVisible(false);
@@ -345,16 +352,39 @@ void RehabReportPPVisualWidget::addFactorColumnToModel(const QString &uidFactor,
                                                        const QString& fDetail,
                                                        const QMap<QString, QString>* factorNames)
 {
-    QString fv1 = "-";
+    QString fvs1 = "-";
+    double fv1 = -1;
     if (fg1)
-        fv1 = fg1->factorValueFormatted(uidFactor);
-    QString fv2 = "-";
+    {
+        fvs1 = fg1->factorValueFormatted(uidFactor);
+        fv1 = fg1->factorValue(uidFactor);
+    }
+    QString fvs2 = "-";
+    double fv2 = -1;
     if (fg2)
-        fv2 = fg2->factorValueFormatted(uidFactor);
-    auto item1 = new QStandardItem(fv1);
+    {
+        fvs2 = fg2->factorValueFormatted(uidFactor);
+        fv2 = fg2->factorValue(uidFactor);
+    }
+    auto item1 = new QStandardItem(fvs1);
     item1->setEditable(false);
-    auto item2 = new QStandardItem(fv2);
+    item1->setData(uidFactor, RehabReportDefines::FactorUidRole);
+    item1->setData(fv1, RehabReportDefines::FactorValueRole);
+    auto item2 = new QStandardItem(fvs2);
     item2->setEditable(false);
+    item2->setData(uidFactor, RehabReportDefines::FactorUidRole);
+    item2->setData(fv2, RehabReportDefines::FactorValueRole);
+
+    if (uidFactor == RatioProbesFactorsDefines::Probe2SUid || uidFactor == RatioProbesFactorsDefines::Probe2KFRUid)
+    {
+        DataDefines::NormSideValue nv1 = getNormValue(fv1);
+        DataDefines::NormSideValue nv2 = getNormValue(fv2);
+
+        item1->setData(nv1, StabTestDefines::NormRole);
+        item2->setData(nv2, StabTestDefines::NormRole);
+    }
+
+
     model->appendColumn(QList<QStandardItem*>() << item1 << item2);
 
     QString fn = "";
@@ -408,4 +438,18 @@ bool RehabReportPPVisualWidget::getProbeCross(const QString &uidTest, QString &u
         }
     }
     return false;
+}
+
+DataDefines::NormSideValue RehabReportPPVisualWidget::getNormValue(const double value) const
+{
+    DataDefines::NormSideValue retval = DataDefines::nsvMissing;
+    if (value >= 0 && value < 100)
+        retval = DataDefines::nsvBelow;
+    else
+    if (value >= 100 && value <= 250)
+        retval = DataDefines::nsvNorm;
+    if (value > 250)
+        retval = DataDefines::nsvAbove;
+
+    return retval;
 }

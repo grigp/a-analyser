@@ -5,6 +5,7 @@
 
 #include "stabsignalstestwidget.h"
 #include "datadefines.h"
+#include "stabtestdefines.h"
 
 RombergKoefValueDelegate::RombergKoefValueDelegate(QObject *parent)
     : QStyledItemDelegate (parent)
@@ -14,7 +15,7 @@ RombergKoefValueDelegate::RombergKoefValueDelegate(QObject *parent)
 
 void RombergKoefValueDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
-    DataDefines::NormSideValue nv = static_cast<DataDefines::NormSideValue>(index.data(StabSignalsTestWidget::NormRole).toInt());
+    DataDefines::NormSideValue nv = static_cast<DataDefines::NormSideValue>(index.data(StabTestDefines::NormRole).toInt());
 
     painter->save();
 

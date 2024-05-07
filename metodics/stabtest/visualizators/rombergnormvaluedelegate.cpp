@@ -2,6 +2,8 @@
 
 #include "stabsignalstestwidget.h"
 #include "datadefines.h"
+#include "stabtestdefines.h"
+
 #include <QPainter>
 
 RombergNormValueDelegate::RombergNormValueDelegate(QObject *parent)
@@ -12,9 +14,9 @@ RombergNormValueDelegate::RombergNormValueDelegate(QObject *parent)
 
 void RombergNormValueDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
-    DataDefines::NormValue nv = static_cast<DataDefines::NormValue>(index.data(StabSignalsTestWidget::NormRole).toInt());
-    auto value = index.data(StabSignalsTestWidget::ValueRole).toDouble();
-    auto format = index.data(StabSignalsTestWidget::FormatRole).toInt();
+    DataDefines::NormValue nv = static_cast<DataDefines::NormValue>(index.data(StabTestDefines::NormRole).toInt());
+    auto value = index.data(StabTestDefines::ValueRole).toDouble();
+    auto format = index.data(StabTestDefines::FormatRole).toInt();
 
     painter->save();
 

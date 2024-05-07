@@ -32,6 +32,17 @@ static QMap<PatientWindows, QString> PatientWindowsName {
     , std::pair<PatientWindows, QString> (pwLines, QCoreApplication::tr("Движение полос"))
 };
 
+/*!
+ * \brief Роли для модели таблицы нормативов для теста Ромберга
+ */
+enum RombergNormsTableRoles
+{
+      NormRole = Qt::UserRole + 1   ///< Норма. int. В колонках значений
+    , ValueRole                     ///< Значение показателя. double. В колонках значений
+    , FormatRole                    ///< Формат значения, кол-во знаков после запятой. int. В колонках значений
+};
+
+
 }
 
 #endif // STABTESTDEFINES_H
