@@ -44,6 +44,29 @@ QString PatientProgramVisualsWidget::namePP() const
     return "";
 }
 
+PatientProgramWidget *PatientProgramVisualsWidget::getCurrentPPW()
+{
+//    if (m_tabs)
+//    {
+//        if (m_tabs->currentIndex() == 0)
+//            return static_cast<PatientProgramWidget*>(m_tabs->currentWidget());
+//        return nullptr;
+//    }
+    return m_wgtPP;
+}
+
+PPVisual *PatientProgramVisualsWidget::getCurrentVisual()
+{
+    //! Если табулятора нет, то и визуалов тоже нет
+    if (m_tabs)
+    {
+        //! Нулевой всегда динамика ИП. Если текущий больше нуля, то
+        if (m_tabs->currentIndex() > 0)
+            return static_cast<PPVisual*>(m_tabs->currentWidget());
+    }
+    return nullptr;
+}
+
 void PatientProgramVisualsWidget::assign()
 {
     //! Если визуализаторов нет, то покажем только виджет индивидуальной программы
@@ -56,18 +79,18 @@ void PatientProgramVisualsWidget::assign()
     //! Если визуализаторы есть, то
     {
         //! Создадим табулятор
-        auto tw = new QTabWidget(ui->frContainer);
-        ui->frContainer->layout()->addWidget(tw);
+        m_tabs = new QTabWidget(ui->frContainer);
+        ui->frContainer->layout()->addWidget(m_tabs);
 
         //! Добавим в него виджет индивидуальной программы
-        tw->addTab(m_wgtPP, tr("Динамика выполнения"));
+        m_tabs->addTab(m_wgtPP, tr("Динамика выполнения"));
         //! И все виджеты визуализатором
         foreach (auto visual, m_visuals)
         {
-            tw->addTab(visual, visual->name());
+            m_tabs->addTab(visual, visual->name());
             visual->calculate();
         }
         //! И покажем первый визуализатор
-        tw->setCurrentIndex(1);
+        m_tabs->setCurrentIndex(1);
     }
 }

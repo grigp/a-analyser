@@ -37,6 +37,11 @@ public:
      */
     QString namePP() const;
 
+    /*!
+     * \brief Печать процесса раебилитации
+     */
+    void print();
+
 signals:
     void selectItem(QModelIndex idx);
     void doubleClicked(QModelIndex idx);

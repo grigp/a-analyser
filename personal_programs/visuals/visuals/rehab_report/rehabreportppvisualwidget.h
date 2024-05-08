@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <QStandardItemModel>
+#include <QPrinter>
 
 #include "ppvisual.h"
 #include "datadefines.h"
@@ -27,6 +28,9 @@ public:
     bool isValid() override;
     void calculate() override;
     void print() override;
+
+private slots:
+    void printReport(QPrinter* printer);
 
 private:
     Ui::RehabReportPPVisualWidget *ui;

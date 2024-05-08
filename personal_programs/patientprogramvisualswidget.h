@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <QList>
+#include <QTabWidget>
 
 namespace Ui {
 class PatientProgramVisualsWidget;
@@ -40,6 +41,15 @@ public:
      */
     QString namePP() const;
 
+    /*!
+     * \brief Возвращает указатель на виджет или nullptr, если он не активен.
+     */
+    PatientProgramWidget* getCurrentPPW();
+
+    /*!
+     * \brief Возвращает указатель на визуал или nullptr, если визуалов нет или активен PPW
+     */
+    PPVisual* getCurrentVisual();
 
 private:
     Ui::PatientProgramVisualsWidget *ui;
@@ -51,6 +61,7 @@ private:
 
     PatientProgramWidget* m_wgtPP {nullptr};
     QList<PPVisual*> m_visuals;
+    QTabWidget* m_tabs {nullptr};
 };
 
 #endif // PATIENTPROGRAMVISUALSWIDGET_H

@@ -366,6 +366,30 @@ void PersonalProgramWidget::on_closeTest()
 
 void PersonalProgramWidget::on_print()
 {
+    auto index = selectedIndex();
+    if (index != QModelIndex())
+    {
+        auto uidPP = index.data(DatabaseWidgetDefines::PatientsModel::PatientPPUidRole).toString();
+        if (uidPP != "")
+        {
+            if (m_wgts.contains(uidPP))
+            {
+                auto wgt = m_wgts.value(uidPP);
+                if (wgt)
+                {
+                    auto visual = wgt->getCurrentVisual();
+                    if (visual)
+                        visual->print();
+                    else
+                    {
+                        auto ppw = wgt->getCurrentPPW();
+                        if (ppw)
+                            ppw->print();
+                    }
+                }
+            }
+        }
+    }
 
 }
 

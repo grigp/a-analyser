@@ -10,6 +10,7 @@
 #include "dailyprograminfodelegate.h"
 #include "testinfodelegate.h"
 #include "metodicsfactory.h"
+#include "amessagebox.h"
 
 PatientProgramWidget::PatientProgramWidget(QWidget *parent) :
     QWidget(parent),
@@ -39,6 +40,11 @@ void PatientProgramWidget::assignPersonalProgram(const QString &uidPP)
 QString PatientProgramWidget::namePP() const
 {
     return static_cast<PersonalProgram*>(ui->tvProgram->model())->name();
+}
+
+void PatientProgramWidget::print()
+{
+    AMessageBox::information(nullptr, tr("Предупреждение"), tr("Печать динамики выполнения в настоящий момент не реализована"));
 }
 
 void PatientProgramWidget::on_selectItem(QModelIndex idx)

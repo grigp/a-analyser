@@ -15,6 +15,7 @@
 #include "dataprovider.h"
 
 #include <QJsonArray>
+#include <QPrintPreviewDialog>
 #include <QDebug>
 
 namespace
@@ -93,7 +94,19 @@ void RehabReportPPVisualWidget::calculate()
 
 void RehabReportPPVisualWidget::print()
 {
-    qDebug() << "Печать";
+    QPrinter printer(QPrinter::HighResolution);
+    printer.setFullPage(true);
+    QPrintPreviewDialog preview(&printer, nullptr);
+    preview.setWindowTitle(tr("Печать отчета о курсе реабилитации"));
+    preview.setWindowFlags(Qt::Window | Qt::WindowCloseButtonHint);
+    preview.setWindowState(Qt::WindowMaximized);
+    connect(&preview, &QPrintPreviewDialog::paintRequested, this, &RehabReportPPVisualWidget::printReport);
+    preview.exec();
+}
+
+void RehabReportPPVisualWidget::printReport(QPrinter *printer)
+{
+
 }
 
 void RehabReportPPVisualWidget::calculateStraight()
