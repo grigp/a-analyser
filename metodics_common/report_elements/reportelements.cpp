@@ -92,6 +92,61 @@ void ReportElements::drawFooter(QPainter *painter, const QString &testUid, QRect
     painter->drawText(rect.x() + rect.width() - size.width(), rect.y() + rect.height() / 2, s);
 }
 
+void ReportElements::drawHeaderPP(QPainter *painter, const QString &kindPPName, const QJsonObject& objectPP, QRect rect)
+{
+    auto fio = new SettingsValue("UserData", "FIO", "");
+    auto enterprice = new SettingsValue("UserData", "Enterprice", "");
+    auto address = new SettingsValue("UserData", "Address", "");
+    auto sity = new SettingsValue("UserData", "Sity", "");
+    auto phones = new SettingsValue("UserData", "Phones", "");
+    auto email = new SettingsValue("UserData", "Email", "");
+    auto website = new SettingsValue("UserData", "Website", "");
+    auto logotip = new SettingsValue("UserData", "Logotip");
+    QPixmap p;
+    p.loadFromData(logotip->value().toByteArray(), "PNG");
+
+    painter->setPen(Qt::black);
+    //! Подбор высоты шрифта
+    int n = 14;
+    int h = 0;
+    do
+    {
+        painter->setFont(QFont("Sans", n, 0, false));
+        QFontMetrics fm = painter->fontMetrics();
+        h = fm.height();
+        n--;
+    }
+    while (h * 0.8 > rect.height() / 7);
+
+    painter->drawText(rect.x() + rect.height() + 70, rect.y(), enterprice->value().toString());
+    painter->drawText(rect.x() + rect.height() + 70, rect.y() + rect.height() / 7, sity->value().toString() + "   " + address->value().toString());
+    painter->drawText(rect.x() + rect.height() + 70, static_cast<int>(rect.y() + rect.height() / 7 * 1.9),
+                      QCoreApplication::tr("Тел") + ":" + phones->value().toString() + "   " +
+                      QCoreApplication::tr("e-mail") + ":" + email->value().toString() + "   " +
+                      website->value().toString());
+    painter->drawText(rect.x() + rect.height() + 70, static_cast<int>(rect.y() + rect.height() / 7 * 2.8), fio->value().toString());
+
+    auto uidPatient = objectPP["patient_uid"].toString();
+    auto objPP = objectPP["pp"].toObject();
+
+    DataDefines::PatientKard patient;
+    DataProvider::getPatient(uidPatient, patient);
+
+    painter->drawText(rect.x() + rect.height() + 70, static_cast<int>(rect.y() + rect.height() / 7 * 3.7), kindPPName);
+    painter->drawText(rect.x() + rect.height() + 70, static_cast<int>(rect.y() + rect.height() / 7 * 4.6), "\"" + objPP["name"].toString() + "\"");
+    painter->drawText(rect.x() + rect.height() + 70, static_cast<int>(rect.y() + rect.height() / 7 * 5.5),
+                      QCoreApplication::tr("Пациент") + " - " + patient.fio + "(" + patient.born.toString("dd.MM.yyyy") + ")");
+    painter->drawText(rect.x() + rect.height() + 70, static_cast<int>(rect.y() + rect.height() / 7 * 6.4),
+                      QCoreApplication::tr("Проводился с") + " " + objectPP["date_begin"].toString() + " " +
+                      QCoreApplication::tr("по") + " " + objectPP["date_end"].toString());
+
+    painter->drawLine(rect.x(), rect.y() + rect.height(), rect.x() + rect.width(), rect.y() + rect.height());
+    painter->drawPixmap(rect.x(), rect.y(), static_cast<int>(rect.height() * 0.9),
+                        static_cast<int>(rect.height() * 0.9 * (static_cast<double>(p.height())/static_cast<double>(p.width()))),
+                        p,
+                        0, 0, p.width(), p.height());
+}
+
 void ReportElements::drawWidget(QPainter *painter, QWidget *widget, const int w, const int h, const int x, const int y)
 {
     double xscale = static_cast<double>(w) / static_cast<double>(widget->width());
@@ -366,5 +421,6 @@ double ReportElements::ratio(const QRect paper, QWidget *widget, const double ma
     if (maxVal > -1 && retval > maxVal) retval = maxVal;
     return retval;
 }
+
 
 

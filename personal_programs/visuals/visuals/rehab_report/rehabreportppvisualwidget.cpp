@@ -11,6 +11,7 @@
 #include "vectorfactors.h"
 #include "rombergkoefvaluedelegate.h"
 #include "stabtestdefines.h"
+#include "reportelements.h"
 
 #include "dataprovider.h"
 
@@ -106,7 +107,119 @@ void RehabReportPPVisualWidget::print()
 
 void RehabReportPPVisualWidget::printReport(QPrinter *printer)
 {
+    QPainter *painter = new QPainter(printer);
+    QRect paper = printer->pageRect();
 
+    painter->begin(printer);
+    //! Заголовок
+    QRect rectHeader(paper.x() + paper.width() / 20, paper.y() + paper.height() / 30, paper.width() / 20 * 18, paper.height() / 30 * 3);
+    ReportElements::drawHeaderPP(painter, tr("Отчет о курсе реабилитации"), objectPP(), rectHeader);
+
+    if (printer->orientation() == QPrinter::Portrait)
+    {
+        //! Таблица показателей тестов Ромберга
+        painter->setFont(QFont("Sans", 12, QFont::Bold, false));
+        painter->drawText(paper.x() + paper.width() / 10, paper.y() + paper.height() / 30 * 5, tr("Тест Ромберга"));
+
+        QRect rectTable(paper.x() + paper.width() / 20,
+                        static_cast<int>(paper.y() + paper.height() / 30 * 5.5),
+                        paper.width() / 10 * 9,
+                        paper.height() / 15);
+        ReportElements::drawTable(painter, &m_mdlRomb, rectTable, QList<int>() << 9 << 3 << 4 << 3 << 4 << 3 << 5 << 5 << 3 << 5 << 3 << 5 << 3,
+                                  false, ReportElements::Table::tvsStretched, 8, -1, -1);
+
+        //! Таблица показателей тестов на устойчивость
+        painter->setFont(QFont("Sans", 12, QFont::Bold, false));
+        painter->drawText(paper.x() + paper.width() / 10, paper.y() + paper.height() / 30 * 8, tr("Тест на устойчивость"));
+
+        rectTable = QRect(paper.x() + paper.width() / 20,
+                          static_cast<int>(paper.y() + paper.height() / 30 * 8.5),
+                          paper.width() / 10 * 9,
+                          paper.height() / 15);
+        ReportElements::drawTable(painter, &m_mdlCross, rectTable, QList<int>() << 9 << 3 << 3 << 3 << 3 << 5 << 5 << 5 << 5,
+                                  false, ReportElements::Table::tvsStretched, 8, -1, -1);
+
+        //! Динамика успешности
+        painter->setFont(QFont("Sans", 12, QFont::Bold, false));
+        painter->drawText(paper.x() + paper.width() / 10, paper.y() + paper.height() / 30 * 11, tr("Успешность тренинга, %"));
+
+        auto rectDiag = QRect(paper.x() + paper.width() / 20,
+                              static_cast<int>(paper.y() + paper.height() / 30 * 11.5),
+                              static_cast<int>(paper.width() * 0.9),
+                              static_cast<int>(paper.height() * 0.5));
+        auto ratioLat = ReportElements::ratio(paper, ui->wgtSuccess, 2);
+        QVector<double> bars;
+        QStringList labels;
+        for (int i = 0; i < m_success.size(); ++i)
+        {
+            auto rec = m_success.at(i);
+            if (rec.val >= 0)
+            {
+                bars << rec.val;
+                labels << rec.dt;
+            }
+        }
+        ReportElements::drawDynamicDiag(painter, rectDiag, ratioLat, bars, labels, "",
+                                        DynamicDiagramDefines::KindBar, DynamicDiagramDefines::Volume3D);
+    }
+    if (printer->orientation() == QPrinter::Landscape)
+    {
+        //! Таблица показателей тестов Ромберга
+        painter->setFont(QFont("Sans", 12, QFont::Bold, false));
+        painter->drawText(paper.x() + paper.width() / 10, paper.y() + paper.height() / 30 * 5, tr("Тест Ромберга"));
+
+        QRect rectTable(paper.x() + paper.width() / 20,
+                        static_cast<int>(paper.y() + paper.height() / 30 * 5.5),
+                        paper.width() / 10 * 9,
+                        paper.height() / 15);
+        ReportElements::drawTable(painter, &m_mdlRomb, rectTable, QList<int>() << 3 << 1 << 1 << 1 << 1 << 1 << 1 << 1 << 1 << 1 << 1 << 1 << 1,
+                                  false, ReportElements::Table::tvsStretched, 8, -1, -1);
+
+        //! Таблица показателей тестов на устойчивость
+        painter->setFont(QFont("Sans", 12, QFont::Bold, false));
+        painter->drawText(paper.x() + paper.width() / 10, paper.y() + paper.height() / 30 * 8, tr("Тест на устойчивость"));
+
+        rectTable = QRect(paper.x() + paper.width() / 20,
+                          static_cast<int>(paper.y() + paper.height() / 30 * 8.5),
+                          paper.width() / 10 * 9,
+                          paper.height() / 15);
+        ReportElements::drawTable(painter, &m_mdlCross, rectTable, QList<int>() << 9 << 3 << 3 << 3 << 3 << 5 << 5 << 5 << 5,
+                                  false, ReportElements::Table::tvsStretched, 8, -1, -1);
+
+        //! Динамика успешности
+        painter->setFont(QFont("Sans", 12, QFont::Bold, false));
+        painter->drawText(paper.x() + paper.width() / 10,
+                          static_cast<int>(paper.y() + paper.height() / 30 * 11.5),
+                          tr("Успешность тренинга, %"));
+
+        auto rectDiag = QRect(paper.x() + paper.width() / 20,
+                              static_cast<int>(paper.y() + paper.height() / 30 * 11.5),
+                              static_cast<int>(paper.width() * 0.9),
+                              static_cast<int>(paper.height() * 0.5));
+        auto ratioLat = ReportElements::ratio(paper, ui->wgtSuccess, 2);
+        QVector<double> bars;
+        QStringList labels;
+        for (int i = 0; i < m_success.size(); ++i)
+        {
+            auto rec = m_success.at(i);
+            if (rec.val >= 0)
+            {
+                bars << rec.val;
+                labels << rec.dt;
+            }
+        }
+        ReportElements::drawDynamicDiag(painter, rectDiag, ratioLat, bars, labels, "",
+                                        DynamicDiagramDefines::KindBar, DynamicDiagramDefines::Volume3D);
+    }
+
+    //! Нижний колонтитул
+    QRect rectFooter(paper.x() + paper.width() / 20,
+                     paper.y() + paper.height() - static_cast<int>(paper.height() / 30 * 1.5),
+                     paper.width() / 20 * 18,
+                     static_cast<int>(paper.height() / 30 * 1.5));
+    ReportElements::drawFooter(painter, "", rectFooter);
+
+    painter->end();
 }
 
 void RehabReportPPVisualWidget::calculateStraight()

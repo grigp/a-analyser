@@ -43,6 +43,16 @@ void drawHeader(QPainter *painter, const QString &testUid, QRect rect);
 void drawFooter(QPainter *painter, const QString &testUid, QRect rect);
 
 /*!
+ * \brief Рисует заголовок отчета о индивидуальной программе.
+ * Данные берет из настроек пользователя и данных ИП
+ * \param painter - указатель на текущий рисователь
+ * \param kindPPName - название типа ИП, например, "курс реабилитации"
+ * \param objectPP - объект ИП
+ * \param rect - прямоугольник, в котором надо рисовать
+ */
+void drawHeaderPP(QPainter *painter, const QString &kindPPName, const QJsonObject& objectPP, QRect rect);
+
+/*!
  * \brief Рисует виджет на отчете по образцу
  * \param painter - указатель на текущий рисователь
  * \param widget - рисуемый виджет
