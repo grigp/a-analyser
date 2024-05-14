@@ -84,8 +84,15 @@ Driver *AAnalyserBuild::createDriver(const QString &drvUid)
     return nullptr;
 }
 
-bool AAnalyserBuild::drvInitialSetup(Connection &connection)
+bool AAnalyserBuild::drvInitialSetup(const QString& uid,
+                                     DeviceProtocols::Ports port,
+                                     const QJsonObject &params,
+                                     const QString &comment)
 {
+    Q_UNUSED(uid);
+    Q_UNUSED(port);
+    Q_UNUSED(params);
+    Q_UNUSED(comment);
     return true;  //! По умолчанию true, ибо, если устройства нет, то настраивать нечего, значит удачно
 }
 

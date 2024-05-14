@@ -194,7 +194,7 @@ void DeviceControlDialog::runDeviceSetup(const int idxRow, const bool isBreakMes
     {
         auto mr = AMessageBox::question(nullptr, tr("Запрос"), tr("Выполнить юстировку устройства?"));
         if (mr == AMessageBox::Yes)
-            AAnalyserBuild::drvInitialSetup(drvUid, static_cast<DeviceProtocols::Ports>(drvPort.toInt()), params, comment);
+            AAnalyserBuild::drvInitialSetup (drvUid, static_cast<DeviceProtocols::Ports>(drvPort.toInt()), params, comment);
     }
     else
     {

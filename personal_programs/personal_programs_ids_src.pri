@@ -8,13 +8,15 @@ HEADERS += \
     $$PWD/personalprogramdefines.h \
     $$PWD/personalprogram.h \
     $$PWD/patientprogramwidget.h \
-    $$PWD/patientprogramvisualswidget.h
+    $$PWD/patientprogramvisualswidget.h \
+    $$PWD/personalprogramservice.h
 
 SOURCES += \
     $$PWD/personalprogrammanager.cpp \
     $$PWD/personalprogram.cpp \
     $$PWD/patientprogramwidget.cpp \
-    $$PWD/patientprogramvisualswidget.cpp
+    $$PWD/patientprogramvisualswidget.cpp \
+    $$PWD/personalprogramservice.cpp
 
 FORMS += \
     $$PWD/patientprogramwidget.ui \

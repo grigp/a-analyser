@@ -67,11 +67,15 @@ Driver* createDriver(const QString &drvUid);
 
 /*!
  * \brief Вызов функции начальной настройки устройства
- * \param connection - данные подключения
+ * \param port - точка подключения устройства
+ * \param param - параметры драйвера
+ * \param comment - комментарий к подключению
  * \return true, если устройство настроено нормально
  */
-bool drvInitialSetup(Connection &connection);
-
+bool drvInitialSetup(const QString& uid,
+                     DeviceProtocols::Ports port,
+                     const QJsonObject &params,
+                     const QString &comment);
 /*!
  * \brief Возвращает true, если драйвер требует начальную настройку устройства
  * \param drvUid - uid драйвера
