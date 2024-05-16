@@ -113,6 +113,7 @@ private slots:
     void on_doubleClicked(const QModelIndex &index);
 
     void on_dataChanged(const QModelIndex &topLeft, const QModelIndex &bottomRight);
+    void on_tunningPeriodChanged(int value);
 
 private:
     Ui::DeviceControlDialog *ui;

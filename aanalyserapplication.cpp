@@ -124,8 +124,13 @@ AAnalyserApplication::AAnalyserApplication(int &argc, char **argv)
         }
 
         //! Начальная настройка подключенного оборудования
+        //! Запрос, пршел ли установленный период
+        auto sTunningDate = SettingsProvider::valueFromRegAppCopy("", AAnalyserSettingsParams::pn_devicesTunningDate, "01.01.2000").toString();
+        auto dtTunningDate = QDate::fromString(sTunningDate, "dd.MM.yyyy");
+        auto days = dtTunningDate.daysTo(QDate::currentDate());
+        auto period = SettingsProvider::valueFromRegAppCopy("", AAnalyserSettingsParams::pn_devicesTunningPeriod, 7).toInt();
         //! Если в приложении это допустимо
-        if (AAnalyserBuild::isAutoRunInitialSetup() && isDvcSetuped)
+        if (AAnalyserBuild::isAutoRunInitialSetup() && isDvcSetuped && days >= period)
         {
             drvInitialSetup(false);
         }
@@ -1181,7 +1186,11 @@ void AAnalyserApplication::drvInitialSetup(const bool isMessageNotRequied)
     //! Если есть хоть одно, то выполняем настройку с запросом
     if (drvSetupCount > 0)
     {
-        auto mr = AMessageBox::question(nullptr, tr("Запрос"), tr("Выполнить юстировку подключенного оборудования?"));
+        QString msg = tr("Выполнить юстировку подключенного оборудования?");
+        if (!isMessageNotRequied)
+            msg = tr("Юстировка подключеного оборудования давно не проводилась.") + "\n" + msg;
+
+        auto mr = AMessageBox::question(nullptr, tr("Запрос"), msg);
         if (mr == AMessageBox::Yes)
         {
             bool res {true};
@@ -1195,7 +1204,12 @@ void AAnalyserApplication::drvInitialSetup(const bool isMessageNotRequied)
                 }
             }
             if (res)
+            {
+                SettingsProvider::setValueToRegAppCopy("",
+                                                       AAnalyserSettingsParams::pn_devicesTunningDate,
+                                                       QDate::currentDate().toString("dd.MM.yyyy"));
                 AMessageBox::information(nullptr, tr("Сообщение"), tr("Юстировка подключенного оборудования выполнена"));
+            }
             else
                 AMessageBox::information(nullptr, tr("Сообщение"), tr("Юстировка не выполнена для одного или нескольких устройств"));
         }

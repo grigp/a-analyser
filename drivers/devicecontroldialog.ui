@@ -194,6 +194,66 @@
      </attribute>
     </widget>
    </item>
+   <item>
+    <widget class="QFrame" name="frTunningPeriod">
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout_2">
+      <item>
+       <widget class="QLabel" name="lblTunningPeriod">
+        <property name="text">
+         <string>Период запроса повторной юстировки оброудования, дни</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <spacer name="horizontalSpacer_3">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
+       <widget class="QSpinBox" name="edTunningPeriod">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>100</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="minimum">
+         <number>1</number>
+        </property>
+        <property name="maximum">
+         <number>30</number>
+        </property>
+        <property name="singleStep">
+         <number>1</number>
+        </property>
+        <property name="value">
+         <number>7</number>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
   </layout>
  </widget>
  <resources>
@@ -312,6 +372,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>edTunningPeriod</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>DeviceControlDialog</receiver>
+   <slot>on_tunningPeriodChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>634</x>
+     <y>364</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>710</x>
+     <y>220</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>addConnect()</slot>
@@ -321,5 +397,6 @@
   <slot>downPriority()</slot>
   <slot>on_doubleClicked(QModelIndex)</slot>
   <slot>on_setupConnect()</slot>
+  <slot>on_tunningPeriodChanged(int)</slot>
  </slots>
 </ui>

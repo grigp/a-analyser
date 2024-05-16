@@ -37,6 +37,9 @@ DeviceControlDialog::DeviceControlDialog(QWidget *parent) :
     ui->tvConnections->header()->resizeSection(DeviceControlModel::ColPort, 80);
 
     connect(m_model, &DeviceControlModel::dataChanged, this, &DeviceControlDialog::on_dataChanged);
+
+    auto period = SettingsProvider::valueFromRegAppCopy("", AAnalyserSettingsParams::pn_devicesTunningPeriod, 7).toInt();
+    ui->edTunningPeriod->setValue(period);
 }
 
 DeviceControlDialog::~DeviceControlDialog()
@@ -177,6 +180,11 @@ void DeviceControlDialog::on_dataChanged(const QModelIndex &topLeft, const QMode
 
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             dataChangedConnection(topLeft.row(), topLeft.column(), value);
+}
+
+void DeviceControlDialog::on_tunningPeriodChanged(int value)
+{
+    SettingsProvider::setValueToRegAppCopy("", AAnalyserSettingsParams::pn_devicesTunningPeriod, value);
 }
 
 void DeviceControlDialog::runDeviceSetup(const int idxRow, const bool isBreakMessages) const
