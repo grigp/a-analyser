@@ -35,6 +35,8 @@
 #include "pulsefactorsdescriptor.h"
 #include "pulsespectrfactorsdescriptor.h"
 
+#include "generalcoordfactorsdescriptor.h"
+
 #include "skgvisual.h"
 #include "stabilogramvisual.h"
 #include "histogramvisual.h"
@@ -52,6 +54,7 @@
 #include "sectiongraphvisual.h"
 
 #include "mancoordppvisual.h"
+#include "rehabreportppvisual.h"
 
 #include "filtersignal.h"
 
@@ -95,6 +98,8 @@ void AAnalyserBuild::registerFactors()
 
     app->registerGroup(new PulseFactorsDescriptor(BaseDefines::tlChannel));
     app->registerGroup(new PulseSpectrFactorsDescriptor(BaseDefines::tlChannel));
+
+    app->registerGroup(new GeneralCoordFactorsDescriptor(BaseDefines::tlBase));
 }
 
 void AAnalyserBuild::registerVisuals()
@@ -122,6 +127,7 @@ void AAnalyserBuild::registerPPVisuals()
 {
     auto* app = static_cast<AAnalyserApplication*>(QApplication::instance());
     app->registerPPVisual(new ManCoordPPVisual());
+    app->registerPPVisual(new RehabReportPPVisual());
 //    app->registerPPVisual(new CommonPPVisual());
 }
 
