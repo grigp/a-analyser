@@ -53,6 +53,7 @@ public:
         Apply              = QMessageBox::Apply,
         Reset              = QMessageBox::Reset,
         RestoreDefaults    = QMessageBox::RestoreDefaults,
+        UserButton         = 0x10000000,   ///< Кнопка, определенная пользователем
 
         FirstButton        = Ok,                // internal
         LastButton         = RestoreDefaults,   // internal
@@ -71,16 +72,16 @@ public:
 
     static StandardButton information(QWidget *parent, const QString &title,
          const QString &text, StandardButtons buttons = Ok,
-         StandardButton defaultButton = NoButton);
+         StandardButton defaultButton = NoButton, const QString& textUserButton = "");
     static StandardButton question(QWidget *parent, const QString &title,
          const QString &text, StandardButtons buttons = StandardButtons(Yes | No),
-         StandardButton defaultButton = NoButton);
+         StandardButton defaultButton = NoButton, const QString& textUserButton = "");
     static StandardButton warning(QWidget *parent, const QString &title,
          const QString &text, StandardButtons buttons = Ok,
-         StandardButton defaultButton = NoButton);
+         StandardButton defaultButton = NoButton, const QString& textUserButton = "");
     static StandardButton critical(QWidget *parent, const QString &title,
          const QString &text, StandardButtons buttons = Ok,
-         StandardButton defaultButton = NoButton);
+         StandardButton defaultButton = NoButton, const QString& textUserButton = "");
 
 
     StandardButton result() {return m_result;}
@@ -89,22 +90,26 @@ private slots:
     void on_OKClicked();
     void on_NoClicked();
     void on_CancelClicked();
+    void on_userClick();
 
 private:
     Ui::AMessageBox *ui;
 
     static StandardButton message(KindMessage kind, QWidget *parent, const QString &title,
          const QString &text, StandardButtons buttons = Ok,
-         StandardButton defaultButton = NoButton);
+         StandardButton defaultButton = NoButton, const
+                                  QString& textUserButton = "");
 
 
     void setTitle(const QString& title);
     void setText(const QString& text);
+    void setTextUserButton(const QString& text);
     void setButtons(StandardButtons buttons);
 
     KindMessage m_kind;
     StandardButton m_result;
     StandardButtons m_buttons;
+    QString m_textUserButton {""};
 };
 
 #endif // AMESSAGEBOX_H

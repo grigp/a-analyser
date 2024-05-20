@@ -1190,7 +1190,11 @@ void AAnalyserApplication::drvInitialSetup(const bool isMessageNotRequied)
         if (!isMessageNotRequied)
             msg = tr("Юстировка подключеного оборудования давно не проводилась.") + "\n" + msg;
 
-        auto mr = AMessageBox::question(nullptr, tr("Запрос"), msg);
+        auto period = SettingsProvider::valueFromRegAppCopy("", AAnalyserSettingsParams::pn_devicesTunningPeriod, 7).toInt();
+
+        auto mr = AMessageBox::question(nullptr, tr("Запрос"), msg,
+                                        AMessageBox::StandardButtons(AMessageBox::Yes | AMessageBox::No | AMessageBox::UserButton),
+                                        AMessageBox::NoButton, tr("Напомнить через") + " " + QString::number(period) + " " + tr("дней"));
         if (mr == AMessageBox::Yes)
         {
             bool res {true};
@@ -1212,6 +1216,12 @@ void AAnalyserApplication::drvInitialSetup(const bool isMessageNotRequied)
             }
             else
                 AMessageBox::information(nullptr, tr("Сообщение"), tr("Юстировка не выполнена для одного или нескольких устройств"));
+        }
+        if (mr == AMessageBox::UserButton)
+        {
+            SettingsProvider::setValueToRegAppCopy("",
+                                                   AAnalyserSettingsParams::pn_devicesTunningDate,
+                                                   QDate::currentDate().toString("dd.MM.yyyy"));
         }
     }
     else

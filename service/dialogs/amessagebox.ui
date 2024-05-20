@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>281</width>
-    <height>119</height>
+    <width>416</width>
+    <height>125</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -117,6 +117,13 @@
         </property>
        </widget>
       </item>
+      <item>
+       <widget class="QPushButton" name="btnUser">
+        <property name="text">
+         <string>Пользователь</string>
+        </property>
+       </widget>
+      </item>
      </layout>
     </widget>
    </item>
@@ -149,8 +156,8 @@
    <slot>on_NoClicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>164</x>
-     <y>79</y>
+     <x>229</x>
+     <y>105</y>
     </hint>
     <hint type="destinationlabel">
      <x>282</x>
@@ -165,12 +172,28 @@
    <slot>on_CancelClicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>209</x>
-     <y>83</y>
+     <x>310</x>
+     <y>105</y>
     </hint>
     <hint type="destinationlabel">
      <x>280</x>
      <y>75</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btnUser</sender>
+   <signal>clicked()</signal>
+   <receiver>AMessageBox</receiver>
+   <slot>on_userClick()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>340</x>
+     <y>100</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>416</x>
+     <y>50</y>
     </hint>
    </hints>
   </connection>
@@ -179,5 +202,6 @@
   <slot>on_OKClicked()</slot>
   <slot>on_NoClicked()</slot>
   <slot>on_CancelClicked()</slot>
+  <slot>on_userClick()</slot>
  </slots>
 </ui>

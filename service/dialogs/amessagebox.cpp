@@ -37,36 +37,40 @@ AMessageBox::StandardButton AMessageBox::information(QWidget *parent,
                                                      const QString &title,
                                                      const QString &text,
                                                      StandardButtons buttons,
-                                                     StandardButton defaultButton)
+                                                     StandardButton defaultButton,
+                                                     const QString& textUserButton)
 {
-    return message(Information, parent, title, text, buttons, defaultButton);
+    return message(Information, parent, title, text, buttons, defaultButton, textUserButton);
 }
 
 AMessageBox::StandardButton AMessageBox::question(QWidget *parent,
                                                   const QString &title,
                                                   const QString &text,
                                                   StandardButtons buttons,
-                                                  StandardButton defaultButton)
+                                                  StandardButton defaultButton,
+                                                  const QString& textUserButton)
 {
-    return message(Question, parent, title, text, buttons, defaultButton);
+    return message(Question, parent, title, text, buttons, defaultButton, textUserButton);
 }
 
 AMessageBox::StandardButton AMessageBox::warning(QWidget *parent,
                                                  const QString &title,
                                                  const QString &text,
                                                  StandardButtons buttons,
-                                                 StandardButton defaultButton)
+                                                 StandardButton defaultButton,
+                                                 const QString& textUserButton)
 {
-    return message(Warning, parent, title, text, buttons, defaultButton);
+    return message(Warning, parent, title, text, buttons, defaultButton, textUserButton);
 }
 
 AMessageBox::StandardButton AMessageBox::critical(QWidget *parent,
                                                   const QString &title,
                                                   const QString &text,
                                                   StandardButtons buttons,
-                                                  StandardButton defaultButton)
+                                                  StandardButton defaultButton,
+                                                  const QString& textUserButton)
 {
-    return message(Critical, parent, title, text, buttons, defaultButton);
+    return message(Critical, parent, title, text, buttons, defaultButton, textUserButton);
 }
 
 void AMessageBox::on_OKClicked()
@@ -102,18 +106,26 @@ void AMessageBox::on_CancelClicked()
     reject();
 }
 
+void AMessageBox::on_userClick()
+{
+    m_result = UserButton;
+    reject();
+}
+
 AMessageBox::StandardButton AMessageBox::message(AMessageBox::KindMessage kind,
                                                  QWidget *parent,
                                                  const QString &title,
                                                  const QString &text,
                                                  StandardButtons buttons,
-                                                 StandardButton defaultButton)
+                                                 StandardButton defaultButton,
+                                                 const QString& textUserButton)
 {
     Q_UNUSED(defaultButton);
 
     AMessageBox dlg(kind, parent);
     dlg.setTitle(title);
     dlg.setText(text);
+    dlg.setTextUserButton(textUserButton);
     dlg.setButtons(buttons);
     dlg.exec();
     return dlg.result();
@@ -127,6 +139,11 @@ void AMessageBox::setTitle(const QString &title)
 void AMessageBox::setText(const QString &text)
 {
     ui->lblComment->setText(text);
+}
+
+void AMessageBox::setTextUserButton(const QString &text)
+{
+    m_textUserButton = text;
 }
 
 void AMessageBox::setButtons(StandardButtons buttons)
@@ -144,6 +161,9 @@ void AMessageBox::setButtons(StandardButtons buttons)
     if ((buttons & Cancel) != 0)
         ui->btnCancel->setText("Отмена");
 
+    if ((buttons & UserButton) != 0)
+        ui->btnUser->setText(m_textUserButton);
+
     if (((buttons & Ok) == 0) &&
         ((buttons & Yes) == 0))
         ui->btnOK->setVisible(false);
@@ -151,5 +171,7 @@ void AMessageBox::setButtons(StandardButtons buttons)
         ui->btnNo->setVisible(false);
     if ((buttons & Cancel) == 0)
         ui->btnCancel->setVisible(false);
+    if ((buttons & UserButton) == 0)
+        ui->btnUser->setVisible(false);
 }
 
