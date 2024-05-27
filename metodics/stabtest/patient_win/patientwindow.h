@@ -15,7 +15,7 @@ class PatientWindow : public QDialog
     Q_OBJECT
 
 public:
-    explicit PatientWindow(QWidget *parent = 0);
+    explicit PatientWindow(QWidget *parent = nullptr);
     ~PatientWindow();
 
     /*!
