@@ -73,6 +73,7 @@
 #include "amedplatform01.h"
 #include "bilateral.h"
 #include "jumpplate.h"
+#include "mwstick.h"
 
 QList<MetodicTemplate *> AAnalyserBuild::getBuildTemplates(QObject *parent)
 {
@@ -174,6 +175,9 @@ QList<DeviceProtocols::Ports> AAnalyserBuild::getDriverPorts(const QString &drvU
     else
     if (drvUid == Bilateral::uid())
         return Bilateral::getPorts();
+    else
+    if (drvUid == MWStick::uid())
+        return MWStick::getPorts();
 
     return QList<DeviceProtocols::Ports>();
 }
@@ -192,6 +196,9 @@ QStringList AAnalyserBuild::getDriverProtocols(const QString &drvUid)
     else
     if (drvUid == Bilateral::uid())
         return Bilateral::getProtocols();
+    else
+    if (drvUid == MWStick::uid())
+        return MWStick::getProtocols();
     return QStringList();
 }
 
@@ -209,6 +216,9 @@ bool AAnalyserBuild::editDriverParams(const QString &drvUid, QJsonObject &params
     else
     if (drvUid == Bilateral::uid())
         return Bilateral::editParams(params);
+    else
+    if (drvUid == MWStick::uid())
+        return MWStick::editParams(params);
     return false;
 }
 
@@ -226,6 +236,9 @@ Driver *AAnalyserBuild::createDriver(const QString &drvUid)
     else
     if (drvUid == Bilateral::uid())
         return new Bilateral();
+    else
+    if (drvUid == MWStick::uid())
+        return new MWStick();
     return nullptr;
 }
 
@@ -256,6 +269,7 @@ void AAnalyserBuild::assignDrivers(QMap<QString, QString> &drivers)
     drivers.insert(AMedPlatform01::uid(), AMedPlatform01::name());
     drivers.insert(JumpPlate::uid(), JumpPlate::name());
     drivers.insert(Bilateral::uid(), Bilateral::name());
+    drivers.insert(MWStick::uid(), MWStick::name());
 }
 
 QStringList AAnalyserBuild::getDefaultPPList()

@@ -352,6 +352,7 @@ void StabTestExecute::on_communicationError(const QString &drvName, const QStrin
 
     //! Озвучка
     if (m_player.state() != QMediaPlayer::PlayingState)
+
     {
         m_player.setMedia(QUrl("qrc:/sound/com_error.wav"));
         m_player.play();

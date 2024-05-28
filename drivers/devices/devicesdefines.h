@@ -11,6 +11,7 @@ namespace  DevicesDefines
     static const QString uid_jumpPlate = "{ACC7467D-6600-4808-B372-EDC2069EBF5E}";
     static const QString uid_bedsidescales01 = "{53243842-E302-4F2F-ABE6-D628AACE833E}";
     static const QString uid_bilateral = "{31ED3CFC-6018-4469-AB38-2CF75C17A5C1}";
+    static const QString uid_mw_stick = "{0226DDAB-9473-4B7D-B99F-39091C07B8FB}";
 
 
     static const QString name_stabilan01 = QCoreApplication::tr("Стабилан - 01");
@@ -18,6 +19,7 @@ namespace  DevicesDefines
     static const QString name_jumpPlate = QCoreApplication::tr("Прыжковая платформа");
     static const QString name_bedsidescales01 = QCoreApplication::tr("Прикроватные весы");
     static const QString name_bilateral = QCoreApplication::tr("Билатеральный стабилограф");
+    static const QString name_mw_stick = QCoreApplication::tr("Соревновательная палка");
 }
 
 
