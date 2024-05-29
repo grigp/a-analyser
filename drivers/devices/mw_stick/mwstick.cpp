@@ -17,61 +17,6 @@
 
 namespace
 {
-///< Идентификаторы тензоканалов по типу для разъемов
-static QMap<DeviceProtocols::TensoDevice, QStringList> td1ChannelsByDevice{
-    std::pair<DeviceProtocols::TensoDevice, QStringList> (DeviceProtocols::tdDynHand,
-                                                          QStringList() << ChannelsDefines::chanDynHand1
-                                                                        << ChannelsDefines::FirstPlatform::chanDynHand1
-                                                                        << ChannelsDefines::SecondPlatform::chanDynHand1)
-  , std::pair<DeviceProtocols::TensoDevice, QStringList> (DeviceProtocols::tdDynStand,
-                                                          QStringList() << ChannelsDefines::chanDynStand1
-                                                                        << ChannelsDefines::FirstPlatform::chanDynStand1
-                                                                        << ChannelsDefines::SecondPlatform::chanDynStand1)
-  , std::pair<DeviceProtocols::TensoDevice, QStringList> (DeviceProtocols::tdBreath,
-                                                          QStringList() << ChannelsDefines::chanBreath1
-                                                                        << ChannelsDefines::FirstPlatform::chanBreath1
-                                                                        << ChannelsDefines::SecondPlatform::chanBreath1)
-  , std::pair<DeviceProtocols::TensoDevice, QStringList> (DeviceProtocols::tdPushDevice,
-                                                          QStringList() << ChannelsDefines::chanDynPush1
-                                                                        << ChannelsDefines::FirstPlatform::chanDynPush1
-                                                                        << ChannelsDefines::SecondPlatform::chanDynPush1)
-};
-static QMap<DeviceProtocols::TensoDevice, QStringList> td2ChannelsByDevice{
-    std::pair<DeviceProtocols::TensoDevice, QStringList> (DeviceProtocols::tdDynHand,
-                                                          QStringList() << ChannelsDefines::chanDynHand2
-                                                                        << ChannelsDefines::FirstPlatform::chanDynHand2
-                                                                        << ChannelsDefines::SecondPlatform::chanDynHand2)
-  , std::pair<DeviceProtocols::TensoDevice, QStringList> (DeviceProtocols::tdDynStand,
-                                                          QStringList() << ChannelsDefines::chanDynStand2
-                                                                        << ChannelsDefines::FirstPlatform::chanDynStand2
-                                                                        << ChannelsDefines::SecondPlatform::chanDynStand2)
-  , std::pair<DeviceProtocols::TensoDevice, QStringList> (DeviceProtocols::tdBreath,
-                                                          QStringList() << ChannelsDefines::chanBreath2
-                                                          << ChannelsDefines::FirstPlatform::chanBreath2
-                                                          << ChannelsDefines::SecondPlatform::chanBreath2)
-  , std::pair<DeviceProtocols::TensoDevice, QStringList> (DeviceProtocols::tdPushDevice,
-                                                          QStringList() << ChannelsDefines::chanDynPush2
-                                                          << ChannelsDefines::FirstPlatform::chanDynPush2
-                                                          << ChannelsDefines::SecondPlatform::chanDynPush2)
-};
-static QMap<DeviceProtocols::TensoDevice, QStringList> td3ChannelsByDevice{
-    std::pair<DeviceProtocols::TensoDevice, QStringList> (DeviceProtocols::tdDynHand,
-                                                          QStringList() << ChannelsDefines::chanDynHand3
-                                                                        << ChannelsDefines::FirstPlatform::chanDynHand3
-                                                                        << ChannelsDefines::SecondPlatform::chanDynHand3)
-  , std::pair<DeviceProtocols::TensoDevice, QStringList> (DeviceProtocols::tdDynStand,
-                                                          QStringList() << ChannelsDefines::chanDynStand3
-                                                                        << ChannelsDefines::FirstPlatform::chanDynStand3
-                                                                        << ChannelsDefines::SecondPlatform::chanDynStand3)
-  , std::pair<DeviceProtocols::TensoDevice, QStringList> (DeviceProtocols::tdBreath,
-                                                          QStringList() << ChannelsDefines::chanBreath3
-                                                                        << ChannelsDefines::FirstPlatform::chanBreath3
-                                                                        << ChannelsDefines::SecondPlatform::chanBreath3)
-  , std::pair<DeviceProtocols::TensoDevice, QStringList> (DeviceProtocols::tdPushDevice,
-                                                          QStringList() << ChannelsDefines::chanDynPush3
-                                                                        << ChannelsDefines::FirstPlatform::chanDynPush3
-                                                                        << ChannelsDefines::SecondPlatform::chanDynPush3)
-};
 
 const quint8 MarkerValue = 0x80;
 
@@ -101,15 +46,9 @@ void MWStick::setParams(const DeviceProtocols::Ports port, const QJsonObject &pa
 
     m_chanRecordingDefault = MWStick::getChanRecordingDefault(params["chan_recording_default"].toObject());
 
-    m_tenso1.device = static_cast<DeviceProtocols::TensoDevice>(params["tenso1"].toInt(0));
-    m_tenso2.device = static_cast<DeviceProtocols::TensoDevice>(params["tenso2"].toInt(1));
-    m_tenso3.device = static_cast<DeviceProtocols::TensoDevice>(params["tenso3"].toInt(2));
-    m_tenso1.rkp = params["rkp1"].toDouble(1.7);
-    m_tenso2.rkp = params["rkp2"].toDouble(1.7);
-    m_tenso3.rkp = params["rkp3"].toDouble(1.7);
-    m_tenso1.pn = params["pn1"].toDouble(100);
-    m_tenso2.pn = params["pn2"].toDouble(500);
-    m_tenso3.pn = params["pn3"].toDouble(1);
+    m_channel = params["channel"].toInt(0);
+    m_rkp = params["rkp"].toDouble(0.8);
+    m_pn = params["pn"].toInt(500);
 
     m_countChannels = 27;
 }
@@ -152,15 +91,7 @@ QList<QString> MWStick::getChannelsByProtocol(const QString &protocolUid) const
     // todo: Неплохо было бы автоматизировать, используя getChannels(), чтобы один раз составить список, а здесь только выбирать из него
     QList<QString> retval;
     if (protocolUid == DeviceProtocols::uid_DynProtocol)
-    {
-        if ((m_tenso1.device != DeviceProtocols::tdBreath) && td1ChannelsByDevice.contains(m_tenso1.device))
-            retval << td1ChannelsByDevice.value(m_tenso1.device).at(0);
-        if ((m_tenso2.device != DeviceProtocols::tdBreath) && td2ChannelsByDevice.contains(m_tenso2.device))
-            retval << td2ChannelsByDevice.value(m_tenso2.device).at(0);
-        if ((m_tenso3.device != DeviceProtocols::tdBreath) && td3ChannelsByDevice.contains(m_tenso3.device))
-            retval << td3ChannelsByDevice.value(m_tenso3.device).at(0);
-    }
-
+        retval << ChannelsDefines::chanDynHand1;
     return retval;
 }
 
@@ -169,14 +100,7 @@ QList<QString> MWStick::getChannelsByFormat(const QString &formatUid) const
     // todo: Неплохо было бы автоматизировать, используя getChannels(), чтобы один раз составить список, а здесь только выбирать из него
     QList<QString> retval;
     if (formatUid == ChannelsDefines::cfSinglePositive)
-    {
-        if ((m_tenso1.device != DeviceProtocols::tdBreath) && td1ChannelsByDevice.contains(m_tenso1.device))
-            retval << td1ChannelsByDevice.value(m_tenso1.device).at(0);
-        if ((m_tenso2.device != DeviceProtocols::tdBreath) && td2ChannelsByDevice.contains(m_tenso2.device))
-            retval << td2ChannelsByDevice.value(m_tenso2.device).at(0);
-        if ((m_tenso3.device != DeviceProtocols::tdBreath) && td3ChannelsByDevice.contains(m_tenso3.device))
-            retval << td3ChannelsByDevice.value(m_tenso3.device).at(0);
-    }
+        retval << ChannelsDefines::chanDynHand1;
     return retval;
 }
 
@@ -189,6 +113,7 @@ QList<QString> MWStick::getChannels() const
 
 int MWStick::getSubChannelsCount(const QString &channelUid) const
 {
+    Q_UNUSED(channelUid);
     return 1;
 }
 
@@ -222,14 +147,15 @@ QList<DeviceProtocols::Ports> MWStick::getPorts()
 
 void MWStick::calibrateTenso(const QString &channelUid)
 {
+    Q_UNUSED(channelUid);
     quint8 chan = 0;
-    if (td1ChannelsByDevice.value(m_tenso1.device).contains(channelUid))
+    if (m_channel == 0)
         chan = 0xA;
     else
-    if (td2ChannelsByDevice.value(m_tenso2.device).contains(channelUid))
+    if (m_channel == 1)
         chan = 0xB;
     else
-    if (td3ChannelsByDevice.value(m_tenso3.device).contains(channelUid))
+    if (m_channel == 2)
         chan = 0xC;
     if (chan != 0)
     {
@@ -247,40 +173,17 @@ void MWStick::calibrateTenso(const QString &channelUid)
 void MWStick::getTensoValueDiapasone(const int chanNumber, double &min, double &max)
 {
     Q_ASSERT(chanNumber >= 0 && chanNumber < 3);
-    auto getMinMax = [&](DeviceProtocols::TensoChannel &tenso)
-    {
-        if (tenso.device != DeviceProtocols::tdBreath)
-        {
-            min = 0;
-            max = tenso.pn;
-        }
-        else
-        {
-            min = m_tensoPercMin[chanNumber];
-            max = m_tensoPercMax[chanNumber];
-        }
-    };
-
-    if (chanNumber == 0)
-        getMinMax(m_tenso1);
-    else
-    if (chanNumber == 1)
-        getMinMax(m_tenso2);
-    else
-    if (chanNumber == 2)
-        getMinMax(m_tenso3);
+    min = 0;
+    max = m_pn;
 }
 
 void MWStick::getTensoValueDiapasone(const QString channelId, double &min, double &max)
 {
-    if (td1ChannelsByDevice.value(m_tenso1.device).contains(channelId))
-        getTensoValueDiapasone(0, min, max);
-    else
-    if (td2ChannelsByDevice.value(m_tenso2.device).contains(channelId))
-        getTensoValueDiapasone(1, min, max);
-    else
-    if (td3ChannelsByDevice.value(m_tenso3.device).contains(channelId))
-        getTensoValueDiapasone(2, min, max);
+    if (channelId == ChannelsDefines::chanDynHand1)
+    {
+        min = 0;
+        max = m_pn;
+    }
     else
     {
         min = 0;
@@ -328,7 +231,7 @@ void MWStick::on_error(const QString &err)
 void MWStick::assignByteFromDevice(quint8 b)
 {
     //! Обработка байта тензоканала
-    auto assignByteTenso = [&](const DeviceProtocols::TensoChannel tenso, const int chan, double &value)
+    auto assignByteTenso = [&](double &value)
     {
         if (m_countBytePack % 2 == 0)
         {
@@ -338,9 +241,9 @@ void MWStick::assignByteFromDevice(quint8 b)
         {
             double dynVal = b * 256 + m_prevB;
             dynVal = dynVal - 0x8000;
-            value = (tenso.pn * 1000 * dynVal) / (65535 * 128 * tenso.rkp);
-            if (tenso.device == DeviceProtocols::tdBreath)
-                value = ((value * 100) + (m_tensoPercMax[chan] - m_tensoPercMin[chan]) / 2);
+            value = (m_pn * 1000 * dynVal) / (65535 * 128 * m_rkp);
+            if (value < 0)
+                value = fabs(value);
         }
     };
 
@@ -390,15 +293,15 @@ void MWStick::assignByteFromDevice(quint8 b)
                     break;
                 }
                 case 7: {             //! Тензоканал 1
-                    assignByteTenso(m_tenso1, 0, m_t1);
+                    //assignByteTenso(m_t1);
                     break;
                 }
                 case 8: {             //! Тензоканал 2
-                    assignByteTenso(m_tenso2, 1, m_t2);
+                    //assignByteTenso(m_t2);
                     break;
                 }
                 case 9: {             //! Тензоканал 3
-                    assignByteTenso(m_tenso3, 2, m_t3);
+                    assignByteTenso(m_t3);
                     break;
                 }
                 case 10: {            //! Пульс
@@ -423,7 +326,8 @@ void MWStick::assignByteFromDevice(quint8 b)
             }
 
             //! Окончание разбора пакета
-            if (m_countBytePack == m_countChannels * 2){  //! Достигли заданного кол-ва каналов
+            if (m_countBytePack == m_countChannels * 2)
+            {  //! Достигли заданного кол-ва каналов
                 incBlockCount();
                 sendDataBlock();
                 m_isPackage = false;                     //! Сбросим признак пакета
@@ -446,26 +350,19 @@ void MWStick::sendDataBlock()
 
 void MWStick::sendTensoChannels()
 {
-    if (td1ChannelsByDevice.contains(m_tenso1.device))
-    {
-        auto tenso1 = new DeviceProtocols::TensoDvcData(this, td1ChannelsByDevice.value(m_tenso1.device).at(0), m_t1);
-        emit sendData(tenso1);
-        delete tenso1;
-    }
+    double val = 0;
+    if (m_channel == 0)
+        val = m_t1;
+    else
+    if (m_channel == 1)
+        val = m_t2;
+    else
+    if (m_channel == 2)
+        val = m_t3;
 
-    if (td2ChannelsByDevice.contains(m_tenso2.device))
-    {
-        auto tenso2 = new DeviceProtocols::TensoDvcData(this, td2ChannelsByDevice.value(m_tenso2.device).at(0), m_t2);
-        emit sendData(tenso2);
-        delete tenso2;
-    }
-
-    if (td3ChannelsByDevice.contains(m_tenso3.device))
-    {
-        auto tenso3 = new DeviceProtocols::TensoDvcData(this, td3ChannelsByDevice.value(m_tenso3.device).at(0), m_t3);
-        emit sendData(tenso3);
-        delete tenso3;
-    }
+    auto tenso = new DeviceProtocols::TensoDvcData(this, ChannelsDefines::chanDynHand1, val);
+    emit sendData(tenso);
+    delete tenso;
 }
 
 QMap<QString, bool> MWStick::getChanRecordingDefault(const QJsonObject &obj)

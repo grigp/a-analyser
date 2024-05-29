@@ -282,5 +282,8 @@
         <file>images/Connects/Setup.png</file>
         <file>sound/error.wav</file>
         <file>sound/ok.wav</file>
+        <file>images/Methodics/MasWrestling.png</file>
+        <file>images/Methodics/MasWrestling1.png</file>
+        <file>images/Methodics/MWStick.png</file>
     </qresource>
 </RCC>

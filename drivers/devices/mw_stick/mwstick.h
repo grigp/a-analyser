@@ -127,9 +127,6 @@ public:
     void setTensoValueDiapasone(const int chanNumber, const double min, const double max) override;
     bool isCalibrated() const override;
 
-    DeviceProtocols::TensoChannel tenso1Params() const {return m_tenso1;}
-    DeviceProtocols::TensoChannel tenso2Params() const {return m_tenso2;}
-    DeviceProtocols::TensoChannel tenso3Params() const {return m_tenso3;}
 
 protected:
     /*!
@@ -169,11 +166,15 @@ private:
     int m_countBytePack {0};      ///< Счетчик байтов пакета
     int m_countChannels {11};     ///< Кол-во каналов. Должно инициализироваться как параметр драйвера
     quint8 m_prevB;               ///< Первый принятый байт
-    double m_t1, m_t2, m_t3;                  ///< Значения тензоканалов
+    double m_t1 {0}, m_t2 {0}, m_t3 {0};                  ///< Значения тензоканалов
 
-    DeviceProtocols::TensoChannel m_tenso1 {DeviceProtocols::TensoChannel(DeviceProtocols::tdDynHand, 1.7, 100)};
-    DeviceProtocols::TensoChannel m_tenso2 {DeviceProtocols::TensoChannel(DeviceProtocols::tdDynStand, 1.7, 500)};
-    DeviceProtocols::TensoChannel m_tenso3 {DeviceProtocols::TensoChannel(DeviceProtocols::tdBreath, 1.7, 1)};
+    int m_channel {0};
+    double m_rkp {0.8};
+    int m_pn {500};
+
+//    DeviceProtocols::TensoChannel m_tenso1 {DeviceProtocols::TensoChannel(DeviceProtocols::tdDynHand, 1.7, 100)};
+//    DeviceProtocols::TensoChannel m_tenso2 {DeviceProtocols::TensoChannel(DeviceProtocols::tdDynStand, 1.7, 500)};
+//    DeviceProtocols::TensoChannel m_tenso3 {DeviceProtocols::TensoChannel(DeviceProtocols::tdBreath, 1.7, 1)};
     double m_tensoPercMin[3] {0, 0, 0};
     double m_tensoPercMax[3] {100, 100, 100};
     bool m_isCalibrated {false};  ///< Было ли откалибровано

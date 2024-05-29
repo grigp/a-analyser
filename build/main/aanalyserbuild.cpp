@@ -18,6 +18,7 @@
 #include "evolventatemplate.h"
 #include "octaedrontemplate.h"
 #include "boxerdodgingtemplate.h"
+#include "mwcompetitivesticktemplate.h"
 #include "connection.h"
 
 #include "classicfactorsdescriptor.h"
@@ -92,7 +93,8 @@ QList<MetodicTemplate *> AAnalyserBuild::getBuildTemplates(QObject *parent)
             << new TriangleTemplate(parent)
             << new EvolventaTemplate(parent)
             << new OctaedronTemplate(parent)
-            << new BoxerDodgingTemplate(parent);
+            << new BoxerDodgingTemplate(parent)
+            << new MWCompetitiveStickTemplate(parent);
 }
 
 void AAnalyserBuild::registerFactors()

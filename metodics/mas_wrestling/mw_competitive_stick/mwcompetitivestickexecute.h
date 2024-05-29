@@ -35,11 +35,15 @@ protected:
 private slots:
     void start();
 
-    void scaleChange(int scaleId);
-
     void getData(DeviceProtocols::DeviceData *data);
     void on_communicationError(const QString &drvName, const QString &port, const int errorCode);
     void on_error(const int errorCode);
+
+    void on_calibrate();
+    void on_resetMax();
+    void on_scaleChange(int scaleIdx);
+
+    void on_record();
 
 private:
     Ui::MWCompetitiveStickExecute *ui;
@@ -52,12 +56,20 @@ private:
     Driver* m_driver {nullptr};     ///< Драйвер передающий данные
     DeviceProtocols::TensoControl* m_control {nullptr};
     int m_freq {50};
+    double m_minVal {0};  ///< Минимальное значение усилия в драйвере
+    double m_maxVal {0};  ///< Максимальное значение усилия в драйвере
 
     DataDefines::PatientKard m_kard;
-    TestResultData *m_trd;  ///< Объект, записывающий данные в базу
+    TestResultData *m_trd {nullptr};  ///< Объект, записывающий данные в базу
+
+    bool m_isAutoEnd {true};
+    int m_recLength {20};
 
     bool m_isRecording {false};
     int m_recCount {0};
+
+    double m_value {0};     ///< Текущее значение усилия
+    double m_valueMax {0};  ///< Максимальное значение усилия, развитое
 
     QMediaPlayer m_player;
 };
