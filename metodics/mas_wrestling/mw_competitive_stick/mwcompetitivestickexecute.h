@@ -13,6 +13,7 @@ class MWCompetitiveStickExecute;
 }
 
 class TestResultData;
+class DynamoSignal;
 
 /*!
  * \brief Виджет выполнения теста с соревновательной палкой The MWCompetitiveStickExecute class
@@ -70,6 +71,8 @@ private:
 
     double m_value {0};     ///< Текущее значение усилия
     double m_valueMax {0};  ///< Максимальное значение усилия, развитое
+
+    DynamoSignal* m_dynamo {nullptr};
 
     QMediaPlayer m_player;
 };

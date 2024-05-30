@@ -269,6 +269,12 @@ ChannelsUtils::ChannelsUtils()
                                                                                           QString("T3"),
                                                                                           ChannelsDefines::ctTenso))
 
+                 , std::pair<QString, ChannelsDefines::ChannelInfo>(ChannelsDefines::chanMWStickForce,
+                                                                          std::make_tuple(QString("Усилия на соревновательной палке"),
+                                                                                          QString("MWSF"),
+                                                                                          ChannelsDefines::ctTenso))
+
+
                  , std::pair<QString, ChannelsDefines::ChannelInfo>(ChannelsDefines::chanJumpSingleHeight,
                                                                     std::make_tuple(QString("Высота одиночного прыжка"),
                                                                                     QString("H"),

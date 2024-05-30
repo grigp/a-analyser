@@ -6,6 +6,7 @@
 #include "channelsdefines.h"
 #include "stabilogram.h"
 #include "balistogram.h"
+#include "dynamosignal.h"
 
 #include <QUuid>
 #include <QDebug>
@@ -89,6 +90,9 @@ void TestResultData::openTest(const QString &uid)
                     else
                     if (ci.channelId == ChannelsDefines::chanTargetTraectory)
                         signal = new DecartCoordinatesSignal(chan);
+                    else
+                    if (ci.channelId == ChannelsDefines::chanMWStickForce)
+                        signal = new DynamoSignal(chan);
                     if (signal)
                         probe->addChannel(signal);
                 }

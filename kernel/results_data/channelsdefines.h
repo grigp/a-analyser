@@ -121,6 +121,8 @@ static QString cfNoSignal = "{90e313c6-8805-4235-8981-1fb85d7aea5f}";          /
  static QString chanTenso2 = "{F832E307-F77E-4FE3-8DD8-2A620D6CC9BB}";  ///< Виртуальный тензоканал 2
  static QString chanTenso3 = "{6615ABFD-B646-4CCA-8F24-59B1CC4DABD6}";  ///< Виртуальный тензоканал 3
 
+ static QString chanMWStickForce = "{CEEDFC5E-C432-42BC-A6AD-31D30F2E156C}";  ///< Усилия соревновательной палки
+
  static QString chanJumpSingleHeight = "{EF9DF092-7FE0-4F74-9EA6-8BA3318AA91C}";
  static QString chanJumpHeight = "{8FE3810D-2A66-4A2E-8921-8E089E577B6E}";
  static QString chanTeppingData = "{25544CFD-A203-4BE9-8297-5D672D0EC7D5}";

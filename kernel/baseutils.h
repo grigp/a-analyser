@@ -357,6 +357,7 @@ static QList<QString> ScalesMyo =
 static const double StabDefaultDiap = 128.0;
 static const double ZDefaultDiap = 150.0;
 static const double DynDefaultDiap = 100.0;
+static const double MWStickDefaultDiap = 500.0;
 static const double MyoDefaultDiap = 2.0;
 
 }

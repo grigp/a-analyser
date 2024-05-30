@@ -3,12 +3,14 @@
 
 #include <QTimer>
 
+#include "baseutils.h"
 #include "driver.h"
 #include "driverdefines.h"
 #include "aanalyserapplication.h"
 #include "testresultdata.h"
 #include "executewidget.h"
 #include "amessagebox.h"
+#include "dynamosignal.h"
 
 MWCompetitiveStickExecute::MWCompetitiveStickExecute(QWidget *parent) :
     QWidget(parent),
@@ -39,8 +41,12 @@ void MWCompetitiveStickExecute::setParams(const QJsonObject &probeParams)
 {
     Q_UNUSED(probeParams);
     m_isAutoEnd = probeParams["autoend"].toBool(true);
-    auto trl = QTime::fromString(probeParams["time"].toString("00:00"), "mm:ss");
+    auto srl = probeParams["time"].toString("00:00");
+    auto trl = QTime::fromString(srl, "mm:ss");
     m_recLength = trl.minute() * 60 + trl.second();
+
+    if (m_isAutoEnd)
+        ui->lblRecLenTitle->setText(tr("Длительность записи") + " - " + srl + " " + tr("мм:сс"));
 }
 
 void MWCompetitiveStickExecute::closeEvent(QCloseEvent *event)
@@ -138,29 +144,25 @@ void MWCompetitiveStickExecute::getData(DeviceProtocols::DeviceData *data)
 
     if (m_isRecording)
     {
-        //! Запись, если не задержка привыкания
-//            if (m_recCount >= probeParams().latentTime * m_freqStab)
-//            {
-//                ui->wgtAdvChannels->record(data);
-//            }
+        //! Запись
+        if (m_dynamo)
+            m_dynamo->addValue(m_value);
 
         ++m_recCount;
         //! Вывод времени теста и прогресса
-//        if (true) //probeParams().autoEnd)
-//        {
-//            ui->lblRecLen->setText(BaseUtils::getTimeBySecCount(static_cast<int>(rc / m_freqStab)) + " / " +
-//                                   BaseUtils::getTimeBySecCount(probeParams().time));
-//            double mrc = probeParams().time * m_freq;
-//            ui->pbRec->setValue(static_cast<int>(rc / mrc * 100));
-//        }
-//        else
-//            ui->lblRecLen->setText(BaseUtils::getTimeBySecCount(m_recCount / m_freqStab));
+        if (m_isAutoEnd)
+        {
+            ui->lblRecLen->setText(BaseUtils::getTimeBySecCount(static_cast<int>(m_recCount / m_freq)) + " / " +
+                                   BaseUtils::getTimeBySecCount(m_recLength));
+            double mrc = m_recLength * m_freq;
+            ui->pbRec->setValue(static_cast<int>(m_recCount / mrc * 100));
+        }
+        else
+            ui->lblRecLen->setText(BaseUtils::getTimeBySecCount(m_recCount / m_freq));
 
-        //! Смена пробы и окончание
-//        if (probeParams().autoEnd && (m_recCount >= (probeParams().time) * m_freq))
-//        {
-//             finishTest();
-//        }
+        //! Окончание записи
+        if (m_isAutoEnd && (m_recCount >= m_recLength * m_freq))
+             finishTest();
     }
 }
 
@@ -188,7 +190,7 @@ void MWCompetitiveStickExecute::on_error(const int errorCode)
 
 void MWCompetitiveStickExecute::on_calibrate()
 {
-    m_control->calibrateTenso(ChannelsDefines::chanDynHand1);
+    m_control->calibrateTenso(ChannelsDefines::chanMWStickForce);
 }
 
 void MWCompetitiveStickExecute::on_resetMax()
@@ -221,7 +223,8 @@ void MWCompetitiveStickExecute::on_record()
             ui->btnRecord->setIcon(QIcon(":/images/SaveOK.png"));
             ui->btnRecord->setText(tr("Завершить"));
         }
-
+        if (!m_dynamo)
+            m_dynamo = new DynamoSignal(ChannelsDefines::chanMWStickForce, ui->wgtDynamoOscill->frequency());
     }
     else
     {
@@ -231,13 +234,24 @@ void MWCompetitiveStickExecute::on_record()
         {
             finishTest();
         }
+        else
+        {
+            if (m_dynamo)
+                m_dynamo->clear();
+        }
     }
+
+    ui->pbRec->setValue(0);
+    ui->lblRecLen->setText("00:00");
+    m_recCount = 0;
 }
 
 void MWCompetitiveStickExecute::finishTest()
 {
 //    hidePatientWindow();
     m_isRecording = false;
+    if (m_dynamo)
+        m_trd->addChannel(m_dynamo);
     m_trd->saveTest();
     static_cast<ExecuteWidget*>(parent())->closeExecutePage(); //showDB();
 }

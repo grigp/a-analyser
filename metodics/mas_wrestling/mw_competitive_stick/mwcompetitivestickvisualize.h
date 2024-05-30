@@ -4,11 +4,14 @@
 #include <QWidget>
 #include <QPrinter>
 
+
 namespace Ui {
 class MWCompetitiveStickVisualize;
 }
 
 class MWCompetitiveStickCalculator;
+class TestResultData;
+class SignalResultInfo;
 
 /*!
  * \brief Класс виджета показа результатов теста с соревновательной палкой The MWCompetitiveStickVisualize class
@@ -39,10 +42,25 @@ public:
     static void paintPreview(QPainter* painter, QRect& rect, const QString& testUid, MWCompetitiveStickCalculator* calculator);
 
 
+private slots:
+    void on_scaleChange(int idx);
+
+    void btnFulSignalClicked(bool isFullSignal);
+
+    void btnPlusClicked();
+    void btnMinusClicked();
+
+    void on_signalScroll(int pos);
+
+    void on_moveCursor();
+
 private:
     Ui::MWCompetitiveStickVisualize *ui;
 
     MWCompetitiveStickCalculator* m_calculator {nullptr};
+    TestResultData* m_trd {nullptr};
+    SignalResultInfo* m_signal {nullptr};
+    double m_absMax {0};
 };
 
 #endif // MWCOMPETITIVESTICKVISUALIZE_H

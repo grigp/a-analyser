@@ -91,7 +91,7 @@ QList<QString> MWStick::getChannelsByProtocol(const QString &protocolUid) const
     // todo: Неплохо было бы автоматизировать, используя getChannels(), чтобы один раз составить список, а здесь только выбирать из него
     QList<QString> retval;
     if (protocolUid == DeviceProtocols::uid_DynProtocol)
-        retval << ChannelsDefines::chanDynHand1;
+        retval << ChannelsDefines::chanMWStickForce;
     return retval;
 }
 
@@ -100,14 +100,14 @@ QList<QString> MWStick::getChannelsByFormat(const QString &formatUid) const
     // todo: Неплохо было бы автоматизировать, используя getChannels(), чтобы один раз составить список, а здесь только выбирать из него
     QList<QString> retval;
     if (formatUid == ChannelsDefines::cfSinglePositive)
-        retval << ChannelsDefines::chanDynHand1;
+        retval << ChannelsDefines::chanMWStickForce;
     return retval;
 }
 
 QList<QString> MWStick::getChannels() const
 {
     QList<QString> retval;
-    retval << ChannelsDefines::chanDynHand1;
+    retval << ChannelsDefines::chanMWStickForce;
     return retval;
 }
 
@@ -179,7 +179,7 @@ void MWStick::getTensoValueDiapasone(const int chanNumber, double &min, double &
 
 void MWStick::getTensoValueDiapasone(const QString channelId, double &min, double &max)
 {
-    if (channelId == ChannelsDefines::chanDynHand1)
+    if (channelId == ChannelsDefines::chanMWStickForce)
     {
         min = 0;
         max = m_pn;
@@ -360,7 +360,7 @@ void MWStick::sendTensoChannels()
     if (m_channel == 2)
         val = m_t3;
 
-    auto tenso = new DeviceProtocols::TensoDvcData(this, ChannelsDefines::chanDynHand1, val);
+    auto tenso = new DeviceProtocols::TensoDvcData(this, ChannelsDefines::chanMWStickForce, val);
     emit sendData(tenso);
     delete tenso;
 }
