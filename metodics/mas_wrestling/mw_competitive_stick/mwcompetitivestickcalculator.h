@@ -5,6 +5,8 @@
 
 #include "testcalculator.h"
 
+class MWStickForceFactors;
+
 /*!
  * \brief Класс расчета результатов теста с соревновательной палкой The MWCompetitiveStickCalculator class
  */
@@ -24,6 +26,22 @@ public:
      * Чтение первичных показателей из БД
      */
     void fastCalculate() override;
+
+    /*!
+     * \brief Возвращает максимальное усилие
+     */
+    double maxForce();
+    QString maxForceFmt();
+
+    /*!
+     * \brief Возвращает среднее усилие
+     */
+    double averageForce();
+    QString averageForceFmt();
+
+private:
+    MWStickForceFactors* m_factors {nullptr};
+
 };
 
 #endif // MWCOMPETITIVESTICKCALCULATOR_H

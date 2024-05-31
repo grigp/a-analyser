@@ -44,6 +44,9 @@ void MWCompetitiveStickVisualize::setTest(const QString &testUid)
         m_calculator = new MWCompetitiveStickCalculator(testUid, this);
         m_calculator->calculate();
 
+        ui->lblMaxForce->setText(tr("Максимальное усилие") + " - " + m_calculator->maxForceFmt() + " " + tr("кг"));
+        ui->lblAverageForce->setText(tr("Среднее усилие") + " - " + m_calculator->averageForceFmt() + " " + tr("кг"));
+
         DataDefines::TestInfo ti;
         if (DataProvider::getTestInfo(testUid, ti))
         {
@@ -86,12 +89,16 @@ void MWCompetitiveStickVisualize::setTest(const QString &testUid)
 
 void MWCompetitiveStickVisualize::print(QPrinter *printer, const QString &testUid)
 {
-
+    Q_UNUSED(printer);
+    Q_UNUSED(testUid);
 }
 
 void MWCompetitiveStickVisualize::paintPreview(QPainter *painter, QRect &rect, const QString &testUid, MWCompetitiveStickCalculator *calculator)
 {
-
+    Q_UNUSED(painter);
+    Q_UNUSED(testUid);
+    Q_UNUSED(rect);
+    Q_UNUSED(calculator);
 }
 
 void MWCompetitiveStickVisualize::on_scaleChange(int idx)

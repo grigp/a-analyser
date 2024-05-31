@@ -1,7 +1,6 @@
 #ifndef PULSEFACTORS_H
 #define PULSEFACTORS_H
 
-#include <QCoreApplication>
 #include <QObject>
 #include <QCoreApplication>
 #include <QVector>

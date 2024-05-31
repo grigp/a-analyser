@@ -1,6 +1,8 @@
 #include "dynamosignalvisualwidget.h"
 #include "ui_dynamosignalvisualwidget.h"
 
+#include <QDebug>
+
 #include "baseutils.h"
 #include "channelsdefines.h"
 #include "channelsutils.h"
