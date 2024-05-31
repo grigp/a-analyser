@@ -1,0 +1,25 @@
+{
+    "tests": [
+        {
+            "uid": "{88ED2E73-A227-4E8C-B1B7-5FD305715B6E}",
+            "name": "Соревновательная палка",
+            "short_name": "АР палка",
+            "image": "MWStick.png",
+            "template": "met_mw_competitive_stick_uid",
+            "build_norms": false,
+            "kind": "{42B2364D-BD9C-4716-99AA-A5E09546F3C4}",
+            "params":
+            {
+                "autoend":  true,
+                "time": "00:20"
+            }
+        }
+    ],
+    "tests_kinds": [
+        {
+            "uid": "{42B2364D-BD9C-4716-99AA-A5E09546F3C4}",
+            "image": "MasWrestling.png",
+            "name": "Мас рестлинг"
+        }
+    ]
+}

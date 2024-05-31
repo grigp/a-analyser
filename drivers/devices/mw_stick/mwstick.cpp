@@ -6,7 +6,6 @@
 #include "channelsutils.h"
 #include "settingsprovider.h"
 #include "driverdefines.h"
-#include "initialsetupstabilandialog.h"
 #include "connection.h"
 
 #include <QApplication>

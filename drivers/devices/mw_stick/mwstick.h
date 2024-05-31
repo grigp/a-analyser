@@ -8,7 +8,6 @@
 
 #include "driver.h"
 #include "deviceprotocols.h"
-#include "stabilan01defines.h"
 #include "devicesdefines.h"
 
 

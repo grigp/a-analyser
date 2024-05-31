@@ -1,0 +1,15 @@
+{
+    "connections": [
+        {
+            "active": true,
+            "comment": "",
+            "driver_uid": "{0226DDAB-9473-4B7D-B99F-39091C07B8FB}",
+            "params": {
+                "channel": 2,
+                "pn": 500,
+                "rkp": 1.7
+            },
+            "port": 1
+        }
+    ]
+}

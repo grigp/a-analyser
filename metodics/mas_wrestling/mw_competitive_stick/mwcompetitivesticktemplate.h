@@ -3,7 +3,6 @@
 
 #include <QObject>
 #include "metodictemplate.h"
-#include "stabtestparams.h"
 
 /*!
  * \brief Шаблон методики соревновательной палки MWCompetitiveStickTemplate class

@@ -205,6 +205,9 @@ void MWCompetitiveStickExecute::on_scaleChange(int scaleIdx)
         scale *= 2;
 
     double maxV = m_maxVal / scale;
+    ui->lblDiagMid->setText(QString::number((m_minVal + maxV) / 2, 'f', 0));
+    ui->lblDiagMax->setText(QString::number(maxV, 'f', 0));
+    ui->pbDiag->setRange(static_cast<int>(m_minVal), static_cast<int>(maxV));
     ui->wgtDynamoOscill->setDiapazone(0, m_minVal, maxV);
 }
 
