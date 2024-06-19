@@ -139,12 +139,37 @@ protected slots:
     void on_error(const QString &err) override;
 
 private:
+    /*!
+     * \brief Этапы обмена данными с устройством The DataStages enum
+     */
+    enum DataStage
+    {
+          dsNone = 0    ///< Ожидание
+        , dsInfoRequest ///< Запрос информационного пакета
+        , dsSending     ///< Получение данных
+    };
 
     /*!
      * \brief Обрабатывает принятый байт из пакета данных байт
      * \param b - текущий байт
      */
     void assignByteFromDevice(quint8 b);
+
+    /*!
+     * \brief Обработка принятого байта при приеме запроса
+     * \param b - принятый байт
+     */
+    void assignByteOnInfoRequest(quint8 b);
+    /*!
+     * \brief Обработка принятого байта при чтении данных
+     * \param b - принятый байт
+     */
+    void assignByteOnSending(quint8 b);
+    /*!
+     * \brief Обработка принятого байта в режиме установившейся синхронизации
+     * \param b - принятый байт
+     */
+    void assignByte(quint8 b);
 
     /*!
      * \brief Передача данных пакета
@@ -158,6 +183,20 @@ private:
 
     static QMap<QString, bool> getChanRecordingDefault(const QJsonObject &obj);
     static QJsonObject setChanRecordingDefault(const QMap<QString, bool>& recMap);
+
+    /*!
+     * \brief Команда запуска передачи данных
+     */
+    void startDataSending();
+    /*!
+     * \brief Команда останова передачи данных
+     */
+    void stopDataSending();
+
+    /*!
+     * \brief Запрос информационного пакета
+     */
+    void infoRequest();
 
     ///< Разбор принятых данных
     bool m_isMarker = false;      ///< Счетчик байтов маркера. При первом 0x80 становится true. При втором 0x80 начинается прием пакета. При true и не 0x80 сбрасывается
@@ -179,6 +218,16 @@ private:
     bool m_isCalibrated {false};  ///< Было ли откалибровано
 
     QMap<QString, bool> m_chanRecordingDefault;
+
+    DataStage m_dataStage {dsNone};
+    int m_byteCount {0};
+    quint8 m_dvcCode {0};      ///< Код устройства
+    quint8 m_channelKind[4];   ///< Типы каналов
+    double m_channelSK[4];     ///< Коэффициенты чувствительности каналов
+    quint32 m_koefParts[4];    ///< Для сборки коэф-та чувствительности
+    int m_blockSize {0};       ///< Размер пакета данных от устройства
+    QVector<quint8> m_synchroBuf;  ///< Буфер для синхронизации, по длине равен трем длинам пакетов
+    bool m_isSynchro {false};      ///< Признак синхронизации
 };
 
 #endif // MWSTICK_H

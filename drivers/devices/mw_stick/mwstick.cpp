@@ -19,6 +19,13 @@ namespace
 
 const quint8 MarkerValue = 0x80;
 
+///! Константы кодов типов каналов
+static const int ChanU16Bit = 130;   ///< Число 16 бит без знака
+static const int Chan16Bit = 132;    ///< Число 16 бит со знаком
+static const int ChanU24Bit = 134;   ///< Число 24 бит без знака
+static const int Chan24Bit = 136;    ///< Число 24 бит со знаком
+
+
 ///< Поддерживаемые протоколы управления устройствами
 QSet<QString> Controls =
 {
@@ -73,15 +80,18 @@ bool MWStick::editParams(QJsonObject &params)
 void MWStick::start()
 {
     Driver::start();
+    infoRequest();
 }
 
 void MWStick::stop()
 {
+    stopDataSending();
     Driver::stop();
 }
 
 int MWStick::frequency(const QString &channelId) const
 {
+    Q_UNUSED(channelId);
     return 50;
 }
 
@@ -204,7 +214,7 @@ bool MWStick::isCalibrated() const
 
 SerialPortDefines::Settings MWStick::getSerialPortSettings()
 {
-    return SerialPortDefines::Settings(57600,
+    return SerialPortDefines::Settings(115200,
                                        QSerialPort::Data8,
                                        QSerialPort::NoParity,
                                        QSerialPort::OneStop,
@@ -214,10 +224,16 @@ SerialPortDefines::Settings MWStick::getSerialPortSettings()
 void MWStick::on_readData(const QByteArray data)
 {
     Driver::on_readData(data);
-    for (int i = 0; i < data.count(); i++)
+
+    foreach (auto b, data)
     {
-        quint8 B = static_cast<quint8>(data[i]);
-        assignByteFromDevice(B);
+        if (m_dataStage == dsInfoRequest)
+            assignByteOnInfoRequest(static_cast<quint8>(b));
+        else
+        if (m_dataStage == dsSending)
+            assignByteOnSending(static_cast<quint8>(b));
+
+//        assignByteFromDevice(static_cast<quint8>(b));
     }
 }
 
@@ -342,6 +358,91 @@ void MWStick::assignByteFromDevice(quint8 b)
     }
 }
 
+void MWStick::assignByteOnInfoRequest(quint8 b)
+{
+    if (m_byteCount == 0)
+    {
+        if (b == 0xF5)
+            ++m_byteCount;
+    }
+    else
+    if (m_byteCount == 1)
+    {
+        m_dvcCode = b;
+        ++m_byteCount;
+    }
+    else
+    if (m_byteCount >= 2 && m_byteCount <= 5)
+    {
+        m_channelKind[m_byteCount - 2] = b;
+        if (b == ChanU16Bit || b == Chan16Bit)
+            m_blockSize += 2;
+        else
+        if (b == ChanU24Bit || b == Chan24Bit)
+            m_blockSize += 3;
+
+        ++m_byteCount;
+    }
+    else
+    if (m_byteCount >= 6)
+    {
+        quint8 n = static_cast<quint8>(m_byteCount - 6);
+        quint8 z = n % 4;
+        m_koefParts[z] = b;
+        if (z == 3)
+        {
+            //qDebug() << "----" << n/4;
+            m_channelSK[n / 4] = ((m_koefParts[3] << 24) + (m_koefParts[2] << 16) + (m_koefParts[1] << 8) + m_koefParts[0]) /
+                                 1000000.0;
+        }
+        ++m_byteCount;
+    }
+
+    if (m_byteCount == 22)
+    {
+        qDebug() << "dvc code:" << m_dvcCode;
+        for (int i = 0; i < 4; ++i)
+            qDebug() << "chan kind:" << m_channelKind[i] << "    chan koef:" << m_channelSK[i];
+
+        m_blockSize += 2;
+        m_synchroBuf.resize(m_blockSize * 3);
+        m_byteCount = 0;
+        qDebug() << "block size:" << m_blockSize;
+        qDebug() << "----------------";
+        m_dataStage = dsNone;
+        startDataSending();
+    }
+
+
+//    int m_byteCount {0};
+//    quint8 m_dvcCode {0};     ///< Код устройства
+//    quint8 m_channelKind[4];  ///< Типы каналов
+//    double m_channelSK[4];    ///< Коэффициенты чувствительности каналов
+//    quint8 m_koefParts[4];    ///< Для сборки коэф-та чувствительности
+}
+
+void MWStick::assignByteOnSending(quint8 b)
+{
+    if (!m_isSynchro)
+    {
+        m_synchroBuf[m_byteCount] = b;
+        ++m_byteCount;
+        if (m_byteCount == m_synchroBuf.size())
+        {
+
+        }
+    }
+    else
+    {
+        assignByte(b);
+    }
+}
+
+void MWStick::assignByte(quint8 b)
+{
+
+}
+
 void MWStick::sendDataBlock()
 {
     sendTensoChannels();
@@ -376,6 +477,37 @@ QJsonObject MWStick::setChanRecordingDefault(const QMap<QString, bool> &recMap)
     QJsonObject recObj;
     recObj["tenso1"] = recMap.value(ChannelsDefines::chanTenso1);
     return recObj;
+}
+
+void MWStick::startDataSending()
+{
+    m_dataStage = dsSending;
+    QByteArray cmd;
+    cmd.resize(2);
+    cmd[0] = static_cast<char>(90);
+    cmd[1] = static_cast<char>(01);
+    emit writeData(cmd);
+}
+
+void MWStick::stopDataSending()
+{
+    m_dataStage = dsNone;
+    QByteArray cmd;
+    cmd.resize(2);
+    cmd[0] = static_cast<char>(90);
+    cmd[1] = static_cast<char>(02);
+    emit writeData(cmd);
+}
+
+void MWStick::infoRequest()
+{
+    m_dataStage = dsInfoRequest;
+    m_byteCount = 0;
+    QByteArray cmd;
+    cmd.resize(2);
+    cmd[0] = static_cast<char>(90);
+    cmd[1] = static_cast<char>(20);
+    emit writeData(cmd);
 }
 
 
