@@ -7,7 +7,7 @@ MWStickParamsDialog::MWStickParamsDialog(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    ui->cbChan->addItems(QStringList() << tr("Канал 1") << tr("Канал 2") << tr("Канал 3"));
+    ui->cbChan->addItems(QStringList() << tr("Канал 1") << tr("Канал 2") << tr("Канал 3") << tr("Канал 4"));
 }
 
 MWStickParamsDialog::~MWStickParamsDialog()

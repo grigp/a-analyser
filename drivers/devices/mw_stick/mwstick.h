@@ -172,6 +172,12 @@ private:
     void assignByte(quint8 b);
 
     /*!
+     * \brief Устанавливает синхронизацию по данным массива m_synchroBuf
+     * \return индекс байта, с которого установлена синхронизация или -1, если не установлена
+     */
+    int lookingForSynchronize();
+
+    /*!
      * \brief Передача данных пакета
      */
     void sendDataBlock();
@@ -228,6 +234,9 @@ private:
     int m_blockSize {0};       ///< Размер пакета данных от устройства
     QVector<quint8> m_synchroBuf;  ///< Буфер для синхронизации, по длине равен трем длинам пакетов
     bool m_isSynchro {false};      ///< Признак синхронизации
+
+    QVector<quint8> m_blockData;  ///< Байты данных в пакете
+    double m_values[4];           ///< Значения сигнала по каналам
 };
 
 #endif // MWSTICK_H

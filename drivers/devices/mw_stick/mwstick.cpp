@@ -25,6 +25,13 @@ static const int Chan16Bit = 132;    ///< Число 16 бит со знаком
 static const int ChanU24Bit = 134;   ///< Число 24 бит без знака
 static const int Chan24Bit = 136;    ///< Число 24 бит со знаком
 
+static const quint8 Header1 = 0xAC;  ///< Заголовок 1
+static const quint8 Header2 = 0x53;  ///< Заголовок 2
+
+QMap<quint8, quint8> NextHeader {
+    std::pair<quint8, quint8> (Header1, Header2)
+  , std::pair<quint8, quint8> (Header2, Header1)
+};
 
 ///< Поддерживаемые протоколы управления устройствами
 QSet<QString> Controls =
@@ -157,26 +164,35 @@ QList<DeviceProtocols::Ports> MWStick::getPorts()
 void MWStick::calibrateTenso(const QString &channelUid)
 {
     Q_UNUSED(channelUid);
-    quint8 chan = 0;
-    if (m_channel == 0)
-        chan = 0xA;
-    else
-    if (m_channel == 1)
-        chan = 0xB;
-    else
-    if (m_channel == 2)
-        chan = 0xC;
-    if (chan != 0)
-    {
-        QByteArray cmd;
-        cmd.resize(4);
-        cmd[0] = 0x33;
-        cmd[1] = static_cast<char>(chan);
-        cmd[2] = 0x33;
-        cmd[3] = 0x7;
-        emit writeData(cmd);
-        m_isCalibrated = true;
-    }
+    quint8 chan = 11 + static_cast<quint8>(m_channel);
+
+    QByteArray cmd;
+    cmd.resize(2);
+    cmd[0] = 90;
+    cmd[1] = static_cast<char>(chan);
+    emit writeData(cmd);
+    m_isCalibrated = true;
+
+//    quint8 chan = 0;
+//    if (m_channel == 0)
+//        chan = 0xA;
+//    else
+//    if (m_channel == 1)
+//        chan = 0xB;
+//    else
+//    if (m_channel == 2)
+//        chan = 0xC;
+//    if (chan != 0)
+//    {
+//        QByteArray cmd;
+//        cmd.resize(4);
+//        cmd[0] = 0x33;
+//        cmd[1] = static_cast<char>(chan);
+//        cmd[2] = 0x33;
+//        cmd[3] = 0x7;
+//        emit writeData(cmd);
+//        m_isCalibrated = true;
+//    }
 }
 
 void MWStick::getTensoValueDiapasone(const int chanNumber, double &min, double &max)
@@ -406,9 +422,13 @@ void MWStick::assignByteOnInfoRequest(quint8 b)
 
         m_blockSize += 2;
         m_synchroBuf.resize(m_blockSize * 3);
+        m_blockData.resize(m_blockSize - 2);
         m_byteCount = 0;
         qDebug() << "block size:" << m_blockSize;
         qDebug() << "----------------";
+//        quint8 a = 0xAC;
+//        quint8 b = 0x53;
+//        qDebug() << a << static_cast<quint8>(~a) << "  " << b << static_cast<quint8>(~b);
         m_dataStage = dsNone;
         startDataSending();
     }
@@ -429,7 +449,17 @@ void MWStick::assignByteOnSending(quint8 b)
         ++m_byteCount;
         if (m_byteCount == m_synchroBuf.size())
         {
-
+            //! Поиск синхронизации
+            auto idx = lookingForSynchronize();
+            //! Если нашли
+            if (idx > -1)
+            {
+                m_isSynchro = true;
+                m_byteCount = 0;
+                //! Для всех байт с точки синхронизации вызвать assignByte
+                for (int i = idx; i < m_synchroBuf.size(); ++i)
+                    assignByte(m_synchroBuf[i]);
+            }
         }
     }
     else
@@ -440,7 +470,97 @@ void MWStick::assignByteOnSending(quint8 b)
 
 void MWStick::assignByte(quint8 b)
 {
+    qDebug() << b;
+    if (NextHeader.contains(b) && (m_byteCount == 0 || m_byteCount == m_blockSize))
+        m_byteCount = 0;
+    else
+    {
+        if (m_byteCount < m_blockSize - 1)
+            m_blockData[m_byteCount - 1] = b;
+        else
+        if (m_byteCount == m_blockSize - 1)
+        {
+            quint8 n = 0;
 
+            auto assignDataChan = [&](int idx)
+            {
+                if (m_channelKind[idx] == ChanU16Bit)
+                {
+                    int b0 = m_blockData[n];
+                    int b1 = m_blockData[n + 1];
+                    m_values[idx] = b1*256 + b0;
+                    n += 2;
+                }
+                else
+                if (m_channelKind[idx] == Chan16Bit)
+                {
+                    int b0 = m_blockData[n];
+                    int b1 = m_blockData[n + 1];
+                    if (b1 < 128)
+                        m_values[idx] = -((b1*256 + b0) - 0x8000);
+                    else
+                        m_values[idx] = (b1*256 + b0) - 0x8000;
+//                    if (idx == 2)
+//                        qDebug() << b1 << b0 << m_values[idx];
+                    n += 2;
+                }
+                else
+                if (m_channelKind[idx] == ChanU24Bit)
+                {
+                    int b0 = m_blockData[n];
+                    int b1 = m_blockData[n + 1];
+                    int b2 = m_blockData[n + 2];
+                    m_values[idx] = b2*256*256 + b1*256 + b0;
+                    n += 3;
+                }
+                else
+                if (m_channelKind[idx] == Chan24Bit)
+                {
+                    int b0 = m_blockData[n];
+                    int b1 = m_blockData[n + 1];
+                    int b2 = m_blockData[n + 2];
+                    if (b2 < 128)
+                        m_values[idx] = b2*256*256 + b1*256 + b0;
+                    else
+                        m_values[idx] = (b2-256*256)*256*256 + (b1-256)*256 + b0;
+                    n += 3;
+                }
+
+                m_values[idx] = m_values[idx] * m_channelSK[idx];
+//                m_values[idx] = (m_values[idx] - 0x8000) * m_channelSK[idx];
+            };
+
+            assignDataChan(0);
+            assignDataChan(1);
+            assignDataChan(2);
+            assignDataChan(3);
+
+            incBlockCount();
+            sendDataBlock();
+//            QString s = "";
+//            for (int i = 0; i < 4; ++i)
+//                s = s + QString::number(m_values[i]) + " ";
+//            qDebug() << s;
+        }
+    }
+    ++m_byteCount;
+}
+
+int MWStick::lookingForSynchronize()
+{
+    for (int i = 0; i < m_synchroBuf.size() - 2 * m_blockSize; ++i)
+    {
+        quint8 b = m_synchroBuf[i];
+        if (NextHeader.contains(b))
+        {
+            quint8 b1 = m_synchroBuf[i + m_blockSize];
+            quint8 b2 = m_synchroBuf[i + 2 * m_blockSize];
+            if (b1 == NextHeader.value(b) && b2 == NextHeader.value(b1))
+                return i;
+        }
+
+    }
+    return -1;
 }
 
 void MWStick::sendDataBlock()
@@ -450,15 +570,16 @@ void MWStick::sendDataBlock()
 
 void MWStick::sendTensoChannels()
 {
-    double val = 0;
-    if (m_channel == 0)
-        val = m_t1;
-    else
-    if (m_channel == 1)
-        val = m_t2;
-    else
-    if (m_channel == 2)
-        val = m_t3;
+//    double val = 0;
+//    if (m_channel == 0)
+//        val = m_t1;
+//    else
+//    if (m_channel == 1)
+//        val = m_t2;
+//    else
+//    if (m_channel == 2)
+//        val = m_t3;
+    double val = m_values[m_channel];
 
     auto tenso = new DeviceProtocols::TensoDvcData(this, ChannelsDefines::chanMWStickForce, val);
     emit sendData(tenso);
