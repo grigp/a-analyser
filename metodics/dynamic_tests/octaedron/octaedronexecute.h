@@ -95,6 +95,11 @@ private:
     BaseDefines::DirectionMode m_directionMode {BaseDefines::dmCounterClockwise};
     int m_stageTime {5};
     int m_radius {50};
+    BaseDefines::StageFinishMode m_stageFinishMode {BaseDefines::sfmFixedTime};
+    int m_holdingTime {1};
+    int m_holdingAmplitude {10};
+    bool m_isShowOnlyCurrentPoint {false};
+
 
     OctaedronPatientWindow *m_patientWin {nullptr};
 

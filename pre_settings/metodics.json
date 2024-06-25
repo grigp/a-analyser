@@ -677,6 +677,25 @@
             }
         },
         {
+            "uid": "{C867F197-0C06-40A5-B9B0-DFD33E64BA38}",
+            "name": "Тренажер статокинетической реакции",
+            "short_name": "Стат реакт",
+            "image": "StabReactTrain.png",
+            "template": "met_octaedron_uid",
+            "build_norms": false,
+            "kind": "{E7829C54-4F99-4870-A91C-404238B43E50}",
+            "params": {
+                "circe_round_rule_mode": "radial",
+                "direction_mode": "random",
+                "holding_amplitude": 10,
+                "holding_time": 1,
+                "only_current_point": true,
+                "radius": 50,
+                "stage_fixing_mode": "fixing_on_target",
+                "stage_time": 5
+            }
+        },
+        {
             "uid": "{CFCCCAA0-A520-49EF-9C04-EB57580E8CAD}",
             "name": "Тренажер \"Мячики\"",
             "short_name": "Мячики",

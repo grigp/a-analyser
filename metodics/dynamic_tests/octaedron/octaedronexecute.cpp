@@ -51,6 +51,12 @@ void OctaedronExecute::setParams(const QJsonObject &params)
     m_stageTime = params["stage_time"].toInt();
     m_radius = params["radius"].toInt();
 
+    auto sfm = params["stage_fixing_mode"].toString();
+    m_stageFinishMode = BaseDefines::StageFinishModeValueIndex.value(sfm);
+    m_holdingTime = params["holding_time"].toInt(1);
+    m_holdingAmplitude = params["holding_amplitude"].toInt(10);
+    m_isShowOnlyCurrentPoint = params["only_current_point"].toBool(false);
+
     setTargetsCoordinates();
 
     StabDynamicTestExecute::setParams(params);

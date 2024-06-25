@@ -18,6 +18,9 @@ OctaedronParamsDialog::OctaedronParamsDialog(QWidget *parent) :
     ui->cbCirceRoundRuleMode->addItems(QStringList()
                               << tr("Радиальное")
                               << tr("Кольцевое"));
+    ui->cbStageFinishMode->addItems(QStringList()
+                                    << tr("Через заданное время")
+                                    << tr("При достижении цели"));
 }
 
 OctaedronParamsDialog::~OctaedronParamsDialog()
@@ -31,9 +34,14 @@ void OctaedronParamsDialog::setParams(const QJsonObject &params)
     ui->cbCirceRoundRuleMode->setCurrentIndex(BaseDefines::CirceRoundRuleModeValueIndex.value(crm));
     auto dm = params["direction_mode"].toString();
     ui->cbDirectionMode->setCurrentIndex(BaseDefines::DirectionModeValueIndex.value(dm));
+    auto sfm = params["stage_fixing_mode"].toString();
+    ui->cbStageFinishMode->setCurrentIndex(BaseDefines::StageFinishModeValueIndex.value(sfm));
 
     ui->edStageTime->setValue(params["stage_time"].toInt());
     ui->edRadius->setValue(params["radius"].toInt());
+    ui->edHoldingTime->setValue(params["holding_time"].toInt(1));
+    ui->edHoldingAmplitude->setValue(params["holding_amplitude"].toInt(10));
+    ui->cbShowOnlyCurrentPoint->setChecked(params["only_current_point"].toBool(false));
 }
 
 QJsonObject OctaedronParamsDialog::getParams()
@@ -43,9 +51,14 @@ QJsonObject OctaedronParamsDialog::getParams()
     retval["direction_mode"] = BaseDefines::DirectionModeValueName.value(valDM);
     auto valCRM = static_cast<BaseDefines::CirceRoundRuleMode>(ui->cbCirceRoundRuleMode->currentIndex());
     retval["circe_round_rule_mode"] = BaseDefines::CirceRoundRuleModeValueName.value(valCRM);
+    auto valSFM = static_cast<BaseDefines::StageFinishMode>(ui->cbStageFinishMode->currentIndex());
+    retval["stage_fixing_mode"] = BaseDefines::StageFinishModeValueName.value(valSFM);
 
     retval["stage_time"] = ui->edStageTime->value();
     retval["radius"] = ui->edRadius->value();
+    retval["holding_time"] = ui->edHoldingTime->value();
+    retval["holding_amplitude"] = ui->edHoldingAmplitude->value();
+    retval["only_current_point"] = ui->cbShowOnlyCurrentPoint->isChecked();
 
     return retval;
 }
@@ -62,6 +75,12 @@ void OctaedronParamsDialog::onDirectionModeChange(int idx)
     if (idx == BaseDefines::dmRandom)
         if (ui->cbCirceRoundRuleMode->currentIndex() == BaseDefines::crmCircle)
             ui->cbCirceRoundRuleMode->setCurrentIndex(BaseDefines::crmRadial);
+}
+
+void OctaedronParamsDialog::on_StageFinishMode(int idx)
+{
+    ui->frHoldingTime->setEnabled(idx == 1);
+    ui->frHoldingAmplitude->setEnabled(idx == 1);
 }
 
 void OctaedronParamsDialog::on_ok()

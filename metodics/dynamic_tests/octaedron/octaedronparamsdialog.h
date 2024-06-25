@@ -33,6 +33,7 @@ public:
 private slots:
     void onCirceRoundRuleMode(int idx);
     void onDirectionModeChange(int idx);
+    void on_StageFinishMode(int idx);
 
     void on_ok();
     void on_cancel();

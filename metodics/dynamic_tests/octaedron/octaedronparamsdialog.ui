@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>537</width>
-    <height>343</height>
+    <width>482</width>
+    <height>518</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -71,7 +71,7 @@
           <widget class="QComboBox" name="cbCirceRoundRuleMode">
            <property name="minimumSize">
             <size>
-             <width>150</width>
+             <width>250</width>
              <height>0</height>
             </size>
            </property>
@@ -113,7 +113,49 @@
           <widget class="QComboBox" name="cbDirectionMode">
            <property name="minimumSize">
             <size>
-             <width>150</width>
+             <width>250</width>
+             <height>0</height>
+            </size>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item>
+       <widget class="QFrame" name="frStageFinishMode">
+        <property name="frameShape">
+         <enum>QFrame::StyledPanel</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Raised</enum>
+        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout_4">
+         <item>
+          <widget class="QLabel" name="lblStageFinishMode">
+           <property name="text">
+            <string>Завершение этапа</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer_4">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>73</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QComboBox" name="cbStageFinishMode">
+           <property name="minimumSize">
+            <size>
+             <width>250</width>
              <height>0</height>
             </size>
            </property>
@@ -231,6 +273,133 @@
        </widget>
       </item>
       <item>
+       <widget class="QFrame" name="frHoldingTime">
+        <property name="frameShape">
+         <enum>QFrame::StyledPanel</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Raised</enum>
+        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout_5">
+         <item>
+          <widget class="QLabel" name="lblHoldingTime">
+           <property name="text">
+            <string>Длительность удержания маркера на точке, сек</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer_9">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>97</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QSpinBox" name="edHoldingTime">
+           <property name="minimumSize">
+            <size>
+             <width>70</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="minimum">
+            <number>1</number>
+           </property>
+           <property name="maximum">
+            <number>4</number>
+           </property>
+           <property name="singleStep">
+            <number>1</number>
+           </property>
+           <property name="value">
+            <number>1</number>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item>
+       <widget class="QFrame" name="frHoldingAmplitude">
+        <property name="frameShape">
+         <enum>QFrame::StyledPanel</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Raised</enum>
+        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout_8">
+         <item>
+          <widget class="QLabel" name="lblHoldingAmplitude">
+           <property name="text">
+            <string>Допустимая амплитуда отклонения при удержании, мм</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer_10">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>65</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QSpinBox" name="edHoldingAmplitude">
+           <property name="minimumSize">
+            <size>
+             <width>70</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="minimum">
+            <number>1</number>
+           </property>
+           <property name="maximum">
+            <number>30</number>
+           </property>
+           <property name="singleStep">
+            <number>5</number>
+           </property>
+           <property name="value">
+            <number>10</number>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item>
+       <widget class="QFrame" name="frShowOnlyCurrentPoint">
+        <property name="frameShape">
+         <enum>QFrame::StyledPanel</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Raised</enum>
+        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout">
+         <item>
+          <widget class="QCheckBox" name="cbShowOnlyCurrentPoint">
+           <property name="text">
+            <string>Показывать только активную точку</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item>
        <spacer name="verticalSpacer">
         <property name="orientation">
          <enum>Qt::Vertical</enum>
@@ -307,7 +476,7 @@
      <y>30</y>
     </hint>
     <hint type="destinationlabel">
-     <x>505</x>
+     <x>481</x>
      <y>60</y>
     </hint>
    </hints>
@@ -319,11 +488,11 @@
    <slot>onDirectionModeChange(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>511</x>
+     <x>456</x>
      <y>90</y>
     </hint>
     <hint type="destinationlabel">
-     <x>506</x>
+     <x>481</x>
      <y>90</y>
     </hint>
    </hints>
@@ -335,11 +504,11 @@
    <slot>on_ok()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>397</x>
-     <y>289</y>
+     <x>385</x>
+     <y>502</y>
     </hint>
     <hint type="destinationlabel">
-     <x>541</x>
+     <x>481</x>
      <y>230</y>
     </hint>
    </hints>
@@ -351,11 +520,11 @@
    <slot>on_cancel()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>494</x>
-     <y>287</y>
+     <x>466</x>
+     <y>502</y>
     </hint>
     <hint type="destinationlabel">
-     <x>537</x>
+     <x>481</x>
      <y>260</y>
     </hint>
    </hints>
@@ -367,12 +536,28 @@
    <slot>on_default()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>167</x>
-     <y>290</y>
+     <x>182</x>
+     <y>502</y>
     </hint>
     <hint type="destinationlabel">
-     <x>538</x>
+     <x>481</x>
      <y>215</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>cbStageFinishMode</sender>
+   <signal>currentIndexChanged(int)</signal>
+   <receiver>OctaedronParamsDialog</receiver>
+   <slot>on_StageFinishMode(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>257</x>
+     <y>123</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>483</x>
+     <y>128</y>
     </hint>
    </hints>
   </connection>
@@ -383,5 +568,6 @@
   <slot>on_ok()</slot>
   <slot>on_cancel()</slot>
   <slot>on_default()</slot>
+  <slot>on_StageFinishMode(int)</slot>
  </slots>
 </ui>

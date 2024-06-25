@@ -290,5 +290,6 @@
         <file>pre_settings/metodics_mw_en_US.json</file>
         <file>images/MainIcon_mw.ico</file>
         <file>images/MainIcon_mw.png</file>
+        <file>images/Methodics/StabReactTrain.png</file>
     </qresource>
 </RCC>

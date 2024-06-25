@@ -88,6 +88,28 @@ static QMap<DirectionMode, QString> DirectionModeValueName {
 };
 
 /*!
+ * \brief Режим фиксации этапа The StageFinishMode enum
+ * Через заданное время
+ * При достижении цели
+ */
+enum StageFinishMode
+{
+      sfmFixedTime = 0   ///< Заданное время
+    , sfmFixingOnTarget  ///< Удержание на цели
+};
+
+static QMap<QString, StageFinishMode> StageFinishModeValueIndex {
+    std::pair<QString, StageFinishMode> ("fixed_time", sfmFixedTime)
+  , std::pair<QString, StageFinishMode> ("fixing_on_target", sfmFixingOnTarget)
+};
+
+static QMap<StageFinishMode, QString> StageFinishModeValueName {
+    std::pair<StageFinishMode, QString> (sfmFixedTime, "fixed_time")
+  , std::pair<StageFinishMode, QString> (sfmFixingOnTarget, "fixing_on_target")
+};
+
+
+/*!
  * \brief Выбрать кольцевое правило обхода CirceRoundRuleMode enum
  */
 enum CirceRoundRuleMode
