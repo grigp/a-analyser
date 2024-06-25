@@ -177,9 +177,9 @@ void SKGPainter::setColorPlatforms(const QColor &color)
    m_platformsColor = color;
 }
 
-void SKGPainter::addTarget(const double x, const double y, const QColor colorBackground, const QColor colorBorder)
+void SKGPainter::addTarget(const double x, const double y, const QColor colorBackground, const QColor colorBorder, const bool visible)
 {
-    m_targets << TargetInfo(QSize(10, 10), QPointF(x, y), colorBackground, colorBorder);
+    m_targets << TargetInfo(QSize(10, 10), QPointF(x, y), colorBackground, colorBorder, visible);
 }
 
 void SKGPainter::setTarget(const double x, const double y, const int idx)
@@ -570,14 +570,17 @@ void SKGPainter::drawTargets()
     m_painter->save();
     foreach (auto ti, m_targets)
     {
-        double x = m_midX + ti.pos.x() * m_prop;
-        double y = m_midY - ti.pos.y() * m_prop;
-        int w = ti.size.width();
-        int h = ti.size.height();
+        if (ti.visible)
+        {
+            double x = m_midX + ti.pos.x() * m_prop;
+            double y = m_midY - ti.pos.y() * m_prop;
+            int w = ti.size.width();
+            int h = ti.size.height();
 
-        m_painter->setBrush(QBrush(ti.colorBackground, Qt::SolidPattern));
-        m_painter->setPen(QPen(ti.colorBorder, 1, Qt::SolidLine, Qt::FlatCap));
-        m_painter->drawRect(static_cast<int>(x - w / 2), static_cast<int>(y - h / 2), w, h);
+            m_painter->setBrush(QBrush(ti.colorBackground, Qt::SolidPattern));
+            m_painter->setPen(QPen(ti.colorBorder, 1, Qt::SolidLine, Qt::FlatCap));
+            m_painter->drawRect(static_cast<int>(x - w / 2), static_cast<int>(y - h / 2), w, h);
+        }
     }
     m_painter->restore();
 }

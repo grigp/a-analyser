@@ -16,6 +16,7 @@ struct TargetInfo
     double y;
     QColor color;
     QString label;
+    bool visible;
     int size;
 };
 
@@ -62,7 +63,7 @@ public:
      * \param size - размер цели
      * \param label - подпись цели
      */
-    void addTarget(const double x, const double y, const QColor color, const int size, const QString label = "");
+    void addTarget(const double x, const double y, const QColor color, const int size, const bool visible = true, const QString label = "");
 
     /*!
      * \brief Устанавливает параметры цели с заданным номером

@@ -30,13 +30,14 @@ void DynamicTestStimul::initTargets(const int count, const QColor color, const i
         addTarget(0, 0, color, size);
 }
 
-void DynamicTestStimul::addTarget(const double x, const double y, const QColor color, const int size, const QString label)
+void DynamicTestStimul::addTarget(const double x, const double y, const QColor color, const int size, const bool visible, const QString label)
 {
     TargetInfo ti;
     ti.x = x;
     ti.y = y;
     ti.color = color;
     ti.size = size;
+    ti.visible = visible;
     ti.label = label;
     m_targets.append(ti);
 }
@@ -84,11 +85,14 @@ void DynamicTestStimul::paintEvent(QPaintEvent *event)
     //! Цели
     foreach (auto target, m_targets)
     {
-        painter.setBrush(QBrush(target.color, Qt::SolidPattern));
-        painter.setPen(QPen(target.color, 1, Qt::SolidLine, Qt::FlatCap));
-        painter.drawRect(geometry().width() / 2 + target.x / m_diap * radius - target.size / 2,
-                         geometry().height() / 2 - target.y / m_diap * radius - target.size / 2,
-                         target.size, target.size);
+        if (target.visible)
+        {
+            painter.setBrush(QBrush(target.color, Qt::SolidPattern));
+            painter.setPen(QPen(target.color, 1, Qt::SolidLine, Qt::FlatCap));
+            painter.drawRect(geometry().width() / 2 + target.x / m_diap * radius - target.size / 2,
+                             geometry().height() / 2 - target.y / m_diap * radius - target.size / 2,
+                             target.size, target.size);
+        }
     }
 
     //! Маркер

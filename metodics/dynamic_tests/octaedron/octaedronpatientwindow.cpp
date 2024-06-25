@@ -4,7 +4,7 @@
 #include <QTimer>
 #include <QDebug>
 
-OctaedronPatientWindow::OctaedronPatientWindow(const int diap,  QList<SignalsDefines::StabRec> targets, QWidget *parent) :
+OctaedronPatientWindow::OctaedronPatientWindow(const int diap,  QList<BaseDefines::TargetInfo> targets, QWidget *parent) :
     StabDynamicTestPatientWindow(parent),
     ui(new Ui::OctaedronPatientWindow)
   , m_diap(diap)
@@ -46,7 +46,7 @@ void OctaedronPatientWindow::createTargets()
 {
     foreach (auto target, m_targets)
     {
-        addTarget(target.x, target.y, Qt::gray, 30);
+        addTarget(target.x, target.y, Qt::gray, 30, target.visible);
     }
     addTarget(0, 0, Qt::green, 30);
 }

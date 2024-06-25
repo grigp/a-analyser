@@ -245,6 +245,23 @@ enum TestDoubleClickMode
     , tdcmRunTest          ///< Запустить тест
 };
 
+/*!
+ * \brief Информация о цели. Координаты и видимость The TargetInfo struct
+ */
+struct TargetInfo
+{
+    double x;
+    double y;
+    bool visible;
+    TargetInfo() {}
+    TargetInfo(std::tuple<double, double, bool> params)
+        : x(std::get<0>(params))
+        , y(std::get<1>(params))
+        , visible(std::get<2>(params))
+    {}
+};
+
+
 }
 
 #endif // BASEDEFINES_H

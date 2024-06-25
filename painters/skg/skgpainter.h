@@ -133,8 +133,9 @@ public:
      * \param x, y - координаты цели
      * \param colorBackground - цвет фона
      * \param colorBorder - цвет границы
+     * \param visible - видимость
      */
-    void addTarget(const double x, const double y, const QColor colorBackground, const QColor colorBorder);
+    void addTarget(const double x, const double y, const QColor colorBackground, const QColor colorBorder, const bool visible = true);
 
     /*!
      * \brief setTarget - Устанавливает цель на позицию
@@ -250,8 +251,9 @@ private:
         QPointF pos;
         QColor colorBackground {Qt::green};
         QColor colorBorder {Qt::darkGreen};
-        TargetInfo(QSize sz, QPointF pt, QColor c, QColor cb)
-            : size(sz), pos(pt), colorBackground(c), colorBorder(cb) {}
+        bool visible;
+        TargetInfo(QSize sz, QPointF pt, QColor c, QColor cb, bool v)
+            : size(sz), pos(pt), colorBackground(c), colorBorder(cb), visible(v) {}
     };
 
     /*!

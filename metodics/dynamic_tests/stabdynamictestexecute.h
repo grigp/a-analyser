@@ -114,8 +114,9 @@ protected:
      * \param x, y - координаты цели
      * \param colorBackground - цвет фона
      * \param colorBorder - цвет границы
+     * \param visible - видимость
      */
-    void addTarget(const double x, const double y, const QColor colorBackground, const QColor colorBorder);
+    void addTarget(const double x, const double y, const QColor colorBackground, const QColor colorBorder, bool visible = true);
 
     /*!
      * \brief setTarget - Устанавливает цель на позицию

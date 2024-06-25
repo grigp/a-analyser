@@ -142,21 +142,21 @@ void OctaedronExecute::on_communicationError(const QString &drvName, const QStri
 void OctaedronExecute::setTargetsCoordinates()
 {
     m_targets.clear();
-    m_targets << SignalsDefines::StabRec(std::make_tuple(0, m_radius))
-              << SignalsDefines::StabRec(std::make_tuple(-m_radius * cos(M_PI_4), m_radius * sin(M_PI_4)))
-              << SignalsDefines::StabRec(std::make_tuple(-m_radius, 0))
-              << SignalsDefines::StabRec(std::make_tuple(-m_radius * 0.8 * cos(M_PI_4), -m_radius * 0.8 * sin(M_PI_4)))
-              << SignalsDefines::StabRec(std::make_tuple(0, -m_radius * 0.7))
-              << SignalsDefines::StabRec(std::make_tuple(m_radius * 0.8 * cos(M_PI_4), -m_radius * 0.8 * sin(M_PI_4)))
-              << SignalsDefines::StabRec(std::make_tuple(m_radius, 0))
-              << SignalsDefines::StabRec(std::make_tuple(m_radius * cos(M_PI_4), m_radius * sin(M_PI_4)));
+    m_targets << BaseDefines::TargetInfo(std::make_tuple(0, m_radius, !m_isShowOnlyCurrentPoint))
+              << BaseDefines::TargetInfo(std::make_tuple(-m_radius * cos(M_PI_4), m_radius * sin(M_PI_4), !m_isShowOnlyCurrentPoint))
+              << BaseDefines::TargetInfo(std::make_tuple(-m_radius, 0, !m_isShowOnlyCurrentPoint))
+              << BaseDefines::TargetInfo(std::make_tuple(-m_radius * 0.8 * cos(M_PI_4), -m_radius * 0.8 * sin(M_PI_4), !m_isShowOnlyCurrentPoint))
+              << BaseDefines::TargetInfo(std::make_tuple(0, -m_radius * 0.7, !m_isShowOnlyCurrentPoint))
+              << BaseDefines::TargetInfo(std::make_tuple(m_radius * 0.8 * cos(M_PI_4), -m_radius * 0.8 * sin(M_PI_4), !m_isShowOnlyCurrentPoint))
+              << BaseDefines::TargetInfo(std::make_tuple(m_radius, 0, !m_isShowOnlyCurrentPoint))
+              << BaseDefines::TargetInfo(std::make_tuple(m_radius * cos(M_PI_4), m_radius * sin(M_PI_4), !m_isShowOnlyCurrentPoint));
 }
 
 void OctaedronExecute::createMarkerAndTargets()
 {
     foreach (auto target, m_targets)
     {
-        addTarget(target.x, target.y, Qt::gray, Qt::darkGray);
+        addTarget(target.x, target.y, Qt::gray, Qt::darkGray, target.visible);
 //        if (m_patientWin)
 //            m_patientWin->addTarget(target.x, target.y, Qt::gray, 30);
     }

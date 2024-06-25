@@ -64,9 +64,12 @@ void StabDynamicTestPatientWindow::initTargets(const int count, const QColor col
     ui->wgtStimul->initTargets(count, color, size);
 }
 
-void StabDynamicTestPatientWindow::addTarget(const double x, const double y, const QColor color, const int size, const QString label)
+void StabDynamicTestPatientWindow::addTarget(const double x, const double y,
+                                             const QColor color,
+                                             const int size,
+                                             const bool visible, const QString label)
 {
-    ui->wgtStimul->addTarget(x, y, color, size, label);
+    ui->wgtStimul->addTarget(x, y, color, size, visible, label);
 }
 
 void StabDynamicTestPatientWindow::setTargetInfo(const int idx, const QColor color, const int size, const QString label)

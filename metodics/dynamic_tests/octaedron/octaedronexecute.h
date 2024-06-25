@@ -103,7 +103,7 @@ private:
 
     OctaedronPatientWindow *m_patientWin {nullptr};
 
-    QList<SignalsDefines::StabRec> m_targets; ///< Список целей
+    QList<BaseDefines::TargetInfo> m_targets; ///< Список целей
     int m_stage {0};                          ///< Индекс в списке этапов пробы.
                                               ///< SequenceRadial.at(m_stage) - номер подсвеченной цели
                                               ///< Если -1, то для радиального - возврат в центр

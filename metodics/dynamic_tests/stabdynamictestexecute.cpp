@@ -190,9 +190,9 @@ void StabDynamicTestExecute::setVisibleMarker(const bool isVisible)
     ui->wgtSKG->setVisibleMarker(isVisible);
 }
 
-void StabDynamicTestExecute::addTarget(const double x, const double y, const QColor colorBackground, const QColor colorBorder)
+void StabDynamicTestExecute::addTarget(const double x, const double y, const QColor colorBackground, const QColor colorBorder, bool visible)
 {
-    ui->wgtSKG->addTarget(x, y, colorBackground, colorBorder);
+    ui->wgtSKG->addTarget(x, y, colorBackground, colorBorder, visible);
 }
 
 void StabDynamicTestExecute::setTarget(const double x, const double y, const int idx)
