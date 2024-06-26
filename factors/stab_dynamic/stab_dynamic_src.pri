@@ -16,7 +16,9 @@ HEADERS += \
     $$PWD/stepdeviationfactorsdescriptor.h \
     $$PWD/stepoffsetfactorsdescriptor.h \
     $$PWD/triangleconslutionfactorsdescriptor.h \
-    $$PWD/trianglefactorsdescriptor.h
+    $$PWD/trianglefactorsdescriptor.h \
+    $$PWD/stabreacttrainfactors.h \
+    $$PWD/stabreacttrainfactorsdescriptor.h
 
 SOURCES += \
     $$PWD/crossfactors.cpp \
@@ -34,7 +36,9 @@ SOURCES += \
     $$PWD/stepdeviationfactorsdescriptor.cpp \
     $$PWD/stepoffsetfactorsdescriptor.cpp \
     $$PWD/triangleconslutionfactorsdescriptor.cpp \
-    $$PWD/trianglefactorsdescriptor.cpp
+    $$PWD/trianglefactorsdescriptor.cpp \
+    $$PWD/stabreacttrainfactors.cpp \
+    $$PWD/stabreacttrainfactorsdescriptor.cpp
 
 FORMS += \
 

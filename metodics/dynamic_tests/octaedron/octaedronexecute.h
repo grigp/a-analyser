@@ -91,6 +91,23 @@ private:
 
     void addStageToResult();
 
+    /*!
+     * \brief Возвращает координаты текущей цели
+     * \param x и y - координаты
+     * \param trgtPos - номер позиции цели
+     */
+    void getCurrentTargetCoords(int& trgtPos, double& x, double& y);
+
+    /*!
+     * \brief Возвращает расстояние от маркера до текущей цели
+     */
+    double distanceToTarget();
+
+    /*!
+     * \brief Возвращает true, усли этап закончен
+     */
+    bool isStageEnded();
+
     BaseDefines::CirceRoundRuleMode m_circeRoundRuleMode {BaseDefines::crmRadial};
     BaseDefines::DirectionMode m_directionMode {BaseDefines::dmCounterClockwise};
     int m_stageTime {5};
@@ -109,6 +126,7 @@ private:
                                               ///< Если -1, то для радиального - возврат в центр
     QSet<int> m_passed;                       ///< Множество пройденных этапов. Только для случайной последовательности при радиальном проходе
     int m_stageCounter {0};                   ///< Счетчик пакетов на этапе
+    int m_holdingCouter {0};                  ///< Счетчик пакетов при удержании цели
 
     OctaedronResultData *m_res {nullptr};
 };

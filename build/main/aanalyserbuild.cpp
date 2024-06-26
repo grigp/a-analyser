@@ -38,6 +38,7 @@
 #include "stepoffsetfactorsdescriptor.h"
 #include "evolventafactorsdescriptor.h"
 #include "octaedronfactorsdescritor.h"
+#include "stabreacttrainfactorsdescriptor.h"
 #include "boxerdodgingmultifactordescriptor.h"
 #include "stepdeviationfactorsdescriptor.h"
 #include "trianglefactorsdescriptor.h"
@@ -113,6 +114,7 @@ void AAnalyserBuild::registerFactors()
     app->registerGroup(new CrossFactorsDescriptor(BaseDefines::tlProbe));
     app->registerGroup(new EvolventaFactorsDescriptor(BaseDefines::tlProbe));
     app->registerGroup(new OctaedronFactorsDescritior(BaseDefines::tlProbe));
+    app->registerGroup(new StabReactTrainFactorsDescriptor(BaseDefines::tlProbe));
     app->registerGroup(new StepDeviationFactorsDescriptor(BaseDefines::tlProbe));
     app->registerGroup(new StepOffsetFactorsDescriptor(BaseDefines::tlProbe));
     app->registerGroup(new TriangleFactorsDescriptor(BaseDefines::tlProbe));

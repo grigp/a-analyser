@@ -119,7 +119,7 @@ void OctaedronExecute::getData(DeviceProtocols::DeviceData *data)
         {
             ++m_stageCounter;
             //! Достигли конца этапа
-            if (m_stageCounter >= m_stageTime * freqStab())
+            if (isStageEnded())
             {
                 if (getNextStage())
                 {
@@ -279,14 +279,61 @@ void OctaedronExecute::setCurrentTarget()
 void OctaedronExecute::addStageToResult()
 {
     int trgtPos = -1;
+    double tx = 0;
+    double ty = 0;
+    getCurrentTargetCoords(trgtPos, tx, ty);
+
+    m_res->addStage(trgtPos, recCount(), tx, ty);
+}
+
+void OctaedronExecute::getCurrentTargetCoords(int& trgtPos, double &x, double &y)
+{
+    trgtPos = -1;
     if (m_circeRoundRuleMode == BaseDefines::crmRadial)
         trgtPos = SequenceRadial.at(m_stage);
     else
     if (m_circeRoundRuleMode == BaseDefines::crmCircle)
         trgtPos = SequenceCircle.at(m_stage);
-
+    x = 0;
+    y = 0;
     if (trgtPos > -1)
-        m_res->addStage(trgtPos, recCount(), m_targets.at(trgtPos).x, m_targets.at(trgtPos).y);
+    {
+        x = m_targets.at(trgtPos).x;
+        y = m_targets.at(trgtPos).y;
+    }
+}
+
+double OctaedronExecute::distanceToTarget()
+{
+    int trgtPos = -1;
+    double tx = 0;
+    double ty = 0;
+    getCurrentTargetCoords(trgtPos, tx, ty);
+
+    return sqrt(pow(tx - x(), 2) + pow(ty - y(), 2));
+}
+
+bool OctaedronExecute::isStageEnded()
+{
+    //! Возврат по истечению времени
+    if (m_stageFinishMode == BaseDefines::sfmFixedTime)
+        return m_stageCounter >= m_stageTime * freqStab();
     else
-        m_res->addStage(trgtPos, recCount(), 0, 0);
+    //! Возврат по времени удержания
+    if (m_stageFinishMode == BaseDefines::sfmFixingOnTarget)
+    {
+        auto d = distanceToTarget();
+        if (d <= m_holdingAmplitude)
+        {
+            ++m_holdingCouter;
+            if (m_holdingCouter >= m_holdingTime * freqStab())
+                return true;
+        }
+        else
+            m_holdingCouter = 0;
+        //! Если не удается, то возврат по истечению времени
+        return m_stageCounter >= m_stageTime * freqStab();
+
+    }
+    return false;
 }

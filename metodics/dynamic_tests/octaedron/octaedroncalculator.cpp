@@ -1,9 +1,12 @@
 #include "octaedroncalculator.h"
 
+#include <QDebug>
+
 #include "datadefines.h"
 #include "dataprovider.h"
 #include "channelsdefines.h"
 #include "octaedronfactors.h"
+#include "stabreacttrainfactors.h"
 
 OctaedronCalculator::OctaedronCalculator(const QString &testUid, QObject *parent)
     : TestCalculator (testUid, parent)
@@ -21,20 +24,34 @@ void OctaedronCalculator::calculate()
     {
         for (int i = 0; i < ti.probes.size(); ++i)
         {
+            auto ssfm = ti.params["stage_fixing_mode"].toString();
+            BaseDefines::StageFinishMode sfm = BaseDefines::StageFinishModeValueIndex.value(ssfm);
+
             DataDefines::ProbeInfo pi;
             if (DataProvider::getProbeInfo(ti.probes.at(i), pi))
             {
                 if (DataProvider::channelExists(pi.uid, ChannelsDefines::chanStab) &&
                     DataProvider::channelExists(pi.uid, ChannelsDefines::chanOctaedronResult))
                 {
-                    m_factors = new OctaedronFactors(testUid(), pi.uid);
-
-                    for (int i = 0; i < m_factors->size(); ++i)
+                    if (sfm == BaseDefines::sfmFixedTime)
                     {
-                        addPrimaryFactor(testUid(), m_factors->factorUid(i),
-                                         m_factors->factorValue(m_factors->factorUid(i)),
-                                         0, ChannelsDefines::chanStab, pi.name);
+                        m_fctOctaedr = new OctaedronFactors(testUid(), pi.uid);
+
+                        for (int i = 0; i < m_fctOctaedr->size(); ++i)
+                            addPrimaryFactor(testUid(), m_fctOctaedr->factorUid(i),
+                                             m_fctOctaedr->factorValue(m_fctOctaedr->factorUid(i)),
+                                             0, ChannelsDefines::chanStab, pi.name);
                     }
+                    else
+                    if (sfm == BaseDefines::sfmFixingOnTarget)
+                    {
+                        m_fctSRT = new StabReactTrainFactors(testUid(), pi.uid);
+                        for (int i = 0; i < m_fctSRT->size(); ++i)
+                            addPrimaryFactor(testUid(), m_fctSRT->factorUid(i),
+                                             m_fctSRT->factorValue(m_fctSRT->factorUid(i)),
+                                             0, ChannelsDefines::chanStab, pi.name);
+                    }
+
                 }
             }
         }
@@ -49,56 +66,70 @@ void OctaedronCalculator::fastCalculate()
 double OctaedronCalculator::getValue(const int idx) const
 {
     Q_ASSERT(idx >= 0 && idx < 8);
-    if (m_factors)
-        return m_factors->factorValue(idx + 1);
+    if (m_fctOctaedr)
+        return m_fctOctaedr->factorValue(idx + 1);
     return 0;
 }
 
 double OctaedronCalculator::getAverageValue() const
 {
-    if (m_factors)
-        return m_factors->factorValue(FactorsDefines::CommonFactors::SuccessUid);
+    if (m_fctOctaedr)
+        return m_fctOctaedr->factorValue(FactorsDefines::CommonFactors::SuccessUid);
+    return 0;
+}
+
+double OctaedronCalculator::latent(const int idx) const
+{
+    if (m_fctSRT)
+        return m_fctSRT->latent(idx);
+    return 0;
+}
+
+double OctaedronCalculator::time(const int idx) const
+{
+    if (m_fctSRT)
+        return m_fctSRT->time(idx);
     return 0;
 }
 
 int OctaedronCalculator::stageTime() const
 {
-    if (m_factors)
-        return m_factors->stageTime();
+    if (m_fctOctaedr)
+        return m_fctOctaedr->stageTime();
     return 5;
 }
 
 QString OctaedronCalculator::circeRoundRuleMode() const
 {
-    if (m_factors)
-        return m_factors->circeRoundRuleMode();
+    if (m_fctOctaedr)
+        return m_fctOctaedr->circeRoundRuleMode();
     return BaseDefines::CirceRoundRuleModeValueName.value(BaseDefines::crmRadial);
 }
 
 QString OctaedronCalculator::directionMode() const
 {
-    if (m_factors)
-        return m_factors->directionMode();
+    if (m_fctOctaedr)
+        return m_fctOctaedr->directionMode();
     return BaseDefines::DirectionModeValueName.value(BaseDefines::dmCounterClockwise);
 }
 
 int OctaedronCalculator::radius() const
 {
-    if (m_factors)
-        return m_factors->radius();
+    if (m_fctOctaedr)
+        return m_fctOctaedr->radius();
     return 50;
 }
 
 int OctaedronCalculator::freq() const
 {
-    if (m_factors)
-        return m_factors->freq();
+    if (m_fctOctaedr)
+        return m_fctOctaedr->freq();
     return 50;
 }
 
 int OctaedronCalculator::diap() const
 {
-    if (m_factors)
-        return m_factors->diap();
+    if (m_fctOctaedr)
+        return m_fctOctaedr->diap();
     return 128;
 }
