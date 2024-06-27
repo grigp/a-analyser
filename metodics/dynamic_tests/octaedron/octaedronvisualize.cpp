@@ -90,13 +90,41 @@ void OctaedronVisualize::print(QPrinter *printer, const QString &testUid)
         cp.setCirceRoundRuleMode(crm);
         auto dm = BaseDefines::DirectionModeValueIndex.value(visual->m_calculator->directionMode());
         cp.setDirection(dm);
-        for (int i = 0; i < 8; ++i)
-            cp.setData(i, static_cast<int>(visual->m_calculator->getValue(i)));
+
+        if (visual->m_calculator->stageFinishMode() == BaseDefines::sfmFixedTime)
+        {
+            for (int i = 0; i < 8; ++i)
+                cp.setData(i, static_cast<int>(visual->m_calculator->getValue(i)));
+        }
+        else
+        if (visual->m_calculator->stageFinishMode() == BaseDefines::sfmFixingOnTarget)
+        {
+            cp.setLabelMode(OctaedronPainter::lmIndexPlus1);
+            for (int i = 0; i < 8; ++i)
+            {
+                int v = static_cast<int>((visual->m_calculator->stageTime() - visual->m_calculator->time(i)) / visual->m_calculator->stageTime() * 100);
+                cp.setData(i, v);
+            }
+        }
         cp.doPaint(ratio);
 
-        painter->setFont(QFont("Sans", 14, QFont::Bold, false));
-        painter->setPen(Qt::darkCyan);
-        painter->drawText(paper.x() + paper.width() / 10, static_cast<int>(paper.y() + paper.height() / 16 * 13), visual->m_sAverageQuality);
+        if (visual->m_calculator->stageFinishMode() == BaseDefines::sfmFixedTime)
+        {
+            painter->setFont(QFont("Sans", 14, QFont::Bold, false));
+            painter->setPen(Qt::darkCyan);
+            painter->drawText(paper.x() + paper.width() / 10, static_cast<int>(paper.y() + paper.height() / 16 * 13), visual->m_sAverageQuality);
+        }
+        else
+        if (visual->m_calculator->stageFinishMode() == BaseDefines::sfmFixingOnTarget)
+        {
+            //! Таблица показателей. Берется модель таблицы из визуализатора
+            QRect rectTable(paper.x() + paper.width() / 10,
+                            static_cast<int>(paper.y() + paper.height() / 7 * 5.5),
+                            paper.width() / 10 * 8,
+                            paper.height() / 10);
+            ReportElements::drawTable(painter, visual->m_model, rectTable, QList<int>() << 3 << 2 << 1 << 1 << 1 << 1 << 1 << 1 << 1 << 1,
+                                      false, ReportElements::Table::tvsStretched, 12, -1, QFont::Bold);
+        }
     }
     else
     if (printer->orientation() == QPrinter::Landscape)
@@ -110,13 +138,41 @@ void OctaedronVisualize::print(QPrinter *printer, const QString &testUid)
         cp.setCirceRoundRuleMode(crm);
         auto dm = BaseDefines::DirectionModeValueIndex.value(visual->m_calculator->directionMode());
         cp.setDirection(dm);
-        for (int i = 0; i < 8; ++i)
-            cp.setData(i, static_cast<int>(visual->m_calculator->getValue(i)));
+
+        if (visual->m_calculator->stageFinishMode() == BaseDefines::sfmFixedTime)
+        {
+            for (int i = 0; i < 8; ++i)
+                cp.setData(i, static_cast<int>(visual->m_calculator->getValue(i)));
+        }
+        else
+        if (visual->m_calculator->stageFinishMode() == BaseDefines::sfmFixingOnTarget)
+        {
+            cp.setLabelMode(OctaedronPainter::lmIndexPlus1);
+            for (int i = 0; i < 8; ++i)
+            {
+                int v = static_cast<int>((visual->m_calculator->stageTime() - visual->m_calculator->time(i)) / visual->m_calculator->stageTime() * 100);
+                cp.setData(i, v);
+            }
+        }
         cp.doPaint(ratio);
 
-        painter->setFont(QFont("Sans", 14, QFont::Bold, false));
-        painter->setPen(Qt::darkCyan);
-        painter->drawText(paper.x() + paper.width() / 5, static_cast<int>(paper.y() + paper.height() / 16 * 14), visual->m_sAverageQuality);
+        if (visual->m_calculator->stageFinishMode() == BaseDefines::sfmFixedTime)
+        {
+            painter->setFont(QFont("Sans", 14, QFont::Bold, false));
+            painter->setPen(Qt::darkCyan);
+            painter->drawText(paper.x() + paper.width() / 5, static_cast<int>(paper.y() + paper.height() / 16 * 14), visual->m_sAverageQuality);
+        }
+        else
+        if (visual->m_calculator->stageFinishMode() == BaseDefines::sfmFixingOnTarget)
+        {
+            //! Таблица показателей. Берется модель таблицы из визуализатора
+            QRect rectTable(paper.x() + paper.width() / 10,
+                            static_cast<int>(paper.y() + paper.height() / 7 * 6),
+                            paper.width() / 10 * 8,
+                            paper.height() / 10);
+            ReportElements::drawTable(painter, visual->m_model, rectTable, QList<int>() << 3 << 2 << 1 << 1 << 1 << 1 << 1 << 1 << 1 << 1,
+                                      false, ReportElements::Table::tvsStretched, 12, -1, QFont::Bold);
+        }
     }
 
     //! Нижний колонтитул

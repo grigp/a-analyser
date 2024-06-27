@@ -79,6 +79,8 @@ void OctaedronParamsDialog::onDirectionModeChange(int idx)
 
 void OctaedronParamsDialog::on_StageFinishMode(int idx)
 {
+    ui->frCirceRoundRuleMode->setEnabled(idx == 0);
+    ui->cbCirceRoundRuleMode->setCurrentIndex(0);
     ui->frHoldingTime->setEnabled(idx == 1);
     ui->frHoldingAmplitude->setEnabled(idx == 1);
 }
