@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <QPrinter>
+#include <QStandardItemModel>
 
 namespace Ui {
 class OctaedronVisualize;
@@ -34,9 +35,12 @@ public:
 private:
     Ui::OctaedronVisualize *ui;
 
+    void showTableFactors();
+
     OctaedronCalculator* m_calculator {nullptr};
     DiagOctaedron *m_wgtDiag {nullptr};
     QString m_sAverageQuality {""};
+    QStandardItemModel* m_model {nullptr};
 };
 
 #endif // OCTAEDRONVISUALIZE_H

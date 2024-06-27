@@ -4,6 +4,7 @@
 #include <QObject>
 
 #include "testcalculator.h"
+#include "basedefines.h"
 
 
 class OctaedronFactors;
@@ -50,6 +51,16 @@ public:
      */
     double time(const int idx) const;
 
+    /*!
+     * \brief Возвращает среднее значение латентного периода
+     */
+    double latentAvg() const;
+
+    /*!
+     * \brief Возвращает среднее значение времени реакции
+     */
+    double timeAvg() const;
+
     int stageTime() const;
     QString circeRoundRuleMode() const;
     QString directionMode() const;
@@ -58,9 +69,15 @@ public:
     int freq() const;
     int diap() const;
 
+    /*!
+     * \brief Возвращает режим завершения этапа
+     */
+    BaseDefines::StageFinishMode stageFinishMode() {return m_sfm;}
+
 private:
     OctaedronFactors *m_fctOctaedr {nullptr};
     StabReactTrainFactors *m_fctSRT {nullptr};
+    BaseDefines::StageFinishMode m_sfm {BaseDefines::sfmFixedTime};
 };
 
 #endif // OCTAEDRONCALCULATOR_H

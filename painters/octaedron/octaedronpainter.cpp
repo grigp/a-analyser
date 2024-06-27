@@ -156,7 +156,18 @@ void OctaedronPainter::doPaint(const double ratio)
         m_painter->drawRect(labels.at(i));
 
         m_painter->setPen(QPen(m_labelTextColor, 1, Qt::SolidLine, Qt::FlatCap));
-        m_painter->drawText(labels.at(i), QString::number(m_data[i]), QTextOption(Qt::AlignHCenter | Qt::AlignVCenter));
+
+        QString sLabel = "";
+        if (m_lm == lmValue)
+            sLabel = QString::number(m_data[i]);
+        else
+        if (m_lm == lmIndex)
+            sLabel = QString::number(i);
+        else
+        if (m_lm == lmIndexPlus1)
+            sLabel = QString::number(i+1);
+
+        m_painter->drawText(labels.at(i), sLabel, QTextOption(Qt::AlignHCenter | Qt::AlignVCenter));
     }
 
     m_painter->restore();

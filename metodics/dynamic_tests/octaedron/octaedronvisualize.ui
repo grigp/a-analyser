@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>300</height>
+    <width>677</width>
+    <height>495</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -16,6 +16,22 @@
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
     <widget class="DiagOctaedron" name="wgtDiag" native="true"/>
+   </item>
+   <item>
+    <widget class="QTreeView" name="tvFactors">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>100</height>
+      </size>
+     </property>
+    </widget>
    </item>
    <item>
     <widget class="QLabel" name="lblAverageQuality">

@@ -88,6 +88,9 @@ public:
      */
     double time(const int idx) const;
 
+    double latentAvg() const {return m_valLatentAvg;}
+    double timeAvg() const {return m_valTimeAvg;}
+
 private:
     void getEventLablels();
 
@@ -98,6 +101,8 @@ private:
     OctaedronResultData* m_resData {nullptr};
     double m_valLatent[8] {0, 0, 0, 0, 0, 0, 0, 0};
     double m_valTime[8] {0, 0, 0, 0, 0, 0, 0, 0};
+    double m_valLatentAvg {0};
+    double m_valTimeAvg {0};
 };
 
 #endif // STABREACTTRAINFACTORS_H

@@ -1,5 +1,7 @@
 #include "stabreacttrainfactors.h"
 
+#include <QDebug>
+
 #include "aanalyserapplication.h"
 #include "channelsdefines.h"
 #include "dataprovider.h"
@@ -41,16 +43,16 @@ void StabReactTrainFactors::calculate()
     getEventLablels();
     calculateBaseFactors();
 
-    double l = 0;
-    double t = 0;
+    m_valLatentAvg = 0;
+    m_valTimeAvg = 0;
     for (int i = 0; i < 8; ++i)
     {
-        l += m_valLatent[i];
-        t += m_valTime[i];
+        m_valLatentAvg += m_valLatent[i];
+        m_valTimeAvg += m_valTime[i];
     }
-    l /= 8;
-    t /= 8;
-    addFactor(StabReactTrainFactorsDefines::LatentAvrUid, l);
+    m_valLatentAvg /= 8;
+    m_valTimeAvg /= 8;
+    addFactor(StabReactTrainFactorsDefines::LatentAvrUid, m_valLatentAvg);
     addFactor(StabReactTrainFactorsDefines::LatentUUid, m_valLatent[0]);
     addFactor(StabReactTrainFactorsDefines::LatentURUid, m_valLatent[1]);
     addFactor(StabReactTrainFactorsDefines::LatentRUid, m_valLatent[2]);
@@ -60,7 +62,7 @@ void StabReactTrainFactors::calculate()
     addFactor(StabReactTrainFactorsDefines::LatentLUid, m_valLatent[6]);
     addFactor(StabReactTrainFactorsDefines::LatentULUid, m_valLatent[7]);
 
-    addFactor(StabReactTrainFactorsDefines::TimeAvrUid, t);
+    addFactor(StabReactTrainFactorsDefines::TimeAvrUid, m_valTimeAvg);
     addFactor(StabReactTrainFactorsDefines::TimeUUid, m_valTime[0]);
     addFactor(StabReactTrainFactorsDefines::TimeURUid, m_valTime[1]);
     addFactor(StabReactTrainFactorsDefines::TimeRUid, m_valTime[2]);
@@ -166,14 +168,15 @@ void StabReactTrainFactors::calculateBaseFactors()
             int code{0}, begin{0};
             double tx{0}, ty{0};
             double txp{0}, typ{0};
+            int end {0};
+            //! Берем конечную точку сначала, чтобы не плодить переменные без надобности
+            m_resData->stage(i+1, code, end, tx, ty);
             m_resData->stage(i, code, begin, tx, ty);
 
             //! Код -1 - это всегда возврат при радиальном движении,
             //! а  при кольцевом всегда только первый этап подготовительный
             if (code > -1 || (getCRRM() == BaseDefines::crmCircle && i > 0))
             {
-                //! Конечная точка этапа
-                int end = begin + m_resData->stageTime() * m_resData->freq();
                 if (begin <= stab.size() && end <= stab.size())
                 {
                     //! Максимальное расстояние для этапа между предыдущей и текущей точками

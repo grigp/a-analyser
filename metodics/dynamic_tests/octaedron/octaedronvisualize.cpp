@@ -34,15 +34,31 @@ void OctaedronVisualize::setTest(const QString &testUid)
         auto dm = BaseDefines::DirectionModeValueIndex.value(m_calculator->directionMode());
         ui->wgtDiag->setDirection(dm);
 
-        for (int i = 0; i < 8; ++i)
-            ui->wgtDiag->setData(i, static_cast<int>(m_calculator->getValue(i)));
+        if (m_calculator->stageFinishMode() == BaseDefines::sfmFixedTime)
+        {
+            for (int i = 0; i < 8; ++i)
+                ui->wgtDiag->setData(i, static_cast<int>(m_calculator->getValue(i)));
+
+            m_sAverageQuality = tr("Успешность выполнения задания") + " " +
+                    QString::number(m_calculator->getAverageValue(), 'f', 0) + " " + tr("%");
+            ui->lblAverageQuality->setText(m_sAverageQuality);
+            ui->lblAverageQuality->setStyleSheet("font-size: 18pt;");
+        }
+        else
+        if (m_calculator->stageFinishMode() == BaseDefines::sfmFixingOnTarget)
+        {
+            ui->wgtDiag->setLabelMode(OctaedronPainter::lmIndexPlus1);
+            for (int i = 0; i < 8; ++i)
+            {
+                int v = static_cast<int>((m_calculator->stageTime() - m_calculator->time(i)) / m_calculator->stageTime() * 100);
+                ui->wgtDiag->setData(i, v);
+            }
+            showTableFactors();
+        }
 
         ui->wgtDiag->doUpdate();
-
-        m_sAverageQuality = tr("Успешность выполнения задания") + " " +
-                QString::number(m_calculator->getAverageValue(), 'f', 0) + " " + tr("%");
-        ui->lblAverageQuality->setText(m_sAverageQuality);
-        ui->lblAverageQuality->setStyleSheet("font-size: 18pt;");
+        ui->lblAverageQuality->setVisible(m_calculator->stageFinishMode() == BaseDefines::sfmFixedTime);
+        ui->tvFactors->setVisible(m_calculator->stageFinishMode() == BaseDefines::sfmFixingOnTarget);
 
         m_wgtDiag = ui->wgtDiag;
     }
@@ -111,4 +127,50 @@ void OctaedronVisualize::print(QPrinter *printer, const QString &testUid)
     ReportElements::drawFooter(painter, testUid, rectFooter);
 
     painter->end();
+}
+
+void OctaedronVisualize::showTableFactors()
+{
+    QList<QStandardItem*> lineTime;
+    lineTime.clear();
+    QList<QStandardItem*> lineLatent;
+    lineLatent.clear();
+
+    QStringList titles;
+    titles.clear();
+    titles << "" << tr("Среднее");
+
+    auto itemTime = new QStandardItem("Время реакции");
+    itemTime->setEditable(false);
+    auto itemTimeAvg = new QStandardItem(QString::number(m_calculator->timeAvg(), 'f', 2));
+    itemTimeAvg->setEditable(false);
+    lineTime << itemTime << itemTimeAvg;
+
+    auto itemLatent = new QStandardItem("Латентный период");
+    itemLatent->setEditable(false);
+    auto itemLatentAvg = new QStandardItem(QString::number(m_calculator->latentAvg(), 'f', 2));
+    itemLatentAvg->setEditable(false);
+    lineLatent << itemLatent << itemLatentAvg;
+
+    for (int i = 0; i < 8; ++i)
+    {
+        titles << QString::number(i + 1);
+
+        auto itemTime = new QStandardItem(QString::number(m_calculator->time(i), 'f', 2));
+        itemTime->setEditable(false);
+        lineTime << itemTime;
+
+        auto itemLatent = new QStandardItem(QString::number(m_calculator->latent(i), 'f', 2));
+        itemLatent->setEditable(false);
+        lineLatent << itemLatent;
+    }
+
+    m_model = new QStandardItemModel(ui->tvFactors);
+    m_model->appendRow(lineTime);
+    m_model->appendRow(lineLatent);
+    m_model->setHorizontalHeaderLabels(titles);
+    ui->tvFactors->setModel(m_model);
+    ui->tvFactors->resizeColumnToContents(0);
+    for (int i = 1; i < m_model->columnCount(); ++i)
+        ui->tvFactors->header()->resizeSection(i, 80);
 }

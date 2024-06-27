@@ -25,7 +25,7 @@ void OctaedronCalculator::calculate()
         for (int i = 0; i < ti.probes.size(); ++i)
         {
             auto ssfm = ti.params["stage_fixing_mode"].toString();
-            BaseDefines::StageFinishMode sfm = BaseDefines::StageFinishModeValueIndex.value(ssfm);
+            m_sfm = BaseDefines::StageFinishModeValueIndex.value(ssfm);
 
             DataDefines::ProbeInfo pi;
             if (DataProvider::getProbeInfo(ti.probes.at(i), pi))
@@ -33,7 +33,7 @@ void OctaedronCalculator::calculate()
                 if (DataProvider::channelExists(pi.uid, ChannelsDefines::chanStab) &&
                     DataProvider::channelExists(pi.uid, ChannelsDefines::chanOctaedronResult))
                 {
-                    if (sfm == BaseDefines::sfmFixedTime)
+                    if (m_sfm == BaseDefines::sfmFixedTime)
                     {
                         m_fctOctaedr = new OctaedronFactors(testUid(), pi.uid);
 
@@ -43,7 +43,7 @@ void OctaedronCalculator::calculate()
                                              0, ChannelsDefines::chanStab, pi.name);
                     }
                     else
-                    if (sfm == BaseDefines::sfmFixingOnTarget)
+                    if (m_sfm == BaseDefines::sfmFixingOnTarget)
                     {
                         m_fctSRT = new StabReactTrainFactors(testUid(), pi.uid);
                         for (int i = 0; i < m_fctSRT->size(); ++i)
@@ -89,6 +89,20 @@ double OctaedronCalculator::time(const int idx) const
 {
     if (m_fctSRT)
         return m_fctSRT->time(idx);
+    return 0;
+}
+
+double OctaedronCalculator::latentAvg() const
+{
+    if (m_fctSRT)
+        return m_fctSRT->latentAvg();
+    return 0;
+}
+
+double OctaedronCalculator::timeAvg() const
+{
+    if (m_fctSRT)
+        return m_fctSRT->timeAvg();
     return 0;
 }
 
