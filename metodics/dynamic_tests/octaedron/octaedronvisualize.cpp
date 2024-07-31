@@ -227,6 +227,7 @@ void OctaedronVisualize::showTableFactors()
     m_model->setHorizontalHeaderLabels(titles);
     ui->tvFactors->setModel(m_model);
     ui->tvFactors->resizeColumnToContents(0);
-    for (int i = 1; i < m_model->columnCount(); ++i)
-        ui->tvFactors->header()->resizeSection(i, 80);
+    ui->tvFactors->resizeColumnToContents(1);
+    for (int i = 2; i < m_model->columnCount(); ++i)
+        ui->tvFactors->header()->resizeSection(i, 60);
 }

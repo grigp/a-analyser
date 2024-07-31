@@ -315,6 +315,17 @@ double OctaedronExecute::distanceToTarget()
 
 bool OctaedronExecute::isStageEnded()
 {
+    int sc = -1;
+    if (m_circeRoundRuleMode == BaseDefines::crmRadial)
+        sc = SequenceRadial.at(m_stage);
+    else
+    if (m_circeRoundRuleMode == BaseDefines::crmCircle)
+        sc = SequenceCircle.at(m_stage);
+
+    //! При возврате в исходное состояние - только ждем истечения времени
+    if (sc == -1)
+        return m_stageCounter >= m_stageTime * freqStab();
+    else
     //! Возврат по истечению времени
     if (m_stageFinishMode == BaseDefines::sfmFixedTime)
         return m_stageCounter >= m_stageTime * freqStab();

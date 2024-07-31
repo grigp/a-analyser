@@ -416,16 +416,16 @@ void MWStick::assignByteOnInfoRequest(quint8 b)
 
     if (m_byteCount == 22)
     {
-        qDebug() << "dvc code:" << m_dvcCode;
-        for (int i = 0; i < 4; ++i)
-            qDebug() << "chan kind:" << m_channelKind[i] << "    chan koef:" << m_channelSK[i];
+//        qDebug() << "dvc code:" << m_dvcCode;
+//        for (int i = 0; i < 4; ++i)
+//            qDebug() << "chan kind:" << m_channelKind[i] << "    chan koef:" << m_channelSK[i];
 
         m_blockSize += 2;
         m_synchroBuf.resize(m_blockSize * 3);
         m_blockData.resize(m_blockSize - 2);
         m_byteCount = 0;
-        qDebug() << "block size:" << m_blockSize;
-        qDebug() << "----------------";
+//        qDebug() << "block size:" << m_blockSize;
+//        qDebug() << "----------------";
 //        quint8 a = 0xAC;
 //        quint8 b = 0x53;
 //        qDebug() << a << static_cast<quint8>(~a) << "  " << b << static_cast<quint8>(~b);
@@ -470,7 +470,6 @@ void MWStick::assignByteOnSending(quint8 b)
 
 void MWStick::assignByte(quint8 b)
 {
-    qDebug() << b;
     if (NextHeader.contains(b) && (m_byteCount == 0 || m_byteCount == m_blockSize))
         m_byteCount = 0;
     else
@@ -526,8 +525,7 @@ void MWStick::assignByte(quint8 b)
                     n += 3;
                 }
 
-                m_values[idx] = m_values[idx] * m_channelSK[idx];
-//                m_values[idx] = (m_values[idx] - 0x8000) * m_channelSK[idx];
+                m_values[idx] = (m_values[idx] * m_channelSK[idx]) / 1000.0;
             };
 
             assignDataChan(0);
@@ -537,10 +535,6 @@ void MWStick::assignByte(quint8 b)
 
             incBlockCount();
             sendDataBlock();
-//            QString s = "";
-//            for (int i = 0; i < 4; ++i)
-//                s = s + QString::number(m_values[i]) + " ";
-//            qDebug() << s;
         }
     }
     ++m_byteCount;

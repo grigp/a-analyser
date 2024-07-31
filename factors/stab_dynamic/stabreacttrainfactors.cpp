@@ -183,13 +183,24 @@ void StabReactTrainFactors::calculateBaseFactors()
                     //! Первая точка никогда не учитывается!!!
                     double maxR = sqrt(pow(tx - txp, 2) + pow(ty - typ, 2));
 
+                    //! МО первых 0.2 секунд
+                    double mid = 0;
+                    for (int j = begin; j < begin + stab.frequency() / 5; ++j)
+                    {
+                        double x = stab.value(0, j);
+                        double y = stab.value(1, j);
+                        double r = sqrt(pow(tx - x, 2) + pow(ty - y, 2));
+                        mid += r;
+                    }
+                    mid /= (stab.frequency() / 5);
+
                     //! По сигналу
                     for (int j = begin; j < end; ++j)
                     {
                         double x = stab.value(0, j);
                         double y = stab.value(1, j);
                         double r = sqrt(pow(tx - x, 2) + pow(ty - y, 2));
-                        if (r < maxR * 0.9)
+                        if (fabs(r - mid) > 10)
                         {
                             //! Показатель латентного периода для прохода
                             m_valLatent[code] = static_cast<double>(j - begin) / stab.frequency();

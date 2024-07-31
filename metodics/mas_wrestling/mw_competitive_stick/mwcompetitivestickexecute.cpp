@@ -136,7 +136,7 @@ void MWCompetitiveStickExecute::getData(DeviceProtocols::DeviceData *data)
     if (m_value > m_valueMax)
     {
         m_valueMax = m_value;
-        ui->lblMaxVal->setText(QString::number(m_valueMax, 'f', 1));
+        ui->lblMaxVal->setText(QString::number(m_valueMax, 'f', 0));
     }
 
 //    if (m_patientWin)
