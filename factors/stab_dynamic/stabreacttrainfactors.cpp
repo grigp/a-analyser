@@ -167,7 +167,7 @@ void StabReactTrainFactors::calculateBaseFactors()
             //! Параметры этапа
             int code{0}, begin{0};
             double tx{0}, ty{0};
-            double txp{0}, typ{0};
+//            double txp{0}, typ{0};
             int end {0};
             //! Берем конечную точку сначала, чтобы не плодить переменные без надобности
             m_resData->stage(i+1, code, end, tx, ty);
@@ -181,7 +181,7 @@ void StabReactTrainFactors::calculateBaseFactors()
                 {
                     //! Максимальное расстояние для этапа между предыдущей и текущей точками
                     //! Первая точка никогда не учитывается!!!
-                    double maxR = sqrt(pow(tx - txp, 2) + pow(ty - typ, 2));
+//                    double maxR = sqrt(pow(tx - txp, 2) + pow(ty - typ, 2));
 
                     //! МО первых 0.2 секунд
                     double mid = 0;
@@ -213,8 +213,8 @@ void StabReactTrainFactors::calculateBaseFactors()
                 }
             }
 
-            txp = tx;
-            typ = ty;
+//            txp = tx;
+//            typ = ty;
         }
     }
 }
