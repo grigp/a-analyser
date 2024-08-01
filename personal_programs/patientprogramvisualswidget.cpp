@@ -67,6 +67,11 @@ PPVisual *PatientProgramVisualsWidget::getCurrentVisual()
     return nullptr;
 }
 
+void PatientProgramVisualsWidget::on_currentChanged(int index)
+{
+    emit tabChanged(index);
+}
+
 void PatientProgramVisualsWidget::assign()
 {
     //! Если визуализаторов нет, то покажем только виджет индивидуальной программы
@@ -90,6 +95,9 @@ void PatientProgramVisualsWidget::assign()
             m_tabs->addTab(visual, visual->name());
             visual->calculate();
         }
+
+        connect(m_tabs, &QTabWidget::currentChanged, this, &PatientProgramVisualsWidget::on_currentChanged);
+
         //! И покажем первый визуализатор
         m_tabs->setCurrentIndex(1);
     }

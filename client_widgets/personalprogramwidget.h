@@ -79,6 +79,7 @@ private slots:
     void on_params();
     void on_openTest();
     void on_closeTest();
+    void on_expandCollapseTest();
     void on_print();
 
     void on_repeat();
@@ -120,6 +121,12 @@ private slots:
     void on_removePatient(const QString &patientUid);
 
     void on_popupMenuRequested(QPoint pos);
+
+    /*!
+     * \brief Сигнал выбора нового табулятора
+     * \param index - индекс нового табулятора
+     */
+    void on_tabChanged(int index);
 
 private:
     Ui::PersonalProgramWidget *ui;

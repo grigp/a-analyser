@@ -364,6 +364,23 @@ void PersonalProgramWidget::on_closeTest()
     ui->frPPOpenTest->setVisible(false);
 }
 
+void PersonalProgramWidget::on_expandCollapseTest()
+{
+    auto sizes = ui->splTableTest->sizes();
+    if (sizes.at(0) == 0)
+    {
+        int v = (sizes.at(0) + sizes.at(1)) / 2;
+        sizes.replace(0, v);
+        sizes.replace(1, v);
+    }
+    else
+    {
+        sizes.replace(1, sizes.at(0) + sizes.at(1));
+        sizes.replace(0, 0);
+    }
+    ui->splTableTest->setSizes(sizes);
+}
+
 void PersonalProgramWidget::on_print()
 {
     auto index = selectedIndex();
@@ -726,6 +743,12 @@ void PersonalProgramWidget::on_popupMenuRequested(QPoint pos)
     m_menu->popup(ui->tvPatients->mapToGlobal(pos));
 }
 
+void PersonalProgramWidget::on_tabChanged(int index)
+{
+    Q_UNUSED(index);
+    on_closeTest();
+}
+
 QStandardItem* PersonalProgramWidget::appendLine(const QString uidPat,
                                                  const QString uidPPAssigned,
                                                  const QJsonObject& objPP,
@@ -843,6 +866,7 @@ void PersonalProgramWidget::showPersonalProgram(const QString& uidPPAssigned)
         //! Создадим виджет, на котором будут визуализаторы
         auto ppvw = new PatientProgramVisualsWidget(ppw, vl, ui->frPrograms);
         m_wgts.insert(uidPPAssigned, ppvw);
+        connect(ppvw, &PatientProgramVisualsWidget::tabChanged, this, &PersonalProgramWidget::on_tabChanged);
         ui->frPrograms->layout()->addWidget(ppvw);
     }
 }

@@ -51,6 +51,16 @@ public:
      */
     PPVisual* getCurrentVisual();
 
+signals:
+    /*!
+     * \brief Сигнал выбора нового табулятора
+     * \param index - индекс нового табулятора
+     */
+    void tabChanged(int index);
+
+private slots:
+    void on_currentChanged(int index);
+
 private:
     Ui::PatientProgramVisualsWidget *ui;
 

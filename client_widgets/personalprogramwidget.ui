@@ -477,6 +477,12 @@
                <property name="orientation">
                 <enum>Qt::Horizontal</enum>
                </property>
+               <property name="opaqueResize">
+                <bool>true</bool>
+               </property>
+               <property name="childrenCollapsible">
+                <bool>true</bool>
+               </property>
                <widget class="QFrame" name="frPrograms">
                 <property name="sizePolicy">
                  <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -539,8 +545,8 @@
                 </property>
                 <property name="minimumSize">
                  <size>
-                  <width>200</width>
-                  <height>0</height>
+                  <width>0</width>
+                  <height>200</height>
                  </size>
                 </property>
                 <property name="frameShape">
@@ -604,6 +610,23 @@
                        </size>
                       </property>
                      </spacer>
+                    </item>
+                    <item>
+                     <widget class="QPushButton" name="btnExpandCollapse">
+                      <property name="toolTip">
+                       <string>Развернуть результаты теста на весь экран</string>
+                      </property>
+                      <property name="text">
+                       <string/>
+                      </property>
+                      <property name="icon">
+                       <iconset resource="../kernel.qrc">
+                        <normaloff>:/images/ExpandCollapse.png</normaloff>:/images/ExpandCollapse.png</iconset>
+                      </property>
+                      <property name="flat">
+                       <bool>true</bool>
+                      </property>
+                     </widget>
                     </item>
                     <item>
                      <widget class="QPushButton" name="btnCloseOpenTestPanel">
@@ -880,6 +903,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>btnExpandCollapse</sender>
+   <signal>clicked()</signal>
+   <receiver>PersonalProgramWidget</receiver>
+   <slot>on_expandCollapseTest()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>976</x>
+     <y>67</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1033</x>
+     <y>431</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>on_splitterMoved(int,int)</slot>
@@ -896,5 +935,6 @@
   <slot>on_repeat()</slot>
   <slot>on_saveAs()</slot>
   <slot>on_print()</slot>
+  <slot>on_expandCollapseTest()</slot>
  </slots>
 </ui>
