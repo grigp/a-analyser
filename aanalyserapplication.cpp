@@ -1361,6 +1361,14 @@ bool AAnalyserApplication::isOneMethodicOnAddTests()
 
 void AAnalyserApplication::assignApplicationVersion()
 {
+    static QMap<QString, QString> release {
+        std::pair<QString, QString> ("0", "alfa")
+      , std::pair<QString, QString> ("1", "betta")
+      , std::pair<QString, QString> ("2", "pre release")
+      , std::pair<QString, QString> ("3", "release")
+    };
+
+
     //! Нумерация версий 1.01.02.356:
     //! j.n.r.b
     //! j - major number
@@ -1372,8 +1380,14 @@ void AAnalyserApplication::assignApplicationVersion()
     auto dtb = QDateTime(QDate(2024, 1, 1));
     qint64 d = dtb.daysTo(m_buildDate);
     auto avl = applicationVersion().split(".");
+    qDebug() << "-------" << avl;
     if (avl.size() >= 3)
-        setApplicationVersion(avl.at(0) + "." + avl.at(1) + "." + avl.at(2) + "." + QString::number(d));
+    {
+        QString sMinor = avl.at(1);
+        if (sMinor.size() < 2)
+            sMinor = "0" + sMinor;
+        setApplicationVersion(avl.at(0) + "." + sMinor + "." + release.value(avl.at(2)) + "." + QString::number(d));
+    }
     else
         setApplicationVersion("1.0.0." + QString::number(d));
 }
