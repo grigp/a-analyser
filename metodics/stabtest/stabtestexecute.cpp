@@ -30,6 +30,7 @@
 #include <QTimer>
 #include <QDesktopWidget>
 #include <QComboBox>
+#include <QFileDialog>
 #include <QDebug>
 
 StabTestExecute::StabTestExecute(QWidget *parent) :
@@ -70,6 +71,8 @@ void StabTestExecute::setParams(const QJsonObject &params)
     m_params.clear();
     m_stages.clear();
     auto prbsArr = params["probes"].toArray();
+    m_semanticMode = params["condition"].toInt();
+    ui->gbFromFiles->setVisible(m_semanticMode == 6);
     for (int i = 0; i < prbsArr.size(); ++i)
     {
         auto obj = prbsArr[i].toObject();
@@ -454,6 +457,110 @@ void StabTestExecute::splitterMoved(int pos, int index)
     Q_UNUSED(pos);
     Q_UNUSED(index);
     SettingsProvider::setValueToRegAppCopy("Geometry/AdvancedChannelsWidget", "SplitterProbePosition", ui->splitter->saveState());
+}
+
+void StabTestExecute::on_AMedStabSelect()
+{
+    static const QString suffix = "txt";
+    static const QString emfn = QCoreApplication::tr("Текстовые файлы") + " *." + suffix + " (*." + suffix + ")";
+    auto fn = QFileDialog::getOpenFileName(this, tr("Текстовые файлы"), "", emfn);
+    if (fn != "")
+    {
+        ui->edAMedStab->setText(fn);
+    }
+}
+
+void StabTestExecute::on_AMedZSelect()
+{
+    static const QString suffix = "txt";
+    static const QString emfn = QCoreApplication::tr("Текстовые файлы") + " *." + suffix + " (*." + suffix + ")";
+    auto fn = QFileDialog::getOpenFileName(this, tr("Текстовые файлы"), "", emfn);
+    if (fn != "")
+    {
+        ui->edAMedZ->setText(fn);
+    }
+}
+
+void StabTestExecute::on_MBNStabSelect()
+{
+    static const QString suffix = "dat";
+    static const QString emfn = QCoreApplication::tr("Файлы экспорта стабилоплатформы МБН") + " *." + suffix + " (*." + suffix + ")";
+    auto fn = QFileDialog::getOpenFileName(this, tr("Файлы dat"), "", emfn);
+    if (fn != "")
+    {
+        ui->edMBNStab->setText(fn);
+    }
+}
+
+void StabTestExecute::on_writeFromFiles()
+{
+    m_extStab1 = new Stabilogram(ChannelsDefines::chanStab1, 50);
+    m_extZ1 = new Balistogram(ChannelsDefines::chanZ1, 50);
+    m_extStab2 = new Stabilogram(ChannelsDefines::chanStab2, 100);
+    m_extZ2 = new Balistogram(ChannelsDefines::chanZ2, 100);
+
+    readFileAMed(ui->edAMedStab->text(), ui->edAMedZ->text(), m_extStab1, m_extZ1);
+    readFileMBN(ui->edMBNStab->text(), m_extStab2, m_extZ2);
+
+    qDebug() << m_extStab1->size() << m_extStab2->size() << m_extZ1->size() << m_extZ2->size();
+
+    m_trd->newProbe(probeParams().name);
+    m_trd->addChannel(m_extStab1);
+    m_trd->addChannel(m_extZ1);
+    m_trd->addChannel(m_extStab2);
+    m_trd->addChannel(m_extZ2);
+
+    finishTest();
+}
+
+void StabTestExecute::readFileAMed(const QString &fnStab, const QString &fnZ, Stabilogram *stab, Balistogram *z)
+{
+    QFile fileStab(fnStab);
+    if (!fileStab.open(QIODevice::ReadOnly | QIODevice::Text))
+        return;
+    QTextStream inStab(&fileStab);
+    while (!inStab.atEnd())
+    {
+        QString line = inStab.readLine();
+        auto sl = line.split('\t');
+        if (sl.size() == 2)
+        {
+            SignalsDefines::StabRec rec(std::make_tuple(sl.at(0).toDouble(), sl.at(1).toDouble()));
+            stab->addValue(rec);
+        }
+    }
+
+    QFile fileZ(fnZ);
+    if (!fileZ.open(QIODevice::ReadOnly | QIODevice::Text))
+        return;
+    QTextStream inZ(&fileZ);
+    while (!inZ.atEnd())
+    {
+        QString line = inZ.readLine();
+        z->addValue(line.toDouble());
+    }
+}
+
+void StabTestExecute::readFileMBN(const QString &fn, Stabilogram *stab, Balistogram *z)
+{
+    QFile file(fn);
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
+        return;
+    QTextStream in(&file);
+    int n = 0;
+    while (!in.atEnd())
+    {
+        QString line = in.readLine();
+        auto sl = line.split('\t');
+        if (n > 0 && sl.size() == 5)
+        {
+            SignalsDefines::StabRec rec(std::make_tuple(sl.at(2).toDouble(), sl.at(3).toDouble()));
+            stab->addValue(rec);
+
+            z->addValue(sl.at(4).toDouble());
+        }
+        ++n;
+    }
 }
 
 StabTestParams::ProbeParams StabTestExecute::probeParams()

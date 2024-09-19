@@ -63,15 +63,22 @@ private slots:
     void recording();
 
     void showTrace(bool trace);
-
     void on_clearTrace();
-
     void on_advChannelsClicked(bool checked);
-
     void splitterMoved(int pos,int index);
+
+    void on_AMedStabSelect();
+    void on_AMedZSelect();
+    void on_MBNStabSelect();
+    void on_writeFromFiles();
 
 private:
     Ui::StabTestExecute *ui;
+
+    void readFileAMed(const QString& fnStab, const QString& fnZ,
+                      Stabilogram* stab, Balistogram* z);
+    void readFileMBN(const QString& fn,
+                      Stabilogram* stab, Balistogram* z);
 
     /*!
      * \brief Возвращает параметры для текущей пробы.
@@ -154,6 +161,12 @@ private:
     int m_autoTimeRun {5};         ///< Время задержки до операции
     int m_autoTimeLatent {2};      ///< Длительность латентного периода
     QList<QList<MetodicDefines::AutoModeStaticStages>> m_stages;  ///< Список этапов для автоматического режима для каждой пробы
+
+    int m_semanticMode = 0;       ///< Режим семантики теста
+    Stabilogram* m_extStab1 = nullptr;
+    Stabilogram* m_extStab2 = nullptr;
+    Balistogram* m_extZ1 = nullptr;
+    Balistogram* m_extZ2 = nullptr;
 
     QMediaPlayer m_player;
 };

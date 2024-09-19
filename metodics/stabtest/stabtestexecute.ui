@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>734</width>
-    <height>565</height>
+    <width>886</width>
+    <height>774</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -457,6 +457,237 @@
               </widget>
              </item>
              <item>
+              <widget class="QGroupBox" name="gbFromFiles">
+               <property name="title">
+                <string>Сравнение </string>
+               </property>
+               <layout class="QVBoxLayout" name="verticalLayout_7">
+                <property name="spacing">
+                 <number>2</number>
+                </property>
+                <property name="leftMargin">
+                 <number>3</number>
+                </property>
+                <property name="topMargin">
+                 <number>0</number>
+                </property>
+                <property name="rightMargin">
+                 <number>3</number>
+                </property>
+                <property name="bottomMargin">
+                 <number>2</number>
+                </property>
+                <item>
+                 <widget class="QLabel" name="lblAMed">
+                  <property name="text">
+                   <string>AMed</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QFrame" name="frAMedStab">
+                  <property name="frameShape">
+                   <enum>QFrame::StyledPanel</enum>
+                  </property>
+                  <property name="frameShadow">
+                   <enum>QFrame::Raised</enum>
+                  </property>
+                  <layout class="QHBoxLayout" name="horizontalLayout_4">
+                   <property name="spacing">
+                    <number>2</number>
+                   </property>
+                   <property name="leftMargin">
+                    <number>4</number>
+                   </property>
+                   <property name="topMargin">
+                    <number>0</number>
+                   </property>
+                   <property name="rightMargin">
+                    <number>1</number>
+                   </property>
+                   <property name="bottomMargin">
+                    <number>0</number>
+                   </property>
+                   <item>
+                    <widget class="QLabel" name="lblAMedStab">
+                     <property name="minimumSize">
+                      <size>
+                       <width>70</width>
+                       <height>0</height>
+                      </size>
+                     </property>
+                     <property name="text">
+                      <string>Стаб (X Y)</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLineEdit" name="edAMedStab"/>
+                   </item>
+                   <item>
+                    <widget class="QPushButton" name="btnAMedStab">
+                     <property name="sizePolicy">
+                      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                       <horstretch>0</horstretch>
+                       <verstretch>0</verstretch>
+                      </sizepolicy>
+                     </property>
+                     <property name="maximumSize">
+                      <size>
+                       <width>25</width>
+                       <height>16777215</height>
+                      </size>
+                     </property>
+                     <property name="text">
+                      <string>...</string>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QFrame" name="frAMedZ">
+                  <property name="frameShape">
+                   <enum>QFrame::StyledPanel</enum>
+                  </property>
+                  <property name="frameShadow">
+                   <enum>QFrame::Raised</enum>
+                  </property>
+                  <layout class="QHBoxLayout" name="horizontalLayout_3">
+                   <property name="spacing">
+                    <number>2</number>
+                   </property>
+                   <property name="leftMargin">
+                    <number>4</number>
+                   </property>
+                   <property name="topMargin">
+                    <number>1</number>
+                   </property>
+                   <property name="rightMargin">
+                    <number>0</number>
+                   </property>
+                   <property name="bottomMargin">
+                    <number>1</number>
+                   </property>
+                   <item>
+                    <widget class="QLabel" name="lblAMedZ">
+                     <property name="minimumSize">
+                      <size>
+                       <width>70</width>
+                       <height>0</height>
+                      </size>
+                     </property>
+                     <property name="text">
+                      <string>Z</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLineEdit" name="edAMedZ"/>
+                   </item>
+                   <item>
+                    <widget class="QPushButton" name="btnAMedZ">
+                     <property name="sizePolicy">
+                      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                       <horstretch>0</horstretch>
+                       <verstretch>0</verstretch>
+                      </sizepolicy>
+                     </property>
+                     <property name="maximumSize">
+                      <size>
+                       <width>25</width>
+                       <height>16777215</height>
+                      </size>
+                     </property>
+                     <property name="text">
+                      <string>...</string>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QLabel" name="lblMBN">
+                  <property name="text">
+                   <string>МБН</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QFrame" name="frMBNStab">
+                  <property name="frameShape">
+                   <enum>QFrame::StyledPanel</enum>
+                  </property>
+                  <property name="frameShadow">
+                   <enum>QFrame::Raised</enum>
+                  </property>
+                  <layout class="QHBoxLayout" name="horizontalLayout_5">
+                   <property name="spacing">
+                    <number>2</number>
+                   </property>
+                   <property name="leftMargin">
+                    <number>4</number>
+                   </property>
+                   <property name="topMargin">
+                    <number>0</number>
+                   </property>
+                   <property name="rightMargin">
+                    <number>1</number>
+                   </property>
+                   <property name="bottomMargin">
+                    <number>0</number>
+                   </property>
+                   <item>
+                    <widget class="QLabel" name="lblMBNStab">
+                     <property name="minimumSize">
+                      <size>
+                       <width>70</width>
+                       <height>0</height>
+                      </size>
+                     </property>
+                     <property name="text">
+                      <string>Стаб (X Y)</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLineEdit" name="edMBNStab"/>
+                   </item>
+                   <item>
+                    <widget class="QPushButton" name="btnMBNStab">
+                     <property name="sizePolicy">
+                      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                       <horstretch>0</horstretch>
+                       <verstretch>0</verstretch>
+                      </sizepolicy>
+                     </property>
+                     <property name="maximumSize">
+                      <size>
+                       <width>25</width>
+                       <height>16777215</height>
+                      </size>
+                     </property>
+                     <property name="text">
+                      <string>...</string>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="btnRecord_2">
+                  <property name="text">
+                   <string>Записать</string>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </widget>
+             </item>
+             <item>
               <spacer name="verticalSpacer">
                <property name="orientation">
                 <enum>Qt::Vertical</enum>
@@ -745,8 +976,8 @@
    <slot>zeroing()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>630</x>
-     <y>54</y>
+     <x>862</x>
+     <y>69</y>
     </hint>
     <hint type="destinationlabel">
      <x>703</x>
@@ -761,8 +992,8 @@
    <slot>calibrate()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>710</x>
-     <y>480</y>
+     <x>862</x>
+     <y>667</y>
     </hint>
     <hint type="destinationlabel">
      <x>702</x>
@@ -793,8 +1024,8 @@
    <slot>scaleChange(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>641</x>
-     <y>87</y>
+     <x>860</x>
+     <y>97</y>
     </hint>
     <hint type="destinationlabel">
      <x>350</x>
@@ -841,12 +1072,76 @@
    <slot>on_clearTrace()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>618</x>
-     <y>428</y>
+     <x>862</x>
+     <y>445</y>
     </hint>
     <hint type="destinationlabel">
      <x>734</x>
      <y>426</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btnAMedStab</sender>
+   <signal>clicked()</signal>
+   <receiver>StabTestExecute</receiver>
+   <slot>on_AMedStabSelect()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>854</x>
+     <y>489</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>889</x>
+     <y>440</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btnAMedZ</sender>
+   <signal>clicked()</signal>
+   <receiver>StabTestExecute</receiver>
+   <slot>on_AMedZSelect()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>843</x>
+     <y>523</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>888</x>
+     <y>468</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btnMBNStab</sender>
+   <signal>clicked()</signal>
+   <receiver>StabTestExecute</receiver>
+   <slot>on_MBNStabSelect()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>851</x>
+     <y>562</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>887</x>
+     <y>501</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btnRecord_2</sender>
+   <signal>clicked()</signal>
+   <receiver>StabTestExecute</receiver>
+   <slot>on_writeFromFiles()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>817</x>
+     <y>586</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>889</x>
+     <y>534</y>
     </hint>
    </hints>
   </connection>
@@ -862,5 +1157,9 @@
   <slot>on_advChannelsClicked(bool)</slot>
   <slot>splitterMoved(int,int)</slot>
   <slot>on_clearTrace()</slot>
+  <slot>on_AMedStabSelect()</slot>
+  <slot>on_AMedZSelect()</slot>
+  <slot>on_MBNStabSelect()</slot>
+  <slot>on_writeFromFiles()</slot>
  </slots>
 </ui>
