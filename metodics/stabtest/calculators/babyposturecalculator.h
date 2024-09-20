@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include "testcalculator.h"
+#include "datadefines.h"
 
 
 class ClassicFactors;
@@ -54,8 +55,19 @@ public:
     int factorsCount() const;
     FactorInfo factor(const int idx) const;
 
+    int factors1Count() const;
+    FactorInfo factor1(const int idx) const;
+
+    int factors2Count() const;
+    FactorInfo factor2(const int idx) const;
+
 private:
-    void assignFactors();
+    QList<FactorInfo> createFactors();
+
+    void assignFactors(const QString& ciStab, const QString& ciZ,
+                       DataDefines::ProbeInfo& pi,
+                       QList<BabyPostureCalculator::FactorInfo>& factors,
+                       const bool isPrimary);
 
     ClassicFactors* m_fctClassic {nullptr};
     SpectrStabFactors* m_fctSpectrStab {nullptr};
@@ -63,6 +75,8 @@ private:
     VectorFactors* m_fctVector {nullptr};
 
     QList<FactorInfo> m_factors;
+    QList<FactorInfo> m_factors1;
+    QList<FactorInfo> m_factors2;
 };
 
 #endif // BABYPOSTURECALCULATOR_H

@@ -494,8 +494,8 @@ void StabTestExecute::on_MBNStabSelect()
 
 void StabTestExecute::on_writeFromFiles()
 {
-    m_extStab1 = new Stabilogram(ChannelsDefines::chanStab1, 50);
-    m_extZ1 = new Balistogram(ChannelsDefines::chanZ1, 50);
+    m_extStab1 = new Stabilogram(ChannelsDefines::chanStab1, 100);
+    m_extZ1 = new Balistogram(ChannelsDefines::chanZ1, 100);
     m_extStab2 = new Stabilogram(ChannelsDefines::chanStab2, 100);
     m_extZ2 = new Balistogram(ChannelsDefines::chanZ2, 100);
 
@@ -513,12 +513,17 @@ void StabTestExecute::on_writeFromFiles()
     finishTest();
 }
 
-void StabTestExecute::readFileAMed(const QString &fnStab, const QString &fnZ, Stabilogram *stab, Balistogram *z)
+void StabTestExecute::readFileAMed(const QString &fnStab, const QString &fnZ, Stabilogram *sigStab, Balistogram *sigZ)
 {
+    QList<SignalsDefines::StabRec> arrStab;
+    arrStab.clear();
+
     QFile fileStab(fnStab);
     if (!fileStab.open(QIODevice::ReadOnly | QIODevice::Text))
         return;
     QTextStream inStab(&fileStab);
+    int n = 0;
+    SignalsDefines::StabRec recO;
     while (!inStab.atEnd())
     {
         QString line = inStab.readLine();
@@ -526,22 +531,62 @@ void StabTestExecute::readFileAMed(const QString &fnStab, const QString &fnZ, St
         if (sl.size() == 2)
         {
             SignalsDefines::StabRec rec(std::make_tuple(sl.at(0).toDouble(), sl.at(1).toDouble()));
-            stab->addValue(rec);
+//            arrStab << rec;
+            if (n > 0)
+            {
+                SignalsDefines::StabRec rec2(std::make_tuple((recO.x + rec.x) / 2,
+                                                             (recO.y + rec.y) / 2));
+                sigStab->addValue(rec2);
+            }
+            sigStab->addValue(rec);
+            recO = rec;
+            ++n;
         }
     }
 
+//    for (int i = 0; i < arrStab.size() - 1; ++i)
+//    {
+//        SignalsDefines::StabRec rec(std::make_tuple((arrStab[i].x + arrStab[i+1].x) / 2,
+//                                                    (arrStab[i].y + arrStab[i+1].y) / 2));
+//        arrStab.insert(i, rec);
+//    }
+//    for (int i = 0; i < arrStab.size() - 1; ++i)
+//        stab->addValue(arrStab[i]);
+
+
+    QList<double> arrZ;
+    arrZ.clear();
     QFile fileZ(fnZ);
     if (!fileZ.open(QIODevice::ReadOnly | QIODevice::Text))
         return;
     QTextStream inZ(&fileZ);
+    n = 0;
+    double zO = 0;
     while (!inZ.atEnd())
     {
         QString line = inZ.readLine();
-        z->addValue(line.toDouble());
+        double z = line.toDouble();
+//        arrZ << line.toDouble();
+        if (n > 0)
+        {
+            double z2 = (zO + z) / 2;
+            sigZ->addValue(z2);
+        }
+        sigZ->addValue(z);
+        zO = z;
+        ++n;
     }
+
+//    for (int i = 0; i < arrZ.size() - 1; ++i)
+//    {
+//        double z = (arrZ[i] + arrZ[i+1]) / 2;
+//        arrZ.insert(i, z);
+//    }
+//    for (int i = 0; i < arrZ.size() - 1; ++i)
+//        sigZ->addValue(arrZ[i]);
 }
 
-void StabTestExecute::readFileMBN(const QString &fn, Stabilogram *stab, Balistogram *z)
+void StabTestExecute::readFileMBN(const QString &fn, Stabilogram *sigStab, Balistogram *sigZ)
 {
     QFile file(fn);
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
@@ -555,9 +600,9 @@ void StabTestExecute::readFileMBN(const QString &fn, Stabilogram *stab, Balistog
         if (n > 0 && sl.size() == 5)
         {
             SignalsDefines::StabRec rec(std::make_tuple(sl.at(2).toDouble(), sl.at(3).toDouble()));
-            stab->addValue(rec);
+            sigStab->addValue(rec);
 
-            z->addValue(sl.at(4).toDouble());
+            sigZ->addValue(sl.at(4).toDouble());
         }
         ++n;
     }

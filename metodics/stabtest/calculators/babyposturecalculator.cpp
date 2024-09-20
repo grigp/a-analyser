@@ -1,12 +1,13 @@
 #include "babyposturecalculator.h"
 
-#include "datadefines.h"
 #include "dataprovider.h"
 #include "channelsdefines.h"
 #include "classicfactors.h"
 #include "spectrstabfactors.h"
 #include "spectrsinglesignalfactors.h"
 #include "vectorfactors.h"
+
+#include <QDebug>
 
 BabyPostureCalculator::BabyPostureCalculator(const QString &testUid, QObject *parent)
     : StabTestCalculator(testUid, parent)
@@ -38,48 +39,20 @@ void BabyPostureCalculator::calculate()
             DataDefines::ProbeInfo pi;
             if (DataProvider::getProbeInfo(ti.probes.at(0), pi))
             {
+                m_factors = createFactors();
+                assignFactors(ChannelsDefines::chanStab, ChannelsDefines::chanZ, pi, m_factors, true);
 
-                assignFactors();
-
-                m_fctClassic = new ClassicFactors(testUid(), pi.uid, ChannelsDefines::chanStab);
-                m_fctSpectrStab = new SpectrStabFactors(testUid(), pi.uid, ChannelsDefines::chanStab);
-                m_fctSpectrZ = new SpectrSingleSignalFactors(testUid(), pi.uid, ChannelsDefines::chanZ);
-                m_fctVector = new VectorFactors(testUid(), pi.uid, ChannelsDefines::chanStab);
-
-                for (int i = 0; i < m_factors.size(); ++i)
+                if (DataProvider::channelExists(pi.uid, ChannelsDefines::chanStab1) &
+                    DataProvider::channelExists(pi.uid, ChannelsDefines::chanZ1) &
+                    DataProvider::channelExists(pi.uid, ChannelsDefines::chanStab2) &
+                    DataProvider::channelExists(pi.uid, ChannelsDefines::chanZ2))
                 {
-                    auto fi = m_factors.at(i);
 
-                    QString chanUid = ChannelsDefines::chanStab;
-                    double v = 0;
-                    if (fi.group == 0)
-                    {
-                        v = m_fctClassic->factorValue(fi.uid);
-                        fi.valueFmt = m_fctClassic->factorValueFormatted(fi.uid);
-                    }
-                    else
-                    if (fi.group == 1)
-                    {
-                        v = m_fctSpectrStab->factorValue(fi.uid);
-                        fi.valueFmt = m_fctSpectrStab->factorValueFormatted(fi.uid);
-                    }
-                    else
-                    if (fi.group == 2)
-                    {
-                        v = m_fctSpectrZ->factorValue(fi.uid);
-                        chanUid = ChannelsDefines::chanZ;
-                        fi.valueFmt = m_fctSpectrZ->factorValueFormatted(fi.uid);
-                    }
-                    if (fi.group == 3)
-                    {
-                        v = m_fctVector->factorValue(fi.uid);
-                        fi.valueFmt = m_fctVector->factorValueFormatted(fi.uid);
-                    }
-                    addPrimaryFactor(testUid(), fi.uid, v, 0, chanUid, pi.name);
-
-                    m_factors.replace(i, fi);
+                    m_factors1 = createFactors();
+                    assignFactors(ChannelsDefines::chanStab1, ChannelsDefines::chanZ1, pi, m_factors1, false);
+                    m_factors2 = createFactors();
+                    assignFactors(ChannelsDefines::chanStab2, ChannelsDefines::chanZ2, pi, m_factors2, false);
                 }
-
             }
         }
     }
@@ -101,9 +74,31 @@ BabyPostureCalculator::FactorInfo BabyPostureCalculator::factor(const int idx) c
     return m_factors.at(idx);
 }
 
-void BabyPostureCalculator::assignFactors()
+int BabyPostureCalculator::factors1Count() const
 {
-    m_factors = QList<BabyPostureCalculator::FactorInfo>()
+    return m_factors1.size();
+}
+
+BabyPostureCalculator::FactorInfo BabyPostureCalculator::factor1(const int idx) const
+{
+    Q_ASSERT((idx >= 0) && (idx < m_factors1.size()));
+    return m_factors1.at(idx);
+}
+
+int BabyPostureCalculator::factors2Count() const
+{
+    return m_factors2.size();
+}
+
+BabyPostureCalculator::FactorInfo BabyPostureCalculator::factor2(const int idx) const
+{
+    Q_ASSERT((idx >= 0) && (idx < m_factors2.size()));
+    return m_factors2.at(idx);
+}
+
+QList<BabyPostureCalculator::FactorInfo> BabyPostureCalculator::createFactors()
+{
+    return QList<BabyPostureCalculator::FactorInfo>()
             << BabyPostureCalculator::FactorInfo(std::make_tuple(
                                                      VectorFactorsDefines::VMidUid, 3,
                                                      QCoreApplication::tr("Скорость ОЦД"),
@@ -250,3 +245,50 @@ void BabyPostureCalculator::assignFactors()
                                                      ""))
                ;
 }
+
+void BabyPostureCalculator::assignFactors(const QString& ciStab, const QString& ciZ,
+                                          DataDefines::ProbeInfo& pi,
+                                          QList<BabyPostureCalculator::FactorInfo>& factors,
+                                          const bool isPrimary)
+{
+    auto fctClassic = new ClassicFactors(testUid(), pi.uid, ciStab);
+    auto fctSpectrStab = new SpectrStabFactors(testUid(), pi.uid, ciStab);
+    auto fctSpectrZ = new SpectrSingleSignalFactors(testUid(), pi.uid, ciZ);
+    auto fctVector = new VectorFactors(testUid(), pi.uid, ciStab);
+
+    for (int i = 0; i < factors.size(); ++i)
+    {
+        auto fi = factors.at(i);
+
+        QString chanUid = ChannelsDefines::chanStab;
+        double v = 0;
+        if (fi.group == 0)
+        {
+            v = fctClassic->factorValue(fi.uid);
+            fi.valueFmt = fctClassic->factorValueFormatted(fi.uid);
+        }
+        else
+        if (fi.group == 1)
+        {
+            v = fctSpectrStab->factorValue(fi.uid);
+            fi.valueFmt = fctSpectrStab->factorValueFormatted(fi.uid);
+        }
+        else
+        if (fi.group == 2)
+        {
+            v = fctSpectrZ->factorValue(fi.uid);
+            chanUid = ChannelsDefines::chanZ;
+            fi.valueFmt = fctSpectrZ->factorValueFormatted(fi.uid);
+        }
+        if (fi.group == 3)
+        {
+            v = fctVector->factorValue(fi.uid);
+            fi.valueFmt = fctVector->factorValueFormatted(fi.uid);
+        }
+        if (isPrimary)
+            addPrimaryFactor(testUid(), fi.uid, v, 0, chanUid, pi.name);
+
+        factors.replace(i, fi);
+    }
+}
+

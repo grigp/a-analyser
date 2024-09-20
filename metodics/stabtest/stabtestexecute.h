@@ -76,9 +76,9 @@ private:
     Ui::StabTestExecute *ui;
 
     void readFileAMed(const QString& fnStab, const QString& fnZ,
-                      Stabilogram* stab, Balistogram* z);
+                      Stabilogram* sigStab, Balistogram* sigZ);
     void readFileMBN(const QString& fn,
-                      Stabilogram* stab, Balistogram* z);
+                      Stabilogram* sigStab, Balistogram* sigZ);
 
     /*!
      * \brief Возвращает параметры для текущей пробы.

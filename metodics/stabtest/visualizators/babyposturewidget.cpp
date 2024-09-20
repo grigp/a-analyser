@@ -3,6 +3,8 @@
 
 #include "babyposturecalculator.h"
 
+#include <QDebug>
+
 BabyPostureWidget::BabyPostureWidget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::BabyPostureWidget)
@@ -15,6 +17,12 @@ BabyPostureWidget::~BabyPostureWidget()
     delete ui;
 }
 
+bool isExtendFactors(BabyPostureCalculator *calculator)
+{
+    return calculator->factors1Count() > 0 && calculator->factors2Count() > 0 &&
+            calculator->factors1Count() == calculator->factors2Count();
+}
+
 void BabyPostureWidget::calculate(BabyPostureCalculator *calculator, const QString &testUid)
 {
     Q_UNUSED(testUid);
@@ -22,9 +30,23 @@ void BabyPostureWidget::calculate(BabyPostureCalculator *calculator, const QStri
 
     m_mdlTable.clear();
 
-    for (int i = 0; i < calculator->factorsCount(); ++i)
+    int n = 0;
+    if (isExtendFactors(calculator))
+        n = calculator->factors1Count();
+    else
+        n = calculator->factorsCount();
+
+    for (int i = 0; i < n; ++i)
     {
-        auto factor = calculator->factor(i);
+        BabyPostureCalculator::FactorInfo factor;
+        BabyPostureCalculator::FactorInfo factor2;
+        if (!isExtendFactors(calculator))
+            factor = calculator->factor(i);
+        else
+        {
+            factor = calculator->factor1(i);
+            factor2 = calculator->factor2(i);
+        }
         ui->teResume->append(factor.name + " " + factor.shortName + " : " + factor.valueFmt);
 
         auto itemName = new QStandardItem(factor.name + "             ");
@@ -36,9 +58,19 @@ void BabyPostureWidget::calculate(BabyPostureCalculator *calculator, const QStri
         auto itemValue = new QStandardItem(factor.valueFmt);
         itemValue->setEditable(false);
 
-        m_mdlTable.appendRow(QList<QStandardItem*>() << itemName <<itemShortName << itemValue);
+        if (isExtendFactors(calculator))
+        {
+            auto item2Value = new QStandardItem(factor2.valueFmt);
+            item2Value->setEditable(false);
+            m_mdlTable.appendRow(QList<QStandardItem*>() << itemName <<itemShortName << item2Value << itemValue);
+        }
+        else
+            m_mdlTable.appendRow(QList<QStandardItem*>() << itemName <<itemShortName << itemValue);
     }
-    m_mdlTable.setHorizontalHeaderLabels(QStringList() << tr("Показатель")  << tr("") << tr("Значение"));
+    if (!isExtendFactors(calculator))
+        m_mdlTable.setHorizontalHeaderLabels(QStringList() << tr("Показатель")  << tr("") << tr("Значение"));
+    else
+        m_mdlTable.setHorizontalHeaderLabels(QStringList() << tr("Показатель")  << tr("") << tr("МБН") << tr("А-Мед"));
 
     ui->tvTable->setModel(&m_mdlTable);
 
