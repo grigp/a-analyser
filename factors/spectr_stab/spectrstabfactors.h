@@ -134,6 +134,7 @@ private:
 
     SignalFFT *m_spectr {nullptr};
     int m_frequency {50};
+    int m_freqMax {50};
     FactorValues m_valuesX, m_valuesY;
 
 };

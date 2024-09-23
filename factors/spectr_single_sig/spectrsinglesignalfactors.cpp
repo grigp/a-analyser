@@ -9,6 +9,8 @@
 #include "computefft.h"
 #include "signalfft.h"
 
+#include <QDebug>
+
 SpectrSingleSignalFactors::SpectrSingleSignalFactors(const QString &testUid,
                                                      const QString &probeUid,
                                                      const QString &channelId,
@@ -62,7 +64,10 @@ void SpectrSingleSignalFactors::calculate()
             signal = new BreathSignal(baSignal);
 
         m_frequency = signal->frequency();
+        qDebug() << "frequency = " << signal->frequency();
         m_spectr = new SignalFFT(signal, ComputeFFT::FFT_COUNT, m_frequency);
+        m_freqMax = static_cast<int>((1 / (static_cast<double>(signal->size()) / static_cast<double>(signal->frequency()))) *
+                                     (static_cast<double>(ComputeFFT::FFT_COUNT) / 2));
 
         computeFactors();
 
@@ -143,7 +148,7 @@ void SpectrSingleSignalFactors::computeFactors()
         summ += data.at(i);
 
         //!Мощность по зонам
-        double f = static_cast<double>(i * m_frequency) / static_cast<double>(m_spectr->points());
+        double f = static_cast<double>(i * m_freqMax) / static_cast<double>(m_spectr->points());
         if (f <= 0.2)
             m_values.power1 += data.at(i);
         else
@@ -163,20 +168,27 @@ void SpectrSingleSignalFactors::computeFactors()
     for (int i = 0; i < data.size(); ++i)
     {
         s += data.at(i);
+//        qDebug() << i << "\t"
+//                 << static_cast<double>(i * m_freqMax) / static_cast<double>(m_spectr->points())
+//                 << "  \t  "
+//                 << data.at(i) << "  \t   " << s << "\t" << summ << "\t" << s / summ * 100;
         if (s > summ * 0.6)
+//        if (s >= summ)
         {
-            m_values.pwr60 = static_cast<double>(i * m_frequency) / static_cast<double>(m_spectr->points());
+            m_values.pwr60 = static_cast<double>(i * m_freqMax) / static_cast<double>(m_spectr->points());
+            qDebug() << i << m_freqMax << m_spectr->points();
             break;
         }
     }
+//    qDebug() << "---------------------------------------------------------------------------";
 
     //! Амплитуды и частоты первых трех пиков
     if (maxs.size() > 3)
     {
         int n = maxs.keys().size();
-        m_values.freq1 = static_cast<double>(maxs.value(maxs.keys().at(n - 1)) * m_frequency) / static_cast<double>(m_spectr->points());
-        m_values.freq2 = static_cast<double>(maxs.value(maxs.keys().at(n - 2)) * m_frequency) / static_cast<double>(m_spectr->points());
-        m_values.freq3 = static_cast<double>(maxs.value(maxs.keys().at(n - 3)) * m_frequency) / static_cast<double>(m_spectr->points());
+        m_values.freq1 = static_cast<double>(maxs.value(maxs.keys().at(n - 1)) * m_freqMax) / static_cast<double>(m_spectr->points());
+        m_values.freq2 = static_cast<double>(maxs.value(maxs.keys().at(n - 2)) * m_freqMax) / static_cast<double>(m_spectr->points());
+        m_values.freq3 = static_cast<double>(maxs.value(maxs.keys().at(n - 3)) * m_freqMax) / static_cast<double>(m_spectr->points());
         m_values.ampl1 = maxs.keys().at(n - 1);
         m_values.ampl2 = maxs.keys().at(n - 2);
         m_values.ampl3 = maxs.keys().at(n - 3);

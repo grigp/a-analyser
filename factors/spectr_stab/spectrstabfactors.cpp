@@ -56,6 +56,9 @@ void SpectrStabFactors::calculate()
         Stabilogram stab(baStab);
         m_frequency = stab.frequency();
         m_spectr = new SignalFFT(&stab, ComputeFFT::FFT_COUNT, m_frequency);
+        m_freqMax = static_cast<int>((1 / (static_cast<double>(stab.size()) / static_cast<double>(stab.frequency()))) *
+                                     (static_cast<double>(ComputeFFT::FFT_COUNT) / 2));
+
         computeFactors();
     }
 
@@ -194,7 +197,7 @@ void SpectrStabFactors::computeFactorsChan(const int chan, SpectrStabFactors::Fa
             maxs.insert(data.at(i), i);
 
         //!Мощность по зонам
-        double f = static_cast<double>(i * m_frequency) / static_cast<double>(m_spectr->points());
+        double f = static_cast<double>(i * m_freqMax) / static_cast<double>(m_spectr->points());
 
         //! Общая мощность
         if (f <= 6)
@@ -218,7 +221,7 @@ void SpectrStabFactors::computeFactorsChan(const int chan, SpectrStabFactors::Fa
     double s = 0;
     for (int i = 0; i < data.size(); ++i)
     {
-        double f = static_cast<double>(i * m_frequency) / static_cast<double>(m_spectr->points());
+        double f = static_cast<double>(i * m_freqMax) / static_cast<double>(m_spectr->points());
 
         //! Общая мощность
         if (f <= 6)
@@ -226,7 +229,7 @@ void SpectrStabFactors::computeFactorsChan(const int chan, SpectrStabFactors::Fa
             s += data.at(i);
             if (s > summ * 0.6)
             {
-                values.pwr60 = static_cast<double>(i * m_frequency) / static_cast<double>(m_spectr->points());
+                values.pwr60 = static_cast<double>(i * m_freqMax) / static_cast<double>(m_spectr->points());
                 break;
             }
         }
@@ -236,9 +239,9 @@ void SpectrStabFactors::computeFactorsChan(const int chan, SpectrStabFactors::Fa
     if (maxs.size() > 3)
     {
         int n = maxs.keys().size();
-        values.freq1 = static_cast<double>(maxs.value(maxs.keys().at(n - 1)) * m_frequency) / static_cast<double>(m_spectr->points());
-        values.freq2 = static_cast<double>(maxs.value(maxs.keys().at(n - 2)) * m_frequency) / static_cast<double>(m_spectr->points());
-        values.freq3 = static_cast<double>(maxs.value(maxs.keys().at(n - 3)) * m_frequency) / static_cast<double>(m_spectr->points());
+        values.freq1 = static_cast<double>(maxs.value(maxs.keys().at(n - 1)) * m_freqMax) / static_cast<double>(m_spectr->points());
+        values.freq2 = static_cast<double>(maxs.value(maxs.keys().at(n - 2)) * m_freqMax) / static_cast<double>(m_spectr->points());
+        values.freq3 = static_cast<double>(maxs.value(maxs.keys().at(n - 3)) * m_freqMax) / static_cast<double>(m_spectr->points());
         values.ampl1 = maxs.keys().at(n - 1);
         values.ampl2 = maxs.keys().at(n - 2);
         values.ampl3 = maxs.keys().at(n - 3);
