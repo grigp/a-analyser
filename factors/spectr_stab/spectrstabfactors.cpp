@@ -193,11 +193,13 @@ void SpectrStabFactors::computeFactorsChan(const int chan, SpectrStabFactors::Fa
         if (i > 0 && i < data.size() - 1 && data.at(i) > data.at(i-1) && data.at(i) > data.at(i+1))
             maxs.insert(data.at(i), i);
 
-        //! Общая мощность
-        summ += data.at(i);
-
         //!Мощность по зонам
         double f = static_cast<double>(i * m_frequency) / static_cast<double>(m_spectr->points());
+
+        //! Общая мощность
+        if (f <= 6)
+            summ += data.at(i);
+
         if (f <= 0.2)
             values.power1 += data.at(i);
         else
@@ -216,11 +218,17 @@ void SpectrStabFactors::computeFactorsChan(const int chan, SpectrStabFactors::Fa
     double s = 0;
     for (int i = 0; i < data.size(); ++i)
     {
-        s += data.at(i);
-        if (s > summ * 0.6)
+        double f = static_cast<double>(i * m_frequency) / static_cast<double>(m_spectr->points());
+
+        //! Общая мощность
+        if (f <= 6)
         {
-            values.pwr60 = static_cast<double>(i * m_frequency) / static_cast<double>(m_spectr->points());
-            break;
+            s += data.at(i);
+            if (s > summ * 0.6)
+            {
+                values.pwr60 = static_cast<double>(i * m_frequency) / static_cast<double>(m_spectr->points());
+                break;
+            }
         }
     }
 

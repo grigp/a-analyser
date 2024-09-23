@@ -9,6 +9,8 @@
 #include "channelsutils.h"
 #include "spectrstabfactors.h"
 #include "settingsprovider.h"
+#include "dataprovider.h"
+#include "stabilogram.h"
 
 SpectrStabVisualWidget::SpectrStabVisualWidget(VisualDescriptor* visual,
                                                const QString& testUid, const QString& probeUid, const QString& channelId,
@@ -136,18 +138,20 @@ void SpectrStabVisualWidget::showTable()
 }
 
 void SpectrStabVisualWidget::showSpectrs()
-{
+{   
     ui->wgtSpectrX->setTitle(tr("Фронталь X"));
     if (m_factors->channelsCount() == 2)
     {
         for (int i = 0; i < m_factors->points(); ++i)
             ui->wgtSpectrX->addValue(m_factors->value(0, i));
-        ui->wgtSpectrX->setFormatData(m_factors->frequency(), 6.1);
+        ui->wgtSpectrX->setFormatData(computeMaxFreq(), 6.1);
+//        ui->wgtSpectrX->setFormatData(m_factors->frequency(), 6.1);
 
         ui->wgtSpectrY->setTitle(tr("Сагитталь Y"));
         for (int i = 0; i < m_factors->points(); ++i)
             ui->wgtSpectrY->addValue(m_factors->value(1, i));
-        ui->wgtSpectrY->setFormatData(m_factors->frequency(), 6.1);
+        ui->wgtSpectrY->setFormatData(computeMaxFreq(), 6.1);
+//        ui->wgtSpectrY->setFormatData(m_factors->frequency(), 6.1);
     }
     ui->lblNoCalculated->setVisible(m_factors->channelsCount() != 2);
     ui->frControl->setVisible(m_factors->channelsCount() == 2);
@@ -161,6 +165,19 @@ void SpectrStabVisualWidget::showSpectrs()
     ui->wgtSpectrY->addFreqArea(0.2, 2, "2", QColor(220, 230, 230), QColor(50, 140, 140));
     ui->wgtSpectrY->addFreqArea(2, 6, "3", QColor(240, 250, 250), QColor(80, 160, 160));
     ui->wgtSpectrY->addFreqLabel(m_factors->factorValue(SpectrStabFactorsDefines::Sagittal::Level60Uid), "60%");
+}
+
+int SpectrStabVisualWidget::computeMaxFreq()
+{
+    int frequency = m_factors->frequency();
+    QByteArray baStab;
+    if (DataProvider::getChannel(probeUid(), channelId(), baStab))
+    {
+        Stabilogram stab(baStab);
+        frequency = static_cast<int>((1 / (static_cast<double>(stab.size()) / static_cast<double>(stab.frequency()))) *
+                                     (static_cast<double>(m_factors->points())));
+    }
+    return frequency;
 }
 
 void SpectrStabVisualWidget::saveSplitterPosition()

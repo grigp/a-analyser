@@ -299,7 +299,8 @@ void SectionGraphVisualWidget::on_calculateSpectr()
         else
         {
             computeSpectrDecimation(dataSrc, dataRes, params["points"].toInt());
-            frequency = static_cast<int>(static_cast<double>(frequency) / (static_cast<double>(m_signal->size()) / static_cast<double>(params["points"].toInt())));
+            frequency = static_cast<int>((1 / (static_cast<double>(m_signal->size()) / static_cast<double>(frequency))) *
+                                         (static_cast<double>(params["points"].toInt()) / 2));
         }
 
         //! Прорисовка спектра в одном диапазоне амплитуд

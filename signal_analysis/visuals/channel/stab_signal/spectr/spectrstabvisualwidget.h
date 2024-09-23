@@ -51,6 +51,8 @@ private:
     void showTable();
     void showSpectrs();
 
+    int computeMaxFreq();
+
     void saveSplitterPosition();
     void restoreSplitterPosition();
 

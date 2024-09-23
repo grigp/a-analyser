@@ -84,7 +84,7 @@ public:
 
     /*!
      * \brief задает данные для форматирования:
-     * \param frequency - частота дискретизации
+     * \param frequency - максимальная частота в спектре
      * \param maxFrequency - максимальная отображаемая частота
      */
     void setFormatData(const double frequency, const double maxFrequency);
