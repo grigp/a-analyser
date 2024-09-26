@@ -63,11 +63,22 @@ void SpectrSingleSignalFactors::calculate()
         if (ChannelsUtils::instance().channelType(channelId()) == ChannelsDefines::ctBreath)
             signal = new BreathSignal(baSignal);
 
+//        qDebug() << "----------------------------------------------------------------------------";
+//        for (int i = 0; i < signal->size(); ++i) {
+//            qDebug() << signal->value(0, i);
+//        }
+//        qDebug() << "----------------------------------------------------------------------------";
+
         m_frequency = signal->frequency();
-        qDebug() << "frequency = " << signal->frequency();
         m_spectr = new SignalFFT(signal, ComputeFFT::FFT_COUNT, m_frequency);
         m_freqMax = static_cast<int>((1 / (static_cast<double>(signal->size()) / static_cast<double>(signal->frequency()))) *
                                      (static_cast<double>(ComputeFFT::FFT_COUNT) / 2));
+
+//        qDebug() << "----------------------------------------------------------------------------";
+//        for (int i = 0; i < m_spectr->points(); ++i) {
+//            qDebug() << m_spectr->value(0, i);
+//        }
+//        qDebug() << "----------------------------------------------------------------------------";
 
         computeFactors();
 
@@ -132,6 +143,7 @@ void SpectrSingleSignalFactors::computeFactors()
 
     //! По спектру
     double summ = 0;
+//    qDebug() << m_freqMax << m_spectr->points();
     for (int i = 0; i < data.size(); ++i)
     {
         //! Добавление экстремумов
@@ -176,7 +188,6 @@ void SpectrSingleSignalFactors::computeFactors()
 //        if (s >= summ)
         {
             m_values.pwr60 = static_cast<double>(i * m_freqMax) / static_cast<double>(m_spectr->points());
-            qDebug() << i << m_freqMax << m_spectr->points();
             break;
         }
     }

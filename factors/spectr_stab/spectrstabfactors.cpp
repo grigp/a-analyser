@@ -172,8 +172,13 @@ void SpectrStabFactors::computeFactorsChan(const int chan, SpectrStabFactors::Fa
 {
     //! Создадим буфер, чтоб проще было
     QVector<double> data;
+    qDebug() << "---------------------------------------------------------------------";
     for (int i = 0; i < m_spectr->points(); ++i)
+    {
+        qDebug() << m_spectr->value(chan, i);
         data << m_spectr->value(chan, i);
+    }
+    qDebug() << "---------------------------------------------------------------------";
 
     //! Для запоминания экстремумов используем карту, чтоб в один проход
     QMap<double, int> maxs;

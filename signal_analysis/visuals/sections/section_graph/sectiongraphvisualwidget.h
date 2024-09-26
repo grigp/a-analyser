@@ -92,7 +92,7 @@ private:
      * \brief Расчет спектра с прореживанием
      * \param dataSrc - буфер исходного сигнала
      * \param dataRes - буфер преобразованного сигнала
-     * \param points - кол-во точее
+     * \param points - кол-во точек
      */
     void computeSpectrDecimation(QVector<double> &dataSrc, QVector<double> &dataRes, const int points);
 

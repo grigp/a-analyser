@@ -197,7 +197,7 @@ void DiagSpectr::paintEvent(QPaintEvent *event)
     int ov = height() - m_bounds.bottom();
     for (int i = 0; i < m_data.size(); ++i)
     {
-        double freq = static_cast<double>(i * m_frequency) / static_cast<double>(m_data.size());
+        double freq = static_cast<double>(i * m_maxFrequency) / static_cast<double>(m_data.size());
         if (freq > minFreq && freq < maxFreq)
         {
 

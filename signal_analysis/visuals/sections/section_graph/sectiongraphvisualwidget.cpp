@@ -295,13 +295,21 @@ void SectionGraphVisualWidget::on_calculateSpectr()
         //! Расчет спектра
         int frequency = m_signal->frequency();
         if (params["is_averaging"].toBool())
+        {
             computeSpectrAveraging(dataSrc, dataRes, params["points"].toInt(), params["averaging_offset"].toInt());
+        }
         else
         {
             computeSpectrDecimation(dataSrc, dataRes, params["points"].toInt());
             frequency = static_cast<int>((1 / (static_cast<double>(m_signal->size()) / static_cast<double>(frequency))) *
                                          (static_cast<double>(params["points"].toInt()) / 2));
         }
+
+//        qDebug() << "----------------------------------------------------------------------------";
+//        for (int i = 0; i < dataSrc.size(); ++i) {
+//            qDebug() << dataSrc.at(i);
+//        }
+//        qDebug() << "----------------------------------------------------------------------------";
 
         //! Прорисовка спектра в одном диапазоне амплитуд
         double maxVS = 0;
@@ -443,14 +451,19 @@ void SectionGraphVisualWidget::computeSpectrAveraging(QVector<double> &dataSrc, 
 
 void SectionGraphVisualWidget::computeSpectrDecimation(QVector<double> &dataSrc, QVector<double> &dataRes, const int points)
 {
-    double prop = static_cast<double>(m_signal->size()) / static_cast<double>(points);
+    initData(dataSrc, points);
+    initData(dataRes, points);
+
+//    double prop = static_cast<double>(m_signal->size()) / static_cast<double>(points);
     double ir = 0.0;
     while (ir < m_signal->size())
     {
+        if (ir >= points)
+            break;
         int i = static_cast<int>(ir);
         dataSrc << m_signal->value(0, i);
         dataRes << m_signal->value(1, i);
-        ir += prop;
+        ir += 1;//prop;   //// !!!! Смещает спектр по частоте вправо!!!
     }
 
     ComputeFFT::baseFFT(dataSrc);
