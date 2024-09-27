@@ -111,6 +111,11 @@ public:
      */
     int frequency() const {return m_frequency;}
 
+    /*!
+     * \brief Возвращает длительность сигнала в секундах
+     */
+    double duration() {return m_duration;}
+
 private:
     struct FactorValues
     {
@@ -136,6 +141,7 @@ private:
     int m_frequency {50};
     int m_freqMax {50};
     FactorValues m_valuesX, m_valuesY;
+    double m_duration {0};
 
 };
 

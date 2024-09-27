@@ -58,6 +58,7 @@ void SpectrStabFactors::calculate()
         m_spectr = new SignalFFT(&stab, ComputeFFT::FFT_COUNT, m_frequency);
         m_freqMax = static_cast<int>((1 / (static_cast<double>(stab.size()) / static_cast<double>(stab.frequency()))) *
                                      (static_cast<double>(ComputeFFT::FFT_COUNT) / 2));
+        m_duration = static_cast<double>(stab.size()) / stab.frequency();
 
         computeFactors();
     }
@@ -172,13 +173,10 @@ void SpectrStabFactors::computeFactorsChan(const int chan, SpectrStabFactors::Fa
 {
     //! Создадим буфер, чтоб проще было
     QVector<double> data;
-    qDebug() << "---------------------------------------------------------------------";
     for (int i = 0; i < m_spectr->points(); ++i)
     {
-        qDebug() << m_spectr->value(chan, i);
         data << m_spectr->value(chan, i);
     }
-    qDebug() << "---------------------------------------------------------------------";
 
     //! Для запоминания экстремумов используем карту, чтоб в один проход
     QMap<double, int> maxs;

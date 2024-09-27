@@ -314,8 +314,10 @@ void SectionGraphVisualWidget::on_calculateSpectr()
         //! Прорисовка спектра в одном диапазоне амплитуд
         double maxVS = 0;
         double maxVR = 0;
-        showSpectr(ui->wgtSpectrSrc, dataSrc, maxVS, frequency, params["max_frequency"].toDouble());
-        showSpectr(ui->wgtSpectrRes, dataRes, maxVR, frequency, params["max_frequency"].toDouble());
+        showSpectr(ui->wgtSpectrSrc, dataSrc, maxVS,
+                   static_cast<double>(m_signal->size() / frequency), params["max_frequency"].toDouble());
+        showSpectr(ui->wgtSpectrRes, dataRes, maxVR,
+                   static_cast<double>(m_signal->size() / frequency), params["max_frequency"].toDouble());
         double max = qMax(maxVS, maxVR);
         ui->wgtSpectrSrc->setVisualArea(0, params["max_frequency"].toDouble(), 0, max);
         ui->wgtSpectrRes->setVisualArea(0, params["max_frequency"].toDouble(), 0, max);
@@ -478,7 +480,7 @@ void SectionGraphVisualWidget::initData(QVector<double> &data, const int size)
 }
 
 void SectionGraphVisualWidget::showSpectr(DiagSpectr *area, QVector<double> &data, double &maxV,
-                                          const int freqSample, const double maxFreq)
+                                          const double duration, const double maxFreq)
 {
     area->clear();
 //    QFile file("d://1//spectr.txt");
@@ -492,7 +494,7 @@ void SectionGraphVisualWidget::showSpectr(DiagSpectr *area, QVector<double> &dat
             maxV = data[i];
     }
 //    file.close();
-    area->setFormatData(freqSample, maxFreq);
+    area->setFormatData(duration, maxFreq);
 }
 
 void SectionGraphVisualWidget::updateSectionData()

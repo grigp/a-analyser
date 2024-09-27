@@ -144,13 +144,13 @@ void SpectrStabVisualWidget::showSpectrs()
     {
         for (int i = 0; i < m_factors->points(); ++i)
             ui->wgtSpectrX->addValue(m_factors->value(0, i));
-        ui->wgtSpectrX->setFormatData(computeMaxFreq(), 6.1);
+        ui->wgtSpectrX->setFormatData(m_factors->duration(), 6.1);
 //        ui->wgtSpectrX->setFormatData(m_factors->frequency(), 6.1);
 
         ui->wgtSpectrY->setTitle(tr("Сагитталь Y"));
         for (int i = 0; i < m_factors->points(); ++i)
             ui->wgtSpectrY->addValue(m_factors->value(1, i));
-        ui->wgtSpectrY->setFormatData(computeMaxFreq(), 6.1);
+        ui->wgtSpectrY->setFormatData(m_factors->duration(), 6.1);
 //        ui->wgtSpectrY->setFormatData(m_factors->frequency(), 6.1);
     }
     ui->lblNoCalculated->setVisible(m_factors->channelsCount() != 2);

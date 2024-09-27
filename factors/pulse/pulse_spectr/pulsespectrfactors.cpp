@@ -55,6 +55,8 @@ void PulseSpectrFactors::calculate()
     {
         Ritmogram signal(baPulse);
 
+        m_duration = 0;
+
         if (signal.size() > 255)
         {
             //! Расчет среднего значения RR - интервала
@@ -62,6 +64,7 @@ void PulseSpectrFactors::calculate()
             for (int i = 0; i < signal.size(); ++i)
                 len += 60.0 / signal.value(i);
             double midT = len / signal.size();
+            m_duration += len;
 
             //! Создание буфера
             QVector<double> data;

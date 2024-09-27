@@ -99,7 +99,7 @@ private:
     void initData(QVector<double> &data, const int size);
 
     void showSpectr(DiagSpectr *area, QVector<double> &data, double &maxV,
-                    const int freqSample, const double maxFreq);
+                    const double duration, const double maxFreq);
 
     void updateSectionData();
 

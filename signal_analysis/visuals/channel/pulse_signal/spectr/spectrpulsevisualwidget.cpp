@@ -83,7 +83,7 @@ void SpectrPulseVisualWidget::showSpectr()
     ui->wgtSpectr->clear();
     for (int i = 0; i < m_factors->spectrCount(); ++i)
         ui->wgtSpectr->addValue(m_factors->spectrValue(i));
-    ui->wgtSpectr->setFormatData(m_factors->freqRate(), 0.4);
+    ui->wgtSpectr->setFormatData(m_factors->duration(), 0.4);
 
     foreach (auto area, PulseSpectrFactorsDefines::SpectrAreases)
         ui->wgtSpectr->addFreqArea(area.lo, area.hi, area.shortName, area.colorBackground, area.colorText);

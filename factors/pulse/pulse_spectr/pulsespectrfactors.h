@@ -97,9 +97,16 @@ public:
      */
     double freqRate() const {return m_freqRate;}
 
+    /*!
+     * \brief Возвращает длительность сигнала
+     */
+    double duration() {return m_duration;}
+
 private:
     QVector<double> m_spectr;
     double m_freqRate {1};
+
+    double m_duration {0};
 
     //! Показатели
     double m_PwHF {0};

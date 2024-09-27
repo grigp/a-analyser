@@ -84,10 +84,10 @@ public:
 
     /*!
      * \brief задает данные для форматирования:
-     * \param frequency - максимальная частота в спектре
+     * \param duration - Длительность сигнала
      * \param maxFrequency - максимальная отображаемая частота
      */
-    void setFormatData(const double frequency, const double maxFrequency);
+    void setFormatData(const double duration, const double maxFrequency);
 
     /*!
      * \brief Задает размеры отображаемой области
@@ -170,7 +170,7 @@ private:
     QRect m_bounds = QRect(QPoint(30, 30), QPoint(10, 30));
 
     QVector<double> m_data;
-    double m_frequency {50.0};   ///< Частота дискретизации
+    double m_duration {50.0};    ///< Длительность анализируемого сигнала
     double m_maxFrequency {6.1}; ///< Максимальная отображаемая частота
 
     double m_minFreq {0};      ///< Минимальная частота
