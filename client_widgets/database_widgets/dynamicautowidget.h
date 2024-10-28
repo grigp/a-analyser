@@ -48,6 +48,11 @@ private slots:
      */
     void on_selectItem(const int idx);
 
+    void on_exportAsText();
+#ifdef Q_OS_WIN32
+    void on_openExcel();
+#endif
+
 
 private:
     Ui::DynamicAutoWidget *ui;
@@ -65,6 +70,8 @@ private:
 
     void saveDynamicVolume(const int volumeCode) const;
     void restoreDynamicVolume();
+
+    void setMenuExport();
 
     DynamicDataModel *m_mdlDynamic {nullptr};
     QString m_selectedPatientUid {""};

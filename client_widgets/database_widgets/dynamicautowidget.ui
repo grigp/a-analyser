@@ -198,6 +198,26 @@
             </property>
            </spacer>
           </item>
+          <item>
+           <widget class="QPushButton" name="btnExport">
+            <property name="toolTip">
+             <string>Экспорт...</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="../../kernel.qrc">
+              <normaloff>:/images/SummaryExport.png</normaloff>:/images/SummaryExport.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>20</width>
+              <height>20</height>
+             </size>
+            </property>
+           </widget>
+          </item>
          </layout>
         </widget>
        </item>

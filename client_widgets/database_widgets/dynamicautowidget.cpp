@@ -1,12 +1,17 @@
 #include "dynamicautowidget.h"
 #include "ui_dynamicautowidget.h"
 
+#include "baseutils.h"
 #include "aanalyserapplication.h"
 #include "dataprovider.h"
 #include "datadefines.h"
 #include "dynamicdatamodel.h"
 #include "settingsprovider.h"
+#include "msexcelexporter.h"
+#include "amessagebox.h"
 
+#include <QMenu>
+#include <QFileDialog>
 #include <QDebug>
 
 DynamicAutoWidget::DynamicAutoWidget(QWidget *parent) :
@@ -30,6 +35,7 @@ DynamicAutoWidget::DynamicAutoWidget(QWidget *parent) :
             this, &DynamicAutoWidget::on_removeTest);
 
     connect(ui->wgtDynamic, &DynamicDiagram::selectItem, this, &DynamicAutoWidget::on_selectItem);
+    setMenuExport();
 }
 
 DynamicAutoWidget::~DynamicAutoWidget()
@@ -139,6 +145,59 @@ void DynamicAutoWidget::on_selectItem(const int idx)
         ui->wgtDynamic->setBottomText(QString(tr("Тест") + " " + sdt + " - " + QString::number(value)));
     }
 }
+
+void DynamicAutoWidget::on_exportAsText()
+{
+    QString path = DataDefines::aanalyserDocumentsPath();
+    auto fileName = QFileDialog::getSaveFileName(this, tr("Файл экспорта динамики показателей"), path, tr("Текстовые файлы (*.txt)"));
+    if (fileName != "")
+        BaseUtils::modelToText(m_mdlDynamic, fileName, "\t");
+}
+
+#ifdef Q_OS_WIN32
+void DynamicAutoWidget::on_openExcel()
+{
+    try
+    {
+        QString fileName = DataDefines::aanalyserTemporaryPath() + "summary.xlsx";
+        fileName = fileName.replace(QString("/"), QString("\\"));
+
+        static_cast<AAnalyserApplication*>(QApplication::instance())->initProgress(tr("Открытие динамики показателей в MS Excel"),
+                                                                                   0, m_mdlDynamic->rowCount() + 2,
+                                                                                   tr("Инициализация"));
+        MSExcelExporter exporter;
+
+        exporter.setCellValue(1, 1, "");
+        for (int i = 0; i < m_mdlDynamic->columnCount() - 1; ++i)
+        {
+            auto dt = m_mdlDynamic->horizontalHeaderItem(i + 1)->data(DynamicDataModel::DateTimeRole).toDateTime();
+            QString s = tr("Тест") + " " + QString::number(i + 1) + ": " + dt.toString("dd.MM.yyyy hh:mm");
+            exporter.setCellValue(1, i + 2, s);
+        }
+
+        //! По строкам
+        for (int i = 0; i < m_mdlDynamic->rowCount(); ++i)
+        {
+            static_cast<AAnalyserApplication*>(QApplication::instance())->setProgressPosition(i+1, tr("Строка") + " " + QString::number(i + 1));
+            //! По столбцам для строки
+            for (int j = 0; j < m_mdlDynamic->columnCount(); ++j)
+            {
+                //! Всегда выводим текст итема
+                auto text = m_mdlDynamic->index(i, j).data().toString();
+                exporter.setCellValue(i + 2, j + 1, text);
+            }
+        }
+
+        static_cast<AAnalyserApplication*>(QApplication::instance())->setProgressPosition(m_mdlDynamic->rowCount() + 2, tr("Завершение"));
+        exporter.saveAs(fileName);
+        static_cast<AAnalyserApplication*>(QApplication::instance())->doneProgress();
+    }
+    catch (const std::exception& e)
+    {
+        AMessageBox::warning(nullptr, tr("Предупреждение"), tr("Произошла ошибка открытия сводки в MS Excel") + e.what());
+    }
+}
+#endif
 
 void DynamicAutoWidget::buildDynamic()
 {
@@ -255,4 +314,21 @@ void DynamicAutoWidget::restoreDynamicVolume()
     DynamicDiagramDefines::Volume volume = static_cast<DynamicDiagramDefines::Volume>(volumeCode);
     ui->wgtDynamic->setVolume(volume);
     ui->btn3D->setChecked(volume == DynamicDiagramDefines::Volume3D);
+}
+
+void DynamicAutoWidget::setMenuExport()
+{
+    auto menu = new QMenu(this);
+
+    QAction *acExportAsText = new QAction(QIcon(":/images/SummaryExport.png"), tr("Сохранить в файл..."), this);
+    connect(acExportAsText, &QAction::triggered, this, &DynamicAutoWidget::on_exportAsText);
+    menu->addAction(acExportAsText);
+
+#ifdef Q_OS_WIN32
+    QAction *acOpenExcel = new QAction(QIcon(":/images/OpenMSExcel.png"), tr("Открыть в MS Excel"), this);
+    connect(acOpenExcel, &QAction::triggered, this, &DynamicAutoWidget::on_openExcel);
+    menu->addAction(acOpenExcel);
+#endif
+
+    ui->btnExport->setMenu(menu);
 }
