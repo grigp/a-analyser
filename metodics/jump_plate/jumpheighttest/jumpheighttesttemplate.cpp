@@ -52,8 +52,9 @@ void JumpHeightTestTemplate::print(QPrinter *printer, const QString &testUid)
     Q_UNUSED(testUid);
 }
 
-bool JumpHeightTestTemplate::editParams(QWidget *parent, QJsonObject &params)
+bool JumpHeightTestTemplate::editParams(QWidget *parent, QJsonObject &params, const QString& testName)
 {
+    Q_UNUSED(testName);
     auto dialog = new JumpHeightTestParamsDialog(parent);
     dialog->setParams(params);
     bool retval = false;

@@ -124,7 +124,7 @@
          <item>
           <widget class="QLabel" name="lblTimeAnalysis">
            <property name="text">
-            <string>Длительность этапа обучения, мин:сек</string>
+            <string>Длительность этапа анализа, мин:сек</string>
            </property>
           </widget>
          </item>
@@ -284,7 +284,7 @@
          <item>
           <widget class="QLabel" name="lblStageTime">
            <property name="text">
-            <string>Временной интервал смещения меркера, сек</string>
+            <string>Временной интервал смещения маркера, сек</string>
            </property>
           </widget>
          </item>

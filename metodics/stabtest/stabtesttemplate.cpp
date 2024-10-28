@@ -71,9 +71,11 @@ void StabTestTemplate::print(QPrinter *printer, const QString &testUid)
     StabTestVisualize::print(printer, testUid);
 }
 
-bool StabTestTemplate::editParams(QWidget *parent, QJsonObject &params)
+bool StabTestTemplate::editParams(QWidget *parent, QJsonObject &params, const QString& testName)
 {
+    Q_UNUSED(testName);
     auto dialog = new StabTestParamsDialog(parent);
+    dialog->setWindowTitle(tr("Параметры методики") + " - " + testName);
     dialog->setParams(params);
     bool retval = false;
     if (dialog->exec() == QDialog::Accepted)

@@ -51,8 +51,9 @@ void OctaedronTemplate::print(QPrinter *printer, const QString &testUid)
     OctaedronVisualize::print(printer, testUid);
 }
 
-bool OctaedronTemplate::editParams(QWidget *parent, QJsonObject &params)
+bool OctaedronTemplate::editParams(QWidget *parent, QJsonObject &params, const QString& testName)
 {
+    Q_UNUSED(testName);
     auto dialog = new OctaedronParamsDialog(parent);
     dialog->setParams(params);
     bool retval = false;

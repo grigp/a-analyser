@@ -66,8 +66,9 @@ void StepDeviationTemplate::print(QPrinter *printer, const QString &testUid)
     StepDeviationVisualize::print(printer, testUid);
 }
 
-bool StepDeviationTemplate::editParams(QWidget *parent, QJsonObject &params)
+bool StepDeviationTemplate::editParams(QWidget *parent, QJsonObject &params, const QString& testName)
 {
+    Q_UNUSED(testName);
     auto dialog = new StepDeviationParamsDialog(parent);
     dialog->setParams(params);
     bool retval = false;

@@ -430,6 +430,9 @@
              </item>
              <item>
               <widget class="QPushButton" name="btnPPPrint">
+               <property name="toolTip">
+                <string>Печать результатов выполненной мндивидуальной программы...</string>
+               </property>
                <property name="text">
                 <string/>
                </property>

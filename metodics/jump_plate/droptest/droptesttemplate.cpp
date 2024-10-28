@@ -53,8 +53,9 @@ void DropTestTemplate::paintPreview(QPainter *painter, QRect &rect, const QStrin
     Q_UNUSED(testUid);
 }
 
-bool DropTestTemplate::editParams(QWidget *parent, QJsonObject &params)
+bool DropTestTemplate::editParams(QWidget *parent, QJsonObject &params, const QString& testName)
 {
+    Q_UNUSED(testName);
     auto dialog = new DropTestParamsDialog(parent);
     dialog->setParams(params);
     bool retval = false;

@@ -51,10 +51,11 @@ void TrenTakePutTemplate::print(QPrinter *printer, const QString &testUid)
     TrenVisualize::print(printer, testUid);
 }
 
-bool TrenTakePutTemplate::editParams(QWidget *parent, QJsonObject &params)
+bool TrenTakePutTemplate::editParams(QWidget *parent, QJsonObject &params, const QString& testName)
 {
     auto dialog = new TrenTakePutParamsDialog(parent);
     dialog->setParams(params);
+    dialog->setWindowTitle(tr("Параметры методики") + " - " + testName);
     bool retval = false;
     if (dialog->exec() == QDialog::Accepted)
     {

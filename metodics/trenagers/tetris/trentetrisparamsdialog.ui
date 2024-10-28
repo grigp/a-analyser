@@ -17,7 +17,7 @@
    <item>
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="tabMain">
       <attribute name="title">
@@ -332,7 +332,7 @@
           <item>
            <widget class="QLabel" name="lblAdvChannelUseInfo">
             <property name="text">
-             <string>Используется в режиме захвата и спуска для захвата и укладки, а в режиме автоматического спуска для сброса.</string>
+             <string>Используется в режиме захвата и спуска для захвата и укладки, а в режиме автоматического спуска - для сброса.</string>
             </property>
             <property name="textFormat">
              <enum>Qt::AutoText</enum>

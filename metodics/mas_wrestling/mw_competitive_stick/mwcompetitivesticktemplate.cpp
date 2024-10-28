@@ -62,8 +62,9 @@ void MWCompetitiveStickTemplate::print(QPrinter *printer, const QString &testUid
     MWCompetitiveStickVisualize::print(printer, testUid);
 }
 
-bool MWCompetitiveStickTemplate::editParams(QWidget *parent, QJsonObject &params)
+bool MWCompetitiveStickTemplate::editParams(QWidget *parent, QJsonObject &params, const QString& testName)
 {
+    Q_UNUSED(testName);
     auto dialog = new MWCompetitiveStickParamsDialog(parent);
     dialog->setParams(params);
     bool retval = false;

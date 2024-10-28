@@ -67,8 +67,9 @@ void CrossTemplate::print(QPrinter *printer, const QString &testUid)
     CrossVisualize::print(printer, testUid);
 }
 
-bool CrossTemplate::editParams(QWidget *parent, QJsonObject &params)
+bool CrossTemplate::editParams(QWidget *parent, QJsonObject &params, const QString& testName)
 {
+    Q_UNUSED(testName);
     auto dialog = new CrossParamsDialog(parent);
     dialog->setParams(params);
     bool retval = false;

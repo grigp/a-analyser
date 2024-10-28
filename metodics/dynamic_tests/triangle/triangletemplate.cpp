@@ -65,8 +65,9 @@ void TriangleTemplate::print(QPrinter *printer, const QString &testUid)
     TriangleVisualize::print(printer, testUid);
 }
 
-bool TriangleTemplate::editParams(QWidget *parent, QJsonObject &params)
+bool TriangleTemplate::editParams(QWidget *parent, QJsonObject &params, const QString& testName)
 {
+    Q_UNUSED(testName);
     auto dialog = new TriangleParamsDialog(parent);
     dialog->setParams(params);
     bool retval = false;

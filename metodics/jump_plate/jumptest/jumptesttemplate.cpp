@@ -52,8 +52,9 @@ void JumpTestTemplate::print(QPrinter *printer, const QString &testUid)
     Q_UNUSED(testUid);
 }
 
-bool JumpTestTemplate::editParams(QWidget *parent, QJsonObject &params)
+bool JumpTestTemplate::editParams(QWidget *parent, QJsonObject &params, const QString& testName)
 {
+    Q_UNUSED(testName);
     auto dialog = new JumpTestParamsDialog(parent);
     dialog->setParams(params);
     bool retval = false;

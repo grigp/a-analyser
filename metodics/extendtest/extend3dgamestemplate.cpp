@@ -54,8 +54,9 @@ void Extend3DGamesTemplate::print(QPrinter *printer, const QString &testUid)
     TrenVisualize::print(printer, testUid);
 }
 
-bool Extend3DGamesTemplate::editParams(QWidget *parent, QJsonObject &params)
+bool Extend3DGamesTemplate::editParams(QWidget *parent, QJsonObject &params, const QString& testName)
 {
+    Q_UNUSED(testName);
     auto dialog = new Extend3DGamesParamsDialog(parent);
     dialog->setParams(params);
     bool retval = false;

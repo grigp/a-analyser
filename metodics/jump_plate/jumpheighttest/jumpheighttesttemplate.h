@@ -56,7 +56,7 @@ public:
      *  \param params - параметры методики
      *  \return true, если нужно сохранить параметры
      */
-    bool editParams(QWidget *parent, QJsonObject &params)  override;
+    bool editParams(QWidget *parent, QJsonObject &params, const QString& testName)  override;
 };
 
 #endif // JUMPHEIGHTTESTTEMPLATE_H

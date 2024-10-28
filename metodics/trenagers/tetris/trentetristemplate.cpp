@@ -51,9 +51,10 @@ void TrenTetrisTemplate::print(QPrinter *printer, const QString &testUid)
     TrenVisualize::print(printer, testUid);
 }
 
-bool TrenTetrisTemplate::editParams(QWidget *parent, QJsonObject &params)
+bool TrenTetrisTemplate::editParams(QWidget *parent, QJsonObject &params, const QString& testName)
 {
     auto dialog = new TrenTetrisParamsDialog(parent);
+    dialog->setWindowTitle(tr("Параметры методики") + " - " + testName);
     dialog->setParams(params);
     bool retval = false;
     if (dialog->exec() == QDialog::Accepted)

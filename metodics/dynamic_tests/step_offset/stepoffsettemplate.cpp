@@ -65,8 +65,9 @@ void StepOffsetTemplate::print(QPrinter *printer, const QString &testUid)
     StepOffsetVisualize::print(printer, testUid);
 }
 
-bool StepOffsetTemplate::editParams(QWidget *parent, QJsonObject &params)
+bool StepOffsetTemplate::editParams(QWidget *parent, QJsonObject &params, const QString& testName)
 {
+    Q_UNUSED(testName);
     auto dialog = new StepOffsetParamsDialog(parent);
     dialog->setParams(params);
     bool retval = false;

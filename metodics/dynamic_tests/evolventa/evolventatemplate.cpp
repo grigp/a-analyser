@@ -67,8 +67,9 @@ void EvolventaTemplate::print(QPrinter *printer, const QString &testUid)
     Q_UNUSED(testUid);
 }
 
-bool EvolventaTemplate::editParams(QWidget *parent, QJsonObject &params)
+bool EvolventaTemplate::editParams(QWidget *parent, QJsonObject &params, const QString& testName)
 {
+    Q_UNUSED(testName);
     auto dialog = new EvolventaParamsDialog(parent);
     dialog->setParams(params);
     bool retval = false;

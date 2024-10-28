@@ -216,6 +216,7 @@ void StabTestExecute::start()
         if (QApplication::desktop()->screenCount() > 1)
             showPatientWindow(m_params.at(m_probe).stimulCode);
         ui->cbScale->setCurrentIndex(m_params.at(m_probe).scale);
+        ui->btnZeroing->setVisible(m_params.at(m_probe).zeroingEnabled);
         QTimer::singleShot(100, [&]  //! Пока процесс создания не завершен, масштаб отображается некорректно, если просто вызывать
         {
             scaleChange(ui->cbScale->currentIndex());

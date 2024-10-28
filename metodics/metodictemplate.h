@@ -43,7 +43,7 @@ public:
      * \param rect - зона прорисовки
      * \param testUid - uid теста
      */
-    virtual void paintPreview(QPainter* painter, QRect& rect, const QString& testUid) = 0;
+    virtual void paintPreview(QPainter* painter, QRect& rect, const QString& testName) = 0;
 
     /*!
      * \brief Печать результатов теста
@@ -57,7 +57,7 @@ public:
      *  \param params - параметры методики
      *  \return true, если нужно сохранить параметры
      */
-    virtual bool editParams(QWidget *parent, QJsonObject &params) = 0;
+    virtual bool editParams(QWidget *parent, QJsonObject &params, const QString& name = "") = 0;
 
 signals:
 

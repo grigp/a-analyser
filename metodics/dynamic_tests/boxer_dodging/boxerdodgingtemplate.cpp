@@ -51,8 +51,9 @@ void BoxerDodgingTemplate::print(QPrinter *printer, const QString &testUid)
     BoxerDodgingVisualize::print(printer, testUid);
 }
 
-bool BoxerDodgingTemplate::editParams(QWidget *parent, QJsonObject &params)
+bool BoxerDodgingTemplate::editParams(QWidget *parent, QJsonObject &params, const QString& testName)
 {
+    Q_UNUSED(testName);
     auto dialog = new BoxerDodgingParamsDialog(parent);
     dialog->setParams(params);
     bool retval = false;

@@ -79,7 +79,7 @@ bool MetodicsFactory::editMetodicParams(QWidget *parent, const QString &metUid)
         if (mi > -1)
         {
             auto met = m_metodics.at(mi);
-            bool retval = mt->editParams(parent, met.params);
+            bool retval = mt->editParams(parent, met.params, met.name);
             if (retval)
             {
                 m_metodics.replace(mi, met);
