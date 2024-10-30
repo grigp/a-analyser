@@ -121,7 +121,6 @@ void AAnalyserBuild::registerVisuals()
     app->registerVisual(new AutoCorrelationAnalysisVisual(BaseDefines::tlChannel));
     app->registerVisual(new SpectrPulseVisual(BaseDefines::tlChannel));
     app->registerVisual(new BilateralVisual(BaseDefines::tlProbe));
-    app->registerVisual(new BilateralVisual(BaseDefines::tlProbe));
     app->registerVisual(new SectionGraphVisual(BaseDefines::tlSection));
 }
 

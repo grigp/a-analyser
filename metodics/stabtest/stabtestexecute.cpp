@@ -201,6 +201,7 @@ void StabTestExecute::start()
             ui->wgtSKG->addTarget(-100, 0, Qt::red, Qt::darkRed);
             ui->wgtSKG->addTarget(100, 0, Qt::red, Qt::darkRed);
         }
+        ui->gbBilat->setVisible(m_bilatControl);
 
         connect(m_driver, &Driver::sendData, this, &StabTestExecute::getData);
         connect(m_driver, &Driver::communicationError, this, &StabTestExecute::on_communicationError);
@@ -333,6 +334,8 @@ void StabTestExecute::getData(DeviceProtocols::DeviceData *data)
             DeviceProtocols::StabDvcData *stabData = static_cast<DeviceProtocols::StabDvcData*>(data);
             ui->wgtSKG->setTarget(m_platform1.center().x() + stabData->x(),
                                   m_platform1.y() - m_platform1.height() / 2 + stabData->y(), 0);
+            ui->diagLeft->setValue(static_cast<int>(stabData->z()));
+            ui->lblZLeft->setText(QString::number(static_cast<int>(stabData->z())) + " " + tr("кг"));
         }
     }
     else
@@ -343,6 +346,8 @@ void StabTestExecute::getData(DeviceProtocols::DeviceData *data)
             DeviceProtocols::StabDvcData *stabData = static_cast<DeviceProtocols::StabDvcData*>(data);
             ui->wgtSKG->setTarget(m_platform2.center().x() + stabData->x(),
                                   m_platform2.y() - m_platform2.height() / 2 + stabData->y(), 1);
+            ui->diagRight->setValue(static_cast<int>(stabData->z()));
+            ui->lblZRight->setText(QString::number(static_cast<int>(stabData->z())) + " " + tr("кг"));
         }
     }
 }
