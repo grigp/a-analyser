@@ -758,6 +758,19 @@
                        <number>0</number>
                       </property>
                       <item>
+                       <spacer name="horizontalSpacer">
+                        <property name="orientation">
+                         <enum>Qt::Horizontal</enum>
+                        </property>
+                        <property name="sizeHint" stdset="0">
+                         <size>
+                          <width>40</width>
+                          <height>20</height>
+                         </size>
+                        </property>
+                       </spacer>
+                      </item>
+                      <item>
                        <widget class="QProgressBar" name="diagLeft">
                         <property name="value">
                          <number>0</number>
@@ -767,6 +780,34 @@
                         </property>
                         <property name="orientation">
                          <enum>Qt::Vertical</enum>
+                        </property>
+                       </widget>
+                      </item>
+                      <item>
+                       <widget class="QPushButton" name="btnCalibrateLeft">
+                        <property name="sizePolicy">
+                         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                          <horstretch>0</horstretch>
+                          <verstretch>0</verstretch>
+                         </sizepolicy>
+                        </property>
+                        <property name="minimumSize">
+                         <size>
+                          <width>0</width>
+                          <height>0</height>
+                         </size>
+                        </property>
+                        <property name="maximumSize">
+                         <size>
+                          <width>23</width>
+                          <height>23</height>
+                         </size>
+                        </property>
+                        <property name="toolTip">
+                         <string>Калибровка платформы для левой ноги</string>
+                        </property>
+                        <property name="text">
+                         <string>0</string>
                         </property>
                        </widget>
                       </item>
@@ -839,6 +880,19 @@
                        <number>0</number>
                       </property>
                       <item>
+                       <spacer name="horizontalSpacer_2">
+                        <property name="orientation">
+                         <enum>Qt::Horizontal</enum>
+                        </property>
+                        <property name="sizeHint" stdset="0">
+                         <size>
+                          <width>40</width>
+                          <height>20</height>
+                         </size>
+                        </property>
+                       </spacer>
+                      </item>
+                      <item>
                        <widget class="QProgressBar" name="diagRight">
                         <property name="value">
                          <number>0</number>
@@ -848,6 +902,28 @@
                         </property>
                         <property name="orientation">
                          <enum>Qt::Vertical</enum>
+                        </property>
+                       </widget>
+                      </item>
+                      <item>
+                       <widget class="QPushButton" name="btnCalibrateRight">
+                        <property name="sizePolicy">
+                         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                          <horstretch>0</horstretch>
+                          <verstretch>0</verstretch>
+                         </sizepolicy>
+                        </property>
+                        <property name="maximumSize">
+                         <size>
+                          <width>23</width>
+                          <height>23</height>
+                         </size>
+                        </property>
+                        <property name="toolTip">
+                         <string>Калибровка платформы для правой ноги</string>
+                        </property>
+                        <property name="text">
+                         <string>0</string>
                         </property>
                        </widget>
                       </item>
@@ -1159,7 +1235,7 @@
    <slot>zeroing()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>862</x>
+     <x>861</x>
      <y>69</y>
     </hint>
     <hint type="destinationlabel">
@@ -1175,8 +1251,8 @@
    <slot>calibrate()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>862</x>
-     <y>667</y>
+     <x>861</x>
+     <y>745</y>
     </hint>
     <hint type="destinationlabel">
      <x>702</x>
@@ -1207,7 +1283,7 @@
    <slot>scaleChange(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>860</x>
+     <x>859</x>
      <y>97</y>
     </hint>
     <hint type="destinationlabel">
@@ -1255,7 +1331,7 @@
    <slot>on_clearTrace()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>862</x>
+     <x>861</x>
      <y>445</y>
     </hint>
     <hint type="destinationlabel">
@@ -1328,6 +1404,38 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>btnCalibrateLeft</sender>
+   <signal>clicked()</signal>
+   <receiver>StabTestExecute</receiver>
+   <slot>on_calibrateLeft()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>724</x>
+     <y>674</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>886</x>
+     <y>604</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btnCalibrateRight</sender>
+   <signal>clicked()</signal>
+   <receiver>StabTestExecute</receiver>
+   <slot>on_calibrateRight()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>842</x>
+     <y>669</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>885</x>
+     <y>630</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>showDataBase()</slot>
@@ -1344,5 +1452,7 @@
   <slot>on_AMedZSelect()</slot>
   <slot>on_MBNStabSelect()</slot>
   <slot>on_writeFromFiles()</slot>
+  <slot>on_calibrateLeft()</slot>
+  <slot>on_calibrateRight()</slot>
  </slots>
 </ui>

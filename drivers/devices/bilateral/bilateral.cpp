@@ -644,3 +644,10 @@ int Bilateral::size() const
     return m_diap;
 }
 
+void Bilateral::calibratePlatform(const int num) const
+{
+    Q_ASSERT(num >= 0 && num < 2);
+    if (m_stabControl[num])
+        m_stabControl[num]->calibrate(ChannelsDefines::chanStab);
+}
+

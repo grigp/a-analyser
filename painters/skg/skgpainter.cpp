@@ -120,6 +120,7 @@ void SKGPainter::setOffset(const double offsetX, const double offsetY, const int
         sd.offsX = offsetX;
         sd.offsY = offsetY;
         m_signals.replace(num, sd);
+        doUpdate();
     }
 }
 

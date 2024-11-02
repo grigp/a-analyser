@@ -56,6 +56,8 @@ private slots:
      * \brief Калибровка
      */
     void calibrate();
+    void on_calibrateLeft();
+    void on_calibrateRight();
 
     /*!
      * \brief Управляет началом / остановом / прерыванием записи
@@ -154,6 +156,10 @@ private:
     DeviceProtocols::MultiPlatformControl* m_bilatControl {nullptr};   ///< Управление билатаральным режимом в драйвере
     QRect m_platform1 {QRect(0, 0, 0, 0)};   ///< Платформы в билатеральном режиме
     QRect m_platform2 {QRect(0, 0, 0, 0)};
+    double m_t0x {0};      ///< Координаты ЦД на платформах
+    double m_t0y {0};
+    double m_t1x {0};
+    double m_t1y {0};
 
     int m_autoModeTimerId {-1};   ///< id таймера для режима автономной работы
     int m_stageNum {0};           ///< Номер этапа в автоматическом режиме

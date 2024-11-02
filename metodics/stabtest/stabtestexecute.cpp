@@ -200,6 +200,7 @@ void StabTestExecute::start()
             ui->wgtSKG->addPlatform(m_platform2);
             ui->wgtSKG->addTarget(-100, 0, Qt::red, Qt::darkRed);
             ui->wgtSKG->addTarget(100, 0, Qt::red, Qt::darkRed);
+            ui->wgtSKG->addTarget(0, 0, QColor(150, 150, 150), QColor(50, 50, 50));
         }
         ui->gbBilat->setVisible(m_bilatControl);
 
@@ -332,10 +333,12 @@ void StabTestExecute::getData(DeviceProtocols::DeviceData *data)
         if (m_bilatControl)
         {
             DeviceProtocols::StabDvcData *stabData = static_cast<DeviceProtocols::StabDvcData*>(data);
-            ui->wgtSKG->setTarget(m_platform1.center().x() + stabData->x(),
-                                  m_platform1.y() - m_platform1.height() / 2 + stabData->y(), 0);
+            m_t0x = m_platform1.center().x() + stabData->x();
+            m_t0y = m_platform1.y() - m_platform1.height() / 2 + stabData->y();
+            ui->wgtSKG->setTarget(m_t0x, m_t0y, 0);
             ui->diagLeft->setValue(static_cast<int>(stabData->z()));
             ui->lblZLeft->setText(QString::number(static_cast<int>(stabData->z())) + " " + tr("кг"));
+            ui->wgtSKG->setTarget((m_t0x + m_t1x) / 2, (m_t0y + m_t1y) / 2, 2);
         }
     }
     else
@@ -344,10 +347,12 @@ void StabTestExecute::getData(DeviceProtocols::DeviceData *data)
         if (m_bilatControl)
         {
             DeviceProtocols::StabDvcData *stabData = static_cast<DeviceProtocols::StabDvcData*>(data);
-            ui->wgtSKG->setTarget(m_platform2.center().x() + stabData->x(),
-                                  m_platform2.y() - m_platform2.height() / 2 + stabData->y(), 1);
+            m_t1x = m_platform2.center().x() + stabData->x();
+            m_t1y = m_platform2.y() - m_platform2.height() / 2 + stabData->y();
+            ui->wgtSKG->setTarget(m_t1x, m_t1y, 1);
             ui->diagRight->setValue(static_cast<int>(stabData->z()));
             ui->lblZRight->setText(QString::number(static_cast<int>(stabData->z())) + " " + tr("кг"));
+            ui->wgtSKG->setTarget((m_t0x + m_t1x) / 2, (m_t0y + m_t1y) / 2, 2);
         }
     }
 }
@@ -388,6 +393,18 @@ void StabTestExecute::calibrate()
 {
     if (m_stabControl)
         m_stabControl->calibrate(ChannelsDefines::chanStab);
+}
+
+void StabTestExecute::on_calibrateLeft()
+{
+    if (m_bilatControl)
+        m_bilatControl->calibratePlatform(0);
+}
+
+void StabTestExecute::on_calibrateRight()
+{
+    if (m_bilatControl)
+        m_bilatControl->calibratePlatform(1);
 }
 
 void StabTestExecute::recording()

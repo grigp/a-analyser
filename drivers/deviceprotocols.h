@@ -667,6 +667,12 @@ public:
      */
     virtual int size() const = 0;
 
+    /*!
+     * \brief калибрует стабилоплатформу num
+     * \param num - номер стабилопдатформы 0, 1, ...
+     */
+    virtual void calibratePlatform(const int num) const = 0;
+
     ~MultiPlatformControl() override;
 };
 

@@ -124,6 +124,13 @@ public:
      */
     int size() const override;
 
+    /*!
+     * \brief калибрует стабилоплатформу num
+     * \param num - номер стабилопдатформы 0, 1, ...
+     */
+    void calibratePlatform(const int num) const override;
+
+
 private slots:
     void getData(DeviceProtocols::DeviceData *data);
 
