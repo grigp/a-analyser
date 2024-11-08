@@ -184,6 +184,24 @@ void SignalAnalysisWidget::on_closeTest()
         closeTest(root);
 }
 
+void SignalAnalysisWidget::on_closeAll()
+{
+    auto res = AMessageBox::question(nullptr, tr("Запрос"), tr("Закрыть все тесты?"));
+    if (res == AMessageBox::Yes)
+    {
+        for (int i = m_mdlTests->rowCount() - 1; i >= 0; --i)
+        {
+            auto idxRoot = m_mdlTests->index(i, 0);
+
+            closeVisuals(idxRoot);
+            m_mdlTests->removeRow(idxRoot.row(), idxRoot.parent());
+            auto uidTest = idxRoot.data(UidRole).toString();
+            static_cast<AAnalyserApplication*>(QApplication::instance())->saCloseTest(uidTest);
+        }
+        static_cast<AAnalyserApplication*>(QApplication::instance())->restoreClientPage();
+    }
+}
+
 void SignalAnalysisWidget::on_signalExport()
 {
     auto selIdxs = ui->tvTests->selectionModel()->selectedIndexes();

@@ -292,5 +292,6 @@
         <file>images/MainIcon_mw.png</file>
         <file>images/Methodics/StabReactTrain.png</file>
         <file>images/ExpandCollapse.png</file>
+        <file>images/CloseAll.png</file>
     </qresource>
 </RCC>

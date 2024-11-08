@@ -107,6 +107,7 @@ private slots:
     void on_popupMenuRequested(QPoint pos);
 
     void on_closeTest();
+    void on_closeAll();
     void on_signalExport();
     void on_deleteSection();
 
