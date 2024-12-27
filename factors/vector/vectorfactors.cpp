@@ -270,10 +270,12 @@ void VectorFactors::vectorSpeed(const QVector<double> &spdX, const QVector<doubl
     angles.clear();
     wSpeed.clear();
 
+//    qDebug() << "----------------------------------------------------------------------------------";
     for (int i = 0; i < fmin(spdX.size(), spdY.size()); ++i)
     {
         //! Модуль скорости
         auto v = hypot(spdX.value(i), spdY.value(i));
+//        qDebug() << v;
         spd << v;
         m_vMid = m_vMid + v;
         m_lss_f = m_lss_f + fabs(spdX.value(i));
@@ -303,6 +305,7 @@ void VectorFactors::vectorSpeed(const QVector<double> &spdX, const QVector<doubl
                 m_rotLf = m_rotLf + fabs(a2);
         }
     }
+//    qDebug() << "----------------------------------------------------------------------------------";
 
     //! Дорасчет VMid
     if (spdX.size() > 0 && spdY.size() > 0)
@@ -347,6 +350,7 @@ void VectorFactors::computeKFR(const QVector<double> &spd)
     {
         m_diapazones[i].limitLow = loV;
         m_diapazones[i].limitHigh = sqrt(KoefDiap * (i + 1) / M_PI);
+//        qDebug() << "j =" << i << "    v1 =" << m_diapazones[i].limitLow << "  v2 =" << m_diapazones[i].limitHigh;
         loV = m_diapazones[i].limitHigh;
         m_diapazones[i].vectorsCnt = 0;
         m_diapazones[i].freq = 0;
