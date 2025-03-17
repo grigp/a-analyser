@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <QPushButton>
+#include <QLabel>
 
 #include "signalwidget.h"
 
@@ -74,6 +75,11 @@ private slots:
 
     void on_myoScaleChange(int scaleIdx);
 
+    void on_resetValuesChan1();
+    void on_resetValuesChan2();
+    void on_resetValuesChan3();
+    void on_resetValuesChan4();
+
 
 private:
     Ui::MyogramWidget *ui;
@@ -91,10 +97,22 @@ private:
 
     int subChanCount() const;
 
+    void setIndicatorsStyle();
+    void showChannelValues(const int idx,
+                           QLabel* lblValue,
+                           QLabel* lblValueCur,
+                           QLabel* lblDecrease,
+                           QLabel* lblMin,
+                           QLabel* lblMax,
+                           QLabel* lblDiap);
+
     DeviceProtocols::MyoControl* m_myoControl {nullptr};
 
     QList<QPushButton*> m_btnSubChans;  ///< Указатели на кнопки записи подканалов
 
+    double m_valueDisplay[4] {0, 0, 0, 0};
+    double m_valueMin[4] {10000, 10000, 10000, 10000};
+    double m_valueMax[4] {-10000, -10000, -10000, -10000};
     Myogram *m_myo {nullptr};
     double m_amplMyo {2};
     QList<QPushButton*> m_subChanels;  ///< Список кнопок, управления записью подканалов 0, 1, ...
