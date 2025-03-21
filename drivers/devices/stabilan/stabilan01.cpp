@@ -173,9 +173,9 @@ void Stabilan01::setParams(const DeviceProtocols::Ports port, const QJsonObject 
     m_tenso1.rkp = params["rkp1"].toDouble(1.7);
     m_tenso2.rkp = params["rkp2"].toDouble(1.7);
     m_tenso3.rkp = params["rkp3"].toDouble(1.7);
-    m_tenso1.pn = params["pn1"].toDouble(100);
-    m_tenso2.pn = params["pn2"].toDouble(500);
-    m_tenso3.pn = params["pn3"].toDouble(1);
+    m_tenso1.pn = params["pn1"].toDouble(1);
+    m_tenso2.pn = params["pn2"].toDouble(100);
+    m_tenso3.pn = params["pn3"].toDouble(500);
 
     m_countChannels = ChannelsCount.value(m_model);
 }
@@ -198,9 +198,9 @@ bool Stabilan01::editParams(QJsonObject &params)
     dlg.setRkpTenso1(params["rkp1"].toDouble(1.7));
     dlg.setRkpTenso2(params["rkp2"].toDouble(1.7));
     dlg.setRkpTenso3(params["rkp3"].toDouble(1.7));
-    dlg.setPnTenso1(params["pn1"].toDouble(100));
-    dlg.setPnTenso2(params["pn2"].toDouble(500));
-    dlg.setPnTenso3(params["pn3"].toDouble(1));
+    dlg.setPnTenso1(params["pn1"].toDouble(1));
+    dlg.setPnTenso2(params["pn2"].toDouble(100));
+    dlg.setPnTenso3(params["pn3"].toDouble(500));
 
     dlg.setMaxDifferent(params["max_different"].toDouble(0.2));
     dlg.setMinWeight(params["min_weight"].toDouble(0.1));

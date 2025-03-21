@@ -53,9 +53,9 @@ QList<Ports> allPorts();
  */
 enum TensoDevice
 {
-      tdDynHand = 0 ///< Кистевой силомер
+      tdBreath = 0  ///< Периметрическое дыхание
+    , tdDynHand     ///< Кистевой силомер
     , tdDynStand    ///< Становой силомер
-    , tdBreath      ///< Периметрическое дыхание
     , tdPushDevice  ///< Толкатель
 };
 
