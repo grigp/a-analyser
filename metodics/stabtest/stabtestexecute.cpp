@@ -45,6 +45,9 @@ StabTestExecute::StabTestExecute(QWidget *parent) :
     ui->lblErrorInDriver->setVisible(false);
     QTimer::singleShot(0, this, &StabTestExecute::start);
 
+    ui->cbScale->addItem("1/8");
+    ui->cbScale->addItem("1/4");
+    ui->cbScale->addItem("1/2");
     ui->cbScale->addItem("1");
     ui->cbScale->addItem("2");
     ui->cbScale->addItem("4");
@@ -217,7 +220,7 @@ void StabTestExecute::start()
 
         if (QApplication::desktop()->screenCount() > 1)
             showPatientWindow(m_params.at(m_probe).stimulCode);
-        ui->cbScale->setCurrentIndex(m_params.at(m_probe).scale);
+        ui->cbScale->setCurrentIndex(m_params.at(m_probe).scale + 3);
         ui->btnZeroing->setVisible(m_params.at(m_probe).zeroingEnabled);
         QTimer::singleShot(100, [&]  //! Пока процесс создания не завершен, масштаб отображается некорректно, если просто вызывать
         {
@@ -253,12 +256,12 @@ void StabTestExecute::start()
 
 void StabTestExecute::scaleChange(int scaleId)
 {
-    int v = 1;
+    double v = 0.125;
     for (int i = 0; i < scaleId; ++i)
         v = v * 2;
-    ui->wgtSKG->setDiap(m_maxDiap / v);
+    ui->wgtSKG->setDiap(static_cast<int>(m_maxDiap / v));
     if (m_patientWin)
-        m_patientWin->setDiap(m_maxDiap / v);
+        m_patientWin->setDiap(static_cast<int>(m_maxDiap / v));
 }
 
 void StabTestExecute::getData(DeviceProtocols::DeviceData *data)
@@ -436,7 +439,7 @@ void StabTestExecute::recording()
         if (QApplication::desktop()->screenCount() == 1)
         {
             showPatientWindow(m_params.at(m_probe).stimulCode);
-            ui->cbScale->setCurrentIndex(m_params.at(m_probe).scale);
+            ui->cbScale->setCurrentIndex(m_params.at(m_probe).scale + 3);
             scaleChange(ui->cbScale->currentIndex());
         }
         if (m_patientWin)
@@ -694,7 +697,7 @@ void StabTestExecute::nextProbe()
 
         if (QApplication::desktop()->screenCount() > 1)
             showPatientWindow(m_params.at(m_probe).stimulCode);
-        ui->cbScale->setCurrentIndex(m_params.at(m_probe).scale);
+        ui->cbScale->setCurrentIndex(m_params.at(m_probe).scale + 3);
 
         ui->btnZeroing->setVisible(m_params.at(m_probe).zeroingEnabled);
         ui->btnZeroing->setEnabled(!m_isRecording);
