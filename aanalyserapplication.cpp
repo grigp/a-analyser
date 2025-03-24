@@ -402,6 +402,16 @@ void AAnalyserApplication::executeMetodic()
     }
 }
 
+bool AAnalyserApplication::editCurrentMetodicParams(QWidget *parent)
+{
+    if (m_metodicUid != ""){
+        DataProvider::editMetodicParams(parent, m_metodicUid);
+        return true;
+    }
+    else
+        return false;
+}
+
 QJsonObject AAnalyserApplication::setMetodicParamsDefault(const QString &uidMet)
 {
     if (m_metodics)

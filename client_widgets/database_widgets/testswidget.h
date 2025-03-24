@@ -14,7 +14,7 @@ class TestsWidget : public QWidget
     Q_OBJECT
 
 public:
-    explicit TestsWidget(QWidget *parent = 0);
+    explicit TestsWidget(QWidget *parent = nullptr);
     ~TestsWidget();
 
     void onDbConnect();

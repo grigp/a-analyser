@@ -185,6 +185,14 @@ public:
      */
     void executeMetodic();
 
+
+    /*!
+     * \brief Резактирование параметров методики
+     * \param parent - виджет - владелец
+     * \return true, если успешно
+     */
+    bool editCurrentMetodicParams(QWidget *parent);
+
     /*!
      * \brief Устанавливает для методики параметры по умолчанию, записанные в программу
      * \param uidMet - uid методики

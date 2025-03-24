@@ -338,6 +338,14 @@ void MainWindow::onDataBaseCreate()
     }
 }
 
+void MainWindow::onEditMethodParams()
+{
+    if (!static_cast<AAnalyserApplication*>(QApplication::instance())->editCurrentMetodicParams(this))
+    {
+        AMessageBox::information(this, tr("Предупреждение"), tr("Методика не выбрана"));
+    }
+}
+
 void MainWindow::on_selectDatabase()
 {
     QString path = DataDefines::dataBasesPath() + static_cast<QAction*>(sender())->data().toString() + "/";
@@ -448,7 +456,8 @@ void MainWindow::initMenu()
 
     menuDatabase->addAction(ui->acDataBaseCreate);
     menuDatabase->addSeparator();
-
+    menuDatabase->addAction(ui->acEditMethodParams);
+    menuDatabase->addSeparator();
     menuDatabase->addAction(ui->acExit);
 
 

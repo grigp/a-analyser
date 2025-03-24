@@ -95,6 +95,7 @@ private slots:
     void onDataBaseClear();
     void onDataBaseDelTests();
     void onDataBaseCreate();
+    void onEditMethodParams();
 
     void on_selectDatabase();
     void on_selectColorSheme();
