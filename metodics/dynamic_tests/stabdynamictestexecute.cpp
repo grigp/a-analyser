@@ -28,6 +28,9 @@ StabDynamicTestExecute::StabDynamicTestExecute(QWidget *parent) :
     ui->lblCommunicationError->setVisible(false);
     QTimer::singleShot(0, this, &StabDynamicTestExecute::start);
 
+    ui->cbScale->addItem("1/8");
+    ui->cbScale->addItem("1/4");
+    ui->cbScale->addItem("1/2");
     ui->cbScale->addItem("1");
     ui->cbScale->addItem("2");
     ui->cbScale->addItem("4");
@@ -130,10 +133,10 @@ void StabDynamicTestExecute::setTitle(const QString &title)
 
 int StabDynamicTestExecute::diap() const
 {
-    int v = 1;
+    double v = 0.125;
     for (int i = 0; i < ui->cbScale->currentIndex(); ++i)
         v = v * 2;
-    return  128 / v;
+    return  static_cast<int>(128 / v);
 }
 
 void StabDynamicTestExecute::isShowValues(const bool isShow)
@@ -273,7 +276,7 @@ void StabDynamicTestExecute::start()
 
         if (QApplication::desktop()->screenCount() > 1)
             createAndShowPatientWindow();
-        ui->cbScale->setCurrentIndex(0);
+        ui->cbScale->setCurrentIndex(3);
         QTimer::singleShot(100, [&]  //! Пока процесс создания не завершен, масштаб отображается некорректно, если просто вызывать
         {
             scaleChange(ui->cbScale->currentIndex());
@@ -477,11 +480,11 @@ void StabDynamicTestExecute::on_started()
 
 void StabDynamicTestExecute::scaleChange(int scaleId)
 {
-    int v = 1;
+    double v = 0.125;
     for (int i = 0; i < scaleId; ++i)
         v = v * 2;
-    ui->wgtSKG->setDiap(128 / v);
-    setPatientWinDiap(128 / v);
+    ui->wgtSKG->setDiap(static_cast<int>(128 / v));
+    setPatientWinDiap(static_cast<int>(128 / v));
 }
 
 void StabDynamicTestExecute::zeroing()
