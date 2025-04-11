@@ -35,7 +35,7 @@ int SKGPainter::diap() const
 void SKGPainter::setDiap(const int diap)
 {
     m_diap = diap;
-    doUpdate();
+    makeUpdate();
 }
 
 void SKGPainter::addMarker()
@@ -47,9 +47,10 @@ void SKGPainter::setMarker(const double x, const double y)
 {
     m_mx = x;
     m_my = y;
+    ++m_counter;
     if (m_isShowTrace)
         m_trace << QPointF(x, y);
-    doUpdate();
+    makeUpdate();
 }
 
 void SKGPainter::setMarkerColor(const QColor colorBackground, const QColor colorBorder)
@@ -97,7 +98,7 @@ void SKGPainter::setSection(const int begin, const int end, const int num)
         sd.begin = begin;
         sd.end = end;
         m_signals.replace(num, sd);
-        doUpdate();
+        makeUpdate();
     }
 }
 
@@ -109,7 +110,7 @@ void SKGPainter::setVisibleMarker(const bool visibleMarker)
 void SKGPainter::setZeroing(const bool zeroing)
 {
     m_isZeroing = zeroing;
-    doUpdate();
+    makeUpdate();
 }
 
 void SKGPainter::setOffset(const double offsetX, const double offsetY, const int num)
@@ -120,7 +121,7 @@ void SKGPainter::setOffset(const double offsetX, const double offsetY, const int
         sd.offsX = offsetX;
         sd.offsY = offsetY;
         m_signals.replace(num, sd);
-        doUpdate();
+        makeUpdate();
     }
 }
 
@@ -221,7 +222,7 @@ void SKGPainter::setVisibleSKG(const bool isVisible, const int num)
         auto sd = m_signals.at(num);
         sd.visible = isVisible;
         m_signals.replace(num, sd);
-        doUpdate();
+        makeUpdate();
     }
 }
 
@@ -604,6 +605,37 @@ void SKGPainter::drawTitle()
         m_painter->drawText(m_geometry.left(), m_geometry.top(), m_geometry.width(), 20, Qt::AlignHCenter | Qt::AlignVCenter, m_title);
 
         m_painter->restore();
+    }
+}
+
+const int FullTraceTime = 5;
+const int FullTraceCount = FullTraceTime * 60 * 50;
+
+void SKGPainter::makeUpdate()
+{
+    //! По истечении 5 минут 5 * 60 = 300 секунд * 50 Гц = 15000 отсчетов
+    //! начинаем перерисовывать виджет не для каждого отсчета, а реже
+    if (m_trace.size() <= FullTraceCount)
+    {
+        doUpdate();
+    }
+    else
+    if (m_trace.size() > FullTraceCount && m_trace.size() <= (FullTraceCount * 2))
+    {
+        int val = (m_trace.size() - FullTraceCount) / (FullTraceCount / 50);
+        if (val > 0) {
+            if ((m_counter % val) == 0)
+                doUpdate();
+        }
+        else
+        {
+            doUpdate();
+        }
+    }
+    else
+    {
+        if ((m_counter % 50) == 0)
+            doUpdate();
     }
 }
 

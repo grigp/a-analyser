@@ -243,6 +243,11 @@ private:
     void drawTitle();
 
     /*!
+     * \brief Вызывается, когда необходимо перерисовать виджет
+     */
+    void makeUpdate();
+
+    /*!
      * \brief Структура данных, содержащая данные цели The TargetInfo struct
      */
     struct TargetInfo
@@ -315,6 +320,9 @@ private:
     double m_mx {0};
     double m_my {0};
     int m_mSize {10};
+
+    ///< Счетчик показанных пакетов
+    int m_counter {0};
 
     ///< Цели
     QList<TargetInfo> m_targets;
