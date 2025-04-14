@@ -608,7 +608,7 @@ void SKGPainter::drawTitle()
     }
 }
 
-const int FullTraceTime = 5;
+const int FullTraceTime = 10;
 const int FullTraceCount = FullTraceTime * 60 * 50;
 
 void SKGPainter::makeUpdate()
