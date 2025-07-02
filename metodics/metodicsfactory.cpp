@@ -311,6 +311,7 @@ void MetodicsFactory::assignMetodicsFromAutoImport()
             if (fileInfo.completeSuffix() == "json")
                 appendNewMetodic(path + "Shared/AutoImport/" + fileInfo.fileName(),
                                  DataDefines::appCopyPath() + "metodics.json");
+            ///TODO: Сделать прием и разбор в зависимости от локали
         }
 }
 

@@ -12,17 +12,17 @@
         <location filename="aanalyserapplication.cpp" line="845"/>
         <location filename="aanalyserapplication.cpp" line="1205"/>
         <source>Запрос</source>
-        <translation type="unfinished">Warning</translation>
+        <translation>Request</translation>
     </message>
     <message>
         <location filename="aanalyserapplication.cpp" line="116"/>
         <source>Настройка подключенного оборудования не проводилась.</source>
-        <translation type="unfinished">The connected equipment was not configured.</translation>
+        <translation>The connected equipment was not configured.</translation>
     </message>
     <message>
         <location filename="aanalyserapplication.cpp" line="117"/>
         <source>Провести настройку подключенного оборудования?</source>
-        <translation type="unfinished">Configure the connected equipment?</translation>
+        <translation>Configure the connected equipment?</translation>
     </message>
     <message>
         <location filename="aanalyserapplication.cpp" line="354"/>
@@ -46,111 +46,111 @@
     <message>
         <location filename="aanalyserapplication.cpp" line="364"/>
         <source>Печать результатов теста</source>
-        <translation type="unfinished">Print results of the test</translation>
+        <translation>Print results of the test</translation>
     </message>
     <message>
         <location filename="aanalyserapplication.cpp" line="379"/>
         <source>Не выбран тест и в окне анализа сигналов отсутствуют ранее открытые тесты</source>
-        <translation type="unfinished">No test selected and there aren&apos;t previously opened tests in the signal analysis window</translation>
+        <translation>No test selected and there aren&apos;t previously opened tests in the signal analysis window</translation>
     </message>
     <message>
         <location filename="aanalyserapplication.cpp" line="385"/>
         <source>Должен быть выбран пациент</source>
-        <translation type="unfinished">Record of patient must be selected</translation>
+        <translation>Record of patient must be selected</translation>
     </message>
     <message>
         <location filename="aanalyserapplication.cpp" line="388"/>
         <source>Должна быть выбрана методика</source>
-        <translation type="unfinished">Record of metodic must be selected</translation>
+        <translation>Record of metodic must be selected</translation>
     </message>
     <message>
         <location filename="aanalyserapplication.cpp" line="437"/>
         <source>Подтверждение</source>
-        <translation type="unfinished">Confirmation</translation>
+        <translation>Confirmation</translation>
     </message>
     <message>
         <location filename="aanalyserapplication.cpp" line="437"/>
         <source>Удалить запись о тесте?</source>
-        <translation type="unfinished">Delete entry of the test?</translation>
+        <translation>Delete entry of the test?</translation>
     </message>
     <message>
         <location filename="aanalyserapplication.cpp" line="496"/>
         <source>Не выбран ни один тест</source>
-        <translation type="unfinished">No test selected</translation>
+        <translation>No test selected</translation>
     </message>
     <message>
         <location filename="aanalyserapplication.cpp" line="762"/>
         <source>Для пациента уже назначена индивидуальная программа</source>
-        <translation type="unfinished">An individual program has already been assigned to the patient</translation>
+        <translation>An individual program has already been assigned to the patient</translation>
     </message>
     <message>
         <location filename="aanalyserapplication.cpp" line="766"/>
         <location filename="aanalyserapplication.cpp" line="818"/>
         <location filename="aanalyserapplication.cpp" line="870"/>
         <source>Не выбран пациент</source>
-        <translation type="unfinished">No patient selected</translation>
+        <translation>No patient selected</translation>
     </message>
     <message>
         <location filename="aanalyserapplication.cpp" line="846"/>
         <source>Отменить индивидуальную программу для пациента?</source>
-        <translation type="unfinished">Cancel the individual program for the patient?</translation>
+        <translation>Cancel the individual program for the patient?</translation>
     </message>
     <message>
         <location filename="aanalyserapplication.cpp" line="867"/>
         <source>Для пациента не назначена индивидуальная программа</source>
-        <translation type="unfinished">The patient has not been assigned an individual program</translation>
+        <translation>The patient has not been assigned an individual program</translation>
     </message>
     <message>
         <location filename="aanalyserapplication.cpp" line="1199"/>
         <source>Выполнить юстировку подключенного оборудования?</source>
-        <translation type="unfinished">Perform alignment of connected equipment?</translation>
+        <translation>Perform alignment of connected equipment?</translation>
     </message>
     <message>
         <location filename="aanalyserapplication.cpp" line="1201"/>
         <source>Юстировка подключеного оборудования давно не проводилась.</source>
-        <translation type="unfinished">The connected equipment has not been adjusted.</translation>
+        <translation>The connected equipment has not been adjusted.</translation>
     </message>
     <message>
         <location filename="aanalyserapplication.cpp" line="1207"/>
         <source>Напомнить через</source>
-        <translation type="unfinished">Remind me in</translation>
+        <translation>Remind me in</translation>
     </message>
     <message>
         <location filename="aanalyserapplication.cpp" line="1207"/>
         <source>дней</source>
-        <translation type="unfinished">days</translation>
+        <translation>days</translation>
     </message>
     <message>
         <location filename="aanalyserapplication.cpp" line="1225"/>
         <location filename="aanalyserapplication.cpp" line="1228"/>
         <location filename="aanalyserapplication.cpp" line="1240"/>
         <source>Сообщение</source>
-        <translation type="unfinished">Message</translation>
+        <translation>Message</translation>
     </message>
     <message>
         <location filename="aanalyserapplication.cpp" line="1225"/>
         <source>Юстировка подключенного оборудования выполнена</source>
-        <translation type="unfinished">The alignment of the connected equipment is complete</translation>
+        <translation>The alignment of the connected equipment is complete</translation>
     </message>
     <message>
         <location filename="aanalyserapplication.cpp" line="1228"/>
         <source>Юстировка не выполнена для одного или нескольких устройств</source>
-        <translation type="unfinished">Alignment not completed for one or more devices</translation>
+        <translation>Alignment not completed for one or more devices</translation>
     </message>
     <message>
         <location filename="aanalyserapplication.cpp" line="1240"/>
         <source>Юстировка подключенного оборудования не требуется</source>
-        <translation type="unfinished">Adjustment of connected equipment is not required</translation>
+        <translation>Adjustment of connected equipment is not required</translation>
     </message>
     <message>
         <location filename="aanalyserapplication.cpp" line="1303"/>
         <source>Не задано название сводки</source>
-        <translation type="unfinished">Summary name is not set</translation>
+        <translation>Summary name is not set</translation>
     </message>
     <message>
         <location filename="aanalyserapplication.cpp" line="1325"/>
         <source>Выбраны тесты по разным методикам</source>
-        <translation type="unfinished">Tests were selected using different methods</translation>
+        <translation>Tests were selected using different methods</translation>
     </message>
     <message>
         <source>Удалить запись о методике?</source>
@@ -161,17 +161,17 @@
         <location filename="aanalyserapplication.cpp" line="763"/>
         <location filename="aanalyserapplication.cpp" line="847"/>
         <source>Пациент</source>
-        <translation type="unfinished">Patient</translation>
+        <translation>Patient</translation>
     </message>
     <message>
         <location filename="aanalyserapplication.cpp" line="439"/>
         <source>Методика</source>
-        <translation type="unfinished">Methodic</translation>
+        <translation>Methodic</translation>
     </message>
     <message>
         <location filename="aanalyserapplication.cpp" line="440"/>
         <source>Дата и время проведения</source>
-        <translation type="unfinished">Date and time </translation>
+        <translation>Date and time </translation>
     </message>
     <message>
         <source>Предупрежение</source>
@@ -183,7 +183,7 @@
         <location filename="aanalyserapplication.cpp" line="451"/>
         <location filename="aanalyserapplication.cpp" line="510"/>
         <source>Не выбран тест</source>
-        <translation type="unfinished">Test not selected</translation>
+        <translation>Test not selected</translation>
     </message>
 </context>
 <context>
@@ -8319,231 +8319,231 @@ Click the [Done] button.</translation>
     <message>
         <location filename="drivers/devices/devicesdefines.h" line="18"/>
         <source>Стабилоанализатор А-Мед</source>
-        <translation type="unfinished">Stabiloanalyzer A-Med</translation>
+        <translation>Stabiloanalyzer A-Med</translation>
     </message>
     <message>
         <location filename="drivers/devices/devicesdefines.h" line="19"/>
         <source>Прыжковая платформа</source>
-        <translation type="unfinished">Jump platform</translation>
+        <translation>Jump platform</translation>
     </message>
     <message>
         <location filename="drivers/devices/devicesdefines.h" line="20"/>
         <source>Прикроватные весы</source>
-        <translation type="unfinished">Bedside scales</translation>
+        <translation>Bedside scales</translation>
     </message>
     <message>
         <location filename="drivers/devices/devicesdefines.h" line="21"/>
         <source>Билатеральный стабилограф</source>
-        <translation type="unfinished">Bilateral stabilograph</translation>
+        <translation>Bilateral stabilograph</translation>
     </message>
     <message>
         <location filename="drivers/devices/devicesdefines.h" line="22"/>
         <source>Соревновательная палка</source>
-        <translation type="unfinished">Competition stick</translation>
+        <translation>Competition stick</translation>
     </message>
     <message>
         <location filename="drivers/devices/devicesdefines.h" line="17"/>
         <source>Стабилан - 01</source>
-        <translation type="unfinished">Stabilan-01</translation>
+        <translation>Stabilan-01</translation>
     </message>
     <message>
         <location filename="drivers/devices/stabilan/stabilan01.cpp" line="572"/>
         <location filename="drivers/devices/stabilan/stabilan01defines.h" line="37"/>
         <source>СТ-01</source>
-        <translation type="unfinished">St-01</translation>
+        <translation>St-01</translation>
     </message>
     <message>
         <location filename="drivers/devices/stabilan/stabilan01.cpp" line="573"/>
         <location filename="drivers/devices/stabilan/stabilan01defines.h" line="38"/>
         <source>СТ-02</source>
-        <translation type="unfinished">St-02</translation>
+        <translation>St-02</translation>
     </message>
     <message>
         <location filename="drivers/devices/stabilan/stabilan01.cpp" line="574"/>
         <location filename="drivers/devices/stabilan/stabilan01defines.h" line="39"/>
         <source>КСК-123-2.0</source>
-        <translation type="unfinished">KSK-123-2.0</translation>
+        <translation>KSK-123-2.0</translation>
     </message>
     <message>
         <location filename="drivers/devices/stabilan/stabilan01.cpp" line="575"/>
         <location filename="drivers/devices/stabilan/stabilan01defines.h" line="40"/>
         <source>КСК-123-2.1</source>
-        <translation type="unfinished">KSK-123-2.1</translation>
+        <translation>KSK-123-2.1</translation>
     </message>
     <message>
         <location filename="drivers/devices/stabilan/stabilan01.cpp" line="576"/>
         <location filename="drivers/devices/stabilan/stabilan01defines.h" line="41"/>
         <source>КСК-123-2.2</source>
-        <translation type="unfinished">KSK-123-2.2</translation>
+        <translation>KSK-123-2.2</translation>
     </message>
     <message>
         <location filename="drivers/devices/stabilan/stabilan01.cpp" line="577"/>
         <location filename="drivers/devices/stabilan/stabilan01defines.h" line="42"/>
         <source>КСК-123-2.3</source>
-        <translation type="unfinished">KSK-123-2.3</translation>
+        <translation>KSK-123-2.3</translation>
     </message>
     <message>
         <location filename="drivers/devices/stabilan/stabilan01.cpp" line="578"/>
         <location filename="drivers/devices/stabilan/stabilan01defines.h" line="43"/>
         <source>КСК-123-3.0</source>
-        <translation type="unfinished">KSK-123-3.0</translation>
+        <translation>KSK-123-3.0</translation>
     </message>
     <message>
         <location filename="drivers/devices/stabilan/stabilan01.cpp" line="579"/>
         <location filename="drivers/devices/stabilan/stabilan01defines.h" line="44"/>
         <source>КСК-123-3.1</source>
-        <translation type="unfinished">KSK-123-3.1</translation>
+        <translation>KSK-123-3.1</translation>
     </message>
     <message>
         <location filename="drivers/devices/stabilan/stabilan01.cpp" line="580"/>
         <location filename="drivers/devices/stabilan/stabilan01defines.h" line="45"/>
         <source>КСК-123-3.2</source>
-        <translation type="unfinished">KSK-123-3.2</translation>
+        <translation>KSK-123-3.2</translation>
     </message>
     <message>
         <location filename="drivers/devices/stabilan/stabilan01.cpp" line="581"/>
         <location filename="drivers/devices/stabilan/stabilan01defines.h" line="46"/>
         <source>КСК-123-3.3</source>
-        <translation type="unfinished">KSK-123-3.3</translation>
+        <translation>KSK-123-3.3</translation>
     </message>
     <message>
         <location filename="drivers/devices/stabilan/stabilan01.cpp" line="582"/>
         <location filename="drivers/devices/stabilan/stabilan01defines.h" line="47"/>
         <source>Стабилан-01. Исполнение 01</source>
-        <translation type="unfinished">Stabilan-01. Build 01</translation>
+        <translation>Stabilan-01. Build 01</translation>
     </message>
     <message>
         <location filename="drivers/devices/stabilan/stabilan01.cpp" line="583"/>
         <location filename="drivers/devices/stabilan/stabilan01defines.h" line="48"/>
         <source>Стабилан-01. Исполнение 02</source>
-        <translation type="unfinished">Stabilan-01. Build 02</translation>
+        <translation>Stabilan-01. Build 02</translation>
     </message>
     <message>
         <location filename="drivers/devices/stabilan/stabilan01.cpp" line="584"/>
         <location filename="drivers/devices/stabilan/stabilan01defines.h" line="49"/>
         <source>Стабилан-01. Исполнение 03</source>
-        <translation type="unfinished">Stabilan-01. Build 03</translation>
+        <translation>Stabilan-01. Build 03</translation>
     </message>
     <message>
         <location filename="drivers/devices/stabilan/stabilan01.cpp" line="585"/>
         <location filename="drivers/devices/stabilan/stabilan01defines.h" line="50"/>
         <source>Стабилан-01. Исполнение 05</source>
-        <translation type="unfinished">Stabilan-01. Build 05</translation>
+        <translation>Stabilan-01. Build 05</translation>
     </message>
     <message>
         <location filename="drivers/devices/stabilan/stabilan01.cpp" line="586"/>
         <location filename="drivers/devices/stabilan/stabilan01defines.h" line="51"/>
         <source>Стабилан-01. Исполнение 12</source>
-        <translation type="unfinished">Stabilan-01. Build 12</translation>
+        <translation>Stabilan-01. Build 12</translation>
     </message>
     <message>
         <location filename="drivers/devices/stabilan/stabilan01.cpp" line="587"/>
         <location filename="drivers/devices/stabilan/stabilan01defines.h" line="52"/>
         <source>Стабилан-01. Исполнение 13</source>
-        <translation type="unfinished">Stabilan-01. Build 13</translation>
+        <translation>Stabilan-01. Build 13</translation>
     </message>
     <message>
         <location filename="drivers/devices/stabilan/stabilan01.cpp" line="588"/>
         <location filename="drivers/devices/stabilan/stabilan01defines.h" line="53"/>
         <source>Стабилан-01. Исполнение 15</source>
-        <translation type="unfinished">Stabilan-01. Build 15</translation>
+        <translation>Stabilan-01. Build 15</translation>
     </message>
     <message>
         <location filename="drivers/devices/stabilan/stabilan01.cpp" line="589"/>
         <location filename="drivers/devices/stabilan/stabilan01defines.h" line="54"/>
         <source>Стабилан-01. Исполнение 16</source>
-        <translation type="unfinished">Stabilan-01. Build 16</translation>
+        <translation>Stabilan-01. Build 16</translation>
     </message>
     <message>
         <location filename="drivers/devices/stabilan/stabilan01.cpp" line="590"/>
         <location filename="drivers/devices/stabilan/stabilan01defines.h" line="55"/>
         <source>Стабилан-01. Исполнение 05 (после 2014)</source>
-        <translation type="unfinished">Stabilan-01. Build 05 (after 2014)</translation>
+        <translation>Stabilan-01. Build 05 (after 2014)</translation>
     </message>
     <message>
         <location filename="drivers/devices/stabilan/stabilan01.cpp" line="591"/>
         <location filename="drivers/devices/stabilan/stabilan01defines.h" line="56"/>
         <source>Стабилан-01. Исполнение 12 (после 2014)</source>
-        <translation type="unfinished">Stabilan-01. Build 12 (after 2014)</translation>
+        <translation>Stabilan-01. Build 12 (after 2014)</translation>
     </message>
     <message>
         <location filename="drivers/devices/stabilan/stabilan01.cpp" line="593"/>
         <source>Модель неизвестная</source>
-        <translation type="unfinished">Unknown</translation>
+        <translation>Unknown</translation>
     </message>
     <message>
         <location filename="drivers/devices/stabilan/stabilan01.cpp" line="605"/>
         <location filename="drivers/devices/stabilan/stabilan01.cpp" line="609"/>
         <location filename="drivers/devices/stabilan/stabilan01defines.h" line="69"/>
         <source>Мгновенная</source>
-        <translation type="unfinished">Immediate</translation>
+        <translation>Immediate</translation>
     </message>
     <message>
         <location filename="drivers/devices/stabilan/stabilan01.cpp" line="606"/>
         <location filename="drivers/devices/stabilan/stabilan01defines.h" line="70"/>
         <source>С усреднением после команды</source>
-        <translation type="unfinished">Averaging after commans</translation>
+        <translation>Averaging after commans</translation>
     </message>
     <message>
         <location filename="drivers/devices/stabilan/stabilan01.cpp" line="607"/>
         <location filename="drivers/devices/stabilan/stabilan01defines.h" line="71"/>
         <source>С усреднением по предыстории</source>
-        <translation type="unfinished">Background averaging</translation>
+        <translation>Background averaging</translation>
     </message>
     <message>
         <location filename="kernel/database/datadefines.h" line="31"/>
         <source>муж</source>
-        <translation type="unfinished">man</translation>
+        <translation>man</translation>
     </message>
     <message>
         <location filename="kernel/database/datadefines.h" line="32"/>
         <source>жен</source>
-        <translation type="unfinished">woman</translation>
+        <translation>woman</translation>
     </message>
     <message>
         <location filename="kernel/database/datadefines.h" line="266"/>
         <source>Русский</source>
-        <translation type="unfinished">Russoan</translation>
+        <translation>Russoan</translation>
     </message>
     <message>
         <location filename="kernel/database/datadefines.h" line="267"/>
         <source>English (USA)</source>
-        <translation type="unfinished">English (USA)</translation>
+        <translation>English (USA)</translation>
     </message>
     <message>
         <location filename="drivers/driverdefines.h" line="24"/>
         <source>Нет ошибки</source>
-        <translation type="unfinished">No error</translation>
+        <translation>No error</translation>
     </message>
     <message>
         <location filename="drivers/driverdefines.h" line="25"/>
         <source>Нет данных</source>
-        <translation type="unfinished">No data</translation>
+        <translation>No data</translation>
     </message>
     <message>
         <location filename="drivers/driverdefines.h" line="26"/>
         <source>Потеря данных (пропуск пакета)</source>
-        <translation type="unfinished">Data loss (packet drop)</translation>
+        <translation>Data loss (packet drop)</translation>
     </message>
     <message>
         <location filename="drivers/driverdefines.h" line="27"/>
         <source>Маркер внутри пакета</source>
-        <translation type="unfinished">Marker inside the package</translation>
+        <translation>Marker inside the package</translation>
     </message>
     <message>
         <location filename="factors/classic/classicfactors.h" line="12"/>
         <source>Классические показатели</source>
-        <translation type="unfinished">Classical factors</translation>
+        <translation>Classical factors</translation>
     </message>
     <message>
         <location filename="factors/factorsdefines.h" line="155"/>
         <source>Успешность выполнения задания</source>
-        <translation type="unfinished">Successful completion of the task</translation>
+        <translation>Successful completion of the task</translation>
     </message>
     <message>
         <location filename="factors/factorsdefines.h" line="156"/>
         <source>Успешность</source>
-        <translation type="unfinished">Success</translation>
+        <translation>Success</translation>
     </message>
     <message>
         <location filename="factors/factorsdefines.h" line="157"/>
@@ -8575,42 +8575,42 @@ Click the [Done] button.</translation>
         <location filename="factors/general_coord/generalcoordcalculator.cpp" line="228"/>
         <location filename="factors/general_coord/generalcoordcalculator.cpp" line="232"/>
         <source>%</source>
-        <translation type="unfinished">%</translation>
+        <translation>%</translation>
     </message>
     <message>
         <location filename="factors/general_coord/generalcoordcalculator.cpp" line="117"/>
         <source>Общий показатель координированности</source>
-        <translation type="unfinished">Overall Coordination Factor</translation>
+        <translation>Overall Coordination Factor</translation>
     </message>
     <message>
         <location filename="factors/general_coord/generalcoordcalculator.cpp" line="118"/>
         <source>ОПК</source>
-        <translation type="unfinished">OCF</translation>
+        <translation>OCF</translation>
     </message>
     <message>
         <location filename="factors/general_coord/generalcoordcalculator.cpp" line="122"/>
         <source>Способность оценивать и занимать определенную позу после смещения тела</source>
-        <translation type="unfinished">Ability to assess and assume a certain posture after body displacement</translation>
+        <translation>Ability to assess and assume a certain posture after body displacement</translation>
     </message>
     <message>
         <location filename="factors/general_coord/generalcoordcalculator.cpp" line="123"/>
         <source>Уст.позы</source>
-        <translation type="unfinished">StabPost</translation>
+        <translation>StabPost</translation>
     </message>
     <message>
         <location filename="factors/general_coord/generalcoordcalculator.cpp" line="126"/>
         <source>Способность к ритмичному движению</source>
-        <translation type="unfinished">The ability to move rhythmically</translation>
+        <translation>The ability to move rhythmically</translation>
     </message>
     <message>
         <location filename="factors/general_coord/generalcoordcalculator.cpp" line="127"/>
         <source>Ритмичность</source>
-        <translation type="unfinished">Rhythm</translation>
+        <translation>Rhythm</translation>
     </message>
     <message>
         <location filename="factors/general_coord/generalcoordcalculator.cpp" line="130"/>
         <source>Точность вступления в сложное движение</source>
-        <translation type="unfinished">Accuracy of entry into complex movement</translation>
+        <translation>Accuracy of entry into complex movement</translation>
     </message>
     <message>
         <location filename="factors/general_coord/generalcoordcalculator.cpp" line="131"/>
@@ -8620,7 +8620,7 @@ Click the [Done] button.</translation>
     <message>
         <location filename="factors/general_coord/generalcoordcalculator.cpp" line="134"/>
         <source>Точность при финальном требовании</source>
-        <translation type="unfinished">Accuracy at final requirement</translation>
+        <translation>Accuracy at final requirement</translation>
     </message>
     <message>
         <location filename="factors/general_coord/generalcoordcalculator.cpp" line="135"/>
@@ -8630,7 +8630,7 @@ Click the [Done] button.</translation>
     <message>
         <location filename="factors/general_coord/generalcoordcalculator.cpp" line="138"/>
         <source>Точность выполнения процесса</source>
-        <translation type="unfinished">Accuracy of process execution</translation>
+        <translation>Accuracy of process execution</translation>
     </message>
     <message>
         <location filename="factors/general_coord/generalcoordcalculator.cpp" line="139"/>
@@ -8640,7 +8640,7 @@ Click the [Done] button.</translation>
     <message>
         <location filename="factors/general_coord/generalcoordcalculator.cpp" line="142"/>
         <source>Точность воспроизводства требуемой амплитуды</source>
-        <translation type="unfinished">Accuracy of reproduction of the required amplitude</translation>
+        <translation>Accuracy of reproduction of the required amplitude</translation>
     </message>
     <message>
         <location filename="factors/general_coord/generalcoordcalculator.cpp" line="143"/>
@@ -8650,175 +8650,175 @@ Click the [Done] button.</translation>
     <message>
         <location filename="factors/general_coord/generalcoordcalculator.cpp" line="146"/>
         <source>Ориентация в пространстве</source>
-        <translation type="unfinished">Orientation overall</translation>
+        <translation>Orientation overall</translation>
     </message>
     <message>
         <location filename="factors/general_coord/generalcoordcalculator.cpp" line="147"/>
         <source>Ориентация</source>
-        <translation type="unfinished">Orient</translation>
+        <translation>Orient</translation>
     </message>
     <message>
         <location filename="factors/general_coord/generalcoordcalculator.cpp" line="150"/>
         <source>Способность воспринимать заданное движение (обучаемость)</source>
-        <translation type="unfinished">Ability to perceive a given movement (learnability)</translation>
+        <translation>Ability to perceive a given movement (learnability)</translation>
     </message>
     <message>
         <location filename="factors/general_coord/generalcoordcalculator.cpp" line="151"/>
         <source>Обучаемость</source>
-        <translation type="unfinished">Learning ability</translation>
+        <translation>Learning ability</translation>
     </message>
     <message>
         <location filename="factors/general_coord/generalcoordcalculator.cpp" line="156"/>
         <source>Дифференциация</source>
-        <translation type="unfinished">Differentiation</translation>
+        <translation>Differentiation</translation>
     </message>
     <message>
         <location filename="factors/general_coord/generalcoordcalculator.cpp" line="157"/>
         <source>Дифференц.</source>
-        <translation type="unfinished">Differ.</translation>
+        <translation>Differ.</translation>
     </message>
     <message>
         <location filename="factors/general_coord/generalcoordcalculator.cpp" line="161"/>
         <location filename="factors/general_coord/generalcoordcalculator.cpp" line="162"/>
         <source>Ритм</source>
-        <translation type="unfinished">Rhythm</translation>
+        <translation>Rhythm</translation>
     </message>
     <message>
         <location filename="factors/general_coord/generalcoordcalculator.cpp" line="165"/>
         <source>Стабильность ритма</source>
-        <translation type="unfinished">Stability of rhythm</translation>
+        <translation>Stability of rhythm</translation>
     </message>
     <message>
         <location filename="factors/general_coord/generalcoordcalculator.cpp" line="166"/>
         <source>Стаб.ритм</source>
-        <translation type="unfinished">Stb.Rythm</translation>
+        <translation>Stb.Rythm</translation>
     </message>
     <message>
         <location filename="factors/general_coord/generalcoordcalculator.cpp" line="170"/>
         <source>Порог чувствительности</source>
-        <translation type="unfinished">Sensitivity threshold</translation>
+        <translation>Sensitivity threshold</translation>
     </message>
     <message>
         <location filename="factors/general_coord/generalcoordcalculator.cpp" line="171"/>
         <source>Чувств.</source>
-        <translation type="unfinished">Sensitю</translation>
+        <translation>Sensitю</translation>
     </message>
     <message>
         <location filename="factors/general_coord/generalcoordcalculator.cpp" line="174"/>
         <source>Опережение маркера цели</source>
-        <translation type="unfinished">Target marker lead</translation>
+        <translation>Target marker lead</translation>
     </message>
     <message>
         <location filename="factors/general_coord/generalcoordcalculator.cpp" line="175"/>
         <source>Опереж.цели</source>
-        <translation type="unfinished">TrgtLead</translation>
+        <translation>TrgtLead</translation>
     </message>
     <message>
         <location filename="factors/general_coord/generalcoordcalculator.cpp" line="178"/>
         <source>Латентный период</source>
-        <translation type="unfinished">Latent period</translation>
+        <translation>Latent period</translation>
     </message>
     <message>
         <location filename="factors/general_coord/generalcoordcalculator.cpp" line="179"/>
         <source>Лат.период</source>
-        <translation type="unfinished">lat.per.</translation>
+        <translation>lat.per.</translation>
     </message>
     <message>
         <location filename="factors/general_coord/generalcoordcalculator.cpp" line="182"/>
         <source>Время начала движения после появления сигнала</source>
-        <translation type="unfinished">Time of start of movement after signal appearance</translation>
+        <translation>Time of start of movement after signal appearance</translation>
     </message>
     <message>
         <location filename="factors/general_coord/generalcoordcalculator.cpp" line="183"/>
         <source>Время НД</source>
-        <translation type="unfinished">Time SM</translation>
+        <translation>Time SM</translation>
     </message>
     <message>
         <location filename="factors/general_coord/generalcoordcalculator.cpp" line="187"/>
         <location filename="factors/general_coord/generalcoordcalculator.cpp" line="209"/>
         <source>Амплитуда броска</source>
-        <translation type="unfinished">Throw amplitude</translation>
+        <translation>Throw amplitude</translation>
     </message>
     <message>
         <location filename="factors/general_coord/generalcoordcalculator.cpp" line="188"/>
         <location filename="factors/general_coord/generalcoordcalculator.cpp" line="210"/>
         <source>Ампл.</source>
-        <translation type="unfinished">Ampl.</translation>
+        <translation>Ampl.</translation>
     </message>
     <message>
         <location filename="factors/general_coord/generalcoordcalculator.cpp" line="191"/>
         <source>Изменение позиции треугольника</source>
-        <translation type="unfinished">Changing the position of the triangle</translation>
+        <translation>Changing the position of the triangle</translation>
     </message>
     <message>
         <location filename="factors/general_coord/generalcoordcalculator.cpp" line="192"/>
         <source>Изм.поз</source>
-        <translation type="unfinished">Cng.pos</translation>
+        <translation>Cng.pos</translation>
     </message>
     <message>
         <location filename="factors/general_coord/generalcoordcalculator.cpp" line="196"/>
         <source>Средняя ошибка по фронтали</source>
-        <translation type="unfinished">Average frontal error</translation>
+        <translation>Average frontal error</translation>
     </message>
     <message>
         <location filename="factors/general_coord/generalcoordcalculator.cpp" line="197"/>
         <source>Ошибка X</source>
-        <translation type="unfinished">Error X</translation>
+        <translation>Error X</translation>
     </message>
     <message>
         <location filename="factors/general_coord/generalcoordcalculator.cpp" line="200"/>
         <source>Средняя ошибка по сагиттали</source>
-        <translation type="unfinished">Average sagittal error</translation>
+        <translation>Average sagittal error</translation>
     </message>
     <message>
         <location filename="factors/general_coord/generalcoordcalculator.cpp" line="201"/>
         <source>Ошибка Y</source>
-        <translation type="unfinished">Error Y</translation>
+        <translation>Error Y</translation>
     </message>
     <message>
         <location filename="factors/general_coord/generalcoordcalculator.cpp" line="204"/>
         <source>Средняя ошибка площади (обучение)</source>
-        <translation type="unfinished">Average square error (training)</translation>
+        <translation>Average square error (training)</translation>
     </message>
     <message>
         <location filename="factors/general_coord/generalcoordcalculator.cpp" line="205"/>
         <source>Ошибка S</source>
-        <translation type="unfinished">Error S</translation>
+        <translation>Error S</translation>
     </message>
     <message>
         <location filename="factors/general_coord/generalcoordcalculator.cpp" line="213"/>
         <source>Среднее изменение амплитуды тр-ка (обучение)</source>
-        <translation type="unfinished">Average change in amplitude of the tr-ka (training)</translation>
+        <translation>Average change in amplitude of the tr-ka (training)</translation>
     </message>
     <message>
         <location filename="factors/general_coord/generalcoordcalculator.cpp" line="214"/>
         <source>Изм.ампл</source>
-        <translation type="unfinished">Chg.ampl.</translation>
+        <translation>Chg.ampl.</translation>
     </message>
     <message>
         <location filename="factors/general_coord/generalcoordcalculator.cpp" line="218"/>
         <source>Точность позиции (фронталь)</source>
-        <translation type="unfinished">Positional accuracy (frontal)</translation>
+        <translation>Positional accuracy (frontal)</translation>
     </message>
     <message>
         <location filename="factors/general_coord/generalcoordcalculator.cpp" line="219"/>
         <source>Точность X</source>
-        <translation type="unfinished">Acc.X</translation>
+        <translation>Acc.X</translation>
     </message>
     <message>
         <location filename="factors/general_coord/generalcoordcalculator.cpp" line="222"/>
         <source>Точность позиции (сагитталь)</source>
-        <translation type="unfinished">Positional accuracy (sagittal)</translation>
+        <translation>Positional accuracy (sagittal)</translation>
     </message>
     <message>
         <location filename="factors/general_coord/generalcoordcalculator.cpp" line="223"/>
         <source>Точность Y</source>
-        <translation type="unfinished">Acc.Y</translation>
+        <translation>Acc.Y</translation>
     </message>
     <message>
         <location filename="factors/general_coord/generalcoordcalculator.cpp" line="227"/>
         <source>Точность повторения</source>
-        <translation type="unfinished">Repeat accuracy</translation>
+        <translation>Repeat accuracy</translation>
     </message>
     <message>
         <location filename="factors/general_coord/generalcoordcalculator.cpp" line="228"/>
@@ -8828,7 +8828,7 @@ Click the [Done] button.</translation>
     <message>
         <location filename="factors/general_coord/generalcoordcalculator.cpp" line="231"/>
         <source>Точность формы</source>
-        <translation type="unfinished">Accuracy of shape</translation>
+        <translation>Accuracy of shape</translation>
     </message>
     <message>
         <location filename="factors/general_coord/generalcoordcalculator.cpp" line="232"/>
@@ -8838,907 +8838,907 @@ Click the [Done] button.</translation>
     <message>
         <location filename="factors/general_coord/generalcoordcalculator.h" line="12"/>
         <source>Показатели оценки координационных способностей</source>
-        <translation type="unfinished">Factors of assessment of coordination abilities</translation>
+        <translation>Factors of assessment of coordination abilities</translation>
     </message>
     <message>
         <location filename="factors/ids/idsfactors.h" line="13"/>
         <source>Показатели динамической стабилизации</source>
-        <translation type="unfinished">Dynamic stabilization factors</translation>
+        <translation>Dynamic stabilization factors</translation>
     </message>
     <message>
         <location filename="factors/jump/droptestfactors.h" line="13"/>
         <source>Показатели дроп теста</source>
-        <translation type="unfinished">Drop test factors</translation>
+        <translation>Drop test factors</translation>
     </message>
     <message>
         <location filename="factors/jump/hoppingfactors.h" line="12"/>
         <source>Показатели соскакивания на платформу</source>
-        <translation type="unfinished">Platform dismounting factors</translation>
+        <translation>Platform dismounting factors</translation>
     </message>
     <message>
         <location filename="factors/jump/jumpheightfactors.h" line="13"/>
         <source>Показатели высоты прыжков</source>
-        <translation type="unfinished">Jump height factors</translation>
+        <translation>Jump height factors</translation>
     </message>
     <message>
         <location filename="factors/jump/jumpheightsinglefactors.h" line="12"/>
         <source>Показатели высоты одиночного прыжка</source>
-        <translation type="unfinished">Single jump height factors</translation>
+        <translation>Single jump height factors</translation>
     </message>
     <message>
         <location filename="factors/jump/teppingtestfactors.h" line="13"/>
         <source>Показатели теппинг теста</source>
-        <translation type="unfinished">Tapping test factors</translation>
+        <translation>Tapping test factors</translation>
     </message>
     <message>
         <location filename="factors/mas_wrestling/mwstickforcefactors.h" line="14"/>
         <source>Показатели усилий соревновательной палки</source>
-        <translation type="unfinished">Competition stick factors</translation>
+        <translation>Competition stick factors</translation>
     </message>
     <message>
         <location filename="factors/pulse/pulse/pulsefactors.h" line="13"/>
         <source>Показатели вариационной пульсометрии</source>
-        <translation type="unfinished">Variational pulsometry factors</translation>
+        <translation>Variational pulsometry factors</translation>
     </message>
     <message>
         <location filename="factors/pulse/pulse/pulsefactors.h" line="52"/>
         <source>выраженная тахикардия</source>
-        <translation type="unfinished">severe tachycardia</translation>
+        <translation>severe tachycardia</translation>
     </message>
     <message>
         <location filename="factors/pulse/pulse/pulsefactors.h" line="53"/>
         <source>умеренная тахикардия</source>
-        <translation type="unfinished">moderate tachycardia</translation>
+        <translation>moderate tachycardia</translation>
     </message>
     <message>
         <location filename="factors/pulse/pulse/pulsefactors.h" line="54"/>
         <source>нормосистолия</source>
-        <translation type="unfinished">normosystole</translation>
+        <translation>normosystole</translation>
     </message>
     <message>
         <location filename="factors/pulse/pulse/pulsefactors.h" line="55"/>
         <source>умеренная брадикардия</source>
-        <translation type="unfinished">moderate bradycardia</translation>
+        <translation>moderate bradycardia</translation>
     </message>
     <message>
         <location filename="factors/pulse/pulse/pulsefactors.h" line="56"/>
         <source>выраженная брадикардия</source>
-        <translation type="unfinished">severe bradycardia</translation>
+        <translation>severe bradycardia</translation>
     </message>
     <message>
         <location filename="factors/pulse/pulse/pulsefactors.h" line="73"/>
         <source>нарушение автоматизма выраженное</source>
-        <translation type="unfinished">severe violation of automatism</translation>
+        <translation>severe violation of automatism</translation>
     </message>
     <message>
         <location filename="factors/pulse/pulse/pulsefactors.h" line="74"/>
         <source>нарушение автоматизма умеренное</source>
-        <translation type="unfinished">moderate automatism disorder</translation>
+        <translation>moderate automatism disorder</translation>
     </message>
     <message>
         <location filename="factors/pulse/pulse/pulsefactors.h" line="75"/>
         <source>умеренная синусовая аритмия</source>
-        <translation type="unfinished">moderate sinus arrhythmia</translation>
+        <translation>moderate sinus arrhythmia</translation>
     </message>
     <message>
         <location filename="factors/pulse/pulse/pulsefactors.h" line="76"/>
         <source>выраженная синусовая аритмия</source>
-        <translation type="unfinished">severe sinus arrhythmia</translation>
+        <translation>severe sinus arrhythmia</translation>
     </message>
     <message>
         <location filename="factors/pulse/pulse/pulsefactors.h" line="77"/>
         <source>ригидный ритм</source>
-        <translation type="unfinished">rigid rhythm</translation>
+        <translation>rigid rhythm</translation>
     </message>
     <message>
         <location filename="factors/pulse/pulse/pulsefactors.h" line="94"/>
         <source>выраженное преобладание ПСНС</source>
-        <translation type="unfinished">marked predominance of PSNS</translation>
+        <translation>marked predominance of PSNS</translation>
     </message>
     <message>
         <location filename="factors/pulse/pulse/pulsefactors.h" line="95"/>
         <source>умеренное преобладание ПСНС</source>
-        <translation type="unfinished">moderate predominance of PSNS</translation>
+        <translation>moderate predominance of PSNS</translation>
     </message>
     <message>
         <location filename="factors/pulse/pulse/pulsefactors.h" line="96"/>
         <source>сохранен</source>
-        <translation type="unfinished">saved</translation>
+        <translation>saved</translation>
     </message>
     <message>
         <location filename="factors/pulse/pulse/pulsefactors.h" line="97"/>
         <source>умеренное преобладание СНС</source>
-        <translation type="unfinished">moderate predominance of SNS</translation>
+        <translation>moderate predominance of SNS</translation>
     </message>
     <message>
         <location filename="factors/pulse/pulse/pulsefactors.h" line="98"/>
         <source>выраженное преобладание СНС</source>
-        <translation type="unfinished">marked predominance of SNS</translation>
+        <translation>marked predominance of SNS</translation>
     </message>
     <message>
         <location filename="factors/pulse/pulse/pulsefactors.h" line="115"/>
         <source>дисрегуляция с преобладанием ПСНС</source>
-        <translation type="unfinished">dysregulation with predominance of PSNS</translation>
+        <translation>dysregulation with predominance of PSNS</translation>
     </message>
     <message>
         <location filename="factors/pulse/pulse/pulsefactors.h" line="116"/>
         <source>переходный процесс</source>
-        <translation type="unfinished">transition process</translation>
+        <translation>transition process</translation>
     </message>
     <message>
         <location filename="factors/pulse/pulse/pulsefactors.h" line="117"/>
         <source>устойчивая регуляция</source>
-        <translation type="unfinished">stable regulation</translation>
+        <translation>stable regulation</translation>
     </message>
     <message>
         <location filename="factors/pulse/pulse/pulsefactors.h" line="118"/>
         <source>дисрегуляция центрального типа</source>
-        <translation type="unfinished">central type dysregulation</translation>
+        <translation>central type dysregulation</translation>
     </message>
     <message>
         <location filename="factors/pulse/pulse/pulsefactors.h" line="119"/>
         <source>дисрегуляция с преобладанием СНС</source>
-        <translation type="unfinished">dysregulation with predominance of SSNS</translation>
+        <translation>dysregulation with predominance of SSNS</translation>
     </message>
     <message>
         <location filename="factors/pulse/pulse_spectr/pulsespectrfactors.h" line="13"/>
         <source>Показатели спектра пульса</source>
-        <translation type="unfinished">Pulse spectrum factors</translation>
+        <translation>Pulse spectrum factors</translation>
     </message>
     <message>
         <location filename="factors/pulse/pulse_spectr/pulsespectrfactorsdefines.h" line="44"/>
         <source>Ультранизкая частота</source>
-        <translation type="unfinished">Ultra low frequency</translation>
+        <translation>Ultra low frequency</translation>
     </message>
     <message>
         <location filename="factors/pulse/pulse_spectr/pulsespectrfactorsdefines.h" line="45"/>
         <source>Очень низкая частота</source>
-        <translation type="unfinished">Very low frequency</translation>
+        <translation>Very low frequency</translation>
     </message>
     <message>
         <location filename="factors/pulse/pulse_spectr/pulsespectrfactorsdefines.h" line="46"/>
         <source>Низкая частота</source>
-        <translation type="unfinished">Low frequency</translation>
+        <translation>Low frequency</translation>
     </message>
     <message>
         <location filename="factors/pulse/pulse_spectr/pulsespectrfactorsdefines.h" line="47"/>
         <source>Высокая частота</source>
-        <translation type="unfinished">High frequency</translation>
+        <translation>High frequency</translation>
     </message>
     <message>
         <location filename="factors/ratio_prb/ratioprobesfactors.h" line="12"/>
         <source>Показатели отношений</source>
-        <translation type="unfinished">Ratio factors</translation>
+        <translation>Ratio factors</translation>
     </message>
     <message>
         <location filename="factors/spectr_single_sig/spectrsinglesignalfactors.h" line="12"/>
         <source>Показатели спектра одиночного сигнала</source>
-        <translation type="unfinished">Single signal spectrum factors</translation>
+        <translation>Single signal spectrum factors</translation>
     </message>
     <message>
         <location filename="factors/spectr_stab/spectrstabfactors.h" line="12"/>
         <source>Показатели спектра стабилограммы</source>
-        <translation type="unfinished">Stabilogram spectrum factors</translation>
+        <translation>Stabilogram spectrum factors</translation>
     </message>
     <message>
         <location filename="factors/stab_dynamic/boxerdodgingmultifactor.h" line="14"/>
         <source>Показатели тренажера с уклонением</source>
-        <translation type="unfinished">Trenager with dodge factors</translation>
+        <translation>Trenager with dodge factors</translation>
     </message>
     <message>
         <location filename="factors/stab_dynamic/crossfactors.h" line="14"/>
         <source>Показатели теста на устойчивость</source>
-        <translation type="unfinished">Stability test factors</translation>
+        <translation>Stability test factors</translation>
     </message>
     <message>
         <location filename="factors/stab_dynamic/evolventafactors.h" line="13"/>
         <source>Показатели теста &quot;Эвольвента&quot;</source>
-        <translation type="unfinished">Evolventa test factors</translation>
+        <translation>Evolventa test factors</translation>
     </message>
     <message>
         <location filename="factors/stab_dynamic/octaedronfactors.h" line="12"/>
         <source>Показатели тренажера &quot;Октаэдр&quot;</source>
-        <translation type="unfinished">Trenager &quot;Octahedron&quot; factors</translation>
+        <translation>Trenager &quot;Octahedron&quot; factors</translation>
     </message>
     <message>
         <location filename="factors/stab_dynamic/stabreacttrainfactors.h" line="12"/>
         <source>Показатели тренажера статокинетической реакции</source>
-        <translation type="unfinished">Statokinetic reaction trenager factors</translation>
+        <translation>Statokinetic reaction trenager factors</translation>
     </message>
     <message>
         <location filename="factors/stab_dynamic/stepdeviationfactors.h" line="12"/>
         <source>Показатели теста прироста</source>
-        <translation type="unfinished">Growth test factors</translation>
+        <translation>Growth test factors</translation>
     </message>
     <message>
         <location filename="factors/stab_dynamic/stepoffsetfactors.h" line="14"/>
         <source>Показатели теста &quot;Ступени&quot;</source>
-        <translation type="unfinished">&quot;Steps&quot; test factors</translation>
+        <translation>&quot;Steps&quot; test factors</translation>
     </message>
     <message>
         <location filename="factors/stab_dynamic/triangleconslutionfactors.h" line="12"/>
         <source>Показатели теста &quot;Треугольник&quot;. Заключение</source>
-        <translation type="unfinished">Triangle test factors. Conclusion</translation>
+        <translation>Triangle test factors. Conclusion</translation>
     </message>
     <message>
         <location filename="factors/stab_dynamic/trianglefactors.h" line="14"/>
         <source>Показатели теста &quot;Треугольник&quot;</source>
-        <translation type="unfinished">Triangle test factors</translation>
+        <translation>Triangle test factors</translation>
     </message>
     <message>
         <location filename="factors/target/targetfactors.h" line="12"/>
         <source>Показатели мишени</source>
-        <translation type="unfinished">Target factors</translation>
+        <translation>Target factors</translation>
     </message>
     <message>
         <location filename="factors/tren_result/trenresultfactors.h" line="12"/>
         <source>Показатели тренажеров</source>
-        <translation type="unfinished">Trenagers factors</translation>
+        <translation>Trenagers factors</translation>
     </message>
     <message>
         <location filename="factors/vector/vectorfactors.h" line="12"/>
         <source>Векторные показатели</source>
-        <translation type="unfinished">Vector factors</translation>
+        <translation>Vector factors</translation>
     </message>
     <message>
         <location filename="kernel/basedefines.h" line="54"/>
         <source>вперед</source>
-        <translation type="unfinished">to the forward</translation>
+        <translation>to the forward</translation>
     </message>
     <message>
         <location filename="kernel/basedefines.h" line="55"/>
         <location filename="kernel/basedefines.h" line="62"/>
         <source>вправо</source>
-        <translation type="unfinished">to the right</translation>
+        <translation>to the right</translation>
     </message>
     <message>
         <location filename="kernel/basedefines.h" line="56"/>
         <source>назад</source>
-        <translation type="unfinished">back</translation>
+        <translation>back</translation>
     </message>
     <message>
         <location filename="kernel/basedefines.h" line="57"/>
         <location filename="kernel/basedefines.h" line="64"/>
         <source>влево</source>
-        <translation type="unfinished">to the left</translation>
+        <translation>to the left</translation>
     </message>
     <message>
         <location filename="kernel/basedefines.h" line="61"/>
         <source>вверх</source>
-        <translation type="unfinished">to the up</translation>
+        <translation>to the up</translation>
     </message>
     <message>
         <location filename="kernel/basedefines.h" line="63"/>
         <source>вниз</source>
-        <translation type="unfinished">to the down</translation>
+        <translation>to the down</translation>
     </message>
     <message>
         <location filename="kernel/basedefines.h" line="156"/>
         <source>верхняя</source>
-        <translation type="unfinished">high</translation>
+        <translation>high</translation>
     </message>
     <message>
         <location filename="kernel/basedefines.h" line="157"/>
         <source>левая</source>
-        <translation type="unfinished">left</translation>
+        <translation>left</translation>
     </message>
     <message>
         <location filename="kernel/basedefines.h" line="158"/>
         <source>правая</source>
-        <translation type="unfinished">right</translation>
+        <translation>right</translation>
     </message>
     <message>
         <location filename="kernel/baseutils.cpp" line="436"/>
         <location filename="kernel/baseutils.cpp" line="470"/>
         <source>незначительно</source>
-        <translation type="unfinished">low</translation>
+        <translation>low</translation>
     </message>
     <message>
         <location filename="kernel/baseutils.cpp" line="442"/>
         <location filename="kernel/baseutils.cpp" line="476"/>
         <source>умеренно</source>
-        <translation type="unfinished">moderate</translation>
+        <translation>moderate</translation>
     </message>
     <message>
         <location filename="kernel/baseutils.cpp" line="447"/>
         <location filename="kernel/baseutils.cpp" line="481"/>
         <source>выражено</source>
-        <translation type="unfinished">severe</translation>
+        <translation>severe</translation>
     </message>
     <message>
         <location filename="kernel/baseutils.cpp" line="453"/>
         <source>Преобладание когнитивных коррекций</source>
-        <translation type="unfinished">Predominance of cognitive corrections</translation>
+        <translation>Predominance of cognitive corrections</translation>
     </message>
     <message>
         <location filename="kernel/baseutils.cpp" line="456"/>
         <source>Преобладание моторных коррекций</source>
-        <translation type="unfinished">Predominance of motor corrections</translation>
+        <translation>Predominance of motor corrections</translation>
     </message>
     <message>
         <location filename="kernel/baseutils.cpp" line="458"/>
         <source>Нет преобладания типа коррекции</source>
-        <translation type="unfinished">There is no predominance of the correction type</translation>
+        <translation>There is no predominance of the correction type</translation>
     </message>
     <message>
         <location filename="kernel/baseutils.cpp" line="487"/>
         <source>Маркер опережает цель</source>
-        <translation type="unfinished">The marker is ahead of the target</translation>
+        <translation>The marker is ahead of the target</translation>
     </message>
     <message>
         <location filename="kernel/baseutils.cpp" line="490"/>
         <source>Маркер отстает от цели</source>
-        <translation type="unfinished">The marker is behind the target</translation>
+        <translation>The marker is behind the target</translation>
     </message>
     <message>
         <location filename="kernel/baseutils.cpp" line="492"/>
         <source>Маркер на цели</source>
-        <translation type="unfinished">Marker on target</translation>
+        <translation>Marker on target</translation>
     </message>
     <message>
         <location filename="kernel/baseutils.h" line="122"/>
         <source>Критического затухания</source>
-        <translation type="unfinished">Critical attenuation</translation>
+        <translation>Critical attenuation</translation>
     </message>
     <message>
         <location filename="kernel/baseutils.h" line="123"/>
         <source>Бесселя</source>
-        <translation type="unfinished">Bessel</translation>
+        <translation>Bessel</translation>
     </message>
     <message>
         <location filename="kernel/baseutils.h" line="124"/>
         <source>Баттерворта</source>
-        <translation type="unfinished">Butterworth</translation>
+        <translation>Butterworth</translation>
     </message>
     <message>
         <location filename="kernel/baseutils.h" line="125"/>
         <source>Чебышева с неравн. 0,5 дБ</source>
-        <translation type="unfinished">Chebyshev with unequal 0.5 dB</translation>
+        <translation>Chebyshev with unequal 0.5 dB</translation>
     </message>
     <message>
         <location filename="kernel/baseutils.h" line="141"/>
         <source>Фильтр нижних частот</source>
-        <translation type="unfinished">Low pass filter</translation>
+        <translation>Low pass filter</translation>
     </message>
     <message>
         <location filename="kernel/baseutils.h" line="142"/>
         <source>Фильтр верхних частот</source>
-        <translation type="unfinished">High pass filter</translation>
+        <translation>High pass filter</translation>
     </message>
     <message>
         <location filename="kernel/baseutils.h" line="143"/>
         <source>Полосовой фильтр</source>
-        <translation type="unfinished">Bandpass filter</translation>
+        <translation>Bandpass filter</translation>
     </message>
     <message>
         <location filename="kernel/baseutils.h" line="144"/>
         <source>Режекторный фильтр</source>
-        <translation type="unfinished">Notch filter</translation>
+        <translation>Notch filter</translation>
     </message>
     <message>
         <location filename="kernel/database/datadefines.cpp" line="209"/>
         <source>Не задана</source>
-        <translation type="unfinished">Undefined</translation>
+        <translation>Undefined</translation>
     </message>
     <message>
         <location filename="kernel/database/datadefines.cpp" line="210"/>
         <source>Не в норме</source>
-        <translation type="unfinished">Not in norm</translation>
+        <translation>Not in norm</translation>
     </message>
     <message>
         <location filename="kernel/database/datadefines.cpp" line="211"/>
         <source>Условно в норме</source>
-        <translation type="unfinished">Conditionally normal</translation>
+        <translation>Conditionally normal</translation>
     </message>
     <message>
         <location filename="kernel/database/datadefines.cpp" line="212"/>
         <source>В норме</source>
-        <translation type="unfinished">Normal</translation>
+        <translation>Normal</translation>
     </message>
     <message>
         <location filename="kernel/results_data/signals_data/anysignal.cpp" line="50"/>
         <source>Канал</source>
-        <translation type="unfinished">Channel</translation>
+        <translation>Channel</translation>
     </message>
     <message>
         <location filename="kernel/results_data/signals_data/decartcoordinatessignal.cpp" line="43"/>
         <source>Фронталь (X)</source>
-        <translation type="unfinished">Frontal (X)</translation>
+        <translation>Frontal (X)</translation>
     </message>
     <message>
         <location filename="kernel/results_data/signals_data/decartcoordinatessignal.cpp" line="46"/>
         <source>Сагитталь (Y)</source>
-        <translation type="unfinished">Sagittal (Y)</translation>
+        <translation>Sagittal (Y)</translation>
     </message>
     <message>
         <location filename="kernel/results_data/signals_data/myogram.cpp" line="51"/>
         <source>Отведение</source>
-        <translation type="unfinished">Channel</translation>
+        <translation>Channel</translation>
     </message>
     <message>
         <location filename="kernel/results_data/signals_data/weightplatesignal.cpp" line="49"/>
         <source>Реакция опоры</source>
-        <translation type="unfinished">Base force</translation>
+        <translation>Base force</translation>
     </message>
     <message>
         <location filename="kernel/results_data/signals_data/weightplatesignal.cpp" line="52"/>
         <source>Общая масса</source>
-        <translation type="unfinished">Total mass</translation>
+        <translation>Total mass</translation>
     </message>
     <message>
         <location filename="kernel/results_data/signals_data/weightplatesignal.cpp" line="55"/>
         <source>Отклонение по фронтали</source>
-        <translation type="unfinished">Frontal deviation</translation>
+        <translation>Frontal deviation</translation>
     </message>
     <message>
         <location filename="kernel/results_data/signals_data/weightplatesignal.cpp" line="58"/>
         <source>Отклонение по сагиттали</source>
-        <translation type="unfinished">Sagittal deviation</translation>
+        <translation>Sagittal deviation</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="54"/>
         <source>Основная</source>
-        <translation type="unfinished">Main</translation>
+        <translation>Main</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="55"/>
         <source>Зеленая</source>
-        <translation type="unfinished">Green</translation>
+        <translation>Green</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="56"/>
         <source>Желтая</source>
-        <translation type="unfinished">Yellow</translation>
+        <translation>Yellow</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="57"/>
         <source>Красная</source>
-        <translation type="unfinished">Red</translation>
+        <translation>Red</translation>
     </message>
     <message>
         <location filename="metodics/dynamic_tests/evolventa/evolventadefines.h" line="22"/>
         <source>раскрутка</source>
-        <translation type="unfinished">unwinding</translation>
+        <translation>unwinding</translation>
     </message>
     <message>
         <location filename="metodics/dynamic_tests/evolventa/evolventadefines.h" line="23"/>
         <source>удержание</source>
-        <translation type="unfinished">holding</translation>
+        <translation>holding</translation>
     </message>
     <message>
         <location filename="metodics/dynamic_tests/evolventa/evolventadefines.h" line="24"/>
         <source>сворачивание</source>
-        <translation type="unfinished">coiling</translation>
+        <translation>coiling</translation>
     </message>
     <message>
         <location filename="metodics/jump_plate/droptest/droptestdefines.h" line="24"/>
         <source>Контактная фаза, сек</source>
-        <translation type="unfinished">Contact phase, sec</translation>
+        <translation>Contact phase, sec</translation>
     </message>
     <message>
         <location filename="metodics/jump_plate/droptest/droptestdefines.h" line="25"/>
         <source>Бесконтактная фаза, сек</source>
-        <translation type="unfinished">Non-contact phase, sec</translation>
+        <translation>Non-contact phase, sec</translation>
     </message>
     <message>
         <location filename="metodics/jump_plate/droptest/droptestdefines.h" line="26"/>
         <source>Высота прыжка, м</source>
-        <translation type="unfinished">Jump height, m</translation>
+        <translation>Jump height, m</translation>
     </message>
     <message>
         <location filename="metodics/jump_plate/droptest/droptestdefines.h" line="27"/>
         <source>Мощность</source>
-        <translation type="unfinished">Power</translation>
+        <translation>Power</translation>
     </message>
     <message>
         <location filename="metodics/jump_plate/droptest/droptestdefines.h" line="28"/>
         <source>Жесткость</source>
-        <translation type="unfinished">Rigidity</translation>
+        <translation>Rigidity</translation>
     </message>
     <message>
         <location filename="metodics/jump_plate/droptest/droptestdefines.h" line="29"/>
         <source>Начальная скорость, м/сек</source>
-        <translation type="unfinished">Initial speed, m/sec</translation>
+        <translation>Initial speed, m/sec</translation>
     </message>
     <message>
         <location filename="metodics/jump_plate/droptest/droptestdefines.h" line="30"/>
         <source>Индекс реактивной силы</source>
-        <translation type="unfinished">Reactive force index</translation>
+        <translation>Reactive force index</translation>
     </message>
     <message>
         <location filename="metodics/metodicdefines.h" line="108"/>
         <source>Центровка через</source>
-        <translation type="unfinished">Centering in</translation>
+        <translation>Centering in</translation>
     </message>
     <message>
         <location filename="metodics/metodicdefines.h" line="110"/>
         <source>Запись через</source>
-        <translation type="unfinished">Recording in</translation>
+        <translation>Recording in</translation>
     </message>
     <message>
         <location filename="metodics/stabtest/calculators/babyposturecalculator.cpp" line="104"/>
         <source>Скорость ОЦД</source>
-        <translation type="unfinished">Speed CP</translation>
+        <translation>Speed CP</translation>
     </message>
     <message>
         <location filename="metodics/stabtest/calculators/babyposturecalculator.cpp" line="105"/>
         <source>V (мм/с)</source>
-        <translation type="unfinished">V(mm|s)</translation>
+        <translation>V(mm|s)</translation>
     </message>
     <message>
         <location filename="metodics/stabtest/calculators/babyposturecalculator.cpp" line="109"/>
         <source>Площадь статокинезиограммы 95</source>
-        <translation type="unfinished">Statokinesiogram square 95</translation>
+        <translation>Statokinesiogram square 95</translation>
     </message>
     <message>
         <location filename="metodics/stabtest/calculators/babyposturecalculator.cpp" line="110"/>
         <source>s95 (мм2)</source>
-        <translation type="unfinished">LFS95 (1/mm)</translation>
+        <translation>LFS95 (1/mm)</translation>
     </message>
     <message>
         <location filename="metodics/stabtest/calculators/babyposturecalculator.cpp" line="114"/>
         <source>Отношение длины статокинезиограммы к её площади</source>
-        <translation type="unfinished">Length in function of square</translation>
+        <translation>Length in function of square</translation>
     </message>
     <message>
         <location filename="metodics/stabtest/calculators/babyposturecalculator.cpp" line="115"/>
         <source>LFS95 (1/мм)</source>
-        <translation type="unfinished">LFS95 (1/mm)</translation>
+        <translation>LFS95 (1/mm)</translation>
     </message>
     <message>
         <location filename="metodics/stabtest/calculators/babyposturecalculator.cpp" line="119"/>
         <source>Длина эллипса статокинезиограммы</source>
-        <translation type="unfinished">Length of the statokinesiogram ellipse</translation>
+        <translation>Length of the statokinesiogram ellipse</translation>
     </message>
     <message>
         <location filename="metodics/stabtest/calculators/babyposturecalculator.cpp" line="120"/>
         <source>Le95 (мм)</source>
-        <translation type="unfinished">Le95 (mm)</translation>
+        <translation>Le95 (mm)</translation>
     </message>
     <message>
         <location filename="metodics/stabtest/calculators/babyposturecalculator.cpp" line="124"/>
         <source>Ширина эллипса статокинезиограммы</source>
-        <translation type="unfinished">Width of the statokinesiogram ellipse</translation>
+        <translation>Width of the statokinesiogram ellipse</translation>
     </message>
     <message>
         <location filename="metodics/stabtest/calculators/babyposturecalculator.cpp" line="125"/>
         <source>We95 (мм)</source>
-        <translation type="unfinished">We95 (mm)</translation>
+        <translation>We95 (mm)</translation>
     </message>
     <message>
         <location filename="metodics/stabtest/calculators/babyposturecalculator.cpp" line="129"/>
         <source>Отношение длины эллипса к его ширине</source>
-        <translation type="unfinished">Length of an ellipse to its width</translation>
+        <translation>Length of an ellipse to its width</translation>
     </message>
     <message>
         <location filename="metodics/stabtest/calculators/babyposturecalculator.cpp" line="130"/>
         <source>Le-We (ед)</source>
-        <translation type="unfinished">Le-We</translation>
+        <translation>Le-We</translation>
     </message>
     <message>
         <location filename="metodics/stabtest/calculators/babyposturecalculator.cpp" line="134"/>
         <source>Уровень 60% мощности спектра во фронтальной плоскости</source>
-        <translation type="unfinished">Level 60% of spectrum power in frontal</translation>
+        <translation>Level 60% of spectrum power in frontal</translation>
     </message>
     <message>
         <location filename="metodics/stabtest/calculators/babyposturecalculator.cpp" line="135"/>
         <source>xf60% (Гц)</source>
-        <translation type="unfinished">xf60% (Hz)</translation>
+        <translation>xf60% (Hz)</translation>
     </message>
     <message>
         <location filename="metodics/stabtest/calculators/babyposturecalculator.cpp" line="139"/>
         <source>Уровень 60% мощности спектра во сагиттальной плоскости</source>
-        <translation type="unfinished">Level 60% of spectrum power in sagittal</translation>
+        <translation>Level 60% of spectrum power in sagittal</translation>
     </message>
     <message>
         <location filename="metodics/stabtest/calculators/babyposturecalculator.cpp" line="140"/>
         <source>yf60% (Гц)</source>
-        <translation type="unfinished">yf60% (Hz)</translation>
+        <translation>yf60% (Hz)</translation>
     </message>
     <message>
         <location filename="metodics/stabtest/calculators/babyposturecalculator.cpp" line="144"/>
         <source>Уровень 60% мощности спектра во вертикальной составляющей</source>
-        <translation type="unfinished">Level 60% of spectrum power in the vertical component</translation>
+        <translation>Level 60% of spectrum power in the vertical component</translation>
     </message>
     <message>
         <location filename="metodics/stabtest/calculators/babyposturecalculator.cpp" line="145"/>
         <source>zf60% (Гц)</source>
-        <translation type="unfinished">zf60% (Hz)</translation>
+        <translation>zf60% (Hz)</translation>
     </message>
     <message>
         <location filename="metodics/stabtest/calculators/babyposturecalculator.cpp" line="149"/>
         <source>Качество функции равновесия</source>
-        <translation type="unfinished">Equilibrium function quality</translation>
+        <translation>Equilibrium function quality</translation>
     </message>
     <message>
         <location filename="metodics/stabtest/calculators/babyposturecalculator.cpp" line="150"/>
         <source>КФР (%)</source>
-        <translation type="unfinished">QEF (%)</translation>
+        <translation>QEF (%)</translation>
     </message>
     <message>
         <location filename="metodics/stabtest/calculators/babyposturecalculator.cpp" line="155"/>
         <source>Частота 1-го максимума спектра по фронтальной составляющей</source>
-        <translation type="unfinished">Frequency of the 1st maximum of the spectrum by frontal component</translation>
+        <translation>Frequency of the 1st maximum of the spectrum by frontal component</translation>
     </message>
     <message>
         <location filename="metodics/stabtest/calculators/babyposturecalculator.cpp" line="156"/>
         <source>Xf1 (Гц)</source>
-        <translation type="unfinished">Xf1 (Hz)</translation>
+        <translation>Xf1 (Hz)</translation>
     </message>
     <message>
         <location filename="metodics/stabtest/calculators/babyposturecalculator.cpp" line="160"/>
         <source>Амплитуда 1-го максимума спектра по фронтальной составляющей</source>
-        <translation type="unfinished">Amplitude of the 1st maximum of the spectrum by frontall component</translation>
+        <translation>Amplitude of the 1st maximum of the spectrum by frontall component</translation>
     </message>
     <message>
         <location filename="metodics/stabtest/calculators/babyposturecalculator.cpp" line="161"/>
         <source>Xa1 (мм)</source>
-        <translation type="unfinished">Xa1 (mm)</translation>
+        <translation>Xa1 (mm)</translation>
     </message>
     <message>
         <location filename="metodics/stabtest/calculators/babyposturecalculator.cpp" line="165"/>
         <source>Частота 1-го максимума спектра по сагиттальной составляющей</source>
-        <translation type="unfinished">Frequency of the 1st maximum of the spectrum by sagittal component</translation>
+        <translation>Frequency of the 1st maximum of the spectrum by sagittal component</translation>
     </message>
     <message>
         <location filename="metodics/stabtest/calculators/babyposturecalculator.cpp" line="166"/>
         <source>Yf1 (Гц)</source>
-        <translation type="unfinished">Yf1 (Hz)</translation>
+        <translation>Yf1 (Hz)</translation>
     </message>
     <message>
         <location filename="metodics/stabtest/calculators/babyposturecalculator.cpp" line="170"/>
         <source>Амплитуда 1-го максимума спектра по сагиттальной составляющей</source>
-        <translation type="unfinished">Amplitude of the 1st maximum of the spectrum by sagittal component</translation>
+        <translation>Amplitude of the 1st maximum of the spectrum by sagittal component</translation>
     </message>
     <message>
         <location filename="metodics/stabtest/calculators/babyposturecalculator.cpp" line="171"/>
         <source>Ya1 (мм)</source>
-        <translation type="unfinished">Ya1 (mm)</translation>
+        <translation>Ya1 (mm)</translation>
     </message>
     <message>
         <location filename="metodics/stabtest/calculators/babyposturecalculator.cpp" line="176"/>
         <source>Частота 2-го максимума спектра по фронтальной составляющей</source>
-        <translation type="unfinished">Frequency of the 2st maximum of the spectrum by frontal component</translation>
+        <translation>Frequency of the 2st maximum of the spectrum by frontal component</translation>
     </message>
     <message>
         <location filename="metodics/stabtest/calculators/babyposturecalculator.cpp" line="177"/>
         <source>Xf2 (Гц)</source>
-        <translation type="unfinished">Xf2 (Hz)</translation>
+        <translation>Xf2 (Hz)</translation>
     </message>
     <message>
         <location filename="metodics/stabtest/calculators/babyposturecalculator.cpp" line="181"/>
         <source>Амплитуда 2-го максимума спектра по фронтальной составляющей</source>
-        <translation type="unfinished">Amplitude of the 2st maximum of the spectrum by frontal component</translation>
+        <translation>Amplitude of the 2st maximum of the spectrum by frontal component</translation>
     </message>
     <message>
         <location filename="metodics/stabtest/calculators/babyposturecalculator.cpp" line="182"/>
         <source>Xa2 (мм)</source>
-        <translation type="unfinished">Xa2 (mm)</translation>
+        <translation>Xa2 (mm)</translation>
     </message>
     <message>
         <location filename="metodics/stabtest/calculators/babyposturecalculator.cpp" line="186"/>
         <source>Частота 2-го максимума спектра по сагиттальной составляющей</source>
-        <translation type="unfinished">Frequency of the 2st maximum of the spectrum by sagittal component</translation>
+        <translation>Frequency of the 2st maximum of the spectrum by sagittal component</translation>
     </message>
     <message>
         <location filename="metodics/stabtest/calculators/babyposturecalculator.cpp" line="187"/>
         <source>Yf2 (Гц)</source>
-        <translation type="unfinished">Yf2 (Hz)</translation>
+        <translation>Yf2 (Hz)</translation>
     </message>
     <message>
         <location filename="metodics/stabtest/calculators/babyposturecalculator.cpp" line="191"/>
         <source>Амплитуда 2-го максимума спектра по сагиттальной составляющей</source>
-        <translation type="unfinished">Amplitude of the 2st maximum of the spectrum by sagittal component</translation>
+        <translation>Amplitude of the 2st maximum of the spectrum by sagittal component</translation>
     </message>
     <message>
         <location filename="metodics/stabtest/calculators/babyposturecalculator.cpp" line="192"/>
         <source>Ya2 (мм)</source>
-        <translation type="unfinished">Ya2 (mm)</translation>
+        <translation>Ya2 (mm)</translation>
     </message>
     <message>
         <location filename="metodics/stabtest/calculators/babyposturecalculator.cpp" line="197"/>
         <source>Частота 3-го максимума спектра по фронтальной составляющей</source>
-        <translation type="unfinished">Frequency of the 3st maximum of the spectrum by frontal component</translation>
+        <translation>Frequency of the 3st maximum of the spectrum by frontal component</translation>
     </message>
     <message>
         <location filename="metodics/stabtest/calculators/babyposturecalculator.cpp" line="198"/>
         <source>Xf3 (Гц)</source>
-        <translation type="unfinished">Xf3 (Hz)</translation>
+        <translation>Xf3 (Hz)</translation>
     </message>
     <message>
         <location filename="metodics/stabtest/calculators/babyposturecalculator.cpp" line="202"/>
         <source>Амплитуда 3-го максимума спектра по фронтальной составляющей</source>
-        <translation type="unfinished">Amplitude of the 3st maximum of the spectrum by frontal component</translation>
+        <translation>Amplitude of the 3st maximum of the spectrum by frontal component</translation>
     </message>
     <message>
         <location filename="metodics/stabtest/calculators/babyposturecalculator.cpp" line="203"/>
         <source>Xa3 (мм)</source>
-        <translation type="unfinished">Xa3 (mm)</translation>
+        <translation>Xa3 (mm)</translation>
     </message>
     <message>
         <location filename="metodics/stabtest/calculators/babyposturecalculator.cpp" line="207"/>
         <source>Частота 3-го максимума спектра по сагиттальной составляющей</source>
-        <translation type="unfinished">Frequency of the 3st maximum of the spectrum by sagittal component</translation>
+        <translation>Frequency of the 3st maximum of the spectrum by sagittal component</translation>
     </message>
     <message>
         <location filename="metodics/stabtest/calculators/babyposturecalculator.cpp" line="208"/>
         <source>Yf3 (Гц)</source>
-        <translation type="unfinished">Yf3 (Hz)</translation>
+        <translation>Yf3 (Hz)</translation>
     </message>
     <message>
         <location filename="metodics/stabtest/calculators/babyposturecalculator.cpp" line="212"/>
         <source>Амплитуда 3-го максимума спектра по сагиттальной составляющей</source>
-        <translation type="unfinished">Amplitude of the 3st maximum of the spectrum by sagittal component</translation>
+        <translation>Amplitude of the 3st maximum of the spectrum by sagittal component</translation>
     </message>
     <message>
         <location filename="metodics/stabtest/calculators/babyposturecalculator.cpp" line="213"/>
         <source>Ya3 (мм)</source>
-        <translation type="unfinished">Ya3 (mm)</translation>
+        <translation>Ya3 (mm)</translation>
     </message>
     <message>
         <location filename="metodics/stabtest/calculators/babyposturecalculator.cpp" line="218"/>
         <source>Частота 1-го максимума спектра по вертикальной составляющей</source>
-        <translation type="unfinished">Frequency of the 1st maximum of the spectrum by vertical component</translation>
+        <translation>Frequency of the 1st maximum of the spectrum by vertical component</translation>
     </message>
     <message>
         <location filename="metodics/stabtest/calculators/babyposturecalculator.cpp" line="219"/>
         <source>Zf1 (Гц)</source>
-        <translation type="unfinished">Zf1 (Hz)</translation>
+        <translation>Zf1 (Hz)</translation>
     </message>
     <message>
         <location filename="metodics/stabtest/calculators/babyposturecalculator.cpp" line="223"/>
         <source>Амплитуда 1-го максимума спектра по вертикальной составляющей</source>
-        <translation type="unfinished">Amplitude of the 1st maximum of the spectrum by vertical component</translation>
+        <translation>Amplitude of the 1st maximum of the spectrum by vertical component</translation>
     </message>
     <message>
         <location filename="metodics/stabtest/calculators/babyposturecalculator.cpp" line="224"/>
         <source>Za1 (мм)</source>
-        <translation type="unfinished">Za1 (mm)</translation>
+        <translation>Za1 (mm)</translation>
     </message>
     <message>
         <location filename="metodics/stabtest/calculators/babyposturecalculator.cpp" line="228"/>
         <source>Частота 2-го максимума спектра по вертикальной составляющей</source>
-        <translation type="unfinished">Frequency of the 2st maximum of the spectrum by vertical component</translation>
+        <translation>Frequency of the 2st maximum of the spectrum by vertical component</translation>
     </message>
     <message>
         <location filename="metodics/stabtest/calculators/babyposturecalculator.cpp" line="229"/>
         <source>Zf2 (Гц)</source>
-        <translation type="unfinished">Zf2 (Hz)</translation>
+        <translation>Zf2 (Hz)</translation>
     </message>
     <message>
         <location filename="metodics/stabtest/calculators/babyposturecalculator.cpp" line="233"/>
         <source>Амплитуда 2-го максимума спектра по вертикальной составляющей</source>
-        <translation type="unfinished">Amplitude of the 2st maximum of the spectrum by vertical component</translation>
+        <translation>Amplitude of the 2st maximum of the spectrum by vertical component</translation>
     </message>
     <message>
         <location filename="metodics/stabtest/calculators/babyposturecalculator.cpp" line="234"/>
         <source>Za2 (мм)</source>
-        <translation type="unfinished">Za2 (mm)</translation>
+        <translation>Za2 (mm)</translation>
     </message>
     <message>
         <location filename="metodics/stabtest/calculators/babyposturecalculator.cpp" line="238"/>
         <source>Частота 3-го максимума спектра по вертикальной составляющей</source>
-        <translation type="unfinished">Frequency of the 3st maximum of the spectrum by vertical component</translation>
+        <translation>Frequency of the 3st maximum of the spectrum by vertical component</translation>
     </message>
     <message>
         <location filename="metodics/stabtest/calculators/babyposturecalculator.cpp" line="239"/>
         <source>Zf3 (Гц)</source>
-        <translation type="unfinished">Zf3 (Hz)</translation>
+        <translation>Zf3 (Hz)</translation>
     </message>
     <message>
         <location filename="metodics/stabtest/calculators/babyposturecalculator.cpp" line="243"/>
         <source>Амплитуда 3-го максимума спектра по вертикальной составляющей</source>
-        <translation type="unfinished">Amplitude of the 3st maximum of the spectrum by vertical component</translation>
+        <translation>Amplitude of the 3st maximum of the spectrum by vertical component</translation>
     </message>
     <message>
         <location filename="metodics/stabtest/calculators/babyposturecalculator.cpp" line="244"/>
         <source>Za3 (мм)</source>
-        <translation type="unfinished">Za3 (mm)</translation>
+        <translation>Za3 (mm)</translation>
     </message>
     <message>
         <location filename="metodics/stabtest/stabtestdefines.h" line="27"/>
         <source>нет</source>
-        <translation type="unfinished">no</translation>
+        <translation>no</translation>
     </message>
     <message>
         <location filename="metodics/stabtest/stabtestdefines.h" line="28"/>
         <source>Цветные круги</source>
-        <translation type="unfinished">Colored circles</translation>
+        <translation>Colored circles</translation>
     </message>
     <message>
         <location filename="metodics/stabtest/stabtestdefines.h" line="29"/>
         <source>Звуковые сигналы</source>
-        <translation type="unfinished">Sound signals</translation>
+        <translation>Sound signals</translation>
     </message>
     <message>
         <location filename="metodics/stabtest/stabtestdefines.h" line="30"/>
         <source>Мишень</source>
-        <translation type="unfinished">Target</translation>
+        <translation>Target</translation>
     </message>
     <message>
         <location filename="metodics/stabtest/stabtestdefines.h" line="31"/>
         <source>С выделенной зоной</source>
-        <translation type="unfinished">With a dedicated area</translation>
+        <translation>With a dedicated area</translation>
     </message>
     <message>
         <location filename="metodics/stabtest/stabtestdefines.h" line="32"/>
         <source>Движение полос</source>
-        <translation type="unfinished">Stripes moving</translation>
+        <translation>Stripes moving</translation>
     </message>
     <message>
         <location filename="metodics/stabtest/stabtestexecute.cpp" line="491"/>
         <location filename="metodics/stabtest/stabtestexecute.cpp" line="502"/>
         <location filename="summaries/summarydefines.h" line="55"/>
         <source>Текстовые файлы</source>
-        <translation type="unfinished">Text files</translation>
+        <translation>Text files</translation>
     </message>
     <message>
         <location filename="metodics/stabtest/stabtestexecute.cpp" line="513"/>
         <source>Файлы экспорта стабилоплатформы МБН</source>
-        <translation type="unfinished">MBN Stabiloplatform Export Files</translation>
+        <translation>MBN Stabiloplatform Export Files</translation>
     </message>
     <message>
         <location filename="metodics_common/report_elements/reportelements.cpp" line="49"/>
         <location filename="metodics_common/report_elements/reportelements.cpp" line="124"/>
         <source>Тел</source>
-        <translation type="unfinished">Phone</translation>
+        <translation>Phone</translation>
     </message>
     <message>
         <location filename="metodics_common/report_elements/reportelements.cpp" line="50"/>
         <location filename="metodics_common/report_elements/reportelements.cpp" line="125"/>
         <source>e-mail</source>
-        <translation type="unfinished">e-mail</translation>
+        <translation>e-mail</translation>
     </message>
     <message>
         <location filename="metodics_common/report_elements/reportelements.cpp" line="62"/>
         <source>Протокол теста</source>
-        <translation type="unfinished">Test protocol</translation>
+        <translation>Test protocol</translation>
     </message>
     <message>
         <location filename="metodics_common/report_elements/reportelements.cpp" line="64"/>
         <location filename="metodics_common/report_elements/reportelements.cpp" line="138"/>
         <source>Пациент</source>
-        <translation type="unfinished">Patient</translation>
+        <translation>Patient</translation>
     </message>
     <message>
         <location filename="metodics_common/report_elements/reportelements.cpp" line="66"/>
         <source>Дата и время проведения</source>
-        <translation type="unfinished">Date and time</translation>
+        <translation>Date and time</translation>
     </message>
     <message>
         <location filename="metodics_common/report_elements/reportelements.cpp" line="140"/>
         <source>Проводился с</source>
-        <translation type="unfinished">Held from</translation>
+        <translation>Held from</translation>
     </message>
     <message>
         <location filename="metodics_common/report_elements/reportelements.cpp" line="141"/>
         <source>по</source>
-        <translation type="unfinished">to</translation>
+        <translation>to</translation>
     </message>
     <message>
         <location filename="signal_analysis/visuals/sections/section_graph/sectiongraphvisualwidget.cpp" line="23"/>
         <source>Файлы преобразований сигнала</source>
-        <translation type="unfinished">Файлы преобразований сигнала</translation>
+        <translation>Файлы преобразований сигнала</translation>
     </message>
     <message>
         <location filename="signal_export/signalexporter.cpp" line="98"/>
         <source>Экспорт сигналов нескольких тестов</source>
-        <translation type="unfinished">Export signals from multiple tests</translation>
+        <translation>Export signals from multiple tests</translation>
     </message>
     <message>
         <location filename="signal_export/signalexporter.cpp" line="100"/>
         <source>Инициализация</source>
-        <translation type="unfinished">Initialization</translation>
+        <translation>Initialization</translation>
     </message>
     <message>
         <location filename="signal_export/signalexporter.cpp" line="115"/>
         <source>Тест</source>
-        <translation type="unfinished">Text</translation>
+        <translation>Text</translation>
     </message>
     <message>
         <location filename="summaries/summarydefines.h" line="54"/>
         <source>Файлы сводок</source>
-        <translation type="unfinished">Summary files</translation>
+        <translation>Summary files</translation>
     </message>
 </context>
 <context>
@@ -12253,7 +12253,7 @@ Click the [Done] button.</translation>
     <message>
         <location filename="drivers/devices/stabilan/stabilan01paramsdialog.ui" line="959"/>
         <source>Установка</source>
-        <translation type="unfinished">Set platforms
+        <translation>Set platforms
 </translation>
     </message>
     <message>

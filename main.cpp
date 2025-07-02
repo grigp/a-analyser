@@ -17,8 +17,8 @@ int main(int argc, char *argv[])
     AAnalyserApplication a(argc, argv);
 
     QString fn = "";
-    QString code = DataDefines::LANG_CODE_RUS;
-    //QString code = DataDefines::LANG_CODE_ENGUSA;
+    //QString code = DataDefines::LANG_CODE_RUS;
+    QString code = DataDefines::LANG_CODE_ENGUSA;
     auto trLoaded = BaseUtils::getTranslatorFileName(fn, code);
 
     QTranslator translator;
