@@ -5,6 +5,9 @@
 #include <QJsonObject>
 #include <QStandardItemModel>
 #include <QItemSelectionModel>
+#include <QMap>
+
+#include "stabtestdefines.h"
 
 namespace Ui {
 class StabTestParamsDialog;
@@ -59,6 +62,20 @@ private slots:
 
 private:
     Ui::StabTestParamsDialog *ui;
+
+
+    /*!
+     * \brief Названия окон пациента The PatientWindowsName
+     */
+    QMap<StabTestDefines::PatientWindows, QString> PatientWindowsName {
+          std::pair<StabTestDefines::PatientWindows, QString> (StabTestDefines::pwNone, QCoreApplication::tr("нет"))
+        , std::pair<StabTestDefines::PatientWindows, QString> (StabTestDefines::pwColors, QCoreApplication::tr("Цветные круги"))
+        , std::pair<StabTestDefines::PatientWindows, QString> (StabTestDefines::pwSound, QCoreApplication::tr("Звуковые сигналы"))
+        , std::pair<StabTestDefines::PatientWindows, QString> (StabTestDefines::pwTarget, QCoreApplication::tr("Мишень"))
+        , std::pair<StabTestDefines::PatientWindows, QString> (StabTestDefines::pwZones, QCoreApplication::tr("С выделенной зоной"))
+        , std::pair<StabTestDefines::PatientWindows, QString> (StabTestDefines::pwLines, QCoreApplication::tr("Движение полос"))
+    };
+
 
     void showProbeParam();
 

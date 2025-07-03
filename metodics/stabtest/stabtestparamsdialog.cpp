@@ -41,12 +41,12 @@ StabTestParamsDialog::StabTestParamsDialog(QWidget *parent) :
 
     ui->lvProbes->setModel(m_mdlProbes);
     ui->cbStimul->addItems(QStringList()
-                           << StabTestDefines::PatientWindowsName.value(StabTestDefines::pwNone)
-                           << StabTestDefines::PatientWindowsName.value(StabTestDefines::pwColors)
-                           << StabTestDefines::PatientWindowsName.value(StabTestDefines::pwSound)
-                           << StabTestDefines::PatientWindowsName.value(StabTestDefines::pwTarget)
-                           << StabTestDefines::PatientWindowsName.value(StabTestDefines::pwZones)
-                           << StabTestDefines::PatientWindowsName.value(StabTestDefines::pwLines));
+                           << PatientWindowsName.value(StabTestDefines::pwNone)
+                           << PatientWindowsName.value(StabTestDefines::pwColors)
+                           << PatientWindowsName.value(StabTestDefines::pwSound)
+                           << PatientWindowsName.value(StabTestDefines::pwTarget)
+                           << PatientWindowsName.value(StabTestDefines::pwZones)
+                           << PatientWindowsName.value(StabTestDefines::pwLines));
     ui->cbScale->addItems(QStringList() << "1" << "2" << "4" << "8" << "16" << "32" << "64" << "128");
     ui->cbConditions->addItems(QStringList()
                                << tr("Анализ сигналов")                ///< Код 0
