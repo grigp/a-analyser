@@ -78,12 +78,12 @@ void PulseWidget::getData(DeviceProtocols::DeviceData *data)
         if (isCorrectValue)
         {
             ui->pbPulse->setValue(static_cast<int>(value));
-            ui->lblPulse->setText(QString("ЧСС - %1 уд/мин").arg(value));
+            ui->lblPulse->setText(QString(tr("ЧСС - %1 уд/мин")).arg(value));
 
             m_pulseMiddle = m_pulseMiddle + value;
             ++m_pulseCount;
 
-            ui->lblPulseMid->setText(QString("Средний пульс - %1 уд/мин").arg(m_pulseMiddle/m_pulseCount));
+            ui->lblPulseMid->setText(QString(tr("Средний пульс - %1 уд/мин")).arg(m_pulseMiddle/m_pulseCount));
 
             //! Погасим индикатор через 100 мс с использованием таймера объекта
             m_pickTimerId = startTimer(100);

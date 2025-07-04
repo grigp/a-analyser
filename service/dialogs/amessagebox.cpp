@@ -150,16 +150,16 @@ void AMessageBox::setButtons(StandardButtons buttons)
 {
     m_buttons = buttons;
     if ((buttons & Ok) != 0)
-        ui->btnOK->setText("OK");
+        ui->btnOK->setText(tr("OK"));
     else
     if ((buttons & Yes) != 0)
-        ui->btnOK->setText("Да");
+        ui->btnOK->setText(tr("Да"));
 
     if ((buttons & No) != 0)
-        ui->btnNo->setText("Нет");
+        ui->btnNo->setText(tr("Нет"));
 
     if ((buttons & Cancel) != 0)
-        ui->btnCancel->setText("Отмена");
+        ui->btnCancel->setText(tr("Отмена"));
 
     if ((buttons & UserButton) != 0)
         ui->btnUser->setText(m_textUserButton);

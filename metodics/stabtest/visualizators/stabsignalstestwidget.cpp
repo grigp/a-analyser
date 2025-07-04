@@ -715,7 +715,7 @@ void StabSignalsTestWidget::showSKG(StabSignalsTestCalculator *calculator, const
 
                     //! Графики сигналов
                     ui->wgtGraph->appendSignal(sig, pi.name);
-                    ui->wgtGraph->setLegend(i, QStringList() << "Фронталь" << "Сагитталь");
+                    ui->wgtGraph->setLegend(i, QStringList() << tr("Фронталь") << tr("Сагитталь"));
                 }
             }
         }

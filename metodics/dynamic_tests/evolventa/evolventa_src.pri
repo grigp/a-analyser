@@ -15,7 +15,8 @@ SOURCES += \
     $$PWD/evolventaexecute.cpp \
     $$PWD/evolventapatientwindow.cpp \
     $$PWD/evolventavisualize.cpp \
-    $$PWD/evolventacalculator.cpp
+    $$PWD/evolventacalculator.cpp \
+    $$PWD/evolventadefines.cpp
 
 FORMS += \
     $$PWD/evolventaparamsdialog.ui \

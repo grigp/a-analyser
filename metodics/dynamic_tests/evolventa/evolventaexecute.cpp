@@ -95,7 +95,8 @@ void EvolventaExecute::recording()
         m_res->setFreq(freqStab());
         m_res->setDiap(diap());
         m_res->setTimeUpwinding(recCount());
-        m_lblStage->setText(tr("Этап") + " : " + EvolventaDefines::StageValueName.value(m_stage));
+        EvolventaDefines::StageValueName name;
+        m_lblStage->setText(tr("Этап") + " : " + name.value(m_stage));
     }
     else
     {
@@ -111,6 +112,8 @@ void EvolventaExecute::getData(DeviceProtocols::DeviceData *data)
     {
         if (isRecording())
         {
+            EvolventaDefines::StageValueName name;
+
             //! Установка цели
             setTargetPolar(m_targetAngle, m_targetAmpl);
 
@@ -131,7 +134,7 @@ void EvolventaExecute::getData(DeviceProtocols::DeviceData *data)
                     m_stage = EvolventaDefines::stgHold;
                     m_endStageCount = m_targetAngle + 2 * M_PI * m_circleCount;
                     m_res->setTimeHold(recCount());
-                    m_lblStage->setText(tr("Этап") + " : " + EvolventaDefines::StageValueName.value(m_stage));
+                    m_lblStage->setText(tr("Этап") + " : " + name.value(m_stage));
                 }
             }
             else
@@ -142,7 +145,7 @@ void EvolventaExecute::getData(DeviceProtocols::DeviceData *data)
                 {
                     m_stage = EvolventaDefines::stgConvolution;
                     m_res->setTimeConvolution(recCount());
-                    m_lblStage->setText(tr("Этап") + " : " + EvolventaDefines::StageValueName.value(m_stage));
+                    m_lblStage->setText(tr("Этап") + " : " + name.value(m_stage));
                 }
             }
             else

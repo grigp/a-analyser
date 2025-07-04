@@ -6,6 +6,8 @@
 #include <QStandardItemModel>
 #include <QLabel>
 
+#include "evolventadefines.h"
+
 namespace Ui {
 class EvolventaVisualize;
 }
@@ -95,6 +97,8 @@ private:
     DualStateDiagram *m_wgtCorrectionDominanceDiag {nullptr};
     QLabel *m_lblCorrectionDominanceValue {nullptr};
     QLabel *m_lblCorrectionDominanceResume {nullptr};
+
+    EvolventaDefines::StageValueName m_name;
 };
 
 #endif // EVOLVENTAVISUALIZE_H

@@ -279,7 +279,7 @@ void EvolventaVisualize::printGraph(QPainter *painter,
     //! Передаем его в рисователь
     gp.appendSignal(signal, "");
 
-    gp.setLegend(0, QStringList() << "Фронталь" << "Сагитталь");
+    gp.setLegend(0, QStringList() << tr("Фронталь") << tr("Сагитталь"));
     int diap = 1;
     int step = 0;
     while (diap < signal->absMaxValue())
@@ -288,11 +288,12 @@ void EvolventaVisualize::printGraph(QPainter *painter,
         ++step;
     }
 
-    gp.setLegend(0, QStringList() << "Траектория" << "Цель");
+    gp.setLegend(0, QStringList() << tr("Траектория") << tr("Цель"));
     gp.setDiapazone(0, -diap, diap);
-    gp.addMarker(0, visual->m_calculator->timeUpwinding(), EvolventaDefines::StageValueName.value(EvolventaDefines::stgUpwinding));
-    gp.addMarker(0, visual->m_calculator->timeHold(), EvolventaDefines::StageValueName.value(EvolventaDefines::stgHold));
-    gp.addMarker(0, visual->m_calculator->timeConvolution(), EvolventaDefines::StageValueName.value(EvolventaDefines::stgConvolution));
+    EvolventaDefines::StageValueName name;
+    gp.addMarker(0, visual->m_calculator->timeUpwinding(), name.value(EvolventaDefines::stgUpwinding));
+    gp.addMarker(0, visual->m_calculator->timeHold(), name.value(EvolventaDefines::stgHold));
+    gp.addMarker(0, visual->m_calculator->timeConvolution(), name.value(EvolventaDefines::stgConvolution));
     gp.setIsFillBetweenSubchans(0, true);
 
     gp.setDiapazone(-diap, diap);
@@ -381,25 +382,27 @@ void EvolventaVisualize::saveEvolventa()
 
 void EvolventaVisualize::showEvolventa()
 {
+    EvolventaDefines::StageValueName name;
+
     auto *sigX = m_calculator->frontal();
     double max = sigX->absMaxValue();
     ui->wgtGraphX->appendSignal(sigX, tr("Фронталь"));
-    ui->wgtGraphX->setLegend(0, QStringList() << "Траектория" << "Цель");
+    ui->wgtGraphX->setLegend(0, QStringList() << tr("Траектория") << tr("Цель"));
     ui->wgtGraphX->setDiapazone(0, -max, max);
-    ui->wgtGraphX->addMarker(0, m_calculator->timeUpwinding(), EvolventaDefines::StageValueName.value(EvolventaDefines::stgUpwinding));
-    ui->wgtGraphX->addMarker(0, m_calculator->timeHold(), EvolventaDefines::StageValueName.value(EvolventaDefines::stgHold));
-    ui->wgtGraphX->addMarker(0, m_calculator->timeConvolution(), EvolventaDefines::StageValueName.value(EvolventaDefines::stgConvolution));
+    ui->wgtGraphX->addMarker(0, m_calculator->timeUpwinding(), name.value(EvolventaDefines::stgUpwinding));
+    ui->wgtGraphX->addMarker(0, m_calculator->timeHold(), name.value(EvolventaDefines::stgHold));
+    ui->wgtGraphX->addMarker(0, m_calculator->timeConvolution(), name.value(EvolventaDefines::stgConvolution));
     ui->wgtGraphX->setIsFillBetweenSubchans(0, true);
     m_wgtGraphX = ui->wgtGraphX;
 
     auto *sigY = m_calculator->sagittal();
     max = sigY->absMaxValue();
     ui->wgtGraphY->appendSignal(sigY, tr("Сагитталь"));
-    ui->wgtGraphY->setLegend(0, QStringList() << "Траектория" << "Цель");
+    ui->wgtGraphY->setLegend(0, QStringList() << tr("Траектория") << tr("Цель"));
     ui->wgtGraphY->setDiapazone(0, -max, max);
-    ui->wgtGraphY->addMarker(0, m_calculator->timeUpwinding(), EvolventaDefines::StageValueName.value(EvolventaDefines::stgUpwinding));
-    ui->wgtGraphY->addMarker(0, m_calculator->timeHold(), EvolventaDefines::StageValueName.value(EvolventaDefines::stgHold));
-    ui->wgtGraphY->addMarker(0, m_calculator->timeConvolution(), EvolventaDefines::StageValueName.value(EvolventaDefines::stgConvolution));
+    ui->wgtGraphY->addMarker(0, m_calculator->timeUpwinding(), name.value(EvolventaDefines::stgUpwinding));
+    ui->wgtGraphY->addMarker(0, m_calculator->timeHold(), name.value(EvolventaDefines::stgHold));
+    ui->wgtGraphY->addMarker(0, m_calculator->timeConvolution(), name.value(EvolventaDefines::stgConvolution));
     ui->wgtGraphY->setIsFillBetweenSubchans(0, true);
     m_wgtGraphY = ui->wgtGraphY;
 }

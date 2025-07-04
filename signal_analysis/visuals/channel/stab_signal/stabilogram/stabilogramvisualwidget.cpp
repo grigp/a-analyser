@@ -198,7 +198,7 @@ void StabilogramVisualWidget::showGraph()
             if (m_stab->size() > 0)
             {
                 ui->wgtGraph->appendSignal(m_stab, tr("мм"));
-                ui->wgtGraph->setLegend(0, QStringList() << "Фронталь" << "Сагитталь");
+                ui->wgtGraph->setLegend(0, QStringList() << tr("Фронталь") << tr("Сагитталь"));
 
                 //! Диапазон сигнала
                 auto absMax = m_stab->absMaxValue();

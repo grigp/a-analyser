@@ -373,7 +373,7 @@ void ReportElements::drawGraph(QPainter *painter,
             Stabilogram stab(baStab);
             gp.appendSignal(&stab, "");
 
-            gp.setLegend(0, QStringList() << "Фронталь" << "Сагитталь");
+            gp.setLegend(0, QStringList() << QCoreApplication::tr("Фронталь") << QCoreApplication::tr("Сагитталь"));
             int diap = 1;
             int step = 0;
             while (diap < stab.absMaxValue())

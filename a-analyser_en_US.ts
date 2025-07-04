@@ -431,16 +431,19 @@ or to which you are closest</translation>
     </message>
     <message>
         <location filename="service/dialogs/amessagebox.ui" line="102"/>
+        <location filename="service/dialogs/amessagebox.cpp" line="153"/>
         <source>OK</source>
         <translation>OK</translation>
     </message>
     <message>
         <location filename="service/dialogs/amessagebox.ui" line="109"/>
+        <location filename="service/dialogs/amessagebox.cpp" line="159"/>
         <source>Нет</source>
         <translation>No</translation>
     </message>
     <message>
         <location filename="service/dialogs/amessagebox.ui" line="116"/>
+        <location filename="service/dialogs/amessagebox.cpp" line="162"/>
         <source>Отмена</source>
         <translation>Cancel</translation>
     </message>
@@ -448,6 +451,11 @@ or to which you are closest</translation>
         <location filename="service/dialogs/amessagebox.ui" line="123"/>
         <source>Пользователь</source>
         <translation>User</translation>
+    </message>
+    <message>
+        <location filename="service/dialogs/amessagebox.cpp" line="156"/>
+        <source>Да</source>
+        <translation>Yes</translation>
     </message>
 </context>
 <context>
@@ -1756,6 +1764,17 @@ These connections must be configured for real working equipment.</translation>
         <location filename="metodics/graphics_utils/video_irriants/irriants/bubblesirriantsettingswidget.ui" line="224"/>
         <source>Выбрать...</source>
         <translation>Browse...</translation>
+    </message>
+</context>
+<context>
+    <name>ChannelEnumerator</name>
+    <message>
+        <source>Стабилографический сигнал</source>
+        <translation type="vanished">Stabilographic signal</translation>
+    </message>
+    <message>
+        <source>Stab</source>
+        <translation type="vanished">Stab</translation>
     </message>
 </context>
 <context>
@@ -3527,16 +3546,16 @@ Force Index</translation>
     </message>
     <message>
         <location filename="metodics/dynamic_tests/evolventa/evolventaexecute.cpp" line="69"/>
-        <location filename="metodics/dynamic_tests/evolventa/evolventaexecute.cpp" line="98"/>
-        <location filename="metodics/dynamic_tests/evolventa/evolventaexecute.cpp" line="102"/>
-        <location filename="metodics/dynamic_tests/evolventa/evolventaexecute.cpp" line="134"/>
-        <location filename="metodics/dynamic_tests/evolventa/evolventaexecute.cpp" line="145"/>
+        <location filename="metodics/dynamic_tests/evolventa/evolventaexecute.cpp" line="99"/>
+        <location filename="metodics/dynamic_tests/evolventa/evolventaexecute.cpp" line="103"/>
+        <location filename="metodics/dynamic_tests/evolventa/evolventaexecute.cpp" line="137"/>
+        <location filename="metodics/dynamic_tests/evolventa/evolventaexecute.cpp" line="148"/>
         <source>Этап</source>
         <translation>Stage</translation>
     </message>
     <message>
         <location filename="metodics/dynamic_tests/evolventa/evolventaexecute.cpp" line="69"/>
-        <location filename="metodics/dynamic_tests/evolventa/evolventaexecute.cpp" line="102"/>
+        <location filename="metodics/dynamic_tests/evolventa/evolventaexecute.cpp" line="103"/>
         <source>ожидание</source>
         <translation>waiting</translation>
     </message>
@@ -4102,89 +4121,105 @@ Force Index</translation>
         <translation>Slow corrections</translation>
     </message>
     <message>
-        <location filename="metodics/dynamic_tests/evolventa/evolventavisualize.cpp" line="334"/>
+        <location filename="metodics/dynamic_tests/evolventa/evolventavisualize.cpp" line="335"/>
         <source>Файл для экспорта таблицы</source>
         <translation>File for exporting table</translation>
     </message>
     <message>
-        <location filename="metodics/dynamic_tests/evolventa/evolventavisualize.cpp" line="336"/>
+        <location filename="metodics/dynamic_tests/evolventa/evolventavisualize.cpp" line="337"/>
         <source>Файлы с разделенными значениями *.csv (*.csv)</source>
         <translation>Separated Values ​​Files *.csv (*.csv)</translation>
     </message>
     <message>
-        <location filename="metodics/dynamic_tests/evolventa/evolventavisualize.cpp" line="345"/>
+        <location filename="metodics/dynamic_tests/evolventa/evolventavisualize.cpp" line="346"/>
         <source>Файл для экспорта эвольвенты</source>
         <translation>File for exporting evolvent</translation>
     </message>
     <message>
-        <location filename="metodics/dynamic_tests/evolventa/evolventavisualize.cpp" line="347"/>
+        <location filename="metodics/dynamic_tests/evolventa/evolventavisualize.cpp" line="348"/>
         <source>текстовые файлы *.txt (*.txt)</source>
         <translation>text files *.txt (*.txt)</translation>
     </message>
     <message>
-        <location filename="metodics/dynamic_tests/evolventa/evolventavisualize.cpp" line="386"/>
-        <location filename="metodics/dynamic_tests/evolventa/evolventavisualize.cpp" line="429"/>
+        <location filename="metodics/dynamic_tests/evolventa/evolventavisualize.cpp" line="282"/>
+        <location filename="metodics/dynamic_tests/evolventa/evolventavisualize.cpp" line="389"/>
+        <location filename="metodics/dynamic_tests/evolventa/evolventavisualize.cpp" line="432"/>
         <source>Фронталь</source>
         <translation>Frontal</translation>
     </message>
     <message>
-        <location filename="metodics/dynamic_tests/evolventa/evolventavisualize.cpp" line="397"/>
-        <location filename="metodics/dynamic_tests/evolventa/evolventavisualize.cpp" line="429"/>
+        <location filename="metodics/dynamic_tests/evolventa/evolventavisualize.cpp" line="282"/>
+        <location filename="metodics/dynamic_tests/evolventa/evolventavisualize.cpp" line="400"/>
+        <location filename="metodics/dynamic_tests/evolventa/evolventavisualize.cpp" line="432"/>
         <source>Сагитталь</source>
         <translation>Sagittal</translation>
     </message>
     <message>
-        <location filename="metodics/dynamic_tests/evolventa/evolventavisualize.cpp" line="429"/>
+        <location filename="metodics/dynamic_tests/evolventa/evolventavisualize.cpp" line="291"/>
+        <location filename="metodics/dynamic_tests/evolventa/evolventavisualize.cpp" line="390"/>
+        <location filename="metodics/dynamic_tests/evolventa/evolventavisualize.cpp" line="401"/>
+        <source>Траектория</source>
+        <translation>Trajectory</translation>
+    </message>
+    <message>
+        <location filename="metodics/dynamic_tests/evolventa/evolventavisualize.cpp" line="291"/>
+        <location filename="metodics/dynamic_tests/evolventa/evolventavisualize.cpp" line="390"/>
+        <location filename="metodics/dynamic_tests/evolventa/evolventavisualize.cpp" line="401"/>
+        <source>Цель</source>
+        <translation>Target</translation>
+    </message>
+    <message>
+        <location filename="metodics/dynamic_tests/evolventa/evolventavisualize.cpp" line="432"/>
         <source>Показатель</source>
         <translation>Factor</translation>
     </message>
     <message>
-        <location filename="metodics/dynamic_tests/evolventa/evolventavisualize.cpp" line="459"/>
+        <location filename="metodics/dynamic_tests/evolventa/evolventavisualize.cpp" line="462"/>
         <source>Длительность</source>
         <translation>Duration</translation>
     </message>
     <message>
-        <location filename="metodics/dynamic_tests/evolventa/evolventavisualize.cpp" line="459"/>
+        <location filename="metodics/dynamic_tests/evolventa/evolventavisualize.cpp" line="462"/>
         <source>100-160 мс</source>
         <translation>100-160 ms</translation>
     </message>
     <message>
-        <location filename="metodics/dynamic_tests/evolventa/evolventavisualize.cpp" line="459"/>
+        <location filename="metodics/dynamic_tests/evolventa/evolventavisualize.cpp" line="462"/>
         <source>200-280 мс</source>
         <translation>200-280 ms</translation>
     </message>
     <message>
-        <location filename="metodics/dynamic_tests/evolventa/evolventavisualize.cpp" line="480"/>
+        <location filename="metodics/dynamic_tests/evolventa/evolventavisualize.cpp" line="483"/>
         <source>Общее количество коррекций</source>
         <translation>Total corrections count</translation>
     </message>
     <message>
-        <location filename="metodics/dynamic_tests/evolventa/evolventavisualize.cpp" line="484"/>
+        <location filename="metodics/dynamic_tests/evolventa/evolventavisualize.cpp" line="487"/>
         <source>Опережение маркера цели</source>
         <translation>Target marker advance</translation>
     </message>
     <message>
-        <location filename="metodics/dynamic_tests/evolventa/evolventavisualize.cpp" line="496"/>
+        <location filename="metodics/dynamic_tests/evolventa/evolventavisualize.cpp" line="499"/>
         <source>Преобладание коррекций</source>
         <translation>Predominance of corrections</translation>
     </message>
     <message>
-        <location filename="metodics/dynamic_tests/evolventa/evolventavisualize.cpp" line="509"/>
+        <location filename="metodics/dynamic_tests/evolventa/evolventavisualize.cpp" line="512"/>
         <source>Длительность полуволны при опережении</source>
         <translation>Half-wave duration at advance</translation>
     </message>
     <message>
-        <location filename="metodics/dynamic_tests/evolventa/evolventavisualize.cpp" line="509"/>
+        <location filename="metodics/dynamic_tests/evolventa/evolventavisualize.cpp" line="512"/>
         <source>сек</source>
         <translation>sec</translation>
     </message>
     <message>
-        <location filename="metodics/dynamic_tests/evolventa/evolventavisualize.cpp" line="512"/>
+        <location filename="metodics/dynamic_tests/evolventa/evolventavisualize.cpp" line="515"/>
         <source>Амплитуда полуволны при опережении</source>
         <translation>Half-wave amplitude at advance</translation>
     </message>
     <message>
-        <location filename="metodics/dynamic_tests/evolventa/evolventavisualize.cpp" line="512"/>
+        <location filename="metodics/dynamic_tests/evolventa/evolventavisualize.cpp" line="515"/>
         <source>мм</source>
         <translation>mm</translation>
     </message>
@@ -8162,6 +8197,16 @@ value, mkV</translation>
         <translation>Upper limit, bpm</translation>
     </message>
     <message>
+        <location filename="metodics_common/adv_channels/signal_frames/pulsewidget.cpp" line="81"/>
+        <source>ЧСС - %1 уд/мин</source>
+        <translation>HR - %1 bpm</translation>
+    </message>
+    <message>
+        <location filename="metodics_common/adv_channels/signal_frames/pulsewidget.cpp" line="86"/>
+        <source>Средний пульс - %1 уд/мин</source>
+        <translation>Average pulse - %1 bpm</translation>
+    </message>
+    <message>
         <location filename="metodics_common/adv_channels/signal_frames/pulsewidget.cpp" line="197"/>
         <source>Сигнал не будет записан</source>
         <translation>The signal won&apos;t be recorded.</translation>
@@ -9296,16 +9341,19 @@ Click the [Done] button.</translation>
         <translation>Red</translation>
     </message>
     <message>
+        <location filename="metodics/dynamic_tests/evolventa/evolventadefines.cpp" line="7"/>
         <location filename="metodics/dynamic_tests/evolventa/evolventadefines.h" line="22"/>
         <source>раскрутка</source>
         <translation>unwinding</translation>
     </message>
     <message>
+        <location filename="metodics/dynamic_tests/evolventa/evolventadefines.cpp" line="8"/>
         <location filename="metodics/dynamic_tests/evolventa/evolventadefines.h" line="23"/>
         <source>удержание</source>
         <translation>holding</translation>
     </message>
     <message>
+        <location filename="metodics/dynamic_tests/evolventa/evolventadefines.cpp" line="9"/>
         <location filename="metodics/dynamic_tests/evolventa/evolventadefines.h" line="24"/>
         <source>сворачивание</source>
         <translation>coiling</translation>
@@ -9636,32 +9684,32 @@ Click the [Done] button.</translation>
         <translation>Za3 (mm)</translation>
     </message>
     <message>
-        <location filename="metodics/stabtest/stabtestdefines.h" line="27"/>
+        <location filename="metodics/stabtest/stabtestparamsdialog.h" line="71"/>
         <source>нет</source>
         <translation>no</translation>
     </message>
     <message>
-        <location filename="metodics/stabtest/stabtestdefines.h" line="28"/>
+        <location filename="metodics/stabtest/stabtestparamsdialog.h" line="72"/>
         <source>Цветные круги</source>
         <translation>Colored circles</translation>
     </message>
     <message>
-        <location filename="metodics/stabtest/stabtestdefines.h" line="29"/>
+        <location filename="metodics/stabtest/stabtestparamsdialog.h" line="73"/>
         <source>Звуковые сигналы</source>
         <translation>Sound signals</translation>
     </message>
     <message>
-        <location filename="metodics/stabtest/stabtestdefines.h" line="30"/>
+        <location filename="metodics/stabtest/stabtestparamsdialog.h" line="74"/>
         <source>Мишень</source>
         <translation>Target</translation>
     </message>
     <message>
-        <location filename="metodics/stabtest/stabtestdefines.h" line="31"/>
+        <location filename="metodics/stabtest/stabtestparamsdialog.h" line="75"/>
         <source>С выделенной зоной</source>
         <translation>With a dedicated area</translation>
     </message>
     <message>
-        <location filename="metodics/stabtest/stabtestdefines.h" line="32"/>
+        <location filename="metodics/stabtest/stabtestparamsdialog.h" line="76"/>
         <source>Движение полос</source>
         <translation>Stripes moving</translation>
     </message>
@@ -9716,6 +9764,16 @@ Click the [Done] button.</translation>
         <translation>to</translation>
     </message>
     <message>
+        <location filename="metodics_common/report_elements/reportelements.cpp" line="376"/>
+        <source>Фронталь</source>
+        <translation>Frontal</translation>
+    </message>
+    <message>
+        <location filename="metodics_common/report_elements/reportelements.cpp" line="376"/>
+        <source>Сагитталь</source>
+        <translation>Sagittal</translation>
+    </message>
+    <message>
         <location filename="signal_analysis/visuals/sections/section_graph/sectiongraphvisualwidget.cpp" line="23"/>
         <source>Файлы преобразований сигнала</source>
         <translation>Файлы преобразований сигнала</translation>
@@ -9739,6 +9797,732 @@ Click the [Done] button.</translation>
         <location filename="summaries/summarydefines.h" line="54"/>
         <source>Файлы сводок</source>
         <translation>Summary files</translation>
+    </message>
+    <message>
+        <location filename="kernel/results_data/channelsutils.cpp" line="397"/>
+        <source>Стабилографический сигнал</source>
+        <translation>Stabilographic signal</translation>
+    </message>
+    <message>
+        <location filename="kernel/results_data/channelsutils.cpp" line="398"/>
+        <source>Stab</source>
+        <translation>Stab</translation>
+    </message>
+    <message>
+        <location filename="kernel/results_data/channelsutils.cpp" line="401"/>
+        <source>Стабилографический сигнал (слева)</source>
+        <translation>Stabilographic signal (left)</translation>
+    </message>
+    <message>
+        <location filename="kernel/results_data/channelsutils.cpp" line="402"/>
+        <source>StabLeft</source>
+        <translation>StabLeft</translation>
+    </message>
+    <message>
+        <location filename="kernel/results_data/channelsutils.cpp" line="405"/>
+        <source>Стабилографический сигнал (справа)</source>
+        <translation>Stabilographic signal (right)</translation>
+    </message>
+    <message>
+        <location filename="kernel/results_data/channelsutils.cpp" line="406"/>
+        <source>StabRight</source>
+        <translation>StabRIght</translation>
+    </message>
+    <message>
+        <location filename="kernel/results_data/channelsutils.cpp" line="409"/>
+        <source>Стабилографический сигнал 1</source>
+        <translation>Stabilographic signal 1</translation>
+    </message>
+    <message>
+        <location filename="kernel/results_data/channelsutils.cpp" line="410"/>
+        <source>Stab1</source>
+        <translation>Stab1</translation>
+    </message>
+    <message>
+        <location filename="kernel/results_data/channelsutils.cpp" line="413"/>
+        <source>Стабилографический сигнал 2</source>
+        <translation>Stabilographic signal 2</translation>
+    </message>
+    <message>
+        <location filename="kernel/results_data/channelsutils.cpp" line="414"/>
+        <source>Stab2</source>
+        <translation>Stab2</translation>
+    </message>
+    <message>
+        <location filename="kernel/results_data/channelsutils.cpp" line="417"/>
+        <source>Баллистограмма</source>
+        <translation>Ballistogram</translation>
+    </message>
+    <message>
+        <location filename="kernel/results_data/channelsutils.cpp" line="418"/>
+        <source>Z</source>
+        <translation>Z</translation>
+    </message>
+    <message>
+        <location filename="kernel/results_data/channelsutils.cpp" line="421"/>
+        <source>Баллистограмма (слева)</source>
+        <translation>Ballistogram (left)</translation>
+    </message>
+    <message>
+        <location filename="kernel/results_data/channelsutils.cpp" line="422"/>
+        <source>ZLeft</source>
+        <translation>ZLeft</translation>
+    </message>
+    <message>
+        <location filename="kernel/results_data/channelsutils.cpp" line="425"/>
+        <source>Баллистограмма (справа)</source>
+        <translation>Ballistogram (right)</translation>
+    </message>
+    <message>
+        <location filename="kernel/results_data/channelsutils.cpp" line="426"/>
+        <source>ZRight</source>
+        <translation>ZRight</translation>
+    </message>
+    <message>
+        <location filename="kernel/results_data/channelsutils.cpp" line="429"/>
+        <source>Баллистограмма 1</source>
+        <translation>Ballistogram 1</translation>
+    </message>
+    <message>
+        <location filename="kernel/results_data/channelsutils.cpp" line="430"/>
+        <source>Z1</source>
+        <translation>Z1</translation>
+    </message>
+    <message>
+        <location filename="kernel/results_data/channelsutils.cpp" line="433"/>
+        <source>Баллистограмма 2</source>
+        <translation>Ballistogram 2</translation>
+    </message>
+    <message>
+        <location filename="kernel/results_data/channelsutils.cpp" line="434"/>
+        <source>Z2</source>
+        <translation>Z2</translation>
+    </message>
+    <message>
+        <location filename="kernel/results_data/channelsutils.cpp" line="437"/>
+        <source>Динамика веса</source>
+        <translation>Weight dynamics</translation>
+    </message>
+    <message>
+        <location filename="kernel/results_data/channelsutils.cpp" line="438"/>
+        <location filename="kernel/results_data/channelsutils.cpp" line="700"/>
+        <source>Weight</source>
+        <translation>Weight</translation>
+    </message>
+    <message>
+        <location filename="kernel/results_data/channelsutils.cpp" line="441"/>
+        <source>Ритмограмма</source>
+        <translation>Rhythmogram</translation>
+    </message>
+    <message>
+        <location filename="kernel/results_data/channelsutils.cpp" line="442"/>
+        <source>RR</source>
+        <translation>RR</translation>
+    </message>
+    <message>
+        <location filename="kernel/results_data/channelsutils.cpp" line="445"/>
+        <source>Кистевой силомер 1</source>
+        <translation>Wrist strength tester 1</translation>
+    </message>
+    <message>
+        <location filename="kernel/results_data/channelsutils.cpp" line="446"/>
+        <source>DH1</source>
+        <translation>DH1</translation>
+    </message>
+    <message>
+        <location filename="kernel/results_data/channelsutils.cpp" line="449"/>
+        <source>Становой силомер 1</source>
+        <translation>Deadlift meter 1</translation>
+    </message>
+    <message>
+        <location filename="kernel/results_data/channelsutils.cpp" line="450"/>
+        <source>SD1</source>
+        <translation>SD1</translation>
+    </message>
+    <message>
+        <location filename="kernel/results_data/channelsutils.cpp" line="453"/>
+        <source>Дыхание 1</source>
+        <translation>Breath 1</translation>
+    </message>
+    <message>
+        <location filename="kernel/results_data/channelsutils.cpp" line="454"/>
+        <source>Br1</source>
+        <translation>Br1</translation>
+    </message>
+    <message>
+        <location filename="kernel/results_data/channelsutils.cpp" line="457"/>
+        <source>Толкатель 1</source>
+        <translation>Pusher 1</translation>
+    </message>
+    <message>
+        <location filename="kernel/results_data/channelsutils.cpp" line="458"/>
+        <source>Push1</source>
+        <translation>Push1</translation>
+    </message>
+    <message>
+        <location filename="kernel/results_data/channelsutils.cpp" line="461"/>
+        <source>Кистевой силомер 2</source>
+        <translation>Wrist strength tester 2</translation>
+    </message>
+    <message>
+        <location filename="kernel/results_data/channelsutils.cpp" line="462"/>
+        <source>DH2</source>
+        <translation>DH2</translation>
+    </message>
+    <message>
+        <location filename="kernel/results_data/channelsutils.cpp" line="465"/>
+        <source>Становой силомер 2</source>
+        <translation>Deadlift meter 3</translation>
+    </message>
+    <message>
+        <location filename="kernel/results_data/channelsutils.cpp" line="466"/>
+        <source>SD2</source>
+        <translation>SD2</translation>
+    </message>
+    <message>
+        <location filename="kernel/results_data/channelsutils.cpp" line="469"/>
+        <source>Дыхание 2</source>
+        <translation>Breath 2</translation>
+    </message>
+    <message>
+        <location filename="kernel/results_data/channelsutils.cpp" line="470"/>
+        <source>Br2</source>
+        <translation>Br2</translation>
+    </message>
+    <message>
+        <location filename="kernel/results_data/channelsutils.cpp" line="473"/>
+        <location filename="kernel/results_data/channelsutils.cpp" line="489"/>
+        <source>Толкатель 2</source>
+        <translation>Pusher 2</translation>
+    </message>
+    <message>
+        <location filename="kernel/results_data/channelsutils.cpp" line="474"/>
+        <location filename="kernel/results_data/channelsutils.cpp" line="490"/>
+        <source>Push2</source>
+        <translation>Push2</translation>
+    </message>
+    <message>
+        <location filename="kernel/results_data/channelsutils.cpp" line="477"/>
+        <source>Кистевой силомер 3</source>
+        <translation>Wrist strength tester 3</translation>
+    </message>
+    <message>
+        <location filename="kernel/results_data/channelsutils.cpp" line="478"/>
+        <source>DH3</source>
+        <translation>DH3</translation>
+    </message>
+    <message>
+        <location filename="kernel/results_data/channelsutils.cpp" line="481"/>
+        <source>Становой силомер 3</source>
+        <translation>Deadlift meter 3</translation>
+    </message>
+    <message>
+        <location filename="kernel/results_data/channelsutils.cpp" line="482"/>
+        <source>SD3</source>
+        <translation>SD3</translation>
+    </message>
+    <message>
+        <location filename="kernel/results_data/channelsutils.cpp" line="485"/>
+        <source>Дыхание 3</source>
+        <translation>Breath 3</translation>
+    </message>
+    <message>
+        <location filename="kernel/results_data/channelsutils.cpp" line="486"/>
+        <source>Br3</source>
+        <translation>Br3</translation>
+    </message>
+    <message>
+        <location filename="kernel/results_data/channelsutils.cpp" line="493"/>
+        <source>Миограмма</source>
+        <translation>Myogram</translation>
+    </message>
+    <message>
+        <location filename="kernel/results_data/channelsutils.cpp" line="494"/>
+        <source>Myo</source>
+        <translation>Myo</translation>
+    </message>
+    <message>
+        <location filename="kernel/results_data/channelsutils.cpp" line="497"/>
+        <source>Данные весовой платформы</source>
+        <translation>Weighing platform data</translation>
+    </message>
+    <message>
+        <location filename="kernel/results_data/channelsutils.cpp" line="498"/>
+        <source>WP</source>
+        <translation>WP</translation>
+    </message>
+    <message>
+        <location filename="kernel/results_data/channelsutils.cpp" line="501"/>
+        <source>Данные АЦП</source>
+        <translation>ADC data</translation>
+    </message>
+    <message>
+        <location filename="kernel/results_data/channelsutils.cpp" line="502"/>
+        <source>ADC</source>
+        <translation>ADC</translation>
+    </message>
+    <message>
+        <location filename="kernel/results_data/channelsutils.cpp" line="506"/>
+        <source>Ритмограмма 1</source>
+        <translation>Rhythmogram 1</translation>
+    </message>
+    <message>
+        <location filename="kernel/results_data/channelsutils.cpp" line="507"/>
+        <source>RR1</source>
+        <translation>RR1</translation>
+    </message>
+    <message>
+        <location filename="kernel/results_data/channelsutils.cpp" line="510"/>
+        <source>Кистевой силомер первой платформы 1</source>
+        <translation>Wrist strength tester of the first platform 1</translation>
+    </message>
+    <message>
+        <location filename="kernel/results_data/channelsutils.cpp" line="511"/>
+        <source>DH11</source>
+        <translation>DH11</translation>
+    </message>
+    <message>
+        <location filename="kernel/results_data/channelsutils.cpp" line="514"/>
+        <source>Становой силомер первой платформы 1</source>
+        <translation>Deadlift meter of the first platform 1</translation>
+    </message>
+    <message>
+        <location filename="kernel/results_data/channelsutils.cpp" line="515"/>
+        <source>DS11</source>
+        <translation>DS11</translation>
+    </message>
+    <message>
+        <location filename="kernel/results_data/channelsutils.cpp" line="518"/>
+        <source>Дыхание первой платформы 1</source>
+        <translation>Breath of the first platform 1</translation>
+    </message>
+    <message>
+        <location filename="kernel/results_data/channelsutils.cpp" line="519"/>
+        <source>Br11</source>
+        <translation>Br11</translation>
+    </message>
+    <message>
+        <location filename="kernel/results_data/channelsutils.cpp" line="522"/>
+        <source>Толкатель первой платформы 1</source>
+        <translation>Pusher of the first platform 1</translation>
+    </message>
+    <message>
+        <location filename="kernel/results_data/channelsutils.cpp" line="523"/>
+        <source>Push11</source>
+        <translation>Push11</translation>
+    </message>
+    <message>
+        <location filename="kernel/results_data/channelsutils.cpp" line="526"/>
+        <source>Кистевой силомер первой платформы 2</source>
+        <translation>Wrist strength tester of the first platform 2</translation>
+    </message>
+    <message>
+        <location filename="kernel/results_data/channelsutils.cpp" line="527"/>
+        <source>DH12</source>
+        <translation>DH12</translation>
+    </message>
+    <message>
+        <location filename="kernel/results_data/channelsutils.cpp" line="530"/>
+        <source>Становой силомер первой платформы 2</source>
+        <translation>Deadlift meter of the first platform 2</translation>
+    </message>
+    <message>
+        <location filename="kernel/results_data/channelsutils.cpp" line="531"/>
+        <source>DS12</source>
+        <translation>DS12</translation>
+    </message>
+    <message>
+        <location filename="kernel/results_data/channelsutils.cpp" line="534"/>
+        <source>Дыхание первой платформы 2</source>
+        <translation>Breath of the first platform 2</translation>
+    </message>
+    <message>
+        <location filename="kernel/results_data/channelsutils.cpp" line="535"/>
+        <source>Br12</source>
+        <translation>Br12</translation>
+    </message>
+    <message>
+        <location filename="kernel/results_data/channelsutils.cpp" line="538"/>
+        <source>Толкатель первой платформы 2</source>
+        <translation>Pusher of the first platform 2</translation>
+    </message>
+    <message>
+        <location filename="kernel/results_data/channelsutils.cpp" line="539"/>
+        <source>Push12</source>
+        <translation>Push12</translation>
+    </message>
+    <message>
+        <location filename="kernel/results_data/channelsutils.cpp" line="542"/>
+        <source>Кистевой силомер первой платформы 3</source>
+        <translation>Wrist strength tester of the first platform 3</translation>
+    </message>
+    <message>
+        <location filename="kernel/results_data/channelsutils.cpp" line="543"/>
+        <source>DH13</source>
+        <translation>DH13</translation>
+    </message>
+    <message>
+        <location filename="kernel/results_data/channelsutils.cpp" line="546"/>
+        <source>Становой силомер первой платформы 3</source>
+        <translation>Deadlift meter of the first platform 3</translation>
+    </message>
+    <message>
+        <location filename="kernel/results_data/channelsutils.cpp" line="547"/>
+        <source>DS13</source>
+        <translation>DS13</translation>
+    </message>
+    <message>
+        <location filename="kernel/results_data/channelsutils.cpp" line="550"/>
+        <source>Дыхание первой платформы 3</source>
+        <translation>Breath of the first platform 3</translation>
+    </message>
+    <message>
+        <location filename="kernel/results_data/channelsutils.cpp" line="551"/>
+        <source>Br13</source>
+        <translation>Br13</translation>
+    </message>
+    <message>
+        <location filename="kernel/results_data/channelsutils.cpp" line="554"/>
+        <source>Толкатель первой платформы 3</source>
+        <translation>Pusher of the first platform 3</translation>
+    </message>
+    <message>
+        <location filename="kernel/results_data/channelsutils.cpp" line="555"/>
+        <source>Push13</source>
+        <translation>Push13</translation>
+    </message>
+    <message>
+        <location filename="kernel/results_data/channelsutils.cpp" line="558"/>
+        <source>Миограмма первой платформы</source>
+        <translation>Myogram of the first platform</translation>
+    </message>
+    <message>
+        <location filename="kernel/results_data/channelsutils.cpp" line="559"/>
+        <source>Myo1</source>
+        <translation>Myo1</translation>
+    </message>
+    <message>
+        <location filename="kernel/results_data/channelsutils.cpp" line="563"/>
+        <source>Ритмограмма 2</source>
+        <translation>Rhythmogram 2</translation>
+    </message>
+    <message>
+        <location filename="kernel/results_data/channelsutils.cpp" line="564"/>
+        <source>RR2</source>
+        <translation>RR2</translation>
+    </message>
+    <message>
+        <location filename="kernel/results_data/channelsutils.cpp" line="567"/>
+        <source>Кистевой силомер второй платформы 1</source>
+        <translation>Wrist strength tester of the second platform 1</translation>
+    </message>
+    <message>
+        <location filename="kernel/results_data/channelsutils.cpp" line="568"/>
+        <source>DH21</source>
+        <translation>DH21</translation>
+    </message>
+    <message>
+        <location filename="kernel/results_data/channelsutils.cpp" line="571"/>
+        <source>Становой силомер второй платформы 1</source>
+        <translation>Deadlift meter of the second platform 1</translation>
+    </message>
+    <message>
+        <location filename="kernel/results_data/channelsutils.cpp" line="572"/>
+        <source>DS21</source>
+        <translation>DS21</translation>
+    </message>
+    <message>
+        <location filename="kernel/results_data/channelsutils.cpp" line="575"/>
+        <source>Дыхание второй платформы 1</source>
+        <translation>Breath of the second platform 1</translation>
+    </message>
+    <message>
+        <location filename="kernel/results_data/channelsutils.cpp" line="576"/>
+        <source>Br21</source>
+        <translation>Br21</translation>
+    </message>
+    <message>
+        <location filename="kernel/results_data/channelsutils.cpp" line="579"/>
+        <source>Толкатель второй платформы 1</source>
+        <translation>Pusher of the second platform 1</translation>
+    </message>
+    <message>
+        <location filename="kernel/results_data/channelsutils.cpp" line="580"/>
+        <source>Push21</source>
+        <translation>Push21</translation>
+    </message>
+    <message>
+        <location filename="kernel/results_data/channelsutils.cpp" line="583"/>
+        <source>Кистевой силомер второй платформы 2</source>
+        <translation>Wrist strength tester of the second platform 2</translation>
+    </message>
+    <message>
+        <location filename="kernel/results_data/channelsutils.cpp" line="584"/>
+        <source>DH22</source>
+        <translation>DH22</translation>
+    </message>
+    <message>
+        <location filename="kernel/results_data/channelsutils.cpp" line="587"/>
+        <source>Становой силомер второй платформы 2</source>
+        <translation>Deadlift meter of the second platform 2</translation>
+    </message>
+    <message>
+        <location filename="kernel/results_data/channelsutils.cpp" line="588"/>
+        <source>DS22</source>
+        <translation>DS22</translation>
+    </message>
+    <message>
+        <location filename="kernel/results_data/channelsutils.cpp" line="591"/>
+        <source>Дыхание второй платформы 2</source>
+        <translation>Breath of the second platform 2</translation>
+    </message>
+    <message>
+        <location filename="kernel/results_data/channelsutils.cpp" line="592"/>
+        <source>Br22</source>
+        <translation>Br22</translation>
+    </message>
+    <message>
+        <location filename="kernel/results_data/channelsutils.cpp" line="595"/>
+        <source>Толкатель второй платформы 2</source>
+        <translation>Pusher of the second platform 2</translation>
+    </message>
+    <message>
+        <location filename="kernel/results_data/channelsutils.cpp" line="596"/>
+        <source>Push22</source>
+        <translation>Push22</translation>
+    </message>
+    <message>
+        <location filename="kernel/results_data/channelsutils.cpp" line="599"/>
+        <source>Кистевой силомер второй платформы 3</source>
+        <translation>Wrist strength tester of the second platform 3</translation>
+    </message>
+    <message>
+        <location filename="kernel/results_data/channelsutils.cpp" line="600"/>
+        <source>DH23</source>
+        <translation>DH23</translation>
+    </message>
+    <message>
+        <location filename="kernel/results_data/channelsutils.cpp" line="603"/>
+        <source>Становой силомер второй платформы 3</source>
+        <translation>Deadlift meter of the second platform 3</translation>
+    </message>
+    <message>
+        <location filename="kernel/results_data/channelsutils.cpp" line="604"/>
+        <source>DS23</source>
+        <translation>DS23</translation>
+    </message>
+    <message>
+        <location filename="kernel/results_data/channelsutils.cpp" line="607"/>
+        <source>Дыхание второй платформы 3</source>
+        <translation>Breath of the second platform 3</translation>
+    </message>
+    <message>
+        <location filename="kernel/results_data/channelsutils.cpp" line="608"/>
+        <source>Br23</source>
+        <translation>Br23</translation>
+    </message>
+    <message>
+        <location filename="kernel/results_data/channelsutils.cpp" line="611"/>
+        <source>Толкатель второй платформы 3</source>
+        <translation>Breath of the second platform 3</translation>
+    </message>
+    <message>
+        <location filename="kernel/results_data/channelsutils.cpp" line="612"/>
+        <source>Push23</source>
+        <translation>Push23</translation>
+    </message>
+    <message>
+        <location filename="kernel/results_data/channelsutils.cpp" line="615"/>
+        <source>Миограмма второй платформы</source>
+        <translation>Myogram of the second platform</translation>
+    </message>
+    <message>
+        <location filename="kernel/results_data/channelsutils.cpp" line="616"/>
+        <source>Myo2</source>
+        <translation>Myo2</translation>
+    </message>
+    <message>
+        <location filename="kernel/results_data/channelsutils.cpp" line="620"/>
+        <source>Тензоканал 1</source>
+        <translation>Tensochannel 1</translation>
+    </message>
+    <message>
+        <location filename="kernel/results_data/channelsutils.cpp" line="621"/>
+        <source>T1</source>
+        <translation>T1</translation>
+    </message>
+    <message>
+        <location filename="kernel/results_data/channelsutils.cpp" line="624"/>
+        <source>Тензоканал 2</source>
+        <translation>Tensochannel 2</translation>
+    </message>
+    <message>
+        <location filename="kernel/results_data/channelsutils.cpp" line="625"/>
+        <source>T2</source>
+        <translation>T2</translation>
+    </message>
+    <message>
+        <location filename="kernel/results_data/channelsutils.cpp" line="628"/>
+        <source>Тензоканал 3</source>
+        <translation>Tensochannel 3</translation>
+    </message>
+    <message>
+        <location filename="kernel/results_data/channelsutils.cpp" line="629"/>
+        <source>T3</source>
+        <translation>T3</translation>
+    </message>
+    <message>
+        <location filename="kernel/results_data/channelsutils.cpp" line="633"/>
+        <source>Усилия на соревновательной палке</source>
+        <translation>Forces on the stick of competition</translation>
+    </message>
+    <message>
+        <location filename="kernel/results_data/channelsutils.cpp" line="634"/>
+        <source>MWSF</source>
+        <translation>MWSF</translation>
+    </message>
+    <message>
+        <location filename="kernel/results_data/channelsutils.cpp" line="639"/>
+        <source>Высота одиночного прыжка</source>
+        <translation>Single jump height</translation>
+    </message>
+    <message>
+        <location filename="kernel/results_data/channelsutils.cpp" line="640"/>
+        <location filename="kernel/results_data/channelsutils.cpp" line="644"/>
+        <source>H</source>
+        <translation>H</translation>
+    </message>
+    <message>
+        <location filename="kernel/results_data/channelsutils.cpp" line="643"/>
+        <source>Высота прыжков</source>
+        <translation>Jumps height</translation>
+    </message>
+    <message>
+        <location filename="kernel/results_data/channelsutils.cpp" line="647"/>
+        <source>Теппинг тест</source>
+        <translation>Tapping test</translation>
+    </message>
+    <message>
+        <location filename="kernel/results_data/channelsutils.cpp" line="648"/>
+        <source>Тепп.тест</source>
+        <translation>Tapp.test</translation>
+    </message>
+    <message>
+        <location filename="kernel/results_data/channelsutils.cpp" line="651"/>
+        <location filename="kernel/results_data/channelsutils.cpp" line="652"/>
+        <source>Дроп тест</source>
+        <translation>Drop test</translation>
+    </message>
+    <message>
+        <location filename="kernel/results_data/channelsutils.cpp" line="655"/>
+        <source>Соскакивание на платформу</source>
+        <translation>Jumping onto the platform</translation>
+    </message>
+    <message>
+        <location filename="kernel/results_data/channelsutils.cpp" line="656"/>
+        <source>JOP</source>
+        <translation>JOP</translation>
+    </message>
+    <message>
+        <location filename="kernel/results_data/channelsutils.cpp" line="659"/>
+        <source>Результаты сеанса тренинга</source>
+        <translation>Results of the training session</translation>
+    </message>
+    <message>
+        <location filename="kernel/results_data/channelsutils.cpp" line="660"/>
+        <source>TrenRes</source>
+        <translation>TrenRes</translation>
+    </message>
+    <message>
+        <location filename="kernel/results_data/channelsutils.cpp" line="663"/>
+        <source>Результаты захвата - укладки</source>
+        <translation>Results of taking - putting</translation>
+    </message>
+    <message>
+        <location filename="kernel/results_data/channelsutils.cpp" line="664"/>
+        <source>TakePutRes</source>
+        <translation>TakePutRes</translation>
+    </message>
+    <message>
+        <location filename="kernel/results_data/channelsutils.cpp" line="667"/>
+        <source>Результаты теста на устойчивость</source>
+        <translation>Stability test results</translation>
+    </message>
+    <message>
+        <location filename="kernel/results_data/channelsutils.cpp" line="668"/>
+        <source>CrossRes</source>
+        <translation>CrossRes</translation>
+    </message>
+    <message>
+        <location filename="kernel/results_data/channelsutils.cpp" line="671"/>
+        <source>Результаты теста &quot;Ступени&quot;</source>
+        <translation>Step test results</translation>
+    </message>
+    <message>
+        <location filename="kernel/results_data/channelsutils.cpp" line="672"/>
+        <source>StepOffsRes</source>
+        <translation>StepOffsRes</translation>
+    </message>
+    <message>
+        <location filename="kernel/results_data/channelsutils.cpp" line="675"/>
+        <source>Результаты теста &quot;Эвольвента&quot;</source>
+        <translation>Test &quot;Evolvent&quot; results</translation>
+    </message>
+    <message>
+        <location filename="kernel/results_data/channelsutils.cpp" line="676"/>
+        <source>EvolventaRes</source>
+        <translation>EvolventaRes</translation>
+    </message>
+    <message>
+        <location filename="kernel/results_data/channelsutils.cpp" line="679"/>
+        <source>Результаты тренажера &quot;Октаэдр&quot;</source>
+        <translation>Trenager &quot;Octaedron&quot; results</translation>
+    </message>
+    <message>
+        <location filename="kernel/results_data/channelsutils.cpp" line="680"/>
+        <location filename="kernel/results_data/channelsutils.cpp" line="684"/>
+        <source>OctaedronRes</source>
+        <translation>OctaedronRes</translation>
+    </message>
+    <message>
+        <location filename="kernel/results_data/channelsutils.cpp" line="683"/>
+        <source>Результаты тренажера с уклонением</source>
+        <translation>Results of the trenager with evasion</translation>
+    </message>
+    <message>
+        <location filename="kernel/results_data/channelsutils.cpp" line="687"/>
+        <source>Траектория цели</source>
+        <translation>Trajectory of target</translation>
+    </message>
+    <message>
+        <location filename="kernel/results_data/channelsutils.cpp" line="688"/>
+        <source>TargetTraectory</source>
+        <translation>TargetTraectory</translation>
+    </message>
+    <message>
+        <location filename="kernel/results_data/channelsutils.cpp" line="691"/>
+        <source>Сигнал двухканальный</source>
+        <translation>Dual channel signal</translation>
+    </message>
+    <message>
+        <location filename="kernel/results_data/channelsutils.cpp" line="692"/>
+        <source>AnySignalDual</source>
+        <translation>AnySignalDual</translation>
+    </message>
+    <message>
+        <location filename="kernel/results_data/channelsutils.cpp" line="695"/>
+        <source>Билатеральный режим</source>
+        <translation>Bilateral mode</translation>
+    </message>
+    <message>
+        <location filename="kernel/results_data/channelsutils.cpp" line="696"/>
+        <source>Bilat</source>
+        <translation>Bilat</translation>
+    </message>
+    <message>
+        <location filename="kernel/results_data/channelsutils.cpp" line="699"/>
+        <source>Взвешивание</source>
+        <translation>Weighing</translation>
     </message>
 </context>
 <context>
@@ -11600,6 +12384,16 @@ Click the [Done] button.</translation>
         <translation>times</translation>
     </message>
     <message>
+        <location filename="metodics/stabtest/visualizators/stabsignalstestwidget.cpp" line="718"/>
+        <source>Фронталь</source>
+        <translation>Frontal</translation>
+    </message>
+    <message>
+        <location filename="metodics/stabtest/visualizators/stabsignalstestwidget.cpp" line="718"/>
+        <source>Сагитталь</source>
+        <translation>Sagittal</translation>
+    </message>
+    <message>
         <location filename="metodics/stabtest/visualizators/stabsignalstestwidget.cpp" line="1334"/>
         <source>Коэф Ромберга</source>
         <translation>Romberg coeffitient</translation>
@@ -12353,6 +13147,16 @@ Click the [Done] button.</translation>
         <location filename="signal_analysis/visuals/channel/stab_signal/stabilogram/stabilogramvisualwidget.cpp" line="200"/>
         <source>мм</source>
         <translation>mm</translation>
+    </message>
+    <message>
+        <location filename="signal_analysis/visuals/channel/stab_signal/stabilogram/stabilogramvisualwidget.cpp" line="201"/>
+        <source>Фронталь</source>
+        <translation>Frontal</translation>
+    </message>
+    <message>
+        <location filename="signal_analysis/visuals/channel/stab_signal/stabilogram/stabilogramvisualwidget.cpp" line="201"/>
+        <source>Сагитталь</source>
+        <translation>Sagittal</translation>
     </message>
 </context>
 <context>

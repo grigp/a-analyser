@@ -6,6 +6,17 @@
 
 #include "channelsdefines.h"
 
+class ChannelEnumerator : public QObject
+{
+public:
+    explicit ChannelEnumerator(QObject *parent = nullptr);
+
+    ChannelsDefines::ChannelInfo channelInfo(const QString& chanId);
+
+private:
+    QMap<QString, ChannelsDefines::ChannelInfo> m_channels;
+};
+
 /*!
  * \brief Класс утилит для доступа к константам каналов ChannelsUtils class
  */
@@ -22,13 +33,13 @@ public:
 
     static ChannelsUtils instance();
 
-    QString channelType(const QString &channelId) const;
+    QString channelType(const QString &channelId);
 
-    QString channelName(const QString &channelId) const;
+    QString channelName(const QString &channelId);
 
-    QString channelShortName(const QString &channelId) const;
+    QString channelShortName(const QString &channelId);
 
-    QString channelFormat(const QString &channelId) const;
+    QString channelFormat(const QString &channelId);
 
     /*!
      * \brief Возвращает идентификатор канала баллистограммы для канала стабилограммы
@@ -40,7 +51,8 @@ private:
     ChannelsUtils();
     ChannelsUtils(const ChannelsUtils &rhs) = default;
 
-    QMap<QString, ChannelsDefines::ChannelInfo> m_channels;
+    ChannelEnumerator *m_channels;
+//    QMap<QString, ChannelsDefines::ChannelInfo> m_channels;
     QMap<QString, QString> m_formats; ///< Соответствие типа канала его формату
 };
 
