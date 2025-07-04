@@ -73,73 +73,73 @@ void TriangleConslutionFactors::registerFactors()
 
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(TriangleConslutionFactorsDefines::AccRepeatUid, TriangleConslutionFactorsDefines::GroupUid,
-                           tr("Точность повторения"), tr("Повторение"), tr("%"), 1, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Точность повторения"), QCoreApplication::tr("Повторение"), QCoreApplication::tr("%"), 1, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(TriangleConslutionFactorsDefines::AccMidXUid, TriangleConslutionFactorsDefines::GroupUid,
-                           tr("Точность позиции (фронталь)"), tr("Позиция X"), tr("мм"), 1, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Точность позиции (фронталь)"), QCoreApplication::tr("Позиция X"), QCoreApplication::tr("мм"), 1, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(TriangleConslutionFactorsDefines::AccMidYUid, TriangleConslutionFactorsDefines::GroupUid,
-                           tr("Точность позиции (сагитталь)"), tr("Позиция Y"), tr("мм"), 1, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Точность позиции (сагитталь)"), QCoreApplication::tr("Позиция Y"), QCoreApplication::tr("мм"), 1, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(TriangleConslutionFactorsDefines::AccFormUid, TriangleConslutionFactorsDefines::GroupUid,
-                           tr("Точность формы"), tr("Форма"), tr("мм"), 1, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Точность формы"), QCoreApplication::tr("Форма"), QCoreApplication::tr("мм"), 1, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(TriangleConslutionFactorsDefines::KorrMotorTstCntUid, TriangleConslutionFactorsDefines::GroupUid,
-                           tr("Кол-во моторных коррекций (обучение)"), tr(""), tr(""), 0, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Кол-во моторных коррекций (обучение)"), QCoreApplication::tr(""), QCoreApplication::tr(""), 0, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(TriangleConslutionFactorsDefines::KorrKognTstCntUid, TriangleConslutionFactorsDefines::GroupUid,
-                           tr("Кол-во когнитивных коррекций (обучение)"), tr(""), tr(""), 0, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Кол-во когнитивных коррекций (обучение)"), QCoreApplication::tr(""), QCoreApplication::tr(""), 0, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(TriangleConslutionFactorsDefines::KorrMotorAnlCntUid, TriangleConslutionFactorsDefines::GroupUid,
-                           tr("Кол-во моторных коррекций (анализ)"), tr(""), tr(""), 0, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Кол-во моторных коррекций (анализ)"), QCoreApplication::tr(""), QCoreApplication::tr(""), 0, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(TriangleConslutionFactorsDefines::KorrKognAnlCntUid, TriangleConslutionFactorsDefines::GroupUid,
-                           tr("Кол-во когнитивных коррекций (анализ)"), tr(""), tr(""), 0, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Кол-во когнитивных коррекций (анализ)"), QCoreApplication::tr(""), QCoreApplication::tr(""), 0, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(TriangleConslutionFactorsDefines::KorrDominTstUid, TriangleConslutionFactorsDefines::GroupUid,
-                           tr("Преобладание коррекций (обучение)"), tr(""), tr(""), 1, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Преобладание коррекций (обучение)"), QCoreApplication::tr(""), QCoreApplication::tr(""), 1, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(TriangleConslutionFactorsDefines::KorrDominAnlUid, TriangleConslutionFactorsDefines::GroupUid,
-                           tr("Преобладание коррекций (анализ)"), tr(""), tr(""), 1, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Преобладание коррекций (анализ)"), QCoreApplication::tr(""), QCoreApplication::tr(""), 1, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(TriangleConslutionFactorsDefines::MidPointErrTstUid, TriangleConslutionFactorsDefines::GroupUid,
-                           tr("Средняя ошибка точки (обучение)"), tr(""), tr(""), 1, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Средняя ошибка точки (обучение)"), QCoreApplication::tr(""), QCoreApplication::tr(""), 1, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(TriangleConslutionFactorsDefines::MidSquareErrTstUid, TriangleConslutionFactorsDefines::GroupUid,
-                           tr("Средняя ошибка площади (обучение)"), tr(""), tr("%"), 1, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Средняя ошибка площади (обучение)"), QCoreApplication::tr(""), QCoreApplication::tr("%"), 1, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(TriangleConslutionFactorsDefines::MidSideErrTstUid, TriangleConslutionFactorsDefines::GroupUid,
-                           tr("Средняя ошибка длины сторон (обучение)"), tr(""), tr(""), 1, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Средняя ошибка длины сторон (обучение)"), QCoreApplication::tr(""), QCoreApplication::tr(""), 1, 3, FactorsDefines::nsDual, 12);
 
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(TriangleConslutionFactorsDefines::MidTimeErrAnlUid, TriangleConslutionFactorsDefines::GroupUid,
-                           tr("Среднее изменение времени прохождения тр-ка (анализ)"), tr(""), tr(""), 1, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Среднее изменение времени прохождения тр-ка (анализ)"), QCoreApplication::tr(""), QCoreApplication::tr(""), 1, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(TriangleConslutionFactorsDefines::MidSquareErrAnlUid, TriangleConslutionFactorsDefines::GroupUid,
-                           tr("Среднее изменение площади тр-ка (анализ)"), tr(""), tr("%"), 1, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Среднее изменение площади тр-ка (анализ)"), QCoreApplication::tr(""), QCoreApplication::tr("%"), 1, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(TriangleConslutionFactorsDefines::MidPosErrAnlUid, TriangleConslutionFactorsDefines::GroupUid,
-                           tr("Изменение позиции треугольника"), tr(""), tr("мм"), 1, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Изменение позиции треугольника"), QCoreApplication::tr(""), QCoreApplication::tr("мм"), 1, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(TriangleConslutionFactorsDefines::MidAmplErrAnlUid, TriangleConslutionFactorsDefines::GroupUid,
-                           tr("Среднее изменение амплитуды тр-ка (анализ)"), tr(""), tr("мм"), 1, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Среднее изменение амплитуды тр-ка (анализ)"), QCoreApplication::tr(""), QCoreApplication::tr("мм"), 1, 3, FactorsDefines::nsDual, 12);
 
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(TriangleConslutionFactorsDefines::LatentMovingTstUid, TriangleConslutionFactorsDefines::GroupUid,
-                           tr("Время начала движения после появления сигнала (обучение)"), tr(""), tr(""), 1, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Время начала движения после появления сигнала (обучение)"), QCoreApplication::tr(""), QCoreApplication::tr(""), 1, 3, FactorsDefines::nsDual, 12);
 
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(TriangleConslutionFactorsDefines::ErrCntKognTstUid, TriangleConslutionFactorsDefines::GroupUid,
-                           tr("Точность выполнения когнитивным сигналом (обучение)"), tr(""), tr("мм"), 1, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Точность выполнения когнитивным сигналом (обучение)"), QCoreApplication::tr(""), QCoreApplication::tr("мм"), 1, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(TriangleConslutionFactorsDefines::ErrCntMotorTstUid, TriangleConslutionFactorsDefines::GroupUid,
-                           tr("Точность моторной коррекции (обучение)"), tr(""), tr("мм"), 1, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Точность моторной коррекции (обучение)"), QCoreApplication::tr(""), QCoreApplication::tr("мм"), 1, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(TriangleConslutionFactorsDefines::ErrCntKognAnlUid, TriangleConslutionFactorsDefines::GroupUid,
-                           tr("Точность выполнения когнитивным сигналом (анализ)"), tr(""), tr("мм"), 1, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Точность выполнения когнитивным сигналом (анализ)"), QCoreApplication::tr(""), QCoreApplication::tr("мм"), 1, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(TriangleConslutionFactorsDefines::ErrCntMotorAnlUid, TriangleConslutionFactorsDefines::GroupUid,
-                           tr("Точность моторной коррекции (анализ)"), tr(""), tr("мм"), 1, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Точность моторной коррекции (анализ)"), QCoreApplication::tr(""), QCoreApplication::tr("мм"), 1, 3, FactorsDefines::nsDual, 12);
 
 }
 

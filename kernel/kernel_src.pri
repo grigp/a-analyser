@@ -16,6 +16,7 @@ SOURCES += \
     $$PWD/baseutils.cpp \
     $$PWD/log.cpp \
     $$PWD/signalaccess.cpp \
-    $$PWD/fragment.cpp
+    $$PWD/fragment.cpp \
+    $$PWD/basedefines.cpp
 
 FORMS += \

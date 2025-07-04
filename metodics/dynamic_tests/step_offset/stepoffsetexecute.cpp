@@ -83,7 +83,7 @@ void StepOffsetExecute::recording()
             connect(m_mfd, &SetMaxForceDialog::rejected, this, &StepOffsetExecute::setMaxForceDialogRejected);
         }
         m_mfd->showFullScreen();
-        auto sDir = BaseDefines::DirectionValueFBName.value(m_direction);
+        auto sDir = BaseDefines::getDirectionValueFBName(m_direction);
         setFrontComment(tr("Отклонитесь") + " " + sDir + ",\n" + tr("не отрывая пяток,") + "\n" +
                         tr("и вернитесь")  + "\n" + tr("в исходное положение") + "\n", true);
     }

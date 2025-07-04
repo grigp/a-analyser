@@ -71,71 +71,71 @@ void StepDeviationFactors::calculate()
 void StepDeviationFactors::registerFactors()
 {
     static_cast<AAnalyserApplication*>(QApplication::instance())->
-            registerGroup(StepDeviationFactorsDefines::GroupUid, tr("Показатели теста прироста"));
+            registerGroup(StepDeviationFactorsDefines::GroupUid, QCoreApplication::tr("Показатели теста прироста"));
 
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(StepDeviationFactorsDefines::TimeUid, StepDeviationFactorsDefines::GroupUid,
-                           tr("Длительность пробы"), tr("Длит"), tr("сек"), 1, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Длительность пробы"), QCoreApplication::tr("Длит"), QCoreApplication::tr("сек"), 1, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(StepDeviationFactorsDefines::StepCountUid, StepDeviationFactorsDefines::GroupUid,
-                           tr("Количество шагов"), tr("Шаги"), tr(""), 0, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Количество шагов"), QCoreApplication::tr("Шаги"), QCoreApplication::tr(""), 0, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(StepDeviationFactorsDefines::ErrorCountUid, StepDeviationFactorsDefines::GroupUid,
-                           tr("Количество ошибок"), tr("Ошибки"), tr(""), 0, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Количество ошибок"), QCoreApplication::tr("Ошибки"), QCoreApplication::tr(""), 0, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(StepDeviationFactorsDefines::GrowthAvrgUid, StepDeviationFactorsDefines::GroupUid,
-                           tr("Средняя величина пророста"), tr("Прирост"), tr("мм"), 2, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Средняя величина пророста"), QCoreApplication::tr("Прирост"), QCoreApplication::tr("мм"), 2, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(StepDeviationFactorsDefines::TimeAvrgUid, StepDeviationFactorsDefines::GroupUid,
-                           tr("Среднее время отклонений"), tr("TimeAvrg"), tr("сек"), 2, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Среднее время отклонений"), QCoreApplication::tr("TimeAvrg"), QCoreApplication::tr("сек"), 2, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(StepDeviationFactorsDefines::SensitivityUid, StepDeviationFactorsDefines::GroupUid,
-                           tr("Порог чувствительности"), tr("Sens"), tr("мм"), 2, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Порог чувствительности"), QCoreApplication::tr("Sens"), QCoreApplication::tr("мм"), 2, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(StepDeviationFactorsDefines::MaxDeviationUid, StepDeviationFactorsDefines::GroupUid,
-                           tr("Максимальное отклонение"), tr("MaxDev"), tr("мм"), 0, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Максимальное отклонение"), QCoreApplication::tr("MaxDev"), QCoreApplication::tr("мм"), 0, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(StepDeviationFactorsDefines::DifferenceUid, StepDeviationFactorsDefines::GroupUid,
-                           tr("Дифференциация"), tr("Differ"), tr("мм"), 2, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Дифференциация"), QCoreApplication::tr("Differ"), QCoreApplication::tr("мм"), 2, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(StepDeviationFactorsDefines::TimeIncreaseAwrgUid, StepDeviationFactorsDefines::GroupUid,
-                           tr("Среднее время нарастания"), tr("TimeIncrAv"), tr("сек"), 2, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Среднее время нарастания"), QCoreApplication::tr("TimeIncrAv"), QCoreApplication::tr("сек"), 2, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(StepDeviationFactorsDefines::TimeReturnAwrgUid, StepDeviationFactorsDefines::GroupUid,
-                           tr("Среднее время возврата"), tr("TimeRetAv"), tr("сек"), 2, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Среднее время возврата"), QCoreApplication::tr("TimeRetAv"), QCoreApplication::tr("сек"), 2, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(StepDeviationFactorsDefines::MinExtrTimeUid, StepDeviationFactorsDefines::GroupUid,
-                           tr("Минимальное время между экстремумами"), tr("TimeExtMin"), tr("сек"), 2, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Минимальное время между экстремумами"), QCoreApplication::tr("TimeExtMin"), QCoreApplication::tr("сек"), 2, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(StepDeviationFactorsDefines::MaxExtrTimeUid, StepDeviationFactorsDefines::GroupUid,
-                           tr("Максимальное время между экстремумами"), tr("TimeExtMax"), tr("сек"), 2, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Максимальное время между экстремумами"), QCoreApplication::tr("TimeExtMax"), QCoreApplication::tr("сек"), 2, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(StepDeviationFactorsDefines::PickCountUid, StepDeviationFactorsDefines::GroupUid,
-                           tr("Общее кол-во \"пиков\" на экстремумах"), tr("PickCnt"), tr(""), 0, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Общее кол-во \"пиков\" на экстремумах"), QCoreApplication::tr("PickCnt"), QCoreApplication::tr(""), 0, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(StepDeviationFactorsDefines::PickCountAvrgUid, StepDeviationFactorsDefines::GroupUid,
-                           tr("Среднее кол-во \"пиков\" на экстремумах"), tr("PickCntAvrg"), tr(""), 2, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Среднее кол-во \"пиков\" на экстремумах"), QCoreApplication::tr("PickCntAvrg"), QCoreApplication::tr(""), 2, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(StepDeviationFactorsDefines::MaxPickCountUid, StepDeviationFactorsDefines::GroupUid,
-                           tr("Максимальное кол-во \"пиков\" на экстремумах"), tr("PickCntMax"), tr(""), 0, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Максимальное кол-во \"пиков\" на экстремумах"), QCoreApplication::tr("PickCntMax"), QCoreApplication::tr(""), 0, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(StepDeviationFactorsDefines::MinPickCountUid, StepDeviationFactorsDefines::GroupUid,
-                           tr("Минимальное кол-во \"пиков\" на экстремумах"), tr("PickCntMin"), tr(""), 0, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Минимальное кол-во \"пиков\" на экстремумах"), QCoreApplication::tr("PickCntMin"), QCoreApplication::tr(""), 0, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(StepDeviationFactorsDefines::ExtrPickCountUid, StepDeviationFactorsDefines::GroupUid,
-                           tr("Кол-во пиков с экстремумами"), tr("ExtPickCnt"), tr(""), 0, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Кол-во пиков с экстремумами"), QCoreApplication::tr("ExtPickCnt"), QCoreApplication::tr(""), 0, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(StepDeviationFactorsDefines::AmplSemiWaveUid, StepDeviationFactorsDefines::GroupUid,
-                           tr("Амплитуда полуволны на экстремуме"), tr("ExtWaveAmp"), tr("мм"), 2, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Амплитуда полуволны на экстремуме"), QCoreApplication::tr("ExtWaveAmp"), QCoreApplication::tr("мм"), 2, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(StepDeviationFactorsDefines::TimeSemiWaveUid, StepDeviationFactorsDefines::GroupUid,
-                           tr("Длительность полуволны на экстремуме"), tr("ExtWaveTm"), tr("сек"), 3, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Длительность полуволны на экстремуме"), QCoreApplication::tr("ExtWaveTm"), QCoreApplication::tr("сек"), 3, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(StepDeviationFactorsDefines::RitmUid, StepDeviationFactorsDefines::GroupUid,
-                           tr("Ритм"), tr("Ритм"), tr(""), 2, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Ритм"), QCoreApplication::tr("Ритм"), QCoreApplication::tr(""), 2, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(StepDeviationFactorsDefines::RitmStabUid, StepDeviationFactorsDefines::GroupUid,
-                           tr("Стабильность ритма"), tr("Стаб.ритм"), tr("сек"), 2, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Стабильность ритма"), QCoreApplication::tr("Стаб.ритм"), QCoreApplication::tr("сек"), 2, 3, FactorsDefines::nsDual, 12);
 }
 
 int StepDeviationFactors::signalSize() const

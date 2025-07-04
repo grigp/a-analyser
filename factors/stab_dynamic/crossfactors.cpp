@@ -84,28 +84,28 @@ void CrossFactors::registerFactors()
 
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(CrossFactorsDefines::LUpUid, CrossFactorsDefines::GroupUid,
-                           tr("Отклонение вперед"), tr("Вперед"), tr("мм"), 0, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Отклонение вперед"), QCoreApplication::tr("Вперед"), QCoreApplication::tr("мм"), 0, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(CrossFactorsDefines::LDnUid, CrossFactorsDefines::GroupUid,
-                           tr("Отклонение назад"), tr("Назад"), tr("мм"), 0, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Отклонение назад"), QCoreApplication::tr("Назад"), QCoreApplication::tr("мм"), 0, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(CrossFactorsDefines::LRtUid, CrossFactorsDefines::GroupUid,
-                           tr("Отклонение вправо"), tr("Вправо"), tr("мм"), 0, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Отклонение вправо"), QCoreApplication::tr("Вправо"), QCoreApplication::tr("мм"), 0, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(CrossFactorsDefines::LLfUid, CrossFactorsDefines::GroupUid,
-                           tr("Отклонение влево"), tr("Влево"), tr("мм"), 0, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Отклонение влево"), QCoreApplication::tr("Влево"), QCoreApplication::tr("мм"), 0, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(CrossFactorsDefines::SZoneUid, CrossFactorsDefines::GroupUid,
-                           tr("Площадь зоны перермещения"), tr("Площадь"), tr("кв.мм"), 0, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Площадь зоны перермещения"), QCoreApplication::tr("Площадь"), QCoreApplication::tr("кв.мм"), 0, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(CrossFactorsDefines::UDUid, CrossFactorsDefines::GroupUid,
-                           tr("Отношение вперед / назад"), tr("Вперед / Назад"), tr(""), 2, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Отношение вперед / назад"), QCoreApplication::tr("Вперед / Назад"), QCoreApplication::tr(""), 2, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(CrossFactorsDefines::RLUid, CrossFactorsDefines::GroupUid,
-                           tr("Отношение вправо / влево"), tr("Вправо / Влево"), tr(""), 2, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Отношение вправо / влево"), QCoreApplication::tr("Вправо / Влево"), QCoreApplication::tr(""), 2, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(CrossFactorsDefines::SFUid, CrossFactorsDefines::GroupUid,
-                           tr("Отношение сагитталь / фронталь"), tr("Сагит / Фронт"), tr(""), 2, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Отношение сагитталь / фронталь"), QCoreApplication::tr("Сагит / Фронт"), QCoreApplication::tr(""), 2, 3, FactorsDefines::nsDual, 12);
 }
 
 int CrossFactors::diap() const

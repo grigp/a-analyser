@@ -50,19 +50,11 @@ static QMap<Directions, QString> DirectionValueUIDName {
   , std::pair<Directions, QString> (dirLeft, "left")
 };
 
-static QMap<Directions, QString> DirectionValueFBName {
-    std::pair<Directions, QString> (dirUp, QCoreApplication::tr("вперед"))
-  , std::pair<Directions, QString> (dirRight, QCoreApplication::tr("вправо"))
-  , std::pair<Directions, QString> (dirDown, QCoreApplication::tr("назад"))
-  , std::pair<Directions, QString> (dirLeft, QCoreApplication::tr("влево"))
-};
+QString getDirectionValueFBName(const Directions dir);
+QList<Directions> getDirectionValueFBKeys();
 
-static QMap<Directions, QString> DirectionValueUDName {
-    std::pair<Directions, QString> (dirUp, QCoreApplication::tr("вверх"))
-  , std::pair<Directions, QString> (dirRight, QCoreApplication::tr("вправо"))
-  , std::pair<Directions, QString> (dirDown, QCoreApplication::tr("вниз"))
-  , std::pair<Directions, QString> (dirLeft, QCoreApplication::tr("влево"))
-};
+QString getDirectionValueUDName(const Directions dir);
+QList<Directions> getDirectionValueUDKeys();
 
 
 /*!

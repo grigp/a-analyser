@@ -157,188 +157,188 @@ void EvolventaFactors::registerFactors()
     ///< Фронтальная составляющая
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(EvolventaFactorsDefines::CommonErrorsFrontal::SummErr, EvolventaFactorsDefines::GroupUid,
-                           tr("Суммарная ошибка"), tr("SummErr"), tr("мм"), 0, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Суммарная ошибка"), QCoreApplication::tr("SummErr"), QCoreApplication::tr("мм"), 0, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(EvolventaFactorsDefines::CommonErrorsFrontal::MidErr, EvolventaFactorsDefines::GroupUid,
-                           tr("Средняя ошибка"), tr("Ср.ошибка(X)"), tr("мм"), 2, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Средняя ошибка"), QCoreApplication::tr("Ср.ошибка(X)"), QCoreApplication::tr("мм"), 2, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(EvolventaFactorsDefines::FragmentExtremumFrontal::MidErr, EvolventaFactorsDefines::GroupUid,
-                           tr("Средняя ошибка на экстремуме"), tr("MidErrExtr"), tr("мм"), 2, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Средняя ошибка на экстремуме"), QCoreApplication::tr("MidErrExtr"), tr("мм"), 2, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(EvolventaFactorsDefines::FragmentBranchFrontal::MidErr, EvolventaFactorsDefines::GroupUid,
-                           tr("Средняя ошибка на переходе"), tr("MidErrBr"), tr("мм"), 2, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Средняя ошибка на переходе"), QCoreApplication::tr("MidErrBr"), QCoreApplication::tr("мм"), 2, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(EvolventaFactorsDefines::FragmentExtremumFrontal::CrsCnt, EvolventaFactorsDefines::GroupUid,
-                           tr("Сред. кол-во пересечений на экстремуме"), tr("CrsCntExtr"), tr(""), 0, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Сред. кол-во пересечений на экстремуме"), QCoreApplication::tr("CrsCntExtr"), QCoreApplication::tr(""), 0, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(EvolventaFactorsDefines::FragmentBranchFrontal::CrsCnt, EvolventaFactorsDefines::GroupUid,
-                           tr("Сред. кол-во пересечений на переходе"), tr("CrsCntBr"), tr(""), 0, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Сред. кол-во пересечений на переходе"), QCoreApplication::tr("CrsCntBr"), QCoreApplication::tr(""), 0, 3, FactorsDefines::nsDual, 12);
 
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(EvolventaFactorsDefines::FragmentExtremumFrontal::ExtrCnt, EvolventaFactorsDefines::GroupUid,
-                           tr("Среднее кол-во пиков на экстремуме"), tr("ExtrCntE"), tr(""), 0, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Среднее кол-во пиков на экстремуме"), QCoreApplication::tr("ExtrCntE"), QCoreApplication::tr(""), 0, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(EvolventaFactorsDefines::FragmentBranchFrontal::ExtrCnt, EvolventaFactorsDefines::GroupUid,
-                           tr("Среднее кол-во пиков на переходе"), tr("ExtrCntB"), tr(""), 0, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Среднее кол-во пиков на переходе"), QCoreApplication::tr("ExtrCntB"), QCoreApplication::tr(""), 0, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(EvolventaFactorsDefines::FragmentExtremumFrontal::MidAmpl, EvolventaFactorsDefines::GroupUid,
-                           tr("Средняя амплитуда между пиками на экстремуме"), tr("MidAmplE"), tr("мм"), 3, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Средняя амплитуда между пиками на экстремуме"), QCoreApplication::tr("MidAmplE"), QCoreApplication::tr("мм"), 3, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(EvolventaFactorsDefines::FragmentBranchFrontal::MidAmpl, EvolventaFactorsDefines::GroupUid,
-                           tr("Средняя амплитуда между пиками на переходе"), tr("MidAmplB"), tr("мм"), 3, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Средняя амплитуда между пиками на переходе"), QCoreApplication::tr("MidAmplB"), QCoreApplication::tr("мм"), 3, 3, FactorsDefines::nsDual, 12);
 
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(EvolventaFactorsDefines::FragmentExtremumFrontal::CMidErr, EvolventaFactorsDefines::GroupUid,
-                           tr("Изменение средней ошибки на экстремуме"), tr("CMidErrE"), tr("мм"), 2, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Изменение средней ошибки на экстремуме"), QCoreApplication::tr("CMidErrE"), QCoreApplication::tr("мм"), 2, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(EvolventaFactorsDefines::FragmentBranchFrontal::CMidErr, EvolventaFactorsDefines::GroupUid,
-                           tr("Изменение средней ошибки на переходе"), tr("CMidErrB"), tr("мм"), 2, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Изменение средней ошибки на переходе"), QCoreApplication::tr("CMidErrB"), QCoreApplication::tr("мм"), 2, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(EvolventaFactorsDefines::FragmentExtremumFrontal::CMidAmp, EvolventaFactorsDefines::GroupUid,
-                           tr("Изменение средней амплитуды на экстремуме"), tr("CMidAmplE"), tr("мм"), 2, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Изменение средней амплитуды на экстремуме"), QCoreApplication::tr("CMidAmplE"), QCoreApplication::tr("мм"), 2, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(EvolventaFactorsDefines::FragmentBranchFrontal::CMidAmp, EvolventaFactorsDefines::GroupUid,
-                           tr("Изменение средней амплитуды на переходе"), tr("CMidAmplB"), tr("мм"), 2, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Изменение средней амплитуды на переходе"), QCoreApplication::tr("CMidAmplB"), QCoreApplication::tr("мм"), 2, 3, FactorsDefines::nsDual, 12);
 
     //// R - retention
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(EvolventaFactorsDefines::Frontal::InterCntR, EvolventaFactorsDefines::GroupUid,
-                           tr("Кол-во пересечений траектории цели при удержании"), tr("InterCntR"), tr(""), 0, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Кол-во пересечений траектории цели при удержании"), QCoreApplication::tr("InterCntR"), QCoreApplication::tr(""), 0, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(EvolventaFactorsDefines::Frontal::InterLenR, EvolventaFactorsDefines::GroupUid,
-                           tr("Длит. между пересечениями траектории цели при удержании"), tr("InterLenR"), tr("мм"), 2, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Длит. между пересечениями траектории цели при удержании"), QCoreApplication::tr("InterLenR"), QCoreApplication::tr("мм"), 2, 3, FactorsDefines::nsDual, 12);
 
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(EvolventaFactorsDefines::Frontal::SemiWavLen, EvolventaFactorsDefines::GroupUid,
-                           tr("Длительность полуволны"), tr("SemiWavLen"), tr("сек"), 2, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Длительность полуволны"), QCoreApplication::tr("SemiWavLen"), QCoreApplication::tr("сек"), 2, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(EvolventaFactorsDefines::Frontal::SemiWavAmpl, EvolventaFactorsDefines::GroupUid,
-                           tr("Амплитуда полуволны"), tr("SemiWavAmpl"), tr("мм"), 2, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Амплитуда полуволны"), QCoreApplication::tr("SemiWavAmpl"), QCoreApplication::tr("мм"), 2, 3, FactorsDefines::nsDual, 12);
 
     ///<---------------------------------------------------------------------------
     ///< Сагиттальная составляющая
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(EvolventaFactorsDefines::CommonErrorsSagittal::SummErr, EvolventaFactorsDefines::GroupUid,
-                           tr("Суммарная ошибка"), tr("SummErr"), tr("мм"), 0, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Суммарная ошибка"), QCoreApplication::tr("SummErr"), QCoreApplication::tr("мм"), 0, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(EvolventaFactorsDefines::CommonErrorsSagittal::MidErr, EvolventaFactorsDefines::GroupUid,
-                           tr("Средняя ошибка"), tr("Ср.ошибка(Y)"), tr("мм"), 2, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Средняя ошибка"), QCoreApplication::tr("Ср.ошибка(Y)"), QCoreApplication::tr("мм"), 2, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(EvolventaFactorsDefines::FragmentExtremumSagittal::MidErr, EvolventaFactorsDefines::GroupUid,
-                           tr("Средняя ошибка на экстремуме"), tr("MidErrExtr"), tr("мм"), 2, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Средняя ошибка на экстремуме"), QCoreApplication::tr("MidErrExtr"), QCoreApplication::tr("мм"), 2, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(EvolventaFactorsDefines::FragmentBranchSagittal::MidErr, EvolventaFactorsDefines::GroupUid,
-                           tr("Средняя ошибка на переходе"), tr("MidErrBr"), tr("мм"), 2, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Средняя ошибка на переходе"), QCoreApplication::tr("MidErrBr"), QCoreApplication::tr("мм"), 2, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(EvolventaFactorsDefines::FragmentExtremumSagittal::CrsCnt, EvolventaFactorsDefines::GroupUid,
-                           tr("Сред. кол-во пересечений на экстремуме"), tr("CrsCntExtr"), tr(""), 0, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Сред. кол-во пересечений на экстремуме"), QCoreApplication::tr("CrsCntExtr"), QCoreApplication::tr(""), 0, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(EvolventaFactorsDefines::FragmentBranchSagittal::CrsCnt, EvolventaFactorsDefines::GroupUid,
-                           tr("Сред. кол-во пересечений на переходе"), tr("CrsCntBr"), tr(""), 0, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Сред. кол-во пересечений на переходе"), QCoreApplication::tr("CrsCntBr"), QCoreApplication::tr(""), 0, 3, FactorsDefines::nsDual, 12);
 
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(EvolventaFactorsDefines::FragmentExtremumSagittal::ExtrCnt, EvolventaFactorsDefines::GroupUid,
-                           tr("Среднее кол-во пиков на экстремуме"), tr("ExtrCntE"), tr(""), 0, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Среднее кол-во пиков на экстремуме"), QCoreApplication::tr("ExtrCntE"), QCoreApplication::tr(""), 0, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(EvolventaFactorsDefines::FragmentBranchSagittal::ExtrCnt, EvolventaFactorsDefines::GroupUid,
-                           tr("Среднее кол-во пиков на переходе"), tr("ExtrCntB"), tr(""), 0, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Среднее кол-во пиков на переходе"), QCoreApplication::tr("ExtrCntB"), QCoreApplication::tr(""), 0, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(EvolventaFactorsDefines::FragmentExtremumSagittal::MidAmpl, EvolventaFactorsDefines::GroupUid,
-                           tr("Средняя амплитуда между пиками на экстремуме"), tr("MidAmplE"), tr("мм"), 3, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Средняя амплитуда между пиками на экстремуме"), QCoreApplication::tr("MidAmplE"), QCoreApplication::tr("мм"), 3, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(EvolventaFactorsDefines::FragmentBranchSagittal::MidAmpl, EvolventaFactorsDefines::GroupUid,
-                           tr("Средняя амплитуда между пиками на переходе"), tr("MidAmplB"), tr("мм"), 3, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Средняя амплитуда между пиками на переходе"), QCoreApplication::tr("MidAmplB"), QCoreApplication::tr("мм"), 3, 3, FactorsDefines::nsDual, 12);
 
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(EvolventaFactorsDefines::FragmentExtremumSagittal::CMidErr, EvolventaFactorsDefines::GroupUid,
-                           tr("Изменение средней ошибки на экстремуме"), tr("CMidErrE"), tr("мм"), 2, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Изменение средней ошибки на экстремуме"), QCoreApplication::tr("CMidErrE"), QCoreApplication::tr("мм"), 2, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(EvolventaFactorsDefines::FragmentBranchSagittal::CMidErr, EvolventaFactorsDefines::GroupUid,
-                           tr("Изменение средней ошибки на переходе"), tr("CMidErrB"), tr("мм"), 2, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Изменение средней ошибки на переходе"), QCoreApplication::tr("CMidErrB"), QCoreApplication::tr("мм"), 2, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(EvolventaFactorsDefines::FragmentExtremumSagittal::CMidAmp, EvolventaFactorsDefines::GroupUid,
-                           tr("Изменение средней амплитуды на экстремуме"), tr("CMidAmplE"), tr("мм"), 2, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Изменение средней амплитуды на экстремуме"), QCoreApplication::tr("CMidAmplE"), QCoreApplication::tr("мм"), 2, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(EvolventaFactorsDefines::FragmentBranchSagittal::CMidAmp, EvolventaFactorsDefines::GroupUid,
-                           tr("Изменение средней амплитуды на переходе"), tr("CMidAmplB"), tr("мм"), 2, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Изменение средней амплитуды на переходе"), QCoreApplication::tr("CMidAmplB"), QCoreApplication::tr("мм"), 2, 3, FactorsDefines::nsDual, 12);
 
     //// R - retention
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(EvolventaFactorsDefines::Sagittal::InterCntR, EvolventaFactorsDefines::GroupUid,
-                           tr("Кол-во пересечений траектории цели при удержании"), tr("InterCntR"), tr(""), 0, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Кол-во пересечений траектории цели при удержании"), QCoreApplication::tr("InterCntR"), QCoreApplication::tr(""), 0, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(EvolventaFactorsDefines::Sagittal::InterLenR, EvolventaFactorsDefines::GroupUid,
-                           tr("Длит. между пересечениями траектории цели при удержании"), tr("InterLenR"), tr("мм"), 2, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Длит. между пересечениями траектории цели при удержании"), QCoreApplication::tr("InterLenR"), QCoreApplication::tr("мм"), 2, 3, FactorsDefines::nsDual, 12);
 
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(EvolventaFactorsDefines::Sagittal::SemiWavLen, EvolventaFactorsDefines::GroupUid,
-                           tr("Длительность полуволны"), tr("SemiWavLen"), tr("сек"), 2, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Длительность полуволны"), QCoreApplication::tr("SemiWavLen"), QCoreApplication::tr("сек"), 2, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(EvolventaFactorsDefines::Sagittal::SemiWavAmpl, EvolventaFactorsDefines::GroupUid,
-                           tr("Амплитуда полуволны"), tr("SemiWavAmpl"), tr("мм"), 2, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Амплитуда полуволны"), QCoreApplication::tr("SemiWavAmpl"), QCoreApplication::tr("мм"), 2, 3, FactorsDefines::nsDual, 12);
 
     ///<---------------------------------------------------------------------------
     ///< Общие показатели коррекций
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(EvolventaFactorsDefines::DAPercent, EvolventaFactorsDefines::GroupUid,
-                           tr("Опережение маркера цели"), tr("Опережение"), tr("%"), 0, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Опережение маркера цели"), QCoreApplication::tr("Опережение"), QCoreApplication::tr("%"), 0, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(EvolventaFactorsDefines::DAhead, EvolventaFactorsDefines::GroupUid,
-                           tr("Суммарное опережение маркера цели"), tr("DAhead"), tr("сек"), 4, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Суммарное опережение маркера цели"), QCoreApplication::tr("DAhead"), QCoreApplication::tr("сек"), 4, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(EvolventaFactorsDefines::SemiWavLenDAC, EvolventaFactorsDefines::GroupUid,
-                           tr("Длительность полуволны при опережении"), tr("SemiWavLenDAC"), tr("сек"), 2, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Длительность полуволны при опережении"), QCoreApplication::tr("SemiWavLenDAC"), QCoreApplication::tr("сек"), 2, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(EvolventaFactorsDefines::SemiWavAmplDAC, EvolventaFactorsDefines::GroupUid,
-                           tr("Амплитуда полуволны при опережении"), tr("SemiWavAmplDAC"), tr("мм"), 2, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Амплитуда полуволны при опережении"), QCoreApplication::tr("SemiWavAmplDAC"), QCoreApplication::tr("мм"), 2, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(EvolventaFactorsDefines::KorrCount, EvolventaFactorsDefines::GroupUid,
-                           tr("Общее количество коррекций"), tr("CorrCount"), tr(""), 0, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Общее количество коррекций"), QCoreApplication::tr("CorrCount"), QCoreApplication::tr(""), 0, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(EvolventaFactorsDefines::KorrDominance, EvolventaFactorsDefines::GroupUid,
-                           tr("Преобладание коррекций"), tr("CorrDominance"), tr(""), 0, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Преобладание коррекций"), QCoreApplication::tr("CorrDominance"), QCoreApplication::tr(""), 0, 3, FactorsDefines::nsDual, 12);
 
     ///<---------------------------------------------------------------------------
     ///< Моторные коррекции
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(EvolventaFactorsDefines::CorrectionsMotor::Percent, EvolventaFactorsDefines::GroupUid,
-                           tr("Процент коррекций"), tr("Percent"), tr("%"), 0, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Процент коррекций"), QCoreApplication::tr("Percent"), QCoreApplication::tr("%"), 0, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(EvolventaFactorsDefines::CorrectionsMotor::Error, EvolventaFactorsDefines::GroupUid,
-                           tr("Средняя ошибка траектории"), tr("Error"), tr("мм"), 2, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Средняя ошибка траектории"), QCoreApplication::tr("Error"), QCoreApplication::tr("мм"), 2, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(EvolventaFactorsDefines::CorrectionsMotor::Amplitude, EvolventaFactorsDefines::GroupUid,
-                           tr("Средняя амплитуда"), tr("Amplitude"), tr("мм"), 4, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Средняя амплитуда"), QCoreApplication::tr("Amplitude"), QCoreApplication::tr("мм"), 4, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(EvolventaFactorsDefines::CorrectionsMotor::TimeSumm, EvolventaFactorsDefines::GroupUid,
-                           tr("Суммарная длительность"), tr("TimeSumm"), tr("сек"), 2, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Суммарная длительность"), QCoreApplication::tr("TimeSumm"), QCoreApplication::tr("сек"), 2, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(EvolventaFactorsDefines::CorrectionsMotor::TimeMid, EvolventaFactorsDefines::GroupUid,
-                           tr("Средняя длительность"), tr("TimeMid"), tr("сек"), 2, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Средняя длительность"), QCoreApplication::tr("TimeMid"), QCoreApplication::tr("сек"), 2, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(EvolventaFactorsDefines::CorrectionsMotor::Power, EvolventaFactorsDefines::GroupUid,
-                           tr("Мощность коррекций"), tr("Power"), tr("мм/сек"), 2, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Мощность коррекций"), QCoreApplication::tr("Power"), QCoreApplication::tr("мм/сек"), 2, 3, FactorsDefines::nsDual, 12);
 
     ///<---------------------------------------------------------------------------
     ///< Когнитивные коррекции
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(EvolventaFactorsDefines::CorrectionsKognitive::Percent, EvolventaFactorsDefines::GroupUid,
-                           tr("Процент коррекций"), tr("Percent"), tr("%"), 0, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Процент коррекций"), QCoreApplication::tr("Percent"), QCoreApplication::tr("%"), 0, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(EvolventaFactorsDefines::CorrectionsKognitive::Error, EvolventaFactorsDefines::GroupUid,
-                           tr("Средняя ошибка траектории"), tr("Error"), tr("мм"), 2, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Средняя ошибка траектории"), QCoreApplication::tr("Error"), QCoreApplication::tr("мм"), 2, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(EvolventaFactorsDefines::CorrectionsKognitive::Amplitude, EvolventaFactorsDefines::GroupUid,
-                           tr("Средняя амплитуда"), tr("Amplitude"), tr("мм"), 4, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Средняя амплитуда"), QCoreApplication::tr("Amplitude"), QCoreApplication::tr("мм"), 4, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(EvolventaFactorsDefines::CorrectionsKognitive::TimeSumm, EvolventaFactorsDefines::GroupUid,
-                           tr("Суммарная длительность"), tr("TimeSumm"), tr("сек"), 2, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Суммарная длительность"), QCoreApplication::tr("TimeSumm"), QCoreApplication::tr("сек"), 2, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(EvolventaFactorsDefines::CorrectionsKognitive::TimeMid, EvolventaFactorsDefines::GroupUid,
-                           tr("Средняя длительность"), tr("TimeMid"), tr("сек"), 2, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Средняя длительность"), QCoreApplication::tr("TimeMid"), QCoreApplication::tr("сек"), 2, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(EvolventaFactorsDefines::CorrectionsKognitive::Power, EvolventaFactorsDefines::GroupUid,
-                           tr("Мощность коррекций"), tr("Power"), tr("мм/сек"), 2, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Мощность коррекций"), QCoreApplication::tr("Power"), QCoreApplication::tr("мм/сек"), 2, 3, FactorsDefines::nsDual, 12);
 }
 
 void EvolventaFactors::getMarkStages()

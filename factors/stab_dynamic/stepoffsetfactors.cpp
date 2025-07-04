@@ -113,143 +113,143 @@ void StepOffsetFactors::registerFactors()
 
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(StepOffsetFactorsDefines::Compensation::LatentUid, StepOffsetFactorsDefines::GroupUid,
-                           tr("Латентный период"), tr("KompLatent"), tr("сек"), 2, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Латентный период"), QCoreApplication::tr("KompLatent"), QCoreApplication::tr("сек"), 2, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(StepOffsetFactorsDefines::Compensation::SwingTimeUid, StepOffsetFactorsDefines::GroupUid,
-                           tr("Время размаха"), tr("KompSwingT"), tr("сек"), 1, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Время размаха"), QCoreApplication::tr("KompSwingT"), QCoreApplication::tr("сек"), 1, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(StepOffsetFactorsDefines::Compensation::SwingAmplUid, StepOffsetFactorsDefines::GroupUid,
-                           tr("Амплитуда размаха"), tr("KompSwingA"), tr("%"), 0, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Амплитуда размаха"), QCoreApplication::tr("KompSwingA"), QCoreApplication::tr("%"), 0, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(StepOffsetFactorsDefines::Compensation::SwingSpeedUid, StepOffsetFactorsDefines::GroupUid,
-                           tr("Скорость размаха"), tr("KompSwingV"), tr("мм/сек"), 2, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Скорость размаха"), QCoreApplication::tr("KompSwingV"), QCoreApplication::tr("мм/сек"), 2, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(StepOffsetFactorsDefines::Compensation::SpurtTimeUid, StepOffsetFactorsDefines::GroupUid,
-                           tr("Время броска"), tr("KompSpurtT"), tr("сек"), 2, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Время броска"), QCoreApplication::tr("KompSpurtT"), QCoreApplication::tr("сек"), 2, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(StepOffsetFactorsDefines::Compensation::SpurtAmplUid, StepOffsetFactorsDefines::GroupUid,
-                           tr("Амплитуда броска"), tr("KompSpurtA"), tr("%"), 0, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Амплитуда броска"), QCoreApplication::tr("KompSpurtA"), QCoreApplication::tr("%"), 0, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(StepOffsetFactorsDefines::Compensation::SpurtSpeedUid, StepOffsetFactorsDefines::GroupUid,
-                           tr("Скорость броска"), tr("KompSpurtV"), tr("%/сек"), 1, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Скорость броска"), QCoreApplication::tr("KompSpurtV"), QCoreApplication::tr("%/сек"), 1, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(StepOffsetFactorsDefines::Compensation::SpurtSpeedMMUid, StepOffsetFactorsDefines::GroupUid,
-                           tr("Скорость броска"), tr("KompSpurtV"), tr("мм/сек"), 1, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Скорость броска"), QCoreApplication::tr("KompSpurtV"), QCoreApplication::tr("мм/сек"), 1, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(StepOffsetFactorsDefines::Compensation::StatismUid, StepOffsetFactorsDefines::GroupUid,
-                           tr("Статизм"), tr("Статизм (K)"), tr("%"), 2, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Статизм"), QCoreApplication::tr("Статизм (K)"), QCoreApplication::tr("%"), 2, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(StepOffsetFactorsDefines::Compensation::ReactionTimeUid, StepOffsetFactorsDefines::GroupUid,
-                           tr("Время реакции"), tr("t реакции(K)"), tr("сек"), 2, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Время реакции"), QCoreApplication::tr("t реакции(K)"), QCoreApplication::tr("сек"), 2, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(StepOffsetFactorsDefines::Compensation::OvershootAmplUid, StepOffsetFactorsDefines::GroupUid,
-                           tr("Амплитуда перерегулирования"), tr("KompOvershoot"), tr("%"), 0, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Амплитуда перерегулирования"), QCoreApplication::tr("KompOvershoot"), QCoreApplication::tr("%"), 0, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(StepOffsetFactorsDefines::Compensation::StabilityDeviationUid, StepOffsetFactorsDefines::GroupUid,
-                           tr("Разброс на этапе стабилизации"), tr("KompStabD"), tr("мм"), 2, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Разброс на этапе стабилизации"), QCoreApplication::tr("KompStabD"), QCoreApplication::tr("мм"), 2, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(StepOffsetFactorsDefines::Compensation::RetentionDeviationUid, StepOffsetFactorsDefines::GroupUid,
-                           tr("Разброс на этапе удержания"), tr("KompRetentD"), tr("мм"), 2, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Разброс на этапе удержания"), QCoreApplication::tr("KompRetentD"), QCoreApplication::tr("мм"), 2, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(StepOffsetFactorsDefines::Compensation::ProcessKindUid, StepOffsetFactorsDefines::GroupUid,
-                           tr("Тип переходного процесса"), tr("Тип процесса (К)"), tr(""), 0, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Тип переходного процесса"), QCoreApplication::tr("Тип процесса (К)"), QCoreApplication::tr(""), 0, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(StepOffsetFactorsDefines::Compensation::CorrectMotorTimeUid, StepOffsetFactorsDefines::GroupUid,
-                           tr("Средняя длительность моторных коррекций"), tr("KompCorrMT"), tr("сек"), 2, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Средняя длительность моторных коррекций"), QCoreApplication::tr("KompCorrMT"), QCoreApplication::tr("сек"), 2, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(StepOffsetFactorsDefines::Compensation::CorrectMotorAmplUid, StepOffsetFactorsDefines::GroupUid,
-                           tr("Средняя амплитуда моторных коррекций"), tr("KompCorrMA"), tr("мм"), 2, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Средняя амплитуда моторных коррекций"), QCoreApplication::tr("KompCorrMA"), QCoreApplication::tr("мм"), 2, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(StepOffsetFactorsDefines::Compensation::CorrectMotorPowerUid, StepOffsetFactorsDefines::GroupUid,
-                           tr("Мощность моторных коррекций"), tr("KompCorrMP"), tr("мм*сек"), 4, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Мощность моторных коррекций"), QCoreApplication::tr("KompCorrMP"), QCoreApplication::tr("мм*сек"), 4, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(StepOffsetFactorsDefines::Compensation::CorrectMotorErrorUid, StepOffsetFactorsDefines::GroupUid,
-                           tr("Средняя ошибка траектории моторных коррекций"), tr("KompCorrME"), tr("мм"), 2, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Средняя ошибка траектории моторных коррекций"), QCoreApplication::tr("KompCorrME"), QCoreApplication::tr("мм"), 2, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(StepOffsetFactorsDefines::Compensation::CorrectKognTimeUid, StepOffsetFactorsDefines::GroupUid,
-                           tr("Средняя длительность когнитивных коррекций"), tr("KompCorrKT"), tr("сек"), 2, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Средняя длительность когнитивных коррекций"), QCoreApplication::tr("KompCorrKT"), QCoreApplication::tr("сек"), 2, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(StepOffsetFactorsDefines::Compensation::CorrectKognAmplUid, StepOffsetFactorsDefines::GroupUid,
-                           tr("Средняя амплитуда когнитивных коррекций"), tr("KompCorrKA"), tr("мм"), 2, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Средняя амплитуда когнитивных коррекций"), QCoreApplication::tr("KompCorrKA"), QCoreApplication::tr("мм"), 2, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(StepOffsetFactorsDefines::Compensation::CorrectKognPowerUid, StepOffsetFactorsDefines::GroupUid,
-                           tr("Мощность когнитивных коррекций"), tr("KompCorrKP"), tr("мм*сек"), 4, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Мощность когнитивных коррекций"), QCoreApplication::tr("KompCorrKP"), QCoreApplication::tr("мм*сек"), 4, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(StepOffsetFactorsDefines::Compensation::CorrectKognErrorUid, StepOffsetFactorsDefines::GroupUid,
-                           tr("Средняя ошибка траектории когнитивных коррекций"), tr("KompCorrKE"), tr("мм"), 2, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Средняя ошибка траектории когнитивных коррекций"), QCoreApplication::tr("KompCorrKE"), QCoreApplication::tr("мм"), 2, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(StepOffsetFactorsDefines::Compensation::CorrectDominanceUid, StepOffsetFactorsDefines::GroupUid,
-                           tr("Преобладание коррекций"), tr("CorrDomin"), tr("%"), 0, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Преобладание коррекций"), QCoreApplication::tr("CorrDomin"), QCoreApplication::tr("%"), 0, 3, FactorsDefines::nsDual, 12);
 
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(StepOffsetFactorsDefines::Return::LatentUid, StepOffsetFactorsDefines::GroupUid,
-                           tr("Латентный период"), tr("RetLatent"), tr("сек"), 2, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Латентный период"), QCoreApplication::tr("RetLatent"), QCoreApplication::tr("сек"), 2, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(StepOffsetFactorsDefines::Return::SwingTimeUid, StepOffsetFactorsDefines::GroupUid,
-                           tr("Время размаха"), tr("RetSwingT"), tr("сек"), 1, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Время размаха"), QCoreApplication::tr("RetSwingT"), QCoreApplication::tr("сек"), 1, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(StepOffsetFactorsDefines::Return::SwingAmplUid, StepOffsetFactorsDefines::GroupUid,
-                           tr("Амплитуда размаха"), tr("RetSwingA"), tr("%"), 0, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Амплитуда размаха"), QCoreApplication::tr("RetSwingA"), QCoreApplication::tr("%"), 0, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(StepOffsetFactorsDefines::Return::SwingSpeedUid, StepOffsetFactorsDefines::GroupUid,
-                           tr("Скорость размаха"), tr("RetSwingV"), tr("мм/сек"), 2, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Скорость размаха"), QCoreApplication::tr("RetSwingV"), QCoreApplication::tr("мм/сек"), 2, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(StepOffsetFactorsDefines::Return::SpurtTimeUid, StepOffsetFactorsDefines::GroupUid,
-                           tr("Время броска"), tr("RetSpurtT"), tr("сек"), 2, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Время броска"), QCoreApplication::tr("RetSpurtT"), QCoreApplication::tr("сек"), 2, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(StepOffsetFactorsDefines::Return::SpurtAmplUid, StepOffsetFactorsDefines::GroupUid,
-                           tr("Амплитуда броска"), tr("RetSpurtA"), tr("%"), 0, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Амплитуда броска"), QCoreApplication::tr("RetSpurtA"), QCoreApplication::tr("%"), 0, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(StepOffsetFactorsDefines::Return::SpurtSpeedUid, StepOffsetFactorsDefines::GroupUid,
-                           tr("Скорость броска"), tr("RetSpurtV"), tr("%/сек"), 1, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Скорость броска"), QCoreApplication::tr("RetSpurtV"), QCoreApplication::tr("%/сек"), 1, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(StepOffsetFactorsDefines::Return::SpurtSpeedMMUid, StepOffsetFactorsDefines::GroupUid,
-                           tr("Скорость броска"), tr("RetSpurtV"), tr("мм/сек"), 1, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Скорость броска"), QCoreApplication::tr("RetSpurtV"), QCoreApplication::tr("мм/сек"), 1, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(StepOffsetFactorsDefines::Return::StatismUid, StepOffsetFactorsDefines::GroupUid,
-                           tr("Статизм"), tr("RetStatism"), tr("%"), 2, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Статизм"), QCoreApplication::tr("RetStatism"), QCoreApplication::tr("%"), 2, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(StepOffsetFactorsDefines::Return::ReactionTimeUid, StepOffsetFactorsDefines::GroupUid,
-                           tr("Время реакции"), tr("RetReactT"), tr("сек"), 2, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Время реакции"), QCoreApplication::tr("RetReactT"), QCoreApplication::tr("сек"), 2, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(StepOffsetFactorsDefines::Return::OvershootAmplUid, StepOffsetFactorsDefines::GroupUid,
-                           tr("Амплитуда перерегулирования"), tr("RetOvershoot"), tr("%"), 0, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Амплитуда перерегулирования"), QCoreApplication::tr("RetOvershoot"), QCoreApplication::tr("%"), 0, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(StepOffsetFactorsDefines::Return::StabilityDeviationUid, StepOffsetFactorsDefines::GroupUid,
-                           tr("Разброс на этапе стабилизации"), tr("RetStabD"), tr("мм"), 2, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Разброс на этапе стабилизации"), QCoreApplication::tr("RetStabD"), QCoreApplication::tr("мм"), 2, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(StepOffsetFactorsDefines::Return::RetentionDeviationUid, StepOffsetFactorsDefines::GroupUid,
-                           tr("Разброс на этапе удержания"), tr("RetRetentD"), tr("мм"), 2, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Разброс на этапе удержания"), QCoreApplication::tr("RetRetentD"), QCoreApplication::tr("мм"), 2, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(StepOffsetFactorsDefines::Return::ProcessKindUid, StepOffsetFactorsDefines::GroupUid,
-                           tr("Тип переходного процесса"), tr("RetKind"), tr(""), 0, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Тип переходного процесса"), QCoreApplication::tr("RetKind"), QCoreApplication::tr(""), 0, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(StepOffsetFactorsDefines::Return::CorrectMotorTimeUid, StepOffsetFactorsDefines::GroupUid,
-                           tr("Средняя длительность моторных коррекций"), tr("RetCorrMT"), tr("сек"), 2, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Средняя длительность моторных коррекций"), QCoreApplication::tr("RetCorrMT"), QCoreApplication::tr("сек"), 2, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(StepOffsetFactorsDefines::Return::CorrectMotorAmplUid, StepOffsetFactorsDefines::GroupUid,
-                           tr("Средняя амплитуда моторных коррекций"), tr("RetCorrMA"), tr("мм"), 2, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Средняя амплитуда моторных коррекций"), QCoreApplication::tr("RetCorrMA"), QCoreApplication::tr("мм"), 2, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(StepOffsetFactorsDefines::Return::CorrectMotorPowerUid, StepOffsetFactorsDefines::GroupUid,
-                           tr("Мощность моторных коррекций"), tr("RetCorrMP"), tr("мм*сек"), 4, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Мощность моторных коррекций"), QCoreApplication::tr("RetCorrMP"), QCoreApplication::tr("мм*сек"), 4, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(StepOffsetFactorsDefines::Return::CorrectMotorErrorUid, StepOffsetFactorsDefines::GroupUid,
-                           tr("Средняя ошибка траектории моторных коррекций"), tr("RetCorrME"), tr("мм"), 2, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Средняя ошибка траектории моторных коррекций"), QCoreApplication::tr("RetCorrME"), QCoreApplication::tr("мм"), 2, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(StepOffsetFactorsDefines::Return::CorrectKognTimeUid, StepOffsetFactorsDefines::GroupUid,
-                           tr("Средняя длительность когнитивных коррекций"), tr("RetCorrKT"), tr("сек"), 2, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Средняя длительность когнитивных коррекций"), QCoreApplication::tr("RetCorrKT"), QCoreApplication::tr("сек"), 2, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(StepOffsetFactorsDefines::Return::CorrectKognAmplUid, StepOffsetFactorsDefines::GroupUid,
-                           tr("Средняя амплитуда когнитивных коррекций"), tr("RetCorrKA"), tr("мм"), 2, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Средняя амплитуда когнитивных коррекций"), QCoreApplication::tr("RetCorrKA"), QCoreApplication::tr("мм"), 2, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(StepOffsetFactorsDefines::Return::CorrectKognPowerUid, StepOffsetFactorsDefines::GroupUid,
-                           tr("Мощность когнитивных коррекций"), tr("RetCorrKP"), tr("мм*сек"), 4, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Мощность когнитивных коррекций"), QCoreApplication::tr("RetCorrKP"), QCoreApplication::tr("мм*сек"), 4, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(StepOffsetFactorsDefines::Return::CorrectKognErrorUid, StepOffsetFactorsDefines::GroupUid,
-                           tr("Средняя ошибка траектории когнитивных коррекций"), tr("RetCorrKE"), tr("мм"), 2, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Средняя ошибка траектории когнитивных коррекций"), QCoreApplication::tr("RetCorrKE"), QCoreApplication::tr("мм"), 2, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(StepOffsetFactorsDefines::Return::CorrectDominanceUid, StepOffsetFactorsDefines::GroupUid,
-                           tr("Преобладание коррекций"), tr("CorrDomin"), tr("%"), 0, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Преобладание коррекций"), QCoreApplication::tr("CorrDomin"), QCoreApplication::tr("%"), 0, 3, FactorsDefines::nsDual, 12);
 }
 
 int StepOffsetFactors::stageTime() const
