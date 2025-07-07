@@ -18,7 +18,7 @@ QString FilterSignal::uid()
 
 QString FilterSignal::name()
 {
-    return SignalTransformerDefines::FilterSignal_name;
+    return QCoreApplication::tr("Фильтрация сигнала"); //SignalTransformerDefines::FilterSignal_name;
 }
 
 void FilterSignal::transform(QVector<double> &buffer, const QJsonObject &params)

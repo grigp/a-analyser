@@ -17,7 +17,7 @@ QString MotionRecognition::uid()
 
 QString MotionRecognition::name()
 {
-    return SignalTransformerDefines::MotionRecognition_name;
+    return QCoreApplication::tr("Выявление движений лежащего человека"); //SignalTransformerDefines::MotionRecognition_name;
 }
 
 void MotionRecognition::transform(QVector<double> &buffer, const QJsonObject &params)
