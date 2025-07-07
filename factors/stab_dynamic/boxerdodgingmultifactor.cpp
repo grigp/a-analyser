@@ -25,7 +25,12 @@ QString BoxerDodgingMultifactor::uid() const
 
 QString BoxerDodgingMultifactor::name() const
 {
-    return BoxerDodgingFactorsDefines::GroupName;
+    return nameAsConst();
+}
+
+QString BoxerDodgingMultifactor::nameAsConst()
+{
+    return QCoreApplication::tr("Показатели тренажера с уклонением");
 }
 
 bool BoxerDodgingMultifactor::isValid() const
@@ -84,72 +89,72 @@ void BoxerDodgingMultifactor::calculate()
 void BoxerDodgingMultifactor::registerFactors()
 {
     static_cast<AAnalyserApplication*>(QApplication::instance())->
-            registerGroup(BoxerDodgingFactorsDefines::GroupUid, BoxerDodgingFactorsDefines::GroupName);
+            registerGroup(BoxerDodgingFactorsDefines::GroupUid, nameAsConst());
 
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(BoxerDodgingFactorsDefines::AverageLatUid, BoxerDodgingFactorsDefines::GroupUid,
-                           tr("Средний латентный период"), tr("LatMid"), tr("сек"), 2, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Средний латентный период"), QCoreApplication::tr("LatMid"), QCoreApplication::tr("сек"), 2, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(BoxerDodgingFactorsDefines::AverageTimeUid, BoxerDodgingFactorsDefines::GroupUid,
-                           tr("Среднее время реакции"), tr("TimeMid"), tr("сек"), 2, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Среднее время реакции"), QCoreApplication::tr("TimeMid"), QCoreApplication::tr("сек"), 2, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(BoxerDodgingFactorsDefines::AverageAmplUid, BoxerDodgingFactorsDefines::GroupUid,
-                           tr("Средняя амплитуда"), tr("AmplMid"), tr("мм"), 1, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Средняя амплитуда"), QCoreApplication::tr("AmplMid"), QCoreApplication::tr("мм"), 1, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(BoxerDodgingFactorsDefines::AllErrorsUid, BoxerDodgingFactorsDefines::GroupUid,
-                           tr("Количество ошибок"), tr("Errors"), tr(""), 0, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Количество ошибок"), QCoreApplication::tr("Errors"), QCoreApplication::tr(""), 0, 3, FactorsDefines::nsDual, 12);
 
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(BoxerDodgingFactorsDefines::LeftLatUid, BoxerDodgingFactorsDefines::GroupUid,
-                           tr("Латентный период влево"), tr("LatLeft"), tr("сек"), 2, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Латентный период влево"), QCoreApplication::tr("LatLeft"), QCoreApplication::tr("сек"), 2, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(BoxerDodgingFactorsDefines::LeftTimeUid, BoxerDodgingFactorsDefines::GroupUid,
-                           tr("Время реакции влево"), tr("TimeLeft"), tr("сек"), 2, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Время реакции влево"), QCoreApplication::tr("TimeLeft"), QCoreApplication::tr("сек"), 2, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(BoxerDodgingFactorsDefines::LeftAmplUid, BoxerDodgingFactorsDefines::GroupUid,
-                           tr("Амплитуда влево"), tr("AmplLeft"), tr("мм"), 1, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Амплитуда влево"), QCoreApplication::tr("AmplLeft"), QCoreApplication::tr("мм"), 1, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(BoxerDodgingFactorsDefines::LeftErrorsUid, BoxerDodgingFactorsDefines::GroupUid,
-                           tr("Количество ошибок влево"), tr("ErrorsLeft"), tr(""), 0, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Количество ошибок влево"), QCoreApplication::tr("ErrorsLeft"), QCoreApplication::tr(""), 0, 3, FactorsDefines::nsDual, 12);
 
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(BoxerDodgingFactorsDefines::RightLatUid, BoxerDodgingFactorsDefines::GroupUid,
-                           tr("Латентный период вправо"), tr("LatRight"), tr("сек"), 2, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Латентный период вправо"), QCoreApplication::tr("LatRight"), QCoreApplication::tr("сек"), 2, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(BoxerDodgingFactorsDefines::RightTimeUid, BoxerDodgingFactorsDefines::GroupUid,
-                           tr("Время реакции вправо"), tr("TimeRight"), tr("сек"), 2, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Время реакции вправо"), QCoreApplication::tr("TimeRight"), QCoreApplication::tr("сек"), 2, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(BoxerDodgingFactorsDefines::RightAmplUid, BoxerDodgingFactorsDefines::GroupUid,
-                           tr("Амплитуда вправо"), tr("AmplRight"), tr("мм"), 1, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Амплитуда вправо"), QCoreApplication::tr("AmplRight"), QCoreApplication::tr("мм"), 1, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(BoxerDodgingFactorsDefines::RightErrorsUid, BoxerDodgingFactorsDefines::GroupUid,
-                           tr("Количество ошибок вправо"), tr("ErrorsRight"), tr(""), 0, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Количество ошибок вправо"), QCoreApplication::tr("ErrorsRight"), QCoreApplication::tr(""), 0, 3, FactorsDefines::nsDual, 12);
 
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(BoxerDodgingFactorsDefines::AheadLatUid, BoxerDodgingFactorsDefines::GroupUid,
-                           tr("Латентный период вперед"), tr("LatAhead"), tr("сек"), 2, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Латентный период вперед"), QCoreApplication::tr("LatAhead"), QCoreApplication::tr("сек"), 2, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(BoxerDodgingFactorsDefines::AheadTimeUid, BoxerDodgingFactorsDefines::GroupUid,
-                           tr("Время реакции вперед"), tr("TimeAhead"), tr("сек"), 2, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Время реакции вперед"), QCoreApplication::tr("TimeAhead"), QCoreApplication::tr("сек"), 2, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(BoxerDodgingFactorsDefines::AheadAmplUid, BoxerDodgingFactorsDefines::GroupUid,
-                           tr("Амплитуда вперед"), tr("AmplAhead"), tr("мм"), 1, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Амплитуда вперед"), QCoreApplication::tr("AmplAhead"), QCoreApplication::tr("мм"), 1, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(BoxerDodgingFactorsDefines::AheadErrorsUid, BoxerDodgingFactorsDefines::GroupUid,
-                           tr("Количество ошибок вперед"), tr("ErrorsAhead"), tr(""), 0, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Количество ошибок вперед"), QCoreApplication::tr("ErrorsAhead"), QCoreApplication::tr(""), 0, 3, FactorsDefines::nsDual, 12);
 
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(BoxerDodgingFactorsDefines::BackLatUid, BoxerDodgingFactorsDefines::GroupUid,
-                           tr("Латентный период назад"), tr("LatBack"), tr("сек"), 2, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Латентный период назад"), QCoreApplication::tr("LatBack"), QCoreApplication::tr("сек"), 2, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(BoxerDodgingFactorsDefines::BackTimeUid, BoxerDodgingFactorsDefines::GroupUid,
-                           tr("Время реакции назад"), tr("TimeBack"), tr("сек"), 2, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Время реакции назад"), QCoreApplication::tr("TimeBack"), QCoreApplication::tr("сек"), 2, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(BoxerDodgingFactorsDefines::BackAmplUid, BoxerDodgingFactorsDefines::GroupUid,
-                           tr("Амплитуда назад"), tr("AmplBack"), tr("мм"), 1, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Амплитуда назад"), QCoreApplication::tr("AmplBack"), QCoreApplication::tr("мм"), 1, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(BoxerDodgingFactorsDefines::BackErrorsUid, BoxerDodgingFactorsDefines::GroupUid,
-                           tr("Количество ошибок назад"), tr("ErrorsBack"), tr(""), 0, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Количество ошибок назад"), QCoreApplication::tr("ErrorsBack"), QCoreApplication::tr(""), 0, 3, FactorsDefines::nsDual, 12);
 }
 
 int BoxerDodgingMultifactor::deviationThreshold() const

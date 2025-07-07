@@ -15,7 +15,7 @@ QString GeneralCoordFactorsDescriptor::uid()
 
 QString GeneralCoordFactorsDescriptor::name()
 {
-    return GeneralCoordFactorsDefines::GroupName;
+    return GeneralCoordFactors::nameAsConst();
 }
 
 bool GeneralCoordFactorsDescriptor::isValid(const QString &testUid, const QString &probeUid, const QString &channelId)

@@ -9,7 +9,6 @@
 namespace OctaedronFactorsDefines
 {
 static const QString GroupUid = "{E5409C1B-045B-4278-96A7-B872A42E3453}";
-static const QString GroupName = QCoreApplication::tr("Показатели тренажера \"Октаэдр\"");
 
 //static const QString QualityAverageUid = "{76C530D6-7CB7-4BDC-982D-23D7B223251C}";
 static const QString QualityUUid = "{850740BA-701F-4B06-BDBF-57B607D95150}";
@@ -40,6 +39,11 @@ public:
      * \brief Возвращает название группы показателей
      */
     QString name() const override;
+
+    /*!
+     * \brief Возвращает название группы показателей для использования, как константу
+     */
+    static QString nameAsConst();
 
     /*!
      * \brief Возвращает true, если показатели можно рассчитать для теста с заданным uid

@@ -25,7 +25,12 @@ QString CrossFactors::uid() const
 
 QString CrossFactors::name() const
 {
-    return CrossFactorsDefines::GroupName;
+    return nameAsConst();
+}
+
+QString CrossFactors::nameAsConst()
+{
+    return QCoreApplication::tr("Показатели теста на устойчивость");
 }
 
 bool CrossFactors::isValid() const
@@ -80,7 +85,7 @@ void CrossFactors::calculate()
 void CrossFactors::registerFactors()
 {
     static_cast<AAnalyserApplication*>(QApplication::instance())->
-            registerGroup(CrossFactorsDefines::GroupUid, CrossFactorsDefines::GroupName);
+            registerGroup(CrossFactorsDefines::GroupUid, nameAsConst());
 
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(CrossFactorsDefines::LUpUid, CrossFactorsDefines::GroupUid,

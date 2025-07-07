@@ -9,7 +9,6 @@
 namespace VectorFactorsDefines
 {
 static const QString GroupUid = "{EE47A8A0-2C55-4B8B-AF44-B642932ACC90}";
-static const QString GroupName = QCoreApplication::tr("Векторные показатели");
 
 static const QString KFRUid = "{1A32C0D6-7A87-4E92-B1EE-ED0BB506EABA}";
 static const QString NPVUid = "{A3EE312D-630B-423C-B21B-811FE8E6AD04}";
@@ -79,6 +78,11 @@ public:
      * \brief Возвращает название группы показателей
      */
     QString name() const override;
+
+    /*!
+     * \brief Возвращает название группы показателей для использования, как константу
+     */
+    static QString nameAsConst();
 
     /*!
      * \brief Возвращает true, если показатели можно рассчитать для теста с заданным uid

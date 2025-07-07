@@ -11,7 +11,6 @@
 namespace CrossFactorsDefines
 {
 static const QString GroupUid = "{6072DE41-F36D-4E87-9C34-10CD3F896E1B}";
-static const QString GroupName = QCoreApplication::tr("Показатели теста на устойчивость");
 
 static const QString LUpUid = "{7817AA0C-D311-422E-AFC6-89B01B39D24F}";
 static const QString LDnUid = "{F85C7159-FD3B-4DE7-8FF9-2698B8F367E9}";
@@ -44,6 +43,11 @@ public:
      * \brief Возвращает название группы показателей
      */
     QString name() const override;
+
+    /*!
+     * \brief Возвращает название группы показателей для использования, как константу
+     */
+    static QString nameAsConst();
 
     /*!
      * \brief Возвращает true, если показатели можно рассчитать для теста с заданным uid

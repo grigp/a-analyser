@@ -15,7 +15,7 @@ QString IDSFactorsDescriptor::uid()
 
 QString IDSFactorsDescriptor::name()
 {
-    return IDSFactorsDefines::GroupName;
+    return IDSFactors::nameAsConst();
 }
 
 bool IDSFactorsDescriptor::isValid(const QString &testUid, const QString &probeUid, const QString &channelId)

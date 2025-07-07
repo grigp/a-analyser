@@ -9,7 +9,6 @@
 namespace SpectrSingleSignalFactorsDefines
 {
 static const QString GroupUid = "{BF8E3564-6014-470F-AF8D-7EC928FBBA3B}";
-static const QString GroupName = QCoreApplication::tr("Показатели спектра одиночного сигнала");
 
 static const QString Frequency1Uid = "{A45D3563-309E-4A4B-9FAA-6F7FC08DB2DE}";
 static const QString Amplitude1Uid = "{ED586057-00DF-43EE-AE2C-6DCFD528141C}";
@@ -49,6 +48,11 @@ public:
      * \brief Возвращает название группы показателей
      */
     QString name() const override;
+
+    /*!
+     * \brief Возвращает название группы показателей для использования, как константу
+     */
+    static QString nameAsConst();
 
     /*!
      * \brief Возвращает true, если показатели можно рассчитать для теста с заданным uid

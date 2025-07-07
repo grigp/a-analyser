@@ -10,7 +10,6 @@
 namespace DropTestFactorsDefines
 {
 static const QString GroupUid = "{59D5CDE6-E52B-4143-B542-36998DABC57F}";
-static const QString GroupName = QCoreApplication::tr("Показатели дроп теста");
 
 static const QString JumpsCountUid = "{6864BC37-310E-4240-AA1D-1923629268AB}";
 static const QString FullTimeUid = "{256972A2-9CCF-4779-A898-40B85D461E65}";
@@ -40,6 +39,11 @@ public:
      * \brief Возвращает название группы показателей
      */
     QString name() const override;
+
+    /*!
+     * \brief Возвращает название группы показателей для использования, как константу
+     */
+    static QString nameAsConst();
 
     /*! \brief Возвращает true, если показатели можно рассчитать для теста с заданным uid
     * uid теста задается в конструкторе

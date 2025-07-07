@@ -10,7 +10,6 @@
 namespace JumpHeightFactorsDefines
 {
 static const QString GroupUid = "{5EF6AB00-42FA-458A-8CBE-82AE09A08160}";
-static const QString GroupName = QCoreApplication::tr("Показатели высоты прыжков");
 
 static const QString JumpsCountUid = "{E5E2FA90-BA27-4027-9CA6-40A5372982FF}";
 static const QString FullTimeUid = "{E9133633-9E88-49A3-89C7-E8E7E13FB9D7}";
@@ -42,6 +41,11 @@ public:
      * \brief Возвращает название группы показателей
      */
     QString name() const override;
+
+    /*!
+     * \brief Возвращает название группы показателей для использования, как константу
+     */
+    static QString nameAsConst();
 
     /*! \brief Возвращает true, если показатели можно рассчитать для теста с заданным uid
     * uid теста задается в конструкторе

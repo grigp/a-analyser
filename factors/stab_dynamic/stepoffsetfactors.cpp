@@ -28,7 +28,12 @@ QString StepOffsetFactors::uid() const
 
 QString StepOffsetFactors::name() const
 {
-    return StepOffsetFactorsDefines::GroupName;
+    return nameAsConst();
+}
+
+QString StepOffsetFactors::nameAsConst()
+{
+    return QCoreApplication::tr("Показатели теста \"Ступени\"");
 }
 
 bool StepOffsetFactors::isValid() const
@@ -109,7 +114,7 @@ void StepOffsetFactors::calculate()
 void StepOffsetFactors::registerFactors()
 {
     static_cast<AAnalyserApplication*>(QApplication::instance())->
-            registerGroup(StepOffsetFactorsDefines::GroupUid, StepOffsetFactorsDefines::GroupName);
+            registerGroup(StepOffsetFactorsDefines::GroupUid, nameAsConst());
 
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(StepOffsetFactorsDefines::Compensation::LatentUid, StepOffsetFactorsDefines::GroupUid,

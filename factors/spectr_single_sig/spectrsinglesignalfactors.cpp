@@ -30,7 +30,12 @@ QString SpectrSingleSignalFactors::uid() const
 
 QString SpectrSingleSignalFactors::name() const
 {
-    return SpectrSingleSignalFactorsDefines::GroupName;
+    return nameAsConst();
+}
+
+QString SpectrSingleSignalFactors::nameAsConst()
+{
+    return QCoreApplication::tr("Показатели спектра одиночного сигнала");
 }
 
 bool SpectrSingleSignalFactors::isValid() const
@@ -91,40 +96,40 @@ void SpectrSingleSignalFactors::calculate()
 void SpectrSingleSignalFactors::registerFactors()
 {
     static_cast<AAnalyserApplication*>(QApplication::instance())->
-            registerGroup(SpectrSingleSignalFactorsDefines::GroupUid, SpectrSingleSignalFactorsDefines::GroupName);
+            registerGroup(SpectrSingleSignalFactorsDefines::GroupUid, nameAsConst());
 
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(SpectrSingleSignalFactorsDefines::Frequency1Uid, SpectrSingleSignalFactorsDefines::GroupUid,
-                           tr("Частота первого пика"), tr("F1"), tr("Гц"), 2, 1, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Частота первого пика"), QCoreApplication::tr("F1"), QCoreApplication::tr("Гц"), 2, 1, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(SpectrSingleSignalFactorsDefines::Amplitude1Uid, SpectrSingleSignalFactorsDefines::GroupUid,
-                           tr("Амплитуда первого пика"), tr("A1"), tr("мм"), 4, 1, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Амплитуда первого пика"), QCoreApplication::tr("A1"), QCoreApplication::tr("мм"), 4, 1, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(SpectrSingleSignalFactorsDefines::Frequency2Uid, SpectrSingleSignalFactorsDefines::GroupUid,
-                           tr("Частота второго пика"), tr("F2"), tr("Гц"), 2, 1, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Частота второго пика"), QCoreApplication::tr("F2"), QCoreApplication::tr("Гц"), 2, 1, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(SpectrSingleSignalFactorsDefines::Amplitude2Uid, SpectrSingleSignalFactorsDefines::GroupUid,
-                           tr("Амплитуда второго пика"), tr("A2"), tr("мм"), 4, 1, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Амплитуда второго пика"), QCoreApplication::tr("A2"), QCoreApplication::tr("мм"), 4, 1, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(SpectrSingleSignalFactorsDefines::Frequency3Uid, SpectrSingleSignalFactorsDefines::GroupUid,
-                           tr("Частота третьего пика"), tr("F3"), tr("Гц"), 2, 1, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Частота третьего пика"), QCoreApplication::tr("F3"), QCoreApplication::tr("Гц"), 2, 1, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(SpectrSingleSignalFactorsDefines::Amplitude3Uid, SpectrSingleSignalFactorsDefines::GroupUid,
-                           tr("Амплитуда третьего пика"), tr("A3"), tr("мм"), 4, 1, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Амплитуда третьего пика"), QCoreApplication::tr("A3"), QCoreApplication::tr("мм"), 4, 1, FactorsDefines::nsDual, 12);
 
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(SpectrSingleSignalFactorsDefines::Level60Uid, SpectrSingleSignalFactorsDefines::GroupUid,
-                           tr("60% мощности спектра"), tr("60%"), tr("мм"), 2, 1, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("60% мощности спектра"), QCoreApplication::tr("60%"), QCoreApplication::tr("мм"), 2, 1, FactorsDefines::nsDual, 12);
 
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(SpectrSingleSignalFactorsDefines::Power1Uid, SpectrSingleSignalFactorsDefines::GroupUid,
-                           tr("Мощность первой зоны"), tr("Pwr1"), tr("%"), 0, 1, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Мощность первой зоны"), QCoreApplication::tr("Pwr1"), QCoreApplication::tr("%"), 0, 1, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(SpectrSingleSignalFactorsDefines::Power2Uid, SpectrSingleSignalFactorsDefines::GroupUid,
-                           tr("Мощность второй зоны"), tr("Pwr2"), tr("%"), 0, 1, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Мощность второй зоны"), QCoreApplication::tr("Pwr2"), QCoreApplication::tr("%"), 0, 1, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(SpectrSingleSignalFactorsDefines::Power3Uid, SpectrSingleSignalFactorsDefines::GroupUid,
-                           tr("Мощность третьей зоны"), tr("Pwr3"), tr("%"), 0, 1, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Мощность третьей зоны"), QCoreApplication::tr("Pwr3"), QCoreApplication::tr("%"), 0, 1, FactorsDefines::nsDual, 12);
 }
 
 void SpectrSingleSignalFactors::computeFactors()

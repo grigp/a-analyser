@@ -15,7 +15,7 @@ QString TeppingTestFactorsDescriptor::uid()
 
 QString TeppingTestFactorsDescriptor::name()
 {
-    return TeppingTestFactorsDefines::GroupName;
+    return TeppingTestFactors::nameAsConst();
 }
 
 bool TeppingTestFactorsDescriptor::isValid(const QString &testUid, const QString &probeUid, const QString &channelId)

@@ -15,7 +15,7 @@ QString VectorFactorsDescriptor::uid()
 
 QString VectorFactorsDescriptor::name()
 {
-    return VectorFactorsDefines::GroupName;
+    return VectorFactors::nameAsConst();
 }
 
 bool VectorFactorsDescriptor::isValid(const QString &testUid, const QString &probeUid, const QString &channelId)

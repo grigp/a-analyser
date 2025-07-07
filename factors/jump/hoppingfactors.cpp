@@ -24,7 +24,12 @@ QString HoppingFactors::uid() const
 
 QString HoppingFactors::name() const
 {
-    return HoppingFactorsDefines::GroupName;
+    return nameAsConst();
+}
+
+QString HoppingFactors::nameAsConst()
+{
+    return QCoreApplication::tr("Показатели соскакивания на платформу");
 }
 
 bool HoppingFactors::isValid() const
@@ -56,12 +61,12 @@ void HoppingFactors::calculate()
 void HoppingFactors::registerFactors()
 {
     static_cast<AAnalyserApplication*>(QApplication::instance())->
-            registerGroup(HoppingFactorsDefines::GroupUid, HoppingFactorsDefines::GroupName);
+            registerGroup(HoppingFactorsDefines::GroupUid, nameAsConst());
 
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(HoppingFactorsDefines::JumpHeightUid, HoppingFactorsDefines::GroupUid,
-                           tr("Высота прыжка"), tr("h"), tr("м"), 4, 2, FactorsDefines::nsAbove, 12);
+                           QCoreApplication::tr("Высота прыжка"), QCoreApplication::tr("h"), QCoreApplication::tr("м"), 4, 2, FactorsDefines::nsAbove, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(HoppingFactorsDefines::TimeUid, HoppingFactorsDefines::GroupUid,
-                           tr("Задержка на платформе"), tr("t"), tr("сек"), 2, 2, FactorsDefines::nsBelow, 12);
+                           QCoreApplication::tr("Задержка на платформе"), QCoreApplication::tr("t"), QCoreApplication::tr("сек"), 2, 2, FactorsDefines::nsBelow, 12);
 }

@@ -170,22 +170,22 @@ void RitmogramVisualWidget::showResume()
 
     auto oer = m_factors->overallEffectReg();
     auto style = getStyleByValue(static_cast<int>(oer));
-    ui->lblOverallEffectReg->setText(tr("Суммарный эффект регуляции") + " - " + PulseFactorsDefines::OverallEffectRegName.value(oer));
+    ui->lblOverallEffectReg->setText(tr("Суммарный эффект регуляции") + " - " + PulseFactors::overallEffectRegName(oer));
     ui->lblOverallEffectReg->setStyleSheet(style);
 
     auto af = m_factors->automaticFunction();
     style = getStyleByValue(static_cast<int>(af));
-    ui->lblAutomaticFunction->setText(tr("Функция автоматизма") + " - " + PulseFactorsDefines::AutomaticFunctionName.value(af));
+    ui->lblAutomaticFunction->setText(tr("Функция автоматизма") + " - " + PulseFactors::automaticFunctionName(af));
     ui->lblAutomaticFunction->setStyleSheet(style);
 
     auto vh = m_factors->vegetativeHomeostasis();
     style = getStyleByValue(static_cast<int>(vh));
-    ui->lblVegetativeHomeostasis->setText(tr("Вегетативный гомеостаз") + " - " + PulseFactorsDefines::VegetativeHomeostasisName.value(vh));
+    ui->lblVegetativeHomeostasis->setText(tr("Вегетативный гомеостаз") + " - " + PulseFactors::vegetativeHomeostasisName(vh));
     ui->lblVegetativeHomeostasis->setStyleSheet(style);
 
     auto sr = m_factors->stabilityRegulation();
     style = getStyleByValue(static_cast<int>(sr));
-    ui->lblStabilityRegulation->setText(tr("Устойчивость регуляции") + " - " + PulseFactorsDefines::StabilityRegulationName.value(sr));
+    ui->lblStabilityRegulation->setText(tr("Устойчивость регуляции") + " - " + PulseFactors::stabilityRegulationName(sr));
     ui->lblStabilityRegulation->setStyleSheet(style);
 }
 

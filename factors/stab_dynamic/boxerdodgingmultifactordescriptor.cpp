@@ -15,7 +15,7 @@ QString BoxerDodgingMultifactorDescriptor::uid()
 
 QString BoxerDodgingMultifactorDescriptor::name()
 {
-    return BoxerDodgingFactorsDefines::GroupName;
+    return BoxerDodgingMultifactor::nameAsConst();
 }
 
 bool BoxerDodgingMultifactorDescriptor::isValid(const QString &testUid, const QString &probeUid, const QString &channelId)

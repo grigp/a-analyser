@@ -11,7 +11,6 @@
 namespace MWStickForceFactorsDefines
 {
 static const QString GroupUid = "{AECF23D7-D0FB-4AB2-923B-26D428ED350B}";
-static const QString GroupName = QCoreApplication::tr("Показатели усилий соревновательной палки");
 
 static const QString MaxForceUid = "{68BBDD65-E800-4117-B73F-D3D5AABB5ABE}";
 static const QString AverageForceUid = "{A677EA17-61B8-4B17-AE9E-55E23A606936}";
@@ -40,6 +39,11 @@ public:
      * \brief Возвращает название группы показателей
      */
     QString name() const override;
+
+    /*!
+     * \brief Возвращает название группы показателей для использования, как константу
+     */
+    static QString nameAsConst();
 
     /*!
      * \brief Возвращает true, если показатели можно рассчитать для теста с заданным uid

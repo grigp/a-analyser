@@ -25,7 +25,12 @@ QString JumpHeightFactors::uid() const
 
 QString JumpHeightFactors::name() const
 {
-    return JumpHeightFactorsDefines::GroupName;
+    return nameAsConst();
+}
+
+QString JumpHeightFactors::nameAsConst()
+{
+    return QCoreApplication::tr("Показатели высоты прыжков");
 }
 
 bool JumpHeightFactors::isValid() const
@@ -81,23 +86,23 @@ void JumpHeightFactors::calculate()
 void JumpHeightFactors::registerFactors()
 {
     static_cast<AAnalyserApplication*>(QApplication::instance())->
-            registerGroup(JumpHeightFactorsDefines::GroupUid, JumpHeightFactorsDefines::GroupName);
+            registerGroup(JumpHeightFactorsDefines::GroupUid, nameAsConst());
 
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(JumpHeightFactorsDefines::JumpsCountUid, JumpHeightFactorsDefines::GroupUid,
-                           tr("Количество прыжков"), tr("Кол-во"), tr(""), 0, 1, FactorsDefines::nsAbove, 12);
+                           QCoreApplication::tr("Количество прыжков"), QCoreApplication::tr("Кол-во"), QCoreApplication::tr(""), 0, 1, FactorsDefines::nsAbove, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(JumpHeightFactorsDefines::FullTimeUid, JumpHeightFactorsDefines::GroupUid,
-                           tr("Общее время"), tr("Время"), tr("сек"), 3, 1, FactorsDefines::nsAbove, 12);
+                           QCoreApplication::tr("Общее время"), QCoreApplication::tr("Время"), QCoreApplication::tr("сек"), 3, 1, FactorsDefines::nsAbove, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(JumpHeightFactorsDefines::JumpsHeightAvrUid, JumpHeightFactorsDefines::GroupUid,
-                           tr("Средняя высота прыжка"), tr("h"), tr("м"), 4, 2, FactorsDefines::nsAbove, 12);
+                           QCoreApplication::tr("Средняя высота прыжка"), QCoreApplication::tr("h"), QCoreApplication::tr("м"), 4, 2, FactorsDefines::nsAbove, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(JumpHeightFactorsDefines::JumpsHeightMaxUid, JumpHeightFactorsDefines::GroupUid,
-                           tr("Максимальная высота прыжка"), tr("h"), tr("м"), 4, 2, FactorsDefines::nsAbove, 12);
+                           QCoreApplication::tr("Максимальная высота прыжка"), QCoreApplication::tr("h"), QCoreApplication::tr("м"), 4, 2, FactorsDefines::nsAbove, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(JumpHeightFactorsDefines::JumpsContactTimeAvrUid, JumpHeightFactorsDefines::GroupUid,
-                           tr("Среднее время контакта"), tr("Контакт"), tr("cек"), 4, 2, FactorsDefines::nsAbove, 12);
+                           QCoreApplication::tr("Среднее время контакта"), QCoreApplication::tr("Контакт"), QCoreApplication::tr("cек"), 4, 2, FactorsDefines::nsAbove, 12);
 }
 
 int JumpHeightFactors::jumpsCount() const

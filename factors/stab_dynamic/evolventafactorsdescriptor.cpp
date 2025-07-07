@@ -15,7 +15,7 @@ QString EvolventaFactorsDescriptor::uid()
 
 QString EvolventaFactorsDescriptor::name()
 {
-    return EvolventaFactorsDefines::GroupName;
+    return EvolventaFactors::nameAsConst();
 }
 
 bool EvolventaFactorsDescriptor::isValid(const QString &testUid, const QString &probeUid, const QString &channelId)

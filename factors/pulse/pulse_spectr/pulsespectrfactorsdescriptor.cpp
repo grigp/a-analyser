@@ -15,7 +15,7 @@ QString PulseSpectrFactorsDescriptor::uid()
 
 QString PulseSpectrFactorsDescriptor::name()
 {
-    return PulseSpectrFactorsDefines::GroupName;
+    return PulseSpectrFactors::nameAsConst();
 }
 
 bool PulseSpectrFactorsDescriptor::isValid(const QString &testUid, const QString &probeUid, const QString &channelId)

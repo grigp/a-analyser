@@ -37,7 +37,12 @@ QString TriangleConslutionFactors::uid() const
 
 QString TriangleConslutionFactors::name() const
 {
-    return TriangleConslutionFactorsDefines::GroupName;
+    return nameAsConst();
+}
+
+QString TriangleConslutionFactors::nameAsConst()
+{
+    return QCoreApplication::tr("Показатели теста \"Треугольник\". Заключение");
 }
 
 bool TriangleConslutionFactors::isValid() const
@@ -69,7 +74,7 @@ void TriangleConslutionFactors::calculate()
 void TriangleConslutionFactors::registerFactors()
 {
     static_cast<AAnalyserApplication*>(QApplication::instance())->
-            registerGroup(TriangleConslutionFactorsDefines::GroupUid, TriangleConslutionFactorsDefines::GroupName);
+            registerGroup(TriangleConslutionFactorsDefines::GroupUid, nameAsConst());
 
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(TriangleConslutionFactorsDefines::AccRepeatUid, TriangleConslutionFactorsDefines::GroupUid,

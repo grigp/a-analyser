@@ -15,7 +15,7 @@ QString TriangleConslutionFactorsDescriptor::uid()
 
 QString TriangleConslutionFactorsDescriptor::name()
 {
-    return TriangleConslutionFactorsDefines::GroupName;
+    return TriangleConslutionFactors::nameAsConst();
 }
 
 bool TriangleConslutionFactorsDescriptor::isValid(const QString &testUid, const QString &probeUid, const QString &channelId)

@@ -1275,227 +1275,172 @@ These connections must be configured for real working equipment.</translation>
 <context>
     <name>BoxerDodgingMultifactor</name>
     <message>
-        <location filename="factors/stab_dynamic/boxerdodgingmultifactor.cpp" line="91"/>
         <source>Средний латентный период</source>
-        <translation>Average latent period</translation>
+        <translation type="vanished">Average latent period</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/boxerdodgingmultifactor.cpp" line="91"/>
         <source>LatMid</source>
-        <translation>LatMid</translation>
+        <translation type="vanished">LatMid</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/boxerdodgingmultifactor.cpp" line="91"/>
-        <location filename="factors/stab_dynamic/boxerdodgingmultifactor.cpp" line="94"/>
-        <location filename="factors/stab_dynamic/boxerdodgingmultifactor.cpp" line="104"/>
-        <location filename="factors/stab_dynamic/boxerdodgingmultifactor.cpp" line="107"/>
-        <location filename="factors/stab_dynamic/boxerdodgingmultifactor.cpp" line="117"/>
-        <location filename="factors/stab_dynamic/boxerdodgingmultifactor.cpp" line="120"/>
-        <location filename="factors/stab_dynamic/boxerdodgingmultifactor.cpp" line="130"/>
-        <location filename="factors/stab_dynamic/boxerdodgingmultifactor.cpp" line="133"/>
-        <location filename="factors/stab_dynamic/boxerdodgingmultifactor.cpp" line="143"/>
-        <location filename="factors/stab_dynamic/boxerdodgingmultifactor.cpp" line="146"/>
         <source>сек</source>
-        <translation>sec</translation>
+        <translation type="vanished">sec</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/boxerdodgingmultifactor.cpp" line="94"/>
         <source>Среднее время реакции</source>
-        <translation>Average reaction time</translation>
+        <translation type="vanished">Average reaction time</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/boxerdodgingmultifactor.cpp" line="94"/>
         <source>TimeMid</source>
-        <translation>TimeMid</translation>
+        <translation type="vanished">TimeMid</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/boxerdodgingmultifactor.cpp" line="97"/>
         <source>Средняя амплитуда</source>
-        <translation>Average amplitude</translation>
+        <translation type="vanished">Average amplitude</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/boxerdodgingmultifactor.cpp" line="97"/>
         <source>AmplMid</source>
-        <translation>AmplMid</translation>
+        <translation type="vanished">AmplMid</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/boxerdodgingmultifactor.cpp" line="97"/>
-        <location filename="factors/stab_dynamic/boxerdodgingmultifactor.cpp" line="110"/>
-        <location filename="factors/stab_dynamic/boxerdodgingmultifactor.cpp" line="123"/>
-        <location filename="factors/stab_dynamic/boxerdodgingmultifactor.cpp" line="136"/>
-        <location filename="factors/stab_dynamic/boxerdodgingmultifactor.cpp" line="149"/>
         <source>мм</source>
-        <translation>mm</translation>
+        <translation type="vanished">mm</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/boxerdodgingmultifactor.cpp" line="100"/>
         <source>Количество ошибок</source>
-        <translation>Errors count</translation>
+        <translation type="vanished">Errors count</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/boxerdodgingmultifactor.cpp" line="100"/>
         <source>Errors</source>
-        <translation>Errors</translation>
+        <translation type="vanished">Errors</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/boxerdodgingmultifactor.cpp" line="104"/>
         <source>Латентный период влево</source>
-        <translation>Latent period to the left</translation>
+        <translation type="vanished">Latent period to the left</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/boxerdodgingmultifactor.cpp" line="104"/>
         <source>LatLeft</source>
-        <translation>LatLeft</translation>
+        <translation type="vanished">LatLeft</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/boxerdodgingmultifactor.cpp" line="107"/>
         <source>Время реакции влево</source>
-        <translation>Time reaction to the left</translation>
+        <translation type="vanished">Time reaction to the left</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/boxerdodgingmultifactor.cpp" line="107"/>
         <source>TimeLeft</source>
-        <translation>TimeLeft</translation>
+        <translation type="vanished">TimeLeft</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/boxerdodgingmultifactor.cpp" line="110"/>
         <source>Амплитуда влево</source>
-        <translation>Amplitude to the left</translation>
+        <translation type="vanished">Amplitude to the left</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/boxerdodgingmultifactor.cpp" line="110"/>
         <source>AmplLeft</source>
-        <translation>AmplLeft</translation>
+        <translation type="vanished">AmplLeft</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/boxerdodgingmultifactor.cpp" line="113"/>
         <source>Количество ошибок влево</source>
-        <translation>Errors count to the left</translation>
+        <translation type="vanished">Errors count to the left</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/boxerdodgingmultifactor.cpp" line="113"/>
         <source>ErrorsLeft</source>
-        <translation>ErrorsLeft</translation>
+        <translation type="vanished">ErrorsLeft</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/boxerdodgingmultifactor.cpp" line="117"/>
         <source>Латентный период вправо</source>
-        <translation>Latent period to the right</translation>
+        <translation type="vanished">Latent period to the right</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/boxerdodgingmultifactor.cpp" line="117"/>
         <source>LatRight</source>
-        <translation>LatRight</translation>
+        <translation type="vanished">LatRight</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/boxerdodgingmultifactor.cpp" line="120"/>
         <source>Время реакции вправо</source>
-        <translation>Time reaction to the left</translation>
+        <translation type="vanished">Time reaction to the left</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/boxerdodgingmultifactor.cpp" line="120"/>
         <source>TimeRight</source>
-        <translation>TimeRight</translation>
+        <translation type="vanished">TimeRight</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/boxerdodgingmultifactor.cpp" line="123"/>
         <source>Амплитуда вправо</source>
-        <translation>Amplitude to the right</translation>
+        <translation type="vanished">Amplitude to the right</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/boxerdodgingmultifactor.cpp" line="123"/>
         <source>AmplRight</source>
-        <translation>AmplRight</translation>
+        <translation type="vanished">AmplRight</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/boxerdodgingmultifactor.cpp" line="126"/>
         <source>Количество ошибок вправо</source>
-        <translation>Errors count to the right</translation>
+        <translation type="vanished">Errors count to the right</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/boxerdodgingmultifactor.cpp" line="126"/>
         <source>ErrorsRight</source>
-        <translation>ErrorsRight</translation>
+        <translation type="vanished">ErrorsRight</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/boxerdodgingmultifactor.cpp" line="130"/>
         <source>Латентный период вперед</source>
-        <translation>Latent period to the forward</translation>
+        <translation type="vanished">Latent period to the forward</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/boxerdodgingmultifactor.cpp" line="130"/>
         <source>LatAhead</source>
-        <translation>LatAhead</translation>
+        <translation type="vanished">LatAhead</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/boxerdodgingmultifactor.cpp" line="133"/>
         <source>Время реакции вперед</source>
-        <translation>Time reaction to the forward</translation>
+        <translation type="vanished">Time reaction to the forward</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/boxerdodgingmultifactor.cpp" line="133"/>
         <source>TimeAhead</source>
-        <translation>TimeAhead</translation>
+        <translation type="vanished">TimeAhead</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/boxerdodgingmultifactor.cpp" line="136"/>
         <source>Амплитуда вперед</source>
-        <translation>Amplitude to the forward</translation>
+        <translation type="vanished">Amplitude to the forward</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/boxerdodgingmultifactor.cpp" line="136"/>
         <source>AmplAhead</source>
-        <translation>AmplAhead</translation>
+        <translation type="vanished">AmplAhead</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/boxerdodgingmultifactor.cpp" line="139"/>
         <source>Количество ошибок вперед</source>
-        <translation>Errors count to the forward</translation>
+        <translation type="vanished">Errors count to the forward</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/boxerdodgingmultifactor.cpp" line="139"/>
         <source>ErrorsAhead</source>
-        <translation>ErrorsAhead</translation>
+        <translation type="vanished">ErrorsAhead</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/boxerdodgingmultifactor.cpp" line="143"/>
         <source>Латентный период назад</source>
-        <translation>Latent period to the backward</translation>
+        <translation type="vanished">Latent period to the backward</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/boxerdodgingmultifactor.cpp" line="143"/>
         <source>LatBack</source>
-        <translation>LatBack</translation>
+        <translation type="vanished">LatBack</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/boxerdodgingmultifactor.cpp" line="146"/>
         <source>Время реакции назад</source>
-        <translation>Time reaction to the backward</translation>
+        <translation type="vanished">Time reaction to the backward</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/boxerdodgingmultifactor.cpp" line="146"/>
         <source>TimeBack</source>
-        <translation>TimeBack</translation>
+        <translation type="vanished">TimeBack</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/boxerdodgingmultifactor.cpp" line="149"/>
         <source>Амплитуда назад</source>
-        <translation>Amplitude to the backward</translation>
+        <translation type="vanished">Amplitude to the backward</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/boxerdodgingmultifactor.cpp" line="149"/>
         <source>AmplBack</source>
-        <translation>AmplBack</translation>
+        <translation type="vanished">AmplBack</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/boxerdodgingmultifactor.cpp" line="152"/>
         <source>Количество ошибок назад</source>
-        <translation>Errors count to the backward</translation>
+        <translation type="vanished">Errors count to the backward</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/boxerdodgingmultifactor.cpp" line="152"/>
         <source>ErrorsBack</source>
-        <translation>ErrorsBack</translation>
+        <translation type="vanished">ErrorsBack</translation>
     </message>
 </context>
 <context>
@@ -2935,80 +2880,64 @@ of reactive power</translation>
 <context>
     <name>DropTestFactors</name>
     <message>
-        <location filename="factors/jump/droptestfactors.cpp" line="107"/>
         <source>Количество прыжков</source>
-        <translation>Jumps quantity</translation>
+        <translation type="vanished">Jumps quantity</translation>
     </message>
     <message>
-        <location filename="factors/jump/droptestfactors.cpp" line="107"/>
         <source>Кол-во</source>
-        <translation>Quantity</translation>
+        <translation type="vanished">Quantity</translation>
     </message>
     <message>
-        <location filename="factors/jump/droptestfactors.cpp" line="110"/>
         <source>Общее время</source>
-        <translation>Total time</translation>
+        <translation type="vanished">Total time</translation>
     </message>
     <message>
-        <location filename="factors/jump/droptestfactors.cpp" line="110"/>
         <source>Время</source>
-        <translation>Time</translation>
+        <translation type="vanished">Time</translation>
     </message>
     <message>
-        <location filename="factors/jump/droptestfactors.cpp" line="110"/>
         <source>сек</source>
-        <translation>sec</translation>
+        <translation type="vanished">sec</translation>
     </message>
     <message>
-        <location filename="factors/jump/droptestfactors.cpp" line="113"/>
         <source>Средняя высота прыжка</source>
-        <translation>Average jump height</translation>
+        <translation type="vanished">Average jump height</translation>
     </message>
     <message>
-        <location filename="factors/jump/droptestfactors.cpp" line="113"/>
         <source>h</source>
-        <translation>h</translation>
+        <translation type="vanished">h</translation>
     </message>
     <message>
-        <location filename="factors/jump/droptestfactors.cpp" line="113"/>
         <source>cм</source>
-        <translation>sm</translation>
+        <translation type="vanished">sm</translation>
     </message>
     <message>
-        <location filename="factors/jump/droptestfactors.cpp" line="116"/>
         <source>Среднее время контактной фазы</source>
-        <translation>Average time of contact phase</translation>
+        <translation type="vanished">Average time of contact phase</translation>
     </message>
     <message>
-        <location filename="factors/jump/droptestfactors.cpp" line="116"/>
         <source>Контакт</source>
-        <translation>Contact</translation>
+        <translation type="vanished">Contact</translation>
     </message>
     <message>
-        <location filename="factors/jump/droptestfactors.cpp" line="116"/>
-        <location filename="factors/jump/droptestfactors.cpp" line="119"/>
         <source>cек</source>
-        <translation>sec</translation>
+        <translation type="vanished">sec</translation>
     </message>
     <message>
-        <location filename="factors/jump/droptestfactors.cpp" line="119"/>
         <source>Среднее время бесконтактной фазы</source>
-        <translation>Average time of non-contact phase</translation>
+        <translation type="vanished">Average time of non-contact phase</translation>
     </message>
     <message>
-        <location filename="factors/jump/droptestfactors.cpp" line="119"/>
         <source>Бесконтакт</source>
-        <translation>Contactless</translation>
+        <translation type="vanished">Contactless</translation>
     </message>
     <message>
-        <location filename="factors/jump/droptestfactors.cpp" line="122"/>
         <source>Индекс реактивной силы</source>
-        <translation>Reactive force index</translation>
+        <translation type="vanished">Reactive force index</translation>
     </message>
     <message>
-        <location filename="factors/jump/droptestfactors.cpp" line="122"/>
         <source>ИРС</source>
-        <translation>RFI</translation>
+        <translation type="vanished">RFI</translation>
     </message>
 </context>
 <context>
@@ -3550,7 +3479,7 @@ Force Index</translation>
         <translation type="vanished">SummErr</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="166"/>
+        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="171"/>
         <source>мм</source>
         <translation>mm</translation>
     </message>
@@ -4222,110 +4151,87 @@ Force Index</translation>
 <context>
     <name>HoppingFactors</name>
     <message>
-        <location filename="factors/jump/hoppingfactors.cpp" line="63"/>
         <source>Высота прыжка</source>
-        <translation>Jump height</translation>
+        <translation type="vanished">Jump height</translation>
     </message>
     <message>
-        <location filename="factors/jump/hoppingfactors.cpp" line="63"/>
         <source>h</source>
-        <translation>h</translation>
+        <translation type="vanished">h</translation>
     </message>
     <message>
-        <location filename="factors/jump/hoppingfactors.cpp" line="63"/>
         <source>м</source>
-        <translation>m</translation>
+        <translation type="vanished">m</translation>
     </message>
     <message>
-        <location filename="factors/jump/hoppingfactors.cpp" line="66"/>
         <source>Задержка на платформе</source>
-        <translation>Delay on the platform</translation>
+        <translation type="vanished">Delay on the platform</translation>
     </message>
     <message>
-        <location filename="factors/jump/hoppingfactors.cpp" line="66"/>
         <source>t</source>
-        <translation>t</translation>
+        <translation type="vanished">t</translation>
     </message>
     <message>
-        <location filename="factors/jump/hoppingfactors.cpp" line="66"/>
         <source>сек</source>
-        <translation>sec</translation>
+        <translation type="vanished">sec</translation>
     </message>
 </context>
 <context>
     <name>IDSFactors</name>
     <message>
-        <location filename="factors/ids/idsfactors.cpp" line="102"/>
         <source>Индекс динамической стабилизации</source>
-        <translation>Dynamic Satbility Index</translation>
+        <translation type="vanished">Dynamic Satbility Index</translation>
     </message>
     <message>
-        <location filename="factors/ids/idsfactors.cpp" line="102"/>
         <source>ИДС</source>
-        <translation>DCI</translation>
+        <translation type="vanished">DCI</translation>
     </message>
     <message>
-        <location filename="factors/ids/idsfactors.cpp" line="102"/>
-        <location filename="factors/ids/idsfactors.cpp" line="112"/>
-        <location filename="factors/ids/idsfactors.cpp" line="115"/>
-        <location filename="factors/ids/idsfactors.cpp" line="118"/>
         <source>%</source>
-        <translation>%</translation>
+        <translation type="vanished">%</translation>
     </message>
     <message>
-        <location filename="factors/ids/idsfactors.cpp" line="105"/>
         <source>Дисперсия ФДС</source>
-        <translation>DCI dispersion</translation>
+        <translation type="vanished">DCI dispersion</translation>
     </message>
     <message>
-        <location filename="factors/ids/idsfactors.cpp" line="105"/>
         <source>Дисп.ФДС</source>
-        <translation>DCI disp.</translation>
+        <translation type="vanished">DCI disp.</translation>
     </message>
     <message>
-        <location filename="factors/ids/idsfactors.cpp" line="108"/>
         <source>Частота звука</source>
-        <translation>Sound frequency</translation>
+        <translation type="vanished">Sound frequency</translation>
     </message>
     <message>
-        <location filename="factors/ids/idsfactors.cpp" line="108"/>
         <source>Freq</source>
-        <translation>Freq</translation>
+        <translation type="vanished">Freq</translation>
     </message>
     <message>
-        <location filename="factors/ids/idsfactors.cpp" line="108"/>
         <source>Гц</source>
-        <translation>Hz</translation>
+        <translation type="vanished">Hz</translation>
     </message>
     <message>
-        <location filename="factors/ids/idsfactors.cpp" line="112"/>
         <source>Стабильность ФДС</source>
-        <translation>Stability DCF</translation>
+        <translation type="vanished">Stability DCF</translation>
     </message>
     <message>
-        <location filename="factors/ids/idsfactors.cpp" line="112"/>
         <source>Стаб.ФДС</source>
-        <translation>Stab. DCF</translation>
+        <translation type="vanished">Stab. DCF</translation>
     </message>
     <message>
-        <location filename="factors/ids/idsfactors.cpp" line="115"/>
         <source>Асимметрия ФДС</source>
-        <translation>Asymmetry of DCI</translation>
+        <translation type="vanished">Asymmetry of DCI</translation>
     </message>
     <message>
-        <location filename="factors/ids/idsfactors.cpp" line="115"/>
         <source>Асм.ФДС</source>
-        <translation>Asm.DCI</translation>
+        <translation type="vanished">Asm.DCI</translation>
     </message>
     <message>
-        <location filename="factors/ids/idsfactors.cpp" line="118"/>
         <source>Коэффициент вариации ФДС</source>
-        <translation>Coefficient of variation of DCF</translation>
+        <translation type="vanished">Coefficient of variation of DCF</translation>
     </message>
     <message>
-        <location filename="factors/ids/idsfactors.cpp" line="118"/>
         <source>КВ ФДС</source>
-        <translation>CV DCF</translation>
+        <translation type="vanished">CV DCF</translation>
     </message>
 </context>
 <context>
@@ -4575,84 +4481,67 @@ After that, click the [Next &gt;&gt;] button.</translation>
 <context>
     <name>JumpHeightFactors</name>
     <message>
-        <location filename="factors/jump/jumpheightfactors.cpp" line="88"/>
         <source>Количество прыжков</source>
-        <translation>Jumps count</translation>
+        <translation type="vanished">Jumps count</translation>
     </message>
     <message>
-        <location filename="factors/jump/jumpheightfactors.cpp" line="88"/>
         <source>Кол-во</source>
-        <translation>Count</translation>
+        <translation type="vanished">Count</translation>
     </message>
     <message>
-        <location filename="factors/jump/jumpheightfactors.cpp" line="91"/>
         <source>Общее время</source>
-        <translation>Total time</translation>
+        <translation type="vanished">Total time</translation>
     </message>
     <message>
-        <location filename="factors/jump/jumpheightfactors.cpp" line="91"/>
         <source>Время</source>
-        <translation>Time</translation>
+        <translation type="vanished">Time</translation>
     </message>
     <message>
-        <location filename="factors/jump/jumpheightfactors.cpp" line="91"/>
         <source>сек</source>
-        <translation>sec</translation>
+        <translation type="vanished">sec</translation>
     </message>
     <message>
-        <location filename="factors/jump/jumpheightfactors.cpp" line="94"/>
         <source>Средняя высота прыжка</source>
-        <translation>Average jump height</translation>
+        <translation type="vanished">Average jump height</translation>
     </message>
     <message>
-        <location filename="factors/jump/jumpheightfactors.cpp" line="94"/>
-        <location filename="factors/jump/jumpheightfactors.cpp" line="97"/>
         <source>h</source>
-        <translation>h</translation>
+        <translation type="vanished">h</translation>
     </message>
     <message>
-        <location filename="factors/jump/jumpheightfactors.cpp" line="94"/>
-        <location filename="factors/jump/jumpheightfactors.cpp" line="97"/>
         <source>м</source>
-        <translation>m</translation>
+        <translation type="vanished">m</translation>
     </message>
     <message>
-        <location filename="factors/jump/jumpheightfactors.cpp" line="97"/>
         <source>Максимальная высота прыжка</source>
-        <translation>Maximal jump height</translation>
+        <translation type="vanished">Maximal jump height</translation>
     </message>
     <message>
-        <location filename="factors/jump/jumpheightfactors.cpp" line="100"/>
         <source>Среднее время контакта</source>
-        <translation>Average contact time</translation>
+        <translation type="vanished">Average contact time</translation>
     </message>
     <message>
-        <location filename="factors/jump/jumpheightfactors.cpp" line="100"/>
         <source>Контакт</source>
-        <translation>Contact</translation>
+        <translation type="vanished">Contact</translation>
     </message>
     <message>
-        <location filename="factors/jump/jumpheightfactors.cpp" line="100"/>
         <source>cек</source>
-        <translation>sec</translation>
+        <translation type="vanished">sec</translation>
     </message>
 </context>
 <context>
     <name>JumpHeightSingleFactors</name>
     <message>
-        <location filename="factors/jump/jumpheightsinglefactors.cpp" line="63"/>
         <source>Высота прыжка</source>
-        <translation>Junp height</translation>
+        <translation type="vanished">Junp height</translation>
     </message>
     <message>
-        <location filename="factors/jump/jumpheightsinglefactors.cpp" line="63"/>
         <source>h</source>
-        <translation>h</translation>
+        <translation type="vanished">h</translation>
     </message>
     <message>
-        <location filename="factors/jump/jumpheightsinglefactors.cpp" line="63"/>
         <source>м</source>
-        <translation>m</translation>
+        <translation type="vanished">m</translation>
     </message>
 </context>
 <context>
@@ -5673,28 +5562,28 @@ After that, click the [Next &gt;&gt;] button.</translation>
 <context>
     <name>MWStickForceFactors</name>
     <message>
-        <location filename="factors/mas_wrestling/mwstickforcefactors.cpp" line="90"/>
+        <location filename="factors/mas_wrestling/mwstickforcefactors.cpp" line="95"/>
         <source>Максимальное усилие</source>
         <translation>Maximal force</translation>
     </message>
     <message>
-        <location filename="factors/mas_wrestling/mwstickforcefactors.cpp" line="90"/>
+        <location filename="factors/mas_wrestling/mwstickforcefactors.cpp" line="95"/>
         <source>Макс</source>
         <translation>Max</translation>
     </message>
     <message>
-        <location filename="factors/mas_wrestling/mwstickforcefactors.cpp" line="90"/>
-        <location filename="factors/mas_wrestling/mwstickforcefactors.cpp" line="93"/>
+        <location filename="factors/mas_wrestling/mwstickforcefactors.cpp" line="95"/>
+        <location filename="factors/mas_wrestling/mwstickforcefactors.cpp" line="98"/>
         <source>кг</source>
         <translation>kg</translation>
     </message>
     <message>
-        <location filename="factors/mas_wrestling/mwstickforcefactors.cpp" line="93"/>
+        <location filename="factors/mas_wrestling/mwstickforcefactors.cpp" line="98"/>
         <source>Среднее усилие</source>
         <translation>Average force</translation>
     </message>
     <message>
-        <location filename="factors/mas_wrestling/mwstickforcefactors.cpp" line="93"/>
+        <location filename="factors/mas_wrestling/mwstickforcefactors.cpp" line="98"/>
         <source>Среднее</source>
         <translation>Average</translation>
     </message>
@@ -6532,96 +6421,72 @@ value, mkV</translation>
 <context>
     <name>OctaedronFactors</name>
     <message>
-        <location filename="factors/stab_dynamic/octaedronfactors.cpp" line="77"/>
         <source>Отклонение вперед</source>
-        <translation>Forward deviation</translation>
+        <translation type="vanished">Forward deviation</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/octaedronfactors.cpp" line="77"/>
         <source>QU</source>
-        <translation>QU</translation>
+        <translation type="vanished">QU</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/octaedronfactors.cpp" line="77"/>
-        <location filename="factors/stab_dynamic/octaedronfactors.cpp" line="80"/>
-        <location filename="factors/stab_dynamic/octaedronfactors.cpp" line="83"/>
-        <location filename="factors/stab_dynamic/octaedronfactors.cpp" line="86"/>
-        <location filename="factors/stab_dynamic/octaedronfactors.cpp" line="89"/>
-        <location filename="factors/stab_dynamic/octaedronfactors.cpp" line="92"/>
-        <location filename="factors/stab_dynamic/octaedronfactors.cpp" line="95"/>
-        <location filename="factors/stab_dynamic/octaedronfactors.cpp" line="98"/>
         <source>%</source>
-        <translation>%</translation>
+        <translation type="vanished">%</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/octaedronfactors.cpp" line="80"/>
         <source>Отклонение вперед влево</source>
-        <translation>Forward left deviation</translation>
+        <translation type="vanished">Forward left deviation</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/octaedronfactors.cpp" line="80"/>
         <source>QUL</source>
-        <translation>QUL</translation>
+        <translation type="vanished">QUL</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/octaedronfactors.cpp" line="83"/>
         <source>Отклонение влево</source>
-        <translation>Left deviation</translation>
+        <translation type="vanished">Left deviation</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/octaedronfactors.cpp" line="83"/>
         <source>QL</source>
-        <translation>QL</translation>
+        <translation type="vanished">QL</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/octaedronfactors.cpp" line="86"/>
         <source>Отклонение назад влево</source>
-        <translation>Backward left deviation</translation>
+        <translation type="vanished">Backward left deviation</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/octaedronfactors.cpp" line="86"/>
         <source>QDL</source>
-        <translation>QDL</translation>
+        <translation type="vanished">QDL</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/octaedronfactors.cpp" line="89"/>
         <source>Отклонение назад</source>
-        <translation>Backward deviation</translation>
+        <translation type="vanished">Backward deviation</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/octaedronfactors.cpp" line="89"/>
         <source>QD</source>
-        <translation>QD</translation>
+        <translation type="vanished">QD</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/octaedronfactors.cpp" line="92"/>
         <source>Отклонение назад вправо</source>
-        <translation>Backward right deviation</translation>
+        <translation type="vanished">Backward right deviation</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/octaedronfactors.cpp" line="92"/>
         <source>QDR</source>
-        <translation>QDR</translation>
+        <translation type="vanished">QDR</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/octaedronfactors.cpp" line="95"/>
         <source>Отклонение вправо</source>
-        <translation>Right deviation</translation>
+        <translation type="vanished">Right deviation</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/octaedronfactors.cpp" line="95"/>
         <source>QR</source>
-        <translation>QR</translation>
+        <translation type="vanished">QR</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/octaedronfactors.cpp" line="98"/>
         <source>Отклонение вперед вправо</source>
-        <translation>Forward right deviation</translation>
+        <translation type="vanished">Forward right deviation</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/octaedronfactors.cpp" line="98"/>
         <source>QUR</source>
-        <translation>QUR</translation>
+        <translation type="vanished">QUR</translation>
     </message>
 </context>
 <context>
@@ -7572,390 +7437,299 @@ value, mkV</translation>
 <context>
     <name>PulseFactors</name>
     <message>
-        <location filename="factors/pulse/pulse/pulsefactors.cpp" line="127"/>
         <source>Средний пульс</source>
-        <translation>Average heart rate</translation>
+        <translation type="vanished">Average heart rate</translation>
     </message>
     <message>
-        <location filename="factors/pulse/pulse/pulsefactors.cpp" line="127"/>
         <source>ЧСС</source>
-        <translation>HR</translation>
+        <translation type="vanished">HR</translation>
     </message>
     <message>
-        <location filename="factors/pulse/pulse/pulsefactors.cpp" line="127"/>
         <source>уд/мин</source>
-        <translation>bpm</translation>
+        <translation type="vanished">bpm</translation>
     </message>
     <message>
-        <location filename="factors/pulse/pulse/pulsefactors.cpp" line="131"/>
         <source>Индекс вариационного размаха</source>
-        <translation>Variation range index</translation>
+        <translation type="vanished">Variation range index</translation>
     </message>
     <message>
-        <location filename="factors/pulse/pulse/pulsefactors.cpp" line="131"/>
         <source>ИВР</source>
-        <translation>IVR</translation>
+        <translation type="vanished">IVR</translation>
     </message>
     <message>
-        <location filename="factors/pulse/pulse/pulsefactors.cpp" line="134"/>
         <source>Показатель адекватности процессов регуляции</source>
-        <translation>Indicator of adequacy of regulatory processes</translation>
+        <translation type="vanished">Indicator of adequacy of regulatory processes</translation>
     </message>
     <message>
-        <location filename="factors/pulse/pulse/pulsefactors.cpp" line="134"/>
         <source>ПАПР</source>
-        <translation>PARP</translation>
+        <translation type="vanished">PARP</translation>
     </message>
     <message>
-        <location filename="factors/pulse/pulse/pulsefactors.cpp" line="137"/>
         <source>Вегетативный показатель ритма</source>
-        <translation>Vegetative rhythm index</translation>
+        <translation type="vanished">Vegetative rhythm index</translation>
     </message>
     <message>
-        <location filename="factors/pulse/pulse/pulsefactors.cpp" line="137"/>
         <source>ВПР</source>
-        <translation>VRI</translation>
+        <translation type="vanished">VRI</translation>
     </message>
     <message>
-        <location filename="factors/pulse/pulse/pulsefactors.cpp" line="140"/>
         <source>Индекс напряжения систем регуляции</source>
-        <translation>Index of tension of regulatory systems</translation>
+        <translation type="vanished">Index of tension of regulatory systems</translation>
     </message>
     <message>
-        <location filename="factors/pulse/pulse/pulsefactors.cpp" line="140"/>
         <source>ИН</source>
-        <translation>IT</translation>
+        <translation type="vanished">IT</translation>
     </message>
     <message>
-        <location filename="factors/pulse/pulse/pulsefactors.cpp" line="143"/>
         <source>Мода</source>
-        <translation>Mode</translation>
+        <translation type="vanished">Mode</translation>
     </message>
     <message>
-        <location filename="factors/pulse/pulse/pulsefactors.cpp" line="143"/>
         <source>Мо</source>
-        <translation>Mo</translation>
+        <translation type="vanished">Mo</translation>
     </message>
     <message>
-        <location filename="factors/pulse/pulse/pulsefactors.cpp" line="143"/>
         <source>сек</source>
-        <translation>sec</translation>
+        <translation type="vanished">sec</translation>
     </message>
     <message>
-        <location filename="factors/pulse/pulse/pulsefactors.cpp" line="146"/>
         <source>Амплитуда моды</source>
-        <translation>Mode amplitude</translation>
+        <translation type="vanished">Mode amplitude</translation>
     </message>
     <message>
-        <location filename="factors/pulse/pulse/pulsefactors.cpp" line="146"/>
         <source>АМо</source>
-        <translation>AMo</translation>
+        <translation type="vanished">AMo</translation>
     </message>
     <message>
-        <location filename="factors/pulse/pulse/pulsefactors.cpp" line="146"/>
-        <location filename="factors/pulse/pulse/pulsefactors.cpp" line="158"/>
-        <location filename="factors/pulse/pulse/pulsefactors.cpp" line="161"/>
         <source>%</source>
-        <translation>%</translation>
+        <translation type="vanished">%</translation>
     </message>
     <message>
-        <location filename="factors/pulse/pulse/pulsefactors.cpp" line="149"/>
         <source>Разность между макс. и мин. значениями</source>
-        <translation>Difference between max and min values</translation>
+        <translation type="vanished">Difference between max and min values</translation>
     </message>
     <message>
-        <location filename="factors/pulse/pulse/pulsefactors.cpp" line="149"/>
         <source>MxDMn</source>
-        <translation>MxDMn</translation>
+        <translation type="vanished">MxDMn</translation>
     </message>
     <message>
-        <location filename="factors/pulse/pulse/pulsefactors.cpp" line="149"/>
-        <location filename="factors/pulse/pulse/pulsefactors.cpp" line="152"/>
-        <location filename="factors/pulse/pulse/pulsefactors.cpp" line="155"/>
-        <location filename="factors/pulse/pulse/pulsefactors.cpp" line="164"/>
-        <location filename="factors/pulse/pulse/pulsefactors.cpp" line="167"/>
-        <location filename="factors/pulse/pulse/pulsefactors.cpp" line="170"/>
         <source>мс</source>
-        <translation>mc</translation>
+        <translation type="vanished">mc</translation>
     </message>
     <message>
-        <location filename="factors/pulse/pulse/pulsefactors.cpp" line="152"/>
         <source>Станд. отклонение массива кардиоинтервалов</source>
-        <translation>Standard deviation of the difference between adjacent RRs</translation>
+        <translation type="vanished">Standard deviation of the difference between adjacent RRs</translation>
     </message>
     <message>
-        <location filename="factors/pulse/pulse/pulsefactors.cpp" line="152"/>
         <source>SDNN</source>
-        <translation>SDNN</translation>
+        <translation type="vanished">SDNN</translation>
     </message>
     <message>
-        <location filename="factors/pulse/pulse/pulsefactors.cpp" line="155"/>
         <source>Среднеквадратичное значение последовательных различий</source>
-        <translation>Mean square of successive differences</translation>
+        <translation type="vanished">Mean square of successive differences</translation>
     </message>
     <message>
-        <location filename="factors/pulse/pulse/pulsefactors.cpp" line="155"/>
         <source>RMSSD</source>
-        <translation>RMSSD</translation>
+        <translation type="vanished">RMSSD</translation>
     </message>
     <message>
-        <location filename="factors/pulse/pulse/pulsefactors.cpp" line="158"/>
         <source>Показатель преобладания парасимп. звена</source>
-        <translation>Index of parasymptomatic link predominance</translation>
+        <translation type="vanished">Index of parasymptomatic link predominance</translation>
     </message>
     <message>
-        <location filename="factors/pulse/pulse/pulsefactors.cpp" line="158"/>
         <source>pNN50</source>
-        <translation>pNN50</translation>
+        <translation type="vanished">pNN50</translation>
     </message>
     <message>
-        <location filename="factors/pulse/pulse/pulsefactors.cpp" line="161"/>
         <source>Коэффициент вариации</source>
-        <translation>Coefficient of variation</translation>
+        <translation type="vanished">Coefficient of variation</translation>
     </message>
     <message>
-        <location filename="factors/pulse/pulse/pulsefactors.cpp" line="161"/>
         <source>CV</source>
-        <translation>CV</translation>
+        <translation type="vanished">CV</translation>
     </message>
     <message>
-        <location filename="factors/pulse/pulse/pulsefactors.cpp" line="164"/>
         <source>Станд. откл. разницы между соседними RR</source>
-        <translation>Standard deviation of the difference between adjacent RRs</translation>
+        <translation type="vanished">Standard deviation of the difference between adjacent RRs</translation>
     </message>
     <message>
-        <location filename="factors/pulse/pulse/pulsefactors.cpp" line="164"/>
         <source>SDSD</source>
-        <translation>SDSD</translation>
+        <translation type="vanished">SDSD</translation>
     </message>
     <message>
-        <location filename="factors/pulse/pulse/pulsefactors.cpp" line="167"/>
         <source>Средняя разница между соседними RR</source>
-        <translation>Average difference between adjacent RRs</translation>
+        <translation type="vanished">Average difference between adjacent RRs</translation>
     </message>
     <message>
-        <location filename="factors/pulse/pulse/pulsefactors.cpp" line="167"/>
         <source>MD</source>
-        <translation>MD</translation>
+        <translation type="vanished">MD</translation>
     </message>
     <message>
-        <location filename="factors/pulse/pulse/pulsefactors.cpp" line="170"/>
         <source>Вариационный размах</source>
-        <translation>Variational range</translation>
+        <translation type="vanished">Variational range</translation>
     </message>
     <message>
-        <location filename="factors/pulse/pulse/pulsefactors.cpp" line="170"/>
         <source>DX</source>
-        <translation>DX</translation>
+        <translation type="vanished">DX</translation>
     </message>
     <message>
-        <location filename="factors/pulse/pulse/pulsefactors.cpp" line="173"/>
         <source>Первый коэффициент автокоррел. функции</source>
-        <translation>The first coefficient of the autocorrelation function</translation>
+        <translation type="vanished">The first coefficient of the autocorrelation function</translation>
     </message>
     <message>
-        <location filename="factors/pulse/pulse/pulsefactors.cpp" line="173"/>
         <source>АСК1</source>
-        <translation>ASK1</translation>
+        <translation type="vanished">ASK1</translation>
     </message>
     <message>
-        <location filename="factors/pulse/pulse/pulsefactors.cpp" line="176"/>
         <source>Число сдвигов автокор. функции до нуля</source>
-        <translation>Count of shifts of autocorrect function to zero</translation>
+        <translation type="vanished">Count of shifts of autocorrect function to zero</translation>
     </message>
     <message>
-        <location filename="factors/pulse/pulse/pulsefactors.cpp" line="176"/>
         <source>ACSh0</source>
-        <translation>ACSh0</translation>
+        <translation type="vanished">ACSh0</translation>
     </message>
 </context>
 <context>
     <name>PulseSpectrFactors</name>
     <message>
-        <location filename="factors/pulse/pulse_spectr/pulsespectrfactors.cpp" line="214"/>
         <source>Мощность зоны высокой частоты</source>
-        <translation>High frequency zone power</translation>
+        <translation type="vanished">High frequency zone power</translation>
     </message>
     <message>
-        <location filename="factors/pulse/pulse_spectr/pulsespectrfactors.cpp" line="214"/>
         <source>HF</source>
-        <translation>HF</translation>
+        <translation type="vanished">HF</translation>
     </message>
     <message>
-        <location filename="factors/pulse/pulse_spectr/pulsespectrfactors.cpp" line="214"/>
-        <location filename="factors/pulse/pulse_spectr/pulsespectrfactors.cpp" line="217"/>
-        <location filename="factors/pulse/pulse_spectr/pulsespectrfactors.cpp" line="220"/>
-        <location filename="factors/pulse/pulse_spectr/pulsespectrfactors.cpp" line="223"/>
-        <location filename="factors/pulse/pulse_spectr/pulsespectrfactors.cpp" line="226"/>
-        <location filename="factors/pulse/pulse_spectr/pulsespectrfactors.cpp" line="241"/>
-        <location filename="factors/pulse/pulse_spectr/pulsespectrfactors.cpp" line="244"/>
-        <location filename="factors/pulse/pulse_spectr/pulsespectrfactors.cpp" line="247"/>
-        <location filename="factors/pulse/pulse_spectr/pulsespectrfactors.cpp" line="250"/>
         <source>мс2</source>
-        <translation>mc2</translation>
+        <translation type="vanished">mc2</translation>
     </message>
     <message>
-        <location filename="factors/pulse/pulse_spectr/pulsespectrfactors.cpp" line="217"/>
         <source>Мощность зоны низкой частоты</source>
-        <translation>Low frequency zone power</translation>
+        <translation type="vanished">Low frequency zone power</translation>
     </message>
     <message>
-        <location filename="factors/pulse/pulse_spectr/pulsespectrfactors.cpp" line="217"/>
         <source>LF</source>
-        <translation>LF</translation>
+        <translation type="vanished">LF</translation>
     </message>
     <message>
-        <location filename="factors/pulse/pulse_spectr/pulsespectrfactors.cpp" line="220"/>
         <source>Мощность зоны очень низкой частоты</source>
-        <translation>Very low frequency zone power</translation>
+        <translation type="vanished">Very low frequency zone power</translation>
     </message>
     <message>
-        <location filename="factors/pulse/pulse_spectr/pulsespectrfactors.cpp" line="220"/>
         <source>VLF</source>
-        <translation>VLF</translation>
+        <translation type="vanished">VLF</translation>
     </message>
     <message>
-        <location filename="factors/pulse/pulse_spectr/pulsespectrfactors.cpp" line="223"/>
         <source>Мощность зоны ультранизкой частоты</source>
-        <translation>Ultra low frequency zone power</translation>
+        <translation type="vanished">Ultra low frequency zone power</translation>
     </message>
     <message>
-        <location filename="factors/pulse/pulse_spectr/pulsespectrfactors.cpp" line="223"/>
         <source>ULF</source>
-        <translation>ULF</translation>
+        <translation type="vanished">ULF</translation>
     </message>
     <message>
-        <location filename="factors/pulse/pulse_spectr/pulsespectrfactors.cpp" line="226"/>
         <source>Суммарная мощность спектра</source>
-        <translation>Total spectrum power</translation>
+        <translation type="vanished">Total spectrum power</translation>
     </message>
     <message>
-        <location filename="factors/pulse/pulse_spectr/pulsespectrfactors.cpp" line="226"/>
         <source>TP</source>
-        <translation>TP</translation>
+        <translation type="vanished">TP</translation>
     </message>
     <message>
-        <location filename="factors/pulse/pulse_spectr/pulsespectrfactors.cpp" line="229"/>
         <source>Процент мощности зоны высокой частоты</source>
-        <translation>High frequency zone power percentage</translation>
+        <translation type="vanished">High frequency zone power percentage</translation>
     </message>
     <message>
-        <location filename="factors/pulse/pulse_spectr/pulsespectrfactors.cpp" line="229"/>
         <source>%HF</source>
-        <translation>%HF</translation>
+        <translation type="vanished">%HF</translation>
     </message>
     <message>
-        <location filename="factors/pulse/pulse_spectr/pulsespectrfactors.cpp" line="229"/>
-        <location filename="factors/pulse/pulse_spectr/pulsespectrfactors.cpp" line="232"/>
-        <location filename="factors/pulse/pulse_spectr/pulsespectrfactors.cpp" line="235"/>
-        <location filename="factors/pulse/pulse_spectr/pulsespectrfactors.cpp" line="238"/>
         <source>%</source>
-        <translation>%</translation>
+        <translation type="vanished">%</translation>
     </message>
     <message>
-        <location filename="factors/pulse/pulse_spectr/pulsespectrfactors.cpp" line="232"/>
         <source>Процент мощности зоны низкой частоты</source>
-        <translation>Low frequency zone power percentage</translation>
+        <translation type="vanished">Low frequency zone power percentage</translation>
     </message>
     <message>
-        <location filename="factors/pulse/pulse_spectr/pulsespectrfactors.cpp" line="232"/>
         <source>%LF</source>
-        <translation>%LF</translation>
+        <translation type="vanished">%LF</translation>
     </message>
     <message>
-        <location filename="factors/pulse/pulse_spectr/pulsespectrfactors.cpp" line="235"/>
         <source>Процент мощности зоны очень низкой частоты</source>
-        <translation>Very low frequency zone power percentage</translation>
+        <translation type="vanished">Very low frequency zone power percentage</translation>
     </message>
     <message>
-        <location filename="factors/pulse/pulse_spectr/pulsespectrfactors.cpp" line="235"/>
         <source>%VLF</source>
-        <translation>%VLF</translation>
+        <translation type="vanished">%VLF</translation>
     </message>
     <message>
-        <location filename="factors/pulse/pulse_spectr/pulsespectrfactors.cpp" line="238"/>
         <source>Процент мощности зоны ультранизкой частоты</source>
-        <translation>Ultra low frequency zone power percentage</translation>
+        <translation type="vanished">Ultra low frequency zone power percentage</translation>
     </message>
     <message>
-        <location filename="factors/pulse/pulse_spectr/pulsespectrfactors.cpp" line="238"/>
         <source>%ULF</source>
-        <translation>%ULF</translation>
+        <translation type="vanished">%ULF</translation>
     </message>
     <message>
-        <location filename="factors/pulse/pulse_spectr/pulsespectrfactors.cpp" line="241"/>
         <source>Средняя мощность зоны высокой частоты</source>
-        <translation>Average power of the high frequency zone</translation>
+        <translation type="vanished">Average power of the high frequency zone</translation>
     </message>
     <message>
-        <location filename="factors/pulse/pulse_spectr/pulsespectrfactors.cpp" line="241"/>
         <source>AvHF</source>
-        <translation>AvHF</translation>
+        <translation type="vanished">AvHF</translation>
     </message>
     <message>
-        <location filename="factors/pulse/pulse_spectr/pulsespectrfactors.cpp" line="244"/>
         <source>Средняя мощность зоны низкой частоты</source>
-        <translation>Average power of the low frequency zone</translation>
+        <translation type="vanished">Average power of the low frequency zone</translation>
     </message>
     <message>
-        <location filename="factors/pulse/pulse_spectr/pulsespectrfactors.cpp" line="244"/>
         <source>AvLF</source>
-        <translation>AvLF</translation>
+        <translation type="vanished">AvLF</translation>
     </message>
     <message>
-        <location filename="factors/pulse/pulse_spectr/pulsespectrfactors.cpp" line="247"/>
         <source>Средняя мощность зоны очень низкой частоты</source>
-        <translation>Average power of the very low frequency zone</translation>
+        <translation type="vanished">Average power of the very low frequency zone</translation>
     </message>
     <message>
-        <location filename="factors/pulse/pulse_spectr/pulsespectrfactors.cpp" line="247"/>
         <source>AvVLF</source>
-        <translation>AvVLF</translation>
+        <translation type="vanished">AvVLF</translation>
     </message>
     <message>
-        <location filename="factors/pulse/pulse_spectr/pulsespectrfactors.cpp" line="250"/>
         <source>Средняя мощность зоны ультранизкой частоты</source>
-        <translation>Average power of the ultra low frequency zone</translation>
+        <translation type="vanished">Average power of the ultra low frequency zone</translation>
     </message>
     <message>
-        <location filename="factors/pulse/pulse_spectr/pulsespectrfactors.cpp" line="250"/>
         <source>AvULF</source>
-        <translation>AvULF</translation>
+        <translation type="vanished">AvULF</translation>
     </message>
     <message>
-        <location filename="factors/pulse/pulse_spectr/pulsespectrfactors.cpp" line="253"/>
         <source>Отношение мощности низкой частоты к высокой</source>
-        <translation>Low frequency to high frequency power ratio</translation>
+        <translation type="vanished">Low frequency to high frequency power ratio</translation>
     </message>
     <message>
-        <location filename="factors/pulse/pulse_spectr/pulsespectrfactors.cpp" line="253"/>
         <source>LF/HF</source>
-        <translation>LF/HF</translation>
+        <translation type="vanished">LF/HF</translation>
     </message>
     <message>
-        <location filename="factors/pulse/pulse_spectr/pulsespectrfactors.cpp" line="256"/>
         <source>Уровень 60% мощности спектра</source>
-        <translation>Level 60% of spectrum power</translation>
+        <translation type="vanished">Level 60% of spectrum power</translation>
     </message>
     <message>
-        <location filename="factors/pulse/pulse_spectr/pulsespectrfactors.cpp" line="256"/>
         <source>60%</source>
-        <translation>60%</translation>
+        <translation type="vanished">60%</translation>
     </message>
     <message>
-        <location filename="factors/pulse/pulse_spectr/pulsespectrfactors.cpp" line="256"/>
         <source>Гц</source>
-        <translation>Hz</translation>
+        <translation type="vanished">Hz</translation>
     </message>
     <message>
-        <location filename="factors/pulse/pulse_spectr/pulsespectrfactors.cpp" line="259"/>
         <source>Индекс централизации</source>
-        <translation>Centralization Index</translation>
+        <translation type="vanished">Centralization Index</translation>
     </message>
     <message>
-        <location filename="factors/pulse/pulse_spectr/pulsespectrfactors.cpp" line="259"/>
         <source>IC</source>
-        <translation>IC</translation>
+        <translation type="vanished">IC</translation>
     </message>
 </context>
 <context>
@@ -8406,494 +8180,1139 @@ Click the [Done] button.</translation>
         <translation>Marker inside the package</translation>
     </message>
     <message>
-        <location filename="factors/classic/classicfactors.h" line="12"/>
+        <location filename="factors/classic/classicfactors.cpp" line="248"/>
         <source>Классические показатели</source>
         <translation>Classical factors</translation>
     </message>
     <message>
         <location filename="factors/factorsdefines.h" line="155"/>
+        <location filename="factors/tren_result/trenresultfactors.cpp" line="151"/>
         <source>Успешность выполнения задания</source>
         <translation>Successful completion of the task</translation>
     </message>
     <message>
         <location filename="factors/factorsdefines.h" line="156"/>
+        <location filename="factors/tren_result/trenresultfactors.cpp" line="151"/>
         <source>Успешность</source>
         <translation>Success</translation>
     </message>
     <message>
         <location filename="factors/factorsdefines.h" line="157"/>
-        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="118"/>
-        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="123"/>
-        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="127"/>
-        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="131"/>
-        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="135"/>
-        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="139"/>
-        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="143"/>
-        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="147"/>
-        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="151"/>
-        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="157"/>
-        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="162"/>
-        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="166"/>
-        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="171"/>
-        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="175"/>
-        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="179"/>
-        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="183"/>
-        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="188"/>
-        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="192"/>
-        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="197"/>
-        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="201"/>
-        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="205"/>
-        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="210"/>
-        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="214"/>
-        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="219"/>
-        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="223"/>
-        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="228"/>
-        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="232"/>
-        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="284"/>
-        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="305"/>
-        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="326"/>
-        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="122"/>
-        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="131"/>
-        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="140"/>
-        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="146"/>
-        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="182"/>
-        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="192"/>
-        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="201"/>
-        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="210"/>
-        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="216"/>
-        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="252"/>
-        <location filename="factors/stab_dynamic/triangleconslutionfactors.cpp" line="76"/>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="162"/>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="165"/>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="290"/>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="293"/>
+        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="119"/>
+        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="124"/>
+        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="128"/>
+        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="132"/>
+        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="136"/>
+        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="140"/>
+        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="144"/>
+        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="148"/>
+        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="152"/>
+        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="158"/>
+        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="163"/>
+        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="167"/>
+        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="172"/>
+        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="176"/>
+        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="180"/>
+        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="184"/>
+        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="189"/>
+        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="193"/>
+        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="198"/>
+        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="202"/>
+        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="206"/>
+        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="211"/>
+        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="215"/>
+        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="220"/>
+        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="224"/>
+        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="229"/>
+        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="233"/>
+        <location filename="factors/ids/idsfactors.cpp" line="107"/>
+        <location filename="factors/ids/idsfactors.cpp" line="117"/>
+        <location filename="factors/ids/idsfactors.cpp" line="120"/>
+        <location filename="factors/ids/idsfactors.cpp" line="123"/>
+        <location filename="factors/pulse/pulse/pulsefactors.cpp" line="151"/>
+        <location filename="factors/pulse/pulse/pulsefactors.cpp" line="163"/>
+        <location filename="factors/pulse/pulse/pulsefactors.cpp" line="166"/>
+        <location filename="factors/pulse/pulse_spectr/pulsespectrfactors.cpp" line="234"/>
+        <location filename="factors/pulse/pulse_spectr/pulsespectrfactors.cpp" line="237"/>
+        <location filename="factors/pulse/pulse_spectr/pulsespectrfactors.cpp" line="240"/>
+        <location filename="factors/pulse/pulse_spectr/pulsespectrfactors.cpp" line="243"/>
+        <location filename="factors/ratio_prb/ratioprobesfactors.cpp" line="126"/>
+        <location filename="factors/ratio_prb/ratioprobesfactors.cpp" line="129"/>
+        <location filename="factors/ratio_prb/ratioprobesfactors.cpp" line="132"/>
+        <location filename="factors/ratio_prb/ratioprobesfactors.cpp" line="135"/>
+        <location filename="factors/ratio_prb/ratioprobesfactors.cpp" line="138"/>
+        <location filename="factors/ratio_prb/ratioprobesfactors.cpp" line="141"/>
+        <location filename="factors/ratio_prb/ratioprobesfactors.cpp" line="144"/>
+        <location filename="factors/ratio_prb/ratioprobesfactors.cpp" line="147"/>
+        <location filename="factors/spectr_single_sig/spectrsinglesignalfactors.cpp" line="126"/>
+        <location filename="factors/spectr_single_sig/spectrsinglesignalfactors.cpp" line="129"/>
+        <location filename="factors/spectr_single_sig/spectrsinglesignalfactors.cpp" line="132"/>
+        <location filename="factors/spectr_stab/spectrstabfactors.cpp" line="104"/>
+        <location filename="factors/spectr_stab/spectrstabfactors.cpp" line="107"/>
+        <location filename="factors/spectr_stab/spectrstabfactors.cpp" line="110"/>
+        <location filename="factors/spectr_stab/spectrstabfactors.cpp" line="138"/>
+        <location filename="factors/spectr_stab/spectrstabfactors.cpp" line="141"/>
+        <location filename="factors/spectr_stab/spectrstabfactors.cpp" line="144"/>
+        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="289"/>
+        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="310"/>
+        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="331"/>
+        <location filename="factors/stab_dynamic/octaedronfactors.cpp" line="82"/>
+        <location filename="factors/stab_dynamic/octaedronfactors.cpp" line="85"/>
+        <location filename="factors/stab_dynamic/octaedronfactors.cpp" line="88"/>
+        <location filename="factors/stab_dynamic/octaedronfactors.cpp" line="91"/>
+        <location filename="factors/stab_dynamic/octaedronfactors.cpp" line="94"/>
+        <location filename="factors/stab_dynamic/octaedronfactors.cpp" line="97"/>
+        <location filename="factors/stab_dynamic/octaedronfactors.cpp" line="100"/>
+        <location filename="factors/stab_dynamic/octaedronfactors.cpp" line="103"/>
+        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="127"/>
+        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="136"/>
+        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="145"/>
+        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="151"/>
+        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="187"/>
+        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="197"/>
+        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="206"/>
+        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="215"/>
+        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="221"/>
+        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="257"/>
+        <location filename="factors/stab_dynamic/triangleconslutionfactors.cpp" line="81"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="167"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="170"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="295"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="298"/>
+        <location filename="factors/tren_result/trenresultfactors.cpp" line="151"/>
+        <location filename="factors/vector/vectorfactors.cpp" line="143"/>
+        <location filename="factors/vector/vectorfactors.cpp" line="149"/>
+        <location filename="factors/vector/vectorfactors.cpp" line="173"/>
+        <location filename="factors/vector/vectorfactors.cpp" line="186"/>
+        <location filename="factors/vector/vectorfactors.cpp" line="189"/>
         <source>%</source>
         <translation>%</translation>
     </message>
     <message>
-        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="117"/>
+        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="118"/>
         <source>Общий показатель координированности</source>
         <translation>Overall Coordination Factor</translation>
     </message>
     <message>
-        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="118"/>
+        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="119"/>
         <source>ОПК</source>
         <translation>OCF</translation>
     </message>
     <message>
-        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="122"/>
+        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="123"/>
         <source>Способность оценивать и занимать определенную позу после смещения тела</source>
         <translation>Ability to assess and assume a certain posture after body displacement</translation>
     </message>
     <message>
-        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="123"/>
+        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="124"/>
         <source>Уст.позы</source>
         <translation>StabPost</translation>
     </message>
     <message>
-        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="126"/>
+        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="127"/>
         <source>Способность к ритмичному движению</source>
         <translation>The ability to move rhythmically</translation>
     </message>
     <message>
-        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="127"/>
+        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="128"/>
         <source>Ритмичность</source>
         <translation>Rhythm</translation>
     </message>
     <message>
-        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="130"/>
+        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="131"/>
         <source>Точность вступления в сложное движение</source>
         <translation>Accuracy of entry into complex movement</translation>
     </message>
     <message>
-        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="131"/>
+        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="132"/>
         <source>Точн.движ</source>
         <translation>Acc.mov.</translation>
     </message>
     <message>
-        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="134"/>
+        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="135"/>
         <source>Точность при финальном требовании</source>
         <translation>Accuracy at final requirement</translation>
     </message>
     <message>
-        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="135"/>
+        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="136"/>
         <source>Точн.треб</source>
         <translation>Acc.req.</translation>
     </message>
     <message>
-        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="138"/>
+        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="139"/>
         <source>Точность выполнения процесса</source>
         <translation>Accuracy of process execution</translation>
     </message>
     <message>
-        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="139"/>
+        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="140"/>
         <source>Точн.проц</source>
         <translation>Acc.proc.</translation>
     </message>
     <message>
-        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="142"/>
+        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="143"/>
         <source>Точность воспроизводства требуемой амплитуды</source>
         <translation>Accuracy of reproduction of the required amplitude</translation>
     </message>
     <message>
-        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="143"/>
+        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="144"/>
         <source>Точн.ампл</source>
         <translation>Acc.ampl.</translation>
     </message>
     <message>
-        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="146"/>
+        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="147"/>
         <source>Ориентация в пространстве</source>
         <translation>Orientation overall</translation>
     </message>
     <message>
-        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="147"/>
+        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="148"/>
         <source>Ориентация</source>
         <translation>Orient</translation>
     </message>
     <message>
-        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="150"/>
+        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="151"/>
         <source>Способность воспринимать заданное движение (обучаемость)</source>
         <translation>Ability to perceive a given movement (learnability)</translation>
     </message>
     <message>
-        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="151"/>
+        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="152"/>
         <source>Обучаемость</source>
         <translation>Learning ability</translation>
     </message>
     <message>
-        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="156"/>
-        <location filename="factors/stab_dynamic/stepdeviationfactors.cpp" line="99"/>
+        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="157"/>
+        <location filename="factors/stab_dynamic/stepdeviationfactors.cpp" line="104"/>
         <source>Дифференциация</source>
         <translation>Differentiation</translation>
     </message>
     <message>
-        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="157"/>
+        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="158"/>
         <source>Дифференц.</source>
         <translation>Differ.</translation>
     </message>
     <message>
-        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="161"/>
         <location filename="factors/general_coord/generalcoordcalculator.cpp" line="162"/>
-        <location filename="factors/stab_dynamic/stepdeviationfactors.cpp" line="135"/>
+        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="163"/>
+        <location filename="factors/stab_dynamic/stepdeviationfactors.cpp" line="140"/>
         <source>Ритм</source>
         <translation>Rhythm</translation>
     </message>
     <message>
-        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="165"/>
-        <location filename="factors/stab_dynamic/stepdeviationfactors.cpp" line="138"/>
+        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="166"/>
+        <location filename="factors/stab_dynamic/stepdeviationfactors.cpp" line="143"/>
         <source>Стабильность ритма</source>
         <translation>Stability of rhythm</translation>
     </message>
     <message>
-        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="166"/>
-        <location filename="factors/stab_dynamic/stepdeviationfactors.cpp" line="138"/>
+        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="167"/>
+        <location filename="factors/stab_dynamic/stepdeviationfactors.cpp" line="143"/>
         <source>Стаб.ритм</source>
         <translation>Stb.Rythm</translation>
     </message>
     <message>
-        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="170"/>
-        <location filename="factors/stab_dynamic/stepdeviationfactors.cpp" line="93"/>
+        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="171"/>
+        <location filename="factors/stab_dynamic/stepdeviationfactors.cpp" line="98"/>
         <source>Порог чувствительности</source>
         <translation>Sensitivity threshold</translation>
     </message>
     <message>
-        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="171"/>
+        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="172"/>
         <source>Чувств.</source>
         <translation>Sensitю</translation>
     </message>
     <message>
-        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="174"/>
-        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="284"/>
+        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="175"/>
+        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="289"/>
         <source>Опережение маркера цели</source>
         <translation>Target marker lead</translation>
     </message>
     <message>
-        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="175"/>
+        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="176"/>
         <source>Опереж.цели</source>
         <translation>TrgtLead</translation>
     </message>
     <message>
-        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="178"/>
-        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="116"/>
-        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="186"/>
+        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="179"/>
+        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="121"/>
+        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="191"/>
         <source>Латентный период</source>
         <translation>Latent period</translation>
     </message>
     <message>
-        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="179"/>
+        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="180"/>
         <source>Лат.период</source>
         <translation>lat.per.</translation>
     </message>
     <message>
-        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="182"/>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="328"/>
+        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="183"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="333"/>
         <source>Время начала движения после появления сигнала</source>
         <translation>Time of start of movement after signal appearance</translation>
     </message>
     <message>
-        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="183"/>
+        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="184"/>
         <source>Время НД</source>
         <translation>Time SM</translation>
     </message>
     <message>
-        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="187"/>
-        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="209"/>
-        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="131"/>
-        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="201"/>
+        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="188"/>
+        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="210"/>
+        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="136"/>
+        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="206"/>
         <source>Амплитуда броска</source>
         <translation>Throw amplitude</translation>
     </message>
     <message>
-        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="188"/>
-        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="210"/>
+        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="189"/>
+        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="211"/>
         <source>Ампл.</source>
         <translation>Ampl.</translation>
     </message>
     <message>
-        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="191"/>
-        <location filename="factors/stab_dynamic/triangleconslutionfactors.cpp" line="122"/>
+        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="192"/>
+        <location filename="factors/stab_dynamic/triangleconslutionfactors.cpp" line="127"/>
         <source>Изменение позиции треугольника</source>
         <translation>Changing the position of the triangle</translation>
     </message>
     <message>
-        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="192"/>
+        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="193"/>
         <source>Изм.поз</source>
         <translation>Cng.pos</translation>
     </message>
     <message>
-        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="196"/>
+        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="197"/>
         <source>Средняя ошибка по фронтали</source>
         <translation>Average frontal error</translation>
     </message>
     <message>
-        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="197"/>
+        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="198"/>
         <source>Ошибка X</source>
         <translation>Error X</translation>
     </message>
     <message>
-        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="200"/>
+        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="201"/>
         <source>Средняя ошибка по сагиттали</source>
         <translation>Average sagittal error</translation>
     </message>
     <message>
-        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="201"/>
+        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="202"/>
         <source>Ошибка Y</source>
         <translation>Error Y</translation>
     </message>
     <message>
-        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="204"/>
-        <location filename="factors/stab_dynamic/triangleconslutionfactors.cpp" line="109"/>
+        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="205"/>
+        <location filename="factors/stab_dynamic/triangleconslutionfactors.cpp" line="114"/>
         <source>Средняя ошибка площади (обучение)</source>
         <translation>Average square error (training)</translation>
     </message>
     <message>
-        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="205"/>
+        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="206"/>
         <source>Ошибка S</source>
         <translation>Error S</translation>
     </message>
     <message>
-        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="213"/>
+        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="214"/>
         <source>Среднее изменение амплитуды тр-ка (обучение)</source>
         <translation>Average change in amplitude of the tr-ka (training)</translation>
     </message>
     <message>
-        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="214"/>
+        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="215"/>
         <source>Изм.ампл</source>
         <translation>Chg.ampl.</translation>
     </message>
     <message>
-        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="218"/>
-        <location filename="factors/stab_dynamic/triangleconslutionfactors.cpp" line="79"/>
+        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="219"/>
+        <location filename="factors/stab_dynamic/triangleconslutionfactors.cpp" line="84"/>
         <source>Точность позиции (фронталь)</source>
         <translation>Positional accuracy (frontal)</translation>
     </message>
     <message>
-        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="219"/>
+        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="220"/>
         <source>Точность X</source>
         <translation>Acc.X</translation>
     </message>
     <message>
-        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="222"/>
-        <location filename="factors/stab_dynamic/triangleconslutionfactors.cpp" line="82"/>
+        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="223"/>
+        <location filename="factors/stab_dynamic/triangleconslutionfactors.cpp" line="87"/>
         <source>Точность позиции (сагитталь)</source>
         <translation>Positional accuracy (sagittal)</translation>
     </message>
     <message>
-        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="223"/>
+        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="224"/>
         <source>Точность Y</source>
         <translation>Acc.Y</translation>
     </message>
     <message>
-        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="227"/>
-        <location filename="factors/stab_dynamic/triangleconslutionfactors.cpp" line="76"/>
+        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="228"/>
+        <location filename="factors/stab_dynamic/triangleconslutionfactors.cpp" line="81"/>
         <source>Точность повторения</source>
         <translation>Repeat accuracy</translation>
     </message>
     <message>
-        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="228"/>
+        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="229"/>
         <source>Точн.повт</source>
         <translation>Acc.rep.</translation>
     </message>
     <message>
-        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="231"/>
-        <location filename="factors/stab_dynamic/triangleconslutionfactors.cpp" line="85"/>
+        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="232"/>
+        <location filename="factors/stab_dynamic/triangleconslutionfactors.cpp" line="90"/>
         <source>Точность формы</source>
         <translation>Accuracy of shape</translation>
     </message>
     <message>
-        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="232"/>
+        <location filename="factors/general_coord/generalcoordcalculator.cpp" line="233"/>
         <source>Точн.формы</source>
         <translation>Acc.shp.</translation>
     </message>
     <message>
-        <location filename="factors/general_coord/generalcoordcalculator.h" line="12"/>
+        <location filename="factors/general_coord/generalcoordfactors.cpp" line="35"/>
         <source>Показатели оценки координационных способностей</source>
         <translation>Factors of assessment of coordination abilities</translation>
     </message>
     <message>
-        <location filename="factors/ids/idsfactors.h" line="13"/>
+        <location filename="factors/ids/idsfactors.cpp" line="37"/>
         <source>Показатели динамической стабилизации</source>
         <translation>Dynamic stabilization factors</translation>
     </message>
     <message>
-        <location filename="factors/jump/droptestfactors.h" line="13"/>
+        <location filename="factors/ids/idsfactors.cpp" line="107"/>
+        <source>Индекс динамической стабилизации</source>
+        <translation>Dynamic Satbility Index</translation>
+    </message>
+    <message>
+        <location filename="factors/ids/idsfactors.cpp" line="107"/>
+        <source>ИДС</source>
+        <translation>DCI</translation>
+    </message>
+    <message>
+        <location filename="factors/ids/idsfactors.cpp" line="110"/>
+        <source>Дисперсия ФДС</source>
+        <translation>DCI dispersion</translation>
+    </message>
+    <message>
+        <location filename="factors/ids/idsfactors.cpp" line="110"/>
+        <source>Дисп.ФДС</source>
+        <translation>DCI disp.</translation>
+    </message>
+    <message>
+        <location filename="factors/ids/idsfactors.cpp" line="113"/>
+        <source>Частота звука</source>
+        <translation>Sound frequency</translation>
+    </message>
+    <message>
+        <location filename="factors/ids/idsfactors.cpp" line="113"/>
+        <source>Freq</source>
+        <translation>Freq</translation>
+    </message>
+    <message>
+        <location filename="factors/ids/idsfactors.cpp" line="113"/>
+        <location filename="factors/pulse/pulse_spectr/pulsespectrfactors.cpp" line="261"/>
+        <location filename="factors/spectr_single_sig/spectrsinglesignalfactors.cpp" line="103"/>
+        <location filename="factors/spectr_single_sig/spectrsinglesignalfactors.cpp" line="109"/>
+        <location filename="factors/spectr_single_sig/spectrsinglesignalfactors.cpp" line="115"/>
+        <location filename="factors/spectr_stab/spectrstabfactors.cpp" line="81"/>
+        <location filename="factors/spectr_stab/spectrstabfactors.cpp" line="87"/>
+        <location filename="factors/spectr_stab/spectrstabfactors.cpp" line="93"/>
+        <location filename="factors/spectr_stab/spectrstabfactors.cpp" line="115"/>
+        <location filename="factors/spectr_stab/spectrstabfactors.cpp" line="121"/>
+        <location filename="factors/spectr_stab/spectrstabfactors.cpp" line="127"/>
+        <location filename="factors/spectr_stab/spectrstabfactors.cpp" line="134"/>
+        <source>Гц</source>
+        <translation>Hz</translation>
+    </message>
+    <message>
+        <location filename="factors/ids/idsfactors.cpp" line="117"/>
+        <source>Стабильность ФДС</source>
+        <translation>Stability DCF</translation>
+    </message>
+    <message>
+        <location filename="factors/ids/idsfactors.cpp" line="117"/>
+        <source>Стаб.ФДС</source>
+        <translation>Stab. DCF</translation>
+    </message>
+    <message>
+        <location filename="factors/ids/idsfactors.cpp" line="120"/>
+        <source>Асимметрия ФДС</source>
+        <translation>Asymmetry of DCI</translation>
+    </message>
+    <message>
+        <location filename="factors/ids/idsfactors.cpp" line="120"/>
+        <source>Асм.ФДС</source>
+        <translation>Asm.DCI</translation>
+    </message>
+    <message>
+        <location filename="factors/ids/idsfactors.cpp" line="123"/>
+        <source>Коэффициент вариации ФДС</source>
+        <translation>Coefficient of variation of DCF</translation>
+    </message>
+    <message>
+        <location filename="factors/ids/idsfactors.cpp" line="123"/>
+        <source>КВ ФДС</source>
+        <translation>CV DCF</translation>
+    </message>
+    <message>
+        <location filename="factors/jump/droptestfactors.cpp" line="36"/>
         <source>Показатели дроп теста</source>
         <translation>Drop test factors</translation>
     </message>
     <message>
-        <location filename="factors/jump/hoppingfactors.h" line="12"/>
+        <location filename="factors/jump/droptestfactors.cpp" line="112"/>
+        <location filename="factors/jump/jumpheightfactors.cpp" line="93"/>
+        <source>Количество прыжков</source>
+        <translation>Jumps count</translation>
+    </message>
+    <message>
+        <location filename="factors/jump/droptestfactors.cpp" line="112"/>
+        <location filename="factors/jump/jumpheightfactors.cpp" line="93"/>
+        <location filename="factors/jump/teppingtestfactors.cpp" line="114"/>
+        <source>Кол-во</source>
+        <translation>Count</translation>
+    </message>
+    <message>
+        <location filename="factors/jump/droptestfactors.cpp" line="115"/>
+        <location filename="factors/jump/jumpheightfactors.cpp" line="96"/>
+        <location filename="factors/jump/teppingtestfactors.cpp" line="117"/>
+        <source>Общее время</source>
+        <translation>Total time</translation>
+    </message>
+    <message>
+        <location filename="factors/jump/droptestfactors.cpp" line="118"/>
+        <location filename="factors/jump/jumpheightfactors.cpp" line="99"/>
+        <source>Средняя высота прыжка</source>
+        <translation>Average jump height</translation>
+    </message>
+    <message>
+        <location filename="factors/jump/droptestfactors.cpp" line="118"/>
+        <location filename="factors/jump/hoppingfactors.cpp" line="68"/>
+        <location filename="factors/jump/jumpheightfactors.cpp" line="99"/>
+        <location filename="factors/jump/jumpheightfactors.cpp" line="102"/>
+        <location filename="factors/jump/jumpheightsinglefactors.cpp" line="68"/>
+        <source>h</source>
+        <translation>h</translation>
+    </message>
+    <message>
+        <location filename="factors/jump/droptestfactors.cpp" line="118"/>
+        <source>cм</source>
+        <translation>sm</translation>
+    </message>
+    <message>
+        <location filename="factors/jump/droptestfactors.cpp" line="121"/>
+        <source>Среднее время контактной фазы</source>
+        <translation>Average time of contact phase</translation>
+    </message>
+    <message>
+        <location filename="factors/jump/droptestfactors.cpp" line="121"/>
+        <location filename="factors/jump/jumpheightfactors.cpp" line="105"/>
+        <source>Контакт</source>
+        <translation>Contact</translation>
+    </message>
+    <message>
+        <location filename="factors/jump/droptestfactors.cpp" line="121"/>
+        <location filename="factors/jump/droptestfactors.cpp" line="124"/>
+        <location filename="factors/jump/jumpheightfactors.cpp" line="105"/>
+        <location filename="factors/jump/teppingtestfactors.cpp" line="120"/>
+        <location filename="factors/jump/teppingtestfactors.cpp" line="123"/>
+        <location filename="factors/jump/teppingtestfactors.cpp" line="126"/>
+        <location filename="factors/jump/teppingtestfactors.cpp" line="129"/>
+        <source>cек</source>
+        <translation>sec</translation>
+    </message>
+    <message>
+        <location filename="factors/jump/droptestfactors.cpp" line="124"/>
+        <source>Среднее время бесконтактной фазы</source>
+        <translation>Average time of non-contact phase</translation>
+    </message>
+    <message>
+        <location filename="factors/jump/droptestfactors.cpp" line="124"/>
+        <source>Бесконтакт</source>
+        <translation>Contactless</translation>
+    </message>
+    <message>
+        <location filename="factors/jump/droptestfactors.cpp" line="127"/>
+        <source>ИРС</source>
+        <translation>RFI</translation>
+    </message>
+    <message>
+        <location filename="factors/jump/hoppingfactors.cpp" line="32"/>
         <source>Показатели соскакивания на платформу</source>
         <translation>Platform dismounting factors</translation>
     </message>
     <message>
-        <location filename="factors/jump/jumpheightfactors.h" line="13"/>
+        <location filename="factors/jump/hoppingfactors.cpp" line="68"/>
+        <location filename="factors/jump/jumpheightsinglefactors.cpp" line="68"/>
+        <source>Высота прыжка</source>
+        <translation>Jump height</translation>
+    </message>
+    <message>
+        <location filename="factors/jump/hoppingfactors.cpp" line="68"/>
+        <location filename="factors/jump/jumpheightfactors.cpp" line="99"/>
+        <location filename="factors/jump/jumpheightfactors.cpp" line="102"/>
+        <location filename="factors/jump/jumpheightsinglefactors.cpp" line="68"/>
+        <source>м</source>
+        <translation>m</translation>
+    </message>
+    <message>
+        <location filename="factors/jump/hoppingfactors.cpp" line="71"/>
+        <source>Задержка на платформе</source>
+        <translation>Delay on the platform</translation>
+    </message>
+    <message>
+        <location filename="factors/jump/hoppingfactors.cpp" line="71"/>
+        <source>t</source>
+        <translation>t</translation>
+    </message>
+    <message>
+        <location filename="factors/jump/jumpheightfactors.cpp" line="33"/>
         <source>Показатели высоты прыжков</source>
         <translation>Jump height factors</translation>
     </message>
     <message>
-        <location filename="factors/jump/jumpheightsinglefactors.h" line="12"/>
+        <location filename="factors/jump/jumpheightfactors.cpp" line="102"/>
+        <source>Максимальная высота прыжка</source>
+        <translation>Minimal jump height</translation>
+    </message>
+    <message>
+        <location filename="factors/jump/jumpheightfactors.cpp" line="105"/>
+        <source>Среднее время контакта</source>
+        <translation>Average contact time</translation>
+    </message>
+    <message>
+        <location filename="factors/jump/jumpheightsinglefactors.cpp" line="34"/>
         <source>Показатели высоты одиночного прыжка</source>
         <translation>Single jump height factors</translation>
     </message>
     <message>
-        <location filename="factors/jump/teppingtestfactors.h" line="13"/>
+        <location filename="factors/jump/teppingtestfactors.cpp" line="35"/>
         <source>Показатели теппинг теста</source>
         <translation>Tapping test factors</translation>
     </message>
     <message>
-        <location filename="factors/mas_wrestling/mwstickforcefactors.h" line="14"/>
+        <location filename="factors/jump/teppingtestfactors.cpp" line="120"/>
+        <source>Быстрота одиночного движения левой ноги</source>
+        <translation>Speed ​​of single movement of the left leg</translation>
+    </message>
+    <message>
+        <location filename="factors/jump/teppingtestfactors.cpp" line="120"/>
+        <source>Быстрота (лев)</source>
+        <translation>Speed (left)</translation>
+    </message>
+    <message>
+        <location filename="factors/jump/teppingtestfactors.cpp" line="123"/>
+        <source>Быстрота одиночного движения правой ноги</source>
+        <translation>Speed ​​of single movement of the right leg</translation>
+    </message>
+    <message>
+        <location filename="factors/jump/teppingtestfactors.cpp" line="123"/>
+        <source>Быстрота (прав)</source>
+        <translation>Speed (right)</translation>
+    </message>
+    <message>
+        <location filename="factors/jump/teppingtestfactors.cpp" line="126"/>
+        <source>Время контакта левой ноги</source>
+        <translation>Left foot contact time</translation>
+    </message>
+    <message>
+        <location filename="factors/jump/teppingtestfactors.cpp" line="126"/>
+        <source>Контакт (лев)</source>
+        <translation>Contact (left)</translation>
+    </message>
+    <message>
+        <location filename="factors/jump/teppingtestfactors.cpp" line="129"/>
+        <source>Время контакта правой ноги</source>
+        <translation>Right foot contact time</translation>
+    </message>
+    <message>
+        <location filename="factors/jump/teppingtestfactors.cpp" line="129"/>
+        <source>Контакт (прав)</source>
+        <translation>Contact (right)</translation>
+    </message>
+    <message>
+        <location filename="factors/jump/teppingtestfactors.cpp" line="132"/>
+        <source>Темп шагов</source>
+        <translation>Step tempo</translation>
+    </message>
+    <message>
+        <location filename="factors/jump/teppingtestfactors.cpp" line="132"/>
+        <source>темп</source>
+        <translation>Tempo</translation>
+    </message>
+    <message>
+        <location filename="factors/jump/teppingtestfactors.cpp" line="132"/>
+        <source>шагов/мин</source>
+        <translation>steps/min</translation>
+    </message>
+    <message>
+        <location filename="factors/mas_wrestling/mwstickforcefactors.cpp" line="32"/>
         <source>Показатели усилий соревновательной палки</source>
         <translation>Competition stick factors</translation>
     </message>
     <message>
-        <location filename="factors/pulse/pulse/pulsefactors.h" line="13"/>
+        <location filename="factors/pulse/pulse/pulsefactors.cpp" line="41"/>
         <source>Показатели вариационной пульсометрии</source>
         <translation>Variational pulsometry factors</translation>
     </message>
     <message>
-        <location filename="factors/pulse/pulse/pulsefactors.h" line="52"/>
+        <location filename="factors/pulse/pulse/pulsefactors.cpp" line="132"/>
+        <source>Средний пульс</source>
+        <translation>Average pulse</translation>
+    </message>
+    <message>
+        <location filename="factors/pulse/pulse/pulsefactors.cpp" line="132"/>
+        <source>ЧСС</source>
+        <translation>HR</translation>
+    </message>
+    <message>
+        <location filename="factors/pulse/pulse/pulsefactors.cpp" line="132"/>
+        <source>уд/мин</source>
+        <translation>bpm</translation>
+    </message>
+    <message>
+        <location filename="factors/pulse/pulse/pulsefactors.cpp" line="136"/>
+        <source>Индекс вариационного размаха</source>
+        <translation>Variation range index</translation>
+    </message>
+    <message>
+        <location filename="factors/pulse/pulse/pulsefactors.cpp" line="136"/>
+        <source>ИВР</source>
+        <translation>IVR</translation>
+    </message>
+    <message>
+        <location filename="factors/pulse/pulse/pulsefactors.cpp" line="139"/>
+        <source>Показатель адекватности процессов регуляции</source>
+        <translation>Indicator of adequacy of regulatory processes</translation>
+    </message>
+    <message>
+        <location filename="factors/pulse/pulse/pulsefactors.cpp" line="139"/>
+        <source>ПАПР</source>
+        <translation>PARP</translation>
+    </message>
+    <message>
+        <location filename="factors/pulse/pulse/pulsefactors.cpp" line="142"/>
+        <source>Вегетативный показатель ритма</source>
+        <translation>Vegetative rhythm index</translation>
+    </message>
+    <message>
+        <location filename="factors/pulse/pulse/pulsefactors.cpp" line="142"/>
+        <source>ВПР</source>
+        <translation>VRI</translation>
+    </message>
+    <message>
+        <location filename="factors/pulse/pulse/pulsefactors.cpp" line="145"/>
+        <source>Индекс напряжения систем регуляции</source>
+        <translation>Index of tension of regulatory systems</translation>
+    </message>
+    <message>
+        <location filename="factors/pulse/pulse/pulsefactors.cpp" line="145"/>
+        <source>ИН</source>
+        <translation>IT</translation>
+    </message>
+    <message>
+        <location filename="factors/pulse/pulse/pulsefactors.cpp" line="148"/>
+        <source>Мода</source>
+        <translation>Mode</translation>
+    </message>
+    <message>
+        <location filename="factors/pulse/pulse/pulsefactors.cpp" line="148"/>
+        <source>Мо</source>
+        <translation>Mo</translation>
+    </message>
+    <message>
+        <location filename="factors/pulse/pulse/pulsefactors.cpp" line="151"/>
+        <source>Амплитуда моды</source>
+        <translation>Mode amplitude</translation>
+    </message>
+    <message>
+        <location filename="factors/pulse/pulse/pulsefactors.cpp" line="151"/>
+        <source>АМо</source>
+        <translation>AMo</translation>
+    </message>
+    <message>
+        <location filename="factors/pulse/pulse/pulsefactors.cpp" line="154"/>
+        <source>Разность между макс. и мин. значениями</source>
+        <translation>Difference between max and min values</translation>
+    </message>
+    <message>
+        <location filename="factors/pulse/pulse/pulsefactors.cpp" line="154"/>
+        <source>MxDMn</source>
+        <translation>MxDMn</translation>
+    </message>
+    <message>
+        <location filename="factors/pulse/pulse/pulsefactors.cpp" line="154"/>
+        <location filename="factors/pulse/pulse/pulsefactors.cpp" line="157"/>
+        <location filename="factors/pulse/pulse/pulsefactors.cpp" line="160"/>
+        <location filename="factors/pulse/pulse/pulsefactors.cpp" line="169"/>
+        <location filename="factors/pulse/pulse/pulsefactors.cpp" line="172"/>
+        <location filename="factors/pulse/pulse/pulsefactors.cpp" line="175"/>
+        <source>мс</source>
+        <translation>mc</translation>
+    </message>
+    <message>
+        <location filename="factors/pulse/pulse/pulsefactors.cpp" line="157"/>
+        <source>Станд. отклонение массива кардиоинтервалов</source>
+        <translation>Standard deviation of the difference between adjacent RRs</translation>
+    </message>
+    <message>
+        <location filename="factors/pulse/pulse/pulsefactors.cpp" line="157"/>
+        <source>SDNN</source>
+        <translation>SDNN</translation>
+    </message>
+    <message>
+        <location filename="factors/pulse/pulse/pulsefactors.cpp" line="160"/>
+        <source>Среднеквадратичное значение последовательных различий</source>
+        <translation>Mean square of successive differences</translation>
+    </message>
+    <message>
+        <location filename="factors/pulse/pulse/pulsefactors.cpp" line="160"/>
+        <source>RMSSD</source>
+        <translation>RMSSD</translation>
+    </message>
+    <message>
+        <location filename="factors/pulse/pulse/pulsefactors.cpp" line="163"/>
+        <source>Показатель преобладания парасимп. звена</source>
+        <translation>Index of parasymptomatic link predominance</translation>
+    </message>
+    <message>
+        <location filename="factors/pulse/pulse/pulsefactors.cpp" line="163"/>
+        <source>pNN50</source>
+        <translation>pNN50</translation>
+    </message>
+    <message>
+        <location filename="factors/pulse/pulse/pulsefactors.cpp" line="166"/>
+        <source>Коэффициент вариации</source>
+        <translation>Coefficient of variation</translation>
+    </message>
+    <message>
+        <location filename="factors/pulse/pulse/pulsefactors.cpp" line="166"/>
+        <source>CV</source>
+        <translation>CV</translation>
+    </message>
+    <message>
+        <location filename="factors/pulse/pulse/pulsefactors.cpp" line="169"/>
+        <source>Станд. откл. разницы между соседними RR</source>
+        <translation>Standard deviation of the difference between adjacent RRs</translation>
+    </message>
+    <message>
+        <location filename="factors/pulse/pulse/pulsefactors.cpp" line="169"/>
+        <source>SDSD</source>
+        <translation>SDSD</translation>
+    </message>
+    <message>
+        <location filename="factors/pulse/pulse/pulsefactors.cpp" line="172"/>
+        <source>Средняя разница между соседними RR</source>
+        <translation>Average difference between adjacent RRs</translation>
+    </message>
+    <message>
+        <location filename="factors/pulse/pulse/pulsefactors.cpp" line="172"/>
+        <source>MD</source>
+        <translation>MD</translation>
+    </message>
+    <message>
+        <location filename="factors/pulse/pulse/pulsefactors.cpp" line="175"/>
+        <source>Вариационный размах</source>
+        <translation>Variational range</translation>
+    </message>
+    <message>
+        <location filename="factors/pulse/pulse/pulsefactors.cpp" line="175"/>
+        <source>DX</source>
+        <translation>DX</translation>
+    </message>
+    <message>
+        <location filename="factors/pulse/pulse/pulsefactors.cpp" line="178"/>
+        <source>Первый коэффициент автокоррел. функции</source>
+        <translation>The first coefficient of the autocorrelation function</translation>
+    </message>
+    <message>
+        <location filename="factors/pulse/pulse/pulsefactors.cpp" line="178"/>
+        <source>АСК1</source>
+        <translation>ASK1</translation>
+    </message>
+    <message>
+        <location filename="factors/pulse/pulse/pulsefactors.cpp" line="181"/>
+        <source>Число сдвигов автокор. функции до нуля</source>
+        <translation>Count of shifts of autocorrect function to zero</translation>
+    </message>
+    <message>
+        <location filename="factors/pulse/pulse/pulsefactors.cpp" line="181"/>
+        <source>ACSh0</source>
+        <translation>ACSh0</translation>
+    </message>
+    <message>
+        <location filename="factors/pulse/pulse/pulsefactors.cpp" line="216"/>
         <source>выраженная тахикардия</source>
         <translation>severe tachycardia</translation>
     </message>
     <message>
-        <location filename="factors/pulse/pulse/pulsefactors.h" line="53"/>
+        <location filename="factors/pulse/pulse/pulsefactors.cpp" line="217"/>
         <source>умеренная тахикардия</source>
         <translation>moderate tachycardia</translation>
     </message>
     <message>
-        <location filename="factors/pulse/pulse/pulsefactors.h" line="54"/>
+        <location filename="factors/pulse/pulse/pulsefactors.cpp" line="218"/>
         <source>нормосистолия</source>
         <translation>normosystole</translation>
     </message>
     <message>
-        <location filename="factors/pulse/pulse/pulsefactors.h" line="55"/>
+        <location filename="factors/pulse/pulse/pulsefactors.cpp" line="219"/>
         <source>умеренная брадикардия</source>
         <translation>moderate bradycardia</translation>
     </message>
     <message>
-        <location filename="factors/pulse/pulse/pulsefactors.h" line="56"/>
+        <location filename="factors/pulse/pulse/pulsefactors.cpp" line="220"/>
         <source>выраженная брадикардия</source>
         <translation>severe bradycardia</translation>
     </message>
     <message>
-        <location filename="factors/pulse/pulse/pulsefactors.h" line="73"/>
+        <location filename="factors/pulse/pulse/pulsefactors.cpp" line="229"/>
         <source>нарушение автоматизма выраженное</source>
         <translation>severe violation of automatism</translation>
     </message>
     <message>
-        <location filename="factors/pulse/pulse/pulsefactors.h" line="74"/>
+        <location filename="factors/pulse/pulse/pulsefactors.cpp" line="230"/>
         <source>нарушение автоматизма умеренное</source>
         <translation>moderate automatism disorder</translation>
     </message>
     <message>
-        <location filename="factors/pulse/pulse/pulsefactors.h" line="75"/>
+        <location filename="factors/pulse/pulse/pulsefactors.cpp" line="231"/>
         <source>умеренная синусовая аритмия</source>
         <translation>moderate sinus arrhythmia</translation>
     </message>
     <message>
-        <location filename="factors/pulse/pulse/pulsefactors.h" line="76"/>
+        <location filename="factors/pulse/pulse/pulsefactors.cpp" line="232"/>
         <source>выраженная синусовая аритмия</source>
         <translation>severe sinus arrhythmia</translation>
     </message>
     <message>
-        <location filename="factors/pulse/pulse/pulsefactors.h" line="77"/>
+        <location filename="factors/pulse/pulse/pulsefactors.cpp" line="233"/>
         <source>ригидный ритм</source>
         <translation>rigid rhythm</translation>
     </message>
     <message>
-        <location filename="factors/pulse/pulse/pulsefactors.h" line="94"/>
+        <location filename="factors/pulse/pulse/pulsefactors.cpp" line="243"/>
         <source>выраженное преобладание ПСНС</source>
         <translation>marked predominance of PSNS</translation>
     </message>
     <message>
-        <location filename="factors/pulse/pulse/pulsefactors.h" line="95"/>
+        <location filename="factors/pulse/pulse/pulsefactors.cpp" line="244"/>
         <source>умеренное преобладание ПСНС</source>
         <translation>moderate predominance of PSNS</translation>
     </message>
     <message>
-        <location filename="factors/pulse/pulse/pulsefactors.h" line="96"/>
+        <location filename="factors/pulse/pulse/pulsefactors.cpp" line="245"/>
         <source>сохранен</source>
         <translation>saved</translation>
     </message>
     <message>
-        <location filename="factors/pulse/pulse/pulsefactors.h" line="97"/>
+        <location filename="factors/pulse/pulse/pulsefactors.cpp" line="246"/>
         <source>умеренное преобладание СНС</source>
         <translation>moderate predominance of SNS</translation>
     </message>
     <message>
-        <location filename="factors/pulse/pulse/pulsefactors.h" line="98"/>
+        <location filename="factors/pulse/pulse/pulsefactors.cpp" line="247"/>
         <source>выраженное преобладание СНС</source>
         <translation>marked predominance of SNS</translation>
     </message>
     <message>
-        <location filename="factors/pulse/pulse/pulsefactors.h" line="115"/>
+        <location filename="factors/pulse/pulse/pulsefactors.cpp" line="257"/>
         <source>дисрегуляция с преобладанием ПСНС</source>
         <translation>dysregulation with predominance of PSNS</translation>
     </message>
     <message>
-        <location filename="factors/pulse/pulse/pulsefactors.h" line="116"/>
+        <location filename="factors/pulse/pulse/pulsefactors.cpp" line="258"/>
         <source>переходный процесс</source>
         <translation>transition process</translation>
     </message>
     <message>
-        <location filename="factors/pulse/pulse/pulsefactors.h" line="117"/>
+        <location filename="factors/pulse/pulse/pulsefactors.cpp" line="259"/>
         <source>устойчивая регуляция</source>
         <translation>stable regulation</translation>
     </message>
     <message>
-        <location filename="factors/pulse/pulse/pulsefactors.h" line="118"/>
+        <location filename="factors/pulse/pulse/pulsefactors.cpp" line="260"/>
         <source>дисрегуляция центрального типа</source>
         <translation>central type dysregulation</translation>
     </message>
     <message>
-        <location filename="factors/pulse/pulse/pulsefactors.h" line="119"/>
+        <location filename="factors/pulse/pulse/pulsefactors.cpp" line="261"/>
         <source>дисрегуляция с преобладанием СНС</source>
         <translation>dysregulation with predominance of SSNS</translation>
     </message>
     <message>
-        <location filename="factors/pulse/pulse_spectr/pulsespectrfactors.h" line="13"/>
+        <location filename="factors/pulse/pulse_spectr/pulsespectrfactors.cpp" line="41"/>
         <source>Показатели спектра пульса</source>
         <translation>Pulse spectrum factors</translation>
+    </message>
+    <message>
+        <location filename="factors/pulse/pulse_spectr/pulsespectrfactors.cpp" line="219"/>
+        <source>Мощность зоны высокой частоты</source>
+        <translation>High frequency zone power</translation>
+    </message>
+    <message>
+        <location filename="factors/pulse/pulse_spectr/pulsespectrfactors.cpp" line="219"/>
+        <source>HF</source>
+        <translation>HF</translation>
+    </message>
+    <message>
+        <location filename="factors/pulse/pulse_spectr/pulsespectrfactors.cpp" line="219"/>
+        <location filename="factors/pulse/pulse_spectr/pulsespectrfactors.cpp" line="222"/>
+        <location filename="factors/pulse/pulse_spectr/pulsespectrfactors.cpp" line="225"/>
+        <location filename="factors/pulse/pulse_spectr/pulsespectrfactors.cpp" line="228"/>
+        <location filename="factors/pulse/pulse_spectr/pulsespectrfactors.cpp" line="231"/>
+        <location filename="factors/pulse/pulse_spectr/pulsespectrfactors.cpp" line="246"/>
+        <location filename="factors/pulse/pulse_spectr/pulsespectrfactors.cpp" line="249"/>
+        <location filename="factors/pulse/pulse_spectr/pulsespectrfactors.cpp" line="252"/>
+        <location filename="factors/pulse/pulse_spectr/pulsespectrfactors.cpp" line="255"/>
+        <source>мс2</source>
+        <translation>mc2</translation>
+    </message>
+    <message>
+        <location filename="factors/pulse/pulse_spectr/pulsespectrfactors.cpp" line="222"/>
+        <source>Мощность зоны низкой частоты</source>
+        <translation>Low frequency zone power</translation>
+    </message>
+    <message>
+        <location filename="factors/pulse/pulse_spectr/pulsespectrfactors.cpp" line="222"/>
+        <source>LF</source>
+        <translation>LF</translation>
+    </message>
+    <message>
+        <location filename="factors/pulse/pulse_spectr/pulsespectrfactors.cpp" line="225"/>
+        <source>Мощность зоны очень низкой частоты</source>
+        <translation>Very low frequency zone power</translation>
+    </message>
+    <message>
+        <location filename="factors/pulse/pulse_spectr/pulsespectrfactors.cpp" line="225"/>
+        <source>VLF</source>
+        <translation>VLF</translation>
+    </message>
+    <message>
+        <location filename="factors/pulse/pulse_spectr/pulsespectrfactors.cpp" line="228"/>
+        <source>Мощность зоны ультранизкой частоты</source>
+        <translation>Ultra low frequency zone power</translation>
+    </message>
+    <message>
+        <location filename="factors/pulse/pulse_spectr/pulsespectrfactors.cpp" line="228"/>
+        <source>ULF</source>
+        <translation>ULF</translation>
+    </message>
+    <message>
+        <location filename="factors/pulse/pulse_spectr/pulsespectrfactors.cpp" line="231"/>
+        <source>Суммарная мощность спектра</source>
+        <translation>Total spectrum power</translation>
+    </message>
+    <message>
+        <location filename="factors/pulse/pulse_spectr/pulsespectrfactors.cpp" line="231"/>
+        <source>TP</source>
+        <translation>TP</translation>
+    </message>
+    <message>
+        <location filename="factors/pulse/pulse_spectr/pulsespectrfactors.cpp" line="234"/>
+        <source>Процент мощности зоны высокой частоты</source>
+        <translation>High frequency zone power percentage</translation>
+    </message>
+    <message>
+        <location filename="factors/pulse/pulse_spectr/pulsespectrfactors.cpp" line="234"/>
+        <source>%HF</source>
+        <translation>%HF</translation>
+    </message>
+    <message>
+        <location filename="factors/pulse/pulse_spectr/pulsespectrfactors.cpp" line="237"/>
+        <source>Процент мощности зоны низкой частоты</source>
+        <translation>Low frequency zone power percentage</translation>
+    </message>
+    <message>
+        <location filename="factors/pulse/pulse_spectr/pulsespectrfactors.cpp" line="237"/>
+        <source>%LF</source>
+        <translation>%LF</translation>
+    </message>
+    <message>
+        <location filename="factors/pulse/pulse_spectr/pulsespectrfactors.cpp" line="240"/>
+        <source>Процент мощности зоны очень низкой частоты</source>
+        <translation>Very low frequency zone power percentage</translation>
+    </message>
+    <message>
+        <location filename="factors/pulse/pulse_spectr/pulsespectrfactors.cpp" line="240"/>
+        <source>%VLF</source>
+        <translation>%VLF</translation>
+    </message>
+    <message>
+        <location filename="factors/pulse/pulse_spectr/pulsespectrfactors.cpp" line="243"/>
+        <source>Процент мощности зоны ультранизкой частоты</source>
+        <translation>Ultra low frequency zone power percentage</translation>
+    </message>
+    <message>
+        <location filename="factors/pulse/pulse_spectr/pulsespectrfactors.cpp" line="243"/>
+        <source>%ULF</source>
+        <translation>%ULF</translation>
+    </message>
+    <message>
+        <location filename="factors/pulse/pulse_spectr/pulsespectrfactors.cpp" line="246"/>
+        <source>Средняя мощность зоны высокой частоты</source>
+        <translation>Average power of the high frequency zone</translation>
+    </message>
+    <message>
+        <location filename="factors/pulse/pulse_spectr/pulsespectrfactors.cpp" line="246"/>
+        <source>AvHF</source>
+        <translation>AvHF</translation>
+    </message>
+    <message>
+        <location filename="factors/pulse/pulse_spectr/pulsespectrfactors.cpp" line="249"/>
+        <source>Средняя мощность зоны низкой частоты</source>
+        <translation>Average power of the low frequency zone</translation>
+    </message>
+    <message>
+        <location filename="factors/pulse/pulse_spectr/pulsespectrfactors.cpp" line="249"/>
+        <source>AvLF</source>
+        <translation>AvLF</translation>
+    </message>
+    <message>
+        <location filename="factors/pulse/pulse_spectr/pulsespectrfactors.cpp" line="252"/>
+        <source>Средняя мощность зоны очень низкой частоты</source>
+        <translation>Average power of the very low frequency zone</translation>
+    </message>
+    <message>
+        <location filename="factors/pulse/pulse_spectr/pulsespectrfactors.cpp" line="252"/>
+        <source>AvVLF</source>
+        <translation>AvVLF</translation>
+    </message>
+    <message>
+        <location filename="factors/pulse/pulse_spectr/pulsespectrfactors.cpp" line="255"/>
+        <source>Средняя мощность зоны ультранизкой частоты</source>
+        <translation>Average power of the ultra low frequency zone</translation>
+    </message>
+    <message>
+        <location filename="factors/pulse/pulse_spectr/pulsespectrfactors.cpp" line="255"/>
+        <source>AvULF</source>
+        <translation>AvULF</translation>
+    </message>
+    <message>
+        <location filename="factors/pulse/pulse_spectr/pulsespectrfactors.cpp" line="258"/>
+        <source>Отношение мощности низкой частоты к высокой</source>
+        <translation>Low frequency to high frequency power ratio</translation>
+    </message>
+    <message>
+        <location filename="factors/pulse/pulse_spectr/pulsespectrfactors.cpp" line="258"/>
+        <source>LF/HF</source>
+        <translation>LF/HF</translation>
+    </message>
+    <message>
+        <location filename="factors/pulse/pulse_spectr/pulsespectrfactors.cpp" line="261"/>
+        <source>Уровень 60% мощности спектра</source>
+        <translation>Level 60% of spectrum power</translation>
+    </message>
+    <message>
+        <location filename="factors/pulse/pulse_spectr/pulsespectrfactors.cpp" line="261"/>
+        <location filename="factors/spectr_single_sig/spectrsinglesignalfactors.cpp" line="122"/>
+        <source>60%</source>
+        <translation>60%</translation>
+    </message>
+    <message>
+        <location filename="factors/pulse/pulse_spectr/pulsespectrfactors.cpp" line="264"/>
+        <source>Индекс централизации</source>
+        <translation>Centralization Index</translation>
+    </message>
+    <message>
+        <location filename="factors/pulse/pulse_spectr/pulsespectrfactors.cpp" line="264"/>
+        <source>IC</source>
+        <translation>IC</translation>
     </message>
     <message>
         <location filename="factors/pulse/pulse_spectr/pulsespectrfactorsdefines.h" line="44"/>
@@ -8916,260 +9335,1279 @@ Click the [Done] button.</translation>
         <translation>High frequency</translation>
     </message>
     <message>
-        <location filename="factors/ratio_prb/ratioprobesfactors.h" line="12"/>
+        <location filename="factors/ratio_prb/ratioprobesfactors.cpp" line="48"/>
         <source>Показатели отношений</source>
         <translation>Ratio factors</translation>
     </message>
     <message>
-        <location filename="factors/spectr_single_sig/spectrsinglesignalfactors.h" line="12"/>
+        <location filename="factors/ratio_prb/ratioprobesfactors.cpp" line="126"/>
+        <location filename="factors/ratio_prb/ratioprobesfactors.cpp" line="132"/>
+        <location filename="factors/ratio_prb/ratioprobesfactors.cpp" line="138"/>
+        <location filename="factors/ratio_prb/ratioprobesfactors.cpp" line="144"/>
+        <source>Коэффициент отношения по площади</source>
+        <translation>Area ratio</translation>
+    </message>
+    <message>
+        <location filename="factors/ratio_prb/ratioprobesfactors.cpp" line="126"/>
+        <location filename="factors/ratio_prb/ratioprobesfactors.cpp" line="132"/>
+        <location filename="factors/ratio_prb/ratioprobesfactors.cpp" line="138"/>
+        <location filename="factors/ratio_prb/ratioprobesfactors.cpp" line="144"/>
+        <source>KS</source>
+        <translation>KS</translation>
+    </message>
+    <message>
+        <location filename="factors/ratio_prb/ratioprobesfactors.cpp" line="129"/>
+        <location filename="factors/ratio_prb/ratioprobesfactors.cpp" line="135"/>
+        <location filename="factors/ratio_prb/ratioprobesfactors.cpp" line="141"/>
+        <location filename="factors/ratio_prb/ratioprobesfactors.cpp" line="147"/>
+        <source>Коэффициент отношения по КФР</source>
+        <translation>KFR ratio</translation>
+    </message>
+    <message>
+        <location filename="factors/ratio_prb/ratioprobesfactors.cpp" line="129"/>
+        <location filename="factors/ratio_prb/ratioprobesfactors.cpp" line="135"/>
+        <location filename="factors/ratio_prb/ratioprobesfactors.cpp" line="141"/>
+        <location filename="factors/ratio_prb/ratioprobesfactors.cpp" line="147"/>
+        <source>KKFR</source>
+        <translation>KKFR</translation>
+    </message>
+    <message>
+        <location filename="factors/spectr_single_sig/spectrsinglesignalfactors.cpp" line="38"/>
         <source>Показатели спектра одиночного сигнала</source>
         <translation>Single signal spectrum factors</translation>
     </message>
     <message>
-        <location filename="factors/spectr_stab/spectrstabfactors.h" line="12"/>
+        <location filename="factors/spectr_single_sig/spectrsinglesignalfactors.cpp" line="103"/>
+        <source>Частота первого пика</source>
+        <translation>First peak frequency</translation>
+    </message>
+    <message>
+        <location filename="factors/spectr_single_sig/spectrsinglesignalfactors.cpp" line="103"/>
+        <source>F1</source>
+        <translation>F1</translation>
+    </message>
+    <message>
+        <location filename="factors/spectr_single_sig/spectrsinglesignalfactors.cpp" line="106"/>
+        <source>Амплитуда первого пика</source>
+        <translation>First peak amplitude</translation>
+    </message>
+    <message>
+        <location filename="factors/spectr_single_sig/spectrsinglesignalfactors.cpp" line="106"/>
+        <source>A1</source>
+        <translation>A1</translation>
+    </message>
+    <message>
+        <location filename="factors/spectr_single_sig/spectrsinglesignalfactors.cpp" line="109"/>
+        <source>Частота второго пика</source>
+        <translation>Second peak frequency</translation>
+    </message>
+    <message>
+        <location filename="factors/spectr_single_sig/spectrsinglesignalfactors.cpp" line="109"/>
+        <source>F2</source>
+        <translation>F2</translation>
+    </message>
+    <message>
+        <location filename="factors/spectr_single_sig/spectrsinglesignalfactors.cpp" line="112"/>
+        <source>Амплитуда второго пика</source>
+        <translation>Second peak amplitude</translation>
+    </message>
+    <message>
+        <location filename="factors/spectr_single_sig/spectrsinglesignalfactors.cpp" line="112"/>
+        <source>A2</source>
+        <translation>A2</translation>
+    </message>
+    <message>
+        <location filename="factors/spectr_single_sig/spectrsinglesignalfactors.cpp" line="115"/>
+        <source>Частота третьего пика</source>
+        <translation>Third peak frequency</translation>
+    </message>
+    <message>
+        <location filename="factors/spectr_single_sig/spectrsinglesignalfactors.cpp" line="115"/>
+        <source>F3</source>
+        <translation>F3</translation>
+    </message>
+    <message>
+        <location filename="factors/spectr_single_sig/spectrsinglesignalfactors.cpp" line="118"/>
+        <source>Амплитуда третьего пика</source>
+        <translation>Third peak amplitude</translation>
+    </message>
+    <message>
+        <location filename="factors/spectr_single_sig/spectrsinglesignalfactors.cpp" line="118"/>
+        <source>A3</source>
+        <translation>A3</translation>
+    </message>
+    <message>
+        <location filename="factors/spectr_single_sig/spectrsinglesignalfactors.cpp" line="122"/>
+        <source>60% мощности спектра</source>
+        <translation>60% of spectrum power</translation>
+    </message>
+    <message>
+        <location filename="factors/spectr_single_sig/spectrsinglesignalfactors.cpp" line="126"/>
+        <source>Мощность первой зоны</source>
+        <translation>Power of the first zone</translation>
+    </message>
+    <message>
+        <location filename="factors/spectr_single_sig/spectrsinglesignalfactors.cpp" line="126"/>
+        <source>Pwr1</source>
+        <translation>Pwr1</translation>
+    </message>
+    <message>
+        <location filename="factors/spectr_single_sig/spectrsinglesignalfactors.cpp" line="129"/>
+        <source>Мощность второй зоны</source>
+        <translation>Power of the second zone</translation>
+    </message>
+    <message>
+        <location filename="factors/spectr_single_sig/spectrsinglesignalfactors.cpp" line="129"/>
+        <source>Pwr2</source>
+        <translation>Pw2</translation>
+    </message>
+    <message>
+        <location filename="factors/spectr_single_sig/spectrsinglesignalfactors.cpp" line="132"/>
+        <source>Мощность третьей зоны</source>
+        <translation>Power of the third zone</translation>
+    </message>
+    <message>
+        <location filename="factors/spectr_single_sig/spectrsinglesignalfactors.cpp" line="132"/>
+        <source>Pwr3</source>
+        <translation>Pw3</translation>
+    </message>
+    <message>
+        <location filename="factors/spectr_stab/spectrstabfactors.cpp" line="41"/>
         <source>Показатели спектра стабилограммы</source>
         <translation>Stabilogram spectrum factors</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/boxerdodgingmultifactor.h" line="14"/>
+        <location filename="factors/spectr_stab/spectrstabfactors.cpp" line="81"/>
+        <source>Частота первого пика (фронталь)</source>
+        <translation>First peak frequency (frontal)</translation>
+    </message>
+    <message>
+        <location filename="factors/spectr_stab/spectrstabfactors.cpp" line="81"/>
+        <source>F1X</source>
+        <translation>F1X</translation>
+    </message>
+    <message>
+        <location filename="factors/spectr_stab/spectrstabfactors.cpp" line="84"/>
+        <source>Амплитуда первого пика (фронталь)</source>
+        <translation>First peak amplitude (frontal)</translation>
+    </message>
+    <message>
+        <location filename="factors/spectr_stab/spectrstabfactors.cpp" line="84"/>
+        <source>A1X</source>
+        <translation>A1X</translation>
+    </message>
+    <message>
+        <location filename="factors/spectr_stab/spectrstabfactors.cpp" line="87"/>
+        <source>Частота второго пика (фронталь)</source>
+        <translation>Second peak frequency (frontal)</translation>
+    </message>
+    <message>
+        <location filename="factors/spectr_stab/spectrstabfactors.cpp" line="87"/>
+        <source>F2X</source>
+        <translation>F2X</translation>
+    </message>
+    <message>
+        <location filename="factors/spectr_stab/spectrstabfactors.cpp" line="90"/>
+        <source>Амплитуда второго пика (фронталь)</source>
+        <translation>Second peak amplitude (frontal)</translation>
+    </message>
+    <message>
+        <location filename="factors/spectr_stab/spectrstabfactors.cpp" line="90"/>
+        <source>A2X</source>
+        <translation>A2X</translation>
+    </message>
+    <message>
+        <location filename="factors/spectr_stab/spectrstabfactors.cpp" line="93"/>
+        <source>Частота третьего пика (фронталь)</source>
+        <translation>Third peak frequency (frontal)</translation>
+    </message>
+    <message>
+        <location filename="factors/spectr_stab/spectrstabfactors.cpp" line="93"/>
+        <source>F3X</source>
+        <translation>F3</translation>
+    </message>
+    <message>
+        <location filename="factors/spectr_stab/spectrstabfactors.cpp" line="96"/>
+        <source>Амплитуда третьего пика (фронталь)</source>
+        <translation>Third peak amplitude (frontal)</translation>
+    </message>
+    <message>
+        <location filename="factors/spectr_stab/spectrstabfactors.cpp" line="96"/>
+        <source>A3X</source>
+        <translation>A3X</translation>
+    </message>
+    <message>
+        <location filename="factors/spectr_stab/spectrstabfactors.cpp" line="100"/>
+        <source>60% мощности спектра (фронталь)</source>
+        <translation>60% of spectrum power (frontal)</translation>
+    </message>
+    <message>
+        <location filename="factors/spectr_stab/spectrstabfactors.cpp" line="100"/>
+        <source>60%X</source>
+        <translation>60%X</translation>
+    </message>
+    <message>
+        <location filename="factors/spectr_stab/spectrstabfactors.cpp" line="104"/>
+        <source>Мощность первой зоны (фронталь)</source>
+        <translation>Power of the first zone (frontal)</translation>
+    </message>
+    <message>
+        <location filename="factors/spectr_stab/spectrstabfactors.cpp" line="104"/>
+        <source>Pwr1X</source>
+        <translation>Pw1X</translation>
+    </message>
+    <message>
+        <location filename="factors/spectr_stab/spectrstabfactors.cpp" line="107"/>
+        <source>Мощность второй зоны (фронталь)</source>
+        <translation>Power of the second zone (frontal)</translation>
+    </message>
+    <message>
+        <location filename="factors/spectr_stab/spectrstabfactors.cpp" line="107"/>
+        <source>Pwr2X</source>
+        <translation>Pw2X</translation>
+    </message>
+    <message>
+        <location filename="factors/spectr_stab/spectrstabfactors.cpp" line="110"/>
+        <source>Мощность третьей зоны (фронталь)</source>
+        <translation>Power of the third zone (frontal)</translation>
+    </message>
+    <message>
+        <location filename="factors/spectr_stab/spectrstabfactors.cpp" line="110"/>
+        <source>Pwr3X</source>
+        <translation>Pw3X</translation>
+    </message>
+    <message>
+        <location filename="factors/spectr_stab/spectrstabfactors.cpp" line="115"/>
+        <source>Частота первого пика (сагитталь)</source>
+        <translation>First peak frequency (sagittal)</translation>
+    </message>
+    <message>
+        <location filename="factors/spectr_stab/spectrstabfactors.cpp" line="115"/>
+        <source>F1Y</source>
+        <translation>F1Y</translation>
+    </message>
+    <message>
+        <location filename="factors/spectr_stab/spectrstabfactors.cpp" line="118"/>
+        <source>Амплитуда первого пика (сагитталь)</source>
+        <translation>First peak amplitude (sagittal)</translation>
+    </message>
+    <message>
+        <location filename="factors/spectr_stab/spectrstabfactors.cpp" line="118"/>
+        <source>A1Y</source>
+        <translation>A1Y</translation>
+    </message>
+    <message>
+        <location filename="factors/spectr_stab/spectrstabfactors.cpp" line="121"/>
+        <source>Частота второго пика (сагитталь)</source>
+        <translation>Second peak frequency (sagittal)</translation>
+    </message>
+    <message>
+        <location filename="factors/spectr_stab/spectrstabfactors.cpp" line="121"/>
+        <source>F2Y</source>
+        <translation>F2Y</translation>
+    </message>
+    <message>
+        <location filename="factors/spectr_stab/spectrstabfactors.cpp" line="124"/>
+        <source>Амплитуда второго пика (сагитталь)</source>
+        <translation>Second peak amplitude (sagittal)</translation>
+    </message>
+    <message>
+        <location filename="factors/spectr_stab/spectrstabfactors.cpp" line="124"/>
+        <source>A2Y</source>
+        <translation>A2Y</translation>
+    </message>
+    <message>
+        <location filename="factors/spectr_stab/spectrstabfactors.cpp" line="127"/>
+        <source>Частота третьего пика (сагитталь)</source>
+        <translation>Third peak frequency (sagittal)</translation>
+    </message>
+    <message>
+        <location filename="factors/spectr_stab/spectrstabfactors.cpp" line="127"/>
+        <source>F3Y</source>
+        <translation>F3Y</translation>
+    </message>
+    <message>
+        <location filename="factors/spectr_stab/spectrstabfactors.cpp" line="130"/>
+        <source>Амплитуда третьего пика (сагитталь)</source>
+        <translation>Third peak amplitude (sagittal)</translation>
+    </message>
+    <message>
+        <location filename="factors/spectr_stab/spectrstabfactors.cpp" line="130"/>
+        <source>A3Y</source>
+        <translation>A3Y</translation>
+    </message>
+    <message>
+        <location filename="factors/spectr_stab/spectrstabfactors.cpp" line="134"/>
+        <source>60% мощности спектра (сагитталь)</source>
+        <translation>60% of spectrum power (sagittal)</translation>
+    </message>
+    <message>
+        <location filename="factors/spectr_stab/spectrstabfactors.cpp" line="134"/>
+        <source>60%Y</source>
+        <translation>60%Y</translation>
+    </message>
+    <message>
+        <location filename="factors/spectr_stab/spectrstabfactors.cpp" line="138"/>
+        <source>Мощность первой зоны (сагитталь)</source>
+        <translation>Power of the first zone (sagittal)</translation>
+    </message>
+    <message>
+        <location filename="factors/spectr_stab/spectrstabfactors.cpp" line="138"/>
+        <source>Pwr1Y</source>
+        <translation>Pw1Y</translation>
+    </message>
+    <message>
+        <location filename="factors/spectr_stab/spectrstabfactors.cpp" line="141"/>
+        <source>Мощность второй зоны (сагитталь)</source>
+        <translation>Power of the second zone (sagittal)</translation>
+    </message>
+    <message>
+        <location filename="factors/spectr_stab/spectrstabfactors.cpp" line="141"/>
+        <source>Pwr2Y</source>
+        <translation>Pw2Y</translation>
+    </message>
+    <message>
+        <location filename="factors/spectr_stab/spectrstabfactors.cpp" line="144"/>
+        <source>Мощность третьей зоны (сагитталь)</source>
+        <translation>Power of the third zone (sagittal)</translation>
+    </message>
+    <message>
+        <location filename="factors/spectr_stab/spectrstabfactors.cpp" line="144"/>
+        <source>Pwr3Y</source>
+        <translation>Pw3Y</translation>
+    </message>
+    <message>
+        <location filename="factors/stab_dynamic/boxerdodgingmultifactor.cpp" line="33"/>
         <source>Показатели тренажера с уклонением</source>
         <translation>Trenager with dodge factors</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/crossfactors.h" line="14"/>
+        <location filename="factors/stab_dynamic/boxerdodgingmultifactor.cpp" line="96"/>
+        <source>Средний латентный период</source>
+        <translation>Average latent period</translation>
+    </message>
+    <message>
+        <location filename="factors/stab_dynamic/boxerdodgingmultifactor.cpp" line="96"/>
+        <source>LatMid</source>
+        <translation>LatMid</translation>
+    </message>
+    <message>
+        <location filename="factors/stab_dynamic/boxerdodgingmultifactor.cpp" line="99"/>
+        <source>Среднее время реакции</source>
+        <translation>Average reaction time</translation>
+    </message>
+    <message>
+        <location filename="factors/stab_dynamic/boxerdodgingmultifactor.cpp" line="102"/>
+        <source>AmplMid</source>
+        <translation>AmplMid</translation>
+    </message>
+    <message>
+        <location filename="factors/stab_dynamic/boxerdodgingmultifactor.cpp" line="105"/>
+        <source>Errors</source>
+        <translation>Errors</translation>
+    </message>
+    <message>
+        <location filename="factors/stab_dynamic/boxerdodgingmultifactor.cpp" line="109"/>
+        <location filename="factors/stab_dynamic/stabreacttrainfactors.cpp" line="109"/>
+        <source>Латентный период влево</source>
+        <translation>Latent period to the left</translation>
+    </message>
+    <message>
+        <location filename="factors/stab_dynamic/boxerdodgingmultifactor.cpp" line="109"/>
+        <source>LatLeft</source>
+        <translation>LatLeft</translation>
+    </message>
+    <message>
+        <location filename="factors/stab_dynamic/boxerdodgingmultifactor.cpp" line="112"/>
+        <location filename="factors/stab_dynamic/stabreacttrainfactors.cpp" line="137"/>
+        <source>Время реакции влево</source>
+        <translation>Reaction time to the left</translation>
+    </message>
+    <message>
+        <location filename="factors/stab_dynamic/boxerdodgingmultifactor.cpp" line="112"/>
+        <source>TimeLeft</source>
+        <translation>TimeLeft</translation>
+    </message>
+    <message>
+        <location filename="factors/stab_dynamic/boxerdodgingmultifactor.cpp" line="115"/>
+        <source>Амплитуда влево</source>
+        <translation>Amplitude to the left</translation>
+    </message>
+    <message>
+        <location filename="factors/stab_dynamic/boxerdodgingmultifactor.cpp" line="115"/>
+        <source>AmplLeft</source>
+        <translation>AmplLeft</translation>
+    </message>
+    <message>
+        <location filename="factors/stab_dynamic/boxerdodgingmultifactor.cpp" line="118"/>
+        <source>Количество ошибок влево</source>
+        <translation>Errors count to the left</translation>
+    </message>
+    <message>
+        <location filename="factors/stab_dynamic/boxerdodgingmultifactor.cpp" line="118"/>
+        <source>ErrorsLeft</source>
+        <translation>ErrorsLeft</translation>
+    </message>
+    <message>
+        <location filename="factors/stab_dynamic/boxerdodgingmultifactor.cpp" line="122"/>
+        <location filename="factors/stab_dynamic/stabreacttrainfactors.cpp" line="97"/>
+        <source>Латентный период вправо</source>
+        <translation>Latent period to the right</translation>
+    </message>
+    <message>
+        <location filename="factors/stab_dynamic/boxerdodgingmultifactor.cpp" line="122"/>
+        <source>LatRight</source>
+        <translation>LatRight</translation>
+    </message>
+    <message>
+        <location filename="factors/stab_dynamic/boxerdodgingmultifactor.cpp" line="125"/>
+        <location filename="factors/stab_dynamic/stabreacttrainfactors.cpp" line="125"/>
+        <source>Время реакции вправо</source>
+        <translation>Reaction time to the right</translation>
+    </message>
+    <message>
+        <location filename="factors/stab_dynamic/boxerdodgingmultifactor.cpp" line="125"/>
+        <source>TimeRight</source>
+        <translation>TimeRight</translation>
+    </message>
+    <message>
+        <location filename="factors/stab_dynamic/boxerdodgingmultifactor.cpp" line="128"/>
+        <source>Амплитуда вправо</source>
+        <translation>Amplitude to the right</translation>
+    </message>
+    <message>
+        <location filename="factors/stab_dynamic/boxerdodgingmultifactor.cpp" line="128"/>
+        <source>AmplRight</source>
+        <translation>AmplRight</translation>
+    </message>
+    <message>
+        <location filename="factors/stab_dynamic/boxerdodgingmultifactor.cpp" line="131"/>
+        <source>Количество ошибок вправо</source>
+        <translation>Errors count to the right</translation>
+    </message>
+    <message>
+        <location filename="factors/stab_dynamic/boxerdodgingmultifactor.cpp" line="131"/>
+        <source>ErrorsRight</source>
+        <translation>ErrorsRight</translation>
+    </message>
+    <message>
+        <location filename="factors/stab_dynamic/boxerdodgingmultifactor.cpp" line="135"/>
+        <location filename="factors/stab_dynamic/stabreacttrainfactors.cpp" line="91"/>
+        <source>Латентный период вперед</source>
+        <translation>Latent period forward</translation>
+    </message>
+    <message>
+        <location filename="factors/stab_dynamic/boxerdodgingmultifactor.cpp" line="135"/>
+        <source>LatAhead</source>
+        <translation>LatAhead</translation>
+    </message>
+    <message>
+        <location filename="factors/stab_dynamic/boxerdodgingmultifactor.cpp" line="138"/>
+        <location filename="factors/stab_dynamic/stabreacttrainfactors.cpp" line="119"/>
+        <source>Время реакции вперед</source>
+        <translation>Time reaction forward</translation>
+    </message>
+    <message>
+        <location filename="factors/stab_dynamic/boxerdodgingmultifactor.cpp" line="138"/>
+        <source>TimeAhead</source>
+        <translation>TimeAhead</translation>
+    </message>
+    <message>
+        <location filename="factors/stab_dynamic/boxerdodgingmultifactor.cpp" line="141"/>
+        <source>Амплитуда вперед</source>
+        <translation>Amplitude to the forward</translation>
+    </message>
+    <message>
+        <location filename="factors/stab_dynamic/boxerdodgingmultifactor.cpp" line="141"/>
+        <source>AmplAhead</source>
+        <translation>AmplAhead</translation>
+    </message>
+    <message>
+        <location filename="factors/stab_dynamic/boxerdodgingmultifactor.cpp" line="144"/>
+        <source>Количество ошибок вперед</source>
+        <translation>Errors count to the forward</translation>
+    </message>
+    <message>
+        <location filename="factors/stab_dynamic/boxerdodgingmultifactor.cpp" line="144"/>
+        <source>ErrorsAhead</source>
+        <translation>ErrorsAhead</translation>
+    </message>
+    <message>
+        <location filename="factors/stab_dynamic/boxerdodgingmultifactor.cpp" line="148"/>
+        <location filename="factors/stab_dynamic/stabreacttrainfactors.cpp" line="103"/>
+        <source>Латентный период назад</source>
+        <translation>Latent period backward</translation>
+    </message>
+    <message>
+        <location filename="factors/stab_dynamic/boxerdodgingmultifactor.cpp" line="148"/>
+        <source>LatBack</source>
+        <translation>LatBack</translation>
+    </message>
+    <message>
+        <location filename="factors/stab_dynamic/boxerdodgingmultifactor.cpp" line="151"/>
+        <location filename="factors/stab_dynamic/stabreacttrainfactors.cpp" line="131"/>
+        <source>Время реакции назад</source>
+        <translation>Time reaction backward</translation>
+    </message>
+    <message>
+        <location filename="factors/stab_dynamic/boxerdodgingmultifactor.cpp" line="151"/>
+        <source>TimeBack</source>
+        <translation>TimeBack</translation>
+    </message>
+    <message>
+        <location filename="factors/stab_dynamic/boxerdodgingmultifactor.cpp" line="154"/>
+        <source>Амплитуда назад</source>
+        <translation>Amplitude to the backward</translation>
+    </message>
+    <message>
+        <location filename="factors/stab_dynamic/boxerdodgingmultifactor.cpp" line="154"/>
+        <source>AmplBack</source>
+        <translation>AmplBack</translation>
+    </message>
+    <message>
+        <location filename="factors/stab_dynamic/boxerdodgingmultifactor.cpp" line="157"/>
+        <source>Количество ошибок назад</source>
+        <translation>Errors count to the backward</translation>
+    </message>
+    <message>
+        <location filename="factors/stab_dynamic/boxerdodgingmultifactor.cpp" line="157"/>
+        <source>ErrorsBack</source>
+        <translation>ErrorsBack</translation>
+    </message>
+    <message>
+        <location filename="factors/stab_dynamic/crossfactors.cpp" line="33"/>
         <source>Показатели теста на устойчивость</source>
         <translation>Stability test factors</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/evolventafactors.h" line="13"/>
+        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="58"/>
         <source>Показатели теста &quot;Эвольвента&quot;</source>
         <translation>Evolventa test factors</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/octaedronfactors.h" line="12"/>
+        <location filename="factors/stab_dynamic/octaedronfactors.cpp" line="32"/>
         <source>Показатели тренажера &quot;Октаэдр&quot;</source>
         <translation>Trenager &quot;Octahedron&quot; factors</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/stabreacttrainfactors.h" line="12"/>
+        <location filename="factors/stab_dynamic/octaedronfactors.cpp" line="82"/>
+        <source>QU</source>
+        <translation>QU</translation>
+    </message>
+    <message>
+        <location filename="factors/stab_dynamic/octaedronfactors.cpp" line="85"/>
+        <source>Отклонение вперед влево</source>
+        <translation>Forward left deviation</translation>
+    </message>
+    <message>
+        <location filename="factors/stab_dynamic/octaedronfactors.cpp" line="85"/>
+        <source>QUL</source>
+        <translation>QUL</translation>
+    </message>
+    <message>
+        <location filename="factors/stab_dynamic/octaedronfactors.cpp" line="88"/>
+        <source>QL</source>
+        <translation>QL</translation>
+    </message>
+    <message>
+        <location filename="factors/stab_dynamic/octaedronfactors.cpp" line="91"/>
+        <source>Отклонение назад влево</source>
+        <translation>Backward left deviation</translation>
+    </message>
+    <message>
+        <location filename="factors/stab_dynamic/octaedronfactors.cpp" line="91"/>
+        <source>QDL</source>
+        <translation>QDL</translation>
+    </message>
+    <message>
+        <location filename="factors/stab_dynamic/octaedronfactors.cpp" line="94"/>
+        <source>QD</source>
+        <translation>QD</translation>
+    </message>
+    <message>
+        <location filename="factors/stab_dynamic/octaedronfactors.cpp" line="97"/>
+        <source>Отклонение назад вправо</source>
+        <translation>Backward right deviation</translation>
+    </message>
+    <message>
+        <location filename="factors/stab_dynamic/octaedronfactors.cpp" line="97"/>
+        <source>QDR</source>
+        <translation>QDR</translation>
+    </message>
+    <message>
+        <location filename="factors/stab_dynamic/octaedronfactors.cpp" line="100"/>
+        <source>QR</source>
+        <translation>QR</translation>
+    </message>
+    <message>
+        <location filename="factors/stab_dynamic/octaedronfactors.cpp" line="103"/>
+        <source>Отклонение вперед вправо</source>
+        <translation>Forward right deviation</translation>
+    </message>
+    <message>
+        <location filename="factors/stab_dynamic/octaedronfactors.cpp" line="103"/>
+        <source>QUR</source>
+        <translation>QUR</translation>
+    </message>
+    <message>
+        <location filename="factors/stab_dynamic/stabreacttrainfactors.cpp" line="30"/>
         <source>Показатели тренажера статокинетической реакции</source>
         <translation>Statokinetic reaction trenager factors</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/stepdeviationfactors.cpp" line="74"/>
-        <location filename="factors/stab_dynamic/stepdeviationfactors.h" line="12"/>
+        <location filename="factors/stab_dynamic/stabreacttrainfactors.cpp" line="88"/>
+        <source>Латентный период средний</source>
+        <translation>Average latent period</translation>
+    </message>
+    <message>
+        <location filename="factors/stab_dynamic/stabreacttrainfactors.cpp" line="88"/>
+        <source>LA</source>
+        <translation>LA</translation>
+    </message>
+    <message>
+        <location filename="factors/stab_dynamic/stabreacttrainfactors.cpp" line="91"/>
+        <source>LU</source>
+        <translation>LU</translation>
+    </message>
+    <message>
+        <location filename="factors/stab_dynamic/stabreacttrainfactors.cpp" line="94"/>
+        <source>Латентный период вперед вправо</source>
+        <translation>Latent period forward right</translation>
+    </message>
+    <message>
+        <location filename="factors/stab_dynamic/stabreacttrainfactors.cpp" line="94"/>
+        <source>LUR</source>
+        <translation>LUR</translation>
+    </message>
+    <message>
+        <location filename="factors/stab_dynamic/stabreacttrainfactors.cpp" line="97"/>
+        <source>LR</source>
+        <translation>LR</translation>
+    </message>
+    <message>
+        <location filename="factors/stab_dynamic/stabreacttrainfactors.cpp" line="100"/>
+        <source>Латентный период назад вправо</source>
+        <translation>Latent period back to the right</translation>
+    </message>
+    <message>
+        <location filename="factors/stab_dynamic/stabreacttrainfactors.cpp" line="100"/>
+        <source>LDR</source>
+        <translation>LDR</translation>
+    </message>
+    <message>
+        <location filename="factors/stab_dynamic/stabreacttrainfactors.cpp" line="103"/>
+        <source>LD</source>
+        <translation>LD</translation>
+    </message>
+    <message>
+        <location filename="factors/stab_dynamic/stabreacttrainfactors.cpp" line="106"/>
+        <source>Латентный период назад влево</source>
+        <translation>Latent period back to the left</translation>
+    </message>
+    <message>
+        <location filename="factors/stab_dynamic/stabreacttrainfactors.cpp" line="106"/>
+        <source>LDL</source>
+        <translation>LDL</translation>
+    </message>
+    <message>
+        <location filename="factors/stab_dynamic/stabreacttrainfactors.cpp" line="109"/>
+        <source>LL</source>
+        <translation>LL</translation>
+    </message>
+    <message>
+        <location filename="factors/stab_dynamic/stabreacttrainfactors.cpp" line="112"/>
+        <source>Латентный период вперед влево</source>
+        <translation>Latent period forward left</translation>
+    </message>
+    <message>
+        <location filename="factors/stab_dynamic/stabreacttrainfactors.cpp" line="112"/>
+        <source>LUL</source>
+        <translation>LUL</translation>
+    </message>
+    <message>
+        <location filename="factors/stab_dynamic/stabreacttrainfactors.cpp" line="116"/>
+        <source>Время реакции среднее</source>
+        <translation>Average reaction time</translation>
+    </message>
+    <message>
+        <location filename="factors/stab_dynamic/stabreacttrainfactors.cpp" line="116"/>
+        <source>TA</source>
+        <translation>TA</translation>
+    </message>
+    <message>
+        <location filename="factors/stab_dynamic/stabreacttrainfactors.cpp" line="119"/>
+        <source>TU</source>
+        <translation>TU</translation>
+    </message>
+    <message>
+        <location filename="factors/stab_dynamic/stabreacttrainfactors.cpp" line="122"/>
+        <source>Время реакции вперед вправо</source>
+        <translation>Forward right reaction time</translation>
+    </message>
+    <message>
+        <location filename="factors/stab_dynamic/stabreacttrainfactors.cpp" line="122"/>
+        <source>TUR</source>
+        <translation>TUR</translation>
+    </message>
+    <message>
+        <location filename="factors/stab_dynamic/stabreacttrainfactors.cpp" line="125"/>
+        <source>TR</source>
+        <translation>TR</translation>
+    </message>
+    <message>
+        <location filename="factors/stab_dynamic/stabreacttrainfactors.cpp" line="128"/>
+        <source>Время реакции назад вправо</source>
+        <translation>Back right reaction time</translation>
+    </message>
+    <message>
+        <location filename="factors/stab_dynamic/stabreacttrainfactors.cpp" line="128"/>
+        <source>TDR</source>
+        <translation>TDR</translation>
+    </message>
+    <message>
+        <location filename="factors/stab_dynamic/stabreacttrainfactors.cpp" line="131"/>
+        <source>TD</source>
+        <translation>TD</translation>
+    </message>
+    <message>
+        <location filename="factors/stab_dynamic/stabreacttrainfactors.cpp" line="134"/>
+        <source>Время реакции назад влево</source>
+        <translation>Back left reaction time</translation>
+    </message>
+    <message>
+        <location filename="factors/stab_dynamic/stabreacttrainfactors.cpp" line="134"/>
+        <source>TDL</source>
+        <translation>TDL</translation>
+    </message>
+    <message>
+        <location filename="factors/stab_dynamic/stabreacttrainfactors.cpp" line="137"/>
+        <source>TL</source>
+        <translation>TL</translation>
+    </message>
+    <message>
+        <location filename="factors/stab_dynamic/stabreacttrainfactors.cpp" line="140"/>
+        <source>Время реакции вперед влево</source>
+        <translation>Forward left reaction time</translation>
+    </message>
+    <message>
+        <location filename="factors/stab_dynamic/stabreacttrainfactors.cpp" line="140"/>
+        <source>TUL</source>
+        <translation>TUL</translation>
+    </message>
+    <message>
+        <location filename="factors/stab_dynamic/stepdeviationfactors.cpp" line="33"/>
         <source>Показатели теста прироста</source>
         <translation>Growth test factors</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/stepdeviationfactors.cpp" line="78"/>
+        <location filename="factors/stab_dynamic/stepdeviationfactors.cpp" line="83"/>
         <source>Длительность пробы</source>
         <translation>Probe duration</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/stepdeviationfactors.cpp" line="78"/>
+        <location filename="factors/stab_dynamic/stepdeviationfactors.cpp" line="83"/>
         <source>Длит</source>
         <translation>PD</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/stepdeviationfactors.cpp" line="81"/>
+        <location filename="factors/jump/teppingtestfactors.cpp" line="114"/>
+        <location filename="factors/stab_dynamic/stepdeviationfactors.cpp" line="86"/>
         <source>Количество шагов</source>
         <translation>Steps count</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/stepdeviationfactors.cpp" line="81"/>
+        <location filename="factors/stab_dynamic/stepdeviationfactors.cpp" line="86"/>
         <source>Шаги</source>
         <translation>Steps</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/stepdeviationfactors.cpp" line="84"/>
+        <location filename="factors/stab_dynamic/boxerdodgingmultifactor.cpp" line="105"/>
+        <location filename="factors/stab_dynamic/stepdeviationfactors.cpp" line="89"/>
+        <location filename="factors/tren_result/trenresultfactors.cpp" line="147"/>
         <source>Количество ошибок</source>
         <translation>Errors count</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/stepdeviationfactors.cpp" line="84"/>
+        <location filename="factors/stab_dynamic/stepdeviationfactors.cpp" line="89"/>
+        <location filename="factors/tren_result/trenresultfactors.cpp" line="147"/>
         <source>Ошибки</source>
         <translation>Errors</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/stepdeviationfactors.cpp" line="87"/>
+        <location filename="factors/stab_dynamic/stepdeviationfactors.cpp" line="92"/>
         <source>Средняя величина пророста</source>
         <translation>Average increase size</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/stepdeviationfactors.cpp" line="87"/>
+        <location filename="factors/stab_dynamic/stepdeviationfactors.cpp" line="92"/>
         <source>Прирост</source>
         <translation>Increase</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/stepdeviationfactors.cpp" line="90"/>
+        <location filename="factors/stab_dynamic/stepdeviationfactors.cpp" line="95"/>
         <source>Среднее время отклонений</source>
         <translation>Average deviation time</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/stepdeviationfactors.cpp" line="90"/>
+        <location filename="factors/stab_dynamic/stepdeviationfactors.cpp" line="95"/>
         <source>TimeAvrg</source>
         <translation>TimeDev</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/stepdeviationfactors.cpp" line="93"/>
+        <location filename="factors/stab_dynamic/stepdeviationfactors.cpp" line="98"/>
         <source>Sens</source>
         <translation>Sens</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/stepdeviationfactors.cpp" line="96"/>
+        <location filename="factors/stab_dynamic/stepdeviationfactors.cpp" line="101"/>
         <source>Максимальное отклонение</source>
         <translation>Maximum deviation</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/stepdeviationfactors.cpp" line="96"/>
+        <location filename="factors/stab_dynamic/stepdeviationfactors.cpp" line="101"/>
         <source>MaxDev</source>
         <translation>MaxDev</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/stepdeviationfactors.cpp" line="99"/>
+        <location filename="factors/stab_dynamic/stepdeviationfactors.cpp" line="104"/>
         <source>Differ</source>
         <translation>Differ</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/stepdeviationfactors.cpp" line="102"/>
+        <location filename="factors/stab_dynamic/stepdeviationfactors.cpp" line="107"/>
         <source>Среднее время нарастания</source>
         <translation>Average increase time</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/stepdeviationfactors.cpp" line="102"/>
+        <location filename="factors/stab_dynamic/stepdeviationfactors.cpp" line="107"/>
         <source>TimeIncrAv</source>
         <translation>AvIncTm</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/stepdeviationfactors.cpp" line="105"/>
+        <location filename="factors/stab_dynamic/stepdeviationfactors.cpp" line="110"/>
         <source>Среднее время возврата</source>
         <translation>Average return time</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/stepdeviationfactors.cpp" line="105"/>
+        <location filename="factors/stab_dynamic/stepdeviationfactors.cpp" line="110"/>
         <source>TimeRetAv</source>
         <translation>AvRetTime</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/stepdeviationfactors.cpp" line="108"/>
+        <location filename="factors/stab_dynamic/stepdeviationfactors.cpp" line="113"/>
         <source>Минимальное время между экстремумами</source>
         <translation>Minimum time between extremes</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/stepdeviationfactors.cpp" line="108"/>
+        <location filename="factors/stab_dynamic/stepdeviationfactors.cpp" line="113"/>
         <source>TimeExtMin</source>
         <translation>TimeExtrMin</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/stepdeviationfactors.cpp" line="111"/>
+        <location filename="factors/stab_dynamic/stepdeviationfactors.cpp" line="116"/>
         <source>Максимальное время между экстремумами</source>
         <translation>Maximum time between extremes</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/stepdeviationfactors.cpp" line="111"/>
+        <location filename="factors/stab_dynamic/stepdeviationfactors.cpp" line="116"/>
         <source>TimeExtMax</source>
         <translation>TimeExtMax</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/stepdeviationfactors.cpp" line="114"/>
+        <location filename="factors/stab_dynamic/stepdeviationfactors.cpp" line="119"/>
         <source>Общее кол-во &quot;пиков&quot; на экстремумах</source>
         <translation>Total count of &quot;peaks&quot; at extremes</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/stepdeviationfactors.cpp" line="114"/>
+        <location filename="factors/stab_dynamic/stepdeviationfactors.cpp" line="119"/>
         <source>PickCnt</source>
         <translation>PickCnt</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/stepdeviationfactors.cpp" line="117"/>
+        <location filename="factors/stab_dynamic/stepdeviationfactors.cpp" line="122"/>
         <source>Среднее кол-во &quot;пиков&quot; на экстремумах</source>
         <translation>Average count of &quot;peaks&quot; at extremes</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/stepdeviationfactors.cpp" line="117"/>
+        <location filename="factors/stab_dynamic/stepdeviationfactors.cpp" line="122"/>
         <source>PickCntAvrg</source>
         <translation>PickCntAvrg</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/stepdeviationfactors.cpp" line="120"/>
+        <location filename="factors/stab_dynamic/stepdeviationfactors.cpp" line="125"/>
         <source>Максимальное кол-во &quot;пиков&quot; на экстремумах</source>
         <translation>Maximum count of &quot;peaks&quot; at extremes</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/stepdeviationfactors.cpp" line="120"/>
+        <location filename="factors/stab_dynamic/stepdeviationfactors.cpp" line="125"/>
         <source>PickCntMax</source>
         <translation>PickCntMax</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/stepdeviationfactors.cpp" line="123"/>
+        <location filename="factors/stab_dynamic/stepdeviationfactors.cpp" line="128"/>
         <source>Минимальное кол-во &quot;пиков&quot; на экстремумах</source>
         <translation>Minimum count of &quot;peaks&quot; at extremes</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/stepdeviationfactors.cpp" line="123"/>
+        <location filename="factors/stab_dynamic/stepdeviationfactors.cpp" line="128"/>
         <source>PickCntMin</source>
         <translation>PickCntMin</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/stepdeviationfactors.cpp" line="126"/>
+        <location filename="factors/stab_dynamic/stepdeviationfactors.cpp" line="131"/>
         <source>Кол-во пиков с экстремумами</source>
         <translation>Count of peaks with extremes</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/stepdeviationfactors.cpp" line="126"/>
+        <location filename="factors/stab_dynamic/stepdeviationfactors.cpp" line="131"/>
         <source>ExtPickCnt</source>
         <translation>ExtPickCnt</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/stepdeviationfactors.cpp" line="129"/>
+        <location filename="factors/stab_dynamic/stepdeviationfactors.cpp" line="134"/>
         <source>Амплитуда полуволны на экстремуме</source>
         <translation>Half-wave amplitude at the extremum</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/stepdeviationfactors.cpp" line="129"/>
+        <location filename="factors/stab_dynamic/stepdeviationfactors.cpp" line="134"/>
         <source>ExtWaveAmp</source>
         <translation>ExtWaveAmp</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/stepdeviationfactors.cpp" line="132"/>
+        <location filename="factors/stab_dynamic/stepdeviationfactors.cpp" line="137"/>
         <source>Длительность полуволны на экстремуме</source>
         <translation>Duration of half-wave at extremum</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/stepdeviationfactors.cpp" line="132"/>
+        <location filename="factors/stab_dynamic/stepdeviationfactors.cpp" line="137"/>
         <source>ExtWaveTm</source>
         <translation>ExtWaveTm</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/stepoffsetfactors.h" line="14"/>
+        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="36"/>
         <source>Показатели теста &quot;Ступени&quot;</source>
         <translation>&quot;Steps&quot; test factors</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/triangleconslutionfactors.h" line="12"/>
+        <location filename="factors/stab_dynamic/triangleconslutionfactors.cpp" line="45"/>
         <source>Показатели теста &quot;Треугольник&quot;. Заключение</source>
         <translation>Triangle test factors. Conclusion</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.h" line="14"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="39"/>
         <source>Показатели теста &quot;Треугольник&quot;</source>
         <translation>Triangle test factors</translation>
     </message>
     <message>
-        <location filename="factors/target/targetfactors.h" line="12"/>
+        <location filename="factors/target/targetfactors.cpp" line="34"/>
         <source>Показатели мишени</source>
         <translation>Target factors</translation>
     </message>
     <message>
-        <location filename="factors/tren_result/trenresultfactors.h" line="12"/>
+        <location filename="factors/target/targetfactors.cpp" line="125"/>
+        <location filename="factors/tren_result/trenresultfactors.cpp" line="144"/>
+        <source>Количество набранных баллов</source>
+        <translation>Scores count</translation>
+    </message>
+    <message>
+        <location filename="factors/target/targetfactors.cpp" line="125"/>
+        <location filename="factors/tren_result/trenresultfactors.cpp" line="144"/>
+        <source>Баллы</source>
+        <translation>Scores</translation>
+    </message>
+    <message>
+        <location filename="factors/target/targetfactors.cpp" line="128"/>
+        <source>Суммарный балл</source>
+        <translation>Total score</translation>
+    </message>
+    <message>
+        <location filename="factors/target/targetfactors.cpp" line="128"/>
+        <source>Сумм. балл</source>
+        <translation>Ttl.score</translation>
+    </message>
+    <message>
+        <location filename="factors/tren_result/trenresultfactors.cpp" line="34"/>
         <source>Показатели тренажеров</source>
         <translation>Trenagers factors</translation>
     </message>
     <message>
-        <location filename="factors/vector/vectorfactors.h" line="12"/>
+        <location filename="factors/tren_result/trenresultfactors.cpp" line="154"/>
+        <source>Время игры</source>
+        <translation>Game time</translation>
+    </message>
+    <message>
+        <location filename="factors/jump/droptestfactors.cpp" line="115"/>
+        <location filename="factors/jump/jumpheightfactors.cpp" line="96"/>
+        <location filename="factors/jump/teppingtestfactors.cpp" line="117"/>
+        <location filename="factors/tren_result/trenresultfactors.cpp" line="154"/>
+        <source>Время</source>
+        <translation>Time</translation>
+    </message>
+    <message>
+        <location filename="factors/tren_result/trenresultfactors.cpp" line="157"/>
+        <source>Количество удаленных строк</source>
+        <translation>Deleted lines count</translation>
+    </message>
+    <message>
+        <location filename="factors/tren_result/trenresultfactors.cpp" line="157"/>
+        <source>Строки</source>
+        <translation>Lines</translation>
+    </message>
+    <message>
+        <location filename="factors/tren_result/trenresultfactors.cpp" line="161"/>
+        <source>Длительность интервалов захвата</source>
+        <translation>Duration of capture intervals</translation>
+    </message>
+    <message>
+        <location filename="factors/tren_result/trenresultfactors.cpp" line="161"/>
+        <source>TakeTime</source>
+        <translation>TakeTime</translation>
+    </message>
+    <message>
+        <location filename="factors/tren_result/trenresultfactors.cpp" line="164"/>
+        <source>Длительность интервалов укладки</source>
+        <translation>Duration of laying intervals</translation>
+    </message>
+    <message>
+        <location filename="factors/tren_result/trenresultfactors.cpp" line="164"/>
+        <source>PutTime</source>
+        <translation>PutTime</translation>
+    </message>
+    <message>
+        <location filename="factors/tren_result/trenresultfactors.cpp" line="167"/>
+        <source>Длительность интервалов ошибок</source>
+        <translation>Duration of error intervals</translation>
+    </message>
+    <message>
+        <location filename="factors/tren_result/trenresultfactors.cpp" line="167"/>
+        <source>ErrTime</source>
+        <translation>ErrTime</translation>
+    </message>
+    <message>
+        <location filename="factors/tren_result/trenresultfactors.cpp" line="170"/>
+        <source>Скорость на этапе захвата</source>
+        <translation>Speed ​​at capture stage</translation>
+    </message>
+    <message>
+        <location filename="factors/tren_result/trenresultfactors.cpp" line="170"/>
+        <source>TakeSpd</source>
+        <translation>TakeSpd</translation>
+    </message>
+    <message>
+        <location filename="factors/tren_result/trenresultfactors.cpp" line="173"/>
+        <source>Скорость на этапе укладки</source>
+        <translation>Speed ​​at the laying stage</translation>
+    </message>
+    <message>
+        <location filename="factors/tren_result/trenresultfactors.cpp" line="173"/>
+        <source>PutSpd</source>
+        <translation>PutSpd</translation>
+    </message>
+    <message>
+        <location filename="factors/tren_result/trenresultfactors.cpp" line="176"/>
+        <source>Скорость на этапе ошибок</source>
+        <translation>Speed ​​at the error stage</translation>
+    </message>
+    <message>
+        <location filename="factors/tren_result/trenresultfactors.cpp" line="176"/>
+        <source>ErrSpd</source>
+        <translation>ErrSpd</translation>
+    </message>
+    <message>
+        <location filename="factors/vector/vectorfactors.cpp" line="49"/>
         <source>Векторные показатели</source>
         <translation>Vector factors</translation>
+    </message>
+    <message>
+        <location filename="factors/vector/vectorfactors.cpp" line="143"/>
+        <source>КФР</source>
+        <translation>QEF</translation>
+    </message>
+    <message>
+        <location filename="factors/vector/vectorfactors.cpp" line="146"/>
+        <source>Нормированная площадь векторограммы</source>
+        <translation>Normalized area of the vectorogram</translation>
+    </message>
+    <message>
+        <location filename="factors/vector/vectorfactors.cpp" line="146"/>
+        <source>НПВ</source>
+        <translation>NAV</translation>
+    </message>
+    <message>
+        <location filename="factors/vector/vectorfactors.cpp" line="146"/>
+        <source>кв.мм./с</source>
+        <translation>sq.mm./s</translation>
+    </message>
+    <message>
+        <location filename="factors/vector/vectorfactors.cpp" line="149"/>
+        <source>Коэф-т резкого изм. напр. движения</source>
+        <translation>The coefficient of a sharp change of direction</translation>
+    </message>
+    <message>
+        <location filename="factors/vector/vectorfactors.cpp" line="149"/>
+        <source>КРИНД</source>
+        <translation>CSCD</translation>
+    </message>
+    <message>
+        <location filename="factors/vector/vectorfactors.cpp" line="153"/>
+        <source>Линейная скорость средняя</source>
+        <translation>Averige linear velosity</translation>
+    </message>
+    <message>
+        <location filename="factors/vector/vectorfactors.cpp" line="153"/>
+        <source>ЛСС</source>
+        <translation>ALV</translation>
+    </message>
+    <message>
+        <location filename="factors/vector/vectorfactors.cpp" line="156"/>
+        <source>Амплитуда вариации линейной скорости</source>
+        <translation>Amplitude of linear velocity variation</translation>
+    </message>
+    <message>
+        <location filename="factors/vector/vectorfactors.cpp" line="156"/>
+        <source>АВЛС</source>
+        <translation>ALVV</translation>
+    </message>
+    <message>
+        <location filename="factors/vector/vectorfactors.cpp" line="159"/>
+        <source>Период вариации линейной скорости</source>
+        <translation>Period of linear velocity variation</translation>
+    </message>
+    <message>
+        <location filename="factors/vector/vectorfactors.cpp" line="159"/>
+        <source>ПВЛС</source>
+        <translation>PLVV</translation>
+    </message>
+    <message>
+        <location filename="factors/vector/vectorfactors.cpp" line="163"/>
+        <source>Угловая скорость средняя</source>
+        <translation>Average angular velocity</translation>
+    </message>
+    <message>
+        <location filename="factors/vector/vectorfactors.cpp" line="163"/>
+        <source>УСС</source>
+        <translation>AAV</translation>
+    </message>
+    <message>
+        <location filename="factors/vector/vectorfactors.cpp" line="163"/>
+        <location filename="factors/vector/vectorfactors.cpp" line="166"/>
+        <source>рад/сек</source>
+        <translation>rad/sec</translation>
+    </message>
+    <message>
+        <location filename="factors/vector/vectorfactors.cpp" line="166"/>
+        <source>Амплитуда вариации угловой скорости</source>
+        <translation>Amplitude of variation of angular velocity</translation>
+    </message>
+    <message>
+        <location filename="factors/vector/vectorfactors.cpp" line="166"/>
+        <source>АВУС</source>
+        <translation>AVAV</translation>
+    </message>
+    <message>
+        <location filename="factors/vector/vectorfactors.cpp" line="169"/>
+        <source>Период вариации угловой скорости</source>
+        <translation>Period of variation of angular velocity</translation>
+    </message>
+    <message>
+        <location filename="factors/vector/vectorfactors.cpp" line="169"/>
+        <source>ПВУС</source>
+        <translation>PVAV</translation>
+    </message>
+    <message>
+        <location filename="factors/vector/vectorfactors.cpp" line="173"/>
+        <source>Коэф-т асимметрии угловой скорости</source>
+        <translation>Asymmetry coefficient of angular velocity</translation>
+    </message>
+    <message>
+        <location filename="factors/vector/vectorfactors.cpp" line="173"/>
+        <source>КАУС</source>
+        <translation>ACAV</translation>
+    </message>
+    <message>
+        <location filename="factors/vector/vectorfactors.cpp" line="176"/>
+        <source>Накопленный угол смещения</source>
+        <translation>Accumulated Offset Angle</translation>
+    </message>
+    <message>
+        <location filename="factors/vector/vectorfactors.cpp" line="176"/>
+        <source>НУС</source>
+        <translation>AOA</translation>
+    </message>
+    <message>
+        <location filename="factors/vector/vectorfactors.cpp" line="176"/>
+        <source>об.</source>
+        <translation>rot.</translation>
+    </message>
+    <message>
+        <location filename="factors/vector/vectorfactors.cpp" line="180"/>
+        <source>Линейная скорость средняя по фронтали</source>
+        <translation>Averige linear velosity (frontal)</translation>
+    </message>
+    <message>
+        <location filename="factors/vector/vectorfactors.cpp" line="180"/>
+        <source>ЛСС ф</source>
+        <translation>ALV f</translation>
+    </message>
+    <message>
+        <location filename="factors/vector/vectorfactors.cpp" line="183"/>
+        <source>Линейная скорость средняя по сагиттали</source>
+        <translation>Averige linear velosity (sagittal)</translation>
+    </message>
+    <message>
+        <location filename="factors/vector/vectorfactors.cpp" line="183"/>
+        <source>ЛСС с</source>
+        <translation>ALV s</translation>
+    </message>
+    <message>
+        <location filename="factors/vector/vectorfactors.cpp" line="186"/>
+        <source>Коэф-т асим. линейной скорости по фронтали</source>
+        <translation>Asymmetry coefficient of linear velocity (frontal)</translation>
+    </message>
+    <message>
+        <location filename="factors/vector/vectorfactors.cpp" line="186"/>
+        <source>КАЛС ф</source>
+        <translation>ACLV f</translation>
+    </message>
+    <message>
+        <location filename="factors/vector/vectorfactors.cpp" line="189"/>
+        <source>Коэф-т асим. линейной скорости по сагиттали</source>
+        <translation>Asymmetry coefficient of linear velocity (sagittal)</translation>
+    </message>
+    <message>
+        <location filename="factors/vector/vectorfactors.cpp" line="189"/>
+        <source>КАЛС с</source>
+        <translation>ACLV s</translation>
+    </message>
+    <message>
+        <location filename="factors/vector/vectorfactors.cpp" line="193"/>
+        <source>Мощность векторограммы</source>
+        <translation>Power of vectorogram</translation>
+    </message>
+    <message>
+        <location filename="factors/vector/vectorfactors.cpp" line="193"/>
+        <source>МВ</source>
+        <translation>PV</translation>
+    </message>
+    <message>
+        <location filename="factors/vector/vectorfactors.cpp" line="193"/>
+        <source>кв.мм/куб.сек</source>
+        <translation>sq.mm/cub.sec</translation>
+    </message>
+    <message>
+        <location filename="factors/vector/vectorfactors.cpp" line="196"/>
+        <source>Соотношение линейной и угловой скоростей</source>
+        <translation>Relationship between linear and angular velocities</translation>
+    </message>
+    <message>
+        <location filename="factors/vector/vectorfactors.cpp" line="196"/>
+        <source>ЛСС/УС</source>
+        <translation>ALV/AAV</translation>
+    </message>
+    <message>
+        <location filename="factors/vector/vectorfactors.cpp" line="196"/>
+        <source>мм/град</source>
+        <translation>mm/deg</translation>
     </message>
     <message>
         <location filename="kernel/basedefines.cpp" line="9"/>
@@ -9467,6 +10905,7 @@ Click the [Done] button.</translation>
         <translation>Initial speed, m/sec</translation>
     </message>
     <message>
+        <location filename="factors/jump/droptestfactors.cpp" line="127"/>
         <location filename="metodics/jump_plate/droptest/droptestdefines.h" line="30"/>
         <source>Индекс реактивной силы</source>
         <translation>Reactive force index</translation>
@@ -9572,6 +11011,7 @@ Click the [Done] button.</translation>
         <translation>zf60% (Hz)</translation>
     </message>
     <message>
+        <location filename="factors/vector/vectorfactors.cpp" line="143"/>
         <location filename="metodics/stabtest/calculators/babyposturecalculator.cpp" line="149"/>
         <source>Качество функции равновесия</source>
         <translation>Equilibrium function quality</translation>
@@ -10603,1869 +12043,1946 @@ Click the [Done] button.</translation>
         <translation>Weighing</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="160"/>
-        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="222"/>
+        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="165"/>
+        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="227"/>
         <source>Суммарная ошибка</source>
         <translation>Total error</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="160"/>
-        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="222"/>
+        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="165"/>
+        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="227"/>
         <source>SummErr</source>
         <translation>SummErr</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/crossfactors.cpp" line="87"/>
-        <location filename="factors/stab_dynamic/crossfactors.cpp" line="90"/>
-        <location filename="factors/stab_dynamic/crossfactors.cpp" line="93"/>
-        <location filename="factors/stab_dynamic/crossfactors.cpp" line="96"/>
-        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="160"/>
-        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="163"/>
-        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="169"/>
-        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="185"/>
-        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="188"/>
-        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="192"/>
-        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="195"/>
-        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="198"/>
-        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="201"/>
-        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="209"/>
-        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="216"/>
-        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="222"/>
-        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="225"/>
-        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="228"/>
-        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="231"/>
-        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="247"/>
-        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="250"/>
-        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="254"/>
-        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="257"/>
-        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="260"/>
-        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="263"/>
-        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="271"/>
-        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="278"/>
-        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="293"/>
-        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="308"/>
-        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="311"/>
-        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="329"/>
-        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="332"/>
-        <location filename="factors/stab_dynamic/stepdeviationfactors.cpp" line="87"/>
-        <location filename="factors/stab_dynamic/stepdeviationfactors.cpp" line="93"/>
-        <location filename="factors/stab_dynamic/stepdeviationfactors.cpp" line="96"/>
-        <location filename="factors/stab_dynamic/stepdeviationfactors.cpp" line="99"/>
-        <location filename="factors/stab_dynamic/stepdeviationfactors.cpp" line="129"/>
-        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="149"/>
-        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="152"/>
-        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="161"/>
-        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="167"/>
-        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="173"/>
-        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="179"/>
-        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="219"/>
-        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="222"/>
-        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="231"/>
-        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="237"/>
-        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="243"/>
-        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="249"/>
-        <location filename="factors/stab_dynamic/triangleconslutionfactors.cpp" line="79"/>
-        <location filename="factors/stab_dynamic/triangleconslutionfactors.cpp" line="82"/>
-        <location filename="factors/stab_dynamic/triangleconslutionfactors.cpp" line="85"/>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="90"/>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="93"/>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="100"/>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="103"/>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="106"/>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="109"/>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="112"/>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="115"/>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="118"/>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="121"/>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="124"/>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="127"/>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="130"/>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="133"/>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="136"/>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="139"/>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="142"/>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="145"/>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="152"/>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="168"/>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="171"/>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="174"/>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="177"/>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="218"/>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="221"/>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="228"/>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="231"/>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="234"/>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="237"/>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="240"/>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="243"/>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="246"/>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="249"/>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="252"/>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="255"/>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="258"/>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="261"/>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="264"/>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="267"/>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="270"/>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="273"/>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="280"/>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="296"/>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="299"/>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="302"/>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="305"/>
+        <location filename="factors/spectr_single_sig/spectrsinglesignalfactors.cpp" line="106"/>
+        <location filename="factors/spectr_single_sig/spectrsinglesignalfactors.cpp" line="112"/>
+        <location filename="factors/spectr_single_sig/spectrsinglesignalfactors.cpp" line="118"/>
+        <location filename="factors/spectr_single_sig/spectrsinglesignalfactors.cpp" line="122"/>
+        <location filename="factors/spectr_stab/spectrstabfactors.cpp" line="84"/>
+        <location filename="factors/spectr_stab/spectrstabfactors.cpp" line="90"/>
+        <location filename="factors/spectr_stab/spectrstabfactors.cpp" line="96"/>
+        <location filename="factors/spectr_stab/spectrstabfactors.cpp" line="100"/>
+        <location filename="factors/spectr_stab/spectrstabfactors.cpp" line="118"/>
+        <location filename="factors/spectr_stab/spectrstabfactors.cpp" line="124"/>
+        <location filename="factors/spectr_stab/spectrstabfactors.cpp" line="130"/>
+        <location filename="factors/stab_dynamic/boxerdodgingmultifactor.cpp" line="102"/>
+        <location filename="factors/stab_dynamic/boxerdodgingmultifactor.cpp" line="115"/>
+        <location filename="factors/stab_dynamic/boxerdodgingmultifactor.cpp" line="128"/>
+        <location filename="factors/stab_dynamic/boxerdodgingmultifactor.cpp" line="141"/>
+        <location filename="factors/stab_dynamic/boxerdodgingmultifactor.cpp" line="154"/>
+        <location filename="factors/stab_dynamic/crossfactors.cpp" line="92"/>
+        <location filename="factors/stab_dynamic/crossfactors.cpp" line="95"/>
+        <location filename="factors/stab_dynamic/crossfactors.cpp" line="98"/>
+        <location filename="factors/stab_dynamic/crossfactors.cpp" line="101"/>
+        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="165"/>
+        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="168"/>
+        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="174"/>
+        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="190"/>
+        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="193"/>
+        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="197"/>
+        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="200"/>
+        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="203"/>
+        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="206"/>
+        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="214"/>
+        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="221"/>
+        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="227"/>
+        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="230"/>
+        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="233"/>
+        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="236"/>
+        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="252"/>
+        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="255"/>
+        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="259"/>
+        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="262"/>
+        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="265"/>
+        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="268"/>
+        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="276"/>
+        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="283"/>
+        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="298"/>
+        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="313"/>
+        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="316"/>
+        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="334"/>
+        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="337"/>
+        <location filename="factors/stab_dynamic/stepdeviationfactors.cpp" line="92"/>
+        <location filename="factors/stab_dynamic/stepdeviationfactors.cpp" line="98"/>
+        <location filename="factors/stab_dynamic/stepdeviationfactors.cpp" line="101"/>
+        <location filename="factors/stab_dynamic/stepdeviationfactors.cpp" line="104"/>
+        <location filename="factors/stab_dynamic/stepdeviationfactors.cpp" line="134"/>
+        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="154"/>
+        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="157"/>
+        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="166"/>
+        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="172"/>
+        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="178"/>
+        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="184"/>
+        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="224"/>
+        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="227"/>
+        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="236"/>
+        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="242"/>
+        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="248"/>
+        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="254"/>
+        <location filename="factors/stab_dynamic/triangleconslutionfactors.cpp" line="84"/>
+        <location filename="factors/stab_dynamic/triangleconslutionfactors.cpp" line="87"/>
+        <location filename="factors/stab_dynamic/triangleconslutionfactors.cpp" line="90"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="95"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="98"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="105"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="108"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="111"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="114"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="117"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="120"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="123"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="126"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="129"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="132"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="135"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="138"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="141"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="144"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="147"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="150"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="157"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="173"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="176"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="179"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="182"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="223"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="226"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="233"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="236"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="239"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="242"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="245"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="248"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="251"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="254"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="257"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="260"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="263"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="266"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="269"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="272"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="275"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="278"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="285"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="301"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="304"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="307"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="310"/>
         <source>мм</source>
         <translation>mm</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/crossfactors.cpp" line="87"/>
+        <location filename="factors/stab_dynamic/crossfactors.cpp" line="92"/>
+        <location filename="factors/stab_dynamic/octaedronfactors.cpp" line="82"/>
         <source>Отклонение вперед</source>
         <translation>Forward deviation</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/crossfactors.cpp" line="87"/>
+        <location filename="factors/stab_dynamic/crossfactors.cpp" line="92"/>
         <source>Вперед</source>
         <translation>Forward</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/crossfactors.cpp" line="90"/>
+        <location filename="factors/stab_dynamic/crossfactors.cpp" line="95"/>
+        <location filename="factors/stab_dynamic/octaedronfactors.cpp" line="94"/>
         <source>Отклонение назад</source>
         <translation>Backward deviation</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/crossfactors.cpp" line="90"/>
+        <location filename="factors/stab_dynamic/crossfactors.cpp" line="95"/>
         <source>Назад</source>
         <translation>Backward</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/crossfactors.cpp" line="93"/>
+        <location filename="factors/stab_dynamic/crossfactors.cpp" line="98"/>
+        <location filename="factors/stab_dynamic/octaedronfactors.cpp" line="100"/>
         <source>Отклонение вправо</source>
         <translation>Right deviation</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/crossfactors.cpp" line="93"/>
+        <location filename="factors/stab_dynamic/crossfactors.cpp" line="98"/>
         <source>Вправо</source>
         <translation>To the right</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/crossfactors.cpp" line="96"/>
+        <location filename="factors/stab_dynamic/crossfactors.cpp" line="101"/>
+        <location filename="factors/stab_dynamic/octaedronfactors.cpp" line="88"/>
         <source>Отклонение влево</source>
         <translation>Left deviation</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/crossfactors.cpp" line="96"/>
+        <location filename="factors/stab_dynamic/crossfactors.cpp" line="101"/>
         <source>Влево</source>
         <translation>To the left</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/crossfactors.cpp" line="99"/>
+        <location filename="factors/stab_dynamic/crossfactors.cpp" line="104"/>
         <source>Площадь зоны перермещения</source>
         <translation>Moving zone square</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/crossfactors.cpp" line="99"/>
+        <location filename="factors/stab_dynamic/crossfactors.cpp" line="104"/>
         <source>Площадь</source>
         <translation>Square</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/crossfactors.cpp" line="99"/>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="78"/>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="81"/>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="206"/>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="209"/>
+        <location filename="factors/stab_dynamic/crossfactors.cpp" line="104"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="83"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="86"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="211"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="214"/>
         <source>кв.мм</source>
         <translation>sq.mm</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/crossfactors.cpp" line="102"/>
+        <location filename="factors/stab_dynamic/crossfactors.cpp" line="107"/>
         <source>Отношение вперед / назад</source>
         <translation>Forward / backward ratio</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/crossfactors.cpp" line="102"/>
+        <location filename="factors/stab_dynamic/crossfactors.cpp" line="107"/>
         <source>Вперед / Назад</source>
         <translation>To the forward / To the backward</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/crossfactors.cpp" line="105"/>
+        <location filename="factors/stab_dynamic/crossfactors.cpp" line="110"/>
         <source>Отношение вправо / влево</source>
         <translation>Right / left ratio</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/crossfactors.cpp" line="105"/>
+        <location filename="factors/stab_dynamic/crossfactors.cpp" line="110"/>
         <source>Вправо / Влево</source>
         <translation>To the right / To the left</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/crossfactors.cpp" line="108"/>
+        <location filename="factors/stab_dynamic/crossfactors.cpp" line="113"/>
         <source>Отношение сагитталь / фронталь</source>
         <translation>Sagittal / frontal ratio</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/crossfactors.cpp" line="108"/>
+        <location filename="factors/stab_dynamic/crossfactors.cpp" line="113"/>
         <source>Сагит / Фронт</source>
         <translation>S / f</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="163"/>
-        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="225"/>
+        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="168"/>
+        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="230"/>
         <source>Средняя ошибка</source>
         <translation>Average error</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="163"/>
+        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="168"/>
         <source>Ср.ошибка(X)</source>
         <translation>Average error(X)</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="166"/>
-        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="228"/>
+        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="171"/>
+        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="233"/>
         <source>Средняя ошибка на экстремуме</source>
         <translation>Average error at the extremum</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="166"/>
-        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="228"/>
+        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="171"/>
+        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="233"/>
         <source>MidErrExtr</source>
         <translation>MidErrExtr</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="169"/>
-        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="231"/>
+        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="174"/>
+        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="236"/>
         <source>Средняя ошибка на переходе</source>
         <translation>Average error at transition</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="169"/>
-        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="231"/>
+        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="174"/>
+        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="236"/>
         <source>MidErrBr</source>
         <translation>MidErrBr</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="172"/>
-        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="234"/>
+        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="177"/>
+        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="239"/>
         <source>Сред. кол-во пересечений на экстремуме</source>
         <translation>Avg. count of intersections at the extremum</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="172"/>
-        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="234"/>
+        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="177"/>
+        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="239"/>
         <source>CrsCntExtr</source>
         <translation>CrsCntExtr</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="175"/>
-        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="237"/>
+        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="180"/>
+        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="242"/>
         <source>Сред. кол-во пересечений на переходе</source>
         <translation>Avg. count of intersections at the crossing</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="175"/>
-        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="237"/>
+        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="180"/>
+        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="242"/>
         <source>CrsCntBr</source>
         <translation>CrsCntBr</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="179"/>
-        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="241"/>
+        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="184"/>
+        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="246"/>
         <source>Среднее кол-во пиков на экстремуме</source>
         <translation>Average count of peaks at the extreme</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="179"/>
-        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="241"/>
+        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="184"/>
+        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="246"/>
         <source>ExtrCntE</source>
         <translation>ExtrCntE</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="182"/>
-        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="244"/>
+        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="187"/>
+        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="249"/>
         <source>Среднее кол-во пиков на переходе</source>
         <translation>Average count of peaks at transition</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="182"/>
-        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="244"/>
+        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="187"/>
+        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="249"/>
         <source>ExtrCntB</source>
         <translation>ExtrCntB</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="185"/>
-        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="247"/>
+        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="190"/>
+        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="252"/>
         <source>Средняя амплитуда между пиками на экстремуме</source>
         <translation>Average amplitude between peaks at the extremum</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="185"/>
-        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="247"/>
+        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="190"/>
+        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="252"/>
         <source>MidAmplE</source>
         <translation>MidAmplE</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="188"/>
-        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="250"/>
+        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="193"/>
+        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="255"/>
         <source>Средняя амплитуда между пиками на переходе</source>
         <translation>Average amplitude between peaks at transition</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="188"/>
-        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="250"/>
+        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="193"/>
+        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="255"/>
         <source>MidAmplB</source>
         <translation>MidAmplB</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="192"/>
-        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="254"/>
+        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="197"/>
+        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="259"/>
         <source>Изменение средней ошибки на экстремуме</source>
         <translation>Change in average error at the extremum</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="192"/>
-        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="254"/>
+        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="197"/>
+        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="259"/>
         <source>CMidErrE</source>
         <translation>CMidErrE</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="195"/>
-        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="257"/>
+        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="200"/>
+        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="262"/>
         <source>Изменение средней ошибки на переходе</source>
         <translation>Change in average error on transition</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="195"/>
-        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="257"/>
+        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="200"/>
+        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="262"/>
         <source>CMidErrB</source>
         <translation>CMidErrB</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="198"/>
-        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="260"/>
+        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="203"/>
+        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="265"/>
         <source>Изменение средней амплитуды на экстремуме</source>
         <translation>Change in average amplitude at the extremum</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="198"/>
-        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="260"/>
+        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="203"/>
+        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="265"/>
         <source>CMidAmplE</source>
         <translation>CMidAmplE</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="201"/>
-        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="263"/>
+        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="206"/>
+        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="268"/>
         <source>Изменение средней амплитуды на переходе</source>
         <translation>Change in average amplitude at transition</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="201"/>
-        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="263"/>
+        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="206"/>
+        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="268"/>
         <source>CMidAmplB</source>
         <translation>CMidAmplB</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="206"/>
-        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="268"/>
+        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="211"/>
+        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="273"/>
         <source>Кол-во пересечений траектории цели при удержании</source>
         <translation>Count of intersections of the target trajectory while holding</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="206"/>
-        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="268"/>
+        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="211"/>
+        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="273"/>
         <source>InterCntR</source>
         <translation>InterCntR</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="209"/>
-        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="271"/>
+        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="214"/>
+        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="276"/>
         <source>Длит. между пересечениями траектории цели при удержании</source>
         <translation>Duration between target trajectory intersections while holding</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="209"/>
-        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="271"/>
+        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="214"/>
+        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="276"/>
         <source>InterLenR</source>
         <translation>InterLenR</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="213"/>
-        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="275"/>
+        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="218"/>
+        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="280"/>
         <source>Длительность полуволны</source>
         <translation>Half-wave duration</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="213"/>
-        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="275"/>
+        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="218"/>
+        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="280"/>
         <source>SemiWavLen</source>
         <translation>SemiWavLen</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="213"/>
-        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="275"/>
-        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="287"/>
-        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="290"/>
-        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="314"/>
-        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="317"/>
-        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="335"/>
-        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="338"/>
-        <location filename="factors/stab_dynamic/stepdeviationfactors.cpp" line="78"/>
-        <location filename="factors/stab_dynamic/stepdeviationfactors.cpp" line="90"/>
-        <location filename="factors/stab_dynamic/stepdeviationfactors.cpp" line="102"/>
-        <location filename="factors/stab_dynamic/stepdeviationfactors.cpp" line="105"/>
-        <location filename="factors/stab_dynamic/stepdeviationfactors.cpp" line="108"/>
-        <location filename="factors/stab_dynamic/stepdeviationfactors.cpp" line="111"/>
-        <location filename="factors/stab_dynamic/stepdeviationfactors.cpp" line="132"/>
-        <location filename="factors/stab_dynamic/stepdeviationfactors.cpp" line="138"/>
-        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="116"/>
-        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="119"/>
-        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="128"/>
-        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="143"/>
-        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="158"/>
-        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="170"/>
-        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="186"/>
-        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="189"/>
-        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="198"/>
-        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="213"/>
-        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="228"/>
-        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="240"/>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="72"/>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="75"/>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="149"/>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="180"/>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="183"/>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="186"/>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="189"/>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="200"/>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="203"/>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="277"/>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="308"/>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="311"/>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="314"/>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="317"/>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="328"/>
+        <location filename="factors/jump/droptestfactors.cpp" line="115"/>
+        <location filename="factors/jump/hoppingfactors.cpp" line="71"/>
+        <location filename="factors/jump/jumpheightfactors.cpp" line="96"/>
+        <location filename="factors/jump/teppingtestfactors.cpp" line="117"/>
+        <location filename="factors/pulse/pulse/pulsefactors.cpp" line="148"/>
+        <location filename="factors/stab_dynamic/boxerdodgingmultifactor.cpp" line="96"/>
+        <location filename="factors/stab_dynamic/boxerdodgingmultifactor.cpp" line="99"/>
+        <location filename="factors/stab_dynamic/boxerdodgingmultifactor.cpp" line="109"/>
+        <location filename="factors/stab_dynamic/boxerdodgingmultifactor.cpp" line="112"/>
+        <location filename="factors/stab_dynamic/boxerdodgingmultifactor.cpp" line="122"/>
+        <location filename="factors/stab_dynamic/boxerdodgingmultifactor.cpp" line="125"/>
+        <location filename="factors/stab_dynamic/boxerdodgingmultifactor.cpp" line="135"/>
+        <location filename="factors/stab_dynamic/boxerdodgingmultifactor.cpp" line="138"/>
+        <location filename="factors/stab_dynamic/boxerdodgingmultifactor.cpp" line="148"/>
+        <location filename="factors/stab_dynamic/boxerdodgingmultifactor.cpp" line="151"/>
+        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="218"/>
+        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="280"/>
+        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="292"/>
+        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="295"/>
+        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="319"/>
+        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="322"/>
+        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="340"/>
+        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="343"/>
+        <location filename="factors/stab_dynamic/stabreacttrainfactors.cpp" line="88"/>
+        <location filename="factors/stab_dynamic/stabreacttrainfactors.cpp" line="91"/>
+        <location filename="factors/stab_dynamic/stabreacttrainfactors.cpp" line="94"/>
+        <location filename="factors/stab_dynamic/stabreacttrainfactors.cpp" line="97"/>
+        <location filename="factors/stab_dynamic/stabreacttrainfactors.cpp" line="100"/>
+        <location filename="factors/stab_dynamic/stabreacttrainfactors.cpp" line="103"/>
+        <location filename="factors/stab_dynamic/stabreacttrainfactors.cpp" line="106"/>
+        <location filename="factors/stab_dynamic/stabreacttrainfactors.cpp" line="109"/>
+        <location filename="factors/stab_dynamic/stabreacttrainfactors.cpp" line="112"/>
+        <location filename="factors/stab_dynamic/stabreacttrainfactors.cpp" line="116"/>
+        <location filename="factors/stab_dynamic/stabreacttrainfactors.cpp" line="119"/>
+        <location filename="factors/stab_dynamic/stabreacttrainfactors.cpp" line="122"/>
+        <location filename="factors/stab_dynamic/stabreacttrainfactors.cpp" line="125"/>
+        <location filename="factors/stab_dynamic/stabreacttrainfactors.cpp" line="128"/>
+        <location filename="factors/stab_dynamic/stabreacttrainfactors.cpp" line="131"/>
+        <location filename="factors/stab_dynamic/stabreacttrainfactors.cpp" line="134"/>
+        <location filename="factors/stab_dynamic/stabreacttrainfactors.cpp" line="137"/>
+        <location filename="factors/stab_dynamic/stabreacttrainfactors.cpp" line="140"/>
+        <location filename="factors/stab_dynamic/stepdeviationfactors.cpp" line="83"/>
+        <location filename="factors/stab_dynamic/stepdeviationfactors.cpp" line="95"/>
+        <location filename="factors/stab_dynamic/stepdeviationfactors.cpp" line="107"/>
+        <location filename="factors/stab_dynamic/stepdeviationfactors.cpp" line="110"/>
+        <location filename="factors/stab_dynamic/stepdeviationfactors.cpp" line="113"/>
+        <location filename="factors/stab_dynamic/stepdeviationfactors.cpp" line="116"/>
+        <location filename="factors/stab_dynamic/stepdeviationfactors.cpp" line="137"/>
+        <location filename="factors/stab_dynamic/stepdeviationfactors.cpp" line="143"/>
+        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="121"/>
+        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="124"/>
+        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="133"/>
+        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="148"/>
+        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="163"/>
+        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="175"/>
+        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="191"/>
+        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="194"/>
+        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="203"/>
+        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="218"/>
+        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="233"/>
+        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="245"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="77"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="80"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="154"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="185"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="188"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="191"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="194"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="205"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="208"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="282"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="313"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="316"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="319"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="322"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="333"/>
+        <location filename="factors/tren_result/trenresultfactors.cpp" line="154"/>
+        <location filename="factors/tren_result/trenresultfactors.cpp" line="161"/>
+        <location filename="factors/tren_result/trenresultfactors.cpp" line="164"/>
+        <location filename="factors/tren_result/trenresultfactors.cpp" line="167"/>
+        <location filename="factors/vector/vectorfactors.cpp" line="159"/>
+        <location filename="factors/vector/vectorfactors.cpp" line="169"/>
         <source>сек</source>
         <translation>sec</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="216"/>
-        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="278"/>
+        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="221"/>
+        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="283"/>
         <source>Амплитуда полуволны</source>
         <translation>Half-wave amplitude</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="216"/>
-        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="278"/>
+        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="221"/>
+        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="283"/>
         <source>SemiWavAmpl</source>
         <translation>SemiWavAmpl</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="225"/>
+        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="230"/>
         <source>Ср.ошибка(Y)</source>
         <translation>Average error(Y)</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="284"/>
+        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="289"/>
         <source>Опережение</source>
         <translation>Advance</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="287"/>
+        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="292"/>
         <source>Суммарное опережение маркера цели</source>
         <translation>Total target  marker advance</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="287"/>
+        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="292"/>
         <source>DAhead</source>
         <translation>DAhead</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="290"/>
+        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="295"/>
         <source>Длительность полуволны при опережении</source>
         <translation>Half-wave duration at advance</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="290"/>
+        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="295"/>
         <source>SemiWavLenDAC</source>
         <translation>SemiWavLenDAC</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="293"/>
+        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="298"/>
         <source>Амплитуда полуволны при опережении</source>
         <translation>Half-wave amplitude at advance</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="293"/>
+        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="298"/>
         <source>SemiWavAmplDAC</source>
         <translation>SemiWavAmplDAC</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="296"/>
+        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="301"/>
         <source>Общее количество коррекций</source>
         <translation>Total corrections count</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="296"/>
+        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="301"/>
         <source>CorrCount</source>
         <translation>CorrCount</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="299"/>
-        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="182"/>
-        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="252"/>
+        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="304"/>
+        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="187"/>
+        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="257"/>
         <source>Преобладание коррекций</source>
         <translation>Predominance of corrections</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="299"/>
+        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="304"/>
         <source>CorrDominance</source>
         <translation>CorrDominance</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="305"/>
-        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="326"/>
+        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="310"/>
+        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="331"/>
         <source>Процент коррекций</source>
         <translation>Corrections percent</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="305"/>
-        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="326"/>
+        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="310"/>
+        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="331"/>
         <source>Percent</source>
         <translation>Percent</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="308"/>
-        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="329"/>
+        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="313"/>
+        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="334"/>
         <source>Средняя ошибка траектории</source>
         <translation>Average trajectory error</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="308"/>
-        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="329"/>
+        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="313"/>
+        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="334"/>
         <source>Error</source>
         <translation>Error</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="311"/>
-        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="332"/>
+        <location filename="factors/stab_dynamic/boxerdodgingmultifactor.cpp" line="102"/>
         <source>Средняя амплитуда</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="311"/>
-        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="332"/>
+        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="316"/>
+        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="337"/>
         <source>Amplitude</source>
         <translation>Amplitude</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="314"/>
-        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="335"/>
+        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="316"/>
+        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="337"/>
+        <source>Средняя  амплитуда</source>
+        <translation>Average amplitude</translation>
+    </message>
+    <message>
+        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="319"/>
+        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="340"/>
         <source>Суммарная длительность</source>
         <translation>Total duration</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="314"/>
-        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="335"/>
+        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="319"/>
+        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="340"/>
         <source>TimeSumm</source>
         <translation>TimeSumm</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="317"/>
-        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="338"/>
+        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="322"/>
+        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="343"/>
         <source>Средняя длительность</source>
         <translation>Average duration</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="317"/>
-        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="338"/>
+        <location filename="factors/stab_dynamic/boxerdodgingmultifactor.cpp" line="99"/>
+        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="322"/>
+        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="343"/>
         <source>TimeMid</source>
         <translation>TimeMid</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="320"/>
-        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="341"/>
+        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="325"/>
+        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="346"/>
         <source>Мощность коррекций</source>
         <translation>Power of corrections</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="320"/>
-        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="341"/>
+        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="325"/>
+        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="346"/>
         <source>Power</source>
         <translation>Power</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="320"/>
-        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="341"/>
-        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="125"/>
-        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="137"/>
-        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="195"/>
-        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="207"/>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="84"/>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="87"/>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="192"/>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="195"/>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="212"/>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="215"/>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="320"/>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="323"/>
+        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="325"/>
+        <location filename="factors/stab_dynamic/evolventafactors.cpp" line="346"/>
+        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="130"/>
+        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="142"/>
+        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="200"/>
+        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="212"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="89"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="92"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="197"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="200"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="217"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="220"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="325"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="328"/>
+        <location filename="factors/tren_result/trenresultfactors.cpp" line="170"/>
+        <location filename="factors/tren_result/trenresultfactors.cpp" line="173"/>
+        <location filename="factors/tren_result/trenresultfactors.cpp" line="176"/>
+        <location filename="factors/vector/vectorfactors.cpp" line="153"/>
+        <location filename="factors/vector/vectorfactors.cpp" line="156"/>
+        <location filename="factors/vector/vectorfactors.cpp" line="180"/>
+        <location filename="factors/vector/vectorfactors.cpp" line="183"/>
         <source>мм/сек</source>
         <translation>mm/sec</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="116"/>
+        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="121"/>
         <source>KompLatent</source>
         <translation>KompLatent</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="119"/>
-        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="189"/>
+        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="124"/>
+        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="194"/>
         <source>Время размаха</source>
         <translation>Swing time</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="119"/>
+        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="124"/>
         <source>KompSwingT</source>
         <translation>KompSwingT</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="122"/>
-        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="192"/>
+        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="127"/>
+        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="197"/>
         <source>Амплитуда размаха</source>
         <translation>Swing amplitude</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="122"/>
+        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="127"/>
         <source>KompSwingA</source>
         <translation>KompSwingA</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="125"/>
-        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="195"/>
+        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="130"/>
+        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="200"/>
         <source>Скорость размаха</source>
         <translation>Swing speed</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="125"/>
+        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="130"/>
         <source>KompSwingV</source>
         <translation>KompSwingV</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="128"/>
-        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="198"/>
+        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="133"/>
+        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="203"/>
         <source>Время броска</source>
         <translation>Throw time</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="128"/>
+        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="133"/>
         <source>KompSpurtT</source>
         <translation>KompSpurtT</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="131"/>
+        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="136"/>
         <source>KompSpurtA</source>
         <translation>KompSpurtA</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="134"/>
-        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="137"/>
-        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="204"/>
-        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="207"/>
+        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="139"/>
+        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="142"/>
+        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="209"/>
+        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="212"/>
         <source>Скорость броска</source>
         <translation>Throw speed</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="134"/>
-        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="137"/>
+        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="139"/>
+        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="142"/>
         <source>KompSpurtV</source>
         <translation>KompSpurtV</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="134"/>
-        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="204"/>
+        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="139"/>
+        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="209"/>
         <source>%/сек</source>
         <translation>%/sec</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="140"/>
-        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="210"/>
+        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="145"/>
+        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="215"/>
         <source>Статизм</source>
         <translation>Statism</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="140"/>
+        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="145"/>
         <source>Статизм (K)</source>
         <translation>Statism (C)</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="143"/>
-        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="213"/>
+        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="148"/>
+        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="218"/>
         <source>Время реакции</source>
         <translation>Reaction time</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="143"/>
+        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="148"/>
         <source>t реакции(K)</source>
         <translation>t react(K)</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="146"/>
-        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="216"/>
+        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="151"/>
+        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="221"/>
         <source>Амплитуда перерегулирования</source>
         <translation>Overshoot amplitude</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="146"/>
+        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="151"/>
         <source>KompOvershoot</source>
         <translation>KompOvershoot</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="149"/>
-        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="219"/>
+        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="154"/>
+        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="224"/>
         <source>Разброс на этапе стабилизации</source>
         <translation>Standard deviation at the stabilization stage</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="149"/>
+        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="154"/>
         <source>KompStabD</source>
         <translation>KompStabD</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="152"/>
-        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="222"/>
+        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="157"/>
+        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="227"/>
         <source>Разброс на этапе удержания</source>
         <translation>Standard deviation at the holding stage</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="152"/>
+        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="157"/>
         <source>KompRetentD</source>
         <translation>KompRetentD</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="155"/>
-        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="225"/>
+        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="160"/>
+        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="230"/>
         <source>Тип переходного процесса</source>
         <translation>Type of transient process</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="155"/>
+        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="160"/>
         <source>Тип процесса (К)</source>
         <translation>Type of process (K)</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="158"/>
-        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="228"/>
+        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="163"/>
+        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="233"/>
         <source>Средняя длительность моторных коррекций</source>
         <translation>Average duration of motor corrections</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="158"/>
+        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="163"/>
         <source>KompCorrMT</source>
         <translation>KompCorrMT</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="161"/>
-        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="231"/>
+        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="166"/>
+        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="236"/>
         <source>Средняя амплитуда моторных коррекций</source>
         <translation>Average amplitude of motor corrections</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="161"/>
+        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="166"/>
         <source>KompCorrMA</source>
         <translation>KompCorrMA</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="164"/>
-        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="234"/>
+        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="169"/>
+        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="239"/>
         <source>Мощность моторных коррекций</source>
         <translation>Power of motor corrections</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="164"/>
+        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="169"/>
         <source>KompCorrMP</source>
         <translation>KompCorrMP</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="164"/>
-        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="176"/>
-        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="234"/>
-        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="246"/>
+        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="169"/>
+        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="181"/>
+        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="239"/>
+        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="251"/>
         <source>мм*сек</source>
         <translation>mm * sec</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="167"/>
-        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="237"/>
+        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="172"/>
+        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="242"/>
         <source>Средняя ошибка траектории моторных коррекций</source>
         <translation>Average trajectory error of motor corrections</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="167"/>
+        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="172"/>
         <source>KompCorrME</source>
         <translation>KompCorrME</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="170"/>
-        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="240"/>
+        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="175"/>
+        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="245"/>
         <source>Средняя длительность когнитивных коррекций</source>
         <translation>Average duration of cognitive corrections</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="170"/>
+        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="175"/>
         <source>KompCorrKT</source>
         <translation>KompCorrKT</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="173"/>
-        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="243"/>
+        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="178"/>
+        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="248"/>
         <source>Средняя амплитуда когнитивных коррекций</source>
         <translation>Average amplitude of cognitive corrections</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="173"/>
+        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="178"/>
         <source>KompCorrKA</source>
         <translation>KompCorrKA</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="176"/>
-        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="246"/>
+        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="181"/>
+        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="251"/>
         <source>Мощность когнитивных коррекций</source>
         <translation>The power of cognitive corrections</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="176"/>
+        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="181"/>
         <source>KompCorrKP</source>
         <translation>KompCorrKP</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="179"/>
-        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="249"/>
+        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="184"/>
+        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="254"/>
         <source>Средняя ошибка траектории когнитивных коррекций</source>
         <translation>Average error of the trajectory of cognitive corrections</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="179"/>
+        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="184"/>
         <source>KompCorrKE</source>
         <translation>KompCorrKE</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="182"/>
-        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="252"/>
+        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="187"/>
+        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="257"/>
         <source>CorrDomin</source>
         <translation>CorrDomin</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="186"/>
+        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="191"/>
         <source>RetLatent</source>
         <translation>RetLatent</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="189"/>
+        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="194"/>
         <source>RetSwingT</source>
         <translation>RetSwingT</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="192"/>
+        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="197"/>
         <source>RetSwingA</source>
         <translation>RetSwingA</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="195"/>
+        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="200"/>
         <source>RetSwingV</source>
         <translation>RetSwingV</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="198"/>
+        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="203"/>
         <source>RetSpurtT</source>
         <translation>RetSpurtT</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="201"/>
+        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="206"/>
         <source>RetSpurtA</source>
         <translation>RetSpurtA</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="204"/>
-        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="207"/>
+        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="209"/>
+        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="212"/>
         <source>RetSpurtV</source>
         <translation>RetSpurtV</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="210"/>
+        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="215"/>
         <source>RetStatism</source>
         <translation>RetStatism</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="213"/>
+        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="218"/>
         <source>RetReactT</source>
         <translation>RetReactT</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="216"/>
+        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="221"/>
         <source>RetOvershoot</source>
         <translation>RetOvershoot</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="219"/>
+        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="224"/>
         <source>RetStabD</source>
         <translation>RetStabD</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="222"/>
+        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="227"/>
         <source>RetRetentD</source>
         <translation>RetRetentD</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="225"/>
+        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="230"/>
         <source>RetKind</source>
         <translation>RetKind</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="228"/>
+        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="233"/>
         <source>RetCorrMT</source>
         <translation>RetCorrMT</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="231"/>
+        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="236"/>
         <source>RetCorrMA</source>
         <translation>RetCorrMA</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="234"/>
+        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="239"/>
         <source>RetCorrMP</source>
         <translation>RetCorrMP</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="237"/>
+        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="242"/>
         <source>RetCorrME</source>
         <translation>RetCorrME</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="240"/>
+        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="245"/>
         <source>RetCorrKT</source>
         <translation>RetCorrKT</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="243"/>
+        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="248"/>
         <source>RetCorrKA</source>
         <translation>RetCorrKA</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="246"/>
+        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="251"/>
         <source>RetCorrKP</source>
         <translation>RetCorrKP</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="249"/>
+        <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="254"/>
         <source>RetCorrKE</source>
         <translation>RetCorrKE</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="72"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="77"/>
         <source>Средняя длительность прохода (обучение)</source>
         <translation>Average duration of completion (training)</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="72"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="77"/>
         <source>LenTest</source>
         <translation>LenTest</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="75"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="80"/>
         <source>Разброс длительности прохода (обучение)</source>
         <translation>Pass duration completion (training)</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="75"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="80"/>
         <source>LenQTest</source>
         <translation>LenQTest</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="78"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="83"/>
         <source>Средняя площадь треугольников (обучение)</source>
         <translation>Average square of ​​triangles (training)</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="78"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="83"/>
         <source>SqrTest</source>
         <translation>SqrTest</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="81"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="86"/>
         <source>Разброс площади треугольников (обучение)</source>
         <translation>Standard deviatior of triangle square (training)</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="81"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="86"/>
         <source>SqrQTest</source>
         <translation>SqrQTest</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="84"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="89"/>
         <source>Средняя скорость прохождения (обучение)</source>
         <translation>Average speed of completion (training)</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="84"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="89"/>
         <source>SpdTest</source>
         <translation>SpdTest</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="87"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="92"/>
         <source>Разброс скорости прохождения (обучение)</source>
         <translation>Standard deviation of speed ​​of completion (training)</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="87"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="92"/>
         <source>SpdQTest</source>
         <translation>SpdQTest</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="90"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="95"/>
         <source>Среднее смещение треуг. по фронтали (обучение)</source>
         <translation>Average displacement of triangle along the frontal (training)</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="90"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="95"/>
         <source>TrXTest</source>
         <translation>TrXTest</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="93"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="98"/>
         <source>Среднее смещение треуг. по сагиттали (обучение)</source>
         <translation>Average displacement of triangle along the sagittal (training)</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="93"/>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="221"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="98"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="226"/>
         <source>TrYTest</source>
         <translation>TrYTest</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="96"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="101"/>
         <source>Угол наклона треугольника (обучение)</source>
         <translation>Triangle Angle (Training)</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="96"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="101"/>
         <source>AngleTest</source>
         <translation>AngleTest</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="96"/>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="224"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="101"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="229"/>
         <source>град</source>
         <translation>degrees</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="100"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="105"/>
         <source>Системная ошибка верхней вершины X (обучение)</source>
         <translation>Systematic error of the upper vertex X (training)</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="100"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="105"/>
         <source>UESXTest</source>
         <translation>UESXTest</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="103"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="108"/>
         <source>Системная ошибка верхней вершины Y (обучение)</source>
         <translation>Systematic error of the upper vertex Y (training)</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="103"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="108"/>
         <source>UESYTest</source>
         <translation>UESYTest</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="106"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="111"/>
         <source>Случайная ошибка верхней вершины X (обучение)</source>
         <translation>Random error of the upper vertex X (training)</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="106"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="111"/>
         <source>UERXTest</source>
         <translation>UERXTest</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="109"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="114"/>
         <source>Случайная ошибка верхней вершины Y (обучение)</source>
         <translation>Random error of the upper vertex Y (training)</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="109"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="114"/>
         <source>UERYTest</source>
         <translation>UERYTest</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="112"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="117"/>
         <source>Системная ошибка правой вершины X (обучение)</source>
         <translation>Systematic error of the right vertex X (training)</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="112"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="117"/>
         <source>RESXTest</source>
         <translation>RESXTest</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="115"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="120"/>
         <source>Системная ошибка правой вершины Y (обучение)</source>
         <translation>Systematic error of the right vertex Y (training)</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="115"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="120"/>
         <source>RESYTest</source>
         <translation>RESYTest</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="118"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="123"/>
         <source>Случайная ошибка правой вершины X (обучение)</source>
         <translation>Random error of the right vertex X (training)</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="118"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="123"/>
         <source>RERXTest</source>
         <translation>RERXTest</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="121"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="126"/>
         <source>Случайная ошибка правой вершины Y (обучение)</source>
         <translation>Random error of the right vertex Y (training)</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="121"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="126"/>
         <source>RERYTest</source>
         <translation>RERYTest</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="124"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="129"/>
         <source>Системная ошибка левой вершины X (обучение)</source>
         <translation>Systematic error of the left vertex X (training)</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="124"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="129"/>
         <source>LESXTest</source>
         <translation>LESXTest</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="127"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="132"/>
         <source>Системная ошибка левой вершины Y (обучение)</source>
         <translation>Systematic error of the left vertex Y (training)</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="127"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="132"/>
         <source>LESYTest</source>
         <translation>LESYTest</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="130"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="135"/>
         <source>Случайная ошибка левой вершины X (обучение)</source>
         <translation>Random error of the left vertex X (training)</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="130"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="135"/>
         <source>LERXTest</source>
         <translation>LERXTest</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="133"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="138"/>
         <source>Случайная ошибка левой вершины Y (обучение)</source>
         <translation>Random error of the left vertex Y (training)</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="133"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="138"/>
         <source>LERYTest</source>
         <translation>LERYTest</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="136"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="141"/>
         <source>Системная ошибка центра треугольника X (обучение)</source>
         <translation>Systematic error of the triangle center X (training)</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="136"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="141"/>
         <source>MESXTest</source>
         <translation>MESXTest</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="139"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="144"/>
         <source>Системная ошибка центра треугольника Y (обучение)</source>
         <translation>Systematic error of the triangle center Y (training)</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="139"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="144"/>
         <source>MESYTest</source>
         <translation>MESYTest</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="142"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="147"/>
         <source>Случайная ошибка центра треугольника X (обучение)</source>
         <translation>Random error of the triangle center X (training)</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="142"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="147"/>
         <source>MERXTest</source>
         <translation>MERXTest</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="145"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="150"/>
         <source>Случайная ошибка центра треугольника Y (обучение)</source>
         <translation>Random error of the triangle center Y (training)</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="145"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="150"/>
         <source>MERYTest</source>
         <translation>MERYTest</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="149"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="154"/>
         <source>Средняя длительность коррекций (обучение)</source>
         <translation>Average duration of corrections (training)</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="149"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="154"/>
         <source>SWLDACTest</source>
         <translation>SWLDACTest</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="152"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="157"/>
         <source>Средняя амплитуда коррекций (обучение)</source>
         <translation>Average amplitude of corrections (training)</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="152"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="157"/>
         <source>SWADACTest</source>
         <translation>SWADACTest</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/triangleconslutionfactors.cpp" line="76"/>
+        <location filename="factors/stab_dynamic/triangleconslutionfactors.cpp" line="81"/>
         <source>Повторение</source>
         <translation>Repetition</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/triangleconslutionfactors.cpp" line="79"/>
+        <location filename="factors/stab_dynamic/triangleconslutionfactors.cpp" line="84"/>
         <source>Позиция X</source>
         <translation>Position X</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/triangleconslutionfactors.cpp" line="82"/>
+        <location filename="factors/stab_dynamic/triangleconslutionfactors.cpp" line="87"/>
         <source>Позиция Y</source>
         <translation>Position Y</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/triangleconslutionfactors.cpp" line="85"/>
+        <location filename="factors/stab_dynamic/triangleconslutionfactors.cpp" line="90"/>
         <source>Форма</source>
         <translation>Shape</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/triangleconslutionfactors.cpp" line="91"/>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="155"/>
+        <location filename="factors/stab_dynamic/triangleconslutionfactors.cpp" line="96"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="160"/>
         <source>Кол-во когнитивных коррекций (обучение)</source>
         <translation>Count of cognitive corrections (training)</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/triangleconslutionfactors.cpp" line="100"/>
+        <location filename="factors/stab_dynamic/triangleconslutionfactors.cpp" line="105"/>
         <source>Преобладание коррекций (обучение)</source>
         <translation>Predominance of corrections (training)</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/triangleconslutionfactors.cpp" line="103"/>
+        <location filename="factors/stab_dynamic/triangleconslutionfactors.cpp" line="108"/>
         <source>Преобладание коррекций (анализ)</source>
         <translation>Predominance of corrections (analysis)</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/triangleconslutionfactors.cpp" line="106"/>
+        <location filename="factors/stab_dynamic/triangleconslutionfactors.cpp" line="111"/>
         <source>Средняя ошибка точки (обучение)</source>
         <translation>Average point error (training)</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/triangleconslutionfactors.cpp" line="112"/>
+        <location filename="factors/stab_dynamic/triangleconslutionfactors.cpp" line="117"/>
         <source>Средняя ошибка длины сторон (обучение)</source>
         <translation>Average side length error (training)</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/triangleconslutionfactors.cpp" line="116"/>
+        <location filename="factors/stab_dynamic/triangleconslutionfactors.cpp" line="121"/>
         <source>Среднее изменение времени прохождения тр-ка (анализ)</source>
         <translation>Average change in triangle transit time (analysis)</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/triangleconslutionfactors.cpp" line="119"/>
+        <location filename="factors/stab_dynamic/triangleconslutionfactors.cpp" line="124"/>
         <source>Среднее изменение площади тр-ка (анализ)</source>
         <translation>Average change in square of ​​a triangle (analysis)</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/triangleconslutionfactors.cpp" line="125"/>
+        <location filename="factors/stab_dynamic/triangleconslutionfactors.cpp" line="130"/>
         <source>Среднее изменение амплитуды тр-ка (анализ)</source>
         <translation>Average change in triangle amplitude (analysis)</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/triangleconslutionfactors.cpp" line="129"/>
+        <location filename="factors/stab_dynamic/triangleconslutionfactors.cpp" line="134"/>
         <source>Время начала движения после появления сигнала (обучение)</source>
         <translation>Time to start movement after signal appears (training)</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/triangleconslutionfactors.cpp" line="133"/>
+        <location filename="factors/stab_dynamic/triangleconslutionfactors.cpp" line="138"/>
         <source>Точность выполнения когнитивным сигналом (обучение)</source>
         <translation>Accuracy of execution of a cognitive signal (learning)</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/triangleconslutionfactors.cpp" line="136"/>
+        <location filename="factors/stab_dynamic/triangleconslutionfactors.cpp" line="141"/>
         <source>Точность моторной коррекции (обучение)</source>
         <translation>Accuracy of motor correction (training)</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/triangleconslutionfactors.cpp" line="139"/>
+        <location filename="factors/stab_dynamic/triangleconslutionfactors.cpp" line="144"/>
         <source>Точность выполнения когнитивным сигналом (анализ)</source>
         <translation>Accuracy of cognitive signal execution (analysis)</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/triangleconslutionfactors.cpp" line="142"/>
+        <location filename="factors/stab_dynamic/triangleconslutionfactors.cpp" line="147"/>
         <source>Точность моторной коррекции (анализ)</source>
         <translation>Accuracy of motor correction (analysis)</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="155"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="160"/>
         <source>KKCntTest</source>
         <translation>KKCntTest</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/triangleconslutionfactors.cpp" line="88"/>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="158"/>
+        <location filename="factors/stab_dynamic/triangleconslutionfactors.cpp" line="93"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="163"/>
         <source>Кол-во моторных коррекций (обучение)</source>
         <translation>Count of motor corrections (training)</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="158"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="163"/>
         <source>KMCntTest</source>
         <translation>KMCntTest</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="162"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="167"/>
         <source>Процент моторных коррекций (обучение)</source>
         <translation>Percentage of motor corrections (training)</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="162"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="167"/>
         <source>MPercTest</source>
         <translation>MPercTest</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="165"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="170"/>
         <source>Процент когнитивных коррекций (обучение)</source>
         <translation>Percentage of cognitive corrections (training)</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="165"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="170"/>
         <source>KPercTest</source>
         <translation>KPercTest</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="168"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="173"/>
         <source>Средняя ошибка моторных коррекций (обучение)</source>
         <translation>Average error of motor corrections (training)</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="168"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="173"/>
         <source>MErrTest</source>
         <translation>MErrTest</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="171"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="176"/>
         <source>Средняя ошибка когнитивных коррекций (обучение)</source>
         <translation>Average error of cognitive corrections (training)</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="171"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="176"/>
         <source>KErrTest</source>
         <translation>KErrTest</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="174"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="179"/>
         <source>Средняя амплитуда моторных коорекций (обучение)</source>
         <translation>Average amplitude of motor corrections (training)</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="174"/>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="186"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="179"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="191"/>
         <source>MMidTest</source>
         <translation>MMidTest</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="177"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="182"/>
         <source>Средняя амплитуда когнитивных коорекций (обучение)</source>
         <translation>Average amplitude of cognitive corrections (training)</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="177"/>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="189"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="182"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="194"/>
         <source>KMidTest</source>
         <translation>KMidTest</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="180"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="185"/>
         <source>Суммарная длительность моторных коррекций (обучение)</source>
         <translation>Total duration of motor corrections (training)</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="180"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="185"/>
         <source>MSumTest</source>
         <translation>MSumTest</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="183"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="188"/>
         <source>Суммарная длительность когнитивных коррекций (обучение)</source>
         <translation>Total duration of cognitive corrections (training)</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="183"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="188"/>
         <source>KSumTest</source>
         <translation>KSumTest</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="186"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="191"/>
         <source>Средняя длительность моторных коррекций (обучение)</source>
         <translation>Average duration of motor corrections (training)</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="189"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="194"/>
         <source>Средняя длительность когнитивных коррекций (обучение)</source>
         <translation>Average duration of cognitive corrections (training)</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="192"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="197"/>
         <source>Мощность моторных коррекций (обучение)</source>
         <translation>Power of motor corrections (training)</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="192"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="197"/>
         <source>MPowTest</source>
         <translation>MPowTest</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="195"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="200"/>
         <source>Мощность когнитивных коррекций (обучение)</source>
         <translation>The power of cognitive corrections (training)</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="195"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="200"/>
         <source>KPowTest</source>
         <translation>KPowTest</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="200"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="205"/>
         <source>Средняя длительность прохода (анализ)</source>
         <translation>Average duration of completion (analysis)</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="200"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="205"/>
         <source>LenAnal</source>
         <translation>LenAnal</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="203"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="208"/>
         <source>Разброс длительности прохода (анализ)</source>
         <translation>Pass duration completion (analysis)</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="203"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="208"/>
         <source>LenQAnal</source>
         <translation>LenQAnal</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="206"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="211"/>
         <source>Средняя площадь треугольников (анализ)</source>
         <translation>Average square of triangles (analysis)</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="206"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="211"/>
         <source>SqrAnal</source>
         <translation>SqrAnal</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="209"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="214"/>
         <source>Разброс площади треугольников (анализ)</source>
         <translation>Standard deviation of triangle square (analysis)</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="209"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="214"/>
         <source>SqrQAnal</source>
         <translation>SqrQAnal</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="212"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="217"/>
         <source>Средняя скорость прохождения (анализ)</source>
         <translation>Average speed of completion (analysis)</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="212"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="217"/>
         <source>SpdAnal</source>
         <translation>SpdAnal</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="215"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="220"/>
         <source>Разброс скорости прохождения (анализ)</source>
         <translation>Standard deviation of speed of completion (analysis)</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="215"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="220"/>
         <source>SpdQAnal</source>
         <translation>SpdQAnal</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="218"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="223"/>
         <source>Среднее смещение треуг. по фронтали (анализ)</source>
         <translation>Average displacement of triangle along the frontal (analysis)</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="218"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="223"/>
         <source>TrXAnal</source>
         <translation>TrXAnal</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="221"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="226"/>
         <source>Среднее смещение треуг. по сагиттали (анализ)</source>
         <translation>Average displacement of triangle along the sagittal (analysis)</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="224"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="229"/>
         <source>Угол наклона треугольника (анализ)</source>
         <translation>Triangle Angle (analysis)</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="224"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="229"/>
         <source>AngleAnal</source>
         <translation>AngleAnal</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="228"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="233"/>
         <source>Системная ошибка верхней вершины X (анализ)</source>
         <translation>Systematic error of the upper vertex X (analysis)</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="228"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="233"/>
         <source>UESXAnal</source>
         <translation>UESXAnal</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="231"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="236"/>
         <source>Системная ошибка верхней вершины Y (анализ)</source>
         <translation>Systematic error of the upper vertex Y (analysis)</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="231"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="236"/>
         <source>UESYAnal</source>
         <translation>UESYAnal</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="234"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="239"/>
         <source>Случайная ошибка верхней вершины X (анализ)</source>
         <translation>Random error of the upper vertex X (analysis)</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="234"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="239"/>
         <source>UERXAnal</source>
         <translation>UERXAnal</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="237"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="242"/>
         <source>Случайная ошибка верхней вершины Y (анализ)</source>
         <translation>Random error of the upper vertex Y (analysis)</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="237"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="242"/>
         <source>UERYAnal</source>
         <translation>UERYAnal</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="240"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="245"/>
         <source>Системная ошибка правой вершины X (анализ)</source>
         <translation>Systematic error of the right vertex X (analysis)</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="240"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="245"/>
         <source>RESXAnal</source>
         <translation>RESXAnal</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="243"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="248"/>
         <source>Системная ошибка правой вершины Y (анализ)</source>
         <translation>Systematic error of the right vertex Y (analysis)</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="243"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="248"/>
         <source>RESYAnal</source>
         <translation>RESYAnal</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="246"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="251"/>
         <source>Случайная ошибка правой вершины X (анализ)</source>
         <translation>Random error of the right vertex X (analysis)</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="246"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="251"/>
         <source>RERXAnal</source>
         <translation>RERXAnal</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="249"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="254"/>
         <source>Случайная ошибка правой вершины Y (анализ)</source>
         <translation>Random error of the right vertex Y (analysis)</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="249"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="254"/>
         <source>RERYAnal</source>
         <translation>RERYAnal</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="252"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="257"/>
         <source>Системная ошибка левой вершины X (анализ)</source>
         <translation>Systematic error of the left vertex X (analysis)</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="252"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="257"/>
         <source>LESXAnal</source>
         <translation>LESXAnal</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="255"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="260"/>
         <source>Системная ошибка левой вершины Y (анализ)</source>
         <translation>Systematic error of the left vertex Y (analysis)</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="255"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="260"/>
         <source>LESYAnal</source>
         <translation>LESYAnal</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="258"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="263"/>
         <source>Случайная ошибка левой вершины X (анализ)</source>
         <translation>Random error of the left vertex X (analysis)</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="258"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="263"/>
         <source>LERXAnal</source>
         <translation>LERXAnal</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="261"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="266"/>
         <source>Случайная ошибка левой вершины Y (анализ)</source>
         <translation>Random error of the left vertex Y (analysis)</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="261"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="266"/>
         <source>LERYAnal</source>
         <translation>LERYAnal</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="264"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="269"/>
         <source>Системная ошибка центра треугольника X (анализ)</source>
         <translation>Systematic error of the triangle center X (analysis)</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="264"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="269"/>
         <source>MESXAnal</source>
         <translation>MESXAnal</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="267"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="272"/>
         <source>Системная ошибка центра треугольника Y (анализ)</source>
         <translation>Systematic error of the triangle center Y (analysis)</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="267"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="272"/>
         <source>MESYAnal</source>
         <translation>MESYAnal</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="270"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="275"/>
         <source>Случайная ошибка центра треугольника X (анализ)</source>
         <translation>Random error of the triangle center X (analysis)</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="270"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="275"/>
         <source>MERXAnal</source>
         <translation>MERXAnal</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="273"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="278"/>
         <source>Случайная ошибка центра треугольника Y (анализ)</source>
         <translation>Random error of the triangle center Y (analysis)</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="273"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="278"/>
         <source>MERYAnal</source>
         <translation>MERYAnal</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="277"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="282"/>
         <source>Средняя длительность коррекций (анализ)</source>
         <translation>Average duration of corrections (analysis)</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="277"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="282"/>
         <source>SWLDACAnal</source>
         <translation>SWLDACAnal</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="280"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="285"/>
         <source>Средняя амплитуда коррекций (анализ)</source>
         <translation>Average amplitude of corrections (analysis)</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="280"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="285"/>
         <source>SWADACAnal</source>
         <translation>SWADACAnal</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/triangleconslutionfactors.cpp" line="97"/>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="283"/>
+        <location filename="factors/stab_dynamic/triangleconslutionfactors.cpp" line="102"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="288"/>
         <source>Кол-во когнитивных коррекций (анализ)</source>
         <translation>Count of cognitive corrections (analysis)</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="283"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="288"/>
         <source>KKCntAnal</source>
         <translation>KKCntAnal</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/triangleconslutionfactors.cpp" line="94"/>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="286"/>
+        <location filename="factors/stab_dynamic/triangleconslutionfactors.cpp" line="99"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="291"/>
         <source>Кол-во моторных коррекций (анализ)</source>
         <translation>Count of motor corrections (analysis)</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="286"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="291"/>
         <source>KMCntAnal</source>
         <translation>KMCntAnal</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="290"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="295"/>
         <source>Процент моторных коррекций (анализ)</source>
         <translation>Percentage of motor corrections (analysis)</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="290"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="295"/>
         <source>MPercAnal</source>
         <translation>MPercAnal</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="293"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="298"/>
         <source>Процент когнитивных коррекций (анализ)</source>
         <translation>Percentage of cognitive corrections (analysis)</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="293"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="298"/>
         <source>KPercAnal</source>
         <translation>KPercAnal</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="296"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="301"/>
         <source>Средняя ошибка моторных коррекций (анализ)</source>
         <translation>Average error of motor corrections (analysis)</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="296"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="301"/>
         <source>MErrAnal</source>
         <translation>MErrAnal</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="299"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="304"/>
         <source>Средняя ошибка когнитивных коррекций (анализ)</source>
         <translation>Average error of cognitive corrections (analysis)</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="299"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="304"/>
         <source>KErrAnal</source>
         <translation>KErrAnal</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="302"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="307"/>
         <source>Средняя амплитуда моторных коорекций (анализ)</source>
         <translation>Average amplitude of motor corrections (analysis)</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="302"/>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="314"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="307"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="319"/>
         <source>MMidAnal</source>
         <translation>MMidAnal</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="305"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="310"/>
         <source>Средняя амплитуда когнитивных коорекций (анализ)</source>
         <translation>Average amplitude of cognitive corrections (analysis)</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="305"/>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="317"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="310"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="322"/>
         <source>KMidAnal</source>
         <translation>KMidAnal</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="308"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="313"/>
         <source>Суммарная длительность моторных коррекций (анализ)</source>
         <translation>Total duration of motor corrections (analysis)</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="308"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="313"/>
         <source>MSumAnal</source>
         <translation>MSumAnal</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="311"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="316"/>
         <source>Суммарная длительность когнитивных коррекций (анализ)</source>
         <translation>Total duration of cognitive corrections (analysis)</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="311"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="316"/>
         <source>KSumAnal</source>
         <translation>KSumAnal</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="314"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="319"/>
         <source>Средняя длительность моторных коррекций (анализ)</source>
         <translation>Average duration of motor corrections (analysis)</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="317"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="322"/>
         <source>Средняя длительность когнитивных коррекций (анализ)</source>
         <translation>Average duration of cognitive corrections (analysis)</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="320"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="325"/>
         <source>Мощность моторных коррекций (анализ)</source>
         <translation>Power of motor corrections (analysis)</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="320"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="325"/>
         <source>MPowAnal</source>
         <translation>MPowAnal</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="323"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="328"/>
         <source>Мощность когнитивных коррекций (анализ)</source>
         <translation>The power of cognitive corrections (analysis)</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="323"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="328"/>
         <source>KPowAnal</source>
         <translation>KPowAnal</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="328"/>
+        <location filename="factors/stab_dynamic/trianglefactors.cpp" line="333"/>
         <source>LatMoving</source>
         <translation>LatMoving</translation>
+    </message>
+    <message>
+        <location filename="signal_analysis/visuals/channel/stab_signal/skg/skgvisual.cpp" line="18"/>
+        <source>Статокинезиграмма</source>
+        <translation>Statokinesigram</translation>
     </message>
 </context>
 <context>
     <name>QCoreApplication::QCoreApplication</name>
     <message>
-        <location filename="factors/stab_dynamic/triangleconslutionfactors.cpp" line="109"/>
-        <location filename="factors/stab_dynamic/triangleconslutionfactors.cpp" line="119"/>
+        <location filename="factors/stab_dynamic/triangleconslutionfactors.cpp" line="114"/>
+        <location filename="factors/stab_dynamic/triangleconslutionfactors.cpp" line="124"/>
         <source>%</source>
         <translation>%</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/triangleconslutionfactors.cpp" line="122"/>
-        <location filename="factors/stab_dynamic/triangleconslutionfactors.cpp" line="125"/>
-        <location filename="factors/stab_dynamic/triangleconslutionfactors.cpp" line="133"/>
-        <location filename="factors/stab_dynamic/triangleconslutionfactors.cpp" line="136"/>
-        <location filename="factors/stab_dynamic/triangleconslutionfactors.cpp" line="139"/>
-        <location filename="factors/stab_dynamic/triangleconslutionfactors.cpp" line="142"/>
+        <location filename="factors/stab_dynamic/triangleconslutionfactors.cpp" line="127"/>
+        <location filename="factors/stab_dynamic/triangleconslutionfactors.cpp" line="130"/>
+        <location filename="factors/stab_dynamic/triangleconslutionfactors.cpp" line="138"/>
+        <location filename="factors/stab_dynamic/triangleconslutionfactors.cpp" line="141"/>
+        <location filename="factors/stab_dynamic/triangleconslutionfactors.cpp" line="144"/>
+        <location filename="factors/stab_dynamic/triangleconslutionfactors.cpp" line="147"/>
         <source>мм</source>
         <translation>mm</translation>
     </message>
@@ -12485,48 +14002,24 @@ Click the [Done] button.</translation>
         <translation type="obsolete">Ratio factors</translation>
     </message>
     <message>
-        <location filename="factors/ratio_prb/ratioprobesfactors.cpp" line="121"/>
-        <location filename="factors/ratio_prb/ratioprobesfactors.cpp" line="127"/>
-        <location filename="factors/ratio_prb/ratioprobesfactors.cpp" line="133"/>
-        <location filename="factors/ratio_prb/ratioprobesfactors.cpp" line="139"/>
         <source>Коэффициент отношения по площади</source>
-        <translation>Area ratio</translation>
+        <translation type="vanished">Area ratio</translation>
     </message>
     <message>
-        <location filename="factors/ratio_prb/ratioprobesfactors.cpp" line="121"/>
-        <location filename="factors/ratio_prb/ratioprobesfactors.cpp" line="127"/>
-        <location filename="factors/ratio_prb/ratioprobesfactors.cpp" line="133"/>
-        <location filename="factors/ratio_prb/ratioprobesfactors.cpp" line="139"/>
         <source>KS</source>
-        <translation>KS</translation>
+        <translation type="vanished">KS</translation>
     </message>
     <message>
-        <location filename="factors/ratio_prb/ratioprobesfactors.cpp" line="121"/>
-        <location filename="factors/ratio_prb/ratioprobesfactors.cpp" line="124"/>
-        <location filename="factors/ratio_prb/ratioprobesfactors.cpp" line="127"/>
-        <location filename="factors/ratio_prb/ratioprobesfactors.cpp" line="130"/>
-        <location filename="factors/ratio_prb/ratioprobesfactors.cpp" line="133"/>
-        <location filename="factors/ratio_prb/ratioprobesfactors.cpp" line="136"/>
-        <location filename="factors/ratio_prb/ratioprobesfactors.cpp" line="139"/>
-        <location filename="factors/ratio_prb/ratioprobesfactors.cpp" line="142"/>
         <source>%</source>
-        <translation>%</translation>
+        <translation type="vanished">%</translation>
     </message>
     <message>
-        <location filename="factors/ratio_prb/ratioprobesfactors.cpp" line="124"/>
-        <location filename="factors/ratio_prb/ratioprobesfactors.cpp" line="130"/>
-        <location filename="factors/ratio_prb/ratioprobesfactors.cpp" line="136"/>
-        <location filename="factors/ratio_prb/ratioprobesfactors.cpp" line="142"/>
         <source>Коэффициент отношения по КФР</source>
-        <translation>KFR ratio</translation>
+        <translation type="vanished">KFR ratio</translation>
     </message>
     <message>
-        <location filename="factors/ratio_prb/ratioprobesfactors.cpp" line="124"/>
-        <location filename="factors/ratio_prb/ratioprobesfactors.cpp" line="130"/>
-        <location filename="factors/ratio_prb/ratioprobesfactors.cpp" line="136"/>
-        <location filename="factors/ratio_prb/ratioprobesfactors.cpp" line="142"/>
         <source>KKFR</source>
-        <translation>KKFR</translation>
+        <translation type="vanished">KKFR</translation>
     </message>
 </context>
 <context>
@@ -13397,361 +14890,271 @@ Click the [Done] button.</translation>
 <context>
     <name>SpectrSingleSignalFactors</name>
     <message>
-        <location filename="factors/spectr_single_sig/spectrsinglesignalfactors.cpp" line="98"/>
         <source>Частота первого пика</source>
-        <translation>First peak frequency</translation>
+        <translation type="vanished">First peak frequency</translation>
     </message>
     <message>
-        <location filename="factors/spectr_single_sig/spectrsinglesignalfactors.cpp" line="98"/>
         <source>F1</source>
-        <translation>F1</translation>
+        <translation type="vanished">F1</translation>
     </message>
     <message>
-        <location filename="factors/spectr_single_sig/spectrsinglesignalfactors.cpp" line="98"/>
-        <location filename="factors/spectr_single_sig/spectrsinglesignalfactors.cpp" line="104"/>
-        <location filename="factors/spectr_single_sig/spectrsinglesignalfactors.cpp" line="110"/>
         <source>Гц</source>
-        <translation>Hz</translation>
+        <translation type="vanished">Hz</translation>
     </message>
     <message>
-        <location filename="factors/spectr_single_sig/spectrsinglesignalfactors.cpp" line="101"/>
         <source>Амплитуда первого пика</source>
-        <translation>First peak amplitude</translation>
+        <translation type="vanished">First peak amplitude</translation>
     </message>
     <message>
-        <location filename="factors/spectr_single_sig/spectrsinglesignalfactors.cpp" line="101"/>
         <source>A1</source>
-        <translation>A1</translation>
+        <translation type="vanished">A1</translation>
     </message>
     <message>
-        <location filename="factors/spectr_single_sig/spectrsinglesignalfactors.cpp" line="101"/>
-        <location filename="factors/spectr_single_sig/spectrsinglesignalfactors.cpp" line="107"/>
-        <location filename="factors/spectr_single_sig/spectrsinglesignalfactors.cpp" line="113"/>
-        <location filename="factors/spectr_single_sig/spectrsinglesignalfactors.cpp" line="117"/>
         <source>мм</source>
-        <translation>mm</translation>
+        <translation type="vanished">mm</translation>
     </message>
     <message>
-        <location filename="factors/spectr_single_sig/spectrsinglesignalfactors.cpp" line="104"/>
         <source>Частота второго пика</source>
-        <translation>Second peak frequency</translation>
+        <translation type="vanished">Second peak frequency</translation>
     </message>
     <message>
-        <location filename="factors/spectr_single_sig/spectrsinglesignalfactors.cpp" line="104"/>
         <source>F2</source>
-        <translation>F2</translation>
+        <translation type="vanished">F2</translation>
     </message>
     <message>
-        <location filename="factors/spectr_single_sig/spectrsinglesignalfactors.cpp" line="107"/>
         <source>Амплитуда второго пика</source>
-        <translation>Second peak amplitude</translation>
+        <translation type="vanished">Second peak amplitude</translation>
     </message>
     <message>
-        <location filename="factors/spectr_single_sig/spectrsinglesignalfactors.cpp" line="107"/>
         <source>A2</source>
-        <translation>A2</translation>
+        <translation type="vanished">A2</translation>
     </message>
     <message>
-        <location filename="factors/spectr_single_sig/spectrsinglesignalfactors.cpp" line="110"/>
         <source>Частота третьего пика</source>
-        <translation>Third peak frequency</translation>
+        <translation type="vanished">Third peak frequency</translation>
     </message>
     <message>
-        <location filename="factors/spectr_single_sig/spectrsinglesignalfactors.cpp" line="110"/>
         <source>F3</source>
-        <translation>F3</translation>
+        <translation type="vanished">F3</translation>
     </message>
     <message>
-        <location filename="factors/spectr_single_sig/spectrsinglesignalfactors.cpp" line="113"/>
         <source>Амплитуда третьего пика</source>
-        <translation>Third peak amplitude</translation>
+        <translation type="vanished">Third peak amplitude</translation>
     </message>
     <message>
-        <location filename="factors/spectr_single_sig/spectrsinglesignalfactors.cpp" line="113"/>
         <source>A3</source>
-        <translation>A3</translation>
+        <translation type="vanished">A3</translation>
     </message>
     <message>
-        <location filename="factors/spectr_single_sig/spectrsinglesignalfactors.cpp" line="117"/>
         <source>60% мощности спектра</source>
-        <translation>60% of spectrum power</translation>
+        <translation type="vanished">60% of spectrum power</translation>
     </message>
     <message>
-        <location filename="factors/spectr_single_sig/spectrsinglesignalfactors.cpp" line="117"/>
         <source>60%</source>
-        <translation>60%</translation>
+        <translation type="vanished">60%</translation>
     </message>
     <message>
-        <location filename="factors/spectr_single_sig/spectrsinglesignalfactors.cpp" line="121"/>
         <source>Мощность первой зоны</source>
-        <translation>Power of the first zone</translation>
+        <translation type="vanished">Power of the first zone</translation>
     </message>
     <message>
-        <location filename="factors/spectr_single_sig/spectrsinglesignalfactors.cpp" line="121"/>
         <source>Pwr1</source>
-        <translation>Pwr1</translation>
+        <translation type="vanished">Pwr1</translation>
     </message>
     <message>
-        <location filename="factors/spectr_single_sig/spectrsinglesignalfactors.cpp" line="121"/>
-        <location filename="factors/spectr_single_sig/spectrsinglesignalfactors.cpp" line="124"/>
-        <location filename="factors/spectr_single_sig/spectrsinglesignalfactors.cpp" line="127"/>
         <source>%</source>
-        <translation>%</translation>
+        <translation type="vanished">%</translation>
     </message>
     <message>
-        <location filename="factors/spectr_single_sig/spectrsinglesignalfactors.cpp" line="124"/>
         <source>Мощность второй зоны</source>
-        <translation>Power of the second zone</translation>
+        <translation type="vanished">Power of the second zone</translation>
     </message>
     <message>
-        <location filename="factors/spectr_single_sig/spectrsinglesignalfactors.cpp" line="124"/>
         <source>Pwr2</source>
-        <translation>Pw2</translation>
+        <translation type="vanished">Pw2</translation>
     </message>
     <message>
-        <location filename="factors/spectr_single_sig/spectrsinglesignalfactors.cpp" line="127"/>
         <source>Мощность третьей зоны</source>
-        <translation>Power of the third zone</translation>
+        <translation type="vanished">Power of the third zone</translation>
     </message>
     <message>
-        <location filename="factors/spectr_single_sig/spectrsinglesignalfactors.cpp" line="127"/>
         <source>Pwr3</source>
-        <translation>Pw3</translation>
+        <translation type="vanished">Pw3</translation>
     </message>
 </context>
 <context>
     <name>SpectrStabFactors</name>
     <message>
-        <location filename="factors/spectr_stab/spectrstabfactors.cpp" line="76"/>
         <source>Частота первого пика (фронталь)</source>
-        <translation>First peak frequency (frontal)</translation>
+        <translation type="vanished">First peak frequency (frontal)</translation>
     </message>
     <message>
-        <location filename="factors/spectr_stab/spectrstabfactors.cpp" line="76"/>
         <source>F1X</source>
-        <translation>F1X</translation>
+        <translation type="vanished">F1X</translation>
     </message>
     <message>
-        <location filename="factors/spectr_stab/spectrstabfactors.cpp" line="76"/>
-        <location filename="factors/spectr_stab/spectrstabfactors.cpp" line="82"/>
-        <location filename="factors/spectr_stab/spectrstabfactors.cpp" line="88"/>
-        <location filename="factors/spectr_stab/spectrstabfactors.cpp" line="110"/>
-        <location filename="factors/spectr_stab/spectrstabfactors.cpp" line="116"/>
-        <location filename="factors/spectr_stab/spectrstabfactors.cpp" line="122"/>
-        <location filename="factors/spectr_stab/spectrstabfactors.cpp" line="129"/>
         <source>Гц</source>
-        <translation>Hz</translation>
+        <translation type="vanished">Hz</translation>
     </message>
     <message>
-        <location filename="factors/spectr_stab/spectrstabfactors.cpp" line="79"/>
         <source>Амплитуда первого пика (фронталь)</source>
-        <translation>First peak amplitude (frontal)</translation>
+        <translation type="vanished">First peak amplitude (frontal)</translation>
     </message>
     <message>
-        <location filename="factors/spectr_stab/spectrstabfactors.cpp" line="79"/>
         <source>A1X</source>
-        <translation>A1X</translation>
+        <translation type="vanished">A1X</translation>
     </message>
     <message>
-        <location filename="factors/spectr_stab/spectrstabfactors.cpp" line="79"/>
-        <location filename="factors/spectr_stab/spectrstabfactors.cpp" line="85"/>
-        <location filename="factors/spectr_stab/spectrstabfactors.cpp" line="91"/>
-        <location filename="factors/spectr_stab/spectrstabfactors.cpp" line="95"/>
-        <location filename="factors/spectr_stab/spectrstabfactors.cpp" line="113"/>
-        <location filename="factors/spectr_stab/spectrstabfactors.cpp" line="119"/>
-        <location filename="factors/spectr_stab/spectrstabfactors.cpp" line="125"/>
         <source>мм</source>
-        <translation>mm</translation>
+        <translation type="vanished">mm</translation>
     </message>
     <message>
-        <location filename="factors/spectr_stab/spectrstabfactors.cpp" line="82"/>
         <source>Частота второго пика (фронталь)</source>
-        <translation>Second peak frequency (frontal)</translation>
+        <translation type="vanished">Second peak frequency (frontal)</translation>
     </message>
     <message>
-        <location filename="factors/spectr_stab/spectrstabfactors.cpp" line="82"/>
         <source>F2X</source>
-        <translation>F2X</translation>
+        <translation type="vanished">F2X</translation>
     </message>
     <message>
-        <location filename="factors/spectr_stab/spectrstabfactors.cpp" line="85"/>
         <source>Амплитуда второго пика (фронталь)</source>
-        <translation>Second peak amplitude (frontal)</translation>
+        <translation type="vanished">Second peak amplitude (frontal)</translation>
     </message>
     <message>
-        <location filename="factors/spectr_stab/spectrstabfactors.cpp" line="85"/>
         <source>A2X</source>
-        <translation>A2X</translation>
+        <translation type="vanished">A2X</translation>
     </message>
     <message>
-        <location filename="factors/spectr_stab/spectrstabfactors.cpp" line="88"/>
         <source>Частота третьего пика (фронталь)</source>
-        <translation>Third peak frequency (frontal)</translation>
+        <translation type="vanished">Third peak frequency (frontal)</translation>
     </message>
     <message>
-        <location filename="factors/spectr_stab/spectrstabfactors.cpp" line="88"/>
         <source>F3X</source>
-        <translation>F3</translation>
+        <translation type="vanished">F3</translation>
     </message>
     <message>
-        <location filename="factors/spectr_stab/spectrstabfactors.cpp" line="91"/>
         <source>Амплитуда третьего пика (фронталь)</source>
-        <translation>Third peak amplitude (frontal)</translation>
+        <translation type="vanished">Third peak amplitude (frontal)</translation>
     </message>
     <message>
-        <location filename="factors/spectr_stab/spectrstabfactors.cpp" line="91"/>
         <source>A3X</source>
-        <translation>A3X</translation>
+        <translation type="vanished">A3X</translation>
     </message>
     <message>
-        <location filename="factors/spectr_stab/spectrstabfactors.cpp" line="95"/>
         <source>60% мощности спектра (фронталь)</source>
-        <translation>60% of spectrum power (frontal)</translation>
+        <translation type="vanished">60% of spectrum power (frontal)</translation>
     </message>
     <message>
-        <location filename="factors/spectr_stab/spectrstabfactors.cpp" line="95"/>
         <source>60%X</source>
-        <translation>60%X</translation>
+        <translation type="vanished">60%X</translation>
     </message>
     <message>
-        <location filename="factors/spectr_stab/spectrstabfactors.cpp" line="99"/>
         <source>Мощность первой зоны (фронталь)</source>
-        <translation>Power of the first zone (frontal)</translation>
+        <translation type="vanished">Power of the first zone (frontal)</translation>
     </message>
     <message>
-        <location filename="factors/spectr_stab/spectrstabfactors.cpp" line="99"/>
         <source>Pwr1X</source>
-        <translation>Pw1X</translation>
+        <translation type="vanished">Pw1X</translation>
     </message>
     <message>
-        <location filename="factors/spectr_stab/spectrstabfactors.cpp" line="99"/>
-        <location filename="factors/spectr_stab/spectrstabfactors.cpp" line="102"/>
-        <location filename="factors/spectr_stab/spectrstabfactors.cpp" line="105"/>
-        <location filename="factors/spectr_stab/spectrstabfactors.cpp" line="133"/>
-        <location filename="factors/spectr_stab/spectrstabfactors.cpp" line="136"/>
-        <location filename="factors/spectr_stab/spectrstabfactors.cpp" line="139"/>
         <source>%</source>
-        <translation>%</translation>
+        <translation type="vanished">%</translation>
     </message>
     <message>
-        <location filename="factors/spectr_stab/spectrstabfactors.cpp" line="102"/>
         <source>Мощность второй зоны (фронталь)</source>
-        <translation>Power of the second zone (frontal)</translation>
+        <translation type="vanished">Power of the second zone (frontal)</translation>
     </message>
     <message>
-        <location filename="factors/spectr_stab/spectrstabfactors.cpp" line="102"/>
         <source>Pwr2X</source>
-        <translation>Pw2X</translation>
+        <translation type="vanished">Pw2X</translation>
     </message>
     <message>
-        <location filename="factors/spectr_stab/spectrstabfactors.cpp" line="105"/>
         <source>Мощность третьей зоны (фронталь)</source>
-        <translation>Power of the third zone (frontal)</translation>
+        <translation type="vanished">Power of the third zone (frontal)</translation>
     </message>
     <message>
-        <location filename="factors/spectr_stab/spectrstabfactors.cpp" line="105"/>
         <source>Pwr3X</source>
-        <translation>Pw3X</translation>
+        <translation type="vanished">Pw3X</translation>
     </message>
     <message>
-        <location filename="factors/spectr_stab/spectrstabfactors.cpp" line="110"/>
         <source>Частота первого пика (сагитталь)</source>
-        <translation>First peak frequency (sagittal)</translation>
+        <translation type="vanished">First peak frequency (sagittal)</translation>
     </message>
     <message>
-        <location filename="factors/spectr_stab/spectrstabfactors.cpp" line="110"/>
         <source>F1Y</source>
-        <translation>F1Y</translation>
+        <translation type="vanished">F1Y</translation>
     </message>
     <message>
-        <location filename="factors/spectr_stab/spectrstabfactors.cpp" line="113"/>
         <source>Амплитуда первого пика (сагитталь)</source>
-        <translation>First peak amplitude (sagittal)</translation>
+        <translation type="vanished">First peak amplitude (sagittal)</translation>
     </message>
     <message>
-        <location filename="factors/spectr_stab/spectrstabfactors.cpp" line="113"/>
         <source>A1Y</source>
-        <translation>A1Y</translation>
+        <translation type="vanished">A1Y</translation>
     </message>
     <message>
-        <location filename="factors/spectr_stab/spectrstabfactors.cpp" line="116"/>
         <source>Частота второго пика (сагитталь)</source>
-        <translation>Second peak frequency (sagittal)</translation>
+        <translation type="vanished">Second peak frequency (sagittal)</translation>
     </message>
     <message>
-        <location filename="factors/spectr_stab/spectrstabfactors.cpp" line="116"/>
         <source>F2Y</source>
-        <translation>F2Y</translation>
+        <translation type="vanished">F2Y</translation>
     </message>
     <message>
-        <location filename="factors/spectr_stab/spectrstabfactors.cpp" line="119"/>
         <source>Амплитуда второго пика (сагитталь)</source>
-        <translation>Second peak amplitude (sagittal)</translation>
+        <translation type="vanished">Second peak amplitude (sagittal)</translation>
     </message>
     <message>
-        <location filename="factors/spectr_stab/spectrstabfactors.cpp" line="119"/>
         <source>A2Y</source>
-        <translation>A2Y</translation>
+        <translation type="vanished">A2Y</translation>
     </message>
     <message>
-        <location filename="factors/spectr_stab/spectrstabfactors.cpp" line="122"/>
         <source>Частота третьего пика (сагитталь)</source>
-        <translation>Third peak frequency (sagittal)</translation>
+        <translation type="vanished">Third peak frequency (sagittal)</translation>
     </message>
     <message>
-        <location filename="factors/spectr_stab/spectrstabfactors.cpp" line="122"/>
         <source>F3Y</source>
-        <translation>F3Y</translation>
+        <translation type="vanished">F3Y</translation>
     </message>
     <message>
-        <location filename="factors/spectr_stab/spectrstabfactors.cpp" line="125"/>
         <source>Амплитуда третьего пика (сагитталь)</source>
-        <translation>Third peak amplitude (sagittal)</translation>
+        <translation type="vanished">Third peak amplitude (sagittal)</translation>
     </message>
     <message>
-        <location filename="factors/spectr_stab/spectrstabfactors.cpp" line="125"/>
         <source>A3Y</source>
-        <translation>A3Y</translation>
+        <translation type="vanished">A3Y</translation>
     </message>
     <message>
-        <location filename="factors/spectr_stab/spectrstabfactors.cpp" line="129"/>
         <source>60% мощности спектра (сагитталь)</source>
-        <translation>60% of spectrum power (sagittal)</translation>
+        <translation type="vanished">60% of spectrum power (sagittal)</translation>
     </message>
     <message>
-        <location filename="factors/spectr_stab/spectrstabfactors.cpp" line="129"/>
         <source>60%Y</source>
-        <translation>60%Y</translation>
+        <translation type="vanished">60%Y</translation>
     </message>
     <message>
-        <location filename="factors/spectr_stab/spectrstabfactors.cpp" line="133"/>
         <source>Мощность первой зоны (сагитталь)</source>
-        <translation>Power of the first zone (sagittal)</translation>
+        <translation type="vanished">Power of the first zone (sagittal)</translation>
     </message>
     <message>
-        <location filename="factors/spectr_stab/spectrstabfactors.cpp" line="133"/>
         <source>Pwr1Y</source>
-        <translation>Pw1Y</translation>
+        <translation type="vanished">Pw1Y</translation>
     </message>
     <message>
-        <location filename="factors/spectr_stab/spectrstabfactors.cpp" line="136"/>
         <source>Мощность второй зоны (сагитталь)</source>
-        <translation>Power of the second zone (sagittal)</translation>
+        <translation type="vanished">Power of the second zone (sagittal)</translation>
     </message>
     <message>
-        <location filename="factors/spectr_stab/spectrstabfactors.cpp" line="136"/>
         <source>Pwr2Y</source>
-        <translation>Pw2Y</translation>
+        <translation type="vanished">Pw2Y</translation>
     </message>
     <message>
-        <location filename="factors/spectr_stab/spectrstabfactors.cpp" line="139"/>
         <source>Мощность третьей зоны (сагитталь)</source>
-        <translation>Power of the third zone (sagittal)</translation>
+        <translation type="vanished">Power of the third zone (sagittal)</translation>
     </message>
     <message>
-        <location filename="factors/spectr_stab/spectrstabfactors.cpp" line="139"/>
         <source>Pwr3Y</source>
-        <translation>Pw3Y</translation>
+        <translation type="vanished">Pw3Y</translation>
     </message>
 </context>
 <context>
@@ -13937,206 +15340,152 @@ Click the [Done] button.</translation>
 <context>
     <name>StabReactTrainFactors</name>
     <message>
-        <location filename="factors/stab_dynamic/stabreacttrainfactors.cpp" line="83"/>
         <source>Латентный период средний</source>
-        <translation>Average latent period</translation>
+        <translation type="vanished">Average latent period</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/stabreacttrainfactors.cpp" line="83"/>
         <source>LA</source>
-        <translation>LA</translation>
+        <translation type="vanished">LA</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/stabreacttrainfactors.cpp" line="83"/>
-        <location filename="factors/stab_dynamic/stabreacttrainfactors.cpp" line="86"/>
-        <location filename="factors/stab_dynamic/stabreacttrainfactors.cpp" line="89"/>
-        <location filename="factors/stab_dynamic/stabreacttrainfactors.cpp" line="92"/>
-        <location filename="factors/stab_dynamic/stabreacttrainfactors.cpp" line="95"/>
-        <location filename="factors/stab_dynamic/stabreacttrainfactors.cpp" line="98"/>
-        <location filename="factors/stab_dynamic/stabreacttrainfactors.cpp" line="101"/>
-        <location filename="factors/stab_dynamic/stabreacttrainfactors.cpp" line="104"/>
-        <location filename="factors/stab_dynamic/stabreacttrainfactors.cpp" line="107"/>
-        <location filename="factors/stab_dynamic/stabreacttrainfactors.cpp" line="111"/>
-        <location filename="factors/stab_dynamic/stabreacttrainfactors.cpp" line="114"/>
-        <location filename="factors/stab_dynamic/stabreacttrainfactors.cpp" line="117"/>
-        <location filename="factors/stab_dynamic/stabreacttrainfactors.cpp" line="120"/>
-        <location filename="factors/stab_dynamic/stabreacttrainfactors.cpp" line="123"/>
-        <location filename="factors/stab_dynamic/stabreacttrainfactors.cpp" line="126"/>
-        <location filename="factors/stab_dynamic/stabreacttrainfactors.cpp" line="129"/>
-        <location filename="factors/stab_dynamic/stabreacttrainfactors.cpp" line="132"/>
-        <location filename="factors/stab_dynamic/stabreacttrainfactors.cpp" line="135"/>
         <source>сек</source>
-        <translation>sec</translation>
+        <translation type="vanished">sec</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/stabreacttrainfactors.cpp" line="86"/>
         <source>Латентный период вперед</source>
-        <translation>Latent period forward</translation>
+        <translation type="vanished">Latent period forward</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/stabreacttrainfactors.cpp" line="86"/>
         <source>LU</source>
-        <translation>LU</translation>
+        <translation type="vanished">LU</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/stabreacttrainfactors.cpp" line="89"/>
         <source>Латентный период вперед вправо</source>
-        <translation>Latent period forward right</translation>
+        <translation type="vanished">Latent period forward right</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/stabreacttrainfactors.cpp" line="89"/>
         <source>LUR</source>
-        <translation>LUR</translation>
+        <translation type="vanished">LUR</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/stabreacttrainfactors.cpp" line="92"/>
         <source>Латентный период вправо</source>
-        <translation>Latent period to the right</translation>
+        <translation type="vanished">Latent period to the right</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/stabreacttrainfactors.cpp" line="92"/>
         <source>LR</source>
-        <translation>LR</translation>
+        <translation type="vanished">LR</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/stabreacttrainfactors.cpp" line="95"/>
         <source>Латентный период назад вправо</source>
-        <translation>Latent period back to the right</translation>
+        <translation type="vanished">Latent period back to the right</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/stabreacttrainfactors.cpp" line="95"/>
         <source>LDR</source>
-        <translation>LDR</translation>
+        <translation type="vanished">LDR</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/stabreacttrainfactors.cpp" line="98"/>
         <source>Латентный период назад</source>
-        <translation>Latent period back</translation>
+        <translation type="vanished">Latent period back</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/stabreacttrainfactors.cpp" line="98"/>
         <source>LD</source>
-        <translation>LD</translation>
+        <translation type="vanished">LD</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/stabreacttrainfactors.cpp" line="101"/>
         <source>Латентный период назад влево</source>
-        <translation>Latent period back to the left</translation>
+        <translation type="vanished">Latent period back to the left</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/stabreacttrainfactors.cpp" line="101"/>
         <source>LDL</source>
-        <translation>LDL</translation>
+        <translation type="vanished">LDL</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/stabreacttrainfactors.cpp" line="104"/>
         <source>Латентный период влево</source>
-        <translation>Latent period to the left</translation>
+        <translation type="vanished">Latent period to the left</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/stabreacttrainfactors.cpp" line="104"/>
         <source>LL</source>
-        <translation>LL</translation>
+        <translation type="vanished">LL</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/stabreacttrainfactors.cpp" line="107"/>
         <source>Латентный период вперед влево</source>
-        <translation>Latent period forward left</translation>
+        <translation type="vanished">Latent period forward left</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/stabreacttrainfactors.cpp" line="107"/>
         <source>LUL</source>
-        <translation>LUL</translation>
+        <translation type="vanished">LUL</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/stabreacttrainfactors.cpp" line="111"/>
         <source>Время реакции среднее</source>
-        <translation>Average reaction time</translation>
+        <translation type="vanished">Average reaction time</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/stabreacttrainfactors.cpp" line="111"/>
         <source>TA</source>
-        <translation>TA</translation>
+        <translation type="vanished">TA</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/stabreacttrainfactors.cpp" line="114"/>
         <source>Время реакции вперед</source>
-        <translation>Forward reaction time</translation>
+        <translation type="vanished">Forward reaction time</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/stabreacttrainfactors.cpp" line="114"/>
         <source>TU</source>
-        <translation>TU</translation>
+        <translation type="vanished">TU</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/stabreacttrainfactors.cpp" line="117"/>
         <source>Время реакции вперед вправо</source>
-        <translation>Forward right reaction time</translation>
+        <translation type="vanished">Forward right reaction time</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/stabreacttrainfactors.cpp" line="117"/>
         <source>TUR</source>
-        <translation>TUR</translation>
+        <translation type="vanished">TUR</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/stabreacttrainfactors.cpp" line="120"/>
         <source>Время реакции вправо</source>
-        <translation>Right reaction time</translation>
+        <translation type="vanished">Right reaction time</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/stabreacttrainfactors.cpp" line="120"/>
         <source>TR</source>
-        <translation>TR</translation>
+        <translation type="vanished">TR</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/stabreacttrainfactors.cpp" line="123"/>
         <source>Время реакции назад вправо</source>
-        <translation>Back right reaction time</translation>
+        <translation type="vanished">Back right reaction time</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/stabreacttrainfactors.cpp" line="123"/>
         <source>TDR</source>
-        <translation>TDR</translation>
+        <translation type="vanished">TDR</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/stabreacttrainfactors.cpp" line="126"/>
         <source>Время реакции назад</source>
-        <translation>Back reaction time</translation>
+        <translation type="vanished">Back reaction time</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/stabreacttrainfactors.cpp" line="126"/>
         <source>TD</source>
-        <translation>TD</translation>
+        <translation type="vanished">TD</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/stabreacttrainfactors.cpp" line="129"/>
         <source>Время реакции назад влево</source>
-        <translation>Back left reaction time</translation>
+        <translation type="vanished">Back left reaction time</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/stabreacttrainfactors.cpp" line="129"/>
         <source>TDL</source>
-        <translation>TDL</translation>
+        <translation type="vanished">TDL</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/stabreacttrainfactors.cpp" line="132"/>
         <source>Время реакции влево</source>
-        <translation>Left reaction time</translation>
+        <translation type="vanished">Left reaction time</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/stabreacttrainfactors.cpp" line="132"/>
         <source>TL</source>
-        <translation>TL</translation>
+        <translation type="vanished">TL</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/stabreacttrainfactors.cpp" line="135"/>
         <source>Время реакции вперед влево</source>
-        <translation>Forward left reaction time</translation>
+        <translation type="vanished">Forward left reaction time</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/stabreacttrainfactors.cpp" line="135"/>
         <source>TUL</source>
-        <translation>TUL</translation>
+        <translation type="vanished">TUL</translation>
     </message>
 </context>
 <context>
@@ -16656,24 +18005,20 @@ The magnitude of the increase should be minimal</translation>
 <context>
     <name>TargetFactors</name>
     <message>
-        <location filename="factors/target/targetfactors.cpp" line="120"/>
         <source>Количество набранных баллов</source>
-        <translation>Count of scores</translation>
+        <translation type="vanished">Count of scores</translation>
     </message>
     <message>
-        <location filename="factors/target/targetfactors.cpp" line="120"/>
         <source>Баллы</source>
-        <translation>Scores</translation>
+        <translation type="vanished">Scores</translation>
     </message>
     <message>
-        <location filename="factors/target/targetfactors.cpp" line="123"/>
         <source>Суммарный балл</source>
-        <translation>Total score</translation>
+        <translation type="vanished">Total score</translation>
     </message>
     <message>
-        <location filename="factors/target/targetfactors.cpp" line="123"/>
         <source>Сумм. балл</source>
-        <translation>Ttl.score</translation>
+        <translation type="vanished">Ttl.score</translation>
     </message>
 </context>
 <context>
@@ -16882,92 +18227,72 @@ The magnitude of the increase should be minimal</translation>
 <context>
     <name>TeppingTestFactors</name>
     <message>
-        <location filename="factors/jump/teppingtestfactors.cpp" line="109"/>
         <source>Количество шагов</source>
-        <translation>Steps count</translation>
+        <translation type="vanished">Steps count</translation>
     </message>
     <message>
-        <location filename="factors/jump/teppingtestfactors.cpp" line="109"/>
         <source>Кол-во</source>
-        <translation>Count</translation>
+        <translation type="vanished">Count</translation>
     </message>
     <message>
-        <location filename="factors/jump/teppingtestfactors.cpp" line="112"/>
         <source>Общее время</source>
-        <translation>Total time</translation>
+        <translation type="vanished">Total time</translation>
     </message>
     <message>
-        <location filename="factors/jump/teppingtestfactors.cpp" line="112"/>
         <source>Время</source>
-        <translation>Time</translation>
+        <translation type="vanished">Time</translation>
     </message>
     <message>
-        <location filename="factors/jump/teppingtestfactors.cpp" line="112"/>
         <source>сек</source>
-        <translation>sec</translation>
+        <translation type="vanished">sec</translation>
     </message>
     <message>
-        <location filename="factors/jump/teppingtestfactors.cpp" line="115"/>
         <source>Быстрота одиночного движения левой ноги</source>
-        <translation>Speed ​​of single movement of the left leg</translation>
+        <translation type="vanished">Speed ​​of single movement of the left leg</translation>
     </message>
     <message>
-        <location filename="factors/jump/teppingtestfactors.cpp" line="115"/>
         <source>Быстрота (лев)</source>
-        <translation>Speed (left)</translation>
+        <translation type="vanished">Speed (left)</translation>
     </message>
     <message>
-        <location filename="factors/jump/teppingtestfactors.cpp" line="115"/>
-        <location filename="factors/jump/teppingtestfactors.cpp" line="118"/>
-        <location filename="factors/jump/teppingtestfactors.cpp" line="121"/>
-        <location filename="factors/jump/teppingtestfactors.cpp" line="124"/>
         <source>cек</source>
-        <translation>sec</translation>
+        <translation type="vanished">sec</translation>
     </message>
     <message>
-        <location filename="factors/jump/teppingtestfactors.cpp" line="118"/>
         <source>Быстрота одиночного движения правой ноги</source>
-        <translation>Speed ​​of single movement of the right leg</translation>
+        <translation type="vanished">Speed ​​of single movement of the right leg</translation>
     </message>
     <message>
-        <location filename="factors/jump/teppingtestfactors.cpp" line="118"/>
         <source>Быстрота (прав)</source>
-        <translation>Speed (right)</translation>
+        <translation type="vanished">Speed (right)</translation>
     </message>
     <message>
-        <location filename="factors/jump/teppingtestfactors.cpp" line="121"/>
         <source>Время контакта левой ноги</source>
-        <translation>Left foot contact time</translation>
+        <translation type="vanished">Left foot contact time</translation>
     </message>
     <message>
-        <location filename="factors/jump/teppingtestfactors.cpp" line="121"/>
         <source>Контакт (лев)</source>
-        <translation>Contact (left)</translation>
+        <translation type="vanished">Contact (left)</translation>
     </message>
     <message>
-        <location filename="factors/jump/teppingtestfactors.cpp" line="124"/>
         <source>Время контакта правой ноги</source>
-        <translation>Right foot contact time</translation>
+        <translation type="vanished">Right foot contact time</translation>
     </message>
     <message>
-        <location filename="factors/jump/teppingtestfactors.cpp" line="124"/>
         <source>Контакт (прав)</source>
-        <translation>Contact (right)</translation>
+        <translation type="vanished">Contact (right)</translation>
     </message>
     <message>
-        <location filename="factors/jump/teppingtestfactors.cpp" line="127"/>
         <source>Темп шагов</source>
-        <translation>Step tempo</translation>
+        <translation type="vanished">Step tempo</translation>
     </message>
     <message>
-        <location filename="factors/jump/teppingtestfactors.cpp" line="127"/>
         <source>темп</source>
-        <translation>Tempo</translation>
+        <translation type="vanished">Tempo</translation>
     </message>
     <message>
-        <location filename="factors/jump/teppingtestfactors.cpp" line="127"/>
         <source>шагов/мин</source>
-        <translation>steps/min</translation>
+        <translation type="vanished">steps/min</translation>
     </message>
 </context>
 <context>
@@ -17458,119 +18783,92 @@ Contact time</translation>
 <context>
     <name>TrenResultFactors</name>
     <message>
-        <location filename="factors/tren_result/trenresultfactors.cpp" line="139"/>
         <source>Количество набранных баллов</source>
-        <translation>Scores count</translation>
+        <translation type="vanished">Scores count</translation>
     </message>
     <message>
-        <location filename="factors/tren_result/trenresultfactors.cpp" line="139"/>
         <source>Баллы</source>
-        <translation>Scores</translation>
+        <translation type="vanished">Scores</translation>
     </message>
     <message>
-        <location filename="factors/tren_result/trenresultfactors.cpp" line="142"/>
         <source>Количество ошибок</source>
-        <translation>Errors count</translation>
+        <translation type="vanished">Errors count</translation>
     </message>
     <message>
-        <location filename="factors/tren_result/trenresultfactors.cpp" line="142"/>
         <source>Ошибки</source>
-        <translation>Errors</translation>
+        <translation type="vanished">Errors</translation>
     </message>
     <message>
-        <location filename="factors/tren_result/trenresultfactors.cpp" line="151"/>
         <source>Время игры</source>
-        <translation>Game time</translation>
+        <translation type="vanished">Game time</translation>
     </message>
     <message>
-        <location filename="factors/tren_result/trenresultfactors.cpp" line="151"/>
         <source>Время</source>
-        <translation>Time</translation>
+        <translation type="vanished">Time</translation>
     </message>
     <message>
-        <location filename="factors/tren_result/trenresultfactors.cpp" line="151"/>
-        <location filename="factors/tren_result/trenresultfactors.cpp" line="158"/>
-        <location filename="factors/tren_result/trenresultfactors.cpp" line="161"/>
-        <location filename="factors/tren_result/trenresultfactors.cpp" line="164"/>
         <source>сек</source>
-        <translation>sec</translation>
+        <translation type="vanished">sec</translation>
     </message>
     <message>
-        <location filename="factors/tren_result/trenresultfactors.cpp" line="154"/>
         <source>Количество удаленных строк</source>
-        <translation>Deleted lines count</translation>
+        <translation type="vanished">Deleted lines count</translation>
     </message>
     <message>
-        <location filename="factors/tren_result/trenresultfactors.cpp" line="154"/>
         <source>Строки</source>
-        <translation>Lines</translation>
+        <translation type="vanished">Lines</translation>
     </message>
     <message>
-        <location filename="factors/tren_result/trenresultfactors.cpp" line="158"/>
         <source>Длительность интервалов захвата</source>
-        <translation>Duration of capture intervals</translation>
+        <translation type="vanished">Duration of capture intervals</translation>
     </message>
     <message>
-        <location filename="factors/tren_result/trenresultfactors.cpp" line="158"/>
         <source>TakeTime</source>
-        <translation>TakeTime</translation>
+        <translation type="vanished">TakeTime</translation>
     </message>
     <message>
-        <location filename="factors/tren_result/trenresultfactors.cpp" line="161"/>
         <source>Длительность интервалов укладки</source>
-        <translation>Duration of laying intervals</translation>
+        <translation type="vanished">Duration of laying intervals</translation>
     </message>
     <message>
-        <location filename="factors/tren_result/trenresultfactors.cpp" line="161"/>
         <source>PutTime</source>
-        <translation>PutTime</translation>
+        <translation type="vanished">PutTime</translation>
     </message>
     <message>
-        <location filename="factors/tren_result/trenresultfactors.cpp" line="164"/>
         <source>Длительность интервалов ошибок</source>
-        <translation>Duration of error intervals</translation>
+        <translation type="vanished">Duration of error intervals</translation>
     </message>
     <message>
-        <location filename="factors/tren_result/trenresultfactors.cpp" line="164"/>
         <source>ErrTime</source>
-        <translation>ErrTime</translation>
+        <translation type="vanished">ErrTime</translation>
     </message>
     <message>
-        <location filename="factors/tren_result/trenresultfactors.cpp" line="167"/>
         <source>Скорость на этапе захвата</source>
-        <translation>Speed ​​at capture stage</translation>
+        <translation type="vanished">Speed ​​at capture stage</translation>
     </message>
     <message>
-        <location filename="factors/tren_result/trenresultfactors.cpp" line="167"/>
         <source>TakeSpd</source>
-        <translation>TakeSpd</translation>
+        <translation type="vanished">TakeSpd</translation>
     </message>
     <message>
-        <location filename="factors/tren_result/trenresultfactors.cpp" line="167"/>
-        <location filename="factors/tren_result/trenresultfactors.cpp" line="170"/>
-        <location filename="factors/tren_result/trenresultfactors.cpp" line="173"/>
         <source>мм/сек</source>
-        <translation>mm/sec</translation>
+        <translation type="vanished">mm/sec</translation>
     </message>
     <message>
-        <location filename="factors/tren_result/trenresultfactors.cpp" line="170"/>
         <source>Скорость на этапе укладки</source>
-        <translation>Speed ​​at the laying stage</translation>
+        <translation type="vanished">Speed ​​at the laying stage</translation>
     </message>
     <message>
-        <location filename="factors/tren_result/trenresultfactors.cpp" line="170"/>
         <source>PutSpd</source>
-        <translation>PutSpd</translation>
+        <translation type="vanished">PutSpd</translation>
     </message>
     <message>
-        <location filename="factors/tren_result/trenresultfactors.cpp" line="173"/>
         <source>Скорость на этапе ошибок</source>
-        <translation>Speed ​​at the error stage</translation>
+        <translation type="vanished">Speed ​​at the error stage</translation>
     </message>
     <message>
-        <location filename="factors/tren_result/trenresultfactors.cpp" line="173"/>
         <source>ErrSpd</source>
-        <translation>ErrSpd</translation>
+        <translation type="vanished">ErrSpd</translation>
     </message>
 </context>
 <context>
@@ -19216,223 +20514,172 @@ Contact time</translation>
         <translation type="obsolete">Vector factors</translation>
     </message>
     <message>
-        <location filename="factors/vector/vectorfactors.cpp" line="138"/>
         <source>Качество функции равновесия</source>
-        <translation>Equilibrium function quality</translation>
+        <translation type="vanished">Equilibrium function quality</translation>
     </message>
     <message>
-        <location filename="factors/vector/vectorfactors.cpp" line="138"/>
         <source>КФР</source>
-        <translation>EFQ</translation>
+        <translation type="vanished">EFQ</translation>
     </message>
     <message>
-        <location filename="factors/vector/vectorfactors.cpp" line="138"/>
-        <location filename="factors/vector/vectorfactors.cpp" line="144"/>
-        <location filename="factors/vector/vectorfactors.cpp" line="168"/>
-        <location filename="factors/vector/vectorfactors.cpp" line="181"/>
-        <location filename="factors/vector/vectorfactors.cpp" line="184"/>
         <source>%</source>
-        <translation>%</translation>
+        <translation type="vanished">%</translation>
     </message>
     <message>
-        <location filename="factors/vector/vectorfactors.cpp" line="141"/>
         <source>Нормированная площадь векторограммы</source>
-        <translation>Normalized area of the vectorogram</translation>
+        <translation type="vanished">Normalized area of the vectorogram</translation>
     </message>
     <message>
-        <location filename="factors/vector/vectorfactors.cpp" line="141"/>
         <source>НПВ</source>
-        <translation>NAV</translation>
+        <translation type="vanished">NAV</translation>
     </message>
     <message>
-        <location filename="factors/vector/vectorfactors.cpp" line="141"/>
         <source>кв.мм./с</source>
-        <translation>sq.mm./s</translation>
+        <translation type="vanished">sq.mm./s</translation>
     </message>
     <message>
-        <location filename="factors/vector/vectorfactors.cpp" line="144"/>
         <source>Коэф-т резкого изм. напр. движения</source>
-        <translation>The coefficient of a sharp change of direction</translation>
+        <translation type="vanished">The coefficient of a sharp change of direction</translation>
     </message>
     <message>
-        <location filename="factors/vector/vectorfactors.cpp" line="144"/>
         <source>КРИНД</source>
-        <translation>CSCD</translation>
+        <translation type="vanished">CSCD</translation>
     </message>
     <message>
-        <location filename="factors/vector/vectorfactors.cpp" line="148"/>
         <source>Линейная скорость средняя</source>
-        <translation>Averige linear velosity</translation>
+        <translation type="vanished">Averige linear velosity</translation>
     </message>
     <message>
-        <location filename="factors/vector/vectorfactors.cpp" line="148"/>
         <source>ЛСС</source>
-        <translation>ALV</translation>
+        <translation type="vanished">ALV</translation>
     </message>
     <message>
-        <location filename="factors/vector/vectorfactors.cpp" line="148"/>
-        <location filename="factors/vector/vectorfactors.cpp" line="151"/>
-        <location filename="factors/vector/vectorfactors.cpp" line="175"/>
-        <location filename="factors/vector/vectorfactors.cpp" line="178"/>
         <source>мм/сек</source>
-        <translation>mm/sec</translation>
+        <translation type="vanished">mm/sec</translation>
     </message>
     <message>
-        <location filename="factors/vector/vectorfactors.cpp" line="151"/>
         <source>Амплитуда вариации линейной скорости</source>
-        <translation>Amplitude of linear velocity variation</translation>
+        <translation type="vanished">Amplitude of linear velocity variation</translation>
     </message>
     <message>
-        <location filename="factors/vector/vectorfactors.cpp" line="151"/>
         <source>АВЛС</source>
-        <translation>ALVV</translation>
+        <translation type="vanished">ALVV</translation>
     </message>
     <message>
-        <location filename="factors/vector/vectorfactors.cpp" line="154"/>
         <source>Период вариации линейной скорости</source>
-        <translation>Period of linear velocity variation</translation>
+        <translation type="vanished">Period of linear velocity variation</translation>
     </message>
     <message>
-        <location filename="factors/vector/vectorfactors.cpp" line="154"/>
         <source>ПВЛС</source>
-        <translation>PLVV</translation>
+        <translation type="vanished">PLVV</translation>
     </message>
     <message>
-        <location filename="factors/vector/vectorfactors.cpp" line="154"/>
-        <location filename="factors/vector/vectorfactors.cpp" line="164"/>
         <source>сек</source>
-        <translation>sec</translation>
+        <translation type="vanished">sec</translation>
     </message>
     <message>
-        <location filename="factors/vector/vectorfactors.cpp" line="158"/>
         <source>Угловая скорость средняя</source>
-        <translation>Average angular velocity</translation>
+        <translation type="vanished">Average angular velocity</translation>
     </message>
     <message>
-        <location filename="factors/vector/vectorfactors.cpp" line="158"/>
         <source>УСС</source>
-        <translation>AAV</translation>
+        <translation type="vanished">AAV</translation>
     </message>
     <message>
-        <location filename="factors/vector/vectorfactors.cpp" line="158"/>
-        <location filename="factors/vector/vectorfactors.cpp" line="161"/>
         <source>рад/сек</source>
-        <translation>rad/sec</translation>
+        <translation type="vanished">rad/sec</translation>
     </message>
     <message>
-        <location filename="factors/vector/vectorfactors.cpp" line="161"/>
         <source>Амплитуда вариации угловой скорости</source>
-        <translation>Amplitude of variation of angular velocity</translation>
+        <translation type="vanished">Amplitude of variation of angular velocity</translation>
     </message>
     <message>
-        <location filename="factors/vector/vectorfactors.cpp" line="161"/>
         <source>АВУС</source>
-        <translation>AVAV</translation>
+        <translation type="vanished">AVAV</translation>
     </message>
     <message>
-        <location filename="factors/vector/vectorfactors.cpp" line="164"/>
         <source>Период вариации угловой скорости</source>
-        <translation>Period of variation of angular velocity</translation>
+        <translation type="vanished">Period of variation of angular velocity</translation>
     </message>
     <message>
-        <location filename="factors/vector/vectorfactors.cpp" line="164"/>
         <source>ПВУС</source>
-        <translation>PVAV</translation>
+        <translation type="vanished">PVAV</translation>
     </message>
     <message>
-        <location filename="factors/vector/vectorfactors.cpp" line="168"/>
         <source>Коэф-т асимметрии угловой скорости</source>
-        <translation>Asymmetry coefficient of angular velocity</translation>
+        <translation type="vanished">Asymmetry coefficient of angular velocity</translation>
     </message>
     <message>
-        <location filename="factors/vector/vectorfactors.cpp" line="168"/>
         <source>КАУС</source>
-        <translation>ACAV</translation>
+        <translation type="vanished">ACAV</translation>
     </message>
     <message>
-        <location filename="factors/vector/vectorfactors.cpp" line="171"/>
         <source>Накопленный угол смещения</source>
-        <translation>Accumulated Offset Angle</translation>
+        <translation type="vanished">Accumulated Offset Angle</translation>
     </message>
     <message>
-        <location filename="factors/vector/vectorfactors.cpp" line="171"/>
         <source>НУС</source>
-        <translation>AOA</translation>
+        <translation type="vanished">AOA</translation>
     </message>
     <message>
-        <location filename="factors/vector/vectorfactors.cpp" line="171"/>
         <source>об.</source>
-        <translation>rot.</translation>
+        <translation type="vanished">rot.</translation>
     </message>
     <message>
-        <location filename="factors/vector/vectorfactors.cpp" line="175"/>
         <source>Линейная скорость средняя по фронтали</source>
-        <translation>Averige linear velosity (frontal)</translation>
+        <translation type="vanished">Averige linear velosity (frontal)</translation>
     </message>
     <message>
-        <location filename="factors/vector/vectorfactors.cpp" line="175"/>
         <source>ЛСС ф</source>
-        <translation>ALV f</translation>
+        <translation type="vanished">ALV f</translation>
     </message>
     <message>
-        <location filename="factors/vector/vectorfactors.cpp" line="178"/>
         <source>Линейная скорость средняя по сагиттали</source>
-        <translation>Averige linear velosity (sagittal)</translation>
+        <translation type="vanished">Averige linear velosity (sagittal)</translation>
     </message>
     <message>
-        <location filename="factors/vector/vectorfactors.cpp" line="178"/>
         <source>ЛСС с</source>
-        <translation>ALV s</translation>
+        <translation type="vanished">ALV s</translation>
     </message>
     <message>
-        <location filename="factors/vector/vectorfactors.cpp" line="181"/>
         <source>Коэф-т асим. линейной скорости по фронтали</source>
-        <translation>Asymmetry coefficient of linear velocity (frontal)</translation>
+        <translation type="vanished">Asymmetry coefficient of linear velocity (frontal)</translation>
     </message>
     <message>
-        <location filename="factors/vector/vectorfactors.cpp" line="181"/>
         <source>КАЛС ф</source>
-        <translation>ACLV f</translation>
+        <translation type="vanished">ACLV f</translation>
     </message>
     <message>
-        <location filename="factors/vector/vectorfactors.cpp" line="184"/>
         <source>Коэф-т асим. линейной скорости по сагиттали</source>
-        <translation>Asymmetry coefficient of linear velocity (sagittal)</translation>
+        <translation type="vanished">Asymmetry coefficient of linear velocity (sagittal)</translation>
     </message>
     <message>
-        <location filename="factors/vector/vectorfactors.cpp" line="184"/>
         <source>КАЛС с</source>
-        <translation>ACLV s</translation>
+        <translation type="vanished">ACLV s</translation>
     </message>
     <message>
-        <location filename="factors/vector/vectorfactors.cpp" line="188"/>
         <source>Мощность векторограммы</source>
-        <translation>Power of vectorogram</translation>
+        <translation type="vanished">Power of vectorogram</translation>
     </message>
     <message>
-        <location filename="factors/vector/vectorfactors.cpp" line="188"/>
         <source>МВ</source>
-        <translation>PV</translation>
+        <translation type="vanished">PV</translation>
     </message>
     <message>
-        <location filename="factors/vector/vectorfactors.cpp" line="188"/>
         <source>кв.мм/куб.сек</source>
-        <translation>sq.mm/cub.sec</translation>
+        <translation type="vanished">sq.mm/cub.sec</translation>
     </message>
     <message>
-        <location filename="factors/vector/vectorfactors.cpp" line="191"/>
         <source>Соотношение линейной и угловой скоростей</source>
-        <translation>Relationship between linear and angular velocities</translation>
+        <translation type="vanished">Relationship between linear and angular velocities</translation>
     </message>
     <message>
-        <location filename="factors/vector/vectorfactors.cpp" line="191"/>
         <source>ЛСС/УС</source>
-        <translation>ALV/AAV</translation>
+        <translation type="vanished">ALV/AAV</translation>
     </message>
     <message>
-        <location filename="factors/vector/vectorfactors.cpp" line="191"/>
         <source>мм/град</source>
-        <translation>mm/deg</translation>
+        <translation type="vanished">mm/deg</translation>
     </message>
 </context>
 <context>

@@ -15,7 +15,7 @@ QString TrenResultFactorsDescriptor::uid()
 
 QString TrenResultFactorsDescriptor::name()
 {
-    return TrenResultFactorsDefines::GroupName;
+    return TrenResultFactors::nameAsConst();
 }
 
 bool TrenResultFactorsDescriptor::isValid(const QString &testUid, const QString &probeUid, const QString &channelId)

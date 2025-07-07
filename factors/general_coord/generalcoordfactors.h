@@ -9,7 +9,6 @@
 namespace GeneralCoordFactorsDefines
 {
 static const QString GroupUid = GeneralCoordCalculatorDefines::GroupUid; //"{5730D1B0-CB89-4004-A178-BEC12219F50E}";
-static const QString GroupName = GeneralCoordCalculatorDefines::GroupName; //QCoreApplication::tr("Показатели оценки координационных способностей");
 
 static const QString GeneralCoordUid = GeneralCoordCalculatorDefines::GeneralCoordUid; //"{6581C206-06C2-4D68-842C-D9EBDEEB1BF8}";
 
@@ -70,6 +69,11 @@ public:
      * \brief Возвращает название группы показателей
      */
     QString name() const override;
+
+    /*!
+     * \brief Возвращает название группы показателей для использования, как константу
+     */
+    static QString nameAsConst();
 
     /*!
      * \brief Возвращает true, если показатели можно рассчитать для теста с заданным uid

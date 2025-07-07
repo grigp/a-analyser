@@ -15,7 +15,7 @@ QString CrossFactorsDescriptor::uid()
 
 QString CrossFactorsDescriptor::name()
 {
-    return CrossFactorsDefines::GroupName;
+    return CrossFactors::nameAsConst();
 }
 
 bool CrossFactorsDescriptor::isValid(const QString &testUid, const QString &probeUid, const QString &channelId)

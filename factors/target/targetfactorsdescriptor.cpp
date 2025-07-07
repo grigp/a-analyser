@@ -15,7 +15,7 @@ QString TargetFactorsDescriptor::uid()
 
 QString TargetFactorsDescriptor::name()
 {
-    return TargetFactorsDefines::GroupName;
+    return TargetFactors::nameAsConst();
 }
 
 bool TargetFactorsDescriptor::isValid(const QString &testUid, const QString &probeUid, const QString &channelId)

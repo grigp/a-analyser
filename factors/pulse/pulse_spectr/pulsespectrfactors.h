@@ -10,7 +10,6 @@
 namespace PulseSpectrFactorsDefines
 {
 static const QString GroupUid = "{892FF592-6DF2-4E19-B3C6-7DA8D8E8C5DC}";
-static const QString GroupName = QCoreApplication::tr("Показатели спектра пульса");
 
 static const QString PwHFUid = "{4ADE99DE-486D-4ED6-A608-5C5758FB53F2}";
 static const QString PwLFUid = "{C33BDC30-5B21-46C0-8B1C-77D2BC0D2862}";
@@ -54,6 +53,11 @@ public:
      * \brief Возвращает название группы показателей
      */
     QString name() const override;
+
+    /*!
+     * \brief Возвращает название группы показателей для использования, как константу
+     */
+    static QString nameAsConst();
 
     /*!
      * \brief Возвращает true, если показатели можно рассчитать для теста с заданным uid

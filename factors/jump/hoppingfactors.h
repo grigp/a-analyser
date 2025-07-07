@@ -9,7 +9,6 @@
 namespace HoppingFactorsDefines
 {
 static const QString GroupUid = "{1B7E2B3D-A822-421B-9B96-A9CDD1236010}";
-static const QString GroupName = QCoreApplication::tr("Показатели соскакивания на платформу");
 
 static const QString JumpHeightUid = "{47C0EEAF-C55E-4A8A-9296-08F747AED039}";
 static const QString TimeUid = "{B1F4BAF9-9B81-4231-ACE9-A499353AA572}";
@@ -37,6 +36,11 @@ public:
      * \brief Возвращает название группы показателей
      */
     QString name() const override;
+
+    /*!
+     * \brief Возвращает название группы показателей для использования, как константу
+     */
+    static QString nameAsConst();
 
     /*! \brief Возвращает true, если показатели можно рассчитать для теста с заданным uid
     * uid теста задается в конструкторе

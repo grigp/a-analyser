@@ -9,7 +9,6 @@
 namespace SpectrStabFactorsDefines
 {
 static const QString GroupUid = "{82E05D05-B591-4468-9873-3D028002E293}";
-static const QString GroupName = QCoreApplication::tr("Показатели спектра стабилограммы");
 
 namespace Frontal {
 static const QString Frequency1Uid = "{7FED3AD3-5679-492C-9D73-607995084F9C}";
@@ -64,6 +63,11 @@ public:
      * \brief Возвращает название группы показателей
      */
     QString name() const override;
+
+    /*!
+     * \brief Возвращает название группы показателей для использования, как константу
+     */
+    static QString nameAsConst();
 
     /*!
      * \brief Возвращает true, если показатели можно рассчитать для теста с заданным uid

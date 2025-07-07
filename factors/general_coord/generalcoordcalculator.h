@@ -9,7 +9,6 @@
 namespace GeneralCoordCalculatorDefines
 {
 static const QString GroupUid = "{5730D1B0-CB89-4004-A178-BEC12219F50E}";
-static const QString GroupName = QCoreApplication::tr("Показатели оценки координационных способностей");
 
 static const QString GeneralCoordUid = "{6581C206-06C2-4D68-842C-D9EBDEEB1BF8}";
 

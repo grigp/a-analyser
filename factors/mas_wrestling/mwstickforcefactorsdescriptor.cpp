@@ -15,7 +15,7 @@ QString MWStickForceFactorsDescriptor::uid()
 
 QString MWStickForceFactorsDescriptor::name()
 {
-    return MWStickForceFactorsDefines::GroupName;
+    return MWStickForceFactors::nameAsConst();
 }
 
 bool MWStickForceFactorsDescriptor::isValid(const QString &testUid,

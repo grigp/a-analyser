@@ -15,7 +15,7 @@ QString SpectrStabFactorsDescriptor::uid()
 
 QString SpectrStabFactorsDescriptor::name()
 {
-    return SpectrStabFactorsDefines::GroupName;
+    return SpectrStabFactors::nameAsConst();
 }
 
 bool SpectrStabFactorsDescriptor::isValid(const QString &testUid, const QString &probeUid, const QString &channelId)

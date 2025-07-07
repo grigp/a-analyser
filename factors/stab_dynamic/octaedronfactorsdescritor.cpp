@@ -15,7 +15,7 @@ QString OctaedronFactorsDescritior::uid()
 
 QString OctaedronFactorsDescritior::name()
 {
-    return OctaedronFactorsDefines::GroupName;
+    return OctaedronFactors::nameAsConst();
 }
 
 bool OctaedronFactorsDescritior::isValid(const QString &testUid, const QString &probeUid, const QString &channelId)

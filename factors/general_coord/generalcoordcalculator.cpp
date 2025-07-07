@@ -8,6 +8,7 @@
 #include "stepoffsetfactors.h"
 #include "trianglefactors.h"
 #include "triangleconslutionfactors.h"
+#include "generalcoordfactors.h"
 
 
 GeneralCoordCalculator::GeneralCoordCalculator()
@@ -110,7 +111,7 @@ void GeneralCoordCalculator::doCalculate()
 void GeneralCoordCalculator::registerFactors()
 {
     static_cast<AAnalyserApplication*>(QApplication::instance())->
-            registerGroup(GeneralCoordCalculatorDefines::GroupUid, GeneralCoordCalculatorDefines::GroupName);
+            registerGroup(GeneralCoordCalculatorDefines::GroupUid, GeneralCoordFactors::nameAsConst());
 
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(GeneralCoordCalculatorDefines::GeneralCoordUid, GeneralCoordCalculatorDefines::GroupUid,

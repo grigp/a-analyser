@@ -9,7 +9,6 @@
 namespace ClassicFactorsDefines
 {
 static const QString GroupUid = "{CE4B0A70-953E-486E-B065-54BB2854BB5D}";
-static const QString GroupName = QCoreApplication::tr("Классические показатели");
 
 static const QString MoXUid = "{D2E9D021-07F5-49D4-967F-4AB7E05558D0}";
 static const QString MoYUid = "{ADEA0860-76A3-4491-A3FB-BE130E1C64DA}";
@@ -69,6 +68,11 @@ public:
      * \brief Возвращает название группы показателей
      */
     QString name() const override;
+
+    /*!
+     * \brief Возвращает название группы показателей для использования, как константу
+     */
+    static QString nameAsConst();
 
     /*!
      * \brief Возвращает true, если показатели можно рассчитать для теста с заданным uid

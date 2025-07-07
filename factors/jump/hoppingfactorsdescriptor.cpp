@@ -15,7 +15,7 @@ QString HoppingFactorsDescriptor::uid()
 
 QString HoppingFactorsDescriptor::name()
 {
-    return HoppingFactorsDefines::GroupName;
+    return HoppingFactors::nameAsConst();
 }
 
 bool HoppingFactorsDescriptor::isValid(const QString &testUid, const QString &probeUid, const QString &channelId)

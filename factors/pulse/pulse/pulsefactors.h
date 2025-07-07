@@ -10,7 +10,6 @@
 namespace PulseFactorsDefines
 {
 static const QString GroupUid = "{BAED5445-97FE-48B9-99DF-1A5FF367A870}";
-static const QString GroupName = QCoreApplication::tr("Показатели вариационной пульсометрии");
 
 static const QString PulseUid = "{6930C0E6-6858-4BE3-8040-6A9E130FA0E1}";
 static const QString IVRUid = "{627AE093-E357-4034-ADED-70A6CF33EE5E}";
@@ -47,15 +46,6 @@ enum OverallEffectReg
     , oerSevereBradycardia = 2      ///< выраженная брадикардия
 };
 
-static QMap<OverallEffectReg, QString> OverallEffectRegName =
-{
-      std::pair<OverallEffectReg, QString> (oerSevereTachycardia, QCoreApplication::tr("выраженная тахикардия"))
-    , std::pair<OverallEffectReg, QString> (oerModerateTachycardia, QCoreApplication::tr("умеренная тахикардия"))
-    , std::pair<OverallEffectReg, QString> (oerNormosystole, QCoreApplication::tr("нормосистолия"))
-    , std::pair<OverallEffectReg, QString> (oerModerateBradycardia, QCoreApplication::tr("умеренная брадикардия"))
-    , std::pair<OverallEffectReg, QString> (oerSevereBradycardia, QCoreApplication::tr("выраженная брадикардия"))
-};
-
 /*!
  * \brief Функция автоматизма The AutomaticFunction enum
  */
@@ -66,15 +56,6 @@ enum AutomaticFunction
     , afModerateSinusArrhythmia = 0  ///< умеренная синусовая аритмия
     , afSevereSinusArrhythmia = 1    ///< выраженная синусовая аритмия
     , afRigidRhythm = 2              ///< ригидный ритм
-};
-
-static QMap<AutomaticFunction, QString> AutomaticFunctionName =
-{
-      std::pair<AutomaticFunction, QString> (afPronDisturbAuto, QCoreApplication::tr("нарушение автоматизма выраженное"))
-    , std::pair<AutomaticFunction, QString> (afModerateAutoDisorder, QCoreApplication::tr("нарушение автоматизма умеренное"))
-    , std::pair<AutomaticFunction, QString> (afModerateSinusArrhythmia, QCoreApplication::tr("умеренная синусовая аритмия"))
-    , std::pair<AutomaticFunction, QString> (afSevereSinusArrhythmia, QCoreApplication::tr("выраженная синусовая аритмия"))
-    , std::pair<AutomaticFunction, QString> (afRigidRhythm, QCoreApplication::tr("ригидный ритм"))
 };
 
 /*!
@@ -89,15 +70,6 @@ enum VegetativeHomeostasis
     , vhSeverePredominanceSNS = 2       ///< выраженное преобладание СНС
 };
 
-static QMap<VegetativeHomeostasis, QString> VegetativeHomeostasisName =
-{
-      std::pair<VegetativeHomeostasis, QString> (vhSeverePredominancePSNS, QCoreApplication::tr("выраженное преобладание ПСНС"))
-    , std::pair<VegetativeHomeostasis, QString> (vhModeratePredominancePSNS, QCoreApplication::tr("умеренное преобладание ПСНС"))
-    , std::pair<VegetativeHomeostasis, QString> (vhSaved, QCoreApplication::tr("сохранен"))
-    , std::pair<VegetativeHomeostasis, QString> (vhModeratePredominanceSNS, QCoreApplication::tr("умеренное преобладание СНС"))
-    , std::pair<VegetativeHomeostasis, QString> (vhSeverePredominanceSNS, QCoreApplication::tr("выраженное преобладание СНС"))
-};
-
 /*!
  * \brief Устойчивость регуляции The StabilityRegulation enum
  */
@@ -108,15 +80,6 @@ enum StabilityRegulation
     , srSustainableRegulation = 0            ///< устойчивая регуляция
     , srCentralDysregulation = 1             ///< дисрегуляция центрального типа
     , srDominatedDysregulationSNS = 2        ///< дисрегуляция с преобладанием СНС
-};
-
-static QMap<StabilityRegulation, QString> StabilityRegulationName =
-{
-      std::pair<StabilityRegulation, QString> (srDysregulationPredominancePSNS, QCoreApplication::tr("дисрегуляция с преобладанием ПСНС"))
-    , std::pair<StabilityRegulation, QString> (srTransitionProcess, QCoreApplication::tr("переходный процесс"))
-    , std::pair<StabilityRegulation, QString> (srSustainableRegulation, QCoreApplication::tr("устойчивая регуляция"))
-    , std::pair<StabilityRegulation, QString> (srCentralDysregulation, QCoreApplication::tr("дисрегуляция центрального типа"))
-    , std::pair<StabilityRegulation, QString> (srDominatedDysregulationSNS, QCoreApplication::tr("дисрегуляция с преобладанием СНС"))
 };
 
 }
@@ -146,6 +109,11 @@ public:
      * \brief Возвращает название группы показателей
      */
     QString name() const override;
+
+    /*!
+     * \brief Возвращает название группы показателей для использования, как константу
+     */
+    static QString nameAsConst();
 
     /*!
      * \brief Возвращает true, если показатели можно рассчитать для теста с заданным uid
@@ -189,6 +157,11 @@ public:
      * \return коэффициент корреляции
      */
     double correlationCoef(const int idx);
+
+    static QString overallEffectRegName(const PulseFactorsDefines::OverallEffectReg val);
+    static QString automaticFunctionName(const PulseFactorsDefines::AutomaticFunction val);
+    static QString vegetativeHomeostasisName(const PulseFactorsDefines::VegetativeHomeostasis val);
+    static QString stabilityRegulationName(const PulseFactorsDefines::StabilityRegulation val);
 
     /*!
      * \brief Возвращает значение суммарного эффекта регуляции

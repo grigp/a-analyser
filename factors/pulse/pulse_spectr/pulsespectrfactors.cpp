@@ -33,7 +33,12 @@ QString PulseSpectrFactors::uid() const
 
 QString PulseSpectrFactors::name() const
 {
-    return PulseSpectrFactorsDefines::GroupName;
+    return nameAsConst();
+}
+
+QString PulseSpectrFactors::nameAsConst()
+{
+    return QCoreApplication::tr("Показатели спектра пульса");
 }
 
 bool PulseSpectrFactors::isValid() const
@@ -207,56 +212,56 @@ void PulseSpectrFactors::calculate()
 void PulseSpectrFactors::registerFactors()
 {
     static_cast<AAnalyserApplication*>(QApplication::instance())->
-            registerGroup(PulseSpectrFactorsDefines::GroupUid, PulseSpectrFactorsDefines::GroupName);
+            registerGroup(PulseSpectrFactorsDefines::GroupUid, nameAsConst());
 
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(PulseSpectrFactorsDefines::PwHFUid, PulseSpectrFactorsDefines::GroupUid,
-                           tr("Мощность зоны высокой частоты"), tr("HF"), tr("мс2"), 0, 1, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Мощность зоны высокой частоты"), QCoreApplication::tr("HF"), QCoreApplication::tr("мс2"), 0, 1, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(PulseSpectrFactorsDefines::PwLFUid, PulseSpectrFactorsDefines::GroupUid,
-                           tr("Мощность зоны низкой частоты"), tr("LF"), tr("мс2"), 0, 1, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Мощность зоны низкой частоты"), QCoreApplication::tr("LF"), QCoreApplication::tr("мс2"), 0, 1, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(PulseSpectrFactorsDefines::PwVLFUid, PulseSpectrFactorsDefines::GroupUid,
-                           tr("Мощность зоны очень низкой частоты"), tr("VLF"), tr("мс2"), 0, 1, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Мощность зоны очень низкой частоты"), QCoreApplication::tr("VLF"), QCoreApplication::tr("мс2"), 0, 1, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(PulseSpectrFactorsDefines::PwULFUid, PulseSpectrFactorsDefines::GroupUid,
-                           tr("Мощность зоны ультранизкой частоты"), tr("ULF"), tr("мс2"), 0, 1, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Мощность зоны ультранизкой частоты"), QCoreApplication::tr("ULF"), QCoreApplication::tr("мс2"), 0, 1, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(PulseSpectrFactorsDefines::PwSumUid, PulseSpectrFactorsDefines::GroupUid,
-                           tr("Суммарная мощность спектра"), tr("TP"), tr("мс2"), 0, 1, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Суммарная мощность спектра"), QCoreApplication::tr("TP"), QCoreApplication::tr("мс2"), 0, 1, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(PulseSpectrFactorsDefines::PrHFUid, PulseSpectrFactorsDefines::GroupUid,
-                           tr("Процент мощности зоны высокой частоты"), tr("%HF"), tr("%"), 1, 1, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Процент мощности зоны высокой частоты"), QCoreApplication::tr("%HF"), QCoreApplication::tr("%"), 1, 1, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(PulseSpectrFactorsDefines::PrLFUid, PulseSpectrFactorsDefines::GroupUid,
-                           tr("Процент мощности зоны низкой частоты"), tr("%LF"), tr("%"), 1, 1, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Процент мощности зоны низкой частоты"), QCoreApplication::tr("%LF"), QCoreApplication::tr("%"), 1, 1, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(PulseSpectrFactorsDefines::PrVLFUid, PulseSpectrFactorsDefines::GroupUid,
-                           tr("Процент мощности зоны очень низкой частоты"), tr("%VLF"), tr("%"), 1, 1, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Процент мощности зоны очень низкой частоты"), QCoreApplication::tr("%VLF"), QCoreApplication::tr("%"), 1, 1, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(PulseSpectrFactorsDefines::PrULFUid, PulseSpectrFactorsDefines::GroupUid,
-                           tr("Процент мощности зоны ультранизкой частоты"), tr("%ULF"), tr("%"), 1, 1, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Процент мощности зоны ультранизкой частоты"), QCoreApplication::tr("%ULF"), QCoreApplication::tr("%"), 1, 1, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(PulseSpectrFactorsDefines::PwAvHFUid, PulseSpectrFactorsDefines::GroupUid,
-                           tr("Средняя мощность зоны высокой частоты"), tr("AvHF"), tr("мс2"), 0, 1, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Средняя мощность зоны высокой частоты"), QCoreApplication::tr("AvHF"), QCoreApplication::tr("мс2"), 0, 1, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(PulseSpectrFactorsDefines::PwAvLFUid, PulseSpectrFactorsDefines::GroupUid,
-                           tr("Средняя мощность зоны низкой частоты"), tr("AvLF"), tr("мс2"), 0, 1, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Средняя мощность зоны низкой частоты"), QCoreApplication::tr("AvLF"), QCoreApplication::tr("мс2"), 0, 1, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(PulseSpectrFactorsDefines::PwAvVLFUid, PulseSpectrFactorsDefines::GroupUid,
-                           tr("Средняя мощность зоны очень низкой частоты"), tr("AvVLF"), tr("мс2"), 0, 1, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Средняя мощность зоны очень низкой частоты"), QCoreApplication::tr("AvVLF"), QCoreApplication::tr("мс2"), 0, 1, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(PulseSpectrFactorsDefines::PwAvULFUid, PulseSpectrFactorsDefines::GroupUid,
-                           tr("Средняя мощность зоны ультранизкой частоты"), tr("AvULF"), tr("мс2"), 0, 1, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Средняя мощность зоны ультранизкой частоты"), QCoreApplication::tr("AvULF"), QCoreApplication::tr("мс2"), 0, 1, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(PulseSpectrFactorsDefines::LHUid, PulseSpectrFactorsDefines::GroupUid,
-                           tr("Отношение мощности низкой частоты к высокой"), tr("LF/HF"), tr(""), 2, 1, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Отношение мощности низкой частоты к высокой"), QCoreApplication::tr("LF/HF"), QCoreApplication::tr(""), 2, 1, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(PulseSpectrFactorsDefines::Pw60Uid, PulseSpectrFactorsDefines::GroupUid,
-                           tr("Уровень 60% мощности спектра"), tr("60%"), tr("Гц"), 2, 1, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Уровень 60% мощности спектра"), QCoreApplication::tr("60%"), QCoreApplication::tr("Гц"), 2, 1, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(PulseSpectrFactorsDefines::CentIdxUid, PulseSpectrFactorsDefines::GroupUid,
-                           tr("Индекс централизации"), tr("IC"), tr(""), 2, 1, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Индекс централизации"), QCoreApplication::tr("IC"), QCoreApplication::tr(""), 2, 1, FactorsDefines::nsDual, 12);
 
 //    static_cast<AAnalyserApplication*>(QApplication::instance())->
 //            registerFactor(PulseSpectrFactorsDefines::FqMidSpUid, PulseSpectrFactorsDefines::GroupUid,

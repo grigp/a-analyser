@@ -15,7 +15,7 @@ QString JumpHeightFactorsDescriptor::uid()
 
 QString JumpHeightFactorsDescriptor::name()
 {
-    return JumpHeightFactorsDefines::GroupName;
+    return JumpHeightFactors::nameAsConst();
 }
 
 bool JumpHeightFactorsDescriptor::isValid(const QString &testUid, const QString &probeUid, const QString &channelId)

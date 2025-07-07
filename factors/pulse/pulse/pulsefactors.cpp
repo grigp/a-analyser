@@ -33,7 +33,12 @@ QString PulseFactors::uid() const
 
 QString PulseFactors::name() const
 {
-    return PulseFactorsDefines::GroupName;
+    return nameAsConst();
+}
+
+QString PulseFactors::nameAsConst()
+{
+    return QCoreApplication::tr("Показатели вариационной пульсометрии");
 }
 
 bool PulseFactors::isValid() const
@@ -120,60 +125,60 @@ void PulseFactors::calculate()
 void PulseFactors::registerFactors()
 {
     static_cast<AAnalyserApplication*>(QApplication::instance())->
-            registerGroup(PulseFactorsDefines::GroupUid, PulseFactorsDefines::GroupName);
+            registerGroup(PulseFactorsDefines::GroupUid, nameAsConst());
 
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(PulseFactorsDefines::PulseUid, PulseFactorsDefines::GroupUid,
-                           tr("Средний пульс"), tr("ЧСС"), tr("уд/мин"), 0, 1, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Средний пульс"), QCoreApplication::tr("ЧСС"), QCoreApplication::tr("уд/мин"), 0, 1, FactorsDefines::nsDual, 12);
 
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(PulseFactorsDefines::IVRUid, PulseFactorsDefines::GroupUid,
-                           tr("Индекс вариационного размаха"), tr("ИВР"), tr(""), 2, 1, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Индекс вариационного размаха"), QCoreApplication::tr("ИВР"), QCoreApplication::tr(""), 2, 1, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(PulseFactorsDefines::PAPRUid, PulseFactorsDefines::GroupUid,
-                           tr("Показатель адекватности процессов регуляции"), tr("ПАПР"), tr(""), 2, 1, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Показатель адекватности процессов регуляции"), QCoreApplication::tr("ПАПР"), QCoreApplication::tr(""), 2, 1, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(PulseFactorsDefines::VPRUid, PulseFactorsDefines::GroupUid,
-                           tr("Вегетативный показатель ритма"), tr("ВПР"), tr(""), 2, 1, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Вегетативный показатель ритма"), QCoreApplication::tr("ВПР"), QCoreApplication::tr(""), 2, 1, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(PulseFactorsDefines::INUid, PulseFactorsDefines::GroupUid,
-                           tr("Индекс напряжения систем регуляции"), tr("ИН"), tr(""), 2, 1, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Индекс напряжения систем регуляции"), QCoreApplication::tr("ИН"), QCoreApplication::tr(""), 2, 1, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(PulseFactorsDefines::ModeUid, PulseFactorsDefines::GroupUid,
-                           tr("Мода"), tr("Мо"), tr("сек"), 2, 1, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Мода"), QCoreApplication::tr("Мо"), QCoreApplication::tr("сек"), 2, 1, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(PulseFactorsDefines::AModeUid, PulseFactorsDefines::GroupUid,
-                           tr("Амплитуда моды"), tr("АМо"), tr("%"), 0, 1, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Амплитуда моды"), QCoreApplication::tr("АМо"), QCoreApplication::tr("%"), 0, 1, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(PulseFactorsDefines::MxDMnUid, PulseFactorsDefines::GroupUid,
-                           tr("Разность между макс. и мин. значениями"), tr("MxDMn"), tr("мс"), 0, 1, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Разность между макс. и мин. значениями"), QCoreApplication::tr("MxDMn"), QCoreApplication::tr("мс"), 0, 1, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(PulseFactorsDefines::SDNNUid, PulseFactorsDefines::GroupUid,
-                           tr("Станд. отклонение массива кардиоинтервалов"), tr("SDNN"), tr("мс"), 0, 1, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Станд. отклонение массива кардиоинтервалов"), QCoreApplication::tr("SDNN"), QCoreApplication::tr("мс"), 0, 1, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(PulseFactorsDefines::RMSSDUid, PulseFactorsDefines::GroupUid,
-                           tr("Среднеквадратичное значение последовательных различий"), tr("RMSSD"), tr("мс"), 0, 1, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Среднеквадратичное значение последовательных различий"), QCoreApplication::tr("RMSSD"), QCoreApplication::tr("мс"), 0, 1, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(PulseFactorsDefines::pNN50Uid, PulseFactorsDefines::GroupUid,
-                           tr("Показатель преобладания парасимп. звена"), tr("pNN50"), tr("%"), 0, 1, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Показатель преобладания парасимп. звена"), QCoreApplication::tr("pNN50"), QCoreApplication::tr("%"), 0, 1, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(PulseFactorsDefines::CVUid, PulseFactorsDefines::GroupUid,
-                           tr("Коэффициент вариации"), tr("CV"), tr("%"), 2, 1, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Коэффициент вариации"), QCoreApplication::tr("CV"), QCoreApplication::tr("%"), 2, 1, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(PulseFactorsDefines::SDSDUid, PulseFactorsDefines::GroupUid,
-                           tr("Станд. откл. разницы между соседними RR"), tr("SDSD"), tr("мс"), 0, 1, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Станд. откл. разницы между соседними RR"), QCoreApplication::tr("SDSD"), QCoreApplication::tr("мс"), 0, 1, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(PulseFactorsDefines::MDUid, PulseFactorsDefines::GroupUid,
-                           tr("Средняя разница между соседними RR"), tr("MD"), tr("мс"), 0, 1, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Средняя разница между соседними RR"), QCoreApplication::tr("MD"), QCoreApplication::tr("мс"), 0, 1, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(PulseFactorsDefines::DXUid, PulseFactorsDefines::GroupUid,
-                           tr("Вариационный размах"), tr("DX"), tr("мс"), 0, 1, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Вариационный размах"), QCoreApplication::tr("DX"), QCoreApplication::tr("мс"), 0, 1, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(PulseFactorsDefines::AKACClUid, PulseFactorsDefines::GroupUid,
-                           tr("Первый коэффициент автокоррел. функции"), tr("АСК1"), tr(""), 3, 1, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Первый коэффициент автокоррел. функции"), QCoreApplication::tr("АСК1"), QCoreApplication::tr(""), 3, 1, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(PulseFactorsDefines::AKACC0Uid, PulseFactorsDefines::GroupUid,
-                           tr("Число сдвигов автокор. функции до нуля"), tr("ACSh0"), tr(""), 0, 1, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Число сдвигов автокор. функции до нуля"), QCoreApplication::tr("ACSh0"), tr(""), 0, 1, FactorsDefines::nsDual, 12);
 }
 
 int PulseFactors::statBoundsCount() const
@@ -202,6 +207,61 @@ double PulseFactors::correlationCoef(const int idx)
 {
     Q_ASSERT(idx >= 0 && idx < PulseFactorsDefines::iAKPointsCount);
     return m_masKK[idx];
+}
+
+QString PulseFactors::overallEffectRegName(const PulseFactorsDefines::OverallEffectReg val)
+{
+    static QMap<PulseFactorsDefines::OverallEffectReg, QString> OverallEffectRegName =
+    {
+          std::pair<PulseFactorsDefines::OverallEffectReg, QString> (PulseFactorsDefines::oerSevereTachycardia, QCoreApplication::tr("выраженная тахикардия"))
+        , std::pair<PulseFactorsDefines::OverallEffectReg, QString> (PulseFactorsDefines::oerModerateTachycardia, QCoreApplication::tr("умеренная тахикардия"))
+        , std::pair<PulseFactorsDefines::OverallEffectReg, QString> (PulseFactorsDefines::oerNormosystole, QCoreApplication::tr("нормосистолия"))
+        , std::pair<PulseFactorsDefines::OverallEffectReg, QString> (PulseFactorsDefines::oerModerateBradycardia, QCoreApplication::tr("умеренная брадикардия"))
+        , std::pair<PulseFactorsDefines::OverallEffectReg, QString> (PulseFactorsDefines::oerSevereBradycardia, QCoreApplication::tr("выраженная брадикардия"))
+    };
+    return OverallEffectRegName.value(val);
+}
+
+QString PulseFactors::automaticFunctionName(const PulseFactorsDefines::AutomaticFunction val)
+{
+    static QMap<PulseFactorsDefines::AutomaticFunction, QString> AutomaticFunctionName =
+    {
+          std::pair<PulseFactorsDefines::AutomaticFunction, QString> (PulseFactorsDefines::afPronDisturbAuto, QCoreApplication::tr("нарушение автоматизма выраженное"))
+        , std::pair<PulseFactorsDefines::AutomaticFunction, QString> (PulseFactorsDefines::afModerateAutoDisorder, QCoreApplication::tr("нарушение автоматизма умеренное"))
+        , std::pair<PulseFactorsDefines::AutomaticFunction, QString> (PulseFactorsDefines::afModerateSinusArrhythmia, QCoreApplication::tr("умеренная синусовая аритмия"))
+        , std::pair<PulseFactorsDefines::AutomaticFunction, QString> (PulseFactorsDefines::afSevereSinusArrhythmia, QCoreApplication::tr("выраженная синусовая аритмия"))
+        , std::pair<PulseFactorsDefines::AutomaticFunction, QString> (PulseFactorsDefines::afRigidRhythm, QCoreApplication::tr("ригидный ритм"))
+    };
+
+    return AutomaticFunctionName.value(val);
+}
+
+QString PulseFactors::vegetativeHomeostasisName(const PulseFactorsDefines::VegetativeHomeostasis val)
+{
+    static QMap<PulseFactorsDefines::VegetativeHomeostasis, QString> VegetativeHomeostasisName =
+    {
+          std::pair<PulseFactorsDefines::VegetativeHomeostasis, QString> (PulseFactorsDefines::vhSeverePredominancePSNS, QCoreApplication::tr("выраженное преобладание ПСНС"))
+        , std::pair<PulseFactorsDefines::VegetativeHomeostasis, QString> (PulseFactorsDefines::vhModeratePredominancePSNS, QCoreApplication::tr("умеренное преобладание ПСНС"))
+        , std::pair<PulseFactorsDefines::VegetativeHomeostasis, QString> (PulseFactorsDefines::vhSaved, QCoreApplication::tr("сохранен"))
+        , std::pair<PulseFactorsDefines::VegetativeHomeostasis, QString> (PulseFactorsDefines::vhModeratePredominanceSNS, QCoreApplication::tr("умеренное преобладание СНС"))
+        , std::pair<PulseFactorsDefines::VegetativeHomeostasis, QString> (PulseFactorsDefines::vhSeverePredominanceSNS, QCoreApplication::tr("выраженное преобладание СНС"))
+    };
+
+    return VegetativeHomeostasisName.value(val);
+}
+
+QString PulseFactors::stabilityRegulationName(const PulseFactorsDefines::StabilityRegulation val)
+{
+    static QMap<PulseFactorsDefines::StabilityRegulation, QString> StabilityRegulationName =
+    {
+          std::pair<PulseFactorsDefines::StabilityRegulation, QString> (PulseFactorsDefines::srDysregulationPredominancePSNS, QCoreApplication::tr("дисрегуляция с преобладанием ПСНС"))
+        , std::pair<PulseFactorsDefines::StabilityRegulation, QString> (PulseFactorsDefines::srTransitionProcess, QCoreApplication::tr("переходный процесс"))
+        , std::pair<PulseFactorsDefines::StabilityRegulation, QString> (PulseFactorsDefines::srSustainableRegulation, QCoreApplication::tr("устойчивая регуляция"))
+        , std::pair<PulseFactorsDefines::StabilityRegulation, QString> (PulseFactorsDefines::srCentralDysregulation, QCoreApplication::tr("дисрегуляция центрального типа"))
+        , std::pair<PulseFactorsDefines::StabilityRegulation, QString> (PulseFactorsDefines::srDominatedDysregulationSNS, QCoreApplication::tr("дисрегуляция с преобладанием СНС"))
+    };
+
+    return StabilityRegulationName.value(val);
 }
 
 void PulseFactors::assignStat(const double sdt, const double tMin, const double tMax)

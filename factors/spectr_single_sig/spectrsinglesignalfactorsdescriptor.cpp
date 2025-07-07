@@ -15,7 +15,7 @@ QString SpectrSingleSignalFactorsDescriptor::uid()
 
 QString SpectrSingleSignalFactorsDescriptor::name()
 {
-    return SpectrSingleSignalFactorsDefines::GroupName;
+    return SpectrSingleSignalFactors::nameAsConst();
 }
 
 bool SpectrSingleSignalFactorsDescriptor::isValid(const QString &testUid, const QString &probeUid, const QString &channelId)

@@ -28,7 +28,12 @@ QString DropTestFactors::uid() const
 
 QString DropTestFactors::name() const
 {
-    return DropTestFactorsDefines::GroupName;
+    return nameAsConst();
+}
+
+QString DropTestFactors::nameAsConst()
+{
+    return QCoreApplication::tr("Показатели дроп теста");
 }
 
 bool DropTestFactors::isValid() const
@@ -100,26 +105,26 @@ void DropTestFactors::calculate()
 void DropTestFactors::registerFactors()
 {
     static_cast<AAnalyserApplication*>(QApplication::instance())->
-            registerGroup(DropTestFactorsDefines::GroupUid, DropTestFactorsDefines::GroupName);
+            registerGroup(DropTestFactorsDefines::GroupUid, nameAsConst());
 
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(DropTestFactorsDefines::JumpsCountUid, DropTestFactorsDefines::GroupUid,
-                           tr("Количество прыжков"), tr("Кол-во"), tr(""), 0, 1, FactorsDefines::nsAbove, 12);
+                           QCoreApplication::tr("Количество прыжков"), QCoreApplication::tr("Кол-во"), QCoreApplication::tr(""), 0, 1, FactorsDefines::nsAbove, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(DropTestFactorsDefines::FullTimeUid, DropTestFactorsDefines::GroupUid,
-                           tr("Общее время"), tr("Время"), tr("сек"), 3, 1, FactorsDefines::nsAbove, 12);
+                           QCoreApplication::tr("Общее время"), QCoreApplication::tr("Время"), QCoreApplication::tr("сек"), 3, 1, FactorsDefines::nsAbove, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(DropTestFactorsDefines::JumpsHeightAvrUid, DropTestFactorsDefines::GroupUid,
-                           tr("Средняя высота прыжка"), tr("h"), tr("cм"), 4, 2, FactorsDefines::nsAbove, 12);
+                           QCoreApplication::tr("Средняя высота прыжка"), QCoreApplication::tr("h"), QCoreApplication::tr("cм"), 4, 2, FactorsDefines::nsAbove, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(DropTestFactorsDefines::JumpsContactTimeAvrUid, DropTestFactorsDefines::GroupUid,
-                           tr("Среднее время контактной фазы"), tr("Контакт"), tr("cек"), 4, 2, FactorsDefines::nsAbove, 12);
+                           QCoreApplication::tr("Среднее время контактной фазы"), QCoreApplication::tr("Контакт"), QCoreApplication::tr("cек"), 4, 2, FactorsDefines::nsAbove, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(DropTestFactorsDefines::JumpsNoContactTimeAvrUid, DropTestFactorsDefines::GroupUid,
-                           tr("Среднее время бесконтактной фазы"), tr("Бесконтакт"), tr("cек"), 4, 2, FactorsDefines::nsAbove, 12);
+                           QCoreApplication::tr("Среднее время бесконтактной фазы"), QCoreApplication::tr("Бесконтакт"), QCoreApplication::tr("cек"), 4, 2, FactorsDefines::nsAbove, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(DropTestFactorsDefines::ReactiveForceIndexUid, DropTestFactorsDefines::GroupUid,
-                           tr("Индекс реактивной силы"), tr("ИРС"), tr(""), 4, 2, FactorsDefines::nsAbove, 12);
+                           QCoreApplication::tr("Индекс реактивной силы"), QCoreApplication::tr("ИРС"), QCoreApplication::tr(""), 4, 2, FactorsDefines::nsAbove, 12);
 }
 
 int DropTestFactors::jumpsCount() const

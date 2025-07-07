@@ -31,7 +31,12 @@ QString TriangleFactors::uid() const
 
 QString TriangleFactors::name() const
 {
-    return TriangleFactorsDefines::GroupName;
+    return nameAsConst();
+}
+
+QString TriangleFactors::nameAsConst()
+{
+    return QCoreApplication::tr("Показатели теста \"Треугольник\"");
 }
 
 bool TriangleFactors::isValid() const
@@ -65,7 +70,7 @@ void TriangleFactors::calculate()
 void TriangleFactors::registerFactors()
 {
     static_cast<AAnalyserApplication*>(QApplication::instance())->
-            registerGroup(TriangleFactorsDefines::GroupUid, TriangleFactorsDefines::GroupName);
+            registerGroup(TriangleFactorsDefines::GroupUid, nameAsConst());
 
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(TriangleFactorsDefines::Training::TimeUid, TriangleFactorsDefines::GroupUid,

@@ -30,7 +30,7 @@ QString ClassicFactors::uid() const
 
 QString ClassicFactors::name() const
 {
-    return ClassicFactorsDefines::GroupName;
+    return nameAsConst();
 }
 
 bool ClassicFactors::isValid(const QString &testUid, const QString &probeUid, const QString &channelId)
@@ -108,7 +108,7 @@ void ClassicFactors::calculate()
 void ClassicFactors::registerFactors()
 {
     static_cast<AAnalyserApplication*>(QApplication::instance())->
-            registerGroup(ClassicFactorsDefines::GroupUid, ClassicFactorsDefines::GroupName);
+            registerGroup(ClassicFactorsDefines::GroupUid, nameAsConst());
 
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(ClassicFactorsDefines::MoXUid, ClassicFactorsDefines::GroupUid,
@@ -241,4 +241,9 @@ void ClassicFactors::meanAndStdDev(QVector<double> &data, double &mean, double &
         stdDev = stdDev + pow(mean - val, 2);
     if (data.size() - 1 > 0)
         stdDev = sqrt(stdDev / (data.size() - 1));
+}
+
+QString ClassicFactors::nameAsConst()
+{
+    return QCoreApplication::tr("Классические показатели");
 }

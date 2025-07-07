@@ -25,7 +25,12 @@ QString StepDeviationFactors::uid() const
 
 QString StepDeviationFactors::name() const
 {
-    return StepDeviationFactorsDefines::GroupName;
+    return nameAsConst();
+}
+
+QString StepDeviationFactors::nameAsConst()
+{
+    return QCoreApplication::tr("Показатели теста прироста");
 }
 
 bool StepDeviationFactors::isValid() const
@@ -71,7 +76,7 @@ void StepDeviationFactors::calculate()
 void StepDeviationFactors::registerFactors()
 {
     static_cast<AAnalyserApplication*>(QApplication::instance())->
-            registerGroup(StepDeviationFactorsDefines::GroupUid, QCoreApplication::tr("Показатели теста прироста"));
+            registerGroup(StepDeviationFactorsDefines::GroupUid, nameAsConst());
 
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(StepDeviationFactorsDefines::TimeUid, StepDeviationFactorsDefines::GroupUid,

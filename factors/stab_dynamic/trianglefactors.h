@@ -11,7 +11,6 @@
 namespace TriangleFactorsDefines
 {
 static const QString GroupUid = "{262C7BC3-2EFA-40CA-8D08-D770E76F57FC}";
-static const QString GroupName = QCoreApplication::tr("Показатели теста \"Треугольник\"");
 
 namespace Training {
 static const QString TimeUid = "{E16E7852-9E22-4385-8A3A-B949C27505BB}";
@@ -156,6 +155,11 @@ public:
      * \brief Возвращает название группы показателей
      */
     QString name() const override;
+
+    /*!
+     * \brief Возвращает название группы показателей для использования, как константу
+     */
+    static QString nameAsConst();
 
     /*!
      * \brief Возвращает true, если показатели можно рассчитать для теста с заданным uid

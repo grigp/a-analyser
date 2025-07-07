@@ -15,7 +15,7 @@ QString StepDeviationFactorsDescriptor::uid()
 
 QString StepDeviationFactorsDescriptor::name()
 {
-    return StepDeviationFactorsDefines::GroupName;
+    return StepDeviationFactors::nameAsConst();
 }
 
 bool StepDeviationFactorsDescriptor::isValid(const QString &testUid, const QString &probeUid, const QString &channelId)

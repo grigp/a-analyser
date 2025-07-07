@@ -15,7 +15,7 @@ QString StepOffsetFactorsDescriptor::uid()
 
 QString StepOffsetFactorsDescriptor::name()
 {
-    return StepOffsetFactorsDefines::GroupName;
+    return StepOffsetFactors::nameAsConst();
 }
 
 bool StepOffsetFactorsDescriptor::isValid(const QString &testUid, const QString &probeUid, const QString &channelId)

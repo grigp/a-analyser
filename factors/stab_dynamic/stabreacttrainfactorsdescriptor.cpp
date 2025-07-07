@@ -15,7 +15,7 @@ QString StabReactTrainFactorsDescriptor::uid()
 
 QString StabReactTrainFactorsDescriptor::name()
 {
-    return  StabReactTrainFactorsDefines::GroupName;
+    return  StabReactTrainFactors::nameAsConst();
 }
 
 bool StabReactTrainFactorsDescriptor::isValid(const QString &testUid,

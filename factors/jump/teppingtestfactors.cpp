@@ -27,7 +27,12 @@ QString TeppingTestFactors::uid() const
 
 QString TeppingTestFactors::name() const
 {
-    return TeppingTestFactorsDefines::GroupName;
+    return nameAsConst();
+}
+
+QString TeppingTestFactors::nameAsConst()
+{
+    return QCoreApplication::tr("Показатели теппинг теста");
 }
 
 bool TeppingTestFactors::isValid() const
@@ -102,29 +107,29 @@ void TeppingTestFactors::calculate()
 void TeppingTestFactors::registerFactors()
 {
     static_cast<AAnalyserApplication*>(QApplication::instance())->
-            registerGroup(TeppingTestFactorsDefines::GroupUid, TeppingTestFactorsDefines::GroupName);
+            registerGroup(TeppingTestFactorsDefines::GroupUid, nameAsConst());
 
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(TeppingTestFactorsDefines::StepsCountUid, TeppingTestFactorsDefines::GroupUid,
-                           tr("Количество шагов"), tr("Кол-во"), tr(""), 0, 1, FactorsDefines::nsAbove, 12);
+                           QCoreApplication::tr("Количество шагов"), QCoreApplication::tr("Кол-во"), QCoreApplication::tr(""), 0, 1, FactorsDefines::nsAbove, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(TeppingTestFactorsDefines::FullTimeUid, TeppingTestFactorsDefines::GroupUid,
-                           tr("Общее время"), tr("Время"), tr("сек"), 3, 1, FactorsDefines::nsAbove, 12);
+                           QCoreApplication::tr("Общее время"), QCoreApplication::tr("Время"), QCoreApplication::tr("сек"), 3, 1, FactorsDefines::nsAbove, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(TeppingTestFactorsDefines::LeftLegNoContactTimeAvrUid, TeppingTestFactorsDefines::GroupUid,
-                           tr("Быстрота одиночного движения левой ноги"), tr("Быстрота (лев)"), tr("cек"), 4, 2, FactorsDefines::nsAbove, 12);
+                           QCoreApplication::tr("Быстрота одиночного движения левой ноги"), QCoreApplication::tr("Быстрота (лев)"), QCoreApplication::tr("cек"), 4, 2, FactorsDefines::nsAbove, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(TeppingTestFactorsDefines::RightLegNoContactTimeAvrUid, TeppingTestFactorsDefines::GroupUid,
-                           tr("Быстрота одиночного движения правой ноги"), tr("Быстрота (прав)"), tr("cек"), 4, 2, FactorsDefines::nsAbove, 12);
+                           QCoreApplication::tr("Быстрота одиночного движения правой ноги"), QCoreApplication::tr("Быстрота (прав)"), QCoreApplication::tr("cек"), 4, 2, FactorsDefines::nsAbove, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(TeppingTestFactorsDefines::LeftLegContactTimeAvrUid, TeppingTestFactorsDefines::GroupUid,
-                           tr("Время контакта левой ноги"), tr("Контакт (лев)"), tr("cек"), 4, 2, FactorsDefines::nsAbove, 12);
+                           QCoreApplication::tr("Время контакта левой ноги"), QCoreApplication::tr("Контакт (лев)"), QCoreApplication::tr("cек"), 4, 2, FactorsDefines::nsAbove, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(TeppingTestFactorsDefines::RightLegContactTimeAvrUid, TeppingTestFactorsDefines::GroupUid,
-                           tr("Время контакта правой ноги"), tr("Контакт (прав)"), tr("cек"), 4, 2, FactorsDefines::nsAbove, 12);
+                           QCoreApplication::tr("Время контакта правой ноги"), QCoreApplication::tr("Контакт (прав)"), QCoreApplication::tr("cек"), 4, 2, FactorsDefines::nsAbove, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(TeppingTestFactorsDefines::TempAvrUid, TeppingTestFactorsDefines::GroupUid,
-                           tr("Темп шагов"), tr("темп"), tr("шагов/мин"), 2, 2, FactorsDefines::nsAbove, 12);
+                           QCoreApplication::tr("Темп шагов"), QCoreApplication::tr("темп"), QCoreApplication::tr("шагов/мин"), 2, 2, FactorsDefines::nsAbove, 12);
 }
 
 int TeppingTestFactors::stepsCount(BaseDefines::Side side) const

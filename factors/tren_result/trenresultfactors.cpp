@@ -26,7 +26,12 @@ QString TrenResultFactors::uid() const
 
 QString TrenResultFactors::name() const
 {
-    return TrenResultFactorsDefines::GroupName;
+    return nameAsConst();
+}
+
+QString TrenResultFactors::nameAsConst()
+{
+    return QCoreApplication::tr("Показатели тренажеров");
 }
 
 bool TrenResultFactors::isValid() const
@@ -132,45 +137,43 @@ void TrenResultFactors::calculate()
 void TrenResultFactors::registerFactors()
 {
     static_cast<AAnalyserApplication*>(QApplication::instance())->
-            registerGroup(TrenResultFactorsDefines::GroupUid, TrenResultFactorsDefines::GroupName);
+            registerGroup(TrenResultFactorsDefines::GroupUid, nameAsConst());
 
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(TrenResultFactorsDefines::ScoreUid, TrenResultFactorsDefines::GroupUid,
-                           tr("Количество набранных баллов"), tr("Баллы"), tr(""), 0, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Количество набранных баллов"), QCoreApplication::tr("Баллы"), QCoreApplication::tr(""), 0, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(TrenResultFactorsDefines::FaultsUid, TrenResultFactorsDefines::GroupUid,
-                           tr("Количество ошибок"), tr("Ошибки"), tr(""), 0, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Количество ошибок"), QCoreApplication::tr("Ошибки"), QCoreApplication::tr(""), 0, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(FactorsDefines::CommonFactors::SuccessUid,
                            TrenResultFactorsDefines::GroupUid,
-                           FactorsDefines::CommonFactors::SuccessName,
-                           FactorsDefines::CommonFactors::SuccessShortName,
-                           FactorsDefines::CommonFactors::SuccessMeasure, 0, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Успешность выполнения задания"), QCoreApplication::tr("Успешность"), QCoreApplication::tr("%"), 0, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(TrenResultFactorsDefines::TimeUid, TrenResultFactorsDefines::GroupUid,
-                           tr("Время игры"), tr("Время"), tr("сек"), 0, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Время игры"), QCoreApplication::tr("Время"), QCoreApplication::tr("сек"), 0, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(TrenResultFactorsDefines::RowsDeletedUid, TrenResultFactorsDefines::GroupUid,
-                           tr("Количество удаленных строк"), tr("Строки"), tr(""), 0, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Количество удаленных строк"), QCoreApplication::tr("Строки"), QCoreApplication::tr(""), 0, 3, FactorsDefines::nsDual, 12);
 
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(TrenResultFactorsDefines::TakeStageTime, TrenResultFactorsDefines::GroupUid,
-                           tr("Длительность интервалов захвата"), tr("TakeTime"), tr("сек"), 2, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Длительность интервалов захвата"), QCoreApplication::tr("TakeTime"), QCoreApplication::tr("сек"), 2, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(TrenResultFactorsDefines::PutStageTime, TrenResultFactorsDefines::GroupUid,
-                           tr("Длительность интервалов укладки"), tr("PutTime"), tr("сек"), 2, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Длительность интервалов укладки"), QCoreApplication::tr("PutTime"), QCoreApplication::tr("сек"), 2, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(TrenResultFactorsDefines::ErrorStageTime, TrenResultFactorsDefines::GroupUid,
-                           tr("Длительность интервалов ошибок"), tr("ErrTime"), tr("сек"), 2, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Длительность интервалов ошибок"), QCoreApplication::tr("ErrTime"), QCoreApplication::tr("сек"), 2, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(TrenResultFactorsDefines::TakeStageSpeed, TrenResultFactorsDefines::GroupUid,
-                           tr("Скорость на этапе захвата"), tr("TakeSpd"), tr("мм/сек"), 0, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Скорость на этапе захвата"), QCoreApplication::tr("TakeSpd"), QCoreApplication::tr("мм/сек"), 0, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(TrenResultFactorsDefines::PutStageSpeed, TrenResultFactorsDefines::GroupUid,
-                           tr("Скорость на этапе укладки"), tr("PutSpd"), tr("мм/сек"), 0, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Скорость на этапе укладки"), QCoreApplication::tr("PutSpd"), QCoreApplication::tr("мм/сек"), 0, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(TrenResultFactorsDefines::ErrorStageSpeed, TrenResultFactorsDefines::GroupUid,
-                           tr("Скорость на этапе ошибок"), tr("ErrSpd"), tr("мм/сек"), 0, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Скорость на этапе ошибок"), QCoreApplication::tr("ErrSpd"), QCoreApplication::tr("мм/сек"), 0, 3, FactorsDefines::nsDual, 12);
 
 }
 

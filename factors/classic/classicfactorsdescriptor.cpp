@@ -15,7 +15,7 @@ QString ClassicFactorsDescriptor::uid()
 
 QString ClassicFactorsDescriptor::name()
 {
-    return ClassicFactorsDefines::GroupName;
+    return ClassicFactors::nameAsConst();
 }
 
 bool ClassicFactorsDescriptor::isValid(const QString &testUid, const QString &probeUid, const QString &channelId)

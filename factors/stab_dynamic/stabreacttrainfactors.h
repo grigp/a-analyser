@@ -9,7 +9,6 @@
 namespace StabReactTrainFactorsDefines
 {
 static const QString GroupUid = "{7256EC87-60AB-4815-B03B-07B0E1EC9FEC}";
-static const QString GroupName = QCoreApplication::tr("Показатели тренажера статокинетической реакции");
 
 static const QString LatentAvrUid = "{B121111A-D736-4574-9985-FF485C3E0604}";
 static const QString LatentUUid = "{83D66F37-5E31-4CCE-8D45-10D42C6910DD}";
@@ -54,6 +53,11 @@ public:
      * \brief Возвращает название группы показателей
      */
     QString name() const override;
+
+    /*!
+     * \brief Возвращает название группы показателей для использования, как константу
+     */
+    static QString nameAsConst();
 
     /*!
      * \brief Возвращает true, если показатели можно рассчитать для теста с заданным uid

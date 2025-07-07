@@ -10,7 +10,6 @@
 namespace IDSFactorsDefines
 {
 static const QString GroupUid = "{603029E3-72A2-4050-A7F2-B65DFC0E63EB}";
-static const QString GroupName = QCoreApplication::tr("Показатели динамической стабилизации");
 
 static const QString IDSUid = "{E7C3FC19-2342-4969-8E29-C9BE88646816}";
 static const QString FDSDispUid = "{57E26D17-C246-4AB9-8A89-27F60E8DE624}";
@@ -45,6 +44,11 @@ public:
      * \brief Возвращает название группы показателей
      */
     QString name() const override;
+
+    /*!
+     * \brief Возвращает название группы показателей для использования, как константу
+     */
+    static QString nameAsConst();
 
     /*!
      * \brief Возвращает true, если показатели можно рассчитать для теста с заданным uid

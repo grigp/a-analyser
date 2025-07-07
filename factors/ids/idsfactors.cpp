@@ -29,7 +29,12 @@ QString IDSFactors::uid() const
 
 QString IDSFactors::name() const
 {
-    return IDSFactorsDefines::GroupName;
+    return nameAsConst();
+}
+
+QString IDSFactors::nameAsConst()
+{
+    return QCoreApplication::tr("Показатели динамической стабилизации");
 }
 
 bool IDSFactors::isValid() const
@@ -95,27 +100,27 @@ void IDSFactors::calculate()
 void IDSFactors::registerFactors()
 {
     static_cast<AAnalyserApplication*>(QApplication::instance())->
-            registerGroup(IDSFactorsDefines::GroupUid, IDSFactorsDefines::GroupName);
+            registerGroup(IDSFactorsDefines::GroupUid, nameAsConst());
 
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(IDSFactorsDefines::IDSUid, IDSFactorsDefines::GroupUid,
-                           tr("Индекс динамической стабилизации"), tr("ИДС"), tr("%"), 0, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Индекс динамической стабилизации"), QCoreApplication::tr("ИДС"), QCoreApplication::tr("%"), 0, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(IDSFactorsDefines::FDSDispUid, IDSFactorsDefines::GroupUid,
-                           tr("Дисперсия ФДС"), tr("Дисп.ФДС"), tr(""), 0, 1, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Дисперсия ФДС"), QCoreApplication::tr("Дисп.ФДС"), QCoreApplication::tr(""), 0, 1, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(IDSFactorsDefines::FreqUid, IDSFactorsDefines::GroupUid,
-                           tr("Частота звука"), tr("Freq"), tr("Гц"), 0, 2, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Частота звука"), QCoreApplication::tr("Freq"), QCoreApplication::tr("Гц"), 0, 2, FactorsDefines::nsDual, 12);
 
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(IDSFactorsDefines::StabFDSUid, IDSFactorsDefines::GroupUid,
-                           tr("Стабильность ФДС"), tr("Стаб.ФДС"), tr("%"), 1, 2, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Стабильность ФДС"), QCoreApplication::tr("Стаб.ФДС"), QCoreApplication::tr("%"), 1, 2, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(IDSFactorsDefines::AsymFDSUid, IDSFactorsDefines::GroupUid,
-                           tr("Асимметрия ФДС"), tr("Асм.ФДС"), tr("%"), 1, 2, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Асимметрия ФДС"), QCoreApplication::tr("Асм.ФДС"), QCoreApplication::tr("%"), 1, 2, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(IDSFactorsDefines::KVarFDSUid, IDSFactorsDefines::GroupUid,
-                           tr("Коэффициент вариации ФДС"), tr("КВ ФДС"), tr("%"), 1, 2, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Коэффициент вариации ФДС"), QCoreApplication::tr("КВ ФДС"), QCoreApplication::tr("%"), 1, 2, FactorsDefines::nsDual, 12);
 }
 
 double IDSFactors::fds(const int idx) const

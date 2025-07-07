@@ -26,7 +26,12 @@ QString JumpHeightSingleFactors::uid() const
 
 QString JumpHeightSingleFactors::name() const
 {
-    return JumpHeightSingleFactorsDefines::GroupName;
+    return nameAsConst();
+}
+
+QString JumpHeightSingleFactors::nameAsConst()
+{
+    return QCoreApplication::tr("Показатели высоты одиночного прыжка");
 }
 
 bool JumpHeightSingleFactors::isValid() const
@@ -56,9 +61,9 @@ void JumpHeightSingleFactors::calculate()
 void JumpHeightSingleFactors::registerFactors()
 {
     static_cast<AAnalyserApplication*>(QApplication::instance())->
-            registerGroup(JumpHeightSingleFactorsDefines::GroupUid, JumpHeightSingleFactorsDefines::GroupName);
+            registerGroup(JumpHeightSingleFactorsDefines::GroupUid, nameAsConst());
 
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(JumpHeightSingleFactorsDefines::JumpHeightUid, JumpHeightSingleFactorsDefines::GroupUid,
-                           tr("Высота прыжка"), tr("h"), tr("м"), 4, 2, FactorsDefines::nsAbove, 12);
+                           QCoreApplication::tr("Высота прыжка"), QCoreApplication::tr("h"), QCoreApplication::tr("м"), 4, 2, FactorsDefines::nsAbove, 12);
 }

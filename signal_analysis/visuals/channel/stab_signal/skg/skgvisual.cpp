@@ -15,7 +15,7 @@ QString SKGVisual::uid()
 
 QString SKGVisual::name()
 {
-    return VisualNames::Name_SKG;
+    return QCoreApplication::tr("Статокинезиграмма"); //VisualNames::Name_SKG;
 }
 
 Visual *SKGVisual::getVisualWidget(QWidget *parent, const QString &testUid, const QString &probeUid, const QString &channelId,

@@ -50,7 +50,12 @@ QString EvolventaFactors::uid() const
 
 QString EvolventaFactors::name() const
 {
-    return EvolventaFactorsDefines::GroupName;
+    return nameAsConst();
+}
+
+QString EvolventaFactors::nameAsConst()
+{
+    return QCoreApplication::tr("Показатели теста \"Эвольвента\"");
 }
 
 bool EvolventaFactors::isValid() const
@@ -151,7 +156,7 @@ void EvolventaFactors::calculate()
 void EvolventaFactors::registerFactors()
 {
     static_cast<AAnalyserApplication*>(QApplication::instance())->
-            registerGroup(EvolventaFactorsDefines::GroupUid, EvolventaFactorsDefines::GroupName);
+            registerGroup(EvolventaFactorsDefines::GroupUid, nameAsConst());
 
     ///<---------------------------------------------------------------------------
     ///< Фронтальная составляющая
@@ -308,7 +313,7 @@ void EvolventaFactors::registerFactors()
                            QCoreApplication::tr("Средняя ошибка траектории"), QCoreApplication::tr("Error"), QCoreApplication::tr("мм"), 2, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(EvolventaFactorsDefines::CorrectionsMotor::Amplitude, EvolventaFactorsDefines::GroupUid,
-                           QCoreApplication::tr("Средняя амплитуда"), QCoreApplication::tr("Amplitude"), QCoreApplication::tr("мм"), 4, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Средняя  амплитуда"), QCoreApplication::tr("Amplitude"), QCoreApplication::tr("мм"), 4, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(EvolventaFactorsDefines::CorrectionsMotor::TimeSumm, EvolventaFactorsDefines::GroupUid,
                            QCoreApplication::tr("Суммарная длительность"), QCoreApplication::tr("TimeSumm"), QCoreApplication::tr("сек"), 2, 3, FactorsDefines::nsDual, 12);
@@ -329,7 +334,7 @@ void EvolventaFactors::registerFactors()
                            QCoreApplication::tr("Средняя ошибка траектории"), QCoreApplication::tr("Error"), QCoreApplication::tr("мм"), 2, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(EvolventaFactorsDefines::CorrectionsKognitive::Amplitude, EvolventaFactorsDefines::GroupUid,
-                           QCoreApplication::tr("Средняя амплитуда"), QCoreApplication::tr("Amplitude"), QCoreApplication::tr("мм"), 4, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Средняя  амплитуда"), QCoreApplication::tr("Amplitude"), QCoreApplication::tr("мм"), 4, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(EvolventaFactorsDefines::CorrectionsKognitive::TimeSumm, EvolventaFactorsDefines::GroupUid,
                            QCoreApplication::tr("Суммарная длительность"), QCoreApplication::tr("TimeSumm"), QCoreApplication::tr("сек"), 2, 3, FactorsDefines::nsDual, 12);

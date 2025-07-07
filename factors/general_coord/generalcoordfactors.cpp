@@ -27,7 +27,12 @@ QString GeneralCoordFactors::uid() const
 
 QString GeneralCoordFactors::name() const
 {
-    return GeneralCoordFactorsDefines::GroupName;
+    return GeneralCoordFactors::nameAsConst();
+}
+
+QString GeneralCoordFactors::nameAsConst()
+{
+    return QCoreApplication::tr("Показатели оценки координационных способностей");
 }
 
 bool GeneralCoordFactors::isValid() const

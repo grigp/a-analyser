@@ -33,7 +33,12 @@ QString SpectrStabFactors::uid() const
 
 QString SpectrStabFactors::name() const
 {
-    return SpectrStabFactorsDefines::GroupName;
+    return nameAsConst();
+}
+
+QString SpectrStabFactors::nameAsConst()
+{
+    return QCoreApplication::tr("Показатели спектра стабилограммы");
 }
 
 bool SpectrStabFactors::isValid() const
@@ -69,74 +74,74 @@ void SpectrStabFactors::calculate()
 void SpectrStabFactors::registerFactors()
 {
     static_cast<AAnalyserApplication*>(QApplication::instance())->
-            registerGroup(SpectrStabFactorsDefines::GroupUid, SpectrStabFactorsDefines::GroupName);
+            registerGroup(SpectrStabFactorsDefines::GroupUid, nameAsConst());
 
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(SpectrStabFactorsDefines::Frontal::Frequency1Uid, SpectrStabFactorsDefines::GroupUid,
-                           tr("Частота первого пика (фронталь)"), tr("F1X"), tr("Гц"), 2, 1, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Частота первого пика (фронталь)"), QCoreApplication::tr("F1X"), QCoreApplication::tr("Гц"), 2, 1, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(SpectrStabFactorsDefines::Frontal::Amplitude1Uid, SpectrStabFactorsDefines::GroupUid,
-                           tr("Амплитуда первого пика (фронталь)"), tr("A1X"), tr("мм"), 4, 1, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Амплитуда первого пика (фронталь)"), QCoreApplication::tr("A1X"), QCoreApplication::tr("мм"), 4, 1, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(SpectrStabFactorsDefines::Frontal::Frequency2Uid, SpectrStabFactorsDefines::GroupUid,
-                           tr("Частота второго пика (фронталь)"), tr("F2X"), tr("Гц"), 2, 1, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Частота второго пика (фронталь)"), QCoreApplication::tr("F2X"), QCoreApplication::tr("Гц"), 2, 1, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(SpectrStabFactorsDefines::Frontal::Amplitude2Uid, SpectrStabFactorsDefines::GroupUid,
-                           tr("Амплитуда второго пика (фронталь)"), tr("A2X"), tr("мм"), 4, 1, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Амплитуда второго пика (фронталь)"), QCoreApplication::tr("A2X"), QCoreApplication::tr("мм"), 4, 1, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(SpectrStabFactorsDefines::Frontal::Frequency3Uid, SpectrStabFactorsDefines::GroupUid,
-                           tr("Частота третьего пика (фронталь)"), tr("F3X"), tr("Гц"), 2, 1, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Частота третьего пика (фронталь)"), QCoreApplication::tr("F3X"), QCoreApplication::tr("Гц"), 2, 1, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(SpectrStabFactorsDefines::Frontal::Amplitude3Uid, SpectrStabFactorsDefines::GroupUid,
-                           tr("Амплитуда третьего пика (фронталь)"), tr("A3X"), tr("мм"), 4, 1, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Амплитуда третьего пика (фронталь)"), QCoreApplication::tr("A3X"), QCoreApplication::tr("мм"), 4, 1, FactorsDefines::nsDual, 12);
 
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(SpectrStabFactorsDefines::Frontal::Level60Uid, SpectrStabFactorsDefines::GroupUid,
-                           tr("60% мощности спектра (фронталь)"), tr("60%X"), tr("мм"), 2, 1, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("60% мощности спектра (фронталь)"), QCoreApplication::tr("60%X"), QCoreApplication::tr("мм"), 2, 1, FactorsDefines::nsDual, 12);
 
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(SpectrStabFactorsDefines::Frontal::Power1Uid, SpectrStabFactorsDefines::GroupUid,
-                           tr("Мощность первой зоны (фронталь)"), tr("Pwr1X"), tr("%"), 0, 1, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Мощность первой зоны (фронталь)"), QCoreApplication::tr("Pwr1X"), QCoreApplication::tr("%"), 0, 1, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(SpectrStabFactorsDefines::Frontal::Power2Uid, SpectrStabFactorsDefines::GroupUid,
-                           tr("Мощность второй зоны (фронталь)"), tr("Pwr2X"), tr("%"), 0, 1, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Мощность второй зоны (фронталь)"), QCoreApplication::tr("Pwr2X"), QCoreApplication::tr("%"), 0, 1, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(SpectrStabFactorsDefines::Frontal::Power3Uid, SpectrStabFactorsDefines::GroupUid,
-                           tr("Мощность третьей зоны (фронталь)"), tr("Pwr3X"), tr("%"), 0, 1, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Мощность третьей зоны (фронталь)"), QCoreApplication::tr("Pwr3X"), QCoreApplication::tr("%"), 0, 1, FactorsDefines::nsDual, 12);
 
 
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(SpectrStabFactorsDefines::Sagittal::Frequency1Uid, SpectrStabFactorsDefines::GroupUid,
-                           tr("Частота первого пика (сагитталь)"), tr("F1Y"), tr("Гц"), 2, 1, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Частота первого пика (сагитталь)"), QCoreApplication::tr("F1Y"), QCoreApplication::tr("Гц"), 2, 1, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(SpectrStabFactorsDefines::Sagittal::Amplitude1Uid, SpectrStabFactorsDefines::GroupUid,
-                           tr("Амплитуда первого пика (сагитталь)"), tr("A1Y"), tr("мм"), 4, 1, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Амплитуда первого пика (сагитталь)"), QCoreApplication::tr("A1Y"), QCoreApplication::tr("мм"), 4, 1, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(SpectrStabFactorsDefines::Sagittal::Frequency2Uid, SpectrStabFactorsDefines::GroupUid,
-                           tr("Частота второго пика (сагитталь)"), tr("F2Y"), tr("Гц"), 2, 1, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Частота второго пика (сагитталь)"), QCoreApplication::tr("F2Y"), QCoreApplication::tr("Гц"), 2, 1, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(SpectrStabFactorsDefines::Sagittal::Amplitude2Uid, SpectrStabFactorsDefines::GroupUid,
-                           tr("Амплитуда второго пика (сагитталь)"), tr("A2Y"), tr("мм"), 4, 1, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Амплитуда второго пика (сагитталь)"), QCoreApplication::tr("A2Y"), QCoreApplication::tr("мм"), 4, 1, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(SpectrStabFactorsDefines::Sagittal::Frequency3Uid, SpectrStabFactorsDefines::GroupUid,
-                           tr("Частота третьего пика (сагитталь)"), tr("F3Y"), tr("Гц"), 2, 1, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Частота третьего пика (сагитталь)"), QCoreApplication::tr("F3Y"), QCoreApplication::tr("Гц"), 2, 1, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(SpectrStabFactorsDefines::Sagittal::Amplitude3Uid, SpectrStabFactorsDefines::GroupUid,
-                           tr("Амплитуда третьего пика (сагитталь)"), tr("A3Y"), tr("мм"), 4, 1, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Амплитуда третьего пика (сагитталь)"), QCoreApplication::tr("A3Y"), QCoreApplication::tr("мм"), 4, 1, FactorsDefines::nsDual, 12);
 
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(SpectrStabFactorsDefines::Sagittal::Level60Uid, SpectrStabFactorsDefines::GroupUid,
-                           tr("60% мощности спектра (сагитталь)"), tr("60%Y"), tr("Гц"), 2, 1, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("60% мощности спектра (сагитталь)"), QCoreApplication::tr("60%Y"), QCoreApplication::tr("Гц"), 2, 1, FactorsDefines::nsDual, 12);
 
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(SpectrStabFactorsDefines::Sagittal::Power1Uid, SpectrStabFactorsDefines::GroupUid,
-                           tr("Мощность первой зоны (сагитталь)"), tr("Pwr1Y"), tr("%"), 0, 1, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Мощность первой зоны (сагитталь)"), QCoreApplication::tr("Pwr1Y"), QCoreApplication::tr("%"), 0, 1, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(SpectrStabFactorsDefines::Sagittal::Power2Uid, SpectrStabFactorsDefines::GroupUid,
-                           tr("Мощность второй зоны (сагитталь)"), tr("Pwr2Y"), tr("%"), 0, 1, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Мощность второй зоны (сагитталь)"), QCoreApplication::tr("Pwr2Y"), QCoreApplication::tr("%"), 0, 1, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(SpectrStabFactorsDefines::Sagittal::Power3Uid, SpectrStabFactorsDefines::GroupUid,
-                           tr("Мощность третьей зоны (сагитталь)"), tr("Pwr3Y"), tr("%"), 0, 1, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Мощность третьей зоны (сагитталь)"), QCoreApplication::tr("Pwr3Y"), QCoreApplication::tr("%"), 0, 1, FactorsDefines::nsDual, 12);
 }
 
 int SpectrStabFactors::channelsCount() const

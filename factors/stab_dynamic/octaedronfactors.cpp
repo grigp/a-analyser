@@ -24,7 +24,12 @@ QString OctaedronFactors::uid() const
 
 QString OctaedronFactors::name() const
 {
-    return OctaedronFactorsDefines::GroupName;
+    return nameAsConst();
+}
+
+QString OctaedronFactors::nameAsConst()
+{
+    return QCoreApplication::tr("Показатели тренажера \"Октаэдр\"");
 }
 
 bool OctaedronFactors::isValid() const
@@ -64,7 +69,7 @@ void OctaedronFactors::calculate()
 void OctaedronFactors::registerFactors()
 {
     static_cast<AAnalyserApplication*>(QApplication::instance())->
-            registerGroup(OctaedronFactorsDefines::GroupUid, OctaedronFactorsDefines::GroupName);
+            registerGroup(OctaedronFactorsDefines::GroupUid, nameAsConst());
 
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(FactorsDefines::CommonFactors::SuccessUid,
@@ -74,28 +79,28 @@ void OctaedronFactors::registerFactors()
                            FactorsDefines::CommonFactors::SuccessMeasure, 0, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(OctaedronFactorsDefines::QualityUUid, OctaedronFactorsDefines::GroupUid,
-                           tr("Отклонение вперед"), tr("QU"), tr("%"), 0, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Отклонение вперед"), QCoreApplication::tr("QU"), QCoreApplication::tr("%"), 0, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(OctaedronFactorsDefines::QualityULUid, OctaedronFactorsDefines::GroupUid,
-                           tr("Отклонение вперед влево"), tr("QUL"), tr("%"), 0, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Отклонение вперед влево"), QCoreApplication::tr("QUL"), QCoreApplication::tr("%"), 0, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(OctaedronFactorsDefines::QualityLUid, OctaedronFactorsDefines::GroupUid,
-                           tr("Отклонение влево"), tr("QL"), tr("%"), 0, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Отклонение влево"), QCoreApplication::tr("QL"), QCoreApplication::tr("%"), 0, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(OctaedronFactorsDefines::QualityDLUid, OctaedronFactorsDefines::GroupUid,
-                           tr("Отклонение назад влево"), tr("QDL"), tr("%"), 0, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Отклонение назад влево"), QCoreApplication::tr("QDL"), QCoreApplication::tr("%"), 0, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(OctaedronFactorsDefines::QualityDUid, OctaedronFactorsDefines::GroupUid,
-                           tr("Отклонение назад"), tr("QD"), tr("%"), 0, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Отклонение назад"), QCoreApplication::tr("QD"), QCoreApplication::tr("%"), 0, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(OctaedronFactorsDefines::QualityDRUid, OctaedronFactorsDefines::GroupUid,
-                           tr("Отклонение назад вправо"), tr("QDR"), tr("%"), 0, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Отклонение назад вправо"), QCoreApplication::tr("QDR"), QCoreApplication::tr("%"), 0, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(OctaedronFactorsDefines::QualityRUid, OctaedronFactorsDefines::GroupUid,
-                           tr("Отклонение вправо"), tr("QR"), tr("%"), 0, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Отклонение вправо"), QCoreApplication::tr("QR"), QCoreApplication::tr("%"), 0, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(OctaedronFactorsDefines::QualityURUid, OctaedronFactorsDefines::GroupUid,
-                           tr("Отклонение вперед вправо"), tr("QUR"), tr("%"), 0, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Отклонение вперед вправо"), QCoreApplication::tr("QUR"), QCoreApplication::tr("%"), 0, 3, FactorsDefines::nsDual, 12);
 
 }
 

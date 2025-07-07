@@ -15,7 +15,7 @@ QString DropTestFactorsDescriptor::uid()
 
 QString DropTestFactorsDescriptor::name()
 {
-    return DropTestFactorsDefines::GroupName;
+    return DropTestFactors::nameAsConst();
 }
 
 bool DropTestFactorsDescriptor::isValid(const QString &testUid, const QString &probeUid, const QString &channelId)

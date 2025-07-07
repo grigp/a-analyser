@@ -22,7 +22,12 @@ QString StabReactTrainFactors::uid() const
 
 QString StabReactTrainFactors::name() const
 {
-    return StabReactTrainFactorsDefines::GroupName;
+    return nameAsConst();
+}
+
+QString StabReactTrainFactors::nameAsConst()
+{
+    return QCoreApplication::tr("Показатели тренажера статокинетической реакции");
 }
 
 bool StabReactTrainFactors::isValid() const
@@ -76,63 +81,63 @@ void StabReactTrainFactors::calculate()
 void StabReactTrainFactors::registerFactors()
 {
     static_cast<AAnalyserApplication*>(QApplication::instance())->
-            registerGroup(StabReactTrainFactorsDefines::GroupUid, StabReactTrainFactorsDefines::GroupName);
+            registerGroup(StabReactTrainFactorsDefines::GroupUid, nameAsConst());
 
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(StabReactTrainFactorsDefines::LatentAvrUid, StabReactTrainFactorsDefines::GroupUid,
-                           tr("Латентный период средний"), tr("LA"), tr("сек"), 2, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Латентный период средний"), QCoreApplication::tr("LA"), QCoreApplication::tr("сек"), 2, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(StabReactTrainFactorsDefines::LatentUUid, StabReactTrainFactorsDefines::GroupUid,
-                           tr("Латентный период вперед"), tr("LU"), tr("сек"), 2, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Латентный период вперед"), QCoreApplication::tr("LU"), QCoreApplication::tr("сек"), 2, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(StabReactTrainFactorsDefines::LatentURUid, StabReactTrainFactorsDefines::GroupUid,
-                           tr("Латентный период вперед вправо"), tr("LUR"), tr("сек"), 2, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Латентный период вперед вправо"), QCoreApplication::tr("LUR"), QCoreApplication::tr("сек"), 2, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(StabReactTrainFactorsDefines::LatentRUid, StabReactTrainFactorsDefines::GroupUid,
-                           tr("Латентный период вправо"), tr("LR"), tr("сек"), 2, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Латентный период вправо"), QCoreApplication::tr("LR"), QCoreApplication::tr("сек"), 2, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(StabReactTrainFactorsDefines::LatentDRUid, StabReactTrainFactorsDefines::GroupUid,
-                           tr("Латентный период назад вправо"), tr("LDR"), tr("сек"), 2, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Латентный период назад вправо"), QCoreApplication::tr("LDR"), QCoreApplication::tr("сек"), 2, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(StabReactTrainFactorsDefines::LatentDUid, StabReactTrainFactorsDefines::GroupUid,
-                           tr("Латентный период назад"), tr("LD"), tr("сек"), 2, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Латентный период назад"), QCoreApplication::tr("LD"), QCoreApplication::tr("сек"), 2, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(StabReactTrainFactorsDefines::LatentDLUid, StabReactTrainFactorsDefines::GroupUid,
-                           tr("Латентный период назад влево"), tr("LDL"), tr("сек"), 2, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Латентный период назад влево"), QCoreApplication::tr("LDL"), QCoreApplication::tr("сек"), 2, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(StabReactTrainFactorsDefines::LatentLUid, StabReactTrainFactorsDefines::GroupUid,
-                           tr("Латентный период влево"), tr("LL"), tr("сек"), 2, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Латентный период влево"), QCoreApplication::tr("LL"), QCoreApplication::tr("сек"), 2, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(StabReactTrainFactorsDefines::LatentULUid, StabReactTrainFactorsDefines::GroupUid,
-                           tr("Латентный период вперед влево"), tr("LUL"), tr("сек"), 2, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Латентный период вперед влево"), QCoreApplication::tr("LUL"), QCoreApplication::tr("сек"), 2, 3, FactorsDefines::nsDual, 12);
 
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(StabReactTrainFactorsDefines::TimeAvrUid, StabReactTrainFactorsDefines::GroupUid,
-                           tr("Время реакции среднее"), tr("TA"), tr("сек"), 2, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Время реакции среднее"), QCoreApplication::tr("TA"), QCoreApplication::tr("сек"), 2, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(StabReactTrainFactorsDefines::TimeUUid, StabReactTrainFactorsDefines::GroupUid,
-                           tr("Время реакции вперед"), tr("TU"), tr("сек"), 2, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Время реакции вперед"), QCoreApplication::tr("TU"), QCoreApplication::tr("сек"), 2, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(StabReactTrainFactorsDefines::TimeURUid, StabReactTrainFactorsDefines::GroupUid,
-                           tr("Время реакции вперед вправо"), tr("TUR"), tr("сек"), 2, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Время реакции вперед вправо"), QCoreApplication::tr("TUR"), QCoreApplication::tr("сек"), 2, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(StabReactTrainFactorsDefines::TimeRUid, StabReactTrainFactorsDefines::GroupUid,
-                           tr("Время реакции вправо"), tr("TR"), tr("сек"), 2, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Время реакции вправо"), QCoreApplication::tr("TR"), QCoreApplication::tr("сек"), 2, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(StabReactTrainFactorsDefines::TimeDRUid, StabReactTrainFactorsDefines::GroupUid,
-                           tr("Время реакции назад вправо"), tr("TDR"), tr("сек"), 2, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Время реакции назад вправо"), QCoreApplication::tr("TDR"), QCoreApplication::tr("сек"), 2, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(StabReactTrainFactorsDefines::TimeDUid, StabReactTrainFactorsDefines::GroupUid,
-                           tr("Время реакции назад"), tr("TD"), tr("сек"), 2, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Время реакции назад"), QCoreApplication::tr("TD"), QCoreApplication::tr("сек"), 2, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(StabReactTrainFactorsDefines::TimeDLUid, StabReactTrainFactorsDefines::GroupUid,
-                           tr("Время реакции назад влево"), tr("TDL"), tr("сек"), 2, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Время реакции назад влево"), QCoreApplication::tr("TDL"), QCoreApplication::tr("сек"), 2, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(StabReactTrainFactorsDefines::TimeLUid, StabReactTrainFactorsDefines::GroupUid,
-                           tr("Время реакции влево"), tr("TL"), tr("сек"), 2, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Время реакции влево"), QCoreApplication::tr("TL"), QCoreApplication::tr("сек"), 2, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(StabReactTrainFactorsDefines::TimeULUid, StabReactTrainFactorsDefines::GroupUid,
-                           tr("Время реакции вперед влево"), tr("TUL"), tr("сек"), 2, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Время реакции вперед влево"), QCoreApplication::tr("TUL"), QCoreApplication::tr("сек"), 2, 3, FactorsDefines::nsDual, 12);
 }
 
 double StabReactTrainFactors::latent(const int idx) const

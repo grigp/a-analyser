@@ -26,7 +26,12 @@ QString TargetFactors::uid() const
 
 QString TargetFactors::name() const
 {
-    return TargetFactorsDefines::GroupName;
+    return nameAsConst();
+}
+
+QString TargetFactors::nameAsConst()
+{
+    return QCoreApplication::tr("Показатели мишени");
 }
 
 bool TargetFactors::isValid() const
@@ -113,14 +118,14 @@ void TargetFactors::calculate()
 void TargetFactors::registerFactors()
 {
     static_cast<AAnalyserApplication*>(QApplication::instance())->
-            registerGroup(TargetFactorsDefines::GroupUid, TargetFactorsDefines::GroupName);
+            registerGroup(TargetFactorsDefines::GroupUid, nameAsConst());
 
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(TargetFactorsDefines::TargetScoreUid, TargetFactorsDefines::GroupUid,
-                           tr("Количество набранных баллов"), tr("Баллы"), tr(""), 0, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Количество набранных баллов"), QCoreApplication::tr("Баллы"), QCoreApplication::tr(""), 0, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(TargetFactorsDefines::TargetTotalScoreUid, TargetFactorsDefines::GroupUid,
-                           tr("Суммарный балл"), tr("Сумм. балл"), tr(""), 0, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Суммарный балл"), QCoreApplication::tr("Сумм. балл"), QCoreApplication::tr(""), 0, 3, FactorsDefines::nsDual, 12);
 }
 
 int TargetFactors::histogram(const int idx) const

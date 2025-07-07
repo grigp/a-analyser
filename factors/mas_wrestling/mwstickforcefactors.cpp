@@ -24,7 +24,12 @@ QString MWStickForceFactors::uid() const
 
 QString MWStickForceFactors::name() const
 {
-    return MWStickForceFactorsDefines::GroupName;
+    return nameAsConst();
+}
+
+QString MWStickForceFactors::nameAsConst()
+{
+    return QCoreApplication::tr("Показатели усилий соревновательной палки");
 }
 
 bool MWStickForceFactors::isValid() const
@@ -83,7 +88,7 @@ void MWStickForceFactors::calculate()
 void MWStickForceFactors::registerFactors()
 {
     static_cast<AAnalyserApplication*>(QApplication::instance())->
-            registerGroup(MWStickForceFactorsDefines::GroupUid, MWStickForceFactorsDefines::GroupName);
+            registerGroup(MWStickForceFactorsDefines::GroupUid, nameAsConst());
 
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(MWStickForceFactorsDefines::MaxForceUid, MWStickForceFactorsDefines::GroupUid,

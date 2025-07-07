@@ -15,7 +15,7 @@ QString RatioProbesFactorsDescriptor::uid()
 
 QString RatioProbesFactorsDescriptor::name()
 {
-    return RatioProbesFactorsDefines::GroupName;
+    return RatioProbesFactors::nameAsConst();
 }
 
 bool RatioProbesFactorsDescriptor::isValid(const QString &testUid, const QString &probeUid, const QString &channelId)
