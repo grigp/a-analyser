@@ -20,7 +20,7 @@ QString SpectrStabVisual::uid()
 
 QString SpectrStabVisual::name()
 {
-    return VisualNames::Name_SpectrStab;
+    return QCoreApplication::tr("Спектральный анализ"); //VisualNames::Name_SpectrStab;
 }
 
 Visual *SpectrStabVisual::getVisualWidget(QWidget *parent, const QString &testUid, const QString &probeUid, const QString &channelId,

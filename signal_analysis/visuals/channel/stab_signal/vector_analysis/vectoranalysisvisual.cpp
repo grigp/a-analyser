@@ -20,7 +20,7 @@ QString VectorAnalysisVisual::uid()
 
 QString VectorAnalysisVisual::name()
 {
-    return VisualNames::Name_VectorAnalysis;
+    return QCoreApplication::tr("Анализ векторов"); //VisualNames::Name_VectorAnalysis;
 }
 
 Visual *VectorAnalysisVisual::getVisualWidget(QWidget *parent,

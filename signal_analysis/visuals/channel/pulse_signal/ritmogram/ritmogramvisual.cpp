@@ -15,7 +15,7 @@ QString RitmogramVisual::uid()
 
 QString RitmogramVisual::name()
 {
-    return VisualNames::Name_Ritmogram;
+    return QCoreApplication::tr("Ритмограмма"); //VisualNames::Name_Ritmogram;
 }
 
 Visual *RitmogramVisual::getVisualWidget(QWidget *parent,

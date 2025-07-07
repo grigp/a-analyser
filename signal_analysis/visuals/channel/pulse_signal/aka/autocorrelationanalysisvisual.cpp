@@ -15,7 +15,7 @@ QString AutoCorrelationAnalysisVisual::uid()
 
 QString AutoCorrelationAnalysisVisual::name()
 {
-    return VisualNames::Name_AKA;
+    return QCoreApplication::tr("Автокорреляционный анализ"); //VisualNames::Name_AKA;
 }
 
 Visual *AutoCorrelationAnalysisVisual::getVisualWidget(QWidget *parent,

@@ -15,7 +15,7 @@ QString BilateralVisual::uid()
 
 QString BilateralVisual::name()
 {
-    return VisualNames::Name_Bilateral;
+    return QCoreApplication::tr("Билатеральный режим"); //VisualNames::Name_Bilateral;
 }
 
 Visual *BilateralVisual::getVisualWidget(QWidget *parent, const QString &testUid, const QString &probeUid, const QString &channelId,

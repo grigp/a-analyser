@@ -20,7 +20,7 @@ QString MyogramSignalVisual::uid()
 
 QString MyogramSignalVisual::name()
 {
-    return VisualNames::Name_MyogramSignal;
+    return QCoreApplication::tr("Сигнал"); //VisualNames::Name_MyogramSignal;
 }
 
 Visual *MyogramSignalVisual::getVisualWidget(QWidget *parent, const QString &testUid, const QString &probeUid, const QString &channelId,

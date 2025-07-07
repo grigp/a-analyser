@@ -20,7 +20,7 @@ QString StabilogramVisual::uid()
 
 QString StabilogramVisual::name()
 {
-    return VisualNames::Name_Stabilogram;
+    return QCoreApplication::tr("Стабилограмма"); //VisualNames::Name_Stabilogram;
 }
 
 Visual *StabilogramVisual::getVisualWidget(QWidget *parent, const QString &testUid, const QString &probeUid, const QString &channelId,

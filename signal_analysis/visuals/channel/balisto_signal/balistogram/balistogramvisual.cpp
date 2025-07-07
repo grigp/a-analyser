@@ -21,7 +21,7 @@ QString BalistogramVisual::uid()
 
 QString BalistogramVisual::name()
 {
-    return VisualNames::Name_Balistogram;
+    return QCoreApplication::tr("Балистограмма"); //VisualNames::Name_Balistogram;
 }
 
 Visual *BalistogramVisual::getVisualWidget(QWidget *parent,

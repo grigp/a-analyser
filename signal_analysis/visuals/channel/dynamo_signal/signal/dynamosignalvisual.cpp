@@ -20,7 +20,7 @@ QString DynamoSignalVisual::uid()
 
 QString DynamoSignalVisual::name()
 {
-    return VisualNames::Name_DynamoSignal;
+    return QCoreApplication::tr("Сигнал"); //VisualNames::Name_DynamoSignal;
 }
 
 Visual *DynamoSignalVisual::getVisualWidget(QWidget *parent, const QString &testUid, const QString &probeUid, const QString &channelId,

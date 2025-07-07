@@ -1,5 +1,7 @@
 #include "histogramvisual.h"
 
+#include <QCoreApplication>
+
 #include "histogramvisualwidget.h"
 
 HistogramVisual::HistogramVisual(BaseDefines::TestLevel level)
@@ -20,7 +22,7 @@ QString HistogramVisual::uid()
 
 QString HistogramVisual::name()
 {
-    return VisualNames::Name_Histogram;
+    return QCoreApplication::tr("Гистограмма"); //VisualNames::Name_Histogram;
 }
 
 Visual *HistogramVisual::getVisualWidget(QWidget *parent, const QString &testUid, const QString &probeUid, const QString &channelId,

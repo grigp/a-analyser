@@ -15,7 +15,7 @@ QString KorrelationRitmogramVisual::uid()
 
 QString KorrelationRitmogramVisual::name()
 {
-    return VisualNames::Name_KRG;
+    return QCoreApplication::tr("Корреляционная ритмограмма"); //VisualNames::Name_KRG;
 }
 
 Visual *KorrelationRitmogramVisual::getVisualWidget(QWidget *parent,

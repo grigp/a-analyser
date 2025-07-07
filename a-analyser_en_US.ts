@@ -11429,6 +11429,7 @@ Click the [Done] button.</translation>
     </message>
     <message>
         <location filename="kernel/results_data/channelsutils.cpp" line="441"/>
+        <location filename="signal_analysis/visuals/channel/pulse_signal/ritmogram/ritmogramvisual.cpp" line="18"/>
         <source>Ритмограмма</source>
         <translation>Rhythmogram</translation>
     </message>
@@ -12029,6 +12030,7 @@ Click the [Done] button.</translation>
     </message>
     <message>
         <location filename="kernel/results_data/channelsutils.cpp" line="695"/>
+        <location filename="signal_analysis/visuals/probes/bilateral/bilateralvisual.cpp" line="18"/>
         <source>Билатеральный режим</source>
         <translation>Bilateral mode</translation>
     </message>
@@ -13967,6 +13969,58 @@ Click the [Done] button.</translation>
         <source>Статокинезиграмма</source>
         <translation>Statokinesigram</translation>
     </message>
+    <message>
+        <location filename="signal_analysis/visuals/channel/balisto_signal/balistogram/balistogramvisual.cpp" line="24"/>
+        <source>Балистограмма</source>
+        <translation>Ballistogram</translation>
+    </message>
+    <message>
+        <location filename="signal_analysis/visuals/channel/dynamo_signal/signal/dynamosignalvisual.cpp" line="23"/>
+        <location filename="signal_analysis/visuals/channel/myogram_signal/signal/myogramsignalvisual.cpp" line="23"/>
+        <source>Сигнал</source>
+        <translation>Signal</translation>
+    </message>
+    <message>
+        <location filename="signal_analysis/visuals/channel/pulse_signal/aka/autocorrelationanalysisvisual.cpp" line="18"/>
+        <source>Автокорреляционный анализ</source>
+        <translation>Autocorrelation analysis</translation>
+    </message>
+    <message>
+        <location filename="signal_analysis/visuals/channel/pulse_signal/krg/korrelationritmogramvisual.cpp" line="18"/>
+        <source>Корреляционная ритмограмма</source>
+        <translation>Correlation rhythmogram</translation>
+    </message>
+    <message>
+        <location filename="signal_analysis/visuals/channel/pulse_signal/spectr/spectrpulsevisual.cpp" line="18"/>
+        <location filename="signal_analysis/visuals/channel/stab_signal/spectr/spectrstabvisual.cpp" line="23"/>
+        <source>Спектральный анализ</source>
+        <translation>Spectral analysis</translation>
+    </message>
+    <message>
+        <location filename="signal_analysis/visuals/channel/pulse_signal/vpg/variationpulsogramvisual.cpp" line="18"/>
+        <source>Вариационная пульсограмма</source>
+        <translation>Variation pulsegram</translation>
+    </message>
+    <message>
+        <location filename="signal_analysis/visuals/channel/stab_signal/histogram/histogramvisual.cpp" line="25"/>
+        <source>Гистограмма</source>
+        <translation>Histogram</translation>
+    </message>
+    <message>
+        <location filename="signal_analysis/visuals/channel/stab_signal/vector_analysis/vectoranalysisvisual.cpp" line="23"/>
+        <source>Анализ векторов</source>
+        <translation>Vector analysis</translation>
+    </message>
+    <message>
+        <location filename="signal_analysis/visuals/sections/section_graph/sectiongraphvisual.cpp" line="23"/>
+        <source>Анализ сигналов</source>
+        <translation>Signals analysis</translation>
+    </message>
+    <message>
+        <location filename="signal_analysis/visuals/channel/stab_signal/stabilogram/stabilogramvisual.cpp" line="23"/>
+        <source>Стабилограмма</source>
+        <translation>Stabilogram</translation>
+    </message>
 </context>
 <context>
     <name>QCoreApplication::QCoreApplication</name>
@@ -14859,7 +14913,7 @@ Click the [Done] button.</translation>
     <message>
         <location filename="signal_analysis/visuals/channel/pulse_signal/spectr/spectrpulsevisualwidget.ui" line="57"/>
         <source>Длительность сигнала ритмограммы слишком мала для расчета спектра</source>
-        <translation>Длительность сигнала ритмограммы слишком мала для расчета</translation>
+        <translation>The duration of the rhythmogram signal is too short to calculate the spectrum</translation>
     </message>
     <message>
         <location filename="signal_analysis/visuals/channel/pulse_signal/spectr/spectrpulsevisualwidget.cpp" line="91"/>

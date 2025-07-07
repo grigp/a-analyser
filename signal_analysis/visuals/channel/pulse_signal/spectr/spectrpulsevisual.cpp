@@ -15,7 +15,7 @@ QString SpectrPulseVisual::uid()
 
 QString SpectrPulseVisual::name()
 {
-    return VisualNames::Name_SpectrPulse;
+    return QCoreApplication::tr("Спектральный анализ"); //VisualNames::Name_SpectrPulse;
 }
 
 Visual *SpectrPulseVisual::getVisualWidget(QWidget *parent,

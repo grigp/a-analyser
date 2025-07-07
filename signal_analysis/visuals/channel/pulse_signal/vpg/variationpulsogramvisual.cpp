@@ -15,7 +15,7 @@ QString VariationPulsogramVisual::uid()
 
 QString VariationPulsogramVisual::name()
 {
-    return VisualNames::Name_VPG;
+    return QCoreApplication::tr("Вариационная пульсограмма"); //VisualNames::Name_VPG;
 }
 
 Visual *VariationPulsogramVisual::getVisualWidget(QWidget *parent,

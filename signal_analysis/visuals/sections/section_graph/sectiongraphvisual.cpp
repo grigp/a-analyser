@@ -20,7 +20,7 @@ QString SectionGraphVisual::uid()
 
 QString SectionGraphVisual::name()
 {
-    return VisualNames::Name_SectionGraph;
+    return QCoreApplication::tr("Анализ сигналов"); //VisualNames::Name_SectionGraph;
 }
 
 Visual *SectionGraphVisual::getVisualWidget(QWidget *parent,
