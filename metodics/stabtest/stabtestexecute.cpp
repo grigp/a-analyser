@@ -24,6 +24,7 @@
 #include "aanalysersettings.h"
 #include "stabtestdefines.h"
 #include "amessagebox.h"
+#include "metodicsfactory.h"
 
 #include <QJsonObject>
 #include <QJsonArray>
@@ -129,7 +130,7 @@ void StabTestExecute::timerEvent(QTimerEvent *event)
         {
             ++m_autoModeSecCounter;
             auto stage = m_stages.at(m_probe).at(m_stageNum);
-            auto stageTitle = MetodicDefines::AutoModeStageTitle.value(stage);
+            auto stageTitle = MetodicsFactory::autoModeStageTitle(stage);
 
             if (stageTitle == "")
             {
@@ -139,7 +140,7 @@ void StabTestExecute::timerEvent(QTimerEvent *event)
                     if (m_stageNum < m_stages.at(m_probe).size())
                     {
                         auto stage = m_stages.at(m_probe).at(m_stageNum);
-                        auto stageTitle = MetodicDefines::AutoModeStageTitle.value(stage);
+                        auto stageTitle = MetodicsFactory::autoModeStageTitle(stage);
                         setFrontComment(msgWaitEvent(stageTitle, m_autoTimeRun));
                         if (m_patientWin)
                             m_patientWin->setFrontComment(msgWaitEvent(stageTitle, m_autoTimeRun));

@@ -11,6 +11,7 @@
 #include "baseutils.h"
 #include "bilateralresultdata.h"
 #include "aanalysersettings.h"
+#include "metodicsfactory.h"
 #include "amessagebox.h"
 
 #include <QTimer>
@@ -83,7 +84,7 @@ void StabDynamicTestExecute::timerEvent(QTimerEvent *event)
         {
             ++m_autoModeSecCounter;
             auto stage = m_stages.at(m_stageNum);
-            auto stageTitle = MetodicDefines::AutoModeStageTitle.value(stage);
+            auto stageTitle = MetodicsFactory::autoModeStageTitle(stage);
 
             if (stageTitle == "")
             {
@@ -93,7 +94,7 @@ void StabDynamicTestExecute::timerEvent(QTimerEvent *event)
                     if (m_stageNum < m_stages.size())
                     {
                         auto stage = m_stages.at(m_stageNum);
-                        auto stageTitle = MetodicDefines::AutoModeStageTitle.value(stage);
+                        auto stageTitle = MetodicsFactory::autoModeStageTitle(stage);
                         setFrontComment(msgWaitEvent(stageTitle, m_autoTimeRun));
                     }
                     m_autoModeSecCounter = 0;

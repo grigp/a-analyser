@@ -74,9 +74,7 @@ void OctaedronFactors::registerFactors()
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(FactorsDefines::CommonFactors::SuccessUid,
                            OctaedronFactorsDefines::GroupUid,
-                           FactorsDefines::CommonFactors::SuccessName,
-                           FactorsDefines::CommonFactors::SuccessShortName,
-                           FactorsDefines::CommonFactors::SuccessMeasure, 0, 3, FactorsDefines::nsDual, 12);
+                           QCoreApplication::tr("Успешность выполнения задания"), QCoreApplication::tr("Успешность"), QCoreApplication::tr("%"), 0, 3, FactorsDefines::nsDual, 12);
     static_cast<AAnalyserApplication*>(QApplication::instance())->
             registerFactor(OctaedronFactorsDefines::QualityUUid, OctaedronFactorsDefines::GroupUid,
                            QCoreApplication::tr("Отклонение вперед"), QCoreApplication::tr("QU"), QCoreApplication::tr("%"), 0, 3, FactorsDefines::nsDual, 12);

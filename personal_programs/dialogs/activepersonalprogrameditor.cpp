@@ -14,6 +14,7 @@
 #include "dailyprogramcompleteddelegate.h"
 #include "testcompleteddelegate.h"
 #include "settingsprovider.h"
+#include "personalprogrammanager.h"
 #include "amessagebox.h"
 
 
@@ -621,12 +622,12 @@ void ActivePersonalProgramEditor::prepareParams()
 {
     ui->cbMinTimeBetweenDP->clear();
     foreach (auto v, PersonalProgramDefines::MinTimeBetweenDPList)
-        ui->cbMinTimeBetweenDP->addItem(PersonalProgramDefines::MinTimeBetweenDPNames.value(v), v);
+        ui->cbMinTimeBetweenDP->addItem(PersonalProgramManager::minTimeBetweenDPNames(v), v);
     ui->cbMinTimeBetweenDP->setCurrentIndex(0);
 
     ui->cbMaxTimeBetweenDP->clear();
     foreach (auto v, PersonalProgramDefines::MaxTimeBetweenDPList)
-        ui->cbMaxTimeBetweenDP->addItem(PersonalProgramDefines::MaxTimeBetweenDPNames.value(v), v);
+        ui->cbMaxTimeBetweenDP->addItem(PersonalProgramManager::maxTimeBetweenDPNames(v), v);
     ui->cbMaxTimeBetweenDP->setCurrentIndex(7);
 }
 

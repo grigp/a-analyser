@@ -170,7 +170,12 @@ void AAnalyserSettings::fillSities(const QString& country, const QString& sity)
 {
     m_mdlSities.clear();
 
-    QFile fileSities("sities.json");
+    QString fName = "sities.json";
+    if (static_cast<AAnalyserApplication*>(QApplication::instance())->languargeCode() == DataDefines::LANG_CODE_ENGUSA)
+        fName = "sities_en_US.json";
+
+
+    QFile fileSities(fName);
     if (fileSities.open(QIODevice::ReadOnly | QIODevice::Text))
     {
         QByteArray ba = fileSities.readAll();

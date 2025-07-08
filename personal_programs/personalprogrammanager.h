@@ -4,6 +4,8 @@
 #include <QObject>
 #include <QStandardItemModel>
 
+#include "personalprogramdefines.h"
+
 /*!
  * \brief Класс, работающий с индивидуальными программами The PersonalProgramManager class
  */
@@ -99,6 +101,19 @@ public:
     static QColor successColor(const double valSuccess);
 
     void on_dbConnected();
+
+    /*!
+     * \brief Возвращает строковое значение параметра индивидуальной программы: Минимальное время между дневными программами
+     * \param val - значение
+     */
+    static QString minTimeBetweenDPNames(PersonalProgramDefines::MinTimeBetweenDP val);
+
+    /*!
+     * \brief Возвращает строковое значение параметра индивидуальной программы: Максимальное время между дневными программами
+     * \param val - значение
+     */
+    static QString maxTimeBetweenDPNames(PersonalProgramDefines::MaxTimeBetweenDP val);
+
 
 private:
     QString createDir();

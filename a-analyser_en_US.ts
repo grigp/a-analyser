@@ -8148,22 +8148,22 @@ Click the [Done] button.</translation>
         <translation>Background averaging</translation>
     </message>
     <message>
-        <location filename="kernel/database/datadefines.h" line="31"/>
+        <location filename="kernel/database/datadefines.cpp" line="242"/>
         <source>муж</source>
         <translation>man</translation>
     </message>
     <message>
-        <location filename="kernel/database/datadefines.h" line="32"/>
+        <location filename="kernel/database/datadefines.cpp" line="243"/>
         <source>жен</source>
         <translation>woman</translation>
     </message>
     <message>
-        <location filename="kernel/database/datadefines.h" line="266"/>
+        <location filename="kernel/database/datadefines.h" line="267"/>
         <source>Русский</source>
         <translation>Russoan</translation>
     </message>
     <message>
-        <location filename="kernel/database/datadefines.h" line="267"/>
+        <location filename="kernel/database/datadefines.h" line="268"/>
         <source>English (USA)</source>
         <translation>English (USA)</translation>
     </message>
@@ -8193,19 +8193,18 @@ Click the [Done] button.</translation>
         <translation>Classical factors</translation>
     </message>
     <message>
-        <location filename="factors/factorsdefines.h" line="155"/>
+        <location filename="factors/stab_dynamic/octaedronfactors.cpp" line="77"/>
         <location filename="factors/tren_result/trenresultfactors.cpp" line="151"/>
         <source>Успешность выполнения задания</source>
         <translation>Successful completion of the task</translation>
     </message>
     <message>
-        <location filename="factors/factorsdefines.h" line="156"/>
+        <location filename="factors/stab_dynamic/octaedronfactors.cpp" line="77"/>
         <location filename="factors/tren_result/trenresultfactors.cpp" line="151"/>
         <source>Успешность</source>
         <translation>Success</translation>
     </message>
     <message>
-        <location filename="factors/factorsdefines.h" line="157"/>
         <location filename="factors/general_coord/generalcoordcalculator.cpp" line="119"/>
         <location filename="factors/general_coord/generalcoordcalculator.cpp" line="124"/>
         <location filename="factors/general_coord/generalcoordcalculator.cpp" line="128"/>
@@ -8264,14 +8263,15 @@ Click the [Done] button.</translation>
         <location filename="factors/stab_dynamic/evolventafactors.cpp" line="289"/>
         <location filename="factors/stab_dynamic/evolventafactors.cpp" line="310"/>
         <location filename="factors/stab_dynamic/evolventafactors.cpp" line="331"/>
-        <location filename="factors/stab_dynamic/octaedronfactors.cpp" line="82"/>
-        <location filename="factors/stab_dynamic/octaedronfactors.cpp" line="85"/>
-        <location filename="factors/stab_dynamic/octaedronfactors.cpp" line="88"/>
-        <location filename="factors/stab_dynamic/octaedronfactors.cpp" line="91"/>
-        <location filename="factors/stab_dynamic/octaedronfactors.cpp" line="94"/>
-        <location filename="factors/stab_dynamic/octaedronfactors.cpp" line="97"/>
-        <location filename="factors/stab_dynamic/octaedronfactors.cpp" line="100"/>
-        <location filename="factors/stab_dynamic/octaedronfactors.cpp" line="103"/>
+        <location filename="factors/stab_dynamic/octaedronfactors.cpp" line="77"/>
+        <location filename="factors/stab_dynamic/octaedronfactors.cpp" line="80"/>
+        <location filename="factors/stab_dynamic/octaedronfactors.cpp" line="83"/>
+        <location filename="factors/stab_dynamic/octaedronfactors.cpp" line="86"/>
+        <location filename="factors/stab_dynamic/octaedronfactors.cpp" line="89"/>
+        <location filename="factors/stab_dynamic/octaedronfactors.cpp" line="92"/>
+        <location filename="factors/stab_dynamic/octaedronfactors.cpp" line="95"/>
+        <location filename="factors/stab_dynamic/octaedronfactors.cpp" line="98"/>
+        <location filename="factors/stab_dynamic/octaedronfactors.cpp" line="101"/>
         <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="127"/>
         <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="136"/>
         <location filename="factors/stab_dynamic/stepoffsetfactors.cpp" line="145"/>
@@ -9898,62 +9898,62 @@ Click the [Done] button.</translation>
         <translation>Trenager &quot;Octahedron&quot; factors</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/octaedronfactors.cpp" line="82"/>
+        <location filename="factors/stab_dynamic/octaedronfactors.cpp" line="80"/>
         <source>QU</source>
         <translation>QU</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/octaedronfactors.cpp" line="85"/>
+        <location filename="factors/stab_dynamic/octaedronfactors.cpp" line="83"/>
         <source>Отклонение вперед влево</source>
         <translation>Forward left deviation</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/octaedronfactors.cpp" line="85"/>
+        <location filename="factors/stab_dynamic/octaedronfactors.cpp" line="83"/>
         <source>QUL</source>
         <translation>QUL</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/octaedronfactors.cpp" line="88"/>
+        <location filename="factors/stab_dynamic/octaedronfactors.cpp" line="86"/>
         <source>QL</source>
         <translation>QL</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/octaedronfactors.cpp" line="91"/>
+        <location filename="factors/stab_dynamic/octaedronfactors.cpp" line="89"/>
         <source>Отклонение назад влево</source>
         <translation>Backward left deviation</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/octaedronfactors.cpp" line="91"/>
+        <location filename="factors/stab_dynamic/octaedronfactors.cpp" line="89"/>
         <source>QDL</source>
         <translation>QDL</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/octaedronfactors.cpp" line="94"/>
+        <location filename="factors/stab_dynamic/octaedronfactors.cpp" line="92"/>
         <source>QD</source>
         <translation>QD</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/octaedronfactors.cpp" line="97"/>
+        <location filename="factors/stab_dynamic/octaedronfactors.cpp" line="95"/>
         <source>Отклонение назад вправо</source>
         <translation>Backward right deviation</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/octaedronfactors.cpp" line="97"/>
+        <location filename="factors/stab_dynamic/octaedronfactors.cpp" line="95"/>
         <source>QDR</source>
         <translation>QDR</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/octaedronfactors.cpp" line="100"/>
+        <location filename="factors/stab_dynamic/octaedronfactors.cpp" line="98"/>
         <source>QR</source>
         <translation>QR</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/octaedronfactors.cpp" line="103"/>
+        <location filename="factors/stab_dynamic/octaedronfactors.cpp" line="101"/>
         <source>Отклонение вперед вправо</source>
         <translation>Forward right deviation</translation>
     </message>
     <message>
-        <location filename="factors/stab_dynamic/octaedronfactors.cpp" line="103"/>
+        <location filename="factors/stab_dynamic/octaedronfactors.cpp" line="101"/>
         <source>QUR</source>
         <translation>QUR</translation>
     </message>
@@ -12189,7 +12189,7 @@ Click the [Done] button.</translation>
     </message>
     <message>
         <location filename="factors/stab_dynamic/crossfactors.cpp" line="92"/>
-        <location filename="factors/stab_dynamic/octaedronfactors.cpp" line="82"/>
+        <location filename="factors/stab_dynamic/octaedronfactors.cpp" line="80"/>
         <source>Отклонение вперед</source>
         <translation>Forward deviation</translation>
     </message>
@@ -12200,7 +12200,7 @@ Click the [Done] button.</translation>
     </message>
     <message>
         <location filename="factors/stab_dynamic/crossfactors.cpp" line="95"/>
-        <location filename="factors/stab_dynamic/octaedronfactors.cpp" line="94"/>
+        <location filename="factors/stab_dynamic/octaedronfactors.cpp" line="92"/>
         <source>Отклонение назад</source>
         <translation>Backward deviation</translation>
     </message>
@@ -12211,7 +12211,7 @@ Click the [Done] button.</translation>
     </message>
     <message>
         <location filename="factors/stab_dynamic/crossfactors.cpp" line="98"/>
-        <location filename="factors/stab_dynamic/octaedronfactors.cpp" line="100"/>
+        <location filename="factors/stab_dynamic/octaedronfactors.cpp" line="98"/>
         <source>Отклонение вправо</source>
         <translation>Right deviation</translation>
     </message>
@@ -12222,7 +12222,7 @@ Click the [Done] button.</translation>
     </message>
     <message>
         <location filename="factors/stab_dynamic/crossfactors.cpp" line="101"/>
-        <location filename="factors/stab_dynamic/octaedronfactors.cpp" line="88"/>
+        <location filename="factors/stab_dynamic/octaedronfactors.cpp" line="86"/>
         <source>Отклонение влево</source>
         <translation>Left deviation</translation>
     </message>

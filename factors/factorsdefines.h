@@ -152,9 +152,9 @@ namespace CommonFactors {
  * \brief Показатель успешности выполнения задания
  */
 static const QString SuccessUid = "{9C5C88D4-9126-4D9C-94E3-9B282340622C}";
-static const QString SuccessName = QCoreApplication::tr("Успешность выполнения задания");
-static const QString SuccessShortName = QCoreApplication::tr("Успешность");
-static const QString SuccessMeasure = QCoreApplication::tr("%");
+//static const QString SuccessName = QCoreApplication::tr("Успешность выполнения задания");
+//static const QString SuccessShortName = QCoreApplication::tr("Успешность");
+//static const QString SuccessMeasure = QCoreApplication::tr("%");
 
 }
 

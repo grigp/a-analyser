@@ -462,6 +462,47 @@ void PersonalProgramManager::on_dbConnected()
     assignDefaultPP();
 }
 
+QString PersonalProgramManager::minTimeBetweenDPNames(PersonalProgramDefines::MinTimeBetweenDP val)
+{
+    /*!
+     * \brief Название значений параметра индивидуальной программы: Минимальное время между дневными программами The MinTimeBetweenDPNames enum
+     */
+    static QMap<PersonalProgramDefines::MinTimeBetweenDP, QString> MinTimeBetweenDPNames
+    {
+          std::pair<PersonalProgramDefines::MinTimeBetweenDP, QString> (PersonalProgramDefines::minOtherDay, QApplication::tr("На другой день"))
+        , std::pair<PersonalProgramDefines::MinTimeBetweenDP, QString> (PersonalProgramDefines::minUndefined, QApplication::tr("Нет"))
+        , std::pair<PersonalProgramDefines::MinTimeBetweenDP, QString> (PersonalProgramDefines::minOneHour, QApplication::tr("Один час"))
+        , std::pair<PersonalProgramDefines::MinTimeBetweenDP, QString> (PersonalProgramDefines::minTwoHours, QApplication::tr("Два часа"))
+        , std::pair<PersonalProgramDefines::MinTimeBetweenDP, QString> (PersonalProgramDefines::minFiveHours, QApplication::tr("Пять часов"))
+        , std::pair<PersonalProgramDefines::MinTimeBetweenDP, QString> (PersonalProgramDefines::minTwelveHours, QApplication::tr("Двенадцать часов"))
+        , std::pair<PersonalProgramDefines::MinTimeBetweenDP, QString> (PersonalProgramDefines::minDay, QApplication::tr("Одни сутки"))
+        , std::pair<PersonalProgramDefines::MinTimeBetweenDP, QString> (PersonalProgramDefines::minTwoDays, QApplication::tr("Двое суток"))
+        , std::pair<PersonalProgramDefines::MinTimeBetweenDP, QString> (PersonalProgramDefines::minFiveDays, QApplication::tr("Пять суток"))
+    };
+    return MinTimeBetweenDPNames.value(val);
+}
+
+QString PersonalProgramManager::maxTimeBetweenDPNames(PersonalProgramDefines::MaxTimeBetweenDP val)
+{
+    /*!
+     * \brief Название значений параметра индивидуальной программы: Максимальное время между дневными программами The MaxTimeBetweenDPNames enum
+     */
+    static QMap<PersonalProgramDefines::MaxTimeBetweenDP, QString> MaxTimeBetweenDPNames
+    {
+          std::pair<PersonalProgramDefines::MaxTimeBetweenDP, QString> (PersonalProgramDefines::maxUndefined, QApplication::tr("Нет"))
+        , std::pair<PersonalProgramDefines::MaxTimeBetweenDP, QString> (PersonalProgramDefines::maxOneHour, QApplication::tr("Один час"))
+        , std::pair<PersonalProgramDefines::MaxTimeBetweenDP, QString> (PersonalProgramDefines::maxTwoHours, QApplication::tr("Два часа"))
+        , std::pair<PersonalProgramDefines::MaxTimeBetweenDP, QString> (PersonalProgramDefines::maxFiveHours, QApplication::tr("Пять часов"))
+        , std::pair<PersonalProgramDefines::MaxTimeBetweenDP, QString> (PersonalProgramDefines::maxTwelveHours, QApplication::tr("Двенадцать часов"))
+        , std::pair<PersonalProgramDefines::MaxTimeBetweenDP, QString> (PersonalProgramDefines::maxOneDay, QApplication::tr("Одни сутки"))
+        , std::pair<PersonalProgramDefines::MaxTimeBetweenDP, QString> (PersonalProgramDefines::maxTwoDays, QApplication::tr("Двое суток"))
+        , std::pair<PersonalProgramDefines::MaxTimeBetweenDP, QString> (PersonalProgramDefines::maxThreeDays, QApplication::tr("Трое суток"))
+        , std::pair<PersonalProgramDefines::MaxTimeBetweenDP, QString> (PersonalProgramDefines::maxWeek, QApplication::tr("Неделя"))
+        , std::pair<PersonalProgramDefines::MaxTimeBetweenDP, QString> (PersonalProgramDefines::maxMonth, QApplication::tr("Месяц"))
+    };
+    return MaxTimeBetweenDPNames.value(val);
+}
+
 QString PersonalProgramManager::createDir()
 {
     QString dirName = DataDefines::appCopyPath() + "personal_programs/";

@@ -21,7 +21,8 @@
 #include "frontcommentitem.h"
 #include "bilateralresultdata.h"
 #include "aanalysersettings.h"
-#include"amessagebox.h"
+#include "metodicsfactory.h"
+#include "amessagebox.h"
 
 TrenExecute::TrenExecute(QWidget *parent) :
     QWidget(parent),
@@ -91,7 +92,7 @@ void TrenExecute::timerEvent(QTimerEvent *event)
         {
             ++m_autoModeSecCounter;
             auto stage = m_stages.at(m_stageNum);
-            auto stageTitle = MetodicDefines::AutoModeStageTitle.value(stage);
+            auto stageTitle = MetodicsFactory::autoModeStageTitle(stage);
 
             if (stageTitle == "")
             {
@@ -102,7 +103,7 @@ void TrenExecute::timerEvent(QTimerEvent *event)
                     {
                         auto stage = m_stages.at(m_stageNum);
                         autoModeStageChanged(stage);
-                        auto stageTitle = MetodicDefines::AutoModeStageTitle.value(stage);
+                        auto stageTitle = MetodicsFactory::autoModeStageTitle(stage);
                         setFrontComment(msgWaitEvent(stageTitle, m_autoTimeRun));
                     }
                     m_autoModeSecCounter = 0;

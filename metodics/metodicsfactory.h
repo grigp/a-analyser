@@ -128,6 +128,13 @@ public:
      */
     TestCalculator* getCalculator(const QString& uidTest);
 
+    /*!
+     * \brief Возвращает заголовок этапа статической пробы для автоматического режима
+     * \param stage
+     */
+    static QString autoModeStageTitle(MetodicDefines::AutoModeStaticStages stage);
+
+
 signals:
 
 public slots:

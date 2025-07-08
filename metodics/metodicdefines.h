@@ -100,17 +100,6 @@ namespace MetodicDefines
         , amssRecording      ///< Запись
     };
 
-    /*!
-     * \brief Заголовки этапов статической пробы для автоматического режима The AutoModeStageTitle
-     */
-    static QMap<AutoModeStaticStages, QString> AutoModeStageTitle {
-          std::pair<AutoModeStaticStages, QString> (amssLatent0, QCoreApplication::tr(""))
-        , std::pair<AutoModeStaticStages, QString> (amssZeroingWait, QCoreApplication::tr("Центровка через"))
-        , std::pair<AutoModeStaticStages, QString> (amssLatent1, QCoreApplication::tr(""))
-        , std::pair<AutoModeStaticStages, QString> (amssRecordingWait, QCoreApplication::tr("Запись через"))
-        , std::pair<AutoModeStaticStages, QString> (amssRecording, QCoreApplication::tr(""))
-    };
-
     ///< Список этапов для статической пробы основной
     const QList<AutoModeStaticStages> AutoStagesBase {amssLatent0, amssZeroingWait, amssLatent1, amssRecordingWait, amssRecording};
     ///< Список этапов для статической пробы без центровки

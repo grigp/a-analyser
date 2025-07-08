@@ -232,6 +232,21 @@ TestCalculator *MetodicsFactory::getCalculator(const QString &uidTest)
     return nullptr;
 }
 
+QString MetodicsFactory::autoModeStageTitle(MetodicDefines::AutoModeStaticStages stage)
+{
+    /*!
+     * \brief Заголовки этапов статической пробы для автоматического режима The AutoModeStageTitle
+     */
+    static QMap<MetodicDefines::AutoModeStaticStages, QString> AutoModeStageTitle {
+          std::pair<MetodicDefines::AutoModeStaticStages, QString> (MetodicDefines::amssLatent0, QCoreApplication::tr(""))
+        , std::pair<MetodicDefines::AutoModeStaticStages, QString> (MetodicDefines::amssZeroingWait, QCoreApplication::tr("Центровка через"))
+        , std::pair<MetodicDefines::AutoModeStaticStages, QString> (MetodicDefines::amssLatent1, QCoreApplication::tr(""))
+        , std::pair<MetodicDefines::AutoModeStaticStages, QString> (MetodicDefines::amssRecordingWait, QCoreApplication::tr("Запись через"))
+        , std::pair<MetodicDefines::AutoModeStaticStages, QString> (MetodicDefines::amssRecording, QCoreApplication::tr(""))
+    };
+    return AutoModeStageTitle.value(stage);
+}
+
 void MetodicsFactory::assignTemplates()
 {
     m_templates << AAnalyserBuild::getBuildTemplates(this);
