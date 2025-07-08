@@ -117,14 +117,6 @@ enum FilterKind
     , fkChebyshev                ///< Чебышева с неравн. 0,5 дБ
 };
 
-static QMap<FilterKind, QString> FilterName =
-{
-      std::pair<FilterKind, QString> (fkCriticalAttenuation, QCoreApplication::tr("Критического затухания"))
-    , std::pair<FilterKind, QString> (fkBessel, QCoreApplication::tr("Бесселя"))
-    , std::pair<FilterKind, QString> (fkBatterwort, QCoreApplication::tr("Баттерворта"))
-    , std::pair<FilterKind, QString> (fkChebyshev, QCoreApplication::tr("Чебышева с неравн. 0,5 дБ"))
-};
-
 /*!
  * \brief Типы фильтров FilterKind enum
  */
@@ -134,14 +126,6 @@ enum FilterDirection
     , fdHighFreq           ///< ФВЧ
     , fdBand               ///< Полосовой
     , fdNotch              ///< Режекторный
-};
-
-static QMap<FilterDirection, QString> FilterDirectionName =
-{
-      std::pair<FilterDirection, QString> (fdLowFreq, QCoreApplication::tr("Фильтр нижних частот"))
-    , std::pair<FilterDirection, QString> (fdHighFreq, QCoreApplication::tr("Фильтр верхних частот"))
-    , std::pair<FilterDirection, QString> (fdBand, QCoreApplication::tr("Полосовой фильтр"))
-    , std::pair<FilterDirection, QString> (fdNotch, QCoreApplication::tr("Режекторный фильтр"))
 };
 
 /*!

@@ -10737,42 +10737,47 @@ Click the [Done] button.</translation>
         <translation>Marker on target</translation>
     </message>
     <message>
-        <location filename="kernel/baseutils.h" line="122"/>
+        <location filename="signal_analysis/transformers/transformers/filter/filtersignal.cpp" line="21"/>
+        <source>Фильтрация сигнала</source>
+        <translation>Signal filtering</translation>
+    </message>
+    <message>
+        <location filename="signal_analysis/transformers/transformers/filter/filtersignal.cpp" line="62"/>
         <source>Критического затухания</source>
         <translation>Critical attenuation</translation>
     </message>
     <message>
-        <location filename="kernel/baseutils.h" line="123"/>
+        <location filename="signal_analysis/transformers/transformers/filter/filtersignal.cpp" line="63"/>
         <source>Бесселя</source>
         <translation>Bessel</translation>
     </message>
     <message>
-        <location filename="kernel/baseutils.h" line="124"/>
+        <location filename="signal_analysis/transformers/transformers/filter/filtersignal.cpp" line="64"/>
         <source>Баттерворта</source>
         <translation>Butterworth</translation>
     </message>
     <message>
-        <location filename="kernel/baseutils.h" line="125"/>
+        <location filename="signal_analysis/transformers/transformers/filter/filtersignal.cpp" line="65"/>
         <source>Чебышева с неравн. 0,5 дБ</source>
         <translation>Chebyshev with unequal 0.5 dB</translation>
     </message>
     <message>
-        <location filename="kernel/baseutils.h" line="141"/>
+        <location filename="signal_analysis/transformers/transformers/filter/filtersignal.cpp" line="74"/>
         <source>Фильтр нижних частот</source>
         <translation>Low pass filter</translation>
     </message>
     <message>
-        <location filename="kernel/baseutils.h" line="142"/>
+        <location filename="signal_analysis/transformers/transformers/filter/filtersignal.cpp" line="75"/>
         <source>Фильтр верхних частот</source>
         <translation>High pass filter</translation>
     </message>
     <message>
-        <location filename="kernel/baseutils.h" line="143"/>
+        <location filename="signal_analysis/transformers/transformers/filter/filtersignal.cpp" line="76"/>
         <source>Полосовой фильтр</source>
         <translation>Bandpass filter</translation>
     </message>
     <message>
-        <location filename="kernel/baseutils.h" line="144"/>
+        <location filename="signal_analysis/transformers/transformers/filter/filtersignal.cpp" line="77"/>
         <source>Режекторный фильтр</source>
         <translation>Notch filter</translation>
     </message>
@@ -14020,6 +14025,11 @@ Click the [Done] button.</translation>
         <location filename="signal_analysis/visuals/channel/stab_signal/stabilogram/stabilogramvisual.cpp" line="23"/>
         <source>Стабилограмма</source>
         <translation>Stabilogram</translation>
+    </message>
+    <message>
+        <location filename="signal_analysis/transformers/transformers/motion_recognition/motionrecognition.cpp" line="20"/>
+        <source>Выявление движений лежащего человека</source>
+        <translation>Detecting movements of a lying person</translation>
     </message>
 </context>
 <context>

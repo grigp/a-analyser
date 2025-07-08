@@ -55,6 +55,30 @@ SignalTransformerParamsWidget *FilterSignal::getParamsWidget()
     return new FilterSignalParamsWidget(nullptr);
 }
 
+QMap<BaseUtils::FilterKind, QString> FilterSignal::filterName()
+{
+    static QMap<BaseUtils::FilterKind, QString> FilterName =
+    {
+          std::pair<BaseUtils::FilterKind, QString> (BaseUtils::fkCriticalAttenuation, QCoreApplication::tr("Критического затухания"))
+        , std::pair<BaseUtils::FilterKind, QString> (BaseUtils::fkBessel, QCoreApplication::tr("Бесселя"))
+        , std::pair<BaseUtils::FilterKind, QString> (BaseUtils::fkBatterwort, QCoreApplication::tr("Баттерворта"))
+        , std::pair<BaseUtils::FilterKind, QString> (BaseUtils::fkChebyshev, QCoreApplication::tr("Чебышева с неравн. 0,5 дБ"))
+    };
+    return FilterName;
+}
+
+QMap<BaseUtils::FilterDirection, QString> FilterSignal::filterDirectionName()
+{
+    static QMap<BaseUtils::FilterDirection, QString> FilterDirectionName =
+    {
+          std::pair<BaseUtils::FilterDirection, QString> (BaseUtils::fdLowFreq, QCoreApplication::tr("Фильтр нижних частот"))
+        , std::pair<BaseUtils::FilterDirection, QString> (BaseUtils::fdHighFreq, QCoreApplication::tr("Фильтр верхних частот"))
+        , std::pair<BaseUtils::FilterDirection, QString> (BaseUtils::fdBand, QCoreApplication::tr("Полосовой фильтр"))
+        , std::pair<BaseUtils::FilterDirection, QString> (BaseUtils::fdNotch, QCoreApplication::tr("Режекторный фильтр"))
+    };
+    return FilterDirectionName;
+}
+
 void FilterSignal::filtraton(QVector<double> &buffer, BaseUtils::FilterDirection dir, double freqCutoff, BaseUtils::FilterKind kind, int freqSample)
 {
     QVector<double> src = buffer;

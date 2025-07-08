@@ -35,8 +35,20 @@ public:
      */
     SignalTransformerParamsWidget* getParamsWidget() override;
 
+    /*!
+     * \brief Возвращает QMap имен фильтров по типу локализованное
+     */
+    static QMap<BaseUtils::FilterKind, QString> filterName();
+
+    /*!
+     * \brief Возвращает QMap имен типов фильтров локализованное
+     */
+    static QMap<BaseUtils::FilterDirection, QString> filterDirectionName();
+
+
 private:
     void filtraton(QVector<double> &buffer, BaseUtils::FilterDirection dir, double freqCutoff, BaseUtils::FilterKind kind, int freqSample);
+
 };
 
 #endif // FILTERSIGNAL_H

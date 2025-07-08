@@ -2,6 +2,7 @@
 #include "ui_filtersignalparamswidget.h"
 
 #include "baseutils.h"
+#include "filtersignal.h"
 
 FilterSignalParamsWidget::FilterSignalParamsWidget(QWidget *parent) :
     SignalTransformerParamsWidget(parent),
@@ -9,11 +10,11 @@ FilterSignalParamsWidget::FilterSignalParamsWidget(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    foreach (auto fk, BaseUtils::FilterName.keys())
-        ui->cbKind->addItem(BaseUtils::FilterName.value(fk), fk);
+    foreach (auto fk, FilterSignal::filterName().keys())
+        ui->cbKind->addItem(FilterSignal::filterName().value(fk), fk);
 
-    foreach (auto fd, BaseUtils::FilterDirectionName.keys())
-        ui->cbDirection->addItem(BaseUtils::FilterDirectionName.value(fd), fd);
+    foreach (auto fd, FilterSignal::filterDirectionName().keys())
+        ui->cbDirection->addItem(FilterSignal::filterDirectionName().value(fd), fd);
 }
 
 FilterSignalParamsWidget::~FilterSignalParamsWidget()
