@@ -3,6 +3,8 @@
 #include <QFile>
 #include <QDataStream>
 
+#include <QCoreApplication>
+
 #include "signalaccess.h"
 
 BinaryExportFilter::BinaryExportFilter(QObject *parent)
@@ -18,7 +20,7 @@ QString BinaryExportFilter::uid()
 
 QString BinaryExportFilter::name()
 {
-    return tr("Бинарный");
+    return QCoreApplication::tr("Бинарный");
 }
 
 void BinaryExportFilter::writeToFile(SignalAccess *signal, QString &fileName, const int chan)

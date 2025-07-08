@@ -9,6 +9,8 @@
 #include <QVariant>
 #include <QDebug>
 
+#include "aanalyserdefines.h"
+#include "aanalyserapplication.h"
 #include "datadefines.h"
 #include "personalprogramdefines.h"
 #include "aanalyserbuild.h"
@@ -478,9 +480,18 @@ void PersonalProgramManager::assignDefaultPP()
 
     foreach (auto groupPP, groupsPP)
     {
-        auto arrPPSrc = getElements(":/pre_settings/personal_programs/" + groupPP + "/pp.json", "pp_list");
-        auto arrDPSrc = getElements(":/pre_settings/personal_programs/" + groupPP + "/dp.json", "dp_list");
-        auto arrPPDPSrc = getElements(":/pre_settings/personal_programs/" + groupPP + "/ppdp.json", "ppdp_list");
+        QString namePP = "/pp.json";
+        QString nameDP = "/dp.json";
+        QString namePPDP = "/ppdp.json";
+        if (static_cast<AAnalyserApplication*>(QApplication::instance())->languargeCode() == DataDefines::LANG_CODE_ENGUSA)
+        {
+            namePP = "/pp_en_US.json";
+            nameDP = "/dp_en_US.json";
+            namePPDP = "/ppdp_en_US.json";
+        }
+        auto arrPPSrc = getElements(":/pre_settings/personal_programs/" + groupPP + namePP, "pp_list");
+        auto arrDPSrc = getElements(":/pre_settings/personal_programs/" + groupPP + nameDP, "dp_list");
+        auto arrPPDPSrc = getElements(":/pre_settings/personal_programs/" + groupPP + namePPDP, "ppdp_list");
 
         auto arrPPDst = getElements(dirName + "/pp.json", "pp_list");
         auto arrDPDst = getElements(dirName + "/dp.json", "dp_list");

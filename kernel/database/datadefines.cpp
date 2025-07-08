@@ -236,5 +236,11 @@ QColor DataDefines::normValueToColorDark(const DataDefines::NormValue val)
     return normColors.value(val);
 }
 
-
-
+QString DataDefines::sexValueToString(const DataDefines::Sex val)
+{
+    static QMap<Sex, QString> SexToText{
+        std::pair<Sex, QString> (male, QCoreApplication::tr("муж"))
+      , std::pair<Sex, QString> (female, QCoreApplication::tr("жен"))
+    };
+    return SexToText.value(val);
+}

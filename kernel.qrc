@@ -293,5 +293,8 @@
         <file>images/Methodics/StabReactTrain.png</file>
         <file>images/ExpandCollapse.png</file>
         <file>images/CloseAll.png</file>
+        <file>pre_settings/personal_programs/neurology/dp_en_US.json</file>
+        <file>pre_settings/personal_programs/neurology/pp_en_US.json</file>
+        <file>pre_settings/personal_programs/neurology/ppdp_en_US.json</file>
     </qresource>
 </RCC>

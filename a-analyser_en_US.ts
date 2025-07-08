@@ -1254,9 +1254,8 @@ These connections must be configured for real working equipment.</translation>
 <context>
     <name>BinaryExportFilter</name>
     <message>
-        <location filename="signal_export/filtres/binaryexportfilter.cpp" line="21"/>
         <source>Бинарный</source>
-        <translation>Binary</translation>
+        <translation type="vanished">Binary</translation>
     </message>
     <message>
         <location filename="signal_export/filtres/binaryexportfilter.h" line="49"/>
@@ -5465,9 +5464,13 @@ After that, click the [Next &gt;&gt;] button.</translation>
 <context>
     <name>MWCompetitiveStickParamsDialog</name>
     <message>
-        <location filename="metodics/mas_wrestling/mw_competitive_stick/mwcompetitivestickparamsdialog.ui" line="14"/>
         <source>Dialog</source>
-        <translation>Dialog</translation>
+        <translation type="vanished">Dialog</translation>
+    </message>
+    <message>
+        <location filename="metodics/mas_wrestling/mw_competitive_stick/mwcompetitivestickparamsdialog.ui" line="14"/>
+        <source>Параметры теста с соревновательной палкой</source>
+        <translation>Competition stick test settings</translation>
     </message>
     <message>
         <location filename="metodics/mas_wrestling/mw_competitive_stick/mwcompetitivestickparamsdialog.ui" line="50"/>
@@ -6176,6 +6179,11 @@ After that, click the [Next &gt;&gt;] button.</translation>
         <location filename="client_widgets/database_widgets/methodswidget.cpp" line="209"/>
         <source>Провести тест по методике</source>
         <translation>Execute a test to the methodic</translation>
+    </message>
+    <message>
+        <location filename="client_widgets/database_widgets/methodswidget.cpp" line="266"/>
+        <source>&lt;Все методики&gt;</source>
+        <translation>&lt;All the methodics&gt;</translation>
     </message>
 </context>
 <context>
@@ -14031,6 +14039,16 @@ Click the [Done] button.</translation>
         <source>Выявление движений лежащего человека</source>
         <translation>Detecting movements of a lying person</translation>
     </message>
+    <message>
+        <location filename="signal_export/filtres/binaryexportfilter.cpp" line="23"/>
+        <source>Бинарный</source>
+        <translation>Binary</translation>
+    </message>
+    <message>
+        <location filename="signal_export/filtres/textexportfilter.cpp" line="23"/>
+        <source>Текст</source>
+        <translation>Text</translation>
+    </message>
 </context>
 <context>
     <name>QCoreApplication::QCoreApplication</name>
@@ -18654,18 +18672,21 @@ Contact time</translation>
     </message>
     <message>
         <location filename="client_widgets/database_widgets/testswidget.ui" line="124"/>
-        <source>Свойства теста...</source>
-        <translation></translation>
+        <source>Свойства  теста...</source>
+        <oldsource>Свойства теста...</oldsource>
+        <translation>Test property...</translation>
     </message>
     <message>
         <location filename="client_widgets/database_widgets/testswidget.ui" line="144"/>
-        <source>Печать результатов теста...</source>
-        <translation></translation>
+        <source>Печать результатов  теста...</source>
+        <oldsource>Печать результатов теста...</oldsource>
+        <translation>Print test results...</translation>
     </message>
     <message>
         <location filename="client_widgets/database_widgets/testswidget.ui" line="164"/>
-        <source>Анализ сигналов...</source>
-        <translation></translation>
+        <source>Анализ  сигналов...</source>
+        <oldsource>Анализ сигналов...</oldsource>
+        <translation>Signals analysis...</translation>
     </message>
     <message>
         <location filename="client_widgets/database_widgets/testswidget.ui" line="200"/>
@@ -18714,9 +18735,8 @@ Contact time</translation>
 <context>
     <name>TextExportFilter</name>
     <message>
-        <location filename="signal_export/filtres/textexportfilter.cpp" line="22"/>
         <source>Текст</source>
-        <translation>Text</translation>
+        <translation type="vanished">Text</translation>
     </message>
     <message>
         <location filename="signal_export/filtres/textexportfilter.h" line="42"/>

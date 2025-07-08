@@ -2,6 +2,7 @@
 
 #include <QFile>
 #include <QTextStream>
+#include <QCoreApplication>
 #include <QDebug>
 
 #include "signalaccess.h"
@@ -19,7 +20,7 @@ QString TextExportFilter::uid()
 
 QString TextExportFilter::name()
 {
-    return tr("Текст");
+    return QCoreApplication::tr("Текст");
 }
 
 void TextExportFilter::writeToFile(SignalAccess *signal, QString &fileName, const int chan)

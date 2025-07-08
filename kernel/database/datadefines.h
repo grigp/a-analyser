@@ -27,10 +27,11 @@ enum Sex
     , female
 };
 
-static QMap<Sex, QString> SexToText{
-    std::pair<Sex, QString> (male, QCoreApplication::tr("муж"))
-  , std::pair<Sex, QString> (female, QCoreApplication::tr("жен"))
-};
+/*!
+ * \brief Возвращает строку со значением пола пациента
+ * \param val - значение
+ */
+QString sexValueToString(const Sex val);
 
 /*!
  * \brief Карточка пациента

@@ -4,42 +4,42 @@
             "logo_file_name": "D:/a-analyser/out/a-analyser-debug/bin/pictures/personal_programs/pp01.png",
             "max_time_between_dp": 7,
             "min_time_between_dp": 0,
-            "name": "Спастический гемипарез без нарушения чувствительности",
+            "name": "Spastic hemiparesis without sensory impairment",
             "uid": "{b189293e-71c3-40ce-8a49-3e98cc7d34df}"
         },
         {
             "logo_file_name": "D:/a-analyser/out/a-analyser-debug/bin/pictures/personal_programs/pp03.png",
             "max_time_between_dp": 7,
             "min_time_between_dp": 0,
-            "name": "Гемипарез в сочетании с нарушением глубокой чувствительности",
+            "name": "Hemiparesis combined with impaired deep sensitivity",
             "uid": "{38f2f44e-b2d3-45fe-8a4d-38c2f8f2c02c}"
         },
         {
             "logo_file_name": "D:/a-analyser/out/a-analyser-debug/bin/pictures/personal_programs/pp02.png",
             "max_time_between_dp": 7,
             "min_time_between_dp": 0,
-            "name": "Гемипарез в сочетании с рекурвацией коленного сустава",
+            "name": "Hemiparesis combined with recurvation of the knee joint",
             "uid": "{a16f190c-c197-4a47-93f7-234938991fff}"
         },
         {
             "logo_file_name": "D:/a-analyser/out/a-analyser-debug/bin/pictures/personal_programs/pp05.png",
             "max_time_between_dp": 7,
             "min_time_between_dp": 0,
-            "name": "Паркинсонизм акинетико-ригидной формы",
+            "name": "Parkinsonism of the akinetic-rigid form",
             "uid": "{88256fa0-d7f3-408f-8ed1-0990f8864998}"
         },
         {
             "logo_file_name": "D:/a-analyser/out/a-analyser-debug/bin/pictures/personal_programs/pp06.png",
             "max_time_between_dp": 7,
             "min_time_between_dp": 0,
-            "name": "Паркинсонизм ригидно-дрожательной формы",
+            "name": "Parkinsonism of the rigid-tremor form",
             "uid": "{fda0381d-cda3-49bf-8501-b002a0b494ac}"
         },
         {
             "logo_file_name": "D:/a-analyser/out/a-analyser-debug/bin/pictures/personal_programs/pp07.png",
             "max_time_between_dp": 7,
             "min_time_between_dp": 0,
-            "name": "Паркинсонизм дрожательно-ригидной формы",
+            "name": "Parkinsonism of the tremor-rigid form",
             "uid": "{ca506249-8fbd-4da2-94c6-b985142c07dc}"
         }
     ]

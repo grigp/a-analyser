@@ -121,7 +121,7 @@
       <item>
        <widget class="QPushButton" name="btnTestProperty">
         <property name="toolTip">
-         <string>Свойства теста...</string>
+         <string>Свойства  теста...</string>
         </property>
         <property name="text">
          <string/>
@@ -141,7 +141,7 @@
       <item>
        <widget class="QPushButton" name="btnTestPrint">
         <property name="toolTip">
-         <string>Печать результатов теста...</string>
+         <string>Печать результатов  теста...</string>
         </property>
         <property name="text">
          <string/>
@@ -161,7 +161,7 @@
       <item>
        <widget class="QPushButton" name="btnSignalsAnalysis">
         <property name="toolTip">
-         <string>Анализ сигналов...</string>
+         <string>Анализ  сигналов...</string>
         </property>
         <property name="text">
          <string/>

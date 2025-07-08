@@ -49,7 +49,7 @@ void PatientsModel::addPatientInModel(DataDefines::PatientKard &patient)
     itemFIO->setEditable(false);
     QStandardItem *itemBorn = new QStandardItem(patient.born.toString("dd.MM.yyyy"));
     itemBorn->setEditable(false);
-//    QStandardItem *itemSex = new QStandardItem(DataDefines::SexToText.value(
+//    QStandardItem *itemSex = new QStandardItem(DataDefines::sexValueToString(
 //                                                   static_cast<DataDefines::Sex>(patient.sex)));
 //    itemSex->setData(patient.sex, DatabaseWidgetDefines::PatientsModel::PatientSexRole);
 //    itemSex->setEditable(false);

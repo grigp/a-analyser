@@ -777,7 +777,7 @@ QStandardItem* PersonalProgramWidget::appendLine(const QString uidPat,
         {
             QStandardItem *itemBorn = new QStandardItem(pi.born.toString("dd.MM.yyyy"));
             itemBorn->setEditable(false);
-            QStandardItem *itemSex = new QStandardItem(DataDefines::SexToText.value(
+            QStandardItem *itemSex = new QStandardItem(DataDefines::sexValueToString(
                                                            static_cast<DataDefines::Sex>(pi.sex)));
             itemSex->setData(pi.sex, DatabaseWidgetDefines::PatientsModel::PatientSexRole);
             itemSex->setEditable(false);

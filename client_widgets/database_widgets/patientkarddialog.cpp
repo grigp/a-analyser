@@ -11,8 +11,8 @@ PatientKardDialog::PatientKardDialog(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    ui->cbSex->addItem(DataDefines::SexToText.value(DataDefines::male));
-    ui->cbSex->addItem(DataDefines::SexToText.value(DataDefines::female));
+    ui->cbSex->addItem(DataDefines::sexValueToString(DataDefines::male));
+    ui->cbSex->addItem(DataDefines::sexValueToString(DataDefines::female));
 
     ui->gbPP->setVisible(AAnalyserBuild::isPPEnabled());
 }

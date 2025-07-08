@@ -263,7 +263,7 @@ void MethodsWidget::setMethodicKindsButtons()
         else
         {
             btn->setIcon(QIcon(":/images/Methodics/All.png"));
-            btn->setToolTip("<Все методики>");
+            btn->setToolTip(tr("<Все методики>"));
             btn->setChecked(true);
         }
         connect(btn, &QPushButton::clicked, this, &MethodsWidget::on_btnKindPressed);
