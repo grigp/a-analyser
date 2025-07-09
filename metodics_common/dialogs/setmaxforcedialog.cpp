@@ -39,7 +39,7 @@ void SetMaxForceDialog::setDirection(const BaseDefines::Directions direction)
         ui->wgtDiagCross->setIsShowValueRight(direction == BaseDefines::dirRight);
         ui->wgtDiagCross->setIsShowValueLeft(direction == BaseDefines::dirLeft);
     }
-    auto sDir = BaseDefines::getDirectionValueFBName(m_direction);
+    auto sDir = BaseDefines::getDirectionValueFB().value(m_direction);
     ui->lblComment->setText(tr("Отклонитесь") + " " + sDir + tr(", не отрывая пяток, и вернитесь в исходное положение"));
 }
 

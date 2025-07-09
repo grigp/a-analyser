@@ -50,11 +50,9 @@ static QMap<Directions, QString> DirectionValueUIDName {
   , std::pair<Directions, QString> (dirLeft, "left")
 };
 
-QString getDirectionValueFBName(const Directions dir);
-QList<Directions> getDirectionValueFBKeys();
+QMap<BaseDefines::Directions, QString> getDirectionValueFB();
 
-QString getDirectionValueUDName(const Directions dir);
-QList<Directions> getDirectionValueUDKeys();
+QMap<BaseDefines::Directions, QString> getDirectionValueUD();
 
 
 /*!

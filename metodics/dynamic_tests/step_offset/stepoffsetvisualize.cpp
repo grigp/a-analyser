@@ -358,7 +358,7 @@ void StepOffsetVisualize::showTable()
 void StepOffsetVisualize::showParams()
 {
     m_sForce = tr("Усилие") + " - " + QString::number(m_calculator->force()) + " " + tr("%");
-    m_sDirection = tr("Направление") + " - " + BaseDefines::getDirectionValueFBName(m_calculator->direction());
+    m_sDirection = tr("Направление") + " - " + BaseDefines::getDirectionValueFB().value(m_calculator->direction());
     m_sDeviation = tr("Отклонение") + " - " +
             QString::number(m_calculator->diap() * m_calculator->force() / 100) +
             " " + tr("мм");

@@ -75,7 +75,7 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     setWindowIcon(QIcon(AAnalyserDefines::MainIcon));
-    setWindowTitle(AAnalyserDefines::MainWindowTitle);
+    setWindowTitle(AAnalyserBuild::mainWindowTitle());
     createClientWidgets();
 
     m_curColorSheme = new SettingsValue("", "ColorSheme", AAnalyserDefines::MainStyleSheetFile);

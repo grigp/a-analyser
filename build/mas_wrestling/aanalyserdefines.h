@@ -22,9 +22,6 @@ static const QString BuildUid = "{E995ED19-9EF3-4EC8-8FE2-F4C7D9AE57FF}";
 //! Главная иконка приложения
 static const QString MainIcon = ":/images/MainIcon_mw.ico";
 
-//! Текст главного окна приложения
-static const QString MainWindowTitle = "А-Мед. Мас рестлинг";
-
 //! Имя файла предустановленных методик. Это заголовок имени.
 //! Полное имя формируется так:
 //! PresetsMetodicsFileName + '.json' - русская версия

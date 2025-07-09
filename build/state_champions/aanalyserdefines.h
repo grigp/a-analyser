@@ -22,10 +22,6 @@ static const QString BuildUid = "{2932CDB1-5DA2-4243-A37A-F21A2FC1091B}";
 //! Главная иконка приложения
 static const QString MainIcon = ":/images/MainIcon_sch_01.ico";
 
-//! Текст главного окна приложения
-static const QString MainWindowTitle = "Стань чемпионом - стабилометрия";
-
-
 //! Имя файла предустановленных методик. Это заголовок имени.
 //! Полное имя формируется так:
 //! PresetsMetodicsFileName + '.json' - русская версия

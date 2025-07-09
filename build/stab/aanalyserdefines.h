@@ -22,9 +22,6 @@ static const QString BuildUid = "{76E5FB17-34FA-4415-9F9E-6F791D905CB6}";
 //! Главная иконка приложения
 static const QString MainIcon = ":/images/MainIcon_stab_1.ico";
 
-//! Текст главного окна приложения
-static const QString MainWindowTitle = "Стабилометрия А-МЕД";
-
 
 //! Имя файла предустановленных методик. Это заголовок имени.
 //! Полное имя формируется так:

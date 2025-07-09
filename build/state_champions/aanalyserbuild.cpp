@@ -167,3 +167,8 @@ bool AAnalyserBuild::isPPEnabled()
 {
     return false;
 }
+
+QString AAnalyserBuild::mainWindowTitle()
+{
+    return QCoreApplication::tr("Стань чемпионом - стабилометрия");
+}

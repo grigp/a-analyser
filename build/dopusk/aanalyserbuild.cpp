@@ -134,3 +134,8 @@ bool AAnalyserBuild::isPPEnabled()
 {
     return false;
 }
+
+QString AAnalyserBuild::mainWindowTitle()
+{
+    return QCoreApplication::tr("Допусковый контроль А-Мед");
+}

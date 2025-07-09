@@ -318,6 +318,6 @@ void StepDeviationVisualize::showDiags()
 
 void StepDeviationVisualize::showDirection()
 {
-    m_directionText = tr("Направление отклонений") + " - " + BaseDefines::getDirectionValueFBName(m_calculator->direction());
+    m_directionText = tr("Направление отклонений") + " - " + BaseDefines::getDirectionValueFB().value(m_calculator->direction());
     ui->lblDirection->setText(m_directionText);
 }

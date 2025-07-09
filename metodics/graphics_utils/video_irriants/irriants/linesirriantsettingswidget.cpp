@@ -15,8 +15,9 @@ LinesIrriantSettingsWidget::LinesIrriantSettingsWidget(LinesIrriant* irritant, Q
 
     ui->cbDirection->clear();
 
-    foreach (auto key, BaseDefines::getDirectionValueFBKeys())
-        ui->cbDirection->addItem(BaseDefines::getDirectionValueFBName(key), key);
+    auto names = BaseDefines::getDirectionValueFB();
+    foreach (auto key, names.keys())
+        ui->cbDirection->addItem(names.value(key), key);
     ui->cbDirection->setCurrentIndex(m_irritant->direction());
     ui->edSpeed->setValue(m_irritant->speed());
     ui->edWidth->setValue(m_irritant->width());
@@ -39,7 +40,7 @@ void LinesIrriantSettingsWidget::on_cbDirectionChanged(int idx)
 {
     Q_UNUSED(idx);
 
-    if (ui->cbDirection->count() == BaseDefines::getDirectionValueFBKeys().size())
+    if (ui->cbDirection->count() == BaseDefines::getDirectionValueFB().keys().size())
     {
         BaseDefines::Directions dir = static_cast<BaseDefines::Directions>(ui->cbDirection->currentData().toInt());
         m_irritant->setDirection(dir);

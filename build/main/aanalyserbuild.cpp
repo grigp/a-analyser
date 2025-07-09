@@ -288,3 +288,8 @@ bool AAnalyserBuild::isPPEnabled()
     return true;
 }
 
+
+QString AAnalyserBuild::mainWindowTitle()
+{
+    return QCoreApplication::tr("Исследования А-Мед");
+}

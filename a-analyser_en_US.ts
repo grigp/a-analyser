@@ -638,164 +638,164 @@ or to which you are closest</translation>
         <translation>Cancel</translation>
     </message>
     <message>
-        <location filename="personal_programs/dialogs/activepersonalprogrameditor.cpp" line="147"/>
-        <location filename="personal_programs/dialogs/activepersonalprogrameditor.cpp" line="180"/>
-        <location filename="personal_programs/dialogs/activepersonalprogrameditor.cpp" line="304"/>
-        <location filename="personal_programs/dialogs/activepersonalprogrameditor.cpp" line="387"/>
+        <location filename="personal_programs/dialogs/activepersonalprogrameditor.cpp" line="148"/>
+        <location filename="personal_programs/dialogs/activepersonalprogrameditor.cpp" line="181"/>
+        <location filename="personal_programs/dialogs/activepersonalprogrameditor.cpp" line="305"/>
+        <location filename="personal_programs/dialogs/activepersonalprogrameditor.cpp" line="388"/>
         <source>Запрос</source>
         <translation>Request</translation>
     </message>
     <message>
-        <location filename="personal_programs/dialogs/activepersonalprogrameditor.cpp" line="148"/>
+        <location filename="personal_programs/dialogs/activepersonalprogrameditor.cpp" line="149"/>
         <source>Дублировать дневную программу?</source>
         <translation>Duplicate the day program?</translation>
     </message>
     <message>
-        <location filename="personal_programs/dialogs/activepersonalprogrameditor.cpp" line="149"/>
-        <location filename="personal_programs/dialogs/activepersonalprogrameditor.cpp" line="182"/>
+        <location filename="personal_programs/dialogs/activepersonalprogrameditor.cpp" line="150"/>
+        <location filename="personal_programs/dialogs/activepersonalprogrameditor.cpp" line="183"/>
         <source>Программа №</source>
         <translation>Program #</translation>
     </message>
     <message>
-        <location filename="personal_programs/dialogs/activepersonalprogrameditor.cpp" line="166"/>
-        <location filename="personal_programs/dialogs/activepersonalprogrameditor.cpp" line="191"/>
-        <location filename="personal_programs/dialogs/activepersonalprogrameditor.cpp" line="224"/>
-        <location filename="personal_programs/dialogs/activepersonalprogrameditor.cpp" line="248"/>
-        <location filename="personal_programs/dialogs/activepersonalprogrameditor.cpp" line="283"/>
-        <location filename="personal_programs/dialogs/activepersonalprogrameditor.cpp" line="326"/>
-        <location filename="personal_programs/dialogs/activepersonalprogrameditor.cpp" line="329"/>
-        <location filename="personal_programs/dialogs/activepersonalprogrameditor.cpp" line="332"/>
-        <location filename="personal_programs/dialogs/activepersonalprogrameditor.cpp" line="360"/>
-        <location filename="personal_programs/dialogs/activepersonalprogrameditor.cpp" line="363"/>
-        <location filename="personal_programs/dialogs/activepersonalprogrameditor.cpp" line="366"/>
-        <location filename="personal_programs/dialogs/activepersonalprogrameditor.cpp" line="413"/>
-        <location filename="personal_programs/dialogs/activepersonalprogrameditor.cpp" line="416"/>
-        <location filename="personal_programs/dialogs/activepersonalprogrameditor.cpp" line="419"/>
-        <location filename="personal_programs/dialogs/activepersonalprogrameditor.cpp" line="450"/>
-        <location filename="personal_programs/dialogs/activepersonalprogrameditor.cpp" line="453"/>
-        <location filename="personal_programs/dialogs/activepersonalprogrameditor.cpp" line="456"/>
-        <location filename="personal_programs/dialogs/activepersonalprogrameditor.cpp" line="487"/>
-        <location filename="personal_programs/dialogs/activepersonalprogrameditor.cpp" line="490"/>
-        <location filename="personal_programs/dialogs/activepersonalprogrameditor.cpp" line="493"/>
+        <location filename="personal_programs/dialogs/activepersonalprogrameditor.cpp" line="167"/>
+        <location filename="personal_programs/dialogs/activepersonalprogrameditor.cpp" line="192"/>
+        <location filename="personal_programs/dialogs/activepersonalprogrameditor.cpp" line="225"/>
+        <location filename="personal_programs/dialogs/activepersonalprogrameditor.cpp" line="249"/>
+        <location filename="personal_programs/dialogs/activepersonalprogrameditor.cpp" line="284"/>
+        <location filename="personal_programs/dialogs/activepersonalprogrameditor.cpp" line="327"/>
+        <location filename="personal_programs/dialogs/activepersonalprogrameditor.cpp" line="330"/>
+        <location filename="personal_programs/dialogs/activepersonalprogrameditor.cpp" line="333"/>
+        <location filename="personal_programs/dialogs/activepersonalprogrameditor.cpp" line="361"/>
+        <location filename="personal_programs/dialogs/activepersonalprogrameditor.cpp" line="364"/>
+        <location filename="personal_programs/dialogs/activepersonalprogrameditor.cpp" line="367"/>
+        <location filename="personal_programs/dialogs/activepersonalprogrameditor.cpp" line="414"/>
+        <location filename="personal_programs/dialogs/activepersonalprogrameditor.cpp" line="417"/>
+        <location filename="personal_programs/dialogs/activepersonalprogrameditor.cpp" line="420"/>
+        <location filename="personal_programs/dialogs/activepersonalprogrameditor.cpp" line="451"/>
+        <location filename="personal_programs/dialogs/activepersonalprogrameditor.cpp" line="454"/>
+        <location filename="personal_programs/dialogs/activepersonalprogrameditor.cpp" line="457"/>
+        <location filename="personal_programs/dialogs/activepersonalprogrameditor.cpp" line="488"/>
+        <location filename="personal_programs/dialogs/activepersonalprogrameditor.cpp" line="491"/>
+        <location filename="personal_programs/dialogs/activepersonalprogrameditor.cpp" line="494"/>
         <source>Предупреждение</source>
         <translation>Warning</translation>
     </message>
     <message>
-        <location filename="personal_programs/dialogs/activepersonalprogrameditor.cpp" line="166"/>
+        <location filename="personal_programs/dialogs/activepersonalprogrameditor.cpp" line="167"/>
         <source>Нельзя дублировать выполненную дневную программу</source>
         <translation>You can&apos;t duplicate a completed day program</translation>
     </message>
     <message>
-        <location filename="personal_programs/dialogs/activepersonalprogrameditor.cpp" line="181"/>
+        <location filename="personal_programs/dialogs/activepersonalprogrameditor.cpp" line="182"/>
         <source>Удалить дневную программу?</source>
         <translation>Remove the day program?.</translation>
     </message>
     <message>
-        <location filename="personal_programs/dialogs/activepersonalprogrameditor.cpp" line="191"/>
+        <location filename="personal_programs/dialogs/activepersonalprogrameditor.cpp" line="192"/>
         <source>Нельзя удалять выполненную дневную программу</source>
         <translation>You can&apos;t delete a completed day program</translation>
     </message>
     <message>
-        <location filename="personal_programs/dialogs/activepersonalprogrameditor.cpp" line="224"/>
-        <location filename="personal_programs/dialogs/activepersonalprogrameditor.cpp" line="248"/>
+        <location filename="personal_programs/dialogs/activepersonalprogrameditor.cpp" line="225"/>
+        <location filename="personal_programs/dialogs/activepersonalprogrameditor.cpp" line="249"/>
         <source>Нельзя перемещать выполненную дневную программу</source>
         <translation>You can&apos;t move a completed day program</translation>
     </message>
     <message>
-        <location filename="personal_programs/dialogs/activepersonalprogrameditor.cpp" line="279"/>
-        <location filename="personal_programs/dialogs/activepersonalprogrameditor.cpp" line="286"/>
-        <location filename="personal_programs/dialogs/activepersonalprogrameditor.cpp" line="335"/>
-        <location filename="personal_programs/dialogs/activepersonalprogrameditor.cpp" line="369"/>
-        <location filename="personal_programs/dialogs/activepersonalprogrameditor.cpp" line="422"/>
-        <location filename="personal_programs/dialogs/activepersonalprogrameditor.cpp" line="459"/>
-        <location filename="personal_programs/dialogs/activepersonalprogrameditor.cpp" line="496"/>
+        <location filename="personal_programs/dialogs/activepersonalprogrameditor.cpp" line="280"/>
+        <location filename="personal_programs/dialogs/activepersonalprogrameditor.cpp" line="287"/>
+        <location filename="personal_programs/dialogs/activepersonalprogrameditor.cpp" line="336"/>
+        <location filename="personal_programs/dialogs/activepersonalprogrameditor.cpp" line="370"/>
+        <location filename="personal_programs/dialogs/activepersonalprogrameditor.cpp" line="423"/>
+        <location filename="personal_programs/dialogs/activepersonalprogrameditor.cpp" line="460"/>
+        <location filename="personal_programs/dialogs/activepersonalprogrameditor.cpp" line="497"/>
         <source>Сообщение</source>
         <translation>Message</translation>
     </message>
     <message>
-        <location filename="personal_programs/dialogs/activepersonalprogrameditor.cpp" line="279"/>
+        <location filename="personal_programs/dialogs/activepersonalprogrameditor.cpp" line="280"/>
         <source>Методика не выбрана</source>
         <translation>Method not selected</translation>
     </message>
     <message>
-        <location filename="personal_programs/dialogs/activepersonalprogrameditor.cpp" line="283"/>
+        <location filename="personal_programs/dialogs/activepersonalprogrameditor.cpp" line="284"/>
         <source>Нельзя добавлять тест в выполненную дневную программу</source>
         <translation>You can&apos;t add a test to a completed day program</translation>
     </message>
     <message>
-        <location filename="personal_programs/dialogs/activepersonalprogrameditor.cpp" line="286"/>
-        <location filename="personal_programs/dialogs/activepersonalprogrameditor.cpp" line="335"/>
-        <location filename="personal_programs/dialogs/activepersonalprogrameditor.cpp" line="369"/>
-        <location filename="personal_programs/dialogs/activepersonalprogrameditor.cpp" line="422"/>
-        <location filename="personal_programs/dialogs/activepersonalprogrameditor.cpp" line="459"/>
-        <location filename="personal_programs/dialogs/activepersonalprogrameditor.cpp" line="496"/>
+        <location filename="personal_programs/dialogs/activepersonalprogrameditor.cpp" line="287"/>
+        <location filename="personal_programs/dialogs/activepersonalprogrameditor.cpp" line="336"/>
+        <location filename="personal_programs/dialogs/activepersonalprogrameditor.cpp" line="370"/>
+        <location filename="personal_programs/dialogs/activepersonalprogrameditor.cpp" line="423"/>
+        <location filename="personal_programs/dialogs/activepersonalprogrameditor.cpp" line="460"/>
+        <location filename="personal_programs/dialogs/activepersonalprogrameditor.cpp" line="497"/>
         <source>Не выбрана дневная программа</source>
         <translation>Day program not selected</translation>
     </message>
     <message>
-        <location filename="personal_programs/dialogs/activepersonalprogrameditor.cpp" line="305"/>
+        <location filename="personal_programs/dialogs/activepersonalprogrameditor.cpp" line="306"/>
         <source>Дублировать тест в дневной программе?</source>
         <translation>Duplicate the test in the day program?</translation>
     </message>
     <message>
-        <location filename="personal_programs/dialogs/activepersonalprogrameditor.cpp" line="306"/>
-        <location filename="personal_programs/dialogs/activepersonalprogrameditor.cpp" line="389"/>
+        <location filename="personal_programs/dialogs/activepersonalprogrameditor.cpp" line="307"/>
+        <location filename="personal_programs/dialogs/activepersonalprogrameditor.cpp" line="390"/>
         <source>Тест</source>
         <translation>Test</translation>
     </message>
     <message>
-        <location filename="personal_programs/dialogs/activepersonalprogrameditor.cpp" line="326"/>
+        <location filename="personal_programs/dialogs/activepersonalprogrameditor.cpp" line="327"/>
         <source>Нельзя дублировать проведенный тест</source>
         <translation>You can&apos;t  duplicate a completed test</translation>
     </message>
     <message>
-        <location filename="personal_programs/dialogs/activepersonalprogrameditor.cpp" line="329"/>
-        <location filename="personal_programs/dialogs/activepersonalprogrameditor.cpp" line="363"/>
-        <location filename="personal_programs/dialogs/activepersonalprogrameditor.cpp" line="416"/>
-        <location filename="personal_programs/dialogs/activepersonalprogrameditor.cpp" line="453"/>
-        <location filename="personal_programs/dialogs/activepersonalprogrameditor.cpp" line="490"/>
+        <location filename="personal_programs/dialogs/activepersonalprogrameditor.cpp" line="330"/>
+        <location filename="personal_programs/dialogs/activepersonalprogrameditor.cpp" line="364"/>
+        <location filename="personal_programs/dialogs/activepersonalprogrameditor.cpp" line="417"/>
+        <location filename="personal_programs/dialogs/activepersonalprogrameditor.cpp" line="454"/>
+        <location filename="personal_programs/dialogs/activepersonalprogrameditor.cpp" line="491"/>
         <source>Не выбран тест</source>
         <translation>Test not selected</translation>
     </message>
     <message>
-        <location filename="personal_programs/dialogs/activepersonalprogrameditor.cpp" line="332"/>
+        <location filename="personal_programs/dialogs/activepersonalprogrameditor.cpp" line="333"/>
         <source>Нельзя дублировать тест из выполненной дневной программы</source>
         <translation>You can&apos;t duplicate a test from a completed day program</translation>
     </message>
     <message>
-        <location filename="personal_programs/dialogs/activepersonalprogrameditor.cpp" line="360"/>
+        <location filename="personal_programs/dialogs/activepersonalprogrameditor.cpp" line="361"/>
         <source>Нельзя редактировать проведенный тест</source>
         <translation>You can&apos;t edit a completed test</translation>
     </message>
     <message>
-        <location filename="personal_programs/dialogs/activepersonalprogrameditor.cpp" line="366"/>
+        <location filename="personal_programs/dialogs/activepersonalprogrameditor.cpp" line="367"/>
         <source>Нельзя редактировать тест в выполненной дневной программе</source>
         <translation>You can&apos;t edit a test in a completed day program</translation>
     </message>
     <message>
-        <location filename="personal_programs/dialogs/activepersonalprogrameditor.cpp" line="388"/>
+        <location filename="personal_programs/dialogs/activepersonalprogrameditor.cpp" line="389"/>
         <source>Удалить тест из дневной программы?</source>
         <translation>Remove the test from the day program?</translation>
     </message>
     <message>
-        <location filename="personal_programs/dialogs/activepersonalprogrameditor.cpp" line="413"/>
+        <location filename="personal_programs/dialogs/activepersonalprogrameditor.cpp" line="414"/>
         <source>Нельзя удалять проведенный тест</source>
         <translation>You can&apos;t delete a completed test</translation>
     </message>
     <message>
-        <location filename="personal_programs/dialogs/activepersonalprogrameditor.cpp" line="419"/>
+        <location filename="personal_programs/dialogs/activepersonalprogrameditor.cpp" line="420"/>
         <source>Нельзя удалять тест из выполненной дневной программы</source>
         <translation>You can&apos;t delete a test from a completed day program</translation>
     </message>
     <message>
-        <location filename="personal_programs/dialogs/activepersonalprogrameditor.cpp" line="450"/>
-        <location filename="personal_programs/dialogs/activepersonalprogrameditor.cpp" line="487"/>
+        <location filename="personal_programs/dialogs/activepersonalprogrameditor.cpp" line="451"/>
+        <location filename="personal_programs/dialogs/activepersonalprogrameditor.cpp" line="488"/>
         <source>Нельзя перемещать проведенный тест</source>
         <translation>You can&apos;t move a completed test</translation>
     </message>
     <message>
-        <location filename="personal_programs/dialogs/activepersonalprogrameditor.cpp" line="456"/>
-        <location filename="personal_programs/dialogs/activepersonalprogrameditor.cpp" line="493"/>
+        <location filename="personal_programs/dialogs/activepersonalprogrameditor.cpp" line="457"/>
+        <location filename="personal_programs/dialogs/activepersonalprogrameditor.cpp" line="494"/>
         <source>Нельзя перемещать тест в выполненной дневной программе</source>
         <translation>You can&apos;t move a test in a completed day program</translation>
     </message>
@@ -3772,7 +3772,7 @@ Force Index</translation>
     <message>
         <location filename="metodics/dynamic_tests/evolventa/evolventaparamsdialog.ui" line="294"/>
         <source>Отмена</source>
-        <translation>Сфтсуд</translation>
+        <translation>Cancel</translation>
     </message>
     <message>
         <location filename="metodics/dynamic_tests/evolventa/evolventaparamsdialog.cpp" line="15"/>
@@ -5662,13 +5662,13 @@ After that, click the [Next &gt;&gt;] button.</translation>
     <message>
         <location filename="mainwindow.ui" line="60"/>
         <location filename="mainwindow.ui" line="79"/>
-        <location filename="mainwindow.cpp" line="438"/>
+        <location filename="mainwindow.cpp" line="442"/>
         <source>База данных</source>
         <translation>Database</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="107"/>
-        <location filename="mainwindow.cpp" line="467"/>
+        <location filename="mainwindow.cpp" line="471"/>
         <source>Индивидуальные программы</source>
         <translation>Personal programs</translation>
     </message>
@@ -5720,7 +5720,7 @@ After that, click the [Next &gt;&gt;] button.</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="252"/>
-        <location filename="mainwindow.cpp" line="556"/>
+        <location filename="mainwindow.cpp" line="560"/>
         <source>Выбрать</source>
         <translation>Select</translation>
     </message>
@@ -5903,82 +5903,82 @@ After that, click the [Next &gt;&gt;] button.</translation>
         <translation>Edit methodic settings...</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="204"/>
-        <location filename="mainwindow.cpp" line="345"/>
+        <location filename="mainwindow.cpp" line="208"/>
+        <location filename="mainwindow.cpp" line="349"/>
         <source>Предупреждение</source>
         <translation>Warning</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="204"/>
+        <location filename="mainwindow.cpp" line="208"/>
         <source>Вы уверены, что хотите прервать проведение теста?</source>
         <translation>Are you sure you want to interrupt the test?</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="294"/>
+        <location filename="mainwindow.cpp" line="298"/>
         <source>Файл для экспорта БД</source>
         <translation>File for exporting database</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="294"/>
-        <location filename="mainwindow.cpp" line="304"/>
+        <location filename="mainwindow.cpp" line="298"/>
+        <location filename="mainwindow.cpp" line="308"/>
         <source>Экспортные файлы БД (*.abde)</source>
         <translation>Export database files (*.abde)</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="304"/>
+        <location filename="mainwindow.cpp" line="308"/>
         <source>Файл для импорта БД</source>
         <translation>File for importing database</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="319"/>
-        <location filename="mainwindow.cpp" line="326"/>
-        <location filename="mainwindow.cpp" line="333"/>
-        <location filename="mainwindow.cpp" line="423"/>
+        <location filename="mainwindow.cpp" line="323"/>
+        <location filename="mainwindow.cpp" line="330"/>
+        <location filename="mainwindow.cpp" line="337"/>
+        <location filename="mainwindow.cpp" line="427"/>
         <source>Запрос</source>
         <translation>Request</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="319"/>
+        <location filename="mainwindow.cpp" line="323"/>
         <source>Удалить всех пациентов со всеми обследованиями?</source>
         <translation>Delete all the tests?</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="326"/>
+        <location filename="mainwindow.cpp" line="330"/>
         <source>Удалить все обследования?</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="333"/>
+        <location filename="mainwindow.cpp" line="337"/>
         <source>Создать новую базу данных?</source>
         <translation>Create new database?</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="345"/>
+        <location filename="mainwindow.cpp" line="349"/>
         <source>Методика не выбрана</source>
         <translation>Methodic not selected</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="423"/>
+        <location filename="mainwindow.cpp" line="427"/>
         <source>Удалить данные о расположении и размере окон, а также о расположении разделителей?</source>
         <translation>Delete windows position settings and also the locations of the dividers?</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="453"/>
+        <location filename="mainwindow.cpp" line="457"/>
         <source>Очистить</source>
         <translation>Clear</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="508"/>
+        <location filename="mainwindow.cpp" line="512"/>
         <source>Настройки</source>
         <translation>Settings</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="520"/>
+        <location filename="mainwindow.cpp" line="524"/>
         <source>Цветовые схемы</source>
         <translation>Color schemes</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="536"/>
+        <location filename="mainwindow.cpp" line="540"/>
         <source>Помощь</source>
         <translation>Help</translation>
     </message>
@@ -7324,104 +7324,104 @@ value, mkV</translation>
         <translation>Remove the day program...</translation>
     </message>
     <message>
-        <location filename="personal_programs/dialogs/personalprogramseditor.cpp" line="98"/>
+        <location filename="personal_programs/dialogs/personalprogramseditor.cpp" line="99"/>
         <source>Дублировать дневную программу &quot;</source>
         <translation>Duplicate a day program&quot;</translation>
     </message>
     <message>
-        <location filename="personal_programs/dialogs/personalprogramseditor.cpp" line="98"/>
+        <location filename="personal_programs/dialogs/personalprogramseditor.cpp" line="99"/>
         <source>&quot;?</source>
         <translation>&quot;?</translation>
     </message>
     <message>
-        <location filename="personal_programs/dialogs/personalprogramseditor.cpp" line="99"/>
-        <location filename="personal_programs/dialogs/personalprogramseditor.cpp" line="124"/>
-        <location filename="personal_programs/dialogs/personalprogramseditor.cpp" line="244"/>
-        <location filename="personal_programs/dialogs/personalprogramseditor.cpp" line="277"/>
+        <location filename="personal_programs/dialogs/personalprogramseditor.cpp" line="100"/>
+        <location filename="personal_programs/dialogs/personalprogramseditor.cpp" line="125"/>
+        <location filename="personal_programs/dialogs/personalprogramseditor.cpp" line="245"/>
+        <location filename="personal_programs/dialogs/personalprogramseditor.cpp" line="278"/>
         <source>Запрос</source>
         <translation>Request</translation>
     </message>
     <message>
-        <location filename="personal_programs/dialogs/personalprogramseditor.cpp" line="112"/>
-        <location filename="personal_programs/dialogs/personalprogramseditor.cpp" line="130"/>
-        <location filename="personal_programs/dialogs/personalprogramseditor.cpp" line="152"/>
-        <location filename="personal_programs/dialogs/personalprogramseditor.cpp" line="174"/>
-        <location filename="personal_programs/dialogs/personalprogramseditor.cpp" line="215"/>
-        <location filename="personal_programs/dialogs/personalprogramseditor.cpp" line="218"/>
-        <location filename="personal_programs/dialogs/personalprogramseditor.cpp" line="221"/>
-        <location filename="personal_programs/dialogs/personalprogramseditor.cpp" line="261"/>
-        <location filename="personal_programs/dialogs/personalprogramseditor.cpp" line="265"/>
-        <location filename="personal_programs/dialogs/personalprogramseditor.cpp" line="296"/>
+        <location filename="personal_programs/dialogs/personalprogramseditor.cpp" line="113"/>
+        <location filename="personal_programs/dialogs/personalprogramseditor.cpp" line="131"/>
+        <location filename="personal_programs/dialogs/personalprogramseditor.cpp" line="153"/>
+        <location filename="personal_programs/dialogs/personalprogramseditor.cpp" line="175"/>
+        <location filename="personal_programs/dialogs/personalprogramseditor.cpp" line="216"/>
+        <location filename="personal_programs/dialogs/personalprogramseditor.cpp" line="219"/>
+        <location filename="personal_programs/dialogs/personalprogramseditor.cpp" line="222"/>
+        <location filename="personal_programs/dialogs/personalprogramseditor.cpp" line="262"/>
+        <location filename="personal_programs/dialogs/personalprogramseditor.cpp" line="266"/>
+        <location filename="personal_programs/dialogs/personalprogramseditor.cpp" line="297"/>
         <source>Предупреждение</source>
         <translation>Inforamtion</translation>
     </message>
     <message>
-        <location filename="personal_programs/dialogs/personalprogramseditor.cpp" line="112"/>
-        <location filename="personal_programs/dialogs/personalprogramseditor.cpp" line="130"/>
-        <location filename="personal_programs/dialogs/personalprogramseditor.cpp" line="152"/>
-        <location filename="personal_programs/dialogs/personalprogramseditor.cpp" line="174"/>
+        <location filename="personal_programs/dialogs/personalprogramseditor.cpp" line="113"/>
+        <location filename="personal_programs/dialogs/personalprogramseditor.cpp" line="131"/>
+        <location filename="personal_programs/dialogs/personalprogramseditor.cpp" line="153"/>
+        <location filename="personal_programs/dialogs/personalprogramseditor.cpp" line="175"/>
         <source>Не выбрана дневная программа</source>
         <translation>Day program is not selected</translation>
     </message>
     <message>
-        <location filename="personal_programs/dialogs/personalprogramseditor.cpp" line="123"/>
+        <location filename="personal_programs/dialogs/personalprogramseditor.cpp" line="124"/>
         <source>Удалить дневную программу &quot;</source>
         <translation>Remove the day program&quot;</translation>
     </message>
     <message>
-        <location filename="personal_programs/dialogs/personalprogramseditor.cpp" line="123"/>
+        <location filename="personal_programs/dialogs/personalprogramseditor.cpp" line="124"/>
         <source>&quot; из индивидуальной программы?</source>
         <translation>&quot; from personal program?</translation>
     </message>
     <message>
-        <location filename="personal_programs/dialogs/personalprogramseditor.cpp" line="215"/>
-        <location filename="personal_programs/dialogs/personalprogramseditor.cpp" line="261"/>
+        <location filename="personal_programs/dialogs/personalprogramseditor.cpp" line="216"/>
+        <location filename="personal_programs/dialogs/personalprogramseditor.cpp" line="262"/>
         <source>Минимальное время между дневными программми больше максимального</source>
         <translation>Minimum time between day programs is more than maximum time</translation>
     </message>
     <message>
-        <location filename="personal_programs/dialogs/personalprogramseditor.cpp" line="218"/>
+        <location filename="personal_programs/dialogs/personalprogramseditor.cpp" line="219"/>
         <source>Необходимо добавить дневные программы в индивидуальную программу</source>
         <translation>You need to add day programs to the personal program</translation>
     </message>
     <message>
-        <location filename="personal_programs/dialogs/personalprogramseditor.cpp" line="221"/>
+        <location filename="personal_programs/dialogs/personalprogramseditor.cpp" line="222"/>
         <source>Не задано название индивидуальной программы</source>
         <translation>Name of personal program is not defined</translation>
     </message>
     <message>
-        <location filename="personal_programs/dialogs/personalprogramseditor.cpp" line="244"/>
+        <location filename="personal_programs/dialogs/personalprogramseditor.cpp" line="245"/>
         <source>Внести изменения в программу</source>
         <translation>Make changes to the program</translation>
     </message>
     <message>
-        <location filename="personal_programs/dialogs/personalprogramseditor.cpp" line="265"/>
-        <location filename="personal_programs/dialogs/personalprogramseditor.cpp" line="296"/>
+        <location filename="personal_programs/dialogs/personalprogramseditor.cpp" line="266"/>
+        <location filename="personal_programs/dialogs/personalprogramseditor.cpp" line="297"/>
         <source>Не выбрана индивидуальная программа</source>
         <translation>Personal program is not selected</translation>
     </message>
     <message>
-        <location filename="personal_programs/dialogs/personalprogramseditor.cpp" line="277"/>
+        <location filename="personal_programs/dialogs/personalprogramseditor.cpp" line="278"/>
         <source>Удалить индивидуальную программу</source>
         <translation>Remove the personal program</translation>
     </message>
     <message>
-        <location filename="personal_programs/dialogs/personalprogramseditor.cpp" line="359"/>
+        <location filename="personal_programs/dialogs/personalprogramseditor.cpp" line="360"/>
         <source>Выберите картинку логотипа</source>
         <translation>Select a logotip image</translation>
     </message>
     <message>
-        <location filename="personal_programs/dialogs/personalprogramseditor.cpp" line="361"/>
+        <location filename="personal_programs/dialogs/personalprogramseditor.cpp" line="362"/>
         <source>Файлы картинок (*.png)</source>
         <translation>Picture files (*.png)</translation>
     </message>
     <message>
-        <location filename="personal_programs/dialogs/personalprogramseditor.cpp" line="368"/>
+        <location filename="personal_programs/dialogs/personalprogramseditor.cpp" line="369"/>
         <source>запрос</source>
         <translation>request</translation>
     </message>
     <message>
-        <location filename="personal_programs/dialogs/personalprogramseditor.cpp" line="368"/>
+        <location filename="personal_programs/dialogs/personalprogramseditor.cpp" line="369"/>
         <source>Очистить логотип?</source>
         <translation>Clear logotip?</translation>
     </message>
@@ -7865,69 +7865,69 @@ and press the [Calibration &gt;&gt;] button</translation>
 Click the [Done] button.</translation>
     </message>
     <message>
-        <location filename="personal_programs/personalprogramdefines.h" line="81"/>
+        <location filename="personal_programs/personalprogrammanager.cpp" line="472"/>
         <source>На другой день</source>
         <translation>The next day</translation>
     </message>
     <message>
-        <location filename="personal_programs/personalprogramdefines.h" line="82"/>
-        <location filename="personal_programs/personalprogramdefines.h" line="97"/>
+        <location filename="personal_programs/personalprogrammanager.cpp" line="473"/>
+        <location filename="personal_programs/personalprogrammanager.cpp" line="492"/>
         <source>Нет</source>
         <translation>No</translation>
     </message>
     <message>
-        <location filename="personal_programs/personalprogramdefines.h" line="83"/>
-        <location filename="personal_programs/personalprogramdefines.h" line="98"/>
+        <location filename="personal_programs/personalprogrammanager.cpp" line="474"/>
+        <location filename="personal_programs/personalprogrammanager.cpp" line="493"/>
         <source>Один час</source>
         <translation>One hour</translation>
     </message>
     <message>
-        <location filename="personal_programs/personalprogramdefines.h" line="84"/>
-        <location filename="personal_programs/personalprogramdefines.h" line="99"/>
+        <location filename="personal_programs/personalprogrammanager.cpp" line="475"/>
+        <location filename="personal_programs/personalprogrammanager.cpp" line="494"/>
         <source>Два часа</source>
         <translation>Two hours</translation>
     </message>
     <message>
-        <location filename="personal_programs/personalprogramdefines.h" line="85"/>
-        <location filename="personal_programs/personalprogramdefines.h" line="100"/>
+        <location filename="personal_programs/personalprogrammanager.cpp" line="476"/>
+        <location filename="personal_programs/personalprogrammanager.cpp" line="495"/>
         <source>Пять часов</source>
         <translation>Five hours</translation>
     </message>
     <message>
-        <location filename="personal_programs/personalprogramdefines.h" line="86"/>
-        <location filename="personal_programs/personalprogramdefines.h" line="101"/>
+        <location filename="personal_programs/personalprogrammanager.cpp" line="477"/>
+        <location filename="personal_programs/personalprogrammanager.cpp" line="496"/>
         <source>Двенадцать часов</source>
         <translation>Twelve hours</translation>
     </message>
     <message>
-        <location filename="personal_programs/personalprogramdefines.h" line="87"/>
-        <location filename="personal_programs/personalprogramdefines.h" line="102"/>
+        <location filename="personal_programs/personalprogrammanager.cpp" line="478"/>
+        <location filename="personal_programs/personalprogrammanager.cpp" line="497"/>
         <source>Одни сутки</source>
         <translation>One day</translation>
     </message>
     <message>
-        <location filename="personal_programs/personalprogramdefines.h" line="88"/>
-        <location filename="personal_programs/personalprogramdefines.h" line="103"/>
+        <location filename="personal_programs/personalprogrammanager.cpp" line="479"/>
+        <location filename="personal_programs/personalprogrammanager.cpp" line="498"/>
         <source>Двое суток</source>
         <translation>Two days</translation>
     </message>
     <message>
-        <location filename="personal_programs/personalprogramdefines.h" line="89"/>
+        <location filename="personal_programs/personalprogrammanager.cpp" line="480"/>
         <source>Пять суток</source>
         <translation>Five days</translation>
     </message>
     <message>
-        <location filename="personal_programs/personalprogramdefines.h" line="104"/>
+        <location filename="personal_programs/personalprogrammanager.cpp" line="499"/>
         <source>Трое суток</source>
         <translation>Three days</translation>
     </message>
     <message>
-        <location filename="personal_programs/personalprogramdefines.h" line="105"/>
+        <location filename="personal_programs/personalprogrammanager.cpp" line="500"/>
         <source>Неделя</source>
         <translation>Week</translation>
     </message>
     <message>
-        <location filename="personal_programs/personalprogramdefines.h" line="106"/>
+        <location filename="personal_programs/personalprogrammanager.cpp" line="501"/>
         <source>Месяц</source>
         <translation>Month</translation>
     </message>
@@ -10618,81 +10618,73 @@ Click the [Done] button.</translation>
         <translation>mm/deg</translation>
     </message>
     <message>
-        <location filename="kernel/basedefines.cpp" line="9"/>
+        <location filename="kernel/basedefines.cpp" line="11"/>
         <source>вперед</source>
         <translation>to the forward</translation>
     </message>
     <message>
-        <location filename="kernel/basedefines.cpp" line="10"/>
-        <location filename="kernel/basedefines.cpp" line="24"/>
+        <location filename="kernel/basedefines.cpp" line="12"/>
+        <location filename="kernel/basedefines.cpp" line="23"/>
         <source>вправо</source>
         <translation>to the right</translation>
     </message>
     <message>
-        <location filename="kernel/basedefines.cpp" line="11"/>
+        <location filename="kernel/basedefines.cpp" line="13"/>
         <source>назад</source>
         <translation>back</translation>
     </message>
     <message>
-        <location filename="kernel/basedefines.cpp" line="12"/>
-        <location filename="kernel/basedefines.cpp" line="26"/>
+        <location filename="kernel/basedefines.cpp" line="14"/>
+        <location filename="kernel/basedefines.cpp" line="25"/>
         <source>влево</source>
         <translation>to the left</translation>
     </message>
     <message>
-        <location filename="kernel/basedefines.cpp" line="16"/>
         <source>forward</source>
-        <translation>forward</translation>
+        <translation type="vanished">forward</translation>
     </message>
     <message>
-        <location filename="kernel/basedefines.cpp" line="17"/>
-        <location filename="kernel/basedefines.cpp" line="31"/>
         <source>to the right</source>
-        <translation>to the right</translation>
+        <translation type="vanished">to the right</translation>
     </message>
     <message>
-        <location filename="kernel/basedefines.cpp" line="18"/>
         <source>backward</source>
-        <translation>backward</translation>
+        <translation type="vanished">backward</translation>
     </message>
     <message>
-        <location filename="kernel/basedefines.cpp" line="19"/>
-        <location filename="kernel/basedefines.cpp" line="33"/>
         <source>to the left</source>
-        <translation>to the left</translation>
+        <translation type="vanished">to the left</translation>
     </message>
     <message>
-        <location filename="kernel/basedefines.cpp" line="23"/>
+        <location filename="kernel/basedefines.cpp" line="22"/>
         <source>вверх</source>
         <translation>to the up</translation>
     </message>
     <message>
-        <location filename="kernel/basedefines.cpp" line="25"/>
+        <location filename="kernel/basedefines.cpp" line="24"/>
         <source>вниз</source>
         <translation>to the down</translation>
     </message>
     <message>
-        <location filename="kernel/basedefines.cpp" line="30"/>
         <source>up</source>
-        <translation>up</translation>
+        <translation type="vanished">up</translation>
     </message>
     <message>
-        <location filename="kernel/basedefines.cpp" line="32"/>
         <source>down</source>
-        <translation>down</translation>
+        <translation type="vanished">down</translation>
     </message>
     <message>
-        <location filename="kernel/basedefines.h" line="148"/>
+        <location filename="kernel/basedefines.h" line="146"/>
         <source>верхняя</source>
         <translation>high</translation>
     </message>
     <message>
-        <location filename="kernel/basedefines.h" line="149"/>
+        <location filename="kernel/basedefines.h" line="147"/>
         <source>левая</source>
         <translation>left</translation>
     </message>
     <message>
-        <location filename="kernel/basedefines.h" line="150"/>
+        <location filename="kernel/basedefines.h" line="148"/>
         <source>правая</source>
         <translation>right</translation>
     </message>
@@ -10924,12 +10916,12 @@ Click the [Done] button.</translation>
         <translation>Reactive force index</translation>
     </message>
     <message>
-        <location filename="metodics/metodicdefines.h" line="108"/>
+        <location filename="metodics/metodicsfactory.cpp" line="242"/>
         <source>Центровка через</source>
         <translation>Centering in</translation>
     </message>
     <message>
-        <location filename="metodics/metodicdefines.h" line="110"/>
+        <location filename="metodics/metodicsfactory.cpp" line="244"/>
         <source>Запись через</source>
         <translation>Recording in</translation>
     </message>
@@ -11245,14 +11237,14 @@ Click the [Done] button.</translation>
         <translation>Stripes moving</translation>
     </message>
     <message>
-        <location filename="metodics/stabtest/stabtestexecute.cpp" line="491"/>
-        <location filename="metodics/stabtest/stabtestexecute.cpp" line="502"/>
+        <location filename="metodics/stabtest/stabtestexecute.cpp" line="492"/>
+        <location filename="metodics/stabtest/stabtestexecute.cpp" line="503"/>
         <location filename="summaries/summarydefines.h" line="55"/>
         <source>Текстовые файлы</source>
         <translation>Text files</translation>
     </message>
     <message>
-        <location filename="metodics/stabtest/stabtestexecute.cpp" line="513"/>
+        <location filename="metodics/stabtest/stabtestexecute.cpp" line="514"/>
         <source>Файлы экспорта стабилоплатформы МБН</source>
         <translation>MBN Stabiloplatform Export Files</translation>
     </message>
@@ -14049,6 +14041,11 @@ Click the [Done] button.</translation>
         <source>Текст</source>
         <translation>Text</translation>
     </message>
+    <message>
+        <location filename="build/main/aanalyserbuild.cpp" line="294"/>
+        <source>Исследования А-Мед</source>
+        <translation>A-Med research</translation>
+    </message>
 </context>
 <context>
     <name>QCoreApplication::QCoreApplication</name>
@@ -15316,7 +15313,7 @@ Click the [Done] button.</translation>
     </message>
     <message>
         <location filename="metodics/dynamic_tests/stabdynamictestexecute.ui" line="304"/>
-        <location filename="metodics/dynamic_tests/stabdynamictestexecute.cpp" line="446"/>
+        <location filename="metodics/dynamic_tests/stabdynamictestexecute.cpp" line="447"/>
         <source>Запись</source>
         <translation>Recording</translation>
     </message>
@@ -15371,37 +15368,37 @@ Click the [Done] button.</translation>
         <translation>Communication error with device:</translation>
     </message>
     <message>
-        <location filename="metodics/dynamic_tests/stabdynamictestexecute.cpp" line="311"/>
+        <location filename="metodics/dynamic_tests/stabdynamictestexecute.cpp" line="312"/>
         <source>Предупреждение</source>
         <translation>Warning</translation>
     </message>
     <message>
-        <location filename="metodics/dynamic_tests/stabdynamictestexecute.cpp" line="311"/>
+        <location filename="metodics/dynamic_tests/stabdynamictestexecute.cpp" line="312"/>
         <source>Отсутствует необходимое подключение для работы теста</source>
         <translation>Missing needed connection for test</translation>
     </message>
     <message>
-        <location filename="metodics/dynamic_tests/stabdynamictestexecute.cpp" line="391"/>
+        <location filename="metodics/dynamic_tests/stabdynamictestexecute.cpp" line="392"/>
         <source>Ошибка связи с устройством</source>
         <translation>Communication error with device</translation>
     </message>
     <message>
-        <location filename="metodics/dynamic_tests/stabdynamictestexecute.cpp" line="391"/>
+        <location filename="metodics/dynamic_tests/stabdynamictestexecute.cpp" line="392"/>
         <source>порт</source>
         <translation>port</translation>
     </message>
     <message>
-        <location filename="metodics/dynamic_tests/stabdynamictestexecute.cpp" line="422"/>
+        <location filename="metodics/dynamic_tests/stabdynamictestexecute.cpp" line="423"/>
         <source>Прервать</source>
         <translation>Abort recording</translation>
     </message>
     <message>
-        <location filename="metodics/dynamic_tests/stabdynamictestexecute.cpp" line="427"/>
+        <location filename="metodics/dynamic_tests/stabdynamictestexecute.cpp" line="428"/>
         <source>Завершить</source>
         <translation>Stop recording</translation>
     </message>
     <message>
-        <location filename="metodics/dynamic_tests/stabdynamictestexecute.cpp" line="556"/>
+        <location filename="metodics/dynamic_tests/stabdynamictestexecute.cpp" line="557"/>
         <source>секунд</source>
         <translation>seconds</translation>
     </message>
@@ -15812,8 +15809,8 @@ Click the [Done] button.</translation>
     </message>
     <message>
         <location filename="metodics/stabtest/stabtestexecute.ui" line="304"/>
-        <location filename="metodics/stabtest/stabtestexecute.cpp" line="456"/>
-        <location filename="metodics/stabtest/stabtestexecute.cpp" line="695"/>
+        <location filename="metodics/stabtest/stabtestexecute.cpp" line="457"/>
+        <location filename="metodics/stabtest/stabtestexecute.cpp" line="696"/>
         <source>Запись</source>
         <translation>Recording</translation>
     </message>
@@ -15949,64 +15946,64 @@ Click the [Done] button.</translation>
         <translation>Driver errors</translation>
     </message>
     <message>
-        <location filename="metodics/stabtest/stabtestexecute.cpp" line="252"/>
+        <location filename="metodics/stabtest/stabtestexecute.cpp" line="253"/>
         <source>Предупреждение</source>
         <translation>Warning</translation>
     </message>
     <message>
-        <location filename="metodics/stabtest/stabtestexecute.cpp" line="252"/>
+        <location filename="metodics/stabtest/stabtestexecute.cpp" line="253"/>
         <source>Отсутствует необходимое подключение для работы теста</source>
         <translation>Missing needed connection for test</translation>
     </message>
     <message>
-        <location filename="metodics/stabtest/stabtestexecute.cpp" line="312"/>
+        <location filename="metodics/stabtest/stabtestexecute.cpp" line="313"/>
         <source>Задержка привыкания</source>
         <translation>Delayed habituation</translation>
     </message>
     <message>
-        <location filename="metodics/stabtest/stabtestexecute.cpp" line="343"/>
-        <location filename="metodics/stabtest/stabtestexecute.cpp" line="357"/>
+        <location filename="metodics/stabtest/stabtestexecute.cpp" line="344"/>
+        <location filename="metodics/stabtest/stabtestexecute.cpp" line="358"/>
         <source>кг</source>
         <translation>kg</translation>
     </message>
     <message>
-        <location filename="metodics/stabtest/stabtestexecute.cpp" line="366"/>
+        <location filename="metodics/stabtest/stabtestexecute.cpp" line="367"/>
         <source>Ошибка связи с устройством</source>
         <translation>Communication error with device</translation>
     </message>
     <message>
-        <location filename="metodics/stabtest/stabtestexecute.cpp" line="366"/>
+        <location filename="metodics/stabtest/stabtestexecute.cpp" line="367"/>
         <source>порт</source>
         <translation>port</translation>
     </message>
     <message>
-        <location filename="metodics/stabtest/stabtestexecute.cpp" line="382"/>
+        <location filename="metodics/stabtest/stabtestexecute.cpp" line="383"/>
         <source>Ошибка в драйвере</source>
         <translation>Driver error</translation>
     </message>
     <message>
-        <location filename="metodics/stabtest/stabtestexecute.cpp" line="430"/>
+        <location filename="metodics/stabtest/stabtestexecute.cpp" line="431"/>
         <source>Прервать</source>
         <translation>Abort recording</translation>
     </message>
     <message>
-        <location filename="metodics/stabtest/stabtestexecute.cpp" line="435"/>
+        <location filename="metodics/stabtest/stabtestexecute.cpp" line="436"/>
         <source>Завершить</source>
         <translation>Stop recording</translation>
     </message>
     <message>
-        <location filename="metodics/stabtest/stabtestexecute.cpp" line="492"/>
-        <location filename="metodics/stabtest/stabtestexecute.cpp" line="503"/>
+        <location filename="metodics/stabtest/stabtestexecute.cpp" line="493"/>
+        <location filename="metodics/stabtest/stabtestexecute.cpp" line="504"/>
         <source>Текстовые файлы</source>
         <translation>Text files</translation>
     </message>
     <message>
-        <location filename="metodics/stabtest/stabtestexecute.cpp" line="514"/>
+        <location filename="metodics/stabtest/stabtestexecute.cpp" line="515"/>
         <source>Файлы dat</source>
         <translation>Files dat</translation>
     </message>
     <message>
-        <location filename="metodics/stabtest/stabtestexecute.cpp" line="781"/>
+        <location filename="metodics/stabtest/stabtestexecute.cpp" line="782"/>
         <source>секунд</source>
         <translation>seconds</translation>
     </message>
@@ -18766,13 +18763,13 @@ Contact time</translation>
     </message>
     <message>
         <location filename="metodics/trenagers/trenexecute.ui" line="148"/>
-        <location filename="metodics/trenagers/trenexecute.cpp" line="311"/>
+        <location filename="metodics/trenagers/trenexecute.cpp" line="312"/>
         <source>Запись</source>
         <translation>Recording</translation>
     </message>
     <message>
         <location filename="metodics/trenagers/trenexecute.ui" line="165"/>
-        <location filename="metodics/trenagers/trenexecute.cpp" line="52"/>
+        <location filename="metodics/trenagers/trenexecute.cpp" line="53"/>
         <source>Длительность записи</source>
         <translation>Recording time</translation>
     </message>
@@ -18818,48 +18815,48 @@ Contact time</translation>
         <translation>Communication error with device:</translation>
     </message>
     <message>
-        <location filename="metodics/trenagers/trenexecute.cpp" line="52"/>
+        <location filename="metodics/trenagers/trenexecute.cpp" line="53"/>
         <source>мин:сек</source>
         <translation>min:sec</translation>
     </message>
     <message>
-        <location filename="metodics/trenagers/trenexecute.cpp" line="191"/>
+        <location filename="metodics/trenagers/trenexecute.cpp" line="192"/>
         <source>Предупреждение</source>
         <translation>Warning</translation>
     </message>
     <message>
-        <location filename="metodics/trenagers/trenexecute.cpp" line="191"/>
+        <location filename="metodics/trenagers/trenexecute.cpp" line="192"/>
         <source>Отсутствует необходимое подключение для работы теста</source>
         <translation>Missing needed connection for test</translation>
     </message>
     <message>
-        <location filename="metodics/trenagers/trenexecute.cpp" line="262"/>
+        <location filename="metodics/trenagers/trenexecute.cpp" line="263"/>
         <source>секунд</source>
         <translation>seconds</translation>
     </message>
     <message>
-        <location filename="metodics/trenagers/trenexecute.cpp" line="273"/>
+        <location filename="metodics/trenagers/trenexecute.cpp" line="274"/>
         <source>Ошибка связи с устройством</source>
         <translation>Communication error with device</translation>
     </message>
     <message>
-        <location filename="metodics/trenagers/trenexecute.cpp" line="273"/>
+        <location filename="metodics/trenagers/trenexecute.cpp" line="274"/>
         <source>порт</source>
         <translation>port</translation>
     </message>
     <message>
-        <location filename="metodics/trenagers/trenexecute.cpp" line="302"/>
+        <location filename="metodics/trenagers/trenexecute.cpp" line="303"/>
         <source>Прервать</source>
         <translation>Abort recording</translation>
     </message>
     <message>
-        <location filename="metodics/trenagers/trenexecute.cpp" line="573"/>
+        <location filename="metodics/trenagers/trenexecute.cpp" line="574"/>
         <source>нет</source>
         <translation>no</translation>
     </message>
     <message>
-        <location filename="metodics/trenagers/trenexecute.cpp" line="649"/>
-        <location filename="metodics/trenagers/trenexecute.cpp" line="685"/>
+        <location filename="metodics/trenagers/trenexecute.cpp" line="650"/>
+        <location filename="metodics/trenagers/trenexecute.cpp" line="686"/>
         <source>Баллы</source>
         <translation>Scores</translation>
     </message>

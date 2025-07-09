@@ -11,8 +11,9 @@ LinesParamsDialog::LinesParamsDialog(QWidget *parent) :
     ui->setupUi(this);
 
     ui->cbDirection->clear();
-    foreach (auto key, BaseDefines::getDirectionValueUDKeys())
-        ui->cbDirection->addItem(BaseDefines::getDirectionValueUDName(key), key);
+    auto names = BaseDefines::getDirectionValueUD();
+    foreach (auto key, names.keys())
+        ui->cbDirection->addItem(names.value(key), key);
 }
 
 LinesParamsDialog::~LinesParamsDialog()

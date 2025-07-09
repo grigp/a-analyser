@@ -22,10 +22,6 @@ static const QString BuildUid = "{52F2DAF9-307E-442D-A345-6A190D2CC08B}";
 //! Главная иконка приложения
 static const QString MainIcon = ":/images/MainIcon_DCI_1.ico";
 
-//! Текст главного окна приложения
-static const QString MainWindowTitle = "Анализ здровья по ИДС А-МЕД";
-
-
 //! Имя файла предустановленных методик. Это заголовок имени.
 //! Полное имя формируется так:
 //! PresetsMetodicsFileName + '.json' - русская версия

@@ -120,3 +120,8 @@ bool AAnalyserBuild::isPPEnabled()
     return false;
 }
 
+
+QString AAnalyserBuild::mainWindowTitle()
+{
+    return QCoreApplication::tr("А-Мед. Мас рестлинг");
+}

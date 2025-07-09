@@ -135,3 +135,8 @@ bool AAnalyserBuild::isPPEnabled()
 {
     return false;
 }
+
+QString AAnalyserBuild::mainWindowTitle()
+{
+    return QCoreApplication::tr("Анализ здровья по ИДС А-МЕД");
+}

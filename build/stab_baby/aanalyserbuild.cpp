@@ -218,3 +218,8 @@ bool AAnalyserBuild::isPPEnabled()
 {
     return false;
 }
+
+QString AAnalyserBuild::mainWindowTitle()
+{
+    return QCoreApplication::tr("Стабилометрия А-МЕД для постурального контроля детей первого года жизни");
+}

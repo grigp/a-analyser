@@ -12,6 +12,9 @@ class Connection;
 namespace AAnalyserBuild
 {
 
+//! Текст главного окна приложения
+QString mainWindowTitle();
+
 /*!
  * \brief Возвращает список шаблонов методик для данной сборки
  */
