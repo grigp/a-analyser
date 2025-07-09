@@ -17,17 +17,22 @@ int main(int argc, char *argv[])
     AAnalyserApplication a(argc, argv);
 
     QString fn = "";
-    //QString code = DataDefines::LANG_CODE_RUS;
-    QString code = DataDefines::LANG_CODE_ENGUSA;
-    auto trLoaded = BaseUtils::getTranslatorFileName(fn, code);
+    QString code = DataDefines::LANG_CODE_RUS;
+//    QString code = DataDefines::LANG_CODE_ENGUSA;
+    QString codeFound = "";
+    auto trLoaded = BaseUtils::getTranslatorFileName(fn, codeFound);
+    qDebug() << trLoaded << fn << code << codeFound << (codeFound == code);
 
     QTranslator translator;
-    if (trLoaded)
-        translator.load(fn);
+    if (codeFound == code)
+    {
+        if (trLoaded)
+            translator.load(fn);
 
-    a.setLanguargeCode(code);
-    if (trLoaded)
-        a.installTranslator(&translator);
+        a.setLanguargeCode(codeFound);
+        if (trLoaded)
+            a.installTranslator(&translator);
+    }
 
     MainWindow w;
     a.setMainWindow(&w);

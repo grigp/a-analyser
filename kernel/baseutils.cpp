@@ -38,7 +38,15 @@ bool BaseUtils::getTranslatorFileName(QString &fileName, QString &langCode)
                 fileInfo.completeSuffix() == "qm")
             {
                 fileName = fileInfo.absoluteFilePath();
-                langCode = fileInfo.baseName().remove("a-analyser_");
+                auto fn = fileInfo.baseName();
+                auto parts = fn.split('_');
+                int ps = parts.size();
+                if (ps > 2)
+                {
+                    langCode = parts.at(ps - 2) + "_" + parts.at(ps - 1);
+                }
+                else
+                    langCode = fileInfo.baseName().remove("a-analyser_");
                 return true;
             }
         }
