@@ -71,7 +71,7 @@ signals:
     void dataBaseChange(const QString &dataBaseFolder);
     void dataBaseClear();
     void deleteTests();
-    void dataBaseCreate();
+//    void dataBaseCreate();
 
 public slots:
     void onDbConnected();

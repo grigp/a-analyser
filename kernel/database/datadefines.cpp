@@ -117,7 +117,7 @@ QString DataDefines::appCopyPath()
 
 QString DataDefines::dataBasesPath()
 {
-    return aanalyserDataPath() + "databases/";
+    return QDir::rootPath() + "A-Med Databases/";
 }
 
 QString DataDefines::aanalyserSummariesPath()

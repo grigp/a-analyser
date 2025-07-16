@@ -19,6 +19,7 @@
 #include "aboutdialog.h"
 #include "dailyprogramseditor.h"
 #include "personalprogramseditor.h"
+#include "stringinputdialog.h"
 #include "amessagebox.h"
 
 #include <QFile>
@@ -333,8 +334,19 @@ void MainWindow::onDataBaseCreate()
     if (AMessageBox::question(this, tr("Запрос"), tr("Создать новую базу данных?")) ==
             AMessageBox::Yes)
     {
-        emit dataBaseCreate();
-        initSelectDatabaseMenu();
+        StringInputDialog dlg;
+        dlg.setTitle("Название БД");
+        dlg.setName("Введите название БД");
+        if (dlg.exec() == QDialog::Accepted)
+        {
+            auto dbName = dlg.text();
+            QString path = DataDefines::dataBasesPath() + dbName + "/";
+            if (dbName != "")
+            {
+                emit dataBaseChange(path);
+                initSelectDatabaseMenu();
+            }
+        }
     }
 }
 
