@@ -198,7 +198,7 @@ void TrenTetrisExecute::elementsInteraction(DeviceProtocols::DeviceData *data)
             if (isGlassFull())
             {
                 m_glass->clear();
-                changeGameScore(-m_glassHCount * 3);
+//                changeGameScore(-m_glassHCount * 3);
 //                if (!isRecording())
 //                    m_glass->clear();
 //                else
