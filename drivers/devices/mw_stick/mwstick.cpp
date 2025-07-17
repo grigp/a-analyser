@@ -408,7 +408,7 @@ void MWStick::assignByteOnInfoRequest(quint8 b)
         if (z == 3)
         {
             //qDebug() << "----" << n/4;
-            m_channelSK[n / 4] = ((m_koefParts[0] << 24) + (m_koefParts[1] << 16) + (m_koefParts[2] << 8) + m_koefParts[3]) /
+            m_channelSK[n / 4] = ((m_koefParts[3] << 24) + (m_koefParts[2] << 16) + (m_koefParts[1] << 8) + m_koefParts[0]) /
                                  1000000.0;
         }
         ++m_byteCount;
