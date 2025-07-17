@@ -408,7 +408,7 @@ void MWStick::assignByteOnInfoRequest(quint8 b)
         if (z == 3)
         {
             //qDebug() << "----" << n/4;
-            m_channelSK[n / 4] = ((m_koefParts[3] << 24) + (m_koefParts[2] << 16) + (m_koefParts[1] << 8) + m_koefParts[0]) /
+            m_channelSK[n / 4] = ((m_koefParts[0] << 24) + (m_koefParts[1] << 16) + (m_koefParts[2] << 8) + m_koefParts[3]) /
                                  1000000.0;
         }
         ++m_byteCount;
@@ -499,8 +499,10 @@ void MWStick::assignByte(quint8 b)
                         m_values[idx] = -((b1*256 + b0) - 0x8000);
                     else
                         m_values[idx] = (b1*256 + b0) - 0x8000;
+
 //                    if (idx == 2)
-//                        qDebug() << b1 << b0 << m_values[idx];
+//                        qDebug() << b0 << b1 << m_values[idx];
+
                     n += 2;
                 }
                 else
@@ -525,7 +527,10 @@ void MWStick::assignByte(quint8 b)
                     n += 3;
                 }
 
+//                double n = m_values[idx];
                 m_values[idx] = (m_values[idx] * m_channelSK[idx]) / 1000.0;
+//                if (idx == 2)
+//                    qDebug() << n << m_channelSK[idx] << m_values[idx];
             };
 
             assignDataChan(0);
