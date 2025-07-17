@@ -109,3 +109,9 @@ void StabDynamicTestPatientWindow::resizeEvent(QResizeEvent *event)
     QDialog::resizeEvent(event);
 }
 
+void StabDynamicTestPatientWindow::closeEvent(QCloseEvent *event)
+{
+    event->ignore();
+}
+
+

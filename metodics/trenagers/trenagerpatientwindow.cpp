@@ -83,3 +83,8 @@ void TrenagerPatientWindow::resizeEvent(QResizeEvent *event)
     m_propX = static_cast<double>(ui->gvGame->geometry().size().width()) / 2000;
     m_propY = static_cast<double>(ui->gvGame->geometry().size().height()) / 2000;
 }
+
+void TrenagerPatientWindow::closeEvent(QCloseEvent *event)
+{
+    event->ignore();
+}

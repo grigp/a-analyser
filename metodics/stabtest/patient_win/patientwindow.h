@@ -2,6 +2,7 @@
 #define PATIENTWINDOW_H
 
 #include <QDialog>
+#include <QCloseEvent>
 
 namespace Ui {
 class PatientWindow;
@@ -16,7 +17,7 @@ class PatientWindow : public QDialog
 
 public:
     explicit PatientWindow(QWidget *parent = nullptr);
-    ~PatientWindow();
+    ~PatientWindow() override;
 
     /*!
      * \brief Задает параметры стимуляции
@@ -39,6 +40,9 @@ public:
      * \brief Возвращает результат работы окна пациента
      */
     virtual QVariant result() = 0;
+
+protected:
+    void closeEvent(QCloseEvent *event) override;
 
 private:
     Ui::PatientWindow *ui;

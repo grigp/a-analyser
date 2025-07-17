@@ -23,7 +23,7 @@ class StabTestParamsDialog : public QDialog
 
 public:
     explicit StabTestParamsDialog(QWidget *parent = nullptr);
-    ~StabTestParamsDialog();
+    ~StabTestParamsDialog() override;
 
     /*!
      * \brief Получает параметры для редактирования

@@ -20,3 +20,8 @@ PatientWindow::~PatientWindow()
     delete ui;
 }
 
+void PatientWindow::closeEvent(QCloseEvent *event)
+{
+    event->ignore();
+}
+

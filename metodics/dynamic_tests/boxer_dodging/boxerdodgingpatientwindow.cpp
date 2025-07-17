@@ -65,3 +65,8 @@ void BoxerDodgingPatientWindow::resizeEvent(QResizeEvent *event)
     ui->lblFrontComment->setGeometry(ui->wgtBoxing->geometry());
     QWidget::resizeEvent(event);
 }
+
+void BoxerDodgingPatientWindow::closeEvent(QCloseEvent *event)
+{
+    event->ignore();
+}
