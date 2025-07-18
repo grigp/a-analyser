@@ -427,7 +427,7 @@ void SKGPainter::drawSKG()
          && m_sizeB > 0 && m_sizeB < 5000
          && m_angle >= -360 && m_angle <= 360)
     {
-        double fi = - m_angle * M_PI / 180 - M_PI / 2;
+        double fi = m_angle * M_PI / 180 - M_PI / 2;
         double psi = 0;
         int ox = 0;
         int oy = 0;
