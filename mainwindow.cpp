@@ -572,9 +572,9 @@ void MainWindow::initSelectDatabaseMenu()
     {
         if (dbInfo.name != curNameBD)
         {
-            QString title = dbInfo.comment;
-            if (title == "")
-                title = dbInfo.name;
+            QString title = dbInfo.name;
+            if (dbInfo.comment != "")
+                title += " (" + dbInfo.comment + ")";
             QAction *acSelDB = new QAction(title);
             acSelDB->setData(dbInfo.name);
             m_menuSelectDatabase->addAction(acSelDB);
