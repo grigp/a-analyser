@@ -38,7 +38,6 @@ bool SKGVisualWidget::isValid()
 void SKGVisualWidget::calculate()
 {
     showSKG();
-    showFactors();
 }
 
 void SKGVisualWidget::splitterMoved(int pos, int index)
@@ -92,6 +91,13 @@ void SKGVisualWidget::showSKG()
             ui->wgtSKG->setDiap(v);
         });
     }
+
+    showFactors();
+
+    auto angle = m_factors->ellipse().angle;
+    auto sizeA = m_factors->ellipse().sizeA;
+    auto sizeB = m_factors->ellipse().sizeB;
+    ui->wgtSKG->setEllipse(sizeA, sizeB, angle);
 }
 
 void SKGVisualWidget::showFactors()
